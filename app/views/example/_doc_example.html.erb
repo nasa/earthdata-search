@@ -1,0 +1,13 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "doc_example", :media => "all" %>
+  <%= javascript_include_tag "doc_example" %>
+<% end %>
+
+<div class="doc-example">
+  <h1>Parameter: <%= object.name %></h1>
+  <p class="css-test test-passing" style="display:none;">CSS is working</p>
+  <p class="css-test test-failing">CSS is broken!</p>
+  <p class="javascript-test test-passing" style="display:none">Javascript is working</p>
+  <p class="javascript-test test-failing">Javascript is broken!</p>
+  <p>This module should be removed once real examples exist.</p>
+</div>

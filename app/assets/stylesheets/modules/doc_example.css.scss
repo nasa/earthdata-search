@@ -1,0 +1,20 @@
+.doc-example {
+  p {
+    font-weight:bold;
+  }
+
+  .test-passing {
+    color:#080;
+  }
+  .test-failing {
+    color:#800;
+  }
+
+  .css-test.test-passing {
+    display:block !important; // !important needed to override necessary inline style
+  }
+
+  .css-test.test-failing {
+    display:none;
+  }
+}
