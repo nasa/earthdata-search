@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-EarthdataSearch::Application.load_tasks
+EarthdataSearchClient::Application.load_tasks
