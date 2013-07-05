@@ -7,6 +7,21 @@ gem 'rails', '~> 4.0.0'
 
 gem 'sqlite3'
 
+group :development do
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'rspec-mocks'
+
+  gem 'database_cleaner'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'capybara-screenshot'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
