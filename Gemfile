@@ -7,12 +7,7 @@ gem 'rails', '~> 4.0.0'
 
 gem 'sqlite3'
 
-group :development do
-  gem 'rspec-rails'
-end
-
 group :test do
-  gem 'rspec-rails'
   gem 'rspec-mocks'
 
   gem 'database_cleaner'
@@ -21,6 +16,20 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'capybara-screenshot'
+end
+
+# Gems that are mostly used for testing but useful to have available via CLI
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'colored'
+  gem 'deadweight' # Finds unused styles
+  gem 'execcsslint' # CSS Lint
+
+  # rspec-like environment for Javascript
+  # The version available via rubygems (1.3.2) doesn't contain Rails 4 support
+  # so we're specifying a newer version here.  This should be removed once we have
+  # a newer release
+  gem 'jasmine', :git => 'https://github.com/pivotal/jasmine-gem.git', :ref => 'e8105401'
 end
 
 # Gems used only for assets and not required
