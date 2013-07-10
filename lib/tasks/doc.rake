@@ -1,6 +1,6 @@
 namespace :doc do
   desc "Generate the UI documentation and tests"
-  task :ui => ['environment', 'assets:clean', 'assets:precompile'] do
+  task :ui => ['environment', 'assets:clobber', 'assets:precompile'] do
     require Rails.root.join('doc', 'ui', 'support', 'offline_template')
     f = File.new(Rails.root.join('doc', 'ui', 'index.html'), 'w')
     template = Rails.root.join('doc', 'ui', 'templates', "index.html.erb")
