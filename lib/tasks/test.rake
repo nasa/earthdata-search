@@ -9,7 +9,7 @@ Rake::Task[:test].enhance(['doc:ui']) do
   puts "[4/6] Running Jasmine Javascript specs"
   Rake::Task['jasmine:ci'].invoke
   puts "[5/6] Checking CSS style with CSS Lint"
-  Rake::Task['csslint'].invoke
+  Rake::Task['test:csslint'].invoke
   puts "[6/6] Looking for unused CSS rules in the project documentation"
-  Rake::Task['deadweight'].invoke
+  Rake::Task['test:deadweight'].invoke
 end
