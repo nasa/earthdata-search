@@ -18,6 +18,14 @@ group :test do
   gem 'capybara-screenshot'
 end
 
+group :development do
+  # Puppet / vagrant deployments using Capistrano
+  gem 'puppet'
+  gem 'librarian-puppet'
+  gem 'rvm-capistrano'
+  gem 'capistrano'
+end
+
 # Gems that are mostly used for testing but useful to have available via CLI
 group :development, :test do
   gem 'rspec-rails'
@@ -39,7 +47,7 @@ group :assets do
   gem 'coffee-rails', '~> 4.0.0'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+  #gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.3.0'
 end

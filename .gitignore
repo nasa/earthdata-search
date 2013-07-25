@@ -15,3 +15,9 @@
 /tmp
 
 /public/assets/*.gz
+
+# Deployment temp files
+/.librarian
+/.tmp
+/modules
+/vagrant/.vagrant
