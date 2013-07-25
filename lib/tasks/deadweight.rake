@@ -6,4 +6,6 @@ unless Rails.env.production?
     dw.stylesheets = Dir.glob('public/assets/**/*.css')
     dw.pages = ['doc/ui/index.html']
   end
+  task :deadweight => 'doc:ui' do
+  end
 end
