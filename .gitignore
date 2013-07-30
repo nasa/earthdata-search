@@ -14,7 +14,7 @@
 /log/*.log
 /tmp
 
-/public/assets/*.gz
+/public/assets
 
 # Deployment temp files
 /.librarian
