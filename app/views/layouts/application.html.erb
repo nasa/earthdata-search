@@ -6,21 +6,24 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>Earth Data Search Client</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-
-        <title>Earth Data Search Client</title>
-
         <%= stylesheet_link_tag    "application", :media => "all" %>
         <%= javascript_include_tag "application" %>
         <%= csrf_meta_tags %>
     </head>
     <body>
         <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-
-      <%= yield %>
+        <div class="earthdata-tophat">Top hat placeholder, please don't look at me yet :)</div>
+        <div class="masthead">
+            <h1>Masthead</h1>
+        </div>
+        <%= yield %>
+        <footer>
+            <p>Footer content</p>
+        </footer>
     </body>
 </html>
