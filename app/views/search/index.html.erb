@@ -1,0 +1,24 @@
+<section class="toolbar" ng-controller="ToolbarController">
+  <%= form_tag('/search', method: 'get') do %>
+    <p>
+      <input name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="FIXME" autofocus>
+    </p>
+  <% end %>
+</section>
+<section class="master-overlay">
+  <section class="dataset-results">
+    <h2><span data-bind="text: datasets.hits"></span> Matching Datasets</h2>
+    <ul data-bind="foreach: datasets.results">
+      <li>
+        <h3 data-bind="text: dataset_id"></h3>
+        <div class="no-image">
+          No image available
+        </div>
+        <p>Archive Center: <span data-bind="text: archive_center"></span></p>
+        <p>Short Name: <span data-bind="text: short_name"></span></p>
+        <p>Version: <span data-bind="text: version_id"></p>
+      </li>
+    </ul>
+    </div>
+  </section>
+</section>
