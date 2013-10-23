@@ -1,10 +1,4 @@
 @import "normalize.css";
 @import "modules/doc_example.css.scss";
-
-
-/* TEMPORARY */
-.earthdata-tophat {
-  background: #282828;
-  color: #fff;
-  padding: 1em;
-}
+@import "screen.css.scss";
+@import "bourbon";

@@ -1,0 +1,86 @@
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: #2c3e50;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+h1 a {
+  background: asset-url('search-logo.png') no-repeat;
+  height: 40px;
+  width: 145px;
+  float: left;
+}
+
+/* TEMPORARY */
+.earthdata-tophat {
+  background: #282828;
+  color: #fff;
+  padding: .5em 1em;
+  font-size: .8em;
+}
+
+header, footer {
+  background: #2c3e50;
+  color: #fff;
+  padding: 1em;
+}
+
+header {
+  background: rgba(44, 62, 80, 1) asset-url('header-drop.png') repeat-x top;
+  height: 40px;
+  padding: .5em 1em;
+}
+
+.homepage-search {
+  background: asset-url('ssm.jpg');
+  min-height: 550px;
+  
+  .search {
+    background: #282828;
+    color: #fff;
+    margin: 100px auto 0 auto;
+    width: 500px;
+    padding: 1em;
+    border-radius: 5px;
+    opacity: .9;
+  }
+}
+
+/*
+Helper Classes
+-------------------------------------
+*/
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
