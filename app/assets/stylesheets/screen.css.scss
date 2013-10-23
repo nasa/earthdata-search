@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 html {
   -webkit-font-smoothing: antialiased;
 }
@@ -17,6 +21,12 @@ h1 a {
   float: left;
 }
 
+ul {
+  // Expect many more lists without bullets than lists with
+  list-style: none;
+  padding: 0;
+}
+
 /* TEMPORARY */
 .earthdata-tophat {
   background: #282828;
@@ -25,22 +35,40 @@ h1 a {
   font-size: .8em;
 }
 
-header, footer {
+#site-header, #site-footer, .toolbar {
   background: #2c3e50;
   color: #fff;
   padding: 1em;
 }
 
-header {
+#site-header {
   background: rgba(44, 62, 80, 1) asset-url('header-drop.png') repeat-x top;
   height: 40px;
   padding: .5em 1em;
 }
 
+.toolbar {
+  padding: .5em;
+
+  input {
+    padding: .2em .5em;
+    width: 30%;
+  }
+}
+
+#main-content {
+  min-height: 550px;
+  position: relative;
+}
+
+#site-footer {
+  clear: both;
+}
+
 .homepage-search {
   background: asset-url('ssm.jpg');
-  min-height: 550px;
-  
+  height: 100%;
+
   .search {
     background: #282828;
     color: #fff;

@@ -4,10 +4,13 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+require 'helpers/shared_browser_session'
+
 require 'capybara-screenshot/rspec'
 require 'capybara-webkit'
 
 Capybara.javascript_driver = :webkit
+Capybara.default_driver = :webkit
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -63,4 +66,6 @@ RSpec.configure do |config|
 
   config.include RSpec::Rails::FixtureSupport
   config.include FactoryGirl::Syntax::Methods
+
+  config.extend SharedBrowserSession
 end

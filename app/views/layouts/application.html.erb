@@ -16,13 +16,26 @@
         <%= csrf_meta_tags %>
     </head>
     <body>
-        <!--[if lt IE 7]>
-        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-        <div class="earthdata-tophat">Top hat placeholder, please don't look at me yet :)</div>
+      <!--[if lte IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+      <![endif]-->
+      <div class="earthdata-tophat">Top hat placeholder, please don't look at me yet :)</div>
+
+      <header id="site-header">
+        <h1><a class="ir" href="#">Earthdata Search</a></h1>
+      </header>
+
+      <section class="toolbar">
+        <%= yield :toolbar %>
+      </section>
+
+
+      <div id="main-content">
         <%= yield %>
-        <footer>
-            <p>Footer content</p>
-        </footer>
+      </div>
+
+      <footer id="site-footer">
+        <p>Footer content</p>
+      </footer>
     </body>
 </html>

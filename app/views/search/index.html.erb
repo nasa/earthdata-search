@@ -1,24 +1,34 @@
-<section class="toolbar" ng-controller="ToolbarController">
+<% content_for :toolbar do %>
   <%= form_tag('/search', method: 'get') do %>
     <p>
-      <input name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="FIXME" autofocus>
+      <input name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or dataset name" autofocus>
     </p>
   <% end %>
-</section>
-<section class="master-overlay">
-  <section class="dataset-results">
-    <h2><span data-bind="text: datasets.hits"></span> Matching Datasets</h2>
-    <ul data-bind="foreach: datasets.results">
-      <li>
-        <h3 data-bind="text: dataset_id"></h3>
-        <div class="no-image">
-          No image available
+<% end %>
+
+
+<section class="master-overlay homepage-search">
+  <section class="master-overlay-parent">
+    <header>
+      <h2>Browse Datasets</h2>
+    </header>
+  </section>
+  <section class="master-overlay-main">
+    <header>
+      <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
+    </header>
+    <ul class="panel-list master-overlay-content" data-bind="foreach: datasets.results">
+      <li class="panel-list-item">
+        <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
+            No image available
         </div>
-        <p>Archive Center: <span data-bind="text: archive_center"></span></p>
-        <p>Short Name: <span data-bind="text: short_name"></span></p>
-        <p>Version: <span data-bind="text: version_id"></p>
+        <h3 data-bind="text: dataset_id"></h3>
+        <p class="panel-list-details">
+          <span data-bind="text: short_name"></span>
+          v<span data-bind="text: version_id"></span>
+          - <span data-bind="text: archive_center"></span>
+        </p>
       </li>
     </ul>
-    </div>
   </section>
 </section>
