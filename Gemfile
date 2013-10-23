@@ -55,6 +55,11 @@ end
 
 gem 'jquery-rails'
 gem 'bourbon'
+gem 'knockoutjs-rails'
+
+# Eventually we'll need these, but there's version conflict when installing
+#gem 'crossroadsjs-rails'
+#gem 'jssignals-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
