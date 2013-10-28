@@ -17,6 +17,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'capybara-screenshot'
+  gem 'vcr'
 end
 
 group :development do

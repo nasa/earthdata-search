@@ -1,8 +1,10 @@
 // The main search page has a master-detail type view, where both master and
 // detail lay on top of the map.  This module describes the master overlay.
 
-$master-overlay-parent-bg-color: transparentize(#111, .1);
-$master-overlay-main-bg-color: transparentize(#222, .1);
+$master-overlay-parent-bg-color: transparentize(#111, .05);
+$master-overlay-parent-on-main-bg-color: transparentize(#111, .05); // Used when drawing parent overlapping main
+$master-overlay-main-bg-color: transparentize(#333, .2);
+
 
 // The container for the entire overlay
 .master-overlay {
@@ -13,19 +15,22 @@ $master-overlay-main-bg-color: transparentize(#222, .1);
 // panel to dataset search results
 .master-overlay-parent {
   background-color: $master-overlay-parent-bg-color;
-  width: 30%;
-  height: 100%;
-  display: none;
+  width: 20%;
+  left: 0;
 }
 
 // The main section in the overlay.  Dataset results, pinned datasets, whatnot.
 .master-overlay-main {
   background-color: $master-overlay-main-bg-color;
   width: 40%;
+  left: 20%;
 }
 
 .master-overlay-parent, .master-overlay-main {
-  float: left;
+  position: absolute;
+  height: 100%;
+  transition-property: left;
+  transition-duration: 0.3s;
 }
 
 // Non-scrollable header area
@@ -37,8 +42,61 @@ $master-overlay-main-bg-color: transparentize(#222, .1);
   }
 }
 
+.master-overlay-main header {
+  margin-left:2em;
+}
+
 // Scrollable content area
 .master-overlay-content {
   margin: 1em;
+  height: 85%;
   overflow-y: scroll;
+}
+
+.master-overlay-close {
+  float: right;
+  display: block;
+}
+
+// DELETE ME After icons are added for close button
+.master-overlay-close {
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(63, 97, 132);
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.master-overlay-parent .master-overlay-close {
+  position: absolute;
+  z-index: 1;
+  right: -3em;
+  top: 0;
+  height:0;
+  text-indent: -2em;
+  border: 1.5em solid transparent;
+  border-left-color: $master-overlay-parent-on-main-bg-color;
+}
+
+.is-master-overlay-parent-hidden .master-overlay-parent {
+  left:-20%;
+}
+
+.is-master-overlay-parent-hidden .master-overlay-main {
+  left:0%;
+}
+
+.is-hidden .master-overlay-parent {
+  left:-60%;
+}
+
+.is-hidden .master-overlay-main {
+  left:-40%;
+}
+
+// Toolbar link
+a.master-overlay-show {
+  color: #fff;
 }

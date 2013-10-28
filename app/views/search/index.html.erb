@@ -4,27 +4,35 @@
       <input name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or dataset name" autofocus>
     </p>
   <% end %>
+  <a href="#datasets-overlay" class="master-overlay-show">Browse All Data</a>
 <% end %>
 
-
-<section class="master-overlay-parent">
-  <h2>Browse Datasets</h2>
-</section>
-<!--
-<section id="dataset-results" class="master-overlay-main">
-    <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
-<ul class="panel-list master-overlay-content" data-bind="foreach: datasets.results">
-  <li class="panel-list-item">
-    <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
-        No image available
+<div class="master-overlay homepage-search" id="datasets-overlay">
+  <section class="master-overlay-parent">
+    <header>
+      <a class="master-overlay-close master-overlay-parent-close" href="#">(X)</a>
+      <h2>Browse Datasets</h2>
+    </header>
+  </section>
+  <section id="dataset-results" class="master-overlay-main">
+    <header>
+      <a class="master-overlay-close master-overlay-main-close" href="#">(X)</a>
+      <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
+    </header>
+    <div class="master-overlay-content">
+      <ul class="panel-list" data-bind="foreach: datasets.results">
+        <li class="panel-list-item">
+          <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
+            No image available
+          </div>
+          <h3 data-bind="text: dataset_id"></h3>
+          <p class="panel-list-details">
+          <span data-bind="text: short_name"></span>
+          v<span data-bind="text: version_id"></span>
+          - <span data-bind="text: archive_center"></span>
+          </p>
+        </li>
+      </ul>
     </div>
-    <h3 data-bind="text: dataset_id"></h3>
-    <p class="panel-list-details">
-      <span data-bind="text: short_name"></span>
-      v<span data-bind="text: version_id"></span>
-      - <span data-bind="text: archive_center"></span>
-    </p>
-  </li>
-</ul>
-</section>
--->
+  </section>
+</div>

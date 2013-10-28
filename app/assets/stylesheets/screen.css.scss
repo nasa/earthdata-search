@@ -74,6 +74,13 @@ footer {
   
   input:focus {
     outline: none;
+    width: 90%;
+    padding: .2em .5em;
+  }
+
+  form {
+    width: 30%;
+    display: inline-block;
   }
 }
 
