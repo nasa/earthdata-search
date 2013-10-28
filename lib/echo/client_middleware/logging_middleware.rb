@@ -22,7 +22,7 @@ module Echo
           status_code = env[:status]
           summary = env[:summary]
           message = [method, url, "(#{status_code})", summary, "[#{time}s]"].compact.join(' ')
-          if status_code < 400
+          if status_code && status_code < 400
             info(green(message))
           else
             warn(red(message))
