@@ -7,17 +7,15 @@ $master-overlay-main-bg-color: transparentize(#222, .1);
 // The container for the entire overlay
 .master-overlay {
   color: #fff;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  bottom: 0;
 }
 
 // A parent panel for the overlday.  For instance, dataset facets are a parent
 // panel to dataset search results
 .master-overlay-parent {
   background-color: $master-overlay-parent-bg-color;
-  width: 20%;
+  width: 30%;
+  height: 100%;
+  display: none;
 }
 
 // The main section in the overlay.  Dataset results, pinned datasets, whatnot.
@@ -28,7 +26,6 @@ $master-overlay-main-bg-color: transparentize(#222, .1);
 
 .master-overlay-parent, .master-overlay-main {
   float: left;
-  height: 100%;
 }
 
 // Non-scrollable header area
@@ -43,6 +40,5 @@ $master-overlay-main-bg-color: transparentize(#222, .1);
 // Scrollable content area
 .master-overlay-content {
   margin: 1em;
-  height: 100%;
   overflow-y: scroll;
 }
