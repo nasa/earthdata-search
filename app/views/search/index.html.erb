@@ -20,7 +20,8 @@
       <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
     </header>
     <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">
-      <ul class="panel-list-list" data-bind="foreach: datasets.results">
+      <ul class="panel-list-list knockout-template"
+          data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
         <li class="panel-list-item">
           <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
             No image available
@@ -33,8 +34,8 @@
           </p>
         </li>
       </ul>
-      <p class="panel-list-load-more" data-bind="visible: datasets.hasNextPage">
-        Loading more datasets...
+      <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
+        Loading datasets...
       </p>
     </div>
   </section>

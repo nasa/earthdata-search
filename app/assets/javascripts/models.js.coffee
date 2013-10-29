@@ -49,7 +49,7 @@ class DatasetsListModel
 
   scrolled: (data, event) =>
     elem = event.target
-    if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 100))
+    if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
       @datasets.loadNextPage(@query.params())
 
 
@@ -58,6 +58,8 @@ class SearchModel
     @query = new QueryModel()
     @datasets = new DatasetsModel()
     @datasetsList = new DatasetsListModel(@query, @datasets)
+    @bindingsLoaded = ko.observable(false)
+
     ko.computed(@_computeDatasetResults).extend(throttle: 500)
 
   _computeDatasetResults: =>
@@ -67,3 +69,5 @@ class SearchModel
 $(document).ready ->
   model = new SearchModel()
   ko.applyBindings(model)
+  model.bindingsLoaded(true)
+  console.log(model.bindingsLoaded())

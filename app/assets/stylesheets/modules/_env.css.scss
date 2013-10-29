@@ -1,0 +1,7 @@
+// Environment-specific styles.  These are almost always a bad idea.  Document what you're doing.
+
+// With our styles, capybara-screenshot shows the page with the bare minimum height of something
+// like 200px, not enough to see anything.  This forces it to use a taller height.
+.env-test .wrap {
+  min-height: 800px;
+}

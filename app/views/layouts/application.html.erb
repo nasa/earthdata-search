@@ -15,9 +15,9 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="env-<%= Rails.env %>">
     <div class="wrap">
-    
+
     <div class="earthdata-tophat">Top hat placeholder, please don't look at me yet :)</div>
         <header class="toolbar">
             <h1><a class="ir" href="#">Earthdata Search</a></h1>
