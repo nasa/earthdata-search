@@ -2,6 +2,7 @@ $panel-list-item-height: 75px;
 $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list {
+  margin-bottom: $panel-list-item-height + 5px;
 }
 
 .panel-list-item {

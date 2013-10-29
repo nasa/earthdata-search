@@ -1,14 +1,16 @@
 // The main search page has a master-detail type view, where both master and
 // detail lay on top of the map.  This module describes the master overlay.
 
-$master-overlay-parent-bg-color: transparentize(#111, .05);
-$master-overlay-parent-on-main-bg-color: transparentize(#111, .05); // Used when drawing parent overlapping main
-$master-overlay-main-bg-color: transparentize(#333, .2);
+$master-overlay-parent-bg-color: transparentize(#111, .1);
+$master-overlay-parent-on-main-bg-color: transparentize(#111, .2); // Used when drawing parent overlapping main
+$master-overlay-main-bg-color: transparentize(#333, .1);
+$overlay-heading-font-color: #c9c9c9;
 
 
 // The container for the entire overlay
 .master-overlay {
   color: #fff;
+  margin-bottom: 100px;
 }
 
 // A parent panel for the overlday.  For instance, dataset facets are a parent
@@ -39,6 +41,8 @@ $master-overlay-main-bg-color: transparentize(#333, .2);
 
   h2 {
     font-weight: normal;
+    color: $overlay-heading-font-color;
+    font-size: 1.2em;
   }
 }
 
@@ -62,22 +66,16 @@ $master-overlay-main-bg-color: transparentize(#333, .2);
 .master-overlay-close {
   text-decoration: none;
   font-weight: bold;
-  color: rgb(63, 97, 132);
-
+  // color: rgb(63, 97, 132);
+  color: rgba(255, 255, 255, .3);
+  @include transition (color 0.2s ease-in-out);
+  
   &:hover {
-    color: #fff;
+    color: rgba(255, 255, 255, .8);
   }
 }
 
 .master-overlay-parent .master-overlay-close {
-  position: absolute;
-  z-index: 1;
-  right: -3em;
-  top: 0;
-  height:0;
-  text-indent: -2em;
-  border: 1.5em solid transparent;
-  border-left-color: $master-overlay-parent-on-main-bg-color;
 }
 
 .is-master-overlay-parent-hidden .master-overlay-parent {
@@ -99,4 +97,5 @@ $master-overlay-main-bg-color: transparentize(#333, .2);
 // Toolbar link
 a.master-overlay-show {
   color: #fff;
+  margin-left: 10px;
 }

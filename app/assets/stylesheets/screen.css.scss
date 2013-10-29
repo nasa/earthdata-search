@@ -6,15 +6,12 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-body {
-}
-
 .wrap {
   width: 100%;
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0px 0px -41px 0px;
+  margin: 0px 0px -25px 0px;
 }
 
 h1, h2, h3, p {
@@ -47,15 +44,12 @@ footer, .toolbar {
   color: #fff;
 }
 
-footer {
-  z-index: 1000;
-  position: relative;
-}
-
 .main-content {
   height: 100%;
   width: 100%;
   position: fixed;
+  // So we don't have to look at a blank map
+  background: asset-url('ssm.jpg') no-repeat center;
 }
 
 .toolbar {
@@ -66,7 +60,7 @@ footer {
   input {
     padding: .5em;
     margin: 2px 0 0 20px;
-    width: 30%;
+    width: 450px;
     border: 1px solid #21303f;
     border-radius: 3px;
     box-shadow: inset 0 1px 5px 1px rgba(0,0,0,0.3);
@@ -74,19 +68,23 @@ footer {
   
   input:focus {
     outline: none;
-    width: 90%;
-    padding: .2em .5em;
   }
 
   form {
-    width: 30%;
     display: inline-block;
   }
 }
 
 
 footer {
-  height: 41px;
+  height: 25px;
+  z-index: 1000;
+  position: relative;
+  font-size: .8em;
+}
+
+footer p {
+  padding: 5px 0 0 10px;
 }
 
 .homepage-search {
