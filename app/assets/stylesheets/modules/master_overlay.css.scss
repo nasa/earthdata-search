@@ -10,7 +10,6 @@ $overlay-heading-font-color: #c9c9c9;
 // The container for the entire overlay
 .master-overlay {
   color: #fff;
-  margin-bottom: 100px;
 }
 
 // A parent panel for the overlday.  For instance, dataset facets are a parent
@@ -69,7 +68,7 @@ $overlay-heading-font-color: #c9c9c9;
   // color: rgb(63, 97, 132);
   color: rgba(255, 255, 255, .3);
   @include transition (color 0.2s ease-in-out);
-  
+
   &:hover {
     color: rgba(255, 255, 255, .8);
   }
