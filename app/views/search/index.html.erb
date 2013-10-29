@@ -19,8 +19,8 @@
       <a class="master-overlay-close master-overlay-main-close" href="#"><i class="fa fa-times-circle"></i></a>
       <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
     </header>
-    <div class="master-overlay-content">
-      <ul class="panel-list" data-bind="foreach: datasets.results">
+    <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">
+      <ul class="panel-list-list" data-bind="foreach: datasets.results">
         <li class="panel-list-item">
           <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
             No image available
@@ -33,6 +33,9 @@
           </p>
         </li>
       </ul>
+      <div class="panel-list-load-more">
+        Loading more datasets...
+      </div>
     </div>
   </section>
 </div>

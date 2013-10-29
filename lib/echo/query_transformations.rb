@@ -8,12 +8,17 @@ module Echo
 
         query = {}
 
+        load_query_page(options, query)
         load_keyword_query(options, query)
 
         query
       end
 
       private
+
+      def load_query_page(options, query)
+        query[:page_num] = options[:page] if options[:page]
+      end
 
       def load_keyword_query(options, query)
         if options[:keywords]
