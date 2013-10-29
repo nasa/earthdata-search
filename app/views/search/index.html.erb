@@ -1,7 +1,7 @@
 <% content_for :toolbar do %>
-  <%= form_tag('/search', method: 'get') do %>
+  <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
     <p>
-      <input name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or dataset name" autofocus>
+      <input id="keywords" name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or dataset name" autofocus>
     </p>
   <% end %>
   <a href="#datasets-overlay" class="master-overlay-show">Browse All Data</a>

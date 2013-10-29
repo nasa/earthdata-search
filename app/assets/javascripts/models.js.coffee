@@ -70,4 +70,3 @@ $(document).ready ->
   model = new SearchModel()
   ko.applyBindings(model)
   model.bindingsLoaded(true)
-  console.log(model.bindingsLoaded())

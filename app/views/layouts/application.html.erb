@@ -19,18 +19,18 @@
     <div class="wrap">
 
     <div class="earthdata-tophat">Top hat placeholder, please don't look at me yet :)</div>
-        <header class="toolbar">
-            <h1><a class="ir" href="#">Earthdata Search</a></h1>
-            <%= yield :toolbar %>
-        </header>
-        <section class="main-content">
-            <%= yield %>
-        </section>
+    <header id="main-toolbar" class="toolbar">
+      <h1><a class="ir" href="#">Earthdata Search</a></h1>
+      <%= yield :toolbar %>
+    </header>
+    <section class="main-content">
+      <%= yield %>
+    </section>
     </div>
     <footer>
-        <div class="footer-content">
-            <p>NASA Earthdata Search Client <strong>v0.01a</strong></p>
-        </div>
+      <div class="footer-content">
+        <p>NASA Earthdata Search Client <strong>v0.01a</strong></p>
+      </div>
     </footer>
 </body>
 </html>
