@@ -1,0 +1,15 @@
+$button-bottom-gradient: #315880;
+$button-top-gradient: #5382b1;
+$button-text-shadow: #283a4e;
+
+.button {
+  @include linear-gradient($button-top-gradient, $button-bottom-gradient);
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 3px;
+  box-shadow: 0 0 3px #424242;
+  border: 1px solid $button-text-shadow;
+  text-shadow: 1px 1px 1px $button-text-shadow;
+}
