@@ -1,7 +1,7 @@
 <% content_for :toolbar do %>
-  <%= form_tag('/search', method: 'get') do %>
+  <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
     <p>
-      <input name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or dataset name" autofocus>
+      <input id="keywords" name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or dataset name" autofocus>
     </p>
   <% end %>
   <a href="#" class="button"><i class="fa fa-clock-o"></i> Temporal</a>
@@ -22,7 +22,8 @@
       <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
     </header>
     <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">
-      <ul class="panel-list-list" data-bind="foreach: datasets.results">
+      <ul class="panel-list-list knockout-template"
+          data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
         <li class="panel-list-item">
           <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
             No image available
@@ -35,9 +36,9 @@
           </p>
         </li>
       </ul>
-      <div class="panel-list-load-more">
-        Loading more datasets...
-      </div>
+      <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
+        Loading datasets...
+      </p>
     </div>
   </section>
 </div>

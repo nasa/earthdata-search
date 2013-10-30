@@ -12,6 +12,7 @@ class DatasetsModel
     @_searchResponse = ko.mapping.fromJS(results: [], hits: 0)
     @results = ko.computed => @_searchResponse.results()
     @hits = ko.computed => @_searchResponse.hits()
+    @hasNextPage = ko.computed => @results().length < @hits()
     @pendingRequestId = 0
     @completedRequestId = 0
     @isLoading = ko.observable(false)
@@ -21,8 +22,9 @@ class DatasetsModel
     @_load(params, true)
 
   loadNextPage: (params) =>
-    params.page = @page++
-    @_load(params, false)
+    if @hasNextPage() and !@isLoading()
+      params.page = ++@page
+      @_load(params, false)
 
   _load: (params, replace) =>
     requestId = ++@pendingRequestId
@@ -30,13 +32,12 @@ class DatasetsModel
     console.log("Request: /datasets.json", requestId, params)
     $.getJSON '/datasets.json', params, (data) =>
       if requestId > @completedRequestId
-        console.log("Response: /datasets.json", requestId, params, data)
+        #console.log("Response: /datasets.json", requestId, params, data)
         if replace
           ko.mapping.fromJS(data, @_searchResponse)
         else
           currentResults = @_searchResponse.results
           newResults = ko.mapping.fromJS(data['results'])
-          console.log('push it', currentResults(), newResults())
           currentResults.push.apply(currentResults, newResults())
         @completedRequestId = requestId
       else
@@ -46,11 +47,10 @@ class DatasetsModel
 class DatasetsListModel
   constructor: (@query, @datasets) ->
 
-  # I'm not super happy with this in this model.  I'd like to move it for separation of concerns.
   scrolled: (data, event) =>
     elem = event.target
-    if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 100))
-      @datasets.loadNextPage(@query.params()) unless @datasets.isLoading()
+    if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
+      @datasets.loadNextPage(@query.params())
 
 
 class SearchModel
@@ -58,6 +58,8 @@ class SearchModel
     @query = new QueryModel()
     @datasets = new DatasetsModel()
     @datasetsList = new DatasetsListModel(@query, @datasets)
+    @bindingsLoaded = ko.observable(false)
+
     ko.computed(@_computeDatasetResults).extend(throttle: 500)
 
   _computeDatasetResults: =>
@@ -67,3 +69,4 @@ class SearchModel
 $(document).ready ->
   model = new SearchModel()
   ko.applyBindings(model)
+  model.bindingsLoaded(true)

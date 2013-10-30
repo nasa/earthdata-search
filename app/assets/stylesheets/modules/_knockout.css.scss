@@ -1,0 +1,10 @@
+// Definitions for knockout.js elements
+
+// The contents of this element constitute a template to be filled-in by knockout.js
+// In order to prevent a flash of raw template markup on page load, add this class
+// and add "css: {'knockout-template': !bindingsLoaded}" to its data-bind attribute.
+// As a result, the template element will be hidden until the initial knockout.js
+// bindings have loaded
+.knockout-template {
+  display: none;
+}

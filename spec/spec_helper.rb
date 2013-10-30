@@ -9,11 +9,17 @@ require 'helpers/shared_browser_session'
 require 'capybara-screenshot/rspec'
 require 'capybara-webkit'
 
+require 'fileutils'
+
+# Out-of-date assets hose specs and lead to confusing errors
+FileUtils.rm_rf(Rails.root.join("public/assets"))
+
 Capybara.javascript_driver = :webkit
 Capybara.default_driver = :webkit
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
