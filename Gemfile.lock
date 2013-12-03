@@ -224,6 +224,7 @@ DEPENDENCIES
   capybara-screenshot
   capybara-webkit
   coffee-rails (~> 4.0.0)
+  coffee-script
   colored
   database_cleaner
   deadweight

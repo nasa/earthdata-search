@@ -4,7 +4,7 @@ ns.Map = do (window,
              document,
              L,
              LExt=ns.L,
-             GibsTileLayer=ns.GibsTileLayer,
+             GibsTileLayer=ns.L.GibsTileLayer,
              ProjExt = ns.L.Proj,
              dateUtil = window.edsc.util.date) ->
 
