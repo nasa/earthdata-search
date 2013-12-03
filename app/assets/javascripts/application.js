@@ -17,4 +17,6 @@
 //= require knockout
 //= require knockout.mapping
 //= require namespaces
-//= require_tree .
+//= require util/index
+//= require models
+//= require modules/index
