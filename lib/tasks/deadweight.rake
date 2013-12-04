@@ -7,6 +7,7 @@ unless Rails.env.production?
     Deadweight::RakeTask.new do |dw|
       dw.root = './'
       dw.stylesheets = Dir.glob('public/assets/**/*.css')
+      dw.ignore_selectors = /^\.(fa|leaflet)(\.|-|$).*/
       dw.pages = ['doc/ui/index.html']
     end
   end

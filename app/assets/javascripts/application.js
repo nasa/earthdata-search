@@ -16,4 +16,7 @@
 //= require jquery-ui-1.10.3.custom.min
 //= require knockout
 //= require knockout.mapping
-//= require_tree .
+//= require namespaces
+//= require util/index
+//= require models
+//= require modules/index
