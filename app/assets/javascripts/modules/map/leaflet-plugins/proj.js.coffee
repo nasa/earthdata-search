@@ -19,7 +19,7 @@ ns.Proj = do (L, proj4) ->
     # Constructs the CRS given maximum bounds, the maximum projected tile size, and
     # a projection object.  The projection must support 'project' and 'unproject'
     # methods expected by Leaflet.
-    initialize: (@bounds, @baseResolution, @projection) ->
+    initialize: (@code, @bounds, @baseResolution, @projection) ->
       @origin = [@bounds[0], @bounds[3]]
       @transformation = new L.Transformation(1, -@origin[0], -1, @origin[1])
 
@@ -56,17 +56,20 @@ ns.Proj = do (L, proj4) ->
 
 
   # EPSG:4326 (geo / plate carree)
-  epsg4326 = new GibsCRS([-180, -90, 180, 90],
+  epsg4326 = new GibsCRS('EPSG:4326',
+                         [-180, -90, 180, 90],
                          360 / (TILE_SIZE + 128),
                          new PlateCarreeProjection())
 
   # EPSG:3413 (arctic / stereographic)
-  epsg3413 = new GibsCRS(GIBS_MAX_STEREO_BOUNDS,
+  epsg3413 = new GibsCRS('EPSG:3413',
+                         GIBS_MAX_STEREO_BOUNDS,
                          GIBS_MAX_STEREO_RESOLUTION,
                          new Proj4Projection('+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'))
 
   # EPSG:3031 (antarctic / stereographic)
-  epsg3031 = new GibsCRS(GIBS_MAX_STEREO_BOUNDS,
+  epsg3031 = new GibsCRS('EPSG:3031',
+                         GIBS_MAX_STEREO_BOUNDS,
                          GIBS_MAX_STEREO_RESOLUTION,
                          new Proj4Projection('+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'))
 

@@ -20,7 +20,7 @@ ns.ProjectionSwitcher = do (L) ->
 
       @$root = $root
       $container = $(map.getContainer())
-      gibsMap = $container.data('map')
+      edscMap = $container.data('map')
 
       self = this
 
@@ -28,7 +28,7 @@ ns.ProjectionSwitcher = do (L) ->
         e.preventDefault()
         e.stopPropagation()
         newProjection = this.href.split('#')[1]
-        gibsMap[newProjection]()
+        edscMap.setProjection(newProjection)()
 
       map.on 'projectionchange', (e) ->
         self.setProjection e.projection
