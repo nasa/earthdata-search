@@ -27,10 +27,8 @@ module Echo
           dataset.associated_difs = []
           dataset.associated_difs = dataset_xml['AssociatedDIFs']['DIF']['EntryId'] if dataset_xml['AssociatedDIFs'] && dataset_xml['AssociatedDIFs']['DIF']
           dataset.spatial = dataset_xml['Spatial']
-          dataset.points = dataset_xml['Spatial']['HorizontalSpatialDomain']['Geometry']['Point']
-          dataset.boxes = dataset_xml['Spatial']['HorizontalSpatialDomain']['Geometry']['BoundingRectangle']
-          dataset.lines = dataset_xml['Spatial']['HorizontalSpatialDomain']['Geometry']['Line']
-          dataset.polygons = dataset_xml['Spatial']['HorizontalSpatialDomain']['Geometry']['GPolygon']
+          dataset.geometry = []
+          dataset.geometry = dataset_xml['Spatial']['HorizontalSpatialDomain']['Geometry'] if dataset_xml['Spatial'] && dataset_xml['Spatial']['HorizontalSpatialDomain']
           dataset.browse_images = []
           dataset.browse_images = dataset_xml['AssociatedBrowseImageUrls']['ProviderBrowseUrl'] if dataset_xml['AssociatedBrowseImageUrls']
           dataset
