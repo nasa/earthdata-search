@@ -62,7 +62,7 @@ describe Echo::Client do
   end
 
   context 'dataset details' do
-    let(:dataset_url) { "/catalog-rest/echo_catalog/datasets/C14758250-LPDAAC_ECS.json" }
+    let(:dataset_url) { "/catalog-rest/echo_catalog/datasets/C14758250-LPDAAC_ECS.echo10" }
     before { allow(Echo::Client).to receive(:connection).and_return(connection) }
 
     it 'with valid dataset ID' do

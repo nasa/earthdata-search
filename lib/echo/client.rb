@@ -2,7 +2,8 @@ module Echo
   # Register custom middleware
   Faraday.register_middleware(:response,
                               :logging => Echo::ClientMiddleware::LoggingMiddleware,
-                              :atom_datasets => Echo::ClientMiddleware::AtomDatasetMiddleware)
+                              :atom_datasets => Echo::ClientMiddleware::AtomDatasetMiddleware,
+                              :echo10_datasets => Echo::ClientMiddleware::Echo10DatasetMiddleware)
 
   class Client
     include Echo::QueryTransformations
@@ -14,7 +15,7 @@ module Echo
     end
 
     def self.get_dataset(id, options={})
-      connection.get("/catalog-rest/echo_catalog/datasets/#{id}.json", options_to_query(options))
+      connection.get("/catalog-rest/echo_catalog/datasets/#{id}.echo10", options_to_query(options))
     end
 
     def self.connection
@@ -32,6 +33,8 @@ module Echo
         # parsers.
         conn.response :atom_datasets, :content_type => /\bjson$/
         conn.response :json, :content_type => /\bjson$/
+        conn.response :echo10_datasets, :content_type => "application/echo10+xml"
+        conn.response :xml, :content_type => /\bxml$/
 
         conn.adapter  Faraday.default_adapter
       end

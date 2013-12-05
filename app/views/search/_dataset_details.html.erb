@@ -5,43 +5,53 @@
   </header>
   <dl class='master-overlay-content'>
     <dt>Description:</dt>
-    <dd data-bind="text: summary"></dd>
+    <dd data-bind="text: description"></dd>
     <dt>Archive Center:</dt>
     <dd data-bind="text: archive_center"></dd>
-    <dt>Distributing Center:</dt>
-    <dd data-bind="text: data_center"></dd>
+    <dt>Processing Center:</dt>
+    <dd data-bind="text: processing_center"></dd>
     <dt>Short Name:</dt>
     <dd data-bind="text: short_name"></dd>
     <dt>Version:</dt>
     <dd data-bind="text: version_id"></dd>
     <dt>Contacts:</dt>
+    <dd data-bind="with: contacts">
+      <p data-bind="text: ContactPersons.ContactPerson.FirstName() + ' ' + ContactPersons.ContactPerson.LastName()"></p>
+      <p data-bind="foreach: OrganizationPhones.Phone">
+        <span data-bind="text: Number() + '('+ Type() +')'"></span><br />
+      </p>
+      <p data-bind="text: OrganizationEmails.Email"></p>
+    </dd>
     <dt>Spatial Extent:</dt>
+    <dd data-bind="with: points">
+      <span data-bind="text: 'Point: ' + PointLatitude() + ', ' + PointLongitude()"></span>
+    </dd>
+    <dd data-bind="with: boxes">
+      <span data-bind="text: 'Bounding Rectangle: ' + NorthBoundingCoordinate() + ', ' + WestBoundingCoordinate() + ', ' + SouthBoundingCoordinate() + ', ' + EastBoundingCoordinate()"></span>
+    </dd>
     <dt>Temporal Extent:</dt>
+    <dd data-bind="with: temporal.RangeDateTime">
+      <p data-bind="text: BeginningDateTime() + ' to ' + EndingDateTime()"></p>
+    </dd>
     <dt>Science Keywords:</dt>
+    <dd data-bind="foreach: science_keywords">
+      <p data-bind="text: CategoryKeyword() + ' >> ' + TopicKeyword() + ' >> ' + TermKeyword()"></p>
+    </dd>
     <dt>Online Access:</dt>
-    <dd data-bind="foreach: links">
-      <a data-bind="attr: {href: href}, text: href"></a>
+    <dd data-bind="foreach: online_access_urls">
+      <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
     </dd>
     <dt>Online Resources:</dt>
+    <dd data-bind="with: online_resources">
+      <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
+    </dd>
     <dt>Browse Products:</dt>
-    <dt>Browse Access:</dt>
-    <dt>Updated:</dt>
-    <dd data-bind="text: updated"></dd>
-    <dt>Processing Level:</dt>
-    <dd data-bind="text: processing_level_id"></dd>
-    <dt>Time Start:</dt>
-    <dd data-bind="text: time_start"></dd>
-    <dt>Time End:</dt>
-    <dd data-bind="text: time_end"></dd>
-    <dt>Boxes:</dt>
-    <dd data-bind="text: boxes"></dd>
-    <dt>Points:</dt>
-    <dd data-bind="text: points"></dd>
+    <dd data-bind="foreach: browse_images">
+      <a data-bind="attr: {href: URL}" target="_blank">
+        <img data-bind="attr: {src: URL}" style="height: 150px;"/>
+      </a>
+    </dd>
     <dt>GCMD DIF Record:</dt>
-    <dd><a data-bind="attr: { href: 'http://gcmd.gsfc.nasa.gov/getdif.htm?'  dif_ids() }, text: dif_ids"></a></dd>
-    <dt>Online Access Flag:</dt>
-    <dd data-bind="text: online_access_flag"></dd>
-    <dt>Browse Flag:</dt>
-    <dd data-bind="text: browse_flag"></dd>
+    <dd><a data-bind="attr: { href: 'http://gcmd.gsfc.nasa.gov/getdif.htm?' + associated_difs() }, text: associated_difs" target="_blank"></a></dd>
   </dl>
 </section>
