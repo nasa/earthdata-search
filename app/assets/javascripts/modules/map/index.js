@@ -4,4 +4,5 @@
 //= require modules/map/namespaces
 //= require modules/map/leaflet-plugins/proj
 //= require modules/map/leaflet-plugins/gibs_tile_layer
+//= require modules/map/leaflet-plugins/projection_switcher
 //= require modules/map/map

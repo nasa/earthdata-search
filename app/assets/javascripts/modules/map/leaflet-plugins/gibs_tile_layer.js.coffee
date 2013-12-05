@@ -22,8 +22,15 @@ ns.GibsTileLayer = do (L) ->
       this[projection]()
 
     # ILayer methods.  Delegate to the underlying L.TileLayer
-    onAdd: (map) -> @layer.onAdd(map)
-    onRemove: (map) -> @layer.onRemove(map)
+    onAdd: (map) ->
+      @layer.onAdd(map)
+      map.on 'projectionchange', @_onProjectionChange
+
+    onRemove: (map) ->
+      @layer.onRemove(map)
+      map.off 'projectionchange', @_onProjectionChange
+
+    _onProjectionChange: (e) => this[e.projection]()
 
     # Switch to arctic projection
     arctic: ->
@@ -59,6 +66,8 @@ ns.GibsTileLayer = do (L) ->
 
       if @layer?
         L.TileLayer.prototype.initialize.call(@layer, gibsUrl, options)
+        @layer.setUrl(gibsUrl) # Forces a redraw / cache refresh
+        @layer.redraw()
       else
         @layer = new L.TileLayer(gibsUrl, options)
 
