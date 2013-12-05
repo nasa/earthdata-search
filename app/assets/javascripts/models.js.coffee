@@ -17,6 +17,8 @@ class models.DatasetsModel
     @pendingRequestId = 0
     @completedRequestId = 0
     @isLoading = ko.observable(false)
+    @_detailResponse = ko.mapping.fromJS(results: [])
+    @details = ko.computed => @_detailResponse.results()
 
   search: (params) =>
     params.page = @page = 1
@@ -44,6 +46,11 @@ class models.DatasetsModel
       else
         console.log("Rejected out-of-sequence request: /datasets.json", requestId, params, data)
       @isLoading(@pendingRequestId != @completedRequestId)
+
+  showDataset: (id) =>
+    console.log("Request: /datasets/", id())
+    $.getJSON '/datasets/' + id() + '.json', (data) =>
+      @_detailResponse.results(ko.mapping.fromJS(data['results']))
 
 class models.DatasetsListModel
   constructor: (@query, @datasets) ->

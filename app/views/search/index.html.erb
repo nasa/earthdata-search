@@ -24,7 +24,7 @@
     <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">
       <ul class="panel-list-list knockout-template"
           data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
-        <li class="panel-list-item">
+        <li data-bind="click: $parent.datasets.showDataset.bind($data, id)" class="panel-list-item">
           <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
             No image available
           </div>
@@ -41,6 +41,7 @@
       </p>
     </div>
   </section>
+  <%= render partial: 'dataset_details' %>
 </div>
 
 <div id="map" class="map" style="height:100%; z-index:-1;">

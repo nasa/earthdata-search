@@ -1,0 +1,47 @@
+<section data-bind="with: datasets.details()" id='dataset-details' class='master-overlay-details'>
+  <header>
+    <a class="master-overlay-close master-overlay-details-close" href="#"><i class="fa fa-times-circle"></i></a>
+    <h2 data-bind="text: dataset_id"></h2>
+  </header>
+  <dl class='master-overlay-content'>
+    <dt>Description:</dt>
+    <dd data-bind="text: summary"></dd>
+    <dt>Archive Center:</dt>
+    <dd data-bind="text: archive_center"></dd>
+    <dt>Distributing Center:</dt>
+    <dd data-bind="text: data_center"></dd>
+    <dt>Short Name:</dt>
+    <dd data-bind="text: short_name"></dd>
+    <dt>Version:</dt>
+    <dd data-bind="text: version_id"></dd>
+    <dt>Contacts:</dt>
+    <dt>Spatial Extent:</dt>
+    <dt>Temporal Extent:</dt>
+    <dt>Science Keywords:</dt>
+    <dt>Online Access:</dt>
+    <dd data-bind="foreach: links">
+      <a data-bind="attr: {href: href}, text: href"></a>
+    </dd>
+    <dt>Online Resources:</dt>
+    <dt>Browse Products:</dt>
+    <dt>Browse Access:</dt>
+    <dt>Updated:</dt>
+    <dd data-bind="text: updated"></dd>
+    <dt>Processing Level:</dt>
+    <dd data-bind="text: processing_level_id"></dd>
+    <dt>Time Start:</dt>
+    <dd data-bind="text: time_start"></dd>
+    <dt>Time End:</dt>
+    <dd data-bind="text: time_end"></dd>
+    <dt>Boxes:</dt>
+    <dd data-bind="text: boxes"></dd>
+    <dt>Points:</dt>
+    <dd data-bind="text: points"></dd>
+    <dt>GCMD DIF Record:</dt>
+    <dd><a data-bind="attr: { href: 'http://gcmd.gsfc.nasa.gov/getdif.htm?'  dif_ids() }, text: dif_ids"></a></dd>
+    <dt>Online Access Flag:</dt>
+    <dd data-bind="text: online_access_flag"></dd>
+    <dt>Browse Flag:</dt>
+    <dd data-bind="text: browse_flag"></dd>
+  </dl>
+</section>

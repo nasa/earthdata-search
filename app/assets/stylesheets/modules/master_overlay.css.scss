@@ -28,7 +28,14 @@ $overlay-heading-font-color: #c9c9c9;
   left: 20%;
 }
 
-.master-overlay-parent, .master-overlay-main {
+.master-overlay-details {
+  background-color: $master-overlay-main-bg-color;
+  width: 40%;
+  left: 60%;
+}
+
+
+.master-overlay-parent, .master-overlay-main, .master-overlay-details {
   position: absolute;
   height: 100%;
   transition-property: left;
@@ -86,10 +93,18 @@ $overlay-heading-font-color: #c9c9c9;
   left:0%;
 }
 
+.is-master-overlay-parent-hidden .master-overlay-details {
+  left:40%;
+}
+
 .is-hidden .master-overlay-parent {
   left:-60%;
 }
 
 .is-hidden .master-overlay-main {
+  left:-40%;
+}
+
+.is-hidden .master-overlay-details {
   left:-40%;
 }

@@ -13,6 +13,10 @@ module Echo
       connection.get('/catalog-rest/echo_catalog/datasets.json', options_to_query(options))
     end
 
+    def self.get_dataset(id, options={})
+      connection.get("/catalog-rest/echo_catalog/datasets/#{id}.json", options_to_query(options))
+    end
+
     def self.connection
       Thread.current[:edsc_echo_connection] ||= self.build_connection
     end
