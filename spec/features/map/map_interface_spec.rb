@@ -35,11 +35,6 @@ describe "Map interface" do
   # This is a hack.  See https://github.com/thoughtbot/capybara-webkit/issues/494
   # Places where this is used have been tested as working in Selenium but are
   # broken in capybara-webkit.  This sends a fake click using Javascript
-  def send_click(selector)
-    script = "$('#{selector}').click()"
-    page.evaluate_script(script)
-  end
-
   context "projection switching" do
     let (:switcher_selector) { '#map .projection-switcher' }
     let (:north_text) { 'North Polar Stereographic' }
@@ -65,13 +60,15 @@ describe "Map interface" do
 
       expect('#map').to have_tiles_with_projection('EPSG4326')
 
-      send_click "#map a[href=#arctic]"
+      click_link north_text
+      #send_click "#map a[href=#arctic]"
       expect(north_link).to have_class('leaflet-disabled')
       expect(geo_link).to_not have_class('leaflet-disabled')
 
       expect('#map').to have_tiles_with_projection('EPSG3413')
 
-      send_click "#map a[href=#geo]"
+      click_link geo_text
+      #send_click "#map a[href=#geo]"
       expect(north_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
@@ -84,13 +81,15 @@ describe "Map interface" do
 
       expect('#map').to have_tiles_with_projection('EPSG4326')
 
-      send_click "#map a[href=#antarctic]"
+      click_link south_text
+      #send_click "#map a[href=#antarctic]"
       expect(south_link).to have_class('leaflet-disabled')
       expect(geo_link).to_not have_class('leaflet-disabled')
 
       expect('#map').to have_tiles_with_projection('EPSG3031')
 
-      send_click "#map a[href=#geo]"
+      click_link geo_text
+      #send_click "#map a[href=#geo]"
       expect(south_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
@@ -102,6 +101,40 @@ describe "Map interface" do
       expect(north_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
       expect(south_link).to_not have_class('leaflet-disabled')
+    end
+  end
+
+  context "layer switcher" do
+    it "presents base and overlay layers on mouse hover" do
+      expect(page).to_not have_field("Corrected Reflectance (True Color)")
+
+      page.find_link('Layers').trigger(:mouseover)
+      expect(page).to have_field("Corrected Reflectance (True Color)")
+      expect(page).to have_field("Land / Water Map")
+      expect(page).to have_field("Administrative Boundaries")
+      expect(page).to have_field("Coastlines")
+    end
+
+    it "allows switching base layers" do
+      page.find_link('Layers').trigger(:mouseover)
+
+      within '#map' do
+        choose 'Land / Water Map'
+      end
+
+      expect('#map').to have_tiles_for_product('land_water_map')
+      expect('#map').to_not have_tiles_for_product('MODIS_Terra_CorrectedReflectance_TrueColor')
+    end
+
+    it "draws overlay layers on top of the base layer" do
+      page.find_link('Layers').trigger(:mouseover)
+
+      within '#map' do
+        check 'Coastlines'
+      end
+
+      expect('#map').to have_tiles_for_product('MODIS_Terra_CorrectedReflectance_TrueColor')
+      expect('#map').to have_tiles_for_product('gpw-v3-coastlines')
     end
   end
 end

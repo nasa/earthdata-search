@@ -2,4 +2,7 @@
 
 .leaflet-container {
   background-color: #000;
+  // Leaflet sets this to -1, presumably for layering.  It breaks horribly on our page layout,
+  // rendering below all containers
+  z-index: 0 !important;
 }

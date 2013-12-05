@@ -21,7 +21,7 @@ ns.Map = do (window,
     constructor: (el, projection='geo') ->
       $(el).data('map', this)
       @layers = []
-      map = @map = new L.Map(el, zoomControl: false)
+      map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())
       @setProjection(projection)
@@ -122,7 +122,7 @@ ns.Map = do (window,
     # Useful debugging snippets
 
     # Add outlines of US States to the map to help ensure correct projections and tile positioning
-    # $.getJSON '/assets-dev/modules/map/debug-geojson.json', {}, (json) -> map.debugShowGeoJson(json)
+    #$.getJSON '/assets-dev/modules/map/debug-geojson.json', {}, (json) -> map.debugShowGeoJson(json)
 
     # Log the mouse lat / lon to the console
     #map.startMouseDebugging()
