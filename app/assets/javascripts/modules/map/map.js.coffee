@@ -3,9 +3,9 @@ ns = window.edsc.map
 ns.Map = do (window,
              document,
              L,
-             LExt=ns.L,
              GibsTileLayer=ns.L.GibsTileLayer,
              ProjExt = ns.L.Proj,
+             ProjectionSwitcher = ns.L.ProjectionSwitcher
              GibsParams=ns.GibsParams,
              dateUtil = window.edsc.util.date) ->
 
@@ -20,19 +20,21 @@ ns.Map = do (window,
     #   'arctic' (EPSG:3413, WGS 84 / NSIDC Sea Ice Polar Stereographic North)
     #   'antarctic' (EPSG:3031, WGS 84 / Antarctic Polar Stereographic)
     constructor: (el, projection='geo') ->
+      $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el,
         attributionControl: false
         zoomControl: false)
       map.addControl(L.control.zoom(position: 'topright'))
-      @_buildLayers()
+      map.addControl(new ProjectionSwitcher())
       this[projection]()
+      @_buildLayers()
 
     _createLayerMap: (productIds...) ->
       result = {}
       for productId in productIds
         params = GibsParams.findByProductId(productId)
-        result[params.name] = new GibsTileLayer(params, @projection || 'geo') # FIXME need pull request merge for @projection
+        result[params.name] = new GibsTileLayer(params, @projection)
       result
 
     _buildLayers: ->
@@ -53,6 +55,8 @@ ns.Map = do (window,
 
     # Change to the arctic projection
     arctic: ->
+      return if @projection == 'arctic'
+      @projection = 'arctic'
       map = @map
       center = [90, 0]
       zoom = 0
@@ -65,10 +69,12 @@ ns.Map = do (window,
         noWrap: true
         center: center)
       map.setView(L.latLng(center), zoom, reset: true)
-      map.eachLayer(((l) -> l.arctic?()), this)
+      map.fire('projectionchange', projection: 'arctic')
 
     # Change to the antarctic projection
     antarctic: ->
+      return if @projection == 'antarctic'
+      @projection = 'antarctic'
       map = @map
       center = [-90, 0]
       zoom = 0
@@ -79,10 +85,12 @@ ns.Map = do (window,
         zoom: zoom
         center: center)
       map.setView(L.latLng(center), zoom, reset: true)
-      map.eachLayer(((l) -> l.antarctic?()), this)
+      map.fire('projectionchange', projection: 'antarctic')
 
     # Change to the geo projection
     geo: ->
+      return if @projection == 'geo'
+      @projection = 'geo'
       map = @map
       center = [0, 0]
       zoom = 2
@@ -93,10 +101,8 @@ ns.Map = do (window,
         zoom: zoom
         zoomControl: false
         center: center)
-      map.setMaxBounds([[-90, -360], [90, 360]])
       map.setView(L.latLng(center), zoom, reset: true)
-      map.eachLayer(((l) -> l.geo?()), this)
-      map.panTo(L.latLng(center))
+      map.fire('projectionchange', projection: 'geo')
 
     # (For debugging) Display a layer with the given GeoJSON
     debugShowGeoJson: (json) ->
