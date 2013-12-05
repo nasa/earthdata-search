@@ -6,6 +6,7 @@ ns.Map = do (window,
              LExt=ns.L,
              GibsTileLayer=ns.L.GibsTileLayer,
              ProjExt = ns.L.Proj,
+             GibsParams=ns.GibsParams,
              dateUtil = window.edsc.util.date) ->
 
   # Constructs and performs basic operations on maps
@@ -23,9 +24,22 @@ ns.Map = do (window,
       map = @map = new L.Map(el,
         attributionControl: false
         zoomControl: false)
-      map.addControl(L.control.layers())
       map.addControl(L.control.zoom(position: 'topright'))
+      @_buildLayers()
       this[projection]()
+
+    _createLayerMap: (productIds...) ->
+      result = {}
+      for productId in productIds
+        params = GibsParams.findByProductId(productId)
+        result[params.name] = new GibsTileLayer(params, @projection || 'geo') # FIXME need pull request merge for @projection
+      result
+
+    _buildLayers: ->
+      baseMaps = @_createLayerMap('MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
+      overlayMaps = @_createLayerMap('national_boundaries', 'administrative_boundaries', 'coastlines')
+      @map.addControl(L.control.layers(baseMaps, overlayMaps))
+
 
     # Removes the map from the page
     destroy: ->
@@ -107,19 +121,8 @@ ns.Map = do (window,
       console.log('mousemove', e.latlng.lat.toFixed(2), e.latlng.lng.toFixed(2))
 
   $(document).ready ->
-    modisOpts =
-      time: dateUtil.isoUtcDateString(new Date())
-      product: 'MODIS_Terra_CorrectedReflectance_TrueColor'
-      resolution: '250m'
-      format: 'jpeg'
-    landWaterOpts =
-      product: 'land_water_map'
-      resolution: '250m'
-      format: 'png'
-
     projection = 'geo'
     map = new Map(document.getElementById('map'), projection)
-    map.addLayer(new GibsTileLayer(modisOpts, projection))
 
     # Useful debugging snippets
 
