@@ -3,10 +3,9 @@ ns = window.edsc.map
 ns.Map = do (window,
              document,
              L,
-             GibsTileLayer=ns.L.GibsTileLayer,
              ProjExt = ns.L.Proj,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
-             GibsParams=ns.GibsParams,
+             LayerBuilder = ns.LayerBuilder,
              dateUtil = window.edsc.util.date) ->
 
   # Constructs and performs basic operations on maps
@@ -22,26 +21,31 @@ ns.Map = do (window,
     constructor: (el, projection='geo') ->
       $(el).data('map', this)
       @layers = []
-      map = @map = new L.Map(el,
-        attributionControl: false
-        zoomControl: false)
+      map = @map = new L.Map(el, zoomControl: false)
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())
-      this[projection]()
+      @setProjection(projection)
       @_buildLayers()
 
     _createLayerMap: (productIds...) ->
+      layerForProduct = LayerBuilder.layerForProduct
+      projection = @projection
       result = {}
       for productId in productIds
-        params = GibsParams.findByProductId(productId)
-        result[params.name] = new GibsTileLayer(params, @projection)
+        layer = layerForProduct(productId, projection)
+        result[layer.name] = layer
       result
 
     _buildLayers: ->
       baseMaps = @_createLayerMap('MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
-      overlayMaps = @_createLayerMap('national_boundaries', 'administrative_boundaries', 'coastlines')
-      @map.addControl(L.control.layers(baseMaps, overlayMaps))
+      overlayMaps = @_createLayerMap('administrative_boundaries', 'coastlines')
 
+      # Show the first layer
+      for own k, layer of baseMaps
+        @map.addLayer(layer)
+        break
+
+      @map.addControl(L.control.layers(baseMaps, overlayMaps))
 
     # Removes the map from the page
     destroy: ->
@@ -53,56 +57,41 @@ ns.Map = do (window,
     # Removes the given layer from the map
     removeLayer: (layer) -> @map.removeLayer(layer)
 
-    # Change to the arctic projection
-    arctic: ->
-      return if @projection == 'arctic'
-      @projection = 'arctic'
-      map = @map
-      center = [90, 0]
-      zoom = 0
-      L.setOptions(map,
+    projectionOptions:
+      arctic:
         crs: ProjExt.epsg3413
         minZoom: 0
         maxZoom: 5
-        zoom: zoom
+        zoom: 0
         continuousWorld: true
         noWrap: true
-        center: center)
-      map.setView(L.latLng(center), zoom, reset: true)
-      map.fire('projectionchange', projection: 'arctic')
-
-    # Change to the antarctic projection
-    antarctic: ->
-      return if @projection == 'antarctic'
-      @projection = 'antarctic'
-      map = @map
-      center = [-90, 0]
-      zoom = 0
-      L.setOptions(map,
+        center: [90, 0]
+      antarctic:
         crs: ProjExt.epsg3031
         minZoom: 0
         maxZoom: 5
-        zoom: zoom
-        center: center)
-      map.setView(L.latLng(center), zoom, reset: true)
-      map.fire('projectionchange', projection: 'antarctic')
-
-    # Change to the geo projection
-    geo: ->
-      return if @projection == 'geo'
-      @projection = 'geo'
-      map = @map
-      center = [0, 0]
-      zoom = 2
-      L.setOptions(map,
+        zoom: 0
+        continuousWorld: true
+        noWrap: true
+        center: [-90, 0]
+      geo:
         crs: ProjExt.epsg4326
         minZoom: 1
         maxZoom: 7
-        zoom: zoom
-        zoomControl: false
-        center: center)
-      map.setView(L.latLng(center), zoom, reset: true)
-      map.fire('projectionchange', projection: 'geo')
+        zoom: 2
+        continuousWorld: false
+        noWrap: false
+        center: [0, 0]
+
+    setProjection: (name) ->
+      map = @map
+      return if @projection == name
+      @projection = map.projection = name
+
+      opts = @projectionOptions[name]
+      L.setOptions(map, opts)
+      map.fire('projectionchange', projection: name, map: map)
+      map.setView(L.latLng(opts.center), opts.zoom, reset: true)
 
     # (For debugging) Display a layer with the given GeoJSON
     debugShowGeoJson: (json) ->
