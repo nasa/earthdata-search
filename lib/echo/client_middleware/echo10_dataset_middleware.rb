@@ -20,10 +20,16 @@ module Echo
           dataset.temporal = dataset_xml['Temporal']
           dataset.contacts = dataset_xml['Contacts']['Contact']
           dataset.science_keywords = dataset_xml['ScienceKeywords']['ScienceKeyword']
-          dataset.online_access_urls = []
-          dataset.online_access_urls = dataset_xml['OnlineAccessURLs']['OnlineAccessURL'] if dataset_xml['OnlineAccessURLs']
-          dataset.online_resources = []
-          dataset.online_resources = dataset_xml['OnlineResources']['OnlineResource'] if dataset_xml['OnlineResources']
+          if dataset_xml['OnlineAccessURLs']
+            dataset.online_access_urls = Array.wrap(dataset_xml['OnlineAccessURLs']['OnlineAccessURL']).map{ |url| url }
+          else
+            dataset.online_access_urls = []
+          end
+          if dataset_xml['OnlineResources']
+            dataset.online_resources = Array.wrap(dataset_xml['OnlineResources']['OnlineResource']).map{ |url| url }
+          else
+            dataset.online_resources = []
+          end
           dataset.associated_difs = []
           dataset.associated_difs = dataset_xml['AssociatedDIFs']['DIF']['EntryId'] if dataset_xml['AssociatedDIFs'] && dataset_xml['AssociatedDIFs']['DIF']
           dataset.spatial = dataset_xml['Spatial']

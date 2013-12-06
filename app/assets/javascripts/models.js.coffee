@@ -61,16 +61,7 @@ class models.DatasetDetailsModel
     @processing_center = params.processing_center || null
     @short_name = params.short_name || null
     @version_id = params.version_id || null
-
-    # Hack because catalog-rest only returns an array of access_urls when
-    # there is more than one url.
-    if params.online_access_urls? and params.online_access_urls.length?
-      @online_access_urls = params.online_access_urls()
-    else if params.online_access_urls?
-      @online_access_urls = [params.online_access_urls]
-    else
-      @online_access_urls = []
-
+    @online_access_urls = params.online_access_urls || null
     @online_resources = params.online_resources || null
     @browse_images = params.browse_images || null
     @associated_difs = new models.DifModel(params.associated_difs) if params?
