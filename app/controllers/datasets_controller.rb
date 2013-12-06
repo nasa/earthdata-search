@@ -8,7 +8,7 @@ class DatasetsController < ApplicationController
 
   def show
     response = Echo::Client.get_dataset(params[:id])
-    respond_with(results: response.body.first)
+    respond_with(results: DatasetDetailsPresenter.new(response.body.first))
   end
 
 end

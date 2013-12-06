@@ -18,21 +18,21 @@
     <dd data-bind="with: contacts">
       <p data-bind="text: name"></p>
        <p data-bind="foreach: phones">
-        <span data-bind="text: number"></span><br />
+        <span data-bind="text: $data"></span><br />
       </p>
       <p data-bind="text: email"></p>
     </dd>
     <dt>Spatial Extent:</dt>
     <dd data-bind="with: spatial">
-      <p data-bind="text: geometry"></p>
+      <p data-bind="text: $data"></p>
     </dd>
     <dt>Temporal Extent:</dt>
     <dd data-bind="with: temporal">
-      <p data-bind="text: temporalRange"></p>
+      <p data-bind="text: $data"></p>
     </dd>
     <dt>Science Keywords:</dt>
     <dd data-bind="foreach: science_keywords">
-      <p data-bind="text: keywordString"></p>
+      <p data-bind="text: $data"></p>
     </dd>
     <dt>Online Access:</dt>
     <dd data-bind="foreach: online_access_urls">
