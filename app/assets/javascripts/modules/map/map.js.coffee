@@ -22,10 +22,11 @@ ns.Map = do (window,
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
+      @_buildLayers()
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())
       @setProjection(projection)
-      @_buildLayers()
+      @_addDrawControls()
 
     _createLayerMap: (productIds...) ->
       layerForProduct = LayerBuilder.layerForProduct
@@ -46,6 +47,27 @@ ns.Map = do (window,
         break
 
       @map.addControl(L.control.layers(baseMaps, overlayMaps))
+
+    _addDrawControls: ->
+      map = @map
+      drawnItems = new L.FeatureGroup()
+      map.addLayer(drawnItems)
+
+      map.on 'draw:created', (e) ->
+        type = e.layerType
+        layer = e.layer
+
+        drawnItems.addLayer(layer)
+
+      # TODO Set icon image
+
+      drawControl = new L.Control.Draw
+        edit:
+          featureGroup: drawnItems
+        position: 'topright'
+        polyline: false
+
+      map.addControl(drawControl)
 
     # Removes the map from the page
     destroy: ->
