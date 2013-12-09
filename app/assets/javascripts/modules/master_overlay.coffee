@@ -7,7 +7,7 @@ $(document).on 'click', '.master-overlay-details-close', ->
   $(this).closest('.master-overlay').toggleClass('show-details')
   return false;
 
-$(document).on 'click', '.back-to-datasets', ->
+$(document).on 'click', '.master-overlay-show-main', ->
   $(this).closest('.master-overlay').toggleClass('show-details')
   return false;
 
