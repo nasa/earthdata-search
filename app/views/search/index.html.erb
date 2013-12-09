@@ -16,32 +16,36 @@
       <h2>Browse Datasets</h2>
     </header>
   </section>
-  <section id="dataset-results" class="master-overlay-main">
-    <header>
-      <a class="master-overlay-close master-overlay-main-close" href="#"><i class="fa fa-times-circle"></i></a>
-      <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
-    </header>
-    <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">
-      <ul class="panel-list-list knockout-template"
-          data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
-        <li data-bind="click: $parent.datasets.showDataset.bind($data, id)" class="panel-list-item">
-          <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
-            No image available
-          </div>
-          <h3 data-bind="text: dataset_id"></h3>
-          <p class="panel-list-details">
-          <span data-bind="text: short_name"></span>
-          v<span data-bind="text: version_id"></span>
-          - <span data-bind="text: archive_center"></span>
+  <div class="master-overlay-main">
+    <div class='master-overlay-main-content'>
+      <section id="dataset-results">
+        <header>
+          <a class="master-overlay-close master-overlay-main-close" href="#"><i class="fa fa-times-circle"></i></a>
+          <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
+        </header>
+        <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">
+          <ul class="panel-list-list knockout-template"
+              data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
+            <li data-bind="click: $parent.datasets.showDataset.bind($data, id)" class="panel-list-item">
+              <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
+                No image available
+              </div>
+              <h3 data-bind="text: dataset_id"></h3>
+              <p class="panel-list-details">
+              <span data-bind="text: short_name"></span>
+              v<span data-bind="text: version_id"></span>
+              - <span data-bind="text: archive_center"></span>
+              </p>
+            </li>
+          </ul>
+          <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
+            Loading datasets...
           </p>
-        </li>
-      </ul>
-      <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
-        Loading datasets...
-      </p>
+        </div>
+      </section>
+      <%= render partial: 'dataset_details' %>
     </div>
-  </section>
-  <%= render partial: 'dataset_details' %>
+  </div>
 </div>
 
 <div id="map" class="map" style="height:100%; z-index:-1;">

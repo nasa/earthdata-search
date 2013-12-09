@@ -51,6 +51,8 @@ class models.DatasetsModel
     console.log("Request: /datasets/", id())
     $.getJSON '/datasets/' + id() + '.json', (data) =>
       @_detailResponse.results(ko.mapping.fromJS(data['results']['dataset']))
+      $content = $('#dataset-details')
+      $content.height($content.parent().height() - $content.offset().top - 110)
 
 
 class models.DatasetDetailsModel

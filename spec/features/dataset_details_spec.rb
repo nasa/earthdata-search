@@ -10,7 +10,7 @@ describe 'Dataset details' do
       fill_in 'keywords', with: 'AST_L1AE'
       expect(page).to have_content('ASTER Expedited L1A')
       find('li', text: 'ASTER Expedited L1A').click
-      within('.master-overlay-details') do
+      within('#dataset-details') do
         expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
         expect(page).to have_content('Archive Center: LPDAAC')
         expect(page).to have_content('Processing Center: EDC')
