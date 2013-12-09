@@ -1,6 +1,7 @@
 //= require proj4
 //= require leaflet-0.7/leaflet-src
 //= require leaflet-plugins/leaflet-arc
+//= require leaflet.draw-0.2.2/leaflet.draw-src
 //= require modules/map/namespaces
 //= require modules/map/leaflet-plugins/proj
 //= require modules/map/leaflet-plugins/projection_switching_layer
@@ -8,4 +9,5 @@
 //= require modules/map/leaflet-plugins/sedac_tile_layer
 //= require modules/map/layer_builder
 //= require modules/map/leaflet-plugins/projection_switcher
+//= require modules/map/spatial_selection
 //= require modules/map/map

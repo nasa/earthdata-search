@@ -35,28 +35,37 @@ describe Echo::Client do
         expect(connection).to receive(:get).with(dataset_search_url, keyword: "term%").and_return(:response)
 
         response = Echo::Client.get_datasets(keywords: "term")
-        expect(response).to eq(:response)
+        expect(response.faraday_response).to eq(:response)
       end
 
       it 'partially matches any word in the keyword query' do
         expect(connection).to receive(:get).with(dataset_search_url, keyword: "term1% term2%").and_return(:response)
 
         response = Echo::Client.get_datasets(keywords: "term1 term2")
-        expect(response).to eq(:response)
+        expect(response.faraday_response).to eq(:response)
       end
 
       it 'collapses whitespace in the keyword query' do
         expect(connection).to receive(:get).with(dataset_search_url, keyword: "term1% term2%").and_return(:response)
 
         response = Echo::Client.get_datasets(keywords: "  term1\t term2 \n")
-        expect(response).to eq(:response)
+        expect(response.faraday_response).to eq(:response)
       end
 
       it 'escaped catalog-rest reserved characters in the keyword query' do
         expect(connection).to receive(:get).with(dataset_search_url, keyword: "cloud\\_cover\\_\\%%").and_return(:response)
 
         response = Echo::Client.get_datasets(keywords: "cloud_cover_%")
-        expect(response).to eq(:response)
+        expect(response.faraday_response).to eq(:response)
+      end
+    end
+
+    context 'by spatial point' do
+      it 'searches the catalog using a "point" filter' do
+        expect(connection).to receive(:get).with(dataset_search_url, point: "10,20").and_return(:response)
+
+        response = Echo::Client.get_datasets(spatial: "point:10,20")
+        expect(response.faraday_response).to eq(:response)
       end
     end
   end
@@ -69,7 +78,7 @@ describe Echo::Client do
       expect(connection).to receive(:get).with(dataset_url, {}).and_return(:response)
 
       response = Echo::Client.get_dataset('C14758250-LPDAAC_ECS')
-      expect(response).to eq(:response)
+      expect(response.faraday_response).to eq(:response)
     end
   end
 

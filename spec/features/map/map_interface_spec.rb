@@ -1,5 +1,9 @@
 # EDSC-28 As a user, I want to see a primary interface focused on a map so that
 #         I may focus on the spatial aspects of my searches and results
+# EDSC-29 As a user, I want to select alternate layers for the map so that I may
+#         have better context for my search
+# EDSC-30 As a user, I want to select alternate map projections so that I may
+#         view areas of interest commonly distorted by default projections
 
 require "spec_helper"
 
@@ -61,14 +65,12 @@ describe "Map interface" do
       expect('#map').to have_tiles_with_projection('EPSG4326')
 
       click_link north_text
-      #send_click "#map a[href=#arctic]"
       expect(north_link).to have_class('leaflet-disabled')
       expect(geo_link).to_not have_class('leaflet-disabled')
 
       expect('#map').to have_tiles_with_projection('EPSG3413')
 
       click_link geo_text
-      #send_click "#map a[href=#geo]"
       expect(north_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 
@@ -82,14 +84,12 @@ describe "Map interface" do
       expect('#map').to have_tiles_with_projection('EPSG4326')
 
       click_link south_text
-      #send_click "#map a[href=#antarctic]"
       expect(south_link).to have_class('leaflet-disabled')
       expect(geo_link).to_not have_class('leaflet-disabled')
 
       expect('#map').to have_tiles_with_projection('EPSG3031')
 
       click_link geo_text
-      #send_click "#map a[href=#geo]"
       expect(south_link).to_not have_class('leaflet-disabled')
       expect(geo_link).to have_class('leaflet-disabled')
 

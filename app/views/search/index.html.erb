@@ -5,20 +5,31 @@
     </p>
   <% end %>
   <a href="#" class="button"><i class="fa fa-clock-o"></i> Temporal</a>
-  <a href="#" class="button"><i class="fa fa-crop"></i> Spatial <i class="fa fa-caret-down"></i></a>
+  <div class="dropdown" data-bind="with: ui.spatialType">
+    <a href="#" class="button dropdown-button spatial-dropdown-button">
+      <i class="fa" data-bind="css: icon"></i>
+      <span class="dropdown-value" data-bind="text: name">Spatial</span>
+      <i class="fa fa-caret-down dropdown-icon"></i>
+    </a>
+    <ul class="dropdown-links spatial-selection">
+      <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon"><i class="fa fa-crop"></i> Polygon</a></li>
+      <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle"><i class="fa fa-crop"></i> Rectangle</a></li>
+      <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="fa fa-crop"></i> Point</a></li>
+    </ul>
+  </div>
   <a href="#datasets-overlay" class="master-overlay-show button"><i class="fa fa-search"></i> Browse All Data</a>
 <% end %>
 
 <div class="master-overlay homepage-search" id="datasets-overlay">
   <section class="master-overlay-parent">
     <header>
-      <a class="master-overlay-close master-overlay-parent-close" href="#"><i class="fa fa-times-circle"></i></a>
+      <a class="master-overlay-close master-overlay-parent-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
     </header>
   </section>
   <section id="dataset-results" class="master-overlay-main">
     <header>
-      <a class="master-overlay-close master-overlay-main-close" href="#"><i class="fa fa-times-circle"></i></a>
+      <a class="master-overlay-close master-overlay-main-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
       <p>
         <a href="#" class='master-overlay-show-parent'>Show Facets</a>
