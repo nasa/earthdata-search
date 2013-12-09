@@ -11,6 +11,10 @@ $overlay-heading-font-color: #c9c9c9;
 // The container for the entire overlay
 .master-overlay {
   color: #fff;
+
+  a {
+    color: #fff;
+  }
 }
 
 // A parent panel for the overlday.  For instance, dataset facets are a parent
@@ -119,6 +123,10 @@ $overlay-heading-font-color: #c9c9c9;
   left:-40%;
 }
 
+.is-master-overlay-details-visible .master-overlay-main-content {
+  left:-100%;
+}
+
 .is-hidden .master-overlay-parent {
   left:-60%;
 }
@@ -127,18 +135,6 @@ $overlay-heading-font-color: #c9c9c9;
   left:-40%;
 }
 
-.is-hidden .master-overlay-details {
-  left:-40%;
-}
-
-.is-master-overlay-details-visible .master-overlay-parent {
-  left:-20%;
-}
-
-.is-master-overlay-details-visible .master-overlay-main {
-  left:0%;
-}
-
-.is-master-overlay-details-visible .master-overlay-main-content {
-  left:-100%;
+.is-hidden .master-overlay-main-content {
+  left:-200%;
 }

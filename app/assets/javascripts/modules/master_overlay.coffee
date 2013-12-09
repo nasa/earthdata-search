@@ -2,11 +2,6 @@ $(document).on 'click', '.master-overlay-main li.panel-list-item', ->
   $(this).closest('.master-overlay').toggleClass('is-master-overlay-details-visible')
   return false;
 
-$(document).on 'click', '.master-overlay-details-close', ->
-  $(this).closest('.master-overlay').toggleClass('is-hidden')
-  $(this).closest('.master-overlay').toggleClass('is-master-overlay-details-visible')
-  return false;
-
 $(document).on 'click', '.master-overlay-show-main', ->
   $(this).closest('.master-overlay').toggleClass('is-master-overlay-details-visible')
   return false;
@@ -25,7 +20,7 @@ $(document).on 'click', '.master-overlay-show-parent', ->
 
 $(document).on 'click', '.master-overlay-show', ->
   id = this.href.split('#')[1]
-  $('#' + id).removeClass('is-hidden').removeClass('is-master-overlay-parent-hidden')
+  $('#' + id).removeClass('is-hidden')
   return false;
 
   $(document).on 'transitionend', '.master-overlay-parent, .master-overlay-main', ->
