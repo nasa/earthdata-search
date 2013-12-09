@@ -15,7 +15,7 @@ class DatasetsController < ApplicationController
     response = Echo::Client.get_dataset(params[:id])
 
     if response.success?
-      respond_with(results: DatasetDetailsPresenter.new(response.body.first), status: response.status)
+      respond_with(DatasetDetailsPresenter.new(response.body.first), status: response.status)
     else
       respond_with(response.body, status: response.status)
     end
