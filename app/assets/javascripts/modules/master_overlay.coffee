@@ -1,3 +1,16 @@
+$(document).on 'click', '.master-overlay-main li.panel-list-item', ->
+  $(this).closest('.master-overlay').toggleClass('show-details')
+  return false;
+
+$(document).on 'click', '.master-overlay-details-close', ->
+  $(this).closest('.master-overlay').toggleClass('is-hidden')
+  $(this).closest('.master-overlay').toggleClass('show-details')
+  return false;
+
+$(document).on 'click', '.back-to-datasets', ->
+  $(this).closest('.master-overlay').toggleClass('show-details')
+  return false;
+
 $(document).on 'click', '.master-overlay-parent .master-overlay-close', ->
   $(this).closest('.master-overlay').toggleClass('is-master-overlay-parent-hidden')
   return false;

@@ -31,7 +31,11 @@ $overlay-heading-font-color: #c9c9c9;
 .master-overlay-details {
   background-color: $master-overlay-main-bg-color;
   width: 40%;
-  left: 60%;
+  left: -40%;
+}
+
+.panel-list-item {
+  cursor: pointer;
 }
 
 
@@ -95,7 +99,7 @@ $overlay-heading-font-color: #c9c9c9;
 }
 
 .is-master-overlay-parent-hidden .master-overlay-details {
-  left:40%;
+  left:-40%;
 }
 
 .is-hidden .master-overlay-parent {
@@ -108,4 +112,21 @@ $overlay-heading-font-color: #c9c9c9;
 
 .is-hidden .master-overlay-details {
   left:-40%;
+}
+
+.show-details .master-overlay-parent {
+  left:-60%;
+}
+
+.show-details .master-overlay-main {
+  left:-40%;
+}
+
+.show-details .master-overlay-details {
+  left:0%;
+}
+
+.back-to-datasets {
+  margin-top: 5px;
+  margin-left: 5px;
 }
