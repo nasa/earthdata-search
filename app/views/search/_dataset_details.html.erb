@@ -1,0 +1,56 @@
+<section data-bind="with: datasets.details" id='dataset-details' class='master-overlay-details'>
+  <header>
+    <a class="master-overlay-close master-overlay-details-close" href="#"><i class="fa fa-times-circle"></i></a>
+    <h2 data-bind="text: dataset_id"></h2>
+  </header>
+  <dl class='master-overlay-content'>
+    <dt>Description:</dt>
+    <dd data-bind="text: description"></dd>
+    <dt>Archive Center:</dt>
+    <dd data-bind="text: archive_center"></dd>
+    <dt>Processing Center:</dt>
+    <dd data-bind="text: processing_center"></dd>
+    <dt>Short Name:</dt>
+    <dd data-bind="text: short_name"></dd>
+    <dt>Version:</dt>
+    <dd data-bind="text: version_id"></dd>
+    <dt>Contacts:</dt>
+    <dd data-bind="with: contacts">
+      <p data-bind="text: name"></p>
+       <p data-bind="foreach: phones">
+        <span data-bind="text: $data"></span><br />
+      </p>
+      <p data-bind="text: email"></p>
+    </dd>
+    <dt>Spatial Extent:</dt>
+    <dd data-bind="with: spatial">
+      <p data-bind="text: $data"></p>
+    </dd>
+    <dt>Temporal Extent:</dt>
+    <dd data-bind="with: temporal">
+      <p data-bind="text: $data"></p>
+    </dd>
+    <dt>Science Keywords:</dt>
+    <dd data-bind="foreach: science_keywords">
+      <p data-bind="text: $data"></p>
+    </dd>
+    <dt>Online Access:</dt>
+    <dd data-bind="foreach: online_access_urls">
+      <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
+    </dd>
+    <dt>Online Resources:</dt>
+    <dd data-bind="foreach: online_resources">
+      <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
+    </dd>
+    <dt>Browse Products:</dt>
+    <dd data-bind="foreach: browse_images">
+      <a data-bind="attr: {href: URL}" target="_blank">
+        <img data-bind="attr: {src: URL}" style="height: 150px;"/>
+      </a>
+    </dd>
+    <dt>GCMD DIF Record:</dt>
+    <dd data-bind="with: associated_difs">
+      <a data-bind="attr: { href: url }, text: id" target="_blank"></a>
+    </dd>
+  </dl>
+</section>

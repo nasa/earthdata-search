@@ -8,6 +8,7 @@ gem 'rails', '~> 4.0.0'
 gem 'sqlite3'
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'multi_xml'
 gem 'term-ansicolor'
 
 group :test do

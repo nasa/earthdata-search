@@ -60,4 +60,17 @@ describe Echo::Client do
       end
     end
   end
+
+  context 'dataset details' do
+    let(:dataset_url) { "/catalog-rest/echo_catalog/datasets/C14758250-LPDAAC_ECS.echo10" }
+    before { allow(Echo::Client).to receive(:connection).and_return(connection) }
+
+    it 'with valid dataset ID' do
+      expect(connection).to receive(:get).with(dataset_url, {}).and_return(:response)
+
+      response = Echo::Client.get_dataset('C14758250-LPDAAC_ECS')
+      expect(response).to eq(:response)
+    end
+  end
+
 end
