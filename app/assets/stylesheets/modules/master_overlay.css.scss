@@ -114,14 +114,14 @@ $overlay-heading-font-color: #c9c9c9;
   left:-40%;
 }
 
-.show-details .master-overlay-parent {
+.is-master-overlay-details-visible .master-overlay-parent {
   left:-60%;
 }
 
-.show-details .master-overlay-main {
+.is-master-overlay-details-visible .master-overlay-main {
   left:-40%;
 }
 
-.show-details .master-overlay-details {
+.is-master-overlay-details-visible .master-overlay-details {
   left:0%;
 }
