@@ -10,6 +10,7 @@ module Echo
 
         load_query_page(options, query)
         load_keyword_query(options, query)
+        load_spatial_query(options, query)
 
         query
       end
@@ -25,6 +26,19 @@ module Echo
           # Escape catalog-rest reserved characters, then add a wildcard character to the
           # end of each word to allow partial matches of any word
           query[:keyword] = catalog_wildcard(catalog_escape(options[:keywords]))
+        end
+      end
+
+      def load_spatial_query(options, query)
+        spatialStr = options[:spatial]
+        if spatialStr.present?
+          type, *pointStrs = spatialStr.split(':')
+
+          # Polygon conditions must have their last point equal to their first
+          pointStrs << pointStrs.first if type == 'polygon'
+          # FIXME: Polygons also must be specified counter-clockwise
+
+          query[type] = pointStrs.join(',')
         end
       end
 

@@ -3,10 +3,21 @@ models = @edsc.models
 class models.QueryModel
   constructor: ->
     @keywords = ko.observable("")
+    @spatial = ko.observable("")
+
     @params = ko.computed(@_computeParams)
 
   _computeParams: =>
-    keywords: @keywords()
+    params = {}
+
+    keywords = @keywords()
+    params.keywords = keywords if keywords?.length > 0
+
+    spatial = @spatial()
+    params.spatial = spatial if spatial?.length > 0
+
+    params
+
 
 class models.DatasetsModel
   constructor: ->
@@ -79,12 +90,35 @@ class models.DatasetsListModel
     if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
       @datasets.loadNextPage(@query.params())
 
+# Keeps track of the user's interface selections for the purpose of keeping buttons in sync
+class models.SpatialType
+  constructor: ->
+    @icon = ko.observable('fa-crop')
+    @name = ko.observable('Spatial')
+
+  selectNone: =>
+    @name('Spatial')
+    @icon ('fa-crop') #TODO (JS): Set correct icon class here
+
+  selectPoint: =>
+    @name('Point')
+    @icon ('fa-crop') #TODO (JS): Set correct icon class here
+
+  selectRectangle: =>
+    @name('Rectangle')
+    @icon ('fa-crop') #TODO (JS): Set correct icon class here
+
+  selectPolygon: =>
+    @name('Polygon')
+    @icon ('fa-crop') #TODO (JS): Set correct icon class here
 
 class models.SearchModel
   constructor: ->
     @query = new models.QueryModel()
     @datasets = new models.DatasetsModel()
     @datasetsList = new models.DatasetsListModel(@query, @datasets)
+    @ui =
+      spatialType: new models.SpatialType()
     @bindingsLoaded = ko.observable(false)
 
     ko.computed(@_computeDatasetResults).extend(throttle: 500)
@@ -92,8 +126,8 @@ class models.SearchModel
   _computeDatasetResults: =>
     @datasets.search(@query.params())
 
+model = models.searchModel = new models.SearchModel()
 
 $(document).ready ->
-  model = new models.SearchModel()
   ko.applyBindings(model)
   model.bindingsLoaded(true)
