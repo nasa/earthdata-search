@@ -6,6 +6,10 @@ $(document).on 'click', '.master-overlay-main .master-overlay-close', ->
   $(this).closest('.master-overlay').toggleClass('is-hidden')
   return false;
 
+$(document).on 'click', '.show-facets', ->
+  $(this).closest('.master-overlay').removeClass('is-master-overlay-parent-hidden')
+  return false;
+
 $(document).on 'click', '.master-overlay-show', ->
   id = this.href.split('#')[1]
   $('#' + id).removeClass('is-hidden').removeClass('is-master-overlay-parent-hidden')
