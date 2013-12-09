@@ -33,9 +33,10 @@ module Echo
         spatialStr = options[:spatial]
         if spatialStr.present?
           type, *pointStrs = spatialStr.split(':')
+          type = type.to_sym
 
           # Polygon conditions must have their last point equal to their first
-          pointStrs << pointStrs.first if type == 'polygon'
+          pointStrs << pointStrs.first if type == :polygon
           # FIXME: Polygons also must be specified counter-clockwise
 
           query[type] = pointStrs.join(',')

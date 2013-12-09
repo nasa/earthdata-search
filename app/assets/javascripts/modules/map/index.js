@@ -9,4 +9,5 @@
 //= require modules/map/leaflet-plugins/sedac_tile_layer
 //= require modules/map/layer_builder
 //= require modules/map/leaflet-plugins/projection_switcher
+//= require modules/map/spatial_selection
 //= require modules/map/map

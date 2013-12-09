@@ -14,6 +14,10 @@ module Echo
       !error?
     end
 
+    def faraday_response
+      @response
+    end
+
     def body
       @response.body
     end
