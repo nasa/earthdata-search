@@ -44,7 +44,7 @@ class models.DatasetsModel
     requestId = ++@pendingRequestId
     @isLoading(@pendingRequestId != @completedRequestId)
     console.log("Request: /datasets.json", requestId, params)
-    $.getJSON '/datasets.json', params, (data) =>
+    xhr = $.getJSON '/datasets.json', params, (data) =>
       if requestId > @completedRequestId
         #console.log("Response: /datasets.json", requestId, params, data)
         if replace
@@ -57,6 +57,11 @@ class models.DatasetsModel
       else
         console.log("Rejected out-of-sequence request: /datasets.json", requestId, params, data)
       @isLoading(@pendingRequestId != @completedRequestId)
+    xhr.fail (response, type, reason) =>
+      errors = response.responseJSON?.errors
+      if errors?
+        console.error errors
+        # Placeholder.  Not currently needed but will be soon.
 
   showDataset: (id) =>
     console.log("Request: /datasets/", id())
