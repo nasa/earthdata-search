@@ -1,10 +1,20 @@
+# This module extends L.Polyline and subclasses (Rectangle, Polygon) to
+# interpolate their vertices before drawing them.  The result is that,
+# for instance, a bounding rectangle drawn in a polar projection will
+# have a curved shape despite only having 4 vertices.
+
 do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
+
+  # Cartesian interpolation.  Averages lat and lng
   interpolateCartesian = (ll0, ll1) ->
     L.latLng((ll0.lat + ll1.lat) / 2, (ll0.lng + ll1.lng) / 2)
 
+  # Geodetic interpolation.  Finds great circle path between the given points.
+  # See geoutil.gcInterpolate
   interpolateGeodetic = (ll0, ll1) ->
     gcInterpolate(ll0, ll1)
 
+  # Dot product of two vectors
   dotProduct = (p, q) ->
     p.x * q.x + p.y * q.y
 
@@ -26,10 +36,10 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
     # Magnitude of the vector
     Math.sqrt(v.x * v.x + v.y * v.y)
 
-  pathString = (points) ->
-    (p.toString() for p in points).join(", ")
-
-  projectLatLngPath = (latLngs, proj, interpolateFn=interpolateCartesian, tolerance=1, maxDepth=10) ->
+  # Given a path defined by latLngs, a projection defined by proj, and an interpolation
+  # function that takes two pionts and returns their midpoint, finds a set of projected
+  # (x, y) points defining the path between the points in the given projection
+  projectLatLngPath = (latLngs, proj, interpolateFn, tolerance=1, maxDepth=10) ->
     return [] if latLngs.length == 0
     # Clone path and set its last element to its first so we can interpolate the last segment
     latLngs = latLngs.concat(latLngs[0])
@@ -74,13 +84,18 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
 
     interpolatedPoints
 
+  # Overrides the default projectLatLngs in Polyline and Polygon to project and interpolate the
+  # path instead of just projecting it
   projectLatlngs = ->
     proj = @_map.latLngToLayerPoint.bind(@_map)
     fn = @_interpolationFn
     @_originalPoints = projectLatLngPath(@_latlngs, proj, fn)
     @_holePoints = (projectLatLngPath(hole, proj, fn) for hole in @_holes ? [])
 
+  # Override methods
   L.Polyline.prototype.projectLatlngs = projectLatlngs
   L.Polygon.prototype.projectLatlngs = projectLatlngs
+
+  # Give shapes an appropriate interpolation function.  Polygons use geodetic, rectangles cartesian
   L.Polyline.prototype._interpolationFn = interpolateGeodetic
   L.Rectangle.prototype._interpolationFn = interpolateCartesian

@@ -1,4 +1,9 @@
-do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
+# This module overrides default Leaflet.draw methods for supported
+# shapes to perform the validations we need. before allowing the user
+# to complete a shape
+do (L) ->
+
+  # Validates a polygon that the user has not yet closed.
   validateIncompletePolygon = (latLngs) ->
     return if latLngs.length < 2
 
@@ -9,9 +14,11 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
       return "Points cannot be more than 180 degrees apart"
     null
 
+  # Validates a polygon that the user has finished.
   validateCompletePolygon = (latLngs) ->
     null
 
+  # Overrides _onClick to check for errors before passing to the original handler
   L.Draw.Polygon.prototype._onClick = (e) ->
     ll = e.target.getLatLng()
 
@@ -22,6 +29,7 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
 
     L.Draw.Polyline.prototype._onClick.call(this, e)
 
+  # Overrides _finishShape to check for errors before passing to the original handler
   L.Draw.Polygon.prototype._finishShape = ->
     error = validateCompletePolygon(@_poly.getLatLngs())
     if error?
@@ -30,20 +38,23 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
 
     L.Draw.Polyline.prototype._finishShape.call(this)
 
+  # Overrides _showErrorTooltip to accept a message parameter.  The default
+  # only allows one error to be displayed
   L.Draw.Polygon.prototype._showErrorTooltip = (message) ->
     message = L.drawLocal.draw.handlers.polyline.error unless message?
 
     @options.drawError.message = message
     L.Draw.Polyline.prototype._showErrorTooltip.call(this)
 
-
+  # Given a rectangle's bounds, returns either an error message for
+  # those bounds or null, indicating no error
   validateRectangle = (bounds) ->
     console.log "Validating", bounds.getEast(), bounds.getWest()
     if Math.abs(bounds.getEast() - bounds.getWest()) >= 360
       return "Bounds cannot span more than 360 degrees latitude"
-    undefined
+    null
 
-
+  # Overrides _onMouseUp to validate before finishing the rectangle
   L.Draw.Rectangle.prototype._onMouseUp = ->
     error = validateRectangle(@_shape.getBounds())
     if error?
@@ -51,6 +62,10 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
       return
 
     L.Draw.SimpleShape.prototype._onMouseUp.call(this)
+
+  # The following four methods are nearly-identical to the L.Draw.Polyline
+  # implementation of error tooltips.  They add error tooltips to
+  # L.Draw.Rectangle
 
   L.Draw.Rectangle.prototype._showErrorTooltip = (message) ->
     @_errorShown = true

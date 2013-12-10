@@ -1,6 +1,9 @@
 ns = window.edsc.map
 
 ns.geoutil = do (L) ->
+
+  # Given two points, returns their midpoint along the shortest great circle between them.  The
+  # two points may not be antipodal, since such a midpoint would be undefined
   gcInterpolate = (p1, p2) ->
     do (asin=Math.asin, sqrt=Math.sqrt, pow=Math.pow, sin=Math.sin, cos=Math.cos, atan2=Math.atan2) ->
       d2r  = L.LatLng.DEG_TO_RAD
