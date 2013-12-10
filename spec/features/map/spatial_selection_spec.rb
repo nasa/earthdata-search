@@ -34,7 +34,7 @@ describe "Spatial" do
     visit "/"
 
     # Close the overlay
-    within ".master-overlay-main" do
+    within ".master-overlay-main #dataset-results" do
       click_link "close"
     end
   end
