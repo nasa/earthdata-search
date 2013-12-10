@@ -20,3 +20,4 @@
 //= require util/index
 //= require models
 //= require modules/index
+//= require bootstrap/bootstrap
