@@ -30,6 +30,7 @@ class models.DatasetsModel
     @isLoading = ko.observable(false)
 
     @details = ko.observable({})
+    @detailsLoading = ko.observable(false)
 
   search: (params) =>
     params.page = @page = 1
@@ -65,8 +66,10 @@ class models.DatasetsModel
 
   showDataset: (id) =>
     console.log("Request: /datasets/", id())
+    @detailsLoading(true)
     $.getJSON '/datasets/' + id() + '.json', (data) =>
       @details(ko.mapping.fromJS(data['dataset']))
+      @detailsLoading(false)
       $content = $('#dataset-details')
       $content.height($content.parent().height() - $content.offset().top - 110)
 

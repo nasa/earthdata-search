@@ -1,5 +1,8 @@
 <section data-bind="with: datasets.details" id="dataset-details">
-  <header>
+  <header data-bind="if: $parent.datasets.detailsLoading">
+    <h2>Details Loading...</h2>
+  </header>
+  <header data-bind="ifnot: $parent.datasets.detailsLoading">
     <a class="master-overlay-close master-overlay-details-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
     <h2 data-bind="text: $data.dataset_id"></h2>
     <p class="master-overlay-show-main">
@@ -7,7 +10,7 @@
       <a href="#">Back to Datasets</a>
     </p>
   </header>
-  <dl class="master-overlay-content">
+  <dl class="master-overlay-content" data-bind="ifnot: $parent.datasets.detailsLoading">
     <dt>Description:</dt>
     <dd data-bind="text: $data.description"></dd>
     <dt>Archive Center:</dt>
