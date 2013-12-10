@@ -39,7 +39,17 @@ module Echo
           pointStrs << pointStrs.first if type == :polygon
           # FIXME: Polygons also must be specified counter-clockwise
 
-          query[type] = pointStrs.join(',')
+          points = pointStrs.map { |s| s.split(',').map(&:to_f) }
+
+          points.map! do |lon, lat|
+            lon += 360 while lon < -180
+            lon -= 360 while lon > 180
+            lat = [lat,  90].min
+            lat = [lat, -90].max
+            [lon, lat]
+          end
+
+          query[type] = points.flatten.join(',')
         end
       end
 

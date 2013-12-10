@@ -1,0 +1,82 @@
+do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
+  validateIncompletePolygon = (latLngs) ->
+    return if latLngs.length < 2
+
+    last = latLngs[latLngs.length - 1]
+    prev = latLngs[latLngs.length - 2]
+
+    if Math.abs(last.lng - prev.lng) >= 180
+      return "Points cannot be more than 180 degrees apart"
+
+    console.log "validate incomplete"
+    undefined
+
+  validateCompletePolygon = (latLngs) ->
+    console.log "validate complete"
+
+
+  L.Draw.Polygon.prototype._onClick = (e) ->
+    ll = e.target.getLatLng()
+
+    error = validateIncompletePolygon(@_poly.getLatLngs().concat(ll))
+    if error?
+      @_showErrorTooltip(error)
+      return
+
+    L.Draw.Polyline.prototype._onClick.call(this, e)
+
+  L.Draw.Polygon.prototype._finishShape = ->
+    error = validateCompletePolygon(@_poly.getLatLngs())
+    if error?
+      @_showErrorTooltip(error)
+      return
+
+    L.Draw.Polyline.prototype._finishShape.call(this)
+
+  L.Draw.Polygon.prototype._showErrorTooltip = (message) ->
+    message = L.drawLocal.draw.handlers.polyline.error unless message?
+
+    @options.drawError.message = message
+    L.Draw.Polyline.prototype._showErrorTooltip.call(this)
+
+
+  validateRectangle = (bounds) ->
+    console.log "Validating", bounds.getEast(), bounds.getWest()
+    if Math.abs(bounds.getEast() - bounds.getWest()) >= 360
+      return "Bounds cannot span more than 360 degrees latitude"
+    undefined
+
+
+  L.Draw.Rectangle.prototype._onMouseUp = ->
+    error = validateRectangle(@_shape.getBounds())
+    if error?
+      @_showErrorTooltip(error)
+      return
+
+    L.Draw.SimpleShape.prototype._onMouseUp.call(this)
+
+  L.Draw.Rectangle.prototype._showErrorTooltip = (message) ->
+    @_errorShown = true
+
+    @_tooltip.showAsError().updateContent(text: message)
+    @_shape.setStyle(color: '#b00b00')
+
+    @_clearHideErrorTimeout()
+    @_hideErrorTimeout = setTimeout(@_hideErrorTooltip.bind(this), 2500)
+
+  L.Draw.Rectangle.prototype._hideErrorTooltip = ->
+    @_errorShown = false
+
+    @_clearHideErrorTimeout()
+
+    @_tooltip.removeError().updateContent(text: @_endLabelText)
+    @_shape.setStyle(color: this.options.shapeOptions.color)
+
+  L.Draw.Rectangle.prototype._clearHideErrorTimeout = ->
+    if @_hideErrorTimeout
+      clearTimeout(@_hideErrorTimeout)
+      @_hideErrorTimeout = null
+
+  L.Draw.Rectangle.prototype.removeHooks = ->
+    @_clearHideErrorTimeout()
+    L.Draw.SimpleShape.prototype.removeHooks.call(this)

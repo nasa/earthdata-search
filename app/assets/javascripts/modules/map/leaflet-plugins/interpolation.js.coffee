@@ -1,7 +1,4 @@
 do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
-
-  # NOTE TO PQ: Override L.Polyline.prototype.projectLatlngs to follow arcs
-
   interpolateCartesian = (ll0, ll1) ->
     L.latLng((ll0.lat + ll1.lat) / 2, (ll0.lng + ll1.lng) / 2)
 
@@ -72,9 +69,6 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
         points.unshift(p)
         depth1 += 1
 
-    # Remove the last element from the path, which is the same as the first element of the path, added above
-    interpolatedPoints.pop()
-
     if maxDepthReached
       console.warn("Max interpolation depth reach.  Interpolated shape has #{interpolatedPoints.length} points.")
 
@@ -82,8 +76,11 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
 
   projectLatlngs = ->
     proj = @_map.latLngToLayerPoint.bind(@_map)
-    @_originalPoints = projectLatLngPath(@_latlngs, proj)
-    @_holePoints = (projectLatLngPath(hole, proj) for hole in @_holes ? [])
+    fn = @_interpolationFn
+    @_originalPoints = projectLatLngPath(@_latlngs, proj, fn)
+    @_holePoints = (projectLatLngPath(hole, proj, fn) for hole in @_holes ? [])
 
   L.Polyline.prototype.projectLatlngs = projectLatlngs
   L.Polygon.prototype.projectLatlngs = projectLatlngs
+  L.Polyline.prototype._interpolationFn = interpolateGeodetic
+  L.Rectangle.prototype._interpolationFn = interpolateCartesian
