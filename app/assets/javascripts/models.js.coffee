@@ -70,8 +70,8 @@ class models.DatasetsModel
     $.getJSON '/datasets/' + id() + '.json', (data) =>
       @details(ko.mapping.fromJS(data['dataset']))
       @detailsLoading(false)
-      $content = $('#dataset-details')
-      $content.height($content.parent().height() - $content.offset().top - 110)
+      $content = $('#dataset-information')
+      $content.height($content.parents('.main-content').height() - $content.offset().top - 40)
 
 
 class models.DatasetsListModel
