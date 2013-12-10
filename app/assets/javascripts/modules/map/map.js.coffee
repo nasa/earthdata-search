@@ -6,7 +6,11 @@ ns.Map = do (window,
              ProjExt = ns.L.Proj,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
              LayerBuilder = ns.LayerBuilder,
+             SpatialSelection = ns.SpatialSelection,
              dateUtil = window.edsc.util.date) ->
+
+  # Fix leaflet default image path
+  L.Icon.Default.imagePath = L.Icon.Default.imagePath?.replace(/\/images$/, '') || '/assets/leaflet-0.7'
 
   # Constructs and performs basic operations on maps
   # This class wraps the details of setting up the map used by the application,
@@ -22,10 +26,12 @@ ns.Map = do (window,
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
+      @_buildLayers()
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())
+      map.addControl(new SpatialSelection())
       @setProjection(projection)
-      @_buildLayers()
+      @_addDrawControls()
 
     _createLayerMap: (productIds...) ->
       layerForProduct = LayerBuilder.layerForProduct
@@ -46,6 +52,11 @@ ns.Map = do (window,
         break
 
       @map.addControl(L.control.layers(baseMaps, overlayMaps))
+
+    _addDrawControls: ->
+      map = @map
+      map.on 'draw:created', (e) ->
+
 
     # Removes the map from the page
     destroy: ->

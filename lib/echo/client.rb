@@ -2,6 +2,7 @@ module Echo
   # Register custom middleware
   Faraday.register_middleware(:response,
                               :logging => Echo::ClientMiddleware::LoggingMiddleware,
+                              :errors => Echo::ClientMiddleware::ErrorsMiddleware,
                               :atom_datasets => Echo::ClientMiddleware::AtomDatasetMiddleware,
                               :echo10_datasets => Echo::ClientMiddleware::Echo10DatasetMiddleware)
 
@@ -11,11 +12,11 @@ module Echo
     CATALOG_URL="https://api.echo.nasa.gov"
 
     def self.get_datasets(options={})
-      connection.get('/catalog-rest/echo_catalog/datasets.json', options_to_query(options))
+      get('/catalog-rest/echo_catalog/datasets.json', options_to_query(options))
     end
 
     def self.get_dataset(id, options={})
-      connection.get("/catalog-rest/echo_catalog/datasets/#{id}.echo10", options_to_query(options))
+      get("/catalog-rest/echo_catalog/datasets/#{id}.echo10")
     end
 
     def self.connection
@@ -23,6 +24,10 @@ module Echo
     end
 
     private
+
+    def self.get(url, params={})
+      Echo::Response.new(connection.get(url, params))
+    end
 
     def self.build_connection
       Faraday.new(:url => CATALOG_URL) do |conn|
@@ -32,6 +37,7 @@ module Echo
         # Our parsers depend on JSON / XML being converted to objects by earlier
         # parsers.
         conn.response :atom_datasets, :content_type => /\bjson$/
+        conn.response :errors, :content_type => /\bjson$/
         conn.response :json, :content_type => /\bjson$/
         conn.response :echo10_datasets, :content_type => "application/echo10+xml"
         conn.response :xml, :content_type => /\bxml$/

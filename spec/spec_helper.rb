@@ -15,6 +15,10 @@ FileUtils.rm_rf(Rails.root.join("public/assets"))
 Capybara.javascript_driver = :webkit
 Capybara.default_driver = :webkit
 
+# For debugging
+#Capybara.javascript_driver = :selenium
+#Capybara.default_driver = :selenium
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/helpers/**/*.rb")].each { |f| require f }
@@ -54,6 +58,14 @@ RSpec.configure do |config|
 
   config.after do
     DatabaseCleaner.clean
+  end
+
+  config.after(:each) do
+    if example.exception != nil
+      if page && page.driver && page.driver.console_messages
+        puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
+      end
+    end
   end
 
   # If true, the base class of anonymous controllers will be inferred

@@ -1,0 +1,46 @@
+#main-toolbar {
+  a:link, a:visited {
+    color: #fff;
+  }
+}
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown:hover {
+  .dropdown-links {
+    display: block !important;
+  }
+}
+
+.dropdown-links {
+  display: none;
+  margin:0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 10000;
+  background-color: #333;
+}
+
+.dropdown-icon {
+  float: right;
+}
+
+.dropdown-link {
+  display: block;
+  padding:0 .5em .5em;
+  text-decoration: none;
+  border:1px solid transparent;
+
+  &:hover {
+    background-color: #444;
+    border:1px solid #888;
+  }
+
+  &:first-child {
+    padding-top: .5em
+  }
+}
