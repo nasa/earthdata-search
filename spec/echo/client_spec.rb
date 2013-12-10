@@ -62,9 +62,47 @@ describe Echo::Client do
 
     context 'by spatial point' do
       it 'searches the catalog using a "point" filter' do
-        expect(connection).to receive(:get).with(dataset_search_url, point: "10,20").and_return(:response)
+        expect(connection).to receive(:get).with(dataset_search_url, point: "10.0,20.0").and_return(:response)
 
         response = Echo::Client.get_datasets(spatial: "point:10,20")
+        expect(response.faraday_response).to eq(:response)
+      end
+
+      it 'moves longitudes to within [-180...180]' do
+        expect(connection).to receive(:get).with(dataset_search_url, point: "90.0,0.0").and_return(:response)
+
+        response = Echo::Client.get_datasets(spatial: "point:-270, 0")
+        expect(response.faraday_response).to eq(:response)
+      end
+
+      it 'clips latitudes to [-90...90]' do
+        expect(connection).to receive(:get).with(dataset_search_url, point: "10.0,90.0").and_return(:response)
+
+        response = Echo::Client.get_datasets(spatial: "point:10,100")
+        expect(response.faraday_response).to eq(:response)
+      end
+
+    end
+
+    context 'by spatial bounding box' do
+      it 'searches the catalog using a "bounding_box" filter' do
+        expect(connection).to receive(:get).with(dataset_search_url, bounding_box: "10.0,20.0,30.0,40.0").and_return(:response)
+
+        response = Echo::Client.get_datasets(spatial: "bounding_box:10,20:30,40")
+        expect(response.faraday_response).to eq(:response)
+      end
+
+      it 'moves longitudes to within [-180...180]' do
+        expect(connection).to receive(:get).with(dataset_search_url, bounding_box: "90.0,0.0,-90.0,10.0").and_return(:response)
+
+        response = Echo::Client.get_datasets(spatial: "bounding_box:-270,0:270,10")
+        expect(response.faraday_response).to eq(:response)
+      end
+
+      it 'clips latitudes to [-90...90]' do
+        expect(connection).to receive(:get).with(dataset_search_url, bounding_box: "10.0,90.0,30.0,-90.0").and_return(:response)
+
+        response = Echo::Client.get_datasets(spatial: "bounding_box:10,100:30,-110")
         expect(response.faraday_response).to eq(:response)
       end
     end

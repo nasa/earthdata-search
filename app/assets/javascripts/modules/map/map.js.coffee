@@ -76,6 +76,7 @@ ns.Map = do (window,
         zoom: 0
         continuousWorld: true
         noWrap: true
+        worldCopyJump: false
         center: [90, 0]
       antarctic:
         crs: ProjExt.epsg3031
@@ -84,6 +85,7 @@ ns.Map = do (window,
         zoom: 0
         continuousWorld: true
         noWrap: true
+        worldCopyJump: false
         center: [-90, 0]
       geo:
         crs: ProjExt.epsg4326
@@ -92,6 +94,7 @@ ns.Map = do (window,
         zoom: 2
         continuousWorld: false
         noWrap: false
+        worldCopyJump: true
         center: [0, 0]
 
     setProjection: (name) ->
