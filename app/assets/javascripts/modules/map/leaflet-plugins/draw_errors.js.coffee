@@ -7,13 +7,10 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
 
     if Math.abs(last.lng - prev.lng) >= 180
       return "Points cannot be more than 180 degrees apart"
-
-    console.log "validate incomplete"
-    undefined
+    null
 
   validateCompletePolygon = (latLngs) ->
-    console.log "validate complete"
-
+    null
 
   L.Draw.Polygon.prototype._onClick = (e) ->
     ll = e.target.getLatLng()

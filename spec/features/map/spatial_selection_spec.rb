@@ -25,6 +25,11 @@ describe "Spatial" do
     page.evaluate_script(script)
   end
 
+  def create_bounding_box(lat0=0, lon0=0, lat1=10, lon1=10)
+    script = "edsc.models.searchModel.query.spatial('bounding_box:#{lon0},#{lat0}:#{lon1},#{lat1}')"
+    page.evaluate_script(script)
+  end
+
   def clear_spatial
     script = "edsc.models.searchModel.query.spatial(null)"
     page.evaluate_script(script)
@@ -47,7 +52,7 @@ describe "Spatial" do
   let(:rectangle_button) { page.find('#map .leaflet-draw-draw-rectangle') }
   let(:polygon_button)   { page.find('#map .leaflet-draw-draw-polygon') }
 
-  context "point selection" do
+  context "tool selection" do
     context "when no tool is currently selected" do
       context "choosing the point selection tool from the site toolbar" do
         before(:each) { choose_tool_from_site_toolbar('Point') }
@@ -125,21 +130,19 @@ describe "Spatial" do
         expect(spatial_dropdown).to have_text('Spatial')
       end
     end
+  end
 
-    context "selecting a point" do
-      before(:each) do
-        create_point(0, 0)
-        click_link "Browse All Data"
-      end
-
-      it "filters datasets using the selected point" do
-        expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-        expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      end
+  context "point selection" do
+    it "filters datasets using the selected point" do
+      create_point(0, 0)
+      click_link "Browse All Data"
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
     context "changing the point selection" do
       before(:each) do
+        create_point(0, 0)
         create_point(-75, 40)
         click_link "Browse All Data"
       end
@@ -157,6 +160,39 @@ describe "Spatial" do
       end
 
       it "removes the spatial point dataset filter" do
+        expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+      end
+    end
+  end
+
+  context "bounding box selection" do
+    it "filters datasets using the selected bounding box" do
+      create_bounding_box(0, 0, 10, 10)
+      click_link "Browse All Data"
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+    end
+
+    context "changing the point selection" do
+      before(:each) do
+        create_bounding_box(0, 0, 10, 10)
+        create_bounding_box(-75, 40, -74, 41)
+        click_link "Browse All Data"
+      end
+
+      it "updates the dataset filters using the new bounding box selection" do
+        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 1.0")
+      end
+    end
+
+    context "removing the bounding box selection" do
+      before(:each) do
+        create_bounding_box(0, 0, 10, 10)
+        clear_spatial
+        click_link "Browse All Data"
+      end
+
+      it "removes the spatial bounding box dataset filter" do
         expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       end
     end

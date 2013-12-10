@@ -44,8 +44,8 @@ module Echo
           points.map! do |lon, lat|
             lon += 360 while lon < -180
             lon -= 360 while lon > 180
-            lat = [lat,  90].min
-            lat = [lat, -90].max
+            lat = [lat,  90.0].min
+            lat = [lat, -90.0].max
             [lon, lat]
           end
 
