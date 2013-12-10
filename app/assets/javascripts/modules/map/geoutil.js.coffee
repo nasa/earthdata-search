@@ -1,6 +1,6 @@
 ns = window.edsc.map
 
-ns.util = do (L) ->
+ns.geoutil = do (L) ->
   gcInterpolate = (p1, p2) ->
     do (asin=Math.asin, sqrt=Math.sqrt, pow=Math.pow, sin=Math.sin, cos=Math.cos, atan2=Math.atan2) ->
       d2r  = L.LatLng.DEG_TO_RAD
