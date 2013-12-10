@@ -118,14 +118,16 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "orderable" => nil,
           "visible" => nil,
           "temporal" => "1984-12-25T00:00:00.000Z to 1994-12-25T00:00:00.000Z",
-          "contacts" => {
-            :name => " ",
-            :phones => [
-              "(865) 241-3952 (Direct Line)",
-              "(865) 574-4665 (Fax)"
-              ],
-            :email => "ornldaac@ornl.gov"
-          },
+          "contacts" => [
+            {
+              :name => "PLEASE CONTACT ORNL DAAC User Services",
+              :phones => [
+                "(865) 241-3952 (Direct Line)",
+                "(865) 574-4665 (Fax)"
+                ],
+              :email => "ornldaac@ornl.gov"
+            }
+          ],
           "science_keywords" => [
             "EARTH SCIENCE >> HYDROSPHERE >> SURFACE WATER",
             "EARTH SCIENCE >> HYDROSPHERE >> SURFACEWATER"

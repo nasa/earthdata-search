@@ -1,10 +1,8 @@
 <section data-bind="with: datasets.details" id="dataset-details">
-  <header data-bind="if: $parent.datasets.detailsLoading">
-    <h2>Details Loading...</h2>
-  </header>
-  <header data-bind="ifnot: $parent.datasets.detailsLoading">
+  <header >
     <a class="master-overlay-close master-overlay-details-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-    <h2 data-bind="text: $data.dataset_id"></h2>
+    <h2 data-bind="if: $parent.datasets.detailsLoading">Details Loading...</h2>
+    <h2 data-bind="text: $data.dataset_id, ifnot: $parent.datasets.detailsLoading"></h2>
     <p class="master-overlay-show-main">
       <i class="fa fa-angle-left"></i>
       <a href="#">Back to Datasets</a>
@@ -28,7 +26,7 @@
         <dt>Version:</dt>
         <dd data-bind="text: $data.version_id"></dd>
         <dt>Contacts:</dt>
-        <dd data-bind="with: $data.contacts">
+        <dd data-bind="foreach: $data.contacts">
           <p data-bind="text: name"></p>
            <p data-bind="foreach: phones">
             <span data-bind="text: $data"></span><br />

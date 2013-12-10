@@ -22,15 +22,28 @@ class DatasetDetailsPresenter
   end
 
   def contacts(hash)
-    person = hash['ContactPersons']
-    if person && person['ContactPerson']
-      name = "#{person['FirstName']} #{person['LastName']}"
-    else
-      name = hash['OrganizationName']
-    end
-    phones = hash['OrganizationPhones']['Phone'].map{|p| "#{p['Number']} (#{p['Type']})"}
-    email = hash['OrganizationEmails']['Email']
-    {name: name, phones: phones, email: email}
+    contact_list = Array.wrap(hash.map do |contact_person|
+      person = contact_person['ContactPersons']
+      if person && person['ContactPerson']
+        name = "#{person['ContactPerson']['FirstName']} #{person['ContactPerson']['LastName']}"
+      else
+        name = contact_person['OrganizationName'] || nil
+      end
+      if contact_person['OrganizationPhones']
+        phones = contact_person['OrganizationPhones']['Phone'].map{|p| "#{p['Number']} (#{p['Type']})"}
+      else
+        phones = []
+      end
+      if contact_person['OrganizationEmails']
+        email = contact_person['OrganizationEmails']['Email']
+      else
+        email = nil
+      end
+
+      {name: name, phones: phones, email: email}
+    end)
+
+    contact_list
   end
 
   def science_keywords(keywords)
@@ -42,17 +55,21 @@ class DatasetDetailsPresenter
   end
 
   def spatial(hash)
-    geometry = hash['HorizontalSpatialDomain']['Geometry']
-    if geometry['Point']
-      latitude = geometry['Point']['PointLatitude']
-      longitude = geometry['Point']['PointLongitude']
-      return "Point: (#{degrees(latitude)}, #{degrees(longitude)})"
-    elsif geometry['BoundingRectangle']
-      north = geometry['BoundingRectangle']['NorthBoundingCoordinate']
-      south = geometry['BoundingRectangle']['SouthBoundingCoordinate']
-      east = geometry['BoundingRectangle']['EastBoundingCoordinate']
-      west = geometry['BoundingRectangle']['WestBoundingCoordinate']
-      return "Bounding Rectangle: (#{degrees(north)}, #{degrees(west)}, #{degrees(south)}, #{degrees(east)})"
+    if hash['HorizontalSpatialDomain']
+      geometry = hash['HorizontalSpatialDomain']['Geometry']
+      if geometry['Point']
+        latitude = geometry['Point']['PointLatitude']
+        longitude = geometry['Point']['PointLongitude']
+        return "Point: (#{degrees(latitude)}, #{degrees(longitude)})"
+      elsif geometry['BoundingRectangle']
+        north = geometry['BoundingRectangle']['NorthBoundingCoordinate']
+        south = geometry['BoundingRectangle']['SouthBoundingCoordinate']
+        east = geometry['BoundingRectangle']['EastBoundingCoordinate']
+        west = geometry['BoundingRectangle']['WestBoundingCoordinate']
+        return "Bounding Rectangle: (#{degrees(north)}, #{degrees(west)}, #{degrees(south)}, #{degrees(east)})"
+      else
+        return 'Not available'
+      end
     else
       return 'Not available'
     end
