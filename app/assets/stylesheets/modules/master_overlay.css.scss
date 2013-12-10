@@ -11,6 +11,10 @@ $overlay-heading-font-color: #c9c9c9;
 // The container for the entire overlay
 .master-overlay {
   color: #fff;
+
+  a {
+    color: #fff;
+  }
 }
 
 // A parent panel for the overlday.  For instance, dataset facets are a parent
@@ -26,16 +30,37 @@ $overlay-heading-font-color: #c9c9c9;
   background-color: $master-overlay-main-bg-color;
   width: 40%;
   left: 20%;
+  overflow: hidden;
+}
+
+.master-overlay-main-content {
+  width: 200%;
+  left: 0%;
+
+  section {
+    width: 50%;
+    float: left;
+  }
+}
+
+.master-overlay-main-right {
+  width: 50%;
+  left: 40%;
+  float: left;
 }
 
 .master-overlay-details {
   background-color: $master-overlay-main-bg-color;
   width: 40%;
-  left: 60%;
+  left: -40%;
+}
+
+.panel-list-item {
+  cursor: pointer;
 }
 
 
-.master-overlay-parent, .master-overlay-main, .master-overlay-details {
+.master-overlay-parent, .master-overlay-main, .master-overlay-main-content {
   z-index: 100;
   position: absolute;
   height: 100%;
@@ -61,7 +86,7 @@ $overlay-heading-font-color: #c9c9c9;
 // Scrollable content area
 .master-overlay-content {
   margin: 1em;
-  height: 85%;
+  height: 100%;
   overflow-y: scroll;
 }
 
@@ -95,7 +120,11 @@ $overlay-heading-font-color: #c9c9c9;
 }
 
 .is-master-overlay-parent-hidden .master-overlay-details {
-  left:40%;
+  left:-40%;
+}
+
+.is-master-overlay-details-visible .master-overlay-main-content {
+  left:-100%;
 }
 
 .is-hidden .master-overlay-parent {
@@ -106,6 +135,6 @@ $overlay-heading-font-color: #c9c9c9;
   left:-40%;
 }
 
-.is-hidden .master-overlay-details {
-  left:-40%;
+.is-hidden .master-overlay-main-content {
+  left:-200%;
 }
