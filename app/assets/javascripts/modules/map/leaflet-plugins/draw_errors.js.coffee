@@ -3,6 +3,26 @@
 # to complete a shape
 do (L) ->
 
+  # Append coordinate information to tooltips
+  originalUpdateContent = L.Tooltip.prototype.updateContent
+  L.Tooltip.prototype.updateContent = (content) ->
+    @_content = content
+    if @_point
+      content =
+        text: "#{content.text}<br>#{@_point}"
+        subtext: content.subtext
+    originalUpdateContent.call(this, content)
+
+  originalUpdatePosition = L.Tooltip.prototype.updatePosition
+
+  L.Tooltip.prototype.updatePosition = (latlng) ->
+    @_point = "(#{latlng.lat.toFixed(5)}, #{latlng.lng.toFixed(5)})"
+    if @_content?
+      @updateContent(@_content)
+
+    originalUpdatePosition.call(this, latlng)
+
+
   # Validates a polygon that the user has not yet closed.
   validateIncompletePolygon = (latLngs) ->
     return if latLngs.length < 2
