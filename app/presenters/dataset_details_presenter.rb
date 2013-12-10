@@ -14,7 +14,7 @@ class DatasetDetailsPresenter
   end
 
   def temporal(hash)
-    if hash['RangeDateTime']
+    if hash && hash['RangeDateTime']
       "#{hash['RangeDateTime']['BeginningDateTime']} to #{hash['RangeDateTime']['EndingDateTime']}"
     else
       'Not available'
@@ -29,8 +29,9 @@ class DatasetDetailsPresenter
       else
         name = contact_person['OrganizationName'] || nil
       end
-      if contact_person['OrganizationPhones']
-        phones = contact_person['OrganizationPhones']['Phone'].map{|p| "#{p['Number']} (#{p['Type']})"}
+      if contact_person['OrganizationPhones'] && contact_person['OrganizationPhones']['Phone']
+        phone = contact_person['OrganizationPhones']['Phone']
+        phones = Array.wrap(phone).map{ |p| "#{p['Number']} (#{p['Type']})" }
       else
         phones = []
       end
@@ -50,7 +51,7 @@ class DatasetDetailsPresenter
     if keywords
       keywords.map{ |k| "#{k['CategoryKeyword']} >> #{k['TopicKeyword']} >> #{k['TermKeyword']}" }.uniq
     else
-      'Not available'
+      ['Not available']
     end
   end
 
