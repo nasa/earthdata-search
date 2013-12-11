@@ -1,11 +1,19 @@
 class DatasetDetailsPresenter
-  def initialize(dataset)
+  def initialize(dataset, collection_id=nil)
     @dataset = dataset
+    @dataset.id = collection_id
     @dataset.spatial = spatial(dataset.spatial)
     @dataset.science_keywords = science_keywords(dataset.science_keywords)
     @dataset.contacts = contacts(dataset.contacts)
     @dataset.temporal = temporal(dataset.temporal)
     @dataset.associated_difs = associated_difs(dataset.associated_difs)
+
+    metadata_url = "datasets/metadata/#{@dataset.id}"
+    @dataset.native_url = "#{metadata_url}.native"
+    @dataset.atom_url = "#{metadata_url}.atom"
+    @dataset.echo10_url = "#{metadata_url}.echo10"
+    @dataset.iso19115_url = "#{metadata_url}.iso19115"
+    @dataset.smap_iso_url = nil #"#{metadata_url}.smap_iso"
   end
 
   def associated_difs(dif_id)

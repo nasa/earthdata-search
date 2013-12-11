@@ -6,5 +6,6 @@ module Echo
     attr_accessor :description, :processing_center, :orderable, :visible, :temporal
     attr_accessor :contacts, :science_keywords, :online_access_urls, :online_resources
     attr_accessor :associated_difs, :spatial, :browse_images
+    attr_accessor :native_url, :atom_url, :echo10_url, :iso19115_url, :smap_iso_url
   end
 end

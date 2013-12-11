@@ -149,7 +149,12 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
             :id => "DIF_ID"
           },
           "spatial" => "Point: (39.1\xC2\xB0, -96.6\xC2\xB0)",
-          "browse_images" => []
+          "browse_images" => [],
+          "id" => nil,
+          "native_url" => "datasets/metadata/.native",
+          "atom_url" => "datasets/metadata/.atom",
+          "echo10_url" => "datasets/metadata/.echo10",
+          "iso19115_url" => "datasets/metadata/.iso19115"
         }
       }
     end
