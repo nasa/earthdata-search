@@ -151,10 +151,10 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "spatial" => "Point: (39.1\xC2\xB0, -96.6\xC2\xB0)",
           "browse_images" => [],
           "id" => nil,
-          "native_url" => "datasets/metadata/.native",
-          "atom_url" => "datasets/metadata/.atom",
-          "echo10_url" => "datasets/metadata/.echo10",
-          "iso19115_url" => "datasets/metadata/.iso19115",
+          "native_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/",
+          "atom_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.atom",
+          "echo10_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.echo10",
+          "iso19115_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.iso19115",
           "smap_iso_url" => nil
         }
       }

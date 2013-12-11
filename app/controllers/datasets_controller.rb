@@ -20,16 +20,4 @@ class DatasetsController < ApplicationController
       respond_with(response.body, status: response.status)
     end
   end
-
-  def metadata
-    format = params[:format] == 'native' ? nil : params[:format]
-    response = Echo::Client.get_metadata(params[:id], format)
-
-    if response.success?
-      filename = "#{params[:id]}.#{params[:format]}.xml"
-      send_data response.body, filename: filename, content_type: response.headers['content-type'], status: response.status
-    else
-
-    end
-  end
 end

@@ -9,26 +9,11 @@ describe 'Dataset metadata' do
   end
 
   shared_browser_session do
-    it 'downloads metadata in native format' do
-      click_link 'Native'
-      page.response_headers['Content-Type'].should eq("application/echo10+xml;charset=utf-8")
+    it 'downloads metadata in multiple formats' do
+      page.should have_xpath("//a[contains(@href, 'https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/C179460405-LPDAAC_ECS')]")
+      page.should have_xpath("//a[contains(@href, 'https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/C179460405-LPDAAC_ECS.atom')]")
+      page.should have_xpath("//a[contains(@href, 'https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/C179460405-LPDAAC_ECS.echo10')]")
+      page.should have_xpath("//a[contains(@href, 'https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/C179460405-LPDAAC_ECS.iso19115')]")
     end
-
-    it 'downloads metadata in atom format' do
-      click_link 'ATOM'
-      page.response_headers['Content-Type'].should eq("application/atom+xml;charset=utf-8")
-    end
-
-    it 'downloads metadata in echo10 format' do
-      click_link 'ECHO 10'
-      page.response_headers['Content-Type'].should eq("application/echo10+xml;charset=utf-8")
-    end
-
-    it 'downloads metadata in iso 19115 format' do
-      click_link 'ISO 19115'
-      page.response_headers['Content-Type'].should eq("application/iso19115+xml;charset=utf-8")
-    end
-    
-    it 'downloads metadata in smapiso format'
   end
 end
