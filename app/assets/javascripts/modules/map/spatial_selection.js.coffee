@@ -5,8 +5,6 @@ ns.SpatialSelection = do (window,
                           L,
                           searchModel = window.edsc.models.searchModel) ->
 
-  # NOTE TO PQ: Override L.Polyline.prototype.projectLatlngs to follow arcs
-
   L.drawLocal.draw.toolbar.buttons.polygon = "Search by spatial polygon"
   L.drawLocal.draw.toolbar.buttons.rectangle = "Search by spatial rectangle"
   L.drawLocal.draw.toolbar.buttons.marker = "Search by spatial point"
@@ -142,6 +140,7 @@ ns.SpatialSelection = do (window,
 
     _saveSpatialParams: (layer, type) ->
       type = 'point' if type == 'marker'
+      type = 'bounding_box' if type == 'rectangle'
 
       shape = switch type
         when 'point'     then [layer.getLatLng()]
