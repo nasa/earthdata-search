@@ -40,7 +40,7 @@
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">
           <ul class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
-            <li data-bind="click: $parent.datasets.showDataset.bind($data, id)" class="panel-list-item">
+            <li data-bind="click: $parent.datasets.showDataset" class="panel-list-item">
               <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
                 No image available
               </div>

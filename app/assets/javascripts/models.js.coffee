@@ -64,11 +64,16 @@ class models.DatasetsModel
         console.error errors
         # Placeholder.  Not currently needed but will be soon.
 
-  showDataset: (id) =>
-    console.log("Request: /datasets/", id())
+  showDataset: (dataset) =>
+    id = dataset.id()
+
+    path = "/datasets/#{id}.json"
+    console.log("Request: #{path}", this)
     @detailsLoading(true)
-    $.getJSON '/datasets/' + id() + '.json', (data) =>
-      @details(ko.mapping.fromJS(data['dataset']))
+    $.getJSON path, (data) =>
+      details = data['dataset']
+      details.summaryData = dataset
+      @details(details)
       @detailsLoading(false)
       $content = $('#dataset-information')
       $content.height($content.parents('.main-content').height() - $content.offset().top - 40)

@@ -7,7 +7,8 @@ ns.Map = do (window,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
              LayerBuilder = ns.LayerBuilder,
              SpatialSelection = ns.SpatialSelection,
-             dateUtil = window.edsc.util.date) ->
+             dateUtil = window.edsc.util.date
+             searchModel = window.edsc.models.searchModel) ->
 
   # Fix leaflet default image path
   L.Icon.Default.imagePath = L.Icon.Default.imagePath?.replace(/\/images$/, '') || '/assets/leaflet-0.7'
@@ -33,6 +34,15 @@ ns.Map = do (window,
       @setProjection(projection)
       @_addDrawControls()
 
+      @_datasetSubscription = searchModel.datasets.details.subscribe(@_showDatasetSpatial)
+      $('#dataset-details').on('click', '.master-overlay-show-main a', @_hideDatasetSpatial)
+
+    # Removes the map from the page
+    destroy: ->
+      @map.remove()
+      @_datasetSubscription.dispose()
+      $('#dataset-details').off('click', '.master-overlay-show-main a', @_hideDatasetSpatial)
+
     _createLayerMap: (productIds...) ->
       layerForProduct = LayerBuilder.layerForProduct
       projection = @projection
@@ -56,11 +66,6 @@ ns.Map = do (window,
     _addDrawControls: ->
       map = @map
       map.on 'draw:created', (e) ->
-
-
-    # Removes the map from the page
-    destroy: ->
-      @map.remove()
 
     # Adds the given layer to the map
     addLayer: (layer) -> @map.addLayer(layer)
@@ -128,6 +133,42 @@ ns.Map = do (window,
 
     _debugMouseMovement: (e) =>
       console.log('mousemove', e.latlng.lat.toFixed(2), e.latlng.lng.toFixed(2))
+
+    _showDatasetSpatial: (dataset) =>
+      dataset = dataset.summaryData
+
+      @_hideDatasetSpatial()
+
+      layer = new L.FeatureGroup()
+
+      @_showLine(layer, s)      for s in dataset.lines()    ? []
+      @_showRectangle(layer, s) for s in dataset.boxes()    ? []
+      @_showPoint(layer, s)     for s in dataset.points()   ? []
+      @_showPolygon(layer, s)   for s in dataset.polygons() ? []
+
+      layer.addTo(@map)
+      @_datasetSpatialLayer = layer
+
+    _showLine:      (layer, points) -> L.polyline(points, color: "#ff7800", weight: 1).addTo(layer)
+    _showRectangle: (layer, points) -> L.rectangle(points, color: "#ff7800", weight: 1).addTo(layer)
+    _showPoint:     (layer, points) -> L.marker(points...).addTo(layer)
+
+    # FIXME: This works for datasets but will not work for granules
+    _showPolygon:   (layer, points) -> L.polygon(points, color: "#ff7800", weight: 1).addTo(layer)
+
+
+    _hideDatasetSpatial: =>
+      if @_datasetSpatialLayer
+        @map.removeLayer(@_datasetSpatialLayer)
+        @_datasetSpatialLayer = null
+
+
+
+  #datasetsModel
+  #  map = $('#map').data('map')
+  #  map.showDatasetSpatial(dataset) if map?
+
+
 
   $(document).ready ->
     projection = 'geo'
