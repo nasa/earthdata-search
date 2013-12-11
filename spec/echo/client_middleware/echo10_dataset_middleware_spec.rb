@@ -154,7 +154,8 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "native_url" => "datasets/metadata/.native",
           "atom_url" => "datasets/metadata/.atom",
           "echo10_url" => "datasets/metadata/.echo10",
-          "iso19115_url" => "datasets/metadata/.iso19115"
+          "iso19115_url" => "datasets/metadata/.iso19115",
+          "smap_iso_url" => nil
         }
       }
     end

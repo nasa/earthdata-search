@@ -28,7 +28,7 @@ module Echo
     end
 
     def self.metadata_connection
-      Thread.current[:edsc_echo_connection] ||= self.build_metadata_connection
+      Thread.current[:edsc_metadata_echo_connection] ||= self.build_metadata_connection
     end
 
     private
