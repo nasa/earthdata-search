@@ -58,7 +58,6 @@ describe 'Dataset details' do
 
   context "when selecting a dataset with polygon spatial" do
     before do
-      pending "Matthew: Remove this line when polygon spatial parsing works"
       fill_in 'keywords', with: 'NSIDC-0022'
       find('li', text: 'AVHRR Polar 1 Km Level 1B Data Set').click
     end
@@ -70,7 +69,6 @@ describe 'Dataset details' do
 
   context "when selecting a dataset with line spatial" do
     before do
-      pending "Matthew: Remove this line when line spatial parsing works"
       fill_in 'keywords', with: 'NSIDC-0239'
       find('li', text: 'SMEX02 Atmospheric Aerosol Optical Properties Data').click
     end
