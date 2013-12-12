@@ -3,6 +3,8 @@ require "spec_helper"
 describe "Dataset results" do
   before do
     visit "/"
+    # scrolling in these specs doesn't work unless the window is resized
+    page.driver.resize_window(1000, 1000)
   end
 
   shared_browser_session do
