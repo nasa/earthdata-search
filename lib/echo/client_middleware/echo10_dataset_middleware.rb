@@ -32,7 +32,7 @@ module Echo
           end
           dataset.associated_difs = []
           dataset.associated_difs = dataset_xml['AssociatedDIFs']['DIF']['EntryId'] if dataset_xml['AssociatedDIFs'] && dataset_xml['AssociatedDIFs']['DIF']
-          dataset.spatial = dataset_xml['Spatial']
+          dataset.spatial = Array.wrap(dataset_xml['Spatial'])
           dataset.browse_images = []
           dataset.browse_images = dataset_xml['AssociatedBrowseImageUrls']['ProviderBrowseUrl'] if dataset_xml['AssociatedBrowseImageUrls']
           dataset

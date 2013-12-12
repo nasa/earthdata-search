@@ -34,7 +34,7 @@
           <p data-bind="text: email"></p>
         </dd>
         <dt>Spatial Extent:</dt>
-        <dd data-bind="with: $data.spatial">
+        <dd data-bind="foreach: $data.spatial">
           <p data-bind="text: $data"></p>
         </dd>
         <dt>Temporal Extent:</dt>
