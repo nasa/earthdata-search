@@ -24,6 +24,14 @@ describe "Dataset results" do
       expect(page).to have_css('#dataset-results .panel-list-item', count: 22)
       expect(page).to have_no_content('Loading datasets...')
     end
+
+    it "hides and shows facets" do
+      expect(page).to have_css('.master-overlay-hide-parent')
+      click_link 'Hide Facets'
+      expect(page).to have_css('.master-overlay-show-parent')
+      click_link 'Show Facets'
+      expect(page).to have_css('.master-overlay-hide-parent')
+    end
   end
 
 end
