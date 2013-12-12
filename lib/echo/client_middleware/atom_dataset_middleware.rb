@@ -43,7 +43,7 @@ module Echo
       def parse_shapes(shape_array)
         return nil unless shape_array.present?
 
-        shape_array.map do |shape|
+        shape_array.flatten.map do |shape|
           # Each shape is a string of space-separated numbers alternating between
           # lat and lon, e.g. "90.0 180.0 -90.0 -180.0.  This splits the string into
           # component numbers, coerces to float, and puts each pair into an array
