@@ -87,19 +87,21 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
               }
             },
             'BrowseImages' => '',
-            'Spatial' => {
-              'SpatialCoverageType' => 'Horizontal',
-              'HorizontalSpatialDomain' => {
-                'Geometry' => {
-                  'CoordinateSystem' => 'CARTESIAN',
-                  'Point' => {
-                    'PointLongitude' => '-96.6',
-                    'PointLatitude' => '39.1'
+            'Spatial' => [
+              {
+                'SpatialCoverageType' => 'Horizontal',
+                'HorizontalSpatialDomain' => {
+                  'Geometry' => {
+                    'CoordinateSystem' => 'CARTESIAN',
+                    'Point' => [{
+                                          'PointLongitude' => '-96.6',
+                                          'PointLatitude' => '39.1'
+                                        }]
                   }
-                }
-              },
-              'GranuleSpatialRepresentation' => 'CARTESIAN'
-            }
+                },
+                'GranuleSpatialRepresentation' => 'CARTESIAN'
+              }
+            ]
           }
         }
       }
@@ -148,7 +150,7 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
             :url => "http://gcmd.gsfc.nasa.gov/getdif.htm?DIF_ID",
             :id => "DIF_ID"
           },
-          "spatial" => "Point: (39.1\xC2\xB0, -96.6\xC2\xB0)",
+          "spatial" => ["Point: (39.1\xC2\xB0, -96.6\xC2\xB0)"],
           "browse_images" => [],
           "id" => nil,
           "native_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/",
