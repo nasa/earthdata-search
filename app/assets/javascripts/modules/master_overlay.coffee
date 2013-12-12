@@ -35,4 +35,4 @@ $(window).on 'load resize', ->
   # even uglier results
   $('.master-overlay-content').each ->
     $this = $ this
-    $this.height($this.parent().height() - $this.offset().top - 40)
+    $this.height($this.parents('.main-content').height() - $this.offset().top - 40)

@@ -118,14 +118,16 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "orderable" => nil,
           "visible" => nil,
           "temporal" => "1984-12-25T00:00:00.000Z to 1994-12-25T00:00:00.000Z",
-          "contacts" => {
-            :name => " ",
-            :phones => [
-              "(865) 241-3952 (Direct Line)",
-              "(865) 574-4665 (Fax)"
-              ],
-            :email => "ornldaac@ornl.gov"
-          },
+          "contacts" => [
+            {
+              :name => "PLEASE CONTACT ORNL DAAC User Services",
+              :phones => [
+                "(865) 241-3952 (Direct Line)",
+                "(865) 574-4665 (Fax)"
+                ],
+              :email => "ornldaac@ornl.gov"
+            }
+          ],
           "science_keywords" => [
             "EARTH SCIENCE >> HYDROSPHERE >> SURFACE WATER",
             "EARTH SCIENCE >> HYDROSPHERE >> SURFACEWATER"
@@ -147,7 +149,13 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
             :id => "DIF_ID"
           },
           "spatial" => "Point: (39.1\xC2\xB0, -96.6\xC2\xB0)",
-          "browse_images" => []
+          "browse_images" => [],
+          "id" => nil,
+          "native_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/",
+          "atom_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.atom",
+          "echo10_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.echo10",
+          "iso19115_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.iso19115",
+          "smap_iso_url" => nil
         }
       }
     end

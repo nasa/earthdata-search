@@ -18,15 +18,15 @@ module Echo
           dataset.orderable = dataset_xml['Orderable']
           dataset.visible = dataset_xml['Visible']
           dataset.temporal = dataset_xml['Temporal']
-          dataset.contacts = dataset_xml['Contacts']['Contact']
-          dataset.science_keywords = dataset_xml['ScienceKeywords']['ScienceKeyword']
+          dataset.contacts = Array.wrap(dataset_xml['Contacts']['Contact'])
+          dataset.science_keywords = Array.wrap(dataset_xml['ScienceKeywords']['ScienceKeyword']) if dataset_xml['ScienceKeywords']
           if dataset_xml['OnlineAccessURLs']
-            dataset.online_access_urls = Array.wrap(dataset_xml['OnlineAccessURLs']['OnlineAccessURL']).map{ |url| url }
+            dataset.online_access_urls = Array.wrap(dataset_xml['OnlineAccessURLs']['OnlineAccessURL'])
           else
             dataset.online_access_urls = []
           end
           if dataset_xml['OnlineResources']
-            dataset.online_resources = Array.wrap(dataset_xml['OnlineResources']['OnlineResource']).map{ |url| url }
+            dataset.online_resources = Array.wrap(dataset_xml['OnlineResources']['OnlineResource'])
           else
             dataset.online_resources = []
           end

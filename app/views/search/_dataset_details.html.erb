@@ -1,63 +1,79 @@
 <section data-bind="with: datasets.details" id="dataset-details">
-  <header data-bind="if: $parent.datasets.detailsLoading">
-    <h2>Details Loading...</h2>
-  </header>
-  <header data-bind="ifnot: $parent.datasets.detailsLoading">
+  <header >
     <a class="master-overlay-close master-overlay-details-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-    <h2 data-bind="text: $data.dataset_id"></h2>
+    <h2 data-bind="if: $parent.datasets.detailsLoading">Details Loading...</h2>
+    <h2 data-bind="text: $data.dataset_id, ifnot: $parent.datasets.detailsLoading"></h2>
     <p class="master-overlay-show-main">
       <i class="fa fa-angle-left"></i>
       <a href="#">Back to Datasets</a>
     </p>
   </header>
-  <dl class="master-overlay-content" data-bind="ifnot: $parent.datasets.detailsLoading">
-    <dt>Description:</dt>
-    <dd data-bind="text: $data.description"></dd>
-    <dt>Archive Center:</dt>
-    <dd data-bind="text: $data.archive_center"></dd>
-    <dt>Processing Center:</dt>
-    <dd data-bind="text: $data.processing_center"></dd>
-    <dt>Short Name:</dt>
-    <dd data-bind="text: $data.short_name"></dd>
-    <dt>Version:</dt>
-    <dd data-bind="text: $data.version_id"></dd>
-    <dt>Contacts:</dt>
-    <dd data-bind="with: $data.contacts">
-      <p data-bind="text: name"></p>
-       <p data-bind="foreach: phones">
-        <span data-bind="text: $data"></span><br />
-      </p>
-      <p data-bind="text: email"></p>
-    </dd>
-    <dt>Spatial Extent:</dt>
-    <dd data-bind="with: $data.spatial">
-      <p data-bind="text: $data"></p>
-    </dd>
-    <dt>Temporal Extent:</dt>
-    <dd data-bind="with: $data.temporal">
-      <p data-bind="text: $data"></p>
-    </dd>
-    <dt>Science Keywords:</dt>
-    <dd data-bind="foreach: $data.science_keywords">
-      <p data-bind="text: $data"></p>
-    </dd>
-    <dt>Online Access:</dt>
-    <dd data-bind="foreach: $data.online_access_urls">
-      <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
-    </dd>
-    <dt>Online Resources:</dt>
-    <dd data-bind="foreach: $data.online_resources">
-      <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
-    </dd>
-    <dt>Browse Products:</dt>
-    <dd data-bind="foreach: $data.browse_images">
-      <a data-bind="attr: {href: URL}" target="_blank">
-        <img data-bind="attr: {src: URL}" style="height: 150px;"/>
-      </a>
-    </dd>
-    <dt>GCMD DIF Record:</dt>
-    <dd data-bind="with: $data.associated_difs">
-      <a data-bind="attr: { href: url }, text: id" target="_blank"></a>
-    </dd>
-  </dl>
+  <ul id="dataset-details-nav" class="nav nav-tabs">
+    <li class="active"><a href="#dataset-information" data-toggle="tab">Information</a></li>
+    <li><a href="#dataset-metadata" data-toggle="tab">Metadata</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="dataset-information">
+      <dl class="master-overlay-content" data-bind="ifnot: $parent.datasets.detailsLoading">
+        <dt>Description:</dt>
+        <dd data-bind="text: $data.description"></dd>
+        <dt>Archive Center:</dt>
+        <dd data-bind="text: $data.archive_center"></dd>
+        <dt>Processing Center:</dt>
+        <dd data-bind="text: $data.processing_center"></dd>
+        <dt>Short Name:</dt>
+        <dd data-bind="text: $data.short_name"></dd>
+        <dt>Version:</dt>
+        <dd data-bind="text: $data.version_id"></dd>
+        <dt>Contacts:</dt>
+        <dd data-bind="foreach: $data.contacts">
+          <p data-bind="text: name"></p>
+           <p data-bind="foreach: phones">
+            <span data-bind="text: $data"></span><br />
+          </p>
+          <p data-bind="text: email"></p>
+        </dd>
+        <dt>Spatial Extent:</dt>
+        <dd data-bind="with: $data.spatial">
+          <p data-bind="text: $data"></p>
+        </dd>
+        <dt>Temporal Extent:</dt>
+        <dd data-bind="with: $data.temporal">
+          <p data-bind="text: $data"></p>
+        </dd>
+        <dt>Science Keywords:</dt>
+        <dd data-bind="foreach: $data.science_keywords">
+          <p data-bind="text: $data"></p>
+        </dd>
+        <dt>Online Access:</dt>
+        <dd data-bind="foreach: $data.online_access_urls">
+          <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
+        </dd>
+        <dt>Online Resources:</dt>
+        <dd data-bind="foreach: $data.online_resources">
+          <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
+        </dd>
+        <dt>Browse Products:</dt>
+        <dd data-bind="foreach: $data.browse_images">
+          <a data-bind="attr: {href: URL}" target="_blank">
+            <img data-bind="attr: {src: URL}" style="height: 150px;"/>
+          </a>
+        </dd>
+        <dt>GCMD DIF Record:</dt>
+        <dd data-bind="with: $data.associated_difs">
+          <a data-bind="attr: { href: url }, text: id" target="_blank"></a>
+        </dd>
+      </dl>
+    </div>
+    <div class="tab-pane" id="dataset-metadata">
+      <dl class="master-overlay-content">
+        <dt>Download Metadata:</dt>
+        <dd><a data-bind="attr: { href: $data.native_url }">Native</a></dd>
+        <dd><a data-bind="attr: { href: $data.atom_url }">ATOM</a></dd>
+        <dd><a data-bind="attr: { href: $data.echo10_url }">ECHO 10</a></dd>
+        <dd><a data-bind="attr: { href: $data.iso19115_url }">ISO 19115</a></dd>
+        <dd data-bind="if: $data.smap_iso_url"><a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a></dd>
+      </dl>
+    </div>
+  </div>
 </section>
