@@ -16,6 +16,16 @@ $(document).on 'click', '.master-overlay-main .master-overlay-close', ->
 
 $(document).on 'click', '.master-overlay-show-parent', ->
   $(this).closest('.master-overlay').removeClass('is-master-overlay-parent-hidden')
+  $(this).removeClass('master-overlay-show-parent')
+  $(this).addClass('master-overlay-hide-parent')
+  $(this).text('Hide Facets')
+  return false;
+
+$(document).on 'click', '.master-overlay-hide-parent', ->
+  $(this).closest('.master-overlay').addClass('is-master-overlay-parent-hidden')
+  $(this).removeClass('master-overlay-hide-parent')
+  $(this).addClass('master-overlay-show-parent')
+  $(this).text('Show Facets')
   return false;
 
 $(document).on 'click', '.master-overlay-show', ->
