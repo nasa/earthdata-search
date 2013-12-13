@@ -83,4 +83,6 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.extend SharedBrowserSession
+
+  config.include Helpers::SpatialHelpers
 end

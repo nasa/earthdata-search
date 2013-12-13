@@ -7,6 +7,10 @@ class models.QueryModel
 
     @params = ko.computed(@_computeParams)
 
+  clearFilters: =>
+    @keywords(null)
+    @spatial(null)
+
   _computeParams: =>
     params = {}
 
