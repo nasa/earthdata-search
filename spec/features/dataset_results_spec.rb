@@ -3,6 +3,8 @@ require "spec_helper"
 describe "Dataset results" do
   before do
     visit "/"
+    # scrolling in these specs doesn't work unless the window is resized
+    page.driver.resize_window(1000, 1000)
   end
 
   shared_browser_session do
@@ -23,6 +25,14 @@ describe "Dataset results" do
       page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 10000"
       expect(page).to have_css('#dataset-results .panel-list-item', count: 22)
       expect(page).to have_no_content('Loading datasets...')
+    end
+
+    it "hides and shows facets" do
+      expect(page).to have_css('.master-overlay-hide-parent')
+      click_link 'Hide Facets'
+      expect(page).to have_css('.master-overlay-show-parent')
+      click_link 'Show Facets'
+      expect(page).to have_css('.master-overlay-hide-parent')
     end
   end
 
