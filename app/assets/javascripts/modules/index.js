@@ -2,3 +2,4 @@
 //= require modules/master_overlay
 //= require modules/toolbar
 //= require modules/map/index
+//= require modules/temporal/index

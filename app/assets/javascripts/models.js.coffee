@@ -4,12 +4,14 @@ class models.QueryModel
   constructor: ->
     @keywords = ko.observable("")
     @spatial = ko.observable("")
+    @temporal = ko.observable("")
 
     @params = ko.computed(@_computeParams)
 
   clearFilters: =>
     @keywords(null)
     @spatial(null)
+    @temporal(null)
 
   _computeParams: =>
     params = {}
@@ -19,6 +21,9 @@ class models.QueryModel
 
     spatial = @spatial()
     params.spatial = spatial if spatial?.length > 0
+
+    temporal = @temporal()
+    params.temporal = temporal if temporal?.length > 0
 
     params
 

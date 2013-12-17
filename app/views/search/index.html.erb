@@ -4,7 +4,41 @@
       <input id="keywords" name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or dataset name" autofocus>
     </p>
   <% end %>
-  <a href="#" class="button"><i class="fa fa-clock-o"></i> Temporal</a>
+  <div class="dropdown">
+    <a href="#" data-toggle="dropdown" class="button dropdown-button temporal-dropdown-button">
+      <i class="fa fa-clock-o"></i>
+      <span class="dropdown-value">Temporal</span>
+      <i class="fa fa-caret-down dropdown-icon"></i>
+    </a>
+    <ul class="dropdown-links temporal-dropdown">
+      <li>
+
+        <div class="temporal">
+          <div class="start bound">
+            <label for="temporal_start">Start</label>
+            <div class="datetime-field" id="temporal_start_button">
+              <%= text_field_tag(:temporal_start, params[:temporal_start],
+                                 :placeholder => 'YYYY-MM-DD HH:MM:SS',
+                                 :class => 'temporal-range-start') %>
+              <button class="secondary text-input-clear-button" type="button">Clear</button>
+            </div>
+          </div>
+          <div class="end bound">
+            <h3><span>End</span></h3>
+            <div class="datetime-field" id="temporal_end_button">
+              <%= text_field_tag(:temporal_end, params[:temporal_end],
+                                 :placeholder => 'YYYY-MM-DD HH:MM:SS',
+                                 :class => 'range-end temporal') %>
+              <button class="secondary text-input-clear-button" type="button">Clear</button>
+            </div>
+          </div>
+        </div>
+
+      </li>
+    </ul>
+  </div>
+
+
   <div class="dropdown" data-bind="with: ui.spatialType">
     <a href="#" class="button dropdown-button spatial-dropdown-button">
       <i class="fa" data-bind="css: icon"></i>

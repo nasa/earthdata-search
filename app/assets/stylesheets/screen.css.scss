@@ -57,7 +57,11 @@ footer, .toolbar {
   padding: .5em 1em;
 
   .spatial-dropdown-button {
-    width:7em; // Make this wide enough for its contents
+    width:9em; // Make this wide enough for its contents
+  }
+
+  .temporal-dropdown-button {
+    width:9em; // Make this wide enough for its contents
   }
 
   input {

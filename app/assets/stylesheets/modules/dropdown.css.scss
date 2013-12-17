@@ -9,6 +9,14 @@
   position: relative;
 }
 
+.temporal-dropdown {
+  width: 500px;
+
+  input {
+    width: 200px;
+  }
+}
+
 .dropdown:hover {
   .dropdown-links {
     display: block !important;
