@@ -11,6 +11,7 @@ class models.QueryModel
   clearFilters: =>
     @keywords(null)
     @spatial(null)
+    models.searchModel.ui.spatialType.selectNone()
     @temporal(null)
 
   _computeParams: =>
