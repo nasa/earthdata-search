@@ -99,19 +99,19 @@ class models.SpatialType
 
   selectNone: =>
     @name('Spatial')
-    @icon ('fa-crop') #TODO (JS): Set correct icon class here
+    @icon ('fa-crop')
 
   selectPoint: =>
     @name('Point')
-    @icon ('fa-map-marker') #TODO (JS): Set correct icon class here
+    @icon ('fa-map-marker')
 
   selectRectangle: =>
     @name('Rectangle')
-    @icon ('edsc-icon-rect-open') #TODO (JS): Set correct icon class here
+    @icon ('edsc-icon-rect-open')
 
   selectPolygon: =>
     @name('Polygon')
-    @icon ('edsc-icon-poly-open') #TODO (JS): Set correct icon class here
+    @icon ('edsc-icon-poly-open')
 
 class models.SearchModel
   constructor: ->
