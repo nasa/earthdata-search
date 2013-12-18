@@ -11,6 +11,7 @@ module Echo
         load_query_page(options, query)
         load_keyword_query(options, query)
         load_spatial_query(options, query)
+        load_temporal_query(options, query)
 
         query
       end
@@ -50,6 +51,12 @@ module Echo
           end
 
           query[type] = points.flatten.join(',')
+        end
+      end
+
+      def load_temporal_query(options, query)
+        if options[:temporal]
+          query[:temporal] = options[:temporal].flatten.join(',')
         end
       end
 
