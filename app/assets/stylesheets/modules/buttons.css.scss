@@ -1,5 +1,6 @@
 @import "bourbon";
 $button-bottom-gradient: #315880;
+$button-hover-gradient: #4a739b;
 $button-top-gradient: #5382b1;
 $button-text-shadow: #283a4e;
 
@@ -13,4 +14,23 @@ $button-text-shadow: #283a4e;
   box-shadow: 0 0 3px #424242;
   border: 1px solid $button-text-shadow;
   text-shadow: 1px 1px 1px $button-text-shadow;
+  
+  &:hover {
+    text-decoration: none;
+    @include linear-gradient($button-hover-gradient, $button-bottom-gradient);
+  }
+}
+
+.dropdown-value {
+  display: inline-block;
+}
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  border-top: 4px solid;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
 }

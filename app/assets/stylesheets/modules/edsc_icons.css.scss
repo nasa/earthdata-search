@@ -1,0 +1,43 @@
+@font-face {
+	font-family: 'edsc';
+	src:url('edsc.eot');
+	src:url('edsc.eot?#iefix') format('embedded-opentype'),
+		url('edsc.ttf') format('truetype'),
+		url('edsc.woff') format('woff'),
+		url('edsc.svg#edsc') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="edsc-icon-"], [class*=" edsc-icon-"] {
+	font-family: 'edsc';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+  display:inline-block;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* This is meant to match the corresponding FontAwesome class */
+.edsc-icon-fw {
+  width: 1.2857142857142858em;
+  text-align: center;
+}
+
+.edsc-icon-rect:before {
+	content: "\e600";
+}
+.edsc-icon-poly:before {
+	content: "\e601";
+}
+.edsc-icon-poly-open:before {
+	content: "\e602";
+}
+.edsc-icon-rect-open:before {
+	content: "\e603";
+}
