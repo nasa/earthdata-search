@@ -5,32 +5,28 @@
     </p>
   <% end %>
   <div class="dropdown">
-    <a href="#" data-toggle="dropdown" class="button dropdown-button temporal-dropdown-button">
+    <a href="#" class="button dropdown-button temporal-dropdown-button">
       <i class="fa fa-clock-o"></i>
       <span class="dropdown-value">Temporal</span>
       <i class="fa fa-caret-down dropdown-icon"></i>
     </a>
-    <ul class="dropdown-links temporal-dropdown">
+    <ul class="dropdown-menu temporal-dropdown">
       <li>
 
         <div class="temporal">
-          <div class="start bound">
+          <div class="datetime-field" id="temporal_start_button">
             <label for="temporal_start">Start</label>
-            <div class="datetime-field" id="temporal_start_button">
-              <%= text_field_tag(:temporal_start, params[:temporal_start],
-                                 :placeholder => 'YYYY-MM-DD HH:MM:SS',
-                                 :class => 'temporal-range-start') %>
-              <button id="clear_temporal_start" class="button" type="button">Clear</button>
-            </div>
+            <%= text_field_tag(:temporal_start, params[:temporal_start],
+                               :placeholder => 'YYYY-MM-DD HH:MM:SS',
+                               :class => 'temporal-range-start') %>
+            <button id="clear_temporal_start" class="button" type="button">Clear</button>
           </div>
-          <div class="end bound">
+          <div class="datetime-field" id="temporal_end_button">
             <label for="temporal_stop">End</label>
-            <div class="datetime-field" id="temporal_end_button">
-              <%= text_field_tag(:temporal_stop, params[:temporal_end],
-                                 :placeholder => 'YYYY-MM-DD HH:MM:SS',
-                                 :class => 'range-end temporal') %>
-              <button id="clear_temporal_stop" class="button" type="button">Clear</button>
-            </div>
+            <%= text_field_tag(:temporal_stop, params[:temporal_end],
+                               :placeholder => 'YYYY-MM-DD HH:MM:SS',
+                               :class => 'range-end temporal') %>
+            <button id="clear_temporal_stop" class="button" type="button">Clear</button>
           </div>
         </div>
 
@@ -40,12 +36,12 @@
 
 
   <div class="dropdown" data-bind="with: ui.spatialType">
-    <a href="#" class="button dropdown-button spatial-dropdown-button">
+    <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button">
       <i class="fa" data-bind="css: icon"></i>
       <span class="dropdown-value" data-bind="text: name">Spatial</span>
       <i class="fa fa-caret-down dropdown-icon"></i>
     </a>
-    <ul class="dropdown-links spatial-selection">
+    <ul class="dropdown-menu spatial-selection">
       <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon"><i class="fa fa-crop"></i> Polygon</a></li>
       <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle"><i class="fa fa-crop"></i> Rectangle</a></li>
       <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="fa fa-crop"></i> Point</a></li>

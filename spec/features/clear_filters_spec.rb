@@ -38,7 +38,7 @@ describe "Clear Filters" do
     click_link "Clear All Filters"
 
     expect(page).to have_content("15 Minute Stream Flow Data: USGS")
-    page.find(".temporal-dropdown-button").hover
+    click_link "Temporal"
     expect(page.find("#temporal_start")).to have_no_text("1978-12-01 00:00:00")
     expect(page.find("#temporal_stop")).to have_no_text("1979-12-01 00:00:00")
   end

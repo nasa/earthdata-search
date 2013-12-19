@@ -28,6 +28,9 @@ $(document).on 'click', '.master-overlay-hide-parent', ->
   $(this).text('Show Facets')
   return false;
 
+$(document).on 'click', '.temporal-dropdown-button', ->
+  $(this).parent().toggleClass('open')
+
 $(document).on 'click', '.master-overlay-show', ->
   id = this.href.split('#')[1]
   $('#' + id).removeClass('is-hidden')

@@ -38,7 +38,7 @@ describe "Temporal" do
       expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
 
-      page.find(".temporal-dropdown-button").hover
+      click_link "Temporal"
       find_by_id("clear_temporal_stop").click
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
@@ -56,7 +56,7 @@ describe "Temporal" do
       expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
 
-      page.find(".temporal-dropdown-button").hover
+      click_link "Temporal"
       page.find_by_id("clear_temporal_start").click
       page.find_by_id("clear_temporal_stop").click
 
