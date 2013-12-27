@@ -6,6 +6,7 @@ class models.QueryModel
     @spatial = ko.observable("")
     @temporal_start = ko.observable("")
     @temporal_stop = ko.observable("")
+    @temporal_recurring = ko.observable("")
 
     @params = ko.computed(@_computeParams)
 
@@ -29,7 +30,9 @@ class models.QueryModel
 
     temporal_start = @temporal_start()
     temporal_stop = @temporal_stop()
+    temporal_recurring = @temporal_recurring()
     params.temporal = [temporal_start,temporal_stop] if temporal_start?.length > 0
+    params.temporal = temporal_recurring if temporal_recurring?.length > 0
 
     params
 
