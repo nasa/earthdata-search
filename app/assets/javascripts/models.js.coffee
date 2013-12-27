@@ -18,6 +18,11 @@ class models.QueryModel
     $('#temporal_start').val('')
     @temporal_stop('')
     $('#temporal_stop').val('')
+    @temporal_recurring('')
+    $('#temporal-recurring #temporal_start').val('')
+    $('#temporal-recurring #temporal_stop').val('')
+    $('#temporal-recurring-year-range').slider('setValue', [1960,2013])
+    $('#temporal-recurring-year-range-value').text('1960 - 2013')
 
   _computeParams: =>
     params = {}

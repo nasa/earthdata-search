@@ -59,3 +59,10 @@ $(document).ready ->
   $(document).on 'click', '#clear_temporal_stop', ->
     $('#temporal_stop').val('')
     query.temporal_stop('')
+
+  $(document).on 'click', '#temporal-recurring-clear', ->
+    $('#temporal-recurring #temporal_start').val('')
+    $('#temporal-recurring #temporal_stop').val('')
+    $('#temporal-recurring-year-range').slider('setValue', [1960,2013])
+    $('#temporal-recurring-year-range-value').text('1960 - 2013')
+    query.temporal_recurring('')
