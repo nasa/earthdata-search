@@ -1,30 +1,43 @@
 query = window.edsc.models.searchModel.query
 
+updateQueryModel = (type, value) ->
+  switch type
+    when 'range-start'
+      query.temporal_start(value)
+    when 'range-stop'
+      query.temporal_stop(value)
+    when 'recurring'
+      query.temporal_recurring(value)
+
 $(document).ready ->
   $('#temporal-date-range #temporal_start').datetimepicker({
-    format: 'Y-m-d H:00:00',
+    format: 'Y-m-d H:i:s',
     yearStart: '1960',
     yearEnd: new Date().getFullYear(),
     roundTime: 'round',
     onChangeDateTime: (dp,$input) ->
-      query.temporal_start($input.val().replace(' ','T') + 'Z')
+      updateQueryModel('range-start', $input.val().replace(' ','T') + 'Z')
+    onClose: (dp,$input) ->
+      updateQueryModel('range-start', $input.val().replace(' ','T') + 'Z') if $input.val()?.length > 0
   })
 
   $('#temporal-date-range #temporal_stop').datetimepicker({
-    format: 'Y-m-d H:00:00',
+    format: 'Y-m-d H:i:s',
     yearStart: '1960',
     yearEnd: new Date().getFullYear(),
     onChangeDateTime: (dp,$input) ->
-      query.temporal_stop($input.val().replace(' ','T') + 'Z')
+      updateQueryModel('range-stop', $input.val().replace(' ','T') + 'Z')
+    onClose: (dp,$input) ->
+      updateQueryModel('range-stop', $input.val().replace(' ','T') + 'Z') if $input.val()?.length > 0
   })
 
   $('#temporal-recurring #temporal_start').datetimepicker({
-    format: 'm-d H:00:00',
+    format: 'm-d H:i:s',
     className: 'recurring-datetimepicker'
   })
 
   $('#temporal-recurring #temporal_stop').datetimepicker({
-    format: 'm-d H:00:00',
+    format: 'm-d H:i:s',
     className: 'recurring-datetimepicker'
   })
 
@@ -50,19 +63,19 @@ $(document).ready ->
     start_day = Math.floor((new Date(start_datetime) - start_date_year) / one_day)
     stop_day = Math.floor((new Date(stop_datetime) - stop_date_year) / one_day)
 
-    query.temporal_recurring([start_datetime, stop_datetime, start_day, stop_day])
+    updateQueryModel('recurring', [start_datetime, stop_datetime, start_day, stop_day])
 
   $(document).on 'click', '#clear_temporal_start', ->
     $('#temporal_start').val('')
-    query.temporal_start('')
+    updateQueryModel('range-start', '')
 
   $(document).on 'click', '#clear_temporal_stop', ->
     $('#temporal_stop').val('')
-    query.temporal_stop('')
+    updateQueryModel('range-stop', '')
 
   $(document).on 'click', '#temporal-recurring-clear', ->
     $('#temporal-recurring #temporal_start').val('')
     $('#temporal-recurring #temporal_stop').val('')
     $('#temporal-recurring-year-range').slider('setValue', [1960,2013])
     $('#temporal-recurring-year-range-value').text('1960 - 2013')
-    query.temporal_recurring('')
+    updateQueryModel('recurring', '')
