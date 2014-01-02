@@ -68,7 +68,7 @@ describe "Temporal" do
   end
 
   context "recurring range selection" do
-    it "selects a range" do
+    it "allows the user to search by recurring date time range" do
       script = "edsc.models.searchModel.query.temporal_recurring(['1970-12-01T00:00:00Z','1975-12-31T00:00:00Z',335,365])"
       page.evaluate_script(script)
 
@@ -76,7 +76,7 @@ describe "Temporal" do
       expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
     end
 
-    it "clears the recurring search" do
+    it "allows the user to clear the recurring date time search" do
       script = "edsc.models.searchModel.query.temporal_recurring(['1970-12-01T00:00:00Z','1975-12-31T00:00:00Z',335,365])"
       page.evaluate_script(script)
 

@@ -57,7 +57,7 @@ describe "'Clear Filters' button" do
       click_link "Recurring"
       expect(page.find("#temporal_start")).to have_no_text("1970-12-01 00:00:00")
       expect(page.find("#temporal_stop")).to have_no_text("1975-12-31 00:00:00")
-      expect(page.find("#temporal-recurring-year-range-value")).to have_text("1960 - 2013")
+      expect(page.find(".temporal-recurring-year-range-value")).to have_text("1960 - #{Time.new.year}")
     end
   end
 end

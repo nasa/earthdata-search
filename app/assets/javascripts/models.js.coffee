@@ -15,14 +15,11 @@ class models.QueryModel
     @spatial(null)
     models.searchModel.ui.spatialType.selectNone()
     @temporal_start('')
-    $('#temporal_start').val('')
     @temporal_stop('')
-    $('#temporal_stop').val('')
     @temporal_recurring('')
-    $('#temporal-recurring #temporal_start').val('')
-    $('#temporal-recurring #temporal_stop').val('')
-    $('#temporal-recurring-year-range').slider('setValue', [1960,2013])
-    $('#temporal-recurring-year-range-value').text('1960 - 2013')
+    $('.temporal').val('')
+    $('.temporal-recurring-year-range').slider('setValue', [1960, new Date().getFullYear()])
+    $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
 
   _computeParams: =>
     params = {}
