@@ -9,9 +9,11 @@
   position: relative;
 }
 
-.dropdown:hover {
-  .dropdown-links {
-    display: block !important;
+.temporal-dropdown {
+  width: 350px;
+
+  input {
+    width: 200px;
   }
 }
 
