@@ -40,7 +40,10 @@ class DatasetExtra < ActiveRecord::Base
     ids = datasets.map {|r| r['id']}
     extras = DatasetExtra.where(echo_id: ids).index_by(&:echo_id)
 
-    datasets.map { |r| extras[r['id']].decorate(r) }
+    datasets.map do |result|
+      extra = extras[result['id']] || DatasetExtra.new
+      extra.decorate(result)
+    end
   end
 
   def decorate(dataset)

@@ -29,6 +29,8 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 FactoryGirl.find_definitions
 
+load "#{::Rails.root}/db/seeds.rb"
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
