@@ -1,5 +1,7 @@
 query = window.edsc.models.searchModel.query
 
+current_year = new Date().getFullYear()
+
 updateQueryModel = (type, value) ->
   switch type
     when 'range-start'
@@ -10,60 +12,49 @@ updateQueryModel = (type, value) ->
       query.temporal_recurring(value)
 
 $(document).ready ->
-  $('.temporal-range-start').datetimepicker({
+  $('.temporal-range-picker').datetimepicker({
     format: 'Y-m-d H:i:s',
     yearStart: '1960',
-    yearEnd: new Date().getFullYear(),
+    yearEnd: current_year,
     roundTime: 'round',
     onChangeDateTime: (dp,$input) ->
-      updateQueryModel('range-start', $input.val().replace(' ','T') + 'Z')
+      queryField = if $input.hasClass('temporal-range-start') then 'range-start' else 'range-stop'
+      updateQueryModel(queryField, $input.val().replace(' ','T') + 'Z')
     onClose: (dp,$input) ->
-      updateQueryModel('range-start', $input.val().replace(' ','T') + 'Z') if $input.val()?.length > 0
+      queryField = if $input.hasClass('temporal-range-start') then 'range-start' else 'range-stop'
+      updateQueryModel(queryField, $input.val().replace(' ','T') + 'Z') if $input.val()?.length > 0
   })
 
-  $('.temporal-range-stop').datetimepicker({
-    format: 'Y-m-d H:i:s',
-    yearStart: '1960',
-    yearEnd: new Date().getFullYear(),
-    onChangeDateTime: (dp,$input) ->
-      updateQueryModel('range-stop', $input.val().replace(' ','T') + 'Z')
-    onClose: (dp,$input) ->
-      updateQueryModel('range-stop', $input.val().replace(' ','T') + 'Z') if $input.val()?.length > 0
-  })
-
-  $('.temporal-recurring-start').datetimepicker({
-    format: 'm-d H:i:s',
-    className: 'recurring-datetimepicker'
-  })
-
-  $('.temporal-recurring-stop').datetimepicker({
+  $('.temporal-recurring-picker').datetimepicker({
     format: 'm-d H:i:s',
     className: 'recurring-datetimepicker'
   })
 
   $('.temporal-recurring-year-range').slider({
     min: 1960,
-    max: new Date().getFullYear(),
-    value: [1960, new Date().getFullYear()],
+    max: current_year,
+    value: [1960, current_year],
     tooltip: 'hide'
   }).on 'slide', (e) ->
     $('.temporal-recurring-year-range-value').text(e.value.join(' - '))
 
-  $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
+  $('.temporal-recurring-year-range-value').text('1960 - ' + current_year)
 
   $(document).on 'click', '#temporal-recurring-submit', ->
     year_range = $('.temporal-recurring-year-range-value').text().split(' - ')
-    start_datetime = year_range[0] + '-' + $('.temporal-recurring-start').val().replace(' ','T') + 'Z'
-    stop_datetime = year_range[1] + '-' + $('.temporal-recurring-stop').val().replace(' ','T') + 'Z'
+    str_start_datetime = year_range[0] + '-' + $('.temporal-recurring-start').val().replace(' ','T') + 'Z'
+    str_stop_datetime = year_range[1] + '-' + $('.temporal-recurring-stop').val().replace(' ','T') + 'Z'
+    date_start_datetime = new Date(str_start_datetime)
+    date_stop_datetime = new Date(str_stop_datetime)
 
     # find day of the year selected
     one_day = 1000 * 60 * 60 * 24
-    start_date_year = new Date( new Date(start_datetime).getFullYear(), 0, 0)
-    stop_date_year = new Date( new Date(stop_datetime).getFullYear(), 0, 0)
-    start_day = Math.floor((new Date(start_datetime) - start_date_year) / one_day)
-    stop_day = Math.floor((new Date(stop_datetime) - stop_date_year) / one_day)
+    start_date_year = new Date( date_start_datetime.getFullYear(), 0, 0)
+    stop_date_year = new Date( date_stop_datetime.getFullYear(), 0, 0)
+    start_day = Math.floor((date_start_datetime - start_date_year) / one_day)
+    stop_day = Math.floor((date_stop_datetime - stop_date_year) / one_day)
 
-    updateQueryModel('recurring', [start_datetime, stop_datetime, start_day, stop_day])
+    updateQueryModel('recurring', [str_start_datetime, str_stop_datetime, start_day, stop_day])
 
   $(document).on 'click', '.temporal-clear', ->
     $(this).prev('.temporal').val('')
@@ -74,6 +65,6 @@ $(document).ready ->
 
   $(document).on 'click', '#temporal-recurring-clear', ->
     $('.temporal').val('')
-    $('.temporal-recurring-year-range').slider('setValue', [1960,new Date().getFullYear()])
-    $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
+    $('.temporal-recurring-year-range').slider('setValue', [1960, current_year])
+    $('.temporal-recurring-year-range-value').text('1960 - ' + current_year)
     updateQueryModel('recurring', '')
