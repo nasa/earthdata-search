@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "Clear Filters" do
+describe "'Clear Filters' button" do
   before do
     visit '/'
   end
