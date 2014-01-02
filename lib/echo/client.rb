@@ -4,7 +4,8 @@ module Echo
                               :logging => Echo::ClientMiddleware::LoggingMiddleware,
                               :errors => Echo::ClientMiddleware::ErrorsMiddleware,
                               :atom_datasets => Echo::ClientMiddleware::AtomDatasetMiddleware,
-                              :echo10_datasets => Echo::ClientMiddleware::Echo10DatasetMiddleware)
+                              :echo10_datasets => Echo::ClientMiddleware::Echo10DatasetMiddleware,
+                              :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware)
 
   class Client
     include Echo::QueryTransformations
@@ -17,6 +18,10 @@ module Echo
 
     def self.get_dataset(id, options={})
       get("/catalog-rest/echo_catalog/datasets/#{id}.echo10")
+    end
+
+    def self.get_granules(options={})
+      get("/catalog-rest/echo_catalog/granules.#{options[:format] || 'json'}", options_to_query(options))
     end
 
     def self.connection
@@ -39,6 +44,7 @@ module Echo
         conn.response :atom_datasets, :content_type => /\bjson$/
         conn.response :errors, :content_type => /\bjson$/
         conn.response :json, :content_type => /\bjson$/
+        conn.response :echo10_granules, :content_type => "application/echo10+xml"
         conn.response :echo10_datasets, :content_type => "application/echo10+xml"
         conn.response :xml, :content_type => /\bxml$/
 
