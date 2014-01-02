@@ -101,9 +101,14 @@
           <ul class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
             <li data-bind="click: $parent.datasets.showDataset" class="panel-list-item">
+              <!-- ko if: thumbnail -->
+              <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
+              <!-- /ko -->
+              <!-- ko ifnot: thumbnail -->
               <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
                 No image available
               </div>
+              <!-- /ko -->
               <h3 data-bind="text: dataset_id"></h3>
               <p class="panel-list-details">
               <span data-bind="text: short_name"></span>

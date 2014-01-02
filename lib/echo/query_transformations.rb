@@ -9,9 +9,12 @@ module Echo
         query = {}
 
         load_query_page(options, query)
+        load_query_page_size(options, query)
+        load_echo_collection_query(options, query)
         load_keyword_query(options, query)
         load_spatial_query(options, query)
         load_temporal_query(options, query)
+        load_browse_only_query(options, query)
 
         query
       end
@@ -20,6 +23,18 @@ module Echo
 
       def load_query_page(options, query)
         query[:page_num] = options[:page] if options[:page]
+      end
+
+      def load_query_page_size(options, query)
+        query[:page_size] = options[:page_size] if options[:page_size]
+      end
+
+      def load_echo_collection_query(options, query)
+        query[:echo_collection_id] = Array.wrap(options[:echo_collection_id]) if options[:echo_collection_id]
+      end
+
+      def load_browse_only_query(options, query)
+        query[:browse_only] = options[:browse_only] if options[:browse_only]
       end
 
       def load_keyword_query(options, query)

@@ -1,7 +1,12 @@
 require "spec_helper"
 
 describe "Dataset results" do
+  let(:ast_l1a_id) { 'C14758250-LPDAAC_ECS' }
+  let(:airabrad_id) { 'C189399410-GSFCS4PA' }
+
   before do
+    DatasetExtra.create!(echo_id: ast_l1a_id, thumbnail_url: 'http://example.com/thumbnail.jpg')
+
     visit "/"
     # scrolling in these specs doesn't work unless the window is resized
     page.driver.resize_window(1000, 1000)
@@ -27,6 +32,20 @@ describe "Dataset results" do
       expect(page).to have_no_content('Loading datasets...')
     end
 
+    it "displays thumbnails for datasets which have stored thumbnail URLs" do
+      fill_in "keywords", with: airabrad_id
+
+      expect(page).to have_css("img.panel-list-thumbnail")
+      expect(page).to have_no_text("No image available")
+    end
+
+    it "displays a placeholder for datasets which have no thumbnail URLs" do
+      fill_in "keywords", with: ast_l1a_id
+
+      expect(page).to have_no_css("img.panel-list-thumbnail")
+      expect(page).to have_text("No image available")
+    end
+
     it "hides and shows facets" do
       expect(page).to have_css('.master-overlay-hide-parent')
       click_link 'Hide Facets'
@@ -35,5 +54,4 @@ describe "Dataset results" do
       expect(page).to have_css('.master-overlay-hide-parent')
     end
   end
-
 end

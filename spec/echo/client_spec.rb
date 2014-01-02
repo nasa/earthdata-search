@@ -26,7 +26,7 @@ describe Echo::Client do
     end
   end
 
-  context 'dataset searches' do
+  context 'dataset search' do
     let(:dataset_search_url) { "/catalog-rest/echo_catalog/datasets.json" }
     before { allow(Echo::Client).to receive(:connection).and_return(connection) }
 
@@ -116,6 +116,42 @@ describe Echo::Client do
       expect(connection).to receive(:get).with(dataset_url, {}).and_return(:response)
 
       response = Echo::Client.get_dataset('C14758250-LPDAAC_ECS')
+      expect(response.faraday_response).to eq(:response)
+    end
+  end
+
+  context 'granule search' do
+    let(:granule_search_url) { "/catalog-rest/echo_catalog/granules.json" }
+    let(:granule_search_base) { "/catalog-rest/echo_catalog/granules" }
+    before { allow(Echo::Client).to receive(:connection).and_return(connection) }
+
+    it 'returns data in the requested format' do
+      granule_echo10_url = "#{granule_search_base}.echo10"
+      expect(connection).to receive(:get).with(granule_echo10_url, {}).and_return(:response)
+
+      response = Echo::Client.get_granules(format: 'echo10')
+      expect(response.faraday_response).to eq(:response)
+    end
+
+    it 'returns data in json format by default' do
+      granule_json_url = "#{granule_search_base}.json"
+      expect(connection).to receive(:get).with(granule_json_url, {}).and_return(:response)
+
+      response = Echo::Client.get_granules()
+      expect(response.faraday_response).to eq(:response)
+    end
+
+    it 'filters granules by a supplied ECHO collection id' do
+      expect(connection).to receive(:get).with(granule_search_url, echo_collection_id: ['1234']).and_return(:response)
+
+      response = Echo::Client.get_granules(echo_collection_id: '1234')
+      expect(response.faraday_response).to eq(:response)
+    end
+
+    it 'filters granules by browse only flag' do
+      expect(connection).to receive(:get).with(granule_search_url, browse_only: 'true').and_return(:response)
+
+      response = Echo::Client.get_granules(browse_only: 'true')
       expect(response.faraday_response).to eq(:response)
     end
   end

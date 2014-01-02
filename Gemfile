@@ -27,6 +27,9 @@ group :development do
   gem 'librarian-puppet'
   gem 'rvm-capistrano'
   gem 'capistrano'
+
+  # For dumping additional metadata stored in DatasetExtras and similar
+  gem 'seed_dump'
 end
 
 # Gems that are mostly used for testing but useful to have available via CLI

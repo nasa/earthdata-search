@@ -5,7 +5,9 @@ class DatasetsController < ApplicationController
     response = Echo::Client.get_datasets(params)
 
     if response.success?
-      respond_with(results: response.body, hits: response.headers['echo-hits'].to_i, status: response.status)
+      results = DatasetExtra.decorate_all(response.body)
+
+      respond_with(results: results, hits: response.headers['echo-hits'].to_i, status: response.status)
     else
       respond_with(response.body, status: response.status)
     end

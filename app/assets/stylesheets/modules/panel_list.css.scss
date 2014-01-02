@@ -1,4 +1,4 @@
-$panel-list-item-height: 75px;
+$panel-list-item-height: 65px;
 $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list {
@@ -10,7 +10,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   background-color: #fff;
   border: 1px solid #000;
   margin: .2em 0;
-  height: $panel-list-thumbnail-size;
+  height: $panel-list-thumbnail-size + 12px;
   padding: .5em .5em .5em $panel-list-thumbnail-size;
   font-size: .8em;
 }
@@ -27,8 +27,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   color: #888;
   font-weight: bold;
   text-align: center;
-  width: $panel-list-thumbnail-size - 10px;
-  height: $panel-list-thumbnail-size - 10px;
+  box-sizing: border-box;
   padding: 4px;
   border: 1px solid #888;
 }
