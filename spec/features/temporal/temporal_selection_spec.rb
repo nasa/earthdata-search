@@ -66,4 +66,30 @@ describe "Temporal" do
     end
 
   end
+
+  context "recurring range selection" do
+    it "allows the user to search by recurring date time range" do
+      script = "edsc.models.searchModel.query.temporal_recurring(['1970-12-01T00:00:00Z','1975-12-31T00:00:00Z',335,365])"
+      page.evaluate_script(script)
+
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+    end
+
+    it "allows the user to clear the recurring date time search" do
+      script = "edsc.models.searchModel.query.temporal_recurring(['1970-12-01T00:00:00Z','1975-12-31T00:00:00Z',335,365])"
+      page.evaluate_script(script)
+
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+
+      click_link "Temporal"
+      click_link "Recurring"
+      page.find_by_id("temporal-recurring-clear").click
+
+      expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_no_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+    end
+
+  end
 end

@@ -6,6 +6,7 @@ class models.QueryModel
     @spatial = ko.observable("")
     @temporal_start = ko.observable("")
     @temporal_stop = ko.observable("")
+    @temporal_recurring = ko.observable("")
 
     @params = ko.computed(@_computeParams)
 
@@ -14,9 +15,11 @@ class models.QueryModel
     @spatial(null)
     models.searchModel.ui.spatialType.selectNone()
     @temporal_start('')
-    $('#temporal_start').val('')
     @temporal_stop('')
-    $('#temporal_stop').val('')
+    @temporal_recurring('')
+    $('.temporal').val('')
+    $('.temporal-recurring-year-range').slider('setValue', [1960, new Date().getFullYear()])
+    $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
 
   _computeParams: =>
     params = {}
@@ -29,7 +32,9 @@ class models.QueryModel
 
     temporal_start = @temporal_start()
     temporal_stop = @temporal_stop()
+    temporal_recurring = @temporal_recurring()
     params.temporal = [temporal_start,temporal_stop] if temporal_start?.length > 0
+    params.temporal = temporal_recurring if temporal_recurring?.length > 0
 
     params
 

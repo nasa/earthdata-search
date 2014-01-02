@@ -1,3 +1,5 @@
+@import "bourbon";
+
 #main-toolbar {
   a:link, a:visited {
     color: #fff;
@@ -15,6 +17,11 @@
   input {
     width: 200px;
   }
+}
+
+// Hide jquery.datetimepicker's year field
+.recurring-datetimepicker .xdsoft_year {
+  display: none;
 }
 
 .dropdown-links {
