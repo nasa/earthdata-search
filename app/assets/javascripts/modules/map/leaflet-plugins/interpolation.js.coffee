@@ -45,11 +45,9 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
     latLngs = latLngs.concat(latLngs[0])
 
     points = (proj(ll) for ll in latLngs)
-    depths = (0 for ll in latLngs)
 
     interpolatedLatLngs = [latLngs.shift()]
     interpolatedPoints = [points.shift()]
-    interpolatedDepths = [depths.shift()]
 
     depth0 = 0
     depth1 = 0

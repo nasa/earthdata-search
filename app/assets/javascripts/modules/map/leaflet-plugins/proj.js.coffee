@@ -35,11 +35,6 @@ ns.Proj = do (L, proj4) ->
       L.point((bounds[2] - bounds[0]) * zoomScale,
               Math.ceil((bounds[3] - bounds[1]) / projectedSize) * projectedSize * zoomScale)
 
-  # A Leaflet-compatible PlateCarreeProjection.  (x, y) <-> (lon, lat)
-  PlateCarreeProjection = L.Class.extend
-    project: (latLng) -> L.point(latLng.lng, latLng.lat)
-    unproject: (point, unbounded) -> L.latLng(point.y, point.x, unbounded)
-
   # A Leaflet-compatible projection which uses Proj4js to convert coordinates
   Proj4Projection = L.Class.extend
     # Initialize with a definition string
@@ -59,7 +54,7 @@ ns.Proj = do (L, proj4) ->
   epsg4326 = new GibsCRS('EPSG:4326',
                          [-180, -90, 180, 90],
                          360 / (TILE_SIZE + 128),
-                         new PlateCarreeProjection())
+                         L.Projection.LonLat);
 
   # EPSG:3413 (arctic / stereographic)
   epsg3413 = new GibsCRS('EPSG:3413',
