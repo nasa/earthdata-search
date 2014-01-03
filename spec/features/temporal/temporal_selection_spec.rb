@@ -18,6 +18,15 @@ describe "Temporal" do
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
+    it "allows the user to search up to the end date time" do
+      click_link "Temporal"
+      fill_in "End", with: "1970-12-01 00:00:00"
+      click_button "Apply"
+
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+    end
+
     it "allows the user to search from a start date time to and end date time" do
       click_link "Temporal"
       fill_in "Start", with: "1975-12-01 00:00:00"
