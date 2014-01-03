@@ -41,7 +41,7 @@ $(document).ready ->
   $('.temporal-recurring-year-range-value').text('1960 - ' + current_year)
 
   # Submit temporal range search
-  $(document).on 'click', '#temporal-range-submit', ->
+  updateTemporalRange = ->
     start_datetime = $('.temporal-range-start').val()
     stop_datetime = $('.temporal-range-stop').val()
     formatted_start_datetime = if start_datetime?.length > 0 then start_datetime.replace(' ','T') + 'Z' else ''
@@ -49,10 +49,13 @@ $(document).ready ->
 
     updateQueryModel('range-start', formatted_start_datetime)
     updateQueryModel('range-stop', formatted_stop_datetime)
+
+  $(document).on 'click', '#temporal-range-submit', ->
+    updateTemporalRange()
     $(this).parents('.dropdown').removeClass('open')
 
-    # Submit temporal recurring search
-  $(document).on 'click', '#temporal-recurring-submit', ->
+  # Submit temporal recurring search
+  updateTemporalRecurring = ->
     year_range = $('.temporal-recurring-year-range-value').text().split(' - ')
     start_datetime = $('.temporal-recurring-start').val()
     stop_datetime = $('.temporal-recurring-stop').val()
@@ -68,7 +71,15 @@ $(document).ready ->
     start_day = Math.floor((date_start_datetime - start_date_year) / one_day)
     stop_day = Math.floor((date_stop_datetime - stop_date_year) / one_day)
 
-    updateQueryModel('recurring', [formatted_start_datetime, formatted_stop_datetime, start_day, stop_day])
+    formatted_query = if formatted_start_datetime and formatted_stop_datetime
+      [formatted_start_datetime, formatted_stop_datetime, start_day, stop_day]
+    else
+      ''
+
+    updateQueryModel('recurring', formatted_query)
+
+  $(document).on 'click', '#temporal-recurring-submit', ->
+    updateTemporalRecurring()
     $(this).parents('.dropdown').removeClass('open')
 
   # Clear buttons within both temporal range and recurring dropdowns
@@ -90,3 +101,12 @@ $(document).ready ->
       $('.temporal-recurring-year-range').slider('setValue', [1960, current_year])
       $('.temporal-recurring-year-range-value').text('1960 - ' + current_year)
       updateQueryModel('recurring', '')
+
+  $(document).on 'click', '.temporal-dropdown-link', ->
+    if $(this).hasClass('temporal-range')
+      updateQueryModel('recurring', '')
+      updateTemporalRange()
+    else if $(this).hasClass('temporal-recurring')
+      updateQueryModel('range-start', '')
+      updateQueryModel('range-stop', '')
+      updateTemporalRecurring()
