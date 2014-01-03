@@ -32,6 +32,14 @@
                                  :class => 'temporal temporal-range-picker temporal-range-stop') %>
               <button id="clear_temporal_stop" class="button temporal-clear" type="button">Clear</button>
             </div>
+            <div class="button-row">
+              <button id="temporal-range-submit"
+                      class="button"
+                      title="Apply your selections" type="button">Apply</button>
+              <button id="temporal-range-clear"
+                      class="button temporal-clear temporal-range"
+                      title="Clear your selections" type="button">Clear</button>
+            </div>
           </div>
           <div id="temporal-recurring" class="tab-pane">
             <div class="datetime-field" id="temporal_start_button">
@@ -58,7 +66,7 @@
                       class="button"
                       title="Apply your selections" type="button">Apply</button>
               <button id="temporal-recurring-clear"
-                      class="button"
+                      class="button temporal-clear temporal-recurring"
                       title="Clear your selections" type="button">Clear</button>
             </div>
           </div>
