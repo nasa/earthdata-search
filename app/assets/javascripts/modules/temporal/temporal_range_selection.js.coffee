@@ -18,16 +18,22 @@ $(document).ready ->
     yearEnd: current_year,
     roundTime: 'round',
     onChangeDateTime: (dp,$input) ->
-      # queryField = if $input.hasClass('temporal-range-start') then 'range-start' else 'range-stop'
-      # updateQueryModel(queryField, $input.val().replace(' ','T') + 'Z')
-    onClose: (dp,$input) ->
-      # queryField = if $input.hasClass('temporal-range-start') then 'range-start' else 'range-stop'
-      # updateQueryModel(queryField, $input.val().replace(' ','T') + 'Z') if $input.val()?.length > 0
+      # Default minutes and seconds to 00
+      datetime = $input.val().split(":")
+      datetime[1] = "00"
+      datetime[2] = "00"
+      $input.val(datetime.join(":"))
   })
 
   $('.temporal-recurring-picker').datetimepicker({
     format: 'm-d H:i:s',
-    className: 'recurring-datetimepicker'
+    className: 'recurring-datetimepicker',
+    onChangeDateTime: (dp,$input) ->
+      # Default minutes and seconds to 00
+      datetime = $input.val().split(":")
+      datetime[1] = "00"
+      datetime[2] = "00"
+      $input.val(datetime.join(":"))
   })
 
   $('.temporal-recurring-year-range').slider({
