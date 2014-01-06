@@ -101,14 +101,14 @@ describe "Temporal" do
       click_button "Apply"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+      expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
 
       click_link "Temporal"
       click_link "Recurring"
       page.find_by_id("temporal-recurring-clear").click
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_no_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+      expect(page).to have_no_content("Amazon River Basin Precipitation, 1972-1992")
     end
 
   end
