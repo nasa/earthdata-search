@@ -1,10 +1,9 @@
-@import "bourbon";
 $button-bottom-gradient: #315880;
 $button-hover-gradient: #4a739b;
 $button-top-gradient: #5382b1;
 $button-text-shadow: #283a4e;
 
-.button {
+a.button {
   @include linear-gradient($button-top-gradient, $button-bottom-gradient);
   color: #fff;
   text-decoration: none;
@@ -14,6 +13,7 @@ $button-text-shadow: #283a4e;
   box-shadow: 0 0 3px #424242;
   border: 1px solid $button-text-shadow;
   text-shadow: 1px 1px 1px $button-text-shadow;
+  outline: none;
   
   &:hover {
     text-decoration: none;

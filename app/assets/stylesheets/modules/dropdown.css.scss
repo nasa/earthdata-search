@@ -24,34 +24,15 @@
   display: none;
 }
 
-.dropdown-links {
-  display: none;
-  margin: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-  z-index: 10000;
-  background-color: rgba(33,33,33,.95);
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
-  width: 140px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
-.dropdown-link {
-  display: block;
-  padding:0 .5em .5em;
-  text-decoration: none;
-
-  &:hover {
-    background: #000;
-    text-shadow: 0 0 10px #ffffcc;
-    @include transition (all 0.4s ease-in-out);
+// Override default Bootstrap tab CSS
+.nav-tabs {
+  
+  a {
+    background: none;
   }
-
-  &:first-child {
-    padding-top: .5em
+  
+  li.active a, li.active:hover a, li:hover a {
+    background: #111;
+    border-color: #111;
   }
 }
