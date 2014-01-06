@@ -16,7 +16,19 @@ $(document).ready ->
     format: 'Y-m-d H:i:s',
     yearStart: '1960',
     yearEnd: current_year,
-    roundTime: 'round',
+    onShow: (dp,$input) ->
+      if $input.hasClass('temporal-range-start') and $('input.temporal-range-stop').val()
+        this.setOptions({
+          minDate: false,
+          maxDate: $('input.temporal-range-stop').val().split(' ')[0],
+          formatDate: 'Y-m-d'
+        })
+      else if $input.hasClass('temporal-range-stop') and $('input.temporal-range-start').val()
+        this.setOptions({
+          maxDate: false,
+          minDate: $('input.temporal-range-start').val().split(' ')[0],
+          formatDate: 'Y-m-d'
+        })
     onChangeDateTime: (dp,$input) ->
       # Default minutes and seconds to 00
       datetime = $input.val().split(":")
@@ -28,6 +40,21 @@ $(document).ready ->
   $('.temporal-recurring-picker').datetimepicker({
     format: 'm-d H:i:s',
     className: 'recurring-datetimepicker',
+    yearStart: current_year,
+    yearEnd: current_year,
+    onShow: (dp,$input) ->
+      if $input.hasClass('temporal-recurring-start') and $('input.temporal-recurring-stop').val()
+        this.setOptions({
+          minDate: false,
+          maxDate: $('input.temporal-recurring-stop').val().split(' ')[0],
+          formatDate: 'm-d'
+        })
+      else if $input.hasClass('temporal-recurring-stop') and $('input.temporal-recurring-start').val()
+        this.setOptions({
+          maxDate: false,
+          minDate: $('input.temporal-recurring-start').val().split(' ')[0],
+          formatDate: 'm-d'
+        })
     onChangeDateTime: (dp,$input) ->
       # Default minutes and seconds to 00
       datetime = $input.val().split(":")
