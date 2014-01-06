@@ -6,26 +6,15 @@ $(document).on 'click', '.master-overlay-show-main', ->
   $(this).closest('.master-overlay').toggleClass('is-master-overlay-details-visible')
   return false;
 
-$(document).on 'click', '.master-overlay-parent .master-overlay-close', ->
-  $(this).closest('.master-overlay').toggleClass('is-master-overlay-parent-hidden')
-  return false;
-
 $(document).on 'click', '.master-overlay-main .master-overlay-close', ->
   $(this).closest('.master-overlay').toggleClass('is-hidden')
   return false;
 
-$(document).on 'click', '.master-overlay-show-parent', ->
-  $(this).closest('.master-overlay').removeClass('is-master-overlay-parent-hidden')
-  $(this).removeClass('master-overlay-show-parent')
-  $(this).addClass('master-overlay-hide-parent')
-  $(this).text('Hide Facets')
-  return false;
-
-$(document).on 'click', '.master-overlay-hide-parent', ->
-  $(this).closest('.master-overlay').addClass('is-master-overlay-parent-hidden')
-  $(this).removeClass('master-overlay-hide-parent')
-  $(this).addClass('master-overlay-show-parent')
-  $(this).text('Show Facets')
+$(document).on 'click', '.master-overlay-toggle-parent, .master-overlay-parent .master-overlay-close', ->
+  $overlay = $(this).closest('.master-overlay')
+  $overlay.toggleClass('is-master-overlay-parent-hidden')
+  text = if $overlay.hasClass('is-master-overlay-parent-hidden') then 'Show Facets' else 'Hide Facets'
+  $overlay.find('.master-overlay-toggle-parent').text(text)
   return false;
 
 $(document).on 'click', '.temporal-dropdown-button', ->
