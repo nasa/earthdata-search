@@ -3,7 +3,7 @@ $button-hover-gradient: #4a739b;
 $button-top-gradient: #5382b1;
 $button-text-shadow: #283a4e;
 
-a.button {
+a.button, button.button {
   @include linear-gradient($button-top-gradient, $button-bottom-gradient);
   color: #fff;
   text-decoration: none;
@@ -19,6 +19,11 @@ a.button {
     text-decoration: none;
     @include linear-gradient($button-hover-gradient, $button-bottom-gradient);
   }
+  
+  &.low-priority {
+    background: none;
+    border-color: #a2a2a2;
+  }
 }
 
 .dropdown-value {
@@ -33,4 +38,8 @@ a.button {
   border-top: 4px solid;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
+}
+
+.button-row {
+  margin: 10px 0 0 0;
 }
