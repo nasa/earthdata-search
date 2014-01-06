@@ -36,6 +36,8 @@ class models.QueryModel
     params.temporal = [temporal_start,temporal_stop] if temporal_start?.length > 0 or temporal_stop?.length > 0
     params.temporal = temporal_recurring if temporal_recurring?.length > 0
 
+    params.page_size = 20
+
     params
 
 

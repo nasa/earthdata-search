@@ -6,9 +6,9 @@ describe "Dataset keyword searches" do
   end
 
   shared_browser_session do
-    it "displays the first 10 dataset results" do
+    it "displays the first 20 dataset results" do
       fill_in "keywords", with: "A"
-      expect(page).to have_css('#dataset-results .panel-list-item', count: 10)
+      expect(page).to have_css('#dataset-results .panel-list-item', count: 20)
     end
 
     it "displays dataset results matching a full keyword" do
