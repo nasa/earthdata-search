@@ -14,28 +14,6 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
   interpolateGeodetic = (ll0, ll1) ->
     gcInterpolate(ll0, ll1)
 
-  # Dot product of two vectors
-  dotProduct = (p, q) ->
-    p.x * q.x + p.y * q.y
-
-  # Returns the distance between q and the line connecting p0 and p1
-  distance = (p0, p1, p) ->
-    return p0.distanceTo(p) if p0.equals(p1)
-
-    # http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line#Vector_formulation
-    a = p0
-    t = p0.distanceTo(p1)
-    n = p1.subtract(p0).divideBy(t)
-
-    # Intermediate term
-    a_p = a.subtract(p)
-
-    # Vector whose magnitude is the desired distance
-    v = a_p.subtract(n.multiplyBy(dotProduct(a_p, n)))
-
-    # Magnitude of the vector
-    Math.sqrt(v.x * v.x + v.y * v.y)
-
   # Given a path defined by latLngs, a projection defined by proj, and an interpolation
   # function that takes two pionts and returns their midpoint, finds a set of projected
   # (x, y) points defining the path between the points in the given projection
@@ -65,7 +43,7 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
       p = proj(ll)
       depth = Math.max(depth0, depth1) + 1
 
-      d = distance(p0, p1, p)
+      d = L.LineUtil.pointToSegmentDistance(p, p0, p1)
       if d < tolerance || depth >= maxDepth
         maxDepthReached = true if depth >= maxDepth
         interpolatedLatLngs.push(ll, latLngs.shift())

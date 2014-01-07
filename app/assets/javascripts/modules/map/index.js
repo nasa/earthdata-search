@@ -12,5 +12,6 @@
 //= require modules/map/layer_builder
 //= require modules/map/leaflet-plugins/projection_switcher
 //= require modules/map/leaflet-plugins/draw_errors
+//= require modules/map/leaflet-plugins/spherical_polygon
 //= require modules/map/spatial_selection
 //= require modules/map/map

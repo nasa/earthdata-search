@@ -182,4 +182,36 @@ ns.Map = do (window,
     # Log the mouse lat / lon to the console
     #map.startMouseDebugging()
 
+    # Debugging spherical polygons
+    #L.sphericalPolygon([[
+    #  [-45, 0],
+    #  [45, 45],
+    #  [0, -45]
+    #]]).addTo(map).bindPopup("I am a generic polygon.")
+
+    #L.sphericalPolygon([[
+    #  [-45, 0],
+    #  [45, 45],
+    #  [0, -45]
+    #], [[-10, 0], [10, 10], [0, -10]]]).addTo(map).bindPopup("I have a hole.")
+
+    L.sphericalPolygon([
+      [-45, 180],
+      [45, 120],
+      [0, -120]
+    ]).addTo(map).bindPopup("I cross the antimeridian.");
+
+    L.sphericalPolygon([
+      [60, -120],
+      [70, 0],
+      [80, 120]
+    ]).addTo(map).bindPopup("I contain the north pole.");
+
+    #L.sphericalPolygon([
+    #  [-60, -120],
+    #  [-70, 0],
+    #  [-80, 120]
+    #]).addTo(map).bindPopup("I contain the south pole.");
+
+
   exports = Map
