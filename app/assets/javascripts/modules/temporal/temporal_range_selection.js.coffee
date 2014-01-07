@@ -12,6 +12,36 @@ updateQueryModel = (type, value) ->
       query.temporal_recurring(value)
 
 $(document).ready ->
+  setMinMaxOptions = (datetimepicker, $input, temporal_type) ->
+    min_date = false
+    max_date = false
+    format = if temporal_type == "range" then 'Y-m-d' else 'm-d'
+
+    start_val = $('input.temporal-' + temporal_type + '-start').val()
+    stop_val = $('input.temporal-' + temporal_type + '-stop').val()
+
+    if $input.hasClass('temporal-' + temporal_type + '-start') and stop_val
+      max_date = stop_val.split(' ')[0]
+    else if $input.hasClass('temporal-' + temporal_type + '-stop') and start_val
+      min_date = start_val.split(' ')[0]
+
+    datetimepicker.setOptions({
+      minDate: min_date,
+      maxDate: max_date,
+      formatDate: format
+    })
+
+  updateMonthButtons = (month_label) ->
+    prev_button = $(month_label).siblings('button.xdsoft_prev')
+    next_button = $(month_label).siblings('button.xdsoft_next')
+    prev_button.show()
+    next_button.show()
+    month = month_label.find('span').text()
+    if month == "January"
+      prev_button.hide()
+    else if month == "December"
+      next_button.hide()
+
   $('.temporal-range-picker').datetimepicker({
     format: 'Y-m-d H:i:s',
     yearStart: '1960',
@@ -43,25 +73,6 @@ $(document).ready ->
     onChangeMonth: (dp,$input) ->
       updateMonthButtons($(this).find('.xdsoft_month'))
   })
-
-  setMinMaxOptions = (datetimepicker, $input, temporal_type) ->
-    min_date = false
-    max_date = false
-    format = if temporal_type == "range" then 'Y-m-d' else 'm-d'
-
-    start_val = $('input.temporal-' + temporal_type + '-start').val()
-    stop_val = $('input.temporal-' + temporal_type + '-stop').val()
-
-    if $input.hasClass('temporal-' + temporal_type + '-start') and stop_val
-      max_date = stop_val.split(' ')[0]
-    else if $input.hasClass('temporal-' + temporal_type + '-stop') and start_val
-      min_date = start_val.split(' ')[0]
-
-    datetimepicker.setOptions({
-      minDate: min_date,
-      maxDate: max_date,
-      formatDate: format
-    })
 
   $('.temporal-recurring-year-range').slider({
     min: 1960,
@@ -146,17 +157,6 @@ $(document).ready ->
       updateQueryModel('range-start', '')
       updateQueryModel('range-stop', '')
       updateTemporalRecurring()
-
-  updateMonthButtons = (month_label) ->
-    prev_button = $(month_label).siblings('button.xdsoft_prev')
-    next_button = $(month_label).siblings('button.xdsoft_next')
-    prev_button.show()
-    next_button.show()
-    month = month_label.find('span').text()
-    if month == "January"
-      prev_button.hide()
-    else if month == "December"
-      next_button.hide()
 
   $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker .xdsoft_today_button', ->
     updateMonthButtons($(this).siblings('.xdsoft_month'))
