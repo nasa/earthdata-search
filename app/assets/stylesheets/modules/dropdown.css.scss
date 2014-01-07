@@ -28,6 +28,19 @@
   display: none;
 }
 
+input.day-of-year-input {
+  width: 100px;
+}
+
+.day-of-year-picker {
+  margin-left: 8px;
+}
+
+.temporal-error {
+  display: none;
+  color: red;
+}
+
 // Override default Bootstrap tab CSS
 .nav-tabs {
   border-color: #000;

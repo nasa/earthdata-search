@@ -22,19 +22,20 @@
               <label for="temporal_start">Start</label>
               <%= text_field_tag(:temporal_start, params[:temporal_start],
                                  :placeholder => 'YYYY-MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-range-picker temporal-range-start') %>
+                                 :class => 'temporal temporal-range-picker temporal-start temporal-range-start') %>
               <button id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
               <label for="temporal_stop">End</label>
               <%= text_field_tag(:temporal_stop, params[:temporal_end],
                                  :placeholder => 'YYYY-MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-range-picker temporal-range-stop') %>
+                                 :class => 'temporal temporal-range-picker temporal-stop temporal-range-stop') %>
               <button id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
+            <div class="temporal-error">Start must be no later than End</div>
             <div class="button-row">
               <button id="temporal-range-submit"
-                      class="button"
+                      class="button submit"
                       title="Apply your selections" type="button">Apply</button>
               <button id="temporal-range-clear"
                       class="button temporal-clear temporal-range low-priority"
@@ -46,14 +47,14 @@
               <label for="temporal_start">Start</label>
               <%= text_field_tag(:temporal_start, params[:temporal_start],
                                  :placeholder => 'MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-recurring-picker temporal-recurring-start') %>
+                                 :class => 'temporal temporal-recurring-picker temporal-start temporal-recurring-start') %>
               <button id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
               <label for="temporal_stop">End</label>
               <%= text_field_tag(:temporal_stop, params[:temporal_end],
                                  :placeholder => 'MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-recurring-picker temporal-recurring-stop') %>
+                                 :class => 'temporal temporal-recurring-picker temporal-stop temporal-recurring-stop') %>
               <button id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="range-slider">
@@ -62,9 +63,10 @@
               <p><span class="temporal-recurring-year-range-value"></span></p>
 
             </div>
+            <div class="temporal-error">Start must be no later than End</div>
             <div class="button-row">
               <button id="temporal-recurring-submit"
-                      class="button"
+                      class="button submit"
                       title="Apply your selections" type="button">Apply</button>
               <button id="temporal-recurring-clear"
                       class="button temporal-clear temporal-recurring low-priority"
@@ -86,7 +88,7 @@
     </ul>
   </div>
   <a href="#datasets-overlay" class="master-overlay-show button"><i class="fa fa-search"></i> Browse All Data</a>
-  <a href="#" class="button" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
+  <a href="#" class="button clear-filters" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
 <% end %>
 
 <div class="master-overlay homepage-search" id="datasets-overlay">

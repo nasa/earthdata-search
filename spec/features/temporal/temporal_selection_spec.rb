@@ -75,6 +75,15 @@ describe "Temporal" do
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
+    it "validates incorrect user input" do
+      click_link "Temporal"
+      fill_in "Start", with: "1979-12-10 00:00:00"
+      fill_in "End", with: "1979-12-01 00:00:00"
+      click_button "Apply"
+
+      expect(page).to have_content("Start must be no later than End")
+    end
+
   end
 
   context "recurring range selection" do
@@ -109,6 +118,16 @@ describe "Temporal" do
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("Amazon River Basin Precipitation, 1972-1992")
+    end
+
+    it "validates incorrect user input" do
+      click_link "Temporal"
+      click_link "Recurring"
+      fill_in "Start", with: "12-10 00:00:00"
+      fill_in "End", with: "12-01 00:00:00"
+      click_button "Apply"
+
+      expect(page).to have_content("Start must be no later than End")
     end
 
   end

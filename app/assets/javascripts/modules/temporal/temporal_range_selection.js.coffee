@@ -11,7 +11,22 @@ updateQueryModel = (type, value) ->
     when 'recurring'
       query.temporal_recurring(value)
 
+Date::formatDateTime = ->
+  @getFullYear() + "-" + String.leftPad(@getMonth() + 1, 2, "0") + "-" + String.leftPad(@getDate(), 2, "0") + " " + String.leftPad(@getHours(), 2, "0") + ":" + String.leftPad(@getMinutes(), 2, "0") + ":" + String.leftPad(@getSeconds(), 2, "0")
+
 $(document).ready ->
+  validateTemporalInputs = ->
+    start = $(".temporal-start:visible").val()
+    end = $(".temporal-stop:visible").val()
+
+    error = $(".temporal-dropdown .tab-pane.active .temporal-error")
+
+    if start == "" or end == "" or start <= end
+      error.hide()
+    else
+      error.show()
+      # error.siblings().find(".submit.button").attr("disabled","disabled")
+
   setMinMaxOptions = (datetimepicker, $input, temporal_type) ->
     min_date = false
     max_date = false
@@ -42,18 +57,62 @@ $(document).ready ->
     else if month == "December"
       next_button.hide()
 
+  addDayOfYear = (picker, input) ->
+    if picker.find('.day-of-year-picker')?.length == 0
+      day_of_year_div = $("<div class='day-of-year-picker'>
+        <label for='day-of-year-input'>Day of Year:</label>
+        <input id='day-of-year-input' class='day-of-year-input' type='text' placeholder='YYYY-DDD' >
+        <button id='day-of-year-submit' class='button' data-input='" + input.attr("id") + "'>Set</button>
+        </div>")
+      day_of_year_div.appendTo(picker)
+
+  parseOrdinal = (value) ->
+    match = /(\d{4})-(\d{3})/.exec(value)
+    return null  unless match # Date is in the wrong format
+    year = parseInt(match[1], 10)
+    day = parseInt(match[2], 10)
+    date = new Date(year, 0, day)
+    return null  unless date.getFullYear() is year # Date is higher than the number of days in the year
+    date.formatDateTime()
+
+  findDayOfYear = (date) ->
+    one_day = 1000 * 60 * 60 * 24
+    date_year = new Date( date.getFullYear(), 0, 0)
+    day = Math.floor((date - date_year) / one_day).toString()
+    day = "0" + day  while day.length < 3
+    day
+
+  populateDayOfYear = (picker, date) ->
+    day = findDayOfYear(date)
+    $(picker).find(".day-of-year-input").val(date.getFullYear() + '-' + day)
+
+  $(document).on 'change', '#day-of-year-submit', ->
+    value = $(this).prev().val()
+    date = parseOrdinal(value)
+    if date
+      $("#" + $(this).attr("data-input") + ":visible").val(date)
+      $(this).parents('.xdsoft_datetimepicker').hide()
+      validateTemporalInputs()
+
   $('.temporal-range-picker').datetimepicker({
     format: 'Y-m-d H:i:s',
     yearStart: '1960',
     yearEnd: current_year,
     onShow: (dp,$input) ->
       setMinMaxOptions(this, $input, 'range')
+      populateDayOfYear(this, new Date($input.val())) if $input.val()
     onChangeDateTime: (dp,$input) ->
       # Default minutes and seconds to 00
       datetime = $input.val().split(":")
       datetime[1] = "00"
       datetime[2] = "00"
       $input.val(datetime.join(":"))
+
+      populateDayOfYear(this, new Date($input.val())) if $input.val()
+
+      validateTemporalInputs()
+    onGenerate: (dp,$input) ->
+      addDayOfYear(this, $input)
   })
 
   $('.temporal-recurring-picker').datetimepicker({
@@ -70,6 +129,8 @@ $(document).ready ->
       datetime[1] = "00"
       datetime[2] = "00"
       $input.val(datetime.join(":"))
+
+      validateTemporalInputs()
     onChangeMonth: (dp,$input) ->
       updateMonthButtons($(this).find('.xdsoft_month'))
   })
@@ -89,45 +150,50 @@ $(document).ready ->
 
   # Submit temporal range search
   updateTemporalRange = ->
-    start_datetime = $('.temporal-range-start').val()
-    stop_datetime = $('.temporal-range-stop').val()
-    formatted_start_datetime = formatDateTime(start_datetime)
-    formatted_stop_datetime = formatDateTime(stop_datetime)
+    if $('#temporal-date-range .temporal-error').is(":hidden")
+      start_datetime = $('.temporal-range-start').val()
+      stop_datetime = $('.temporal-range-stop').val()
+      formatted_start_datetime = formatDateTime(start_datetime)
+      formatted_stop_datetime = formatDateTime(stop_datetime)
 
-    updateQueryModel('range-start', formatted_start_datetime)
-    updateQueryModel('range-stop', formatted_stop_datetime)
+      updateQueryModel('range-start', formatted_start_datetime)
+      updateQueryModel('range-stop', formatted_stop_datetime)
+      true
+    else
+      false
 
   $(document).on 'click', '#temporal-range-submit', ->
-    updateTemporalRange()
-    $(this).parents('.dropdown').removeClass('open')
+    if updateTemporalRange()
+      $(this).parents('.dropdown').removeClass('open')
 
   # Submit temporal recurring search
   updateTemporalRecurring = ->
-    year_range = $('.temporal-recurring-year-range-value').text().split(' - ')
-    start_datetime = $('.temporal-recurring-start').val()
-    stop_datetime = $('.temporal-recurring-stop').val()
-    formatted_start_datetime = formatDateTime(year_range[0] + '-' + start_datetime)
-    formatted_stop_datetime = formatDateTime(year_range[1] + '-' + stop_datetime)
-    date_start_datetime = new Date(formatted_start_datetime)
-    date_stop_datetime = new Date(formatted_stop_datetime)
+    if $('#temporal-recurring .temporal-error').is(":hidden")
+      year_range = $('.temporal-recurring-year-range-value').text().split(' - ')
+      start_datetime = $('.temporal-recurring-start').val()
+      stop_datetime = $('.temporal-recurring-stop').val()
+      formatted_start_datetime = formatDateTime(year_range[0] + '-' + start_datetime)
+      formatted_stop_datetime = formatDateTime(year_range[1] + '-' + stop_datetime)
+      date_start_datetime = new Date(formatted_start_datetime)
+      date_stop_datetime = new Date(formatted_stop_datetime)
 
-    # find day of the year selected
-    one_day = 1000 * 60 * 60 * 24
-    start_date_year = new Date( date_start_datetime.getFullYear(), 0, 0)
-    stop_date_year = new Date( date_stop_datetime.getFullYear(), 0, 0)
-    start_day = Math.floor((date_start_datetime - start_date_year) / one_day)
-    stop_day = Math.floor((date_stop_datetime - stop_date_year) / one_day)
+      # find day of the year selected
+      start_day = findDayOfYear(date_start_datetime)
+      stop_day = findDayOfYear(date_stop_datetime)
 
-    formatted_query = if start_datetime and stop_datetime
-      [formatted_start_datetime, formatted_stop_datetime, start_day, stop_day]
+      formatted_query = if start_datetime and stop_datetime
+        [formatted_start_datetime, formatted_stop_datetime, start_day, stop_day]
+      else
+        ''
+
+      updateQueryModel('recurring', formatted_query)
+      true
     else
-      ''
-
-    updateQueryModel('recurring', formatted_query)
+      false
 
   $(document).on 'click', '#temporal-recurring-submit', ->
-    updateTemporalRecurring()
-    $(this).parents('.dropdown').removeClass('open')
+    if updateTemporalRecurring()
+      $(this).parents('.dropdown').removeClass('open')
 
   # Clear buttons within both temporal range and recurring dropdowns
   $(document).on 'click', '.temporal-clear', ->
@@ -149,6 +215,11 @@ $(document).ready ->
       $('.temporal-recurring-year-range-value').text('1960 - ' + current_year)
       updateQueryModel('recurring', '')
 
+    validateTemporalInputs()
+
+  $(document).on 'click', '.clear-filters.button', ->
+    validateTemporalInputs()
+
   $(document).on 'click', '.temporal-dropdown-link', ->
     if $(this).hasClass('temporal-range')
       updateQueryModel('recurring', '')
@@ -166,3 +237,9 @@ $(document).ready ->
 
   $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker button.xdsoft_next', ->
     updateMonthButtons($(this).siblings('.xdsoft_month'))
+
+  $(document).on 'click', 'input.day-of-year-input', ->
+    $(this).focus()
+
+  $('.temporal').blur ->
+    validateTemporalInputs()
