@@ -17,21 +17,7 @@ $(document).ready ->
     yearStart: '1960',
     yearEnd: current_year,
     onShow: (dp,$input) ->
-      min_date = false
-      max_date = false
-      start_val = $('input.temporal-range-start').val()
-      stop_val = $('input.temporal-range-stop').val()
-
-      if $input.hasClass('temporal-range-start') and stop_val
-        max_date = stop_val.split(' ')[0]
-      else if $input.hasClass('temporal-range-stop') and start_val
-        min_date = start_val.split(' ')[0]
-
-      this.setOptions({
-        minDate: min_date,
-        maxDate: max_date,
-        formatDate: 'Y-m-d'
-      })
+      setMinMaxOptions(this, $input, 'range')
     onChangeDateTime: (dp,$input) ->
       # Default minutes and seconds to 00
       datetime = $input.val().split(":")
@@ -47,22 +33,7 @@ $(document).ready ->
     yearEnd: current_year,
     onShow: (dp,$input) ->
       updateMonthButtons($(this).find('.xdsoft_month'))
-
-      min_date = false
-      max_date = false
-      start_val = $('input.temporal-recurring-start').val()
-      stop_val = $('input.temporal-recurring-stop').val()
-
-      if $input.hasClass('temporal-recurring-start') and stop_val
-          max_date = stop_val.split(' ')[0]
-      else if $input.hasClass('temporal-recurring-stop') and start_val
-          min_date = start_val.split(' ')[0]
-
-      this.setOptions({
-        minDate: min_date,
-        maxDate: max_date,
-        formatDate: 'm-d'
-      })
+      setMinMaxOptions(this, $input, 'recurring')
     onChangeDateTime: (dp,$input) ->
       # Default minutes and seconds to 00
       datetime = $input.val().split(":")
@@ -72,6 +43,25 @@ $(document).ready ->
     onChangeMonth: (dp,$input) ->
       updateMonthButtons($(this).find('.xdsoft_month'))
   })
+
+  setMinMaxOptions = (datetimepicker, $input, temporal_type) ->
+    min_date = false
+    max_date = false
+    format = if temporal_type == "range" then 'Y-m-d' else 'm-d'
+
+    start_val = $('input.temporal-' + temporal_type + '-start').val()
+    stop_val = $('input.temporal-' + temporal_type + '-stop').val()
+
+    if $input.hasClass('temporal-' + temporal_type + '-start') and stop_val
+      max_date = stop_val.split(' ')[0]
+    else if $input.hasClass('temporal-' + temporal_type + '-stop') and start_val
+      min_date = start_val.split(' ')[0]
+
+    datetimepicker.setOptions({
+      minDate: min_date,
+      maxDate: max_date,
+      formatDate: format
+    })
 
   $('.temporal-recurring-year-range').slider({
     min: 1960,
