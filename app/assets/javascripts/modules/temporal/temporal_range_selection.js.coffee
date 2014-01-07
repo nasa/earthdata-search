@@ -17,18 +17,26 @@ $(document).ready ->
     yearStart: '1960',
     yearEnd: current_year,
     onShow: (dp,$input) ->
-      if $input.hasClass('temporal-range-start') and $('input.temporal-range-stop').val()
-        this.setOptions({
-          minDate: false,
-          maxDate: $('input.temporal-range-stop').val().split(' ')[0],
-          formatDate: 'Y-m-d'
-        })
-      else if $input.hasClass('temporal-range-stop') and $('input.temporal-range-start').val()
-        this.setOptions({
-          maxDate: false,
-          minDate: $('input.temporal-range-start').val().split(' ')[0],
-          formatDate: 'Y-m-d'
-        })
+      if $input.hasClass('temporal-range-start')
+        if $('input.temporal-range-stop').val()
+          min_date = false
+          max_date = $('input.temporal-range-stop').val().split(' ')[0]
+        else
+          min_date = false
+          max_date = false
+      else if $input.hasClass('temporal-range-stop')
+        if $('input.temporal-range-start').val()
+          min_date = $('input.temporal-range-start').val().split(' ')[0]
+          max_date = false
+        else
+          min_date = false
+          max_date = false
+
+      this.setOptions({
+        minDate: min_date,
+        maxDate: max_date,
+        formatDate: 'Y-m-d'
+      })
     onChangeDateTime: (dp,$input) ->
       # Default minutes and seconds to 00
       datetime = $input.val().split(":")
@@ -43,24 +51,36 @@ $(document).ready ->
     yearStart: current_year,
     yearEnd: current_year,
     onShow: (dp,$input) ->
-      if $input.hasClass('temporal-recurring-start') and $('input.temporal-recurring-stop').val()
-        this.setOptions({
-          minDate: false,
-          maxDate: $('input.temporal-recurring-stop').val().split(' ')[0],
-          formatDate: 'm-d'
-        })
-      else if $input.hasClass('temporal-recurring-stop') and $('input.temporal-recurring-start').val()
-        this.setOptions({
-          maxDate: false,
-          minDate: $('input.temporal-recurring-start').val().split(' ')[0],
-          formatDate: 'm-d'
-        })
+      updateMonthButtons($(this).find('.xdsoft_month'))
+
+      if $input.hasClass('temporal-recurring-start')
+        if $('input.temporal-recurring-stop').val()
+          min_date = false
+          max_date = $('input.temporal-recurring-stop').val().split(' ')[0]
+        else
+          min_date = false
+          max_date = false
+      else if $input.hasClass('temporal-recurring-stop')
+        if $('input.temporal-recurring-start').val()
+          min_date = $('input.temporal-recurring-start').val().split(' ')[0]
+          max_date = false
+        else
+          min_date = false
+          max_date = false
+
+      this.setOptions({
+        minDate: min_date,
+        maxDate: max_date,
+        formatDate: 'm-d'
+      })
     onChangeDateTime: (dp,$input) ->
       # Default minutes and seconds to 00
       datetime = $input.val().split(":")
       datetime[1] = "00"
       datetime[2] = "00"
       $input.val(datetime.join(":"))
+    onChangeMonth: (dp,$input) ->
+      updateMonthButtons($(this).find('.xdsoft_month'))
   })
 
   $('.temporal-recurring-year-range').slider({
@@ -143,3 +163,26 @@ $(document).ready ->
       updateQueryModel('range-start', '')
       updateQueryModel('range-stop', '')
       updateTemporalRecurring()
+
+  updateMonthButtons = (month_label) ->
+    prev_button = $(month_label).siblings('button.xdsoft_prev')
+    next_button = $(month_label).siblings('button.xdsoft_next')
+    month = month_label.find('span').text()
+    if month == "January"
+      prev_button.hide()
+      next_button.show()
+    else if month == "December"
+      prev_button.show()
+      next_button.hide()
+    else
+      prev_button.show()
+      next_button.show()
+
+  $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker .xdsoft_today_button', ->
+    updateMonthButtons($(this).siblings('.xdsoft_month'))
+
+  $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker button.xdsoft_prev', ->
+    updateMonthButtons($(this).siblings('.xdsoft_month'))
+
+  $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker button.xdsoft_next', ->
+    updateMonthButtons($(this).siblings('.xdsoft_month'))
