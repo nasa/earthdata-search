@@ -5,7 +5,7 @@
     </p>
   <% end %>
   <div class="dropdown">
-    <a href="#" class="button dropdown-button temporal-dropdown-button">
+    <a href="#" class="button temporal-dropdown-button">
       <i class="fa fa-clock-o"></i>
       <span class="dropdown-value">Temporal</span>
       <i class="fa fa-caret-down dropdown-icon"></i>
@@ -13,8 +13,8 @@
     <ul class="dropdown-menu temporal-dropdown">
       <li>
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#temporal-date-range" data-toggle="tab">Date Range</a></li>
-          <li><a href="#temporal-recurring" data-toggle="tab">Recurring</a></li>
+          <li class="temporal-dropdown-link temporal-range active"><a href="#temporal-date-range" data-toggle="tab">Date Range</a></li>
+          <li class="temporal-dropdown-link temporal-recurring"><a href="#temporal-recurring" data-toggle="tab">Recurring</a></li>
         </ul>
         <div class="tab-content">
           <div id="temporal-date-range" class="tab-pane active">
@@ -23,14 +23,22 @@
               <%= text_field_tag(:temporal_start, params[:temporal_start],
                                  :placeholder => 'YYYY-MM-DD HH:MM:SS',
                                  :class => 'temporal temporal-range-picker temporal-range-start') %>
-              <button id="clear_temporal_start" class="button temporal-clear" type="button">Clear</button>
+              <button id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
               <label for="temporal_stop">End</label>
               <%= text_field_tag(:temporal_stop, params[:temporal_end],
                                  :placeholder => 'YYYY-MM-DD HH:MM:SS',
                                  :class => 'temporal temporal-range-picker temporal-range-stop') %>
-              <button id="clear_temporal_stop" class="button temporal-clear" type="button">Clear</button>
+              <button id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
+            </div>
+            <div class="button-row">
+              <button id="temporal-range-submit"
+                      class="button"
+                      title="Apply your selections" type="button">Apply</button>
+              <button id="temporal-range-clear"
+                      class="button temporal-clear temporal-range low-priority"
+                      title="Clear your selections" type="button">Clear</button>
             </div>
           </div>
           <div id="temporal-recurring" class="tab-pane">
@@ -39,26 +47,27 @@
               <%= text_field_tag(:temporal_start, params[:temporal_start],
                                  :placeholder => 'MM-DD HH:MM:SS',
                                  :class => 'temporal temporal-recurring-picker temporal-recurring-start') %>
-              <button id="clear_temporal_start" class="button temporal-clear" type="button">Clear</button>
+              <button id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
               <label for="temporal_stop">End</label>
               <%= text_field_tag(:temporal_stop, params[:temporal_end],
                                  :placeholder => 'MM-DD HH:MM:SS',
                                  :class => 'temporal temporal-recurring-picker temporal-recurring-stop') %>
-              <button id="clear_temporal_stop" class="button temporal-clear" type="button">Clear</button>
+              <button id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
-            <div>
-              <span class="temporal-recurring-year-range-value"></span>
-              <label for="temporal-slider">Year Range</label>
-              <input id="temporal-slider" class="temporal-recurring-year-range" type="text" >
+            <div class="range-slider">
+                <label for="temporal-slider">Range</label>
+              <input id="temporal-slider" class="temporal-recurring-year-range" type="text">
+              <p><span class="temporal-recurring-year-range-value"></span></p>
+
             </div>
             <div class="button-row">
               <button id="temporal-recurring-submit"
                       class="button"
                       title="Apply your selections" type="button">Apply</button>
               <button id="temporal-recurring-clear"
-                      class="button"
+                      class="button temporal-clear temporal-recurring low-priority"
                       title="Clear your selections" type="button">Clear</button>
             </div>
           </div>
@@ -94,7 +103,7 @@
           <a class="master-overlay-close master-overlay-main-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
           <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
           <p>
-            <a href="#" class='master-overlay-hide-parent'>Hide Facets</a>
+            <a href="#" class='master-overlay-toggle-parent'>Hide Facets</a>
           </p>
         </header>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">

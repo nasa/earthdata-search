@@ -45,11 +45,14 @@ describe "Dataset results" do
     end
 
     it "hides and shows facets" do
-      expect(page).to have_css('.master-overlay-hide-parent')
+      expect(page).to have_text('Hide Facets')
       click_link 'Hide Facets'
-      expect(page).to have_css('.master-overlay-show-parent')
+      expect(page).to have_text('Show Facets')
       click_link 'Show Facets'
-      expect(page).to have_css('.master-overlay-hide-parent')
+      expect(page).to have_text('Hide Facets')
+
+      page.find('.master-overlay-parent-close').click
+      expect(page).to have_text('Show Facets')
     end
   end
 end

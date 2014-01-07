@@ -11,6 +11,10 @@
   position: relative;
 }
 
+.dropdown-menu {
+  background-color: rgba(20,20,20,.9);
+}
+
 .temporal-dropdown {
   width: 350px;
 
@@ -24,34 +28,63 @@
   display: none;
 }
 
-.dropdown-links {
-  display: none;
-  margin: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-  z-index: 10000;
-  background-color: rgba(33,33,33,.95);
+// Override default Bootstrap tab CSS
+.nav-tabs {
+  border-color: #000;
+  margin: 15px 15px 0 15px;
+  
+  a {
+    background: none;
+  }
+  
+  li.active a, li.active:hover a {
+    background: #333;
+    border-color: #000;
+    border-bottom-color: #333;
+  }
+  
+  li:hover a {
+    background: #222;
+    border-color: #222;
+  }
+}
+
+.tab-content {
+  margin: 0 15px 12px 15px;
+  padding: 10px;
+  background: #333;
   border-left: 1px solid #000;
   border-right: 1px solid #000;
   border-bottom: 1px solid #000;
-  width: 140px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
-
-.dropdown-link {
-  display: block;
-  padding:0 .5em .5em;
-  text-decoration: none;
-
-  &:hover {
-    background: #000;
-    text-shadow: 0 0 10px #ffffcc;
-    @include transition (all 0.4s ease-in-out);
+  
+  label {
+    display: inline-block;
+    font-weight: bold;
+    width: 60px;
   }
-
-  &:first-child {
-    padding-top: .5em
+  
+  input[type="text"] {
+    display: inline-block;
+    width: 160px;
+    margin: 0;
+  }
+  
+  .range-slider {
+    margin-top: 10px;
+    
+    #temporal-slider {
+      display: none;
+    }
+    
+    input {
+      width: 210px;
+    }
+  }
+  
+  .slider {
+    width: 110px;
+  }
+  .slider.slider-horizontal {
+    width: 110px;
   }
 }
