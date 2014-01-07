@@ -17,20 +17,15 @@ $(document).ready ->
     yearStart: '1960',
     yearEnd: current_year,
     onShow: (dp,$input) ->
-      if $input.hasClass('temporal-range-start')
-        if $('input.temporal-range-stop').val()
-          min_date = false
-          max_date = $('input.temporal-range-stop').val().split(' ')[0]
-        else
-          min_date = false
-          max_date = false
-      else if $input.hasClass('temporal-range-stop')
-        if $('input.temporal-range-start').val()
-          min_date = $('input.temporal-range-start').val().split(' ')[0]
-          max_date = false
-        else
-          min_date = false
-          max_date = false
+      min_date = false
+      max_date = false
+      start_val = $('input.temporal-range-start').val()
+      stop_val = $('input.temporal-range-stop').val()
+
+      if $input.hasClass('temporal-range-start') and stop_val
+        max_date = stop_val.split(' ')[0]
+      else if $input.hasClass('temporal-range-stop') and start_val
+        min_date = start_val.split(' ')[0]
 
       this.setOptions({
         minDate: min_date,
@@ -53,20 +48,15 @@ $(document).ready ->
     onShow: (dp,$input) ->
       updateMonthButtons($(this).find('.xdsoft_month'))
 
-      if $input.hasClass('temporal-recurring-start')
-        if $('input.temporal-recurring-stop').val()
-          min_date = false
-          max_date = $('input.temporal-recurring-stop').val().split(' ')[0]
-        else
-          min_date = false
-          max_date = false
-      else if $input.hasClass('temporal-recurring-stop')
-        if $('input.temporal-recurring-start').val()
-          min_date = $('input.temporal-recurring-start').val().split(' ')[0]
-          max_date = false
-        else
-          min_date = false
-          max_date = false
+      min_date = false
+      max_date = false
+      start_val = $('input.temporal-recurring-start').val()
+      stop_val = $('input.temporal-recurring-stop').val()
+
+      if $input.hasClass('temporal-recurring-start') and stop_val
+          max_date = stop_val.split(' ')[0]
+      else if $input.hasClass('temporal-recurring-stop') and start_val
+          min_date = start_val.split(' ')[0]
 
       this.setOptions({
         minDate: min_date,
@@ -93,12 +83,15 @@ $(document).ready ->
 
   $('.temporal-recurring-year-range-value').text('1960 - ' + current_year)
 
+  formatDateTime = (datetime) ->
+    if datetime?.length > 0 then datetime.replace(' ','T') + 'Z' else ''
+
   # Submit temporal range search
   updateTemporalRange = ->
     start_datetime = $('.temporal-range-start').val()
     stop_datetime = $('.temporal-range-stop').val()
-    formatted_start_datetime = if start_datetime?.length > 0 then start_datetime.replace(' ','T') + 'Z' else ''
-    formatted_stop_datetime = if stop_datetime?.length > 0 then stop_datetime.replace(' ','T') + 'Z' else ''
+    formatted_start_datetime = formatDateTime(start_datetime)
+    formatted_stop_datetime = formatDateTime(stop_datetime)
 
     updateQueryModel('range-start', formatted_start_datetime)
     updateQueryModel('range-stop', formatted_stop_datetime)
@@ -112,8 +105,8 @@ $(document).ready ->
     year_range = $('.temporal-recurring-year-range-value').text().split(' - ')
     start_datetime = $('.temporal-recurring-start').val()
     stop_datetime = $('.temporal-recurring-stop').val()
-    formatted_start_datetime = if start_datetime?.length > 0 then year_range[0] + '-' + start_datetime.replace(' ','T') + 'Z' else ''
-    formatted_stop_datetime = if stop_datetime?.length > 0 then year_range[1] + '-' + stop_datetime.replace(' ','T') + 'Z' else ''
+    formatted_start_datetime = formatDateTime(year_range[0] + '-' + start_datetime)
+    formatted_stop_datetime = formatDateTime(year_range[1] + '-' + stop_datetime)
     date_start_datetime = new Date(formatted_start_datetime)
     date_stop_datetime = new Date(formatted_stop_datetime)
 
@@ -124,7 +117,7 @@ $(document).ready ->
     start_day = Math.floor((date_start_datetime - start_date_year) / one_day)
     stop_day = Math.floor((date_stop_datetime - stop_date_year) / one_day)
 
-    formatted_query = if formatted_start_datetime and formatted_stop_datetime
+    formatted_query = if start_datetime and stop_datetime
       [formatted_start_datetime, formatted_stop_datetime, start_day, stop_day]
     else
       ''
@@ -167,16 +160,13 @@ $(document).ready ->
   updateMonthButtons = (month_label) ->
     prev_button = $(month_label).siblings('button.xdsoft_prev')
     next_button = $(month_label).siblings('button.xdsoft_next')
+    prev_button.show()
+    next_button.show()
     month = month_label.find('span').text()
     if month == "January"
       prev_button.hide()
-      next_button.show()
     else if month == "December"
-      prev_button.show()
       next_button.hide()
-    else
-      prev_button.show()
-      next_button.show()
 
   $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker .xdsoft_today_button', ->
     updateMonthButtons($(this).siblings('.xdsoft_month'))
