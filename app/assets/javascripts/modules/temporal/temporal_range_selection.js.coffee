@@ -12,6 +12,8 @@ updateQueryModel = (type, value) ->
     when 'recurring'
       query.temporal_recurring(value)
 
+  window.edsc.models.searchModel.ui.temporal.setTemporal(query, type, value)
+
 $(document).ready ->
   validateTemporalInputs = ->
     start = $(".temporal-start:visible").val()

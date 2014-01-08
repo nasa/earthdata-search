@@ -14,6 +14,7 @@ class models.QueryModel
     @keywords(null)
     @spatial(null)
     models.searchModel.ui.spatialType.selectNone()
+    models.searchModel.ui.temporal.selectNone()
     @temporal_start('')
     @temporal_stop('')
     @temporal_recurring('')
@@ -131,6 +132,31 @@ class models.SpatialType
     @name('Polygon')
     @icon ('edsc-icon-poly-open')
 
+class models.Temporal
+  constructor:  ->
+    @start = ko.observable("")
+    @stop = ko.observable("")
+    @years = ko.observable("")
+
+  _formatDate: (date) ->
+    date.replace("T", " ").replace("Z", "")
+
+  selectNone: =>
+      @start("")
+      @stop("")
+      @years("")
+
+  setTemporal: (@query, type, value) =>
+    if type == "recurring" and value != ""
+      recurring = @query.temporal_recurring()
+      @start(@_formatDate(recurring[0].substring(5)))
+      @stop(@_formatDate(recurring[1].substring(5)))
+      @years(recurring[0].substring(0,4) + " - " + recurring[1].substring(0,4))
+    else
+      @start(@_formatDate(@query.temporal_start()))
+      @stop(@_formatDate(@query.temporal_stop()))
+      @years("")
+
 class models.SearchModel
   constructor: ->
     @query = new models.QueryModel()
@@ -138,6 +164,7 @@ class models.SearchModel
     @datasetsList = new models.DatasetsListModel(@query, @datasets)
     @ui =
       spatialType: new models.SpatialType()
+      temporal: new models.Temporal()
     @bindingsLoaded = ko.observable(false)
 
     ko.computed(@_computeDatasetResults).extend(throttle: 500)
