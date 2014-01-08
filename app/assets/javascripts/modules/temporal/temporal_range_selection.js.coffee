@@ -169,8 +169,8 @@ $(document).ready ->
       year_range = $('.temporal-recurring-year-range-value').text().split(' - ')
       start_datetime = $('.temporal-recurring-start').val()
       stop_datetime = $('.temporal-recurring-stop').val()
-      formatted_start_datetime = formatDateTime(year_range[0] + '-' + start_datetime)
-      formatted_stop_datetime = formatDateTime(year_range[1] + '-' + stop_datetime)
+      formatted_start_datetime = formatDateTimeString(year_range[0] + '-' + start_datetime)
+      formatted_stop_datetime = formatDateTimeString(year_range[1] + '-' + stop_datetime)
       date_start_datetime = new Date(formatted_start_datetime)
       date_stop_datetime = new Date(formatted_stop_datetime)
 
