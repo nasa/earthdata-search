@@ -23,6 +23,18 @@ do (L, geoutil=window.edsc.map.geoutil) ->
   # 4. Contains S. pole?  Add points
   # 5. Split along meridian
 
+  # Ensures that latlngs is counterclockwise around its smallest area
+  # This is an in-place operation modifying the original list.
+  makeCounterclockwise = (latlngs) ->
+    latlngs.reverse() if geoutil.area(latlngs) < 0
+    latlngs
+
+  ll2s = (latlngs) ->
+    ("(#{ll.lat}, #{ll.lng})" for ll in latlngs).join(', ')
+
+  ll2j = (latlngs) ->
+    ("#{ll.lng},#{ll.lat}" for ll in latlngs.concat(latlngs[0])).join(', ')
+
   dividePolygon = (latlngs) ->
     interiors = []
     boundaries = []
@@ -36,13 +48,118 @@ do (L, geoutil=window.edsc.map.geoutil) ->
       latlngs = latlngs[0]
 
     latlngs = convertLatLngs(latlngs)
-    latlngs.reverse() if geoutil.area(latlngs) < 0
 
-    denormalizePath(latlngs)
+    # Ensure the exterior points are counterclockwise around their smallest area
+    # TODO: This is probably not the right place to do this when it comes to displaying
+    #       granule geometries
+    makeCounterclockwise(latlngs)
 
-    interiors.push([latlngs].concat(holes))
-    boundaries.push(latlngs)
-    boundaries = boundaries.concat(holes)
+    containedPoles = geoutil.containsPole(latlngs)
+    containsNorthPole = (containedPoles & geoutil.NORTH_POLE) != 0
+    containsSouthPole = (containedPoles & geoutil.SOUTH_POLE) != 0
+
+    maxCrossingLat = -95
+    minCrossingLat = 95
+
+    split = []
+    len = latlngs.length
+    for i in [0...len]
+      latlng1 = latlngs[i]
+      latlng2 = latlngs[(i + 1) % len]
+
+      crossing = geoutil.antimeridianCrossing(latlng1, latlng2)
+
+      split.push(latlng1)
+
+      # FIXME: What if they're both at +/-180 or one is at -180 and one is at 180
+      #        Test cases needed
+
+      extras = []
+      if crossing?
+        lat = crossing.lat
+        if latlng1.lng < latlng2.lng
+          extras = [[lat, -180], [lat, 180]]
+        else
+          extras = [[lat, 180], [lat, -180]]
+      else if latlng1.lng == 180 && latlng2.lng < 0
+        extras = [[latlng1.lat, -180]]
+      else if latlng1.lng == -180 && latlng2.lng > 0
+        extras = [[latlng1.lat, 180]]
+      else if latlng2.lng == 180 && latlng1.lng < 0
+        extras = [[latlng2.lat, -180]]
+      else if latlng2.lng == -180 && latlng1.lng > 0
+        extras = [[latlng2.lat, 180]]
+
+      for extra in extras
+        [lat, lng] = extra
+        split.push(L.latLng(lat, lng))
+        maxCrossingLat = Math.max(lat, maxCrossingLat)
+        minCrossingLat = Math.min(lat, minCrossingLat)
+
+
+    hasInsertions = latlngs.length < split.length
+
+    if hasInsertions
+      console.log containsNorthPole, containsSouthPole
+      # FIXME: Polygon is reversed if we cross the meridian
+      #containsNorthPole = !containsNorthPole
+      #containsSouthPole = !containsSouthPole
+
+      # Rearrange the split array so that its beginning and end contain separate polygons
+      if Math.abs(split[0].lng) != 180 || Math.abs(split[split.length - 1].lng) != 180
+        while Math.abs(split[0].lng) != 180
+          split.push(split.shift())
+        split.push(split.shift())
+
+    interior = []
+    for latlng, i in split
+      interior.push(latlng)
+
+      next = split[(i + 1) % split.length]
+      if interior.length > 2 && Math.abs(latlng.lng) == 180 && Math.abs(next.lng) == 180
+        interiors.push(interior)
+        boundaries.push(interior.concat())
+        interior = []
+
+    if containsNorthPole && containsSouthPole
+      # Reverse everything
+      lat = 90
+      interiors.unshift([L.latLng( lat, -180),
+                         L.latLng( lat,  -90),
+                         L.latLng( lat,    0),
+                         L.latLng( lat,   90),
+                         L.latLng( lat,  180),
+                         L.latLng(-lat,  180),
+                         L.latLng(-lat,   90),
+                         L.latLng(-lat,    0),
+                         L.latLng(-lat,  -90),
+                         L.latLng(-lat, -180)])
+    else if containsNorthPole
+      newCrossings = []
+      crossingIndex = -1
+      for interior, i in interiors
+        latlng = interior[0]
+        if latlng.lat == maxCrossingLat
+          crossingIndex = i
+          break
+
+
+    else if containsSouthPole
+      for interior in interiors
+        latlng = interior[0]
+        if latlng.lat == minCrossingLat
+          interior.push(L.latLng(-90, -latlng.lng))
+          interior.push(L.latLng(-90, latlng.lng))
+          break
+
+    for interior in interiors
+      console.log "Interior:", ll2s(interior)
+
+    # Split along meridian, adding points for poles
+
+    #interiors.push([latlngs].concat(holes))
+    #boundaries.push(latlngs)
+    #boundaries = boundaries.concat(holes)
 
     {interiors: interiors, boundaries: boundaries}
 
@@ -65,7 +182,7 @@ do (L, geoutil=window.edsc.map.geoutil) ->
         @_interiors.setLatLngs(divided.interiors)
         @_boundaries.setLatLngs(divided.boundaries)
       else
-        @_interiors = L.multiPolygon(divided.interiors, L.extend({}, @_options, stroke: false))
+        @_interiors = L.polygon(divided.interiors, L.extend({}, @_options, stroke: false))
         @_boundaries = L.multiPolyline(divided.boundaries, L.extend({}, @_options, fill: false))
         @addLayer(@_interiors)
         @addLayer(@_boundaries)

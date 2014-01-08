@@ -97,12 +97,13 @@ ns.geoutil = do (L) ->
       @normal = @coordA.cross(@coordB)
 
     antimeridianCrossing: ->
+      abs = Math.abs
+
       # Doesn't cross the meridian
       return null if @coordA.theta < @coordB.theta
 
-      # Fear not!  This method looks really complicated but it's just high
-      # school algebra.
-      abs = Math.abs
+      # On the meridian
+      return null if abs(Math.PI - abs(@coordA.theta)) < EPSILON || abs(Math.PI - abs(@coordB.theta)) < EPSILON
 
       xN = @normal.x
       yN = @normal.y
@@ -152,7 +153,9 @@ ns.geoutil = do (L) ->
   # Given two points, returns their midpoint along the shortest great circle between them.  The
   # two points may not be antipodal, since such a midpoint would be undefined
   gcInterpolate = (p1, p2) ->
-    do (asin=Math.asin, sqrt=Math.sqrt, pow=Math.pow, sin=Math.sin, cos=Math.cos, atan2=Math.atan2) ->
+    do (abs=Math.abs, asin=Math.asin, sqrt=Math.sqrt, pow=Math.pow, sin=Math.sin, cos=Math.cos, atan2=Math.atan2) ->
+      return p1 if abs(p1.lat) == abs(p2.lat) == 90
+
       d2r  = L.LatLng.DEG_TO_RAD
       r2d  = L.LatLng.RAD_TO_DEG
 
@@ -177,8 +180,12 @@ ns.geoutil = do (L) ->
       lat = r2d * atan2(z, sqrt(x*x + y*y))
       lon = r2d * atan2(y, x)
 
+      # Guard against the points being the same or antipodal
+      return p1 if isNaN(lat) || isNaN(lon)
+
       lon += 360 while lon < p1.lng
       lon -= 360 while lon > p2.lng
+
       L.latLng(lat, lon)
 
   DEG_TO_RAD = Math.PI / 180
@@ -206,9 +213,132 @@ ns.geoutil = do (L) ->
     arc.antimeridianCrossing()?.toLatLng()
 
 
+  course = (latlng1, latlng2) ->
+    # http://williams.best.vwh.net/avform.htm#Crs
+    {sin, cos, atan2, PI} = Math
+
+    c1 = Coordinate.fromLatLng(latlng1)
+    c2 = Coordinate.fromLatLng(latlng1)
+
+    lat1 = latlng1.lat * DEG_TO_RAD
+    lng1 = latlng1.lng * DEG_TO_RAD
+
+    lat2 = latlng2.lat * DEG_TO_RAD
+    lng2 = latlng2.lng * DEG_TO_RAD
+
+    return PI     if lat1 >  PI / 2 - EPSILON
+    return 2 * PI if lat1 < -PI / 2 + EPSILON
+
+    numer = sin(lng1 - lng2) * cos(lat2)
+    denom = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(lng1 - lng2)
+    result = atan2(numer, denom) % (2 * PI)
+
+    result += 2 * PI if result < 0
+
+    result
+
+  angleDelta = (a1, a2) ->
+    a2 += 360 if a2 < a1
+
+    left_turn_amount = a2 - a1
+
+    if left_turn_amount == 180
+      0
+    else if left_turn_amount > 180
+      left_turn_amount - 360
+    else
+      left_turn_amount
+
+  COUNTERCLOCKWISE = 1
+  CLOCKWISE = -1
+  NONE = 0
+
+  rotationDirection = (angles) ->
+    delta = 0
+    len = angles.length
+
+    for i in [0...len]
+      a1 = angles[i]
+      a2 = angles[(i + 1) % len]
+      delta += angleDelta(a1, a2)
+
+    if Math.abs(delta) < EPSILON
+      direction = NONE
+    else if delta > 0
+      direction = COUNTERCLOCKWISE
+    else
+      direction = CLOCKWISE
+    direction
+
+  NORTH_POLE = 1 # = 0001
+  SOUTH_POLE = 2 # = 0010
+
+  containsPole = (latlngs) ->
+    return false if latlngs.length < 3
+
+    latlngs = (L.latLng(latlng) for latlng in latlngs)
+
+    # http://www.element84.com/determining-if-a-spherical-polygon-contains-a-pole.html
+
+    delta = 0
+    len = latlngs.length
+    for i in [0...len]
+      latlng0 = latlngs[(i - 1 + len) % len]
+      latlng1 = latlngs[i]
+      latlng2 = latlngs[(i + 1) % len]
+
+      prev = (course(latlng1, latlng0) + Math.PI) % (2 * Math.PI)
+      initial = course(latlng1, latlng2)
+      final = (course(latlng2, latlng1) + Math.PI) % (2 * Math.PI)
+
+      delta0 = initial - prev
+      delta0 -= 2 * Math.PI if delta0 > Math.PI
+      delta0 += 2 * Math.PI if delta0 < -Math.PI
+      if Math.abs(Math.PI - Math.abs(delta0)) < EPSILON
+        delta0 = 0
+
+      delta1 = final - initial
+      delta1 -= 2 * Math.PI if delta1 > Math.PI
+      delta1 += 2 * Math.PI if delta1 < -Math.PI
+      if Math.abs(Math.PI - Math.abs(delta1)) < EPSILON
+        delta1 = 0
+
+      delta += delta0 + delta1
+
+    delta = delta * RAD_TO_DEG
+
+    if delta < -360 + EPSILON
+      NORTH_POLE | SOUTH_POLE
+    else if delta < EPSILON
+      angles = (latlng.lng for latlng in latlngs)
+      dir = rotationDirection(angles)
+      if dir == COUNTERCLOCKWISE
+        NORTH_POLE
+      else if dir == CLOCKWISE
+        SOUTH_POLE
+      else
+        console.warn("Rotation direction is NONE despite containing a pole")
+        NONE
+    else
+      NONE
+
+  #180, -45, 120, 45, -170, 20, 160, 50, -120, 0, 180, -45
+
+  #console.log "DELTA n. pole: 1?", containsPole([[60, -120], [70, 0], [80, 120]])
+  #console.log "DELTA no pole: 0?", containsPole([[-45, 180], [45, 120], [0, -120]])
+  #console.log "DELTA no pole: 0?", containsPole([[1, 0], [1, 4], [5, 6], [5, 2]])
+  #console.log "DELTA 2 poles: 3?", containsPole([[1, 0], [5, 2], [5, 6], [1, 4]])
+  #console.log "DELTA n. pole: 1?", containsPole([[85, -135], [85, -45], [85, 45], [85, 135]])
+  #console.log "DELTA no pole: 0?", containsPole([[85, -90], [85, 0], [85, 90]])
+  #console.log "DELTA s. pole: 2?", containsPole([[-85, -135], [-85, 135], [-85, 45], [-85, -45]])
+  #console.log "DELTA no pole: 0?", containsPole([[-85, 90], [-85, 0], [-85, -90]])
+
   exports =
     gcInterpolate: gcInterpolate
     area: area
     Coordinate: Coordinate
     Arc: Arc
     antimeridianCrossing: antimeridianCrossing
+    containsPole: containsPole
+    NORTH_POLE: NORTH_POLE
+    SOUTH_POLE: SOUTH_POLE

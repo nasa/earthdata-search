@@ -198,14 +198,16 @@ ns.Map = do (window,
     L.sphericalPolygon([
       [-45, 180],
       [45, 120],
+      [20, -170],
+      [50, 160],
       [0, -120]
-    ]).addTo(map).bindPopup("I cross the antimeridian.");
+    ]).addTo(map).bindPopup("I cross the antimeridian a few times.");
 
-    L.sphericalPolygon([
-      [60, -120],
-      [70, 0],
-      [80, 120]
-    ]).addTo(map).bindPopup("I contain the north pole.");
+    #L.sphericalPolygon([
+    #  [60, -120],
+    #  [70, 0],
+    #  [80, 120]
+    #]).addTo(map).bindPopup("I contain the north pole.");
 
     #L.sphericalPolygon([
     #  [-60, -120],

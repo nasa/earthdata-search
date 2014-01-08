@@ -19,8 +19,14 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
   # (x, y) points defining the path between the points in the given projection
   projectLatLngPath = (latLngs, proj, interpolateFn, tolerance=1, maxDepth=10) ->
     return [] if latLngs.length == 0
+
     # Clone path and set its last element to its first so we can interpolate the last segment
-    latLngs = latLngs.concat(latLngs[0])
+    if Math.abs(latLngs[0].lng) == Math.abs(latLngs[latLngs.length - 1].lng) == 180
+      # In this case the last element is an artificial longitude crossing.  Avoid interpolating
+      # with the first to prevent drawing strokes along the dateline
+      latLngs = latLngs.concat(latLngs[latLngs.length - 1])
+    else
+      latLngs = latLngs.concat(latLngs[0])
 
     points = (proj(ll) for ll in latLngs)
 
@@ -63,7 +69,16 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
   # Overrides the default projectLatLngs in Polyline and Polygon to project and interpolate the
   # path instead of just projecting it
   projectLatlngs = ->
-    proj = @_map.latLngToLayerPoint.bind(@_map)
+    map = @_map
+    proj = (ll) ->
+      # Avoid weird precision problems near infinity by clamping to a high min/max pixel value
+      MAX_RES = 100000
+
+      result = map.latLngToLayerPoint.call(map, ll)
+      result.x = Math.max(Math.min(result.x, MAX_RES), -MAX_RES)
+      result.y = Math.max(Math.min(result.y, MAX_RES), -MAX_RES)
+      result
+
     fn = @_interpolationFn
     @_originalPoints = projectLatLngPath(@_latlngs, proj, fn)
     @_holePoints = (projectLatLngPath(hole, proj, fn) for hole in @_holes ? [])
