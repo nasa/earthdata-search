@@ -86,7 +86,7 @@ $(document).ready ->
     day = findDayOfYear(date)
     $(picker).find(".day-of-year-input").val(date.getFullYear() + '-' + day)
 
-  $(document).on 'change', '#day-of-year-submit', ->
+  $(document).on 'click', '#day-of-year-submit', ->
     value = $(this).prev().val()
     date = parseOrdinal(value)
     if date
