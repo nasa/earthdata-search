@@ -1,0 +1,35 @@
+a:hover {
+  text-decoration: none;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+h1 a {
+  background: asset-url('search-logo.png') no-repeat;
+  height: 40px;
+  width: 145px;
+  float: left;
+}
+
+ul {
+  // Expect many more lists without bullets than lists with
+  list-style: none;
+  padding: 0;
+}
+
+// Image replacement
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}

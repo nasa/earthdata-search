@@ -1,0 +1,106 @@
+html, body {
+  height: 100%;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-size: 16px;
+}
+
+.wrap {
+  width: 100%;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0px 0px -25px 0px;
+}
+
+/* TEMPORARY */
+.earthdata-tophat {
+  background: #282828;
+  color: #fff;
+  padding: .5em 1em;
+  font-size: .8em;
+}
+
+footer, .toolbar {
+  background: #2c3e50;
+  color: #fff;
+}
+
+.main-content {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  // So we don't have to look at a blank map
+  //background: asset-url('ssm.jpg') no-repeat center;
+}
+
+.toolbar {
+  background: rgba(44, 62, 80, 1) asset-url('header-drop.png') repeat-x top;
+  padding: .5em 1em;
+
+  input {
+    padding: .5em;
+    margin: 2px 0 0 20px;
+    width: 450px;
+    border: 1px solid #21303f;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 5px 1px rgba(0,0,0,0.2);
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  form {
+    display: inline-block;
+  }
+}
+
+
+footer {
+  height: 25px;
+  z-index: 1000;
+  position: relative;
+  font-size: .8em;
+}
+
+footer p {
+  padding: 5px 0 0 10px;
+}
+
+.homepage-search {
+
+  .search {
+    background: #282828;
+    color: #fff;
+    margin: 100px auto 0 auto;
+    width: 500px;
+    padding: 1em;
+    border-radius: 5px;
+    opacity: .9;
+  }
+}
+
+/*
+Helper Classes
+-------------------------------------
+*/
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
