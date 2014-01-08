@@ -1,4 +1,5 @@
 query = window.edsc.models.searchModel.query
+edsc_date = window.edsc.util.date
 
 current_year = new Date().getFullYear()
 
@@ -11,9 +12,6 @@ updateQueryModel = (type, value) ->
     when 'recurring'
       query.temporal_recurring(value)
 
-Date::formatDateTime = ->
-  @getFullYear() + "-" + String.leftPad(@getMonth() + 1, 2, "0") + "-" + String.leftPad(@getDate(), 2, "0") + " " + String.leftPad(@getHours(), 2, "0") + ":" + String.leftPad(@getMinutes(), 2, "0") + ":" + String.leftPad(@getSeconds(), 2, "0")
-
 $(document).ready ->
   validateTemporalInputs = ->
     start = $(".temporal-start:visible").val()
@@ -25,7 +23,6 @@ $(document).ready ->
       error.hide()
     else
       error.show()
-      # error.siblings().find(".submit.button").attr("disabled","disabled")
 
   setMinMaxOptions = (datetimepicker, $input, temporal_type) ->
     min_date = false
@@ -73,7 +70,7 @@ $(document).ready ->
     day = parseInt(match[2], 10)
     date = new Date(year, 0, day)
     return null  unless date.getFullYear() is year # Date is higher than the number of days in the year
-    date.formatDateTime()
+    edsc_date.isoUtcDateTimeString(date)
 
   findDayOfYear = (date) ->
     one_day = 1000 * 60 * 60 * 24
@@ -145,7 +142,7 @@ $(document).ready ->
 
   $('.temporal-recurring-year-range-value').text('1960 - ' + current_year)
 
-  formatDateTime = (datetime) ->
+  formatDateTimeString = (datetime) ->
     if datetime?.length > 0 then datetime.replace(' ','T') + 'Z' else ''
 
   # Submit temporal range search
@@ -153,8 +150,8 @@ $(document).ready ->
     if $('#temporal-date-range .temporal-error').is(":hidden")
       start_datetime = $('.temporal-range-start').val()
       stop_datetime = $('.temporal-range-stop').val()
-      formatted_start_datetime = formatDateTime(start_datetime)
-      formatted_stop_datetime = formatDateTime(stop_datetime)
+      formatted_start_datetime = formatDateTimeString(start_datetime)
+      formatted_stop_datetime = formatDateTimeString(stop_datetime)
 
       updateQueryModel('range-start', formatted_start_datetime)
       updateQueryModel('range-stop', formatted_stop_datetime)
