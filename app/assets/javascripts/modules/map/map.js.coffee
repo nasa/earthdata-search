@@ -152,23 +152,13 @@ ns.Map = do (window,
     _showLine:      (layer, points) -> L.polyline(points, color: "#ff7800", weight: 1).addTo(layer)
     _showRectangle: (layer, points) -> L.rectangle(points, color: "#ff7800", weight: 1).addTo(layer)
     _showPoint:     (layer, points) -> L.marker(points...).addTo(layer)
-
-    # FIXME: This works for datasets but will not work for granules
-    _showPolygon:   (layer, points) -> L.polygon(points, color: "#ff7800", weight: 1).addTo(layer)
+    _showPolygon:   (layer, points) -> L.sphericalPolygon(points, color: "#ff7800", weight: 1).addTo(layer)
 
 
     _hideDatasetSpatial: =>
       if @_datasetSpatialLayer
         @map.removeLayer(@_datasetSpatialLayer)
         @_datasetSpatialLayer = null
-
-
-
-  #datasetsModel
-  #  map = $('#map').data('map')
-  #  map.showDatasetSpatial(dataset) if map?
-
-
 
   $(document).ready ->
     projection = 'geo'

@@ -10,7 +10,7 @@ ns.SpatialSelection = do (window,
   L.drawLocal.draw.toolbar.buttons.rectangle = "Search by spatial rectangle"
   L.drawLocal.draw.toolbar.buttons.marker = "Search by spatial point"
 
-  normalColor = '#009900'
+  normalColor = '#00ffff'
   errorColor = '#990000'
 
   class SpatialSelection
