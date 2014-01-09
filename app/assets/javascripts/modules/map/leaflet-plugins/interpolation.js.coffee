@@ -29,6 +29,9 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
       latLngs = latLngs.concat(latLngs[0])
 
     points = (proj(ll) for ll in latLngs)
+    #for ll in latLngs
+    #  if Math.abs(ll.lat) == 90
+    #    console.log ll.toString(), '->', proj(ll).toString()
 
     interpolatedLatLngs = [latLngs.shift()]
     interpolatedPoints = [points.shift()]
@@ -48,6 +51,11 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
       ll = interpolateFn(ll0, ll1)
       p = proj(ll)
       depth = Math.max(depth0, depth1) + 1
+
+      #if depth == 1
+      #  console.log '0:', ll0.toString(), '->', p0.toString()
+      #  console.log 'M:', ll.toString(), '->', p.toString()
+      #  console.log '1:', ll1.toString(), '->', p1.toString()
 
       d = L.LineUtil.pointToSegmentDistance(p, p0, p1)
       if d < tolerance || depth >= maxDepth
@@ -73,6 +81,10 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
     proj = (ll) ->
       # Avoid weird precision problems near infinity by clamping to a high min/max pixel value
       MAX_RES = 100000
+
+      # Fix problems where 90 degrees projects to NaN in our south polar projection
+      if ll.lat == 90
+        ll = L.latLng(89.999, ll.lng)
 
       result = map.latLngToLayerPoint.call(map, ll)
       result.x = Math.max(Math.min(result.x, MAX_RES), -MAX_RES)

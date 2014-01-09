@@ -2,6 +2,7 @@ ns = window.edsc.map
 
 ns.SpatialSelection = do (window,
                           document,
+                          toastr,
                           L,
                           searchModel = window.edsc.models.searchModel) ->
 
@@ -9,17 +10,47 @@ ns.SpatialSelection = do (window,
   L.drawLocal.draw.toolbar.buttons.rectangle = "Search by spatial rectangle"
   L.drawLocal.draw.toolbar.buttons.marker = "Search by spatial point"
 
+  normalColor = '#009900'
+  errorColor = '#990000'
+
   class SpatialSelection
     addTo: (map) ->
       @map = map
       drawnItems = @_drawnItems = new L.FeatureGroup()
       drawnItems.addTo(map)
 
+      @_colorOptions = colorOptions =
+        color: normalColor
+        dashArray: null
+      @_errorOptions = errorOptions =
+        color: errorColor
+        dashArray: null
+      selectedOptions =
+        dashArray: '10, 10'
+
       drawControl = @_drawControl = new L.Control.Draw
         draw:
+          polygon:
+            drawError:
+              color: errorColor
+              dashArray: null
+            shapeOptions:
+              color: normalColor
+              dashArray: null
+          rectangle:
+            drawError:
+              color: errorColor
+              dashArray: null
+            shapeOptions:
+              color: normalColor
+              dashArray: null
           polyline: false
           circle: false
         edit:
+          selectedPathOptions:
+            opacity: 0.6
+            dashArray: '10, 10'
+
           featureGroup: drawnItems
         position: 'topright'
 
@@ -27,6 +58,7 @@ ns.SpatialSelection = do (window,
 
       spatialModel = searchModel.query.spatial
       @_querySubscription = spatialModel.subscribe(@_onSpatialChange)
+      @_spatialErrorSubscription = searchModel.spatialError.subscribe(@_onSpatialErrorChange)
       @_onSpatialChange(spatialModel())
 
       map.on 'draw:drawstart', @_onDrawStart
@@ -51,6 +83,7 @@ ns.SpatialSelection = do (window,
       @_drawControl.removeFrom(map)
       @_querySubscription.dispose()
       @_toolSubscription.dispose()
+      @_spatialErrorSubscription.dispose()
       map.off 'draw:drawstart', @_onDrawStart
       map.off 'draw:drawstop', @_onDrawStop
       map.off 'draw:created', @_onDrawCreated
@@ -94,6 +127,7 @@ ns.SpatialSelection = do (window,
         @_drawnItems.addLayer(@_layer)
 
     _onDrawCreated: (e) =>
+      console.log e
       @_addLayer(e.target, e.layer, e.layerType)
 
     _onDrawEdited: (e) =>
@@ -118,6 +152,17 @@ ns.SpatialSelection = do (window,
       else
         @_loadSpatialParams(newValue)
 
+    _onSpatialErrorChange: (newValue) =>
+      if newValue?
+        if @_layer?
+          toastr.error(newValue, "Spatial Query Error")
+          console.log @_layer, @_errorOptions
+          @_layer.setStyle(@_errorOptions)
+      else
+        if @_layer?
+          @_layer.setStyle(@_colorOptions)
+
+
     _renderSpatial: (type, shape) ->
 
     _removeSpatial: () ->
@@ -135,7 +180,7 @@ ns.SpatialSelection = do (window,
       @_drawnItems.addLayer(rect)
 
     _renderPolygon: (shape) ->
-      poly = @_layer = new L.Polygon(shape, L.Draw.Polygon.prototype.options.shapeOptions)
+      poly = @_layer = new L.SphericalPolygon(shape, L.Draw.Polygon.prototype.options.shapeOptions)
       @_drawnItems.addLayer(poly)
 
     _saveSpatialParams: (layer, type) ->

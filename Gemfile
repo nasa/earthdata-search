@@ -10,6 +10,7 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'multi_xml'
 gem 'term-ansicolor'
+gem 'toastr-rails'
 
 group :test do
   gem 'database_cleaner'

@@ -1,34 +1,23 @@
 do (L, geoutil=window.edsc.map.geoutil) ->
 
   convertLatLngs = (latlngs) ->
-    L.latLng(latlng) for latlng in latlngs
+    result = []
+    for original in latlngs
+      latlng = L.latLng(original)
+      latlng.lng -= 360 while latlng.lng > 180
+      latlng.lng += 360 while latlng.lng < -180
+      result.push(latlng)
 
-  denormalizePath = (latlngs) ->
-    len = latlngs.length
-
-    for i in [0...len]
-      latlng1 = latlngs[i]
-      latlng2 = latlngs[(i + 1) % len]
-
-      if Math.abs(latlng1.lng - latlng2.lng) > 180
-        if latlng1.lng < latlng2.lng
-          latlng1.lng += 360
-        else
-          latlng2.lng += 360
-
-
-  # 1. Orient points based on area
-  # 2. Crosses meridian?
-  # 3. Contains N. pole?  Add points
-  # 4. Contains S. pole?  Add points
-  # 5. Split along meridian
+    result
 
   # Ensures that latlngs is counterclockwise around its smallest area
   # This is an in-place operation modifying the original list.
   makeCounterclockwise = (latlngs) ->
-    latlngs.reverse() if geoutil.area(latlngs) < 0
+    area = geoutil.area(latlngs)
+    latlngs.reverse() if area > 2 * Math.PI
     latlngs
 
+  # For debugging
   ll2s = (latlngs) ->
     ("(#{ll.lat}, #{ll.lng})" for ll in latlngs).join(', ')
 
@@ -52,7 +41,7 @@ do (L, geoutil=window.edsc.map.geoutil) ->
     # Ensure the exterior points are counterclockwise around their smallest area
     # TODO: This is probably not the right place to do this when it comes to displaying
     #       granule geometries
-    makeCounterclockwise(latlngs)
+    latlngs = makeCounterclockwise(latlngs)
 
     containedPoles = geoutil.containsPole(latlngs)
     containsNorthPole = (containedPoles & geoutil.NORTH_POLE) != 0
@@ -99,84 +88,79 @@ do (L, geoutil=window.edsc.map.geoutil) ->
 
     hasInsertions = latlngs.length < split.length
 
-    if hasInsertions
-      console.log containsNorthPole, containsSouthPole
-      # FIXME: Polygon is reversed if we cross the meridian
-      #containsNorthPole = !containsNorthPole
-      #containsSouthPole = !containsSouthPole
+    interior = []
+    boundary = []
 
+    if hasInsertions
       # Rearrange the split array so that its beginning and end contain separate polygons
       if Math.abs(split[0].lng) != 180 || Math.abs(split[split.length - 1].lng) != 180
         while Math.abs(split[0].lng) != 180
           split.push(split.shift())
         split.push(split.shift())
 
-    interior = []
     for latlng, i in split
       interior.push(latlng)
+      boundary.push(latlng)
 
       next = split[(i + 1) % split.length]
       if interior.length > 2 && Math.abs(latlng.lng) == 180 && Math.abs(next.lng) == 180
-        interiors.push(interior)
-        boundaries.push(interior.concat())
-        interior = []
+        boundaries.push(boundary)
+        boundary = []
 
-    if containsNorthPole && containsSouthPole
-      # Reverse everything
-      lat = 90
-      interiors.unshift([L.latLng( lat, -180),
-                         L.latLng( lat,  -90),
-                         L.latLng( lat,    0),
-                         L.latLng( lat,   90),
-                         L.latLng( lat,  180),
-                         L.latLng(-lat,  180),
-                         L.latLng(-lat,   90),
-                         L.latLng(-lat,    0),
-                         L.latLng(-lat,  -90),
-                         L.latLng(-lat, -180)])
-    else if containsNorthPole
-      newCrossings = []
-      crossingIndex = -1
-      for interior, i in interiors
-        latlng = interior[0]
-        if latlng.lat == maxCrossingLat
-          crossingIndex = i
-          break
+        hasPole = false
+        if containsNorthPole && latlng.lat == maxCrossingLat
+          hasPole = true
+          lng = latlng.lng
+          inc = if lng < 0 then 90 else -90
+          for i in [0..4]
+            interior.push(L.latLng(90, lng + i*inc))
+        if containsSouthPole && latlng.lat == minCrossingLat
+          hasPole = true
+          lng = latlng.lng
+          inc = if lng < 0 then 90 else -90
+          for i in [0..4]
+            interior.push(L.latLng(-90, lng + i*inc))
+        unless hasPole
+          interiors.push(interior)
+          interior = []
 
+    boundaries.push(boundary) if boundary.length > 0
+    interiors.push(interior) if interior.length > 0
 
-    else if containsSouthPole
-      for interior in interiors
-        latlng = interior[0]
-        if latlng.lat == minCrossingLat
-          interior.push(L.latLng(-90, -latlng.lng))
-          interior.push(L.latLng(-90, latlng.lng))
-          break
+    # Special case: If we contain both poles but do not have an edge crossing the meridian
+    # as dealt with above, reverse our drawing.
+    if containsNorthPole && containsSouthPole && !hasInsertions
+      interior = []
+      interior.push(L.latLng(90, -180 + i*90)) for i in [0..4]
+      interior.push(L.latLng(-90, 180 - i*90)) for i in [0..4]
+      interiors.unshift(interior)
 
-    for interior in interiors
-      console.log "Interior:", ll2s(interior)
+    #for interior in interiors
+    #  console.log "Interior:", ll2s(interior)
+    #for interior in boundaries
+    #  console.log "Boundary:", ll2s(interior)
 
-    # Split along meridian, adding points for poles
-
-    #interiors.push([latlngs].concat(holes))
-    #boundaries.push(latlngs)
-    #boundaries = boundaries.concat(holes)
 
     {interiors: interiors, boundaries: boundaries}
 
-  L.SphericalPolygon = L.FeatureGroup.extend
+  # This is a bit tricky.  We need to be an instanceof L.Polygon for L.Draw methods
+  # to work, but in reality we're an L.FeatureGroup, hence the "includes"
+  L.SphericalPolygon = L.Polygon.extend
+    includes: [L.LayerGroup.prototype, L.FeatureGroup.prototype]
     options:
       fill: true
 
     initialize: (latlngs, options) ->
-      console.log 'Using L.SphericalPolygon'
       @_layers = {}
-      @_options = options
+      @_options = @options = options
       @setLatLngs(latlngs)
 
     setLatLngs: (latlngs) ->
-      divided = dividePolygon(latlngs)
+      latlngs = (L.latLng(latlng) for latlng in latlngs)
 
       @_latlngs = latlngs
+
+      divided = dividePolygon(latlngs)
 
       if @_boundaries
         @_interiors.setLatLngs(divided.interiors)
@@ -188,15 +172,23 @@ do (L, geoutil=window.edsc.map.geoutil) ->
         @addLayer(@_boundaries)
 
     getLatLngs: ->
-      @_latlngs.reverse() if geoutil.area(@_latlngs) < 0
-      @_latlngs
+      makeCounterclockwise(@_latlngs.concat())
 
     newLatLngIntersects: (latlng, skipFirst) ->
       false
-      # FIXME
 
-    addLatLng: (latlng) ->
-      @_latlngs.push(L.latLng(latlng))
+    setOptions: (options) ->
+      @_options = @options = L.extend({}, @_options, options)
+      L.setOptions(@_interiors, L.extend({}, @_options, stroke: false))
+      L.setOptions(@_boundaries, L.extend({}, @_options, fill: false))
+      @redraw()
+
+    setStyle: (style) ->
+      @setOptions(style)
+      @_interiors.setStyle(L.extend({}, style, stroke: false))
+      @_boundaries.setStyle(L.extend({}, style, fill: false))
+
+    redraw: ->
       @setLatLngs(@_latlngs)
 
   L.sphericalPolygon = (latlngs, options) -> new L.SphericalPolygon(latlngs, options)
@@ -208,3 +200,7 @@ do (L, geoutil=window.edsc.map.geoutil) ->
       L.Draw.Polyline.prototype.addHooks.call(this)
       if @_map
         this._poly = new L.SphericalPolygon([], @options.shapeOptions)
+
+  L.Edit.Poly = L.Edit.Poly.extend
+    _getMiddleLatLng: (marker1, marker2) ->
+      latlng = geoutil.gcInterpolate(marker1.getLatLng(), marker2.getLatLng())

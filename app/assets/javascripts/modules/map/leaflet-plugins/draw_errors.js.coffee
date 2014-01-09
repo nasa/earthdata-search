@@ -30,8 +30,6 @@ do (L) ->
     last = latLngs[latLngs.length - 1]
     prev = latLngs[latLngs.length - 2]
 
-    if Math.abs(last.lng - prev.lng) >= 180
-      return "Points cannot be more than 180 degrees apart"
     null
 
   # Validates a polygon that the user has finished.

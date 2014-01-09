@@ -105,6 +105,9 @@ ns.geoutil = do (L) ->
       # On the meridian
       return null if abs(Math.PI - abs(@coordA.theta)) < EPSILON || abs(Math.PI - abs(@coordB.theta)) < EPSILON
 
+      # On a longitude line
+      return null if abs(@coordA.theta - @coordB.theta) % Math.PI < EPSILON
+
       xN = @normal.x
       yN = @normal.y
       zN = @normal.z
@@ -191,21 +194,10 @@ ns.geoutil = do (L) ->
   DEG_TO_RAD = Math.PI / 180
   RAD_TO_DEG = 180 / Math.PI
 
-  area = (latlngs) ->
-    return 0 if latlngs.length < 3
-
-    # http://trs-new.jpl.nasa.gov/dspace/bitstream/2014/40409/3/JPL%20Pub%2007-3%20%20w%20Errata.pdf
-    # Page 7
-
-    sum = 0
-    len = latlngs.length
-    for i in [0...len]
-      thetaA = latlngs[i].lng * DEG_TO_RAD
-      phiB = latlngs[(i + 1) % len].lat * DEG_TO_RAD
-      thetaC = latlngs[(i + 2) % len].lng * DEG_TO_RAD
-      sum += (thetaC - thetaA) * Math.sin(phiB)
-
-    -sum / 2
+  # TODO:
+  # Look at TODOs and FIXMEs
+  # Tests
+  # Clean up
 
   antimeridianCrossing = (latlng0, latlng1) ->
     arc = new Arc(Coordinate.fromLatLng(L.latLng(latlng0)),
@@ -332,6 +324,36 @@ ns.geoutil = do (L) ->
   #console.log "DELTA no pole: 0?", containsPole([[85, -90], [85, 0], [85, 90]])
   #console.log "DELTA s. pole: 2?", containsPole([[-85, -135], [-85, 135], [-85, 45], [-85, -45]])
   #console.log "DELTA no pole: 0?", containsPole([[-85, 90], [-85, 0], [-85, -90]])
+
+  area = (latlngs) ->
+    return 0 if latlngs.length < 3
+
+    # http://trs-new.jpl.nasa.gov/dspace/bitstream/2014/40409/3/JPL%20Pub%2007-3%20%20w%20Errata.pdf
+    # Page 7
+
+    crossesMeridian = false
+    sum = 0
+    len = latlngs.length
+    for i in [0...len]
+      latlngA = latlngs[i]
+      latlngB = latlngs[(i + 1) % len]
+      latlngC = latlngs[(i + 2) % len]
+
+      crossesMeridian = true if Math.abs(latlngA.lng - latlngB.lng) > 180
+
+      thetaA = latlngA.lng * DEG_TO_RAD
+      phiB = latlngB.lat * DEG_TO_RAD
+      thetaB = latlngB.lng * DEG_TO_RAD
+      thetaC = latlngC.lng * DEG_TO_RAD
+
+      sum += (thetaC - thetaA) * Math.sin(phiB)
+
+    # FIXME: This fails for some reason for polygons crossing the meridian
+    #        covering a large range of latitudes
+    area = -sum / 2
+    area = -area if crossesMeridian
+    area = 4*Math.PI + area if area < 0
+    area
 
   exports =
     gcInterpolate: gcInterpolate
