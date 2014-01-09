@@ -31,19 +31,11 @@ ns.SpatialSelection = do (window,
       drawControl = @_drawControl = new L.Control.Draw
         draw:
           polygon:
-            drawError:
-              color: errorColor
-              dashArray: null
-            shapeOptions:
-              color: normalColor
-              dashArray: null
+            drawError: errorOptions
+            shapeOptions: colorOptions
           rectangle:
-            drawError:
-              color: errorColor
-              dashArray: null
-            shapeOptions:
-              color: normalColor
-              dashArray: null
+            drawError: errorOptions
+            shapeOptions: colorOptions
           polyline: false
           circle: false
         edit:
@@ -127,7 +119,6 @@ ns.SpatialSelection = do (window,
         @_drawnItems.addLayer(@_layer)
 
     _onDrawCreated: (e) =>
-      console.log e
       @_addLayer(e.target, e.layer, e.layerType)
 
     _onDrawEdited: (e) =>
@@ -156,7 +147,6 @@ ns.SpatialSelection = do (window,
       if newValue?
         if @_layer?
           toastr.error(newValue, "Spatial Query Error")
-          console.log @_layer, @_errorOptions
           @_layer.setStyle(@_errorOptions)
       else
         if @_layer?
@@ -176,11 +166,13 @@ ns.SpatialSelection = do (window,
 
     _renderRectangle: (shape) ->
       bounds = new L.LatLngBounds(shape...)
-      rect = @_layer = new L.Rectangle(bounds, L.Draw.Rectangle.prototype.options.shapeOptions)
+      options = L.extend({}, L.Draw.Rectangle.prototype.options.shapeOptions, @_colorOptions)
+      rect = @_layer = new L.Rectangle(bounds, options)
       @_drawnItems.addLayer(rect)
 
     _renderPolygon: (shape) ->
-      poly = @_layer = new L.SphericalPolygon(shape, L.Draw.Polygon.prototype.options.shapeOptions)
+      options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
+      poly = @_layer = new L.SphericalPolygon(shape, options)
       @_drawnItems.addLayer(poly)
 
     _saveSpatialParams: (layer, type) ->
@@ -204,6 +196,7 @@ ns.SpatialSelection = do (window,
     _loadSpatialParams: (spatial) ->
       return if spatial == @_spatial
       console.log "Loading spatial params"
+      @_removeSpatial()
       @_spatial = spatial
       [type, shapePoints...] = spatial.split(':')
       shape = for pointStr in shapePoints

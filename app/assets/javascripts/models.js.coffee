@@ -153,7 +153,6 @@ class models.SearchModel
   _computeSpatialError: =>
     error = @datasets.error()
     if error?
-      console.log error, error.error
       return "Polygon boundaries must not cross themselves" if error.indexOf('ORA-13349') != -1
       return "Polygon is too large" if error.indexOf('ORA-13367') != -1
     null
