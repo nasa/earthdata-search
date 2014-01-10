@@ -165,6 +165,22 @@ describe "Spatial" do
         expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       end
     end
+
+    it "filters datasets using north polar bounding boxes in the north polar projection" do
+      click_link "North Polar Stereographic"
+      create_arctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
+      click_link "Browse All Data"
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+    end
+
+    it "filters datasets using south polar bounding boxes in the south polar projection" do
+      click_link "South Polar Stereographic"
+      create_antarctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
+      click_link "Browse All Data"
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+    end
   end
 
   context "polygon selection" do
