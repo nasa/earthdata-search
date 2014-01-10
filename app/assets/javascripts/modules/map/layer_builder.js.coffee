@@ -8,6 +8,13 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
   yesterday.setDate(yesterday.getDate() - 1)
 
   gibsParams =
+    blue_marble:
+      name: 'Blue Marble'
+      product: 'blue_marble'
+      resolution: '500m'
+      format: 'jpeg'
+      arctic: false
+      antarctic: false
     MODIS_Terra_CorrectedReflectance_TrueColor:
       name: 'Corrected Reflectance (True Color)'
       source: 'Terra / MODIS'
