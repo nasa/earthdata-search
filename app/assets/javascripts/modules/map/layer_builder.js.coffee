@@ -1,7 +1,11 @@
 ns = window.edsc.map
 
 ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
-                      SedacTileLayer = ns.L.SedacTileLayer) ->
+                      SedacTileLayer = ns.L.SedacTileLayer,
+                      dateUtil = window.edsc.util.date) ->
+
+  yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
 
   gibsParams =
     MODIS_Terra_CorrectedReflectance_TrueColor:
@@ -10,6 +14,7 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
       product: 'MODIS_Terra_CorrectedReflectance_TrueColor'
       resolution: '250m'
       format: 'jpeg'
+      time: dateUtil.isoUtcDateString(yesterday)
     land_water_map:
       name: 'Land / Water Map'
       source: 'OpenStreetMap / Coastlines'

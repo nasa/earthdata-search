@@ -25,6 +25,12 @@ module Helpers
       page.evaluate_script(script)
     end
 
+    def create_polygon(*points)
+      point_strs = points.map {|p| p.reverse.join(',')}
+      script = "edsc.models.searchModel.query.spatial('polygon:#{point_strs.join(':')}')"
+      page.evaluate_script(script)
+    end
+
     def clear_spatial
       script = "edsc.models.searchModel.query.spatial(null)"
       page.evaluate_script(script)

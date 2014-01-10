@@ -152,23 +152,13 @@ ns.Map = do (window,
     _showLine:      (layer, points) -> L.polyline(points, color: "#ff7800", weight: 1).addTo(layer)
     _showRectangle: (layer, points) -> L.rectangle(points, color: "#ff7800", weight: 1).addTo(layer)
     _showPoint:     (layer, points) -> L.marker(points...).addTo(layer)
-
-    # FIXME: This works for datasets but will not work for granules
-    _showPolygon:   (layer, points) -> L.polygon(points, color: "#ff7800", weight: 1).addTo(layer)
+    _showPolygon:   (layer, points) -> L.sphericalPolygon(points, color: "#ff7800", weight: 1).addTo(layer)
 
 
     _hideDatasetSpatial: =>
       if @_datasetSpatialLayer
         @map.removeLayer(@_datasetSpatialLayer)
         @_datasetSpatialLayer = null
-
-
-
-  #datasetsModel
-  #  map = $('#map').data('map')
-  #  map.showDatasetSpatial(dataset) if map?
-
-
 
   $(document).ready ->
     projection = 'geo'
@@ -181,5 +171,75 @@ ns.Map = do (window,
 
     # Log the mouse lat / lon to the console
     #map.startMouseDebugging()
+
+    # Debugging spherical polygons
+    #L.sphericalPolygon([
+    #  [-45, 0],
+    #  [45, 45],
+    #  [0, -45]
+    #]).addTo(map).bindPopup("I am a generic polygon.")
+
+    #L.sphericalPolygon([
+    #  [0, -45],
+    #  [45, 45],
+    #  [-45, 0]
+    #]).addTo(map).bindPopup("I am a generic polygon specified in a reverse order.")
+
+    #L.sphericalPolygon([[
+    #  [-45, 0],
+    #  [45, 45],
+    #  [0, -45]
+    #], [[-10, 0], [10, 10], [0, -10]]]).addTo(map).bindPopup("I have a hole.")
+
+    #L.sphericalPolygon([
+    #  [-45, 180],
+    #  [45, 120],
+    #  [20, -170],
+    #  [50, 160],
+    #  [0, -120]
+    #]).addTo(map).bindPopup("I cross the antimeridian a few times going clockwise.");
+
+    #L.sphericalPolygon([
+    #  [0, -10],
+    #  [70, -10],
+    #  [70, -100],
+    #  [70, 100],
+    #  [70, 10],
+    #  [0, 10],
+    #  [-70, 10],
+    #  [-70, 100],
+    #  [-70, -100],
+    #  [-70, -10]
+    #]).addTo(map).bindPopup("I contain both poles and cross the antimeridian.");
+
+    #L.sphericalPolygon([
+    #  [0, -170],
+    #  [70, -170],
+    #  [70, 170],
+    #  [0, 170],
+    #  [-70, 170],
+    #  [-70, -170]
+    #]).addTo(map).bindPopup("I contain both poles and cross the antimeridian.");
+
+    #L.sphericalPolygon([
+    #  [-70, -170],
+    #  [ 70, -170],
+    #  [ 70,    0],
+    #  [ 70,  170],
+    #  [-70,  170],
+    #  [-70,    0]
+    #]).addTo(map).bindPopup("I contain both poles and do not cross the antimeridian.");
+
+    #L.sphericalPolygon([
+    #  [60, -120],
+    #  [70, 0],
+    #  [80, 120]
+    #]).addTo(map).bindPopup("I contain the north pole.");
+
+    #L.sphericalPolygon([
+    #  [-60, -120],
+    #  [-70, 0],
+    #  [-80, 120]
+    #]).addTo(map).bindPopup("I contain the south pole.");
 
   exports = Map

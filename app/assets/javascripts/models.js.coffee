@@ -54,6 +54,8 @@ class models.DatasetsModel
     @details = ko.observable({})
     @detailsLoading = ko.observable(false)
 
+    @error = ko.observable(null)
+
   search: (params) =>
     params.page = @page = 1
     @_load(params, true)
@@ -69,6 +71,8 @@ class models.DatasetsModel
     console.log("Request: /datasets.json", requestId, params)
     xhr = $.getJSON '/datasets.json', params, (data) =>
       if requestId > @completedRequestId
+        @completedRequestId = requestId
+        @error(null)
         #console.log("Response: /datasets.json", requestId, params, data)
         if replace
           ko.mapping.fromJS(data, @_searchResponse)
@@ -76,15 +80,14 @@ class models.DatasetsModel
           currentResults = @_searchResponse.results
           newResults = ko.mapping.fromJS(data['results'])
           currentResults.push.apply(currentResults, newResults())
-        @completedRequestId = requestId
       else
         console.log("Rejected out-of-sequence request: /datasets.json", requestId, params, data)
       @isLoading(@pendingRequestId != @completedRequestId)
     xhr.fail (response, type, reason) =>
-      errors = response.responseJSON?.errors
-      if errors?
-        console.error errors
-        # Placeholder.  Not currently needed but will be soon.
+      if requestId > @completedRequestId
+        @completedRequestId = requestId
+        errors = response.responseJSON?.errors
+        @error(errors?.error)
 
   showDataset: (dataset) =>
     id = dataset.id()
@@ -140,10 +143,19 @@ class models.SearchModel
       spatialType: new models.SpatialType()
     @bindingsLoaded = ko.observable(false)
 
+    @spatialError = ko.computed(@_computeSpatialError)
+
     ko.computed(@_computeDatasetResults).extend(throttle: 500)
 
   _computeDatasetResults: =>
     @datasets.search(@query.params())
+
+  _computeSpatialError: =>
+    error = @datasets.error()
+    if error?
+      return "Polygon boundaries must not cross themselves" if error.indexOf('ORA-13349') != -1
+      return "Polygon is too large" if error.indexOf('ORA-13367') != -1
+    null
 
 model = models.searchModel = new models.SearchModel()
 

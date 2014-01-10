@@ -53,7 +53,6 @@ module Echo
 
           # Polygon conditions must have their last point equal to their first
           pointStrs << pointStrs.first if type == :polygon
-          # FIXME: Polygons also must be specified counter-clockwise
 
           points = pointStrs.map { |s| s.split(',').map(&:to_f) }
 

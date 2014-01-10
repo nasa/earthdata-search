@@ -106,6 +106,29 @@ describe Echo::Client do
         expect(response.faraday_response).to eq(:response)
       end
     end
+
+    context 'by spatial polygon' do
+      it 'searches the catalog using a "polygon" filter' do
+        expect(connection).to receive(:get).with(dataset_search_url, polygon: "0.0,0.0,20.0,10.0,-20.0,10.0,0.0,0.0").and_return(:response)
+
+        response = Echo::Client.get_datasets(spatial: "polygon:0,0:20,10:-20,10")
+        expect(response.faraday_response).to eq(:response)
+      end
+
+      it 'moves longitudes to within [-180...180]' do
+        expect(connection).to receive(:get).with(dataset_search_url, polygon: "150.0,0.0,170.0,10.0,130.0,10.0,150.0,0.0").and_return(:response)
+
+        response = Echo::Client.get_datasets(spatial: "polygon:-210,0:-190,10:-230,10")
+        expect(response.faraday_response).to eq(:response)
+      end
+
+      it 'clips latitudes to [-90...90]' do
+        expect(connection).to receive(:get).with(dataset_search_url, polygon: "0.0,85.0,20.0,90.0,-20.0,90.0,0.0,85.0").and_return(:response)
+
+        response = Echo::Client.get_datasets(spatial: "polygon:0,85:20,95:-20,95")
+        expect(response.faraday_response).to eq(:response)
+      end
+    end
   end
 
   context 'dataset details' do
