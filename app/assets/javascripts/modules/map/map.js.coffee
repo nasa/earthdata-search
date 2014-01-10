@@ -53,15 +53,47 @@ ns.Map = do (window,
       result
 
     _buildLayers: ->
-      baseMaps = @_createLayerMap('MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
-      overlayMaps = @_createLayerMap('administrative_boundaries', 'coastlines')
+      baseMaps = @_baseMaps = @_createLayerMap('blue_marble', 'MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
+      overlayMaps = @_overlayMaps = @_createLayerMap('administrative_boundaries', 'coastlines')
 
       # Show the first layer
       for own k, layer of baseMaps
         @map.addLayer(layer)
         break
 
-      @map.addControl(L.control.layers(baseMaps, overlayMaps))
+      @_layerControl = L.control.layers(baseMaps, overlayMaps)
+      @map.addControl(@_layerControl)
+
+    _rebuildLayers: ->
+      layerControl = @_layerControl
+      needsNewBaseLayer = false
+      projection = @projection
+
+      for own k, layer of @_baseMaps
+        valid = layer.validForProjection(projection)
+        hasLayer = layerControl._layers[L.stamp(layer)]?
+        if valid && !hasLayer
+          layerControl.addBaseLayer(layer, k)
+        if !valid && hasLayer
+          layerControl.removeLayer(layer)
+          needsNewBaseLayer = true if layer.layer?._map?
+          @map.removeLayer(layer)
+
+      if needsNewBaseLayer
+        # Show the first layer
+        for own k, layer of @_baseMaps
+          if layer.validForProjection(projection)
+            @map.addLayer(layer)
+            break
+
+      for own k, layer of @_overlayMaps
+        valid = layer.validForProjection(projection)
+        hasLayer = layerControl._layers[L.stamp(layer)]?
+        if valid && !hasLayer
+          layerControl.addOverlay(layer, k)
+        if !valid && hasLayer
+          layerControl.removeLayer(layer)
+
 
     _addDrawControls: ->
       map = @map
@@ -109,8 +141,10 @@ ns.Map = do (window,
 
       opts = @projectionOptions[name]
       L.setOptions(map, opts)
+
       map.fire('projectionchange', projection: name, map: map)
       map.setView(L.latLng(opts.center), opts.zoom, reset: true)
+      @_rebuildLayers()
 
     # (For debugging) Display a layer with the given GeoJSON
     debugShowGeoJson: (json) ->
