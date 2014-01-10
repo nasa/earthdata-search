@@ -1,12 +1,41 @@
 models = @edsc.models
+date = @edsc.util.date
+
+current_year = new Date().getFullYear()
 
 class models.QueryModel
   constructor: ->
     @keywords = ko.observable("")
     @spatial = ko.observable("")
-    @temporal_start = ko.observable("")
-    @temporal_stop = ko.observable("")
-    @temporal_recurring = ko.observable("")
+    @temporal = ko.observable("")
+
+    @temporal_range_start = ko.observable("")
+    @temporal_range_stop = ko.observable("")
+    @temporal_recurring_start = ko.observable("")
+    @temporal_recurring_stop = ko.observable("")
+    @temporal_recurring_year_range = ko.observable("")
+
+    @temporal_range = ko.computed =>
+      start = date.queryDateString(@temporal_range_start())
+      stop = date.queryDateString(@temporal_range_stop())
+
+      if start or stop
+        [start, stop]
+      else
+        null
+
+    @temporal_recurring = ko.computed =>
+      years = @temporal_recurring_year_range().split(" - ")
+      start = date.queryDateString(years[0] + "-" + @temporal_recurring_start()) if @temporal_recurring_start()
+      stop = date.queryDateString(years[1] + "-" + @temporal_recurring_stop()) if @temporal_recurring_stop()
+
+      start_day = date.findDayOfYear(new Date(start))
+      stop_day = date.findDayOfYear(new Date(stop))
+
+      if start and stop and start_day and stop_day
+        [start,stop,start_day,stop_day]
+      else
+        null
 
     @params = ko.computed(@_computeParams)
 
@@ -15,12 +44,13 @@ class models.QueryModel
     @spatial(null)
     models.searchModel.ui.spatialType.selectNone()
     models.searchModel.ui.temporal.selectNone()
-    @temporal_start('')
-    @temporal_stop('')
-    @temporal_recurring('')
-    $('.temporal').val('')
-    $('.temporal-recurring-year-range').slider('setValue', [1960, new Date().getFullYear()])
-    $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
+    @temporal(null)
+    @temporal_range_start("")
+    @temporal_range_stop("")
+    @temporal_recurring_start("")
+    @temporal_recurring_stop("")
+    @temporal_recurring_year_range('1960 - ' + current_year)
+    $('.temporal-recurring-year-range').slider('setValue', [1960, current_year])
 
   _computeParams: =>
     params = {}
@@ -31,16 +61,48 @@ class models.QueryModel
     spatial = @spatial()
     params.spatial = spatial if spatial?.length > 0
 
-    temporal_start = @temporal_start()
-    temporal_stop = @temporal_stop()
-    temporal_recurring = @temporal_recurring()
-    params.temporal = [temporal_start,temporal_stop] if temporal_start?.length > 0 or temporal_stop?.length > 0
-    params.temporal = temporal_recurring if temporal_recurring?.length > 0
+    temporal = @temporal()
+    params.temporal = temporal if temporal?.length > 0
 
     params.page_size = 20
 
     params
 
+  switchTemporal: (type) =>
+    switch type
+      when "range"
+        range = @temporal_range()
+        @temporal(range)
+      when "recurring"
+        recurring = @temporal_recurring()
+        @temporal(recurring)
+
+    model.ui.temporal.setTemporal(type)
+
+  clearTemporal: (button) =>
+    type = "range"
+    switch button
+      when "range"
+        @temporal_range_start("")
+        @temporal_range_stop("")
+      when "recurring"
+        type = "recurring"
+        @temporal_recurring_start("")
+        @temporal_recurring_stop("")
+        @temporal_recurring_year_range('1960 - ' + current_year)
+        $('.temporal-recurring-year-range').slider('setValue', [1960, current_year])
+      when "range-start"
+        @temporal_range_start("")
+      when "range-stop"
+        @temporal_range_stop("")
+      when "recurring-start"
+        type = "recurring"
+        @temporal_recurring_start("")
+      when "recurring-stop"
+        type = "recurring"
+        @temporal_recurring_stop("")
+
+    @switchTemporal(type)
 
 class models.DatasetsModel
   constructor: ->
@@ -139,23 +201,28 @@ class models.Temporal
     @years = ko.observable("")
 
   _formatDate: (date) ->
-    date.replace("T", " ").replace("Z", "")
+    date.replace("T", " ").replace("Z", "") if date
 
   selectNone: =>
       @start("")
       @stop("")
       @years("")
 
-  setTemporal: (@query, type, value) =>
-    if type == "recurring" and value != ""
-      recurring = @query.temporal_recurring()
-      @start(@_formatDate(recurring[0].substring(5)))
-      @stop(@_formatDate(recurring[1].substring(5)))
-      @years(recurring[0].substring(0,4) + " - " + recurring[1].substring(0,4))
+  setTemporal: (type) =>
+    query = model.query
+    if query.temporal()
+      if type == "recurring"
+        recurring = query.temporal_recurring()
+        @start(@_formatDate(recurring[0].substring(5)))
+        @stop(@_formatDate(recurring[1].substring(5)))
+        @years(recurring[0].substring(0,4) + " - " + recurring[1].substring(0,4))
+      else if type == "range"
+        @start(@_formatDate(query.temporal_range_start()))
+        @stop(@_formatDate(query.temporal_range_stop()))
+        @years("")
     else
-      @start(@_formatDate(@query.temporal_start()))
-      @stop(@_formatDate(@query.temporal_stop()))
-      @years("")
+      @selectNone()
+
 
 class models.SearchModel
   constructor: ->

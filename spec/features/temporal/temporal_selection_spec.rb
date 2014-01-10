@@ -98,10 +98,10 @@ describe "Temporal" do
 
     it "allows the user to search by day-of-year input" do
       click_link "Temporal"
-      page.find_by_id("temporal_start").click
+      page.find_by_id("temporal-range-start").click
       fill_in "Day of Year:", with: "1978-335"
       click_button "Set"
-      page.find_by_id("temporal_stop").click
+      page.find_by_id("temporal-range-stop").click
       fill_in "Day of Year:", with: "1979-335"
       click_button "Set"
       click_button "Apply"
@@ -121,12 +121,12 @@ describe "Temporal" do
       click_link "Recurring"
       fill_in "Start", with: "12-01 00:00:00"
       fill_in "End", with: "12-31 00:00:00"
-      script = "$('span.temporal-recurring-year-range-value').html('1970 - 1975')"
+      script = "edsc.models.searchModel.query.temporal_recurring_year_range('1970 - 1975')"
       page.execute_script(script)
       click_button "Apply"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+      expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
       expect(page).to have_content("Start: 12-01 00:00:00")
       expect(page).to have_content("Stop: 12-31 00:00:00")
       expect(page).to have_content("Year Range: 1970 - 1975")
@@ -137,7 +137,7 @@ describe "Temporal" do
       click_link "Recurring"
       fill_in "Start", with: "12-01 00:00:00"
       fill_in "End", with: "12-31 00:00:00"
-      script = "$('span.temporal-recurring-year-range-value').html('1970 - 1975')"
+      script = "edsc.models.searchModel.query.temporal_recurring_year_range('1970 - 1975')"
       page.execute_script(script)
       click_button "Apply"
 
@@ -166,6 +166,15 @@ describe "Temporal" do
       click_button "Apply"
 
       expect(page).to have_content("Start must be no later than End")
+    end
+
+    it "validates both start and end are present" do
+      click_link "Temporal"
+      click_link "Recurring"
+      fill_in "Start", with: "12-10 00:00:00"
+      click_button "Apply"
+
+      expect(page).to have_content("Start and End dates must both be selected")
     end
 
   end
