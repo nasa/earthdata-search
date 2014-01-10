@@ -29,7 +29,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 FactoryGirl.find_definitions
 
-load "#{::Rails.root}/db/seeds.rb"
+load "#{::Rails.root}/db/seeds.rb" unless ENV["NO_SEEDS"]
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -64,7 +64,7 @@ RSpec.configure do |config|
 
   config.after(:each) do
     if example.exception != nil
-      if page && page.driver && page.driver.console_messages
+      if defined?(page) && page && page.driver && page.driver.console_messages
         puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
       end
     end

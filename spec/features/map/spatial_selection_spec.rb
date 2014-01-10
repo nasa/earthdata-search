@@ -166,4 +166,42 @@ describe "Spatial" do
       end
     end
   end
+
+  context "polygon selection" do
+    it "filters datasets using the selected polygon" do
+      create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
+      click_link "Browse All Data"
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+    end
+
+    it "displays errors for invalid polygons" do
+      create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
+      expect(page).to have_content("Polygon boundaries must not cross themselves")
+    end
+
+    context "changing the point selection" do
+      before(:each) do
+        create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
+        create_polygon([-74, 41], [-75, 41], [-75, -40], [-74, 40])
+        click_link "Browse All Data"
+      end
+
+      it "updates the dataset filters using the new bounding box selection" do
+        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 1.0")
+      end
+    end
+
+    context "removing the bounding box selection" do
+      before(:each) do
+        create_polygon([10, 10], [10, -10], [-10, -10], [-10, -10])
+        clear_spatial
+        click_link "Browse All Data"
+      end
+
+      it "removes the spatial bounding box dataset filter" do
+        expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+      end
+    end
+  end
 end

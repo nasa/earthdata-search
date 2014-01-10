@@ -206,6 +206,8 @@ GEM
       atomic
     tilt (1.4.1)
     tins (0.12.0)
+    toastr-rails (1.0.3)
+      railties (>= 3.1.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -250,5 +252,6 @@ DEPENDENCIES
   seed_dump
   sqlite3
   term-ansicolor
+  toastr-rails
   uglifier (>= 1.3.0)
   vcr

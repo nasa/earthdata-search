@@ -23,9 +23,13 @@ ns.ProjectionSwitchingLayer = do (L) ->
 
     onRemove: (map) ->
       @layer.onRemove(map)
+      @layer = null
       map.off 'projectionchange', @_onProjectionChange
 
     setZIndex: (@zIndex) ->
+
+    validForProjection: (proj) ->
+      @options[proj] != false
 
     _onProjectionChange: (e) =>
       @layer.onRemove(e.map)
