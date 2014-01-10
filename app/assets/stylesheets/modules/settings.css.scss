@@ -1,0 +1,30 @@
+//
+// Global EDSC UI Settings
+// These rules are inheritied by all module stylesheets
+//
+
+// Layout Dimensions
+// ========================================
+
+$toolbar-search-field-width: 400px;
+
+
+// Colors
+// ========================================
+
+// Buttons
+$button-bottom-gradient: #315880;
+$button-hover-gradient: #4a739b;
+$button-top-gradient: #5382b1;
+$button-text-shadow: #283a4e;
+$button-lp-border: #a2a2a2;
+
+// Toolbar and Footer
+$toolbar-background: #2c3e50;
+$toolbar-accent-border: #21303f;
+
+// Master Overlay
+$master-overlay-parent-bg-color: transparentize(#111, .1);
+$master-overlay-parent-on-main-bg-color: transparentize(#111, .2); // Used when drawing parent overlapping main
+$master-overlay-main-bg-color: transparentize(#333, .1);
+$overlay-heading-font-color: #c9c9c9;

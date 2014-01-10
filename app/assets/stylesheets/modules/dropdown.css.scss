@@ -1,5 +1,3 @@
-@import "bourbon";
-
 #main-toolbar {
   a:link, a:visited {
     color: #fff;
@@ -68,23 +66,24 @@
     width: 160px;
     margin: 0;
   }
+}
+
+// Override default Slider CSS
+.range-slider {
+  margin-top: 10px;
   
-  .range-slider {
-    margin-top: 10px;
-    
-    #temporal-slider {
-      display: none;
-    }
-    
-    input {
-      width: 210px;
-    }
+  #temporal-slider {
+    display: none;
   }
   
-  .slider {
-    width: 110px;
+  input {
+    width: 210px;
   }
-  .slider.slider-horizontal {
-    width: 110px;
-  }
+}
+
+.slider {
+  width: 110px;
+}
+.slider.slider-horizontal {
+  width: 110px;
 }
