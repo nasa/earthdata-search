@@ -24,6 +24,10 @@ module Echo
       get("/catalog-rest/echo_catalog/granules.#{options[:format] || 'json'}", options_to_query(options))
     end
 
+    def self.get_facets(options={})
+      get("/catalog-rest/search_facet.json", options_to_query(options))
+    end
+
     def self.connection
       Thread.current[:edsc_echo_connection] ||= self.build_connection
     end
