@@ -4,6 +4,7 @@ ns.SpatialSelection = do (window,
                           document,
                           toastr,
                           L,
+                          Proj = ns.L.Proj
                           searchModel = window.edsc.models.searchModel) ->
 
   L.drawLocal.draw.toolbar.buttons.polygon = "Search by spatial polygon"
@@ -101,7 +102,7 @@ ns.SpatialSelection = do (window,
       # Avoid sending events for already-selected tools (infinite loop in firefox)
       return if @_currentTool == name
       @_currentTool = name
-      link = @_getToolLinksForName(name)[0]
+      link = $(@_getToolLinksForName(name)).filter(':visible')[0]
       event = document.createEvent("MouseEvents")
       event.initMouseEvent("click", true, true, window)
       link?.dispatchEvent(event)
@@ -112,6 +113,7 @@ ns.SpatialSelection = do (window,
       @_removeSpatial()
 
     _onDrawStop: (e) =>
+      searchModel.ui.spatialType.selectNone()
       # The user cancelled without committing.  Restore the old layer
       if @_oldLayer?
         @_layer = @_oldLayer
@@ -122,6 +124,7 @@ ns.SpatialSelection = do (window,
       @_addLayer(e.target, e.layer, e.layerType)
 
     _onDrawEdited: (e) =>
+      searchModel.ui.spatialType.selectNone()
       @_addLayer(e.target)
 
     _addLayer: (map, layer=@_layer, type=@_layer.type) ->
@@ -134,6 +137,7 @@ ns.SpatialSelection = do (window,
       @_drawnItems.addLayer(layer)
 
     _onDrawDeleted: (e) =>
+      searchModel.ui.spatialType.selectNone()
       @_removeSpatial()
       searchModel.query.spatial("")
 
@@ -175,6 +179,11 @@ ns.SpatialSelection = do (window,
       poly = @_layer = new L.SphericalPolygon(shape, options)
       @_drawnItems.addLayer(poly)
 
+    _renderPolarRectangle: (shape, proj) ->
+      options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
+      poly = @_layer = new L.PolarRectangle(shape, options, proj)
+      @_drawnItems.addLayer(poly)
+
     _saveSpatialParams: (layer, type) ->
       type = 'point' if type == 'marker'
       type = 'bounding_box' if type == 'rectangle'
@@ -183,6 +192,8 @@ ns.SpatialSelection = do (window,
         when 'point'     then [layer.getLatLng()]
         when 'bounding_box' then [layer.getLatLngs()[0], layer.getLatLngs()[2]]
         when 'polygon'   then layer.getLatLngs()
+        when 'arctic-rectangle'   then layer.getLatLngs()
+        when 'antarctic-rectangle'   then layer.getLatLngs()
         else console.error("Unrecognized shape: #{type}")
 
       shapePoints = ("#{p.lng},#{p.lat}" for p in shape)
@@ -206,6 +217,8 @@ ns.SpatialSelection = do (window,
         when 'point'     then @_renderMarker(shape)
         when 'bounding_box' then @_renderRectangle(shape)
         when 'polygon'   then @_renderPolygon(shape)
+        when 'arctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3413.projection)
+        when 'antarctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3031.projection)
         else console.error("Cannot render spatial type #{type}")
 
   exports = SpatialSelection

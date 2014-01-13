@@ -137,6 +137,10 @@ ns.Map = do (window,
     setProjection: (name) ->
       map = @map
       return if @projection == name
+
+      $(map._container).removeClass("projection-#{@projection}")
+      $(map._container).addClass("projection-#{name}")
+
       @projection = map.projection = name
 
       opts = @projectionOptions[name]

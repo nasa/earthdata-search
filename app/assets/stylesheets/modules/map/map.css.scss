@@ -7,3 +7,12 @@
   // rendering below all containers
   z-index: 0 !important;
 }
+
+.projection-geo .projection-only-arctic,
+.projection-geo .projection-only-antarctic,
+.projection-arctic .projection-only-geo,
+.projection-arctic .projection-only-antarctic,
+.projection-antarctic .projection-only-geo,
+.projection-antarctic .projection-only-arctic {
+  display: none;
+}

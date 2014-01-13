@@ -16,25 +16,38 @@ module Helpers
     end
 
     def create_point(lat=0, lon=0)
-      script = "edsc.models.searchModel.query.spatial('point:#{lon},#{lat}')"
-      page.evaluate_script(script)
+      create_spatial('point', [lat, lon])
     end
 
     def create_bounding_box(lat0=0, lon0=0, lat1=10, lon1=10)
-      script = "edsc.models.searchModel.query.spatial('bounding_box:#{lon0},#{lat0}:#{lon1},#{lat1}')"
-      page.evaluate_script(script)
+      create_spatial('bounding_box', [lat0, lon0], [lat1, lon1])
     end
 
     def create_polygon(*points)
-      point_strs = points.map {|p| p.reverse.join(',')}
-      script = "edsc.models.searchModel.query.spatial('polygon:#{point_strs.join(':')}')"
-      page.evaluate_script(script)
+      create_spatial('polygon', *points)
+    end
+
+    def create_arctic_rectangle(*points)
+      create_spatial('arctic-rectangle', *points)
+    end
+
+    def create_antarctic_rectangle(*points)
+      create_spatial('antarctic-rectangle', *points)
     end
 
     def clear_spatial
       script = "edsc.models.searchModel.query.spatial(null)"
       page.evaluate_script(script)
     end
+
+    private
+
+    def create_spatial(type, *points)
+      point_strs = points.map {|p| p.reverse.join(',')}
+      script = "edsc.models.searchModel.query.spatial('#{type}:#{point_strs.join(':')}')"
+      page.evaluate_script(script)
+    end
+
 
   end
 end
