@@ -2,7 +2,7 @@ class DatasetsController < ApplicationController
   respond_to :json
 
   def index
-    response = Echo::Client.get_datasets(params)
+    response = Echo::Client.get_datasets(to_echo_params(params))
 
     if response.success?
       results = DatasetExtra.decorate_all(response.body)
@@ -46,5 +46,21 @@ class DatasetsController < ApplicationController
     else
       respond_with(response.body, status: response.status)
     end
+
+  private
+
+  # Does application-specific transformations on params to make them
+  # suitable for the ECHO client.  Including these in the ECHO client
+  # would be inappropriate and make it difficult to distribute the
+  # client as a gem
+  def to_echo_params(params)
+    result = params.dup
+
+    # Remove bits of the keywords param that aren't ECHO keywords, such as placename
+    keywords = params[:keywords].presence
+    placename = params[:placename].presence
+    params[:keywords] = keywords.gsub(placename, '') if keywords && placename
+
+    result
   end
 end

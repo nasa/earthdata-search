@@ -104,7 +104,7 @@ ns.SpatialSelection = do (window,
       @_currentTool = name
       link = $(@_getToolLinksForName(name)).filter(':visible')[0]
       event = document.createEvent("MouseEvents")
-      event.initMouseEvent("click", true, true, window)
+      event.initMouseEvent("click", true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null)
       link?.dispatchEvent(event)
 
     _onDrawStart: (e) =>
