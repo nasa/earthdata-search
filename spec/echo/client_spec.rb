@@ -179,4 +179,16 @@ describe Echo::Client do
     end
   end
 
+  context 'dataset facets' do
+    let(:dataset_facets_url) { "/catalog-rest/search_facet.json" }
+    before { allow(Echo::Client).to receive(:connection).and_return(connection) }
+
+    it 'returns dataset facets in json format' do
+      expect(connection).to receive(:get).with(dataset_facets_url, {}).and_return(:response)
+
+      response = Echo::Client.get_facets()
+      expect(response.faraday_response).to eq(:response)
+    end
+  end
+
 end

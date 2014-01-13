@@ -97,6 +97,17 @@
       <a class="master-overlay-close master-overlay-parent-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
     </header>
+    <div class="master-overlay-content">
+      <dl data-bind="foreach: datasetFacets.results">
+        <dt data-bind="text: $data[0]"></dt>
+        <dd data-bind="foreach: $data[1]">
+          <p class="facets-item">
+            <span data-bind="text: term"></span>
+            (<span data-bind="text: count"></span>)
+          </p>
+        </dd>
+      </dl>
+    </div>
   </section>
   <div class="master-overlay-main">
     <div class='master-overlay-main-content'>
