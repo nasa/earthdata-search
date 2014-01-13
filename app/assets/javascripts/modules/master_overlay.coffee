@@ -38,3 +38,12 @@ $(window).on 'load resize', ->
   $('.master-overlay-content').each ->
     $this = $ this
     $this.height($this.parents('.main-content').height() - $this.offset().top - 40)
+
+# Initialize Expand/Collapse Facets
+$(document).ready ->
+  $('.collapse').collapse()
+
+# Expand/Collapse Facets
+$(document).on 'click', '.collapse-link', ->
+  $($(this).find('a').attr("data-target")).collapse('toggle')
+  $(this).find('i').toggleClass('fa-caret-down fa-caret-up')

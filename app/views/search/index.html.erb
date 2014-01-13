@@ -97,16 +97,27 @@
       <a class="master-overlay-close master-overlay-parent-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
     </header>
-    <div class="master-overlay-content">
-      <dl data-bind="foreach: datasetFacets.results">
-        <dt data-bind="text: $data[0]"></dt>
-        <dd data-bind="foreach: $data[1]">
-          <p class="facets-item">
-            <span data-bind="text: term"></span>
-            (<span data-bind="text: count"></span>)
-          </p>
-        </dd>
-      </dl>
+    <div class="master-overlay-content panel-group" id="accordion">
+      <!-- ko foreach: datasetFacets.results -->
+      <div data-bind="" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title collapse-link">
+            <a data-bind="text: $data[0], attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
+            <i class="fa fa-caret-down"></i>
+          </h3>
+        </div>
+        <div data-bind="attr: {id: 'collapse'+$index()}" class="panel-collapse in">
+          <div class="panel-body facets">
+            <!-- ko foreach: $data[1] -->
+            <p class="facets-item">
+              <span data-bind="text: term"></span>
+              (<span data-bind="text: count"></span>)
+            </p>
+            <!-- /ko -->
+          </div>
+        </div>
+      </div>
+      <!-- /ko -->
     </div>
   </section>
   <div class="master-overlay-main">
