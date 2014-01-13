@@ -134,6 +134,39 @@ class models.SpatialType
     @name('Polygon')
     @icon ('edsc-icon-poly-open')
 
+class models.DatasetFacetsModel
+  constructor: ->
+    @_searchResponse = ko.mapping.fromJS(results: [])
+    @results = ko.computed => @_searchResponse.results()
+    @pendingRequestId = 0
+    @completedRequestId = 0
+    @isLoading = ko.observable(false)
+
+    @error = ko.observable(null)
+
+  search: (params) =>
+    @_load(params)
+
+  _load: (params) =>
+    requestId = ++@pendingRequestId
+    @isLoading(@pendingRequestId != @completedRequestId)
+    console.log("Request: /dataset_facets.json", requestId, params)
+    xhr = $.getJSON '/dataset_facets.json', params, (data) =>
+      if requestId > @completedRequestId
+        @completedRequestId = requestId
+        @error(null)
+
+        ko.mapping.fromJS(data, @_searchResponse)
+      else
+        console.log("Rejected out-of-sequence request: /datasets.json", requestId, params, data)
+      @isLoading(@pendingRequestId != @completedRequestId)
+    xhr.fail (response, type, reason) =>
+      if requestId > @completedRequestId
+        @completedRequestId = requestId
+        errors = response.responseJSON?.errors
+        @error(errors?.error)
+
+
 class models.SearchModel
   constructor: ->
     @query = new models.QueryModel()
@@ -142,13 +175,18 @@ class models.SearchModel
     @ui =
       spatialType: new models.SpatialType()
     @bindingsLoaded = ko.observable(false)
+    @datasetFacets = new models.DatasetFacetsModel()
 
     @spatialError = ko.computed(@_computeSpatialError)
 
     ko.computed(@_computeDatasetResults).extend(throttle: 500)
+    ko.computed(@_computeDatasetFacetsResults)
 
   _computeDatasetResults: =>
     @datasets.search(@query.params())
+
+  _computeDatasetFacetsResults: =>
+    @datasetFacets.search()
 
   _computeSpatialError: =>
     error = @datasets.error()
