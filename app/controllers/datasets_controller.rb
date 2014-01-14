@@ -46,6 +46,7 @@ class DatasetsController < ApplicationController
     else
       respond_with(response.body, status: response.status)
     end
+  end
 
   private
 
@@ -59,7 +60,12 @@ class DatasetsController < ApplicationController
     # Remove bits of the keywords param that aren't ECHO keywords, such as placename
     keywords = params[:keywords].presence
     placename = params[:placename].presence
-    params[:keywords] = keywords.gsub(placename, '') if keywords && placename
+    keywords = keywords.gsub(placename, '') if keywords && placename
+    if keywords.present?
+      result[:keywords] = keywords
+    else
+      result.delete(:keywords)
+    end
 
     result
   end

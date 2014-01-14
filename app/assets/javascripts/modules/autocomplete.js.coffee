@@ -20,6 +20,9 @@ do ($=jQuery, searchModel = window.edsc.models.searchModel) ->
         searchModel.query.spatial(data.spatial)
         searchModel.query.placename(placename)
 
+    searchModel.query.keywords.subscribe (newValue) ->
+      $('.autocomplete-placenames').typeahead('setQuery', newValue ? "")
+
     searchModel.query.spatial.subscribe (newValue) ->
       currentPlacename = searchModel.query.placename()
       for input in $('.autocomplete-placenames')

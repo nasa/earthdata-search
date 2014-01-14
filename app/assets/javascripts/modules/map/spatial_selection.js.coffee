@@ -154,6 +154,7 @@ ns.SpatialSelection = do (window,
           @_layer.setStyle(@_errorOptions)
       else
         if @_layer?
+          console.warn("No setStyle method available", @_layer) unless @_layer.setStyle?
           @_layer.setStyle(@_colorOptions)
 
 
