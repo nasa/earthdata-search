@@ -7,6 +7,7 @@ class models.QueryModel
     @temporal_start = ko.observable("")
     @temporal_stop = ko.observable("")
     @temporal_recurring = ko.observable("")
+    @placename = ko.observable("")
 
     @params = ko.computed(@_computeParams)
 
@@ -17,6 +18,7 @@ class models.QueryModel
     @temporal_start('')
     @temporal_stop('')
     @temporal_recurring('')
+    @placename('')
     $('.temporal').val('')
     $('.temporal-recurring-year-range').slider('setValue', [1960, new Date().getFullYear()])
     $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
@@ -35,6 +37,9 @@ class models.QueryModel
     temporal_recurring = @temporal_recurring()
     params.temporal = [temporal_start,temporal_stop] if temporal_start?.length > 0 or temporal_stop?.length > 0
     params.temporal = temporal_recurring if temporal_recurring?.length > 0
+
+    placename = @placename()
+    params.placename = placename if placename?.length > 0
 
     params.page_size = 20
 
