@@ -37,6 +37,8 @@ class models.QueryModel
       else
         null
 
+    @placename = ko.observable("")
+
     @params = ko.computed(@_computeParams)
 
   clearFilters: =>
@@ -51,6 +53,7 @@ class models.QueryModel
     @temporal_recurring_stop("")
     @temporal_recurring_year_range('1960 - ' + current_year)
     $('.temporal-recurring-year-range').slider('setValue', [1960, current_year])
+    @placename('')
 
   _computeParams: =>
     params = {}
@@ -63,6 +66,9 @@ class models.QueryModel
 
     temporal = @temporal()
     params.temporal = temporal if temporal?.length > 0
+
+    placename = @placename()
+    params.placename = placename if placename?.length > 0
 
     params.page_size = 20
 

@@ -29,6 +29,8 @@ group :development do
   gem 'rvm-capistrano'
   gem 'capistrano'
 
+  gem 'quiet_assets'
+
   # For dumping additional metadata stored in DatasetExtras and similar
   gem 'seed_dump'
 end
