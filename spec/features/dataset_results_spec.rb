@@ -7,7 +7,7 @@ describe "Dataset results" do
   before do
     DatasetExtra.create!(echo_id: ast_l1a_id, thumbnail_url: 'http://example.com/thumbnail.jpg')
 
-    visit "/"
+    visit "/search"
     # scrolling in these specs doesn't work unless the window is resized
     page.driver.resize_window(1000, 1000)
   end

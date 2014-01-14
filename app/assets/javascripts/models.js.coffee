@@ -179,6 +179,7 @@ class models.SearchModel
     @datasetsList = new models.DatasetsListModel(@query, @datasets)
     @ui =
       spatialType: new models.SpatialType()
+      isLandingPage: ko.observable(null) # Used by modules/landing
     @bindingsLoaded = ko.observable(false)
     @datasetFacets = new models.DatasetFacetsModel()
 

@@ -17,6 +17,7 @@
 //= require knockout
 //= require knockout.mapping
 //= require toastr
+//= require history.js-1.8.6/jquery.history.js
 //= require namespaces
 //= require util/index
 //= require models

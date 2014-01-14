@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Dataset metadata' do
   before do
-    visit '/'
+    visit '/search'
     fill_in 'keywords', with: 'AST_L1AE'
     find('li', text: 'ASTER Expedited L1A').click
     click_link 'Metadata'

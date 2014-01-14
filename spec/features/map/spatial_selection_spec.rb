@@ -5,7 +5,7 @@ require "spec_helper"
 
 describe "Spatial" do
   before do
-    visit "/"
+    visit "/search"
 
     # Close the overlay
     within ".master-overlay-main #dataset-results" do
