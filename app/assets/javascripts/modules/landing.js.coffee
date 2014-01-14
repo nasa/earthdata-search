@@ -9,6 +9,7 @@ do ($=jQuery, uiModel = edsc.models.searchModel.ui, urlUtil = edsc.util.url) ->
     $('.landing-visible').toggle(isLandingPage)
     if (isLandingPage)
       $('.landing-dialog-toolbar').append($content)
+      $('#keywords').focus()
     else
       $('.landing-toolbar-container').append($content)
     $content.css(top: 0, left: 0, position: 'relative')
