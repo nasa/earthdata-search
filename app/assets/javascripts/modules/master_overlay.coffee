@@ -28,8 +28,6 @@ $(document).on 'click', '.master-overlay-show', ->
   $(document).on 'transitionend', '.master-overlay-parent, .master-overlay-main', ->
   console.log 'Overlay animation ended'
 
-resizeOverlayContent = ->
-
 $(window).on 'load resize', ->
   # When the window is first loaded or later resized, update the master overlay content
   # boxes to have a height that stretches to the bottom of their parent.  It would

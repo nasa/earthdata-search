@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe "Place name autocomplete" do
   before do
-    visit "/"
+    visit "/search"
   end
 
   it "displays suggestions when the user provides types a few letters" do

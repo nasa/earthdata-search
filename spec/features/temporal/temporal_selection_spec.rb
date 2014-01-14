@@ -1,11 +1,11 @@
-# EDSC-15 As a user, I want to search for datasets by simple temporal date 
+# EDSC-15 As a user, I want to search for datasets by simple temporal date
 #         range so that I may limit my results the relevant time span
 
 require "spec_helper"
 
 describe "Temporal" do
   before do
-    visit "/"
+    visit "/search"
   end
 
   context "range selection" do
