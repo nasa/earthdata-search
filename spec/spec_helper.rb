@@ -31,6 +31,16 @@ FactoryGirl.find_definitions
 
 load "#{::Rails.root}/db/seeds.rb" unless ENV["NO_SEEDS"]
 
+# http://stackoverflow.com/questions/11012407/set-json-max-nesting-option-from-within-ruby-on-rails-application/11013407#11013407
+module JSON
+  class << self
+    def parse(source, opts = {})
+      opts = ({:max_nesting => 350}).merge(opts)
+      Parser.new(source, opts).parse
+    end
+  end
+end
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
