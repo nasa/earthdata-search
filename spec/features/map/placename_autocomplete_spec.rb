@@ -4,7 +4,10 @@ require "spec_helper"
 
 describe "Place name autocomplete" do
   before do
-    visit "/"
+    visit "/search"
+    # Hack to avoid Capybara::Webkit::ClickFailed: bug caused by the autocomplete
+    # dialog overflowing outside its container
+    page.evaluate_script('$(".toolbar").height(300)')
   end
 
   it "displays suggestions when the user provides types a few letters" do

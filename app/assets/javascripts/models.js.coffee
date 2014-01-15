@@ -273,6 +273,7 @@ class models.SearchModel
     @ui =
       spatialType: new models.SpatialType()
       temporal: new models.Temporal()
+      isLandingPage: ko.observable(null) # Used by modules/landing
     @bindingsLoaded = ko.observable(false)
     @datasetFacets = new models.DatasetFacetsModel()
 

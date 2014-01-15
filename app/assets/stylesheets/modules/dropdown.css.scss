@@ -1,6 +1,6 @@
 @import "bourbon";
 
-#main-toolbar {
+.toolbar {
   a:link, a:visited {
     color: #fff;
   }
@@ -45,17 +45,17 @@ input.day-of-year-input {
 .nav-tabs {
   border-color: #000;
   margin: 15px 15px 0 15px;
-  
+
   a {
     background: none;
   }
-  
+
   li.active a, li.active:hover a {
     background: #333;
     border-color: #000;
     border-bottom-color: #333;
   }
-  
+
   li:hover a {
     background: #222;
     border-color: #222;
@@ -69,31 +69,31 @@ input.day-of-year-input {
   border-left: 1px solid #000;
   border-right: 1px solid #000;
   border-bottom: 1px solid #000;
-  
+
   label {
     display: inline-block;
     font-weight: bold;
     width: 60px;
   }
-  
+
   input[type="text"] {
     display: inline-block;
     width: 160px;
     margin: 0;
   }
-  
+
   .range-slider {
     margin-top: 10px;
-    
+
     #temporal-slider {
       display: none;
     }
-    
+
     input {
       width: 210px;
     }
   }
-  
+
   .slider {
     width: 110px;
   }

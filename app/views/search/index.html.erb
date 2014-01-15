@@ -1,4 +1,6 @@
 <% content_for :toolbar do %>
+  <div class="landing-toolbar-container">
+  <div class="landing-toolbar-content">
   <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
     <p>
       <input id="keywords" name="keywords" class="autocomplete-placenames"
@@ -82,8 +84,10 @@
       <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="fa fa-fw fa-map-marker"></i> Point</a></li>
     </ul>
   </div>
-  <a href="#datasets-overlay" class="master-overlay-show button"><i class="fa fa-search"></i> Browse All Data</a>
-  <a href="#" class="button clear-filters" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
+  <a href="#datasets-overlay" class="master-overlay-show button landing-hidden"><i class="fa fa-search"></i> Browse All Data</a>
+  <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
+</div>
+</div>
 <% end %>
 
 <div class="master-overlay homepage-search" id="datasets-overlay">
@@ -152,4 +156,21 @@
   <p>Start: <span data-bind="text: start"></span></p>
   <p>Stop: <span data-bind="text: stop"></span></p>
   <p>Year Range: <span data-bind="text: years"></span></p>
+</div>
+
+<div class="landing-area landing-visible">
+
+  <div class="landing-dialog">
+    <div class="landing-dialog-header">
+      <h1>Earthdata Search</h1>
+      <p>Filter any keyword search by time or space.</p>
+    </div>
+    <div class="landing-dialog-toolbar toolbar">
+    </div>
+    <div class="landing-dialog-actions">
+      <a href="#datasets-overlay" class="master-overlay-show button"><i class="fa fa-search"></i> Browse All Data</a>
+      <p>See new and featured datasets or use categories to narrow your results.</p>
+    </div>
+  </div>
+
 </div>

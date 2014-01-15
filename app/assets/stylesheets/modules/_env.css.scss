@@ -9,5 +9,5 @@
 // Also set the width to a fixed value.  The default width is too narrow and pushes the toolbar buttons
 // down, causing some specs to fail because of capybara-webkit issues with element stacking
 .env-test {
-  width: 1200px;
+  width: 1280px;
 }
