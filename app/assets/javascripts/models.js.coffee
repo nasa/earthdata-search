@@ -7,7 +7,7 @@ class models.QueryModel
     @temporal_start = ko.observable("")
     @temporal_stop = ko.observable("")
     @temporal_recurring = ko.observable("")
-    @facets = ko.observable({})
+    @facets = ko.observableArray()
     @placename = ko.observable("")
 
     @params = ko.computed(@_computeParams)
@@ -23,7 +23,7 @@ class models.QueryModel
     $('.temporal').val('')
     $('.temporal-recurring-year-range').slider('setValue', [1960, new Date().getFullYear()])
     $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
-    @facets({})
+    @facets.removeAll()
 
   _computeParams: =>
     params = {}
@@ -41,7 +41,7 @@ class models.QueryModel
     params.temporal = temporal_recurring if temporal_recurring?.length > 0
 
     facets = @facets()
-    params.facets = facets if Object.keys(facets).length > 0
+    params.facets = facets if facets.length > 0
 
     placename = @placename()
     params.placename = placename if placename?.length > 0
@@ -177,8 +177,8 @@ class models.DatasetFacetsModel
         @error(errors?.error)
 
   loadFacet: (facet_type, facet) =>
-    facet_query = {type: facet_type, name:facet.term()}
-    model.query.facets(facet_query)
+    facet_query = {type: facet_type, name: facet.term()}
+    model.query.facets.push(facet_query)
 
 class models.SearchModel
   constructor: ->

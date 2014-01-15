@@ -78,20 +78,27 @@ module Echo
 
       def load_facets_query(options, query, load_facet_options)
         if options[:facets]
-          if load_facet_options
-            query[:filter] = transform_facet_type(options[:facets][:type])[1]
-            query[:value] = options[:facets][:name]
-          else
-            type = transform_facet_type(options[:facets][:type])[0]
-            query[:options] ||= {}
-            query[:options] = query[:options].merge(type => {ignore_case: false})
-            if type == "science_keywords"
-              keyword = transform_science_keyword(options[:facets][:type])
-              query[type] = Hash.new
-              query[type][0] = Hash.new
-              query[type][0][keyword] = options[:facets][:name]
+          options[:facets].each do |opt|
+            facet = opt[1]
+            if load_facet_options
+              query[:filter] = transform_facet_type(facet[:type])[1]
+              query[:value] = facet[:name]
             else
-              query[type] = options[:facets][:name]
+              type = transform_facet_type(facet[:type])[0]
+              # putting the values into an array currently
+              # forces an OR search waiting on NCR #11014369
+              # for an AND solution
+              query[type] = [] unless query[type]
+              query[:options] ||= {}
+              query[:options] = query[:options].merge(type => {ignore_case: false})
+              if type == "science_keywords"
+                keyword = transform_science_keyword(facet[:type])
+                query[type] << Hash.new
+                query[type][0] = Hash.new
+                query[type][0][keyword] = facet[:name]
+              else
+                query[type] << facet[:name]
+              end
             end
           end
         end
