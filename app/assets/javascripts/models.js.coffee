@@ -7,11 +7,8 @@ class models.QueryModel
     @temporal_start = ko.observable("")
     @temporal_stop = ko.observable("")
     @temporal_recurring = ko.observable("")
-<<<<<<< HEAD
     @facets = ko.observable({})
-=======
     @placename = ko.observable("")
->>>>>>> FETCH_HEAD
 
     @params = ko.computed(@_computeParams)
 
