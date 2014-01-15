@@ -99,7 +99,7 @@
     </header>
     <div class="master-overlay-content panel-group" id="accordion">
       <!-- ko foreach: datasetFacets.results -->
-      <div data-bind="" class="panel panel-default">
+      <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title collapse-link">
             <a data-bind="text: $data[0], attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
@@ -109,7 +109,7 @@
         <div data-bind="attr: {id: 'collapse'+$index()}" class="panel-collapse in">
           <div class="panel-body facets">
             <!-- ko foreach: $data[1] -->
-            <p class="facets-item">
+            <p class="facets-item" data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent[0])">
               <span data-bind="text: term"></span>
               (<span data-bind="text: count"></span>)
             </p>

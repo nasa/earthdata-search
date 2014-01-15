@@ -7,6 +7,7 @@ class models.QueryModel
     @temporal_start = ko.observable("")
     @temporal_stop = ko.observable("")
     @temporal_recurring = ko.observable("")
+    @facets = ko.observable({})
 
     @params = ko.computed(@_computeParams)
 
@@ -20,6 +21,7 @@ class models.QueryModel
     $('.temporal').val('')
     $('.temporal-recurring-year-range').slider('setValue', [1960, new Date().getFullYear()])
     $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
+    @facets({})
 
   _computeParams: =>
     params = {}
@@ -35,6 +37,9 @@ class models.QueryModel
     temporal_recurring = @temporal_recurring()
     params.temporal = [temporal_start,temporal_stop] if temporal_start?.length > 0 or temporal_stop?.length > 0
     params.temporal = temporal_recurring if temporal_recurring?.length > 0
+
+    facets = @facets()
+    params.facets = facets if Object.keys(facets).length > 0
 
     params.page_size = 20
 
@@ -158,7 +163,7 @@ class models.DatasetFacetsModel
 
         ko.mapping.fromJS(data, @_searchResponse)
       else
-        console.log("Rejected out-of-sequence request: /datasets.json", requestId, params, data)
+        console.log("Rejected out-of-sequence request: /dataset_facets.json", requestId, params, data)
       @isLoading(@pendingRequestId != @completedRequestId)
     xhr.fail (response, type, reason) =>
       if requestId > @completedRequestId
@@ -166,6 +171,9 @@ class models.DatasetFacetsModel
         errors = response.responseJSON?.errors
         @error(errors?.error)
 
+  loadFacet: (facet_type, facet) =>
+    facet_query = {type: facet_type, name:facet.term()}
+    model.query.facets(facet_query)
 
 class models.SearchModel
   constructor: ->

@@ -15,6 +15,7 @@ module Echo
         load_spatial_query(options, query)
         load_temporal_query(options, query)
         load_browse_only_query(options, query)
+        load_facets_query(options, query)
 
         query
       end
@@ -72,6 +73,61 @@ module Echo
       def load_temporal_query(options, query)
         if options[:temporal]
           query[:temporal] = options[:temporal].flatten.join(',')
+        end
+      end
+
+      def load_facets_query(options, query)
+        if options[:facets]
+          type = transform_facet_type(options[:facets][:type])
+          if type == "science_keywords"
+            keyword = transform_science_keyword(options[:facets][:type])
+            query[type] = Hash.new
+            query[type][0] = Hash.new
+            query[type][0][keyword] = options[:facets][:name]
+          else
+            query[type] = options[:facets][:name]
+          end
+        end
+      end
+
+      def transform_facet_type(type)
+        case type
+        when "Campaigns"
+          "campaign"
+        when "Platforms"
+          "platform"
+        when "Instruments"
+          "instrument"
+        when "Sensors"
+          "sensor"
+        when "2D Coordinate Name"
+          "two_d_coordinate_system_name"
+        when "Category Keyword" || "Topic Keyword" ||
+              "Term Keyword" || "Variable Level 1 Keyword" ||
+              "Variable Level 2 Keyword" || "Variable Level 3 Keyword" ||
+              "Detailed Variable Keyword"
+          "science_keywords"
+        when "Processing Level"
+          "processing_level"
+        end
+      end
+
+      def transform_science_keyword(name)
+        case name
+        when "Category Keyword"
+          "category"
+        when "Topic Keyword"
+          "topic"
+        when "Term Keyword"
+          "term"
+        when "Variable Level 1 Keyword"
+          "variable_level_1"
+        when "Variable Level 2 Keyword"
+          "variable_level_2"
+        when "Variable Level 3 Keyword"
+          "variable_level_3"
+        when "Detailed Variable Keyword"
+          "detailed_variable"
         end
       end
 
