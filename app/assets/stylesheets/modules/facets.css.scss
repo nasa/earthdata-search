@@ -1,3 +1,22 @@
+$master-overlay-parent-bg-color: transparentize(#111, .1);
+
 .facets-item {
   font-size: .8em;
+}
+
+// Overwrite default bootstrap values
+.panel-body {
+  background-color: $master-overlay-parent-bg-color;
+}
+
+.panel-heading {
+  padding: 5px 10px;
+}
+
+.panel-default>.panel-heading {
+  background-color: $master-overlay-parent-bg-color;
+}
+
+.panel {
+  background-color: $master-overlay-parent-bg-color;
 }
