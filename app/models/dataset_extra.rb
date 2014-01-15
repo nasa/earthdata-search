@@ -47,8 +47,28 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def decorate(dataset)
-    dataset = dataset.dup
-    dataset[:thumbnail] = self.thumbnail_url
+    dataset = dataset.dup.with_indifferent_access
+
+    decorate_thumbnail(dataset)
+    decorate_spatial_constraint(dataset)
+
     dataset
+  end
+
+  private
+
+  def decorate_thumbnail(dataset)
+    dataset[:thumbnail] = self.thumbnail_url
+  end
+
+  def decorate_spatial_constraint(dataset)
+    point_spatial = dataset[:points]
+
+    constraint = nil
+    if point_spatial && point_spatial.size == 1
+      point = point_spatial.first.first
+      constraint = "point:#{point.reverse.join(',')}"
+    end
+    dataset[:spatial_constraint] = constraint
   end
 end

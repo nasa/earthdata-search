@@ -161,28 +161,33 @@ ns.SpatialSelection = do (window,
     _renderSpatial: (type, shape) ->
 
     _removeSpatial: () ->
+      @_spatial = null
       if @_layer
         @_drawnItems.removeLayer(@_layer) if @_layer
         @_layer = null
 
     _renderMarker: (shape) ->
       marker = @_layer = new L.Marker(shape[0], icon: L.Draw.Marker.prototype.options.icon)
+      marker.type = 'marker'
       @_drawnItems.addLayer(marker)
 
     _renderRectangle: (shape) ->
       bounds = new L.LatLngBounds(shape...)
       options = L.extend({}, L.Draw.Rectangle.prototype.options.shapeOptions, @_colorOptions)
       rect = @_layer = new L.Rectangle(bounds, options)
+      rect.type = 'rectangle'
       @_drawnItems.addLayer(rect)
 
     _renderPolygon: (shape) ->
       options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
       poly = @_layer = new L.SphericalPolygon(shape, options)
+      poly.type = 'polygon'
       @_drawnItems.addLayer(poly)
 
-    _renderPolarRectangle: (shape, proj) ->
+    _renderPolarRectangle: (shape, proj, type) ->
       options = L.extend({}, L.Draw.Polygon.prototype.options.shapeOptions, @_colorOptions)
       poly = @_layer = new L.PolarRectangle(shape, options, proj)
+      poly.type = type
       @_drawnItems.addLayer(poly)
 
     _saveSpatialParams: (layer, type) ->
@@ -207,19 +212,20 @@ ns.SpatialSelection = do (window,
 
     _loadSpatialParams: (spatial) ->
       return if spatial == @_spatial
-      console.log "Loading spatial params"
       @_removeSpatial()
       @_spatial = spatial
       [type, shapePoints...] = spatial.split(':')
       shape = for pointStr in shapePoints
-        L.latLng((pointStr.split(','))...)
+        L.latLng(pointStr.split(',').reverse())
+
+      @_oldLayer = null
 
       switch type
         when 'point'     then @_renderMarker(shape)
         when 'bounding_box' then @_renderRectangle(shape)
         when 'polygon'   then @_renderPolygon(shape)
-        when 'arctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3413.projection)
-        when 'antarctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3031.projection)
+        when 'arctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3413.projection, type)
+        when 'antarctic-rectangle'   then @_renderPolarRectangle(shape, Proj.epsg3031.projection, type)
         else console.error("Cannot render spatial type #{type}")
 
   exports = SpatialSelection
