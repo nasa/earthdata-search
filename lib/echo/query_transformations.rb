@@ -79,6 +79,8 @@ module Echo
       def load_facets_query(options, query)
         if options[:facets]
           type = transform_facet_type(options[:facets][:type])
+          query[:options] ||= {}
+          query[:options] = query[:options].merge(type => {ignore_case: false})
           if type == "science_keywords"
             keyword = transform_science_keyword(options[:facets][:type])
             query[type] = Hash.new
