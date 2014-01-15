@@ -7,7 +7,11 @@ class models.QueryModel
     @temporal_start = ko.observable("")
     @temporal_stop = ko.observable("")
     @temporal_recurring = ko.observable("")
+<<<<<<< HEAD
     @facets = ko.observable({})
+=======
+    @placename = ko.observable("")
+>>>>>>> FETCH_HEAD
 
     @params = ko.computed(@_computeParams)
 
@@ -18,6 +22,7 @@ class models.QueryModel
     @temporal_start('')
     @temporal_stop('')
     @temporal_recurring('')
+    @placename('')
     $('.temporal').val('')
     $('.temporal-recurring-year-range').slider('setValue', [1960, new Date().getFullYear()])
     $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
@@ -40,6 +45,9 @@ class models.QueryModel
 
     facets = @facets()
     params.facets = facets if Object.keys(facets).length > 0
+
+    placename = @placename()
+    params.placename = placename if placename?.length > 0
 
     params.page_size = 20
 
@@ -182,6 +190,7 @@ class models.SearchModel
     @datasetsList = new models.DatasetsListModel(@query, @datasets)
     @ui =
       spatialType: new models.SpatialType()
+      isLandingPage: ko.observable(null) # Used by modules/landing
     @bindingsLoaded = ko.observable(false)
     @datasetFacets = new models.DatasetFacetsModel()
 

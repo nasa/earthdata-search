@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Dataset keyword searches" do
   before do
-    visit "/"
+    visit "/search"
   end
 
   shared_browser_session do

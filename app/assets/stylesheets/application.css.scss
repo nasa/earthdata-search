@@ -1,10 +1,14 @@
-@import "normalize.css";
-@import "font-awesome.min.css";
+/*
+ * Concatenate normal CSS Produced by 3rd party plugins
+ *= require normalize
+ *= require font-awesome.min
+ *= require bootstrap/bootstrap.min
+ *= require datetimepicker/jquery.datetimepicker
+ *= require toastr
+ *= require bootstrap-slider/slider
+ */
+// Compile sass files
 @import "bourbon";
-@import "bootstrap/bootstrap.min.css";
-@import "datetimepicker/jquery.datetimepicker.css";
-@import "toastr.css";
-@import "bootstrap-slider/slider.css";
 @import "screen.css.scss";
 @import "modules/buttons.css.scss";
 @import "modules/edsc_icons.css.scss";
@@ -15,3 +19,5 @@
 @import "modules/dropdown.css.scss";
 @import "modules/map/map.css.scss";
 @import "modules/facets.css.scss";
+@import "modules/autocomplete.css.scss";
+@import "modules/landing.css.scss";

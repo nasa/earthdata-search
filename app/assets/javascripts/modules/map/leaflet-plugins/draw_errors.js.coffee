@@ -67,7 +67,6 @@ do (L) ->
   # Given a rectangle's bounds, returns either an error message for
   # those bounds or null, indicating no error
   validateRectangle = (bounds) ->
-    console.log "Validating", bounds.getEast(), bounds.getWest()
     if Math.abs(bounds.getEast() - bounds.getWest()) >= 360
       return "Bounds cannot span more than 360 degrees latitude"
     null

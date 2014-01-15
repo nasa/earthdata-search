@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "'Clear Filters' button" do
   before do
-    visit '/'
+    visit '/search'
   end
 
   it "clears keywords" do

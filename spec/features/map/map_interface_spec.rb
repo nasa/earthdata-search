@@ -9,7 +9,7 @@ require "spec_helper"
 
 describe "Map interface" do
   before do
-    visit "/"
+    visit "/search"
   end
 
   let (:switcher_selector) { '#map .projection-switcher' }
