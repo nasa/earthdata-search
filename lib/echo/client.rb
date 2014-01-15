@@ -25,7 +25,7 @@ module Echo
     end
 
     def self.get_facets(options={})
-      get("/catalog-rest/search_facet.json", options_to_query(options))
+      get("/catalog-rest/search_facet.json", options_to_query(options, true))
     end
 
     def self.connection

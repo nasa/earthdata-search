@@ -194,13 +194,13 @@ class models.SearchModel
     @spatialError = ko.computed(@_computeSpatialError)
 
     ko.computed(@_computeDatasetResults).extend(throttle: 500)
-    ko.computed(@_computeDatasetFacetsResults)
+    ko.computed(@_computeDatasetFacetsResults).extend(throttle: 500)
 
   _computeDatasetResults: =>
     @datasets.search(@query.params())
 
   _computeDatasetFacetsResults: =>
-    @datasetFacets.search()
+    @datasetFacets.search(@query.params())
 
   _computeSpatialError: =>
     error = @datasets.error()
