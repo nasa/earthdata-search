@@ -18,27 +18,6 @@ body {
   margin: 0px 0px -25px 0px;
 }
 
-a:hover {
-  text-decoration: none;
-}
-
-h1, h2, h3, p {
-  margin: 0;
-}
-
-h1 a {
-  background: asset-url('search-logo.png') no-repeat;
-  height: 40px;
-  width: 145px;
-  float: left;
-}
-
-ul {
-  // Expect many more lists without bullets than lists with
-  list-style: none;
-  padding: 0;
-}
-
 /* TEMPORARY */
 .earthdata-tophat {
   background: #282828;
@@ -48,7 +27,7 @@ ul {
 }
 
 footer, .toolbar {
-  background: #2c3e50;
+  background: $toolbar-background;
   color: #fff;
 }
 
@@ -65,11 +44,19 @@ footer, .toolbar {
   padding: .5em 1em;
   height: 58px;
 
-  input {
+  h1 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .tt-query, .tt-hint {
     padding: .5em;
     margin: 2px 0 0 20px;
-    width: 450px;
-    border: 1px solid #21303f;
+    width: $toolbar-search-field-width;
+    border: 1px solid $toolbar-accent-border;
     border-radius: 3px;
     box-shadow: inset 0 1px 5px 1px rgba(0,0,0,0.2);
   }
@@ -95,17 +82,14 @@ footer p {
   padding: 5px 0 0 10px;
 }
 
-.homepage-search {
-
-  .search {
-    background: #282828;
-    color: #fff;
-    margin: 100px auto 0 auto;
-    width: 500px;
-    padding: 1em;
-    border-radius: 5px;
-    opacity: .9;
-  }
+.search {
+  background: #282828;
+  color: #fff;
+  margin: 100px auto 0 auto;
+  width: 500px;
+  padding: 1em;
+  border-radius: 5px;
+  opacity: .9;
 }
 
 /*
@@ -113,30 +97,16 @@ Helper Classes
 -------------------------------------
 */
 
-.ir {
-    background-color: transparent;
-    border: 0;
-    overflow: hidden;
-    *text-indent: -9999px;
-}
-
-.ir:before {
-    content: "";
-    display: block;
-    width: 0;
-    height: 150%;
-}
-
 .clearfix:before,
 .clearfix:after {
-    content: " ";
-    display: table;
+  content: " ";
+  display: table;
 }
 
 .clearfix:after {
-    clear: both;
+  clear: both;
 }
 
 .clearfix {
-    *zoom: 1;
+  *zoom: 1;
 }

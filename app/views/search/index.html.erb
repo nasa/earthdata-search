@@ -167,6 +167,14 @@
               </div>
               <!-- /ko -->
               <h3 data-bind="text: dataset_id"></h3>
+              <div class="panel-list-item-actions">
+                <!-- ko if: $root.query.canQueryDatasetSpatial($data) -->
+                <a href="#" class="button icon-button" title="Search using this dataset's location"
+                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.query.toggleQueryDatasetSpatial, clickBubble: false">
+                  <i class="edsc-icon-fw edsc-icon-location"></i>
+                </a>
+                <!-- /ko -->
+              </div>
               <p class="panel-list-details">
               <span data-bind="text: short_name"></span>
               v<span data-bind="text: version_id"></span>
@@ -198,7 +206,7 @@
     <div class="landing-dialog-toolbar toolbar">
     </div>
     <div class="landing-dialog-actions">
-      <a href="#datasets-overlay" class="master-overlay-show button"><i class="fa fa-search"></i> Browse All Data</a>
+      <a href="#datasets-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
       <p>See new and featured datasets or use categories to narrow your results.</p>
     </div>
   </div>

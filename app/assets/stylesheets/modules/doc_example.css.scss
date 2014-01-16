@@ -1,3 +1,33 @@
+#base_css {
+  overflow: scroll;
+  height: 100%;
+  position: relative;
+  padding: 1em;
+  
+  section {
+    margin-bottom: 20px;
+  }
+  
+  & > h1 {
+    color: #34495e;
+    margin: 0 0 .4em 0;
+  }
+  
+  & > section > h2 {
+    color: #999;
+    border-bottom: 1px solid #e3e3e3;
+    font-weight: normal;
+    margin: 0 0 .4em 0;
+  }
+  
+  pre {
+    background: #fffbe5;
+    font-size: .8em;
+    padding: 10px;
+    border-top: 2px solid #e8e2c1;
+  }
+}
+
 .doc-example {
   p {
     font-weight:bold !important;

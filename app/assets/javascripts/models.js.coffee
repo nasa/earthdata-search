@@ -13,8 +13,8 @@ class models.QueryModel
     @params = ko.computed(@_computeParams)
 
   clearFilters: =>
-    @keywords(null)
-    @spatial(null)
+    @keywords('')
+    @spatial('')
     models.searchModel.ui.spatialType.selectNone()
     @temporal_start('')
     @temporal_stop('')
@@ -24,6 +24,18 @@ class models.QueryModel
     $('.temporal-recurring-year-range').slider('setValue', [1960, new Date().getFullYear()])
     $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
     @facets.removeAll()
+
+  toggleQueryDatasetSpatial: (dataset) =>
+    constraint = dataset.spatial_constraint()
+    spatial = @spatial()
+    constraint = "" if constraint == spatial
+    @spatial(constraint)
+    false
+
+  canQueryDatasetSpatial: (dataset) =>
+    spatial = @spatial()
+    constraint = dataset.spatial_constraint()
+    constraint? && (!spatial || spatial == constraint)
 
   _computeParams: =>
     params = {}

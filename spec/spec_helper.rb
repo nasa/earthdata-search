@@ -29,7 +29,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 FactoryGirl.find_definitions
 
-load "#{::Rails.root}/db/seeds.rb" unless ENV["NO_SEEDS"]
+load "#{::Rails.root}/db/seeds.rb" if ENV["SEED"] == "true"
 
 # http://stackoverflow.com/questions/11012407/set-json-max-nesting-option-from-within-ruby-on-rails-application/11013407#11013407
 module JSON
@@ -97,4 +97,6 @@ RSpec.configure do |config|
   config.extend SharedBrowserSession
 
   config.include Helpers::SpatialHelpers
+  config.include Helpers::PageHelpers
+  config.include Helpers::DefaultTags
 end

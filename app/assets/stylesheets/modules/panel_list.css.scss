@@ -3,6 +3,13 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list {
   margin-bottom: $panel-list-item-height + 5px;
+
+  .button {
+    @include light-button;
+
+    font-size: 1.2em;
+    padding: 4px 6px;
+  }
 }
 
 .panel-list-item {
@@ -13,6 +20,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   height: $panel-list-thumbnail-size + 12px;
   padding: .5em .5em .5em $panel-list-thumbnail-size;
   font-size: .8em;
+  position: relative;
 }
 
 .panel-list-thumbnail {
@@ -35,4 +43,11 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 .panel-list-details {
   font-size: .9em;
   padding: .5em 0;
+}
+
+.panel-list-item-actions {
+  position: absolute;
+  padding: .5em;
+  right: 0;
+  bottom: 0;
 }

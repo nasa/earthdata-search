@@ -28,6 +28,16 @@ module Echo
       get("/catalog-rest/search_facet.json", options_to_query(options, true))
     end
 
+    def self.get_token(username, password, client_id, ip)
+      xml = {
+        username: username,
+        password: password,
+        client_id: client_id,
+        user_ip_address: ip
+      }.to_xml(root: 'token')
+      Echo::Response.new(post("/echo-rest/tokens.xml", xml))
+    end
+
     def self.connection
       Thread.current[:edsc_echo_connection] ||= self.build_connection
     end
@@ -36,6 +46,14 @@ module Echo
 
     def self.get(url, params={})
       Echo::Response.new(connection.get(url, params))
+    end
+
+    def self.post(url, body)
+      faraday_response = connection.post(url) do |req|
+        req.headers['Content-Type'] = 'application/xml'
+        req.body = body if body
+      end
+      Echo::Response.new(faraday_response)
     end
 
     def self.build_connection
