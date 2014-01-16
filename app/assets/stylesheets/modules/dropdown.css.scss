@@ -23,6 +23,10 @@
   }
 }
 
+.xdsoft_datetimepicker, .xdsoft_timepicker {
+  z-index:10000;
+}
+
 // Hide jquery.datetimepicker's year field
 .recurring-datetimepicker .xdsoft_year {
   display: none;
