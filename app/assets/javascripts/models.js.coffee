@@ -176,9 +176,46 @@ class models.DatasetFacetsModel
         errors = response.responseJSON?.errors
         @error(errors?.error)
 
-  loadFacet: (facet_type, facet) =>
-    facet_query = {type: facet_type, name: facet.term()}
-    model.query.facets.push(facet_query)
+  loadFacet: (facet_type, facet, event) =>
+    facet_query = {type: facet_type, name: facet}
+    facets = model.query.facets
+    found = ko.utils.arrayFirst facets(), (item) ->
+      #returns either null or the found facet
+      facet_query.type == item.type and facet_query.name == item.name
+    if !found
+      facets.push(facet_query)
+    else
+      # facets.remove(facet_query) did not remove the item, but
+      # facets.remove(found) does
+      facets.remove(found)
+
+  highlightFacet: (type, facet) =>
+    applied_facets = model.query.facets()
+    found = ko.utils.arrayFirst applied_facets, (item) ->
+      #returns either null or the found facet
+      type == item.type and facet() == item.name
+    if !found
+      false
+    else
+      true
+
+  applied_facets: () =>
+    facets = model.query.facets()
+    # don't want to shift all the items out of the facet query
+    facets_copy = ko.observableArray(facets.slice(0))
+    results = []
+    while temp = facets_copy.shift()
+      type = temp.type
+      found = ko.utils.arrayFirst results, (item) ->
+        item.type == type
+
+      if !found
+        results.push {type: type, values: [temp.name]}
+      else
+        found.values.push(temp.name)
+
+    results
+
 
 class models.SearchModel
   constructor: ->

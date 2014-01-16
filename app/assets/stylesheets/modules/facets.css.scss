@@ -1,8 +1,16 @@
 $master-overlay-parent-bg-color: transparentize(#111, .1);
 
 .facets-item {
-  font-size: .8em;
+  font-size: 0.8em;
   cursor: pointer;
+}
+
+dd.facets-item {
+  margin: 0 0 0 10px;
+}
+
+.facets-item.selected {
+  font-weight: bold;
 }
 
 // Overwrite default bootstrap values
@@ -29,6 +37,6 @@ $master-overlay-parent-bg-color: transparentize(#111, .1);
   margin-right: 5px;
 }
 
-.panel-title {
+.facet-title {
   font-size: 0.8em;
 }
