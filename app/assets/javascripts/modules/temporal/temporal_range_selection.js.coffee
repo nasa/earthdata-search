@@ -59,7 +59,7 @@ $(document).ready ->
       day_of_year_div = $("<div class='day-of-year-picker'>
         <label for='day-of-year-input'>Day of Year:</label>
         <input id='day-of-year-input' class='day-of-year-input' type='text' placeholder='YYYY-DDD' >
-        <button id='day-of-year-submit' class='button' data-input='" + input.attr("id") + "'>Set</button>
+        <button id='day-of-year-submit' class='button text-button' data-input='" + input.attr("id") + "'>Set</button>
         </div>")
       day_of_year_div.appendTo(picker)
 

@@ -1,0 +1,24 @@
+input[type="text"], input[type="search"] {
+  padding: 5px;
+  outline: none;
+}
+
+textarea {
+  min-width: 300px;
+  min-height: 200px;
+  font-size: 1em;
+  padding: 5px;
+}
+
+fieldset {
+  @include linear-gradient(#fff, #f3f3f3);
+  border-radius: 5px;
+  padding: 1em;
+  border-color: #e3e3e3;
+  
+  legend {
+    background: #fff;
+    font-weight: bold;
+    padding: .1em .4em;
+  }
+}

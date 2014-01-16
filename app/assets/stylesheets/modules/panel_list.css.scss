@@ -4,7 +4,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 .panel-list {
   margin-bottom: $panel-list-item-height + 5px;
 
-  a.button {
+  .button {
     @include light-button;
 
     font-size: 1.2em;

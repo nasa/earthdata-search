@@ -1,11 +1,5 @@
-@import "bourbon";
 // The main search page has a master-detail type view, where both master and
 // detail lay on top of the map.  This module describes the master overlay.
-
-$master-overlay-parent-bg-color: transparentize(#111, .1);
-$master-overlay-parent-on-main-bg-color: transparentize(#111, .2); // Used when drawing parent overlapping main
-$master-overlay-main-bg-color: transparentize(#333, .1);
-$overlay-heading-font-color: #c9c9c9;
 
 
 // The container for the entire overlay
