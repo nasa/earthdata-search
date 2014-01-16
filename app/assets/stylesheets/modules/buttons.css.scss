@@ -1,29 +1,59 @@
-$button-bottom-gradient: #315880;
-$button-hover-gradient: #4a739b;
-$button-top-gradient: #5382b1;
-$button-text-shadow: #283a4e;
+@mixin light-button {
+  background: #ddd;
+  color: #000;
+  border: 1px solid transparent;
 
-a.button, button.button {
-  @include linear-gradient($button-top-gradient, $button-bottom-gradient);
-  color: #fff;
-  text-decoration: none;
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 3px;
-  box-shadow: 0 0 3px #424242;
-  border: 1px solid $button-text-shadow;
-  text-shadow: 1px 1px 1px $button-text-shadow;
-  outline: none;
-  
-  &:hover {
-    text-decoration: none;
-    @include linear-gradient($button-hover-gradient, $button-bottom-gradient);
+  &.button-active {
+    background: #888;
+    border: 1px solid #444;
+    color: #fff;
+    text-shadow: 1px 1px 1px $button-dark-text-shadow;
   }
-  
+
+  &:hover, .button-active:hover {
+    background: #aaa;
+    border: 1px solid #888;
+  }
+}
+
+@mixin dark-button {
+  @include linear-gradient($button-dark-top-gradient, $button-dark-bottom-gradient);
+  color: #fff;
+  box-shadow: 0 0 3px #424242;
+  border: 1px solid $button-dark-text-shadow;
+  text-shadow: 1px 1px 1px $button-dark-text-shadow;
+
+  &:hover {
+    color: #fff;
+    @include linear-gradient($button-dark-hover-gradient, $button-dark-bottom-gradient);
+  }
+
   &.low-priority {
     background: none;
-    border-color: #a2a2a2;
+    border-color: $button-dark-lp-border;
   }
+}
+
+.button, input[type="button"], input[type="reset"], input[type="submit"] {
+  text-decoration: none;
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 3px;
+  outline: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.toolbar {
+  .button, input[type="button"], input[type="reset"], input[type="submit"] {
+    @include dark-button;
+  }
+}
+
+.text-button {
+  @include dark-button;
 }
 
 .dropdown-value {

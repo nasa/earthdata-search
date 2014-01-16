@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'edsc';
-	src:url('edsc.eot');
-	src:url('edsc.eot?#iefix') format('embedded-opentype'),
-		url('edsc.ttf') format('truetype'),
-		url('edsc.woff') format('woff'),
-		url('edsc.svg#edsc') format('svg');
+	src:asset-url('edsc.eot');
+	src:asset-url('edsc.eot?#iefix') format('embedded-opentype'),
+		asset-url('edsc.ttf') format('truetype'),
+		asset-url('edsc.woff') format('woff'),
+		asset-url('edsc.svg#edsc') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -40,4 +40,25 @@
 }
 .edsc-icon-rect-open:before {
 	content: "\e603";
+}
+.edsc-icon-cog:before {
+	content: "\e605";
+}
+.edsc-icon-rocket:before {
+	content: "\e606";
+}
+.edsc-icon-lock:before {
+	content: "\e607";
+}
+.edsc-icon-bookmark:before {
+	content: "\e608";
+}
+.edsc-icon-download:before {
+	content: "\e609";
+}
+.edsc-icon-location:before {
+	content: "\e60a";
+}
+.edsc-icon-stack:before {
+	content: "\e604";
 }

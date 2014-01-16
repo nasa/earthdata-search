@@ -2,7 +2,7 @@ ns = window.edsc.map.L
 
 ns.GibsTileLayer = do (L, ProjectionSwitchingLayer = ns.ProjectionSwitchingLayer) ->
 
-  gibsUrl = 'https://map1c.vis.earthdata.nasa.gov/wmts-{endpoint}/wmts.cgi?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}'
+  gibsUrl = 'https://map1{s}.vis.earthdata.nasa.gov/wmts-{endpoint}/wmts.cgi?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}'
 
   parent = ProjectionSwitchingLayer.prototype
 

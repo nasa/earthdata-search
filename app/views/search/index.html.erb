@@ -96,16 +96,27 @@
       <a class="master-overlay-close master-overlay-parent-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
     </header>
-    <div class="master-overlay-content">
-      <dl data-bind="foreach: datasetFacets.results">
-        <dt data-bind="text: $data[0]"></dt>
-        <dd data-bind="foreach: $data[1]">
-          <p class="facets-item">
-            <span data-bind="text: term"></span>
-            (<span data-bind="text: count"></span>)
-          </p>
-        </dd>
-      </dl>
+    <div class="master-overlay-content panel-group" id="accordion">
+      <!-- ko foreach: datasetFacets.results -->
+      <div data-bind="" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title collapse-link">
+            <a data-bind="text: $data[0], attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
+            <i class="fa fa-caret-down"></i>
+          </h3>
+        </div>
+        <div data-bind="attr: {id: 'collapse'+$index()}" class="panel-collapse in">
+          <div class="panel-body facets">
+            <!-- ko foreach: $data[1] -->
+            <p class="facets-item">
+              <span data-bind="text: term"></span>
+              (<span data-bind="text: count"></span>)
+            </p>
+            <!-- /ko -->
+          </div>
+        </div>
+      </div>
+      <!-- /ko -->
     </div>
   </section>
   <div class="master-overlay-main">
@@ -131,6 +142,14 @@
               </div>
               <!-- /ko -->
               <h3 data-bind="text: dataset_id"></h3>
+              <div class="panel-list-item-actions">
+                <!-- ko if: $root.query.canQueryDatasetSpatial($data) -->
+                <a href="#" class="button icon-button" title="Search using this dataset's location"
+                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.query.toggleQueryDatasetSpatial, clickBubble: false">
+                  <i class="edsc-icon-fw edsc-icon-location"></i>
+                </a>
+                <!-- /ko -->
+              </div>
               <p class="panel-list-details">
               <span data-bind="text: short_name"></span>
               v<span data-bind="text: version_id"></span>
@@ -168,7 +187,7 @@
     <div class="landing-dialog-toolbar toolbar">
     </div>
     <div class="landing-dialog-actions">
-      <a href="#datasets-overlay" class="master-overlay-show button"><i class="fa fa-search"></i> Browse All Data</a>
+      <a href="#datasets-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
       <p>See new and featured datasets or use categories to narrow your results.</p>
     </div>
   </div>
