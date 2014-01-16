@@ -24,6 +24,7 @@
   text-shadow: 1px 1px 1px $button-dark-text-shadow;
 
   &:hover {
+    color: #fff;
     @include linear-gradient($button-dark-hover-gradient, $button-dark-bottom-gradient);
   }
 
