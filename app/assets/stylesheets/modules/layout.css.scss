@@ -42,7 +42,15 @@ footer, .toolbar {
 .toolbar {
   background: rgba(44, 62, 80, 1) asset-url('header-drop.png') repeat-x top;
   padding: .5em 1em;
-
+  
+  h1 {
+    margin: 0;
+  }
+  
+  p {
+    margin: 0;
+  }
+  
   input {
     padding: .5em;
     margin: 2px 0 0 20px;
@@ -90,14 +98,14 @@ Helper Classes
 
 .clearfix:before,
 .clearfix:after {
-    content: " ";
-    display: table;
+  content: " ";
+  display: table;
 }
 
 .clearfix:after {
-    clear: both;
+  clear: both;
 }
 
 .clearfix {
-    *zoom: 1;
+  *zoom: 1;
 }

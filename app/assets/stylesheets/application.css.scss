@@ -7,6 +7,7 @@
 @import "modules/layout.css.scss";
 @import "modules/typography.css.scss";
 @import "modules/buttons.css.scss";
+@import "modules/forms.css.scss";
 @import "modules/edsc_icons.css.scss";
 @import "modules/panel_list.css.scss";
 @import "modules/master_overlay.css.scss";
@@ -14,3 +15,6 @@
 @import "modules/env.css.scss";
 @import "modules/dropdown.css.scss";
 @import "modules/map/map.css.scss";
+
+/* Documentation styles, can remove from production app */
+@import "modules/doc_example.css.scss";

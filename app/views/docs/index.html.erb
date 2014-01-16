@@ -1,0 +1,244 @@
+<% content_for :toolbar do %>
+    <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
+      <p>
+        <input id="keywords" name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or dataset name" autofocus>
+      </p>
+    <% end %>
+<% end %>
+    <section class="main-content">
+
+<!--      
+<section class="homepage-search clearfix" style="clear:both">
+  <div class="search">
+    This is a search box within the homepage search.  It's currently only used on the site's landing screen.
+  </div>
+</section>
+-->
+<section id="master-overlay" class="master-overlay">
+  <section class="master-overlay-parent">
+    <header>
+      <a class="master-overlay-close master-overlay-main-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+      <h2>This is a master-overlay</h2>
+    </header>
+    <div class="master-overlay-content">
+      <p>
+        Master overlays are the master portion of a master-detail view which is overlayed over the
+        main content view.  For the EDSC, this typically contains the dataset facets, search results,
+        and pinned datasets, overlayed over the main map view.
+      </p>
+      <p>
+        Master overlays contain two sections, styled as vertical columns.  The left column is the
+        "master-overlay-parent", the right is the "master-overlay-main".  They differ mostly
+        in size, background color, and the ability to close the parent while keeping the main
+        area visible.
+      </p>
+      <p>
+        Master overlays have a static header area and a scrollable body which stretches the vertical
+        height of the main portion of the page
+      </p>
+    </div>
+  </section>
+  <section class="master-overlay-main">
+    <header>
+      <a class="master-overlay-close master-overlay-parent-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+      <h2>This is the master overlay main area</h2>
+      <p>
+        It contains an example of a panel-list.  Panel lists are used to show item summaries as
+        tiles / panels (as opposed to a columnar view).  Typically, panel-list-items will have thumbnails
+        or placeholders, some obvious title, some descriptive text, and some actions to perform on the
+        item.  Panel lists are used most often for dataset views.
+      </p>
+    </header>
+    <ul class="panel-list master-overlay-content">
+      <li class="panel-list-item">
+        <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
+            No image available
+        </div>
+        <h3>This is a header, an h3 within the list item</h3>
+        <p class="panel-list-details">
+          These are the panel-list-details
+        </p>
+      </li>
+    </ul>
+  </section>
+</section>
+
+<section id="base_css">
+  <h1>Base CSS Documentation</h1>
+  <section id="headings">
+    <h2>Headings</h2>
+    <div class="docs-example">
+      <h1>h1. Heading 1</h1>
+      <h2>h2. Heading 2</h2>
+      <h3>h3. Heading 3</h3>
+      <h4>h4. Heading 4</h4>
+      <h5>h5. Heading 5</h5>
+      <h6>h6. Heading 6</h6>
+      <hgroup>
+        <h1>hgroup h1. Heading 1</h1>
+        <h2>hgroup h2. Heading 2</h2>
+      </hgroup>
+    </div>
+  </section>
+  <!-- These are intentionally hidden.  They're styled by CSS reset. -->
+  <section id="unused-defaults" style="display:none">
+    <audio>This is an &lt;audio&gt;</audio>
+    <video>This is an &lt;audio&gt;</video>
+    <canvas>This is a &lt;canvas&gt;</canvas>
+    <svg></svg>
+  </section>
+  <section id="forms">
+    <h2>Forms</h2>
+    <form>
+      <fieldset>
+        <legend>This is a legend in a form fieldset</legend>
+        <p><button class="button">This is a &lt;button&gt;</button></p>
+        <p><button disabled="disabled">This is a disabled &lt;button&gt;</button></p>
+        <p>This is an &lt;input&gt;: <input type="text"></p>
+        <p>This is a disabled &lt;input&gt;: <input type="text" disabled="disabled"></p>
+        <p>This is an &lt;input&gt; button: <input type="button" value="&lt;input&gt; Button"></p>
+        <p>This is a reset: <input type="reset"></p>
+        <p>This is a submit: <input type="submit"></p>
+        <p>This is a search input: <input type="search"></p>
+        <p>This is a checkbox: <input type="checkbox"></p>
+        <p>This is a radio: <input type="radio"></p>
+        <p>
+          <select>This is a &lt;select&gt;</select>
+        </p>
+        <p><textarea>This is a &lt;textarea&gt;</textarea></p>
+      </fieldset>
+    </form>
+  </section>
+  <section id="defaults">
+    <h2>Default styles</h2>
+    <div class="docs-example">
+      <article>This is an &lt;article&gt;</article>
+      <aside>This is an &lt;aside&gt;</aside>
+      <details>This is a &lt;details&gt;</details>
+      <figure>
+        This is a &lt;figure&gt;
+        <figcaption>And this is its &lt;figcaption&gt;</figcaption>
+      </figure>
+      <main>This is a &lt;main&gt;</main>
+      <nav>This is a &lt;nav&gt;</nav>
+      <summary>This is a &lt;summary&gt;</summary>
+      <div hidden="hidden">This is hidden</div>
+      <a>This is an &lt;a&gt;</a>
+      <abbr title="This is the abbr title">This is an &lt;abbr&gt;</abbr>
+      <b>This is a &lt;b&gt;</b>
+      <strong>This is a &lt;strong&gt;</strong>
+      <blockquote>This is a &lt;blockquote&gt;</blockquote>
+      <dfn>This is a &lt;dfn&gt;</dfn>
+      This is a &lt;hr&gt;:<hr>
+      <mark>This is a &lt;mark&gt;</mark>
+      <code>This is a &lt;code&gt;</code>
+      <kbd>This is a &lt;kbd&gt;</kbd>
+      <samp>This is a &lt;samp&gt;</samp>
+      <q>This is a &lt;q&gt;</q>
+      <small>This is a &lt;small&gt;</small>
+      <sub>This is a &lt;sub&gt;</sub>
+      <sup>This is a &lt;sup&gt;</sup>
+      <dl>
+        <dt>This is a &lt;dt&gt;</dt>
+        <dd>This is a &lt;dt&gt;</dd>
+      </dl>
+      <menu>This is a &lt;menu&gt;</menu>
+      <ol>
+        <li>This is an ordered list item</li>
+        <li>This is another ordered list item</li>
+      </ol>
+      <ul>
+        <li>This is an unordered list item</li>
+        <li>This is another unordered list item</li>
+      </ul>
+      <nav>
+        <ol>
+          <li>This is an ordered list item in a nav</li>
+          <li>This is another ordered list item in a nav</li>
+        </ol>
+        <ul>
+          <li>This is an unordered list item in a nav</li>
+          <li>This is another unordered list item in a nav</li>
+        </ul>
+      </nav>
+      <table>
+        <tr><td>This is a cell in a table</td></tr>
+      </table>
+      <img alt="This is an image">
+    </div>
+  </section>
+  <section id="font_icons">
+    <h2>Icon Sets</h2>
+    <div class="docs-example">
+      <p>EDSC Icons</p>
+      <p>
+        <i class="edsc-icon-poly"></i>
+        <i class="edsc-icon-rect"></i>
+        <i class="edsc-icon-poly-open"></i>
+        <i class="edsc-icon-rect-open"></i>
+      </p>
+      <code>
+<pre>
+&lt;p&gt;
+  &lt;i class="edsc-icon-poly"&gt;&lt;/i&gt;
+  &lt;i class="edsc-icon-rect"&gt;&lt;/i&gt;
+  &lt;i class="edsc-icon-poly-open"&gt;&lt;/i&gt;
+  &lt;i class="edsc-icon-rect-open"&gt;&lt;/i&gt;
+&lt;/p&gt;
+</pre>
+      </code>
+      <p>FontAwesome Icons</p>
+      <p>
+        <i class="fa fa-edit"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-tasks"></i>
+        <i class="fa fa-fighter-jet"></i>
+      </p>
+      <code>
+<pre>
+&lt;p&gt;
+  &lt;i class="fa fa-edit"&gt;&lt;/i&gt;
+  &lt;i class="fa fa-star"&gt;&lt;/i&gt;
+  &lt;i class="fa fa-tasks"&gt;&lt;/i&gt;
+  &lt;i class="fa fa-fighter-jet"&gt;&lt;/i&gt;
+&lt;/p&gt;
+</pre>
+      </code>
+    </div>
+  </section>
+  <section id="body_text">
+    <h2>Body text</h2>
+    <div class="docs-example">
+      <p>
+        It's art! A statement on modern society, 'Oh Ain't Modern Society Awful?'! I am the Doctor, and you are the Daleks! Aw, you're all Mr. Grumpy Face today. They're not aliens, they're Earth&hellip;liens! Bow ties are cool! Come on Amy, I'm a normal bloke, tell me what normal blokes do! Annihilate? No. No violence. I won't stand for it. Not now, not ever, do you understand me?! I'm the Doctor, the Oncoming Storm - and you basically meant beat them in a football match, didn't you?
+      </p>
+    </div>
+    <pre class="docs-example-pretty">
+      &lt;p&gt;&hellip;&lt;/p&gt;
+    </pre>
+  </section>
+</section>
+<section id="modules">
+  <h1>Earth Data Search Modules</h1>
+  <section id="doc_example">
+    <h2>Example Module</h2>
+    <div class="docs-example">
+      
+<div class="doc-example">
+  <h1>Parameter: Documentation</h1>
+  <p class="css-test test-passing" style="display:none;">CSS is working</p>
+  <p class="css-test test-failing">CSS is broken!</p>
+  <p class="javascript-test test-passing" style="display:none">Javascript is working</p>
+  <p class="javascript-test test-failing">Javascript is broken!</p>
+  <p>This module should be removed once real examples exist.</p>
+</div>
+
+    </div>
+    <div class="docs-example-pretty">
+      &lt;%= render 'example/doc_example', object: OpenStruct.new(name: "Documentation")  %&gt;
+    </div>
+  </section>
+  </section>
+</section>
+    </section>
+    </div>

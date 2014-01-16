@@ -1,11 +1,11 @@
-a.button, button.button {
+a.button, button.button, input[type="button"], input[type="reset"], input[type="submit"] {
   @include linear-gradient($button-top-gradient, $button-bottom-gradient);
   color: #fff;
   text-decoration: none;
   display: inline-block;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border-radius: 3px;
-  box-shadow: 0 0 3px #424242;
+  box-shadow: 0 0 3px #ccc;
   border: 1px solid $button-text-shadow;
   text-shadow: 1px 1px 1px $button-text-shadow;
   outline: none;
@@ -19,6 +19,10 @@ a.button, button.button {
     background: none;
     border-color: $button-lp-border;
   }
+}
+
+.toolbar .button {
+  box-shadow: 0 0 3px #424242;
 }
 
 .dropdown-value {

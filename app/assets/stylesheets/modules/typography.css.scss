@@ -3,7 +3,19 @@ a:hover {
 }
 
 h1, h2, h3, p {
-  margin: 0;
+  margin: 0 0 .2em 0;
+}
+
+hgroup {
+
+  & > h1 {
+    margin-bottom: 0;
+  }
+  
+  & > h2 {
+    color: #999;
+    font-weight: normal;
+  }
 }
 
 header .ir {
