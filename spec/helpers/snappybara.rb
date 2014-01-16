@@ -25,11 +25,26 @@ module Snappybara
   end
 end
 
-if ENV["WIP_REUSE_SESSION"] == "true"
-  RSpec.configure do |config|
-    # Replace Capybara::DSL with Snappybara::DSL in RSpec's included modules
-    config.include_or_extend_modules.each do |mod|
-      mod[1] = Snappybara::DSL if mod[1] == Capybara::DSL
+RSpec.configure do |config|
+  # Replace Capybara::DSL with Snappybara::DSL in RSpec's included modules
+  config.include_or_extend_modules.each do |mod|
+    mod[1] = Snappybara::DSL if mod[1] == Capybara::DSL
+  end
+
+  config.before :each do |parent|
+    if self.class.include?(Snappybara::DSL)
+      driver = Capybara.default_driver
+      driver = Capybara.javascript_driver if example.metadata[:js]
+      driver = example.metadata[:driver] if example.metadata[:driver]
+
+      if example.metadata[:reset] || driver != Capybara.current_driver
+        Capybara.reset_sessions!
+        Capybara.current_driver = driver
+      end
     end
+  end
+
+  config.after(:suite) do
+    Capybara.reset_sessions!
   end
 end

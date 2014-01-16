@@ -98,4 +98,5 @@ RSpec.configure do |config|
 
   config.include Helpers::SpatialHelpers
   config.include Helpers::PageHelpers
+  config.include Helpers::DefaultTags
 end
