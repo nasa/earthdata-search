@@ -7,19 +7,33 @@ class models.QueryModel
     @temporal_start = ko.observable("")
     @temporal_stop = ko.observable("")
     @temporal_recurring = ko.observable("")
+    @placename = ko.observable("")
 
     @params = ko.computed(@_computeParams)
 
   clearFilters: =>
-    @keywords(null)
-    @spatial(null)
+    @keywords('')
+    @spatial('')
     models.searchModel.ui.spatialType.selectNone()
     @temporal_start('')
     @temporal_stop('')
     @temporal_recurring('')
+    @placename('')
     $('.temporal').val('')
     $('.temporal-recurring-year-range').slider('setValue', [1960, new Date().getFullYear()])
     $('.temporal-recurring-year-range-value').text('1960 - ' + new Date().getFullYear())
+
+  toggleQueryDatasetSpatial: (dataset) =>
+    constraint = dataset.spatial_constraint()
+    spatial = @spatial()
+    constraint = "" if constraint == spatial
+    @spatial(constraint)
+    false
+
+  canQueryDatasetSpatial: (dataset) =>
+    spatial = @spatial()
+    constraint = dataset.spatial_constraint()
+    constraint? && (!spatial || spatial == constraint)
 
   _computeParams: =>
     params = {}
@@ -35,6 +49,9 @@ class models.QueryModel
     temporal_recurring = @temporal_recurring()
     params.temporal = [temporal_start,temporal_stop] if temporal_start?.length > 0 or temporal_stop?.length > 0
     params.temporal = temporal_recurring if temporal_recurring?.length > 0
+
+    placename = @placename()
+    params.placename = placename if placename?.length > 0
 
     params.page_size = 20
 
@@ -54,6 +71,8 @@ class models.DatasetsModel
     @details = ko.observable({})
     @detailsLoading = ko.observable(false)
 
+    @error = ko.observable(null)
+
   search: (params) =>
     params.page = @page = 1
     @_load(params, true)
@@ -69,6 +88,8 @@ class models.DatasetsModel
     console.log("Request: /datasets.json", requestId, params)
     xhr = $.getJSON '/datasets.json', params, (data) =>
       if requestId > @completedRequestId
+        @completedRequestId = requestId
+        @error(null)
         #console.log("Response: /datasets.json", requestId, params, data)
         if replace
           ko.mapping.fromJS(data, @_searchResponse)
@@ -76,15 +97,14 @@ class models.DatasetsModel
           currentResults = @_searchResponse.results
           newResults = ko.mapping.fromJS(data['results'])
           currentResults.push.apply(currentResults, newResults())
-        @completedRequestId = requestId
       else
         console.log("Rejected out-of-sequence request: /datasets.json", requestId, params, data)
       @isLoading(@pendingRequestId != @completedRequestId)
     xhr.fail (response, type, reason) =>
-      errors = response.responseJSON?.errors
-      if errors?
-        console.error errors
-        # Placeholder.  Not currently needed but will be soon.
+      if requestId > @completedRequestId
+        @completedRequestId = requestId
+        errors = response.responseJSON?.errors
+        @error(errors?.error)
 
   showDataset: (dataset) =>
     id = dataset.id()
@@ -131,6 +151,39 @@ class models.SpatialType
     @name('Polygon')
     @icon ('edsc-icon-poly-open')
 
+class models.DatasetFacetsModel
+  constructor: ->
+    @_searchResponse = ko.mapping.fromJS(results: [])
+    @results = ko.computed => @_searchResponse.results()
+    @pendingRequestId = 0
+    @completedRequestId = 0
+    @isLoading = ko.observable(false)
+
+    @error = ko.observable(null)
+
+  search: (params) =>
+    @_load(params)
+
+  _load: (params) =>
+    requestId = ++@pendingRequestId
+    @isLoading(@pendingRequestId != @completedRequestId)
+    console.log("Request: /dataset_facets.json", requestId, params)
+    xhr = $.getJSON '/dataset_facets.json', params, (data) =>
+      if requestId > @completedRequestId
+        @completedRequestId = requestId
+        @error(null)
+
+        ko.mapping.fromJS(data, @_searchResponse)
+      else
+        console.log("Rejected out-of-sequence request: /datasets.json", requestId, params, data)
+      @isLoading(@pendingRequestId != @completedRequestId)
+    xhr.fail (response, type, reason) =>
+      if requestId > @completedRequestId
+        @completedRequestId = requestId
+        errors = response.responseJSON?.errors
+        @error(errors?.error)
+
+
 class models.SearchModel
   constructor: ->
     @query = new models.QueryModel()
@@ -138,12 +191,27 @@ class models.SearchModel
     @datasetsList = new models.DatasetsListModel(@query, @datasets)
     @ui =
       spatialType: new models.SpatialType()
+      isLandingPage: ko.observable(null) # Used by modules/landing
     @bindingsLoaded = ko.observable(false)
+    @datasetFacets = new models.DatasetFacetsModel()
+
+    @spatialError = ko.computed(@_computeSpatialError)
 
     ko.computed(@_computeDatasetResults).extend(throttle: 500)
+    ko.computed(@_computeDatasetFacetsResults)
 
   _computeDatasetResults: =>
     @datasets.search(@query.params())
+
+  _computeDatasetFacetsResults: =>
+    @datasetFacets.search()
+
+  _computeSpatialError: =>
+    error = @datasets.error()
+    if error?
+      return "Polygon boundaries must not cross themselves" if error.indexOf('ORA-13349') != -1
+      return "Polygon is too large" if error.indexOf('ORA-13367') != -1
+    null
 
 model = models.searchModel = new models.SearchModel()
 

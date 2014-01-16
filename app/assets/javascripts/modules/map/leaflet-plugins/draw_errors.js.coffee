@@ -30,8 +30,6 @@ do (L) ->
     last = latLngs[latLngs.length - 1]
     prev = latLngs[latLngs.length - 2]
 
-    if Math.abs(last.lng - prev.lng) >= 180
-      return "Points cannot be more than 180 degrees apart"
     null
 
   # Validates a polygon that the user has finished.
@@ -69,7 +67,6 @@ do (L) ->
   # Given a rectangle's bounds, returns either an error message for
   # those bounds or null, indicating no error
   validateRectangle = (bounds) ->
-    console.log "Validating", bounds.getEast(), bounds.getWest()
     if Math.abs(bounds.getEast() - bounds.getWest()) >= 360
       return "Bounds cannot span more than 360 degrees latitude"
     null

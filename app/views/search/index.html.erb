@@ -1,7 +1,12 @@
 <% content_for :toolbar do %>
+  <div class="landing-toolbar-container">
+  <div class="landing-toolbar-content">
   <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
     <p>
-      <input id="keywords" name="keywords" data-bind="value: query.keywords, valueUpdate: 'keyup'" placeholder="Type any topic or dataset name" autofocus>
+      <input id="keywords" name="keywords" class="autocomplete-placenames"
+             data-bind="value: query.keywords, valueUpdate: 'keyup'"
+             placeholder="Type any topic or dataset name"
+             autofocus>
     </p>
   <% end %>
   <div class="dropdown">
@@ -22,19 +27,20 @@
               <label for="temporal_start">Start</label>
               <%= text_field_tag(:temporal_start, params[:temporal_start],
                                  :placeholder => 'YYYY-MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-range-picker temporal-range-start') %>
+                                 :class => 'temporal temporal-range-picker temporal-start temporal-range-start') %>
               <button id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
               <label for="temporal_stop">End</label>
               <%= text_field_tag(:temporal_stop, params[:temporal_end],
                                  :placeholder => 'YYYY-MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-range-picker temporal-range-stop') %>
+                                 :class => 'temporal temporal-range-picker temporal-stop temporal-range-stop') %>
               <button id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
+            <div class="temporal-error">Start must be no later than End</div>
             <div class="button-row">
               <button id="temporal-range-submit"
-                      class="button"
+                      class="button submit"
                       title="Apply your selections" type="button">Apply</button>
               <button id="temporal-range-clear"
                       class="button temporal-clear temporal-range low-priority"
@@ -46,14 +52,14 @@
               <label for="temporal_start">Start</label>
               <%= text_field_tag(:temporal_start, params[:temporal_start],
                                  :placeholder => 'MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-recurring-picker temporal-recurring-start') %>
+                                 :class => 'temporal temporal-recurring-picker temporal-start temporal-recurring-start') %>
               <button id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
               <label for="temporal_stop">End</label>
               <%= text_field_tag(:temporal_stop, params[:temporal_end],
                                  :placeholder => 'MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-recurring-picker temporal-recurring-stop') %>
+                                 :class => 'temporal temporal-recurring-picker temporal-stop temporal-recurring-stop') %>
               <button id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="range-slider">
@@ -62,9 +68,10 @@
               <p><span class="temporal-recurring-year-range-value"></span></p>
 
             </div>
+            <div class="temporal-error">Start must be no later than End</div>
             <div class="button-row">
               <button id="temporal-recurring-submit"
-                      class="button"
+                      class="button submit"
                       title="Apply your selections" type="button">Apply</button>
               <button id="temporal-recurring-clear"
                       class="button temporal-clear temporal-recurring low-priority"
@@ -85,8 +92,10 @@
       <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="fa fa-fw fa-map-marker"></i> Point</a></li>
     </ul>
   </div>
-  <a href="#datasets-overlay" class="master-overlay-show button"><i class="fa fa-search"></i> Browse All Data</a>
-  <a href="#" class="button" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
+  <a href="#datasets-overlay" class="master-overlay-show button landing-hidden"><i class="fa fa-search"></i> Browse All Data</a>
+  <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
+</div>
+</div>
 <% end %>
 
 <div class="master-overlay homepage-search" id="datasets-overlay">
@@ -95,6 +104,28 @@
       <a class="master-overlay-close master-overlay-parent-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
     </header>
+    <div class="master-overlay-content panel-group" id="accordion">
+      <!-- ko foreach: datasetFacets.results -->
+      <div data-bind="" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title collapse-link">
+            <a data-bind="text: $data[0], attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
+            <i class="fa fa-caret-down"></i>
+          </h3>
+        </div>
+        <div data-bind="attr: {id: 'collapse'+$index()}" class="panel-collapse in">
+          <div class="panel-body facets">
+            <!-- ko foreach: $data[1] -->
+            <p class="facets-item">
+              <span data-bind="text: term"></span>
+              (<span data-bind="text: count"></span>)
+            </p>
+            <!-- /ko -->
+          </div>
+        </div>
+      </div>
+      <!-- /ko -->
+    </div>
   </section>
   <div class="master-overlay-main">
     <div class='master-overlay-main-content'>
@@ -119,6 +150,14 @@
               </div>
               <!-- /ko -->
               <h3 data-bind="text: dataset_id"></h3>
+              <div class="panel-list-item-actions">
+                <!-- ko if: $root.query.canQueryDatasetSpatial($data) -->
+                <a href="#" class="button icon-button" title="Search using this dataset's location"
+                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.query.toggleQueryDatasetSpatial, clickBubble: false">
+                  <i class="edsc-icon-fw edsc-icon-location"></i>
+                </a>
+                <!-- /ko -->
+              </div>
               <p class="panel-list-details">
               <span data-bind="text: short_name"></span>
               v<span data-bind="text: version_id"></span>
@@ -137,5 +176,22 @@
 </div>
 
 <div id="map" class="map" style="height:100%; z-index:-1;">
+
+</div>
+
+<div class="landing-area landing-visible">
+
+  <div class="landing-dialog">
+    <div class="landing-dialog-header">
+      <h1>Earthdata Search</h1>
+      <p>Filter any keyword search by time or space.</p>
+    </div>
+    <div class="landing-dialog-toolbar toolbar">
+    </div>
+    <div class="landing-dialog-actions">
+      <a href="#datasets-overlay" class="master-overlay-show button"><i class="fa fa-search"></i> Browse All Data</a>
+      <p>See new and featured datasets or use categories to narrow your results.</p>
+    </div>
+  </div>
 
 </div>

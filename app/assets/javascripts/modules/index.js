@@ -3,3 +3,5 @@
 //= require modules/toolbar
 //= require modules/map/index
 //= require modules/temporal/index
+//= require modules/autocomplete
+//= require modules/landing

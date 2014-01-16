@@ -9,8 +9,16 @@ require "spec_helper"
 
 describe "Map interface" do
   before do
-    visit "/"
+    visit "/search"
   end
+
+  let (:switcher_selector) { '#map .projection-switcher' }
+  let (:north_text) { 'North Polar Stereographic' }
+  let (:north_link) { within(switcher_selector) {find_link(north_text)} }
+  let (:geo_text) { 'WGS 84 / Plate Carree' }
+  let (:geo_link) { within(switcher_selector) {find_link(geo_text)} }
+  let (:south_text) { 'South Polar Stereographic' }
+  let (:south_link) { within(switcher_selector) {find_link(south_text)} }
 
   shared_browser_session do
     it "displays the whole Earth centered in plate carree projection on the main page" do
@@ -40,14 +48,6 @@ describe "Map interface" do
   # Places where this is used have been tested as working in Selenium but are
   # broken in capybara-webkit.  This sends a fake click using Javascript
   context "projection switching" do
-    let (:switcher_selector) { '#map .projection-switcher' }
-    let (:north_text) { 'North Polar Stereographic' }
-    let (:north_link) { within(switcher_selector) {find_link(north_text)} }
-    let (:geo_text) { 'WGS 84 / Plate Carree' }
-    let (:geo_link) { within(switcher_selector) {find_link(geo_text)} }
-    let (:south_text) { 'South Polar Stereographic' }
-    let (:south_link) { within(switcher_selector) {find_link(south_text)} }
-
     it "displays controls to switch between north pole, south pole, and global projections" do
       expect(page).to have_css(switcher_selector)
 
@@ -109,6 +109,7 @@ describe "Map interface" do
       expect(page).to_not have_field("Corrected Reflectance (True Color)")
 
       page.find_link('Layers').trigger(:mouseover)
+      expect(page).to have_field("Blue Marble")
       expect(page).to have_field("Corrected Reflectance (True Color)")
       expect(page).to have_field("Land / Water Map")
       expect(page).to have_field("Administrative Boundaries")
@@ -123,7 +124,25 @@ describe "Map interface" do
       end
 
       expect('#map').to have_tiles_for_product('land_water_map')
-      expect('#map').to_not have_tiles_for_product('MODIS_Terra_CorrectedReflectance_TrueColor')
+      expect('#map').to_not have_tiles_for_product('blue_marble')
+    end
+
+    it "hides layers that are not valid for the current projection" do
+      expect('#map').to have_tiles_for_product('blue_marble')
+
+      click_link north_text
+
+      page.find_link('Layers').trigger(:mouseover)
+      expect(page).to have_field("Corrected Reflectance (True Color)")
+      expect('#map').to have_tiles_for_product('MODIS_Terra_CorrectedReflectance_TrueColor')
+      expect(page).to_not have_field("Blue Marble")
+      expect('#map').to_not have_tiles_for_product('blue_marble')
+
+      click_link geo_text
+
+      expect('#map').to have_tiles_for_product('MODIS_Terra_CorrectedReflectance_TrueColor')
+      expect(page).to have_field("Blue Marble")
+      expect('#map').to_not have_tiles_for_product('blue_marble')
     end
 
     it "draws overlay layers on top of the base layer" do
@@ -133,7 +152,7 @@ describe "Map interface" do
         check 'Coastlines'
       end
 
-      expect('#map').to have_tiles_for_product('MODIS_Terra_CorrectedReflectance_TrueColor')
+      expect('#map').to have_tiles_for_product('blue_marble')
       expect('#map').to have_tiles_for_product('gpw-v3-coastlines')
     end
   end

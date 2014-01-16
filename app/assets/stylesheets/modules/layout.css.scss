@@ -42,16 +42,17 @@ footer, .toolbar {
 .toolbar {
   background: rgba(44, 62, 80, 1) asset-url('header-drop.png') repeat-x top;
   padding: .5em 1em;
-  
+  height: 58px;
+
   h1 {
     margin: 0;
   }
-  
+
   p {
     margin: 0;
   }
-  
-  input {
+
+  .tt-query, .tt-hint {
     padding: .5em;
     margin: 2px 0 0 20px;
     width: $toolbar-search-field-width;

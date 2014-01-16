@@ -53,15 +53,47 @@ ns.Map = do (window,
       result
 
     _buildLayers: ->
-      baseMaps = @_createLayerMap('MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
-      overlayMaps = @_createLayerMap('administrative_boundaries', 'coastlines')
+      baseMaps = @_baseMaps = @_createLayerMap('blue_marble', 'MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
+      overlayMaps = @_overlayMaps = @_createLayerMap('administrative_boundaries', 'coastlines')
 
       # Show the first layer
       for own k, layer of baseMaps
         @map.addLayer(layer)
         break
 
-      @map.addControl(L.control.layers(baseMaps, overlayMaps))
+      @_layerControl = L.control.layers(baseMaps, overlayMaps)
+      @map.addControl(@_layerControl)
+
+    _rebuildLayers: ->
+      layerControl = @_layerControl
+      needsNewBaseLayer = false
+      projection = @projection
+
+      for own k, layer of @_baseMaps
+        valid = layer.validForProjection(projection)
+        hasLayer = layerControl._layers[L.stamp(layer)]?
+        if valid && !hasLayer
+          layerControl.addBaseLayer(layer, k)
+        if !valid && hasLayer
+          layerControl.removeLayer(layer)
+          needsNewBaseLayer = true if layer.layer?._map?
+          @map.removeLayer(layer)
+
+      if needsNewBaseLayer
+        # Show the first layer
+        for own k, layer of @_baseMaps
+          if layer.validForProjection(projection)
+            @map.addLayer(layer)
+            break
+
+      for own k, layer of @_overlayMaps
+        valid = layer.validForProjection(projection)
+        hasLayer = layerControl._layers[L.stamp(layer)]?
+        if valid && !hasLayer
+          layerControl.addOverlay(layer, k)
+        if !valid && hasLayer
+          layerControl.removeLayer(layer)
+
 
     _addDrawControls: ->
       map = @map
@@ -105,12 +137,18 @@ ns.Map = do (window,
     setProjection: (name) ->
       map = @map
       return if @projection == name
+
+      $(map._container).removeClass("projection-#{@projection}")
+      $(map._container).addClass("projection-#{name}")
+
       @projection = map.projection = name
 
       opts = @projectionOptions[name]
       L.setOptions(map, opts)
+
       map.fire('projectionchange', projection: name, map: map)
       map.setView(L.latLng(opts.center), opts.zoom, reset: true)
+      @_rebuildLayers()
 
     # (For debugging) Display a layer with the given GeoJSON
     debugShowGeoJson: (json) ->
@@ -152,23 +190,13 @@ ns.Map = do (window,
     _showLine:      (layer, points) -> L.polyline(points, color: "#ff7800", weight: 1).addTo(layer)
     _showRectangle: (layer, points) -> L.rectangle(points, color: "#ff7800", weight: 1).addTo(layer)
     _showPoint:     (layer, points) -> L.marker(points...).addTo(layer)
-
-    # FIXME: This works for datasets but will not work for granules
-    _showPolygon:   (layer, points) -> L.polygon(points, color: "#ff7800", weight: 1).addTo(layer)
+    _showPolygon:   (layer, points) -> L.sphericalPolygon(points, color: "#ff7800", weight: 1).addTo(layer)
 
 
     _hideDatasetSpatial: =>
       if @_datasetSpatialLayer
         @map.removeLayer(@_datasetSpatialLayer)
         @_datasetSpatialLayer = null
-
-
-
-  #datasetsModel
-  #  map = $('#map').data('map')
-  #  map.showDatasetSpatial(dataset) if map?
-
-
 
   $(document).ready ->
     projection = 'geo'
@@ -181,5 +209,75 @@ ns.Map = do (window,
 
     # Log the mouse lat / lon to the console
     #map.startMouseDebugging()
+
+    # Debugging spherical polygons
+    #L.sphericalPolygon([
+    #  [-45, 0],
+    #  [45, 45],
+    #  [0, -45]
+    #]).addTo(map).bindPopup("I am a generic polygon.")
+
+    #L.sphericalPolygon([
+    #  [0, -45],
+    #  [45, 45],
+    #  [-45, 0]
+    #]).addTo(map).bindPopup("I am a generic polygon specified in a reverse order.")
+
+    #L.sphericalPolygon([[
+    #  [-45, 0],
+    #  [45, 45],
+    #  [0, -45]
+    #], [[-10, 0], [10, 10], [0, -10]]]).addTo(map).bindPopup("I have a hole.")
+
+    #L.sphericalPolygon([
+    #  [-45, 180],
+    #  [45, 120],
+    #  [20, -170],
+    #  [50, 160],
+    #  [0, -120]
+    #]).addTo(map).bindPopup("I cross the antimeridian a few times going clockwise.");
+
+    #L.sphericalPolygon([
+    #  [0, -10],
+    #  [70, -10],
+    #  [70, -100],
+    #  [70, 100],
+    #  [70, 10],
+    #  [0, 10],
+    #  [-70, 10],
+    #  [-70, 100],
+    #  [-70, -100],
+    #  [-70, -10]
+    #]).addTo(map).bindPopup("I contain both poles and cross the antimeridian.");
+
+    #L.sphericalPolygon([
+    #  [0, -170],
+    #  [70, -170],
+    #  [70, 170],
+    #  [0, 170],
+    #  [-70, 170],
+    #  [-70, -170]
+    #]).addTo(map).bindPopup("I contain both poles and cross the antimeridian.");
+
+    #L.sphericalPolygon([
+    #  [-70, -170],
+    #  [ 70, -170],
+    #  [ 70,    0],
+    #  [ 70,  170],
+    #  [-70,  170],
+    #  [-70,    0]
+    #]).addTo(map).bindPopup("I contain both poles and do not cross the antimeridian.");
+
+    #L.sphericalPolygon([
+    #  [60, -120],
+    #  [70, 0],
+    #  [80, 120]
+    #]).addTo(map).bindPopup("I contain the north pole.");
+
+    #L.sphericalPolygon([
+    #  [-60, -120],
+    #  [-70, 0],
+    #  [-80, 120]
+    #]).addTo(map).bindPopup("I contain the south pole.");
 
   exports = Map

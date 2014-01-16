@@ -1,7 +1,13 @@
-@import "font-awesome-4.0.3/font-awesome.min.css";
-@import "bootstrap/bootstrap.css";
-@import "bootstrap-slider/slider.css";
-@import "datetimepicker/jquery.datetimepicker.css";
+/*
+ * Concatenate normal CSS Produced by 3rd party plugins
+ *= require normalize
+ *= require font-awesome-4.0.3/font-awesome.min
+ *= require bootstrap/bootstrap
+ *= require datetimepicker/jquery.datetimepicker
+ *= require toastr
+ *= require bootstrap-slider/slider
+ */
+// Compile sass files
 @import "bourbon";
 @import "modules/settings.css.scss";
 @import "modules/layout.css.scss";
@@ -15,6 +21,6 @@
 @import "modules/env.css.scss";
 @import "modules/dropdown.css.scss";
 @import "modules/map/map.css.scss";
-
-/* Documentation styles, can remove from production app */
-@import "modules/doc_example.css.scss";
+@import "modules/facets.css.scss";
+@import "modules/autocomplete.css.scss";
+@import "modules/landing.css.scss";

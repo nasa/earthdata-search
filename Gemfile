@@ -10,6 +10,7 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'multi_xml'
 gem 'term-ansicolor'
+gem 'toastr-rails'
 
 group :test do
   gem 'database_cleaner'
@@ -27,6 +28,8 @@ group :development do
   gem 'librarian-puppet'
   gem 'rvm-capistrano'
   gem 'capistrano'
+
+  gem 'quiet_assets'
 
   # For dumping additional metadata stored in DatasetExtras and similar
   gem 'seed_dump'

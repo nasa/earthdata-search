@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe 'Dataset details' do
   before do
-    visit '/'
+    visit '/search'
   end
 
   shared_browser_session do

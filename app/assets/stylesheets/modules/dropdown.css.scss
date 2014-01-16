@@ -1,4 +1,4 @@
-#main-toolbar {
+.toolbar {
   a:link, a:visited {
     color: #fff;
   }
@@ -21,26 +21,43 @@
   }
 }
 
+.xdsoft_datetimepicker, .xdsoft_timepicker {
+  z-index:10000;
+}
+
 // Hide jquery.datetimepicker's year field
 .recurring-datetimepicker .xdsoft_year {
   display: none;
+}
+
+input.day-of-year-input {
+  width: 100px;
+}
+
+.day-of-year-picker {
+  margin-left: 8px;
+}
+
+.temporal-error {
+  display: none;
+  color: red;
 }
 
 // Override default Bootstrap tab CSS
 .nav-tabs {
   border-color: #000;
   margin: 15px 15px 0 15px;
-  
+
   a {
     background: none;
   }
-  
+
   li.active a, li.active:hover a {
     background: #333;
     border-color: #000;
     border-bottom-color: #333;
   }
-  
+
   li:hover a {
     background: #222;
     border-color: #222;
@@ -54,13 +71,13 @@
   border-left: 1px solid #000;
   border-right: 1px solid #000;
   border-bottom: 1px solid #000;
-  
+
   label {
     display: inline-block;
     font-weight: bold;
     width: 60px;
   }
-  
+
   input[type="text"] {
     display: inline-block;
     width: 160px;
@@ -71,11 +88,11 @@
 // Override default Slider CSS
 .range-slider {
   margin-top: 10px;
-  
+
   #temporal-slider {
     display: none;
   }
-  
+
   input {
     width: 210px;
   }

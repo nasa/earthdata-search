@@ -15,13 +15,15 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
 </head>
-<body class="env-<%= Rails.env %>">
+<body class="env-<%= Rails.env %>" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
 
     <div class="earthdata-tophat">Top hat placeholder, please don't look at me yet :)</div>
     <header id="main-toolbar" class="toolbar">
       <h1><a class="ir" href="#">Earthdata Search</a></h1>
-      <%= yield :toolbar %>
+      <div class="toolbar-content">
+        <%= yield :toolbar %>
+      </div>
     </header>
     <section class="main-content">
       <%= yield %>

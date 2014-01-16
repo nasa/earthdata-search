@@ -29,7 +29,17 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 FactoryGirl.find_definitions
 
-load "#{::Rails.root}/db/seeds.rb"
+load "#{::Rails.root}/db/seeds.rb" if ENV["SEED"] == "true"
+
+# http://stackoverflow.com/questions/11012407/set-json-max-nesting-option-from-within-ruby-on-rails-application/11013407#11013407
+module JSON
+  class << self
+    def parse(source, opts = {})
+      opts = ({:max_nesting => 350}).merge(opts)
+      Parser.new(source, opts).parse
+    end
+  end
+end
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -64,7 +74,7 @@ RSpec.configure do |config|
 
   config.after(:each) do
     if example.exception != nil
-      if page && page.driver && page.driver.console_messages
+      if defined?(page) && page && page.driver && page.driver.console_messages
         puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
       end
     end
@@ -87,4 +97,5 @@ RSpec.configure do |config|
   config.extend SharedBrowserSession
 
   config.include Helpers::SpatialHelpers
+  config.include Helpers::PageHelpers
 end

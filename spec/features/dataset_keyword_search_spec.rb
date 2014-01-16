@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Dataset keyword searches" do
   before do
-    visit "/"
+    visit "/search"
   end
 
   shared_browser_session do
@@ -22,7 +22,7 @@ describe "Dataset keyword searches" do
     end
 
     it "displays all datasets when keywords are cleared" do
-      fill_in "keywords", with: ""
+      fill_in "keywords", with: " "
       expect(page).to have_content('15 Minute Stream')
     end
 

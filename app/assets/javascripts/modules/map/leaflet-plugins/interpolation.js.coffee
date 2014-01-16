@@ -14,37 +14,24 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
   interpolateGeodetic = (ll0, ll1) ->
     gcInterpolate(ll0, ll1)
 
-  # Dot product of two vectors
-  dotProduct = (p, q) ->
-    p.x * q.x + p.y * q.y
-
-  # Returns the distance between q and the line connecting p0 and p1
-  distance = (p0, p1, p) ->
-    return p0.distanceTo(p) if p0.equals(p1)
-
-    # http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line#Vector_formulation
-    a = p0
-    t = p0.distanceTo(p1)
-    n = p1.subtract(p0).divideBy(t)
-
-    # Intermediate term
-    a_p = a.subtract(p)
-
-    # Vector whose magnitude is the desired distance
-    v = a_p.subtract(n.multiplyBy(dotProduct(a_p, n)))
-
-    # Magnitude of the vector
-    Math.sqrt(v.x * v.x + v.y * v.y)
-
   # Given a path defined by latLngs, a projection defined by proj, and an interpolation
   # function that takes two pionts and returns their midpoint, finds a set of projected
   # (x, y) points defining the path between the points in the given projection
   projectLatLngPath = (latLngs, proj, interpolateFn, tolerance=1, maxDepth=10) ->
     return [] if latLngs.length == 0
+
     # Clone path and set its last element to its first so we can interpolate the last segment
-    latLngs = latLngs.concat(latLngs[0])
+    if Math.abs(latLngs[0].lng) == Math.abs(latLngs[latLngs.length - 1].lng) == 180
+      # In this case the last element is an artificial longitude crossing.  Avoid interpolating
+      # with the first to prevent drawing strokes along the dateline
+      latLngs = latLngs.concat(latLngs[latLngs.length - 1])
+    else
+      latLngs = latLngs.concat(latLngs[0])
 
     points = (proj(ll) for ll in latLngs)
+    #for ll in latLngs
+    #  if Math.abs(ll.lat) == 90
+    #    console.log ll.toString(), '->', proj(ll).toString()
 
     interpolatedLatLngs = [latLngs.shift()]
     interpolatedPoints = [points.shift()]
@@ -65,7 +52,12 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
       p = proj(ll)
       depth = Math.max(depth0, depth1) + 1
 
-      d = distance(p0, p1, p)
+      #if depth == 1
+      #  console.log '0:', ll0.toString(), '->', p0.toString()
+      #  console.log 'M:', ll.toString(), '->', p.toString()
+      #  console.log '1:', ll1.toString(), '->', p1.toString()
+
+      d = L.LineUtil.pointToSegmentDistance(p, p0, p1)
       if d < tolerance || depth >= maxDepth
         maxDepthReached = true if depth >= maxDepth
         interpolatedLatLngs.push(ll, latLngs.shift())
@@ -85,7 +77,20 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
   # Overrides the default projectLatLngs in Polyline and Polygon to project and interpolate the
   # path instead of just projecting it
   projectLatlngs = ->
-    proj = @_map.latLngToLayerPoint.bind(@_map)
+    map = @_map
+    proj = (ll) ->
+      # Avoid weird precision problems near infinity by clamping to a high min/max pixel value
+      MAX_RES = 100000
+
+      # Fix problems where 90 degrees projects to NaN in our south polar projection
+      if ll.lat == 90
+        ll = L.latLng(89.999, ll.lng)
+
+      result = map.latLngToLayerPoint.call(map, ll)
+      result.x = Math.max(Math.min(result.x, MAX_RES), -MAX_RES)
+      result.y = Math.max(Math.min(result.y, MAX_RES), -MAX_RES)
+      result
+
     fn = @_interpolationFn
     @_originalPoints = projectLatLngPath(@_latlngs, proj, fn)
     @_holePoints = (projectLatLngPath(hole, proj, fn) for hole in @_holes ? [])
