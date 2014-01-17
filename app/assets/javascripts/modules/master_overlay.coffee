@@ -13,8 +13,6 @@ $(document).on 'click', '.master-overlay-main .master-overlay-close', ->
 $(document).on 'click', '.master-overlay-toggle-parent, .master-overlay-parent .master-overlay-close', ->
   $overlay = $(this).closest('.master-overlay')
   $overlay.toggleClass('is-master-overlay-parent-hidden')
-  text = if $overlay.hasClass('is-master-overlay-parent-hidden') then 'Show Facets' else 'Hide Facets'
-  $overlay.find('.master-overlay-toggle-parent').text(text)
   return false;
 
 $(document).on 'click', '.temporal-dropdown-button', ->
