@@ -21,6 +21,8 @@ module Echo
       end
 
       def options_to_facet_query(options={})
+        options = options.with_indifferent_access
+
         query = {}
 
         load_facets_query(options, query, true)
