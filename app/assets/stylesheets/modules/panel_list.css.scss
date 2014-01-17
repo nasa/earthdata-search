@@ -15,12 +15,13 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 .panel-list-item {
   color: #000;
   background-color: #fff;
-  border: 1px solid #000;
+  border: 1px solid #111;
   margin: .2em 0;
-  height: $panel-list-thumbnail-size + 12px;
-  padding: .5em .5em .5em $panel-list-thumbnail-size;
+  height: $panel-list-thumbnail-size + 16px;
+  padding: .6em .5em .6em $panel-list-thumbnail-size;
   font-size: .8em;
   position: relative;
+  border-radius: 3px;
 }
 
 .panel-list-thumbnail {
@@ -42,7 +43,8 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list-details {
   font-size: .9em;
-  padding: .5em 0;
+  padding: 0;
+  color: #7f8c8d;
 }
 
 .panel-list-item-actions {

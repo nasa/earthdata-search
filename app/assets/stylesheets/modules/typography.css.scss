@@ -19,7 +19,7 @@ hgroup {
 }
 
 header .ir {
-  background: asset-url('search-logo.png') no-repeat;
+  @include retina-image(search-logo, 145px 40px);
   height: 40px;
   width: 145px;
   float: left;
