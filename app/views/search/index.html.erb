@@ -129,17 +129,17 @@
         </div>
       </div>
       <!-- ko foreach: datasetFacets.results -->
-      <div data-bind="if: $data[1].length > 0" class="panel panel-default">
+      <div data-bind="if: $data.values.length > 0, css: $data.class_name" class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title facet-title collapse-link">
-            <a data-bind="text: $data[0], attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
+            <a data-bind="text: $data.name, attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
             <i class="fa fa-caret-down pull-right"></i>
           </h3>
         </div>
         <div data-bind="attr: {id: 'collapse'+$index()}" class="panel-collapse in">
           <div class="panel-body facets">
-            <!-- ko foreach: $data[1].sort(function (l, r) { return l.term() > r.term() ? 1 : -1 }) -->
-            <p class="facets-item" data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent[0], term()), css: {selected: $root.datasetFacets.highlightFacet($parent[0], term)}">
+            <!-- ko foreach: $data.values -->
+            <p class="facets-item" data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent.name, term()), css: {selected: $root.datasetFacets.highlightFacet($parent.name, term)}">
               <span data-bind="text: term"></span>
               (<span data-bind="text: count"></span>)
               <i class="fa fa-times"></i>
