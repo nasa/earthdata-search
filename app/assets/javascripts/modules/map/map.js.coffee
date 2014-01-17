@@ -74,6 +74,7 @@ ns.Map = do (window,
         hasLayer = layerControl._layers[L.stamp(layer)]?
         if valid && !hasLayer
           layerControl.addBaseLayer(layer, k)
+          layer.setZIndex(1) # Keep baselayers below overlays
         if !valid && hasLayer
           layerControl.removeLayer(layer)
           needsNewBaseLayer = true if layer.layer?._map?
