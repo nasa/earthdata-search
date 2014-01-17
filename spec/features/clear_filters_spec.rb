@@ -60,4 +60,16 @@ describe "'Clear Filters' button" do
       expect(page.find(".temporal-recurring-year-range-value")).to have_text("1960 - #{Time.new.year}")
     end
   end
+
+  it "clears facets" do
+    find(".facets-item", text: "EOSDIS").click
+    within(:css, '.selected-facets-panel') do
+      expect(page).to have_content("EOSDIS")
+      expect(page).to have_css(".facets-item.selected")
+    end
+    
+    click_link "Clear Filters"
+
+    expect(page).to have_no_css(".facets-item.selected")
+  end
 end

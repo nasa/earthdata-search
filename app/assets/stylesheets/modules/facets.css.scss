@@ -5,9 +5,15 @@ $master-overlay-parent-bg-color: transparentize(#111, .1);
   cursor: pointer;
 }
 
-dd.facets-item {
+dd.facets {
   margin: 0 0 0 10px;
+  font-size: 0.8em;
 }
+
+dd.facets>.facets-item {
+  font-size: 1em;
+}
+
 
 .facets-item.selected {
   font-weight: bold;

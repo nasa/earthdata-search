@@ -105,7 +105,7 @@
       <h2>Browse Datasets</h2>
     </header>
     <div class="master-overlay-content panel-group" id="accordion">
-      <div data-bind="if: query.facets().length > 0" class="panel panel-default">
+      <div data-bind="if: query.facets().length > 0" class="panel panel-default selected-facets-panel">
         <div class="panel-heading">
           <h3 class="panel-title facet-title">
             Values Selected
@@ -115,9 +115,11 @@
           <dl>
             <!-- ko foreach: datasetFacets.applied_facets() -->
                 <dt data-bind="text: type" class="facet-title"></dt>
-                <!-- ko foreach: values -->
-                  <dd data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent.type, $data), text: $data" class="facets-item selected"></dd>
-                <!-- /ko -->
+                  <dd data-bind="" class="facets">
+                    <!-- ko foreach: values -->
+                      <span data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent.type, $data), text: $data" class="facets-item selected"></span><span data-bind="if: $parent.values.indexOf($data) < $parent.values.length - 1"> or </span>
+                    <!-- /ko -->
+                  </dd>
             <!-- /ko -->
           </dl>
         </div>
