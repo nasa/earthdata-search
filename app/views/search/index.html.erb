@@ -97,20 +97,44 @@
       <h2>Browse Datasets</h2>
     </header>
     <div class="master-overlay-content panel-group" id="accordion">
-      <!-- ko foreach: datasetFacets.results -->
-      <div data-bind="" class="panel panel-default">
+      <div data-bind="if: query.facets().length > 0" class="panel panel-default selected-facets-panel">
         <div class="panel-heading">
-          <h3 class="panel-title collapse-link">
+          <h3 class="panel-title facet-title">
+            Values Selected
+          </h3>
+        </div>
+        <div class="panel-body facets">
+          <dl>
+            <!-- ko foreach: datasetFacets.applied_facets() -->
+                <dt data-bind="text: type" class="facet-title"></dt>
+                  <dd data-bind="" class="facets">
+                    <!-- ko foreach: values.sort() -->
+                    <span data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent.type, $data)" class="facets-item selected">
+                        <span data-bind="text: $data" ></span>
+                        <i class="fa fa-times"></i>
+                      </span>
+                      <span data-bind="if: $parent.values.indexOf($data) < $parent.values.length - 1"> or </span>
+                    <!-- /ko -->
+                  </dd>
+            <!-- /ko -->
+          </dl>
+        </div>
+      </div>
+      <!-- ko foreach: datasetFacets.results -->
+      <div data-bind="if: $data[1].length > 0" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title facet-title collapse-link">
             <a data-bind="text: $data[0], attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
-            <i class="fa fa-caret-down"></i>
+            <i class="fa fa-caret-down pull-right"></i>
           </h3>
         </div>
         <div data-bind="attr: {id: 'collapse'+$index()}" class="panel-collapse in">
           <div class="panel-body facets">
-            <!-- ko foreach: $data[1] -->
-            <p class="facets-item">
+            <!-- ko foreach: $data[1].sort(function (l, r) { return l.term() > r.term() ? 1 : -1 }) -->
+            <p class="facets-item" data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent[0], term()), css: {selected: $root.datasetFacets.highlightFacet($parent[0], term)}">
               <span data-bind="text: term"></span>
               (<span data-bind="text: count"></span>)
+              <i class="fa fa-times"></i>
             </p>
             <!-- /ko -->
           </div>

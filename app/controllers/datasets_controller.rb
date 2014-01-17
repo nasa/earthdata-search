@@ -24,7 +24,7 @@ class DatasetsController < ApplicationController
   end
 
   def facets
-    response = Echo::Client.get_facets
+    response = Echo::Client.get_facets(to_echo_params(params))
 
     results = []
     results << ["Campaigns", response.body["campaign_sn"]]

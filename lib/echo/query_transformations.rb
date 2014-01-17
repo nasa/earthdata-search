@@ -3,7 +3,7 @@ module Echo
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def options_to_query(options={})
+      def options_to_query(options={}, load_facet_options=false)
         options = options.with_indifferent_access
 
         query = {}
@@ -15,6 +15,7 @@ module Echo
         load_spatial_query(options, query)
         load_temporal_query(options, query)
         load_browse_only_query(options, query)
+        load_facets_query(options, query, load_facet_options)
 
         query
       end
@@ -72,6 +73,85 @@ module Echo
       def load_temporal_query(options, query)
         if options[:temporal]
           query[:temporal] = options[:temporal].flatten.join(',')
+        end
+      end
+
+      def load_facets_query(options, query, load_facet_options)
+        if options[:facets]
+          options[:facets].each do |opt|
+            facet = opt[1]
+            if load_facet_options
+              query[:filter] = transform_facet_type(facet[:type])[1]
+              query[:value] = facet[:name]
+            else
+              type = transform_facet_type(facet[:type])[0]
+              # putting the values into an array currently
+              # forces an OR search waiting on NCR #11014369
+              # for an AND solution
+              query[type] = [] unless query[type]
+              query[:options] ||= {}
+              query[:options] = query[:options].merge(type => {ignore_case: false})
+              if type == "science_keywords"
+                keyword = transform_science_keyword(facet[:type])
+                query[type] << Hash.new
+                query[type][0] = Hash.new
+                query[type][0][keyword] = facet[:name]
+              else
+                query[type] << facet[:name]
+              end
+            end
+          end
+        end
+      end
+
+      # Returns array [dataset_search_query_type, facet_search_query_type]
+      def transform_facet_type(type)
+        case type
+        when "Campaigns"
+          ["campaign","campaign_sn"]
+        when "Platforms"
+          ["platform","platform_sn"]
+        when "Instruments"
+          ["instrument","instrument_sn"]
+        when "Sensors"
+          ["sensor","sensor_sn"]
+        when "2D Coordinate Name"
+          ["two_d_coordinate_system_name","twod_coord_name"]
+        when "Category Keyword"
+          ["science_keywords","category_keyword"]
+        when "Topic Keyword"
+          ["science_keywords","topic_keyword"]
+        when "Term Keyword"
+          ["science_keywords","term_keyword"]
+        when "Variable Level 1 Keyword"
+          ["science_keywords","variable_level_1_keyword"]
+        when  "Variable Level 2 Keyword"
+          ["science_keywords","variable_level_2_keyword"]
+        when "Variable Level 3 Keyword"
+          ["science_keywords","variable_level_3_keyword"]
+        when "Detailed Variable Keyword"
+          ["science_keywords","detailed_variable_keyword"]
+        when "Processing Level"
+          ["processing_level","processing_level"]
+        end
+      end
+
+      def transform_science_keyword(name)
+        case name
+        when "Category Keyword"
+          "category"
+        when "Topic Keyword"
+          "topic"
+        when "Term Keyword"
+          "term"
+        when "Variable Level 1 Keyword"
+          "variable_level_1"
+        when "Variable Level 2 Keyword"
+          "variable_level_2"
+        when "Variable Level 3 Keyword"
+          "variable_level_3"
+        when "Detailed Variable Keyword"
+          "detailed_variable"
         end
       end
 

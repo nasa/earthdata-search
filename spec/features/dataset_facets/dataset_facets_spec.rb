@@ -61,4 +61,46 @@ describe "Dataset Facets" do
       expect(page).to have_content("Processing Level 3")
     end
   end
+
+  context "selecting facets" do
+    it "shows the user which facets have been applied to the query" do
+      # select a campaign
+      find(".facets-item", text: "EOSDIS").click
+      within(:css, '.selected-facets-panel') do
+        expect(page).to have_content("EOSDIS")
+        expect(page).to have_css(".facets-item.selected")
+      end
+      expect(page).to have_css("p.facets-item.selected")
+
+      # select an instrument
+      find(".facets-item", text: "FIELD INVESTIGATION").click
+      within(:css, '.selected-facets-panel') do
+        expect(page).to have_content("FIELD INVESTIGATION")
+        expect(page).to have_css(".facets-item.selected")
+      end
+      expect(page).to have_css("p.facets-item.selected")
+
+      # select a second campaign
+      find(".facets-item", text: "LBA").click
+      within(:css, '.selected-facets-panel') do
+        expect(page).to have_content("EOSDIS or LBA")
+        expect(page).to have_css(".facets-item.selected")
+      end
+      expect(page).to have_css("p.facets-item.selected")
+
+      reset_search
+    end
+
+    it "removes facet from query on second click" do
+      find(".facets-item", text: "EOSDIS").click
+      within(:css, '.selected-facets-panel') do
+        expect(page).to have_content("EOSDIS")
+        expect(page).to have_css(".facets-item.selected")
+
+        find(".facets-item", text: "EOSDIS").click
+      end
+
+      expect(page).to have_no_css(".facets-item.selected")
+    end
+  end
 end

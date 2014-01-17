@@ -37,6 +37,7 @@ class models.QueryModel
       else
         null
 
+    @facets = ko.observableArray()
     @placename = ko.observable("")
 
     @params = ko.computed(@_computeParams)
@@ -54,6 +55,7 @@ class models.QueryModel
     @temporal_recurring_year_range('1960 - ' + current_year)
     $('.temporal-recurring-year-range').slider('setValue', [1960, current_year])
     @placename('')
+    @facets.removeAll()
 
   toggleQueryDatasetSpatial: (dataset) =>
     constraint = dataset.spatial_constraint()
@@ -78,6 +80,9 @@ class models.QueryModel
 
     temporal = @temporal()
     params.temporal = temporal if temporal?.length > 0
+
+    facets = @facets()
+    params.facets = facets if facets.length > 0
 
     placename = @placename()
     params.placename = placename if placename?.length > 0
@@ -268,13 +273,53 @@ class models.DatasetFacetsModel
 
         ko.mapping.fromJS(data, @_searchResponse)
       else
-        console.log("Rejected out-of-sequence request: /datasets.json", requestId, params, data)
+        console.log("Rejected out-of-sequence request: /dataset_facets.json", requestId, params, data)
       @isLoading(@pendingRequestId != @completedRequestId)
     xhr.fail (response, type, reason) =>
       if requestId > @completedRequestId
         @completedRequestId = requestId
         errors = response.responseJSON?.errors
         @error(errors?.error)
+
+  loadFacet: (facet_type, facet, event) =>
+    facet_query = {type: facet_type, name: facet}
+    facets = model.query.facets
+    found = ko.utils.arrayFirst facets(), (item) ->
+      #returns either null or the found facet
+      facet_query.type == item.type and facet_query.name == item.name
+    if !found
+      facets.push(facet_query)
+    else
+      # facets.remove(facet_query) did not remove the item, but
+      # facets.remove(found) does
+      facets.remove(found)
+
+  highlightFacet: (type, facet) =>
+    applied_facets = model.query.facets()
+    found = ko.utils.arrayFirst applied_facets, (item) ->
+      #returns either null or the found facet
+      type == item.type and facet() == item.name
+    if !found
+      false
+    else
+      true
+
+  applied_facets: () =>
+    facets = model.query.facets()
+    # don't want to shift all the items out of the facet query
+    facets_copy = ko.observableArray(facets.slice(0))
+    results = []
+    while temp = facets_copy.shift()
+      type = temp.type
+      found = ko.utils.arrayFirst results, (item) ->
+        item.type == type
+
+      if !found
+        results.push {type: type, values: [temp.name]}
+      else
+        found.values.push(temp.name)
+
+    results
 
 
 class models.SearchModel
@@ -292,13 +337,13 @@ class models.SearchModel
     @spatialError = ko.computed(@_computeSpatialError)
 
     ko.computed(@_computeDatasetResults).extend(throttle: 500)
-    ko.computed(@_computeDatasetFacetsResults)
+    ko.computed(@_computeDatasetFacetsResults).extend(throttle: 500)
 
   _computeDatasetResults: =>
     @datasets.search(@query.params())
 
   _computeDatasetFacetsResults: =>
-    @datasetFacets.search()
+    @datasetFacets.search(@query.params())
 
   _computeSpatialError: =>
     error = @datasets.error()
