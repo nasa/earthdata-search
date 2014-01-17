@@ -3,6 +3,10 @@ $master-overlay-parent-bg-color: transparentize(#111, .1);
 .facets-item {
   font-size: 0.8em;
   cursor: pointer;
+
+  i.fa-times {
+    display: none;
+  }
 }
 
 dd.facets {
@@ -14,9 +18,12 @@ dd.facets>.facets-item {
   font-size: 1em;
 }
 
-
 .facets-item.selected {
   font-weight: bold;
+
+  i.fa-times {
+    display: inline;
+  }
 }
 
 // Overwrite default bootstrap values
