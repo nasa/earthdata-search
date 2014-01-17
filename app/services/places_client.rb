@@ -33,7 +33,7 @@ class PlacesClient
       return nil unless details.present? && details['status'] == 'OK'
 
       location = details['result']['geometry']['location']
-      "point:#{location['lat']},#{location['lng']}"
+      "point:#{location['lng']},#{location['lat']}"
     end
 
     def self.connection
