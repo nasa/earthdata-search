@@ -133,6 +133,7 @@ GEM
       net-ssh (>= 2.6.5)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    pg (0.17.1)
     polyglot (0.3.3)
     puppet (3.3.1)
       facter (~> 1.6)
@@ -246,6 +247,7 @@ DEPENDENCIES
   knockoutjs-rails
   librarian-puppet
   multi_xml
+  pg
   puppet
   quiet_assets
   rails (~> 4.0.0)
