@@ -1,8 +1,16 @@
 require "spec_helper"
 
-describe "Dataset keyword searches" do
-  before do
+describe "Dataset keyword searches", reset: false do
+  before(:all) do
+    Capybara.reset_sessions!
     visit "/search"
+  end
+
+  # TODO: This should be in an after(:each) block, but it is too slow
+  #       because of DOM manipulations when clearing temporal.  Partial
+  #       fix is in EDSC-19
+  after(:all) do
+    reset_search
   end
 
   shared_browser_session do
