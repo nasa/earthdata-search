@@ -116,8 +116,12 @@
             <!-- ko foreach: datasetFacets.applied_facets() -->
                 <dt data-bind="text: type" class="facet-title"></dt>
                   <dd data-bind="" class="facets">
-                    <!-- ko foreach: values -->
-                      <span data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent.type, $data), text: $data" class="facets-item selected"></span><span data-bind="if: $parent.values.indexOf($data) < $parent.values.length - 1"> or </span>
+                    <!-- ko foreach: values.sort() -->
+                    <span data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent.type, $data)" class="facets-item selected">
+                        <span data-bind="text: $data" ></span>
+                        <i class="fa fa-times"></i>
+                      </span>
+                      <span data-bind="if: $parent.values.indexOf($data) < $parent.values.length - 1"> or </span>
                     <!-- /ko -->
                   </dd>
             <!-- /ko -->
