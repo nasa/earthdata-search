@@ -189,6 +189,13 @@ describe Echo::Client do
       response = Echo::Client.get_facets()
       expect(response.faraday_response).to eq(:response)
     end
+
+    it 'returns dataset facets with a filter' do
+      expect(connection).to receive(:get).with(dataset_facets_url, {filter: "campaign_sn", value: "AQUA"}).and_return(:response)
+
+      response = Echo::Client.get_facets("facets"=>{"0"=>{"type"=>"Campaigns", "name"=>"AQUA"}})
+      expect(response.faraday_response).to eq(:response)
+    end
   end
 
 end

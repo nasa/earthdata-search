@@ -13,7 +13,7 @@ module Echo
     CATALOG_URL="https://api.echo.nasa.gov"
 
     def self.get_datasets(options={})
-      get('/catalog-rest/echo_catalog/datasets.json', options_to_query(options))
+      get('/catalog-rest/echo_catalog/datasets.json', options_to_item_query(options))
     end
 
     def self.get_dataset(id, options={})
@@ -21,11 +21,11 @@ module Echo
     end
 
     def self.get_granules(options={})
-      get("/catalog-rest/echo_catalog/granules.#{options[:format] || 'json'}", options_to_query(options))
+      get("/catalog-rest/echo_catalog/granules.#{options[:format] || 'json'}", options_to_item_query(options))
     end
 
     def self.get_facets(options={})
-      get("/catalog-rest/search_facet.json", options_to_query(options, true))
+      get("/catalog-rest/search_facet.json", options_to_facet_query(options))
     end
 
     def self.get_token(username, password, client_id, ip)

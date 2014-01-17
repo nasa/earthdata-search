@@ -3,7 +3,7 @@ module Echo
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def options_to_query(options={}, load_facet_options=false)
+      def options_to_item_query(options={})
         options = options.with_indifferent_access
 
         query = {}
@@ -15,7 +15,17 @@ module Echo
         load_spatial_query(options, query)
         load_temporal_query(options, query)
         load_browse_only_query(options, query)
-        load_facets_query(options, query, load_facet_options)
+        load_facets_query(options, query, false)
+
+        query
+      end
+
+      def options_to_facet_query(options={})
+        options = options.with_indifferent_access
+
+        query = {}
+
+        load_facets_query(options, query, true)
 
         query
       end
