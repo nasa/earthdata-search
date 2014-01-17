@@ -11,6 +11,10 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
     blue_marble:
       name: 'Blue Marble'
       product: 'blue_marble'
+      product_arctic: 'blue_marble_arctic'
+      product_antarctic: 'blue_marble_antarctic'
+      product_geo: 'blue_marble'
+      product: 'blue_marble'
       resolution: '500m'
       format: 'jpeg'
       arctic: false
