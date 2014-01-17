@@ -181,7 +181,9 @@
               </div>
               <p class="panel-list-details">
               <span data-bind="text: short_name"></span>
+              <!-- ko if: version_id() != 'Undefined' -->
               v<span data-bind="text: version_id"></span>
+                <!-- /ko -->
               - <span data-bind="text: archive_center"></span>
               </p>
             </li>
