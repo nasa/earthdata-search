@@ -10,7 +10,8 @@ do ($=jQuery, searchModel = window.edsc.models.searchModel) ->
       remote: '/placenames?q=%QUERY'
 
     # When the user selects a typeahead value,
-    $placenameInputs.on 'typeahead:selected typeahead:autocompleted', (event, datum) ->
+    # TODO: Upgrade to typeahead-0.10 when available and verify that typeahead:cursorchanged triggers with arrow keys
+    $placenameInputs.on 'typeahead:selected typeahead:autocompleted typeahead:cursorchanged', (event, datum) ->
       {placename, ref, value} = datum
       searchModel.query.keywords(value)
 
