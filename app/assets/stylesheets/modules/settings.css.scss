@@ -21,10 +21,11 @@ $button-dark-lp-border: #a2a2a2;
 
 // Toolbar and Footer
 $toolbar-background: #2c3e50;
+$toolbar-background-bottom: #283949;
 $toolbar-accent-border: #21303f;
 
 // Master Overlay
 $master-overlay-parent-bg-color: transparentize(#111, .1);
 $master-overlay-parent-on-main-bg-color: transparentize(#111, .2); // Used when drawing parent overlapping main
-$master-overlay-main-bg-color: transparentize(#333, .1);
+$master-overlay-main-bg-color: transparentize(#111, .2);
 $overlay-heading-font-color: #c9c9c9;

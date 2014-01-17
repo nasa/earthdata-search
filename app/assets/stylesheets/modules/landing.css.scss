@@ -19,29 +19,36 @@
 }
 
 .landing-dialog {
-  width: 900px;
+  width: 800px;
   margin: 10em auto 0;
   color: #fff;
-  padding: 1em;
-  background-color: transparentize(#111, .3);
-  border-radius: 8px;
-  box-shadow: 6px 6px 3px transparentize(#111, .5);
+  background-color: transparentize(#111, .2);
+  border-radius: 6px;
+  box-shadow: 0 0 20px 0 transparentize(#111, .3);
 }
 
 .landing-dialog-toolbar {
   height: 58px;
   padding: .5em 0;
   background: transparent;
+  margin-left: .5em;
 }
 
 .landing-dialog-header {
-  padding: 1em;
+  padding: 1em 1.5em;
+  
+  h2 {
+    font-weight: normal;
+    margin: 0 0 .2em 0;
+    font-size: 2.2em;
+    text-shadow: 1px 1px 1px #111;
+  }
 }
 
 .landing-dialog-actions {
-  margin-top: 1em;
-  border-top: 1px solid #888;
-  padding: 1em;
+  margin-top: 2em;
+  border-top: 1px solid #424242;
+  padding: 1.5em 1.5em 1em 1.5em;
 
   a {
     margin-right: 1em;
@@ -49,6 +56,7 @@
   }
 
   p {
+    font-size: .9em;
     line-height: 40px;
   }
 }
