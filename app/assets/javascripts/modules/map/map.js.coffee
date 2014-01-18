@@ -11,7 +11,7 @@ ns.Map = do (window,
              searchModel = window.edsc.models.searchModel) ->
 
   # Fix leaflet default image path
-  L.Icon.Default.imagePath = L.Icon.Default.imagePath?.replace(/\/images$/, '') || '/assets/leaflet-0.7'
+  L.Icon.Default.imagePath = '/images/leaflet-0.7'
 
   # Constructs and performs basic operations on maps
   # This class wraps the details of setting up the map used by the application,
