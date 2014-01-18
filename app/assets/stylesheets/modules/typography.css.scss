@@ -11,7 +11,7 @@ hgroup {
   & > h1 {
     margin-bottom: 0;
   }
-  
+
   & > h2 {
     color: #999;
     font-weight: normal;
@@ -19,7 +19,7 @@ hgroup {
 }
 
 header .ir {
-  @include retina-image(search-logo, 145px 40px);
+  @include retina-image(search-logo, 145px 40px, png, null, true);
   height: 40px;
   width: 145px;
   float: left;
