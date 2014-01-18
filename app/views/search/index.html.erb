@@ -24,48 +24,40 @@
         <div class="tab-content">
           <div id="temporal-date-range" class="tab-pane active">
             <div class="datetime-field" id="temporal_start_button">
-              <label for="temporal_start">Start</label>
-              <%= text_field_tag(:temporal_start, params[:temporal_start],
-                                 :placeholder => 'YYYY-MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-range-picker temporal-start temporal-range-start') %>
-              <button id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
+              <label for="temporal-range-start">Start</label>
+              <input data-bind="value: query.temporal_range_start" id="temporal-range-start" class="temporal temporal-range-picker temporal-start temporal-range-start" type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
+              <button data-bind="click: query.clearTemporal.bind($data, 'range-start')" id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
-              <label for="temporal_stop">End</label>
-              <%= text_field_tag(:temporal_stop, params[:temporal_end],
-                                 :placeholder => 'YYYY-MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-range-picker temporal-stop temporal-range-stop') %>
-              <button id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
+              <label for="temporal-range-stop">End</label>
+              <input data-bind="value: query.temporal_range_stop" id="temporal-range-stop" class="temporal temporal-range-picker temporal-stop temporal-range-stop" type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
+              <button data-bind="click: query.clearTemporal.bind($data, 'range-stop')" id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="temporal-error">Start must be no later than End</div>
             <div class="button-row">
               <button id="temporal-range-submit"
                       class="button submit"
                       title="Apply your selections" type="button">Apply</button>
-              <button id="temporal-range-clear"
+              <button id="temporal-range-clear" data-bind="click: query.clearTemporal.bind($data, 'range')"
                       class="button temporal-clear temporal-range low-priority"
                       title="Clear your selections" type="button">Clear</button>
             </div>
           </div>
           <div id="temporal-recurring" class="tab-pane">
             <div class="datetime-field" id="temporal_start_button">
-              <label for="temporal_start">Start</label>
-              <%= text_field_tag(:temporal_start, params[:temporal_start],
-                                 :placeholder => 'MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-recurring-picker temporal-start temporal-recurring-start') %>
-              <button id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
+              <label for="temporal-recurring-start">Start</label>
+              <input data-bind="value: query.temporal_recurring_start" id="temporal-recurring-start" class="temporal temporal-recurring-picker temporal-start temporal-recurring-start" type="text" placeholder="MM-DD HH:MM:SS"/>
+              <button data-bind="click: query.clearTemporal.bind($data, 'recurring-start')" id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
-              <label for="temporal_stop">End</label>
-              <%= text_field_tag(:temporal_stop, params[:temporal_end],
-                                 :placeholder => 'MM-DD HH:MM:SS',
-                                 :class => 'temporal temporal-recurring-picker temporal-stop temporal-recurring-stop') %>
-              <button id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
+              <label for="temporal-recurring-stop">End</label>
+              <input data-bind="value: query.temporal_recurring_stop" id="temporal-recurring-stop" class="temporal temporal-recurring-picker temporal-stop temporal-recurring-stop" type="text" placeholder="MM-DD HH:MM:SS"/>
+              <button data-bind="click: query.clearTemporal.bind($data, 'recurring-stop')" id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="range-slider">
                 <label for="temporal-slider">Range</label>
               <input id="temporal-slider" class="temporal-recurring-year-range" type="text">
-              <p><span class="temporal-recurring-year-range-value"></span></p>
+              <p><span data-bind="text: query.temporal_recurring_year_range" class="temporal-recurring-year-range-value"></span></p>
 
             </div>
             <div class="temporal-error">Start must be no later than End</div>
@@ -73,7 +65,7 @@
               <button id="temporal-recurring-submit"
                       class="button submit"
                       title="Apply your selections" type="button">Apply</button>
-              <button id="temporal-recurring-clear"
+              <button id="temporal-recurring-clear" data-bind="click: query.clearTemporal.bind($data, 'recurring')"
                       class="button temporal-clear temporal-recurring low-priority"
                       title="Clear your selections" type="button">Clear</button>
             </div>
@@ -206,6 +198,12 @@
 
 <div id="map" class="map" style="height:100%; z-index:-1;">
 
+</div>
+
+<div id="temporal-query" data-bind="with: ui.temporal">
+  <p>Start: <span data-bind="text: start"></span></p>
+  <p>Stop: <span data-bind="text: stop"></span></p>
+  <p>Year Range: <span data-bind="text: years"></span></p>
 </div>
 
 <div class="landing-area landing-visible">

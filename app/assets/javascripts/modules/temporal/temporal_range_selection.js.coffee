@@ -3,26 +3,31 @@ edsc_date = window.edsc.util.date
 
 current_year = new Date().getFullYear()
 
-updateQueryModel = (type, value) ->
-  switch type
-    when 'range-start'
-      query.temporal_start(value)
-    when 'range-stop'
-      query.temporal_stop(value)
-    when 'recurring'
-      query.temporal_recurring(value)
-
 $(document).ready ->
   validateTemporalInputs = ->
-    start = $(".temporal-start:visible").val()
-    end = $(".temporal-stop:visible").val()
+    start = $(".temporal-start:visible")
+    end = $(".temporal-stop:visible")
+    start_val = start.val()
+    end_val = end.val()
 
-    error = $(".temporal-dropdown .tab-pane.active .temporal-error")
-
-    if start == "" or end == "" or start <= end
-      error.hide()
-    else
+    if start and stop
+      error = $(".temporal-dropdown .tab-pane.active .temporal-error")
       error.show()
+
+      if start.hasClass("temporal-recurring-start")
+        # Recurring start and stop must both be selected
+        if start_val == "" ^ end_val == ""
+          error.text("Start and End dates must both be selected")
+        else if start_val > end_val
+          error.text("Start must be no later than End")
+        else
+          error.hide()
+      else
+        if start_val == "" or end_val == "" or start_val <= end_val
+          error.hide()
+        else
+          error.text("Start must be no later than End")
+
 
   setMinMaxOptions = (datetimepicker, $input, temporal_type) ->
     min_date = false
@@ -87,7 +92,7 @@ $(document).ready ->
     value = $(this).prev().val()
     date = parseOrdinal(value)
     if date
-      $("#" + $(this).attr("data-input") + ":visible").val(date)
+      $("#" + $(this).attr("data-input") + ":visible").val(date).trigger('change')
       $(this).parents('.xdsoft_datetimepicker').hide()
       validateTemporalInputs()
 
@@ -108,6 +113,8 @@ $(document).ready ->
       populateDayOfYear(this, new Date($input.val())) if $input.val()
 
       validateTemporalInputs()
+
+      $input.trigger('change')
     onGenerate: (dp,$input) ->
       addDayOfYear(this, $input)
   })
@@ -128,6 +135,8 @@ $(document).ready ->
       $input.val(datetime.join(":"))
 
       validateTemporalInputs()
+
+      $input.trigger('change')
     onChangeMonth: (dp,$input) ->
       updateMonthButtons($(this).find('.xdsoft_month'))
   })
@@ -138,9 +147,9 @@ $(document).ready ->
     value: [1960, current_year],
     tooltip: 'hide'
   }).on 'slide', (e) ->
-    $('.temporal-recurring-year-range-value').text(e.value.join(' - '))
+    query.temporal_recurring_year_range(e.value.join(" - "))
 
-  $('.temporal-recurring-year-range-value').text('1960 - ' + current_year)
+  query.temporal_recurring_year_range("1960 - " + current_year)
 
   formatDateTimeString = (datetime) ->
     if datetime?.length > 0 then datetime.replace(' ','T') + 'Z' else ''
@@ -148,14 +157,7 @@ $(document).ready ->
   # Submit temporal range search
   updateTemporalRange = ->
     if $('#temporal-date-range .temporal-error').is(":hidden")
-      start_datetime = $('.temporal-range-start').val()
-      stop_datetime = $('.temporal-range-stop').val()
-      formatted_start_datetime = formatDateTimeString(start_datetime)
-      formatted_stop_datetime = formatDateTimeString(stop_datetime)
-
-      updateQueryModel('range-start', formatted_start_datetime)
-      updateQueryModel('range-stop', formatted_stop_datetime)
-      true
+      query.switchTemporal('range')
     else
       false
 
@@ -166,25 +168,7 @@ $(document).ready ->
   # Submit temporal recurring search
   updateTemporalRecurring = ->
     if $('#temporal-recurring .temporal-error').is(":hidden")
-      year_range = $('.temporal-recurring-year-range-value').text().split(' - ')
-      start_datetime = $('.temporal-recurring-start').val()
-      stop_datetime = $('.temporal-recurring-stop').val()
-      formatted_start_datetime = formatDateTimeString(year_range[0] + '-' + start_datetime)
-      formatted_stop_datetime = formatDateTimeString(year_range[1] + '-' + stop_datetime)
-      date_start_datetime = new Date(formatted_start_datetime)
-      date_stop_datetime = new Date(formatted_stop_datetime)
-
-      # find day of the year selected
-      start_day = findDayOfYear(date_start_datetime)
-      stop_day = findDayOfYear(date_stop_datetime)
-
-      formatted_query = if start_datetime and stop_datetime
-        [formatted_start_datetime, formatted_stop_datetime, start_day, stop_day]
-      else
-        ''
-
-      updateQueryModel('recurring', formatted_query)
-      true
+      query.switchTemporal('recurring')
     else
       false
 
@@ -192,38 +176,13 @@ $(document).ready ->
     if updateTemporalRecurring()
       $(this).parents('.dropdown').removeClass('open')
 
-  # Clear buttons within both temporal range and recurring dropdowns
-  $(document).on 'click', '.temporal-clear', ->
-    # handle clear buttons next to input fields
-    $(this).prev('.temporal').val('')
-    if $(this).prev('.temporal').hasClass('temporal-range-start')
-      updateQueryModel('range-start', '')
-    else if $(this).prev('.temporal').hasClass('temporal-range-stop')
-      updateQueryModel('range-stop', '')
-
-    # handle clear buttons at the bottom of each dropdown
-    if $(this).hasClass('temporal-range')
-      $(this).parents('.tab-pane').find('.temporal').val('')
-      updateQueryModel('range-start', '')
-      updateQueryModel('range-stop', '')
-    else if $(this).hasClass('temporal-recurring')
-      $(this).parents('.tab-pane').find('.temporal').val('')
-      $('.temporal-recurring-year-range').slider('setValue', [1960, current_year])
-      $('.temporal-recurring-year-range-value').text('1960 - ' + current_year)
-      updateQueryModel('recurring', '')
-
-    validateTemporalInputs()
-
-  $(document).on 'click', '.clear-filters.button', ->
+  $(document).on 'click', '.clear-filters.button, .temporal-clear', ->
     validateTemporalInputs()
 
   $(document).on 'click', '.temporal-dropdown-link', ->
     if $(this).hasClass('temporal-range')
-      updateQueryModel('recurring', '')
       updateTemporalRange()
     else if $(this).hasClass('temporal-recurring')
-      updateQueryModel('range-start', '')
-      updateQueryModel('range-stop', '')
       updateTemporalRecurring()
 
   $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker .xdsoft_today_button', ->
@@ -238,5 +197,5 @@ $(document).ready ->
   $(document).on 'click', 'input.day-of-year-input', ->
     $(this).focus()
 
-  $('.temporal').blur ->
+  $('.temporal').on 'change paste keyup', ->
     validateTemporalInputs()
