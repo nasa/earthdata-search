@@ -252,12 +252,24 @@ class models.Temporal
 class models.DatasetFacetsModel
   constructor: ->
     @_searchResponse = ko.mapping.fromJS(results: [])
-    @results = ko.computed => @_searchResponse.results()
+    @results = ko.computed(@_prepareResults)
     @pendingRequestId = 0
     @completedRequestId = 0
     @isLoading = ko.observable(false)
 
     @error = ko.observable(null)
+
+  _prepareResults: =>
+    results = []
+    for item in @_searchResponse.results()
+      result = {}
+      result.name = item[0]
+      result.class_name = result.name.toLowerCase().replace(' ', '-')
+      result.values = item[1].sort (l, r) ->
+        if l.term() > r.term() then 1 else -1
+      results.push result
+
+    results
 
   search: (params) =>
     @_load(params)

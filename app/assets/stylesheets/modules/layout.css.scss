@@ -22,7 +22,7 @@ body {
 .earthdata-tophat {
   background: #282828;
   color: #fff;
-  padding: .5em 1em;
+  padding: .4em 1em;
   font-size: .8em;
 }
 
@@ -40,9 +40,11 @@ footer, .toolbar {
 }
 
 .toolbar {
-  background: rgba(44, 62, 80, 1) asset-url('header-drop.png') repeat-x top;
+  @include linear-gradient(rgba(44, 62, 80, 1), $toolbar-background-bottom);
+  //background: asset-url('header-drop.png') repeat-x top;
   padding: .5em 1em;
   height: 58px;
+  border-bottom: 1px solid #242424;
 
   h1 {
     margin: 0;

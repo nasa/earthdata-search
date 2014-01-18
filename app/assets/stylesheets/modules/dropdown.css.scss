@@ -50,12 +50,14 @@ input.day-of-year-input {
 
   a {
     background: none;
+    color: #999;
   }
 
   li.active a, li.active:hover a {
     background: #333;
     border-color: #000;
     border-bottom-color: #333;
+    color: #fff;
   }
 
   li:hover a {

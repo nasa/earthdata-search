@@ -14,7 +14,8 @@
 // A parent panel for the overlday.  For instance, dataset facets are a parent
 // panel to dataset search results
 .master-overlay-parent {
-  background-color: $master-overlay-parent-bg-color;
+  // background-color: $master-overlay-parent-bg-color;
+  @include retina-image(debut_dark, 200px 200px);
   width: 20%;
   left: 0;
 }
@@ -34,6 +35,10 @@
   section {
     width: 50%;
     float: left;
+  }
+  
+  dl {
+    font-size: .8em;
   }
 }
 
@@ -90,19 +95,24 @@
 }
 
 // DELETE ME After icons are added for close button
-.master-overlay-close {
+a.master-overlay-close {
   text-decoration: none;
   font-weight: bold;
   // color: rgb(63, 97, 132);
   color: rgba(255, 255, 255, .3);
-  @include transition (color 0.2s ease-in-out);
+  @include transition (color 0.15s ease-in-out);
 
   &:hover {
     color: rgba(255, 255, 255, .8);
   }
 }
 
-.master-overlay-parent .master-overlay-close {
+.master-overlay-when-parent-hidden {
+  display: none;
+}
+
+.is-master-overlay-parent-hidden .master-overlay-when-parent-hidden {
+  display: inline;
 }
 
 .is-master-overlay-parent-hidden .master-overlay-parent {

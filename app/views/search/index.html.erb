@@ -121,17 +121,17 @@
         </div>
       </div>
       <!-- ko foreach: datasetFacets.results -->
-      <div data-bind="if: $data[1].length > 0" class="panel panel-default">
+      <div data-bind="if: $data.values.length > 0, css: $data.class_name" class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title facet-title collapse-link">
-            <a data-bind="text: $data[0], attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
+            <a data-bind="text: $data.name, attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
             <i class="fa fa-caret-down pull-right"></i>
           </h3>
         </div>
         <div data-bind="attr: {id: 'collapse'+$index()}" class="panel-collapse in">
           <div class="panel-body facets">
-            <!-- ko foreach: $data[1].sort(function (l, r) { return l.term() > r.term() ? 1 : -1 }) -->
-            <p class="facets-item" data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent[0], term()), css: {selected: $root.datasetFacets.highlightFacet($parent[0], term)}">
+            <!-- ko foreach: $data.values -->
+            <p class="facets-item" data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent.name, term()), css: {selected: $root.datasetFacets.highlightFacet($parent.name, term)}">
               <span data-bind="text: term"></span>
               (<span data-bind="text: count"></span>)
               <i class="fa fa-times"></i>
@@ -150,7 +150,12 @@
           <a class="master-overlay-close master-overlay-main-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
           <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
           <p>
-            <a href="#" class='master-overlay-toggle-parent'>Hide Facets</a>
+            <a href="#" class="master-overlay-toggle-parent master-overlay-when-parent-hidden">
+             Browse Datasets
+             <span data-bind="if: query.facets().length > 0">
+               (<span data-bind="text: (query.facets().length > 1 ? query.facets().length + ' filters' : '1 filter')"></span> applied)
+             </span>
+            </a>
           </p>
         </header>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">
@@ -205,14 +210,14 @@
 
   <div class="landing-dialog">
     <div class="landing-dialog-header">
-      <h1>Earthdata Search</h1>
-      <p>Filter any keyword search by time or space.</p>
+      <h2>Discover Earth Science Data</h2>
+      <p>Search NASA Earth Science data by keyword and filter by <i class="fa fa-clock-o"></i> <strong>time</strong> or <i class="fa fa-crop"></i> <strong>space</strong>.</p>
     </div>
     <div class="landing-dialog-toolbar toolbar">
     </div>
     <div class="landing-dialog-actions">
       <a href="#datasets-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
-      <p>See new and featured datasets or use categories to narrow your results.</p>
+      <p><i class="fa fa-arrow-circle-left"></i> See new and featured datasets or use categories to narrow your results.</p>
     </div>
   </div>
 

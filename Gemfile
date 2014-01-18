@@ -62,6 +62,10 @@ group :assets, :test do
   gem 'uglifier', '>= 1.3.0'
 end
 
+group :production do
+  gem 'pg'
+end
+
 gem 'jquery-rails'
 gem 'bourbon'
 gem 'knockoutjs-rails'
