@@ -20,6 +20,6 @@
 //= require history.js-1.8.6/jquery.history.js
 //= require namespaces
 //= require util/index
-//= require models
+//= require models/index
 //= require modules/index
 //= require bootstrap/bootstrap

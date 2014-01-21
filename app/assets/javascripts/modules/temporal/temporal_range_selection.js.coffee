@@ -1,5 +1,5 @@
-query = window.edsc.models.searchModel.query
-edsc_date = window.edsc.util.date
+query = @edsc.models.page.current.query
+edsc_date = @edsc.util.date
 
 current_year = new Date().getFullYear()
 

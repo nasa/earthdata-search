@@ -1,4 +1,4 @@
-do ($=jQuery, uiModel = edsc.models.searchModel.ui, urlUtil = edsc.util.url) ->
+do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) ->
 
   updateLandingPageState = ->
     uiModel.isLandingPage(History.getState().hash == '/')

@@ -17,7 +17,7 @@ module Helpers
 
     # Resets the query filters and waits for all the resulting xhr requests to finish.
     def reset_search
-      page.evaluate_script('window.edsc.models.searchModel.query.clearFilters()')
+      page.evaluate_script('window.edsc.models.page.current.query.clearFilters()')
       wait_for_xhr
     end
 
