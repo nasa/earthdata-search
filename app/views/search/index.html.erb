@@ -159,7 +159,8 @@
           </p>
         </header>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
-          <ul class="panel-list-list knockout-template"
+          <ul id="dataset-results-list"
+              class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
             <li data-bind="click: $parent.datasets.showDataset" class="panel-list-item">
               <!-- ko if: thumbnail -->
@@ -178,6 +179,14 @@
                   <i class="edsc-icon-fw edsc-icon-location"></i>
                 </a>
                 <!-- /ko -->
+                <a href="#" class="button icon-button" title="Add dataset to the current project"
+                   data-bind="visible: !$root.project.datasets.contains($data), click: $root.project.toggleDataset, clickBubble: false">
+                  <i class="fa fa-plus"></i>
+                </a>
+                <a href="#" class="button icon-button button-active" title="Remove dataset from the current project"
+                   data-bind="visible: $root.project.datasets.contains($data), click: $root.project.toggleDataset, clickBubble: false">
+                  <i class="fa fa-minus"></i>
+                </a>
               </div>
               <p class="panel-list-details">
               <span data-bind="text: short_name"></span>

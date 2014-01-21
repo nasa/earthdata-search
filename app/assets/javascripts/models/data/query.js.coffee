@@ -5,7 +5,7 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
 
   current_year = new Date().getFullYear()
 
-  class QueryModel
+  class Query
     constructor: ->
       @keywords = ko.observable("")
       @spatial = ko.observable("")
@@ -129,4 +129,4 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
 
       @switchTemporal(type)
 
-  exports = QueryModel
+  exports = Query

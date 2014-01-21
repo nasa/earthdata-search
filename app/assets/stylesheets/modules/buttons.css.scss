@@ -46,6 +46,12 @@
   }
 }
 
+.icon-button {
+  width: 36px;
+  height: 32px;
+  text-align: center;
+}
+
 .toolbar {
   .button, input[type="button"], input[type="reset"], input[type="submit"] {
     @include dark-button;
