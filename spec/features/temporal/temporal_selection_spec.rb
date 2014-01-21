@@ -121,7 +121,7 @@ describe "Temporal" do
       click_link "Recurring"
       fill_in "Start", with: "12-01 00:00:00"
       fill_in "End", with: "12-31 00:00:00"
-      script = "edsc.models.searchModel.query.temporal_recurring_year_range('1970 - 1975')"
+      script = "edsc.models.page.current.query.temporal_recurring_year_range('1970 - 1975')"
       page.execute_script(script)
       click_button "Apply"
 
@@ -137,7 +137,7 @@ describe "Temporal" do
       click_link "Recurring"
       fill_in "Start", with: "12-01 00:00:00"
       fill_in "End", with: "12-31 00:00:00"
-      script = "edsc.models.searchModel.query.temporal_recurring_year_range('1970 - 1975')"
+      script = "edsc.models.page.current.query.temporal_recurring_year_range('1970 - 1975')"
       page.execute_script(script)
       click_button "Apply"
 

@@ -158,7 +158,7 @@
             </a>
           </p>
         </header>
-        <div class="master-overlay-content panel-list" data-bind="event: {scroll: datasetsList.scrolled}">
+        <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
           <ul class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
             <li data-bind="click: $parent.datasets.showDataset" class="panel-list-item">

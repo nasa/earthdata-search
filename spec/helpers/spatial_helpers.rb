@@ -5,7 +5,7 @@ module Helpers
       # CSS mouseovers in capybara are screwy, so this is a bit of a hack
       # And selenium freaks out if we try to use jQuery to do this
       # We resort to dealing directly with the click handler
-      script = "edsc.models.searchModel.ui.spatialType.select#{name}()"
+      script = "edsc.models.page.current.ui.spatialType.select#{name}()"
       page.evaluate_script(script)
     end
 
@@ -36,7 +36,7 @@ module Helpers
     end
 
     def clear_spatial
-      script = "edsc.models.searchModel.query.spatial(null)"
+      script = "edsc.models.page.current.query.spatial(null)"
       page.evaluate_script(script)
     end
 
@@ -44,7 +44,7 @@ module Helpers
 
     def create_spatial(type, *points)
       point_strs = points.map {|p| p.reverse.join(',')}
-      script = "edsc.models.searchModel.query.spatial('#{type}:#{point_strs.join(':')}')"
+      script = "edsc.models.page.current.query.spatial('#{type}:#{point_strs.join(':')}')"
       page.evaluate_script(script)
     end
 

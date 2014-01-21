@@ -1,3 +1,8 @@
-window.edsc ?= {}
-window.edsc.models ?= {}
-window.edsc.util ?= {}
+@edsc =
+  models:
+    data: {}
+    page: {}
+    ui: {}
+  map:
+    L: {}
+  util: {}

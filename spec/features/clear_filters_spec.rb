@@ -29,7 +29,7 @@ describe "'Clear Filters' button" do
 
   context "clears temporal" do
     it "range" do
-      script = "edsc.models.searchModel.query.temporal(['1978-12-01T00:00:00Z','1979-12-01T00:00:00Z'])"
+      script = "edsc.models.page.current.query.temporal(['1978-12-01T00:00:00Z','1979-12-01T00:00:00Z'])"
       page.evaluate_script(script)
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -43,7 +43,7 @@ describe "'Clear Filters' button" do
     end
 
     it "recurring" do
-      script = "edsc.models.searchModel.query.temporal(['1970-12-01T00:00:00Z','1975-12-31T00:00:00Z',335,365])"
+      script = "edsc.models.page.current.query.temporal(['1970-12-01T00:00:00Z','1975-12-31T00:00:00Z',335,365])"
       page.evaluate_script(script)
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -65,7 +65,7 @@ describe "'Clear Filters' button" do
       expect(page).to have_content("EOSDIS")
       expect(page).to have_css(".facets-item.selected")
     end
-    
+
     click_link "Clear Filters"
 
     expect(page).to have_no_css(".facets-item.selected")

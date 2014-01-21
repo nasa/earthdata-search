@@ -1,6 +1,6 @@
 //= require typeahead-0.9.3/typeahead
 
-do ($=jQuery, searchModel = window.edsc.models.searchModel) ->
+do ($=jQuery, currentPage = window.edsc.models.page.current) ->
 
   $(document).ready ->
     $placenameInputs = $('.autocomplete-placenames')
@@ -13,19 +13,19 @@ do ($=jQuery, searchModel = window.edsc.models.searchModel) ->
     # TODO: Upgrade to typeahead-0.10 when available and verify that typeahead:cursorchanged triggers with arrow keys
     $placenameInputs.on 'typeahead:selected typeahead:autocompleted typeahead:cursorchanged', (event, datum) ->
       {placename, ref, value} = datum
-      searchModel.query.keywords(value)
+      currentPage.query.keywords(value)
 
       $.getJSON "/placenames/#{ref}", (data) ->
         # Avoid overwriting our own value with the subscription below
-        searchModel.query.placename(null)
-        searchModel.query.spatial(data.spatial)
-        searchModel.query.placename(placename)
+        currentPage.query.placename(null)
+        currentPage.query.spatial(data.spatial)
+        currentPage.query.placename(placename)
 
-    searchModel.query.keywords.subscribe (newValue) ->
+    currentPage.query.keywords.subscribe (newValue) ->
       $('.autocomplete-placenames').typeahead('setQuery', newValue ? "")
 
-    searchModel.query.spatial.subscribe (newValue) ->
-      currentPlacename = searchModel.query.placename()
+    currentPage.query.spatial.subscribe (newValue) ->
+      currentPlacename = currentPage.query.placename()
       for input in $('.autocomplete-placenames')
         if input.value.indexOf(currentPlacename) != -1
           input.value = input.value.replace(currentPlacename, '')

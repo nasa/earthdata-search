@@ -1,11 +1,11 @@
-ns = window.edsc.map
+ns = @edsc.map
 
 ns.SpatialSelection = do (window,
                           document,
                           toastr,
                           L,
                           Proj = ns.L.Proj
-                          searchModel = window.edsc.models.searchModel) ->
+                          currentPage = @edsc.models.page.current) ->
 
   L.drawLocal.draw.toolbar.buttons.polygon = "Search by spatial polygon"
   L.drawLocal.draw.toolbar.buttons.rectangle = "Search by spatial rectangle"
@@ -49,9 +49,9 @@ ns.SpatialSelection = do (window,
 
       drawControl.addTo(map)
 
-      spatialModel = searchModel.query.spatial
+      spatialModel = currentPage.query.spatial
       @_querySubscription = spatialModel.subscribe(@_onSpatialChange)
-      @_spatialErrorSubscription = searchModel.spatialError.subscribe(@_onSpatialErrorChange)
+      @_spatialErrorSubscription = currentPage.spatialError.subscribe(@_onSpatialErrorChange)
       @_onSpatialChange(spatialModel())
 
       map.on 'draw:drawstart', @_onDrawStart
@@ -60,7 +60,7 @@ ns.SpatialSelection = do (window,
       map.on 'draw:edited', @_onDrawEdited
       map.on 'draw:deleted', @_onDrawDeleted
 
-      spatialType = searchModel.ui.spatialType
+      spatialType = currentPage.ui.spatialType
       el.addEventListener('click', spatialType.selectRectangle) for el in @_getToolLinksForName('Rectangle')
       el.addEventListener('click', spatialType.selectPolygon) for el in @_getToolLinksForName('Polygon')
       el.addEventListener('click', spatialType.selectPoint) for el in @_getToolLinksForName('Point')
@@ -83,7 +83,7 @@ ns.SpatialSelection = do (window,
       map.off 'draw:edited', @_onDrawEdited
       map.off 'draw:deleted', @_onDrawDeleted
 
-      spatialType = searchModel.ui.spatialType
+      spatialType = currentPage.ui.spatialType
       el.removeEventListener('click', spatialType.selectRectangle) for el in @_getToolLinksForName('Rectangle')
       el.removeEventListener('click', spatialType.selectPolygon) for el in @_getToolLinksForName('Polygon')
       el.removeEventListener('click', spatialType.selectPoint) for el in @_getToolLinksForName('Point')
@@ -113,7 +113,7 @@ ns.SpatialSelection = do (window,
       @_removeSpatial()
 
     _onDrawStop: (e) =>
-      searchModel.ui.spatialType.selectNone()
+      currentPage.ui.spatialType.selectNone()
       # The user cancelled without committing.  Restore the old layer
       if @_oldLayer?
         @_layer = @_oldLayer
@@ -124,7 +124,7 @@ ns.SpatialSelection = do (window,
       @_addLayer(e.target, e.layer, e.layerType)
 
     _onDrawEdited: (e) =>
-      searchModel.ui.spatialType.selectNone()
+      currentPage.ui.spatialType.selectNone()
       @_addLayer(e.target)
 
     _addLayer: (map, layer=@_layer, type=@_layer.type) ->
@@ -137,9 +137,9 @@ ns.SpatialSelection = do (window,
       @_drawnItems.addLayer(layer)
 
     _onDrawDeleted: (e) =>
-      searchModel.ui.spatialType.selectNone()
+      currentPage.ui.spatialType.selectNone()
       @_removeSpatial()
-      searchModel.query.spatial("")
+      currentPage.query.spatial("")
 
     _onSpatialChange: (newValue) =>
       if !newValue? || newValue.length == 0
@@ -208,7 +208,7 @@ ns.SpatialSelection = do (window,
       serialized = "#{type}:#{shapeStr}"
 
       @_spatial = serialized
-      searchModel.query.spatial(serialized)
+      currentPage.query.spatial(serialized)
 
     _loadSpatialParams: (spatial) ->
       return if spatial == @_spatial

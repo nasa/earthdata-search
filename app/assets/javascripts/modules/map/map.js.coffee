@@ -1,4 +1,4 @@
-ns = window.edsc.map
+ns = @edsc.map
 
 ns.Map = do (window,
              document,
@@ -7,8 +7,8 @@ ns.Map = do (window,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
              LayerBuilder = ns.LayerBuilder,
              SpatialSelection = ns.SpatialSelection,
-             dateUtil = window.edsc.util.date
-             searchModel = window.edsc.models.searchModel) ->
+             dateUtil = @edsc.util.date
+             currentPage = @edsc.models.page.current) ->
 
   # Fix leaflet default image path
   L.Icon.Default.imagePath = '/images/leaflet-0.7'
@@ -34,7 +34,7 @@ ns.Map = do (window,
       @setProjection(projection)
       @_addDrawControls()
 
-      @_datasetSubscription = searchModel.datasets.details.subscribe(@_showDatasetSpatial)
+      @_datasetSubscription = currentPage.datasets.details.subscribe(@_showDatasetSpatial)
       $('#dataset-details').on('click', '.master-overlay-show-main a', @_hideDatasetSpatial)
 
     # Removes the map from the page
