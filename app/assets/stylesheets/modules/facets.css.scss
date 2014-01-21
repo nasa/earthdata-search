@@ -26,6 +26,19 @@ dd.facets>.facets-item {
   }
 }
 
+.facet-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.facets-list-hide {
+  height: 0px;
+}
+
+.facets-list-show {
+  height: auto;
+}
+
 // Overwrite default bootstrap values
 .panel-body {
   background-color: #fff;

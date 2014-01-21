@@ -2,6 +2,17 @@ ns = @edsc.models.data
 
 ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON) ->
 
+  class FacetsListModel
+    constructor: ->
+      @name = ko.observable("")
+      @class_name = ko.computed => @name().toLowerCase().replace(' ', '-')
+      @opened = ko.observable(true)
+      @closed = ko.computed => !@opened()
+      @values = ko.observable([])
+
+    toggleList: =>
+      @opened(!@opened())
+
   class DatasetFacetsModel
     constructor: (@queryModel) ->
       @_searchResponse = ko.mapping.fromJS(results: [])
@@ -13,14 +24,24 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON) ->
       @error = ko.observable(null)
 
     _prepareResults: =>
-      results = []
+      results = @results
+      if ko.isComputed(results)
+        results = results()
+      else
+        results = []
       for item in @_searchResponse.results()
-        result = {}
-        result.name = item[0]
-        result.class_name = result.name.toLowerCase().replace(' ', '-')
-        result.values = item[1].sort (l, r) ->
-          if l.term() > r.term() then 1 else -1
-        results.push result
+        found = ko.utils.arrayFirst results, (result) ->
+          if result.name() == item[0]
+            values = item[1].sort (l, r) ->
+              if l.term() > r.term() then 1 else -1
+            result.values(values)
+        unless found
+          result = new FacetsListModel()
+          result.name(item[0])
+          values = item[1].sort (l, r) ->
+            if l.term() > r.term() then 1 else -1
+          result.values(values)
+          results.push result
 
       results
 
