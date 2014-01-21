@@ -124,8 +124,8 @@
       <div data-bind="if: values().length > 0, css: class_name" class="panel panel-default">
         <div class="panel-heading">
           <h3 data-bind="click: toggleList" class="panel-title facet-title">
-            <a data-bind="text: name, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
             <i data-bind="css: {'fa-caret-down': closed(), 'fa-caret-up': opened()}" class="fa pull-right"></i>
+            <a data-bind="text: name, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
           </h3>
         </div>
         <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed()}">
