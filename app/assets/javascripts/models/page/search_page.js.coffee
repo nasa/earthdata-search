@@ -41,6 +41,10 @@ ns.SearchPage = do (ko,
       ko.computed(@_computeDatasetResults).extend(throttle: 500)
       ko.computed(@_computeDatasetFacetsResults).extend(throttle: 500)
 
+    pluralize: (value, singular, plural) ->
+      word = if value == 1 then singular else plural
+      "#{value} #{word}"
+
     _computeDatasetResults: =>
       @datasets.search(@query.params())
 
