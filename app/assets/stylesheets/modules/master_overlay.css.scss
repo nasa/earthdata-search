@@ -70,16 +70,34 @@
 // Non-scrollable header area
 .master-overlay header {
   margin: 1em;
+  color: $overlay-heading-font-color;
 
   h2 {
     font-weight: normal;
-    color: $overlay-heading-font-color;
     font-size: 1.2em;
+  }
+
+  a:hover {
+    color: #aaa;
   }
 }
 
-.master-overlay-main header {
-  margin-left:2em;
+.master-overlay-info {
+  margin: 1em;
+  color: $overlay-heading-font-color;
+  font-style: italic;
+  line-height:36px;
+
+  .button {
+    @include dark-button;
+    float: right;
+    font-style: normal;
+    line-height: 1.428571429em; // Bootstrap value.  Weird.
+  }
+
+  em {
+    font-weight: bold;
+  }
 }
 
 // Scrollable content area
