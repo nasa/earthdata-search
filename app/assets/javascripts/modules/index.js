@@ -5,3 +5,4 @@
 //= require modules/temporal/index
 //= require modules/autocomplete
 //= require modules/landing
+//= require modules/button_effects

@@ -13,7 +13,7 @@
 //= require modernizr-2.6.2-respond-1.1.0.min
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui-1.10.3.custom.min
+//= require jquery.color-2.1.2
 //= require knockout
 //= require knockout.mapping
 //= require toastr

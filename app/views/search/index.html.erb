@@ -164,14 +164,14 @@
           </p>
           <p data-bind="visible: !project.isEmpty()">
             <a class="button" href="#"><i class="fa fa-folder-o"></i> View Project</a>
-            You have <em data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.
+            You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.
           </p>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
           <ul id="dataset-results-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
-            <li data-bind="click: $parent.datasets.showDataset" class="panel-list-item">
+            <li data-bind="click: $parent.ui.datasetsList.clickDataset" class="panel-list-item">
               <!-- ko if: thumbnail -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
               <!-- /ko -->
@@ -184,16 +184,16 @@
               <div class="panel-list-item-actions">
                 <!-- ko if: $root.query.canQueryDatasetSpatial($data) -->
                 <a href="#" class="button icon-button" title="Search using this dataset's location"
-                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.query.toggleQueryDatasetSpatial, clickBubble: false">
+                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.query.toggleQueryDatasetSpatial">
                   <i class="edsc-icon-fw edsc-icon-location"></i>
                 </a>
                 <!-- /ko -->
-                <a href="#" class="button icon-button" data-transition-to="#project-count" title="Add dataset to the current project"
-                   data-bind="visible: !$root.project.hasDataset($data), click: $root.project.toggleDataset, clickBubble: false">
+                <a href="#" class="button icon-button" data-pulse="#project-count" title="Add dataset to the current project"
+                   data-bind="visible: !$root.project.hasDataset($data), click: $root.project.toggleDataset">
                   <i class="fa fa-plus"></i>
                 </a>
-                <a href="#" class="button icon-button button-active" data-transition-from="#project-count" title="Remove dataset from the current project"
-                   data-bind="visible: $root.project.hasDataset($data), click: $root.project.toggleDataset, clickBubble: false">
+                <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove dataset from the current project"
+                   data-bind="visible: $root.project.hasDataset($data), click: $root.project.toggleDataset">
                   <i class="fa fa-minus"></i>
                 </a>
               </div>
