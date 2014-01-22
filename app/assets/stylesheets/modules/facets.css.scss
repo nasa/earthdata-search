@@ -26,6 +26,14 @@ dd.facets>.facets-item {
   }
 }
 
+.facets-list-hide {
+  height: 0px;
+}
+
+.facets-list-show {
+  height: auto;
+}
+
 // Overwrite default bootstrap values
 .panel-body {
   background-color: #fff;
