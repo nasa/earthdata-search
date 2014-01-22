@@ -19,7 +19,6 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'capybara-screenshot'
-  gem 'vcr'
 end
 
 group :development do
@@ -41,6 +40,7 @@ group :development, :test do
   gem 'colored'
   gem 'deadweight' # Finds unused styles
   gem 'execcsslint' # CSS Lint
+  gem 'vcr'
 
   # rspec-like environment for Javascript
   # The version available via rubygems (1.3.2) doesn't contain Rails 4 support
