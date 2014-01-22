@@ -22,6 +22,8 @@ ns.Project = do (ko) ->
       @_datasetIds(datasetIds)
       null
 
+    isEmpty: () ->
+      @_datasetIds.isEmpty()
 
     toggleDataset: (dataset) =>
       if @hasDataset(dataset)
