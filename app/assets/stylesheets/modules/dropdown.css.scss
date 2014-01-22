@@ -11,6 +11,10 @@
 
 .dropdown-menu {
   background-color: rgba(20,20,20,.9);
+
+  > li > a.dropdown-link:hover {
+    color: #ddd;
+  }
 }
 
 .temporal-dropdown {

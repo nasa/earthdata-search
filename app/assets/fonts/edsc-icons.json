@@ -1,7 +1,7 @@
 {
 	"metadata": {
 		"name": "edsc-icons",
-		"lastOpened": 1389799690538,
+		"lastOpened": 1390403868055,
 		"created": 1381083457739
 	},
 	"iconSets": [
@@ -39,7 +39,7 @@
 					"id": 0,
 					"prevSize": 32,
 					"code": 58881,
-					"name": "",
+					"name": "poly",
 					"tempChar": "",
 					"ligatures": ""
 				}
@@ -6093,7 +6093,12 @@
 				},
 				{
 					"order": 11,
-					"id": 67
+					"id": 67,
+					"prevSize": 32,
+					"code": 58890,
+					"name": "location",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
 					"order": 0,
@@ -6881,12 +6886,22 @@
 					"id": 257
 				},
 				{
-					"order": 0,
-					"id": 258
+					"order": 13,
+					"id": 258,
+					"prevSize": 32,
+					"code": 58892,
+					"name": "minus",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
-					"order": 0,
-					"id": 259
+					"order": 12,
+					"id": 259,
+					"prevSize": 32,
+					"code": 58891,
+					"name": "plus",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
 					"order": 0,
@@ -13975,8 +13990,13 @@
 					"id": 197
 				},
 				{
-					"order": 0,
-					"id": 198
+					"order": 14,
+					"id": 198,
+					"prevSize": 32,
+					"code": 58893,
+					"name": "arrow-left",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
 					"order": 0,

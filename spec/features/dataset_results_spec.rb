@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Dataset results" do
   let(:ast_l1a_id) { 'C14758250-LPDAAC_ECS' }
-  let(:airabrad_id) { 'C189399410-GSFCS4PA' }
+  let(:airh2ccf_id) { 'C186815383-GSFCS4PA' }
 
   before do
     DatasetExtra.create!(echo_id: ast_l1a_id, thumbnail_url: 'http://example.com/thumbnail.jpg')
@@ -31,7 +31,7 @@ describe "Dataset results" do
     end
 
     it "displays thumbnails for datasets which have stored thumbnail URLs" do
-      fill_in "keywords", with: airabrad_id
+      fill_in "keywords", with: airh2ccf_id
 
       expect(page).to have_css("img.panel-list-thumbnail")
       expect(page).to have_no_text("No image available")

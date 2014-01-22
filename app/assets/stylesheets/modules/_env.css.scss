@@ -1,13 +1,14 @@
 // Environment-specific styles.  These are almost always a bad idea.  Document what you're doing.
 
-// With our styles, capybara-screenshot shows the page with the bare minimum height of something
-// like 200px, not enough to see anything.  This forces it to use a taller height.
-.env-test .wrap {
-  min-height: 800px;
-}
-
-// Also set the width to a fixed value.  The default width is too narrow and pushes the toolbar buttons
-// down, causing some specs to fail because of capybara-webkit issues with element stacking
 .env-test {
+  // Set the page width to a fixed value.  The default width is too narrow and pushes the toolbar buttons
+  // down, causing some specs to fail because of capybara-webkit issues with element stacking
   width: 1280px;
+
+  // With our styles, capybara-screenshot shows the page with the bare minimum height of something
+  // like 200px, not enough to see anything.  This forces it to use a taller height.
+  .wrap { min-height: 800px; }
+
+  // Disable CSS transitions to avoid waiting for animations no one will see
+  * { transition: none !important; }
 }

@@ -1,0 +1,34 @@
+            <li data-bind="click: $parent.ui.datasetsList.clickDataset" class="panel-list-item master-overlay-forward">
+              <!-- ko if: thumbnail -->
+              <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
+              <!-- /ko -->
+              <!-- ko ifnot: thumbnail -->
+              <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
+                No image available
+              </div>
+              <!-- /ko -->
+              <h3 data-bind="text: dataset_id"></h3>
+              <div class="panel-list-item-actions">
+                <!-- ko if: $root.query.canQueryDatasetSpatial($data) -->
+                <a href="#" class="button icon-button" title="Search using this dataset's location"
+                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.query.toggleQueryDatasetSpatial">
+                  <i class="edsc-icon-location"></i>
+                </a>
+                <!-- /ko -->
+                <a href="#" class="button icon-button" data-pulse="#project-count" title="Add dataset to the current project"
+                   data-bind="visible: !$root.project.hasDataset($data), click: $root.project.toggleDataset">
+                  <i class="edsc-icon-plus"></i>
+                </a>
+                <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove dataset from the current project"
+                   data-bind="visible: $root.project.hasDataset($data), click: $root.project.toggleDataset">
+                  <i class="edsc-icon-minus"></i>
+                </a>
+              </div>
+              <p class="panel-list-details">
+              <span data-bind="text: short_name"></span>
+              <!-- ko if: version_id() != 'Undefined' -->
+              v<span data-bind="text: version_id"></span>
+                <!-- /ko -->
+              - <span data-bind="text: archive_center"></span>
+              </p>
+            </li>

@@ -5,6 +5,7 @@
 #= require models/ui/spatial_type
 #= require models/ui/temporal
 #= require models/ui/datasets_list
+#= require models/ui/project_list
 
 models = @edsc.models
 data = models.data
@@ -19,7 +20,8 @@ ns.SearchPage = do (ko,
                     ProjectModel = data.Project
                     SpatialTypeModel = ui.SpatialType
                     TemporalModel = ui.Temporal
-                    DatasetsListModel = ui.DatasetsList) ->
+                    DatasetsListModel = ui.DatasetsList
+                    ProjectListModel = ui.ProjectList) ->
 
   class SearchPage
     constructor: ->
@@ -32,6 +34,7 @@ ns.SearchPage = do (ko,
         spatialType: new SpatialTypeModel()
         temporal: new TemporalModel(@query)
         datasetsList: new DatasetsListModel(@query, @datasets)
+        projectList: new ProjectListModel(@project)
         isLandingPage: ko.observable(null) # Used by modules/landing
 
       @bindingsLoaded = ko.observable(false)

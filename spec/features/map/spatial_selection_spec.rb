@@ -104,7 +104,6 @@ describe "Spatial" do
   context "point selection" do
     it "filters datasets using the selected point" do
       create_point(0, 0)
-      click_link "Browse All Data"
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
@@ -113,7 +112,6 @@ describe "Spatial" do
       before(:each) do
         create_point(0, 0)
         create_point(-75, 40)
-        click_link "Browse All Data"
       end
 
       it "updates the dataset filters using the new point selection" do
@@ -125,7 +123,6 @@ describe "Spatial" do
       before(:each) do
         create_point(0, 0)
         clear_spatial
-        click_link "Browse All Data"
       end
 
       it "removes the spatial point dataset filter" do
@@ -137,7 +134,6 @@ describe "Spatial" do
   context "bounding box selection" do
     it "filters datasets using the selected bounding box" do
       create_bounding_box(0, 0, 10, 10)
-      click_link "Browse All Data"
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
@@ -146,7 +142,6 @@ describe "Spatial" do
       before(:each) do
         create_bounding_box(0, 0, 10, 10)
         create_bounding_box(-75, 40, -74, 41)
-        click_link "Browse All Data"
       end
 
       it "updates the dataset filters using the new bounding box selection" do
@@ -158,7 +153,6 @@ describe "Spatial" do
       before(:each) do
         create_bounding_box(0, 0, 10, 10)
         clear_spatial
-        click_link "Browse All Data"
       end
 
       it "removes the spatial bounding box dataset filter" do
@@ -169,7 +163,6 @@ describe "Spatial" do
     it "filters datasets using north polar bounding boxes in the north polar projection" do
       click_link "North Polar Stereographic"
       create_arctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
-      click_link "Browse All Data"
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
@@ -177,7 +170,6 @@ describe "Spatial" do
     it "filters datasets using south polar bounding boxes in the south polar projection" do
       click_link "South Polar Stereographic"
       create_antarctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
-      click_link "Browse All Data"
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
@@ -186,7 +178,6 @@ describe "Spatial" do
   context "polygon selection" do
     it "filters datasets using the selected polygon" do
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
-      click_link "Browse All Data"
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
@@ -200,7 +191,6 @@ describe "Spatial" do
       before(:each) do
         create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
         create_polygon([-74, 41], [-75, 41], [-75, -40], [-74, 40])
-        click_link "Browse All Data"
       end
 
       it "updates the dataset filters using the new bounding box selection" do
@@ -212,7 +202,6 @@ describe "Spatial" do
       before(:each) do
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, -10])
         clear_spatial
-        click_link "Browse All Data"
       end
 
       it "removes the spatial bounding box dataset filter" do

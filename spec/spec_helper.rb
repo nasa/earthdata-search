@@ -29,7 +29,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 FactoryGirl.find_definitions
 
-load "#{::Rails.root}/db/seeds.rb" if ENV["SEED"] == "true"
+load "#{::Rails.root}/db/seeds.rb" if ENV["seed"] == "true"
 
 # http://stackoverflow.com/questions/11012407/set-json-max-nesting-option-from-within-ruby-on-rails-application/11013407#11013407
 module JSON
