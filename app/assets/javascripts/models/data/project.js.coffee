@@ -13,5 +13,11 @@ ns.Project = do (ko) ->
       else
         datasets.push(dataset)
 
+    hasDataset: (other) =>
+      id = other.id()
+      for dataset in @datasets()
+        return true if dataset.id() == id
+      false
+
 
   exports = Project

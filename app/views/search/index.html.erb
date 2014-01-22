@@ -188,12 +188,12 @@
                   <i class="edsc-icon-fw edsc-icon-location"></i>
                 </a>
                 <!-- /ko -->
-                <a href="#" class="button icon-button" title="Add dataset to the current project"
-                   data-bind="visible: !$root.project.datasets.contains($data), click: $root.project.toggleDataset, clickBubble: false">
+                <a href="#" class="button icon-button" data-transition-to="#project-count" title="Add dataset to the current project"
+                   data-bind="visible: !$root.project.hasDataset($data), click: $root.project.toggleDataset, clickBubble: false">
                   <i class="fa fa-plus"></i>
                 </a>
-                <a href="#" class="button icon-button button-active" title="Remove dataset from the current project"
-                   data-bind="visible: $root.project.datasets.contains($data), click: $root.project.toggleDataset, clickBubble: false">
+                <a href="#" class="button icon-button button-active" data-transition-from="#project-count" title="Remove dataset from the current project"
+                   data-bind="visible: $root.project.hasDataset($data), click: $root.project.toggleDataset, clickBubble: false">
                   <i class="fa fa-minus"></i>
                 </a>
               </div>
