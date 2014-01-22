@@ -96,7 +96,7 @@
       <a class="master-overlay-close master-overlay-parent-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
     </header>
-    <div class="master-overlay-content panel-group" id="accordion">
+    <div class="master-overlay-content panel-group">
       <div data-bind="if: query.facets().length > 0" class="panel panel-default selected-facets-panel">
         <div class="panel-heading">
           <h3 class="panel-title facet-title">
@@ -121,16 +121,16 @@
         </div>
       </div>
       <!-- ko foreach: datasetFacets.results -->
-      <div data-bind="if: $data.values.length > 0, css: $data.class_name" class="panel panel-default">
+      <div data-bind="if: values().length > 0, css: class_name" class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title facet-title collapse-link">
-            <a data-bind="text: $data.name, attr: {'data-target': '#collapse'+$index()}" data-parent="#accordion" href="#" ></a>
-            <i class="fa fa-caret-down pull-right"></i>
+          <h3 data-bind="click: toggleList" class="panel-title facet-title">
+            <i data-bind="css: {'fa-caret-down': closed(), 'fa-caret-up': opened()}" class="fa pull-right"></i>
+            <a data-bind="text: name, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
           </h3>
         </div>
-        <div data-bind="attr: {id: 'collapse'+$index()}" class="panel-collapse in">
+        <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed()}">
           <div class="panel-body facets">
-            <!-- ko foreach: $data.values -->
+            <!-- ko foreach: values() -->
             <p class="facets-item" data-bind="click: $root.datasetFacets.loadFacet.bind($data, $parent.name, term()), css: {selected: $root.datasetFacets.highlightFacet($parent.name, term)}">
               <span data-bind="text: term"></span>
               (<span data-bind="text: count"></span>)
