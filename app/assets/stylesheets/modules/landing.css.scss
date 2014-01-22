@@ -77,6 +77,13 @@
   display: none;
 }
 
+ .no-js .landing-dialog-header,
+ .no-js .landing-dialog-toolbar,
+ .no-js .landing-toolbar-content,
+ .no-js .landing-dialog-actions {
+  display: none;
+}
+
 .old-ie {
   display: none;
   height: 290px;
