@@ -10,7 +10,7 @@ $(document).ready ->
     start_val = start.val()
     end_val = end.val()
 
-    if start and stop
+    if start and end
       error = $(".temporal-dropdown .tab-pane.active .temporal-error")
       error.show()
 

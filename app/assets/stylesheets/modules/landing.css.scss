@@ -34,7 +34,7 @@
   margin-left: .5em;
 }
 
-.landing-dialog-header, .noscript {
+.landing-dialog-header, .noscript, .old-ie {
   padding: 1em 1.5em;
   
   h2 {
@@ -58,5 +58,99 @@
   p {
     font-size: .9em;
     line-height: 40px;
+  }
+}
+
+.lt-ie9 .landing-dialog {
+  background-color: #111;
+}
+
+.lt-ie9 .old-ie {
+  height: 290px;
+  padding: 20px;
+  font-size: 12px;
+}
+
+ .lt-ie9 .landing-dialog-header,
+ .lt-ie9 .landing-dialog-toolbar,
+ .lt-ie9 .landing-dialog-actions {
+  display: none;
+}
+
+.old-ie {
+  display: none;
+  height: 290px;
+
+  h1 {
+    font-size: 1.3em;
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+}
+
+.lt-ie9 .old-ie {
+  display: block;
+}
+
+.noscript {
+  display: none;
+}
+
+.no-js .noscript {
+  display: block;
+}
+
+.old-ie li {
+  float: left;
+  background-image: url(/images/browsers/background_browser.gif);
+  background-attachment: scroll;
+  background-color: transparent;
+  cursor: pointer;
+  width: 120px;
+  height: 122px;
+  margin: 0px 10px 10px 10px;
+  background-repeat: no-repeat no-repeat;
+
+  div.icon {
+    width: 100px;
+    height: 100px;
+    margin: 1px auto;
+    background-attachment: scroll;
+    background-color: transparent;
+    background-position: 0% 0%;
+    background-repeat: no-repeat no-repeat;
+  }
+
+  div.icon.chrome {
+    background-image: url(/images/browsers/browser_chrome.gif);
+  }
+
+  div.icon.firefox {
+    background-image: url(/images/browsers/browser_firefox.gif);
+  }
+
+  div.icon.safari {
+    background-image: url(/images/browsers/browser_safari.gif);
+  }
+
+  div.icon.opera {
+    background-image: url(/images/browsers/browser_opera.gif);
+  }
+
+  div.icon.ie {
+    background-image: url(/images/browsers/browser_ie.gif);
+  }
+
+  div.name {
+    color: rgb(128, 128, 128);
+    font-size: 0.8em;
+    height: 18px;
+    line-height: 17px;
+    margin: 1px auto;
+    width: 118px;
+    text-align: center;
   }
 }
