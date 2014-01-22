@@ -1,6 +1,7 @@
 #= require models/data/query
 #= require models/data/datasets
 #= require models/data/dataset_facets
+#= require models/data/project
 #= require models/ui/spatial_type
 #= require models/ui/temporal
 #= require models/ui/datasets_list
@@ -15,6 +16,7 @@ ns.SearchPage = do (ko,
                     QueryModel = data.Query,
                     DatasetsModel = data.Datasets
                     DatasetFacetsModel = data.DatasetFacets
+                    ProjectModel = data.Project
                     SpatialTypeModel = ui.SpatialType
                     TemporalModel = ui.Temporal
                     DatasetsListModel = ui.DatasetsList) ->
@@ -24,6 +26,7 @@ ns.SearchPage = do (ko,
       @query = new QueryModel()
       @datasets = new DatasetsModel()
       @datasetFacets = new DatasetFacetsModel(@query)
+      @project = new ProjectModel()
 
       @ui =
         spatialType: new SpatialTypeModel()
@@ -50,3 +53,5 @@ ns.SearchPage = do (ko,
         return "Polygon boundaries must not cross themselves" if error.indexOf('ORA-13349') != -1
         return "Polygon is too large" if error.indexOf('ORA-13367') != -1
       null
+
+  exports = SearchPage

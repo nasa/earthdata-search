@@ -30,3 +30,5 @@ ns.Temporal = do (ko) ->
           @years("")
       else
         @selectNone()
+
+  exports = Temporal
