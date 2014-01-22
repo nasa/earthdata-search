@@ -159,10 +159,10 @@
           </p>
         </header>
         <div class="master-overlay-info">
-          <p data-bind="visible: project.datasets.isEmpty()">
+          <p data-bind="visible: project.isEmpty()">
             Add datasets to your project to compare and retrieve their data.
           </p>
-          <p data-bind="visible: !project.datasets.isEmpty()">
+          <p data-bind="visible: !project.isEmpty()">
             <a class="button" href="#"><i class="fa fa-folder-o"></i> View Project</a>
             You have <em data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.
           </p>
