@@ -59,20 +59,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       # even uglier results
       content.height(content.parents('.main-content').height() - content.offset().top - 40)
 
-  delegate = (method, argFn) ->
-    (e) ->
-      $this = $(this)
-      if $this.is('a') || $(e.target).closest('a').length == 0
-        $overlay = $this.closest('.master-overlay')
-        if $overlay.length == 0
-          href = $this.attr('href')
-          $overlay = $(href) if href? && href.length > 1
-
-        args = argFn?.call(this, e) ? []
-        $overlay.masterOverlay(method, args...)
-      false
-
-
   $document = $(document)
 
   # Hide the project list after the back animation completes
@@ -83,15 +69,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
   $document.on 'edsc.navigate', '#project-overview', ->
     window.clearTimeout(timeout)
 
-  $document.on 'click', '.master-overlay-forward',     delegate('forward')
-  $document.on 'click', '.master-overlay-back',        delegate('back')
-  $document.on 'click', '.master-overlay-navigate',    delegate('level', -> [$(this).attr('data-level')])
-  $document.on 'click', '.master-overlay-show',        delegate('show')
-  $document.on 'click', '.master-overlay-hide',        delegate('hide')
-  $document.on 'click', '.master-overlay-show-parent', delegate('showParent')
-  $document.on 'click', '.master-overlay-hide-parent', delegate('hideParent')
-
   plugin.create('masterOverlay', MasterOverlay)
 
   $document.ready ->
     $('.master-overlay').masterOverlay()
+
+  @MasterOverlay = MasterOverlay
