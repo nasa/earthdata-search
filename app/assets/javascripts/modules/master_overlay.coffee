@@ -52,7 +52,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @root.find(@scope('.main-content'))
 
     _fixContentHeight: =>
-      content = @_content()
+      content = @_content().find(@scope('.content'))
       # When the window is first loaded or later resized, update the master overlay content
       # boxes to have a height that stretches to the bottom of their parent.  It would
       # be awesome to do this in CSS, but I don't know that it's possible without
