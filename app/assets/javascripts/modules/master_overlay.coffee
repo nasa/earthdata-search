@@ -73,5 +73,3 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
   $document.ready ->
     $('.master-overlay').masterOverlay()
-
-  @MasterOverlay = MasterOverlay
