@@ -96,6 +96,7 @@ RSpec.configure do |config|
 
   config.extend SharedBrowserSession
 
+  config.include Helpers::OverlayHelpers
   config.include Helpers::SpatialHelpers
   config.include Helpers::ProjectHelpers
   config.include Helpers::PageHelpers

@@ -9,5 +9,9 @@ window.edsc.util.string = do (Date) ->
       str = char + str
     str
 
+  dasherize = (str) ->
+    str.trim().replace(/[_\s]+/g, '-').replace(/([A-Z])/g, '-$1').replace(/-+/g, '-').toLowerCase()
+
   exports =
     padLeft: padLeft
+    dasherize: dasherize

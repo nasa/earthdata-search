@@ -92,7 +92,7 @@
 <div class="master-overlay homepage-search" id="datasets-overlay">
   <section class="master-overlay-parent">
     <header>
-      <a class="master-overlay-close master-overlay-parent-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+      <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
     </header>
     <div class="master-overlay-content panel-group">
@@ -145,7 +145,7 @@
   <div class="master-overlay-main">
     <div class="master-overlay-main-content" data-level="0">
       <section id="dataset-results">
-        <a class="master-overlay-close master-overlay-main-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav master-overlay-when-parent-hidden">
           <a href="#" class="master-overlay-show-parent">
             <i class="fa fa-search"></i> Browse Datasets
@@ -179,10 +179,10 @@
           </p>
         </div>
       </section>
-      <section id="project-list" data-bind="visible: ui.projectList.visible">
-        <a class="master-overlay-close master-overlay-main-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+      <section id="project-overview" data-bind="visible: ui.projectList.visible">
+        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
-          <a class="master-overlay-back" data-bind="click: ui.projectList.hideProject" href="#">
+          <a class="master-overlay-back" href="#">
             <i class="fa fa-arrow-circle-left"></i> Back to Dataset Search
           </a>
         </nav>
@@ -195,7 +195,7 @@
           </p>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
-          <ul id="project-list"
+          <ul id="project-datasets-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">
             <%= render partial: 'dataset_list_item' %>

@@ -35,13 +35,13 @@ ns.Map = do (window,
       @_addDrawControls()
 
       @_datasetSubscription = currentPage.datasets.details.subscribe(@_showDatasetSpatial)
-      $('#dataset-results, #project-list').on('edsc.navigate', @_hideDatasetSpatial)
+      $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)
 
     # Removes the map from the page
     destroy: ->
       @map.remove()
       @_datasetSubscription.dispose()
-      $('#dataset-results, #project-list').off('edsc.navigate', @_hideDatasetSpatial)
+      $('#dataset-results, #project-overview').off('edsc.navigate', @_hideDatasetSpatial)
 
     _createLayerMap: (productIds...) ->
       layerForProduct = LayerBuilder.layerForProduct

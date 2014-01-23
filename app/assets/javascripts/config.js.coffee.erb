@@ -1,0 +1,19 @@
+# Environment-specific config
+@edsc.config = do (env='<%= Rails.env %>') ->
+
+  <% if Rails.env.test? %>
+  # Test config
+  exports =
+    defaultAnimationDurationMs: 0
+
+  <% elsif Rails.env.development? %>
+  # Development config
+  exports =
+    defaultAnimationDurationMs: 300
+
+  <% elsif Rails.env.production? %>
+  # Production config
+  exports =
+    defaultAnimationDurationMs: 300
+
+  <% end %>

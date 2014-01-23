@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.ProjectList = do (ko) ->
+ns.ProjectList = do (ko, window) ->
   class ProjectList
     constructor: (@project) ->
       @visible = ko.observable(false)
@@ -9,6 +9,6 @@ ns.ProjectList = do (ko) ->
       @visible(true)
 
     hideProject: =>
-      @visible(true)
+      @visible(false)
 
   exports = ProjectList
