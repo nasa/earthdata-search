@@ -9,6 +9,26 @@
   a {
     color: #fff;
   }
+
+  // Non-scrollable header area
+  header {
+    margin: 1em;
+    color: $overlay-heading-font-color;
+
+    h2 {
+      font-weight: normal;
+      font-size: 1.2em;
+    }
+
+    a:hover {
+      color: #aaa;
+    }
+  }
+}
+
+.master-overlay-nav {
+  padding: 1em;
+  border-bottom: 1px solid #333;
 }
 
 // A parent panel for the overlday.  For instance, dataset facets are a parent
@@ -29,12 +49,13 @@
 }
 
 .master-overlay-main-content {
-  width: 200%;
+  width: 400%;
   left: 0%;
 
   section {
-    width: 50%;
+    width: 25%;
     float: left;
+    position: relative;
   }
 
   dl {
@@ -46,12 +67,6 @@
   width: 50%;
   left: 40%;
   float: left;
-}
-
-.master-overlay-details {
-  background-color: $master-overlay-main-bg-color;
-  width: 40%;
-  left: -40%;
 }
 
 .panel-list-item {
@@ -67,19 +82,17 @@
   transition-duration: 0.3s;
 }
 
-// Non-scrollable header area
-.master-overlay header {
-  margin: 1em;
-  color: $overlay-heading-font-color;
+.master-overlay-minimized {
+  position: absolute;
+  left: 1em;
+  top: 1em;
+  z-index: 99;
+  opacity: 0;
+  @include transition(opacity 0.3s ease-in-out 0.3s);
+}
 
-  h2 {
-    font-weight: normal;
-    font-size: 1.2em;
-  }
-
-  a:hover {
-    color: #aaa;
-  }
+.is-hidden .master-overlay-minimized {
+  opacity: 1;
 }
 
 .master-overlay-info {
@@ -108,21 +121,16 @@
 }
 
 .master-overlay-close {
-  float: right;
+  position: absolute;
+  right: 1em;
+  top: 1em;
   display: block;
 }
 
 // DELETE ME After icons are added for close button
 a.master-overlay-close {
-  text-decoration: none;
-  font-weight: bold;
-  // color: rgb(63, 97, 132);
   color: rgba(255, 255, 255, .3);
   @include transition (color 0.15s ease-in-out);
-
-  &:hover {
-    color: rgba(255, 255, 255, .8);
-  }
 }
 
 .master-overlay-when-parent-hidden {
@@ -130,29 +138,20 @@ a.master-overlay-close {
 }
 
 .is-master-overlay-parent-hidden .master-overlay-when-parent-hidden {
-  display: inline;
+  display: block;
 }
 
-.is-master-overlay-parent-hidden .master-overlay-parent {
-  left:-20%;
+.is-master-overlay-parent-hidden {
+  .master-overlay-parent { left:-20%; }
+  .master-overlay-main   { left:0%; }
 }
 
-.is-master-overlay-parent-hidden .master-overlay-main {
-  left:0%;
+.master-overlay-main-content {
+  &[data-level="1"] { left:-100%; }
+  &[data-level="2"] { left:-200%; }
 }
 
-.is-master-overlay-parent-hidden .master-overlay-details {
-  left:-40%;
-}
-
-.is-master-overlay-details-visible .master-overlay-main-content {
-  left:-100%;
-}
-
-.is-hidden .master-overlay-parent {
-  left:-60%;
-}
-
-.is-hidden .master-overlay-main {
-  left:-40%;
+.is-hidden {
+  .master-overlay-parent { left:-60%; }
+  .master-overlay-main   { left: -40%; }
 }

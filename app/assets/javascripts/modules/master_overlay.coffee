@@ -1,34 +1,75 @@
-$(document).on 'click', '.master-overlay-main li.panel-list-item', (e) ->
-  if $(e.target).closest('a').length == 0
-    $(this).closest('.master-overlay').toggleClass('is-master-overlay-details-visible')
-  false
+do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, page = edsc.models.page) ->
 
-$(document).on 'click', '.master-overlay-show-main', ->
-  $(this).closest('.master-overlay').toggleClass('is-master-overlay-details-visible')
-  false
+  class MasterOverlay extends plugin.Base
+    constructor: (root, namespace, options={}) ->
+      super(root, namespace, options)
+      $(window).on 'load resize', @_fixContentHeight
 
-$(document).on 'click', '.master-overlay-main .master-overlay-close', ->
-  $(this).closest('.master-overlay').toggleClass('is-hidden')
-  false
+    destroy: ->
+      super()
+      $(window).off 'load resize', @_fixContentHeight
 
-$(document).on 'click', '.master-overlay-toggle-parent, .master-overlay-parent .master-overlay-close', ->
-  $overlay = $(this).closest('.master-overlay')
-  $overlay.toggleClass('is-master-overlay-parent-hidden')
-  false
+    show: -> @toggle(true)
 
-$(document).on 'click', '.temporal-dropdown-button', ->
-  $(this).parent().toggleClass('open')
+    hide: -> @toggle(false)
 
-$(document).on 'click', '.master-overlay-show', ->
-  id = this.href.split('#')[1]
-  $('#' + id).removeClass('is-hidden')
-  false
+    toggle: (show = @root.hasClass('is-hidden')) ->
+      @root.toggleClass('is-hidden', !show)
 
-$(window).on 'load resize', ->
-  # When the window is first loaded or later resized, update the master overlay content
-  # boxes to have a height that stretches to the bottom of their parent.  It would
-  # be awesome to do this in CSS, but I don't know that it's possible without
-  # even uglier results
-  $('.master-overlay-content').each ->
-    $this = $ this
-    $this.height($this.parents('.main-content').height() - $this.offset().top - 40)
+    showParent: -> @toggleParent(true)
+
+    hideParent: -> @toggleParent(false)
+
+    toggleParent: (show = @root.hasClass(@scope('is-parent-hidden'))) ->
+      @root.toggleClass(@scope('is-parent-hidden'), !show)
+      @_fixContentHeight()
+
+    forward: ->
+      @level(Math.min(@level() + 1, @children().length))
+
+    back: ->
+      @level(Math.max(@level() - 1, 0))
+
+    children: ->
+      @_content().children(':visible')
+
+    current: ->
+      @children().eq(@level())
+
+    level: (value=null) ->
+      if value?
+        # setter
+        value = parseInt(value, 10)
+        currentLevel = @level()
+        if currentLevel != value
+          @_content().attr('data-level', value)
+          @current().trigger('edsc.navigate')
+      else
+        # getter
+        parseInt(@_content().attr('data-level'), 10)
+
+    _content: ->
+      @root.find(@scope('.main-content'))
+
+    _fixContentHeight: =>
+      content = @_content().find(@scope('.content'))
+      # When the window is first loaded or later resized, update the master overlay content
+      # boxes to have a height that stretches to the bottom of their parent.  It would
+      # be awesome to do this in CSS, but I don't know that it's possible without
+      # even uglier results
+      content.height(content.parents('.main-content').height() - content.offset().top - 40)
+
+  $document = $(document)
+
+  # Hide the project list after the back animation completes
+  timeout = null
+  $document.on 'edsc.navigate', '#dataset-results', ->
+    window.setTimeout(page.current.ui.projectList.hideProject, config.defaultAnimationDurationMs)
+
+  $document.on 'edsc.navigate', '#project-overview', ->
+    window.clearTimeout(timeout)
+
+  plugin.create('masterOverlay', MasterOverlay)
+
+  $document.ready ->
+    $('.master-overlay').masterOverlay()

@@ -41,7 +41,7 @@
   border-radius: 3px;
   outline: none;
 
-  &:hover {
+  &:hover, &:focus {
     text-decoration: none;
   }
 }

@@ -1,12 +1,11 @@
 <section data-bind="with: datasets.details" id="dataset-details">
+  <a class="master-overlay-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+  <nav class="master-overlay-nav">
+    <a href="#" class="master-overlay-back"><i class="fa fa-arrow-circle-left"></i> Back to Datasets</a>
+  </nav>
   <header >
-    <a class="master-overlay-close master-overlay-details-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
     <h2 data-bind="if: $parent.datasets.detailsLoading">Details Loading...</h2>
     <h2 data-bind="text: $data.dataset_id, ifnot: $parent.datasets.detailsLoading"></h2>
-    <p class="master-overlay-show-main">
-      <i class="fa fa-angle-left"></i>
-      <a href="#">Back to Datasets</a>
-    </p>
   </header>
   <ul id="dataset-details-nav" class="nav nav-tabs">
     <li class="active"><a href="#dataset-information" data-toggle="tab">Information</a></li>

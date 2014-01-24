@@ -18,7 +18,6 @@ describe "'Clear Filters' button" do
 
   it "clears spatial" do
     create_point(0, 0)
-    click_link "Browse All Data"
     expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
     expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
 

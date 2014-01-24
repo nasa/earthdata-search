@@ -2,3 +2,4 @@
 //= require util/date
 //= require util/url
 //= require util/xhr
+//= require util/plugin

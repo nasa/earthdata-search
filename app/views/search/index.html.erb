@@ -9,8 +9,8 @@
              autofocus>
     </p>
   <% end %>
-  <div class="dropdown">
-    <a href="#" class="button temporal-dropdown-button">
+  <div class="dropdown dropdown-persistent" id="temporal-dropdown">
+    <a href="#" class="button temporal-dropdown-button dropdown-button" data-toggle="dropdown">
       <i class="fa fa-clock-o"></i>
       <span class="dropdown-value">Temporal</span>
       <i class="fa fa-caret-down dropdown-icon"></i>
@@ -81,10 +81,9 @@
     <ul class="dropdown-menu spatial-selection">
       <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
       <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
-      <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="fa fa-fw fa-map-marker"></i> Point</a></li>
+      <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="edsc-icon-fw edsc-icon-location"></i> Point</a></li>
     </ul>
   </div>
-  <a href="#datasets-overlay" class="master-overlay-show button landing-hidden"><i class="fa fa-search"></i> Browse All Data</a>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
 </div>
 </div>
@@ -93,7 +92,7 @@
 <div class="master-overlay homepage-search" id="datasets-overlay">
   <section class="master-overlay-parent">
     <header>
-      <a class="master-overlay-close master-overlay-parent-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+      <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
     </header>
     <div class="master-overlay-content panel-group">
@@ -144,26 +143,28 @@
     </div>
   </section>
   <div class="master-overlay-main">
-    <div class='master-overlay-main-content'>
+    <div class="master-overlay-main-content" data-level="0">
       <section id="dataset-results">
-        <header>
-          <a class="master-overlay-close master-overlay-main-close" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-          <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
-          <p>
-            <a href="#" class="master-overlay-toggle-parent master-overlay-when-parent-hidden">
-             <i class="fa fa-arrow-circle-left"></i> Browse Datasets
-             <span data-bind="if: query.facets().length > 0">
+        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+        <nav class="master-overlay-nav master-overlay-when-parent-hidden">
+          <a href="#" class="master-overlay-show-parent">
+            <i class="fa fa-search"></i> Browse Datasets
+            <span data-bind="if: query.facets().length > 0">
                (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
-             </span>
-            </a>
-          </p>
+            </span>
+          </a>
+        </nav>
+        <header>
+          <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
         </header>
         <div class="master-overlay-info">
           <p data-bind="visible: project.isEmpty()">
             Add datasets to your project to compare and retrieve their data.
           </p>
           <p data-bind="visible: !project.isEmpty()">
-            <a class="button" href="#"><i class="fa fa-folder-o"></i> View Project</a>
+            <a class="button master-overlay-forward master-overlay-hide-parent" data-bind="click: ui.projectList.showProject" href="#">
+              <i class="fa fa-folder-o"></i> View Project
+            </a>
             You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.
           </p>
         </div>
@@ -171,53 +172,52 @@
           <ul id="dataset-results-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
-            <li data-bind="click: $parent.ui.datasetsList.clickDataset" class="panel-list-item">
-              <!-- ko if: thumbnail -->
-              <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
-              <!-- /ko -->
-              <!-- ko ifnot: thumbnail -->
-              <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
-                No image available
-              </div>
-              <!-- /ko -->
-              <h3 data-bind="text: dataset_id"></h3>
-              <div class="panel-list-item-actions">
-                <!-- ko if: $root.query.canQueryDatasetSpatial($data) -->
-                <a href="#" class="button icon-button" title="Search using this dataset's location"
-                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.query.toggleQueryDatasetSpatial">
-                  <i class="edsc-icon-fw edsc-icon-location"></i>
-                </a>
-                <!-- /ko -->
-                <a href="#" class="button icon-button" data-pulse="#project-count" title="Add dataset to the current project"
-                   data-bind="visible: !$root.project.hasDataset($data), click: $root.project.toggleDataset">
-                  <i class="fa fa-plus"></i>
-                </a>
-                <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove dataset from the current project"
-                   data-bind="visible: $root.project.hasDataset($data), click: $root.project.toggleDataset">
-                  <i class="fa fa-minus"></i>
-                </a>
-              </div>
-              <p class="panel-list-details">
-              <span data-bind="text: short_name"></span>
-              <!-- ko if: version_id() != 'Undefined' -->
-              v<span data-bind="text: version_id"></span>
-                <!-- /ko -->
-              - <span data-bind="text: archive_center"></span>
-              </p>
-            </li>
+            <%= render partial: 'dataset_list_item' %>
           </ul>
           <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
             Loading datasets...
           </p>
         </div>
       </section>
+      <section id="project-overview" data-bind="visible: ui.projectList.visible">
+        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+        <nav class="master-overlay-nav">
+          <a class="master-overlay-back" href="#">
+            <i class="fa fa-arrow-circle-left"></i> Back to Dataset Search
+          </a>
+        </nav>
+        <header>
+          <h2>Project Datasets</h2>
+        </header>
+        <div class="master-overlay-info">
+          <p>
+            Batch compare, preview, refine, and download datasets you've added to your project.
+          </p>
+        </div>
+        <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
+          <ul id="project-datasets-list"
+              class="panel-list-list knockout-template"
+              data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">
+            <%= render partial: 'dataset_list_item' %>
+          </ul>
+        </div>
+      </section>
       <%= render partial: 'dataset_details' %>
     </div>
+  </div>
+  <div class="master-overlay-minimized">
+    <a href="#datasets-overlay" class="button text-button master-overlay-show master-overlay-level" data-master-overlay-level="0">
+      <i class="fa fa-search"></i> Search Datasets
+    </a>
+    <a href="#datasets-overlay" class="button text-button master-overlay-show master-overlay-level master-overlay-hide-parent"
+       data-master-overlay-level="1"
+       data-bind="click: ui.projectList.showProject, visible: !project.isEmpty()">
+      <i class="fa fa-folder-o"></i> View Project
+    </a>
   </div>
 </div>
 
 <div id="map" class="map" style="height:100%; z-index:-1;">
-
 </div>
 
 <div id="temporal-query" data-bind="with: ui.temporal">
