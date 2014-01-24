@@ -21,6 +21,7 @@ describe "Dataset results", :reset => false do
   end
 
   it "loads more results when the user scrolls to the bottom of the current list" do
+    expect(page).to have_css('#dataset-results .panel-list-item', count: 20)
     page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 10000"
     expect(page).to have_css('#dataset-results .panel-list-item', count: 40)
   end
