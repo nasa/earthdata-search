@@ -3,6 +3,7 @@ ns = @edsc.map
 ns.Map = do (window,
              document,
              L,
+             Dropzone,
              ProjExt = ns.L.Proj,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
              LayerBuilder = ns.LayerBuilder,
@@ -202,6 +203,28 @@ ns.Map = do (window,
   $(document).ready ->
     projection = 'geo'
     map = new Map(document.getElementById('map'), projection)
+
+
+    dropzoneMap = $('html:not(lt-ie9) #map')
+
+    token = $('meta[name=csrf-token]').attr('content')
+
+    if dropzoneMap.size() > 0
+      Dropzone.options.map =
+        url: '/convert'
+        clickable: false
+        createImageThumbnails: false
+        # forceFallback: true # For debugging fallback behavior
+        fallback: ->
+        headers:
+          'X-CSRF-Token': token
+        init: ->
+          @on 'success', (file, response) ->
+            map.debugShowGeoJson(response)
+
+
+      dropzoneMap.addClass('dropzone')
+
 
     # Useful debugging snippets
 
