@@ -60,4 +60,11 @@ ns.Project = do (ko) ->
       else
         @_visibleDatasetIds.push(dataset.id())
 
+    toggleViewAllDatasets: =>
+      if @_visibleDatasetIds().length > 0
+        @_visibleDatasetIds.removeAll()
+      else
+        for id in @_datasetIds()
+          @_visibleDatasetIds.push(id)
+
   exports = Project

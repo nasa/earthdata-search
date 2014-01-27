@@ -4,6 +4,8 @@ module Helpers
     def reset_project
       page.evaluate_script('edsc.models.page.current.project.datasets([])')
       page.evaluate_script('edsc.models.page.current.project.datasets()') # Read it back out to ensure it was applied
+
+      page.evaluate_script('edsc.models.page.current.project._visibleDatasetIds([])')
     end
 
     def project_dataset_ids

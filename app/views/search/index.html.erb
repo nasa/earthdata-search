@@ -183,7 +183,7 @@
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
           <a class="master-overlay-back" href="#">
-            <i class="fa fa-arrow-circle-left"></i> Back to Dataset Search
+            <i class="edsc-icon-arrow-left"></i> Back to Dataset Search
           </a>
         </nav>
         <header>
@@ -193,6 +193,11 @@
           <p>
             Batch compare, preview, refine, and download datasets you've added to your project.
           </p>
+        </div>
+        <div class="master-overlay-content-actions">
+          <a href="#" title="View all datasets" data-bind="click: project.toggleViewAllDatasets">
+            <i class="edsc-icon-eye"></i>
+          </a>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
           <ul id="project-datasets-list"

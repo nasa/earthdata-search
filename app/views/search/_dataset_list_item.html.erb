@@ -1,4 +1,4 @@
-            <li data-bind="click: $parent.ui.datasetsList.clickDataset, css: {'view-granules': $root.project.hasVisibleDataset($data)}" class="panel-list-item master-overlay-forward">
+            <li data-bind="click: $parent.ui.datasetsList.clickDataset, css: {'view-dataset': $root.project.hasVisibleDataset($data)}" class="panel-list-item master-overlay-forward">
               <!-- ko if: thumbnail -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
               <!-- /ko -->
@@ -16,10 +16,10 @@
                 </a>
                 <!-- /ko -->
                 <!-- ko if: $root.ui.projectList.visible() -->
-                <a href="#" class="button icon-button" title="View granules" data-bind="visible: !$root.project.hasVisibleDataset($data), click: $root.project.toggleVisibleDataset">
+                <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.project.hasVisibleDataset($data), click: $root.project.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
-                <a href="#" class="button icon-button button-active" title="View granules" data-bind="visible: $root.project.hasVisibleDataset($data), click: $root.project.toggleVisibleDataset">
+                <a href="#" class="button icon-button button-active" title="View dataset" data-bind="visible: $root.project.hasVisibleDataset($data), click: $root.project.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
                 <!-- /ko -->

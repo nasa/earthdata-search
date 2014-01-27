@@ -52,13 +52,41 @@ describe "Project dataset list", reset: false do
     end
   end
 
-  context "when clicking the view granules button" do
-    it "highlights the selected dataset" do
-      first_project_dataset.click_link "View granules"
-      expect(page).to have_css('#project-datasets-list .panel-list-item.view-granules', count: 1)
+  context "when clicking the 'View dataset' button" do
+    before(:each) do
+      first_project_dataset.click_link "View dataset"
+    end
 
-      first_project_dataset.click_link "View granules"
-      expect(page).to have_no_css('#project-datasets-list .panel-list-item.view-granules')
+    it "highlights the selected dataset" do
+      expect(page).to have_css('#project-datasets-list .panel-list-item.view-dataset', count: 1)
+    end
+
+    it "un-highlights the selected dataset when clicking the button again" do
+      first_project_dataset.click_link "View dataset"
+      expect(page).to have_no_css('#project-datasets-list .panel-list-item.view-dataset')
+    end
+
+    it "keeps the selected dataset highlighted when returning to the project" do
+      click_link "Back to Dataset Search"
+
+      dataset_results.click_link "View Project"
+      expect(page).to have_css('#project-datasets-list .panel-list-item.view-dataset', count: 1)
     end
   end
+
+  context "when clicking the 'View all datasets' button" do
+    before(:each) do
+      click_link 'View all datasets'
+    end
+
+    it "highlights all project datasets" do
+      expect(page).to have_css('#project-datasets-list .panel-list-item.view-dataset', count: 2)
+    end
+
+    it "un-highlights all project datasets when clicking the button again" do
+      click_link 'View all datasets'
+      expect(page).to have_no_css('#project-datasets-list .panel-list-item.view-dataset')
+    end
+  end
+
 end
