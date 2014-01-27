@@ -59,6 +59,7 @@ ns.SearchPage = do (ko,
       if error?
         return "Polygon boundaries must not cross themselves" if error.indexOf('ORA-13349') != -1
         return "Polygon is too large" if error.indexOf('ORA-13367') != -1
+        return error if error.indexOf('ORA-') != -1
       null
 
   exports = SearchPage

@@ -1,0 +1,15 @@
+.popover {
+  min-width: 230px;
+  max-width: 400px;
+}
+
+.is-popover-single {
+  .btn[data-role=prev], .btn[data-role=next] {
+    display: none;
+  }
+}
+
+.popover-navigation {
+  min-height: 48px;
+  padding: 9px 14px
+}

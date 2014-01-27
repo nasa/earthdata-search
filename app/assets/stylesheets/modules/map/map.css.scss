@@ -16,3 +16,88 @@
 .projection-antarctic .projection-only-arctic {
   display: none;
 }
+
+
+.geojson-svg {
+  stroke-width: 1;
+  stroke: #f80;
+  fill-opacity: 0;
+
+  &:hover {
+    fill: #00C322;
+    stroke: #00C322;
+    fill-opacity: .5;
+  }
+}
+
+.geojson-icon {
+  opacity: .3;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.geojson-help {
+  display: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.geojson-help-dropzone {
+  display: none;
+  border: 5px dashed #eee;
+  background: #fff;
+  width: 30em;
+  border-radius: 1em;
+  margin: 5em auto 0;
+  padding: 1em;
+  font-size: 1.5em;
+
+  p {
+    margin: 1em 0;
+  }
+
+  ul {
+    list-style: disc inside;
+  }
+}
+
+.is-geojson-help-visible {
+  .geojson-help, .geojson-help-dropzone {
+    display: block;
+  }
+}
+
+.dz-drag-hover {
+  .geojson-help {
+    background-color: rgba(200, 255, 200, 0.75);
+  }
+
+  .geojson-help-dropzone {
+    border: 5px dashed #afa;
+    background: #efe;
+  }
+}
+
+.dropzone {
+  .dz-filename {
+    height: 2em;
+  }
+
+  .dz-preview {
+    position: absolute;
+    right: 1em;
+    bottom: 10em;
+
+    .dz-details {
+      width: 150px;
+      height: auto;
+    }
+  }
+}

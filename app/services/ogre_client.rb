@@ -5,11 +5,8 @@ class OgreClient
 
   OGRE_URL="http://ogre.adc4gis.com"
 
-  def self.convert_shapefile(file)
-    def file.local_path
-      @tempfile
-    end
-    post('/convert', :upload => file)
+  def self.convert_shapefile(options)
+    post('/convert', options)
   end
 
   def self.connection

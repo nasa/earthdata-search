@@ -36,7 +36,7 @@
 
 .landing-dialog-header, .noscript, .old-ie {
   padding: 1em 1.5em;
-  
+
   h2 {
     font-weight: normal;
     margin: 0 0 .2em 0;
@@ -112,7 +112,7 @@
 
 .old-ie li {
   float: left;
-  background-image: url(/images/browsers/background_browser.gif);
+  background-image: image-url('browsers/background_browser.gif');
   background-attachment: scroll;
   background-color: transparent;
   cursor: pointer;
@@ -132,23 +132,23 @@
   }
 
   div.icon.chrome {
-    background-image: url(/images/browsers/browser_chrome.gif);
+    background-image: image-url('browsers/browser_chrome.gif');
   }
 
   div.icon.firefox {
-    background-image: url(/images/browsers/browser_firefox.gif);
+    background-image: image-url('browsers/browser_firefox.gif');
   }
 
   div.icon.safari {
-    background-image: url(/images/browsers/browser_safari.gif);
+    background-image: image-url('browsers/browser_safari.gif');
   }
 
   div.icon.opera {
-    background-image: url(/images/browsers/browser_opera.gif);
+    background-image: image-url('browsers/browser_opera.gif');
   }
 
   div.icon.ie {
-    background-image: url(/images/browsers/browser_ie.gif);
+    background-image: image-url('browsers/browser_ie.gif');
   }
 
   div.name {

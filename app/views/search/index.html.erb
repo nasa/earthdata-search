@@ -82,6 +82,7 @@
       <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
       <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
       <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="edsc-icon-fw edsc-icon-location"></i> Point</a></li>
+      <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile"><i class="edsc-icon-fw edsc-icon-shapefile"></i> Shape File</a></li>
     </ul>
   </div>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
@@ -218,6 +219,24 @@
 </div>
 
 <div id="map" class="map" style="height:100%; z-index:-1;">
+  <div class="geojson-help">
+    <div class="geojson-help-dropzone">
+      <h1>Search by Shape File</h1>
+      <p>
+        <a class="geojson-dropzone-link" href="#">Click here</a> to select a shape file.  You may also
+        simply drag and drop shape files onto the map at any time.
+      </p>
+      <p>
+        Valid formats include:
+      </p>
+      <ul>
+        <li>ESRI Shapefile (.zip including .shp, .dbf, and .shx file)</li>
+        <li>Keyhole Markup Language (.kml or .kmz)</li>
+        <li>GeoJSON (.json or .geojson)</li>
+        <li>GeoRSS (.rss, .georss, or .xml)</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <div id="temporal-query" data-bind="with: ui.temporal">

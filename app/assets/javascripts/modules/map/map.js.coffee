@@ -3,7 +3,6 @@ ns = @edsc.map
 ns.Map = do (window,
              document,
              L,
-             Dropzone,
              ProjExt = ns.L.Proj,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
              LayerBuilder = ns.LayerBuilder,
@@ -28,12 +27,12 @@ ns.Map = do (window,
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
+
       @_buildLayers()
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
       @setProjection(projection)
-      @_addDrawControls()
 
       @_datasetSubscription = currentPage.datasets.details.subscribe(@_showDatasetSpatial)
       $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)
@@ -96,10 +95,6 @@ ns.Map = do (window,
         if !valid && hasLayer
           layerControl.removeLayer(layer)
 
-
-    _addDrawControls: ->
-      map = @map
-      map.on 'draw:created', (e) ->
 
     # Adds the given layer to the map
     addLayer: (layer) -> @map.addLayer(layer)
@@ -203,27 +198,6 @@ ns.Map = do (window,
   $(document).ready ->
     projection = 'geo'
     map = new Map(document.getElementById('map'), projection)
-
-
-    dropzoneMap = $('html:not(lt-ie9) #map')
-
-    token = $('meta[name=csrf-token]').attr('content')
-
-    if dropzoneMap.size() > 0
-      Dropzone.options.map =
-        url: '/convert'
-        clickable: false
-        createImageThumbnails: false
-        # forceFallback: true # For debugging fallback behavior
-        fallback: ->
-        headers:
-          'X-CSRF-Token': token
-        init: ->
-          @on 'success', (file, response) ->
-            map.debugShowGeoJson(response)
-
-
-      dropzoneMap.addClass('dropzone')
 
 
     # Useful debugging snippets
