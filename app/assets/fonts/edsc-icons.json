@@ -1,7 +1,7 @@
 {
 	"metadata": {
-		"name": "edsc-icons 2",
-		"lastOpened": 1390513788704,
+		"name": "edsc-icons",
+		"lastOpened": 1390850937132,
 		"created": 1381083457739
 	},
 	"iconSets": [
@@ -13447,8 +13447,13 @@
 					"id": 60
 				},
 				{
-					"order": 0,
-					"id": 61
+					"order": 18,
+					"id": 61,
+					"prevSize": 32,
+					"code": 58895,
+					"name": "eye",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
 					"order": 0,
