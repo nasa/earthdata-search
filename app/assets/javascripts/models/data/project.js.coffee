@@ -5,7 +5,7 @@ ns.Project = do (ko) ->
   class Project
     constructor: ->
       @_datasetIds = ko.observableArray()
-      @_datasetIdsForGranules = ko.observableArray()
+      @_visibleDatasetIds = ko.observableArray()
       @_datasetsById = {}
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
 
@@ -44,18 +44,20 @@ ns.Project = do (ko) ->
       id = dataset.id()
       delete @_datasetsById[id]
       @_datasetIds.remove(id)
+      if @hasVisibleDataset(dataset)
+        @_visibleDatasetIds.remove(dataset.id())
       null
 
     hasDataset: (other) =>
       @_datasetIds.indexOf(other.id()) != -1
 
-    hasDatasetForGranules: (dataset) =>
-      @_datasetIdsForGranules.indexOf(dataset.id()) != -1
+    hasVisibleDataset: (dataset) =>
+      @_visibleDatasetIds.indexOf(dataset.id()) != -1
 
-    toggleDatasetGranules: (dataset) =>
-      if @hasDatasetForGranules(dataset)
-        @_datasetIdsForGranules.remove(dataset.id())
+    toggleVisibleDataset: (dataset) =>
+      if @hasVisibleDataset(dataset)
+        @_visibleDatasetIds.remove(dataset.id())
       else
-        @_datasetIdsForGranules.push(dataset.id())
+        @_visibleDatasetIds.push(dataset.id())
 
   exports = Project

@@ -54,11 +54,11 @@ describe "Project dataset list", reset: false do
 
   context "when clicking the view granules button" do
     it "highlights the selected dataset" do
-      first_project_dataset.click_link "View and refine granules"
-      expect(page).to have_css('#project-datasets-list .panel-list-item.refine-granules', count: 1)
+      first_project_dataset.click_link "View granules"
+      expect(page).to have_css('#project-datasets-list .panel-list-item.view-granules', count: 1)
 
-      first_project_dataset.click_link "View and refine granules"
-      expect(page).to have_no_css('#project-datasets-list .panel-list-item.refine-granules')
+      first_project_dataset.click_link "View granules"
+      expect(page).to have_no_css('#project-datasets-list .panel-list-item.view-granules')
     end
   end
 end
