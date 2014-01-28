@@ -16,7 +16,7 @@ describe "Dataset results", :reset => false do
   let(:ast_l1a_id) { 'C14758250-LPDAAC_ECS' }
   let(:airh2ccf_id) { 'C186815383-GSFCS4PA' }
 
-  it "displays the first 10 datasets when first visiting the page" do
+  it "displays the first 20 datasets when first visiting the page" do
     expect(page).to have_css('#dataset-results .panel-list-item', count: 20)
   end
 
