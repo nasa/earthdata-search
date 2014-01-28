@@ -128,16 +128,20 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
         middleChild = children[Math.floor(children.length / 2)]
         el = middleChild._container ? middleChild._icon
         help.add('shapefile_multiple', element: el)
+      else if children.length == 1
+        @_setConstraint(children[0])
+
       help.add('shapefile_file_area', element: file.previewElement)
 
     _clickLayer: (e) =>
-      target = e.chain[0]
+      @_setConstraint(e.chain[0])
 
+    _setConstraint: (sourceLayer) ->
       help.next() if help.current()?.key == 'shapefile_multiple'
 
-      if target.getLatLngs?
+      if sourceLayer.getLatLngs?
         # Polygon
-        originalLatLngs = target.getLatLngs()
+        originalLatLngs = sourceLayer.getLatLngs()
         latlngs = @_simplifyPoints(originalLatLngs)
 
         if latlngs.length != originalLatLngs.length
@@ -146,9 +150,9 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
         layer = L.sphericalPolygon(latlngs, @options.selection)
         layerType = 'polygon'
 
-      else if target.getLatLng?
+      else if sourceLayer.getLatLng?
         # Point
-        layer = L.marker(target.getLatLng())
+        layer = L.marker(sourceLayer.getLatLng())
         layerType = 'marker'
 
       if layer?

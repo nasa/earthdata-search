@@ -6,7 +6,7 @@
       content: "The file you uploaded contains multiple shapes.  Click on the shape you wish to
                 use as your search constraint."
     shapefile_file_area:
-      title: "File uploaded!"
+      title: "File Upload"
       content: "Information about your shape file appears here.  Click \"Remove file\" to
                 remove it from the map."
     shapefile_reduction:
