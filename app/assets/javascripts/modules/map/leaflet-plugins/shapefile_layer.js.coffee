@@ -19,11 +19,11 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
     #url: 'http://ogre.adc4gis.com/convert'
 
     # Ogre running locally on port 3001
-    url: 'http://localhost:3001/convert'
+    #url: 'http://localhost:3001/convert'
 
     # Ogre proxied through Rails
-    #url: '/convert'
-    #headers: {'X-CSRF-Token': config.csrfToken}
+    url: '/convert'
+    headers: {'X-CSRF-Token': config.csrfToken}
 
     # Test fallback behavior
     #forceFallback: true
@@ -33,6 +33,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
     clickable: '.geojson-dropzone-link'
     createImageThumbnails: false
     fallback: -> # If the browser can't support the necessary features
+      $('.select-shapefile').parent().hide()
     parallelUploads: 1
     uploadMultiple: false
     addRemoveLinks: true
