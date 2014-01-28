@@ -6,6 +6,7 @@ module Helpers
         overlay.masterOverlay('level', 0)
         overlay.masterOverlay('show')
         overlay.masterOverlay('showParent')
+        overlay.masterOverlay('hideSecondary')
       """
     end
 

@@ -49,7 +49,7 @@ describe "Dataset results", :reset => false do
 
   it "hides and shows facets" do
     expect(page).to have_no_link('Browse Datasets')
-    page.find('.master-overlay-hide-parent').click
+    page.find('#master-overlay-parent .master-overlay-hide-parent').click
     expect(page).to have_link('Browse Datasets')
     click_link 'Browse Datasets'
     expect(page).to have_no_link('Browse Datasets')

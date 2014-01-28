@@ -43,8 +43,6 @@ ns.Project = do (ko) ->
       id = dataset.id()
       delete @_datasetsById[id]
       @_datasetIds.remove(id)
-      if @hasVisibleDataset(dataset)
-        @_visibleDatasetIds.remove(dataset.id())
       null
 
     hasDataset: (other) =>

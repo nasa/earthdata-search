@@ -89,8 +89,8 @@
 </div>
 <% end %>
 
-<div class="master-overlay homepage-search" id="datasets-overlay">
-  <section class="master-overlay-parent">
+<div class="master-overlay homepage-search is-master-overlay-secondary-hidden" id="datasets-overlay">
+  <section id="master-overlay-parent" class="master-overlay-parent">
     <header>
       <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
@@ -147,7 +147,7 @@
       <section id="dataset-results">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav master-overlay-when-parent-hidden">
-          <a href="#" class="master-overlay-show-parent">
+          <a href="#" class="master-overlay-show-parent master-overlay-hide-secondary">
             <i class="fa fa-search"></i> Browse Datasets
             <span data-bind="if: query.facets().length > 0">
                (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
@@ -203,6 +203,7 @@
           </a>
           <div class="button icon-button empty-button"></div>
           <div class="button icon-button empty-button"></div>
+          <div class="button icon-button empty-button"></div>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
           <ul id="project-datasets-list"
@@ -213,6 +214,16 @@
         </div>
       </section>
       <%= render partial: 'dataset_details' %>
+    </div>
+  </div>
+  <div class="master-overlay-secondary">
+    <div class="master-overlay-secondary-content" data-level="0">
+      <section id="granule-search">
+        <header>
+          <a class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+          <h2>Granule Search</h2>
+        </header>
+      </section>
     </div>
   </div>
   <div class="master-overlay-minimized">

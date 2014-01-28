@@ -20,8 +20,16 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
     hideParent: -> @toggleParent(false)
 
+    showSecondary: -> @toggleSecondary(true)
+
+    hideSecondary: -> @toggleSecondary(false)
+
     toggleParent: (show = @root.hasClass(@scope('is-parent-hidden'))) ->
       @root.toggleClass(@scope('is-parent-hidden'), !show)
+      @_fixContentHeight()
+
+    toggleSecondary: (show = @root.hasClass(@scope('is-secondary-hidden'))) ->
+      @root.toggleClass(@scope('is-secondary-hidden'), !show)
       @_fixContentHeight()
 
     forward: ->

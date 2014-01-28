@@ -48,6 +48,19 @@
   overflow: hidden;
 }
 
+// The secondary section in the overlay. Granule filters
+.master-overlay-secondary {
+  background-color: $master-overlay-main-bg-color;
+  width: 60%;
+  right: 0%;
+  overflow: hidden;
+  z-index: 100;
+  position: absolute;
+  height: 100%;
+  transition-property: right;
+  transition-duration: 0.3s;
+}
+
 .master-overlay-main-content {
   width: 400%;
   left: 0%;
@@ -150,6 +163,10 @@ a.master-overlay-close {
   .master-overlay-main   { left:0%; }
 }
 
+.is-master-overlay-secondary-hidden {
+  .master-overlay-secondary { right: -60%; }
+}
+
 .master-overlay-main-content {
   &[data-level="1"] { left:-100%; }
   &[data-level="2"] { left:-200%; }
@@ -158,4 +175,5 @@ a.master-overlay-close {
 .is-hidden {
   .master-overlay-parent { left:-60%; }
   .master-overlay-main   { left: -40%; }
+  .master-overlay-secondary { right: -60%; }
 }
