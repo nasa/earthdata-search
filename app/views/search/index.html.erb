@@ -194,10 +194,12 @@
             Batch compare, preview, refine, and download datasets you've added to your project.
           </p>
         </div>
-        <div class="master-overlay-content-actions">
-          <a href="#" title="View all datasets" data-bind="click: project.toggleViewAllDatasets">
+        <div class="master-overlay-project-actions">
+          <a href="#" title="View all datasets" data-bind="click: project.toggleViewAllDatasets" class="button icon-button" >
             <i class="edsc-icon-eye"></i>
           </a>
+          <div class="button icon-button empty-button"></div>
+          <div class="button icon-button empty-button"></div>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
           <ul id="project-datasets-list"
