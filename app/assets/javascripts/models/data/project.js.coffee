@@ -5,7 +5,6 @@ ns.Project = do (ko) ->
   class Project
     constructor: ->
       @_datasetIds = ko.observableArray()
-      @_visibleDatasetIds = ko.observableArray()
       @_datasetsById = {}
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
 
@@ -50,21 +49,5 @@ ns.Project = do (ko) ->
 
     hasDataset: (other) =>
       @_datasetIds.indexOf(other.id()) != -1
-
-    hasVisibleDataset: (dataset) =>
-      @_visibleDatasetIds.indexOf(dataset.id()) != -1
-
-    toggleVisibleDataset: (dataset) =>
-      if @hasVisibleDataset(dataset)
-        @_visibleDatasetIds.remove(dataset.id())
-      else
-        @_visibleDatasetIds.push(dataset.id())
-
-    toggleViewAllDatasets: =>
-      if @_visibleDatasetIds().length > 0
-        @_visibleDatasetIds.removeAll()
-      else
-        for id in @_datasetIds()
-          @_visibleDatasetIds.push(id)
 
   exports = Project

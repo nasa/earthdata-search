@@ -15,6 +15,9 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON) ->
       @details = ko.observable({})
       @detailsLoading = ko.observable(false)
 
+      @_visibleDatasetIds = ko.observableArray()
+      @allDatasetsVisible = ko.observable(false)
+
       @error = ko.observable(null)
 
     search: (params) =>
@@ -63,5 +66,24 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON) ->
         @detailsLoading(false)
         $content = $('#dataset-information')
         $content.height($content.parents('.main-content').height() - $content.offset().top - 40)
+
+    hasVisibleDataset: (dataset) =>
+      @_visibleDatasetIds.indexOf(dataset.id()) != -1
+
+    toggleVisibleDataset: (dataset) =>
+      if @hasVisibleDataset(dataset)
+        @_visibleDatasetIds.remove(dataset.id())
+      else
+        @_visibleDatasetIds.push(dataset.id())
+
+    toggleViewAllDatasets: (datasets) =>
+      if @allDatasetsVisible()
+        for dataset in datasets()
+          @_visibleDatasetIds.remove(dataset.id())
+        @allDatasetsVisible(false)
+      else
+        for dataset in datasets()
+          @_visibleDatasetIds.push(dataset.id())
+        @allDatasetsVisible(true)
 
   exports = DatasetsModel

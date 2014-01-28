@@ -54,4 +54,23 @@ describe "Dataset results", :reset => false do
     click_link 'Browse Datasets'
     expect(page).to have_no_link('Browse Datasets')
   end
+
+  context "when clicking the 'View dataset' button" do
+    before(:each) do
+      first_dataset_result.click_link "View dataset"
+    end
+
+    after(:each) do
+      reset_visible_datasets
+    end
+
+    it "highlights the selected dataset" do
+      expect(page).to have_css('#dataset-results .panel-list-item.view-dataset', count: 1)
+    end
+
+    it "un-highlights the selected dataset when clicking the button again" do
+      first_dataset_result.click_link "View dataset"
+      expect(page).to have_no_css('#dataset-results .panel-list-item.view-dataset')
+    end
+  end
 end

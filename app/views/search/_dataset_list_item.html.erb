@@ -1,4 +1,4 @@
-            <li data-bind="click: $parent.ui.datasetsList.clickDataset, css: {'view-dataset': $root.project.hasVisibleDataset($data)}" class="panel-list-item master-overlay-forward">
+            <li data-bind="click: $parent.ui.datasetsList.clickDataset, css: {'view-dataset': $root.datasets.hasVisibleDataset($data)}" class="panel-list-item master-overlay-forward">
               <!-- ko if: thumbnail -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
               <!-- /ko -->
@@ -15,14 +15,12 @@
                   <i class="edsc-icon-location"></i>
                 </a>
                 <!-- /ko -->
-                <!-- ko if: $root.ui.projectList.visible() -->
-                <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.project.hasVisibleDataset($data), click: $root.project.toggleVisibleDataset">
+                <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
-                <a href="#" class="button icon-button button-active" title="View dataset" data-bind="visible: $root.project.hasVisibleDataset($data), click: $root.project.toggleVisibleDataset">
+                <a href="#" class="button icon-button button-active" title="View dataset" data-bind="visible: $root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
-                <!-- /ko -->
                 <a href="#" class="button icon-button" data-pulse="#project-count" title="Add dataset to the current project"
                    data-bind="visible: !$root.project.hasDataset($data), click: $root.project.toggleDataset">
                   <i class="edsc-icon-plus"></i>

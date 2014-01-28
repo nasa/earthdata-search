@@ -9,6 +9,11 @@ module Helpers
       """
     end
 
+    def reset_visible_datasets
+      page.evaluate_script('edsc.models.page.current.datasets._visibleDatasetIds([])')
+      page.evaluate_script('edsc.models.page.current.datasets.allDatasetsVisible(false)')
+    end
+
     def have_visible_facets
       have_css('.is-master-overlay-parent-hidden')
     end

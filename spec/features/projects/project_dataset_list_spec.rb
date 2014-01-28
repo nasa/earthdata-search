@@ -16,6 +16,7 @@ describe "Project dataset list", reset: false do
   after(:each) do
     reset_overlay
     reset_project
+    reset_visible_datasets
   end
 
   it "displays datasets that have been added to the project" do
@@ -80,11 +81,12 @@ describe "Project dataset list", reset: false do
     end
 
     it "highlights all project datasets" do
+      expect(page).to have_css('.master-overlay-project-actions a.button-active', count: 1)
       expect(page).to have_css('#project-datasets-list .panel-list-item.view-dataset', count: 2)
     end
 
     it "un-highlights all project datasets when clicking the button again" do
-      click_link 'View all datasets'
+      click_link 'Hide all datasets'
       expect(page).to have_no_css('#project-datasets-list .panel-list-item.view-dataset')
     end
   end
