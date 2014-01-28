@@ -19,11 +19,11 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
     #url: 'http://ogre.adc4gis.com/convert'
 
     # Ogre running locally on port 3001
-    #url: 'http://localhost:3001/convert'
+    url: 'http://localhost:3001/convert'
 
     # Ogre proxied through Rails
-    url: '/convert'
-    headers: {'X-CSRF-Token': config.csrfToken}
+    #url: '/convert'
+    #headers: {'X-CSRF-Token': config.csrfToken}
 
     # Test fallback behavior
     #forceFallback: true
@@ -130,8 +130,6 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
         help.add('shapefile_multiple', element: el)
       else if children.length == 1
         @_setConstraint(children[0])
-
-      help.add('shapefile_file_area', element: file.previewElement)
 
     _clickLayer: (e) =>
       @_setConstraint(e.chain[0])

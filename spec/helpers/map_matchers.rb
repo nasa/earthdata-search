@@ -1,13 +1,17 @@
-module TileUtil
+module MapUtil
   def self.tiles(node, selector)
     # 'visible: false' because leaflet fails to load the tiles and therefore keeps them hidden
     node.all("#{selector} .leaflet-tile", visible: false)
+  end
+
+  def self.spatial(page)
+    page.evaluate_script('edsc.models.page.current.query.spatial()')
   end
 end
 
 RSpec::Matchers.define :have_tiles_with_projection do |expected|
   match do |selector|
-    TileUtil.tiles(Capybara.current_session, selector).any? do |img|
+    MapUtil.tiles(Capybara.current_session, selector).any? do |img|
       img['src'] =~ /TILEMATRIXSET=#{expected}/
     end
   end
@@ -15,7 +19,7 @@ end
 
 RSpec::Matchers.define :have_tiles_with_zoom_level do |expected|
   match do |selector|
-    TileUtil.tiles(Capybara.current_session, selector).any? do |img|
+    MapUtil.tiles(Capybara.current_session, selector).any? do |img|
       img['src'] =~ /TILEMATRIX=#{expected}/
     end
   end
@@ -23,8 +27,18 @@ end
 
 RSpec::Matchers.define :have_tiles_for_product do |expected|
   match do |selector|
-    TileUtil.tiles(Capybara.current_session, selector).any? do |img|
+    MapUtil.tiles(Capybara.current_session, selector).any? do |img|
       img['src'] =~ /=#{expected}&/
     end
+  end
+end
+
+RSpec::Matchers.define :have_spatial_constraint do |expected|
+  match do |page|
+    MapUtil.spatial(page) == expected
+  end
+
+  failure_message_for_should do |page|
+    "expected page to have spatial constraint #{expected}, got #{MapUtil.spatial(page)}"
   end
 end

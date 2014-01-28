@@ -278,4 +278,11 @@ ns.Map = do (window,
     #  [-80, 120]
     #]).addTo(map).bindPopup("I contain the south pole.");
 
+  # For tests to be able to click
+  $.fn.mapClick = ->
+    @each (i, e) ->
+      evt = document.createEvent("MouseEvents")
+      evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+      e.dispatchEvent(evt)
+
   exports = Map
