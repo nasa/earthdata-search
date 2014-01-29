@@ -7,6 +7,7 @@ ns.Project = do (ko) ->
       @_datasetIds = ko.observableArray()
       @_datasetsById = {}
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
+      @searchGranulesDataset = ko.observable(null)
 
     getDatasets: ->
       @_datasetsById[id] for id in @_datasetIds()
@@ -47,5 +48,17 @@ ns.Project = do (ko) ->
 
     hasDataset: (other) =>
       @_datasetIds.indexOf(other.id()) != -1
+
+    isSearchingGranules: (dataset) =>
+      if @searchGranulesDataset() == dataset
+        true
+      else
+        false
+
+    searchGranules: (dataset) =>
+      @searchGranulesDataset(dataset)
+
+    clearSearchGranules: =>
+      @searchGranulesDataset(null)
 
   exports = Project

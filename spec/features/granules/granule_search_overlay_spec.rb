@@ -6,17 +6,21 @@ describe "Granule search overlay", reset: false do
     visit "/search"
   end
 
+  before(:each) do
+    first_dataset_result.click_link "Add dataset to the current project"
+    second_dataset_result.click_link "Add dataset to the current project"
+
+    dataset_results.click_link "View Project"
+  end
+
   after(:each) do
     reset_overlay
+    reset_project
   end
 
   context "when clicking the 'Filter Granules' button" do
     before(:each) do
-      first_dataset_result.click_link "Filter granules"
-    end
-
-    it "should close master overlay parent" do
-      expect(page).to_not have_visible_master_overlay_parent
+      first_project_dataset.click_link "Filter granules"
     end
 
     it "should open granule search overlay" do
@@ -24,9 +28,23 @@ describe "Granule search overlay", reset: false do
     end
 
     it "should close granule search overlay when clicking again" do
-      first_dataset_result.click_link "Filter granules"
+      first_project_dataset.click_link "Filter granules"
 
       expect(page).to_not have_visible_granule_search
     end
+
+    it "should hide the granule search overlay when returning to dataset list" do
+      project_overview.click_link "Back to Dataset Search"
+
+      expect(page).to_not have_visible_granule_search
+    end
+
+    it "should show the granule search overlay when returning to the project" do
+      project_overview.click_link "Back to Dataset Search"
+      dataset_results.click_link "View Project"
+
+      expect(page).to have_visible_granule_search
+    end
+
   end
 end
