@@ -1,57 +1,49 @@
+#= require models/data/xhr_model
+#= require models/data/granules
+
 ns = @edsc.models.data
 
-ns.Datasets = do (ko, getJSON=jQuery.getJSON) ->
+ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.Granules) ->
 
-  class DatasetsModel
-    constructor: ->
-      @_searchResponse = ko.mapping.fromJS(results: [], hits: 0)
-      @results = ko.computed => @_searchResponse.results()
-      @hits = ko.computed => @_searchResponse.hits()
-      @hasNextPage = ko.computed => @results().length < @hits()
-      @pendingRequestId = 0
-      @completedRequestId = 0
-      @isLoading = ko.observable(false)
+  class Dataset
+    constructor: (jsonData) ->
+      @_loadJson(jsonData)
 
-      @details = ko.observable({})
-      @detailsLoading = ko.observable(false)
+      @granulesModel = granulesModel = new Granules()
+      @granules = ko.computed -> granulesModel.results()
+      @granuleHits = ko.computed -> granulesModel.hits()
+
+    _loadJson: (jsonData) ->
+      ko.mapping.fromJS(jsonData, {}, this)
 
       @_visibleDatasetIds = ko.observableArray()
       @allDatasetsVisible = ko.observable(false)
 
       @error = ko.observable(null)
 
-    search: (params) =>
-      params.page = @page = 1
-      @_load(params, true)
+    searchGranules: (params) ->
+      @granulesModel.search(@_granuleParams(params))
 
-    loadNextPage: (params) =>
-      if @hasNextPage() and !@isLoading()
-        params.page = ++@page
-        @_load(params, false)
+    loadNextGranules: (params) ->
+      @granulesModel.loadNextPage(@_granuleParams(params))
 
-    _load: (params, replace) =>
-      requestId = ++@pendingRequestId
-      @isLoading(@pendingRequestId != @completedRequestId)
-      console.log("Request: /datasets.json", requestId, params)
-      xhr = getJSON '/datasets.json', params, (data) =>
-        if requestId > @completedRequestId
-          @completedRequestId = requestId
-          @error(null)
-          #console.log("Response: /datasets.json", requestId, params, data)
-          if replace
-            ko.mapping.fromJS(data, @_searchResponse)
-          else
-            currentResults = @_searchResponse.results
-            newResults = ko.mapping.fromJS(data['results'])
-            currentResults.push.apply(currentResults, newResults())
-        else
-          console.log("Rejected out-of-sequence request: /datasets.json", requestId, params, data)
-        @isLoading(@pendingRequestId != @completedRequestId)
-      xhr.fail (response, type, reason) =>
-        if requestId > @completedRequestId
-          @completedRequestId = requestId
-          errors = response.responseJSON?.errors
-          @error(errors?.error)
+    _granuleParams: (params) ->
+      $.extend({}, params, 'echo_collection_id[]': @id())
+
+  class DatasetsModel extends XhrModel
+    constructor: ->
+      super('/datasets.json')
+      @details = ko.observable({})
+      @detailsLoading = ko.observable(false)
+
+    _onSuccess: (data, replace) ->
+      if replace
+        @_searchResponse.hits(data.hits)
+        @_searchResponse.results(new Dataset(result) for result in data['results'])
+      else
+        currentResults = @_searchResponse.results
+        newResults = (new Dataset(result) for result in data['results'])
+        currentResults.push.apply(currentResults, newResults)
 
     showDataset: (dataset) =>
       id = dataset.id()
