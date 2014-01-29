@@ -194,6 +194,7 @@
             Batch compare, preview, refine, and download datasets you've added to your project.
           </p>
         </div>
+        <div class="master-overlay-content panel-list">
         <div class="master-overlay-project-actions">
           <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
             <i class="edsc-icon-eye"></i>
@@ -203,9 +204,7 @@
           </a>
           <div class="button icon-button empty-button"></div>
           <div class="button icon-button empty-button"></div>
-          <div class="button icon-button empty-button"></div>
         </div>
-        <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
           <ul id="project-datasets-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">

@@ -127,7 +127,14 @@
 }
 
 .master-overlay-project-actions {
+  padding: .5em;
   text-align: right;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+
+#project-datasets-list {
+  margin-top: 0;
 }
 
 // Scrollable content area
