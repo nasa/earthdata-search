@@ -25,12 +25,14 @@ describe "Granule search overlay", reset: false do
 
     it "should open granule search overlay" do
       expect(page).to have_visible_granule_search
+      expect(page).to have_css("#project-datasets-list .panel-list-item.search-granules", count: 1)
     end
 
     it "should close granule search overlay when clicking again" do
       first_project_dataset.click_link "Filter granules"
 
       expect(page).to_not have_visible_granule_search
+      expect(page).to have_no_css("#project-datasets-list .panel-list-item.search-granules")
     end
 
     it "should hide the granule search overlay when returning to dataset list" do
@@ -39,11 +41,12 @@ describe "Granule search overlay", reset: false do
       expect(page).to_not have_visible_granule_search
     end
 
-    it "should show the granule search overlay when returning to the project" do
+    it "should hide the granule search overlay when returning to the project" do
       project_overview.click_link "Back to Dataset Search"
       dataset_results.click_link "View Project"
 
-      expect(page).to have_visible_granule_search
+      expect(page).to_not have_visible_granule_search
+      expect(page).to have_no_css("#project-datasets-list .panel-list-item.search-granules")
     end
 
   end

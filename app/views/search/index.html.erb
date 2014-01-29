@@ -162,7 +162,7 @@
             Add datasets to your project to compare and retrieve their data.
           </p>
           <p data-bind="visible: !project.isEmpty()">
-            <a class="button master-overlay-forward master-overlay-hide-parent" data-bind="click: ui.projectList.showProject, css: { 'master-overlay-show-secondary': project.searchGranulesDataset() }" href="#">
+            <a class="button master-overlay-forward master-overlay-hide-parent" data-bind="click: ui.projectList.showProject" href="#">
               <i class="fa fa-folder-o"></i> View Project
             </a>
             You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.
@@ -182,7 +182,7 @@
       <section id="project-overview" data-bind="visible: ui.projectList.visible">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
-          <a class="master-overlay-back master-overlay-hide-secondary" href="#">
+          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: project.clearSearchGranules">
             <i class="edsc-icon-arrow-left"></i> Back to Dataset Search
           </a>
         </nav>

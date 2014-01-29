@@ -1,4 +1,4 @@
-            <li data-bind="click: $parent.ui.datasetsList.clickDataset, css: {'view-dataset': $root.datasets.hasVisibleDataset($data)}" class="panel-list-item master-overlay-forward">
+            <li data-bind="click: $parent.ui.datasetsList.clickDataset, css: {'view-dataset': $root.datasets.hasVisibleDataset($data), 'search-granules': $root.project.isSearchingGranules($data)}" class="panel-list-item master-overlay-forward">
               <!-- ko if: thumbnail -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
               <!-- /ko -->
