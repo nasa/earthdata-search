@@ -52,4 +52,7 @@
                 <!-- /ko -->
               - <span data-bind="text: archive_center"></span>
               </p>
+              <p data-bind="if: granulesModel.isLoaded">
+                <span data-bind="text: $root.pluralize(granuleHits(), 'Granule', 'Granules')"></span>
+              </p>
             </li>

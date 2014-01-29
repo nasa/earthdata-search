@@ -9,6 +9,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
       @completedRequestId = 0
       @isLoading = ko.observable(false)
       @error = ko.observable(null)
+      @isLoaded = ko.observable(false)
 
       @results = ko.computed => @_searchResponse.results?() ? []
       @hits = ko.computed => @_searchResponse.hits?() ? 0
@@ -29,6 +30,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
       console.log("Request: #{@path}", requestId, params)
       xhr = getJSON @path, params, (data) =>
         if requestId > @completedRequestId
+          @isLoaded(true)
           @completedRequestId = requestId
           @error(null)
           #console.log("Response: #{@path}", requestId, params, data)
