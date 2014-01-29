@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Map interface", reset: false do
+describe "Shapefile search", reset: false do
   before :all do
     visit "/search"
   end
@@ -68,8 +68,9 @@ describe "Map interface", reset: false do
 
   context "when selecting a shapefile feature containing a large number of points" do
     before :all do
-      upload_shapefile('doc/example-data/shapefiles/large.geojson')
       expect(page).to have_no_css('.geojson-svg')
+      upload_shapefile('doc/example-data/shapefiles/large.geojson')
+      expect(page).to have_css('.geojson-svg')
     end
 
     after :all do

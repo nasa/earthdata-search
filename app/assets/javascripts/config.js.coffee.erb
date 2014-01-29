@@ -1,9 +1,14 @@
 # Environment-specific config
-@edsc.config = do (env='<%= Rails.env %>') ->
+@edsc.config = do (window, env='<%= Rails.env %>') ->
 
   csrfToken = document.querySelector?('meta[name=csrf-token]')?.content
 
   <% if Rails.env.test? %>
+
+  window.onerror = (message, filename, lineno, colno, e) ->
+    console.error "#{message} [#{filename}:#{lineno}]"
+    false
+
   # Test config
   exports =
     defaultAnimationDurationMs: 0

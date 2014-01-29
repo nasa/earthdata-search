@@ -25,7 +25,7 @@ describe "Map interface" do
       expect(page).to have_css('#map.leaflet-container')
 
       # 'visible: false' because leaflet fails to load the tiles and therefore keeps them hidden
-      TileUtil.tiles(page, '#map').each do |img|
+      MapUtil.tiles(page, '#map').each do |img|
         src = img['src']
         expect(src).to match(/TILEMATRIXSET=EPSG4326/) # Plate Carree
         expect(src).to match(/TILEMATRIX=2&/) # Zoomed to show whole Earth
