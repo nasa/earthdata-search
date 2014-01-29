@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140102155714) do
+ActiveRecord::Schema.define(version: 20140129200846) do
 
   create_table "dataset_extras", force: true do |t|
     t.string   "echo_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20140102155714) do
     t.string   "thumbnail_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "has_granules"
   end
 
 end

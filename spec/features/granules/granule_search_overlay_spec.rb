@@ -49,5 +49,7 @@ describe "Granule search overlay", reset: false do
       expect(page).to have_no_css("#project-datasets-list .panel-list-item.search-granules")
     end
 
+    it "should not show 'Filter Granules' button for datasets without granules"
+
   end
 end
