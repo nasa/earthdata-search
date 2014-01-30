@@ -49,7 +49,11 @@ describe "Granule search overlay", reset: false do
       expect(page).to have_no_css("#project-datasets-list .panel-list-item.search-granules")
     end
 
-    it "should not show 'Filter Granules' button for datasets without granules"
+    it "should not show 'Filter Granules' button for datasets without granules" do
+      within("#project-overview") do
+        expect(page).to have_xpath(".//a[@title='No granules']", count: 1)
+      end
+    end
 
   end
 end

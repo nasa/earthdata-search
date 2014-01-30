@@ -94,7 +94,6 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def decorate_granule_information(dataset)
-    puts self.inspect
     dataset[:has_granules] = self.has_granules
   end
 end
