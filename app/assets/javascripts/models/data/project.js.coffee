@@ -3,11 +3,12 @@ ns = @edsc.models.data
 ns.Project = do (ko) ->
 
   class Project
-    constructor: ->
+    constructor: (@query) ->
       @_datasetIds = ko.observableArray()
       @_datasetsById = {}
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
       @searchGranulesDataset = ko.observable(null)
+      @query.params.subscribe(@_onQueryChange)
 
     getDatasets: ->
       @_datasetsById[id] for id in @_datasetIds()
@@ -38,6 +39,9 @@ ns.Project = do (ko) ->
       @_datasetsById[id] = dataset
       @_datasetIds.remove(id)
       @_datasetIds.push(id)
+
+      dataset.searchGranules(@query.params())
+
       null
 
     removeDataset: (dataset) =>
@@ -60,5 +64,10 @@ ns.Project = do (ko) ->
 
     clearSearchGranules: =>
       @searchGranulesDataset(null)
+
+    _onQueryChange: =>
+      params = @query.params()
+      for dataset in @getDatasets()
+        dataset.searchGranules(params)
 
   exports = Project

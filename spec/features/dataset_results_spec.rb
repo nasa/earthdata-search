@@ -10,7 +10,7 @@ describe "Dataset results", :reset => false do
 
   after :each do
     page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 0"
-    fill_in "keywords", with: " "
+    reset_search
   end
 
   let(:ast_l1a_id) { 'C14758250-LPDAAC_ECS' }

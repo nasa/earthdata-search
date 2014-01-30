@@ -3,9 +3,13 @@
 
 require "spec_helper"
 
-describe "Temporal" do
-  before do
+describe "Temporal", reset: false do
+  before :all do
     visit "/search"
+  end
+
+  after :each do
+    reset_search
   end
 
   context "range selection" do
@@ -29,7 +33,7 @@ describe "Temporal" do
       expect(page).to have_content("Stop: 1970-12-01 00:00:00")
     end
 
-    it "allows the user to search from a start date time to and end date time" do
+    it "allows the user to search from a start date time to an end date time" do
       click_link "Temporal"
       fill_in "Start", with: "1975-12-01 00:00:00"
       fill_in "End", with: "1975-12-01 00:00:00"

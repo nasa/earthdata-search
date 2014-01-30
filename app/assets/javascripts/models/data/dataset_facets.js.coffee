@@ -1,6 +1,8 @@
+#= require models/data/xhr_model
+
 ns = @edsc.models.data
 
-ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON) ->
+ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
 
   class FacetsListModel
     constructor: ->
@@ -13,15 +15,10 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON) ->
     toggleList: =>
       @opened(!@opened())
 
-  class DatasetFacetsModel
+  class DatasetFacetsModel extends XhrModel
     constructor: (@queryModel) ->
-      @_searchResponse = ko.mapping.fromJS(results: [])
+      super('/dataset_facets.json')
       @results = ko.computed(@_prepareResults)
-      @pendingRequestId = 0
-      @completedRequestId = 0
-      @isLoading = ko.observable(false)
-
-      @error = ko.observable(null)
 
     _prepareResults: =>
       results = @results
@@ -44,28 +41,6 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON) ->
           results.push result
 
       results
-
-    search: (params) =>
-      @_load(params)
-
-    _load: (params) =>
-      requestId = ++@pendingRequestId
-      @isLoading(@pendingRequestId != @completedRequestId)
-      console.log("Request: /dataset_facets.json", requestId, params)
-      xhr = getJSON '/dataset_facets.json', params, (data) =>
-        if requestId > @completedRequestId
-          @completedRequestId = requestId
-          @error(null)
-
-          ko.mapping.fromJS(data, @_searchResponse)
-        else
-          console.log("Rejected out-of-sequence request: /dataset_facets.json", requestId, params, data)
-        @isLoading(@pendingRequestId != @completedRequestId)
-      xhr.fail (response, type, reason) =>
-        if requestId > @completedRequestId
-          @completedRequestId = requestId
-          errors = response.responseJSON?.errors
-          @error(errors?.error)
 
     loadFacet: (facet_type, facet, event) =>
       facet_query = {type: facet_type, name: facet}

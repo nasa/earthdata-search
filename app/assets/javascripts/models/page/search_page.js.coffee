@@ -28,7 +28,7 @@ ns.SearchPage = do (ko,
       @query = new QueryModel()
       @datasets = new DatasetsModel()
       @datasetFacets = new DatasetFacetsModel(@query)
-      @project = new ProjectModel()
+      @project = new ProjectModel(@query)
 
       @ui =
         spatialType: new SpatialTypeModel()
