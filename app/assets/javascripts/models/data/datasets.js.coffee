@@ -15,10 +15,6 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
 
     _loadJson: (jsonData) ->
       ko.mapping.fromJS(jsonData, {}, this)
-
-      @_visibleDatasetIds = ko.observableArray()
-      @allDatasetsVisible = ko.observable(false)
-
       @error = ko.observable(null)
 
     searchGranules: (params) ->
@@ -35,6 +31,8 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
       super('/datasets.json')
       @details = ko.observable({})
       @detailsLoading = ko.observable(false)
+      @_visibleDatasetIds = ko.observableArray()
+      @allDatasetsVisible = ko.observable(false)
 
     _onSuccess: (data, replace) ->
       if replace
