@@ -24,4 +24,8 @@ ns.SpatialType = do (ko) ->
       @name('Polygon')
       @icon ('edsc-icon-poly-open')
 
+    selectShapefile: =>
+      @name('Shape File')
+      @icon ('edsc-icon-shapefile')
+
   exports = SpatialType

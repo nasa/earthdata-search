@@ -36,8 +36,33 @@ module Helpers
     end
 
     def clear_spatial
-      script = "edsc.models.page.current.query.spatial(null)"
+      script = """
+        edsc.models.page.current.query.spatial(null);
+        edsc.models.page.current.ui.spatialType.selectNone();
+      """
       page.evaluate_script(script)
+    end
+
+    def upload_shapefile(path)
+      script = "$('input[type=file]').css({visibility: 'visible', height: '28px', width: '300px'}).show().attr('name', 'shapefile')"
+      page.evaluate_script(script)
+
+      attach_file('shapefile', Rails.root.join(path))
+
+      clear_spatial
+      clear_popover
+    end
+
+    def clear_popover
+      page.evaluate_script('edsc.help.close()')
+    end
+
+    def clear_shapefile
+      begin
+        click_link "Remove file"
+        page.should have_no_css(".dz-file-preview")
+      rescue Capybara::ElementNotFound
+      end
     end
 
     private

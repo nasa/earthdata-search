@@ -4,7 +4,8 @@ ns.SpatialSelection = do (window,
                           document,
                           toastr,
                           L,
-                          Proj = ns.L.Proj
+                          ShapefileLayer = ns.L.ShapefileLayer,
+                          Proj = ns.L.Proj,
                           currentPage = @edsc.models.page.current) ->
 
   L.drawLocal.draw.toolbar.buttons.polygon = "Search by spatial polygon"
@@ -69,9 +70,13 @@ ns.SpatialSelection = do (window,
       @_toolSubscription = spatialType.name.subscribe(@_onToolChange)
       @_onToolChange(spatialType.name())
 
+      @_shapefileLayer = new ShapefileLayer(selection: @_colorOptions)
+      map.addLayer(@_shapefileLayer)
+
     onRemove: (map) ->
       @map = null
 
+      @_shapefileLayer.removeFrom(map)
       @_drawnItems.removeFrom(map)
       @_drawControl.removeFrom(map)
       @_querySubscription.dispose()
@@ -101,24 +106,34 @@ ns.SpatialSelection = do (window,
     _onToolChange: (name) =>
       # Avoid sending events for already-selected tools (infinite loop in firefox)
       return if @_currentTool == name
+
       @_currentTool = name
+
       link = $(@_getToolLinksForName(name)).filter(':visible')[0]
       event = document.createEvent("MouseEvents")
       event.initMouseEvent("click", true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null)
       link?.dispatchEvent(event)
 
+      if name == 'Shape File'
+        @_shapefileLayer.activate()
+      else if name != 'Spatial' && @_shapefileLayer.isActive()
+        @_shapefileLayer.deactivate()
+
     _onDrawStart: (e) =>
       # Remove the old layer
       @_oldLayer = @_layer
+      @_oldLayerIsShapefile = @_shapefileLayer.isActive()
       @_removeSpatial()
 
     _onDrawStop: (e) =>
       currentPage.ui.spatialType.selectNone()
       # The user cancelled without committing.  Restore the old layer
+      @_shapefileLayer.activate(false) if @_oldLayerIsShapefile
       if @_oldLayer?
         @_layer = @_oldLayer
         @_oldLayer = null
         @_drawnItems.addLayer(@_layer)
+
 
     _onDrawCreated: (e) =>
       @_addLayer(e.target, e.layer, e.layerType)
@@ -129,12 +144,12 @@ ns.SpatialSelection = do (window,
 
     _addLayer: (map, layer=@_layer, type=@_layer.type) ->
       @_oldLayer = null
+      @_oldLayerIsShapefile = false
       @_layer = layer
       @_layer.type = type
 
-      @_saveSpatialParams(layer, type)
-
       @_drawnItems.addLayer(layer)
+      @_saveSpatialParams(layer, type)
 
     _onDrawDeleted: (e) =>
       currentPage.ui.spatialType.selectNone()

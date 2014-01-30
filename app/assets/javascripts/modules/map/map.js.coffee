@@ -27,12 +27,12 @@ ns.Map = do (window,
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
+
       @_buildLayers()
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
       @setProjection(projection)
-      @_addDrawControls()
 
       @_datasetSubscription = currentPage.datasets.details.subscribe(@_showDatasetSpatial)
       $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)
@@ -95,10 +95,6 @@ ns.Map = do (window,
         if !valid && hasLayer
           layerControl.removeLayer(layer)
 
-
-    _addDrawControls: ->
-      map = @map
-      map.on 'draw:created', (e) ->
 
     # Adds the given layer to the map
     addLayer: (layer) -> @map.addLayer(layer)
@@ -203,6 +199,7 @@ ns.Map = do (window,
     projection = 'geo'
     map = new Map(document.getElementById('map'), projection)
 
+
     # Useful debugging snippets
 
     # Add outlines of US States to the map to help ensure correct projections and tile positioning
@@ -280,5 +277,12 @@ ns.Map = do (window,
     #  [-70, 0],
     #  [-80, 120]
     #]).addTo(map).bindPopup("I contain the south pole.");
+
+  # For tests to be able to click
+  $.fn.mapClick = ->
+    @each (i, e) ->
+      evt = document.createEvent("MouseEvents")
+      evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+      e.dispatchEvent(evt)
 
   exports = Map

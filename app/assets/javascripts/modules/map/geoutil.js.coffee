@@ -41,8 +41,8 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc) ->
       # Guard against the points being the same or antipodal
       return p1 if isNaN(lat) || isNaN(lon)
 
-      lon += 360 while lon < p1.lng
-      lon -= 360 while lon > p2.lng
+      lon += 360 while lon < p1.lng - EPSILON
+      lon -= 360 while lon > p2.lng + EPSILON
 
       L.latLng(lat, lon)
 

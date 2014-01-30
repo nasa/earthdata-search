@@ -21,6 +21,14 @@ module Helpers
       wait_for_xhr
     end
 
+    def have_popover(title)
+      have_css('.popover-title', text: title)
+    end
+
+    def have_no_popover(title)
+      have_no_css('.popover-title', text: title)
+    end
+
     private
 
     def page

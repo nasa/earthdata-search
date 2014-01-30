@@ -19,6 +19,14 @@ ns.ProjectionSwitchingLayer = do (L) ->
       @layer = @_buildLayerWithOptions(this["#{map.projection}Options"])
       @layer.setZIndex(@zIndex ? 0)
       @layer.onAdd(map)
+
+      # Retry loading a tile once if it errors
+      @layer.on 'tileerror', (e) ->
+        src = e.tile.src
+        retryCount = src.match(/&retry=(\d+)$/)
+        if !retryCount
+          e.tile.src += '&retry=1'
+
       map.on 'projectionchange', @_onProjectionChange
 
     onRemove: (map) ->

@@ -10,9 +10,9 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
+    <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
-    <%= csrf_meta_tags %>
 </head>
 <body class="env-<%= Rails.env %>" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
