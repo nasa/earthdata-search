@@ -6,7 +6,13 @@ module Helpers
         overlay.masterOverlay('level', 0)
         overlay.masterOverlay('show')
         overlay.masterOverlay('showParent')
+        overlay.masterOverlay('hideSecondary')
       """
+    end
+
+    def reset_visible_datasets
+      page.evaluate_script('edsc.models.page.current.datasets._visibleDatasetIds([])')
+      page.evaluate_script('edsc.models.page.current.datasets.allDatasetsVisible(false)')
     end
 
     def have_visible_facets

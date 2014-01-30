@@ -16,6 +16,7 @@ describe "Project dataset list", reset: false do
   after(:each) do
     reset_overlay
     reset_project
+    reset_visible_datasets
   end
 
   it "displays datasets that have been added to the project" do
@@ -51,4 +52,43 @@ describe "Project dataset list", reset: false do
       expect(page).to have_css('#project-datasets-list .panel-list-item', count: 1)
     end
   end
+
+  context "when clicking the 'View dataset' button" do
+    before(:each) do
+      first_project_dataset.click_link "View dataset"
+    end
+
+    it "highlights the selected dataset" do
+      expect(page).to have_css('#project-datasets-list .panel-list-item.view-dataset', count: 1)
+    end
+
+    it "un-highlights the selected dataset when clicking the button again" do
+      first_project_dataset.click_link "View dataset"
+      expect(page).to have_no_css('#project-datasets-list .panel-list-item.view-dataset')
+    end
+
+    it "keeps the selected dataset highlighted when returning to the project" do
+      click_link "Back to Dataset Search"
+
+      dataset_results.click_link "View Project"
+      expect(page).to have_css('#project-datasets-list .panel-list-item.view-dataset', count: 1)
+    end
+  end
+
+  context "when clicking the 'View all datasets' button" do
+    before(:each) do
+      click_link 'View all datasets'
+    end
+
+    it "highlights all project datasets" do
+      expect(page).to have_css('.master-overlay-project-actions a.button-active', count: 1)
+      expect(page).to have_css('#project-datasets-list .panel-list-item.view-dataset', count: 2)
+    end
+
+    it "un-highlights all project datasets when clicking the button again" do
+      click_link 'Hide all datasets'
+      expect(page).to have_no_css('#project-datasets-list .panel-list-item.view-dataset')
+    end
+  end
+
 end

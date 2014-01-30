@@ -1,8 +1,8 @@
 module OverlayUtil
-  OVERLAY_IDS = ['project-overview', 'dataset-results', 'dataset-details']
+  OVERLAY_IDS = ['project-overview', 'dataset-results', 'dataset-details', 'master-overlay-parent', 'granule-search']
 
   def self.has_visible_overlay_content?(page, id)
-    datasets_overlay_visible?(page) && current_overlay_id(page) == id
+    datasets_overlay_visible?(page) && current_overlay_id(page).include?(id)
   end
 
   def self.datasets_overlay_visible?(page)
@@ -10,11 +10,21 @@ module OverlayUtil
   end
 
   def self.current_overlay_id(page)
-    page.evaluate_script """
+    main_id = page.evaluate_script """
       var $content = $('.master-overlay-main-content');
       var level = parseInt($content.attr('data-level'), 10);
       $content.children(':visible')[level].id
     """
+    if page.has_css?('#datasets-overlay:not(.is-master-overlay-secondary-hidden)')
+      secondary_id = page.evaluate_script """
+        var $content = $('.master-overlay-secondary-content');
+        var level = parseInt($content.attr('data-level'), 10);
+        $content.children(':visible')[level].id
+      """
+    else
+      secondary_id = nil
+    end
+    [main_id, secondary_id]
   end
 
   def self.define_overlay_matchers

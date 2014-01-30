@@ -89,8 +89,8 @@
 </div>
 <% end %>
 
-<div class="master-overlay homepage-search" id="datasets-overlay">
-  <section class="master-overlay-parent">
+<div class="master-overlay homepage-search is-master-overlay-secondary-hidden" id="datasets-overlay">
+  <section id="master-overlay-parent" class="master-overlay-parent">
     <header>
       <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
       <h2>Browse Datasets</h2>
@@ -182,8 +182,8 @@
       <section id="project-overview" data-bind="visible: ui.projectList.visible">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
-          <a class="master-overlay-back" href="#">
-            <i class="fa fa-arrow-circle-left"></i> Back to Dataset Search
+          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: project.clearSearchGranules">
+            <i class="edsc-icon-arrow-left"></i> Back to Dataset Search
           </a>
         </nav>
         <header>
@@ -194,7 +194,17 @@
             Batch compare, preview, refine, and download datasets you've added to your project.
           </p>
         </div>
-        <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
+        <div class="master-overlay-content panel-list">
+        <div class="master-overlay-project-actions">
+          <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
+            <i class="edsc-icon-eye"></i>
+          </a>
+          <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
+            <i class="edsc-icon-eye"></i>
+          </a>
+          <div class="button icon-button empty-button"></div>
+          <div class="button icon-button empty-button"></div>
+        </div>
           <ul id="project-datasets-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">
@@ -203,6 +213,19 @@
         </div>
       </section>
       <%= render partial: 'dataset_details' %>
+    </div>
+  </div>
+  <div class="master-overlay-secondary">
+    <div class="master-overlay-secondary-content" data-level="0">
+      <section id="granule-search" >
+        <header>
+          <a class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+          <h2>Granule Search</h2>
+          <!-- ko if: project.searchGranulesDataset() -->
+          <p data-bind="text: project.searchGranulesDataset().dataset_id"></p>
+          <!-- /ko -->
+        </header>
+      </section>
     </div>
   </div>
   <div class="master-overlay-minimized">

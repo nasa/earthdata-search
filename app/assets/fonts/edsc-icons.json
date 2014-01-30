@@ -1,7 +1,7 @@
 {
 	"metadata": {
 		"name": "edsc-icons",
-		"lastOpened": 1390403868055,
+		"lastOpened": 1390850937132,
 		"created": 1381083457739
 	},
 	"iconSets": [
@@ -9599,8 +9599,13 @@
 					"id": 34
 				},
 				{
-					"order": 0,
-					"id": 35
+					"order": 15,
+					"id": 35,
+					"prevSize": 16,
+					"code": 58894,
+					"name": "compose",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
 					"order": 0,
@@ -13442,8 +13447,13 @@
 					"id": 60
 				},
 				{
-					"order": 0,
-					"id": 61
+					"order": 18,
+					"id": 61,
+					"prevSize": 32,
+					"code": 58895,
+					"name": "eye",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
 					"order": 0,
@@ -13995,7 +14005,7 @@
 					"prevSize": 32,
 					"code": 58893,
 					"name": "arrow-left",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{

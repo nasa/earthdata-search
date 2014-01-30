@@ -35,6 +35,25 @@ class DatasetExtra < ActiveRecord::Base
     nil
   end
 
+  def self.load_granule_information
+    response = Echo::Client.get_provider_holdings
+    results = response.body
+    hits = response.headers['echo-dataset-hits'].to_i
+
+    processed_count = 0
+
+    results.each do |result|
+        extra = DatasetExtra.find_or_create_by(echo_id: result["echo_collection_id"])
+
+        extra.has_granules = result["granule_count"].to_i > 0
+        extra.save
+
+        processed_count += 1
+
+        puts "#{processed_count} / #{hits}"
+    end
+  end
+
   def self.decorate_all(datasets)
     datasets = datasets.as_json
     ids = datasets.map {|r| r['id']}
@@ -51,6 +70,8 @@ class DatasetExtra < ActiveRecord::Base
 
     decorate_thumbnail(dataset)
     decorate_spatial_constraint(dataset)
+
+    decorate_granule_information(dataset)
 
     dataset
   end
@@ -70,5 +91,9 @@ class DatasetExtra < ActiveRecord::Base
       constraint = "point:#{point.reverse.join(',')}"
     end
     dataset[:spatial_constraint] = constraint
+  end
+
+  def decorate_granule_information(dataset)
+    dataset[:has_granules] = self.has_granules
   end
 end

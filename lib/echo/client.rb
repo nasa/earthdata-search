@@ -28,6 +28,10 @@ module Echo
       get("/catalog-rest/search_facet.json", options_to_facet_query(options))
     end
 
+    def self.get_provider_holdings
+      get("/catalog-rest/echo_catalog/provider_holdings.json")
+    end
+
     def self.get_token(username, password, client_id, ip)
       xml = {
         username: username,

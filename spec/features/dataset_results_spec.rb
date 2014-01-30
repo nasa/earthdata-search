@@ -50,9 +50,28 @@ describe "Dataset results", :reset => false do
 
   it "hides and shows facets" do
     expect(page).to have_no_link('Browse Datasets')
-    page.find('.master-overlay-hide-parent').click
+    page.find('#master-overlay-parent .master-overlay-hide-parent').click
     expect(page).to have_link('Browse Datasets')
     click_link 'Browse Datasets'
     expect(page).to have_no_link('Browse Datasets')
+  end
+
+  context "when clicking the 'View dataset' button" do
+    before(:each) do
+      first_dataset_result.click_link "View dataset"
+    end
+
+    after(:each) do
+      reset_visible_datasets
+    end
+
+    it "highlights the selected dataset" do
+      expect(page).to have_css('#dataset-results .panel-list-item.view-dataset', count: 1)
+    end
+
+    it "un-highlights the selected dataset when clicking the button again" do
+      first_dataset_result.click_link "View dataset"
+      expect(page).to have_no_css('#dataset-results .panel-list-item.view-dataset')
+    end
   end
 end
