@@ -3,6 +3,16 @@
   color: #000;
   border: 1px solid transparent;
 
+  &.button-disabled {
+    color: #aaa;
+    cursor: default;
+  }
+
+  &.button-disabled:hover {
+    background: #ddd;
+    border: 1px solid transparent;
+  }
+
   &.button-active {
     background: #888;
     border: 1px solid #444;
