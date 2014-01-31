@@ -263,9 +263,7 @@
 </div>
 
 <div id="temporal-query" data-bind="with: ui.temporal">
-  <p>Start: <span data-bind="text: start"></span></p>
-  <p>Stop: <span data-bind="text: stop"></span></p>
-  <p>Year Range: <span data-bind="text: years"></span></p>
+  <p><i class="fa fa-clock-o"></i> <span data-bind="visible: start"><strong>Start</strong> <span data-bind="text: start"></span></span> <span data-bind="visible: stop"><strong>Stop</strong> <span data-bind="text: stop"></span></span> <span data-bind="visible: years"><strong>Range</strong> <span data-bind="text: years"></span></span></p>
 </div>
 
 <div class="landing-area landing-visible">

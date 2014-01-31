@@ -72,6 +72,27 @@ footer, .toolbar {
   }
 }
 
+#temporal-query {
+  position: absolute;
+  color: #fff;
+  background: rgba(22,22,22,.9);
+  z-index: 3000;
+  padding: 8px 12px;
+  border-radius: 5px;
+  top: 15px;
+  right: 10px;
+  box-shadow: 0 0 10px #424242;
+  font-size: 1em;
+}
+
+#temporal-query p {
+  margin: 0;
+}
+
+.leaflet-top.leaflet-right {
+  top: 50px;
+}
+
 
 footer {
   height: 25px;
