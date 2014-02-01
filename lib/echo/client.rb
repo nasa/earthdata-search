@@ -21,7 +21,9 @@ module Echo
     end
 
     def self.get_granules(options={})
-      get("/catalog-rest/echo_catalog/granules.#{options[:format] || 'json'}", options_to_item_query(options))
+      options = options.dup
+      format = options.delete(:format) || 'json'
+      get("/catalog-rest/echo_catalog/granules.#{format}", options_to_item_query(options))
     end
 
     def self.get_facets(options={})

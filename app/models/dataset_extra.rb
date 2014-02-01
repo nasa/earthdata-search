@@ -14,7 +14,7 @@ class DatasetExtra < ActiveRecord::Base
 
         # Skip datasets that we've seen before which have no browseable granules.  Saves tons of time
         if extra.has_browseable_granules.nil? || extra.has_browseable_granules
-          granules = Echo::Client.get_granules(format: 'echo10', echo_collection_id: dataset.id, page_size: 1, browse_only: true).body
+          granules = Echo::Client.get_granules(format: 'echo10', echo_collection_id: [dataset.id], page_size: 1, browse_only: true).body
 
           granule = granules.first
           if granule

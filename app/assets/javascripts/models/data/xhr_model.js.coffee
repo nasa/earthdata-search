@@ -16,12 +16,12 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
       @hasNextPage = ko.computed => @results().length < @hits()
 
     search: (params) =>
-      params.page = @page = 1
+      params.page_num = @page = 1
       @_load(params, true)
 
     loadNextPage: (params) =>
       if @hasNextPage() and !@isLoading()
-        params.page = ++@page
+        params.page_num = ++@page
         @_load(params, false)
 
     _load: (params, args...) =>

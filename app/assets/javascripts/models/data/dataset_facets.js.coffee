@@ -4,13 +4,49 @@ ns = @edsc.models.data
 
 ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
 
+  class Facet
+    constructor: (@parent, item) ->
+      @term = item.term
+      @count = item.count
+
+      param = @parent.param()
+      @isSelected = ko.computed =>
+        term = @term()
+        for facet in @parent.queryModel.facets()
+          return true if facet.term == term && facet.param == param
+        return false
+
   class FacetsListModel
-    constructor: ->
-      @name = ko.observable("")
+    constructor: (@queryModel, item) ->
+      @name = item.name
       @class_name = ko.computed => @name().toLowerCase().replace(' ', '-')
+      @param = item.param
       @opened = ko.observable(true)
       @closed = ko.computed => !@opened()
-      @values = ko.observable([])
+
+      values = (new Facet(this, value) for value in item.values())
+
+      @values = ko.observable(values)
+      @selectedValues = ko.computed(@_loadSelectedValues)
+
+    setValues: (newValues) =>
+      facetsByTerm = {}
+      for facet in @values()
+        facetsByTerm[facet.term()] = facet
+      values = []
+      for newFacet in newValues
+        oldFacet = facetsByTerm[newFacet.term()]
+        if oldFacet?
+          value = oldFacet
+          value.count = newFacet.count()
+        else
+          value = new Facet(this, newFacet)
+        values.push(value)
+      @values(values)
+
+
+    _loadSelectedValues: =>
+      facet for facet in @values() when facet.isSelected()
 
     toggleList: =>
       @opened(!@opened())
@@ -19,67 +55,40 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
     constructor: (@queryModel) ->
       super('/dataset_facets.json')
       @results = ko.computed(@_prepareResults)
+      @appliedFacets = ko.computed =>
+        result for result in @results() when result.selectedValues().length > 0
 
     _prepareResults: =>
-      results = @results
-      if ko.isComputed(results)
-        results = results()
+      if ko.isComputed(@results)
+        results = @results()
       else
         results = []
       for item in @_searchResponse.results()
         found = ko.utils.arrayFirst results, (result) ->
-          if result.name() == item[0]
-            values = item[1].sort (l, r) ->
-              if l.term() > r.term() then 1 else -1
-            result.values(values)
-        unless found
-          result = new FacetsListModel()
-          result.name(item[0])
-          values = item[1].sort (l, r) ->
-            if l.term() > r.term() then 1 else -1
-          result.values(values)
-          results.push result
-
-      results
-
-    loadFacet: (facet_type, facet, event) =>
-      facet_query = {type: facet_type, name: facet}
-      facets = @queryModel.facets
-      found = ko.utils.arrayFirst facets(), (item) ->
-        #returns either null or the found facet
-        facet_query.type == item.type and facet_query.name == item.name
-      if !found
-        facets.push(facet_query)
-      else
-        # facets.remove(facet_query) did not remove the item, but
-        # facets.remove(found) does
-        facets.remove(found)
-
-    highlightFacet: (type, facet) =>
-      applied_facets = @queryModel.facets()
-      found = ko.utils.arrayFirst applied_facets, (item) ->
-        #returns either null or the found facet
-        type == item.type and facet() == item.name
-      if !found
-        false
-      else
-        true
-
-    applied_facets: () =>
-      facets = @queryModel.facets()
-      # don't want to shift all the items out of the facet query
-      facets_copy = ko.observableArray(facets.slice(0))
-      results = []
-      while temp = facets_copy.shift()
-        type = temp.type
-        found = ko.utils.arrayFirst results, (item) ->
-          item.type == type
-
-        if !found
-          results.push {type: type, values: [temp.name]}
+          result.name() == item.name()
+        if found
+          values = item.values()
+          value.parent = found for value in item.values
+          found.setValues(item.values())
         else
-          found.values.push(temp.name)
+          results.push(new FacetsListModel(@queryModel, item))
 
       results
+
+    removeFacet: (facet) =>
+      term = facet.term()
+      param = facet.parent.param()
+      @queryModel.facets.remove (queryFacet) ->
+        queryFacet.term == term && queryFacet.param == param
+
+    addFacet: (facet) =>
+      @queryModel.facets.push(term: facet.term(), param: facet.parent.param())
+
+
+    toggleFacet: (facet) =>
+      if facet.isSelected()
+        @removeFacet(facet)
+      else
+        @addFacet(facet)
 
   exports = DatasetFacetsModel

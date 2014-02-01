@@ -34,28 +34,28 @@ describe Echo::Client do
       it 'performs searches using partial keyword matches' do
         expect(connection).to receive(:get).with(dataset_search_url, keyword: "term%").and_return(:response)
 
-        response = Echo::Client.get_datasets(keywords: "term")
+        response = Echo::Client.get_datasets(keyword: "term")
         expect(response.faraday_response).to eq(:response)
       end
 
       it 'partially matches any word in the keyword query' do
         expect(connection).to receive(:get).with(dataset_search_url, keyword: "term1% term2%").and_return(:response)
 
-        response = Echo::Client.get_datasets(keywords: "term1 term2")
+        response = Echo::Client.get_datasets(keyword: "term1 term2")
         expect(response.faraday_response).to eq(:response)
       end
 
       it 'collapses whitespace in the keyword query' do
         expect(connection).to receive(:get).with(dataset_search_url, keyword: "term1% term2%").and_return(:response)
 
-        response = Echo::Client.get_datasets(keywords: "  term1\t term2 \n")
+        response = Echo::Client.get_datasets(keyword: "  term1\t term2 \n")
         expect(response.faraday_response).to eq(:response)
       end
 
       it 'escaped catalog-rest reserved characters in the keyword query' do
         expect(connection).to receive(:get).with(dataset_search_url, keyword: "cloud\\_cover\\_\\%%").and_return(:response)
 
-        response = Echo::Client.get_datasets(keywords: "cloud_cover_%")
+        response = Echo::Client.get_datasets(keyword: "cloud_cover_%")
         expect(response.faraday_response).to eq(:response)
       end
     end
@@ -167,7 +167,7 @@ describe Echo::Client do
     it 'filters granules by a supplied ECHO collection id' do
       expect(connection).to receive(:get).with(granule_search_url, echo_collection_id: ['1234']).and_return(:response)
 
-      response = Echo::Client.get_granules(echo_collection_id: '1234')
+      response = Echo::Client.get_granules(echo_collection_id: ['1234'])
       expect(response.faraday_response).to eq(:response)
     end
 
@@ -191,9 +191,9 @@ describe Echo::Client do
     end
 
     it 'returns dataset facets with a filter' do
-      expect(connection).to receive(:get).with(dataset_facets_url, {filter: "campaign_sn", value: "AQUA"}).and_return(:response)
+      expect(connection).to receive(:get).with(dataset_facets_url, {filter: :campaign_sn, value: "AQUA"}).and_return(:response)
 
-      response = Echo::Client.get_facets("facets"=>{"0"=>{"type"=>"Campaigns", "name"=>"AQUA"}})
+      response = Echo::Client.get_facets(campaign: ["AQUA"])
       expect(response.faraday_response).to eq(:response)
     end
   end
