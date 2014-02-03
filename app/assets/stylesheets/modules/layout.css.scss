@@ -68,7 +68,7 @@ footer, .toolbar {
   position: absolute;
   color: #fff;
   background: rgba(22,22,22,.9);
-  z-index: 3000;
+  z-index: 30;
   padding: 8px 12px;
   border-radius: 5px;
   top: 15px;
@@ -91,18 +91,18 @@ footer {
   z-index: 1000;
   position: relative;
   font-size: .7em;
-  
+
   p {
     padding: 9px 20px 0 20px;
   }
-  
+
   .version {
     background: $button-dark-bottom-gradient;
     padding: 2px 8px;
     border-radius: 2px;
     text-shadow: 1px 1px 1px $toolbar-background-bottom;
   }
-  
+
   a:link, a:visited {
     color: #92bfec;
   }

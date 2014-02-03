@@ -54,7 +54,7 @@
   width: 60%;
   right: 0%;
   overflow: hidden;
-  z-index: 100;
+  z-index: 10;
   position: absolute;
   height: 100%;
   transition-property: right;
@@ -88,7 +88,7 @@
 
 
 .master-overlay-parent, .master-overlay-main, .master-overlay-main-content {
-  z-index: 100;
+  z-index: 10;
   position: absolute;
   height: 100%;
   transition-property: left;
@@ -99,7 +99,7 @@
   position: absolute;
   left: 1em;
   top: 1em;
-  z-index: 99;
+  z-index: 8;
   opacity: 0;
   @include transition(opacity 0.3s ease-in-out 0.3s);
 }
