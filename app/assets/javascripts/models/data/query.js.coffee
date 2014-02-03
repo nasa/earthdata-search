@@ -18,11 +18,16 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
       @temporal_recurring_year_range = ko.observable("")
 
       @temporal_range = ko.computed =>
-        start = date.queryDateString(@temporal_range_start())
-        stop = date.queryDateString(@temporal_range_stop())
+        result = []
 
-        if start or stop
-          [start, stop]
+        start = date.queryDateString(@temporal_range_start())
+        result.push(start) if start?
+
+        stop = date.queryDateString(@temporal_range_stop())
+        result.push(stop) if stop?
+
+        if result.length > 0
+          result
         else
           null
 
@@ -79,16 +84,18 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
       params = {}
 
       keywords = @keywords()
-      params.keywords = keywords if keywords?.length > 0
+      params.keyword = keywords.trim() if keywords?.trim().length > 0
 
       spatial = @spatial()
       params.spatial = spatial if spatial?.length > 0
 
       temporal = @temporal()
-      params.temporal = temporal if temporal?.length > 0
+      params.temporal = temporal.join(',') if temporal?.length > 0
 
-      facets = @facets()
-      params.facets = facets if facets.length > 0
+      for facet in @facets()
+        param = facet.param
+        params[param] ||= []
+        params[param].push(facet.term)
 
       placename = @placename()
       params.placename = placename if placename?.length > 0

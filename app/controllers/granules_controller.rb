@@ -2,12 +2,16 @@ class GranulesController < CatalogController
   respond_to :json
 
   def index
-    response = Echo::Client.get_granules(to_echo_params(params))
+    catalog_response = Echo::Client.get_granules(to_echo_params(request.query_parameters))
 
-    if response.success?
-      respond_with(results: response.body, hits: response.headers['echo-hits'].to_i, status: response.status)
+    if catalog_response.success?
+      catalog_response.headers.each do |key, value|
+        response.headers[key] = value if key.start_with?('echo-')
+      end
+
+      respond_with(catalog_response.body, status: catalog_response.status)
     else
-      respond_with(response.body, status: response.status)
+      respond_with(catalog_response.body, status: catalog_response.status)
     end
   end
 end

@@ -4,56 +4,53 @@ module Echo
 
     module ClassMethods
       def options_to_item_query(options={})
-        options = options.with_indifferent_access
+        query = options.dup.symbolize_keys
 
-        query = {}
-
-        load_query_page(options, query)
-        load_query_page_size(options, query)
-        load_echo_collection_query(options, query)
-        load_keyword_query(options, query)
-        load_spatial_query(options, query)
-        load_temporal_query(options, query)
-        load_browse_only_query(options, query)
-        load_facets_query(options, query, false)
+        load_keyword_query(query)
+        load_spatial_query(query)
         load_day_night_flag_query(options, query)
 
         query
       end
 
+      def options_to_granule_query(options={})
+        query = options.dup.symbolize_keys
+        query.delete(:keyword)
+        options_to_item_query(query)
+      end
+
       def options_to_facet_query(options={})
         options = options.with_indifferent_access
 
-        query = {}
+        simple_facet_params = {
+          :campaign => :campaign_sn,
+          :platform => :platform_sn,
+          :instrument => :instrument_sn,
+          :sensor => :sensor_sn,
+          :two_d_coordinate_system_name => :twod_coord_name,
+          :processing_level => :processing_level
+        }
 
-        load_facets_query(options, query, true)
+        simple_facet_params.each do |param, facet_param|
+          if options[param].present?
+            return {filter: facet_param, value: options[param].first}
+          end
+        end
 
-        query
+        if options[:science_keywords].present?
+          keyword, value = options[:science_keywords].first
+          return {filter: "#{keyword}_keyword", value: value}
+        end
+        {}
       end
 
       private
 
-      def load_query_page(options, query)
-        query[:page_num] = options[:page] if options[:page]
-      end
-
-      def load_query_page_size(options, query)
-        query[:page_size] = options[:page_size] if options[:page_size]
-      end
-
-      def load_echo_collection_query(options, query)
-        query[:echo_collection_id] = Array.wrap(options[:echo_collection_id]) if options[:echo_collection_id]
-      end
-
-      def load_browse_only_query(options, query)
-        query[:browse_only] = options[:browse_only] if options[:browse_only]
-      end
-
-      def load_keyword_query(options, query)
-        if options[:keywords]
+      def load_keyword_query(query)
+        if query[:keyword]
           # Escape catalog-rest reserved characters, then add a wildcard character to the
           # end of each word to allow partial matches of any word
-          query[:keyword] = catalog_wildcard(catalog_escape(options[:keywords]))
+          query[:keyword] = catalog_wildcard(catalog_escape(query[:keyword]))
         end
       end
 
@@ -70,8 +67,8 @@ module Echo
         end
       end
 
-      def load_spatial_query(options, query)
-        spatialStr = options[:spatial]
+      def load_spatial_query(query)
+        spatialStr = query.delete(:spatial)
         if spatialStr.present?
           type, *pointStrs = spatialStr.split(':')
           type = type.gsub('-', '_').to_sym
@@ -91,91 +88,6 @@ module Echo
           end
 
           query[type] = points.flatten.join(',')
-        end
-      end
-
-      def load_temporal_query(options, query)
-        if options[:temporal]
-          query[:temporal] = options[:temporal].flatten.join(',')
-        end
-      end
-
-      def load_facets_query(options, query, load_facet_options)
-        if options[:facets]
-          options[:facets].each do |opt|
-            facet = opt[1]
-            if load_facet_options
-              query[:filter] = transform_facet_type(facet[:type])[1]
-              query[:value] = facet[:name]
-            else
-              type = transform_facet_type(facet[:type])[0]
-              # putting the values into an array currently
-              # forces an OR search waiting on NCR #11014369
-              # for an AND solution
-              query[type] = [] unless query[type]
-              query[:options] ||= {}
-              query[:options] = query[:options].merge(type => {ignore_case: false})
-              if type == "science_keywords"
-                keyword = transform_science_keyword(facet[:type])
-                query[type] << Hash.new
-                query[type][0] = Hash.new
-                query[type][0][keyword] = facet[:name]
-              else
-                query[type] << facet[:name]
-              end
-            end
-          end
-        end
-      end
-
-      # Returns array [dataset_search_query_type, facet_search_query_type]
-      def transform_facet_type(type)
-        case type
-        when "Campaigns"
-          ["campaign","campaign_sn"]
-        when "Platforms"
-          ["platform","platform_sn"]
-        when "Instruments"
-          ["instrument","instrument_sn"]
-        when "Sensors"
-          ["sensor","sensor_sn"]
-        when "2D Coordinate Name"
-          ["two_d_coordinate_system_name","twod_coord_name"]
-        when "Category Keyword"
-          ["science_keywords","category_keyword"]
-        when "Topic Keyword"
-          ["science_keywords","topic_keyword"]
-        when "Term Keyword"
-          ["science_keywords","term_keyword"]
-        when "Variable Level 1 Keyword"
-          ["science_keywords","variable_level_1_keyword"]
-        when  "Variable Level 2 Keyword"
-          ["science_keywords","variable_level_2_keyword"]
-        when "Variable Level 3 Keyword"
-          ["science_keywords","variable_level_3_keyword"]
-        when "Detailed Variable Keyword"
-          ["science_keywords","detailed_variable_keyword"]
-        when "Processing Level"
-          ["processing_level","processing_level"]
-        end
-      end
-
-      def transform_science_keyword(name)
-        case name
-        when "Category Keyword"
-          "category"
-        when "Topic Keyword"
-          "topic"
-        when "Term Keyword"
-          "term"
-        when "Variable Level 1 Keyword"
-          "variable_level_1"
-        when "Variable Level 2 Keyword"
-          "variable_level_2"
-        when "Variable Level 3 Keyword"
-          "variable_level_3"
-        when "Detailed Variable Keyword"
-          "detailed_variable"
         end
       end
 

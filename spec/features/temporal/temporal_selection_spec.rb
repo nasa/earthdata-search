@@ -20,7 +20,7 @@ describe "Temporal", reset: false do
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_content("Start: 2013-12-01 00:00:00")
+      expect(page).to have_content("Start 2013-12-01 00:00:00")
     end
 
     it "allows the user to search up to the end date time" do
@@ -30,7 +30,7 @@ describe "Temporal", reset: false do
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
-      expect(page).to have_content("Stop: 1970-12-01 00:00:00")
+      expect(page).to have_content("Stop 1970-12-01 00:00:00")
     end
 
     it "allows the user to search from a start date time to an end date time" do
@@ -42,8 +42,8 @@ describe "Temporal", reset: false do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2000 Pilot Environmental Sustainability Index")
       expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
-      expect(page).to have_content("Start: 1975-12-01 00:00:00")
-      expect(page).to have_content("Stop: 1975-12-01 00:00:00")
+      expect(page).to have_content("Start 1975-12-01 00:00:00")
+      expect(page).to have_content("Stop 1975-12-01 00:00:00")
     end
 
     it "allows the user to clear the end date time" do
@@ -55,8 +55,8 @@ describe "Temporal", reset: false do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_content("Start: 1978-12-01 00:00:00")
-      expect(page).to have_content("Stop: 1979-12-01 00:00:00")
+      expect(page).to have_content("Start 1978-12-01 00:00:00")
+      expect(page).to have_content("Stop 1979-12-01 00:00:00")
 
       click_link "Temporal"
       find_by_id("clear_temporal_stop").click
@@ -64,8 +64,8 @@ describe "Temporal", reset: false do
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2001 Environmental Sustainability Index (ESI)")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_content("Start: 1978-12-01 00:00:00")
-      expect(page).to have_no_content("Stop: 1979-12-01 00:00:00")
+      expect(page).to have_content("Start 1978-12-01 00:00:00")
+      expect(page).to have_no_content("Stop 1979-12-01 00:00:00")
     end
 
     it "allows the user to clear the date time range" do
@@ -77,8 +77,8 @@ describe "Temporal", reset: false do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_content("Start: 1978-12-01 00:00:00")
-      expect(page).to have_content("Stop: 1979-12-01 00:00:00")
+      expect(page).to have_content("Start 1978-12-01 00:00:00")
+      expect(page).to have_content("Stop 1979-12-01 00:00:00")
 
       click_link "Temporal"
       page.find_by_id("clear_temporal_start").click
@@ -87,8 +87,8 @@ describe "Temporal", reset: false do
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2001 Environmental Sustainability Index (ESI)")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_no_content("Start: 1978-12-01 00:00:00")
-      expect(page).to have_no_content("Stop: 1979-12-01 00:00:00")
+      expect(page).to have_no_content("Start 1978-12-01 00:00:00")
+      expect(page).to have_no_content("Stop 1979-12-01 00:00:00")
     end
 
     it "validates incorrect user input" do
@@ -113,8 +113,8 @@ describe "Temporal", reset: false do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_content("Start: 1978-12-01 00:00:00")
-      expect(page).to have_content("Stop: 1979-12-01 00:00:00")
+      expect(page).to have_content("Start 1978-12-01 00:00:00")
+      expect(page).to have_content("Stop 1979-12-01 00:00:00")
     end
 
   end
@@ -131,9 +131,9 @@ describe "Temporal", reset: false do
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
-      expect(page).to have_content("Start: 12-01 00:00:00")
-      expect(page).to have_content("Stop: 12-31 00:00:00")
-      expect(page).to have_content("Year Range: 1970 - 1975")
+      expect(page).to have_content("Start 12-01 00:00:00")
+      expect(page).to have_content("Stop 12-31 00:00:00")
+      expect(page).to have_content("Range 1970 - 1975")
     end
 
     it "allows the user to clear the recurring date time search" do
@@ -147,9 +147,9 @@ describe "Temporal", reset: false do
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
-      expect(page).to have_content("Start: 12-01 00:00:00")
-      expect(page).to have_content("Stop: 12-31 00:00:00")
-      expect(page).to have_content("Year Range: 1970 - 1975")
+      expect(page).to have_content("Start 12-01 00:00:00")
+      expect(page).to have_content("Stop 12-31 00:00:00")
+      expect(page).to have_content("Range 1970 - 1975")
 
       click_link "Temporal"
       click_link "Recurring"
@@ -157,9 +157,9 @@ describe "Temporal", reset: false do
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("Amazon River Basin Precipitation, 1972-1992")
-      expect(page).to have_no_content("Start: 12-01 00:00:00")
-      expect(page).to have_no_content("Stop: 12-31 00:00:00")
-      expect(page).to have_no_content("Year Range: 1970 - 1975")
+      expect(page).to have_no_content("Start 12-01 00:00:00")
+      expect(page).to have_no_content("Stop 12-31 00:00:00")
+      expect(page).to have_no_content("Range 1970 - 1975")
     end
 
     it "validates incorrect user input" do
