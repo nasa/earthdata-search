@@ -1,6 +1,6 @@
 ns = @edsc.models.data
 
-ns.Project = do (ko) ->
+ns.Project = do (ko, evilJQuery=$, QueryModel = ns.Query) ->
 
   class Project
     constructor: (@query) ->
@@ -9,6 +9,9 @@ ns.Project = do (ko) ->
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
       @searchGranulesDataset = ko.observable(null)
       @query.params.subscribe(@_onQueryChange)
+
+      @granule_query = new QueryModel()
+      @granule_query.params.subscribe(@_onGranuleQueryChange)
 
     getDatasets: ->
       @_datasetsById[id] for id in @_datasetIds()
@@ -69,5 +72,12 @@ ns.Project = do (ko) ->
       params = @query.params()
       for dataset in @getDatasets()
         dataset.searchGranules(params)
+
+    _onGranuleQueryChange: =>
+      dataset_params = @query.params()
+      granule_params = @granule_query.params()
+      params = $.extend({}, dataset_params, granule_params)
+      if @searchGranulesDataset()
+        @searchGranulesDataset().searchGranules(params)
 
   exports = Project

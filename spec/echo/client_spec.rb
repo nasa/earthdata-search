@@ -177,6 +177,13 @@ describe Echo::Client do
       response = Echo::Client.get_granules(browse_only: 'true')
       expect(response.faraday_response).to eq(:response)
     end
+
+    it 'filters granules by day/night flag' do
+      expect(connection).to receive(:get).with(granule_search_url, day_night_flag: 'DAY').and_return(:response)
+
+      response = Echo::Client.get_granules(day_night_flag: 'Day only')
+      expect(response.faraday_response).to eq(:response)
+    end
   end
 
   context 'dataset facets' do

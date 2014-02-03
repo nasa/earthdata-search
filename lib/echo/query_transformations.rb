@@ -16,6 +16,7 @@ module Echo
         load_temporal_query(options, query)
         load_browse_only_query(options, query)
         load_facets_query(options, query, false)
+        load_day_night_flag_query(options, query)
 
         query
       end
@@ -53,6 +54,19 @@ module Echo
           # Escape catalog-rest reserved characters, then add a wildcard character to the
           # end of each word to allow partial matches of any word
           query[:keyword] = catalog_wildcard(catalog_escape(options[:keywords]))
+        end
+      end
+
+      def load_day_night_flag_query(options, query)
+        if options[:day_night_flag] && options[:day_night_flag] != "Anytime"
+          query[:day_night_flag] = case options[:day_night_flag]
+          when "Day only"
+            "DAY"
+          when "Night only"
+            "NIGHT"
+          when "Both day and night"
+            "Both"
+          end
         end
       end
 
