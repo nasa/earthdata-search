@@ -25,7 +25,7 @@ $toolbar-background-bottom: #283949;
 $toolbar-accent-border: #21303f;
 
 // Master Overlay
-$master-overlay-parent-bg-color: transparentize(#111, .1);
-$master-overlay-parent-on-main-bg-color: transparentize(#111, .2); // Used when drawing parent overlapping main
+$master-overlay-parent-bg-color: transparentize(#111, .2);
+$master-overlay-parent-on-main-bg-color: transparentize(#111, .3); // Used when drawing parent overlapping main
 $master-overlay-main-bg-color: transparentize(#111, .2);
 $overlay-heading-font-color: #c9c9c9;

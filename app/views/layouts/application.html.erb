@@ -13,11 +13,10 @@
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" %>
 </head>
 <body class="env-<%= Rails.env %>" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
-
-    <div class="earthdata-tophat">Earthdata Tophat</div>
     <header id="main-toolbar" class="toolbar">
       <h1><a class="ir" href="#">Earthdata Search</a></h1>
       <div class="toolbar-content">
@@ -30,7 +29,7 @@
     </div>
     <footer>
       <div class="footer-content">
-        <p>NASA Earthdata Search Client</p>
+        <p><span class="version">v <strong>0.1.4</strong></span> • <strong>NASA Official:</strong> Kevin Murphy • <span class="nasa-links"><a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> • <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> • <a href="http://www.usa.gov">USA.gov</a> • <a href="http://www.usa.gov">ExpectMore.gov</a></span></p>
       </div>
     </footer>
 </body>

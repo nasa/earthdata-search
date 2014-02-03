@@ -15,15 +15,7 @@ body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0px 0px -25px 0px;
-}
-
-/* TEMPORARY */
-.earthdata-tophat {
-  background: #282828;
-  color: #fff;
-  padding: .4em 1em;
-  font-size: .8em;
+  margin: -25px 0px -35px 0px;
 }
 
 footer, .toolbar {
@@ -42,7 +34,7 @@ footer, .toolbar {
 .toolbar {
   @include linear-gradient(rgba(44, 62, 80, 1), $toolbar-background-bottom);
   //background: asset-url('header-drop.png') repeat-x top;
-  padding: .5em 1em;
+  padding: 35px 1em 50px 1em;
   height: 58px;
   border-bottom: 1px solid #242424;
 
@@ -95,14 +87,25 @@ footer, .toolbar {
 
 
 footer {
-  height: 25px;
+  height: 35px;
   z-index: 1000;
   position: relative;
-  font-size: .8em;
-}
-
-footer p {
-  padding: 5px 0 0 10px;
+  font-size: .7em;
+  
+  p {
+    padding: 9px 20px 0 20px;
+  }
+  
+  .version {
+    background: $button-dark-bottom-gradient;
+    padding: 2px 8px;
+    border-radius: 2px;
+    text-shadow: 1px 1px 1px $toolbar-background-bottom;
+  }
+  
+  a:link, a:visited {
+    color: #92bfec;
+  }
 }
 
 .search {
