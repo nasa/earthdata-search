@@ -4,11 +4,12 @@
 require "spec_helper"
 
 describe "Dataset Facets" do
-  before do
-    visit "/search"
-  end
+  context "facet listings", reset: false do
+    before do
+      Capybara.reset_sessions!
+      visit "/search"
+    end
 
-  context "facet listings" do
     it "shows the first Campaign facet" do
       expect(page).to have_content("Campaigns AQUA")
     end
@@ -65,12 +66,18 @@ describe "Dataset Facets" do
       expect(page).to have_css("#collapse0.facets-list-show")
 
       find(".facet-title", text: "Campaigns").click
-
       expect(page).to have_css("#collapse0.facets-list-hide")
+
+      find(".facet-title", text: "Campaigns").click
+      expect(page).to have_css("#collapse0.facets-list-show")
     end
   end
 
   context "selecting facets" do
+    before do
+      visit "/search"
+    end
+
     it "shows the user which facets have been applied to the query" do
       # select a campaign
       find(".facets-item", text: "EOSDIS").click

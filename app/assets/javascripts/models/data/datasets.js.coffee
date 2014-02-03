@@ -14,6 +14,9 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
       @granuleHits = ko.computed -> granulesModel.hits()
 
     _loadJson: (jsonData) ->
+      @thumbnail = ko.observable(null)
+      @spatial_constraint = ko.observable(null)
+      @archive_center = ko.observable(null)
       ko.mapping.fromJS(jsonData, {}, this)
       @error = ko.observable(null)
 
@@ -28,6 +31,7 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
 
   class DatasetsModel extends XhrModel
     constructor: ->
+      #super('http://localhost:3002/datasets')
       super('/datasets.json')
       @details = ko.observable({})
       @detailsLoading = ko.observable(false)
@@ -35,12 +39,12 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
       @allDatasetsVisible = ko.observable(false)
 
     _onSuccess: (data, replace) ->
+      results = data.feed.entry;
       if replace
-        @_searchResponse.hits(data.hits)
-        @_searchResponse.results(new Dataset(result) for result in data['results'])
+        @_searchResponse(new Dataset(result) for result in results)
       else
-        currentResults = @_searchResponse.results
-        newResults = (new Dataset(result) for result in data['results'])
+        currentResults = @_searchResponse
+        newResults = (new Dataset(result) for result in results)
         currentResults.push.apply(currentResults, newResults)
 
     showDataset: (dataset) =>

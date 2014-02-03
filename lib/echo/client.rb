@@ -3,7 +3,6 @@ module Echo
   Faraday.register_middleware(:response,
                               :logging => Echo::ClientMiddleware::LoggingMiddleware,
                               :errors => Echo::ClientMiddleware::ErrorsMiddleware,
-                              :atom_datasets => Echo::ClientMiddleware::AtomDatasetMiddleware,
                               :echo10_datasets => Echo::ClientMiddleware::Echo10DatasetMiddleware,
                               :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware)
 
@@ -21,7 +20,9 @@ module Echo
     end
 
     def self.get_granules(options={})
-      get("/catalog-rest/echo_catalog/granules.#{options[:format] || 'json'}", options_to_item_query(options))
+      options = options.dup
+      format = options.delete(:format) || 'json'
+      get("/catalog-rest/echo_catalog/granules.#{format}", options_to_granule_query(options))
     end
 
     def self.get_facets(options={})
@@ -67,7 +68,6 @@ module Echo
         # The order of these handlers is important.  They are run last to first.
         # Our parsers depend on JSON / XML being converted to objects by earlier
         # parsers.
-        conn.response :atom_datasets, :content_type => /\bjson$/
         conn.response :errors, :content_type => /\bjson$/
         conn.response :json, :content_type => /\bjson$/
         conn.response :echo10_granules, :content_type => "application/echo10+xml"
