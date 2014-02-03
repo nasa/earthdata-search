@@ -22,7 +22,7 @@ module Echo
     def self.get_granules(options={})
       options = options.dup
       format = options.delete(:format) || 'json'
-      get("/catalog-rest/echo_catalog/granules.#{format}", options_to_item_query(options))
+      get("/catalog-rest/echo_catalog/granules.#{format}", options_to_granule_query(options))
     end
 
     def self.get_facets(options={})

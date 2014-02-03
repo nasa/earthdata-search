@@ -12,6 +12,12 @@ module Echo
         query
       end
 
+      def options_to_granule_query(options={})
+        query = options.dup.symbolize_keys
+        query.delete(:keyword)
+        options_to_item_query(query)
+      end
+
       def options_to_facet_query(options={})
         options = options.with_indifferent_access
 

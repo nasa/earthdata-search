@@ -190,14 +190,12 @@ ns.Map = do (window,
     _showPolygon:   (layer, points) -> L.sphericalPolygon(points, color: "#ff7800", weight: 1).addTo(layer)
 
     _parseSpatial: (s) ->
-      console.log s
       s = s[0] if s instanceof Array
 
       coords = s.split(' ')
       points = []
       for i in [0...coords.length] by 2
         points.push([parseFloat(coords[i]), parseFloat(coords[i+1])])
-      console.log points
       points
 
     _hideDatasetSpatial: =>
