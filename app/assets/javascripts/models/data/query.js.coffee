@@ -47,7 +47,10 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
       @facets = ko.observableArray()
       @placename = ko.observable("")
 
-      @day_night_flag_options = ["Anytime","Day only","Night only","Both day and night"]
+      @day_night_flag_options = [{name: "Anytime", value: null},
+                                 {name: "Day only", value: "DAY"},
+                                 {name: "Night only", value: "NIGHT"},
+                                 {name: "Both day and night", value: "BOTH"}]
       @day_night_flag = ko.observable("")
 
       @params = ko.computed(@_computeParams)

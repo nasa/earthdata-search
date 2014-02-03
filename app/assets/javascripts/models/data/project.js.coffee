@@ -1,6 +1,6 @@
 ns = @edsc.models.data
 
-ns.Project = do (ko, evilJQuery=$, QueryModel = ns.Query) ->
+ns.Project = do (ko, QueryModel = ns.Query) ->
 
   class Project
     constructor: (@query) ->
