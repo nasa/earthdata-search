@@ -63,7 +63,7 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
         results = @results()
       else
         results = []
-      for item in @_searchResponse.results()
+      for item in @_searchResponse()
         found = ko.utils.arrayFirst results, (result) ->
           result.name() == item.name()
         if found

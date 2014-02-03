@@ -55,11 +55,10 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def self.decorate_all(datasets)
-    datasets = datasets.as_json
     ids = datasets.map {|r| r['id']}
     extras = DatasetExtra.where(echo_id: ids).index_by(&:echo_id)
 
-    datasets.map do |result|
+    datasets.map! do |result|
       extra = extras[result['id']] || DatasetExtra.new
       extra.decorate(result)
     end
@@ -87,7 +86,7 @@ class DatasetExtra < ActiveRecord::Base
 
     constraint = nil
     if point_spatial && point_spatial.size == 1
-      point = point_spatial.first.first
+      point = point_spatial.first.split
       constraint = "point:#{point.reverse.join(',')}"
     end
     dataset[:spatial_constraint] = constraint

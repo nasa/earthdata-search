@@ -176,10 +176,10 @@ ns.Map = do (window,
 
       layer = new L.FeatureGroup()
 
-      @_showLine(layer, s)      for s in dataset.lines()    ? []
-      @_showRectangle(layer, s) for s in dataset.boxes()    ? []
-      @_showPoint(layer, s)     for s in dataset.points()   ? []
-      @_showPolygon(layer, s)   for s in dataset.polygons() ? []
+      @_showLine(layer, @_parseSpatial(s))      for s in dataset.lines?()    if dataset.lines?
+      @_showRectangle(layer, @_parseSpatial(s)) for s in dataset.boxes?()    if dataset.boxes?
+      @_showPoint(layer, @_parseSpatial(s))     for s in dataset.points?()   if dataset.points?
+      @_showPolygon(layer, @_parseSpatial(s))   for s in dataset.polygons?() if dataset.polygons?
 
       layer.addTo(@map)
       @_datasetSpatialLayer = layer
@@ -189,6 +189,16 @@ ns.Map = do (window,
     _showPoint:     (layer, points) -> L.marker(points...).addTo(layer)
     _showPolygon:   (layer, points) -> L.sphericalPolygon(points, color: "#ff7800", weight: 1).addTo(layer)
 
+    _parseSpatial: (s) ->
+      console.log s
+      s = s[0] if s instanceof Array
+
+      coords = s.split(' ')
+      points = []
+      for i in [0...coords.length] by 2
+        points.push([parseFloat(coords[i]), parseFloat(coords[i+1])])
+      console.log points
+      points
 
     _hideDatasetSpatial: =>
       if @_datasetSpatialLayer
