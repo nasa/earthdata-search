@@ -12,10 +12,14 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
       @granulesModel = granulesModel = new Granules()
       @granules = ko.computed -> granulesModel.results()
       @granuleHits = ko.computed -> granulesModel.hits()
+      @spatial_constraint = ko.computed =>
+        if @points?
+          'point:' + @points()[0].split(/\s+/).reverse().join(',')
+        else
+          null
 
     _loadJson: (jsonData) ->
       @thumbnail = ko.observable(null)
-      @spatial_constraint = ko.observable(null)
       @archive_center = ko.observable(null)
       ko.mapping.fromJS(jsonData, {}, this)
       @error = ko.observable(null)

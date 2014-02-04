@@ -138,7 +138,7 @@ describe "Spatial" do
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
-    context "changing the point selection" do
+    context "changing the bounding box selection" do
       before(:each) do
         create_bounding_box(0, 0, 10, 10)
         create_bounding_box(-75, 40, -74, 41)
@@ -187,7 +187,7 @@ describe "Spatial" do
       expect(page).to have_content("Polygon boundaries must not cross themselves")
     end
 
-    context "changing the point selection" do
+    context "changing the polygon selection" do
       before(:each) do
         create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
         create_polygon([-74, 41], [-75, 41], [-75, -40], [-74, 40])

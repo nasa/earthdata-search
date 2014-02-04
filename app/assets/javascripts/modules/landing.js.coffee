@@ -18,7 +18,7 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) -
   updateLandingPageAnimated = (isLandingPage) ->
     $content = $('.landing-toolbar-content')
     startOffset = $content.offset()
-    $content.css(position: 'absolute', zIndex: 10001, left: startOffset.left, top: startOffset.top)
+    $content.css(position: 'absolute', zIndex: 101, left: startOffset.left, top: startOffset.top)
     $('.landing-toolbar-container').append($content)
 
     if isLandingPage

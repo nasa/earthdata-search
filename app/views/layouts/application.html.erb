@@ -13,7 +13,7 @@
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
-    <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" %>
+    <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
 </head>
 <body class="env-<%= Rails.env %>" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
