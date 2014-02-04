@@ -22,3 +22,5 @@
 /.librarian
 /.tmp
 /vagrant/.vagrant
+
+/fixtures/cassettes/*

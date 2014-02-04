@@ -1,8 +1,8 @@
-class GranulesController < CatalogController
+class GranulesController < ApplicationController
   respond_to :json
 
   def index
-    catalog_response = Echo::Client.get_granules(to_echo_params(request.query_parameters))
+    catalog_response = Echo::Client.get_granules(request.query_parameters)
 
     if catalog_response.success?
       catalog_response.headers.each do |key, value|

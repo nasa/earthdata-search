@@ -1,8 +1,8 @@
-class DatasetsController < CatalogController
+class DatasetsController < ApplicationController
   respond_to :json
 
   def index
-    catalog_response = Echo::Client.get_datasets(to_echo_params(request.query_parameters))
+    catalog_response = Echo::Client.get_datasets(request.query_parameters)
 
     if catalog_response.success?
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
@@ -28,7 +28,7 @@ class DatasetsController < CatalogController
   end
 
   def facets
-    response = Echo::Client.get_facets(to_echo_params(request.query_parameters))
+    response = Echo::Client.get_facets(request.query_parameters)
 
 
     if response.success?

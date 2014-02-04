@@ -6,15 +6,14 @@ module Echo
       def options_to_item_query(options={})
         query = options.dup.symbolize_keys
 
-        load_keyword_query(query)
-        load_spatial_query(query)
+        load_freetext_query(query)
 
         query
       end
 
       def options_to_granule_query(options={})
         query = options.dup.symbolize_keys
-        query.delete(:keyword)
+        query.delete(:free_text)
         options_to_item_query(query)
       end
 
@@ -45,35 +44,12 @@ module Echo
 
       private
 
-      def load_keyword_query(query)
-        if query[:keyword]
+      def load_freetext_query(query)
+        freetext = query.delete(:free_text)
+        if freetext
           # Escape catalog-rest reserved characters, then add a wildcard character to the
           # end of each word to allow partial matches of any word
-          query[:keyword] = catalog_wildcard(catalog_escape(query[:keyword]))
-        end
-      end
-
-      def load_spatial_query(query)
-        spatialStr = query.delete(:spatial)
-        if spatialStr.present?
-          type, *pointStrs = spatialStr.split(':')
-          type = type.gsub('-', '_').to_sym
-          type = :polygon if type == :antarctic_rectangle || type == :arctic_rectangle
-
-          # Polygon conditions must have their last point equal to their first
-          pointStrs << pointStrs.first if type == :polygon
-
-          points = pointStrs.map { |s| s.split(',').map(&:to_f) }
-
-          points.map! do |lon, lat|
-            lon += 360 while lon < -180
-            lon -= 360 while lon > 180
-            lat = [lat,  90.0].min
-            lat = [lat, -90.0].max
-            [lon, lat]
-          end
-
-          query[type] = points.flatten.join(',')
+          query[:keyword] = catalog_wildcard(catalog_escape(freetext))
         end
       end
 

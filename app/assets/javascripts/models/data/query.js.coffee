@@ -86,11 +86,15 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
     _computeParams: =>
       params = {}
 
-      keywords = @keywords()
-      params.keyword = keywords.trim() if keywords?.trim().length > 0
+      keywords = @keywords()?.trim()
+      if keywords?.length > 0
+        placename = @placename()
+        if placename? && placename.length > 0 && keywords.indexOf(placename) == 0
+          keywords = keywords.replace(placename, '')
+        params.free_text = keywords
 
       spatial = @spatial()
-      params.spatial = spatial if spatial?.length > 0
+      @_computeSpatialParams(params, spatial) if spatial?.length > 0
 
       temporal = @temporal()
       params.temporal = temporal.join(',') if temporal?.length > 0
@@ -100,7 +104,6 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
         params[param] ||= []
         params[param].push(facet.term)
 
-      placename = @placename()
       params.placename = placename if placename?.length > 0
 
       day_night_flag = @day_night_flag()
@@ -109,6 +112,28 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
       params.page_size = 20
 
       params
+
+    _computeSpatialParams: (params, spatialStr) ->
+      spatial = spatialStr.split(':')
+      type = spatial.shift()
+
+      if type != 'point' && type != 'bounding_box'  && type != 'line'
+        type = 'polygon'
+
+      spatial = for coord in spatial
+        [lon, lat] = coord.split(',')
+        lon = parseFloat(lon)
+        lon += 360 while lon < -180
+        lon -= 360 while lon > 180
+        lat = parseFloat(lat)
+        lat = Math.min(90, lat)
+        lat = Math.max(-90, lat)
+        "#{lon},#{lat}"
+
+      if type == 'polygon'
+        spatial.push(spatial[0])
+
+      params[type] = spatial.join(',')
 
     switchTemporal: (type) =>
       switch type

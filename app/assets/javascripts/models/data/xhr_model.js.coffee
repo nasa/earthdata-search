@@ -33,7 +33,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
           @isLoaded(true)
           @completedRequestId = requestId
           @error(null)
-          @hits(parseInt(xhr.getResponseHeader('echo-hits'), 10))
+          @hits(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10))
           #console.log("Response: #{@path}", requestId, params, data)
           @_onSuccess(data, args...)
         else
