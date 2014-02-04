@@ -219,13 +219,16 @@
   <div class="master-overlay-secondary">
     <div class="master-overlay-secondary-content" data-level="0">
       <section id="granule-search" >
-        <header>
           <a class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-          <h2>Granule Search</h2>
+        <nav class="master-overlay-nav">
+          Granule Filters
+        </nav>
+        <header>
           <!-- ko if: project.searchGranulesDataset() -->
-          <p data-bind="text: project.searchGranulesDataset().dataset_id"></p>
+          <h2 data-bind="text: project.searchGranulesDataset().dataset_id"></h2>
           <!-- /ko -->
         </header>
+        <%= render partial: 'granule_search' %>
       </section>
     </div>
   </div>

@@ -47,6 +47,12 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
       @facets = ko.observableArray()
       @placename = ko.observable("")
 
+      @day_night_flag_options = [{name: "Anytime", value: null},
+                                 {name: "Day only", value: "DAY"},
+                                 {name: "Night only", value: "NIGHT"},
+                                 {name: "Both day and night", value: "BOTH"}]
+      @day_night_flag = ko.observable("")
+
       @params = ko.computed(@_computeParams)
 
     clearFilters: =>
@@ -63,6 +69,7 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
       evilJQuery('.temporal-recurring-year-range').slider('setValue', [1960, current_year])
       @placename('')
       @facets.removeAll()
+      @day_night_flag("")
 
     toggleQueryDatasetSpatial: (dataset) =>
       constraint = dataset.spatial_constraint()
@@ -95,6 +102,9 @@ ns.Query = do (ko, date=@edsc.util.date, evilJQuery=$, evilPageModels=@edsc.mode
 
       placename = @placename()
       params.placename = placename if placename?.length > 0
+
+      day_night_flag = @day_night_flag()
+      params.day_night_flag = day_night_flag if day_night_flag?.length > 0
 
       params.page_size = 20
 
