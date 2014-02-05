@@ -5,7 +5,6 @@ gem 'rails', '~> 4.0.0'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'multi_xml'
@@ -38,8 +37,6 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'colored'
-  gem 'deadweight' # Finds unused styles
-  gem 'execcsslint' # CSS Lint
   gem 'vcr'
 
   # rspec-like environment for Javascript
@@ -47,6 +44,11 @@ group :development, :test do
   # so we're specifying a newer version here.  This should be removed once we have
   # a newer release
   gem 'jasmine', :git => 'https://github.com/pivotal/jasmine-gem.git', :ref => 'e8105401'
+end
+
+group :assets, :development, :test do
+  gem 'execcsslint' # CSS Lint
+  gem 'deadweight' # Finds unused styles
 end
 
 # Gems used only for assets and not required
@@ -62,9 +64,7 @@ group :assets, :test do
   gem 'uglifier', '>= 1.3.0'
 end
 
-group :production do
-  gem 'pg'
-end
+gem 'pg', '0.17.1'
 
 gem 'jquery-rails'
 gem 'bourbon'
@@ -81,7 +81,7 @@ gem 'knockoutjs-rails'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
