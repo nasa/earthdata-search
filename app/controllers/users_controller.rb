@@ -10,7 +10,8 @@ class UsersController < ApplicationController
     if response.status == 201
       render json: token, status: response.status
     else
-      render json: response.body["errors"], status: response.status
+      errors = Array.wrap(response.body["errors"]["error"]).join(', ')
+      render json: errors, status: response.status
     end
   end
 end

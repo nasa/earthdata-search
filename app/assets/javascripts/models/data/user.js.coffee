@@ -22,7 +22,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
         @username(response.username)
 
       xhr.fail (response, type, reason) =>
-        @errors(response.responseJSON)
+        @errors(response.responseText)
 
     logout: =>
       @isLoggedIn(false)
