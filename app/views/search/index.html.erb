@@ -87,10 +87,10 @@
   </div>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
 
-  <!-- ko if: user.token().length == 0 -->
+  <!-- ko ifnot: user.isLoggedIn -->
   <a href="#" class="button user-info" data-toggle="modal" data-target="#login-modal">Login</a>
   <!-- /ko -->
-  <!-- ko if: user.token().length > 0 -->
+  <!-- ko if: user.isLoggedIn -->
   <div class="dropdown user-info">
     <a href="#" data-toggle="dropdown" data-bind="text: user.username" class="button dropdown-button"></a>
     <ul class="dropdown-menu">

@@ -7,6 +7,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
       @token = ko.observable("")
       @username = ko.observable("")
       @errors = ko.observable("")
+      @isLoggedIn = ko.observable(false)
 
     login: (form) =>
       data = {
@@ -16,6 +17,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
       @errors("")
 
       xhr = doPost "/login", data, (response) =>
+        @isLoggedIn(true)
         @token(response.id)
         @username(response.username)
 
@@ -23,6 +25,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
         @errors(response.responseJSON)
 
     logout: =>
+      @isLoggedIn(false)
       @token("")
       @username("")
 
