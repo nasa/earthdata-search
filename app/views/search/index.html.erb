@@ -86,13 +86,12 @@
     </ul>
   </div>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
-
   <!-- ko ifnot: user.isLoggedIn -->
-  <a href="#" class="button user-info" data-toggle="modal" data-target="#login-modal">Login</a>
+  <a href="#" class="button user-info" data-toggle="modal" data-target="#login-modal"><i class="fa fa-lock"></i> Login</a>
   <!-- /ko -->
   <!-- ko if: user.isLoggedIn -->
   <div class="dropdown user-info">
-    <a href="#" data-toggle="dropdown" data-bind="text: user.username" class="button dropdown-button"></a>
+    <a href="#" data-toggle="dropdown" class="button dropdown-button"><i class="fa fa-user"></i> <!--ko text: user.username--><!--/ko--></a>
     <ul class="dropdown-menu">
       <li>
         <a href="#" data-bind="click: user.logout">Logout</a>
