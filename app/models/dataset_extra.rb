@@ -88,16 +88,12 @@ class DatasetExtra < ActiveRecord::Base
     if dataset[:id] == 'C1000000016-LANCEMODIS'
       dataset[:gibs] = {
         product: 'MODIS_Terra_Snow_Cover',
-        start_date: '2012-05-08',
-        end_Date: '2014-02-06',
         format: 'png',
         resolution: '500m'
       }
     elsif dataset[:id] == 'C1000000019-LANCEMODIS'
       dataset[:gibs] = {
         product: 'MODIS_Terra_Aerosol',
-        start_date: '2012-05-08',
-        end_Date: '2014-02-06',
         maxNativeZoom: 5,
         format: 'png',
         resolution: '2km',

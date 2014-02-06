@@ -18,7 +18,7 @@
                 <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
-                <a href="#" class="button icon-button button-active" title="View dataset" data-bind="visible: $root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
+                <a href="#" class="button icon-button button-active" title="Hide dataset" data-bind="visible: $root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
                 <!-- ko if: $parent.ui.projectList.visible -->
