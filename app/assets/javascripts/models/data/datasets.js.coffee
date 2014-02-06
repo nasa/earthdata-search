@@ -22,6 +22,10 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
       @thumbnail = ko.observable(null)
       @archive_center = ko.observable(null)
       ko.mapping.fromJS(jsonData, {}, this)
+      if @gibs
+        @gibs = ko.observable(ko.mapping.toJS(@gibs))
+      else
+        @gibs = ko.observable(null)
       @error = ko.observable(null)
 
     searchGranules: (params) ->
@@ -40,6 +44,8 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
       @details = ko.observable({})
       @detailsLoading = ko.observable(false)
       @_visibleDatasetIds = ko.observableArray()
+      @_visibleDatasets = {}
+      @visibleGibsDatasets = ko.computed(@_computeVisibleGibsDatasets)
       @allDatasetsVisible = ko.observable(false)
 
     _onSuccess: (data, replace) ->
@@ -68,20 +74,37 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
     hasVisibleDataset: (dataset) =>
       @_visibleDatasetIds.indexOf(dataset.id()) != -1
 
+    addVisibleDataset: (dataset) ->
+      unless @hasVisibleDataset(dataset)
+        id = dataset.id()
+        @_visibleDatasets[id] = dataset
+        @_visibleDatasetIds.push(id)
+
+    removeVisibleDataset: (dataset) ->
+      id = dataset.id()
+      @_visibleDatasetIds.remove(id)
+      delete @_visibleDatasets[id]
+
+    _computeVisibleGibsDatasets: =>
+      result = []
+      for id in @_visibleDatasetIds()
+        dataset = @_visibleDatasets[id]
+        if dataset.gibs()?
+          result.push(dataset)
+      result
+
     toggleVisibleDataset: (dataset) =>
       if @hasVisibleDataset(dataset)
-        @_visibleDatasetIds.remove(dataset.id())
+        @removeVisibleDataset(dataset)
       else
-        @_visibleDatasetIds.push(dataset.id())
+        @addVisibleDataset(dataset)
 
     toggleViewAllDatasets: (datasets) =>
       if @allDatasetsVisible()
-        for dataset in datasets()
-          @_visibleDatasetIds.remove(dataset.id())
+        datasets.forEach(@removeVisibleDataset, this)
         @allDatasetsVisible(false)
       else
-        for dataset in datasets()
-          @_visibleDatasetIds.push(dataset.id())
+        datasets.forEach(@addVisibleDataset, this)
         @allDatasetsVisible(true)
 
   exports = DatasetsModel

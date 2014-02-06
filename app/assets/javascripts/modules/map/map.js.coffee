@@ -7,8 +7,8 @@ ns.Map = do (window,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
              LayerBuilder = ns.LayerBuilder,
              SpatialSelection = ns.SpatialSelection,
-             dateUtil = @edsc.util.date
-             currentPage = @edsc.models.page.current) ->
+             GibsVisualizationsLayer = ns.GibsVisualizationsLayer,
+             page = @edsc.page) ->
 
   # Fix leaflet default image path
   L.Icon.Default.imagePath = '/images/leaflet-0.7'
@@ -28,31 +28,36 @@ ns.Map = do (window,
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
 
-      @_buildLayers()
+      @_buildLayerSwitcher()
+      map.addLayer(new GibsVisualizationsLayer())
+
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
       @setProjection(projection)
 
-      @_datasetSubscription = currentPage.datasets.details.subscribe(@_showDatasetSpatial)
+      @_datasetSubscription = page.datasets.details.subscribe(@_showDatasetSpatial)
+      @_gibsVisualizationSubscription = page.datasets.visibleGibsDatasets.subscribe (datasets) ->
+        map.fire('gibs.visibledatasetschange', datasets: datasets)
+
       $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)
 
     # Removes the map from the page
     destroy: ->
       @map.remove()
       @_datasetSubscription.dispose()
+      @_gibsVisualizationSubscription.dispose()
       $('#dataset-results, #project-overview').off('edsc.navigate', @_hideDatasetSpatial)
 
     _createLayerMap: (productIds...) ->
       layerForProduct = LayerBuilder.layerForProduct
-      projection = @projection
       result = {}
       for productId in productIds
-        layer = layerForProduct(productId, projection)
-        result[layer.name] = layer
+        layer = layerForProduct(productId)
+        result[layer.options.name] = layer
       result
 
-    _buildLayers: ->
+    _buildLayerSwitcher: ->
       baseMaps = @_baseMaps = @_createLayerMap('blue_marble', 'MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
       overlayMaps = @_overlayMaps = @_createLayerMap('administrative_boundaries', 'coastlines')
 
@@ -74,7 +79,7 @@ ns.Map = do (window,
         hasLayer = layerControl._layers[L.stamp(layer)]?
         if valid && !hasLayer
           layerControl.addBaseLayer(layer, k)
-          layer.setZIndex(1) # Keep baselayers below overlays
+          layer.setZIndex(0) # Keep baselayers below overlays
         if !valid && hasLayer
           layerControl.removeLayer(layer)
           needsNewBaseLayer = true if layer.layer?._map?
@@ -92,6 +97,7 @@ ns.Map = do (window,
         hasLayer = layerControl._layers[L.stamp(layer)]?
         if valid && !hasLayer
           layerControl.addOverlay(layer, k)
+          layer.setZIndex(10) # Keep baselayers below overlays
         if !valid && hasLayer
           layerControl.removeLayer(layer)
 
@@ -147,28 +153,6 @@ ns.Map = do (window,
       map.setView(L.latLng(opts.center), opts.zoom, reset: true)
       @_rebuildLayers()
 
-    # (For debugging) Display a layer with the given GeoJSON
-    debugShowGeoJson: (json) ->
-      layer = new L.geoJson(json);
-      layer.setStyle
-        color: "#0f0"
-        weight: 1
-        fill: false
-        opacity: 1.0
-
-      @addLayer(layer)
-
-    # (For debugging) Log mouse lat / lon to the console as the mouse moves
-    startMouseDebugging: ->
-      @map.on 'mousemove', @_debugMouseMovement
-
-    # (For debugging) Stop logging mouse lat / lon to the console
-    stopMouseDebugging: ->
-      @map.off 'mousemove', @_debugMouseMovement
-
-    _debugMouseMovement: (e) =>
-      console.log('mousemove', e.latlng.lat.toFixed(2), e.latlng.lng.toFixed(2))
-
     _showDatasetSpatial: (dataset) =>
       dataset = dataset.summaryData
 
@@ -207,21 +191,12 @@ ns.Map = do (window,
     projection = 'geo'
     map = new Map(document.getElementById('map'), projection)
 
-
-    # Useful debugging snippets
-
-    # Add outlines of US States to the map to help ensure correct projections and tile positioning
-    #$.getJSON '/assets-dev/modules/map/debug-geojson.json', {}, (json) -> map.debugShowGeoJson(json)
-
-    # Log the mouse lat / lon to the console
-    #map.startMouseDebugging()
-
     # Debugging spherical polygons
     #L.sphericalPolygon([
     #  [-45, 0],
     #  [45, 45],
     #  [0, -45]
-    #]).addTo(map).bindPopup("I am a generic polygon.")
+    #]).addTo(map).bindopup("I am a generic polygon.")
 
     #L.sphericalPolygon([
     #  [0, -45],

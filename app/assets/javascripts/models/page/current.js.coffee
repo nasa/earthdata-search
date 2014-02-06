@@ -2,7 +2,7 @@
 
 ns = @edsc.models.page
 
-ns.current = do ($ = jQuery, SearchPageModel = ns.SearchPage) ->
+ns.current = @edsc.page = do ($ = jQuery, SearchPageModel = ns.SearchPage) ->
 
   # We only have one page to worry about for now.  Eventually we'll have to
   # worry about loading the correct page.

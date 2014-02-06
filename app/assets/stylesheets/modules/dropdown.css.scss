@@ -7,6 +7,10 @@
 .dropdown {
   display: inline-block;
   position: relative;
+
+  .dropdown-menu {
+    z-index: 1000;
+  }
 }
 
 .dropdown-menu {
@@ -26,7 +30,7 @@
 }
 
 .xdsoft_datetimepicker, .xdsoft_timepicker {
-  z-index:1000;
+  z-index:1001;
 }
 
 // Hide jquery.datetimepicker's year field

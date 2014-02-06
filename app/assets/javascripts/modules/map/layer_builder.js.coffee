@@ -46,22 +46,11 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
       wmsParams:
         layers: 'gpw-v3-coastlines'
 
-  buildGibsLayer = (id, projection) ->
-    params = gibsParams[id]
-    new GibsTileLayer(params.name, params, projection)
+  layerForProduct = (id) ->
+    return new GibsTileLayer(gibsParams[id]) if gibsParams[id]?
+    return new SedacTileLayer(sedacParams[id]) if sedacParams[id]?
 
-  buildSedacLayer = (id, projection) ->
-    params = sedacParams[id]
-    new SedacTileLayer(params.name, params.wmsParams, projection)
-
-  layerForProduct = (id, projection="geo") ->
-    if gibsParams[id]?
-      buildGibsLayer(id, projection)
-    else if sedacParams[id]?
-      buildSedacLayer(id, projection)
-    else
-      console.error("Unable to find product: #{id}")
-      null
+    console.error("Unable to find product: #{id}")
 
   exports =
     layerForProduct: layerForProduct

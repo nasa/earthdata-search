@@ -18,27 +18,41 @@
     <ul class="dropdown-menu temporal-dropdown">
       <li>
         <ul class="nav nav-tabs">
-          <li class="temporal-dropdown-link temporal-range active"><a href="#temporal-date-range" data-toggle="tab">Date Range</a></li>
-          <li class="temporal-dropdown-link temporal-recurring"><a href="#temporal-recurring" data-toggle="tab">Recurring</a></li>
+          <li class="temporal-dropdown-link temporal-range active">
+            <a href="#temporal-date-range" data-toggle="tab" data-bind="click: ui.temporal.pending.isRecurring.bind($data, false)">Date Range</a>
+          </li>
+          <li class="temporal-dropdown-link temporal-recurring">
+            <a href="#temporal-recurring" data-toggle="tab" data-bind="click: ui.temporal.pending.isRecurring.bind($data, true)">Recurring</a>
+          </li>
         </ul>
         <div class="tab-content">
           <div id="temporal-date-range" class="tab-pane active">
             <div class="datetime-field" id="temporal_start_button">
               <label for="temporal-range-start">Start</label>
-              <input data-bind="value: query.temporal_range_start" id="temporal-range-start" class="temporal temporal-range-picker temporal-start temporal-range-start" type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
-              <button data-bind="click: query.clearTemporal.bind($data, 'range-start')" id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
+              <input data-bind="value: ui.temporal.pending.start.humanDateString"
+                     id="temporal-range-start"
+                     class="temporal temporal-range-picker temporal-start temporal-range-start"
+                     type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
+              <button data-bind="click: ui.temporal.pending.start.clear"
+                      id="clear_temporal_start"
+                      class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
               <label for="temporal-range-stop">End</label>
-              <input data-bind="value: query.temporal_range_stop" id="temporal-range-stop" class="temporal temporal-range-picker temporal-stop temporal-range-stop" type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
-              <button data-bind="click: query.clearTemporal.bind($data, 'range-stop')" id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
+              <input data-bind="value: ui.temporal.pending.stop.humanDateString"
+                     id="temporal-range-stop"
+                     class="temporal temporal-range-picker temporal-stop temporal-range-stop"
+                     type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
+              <button data-bind="click: ui.temporal.pending.stop.clear"
+                      id="clear_temporal_stop"
+                      class="button temporal-clear low-priority" type="button">Clear</button>
             </div>
             <div class="temporal-error">Start must be no later than End</div>
             <div class="button-row">
               <button id="temporal-range-submit"
                       class="button submit"
                       title="Apply your selections" type="button">Apply</button>
-              <button id="temporal-range-clear" data-bind="click: query.clearTemporal.bind($data, 'range')"
+              <button id="temporal-range-clear" data-bind="click: ui.temporal.pending.clear"
                       class="button temporal-clear temporal-range low-priority"
                       title="Clear your selections" type="button">Clear</button>
             </div>
@@ -46,18 +60,30 @@
           <div id="temporal-recurring" class="tab-pane">
             <div class="datetime-field" id="temporal_start_button">
               <label for="temporal-recurring-start">Start</label>
-              <input data-bind="value: query.temporal_recurring_start" id="temporal-recurring-start" class="temporal temporal-recurring-picker temporal-start temporal-recurring-start" type="text" placeholder="MM-DD HH:MM:SS"/>
-              <button data-bind="click: query.clearTemporal.bind($data, 'recurring-start')" id="clear_temporal_start" class="button temporal-clear low-priority" type="button">Clear</button>
+              <input data-bind="value: ui.temporal.pending.start.humanDateString"
+                     id="temporal-recurring-start"
+                     class="temporal temporal-recurring-picker temporal-start temporal-recurring-start"
+                     type="text" placeholder="MM-DD HH:MM:SS"/>
+              <button data-bind="click: ui.temporal.pending.start.clear"
+                      id="clear_temporal_start"
+                      class="button temporal-clear low-priority"
+                      type="button">Clear</button>
             </div>
             <div class="datetime-field" id="temporal_end_button">
               <label for="temporal-recurring-stop">End</label>
-              <input data-bind="value: query.temporal_recurring_stop" id="temporal-recurring-stop" class="temporal temporal-recurring-picker temporal-stop temporal-recurring-stop" type="text" placeholder="MM-DD HH:MM:SS"/>
-              <button data-bind="click: query.clearTemporal.bind($data, 'recurring-stop')" id="clear_temporal_stop" class="button temporal-clear low-priority" type="button">Clear</button>
+              <input data-bind="value: ui.temporal.pending.stop.humanDateString"
+                     id="temporal-recurring-stop"
+                     class="temporal temporal-recurring-picker temporal-stop temporal-recurring-stop"
+                     type="text" placeholder="MM-DD HH:MM:SS"/>
+              <button data-bind="click: ui.temporal.pending.stop.clear"
+                      id="clear_temporal_stop"
+                      class="button temporal-clear low-priority"
+                      type="button">Clear</button>
             </div>
             <div class="range-slider">
                 <label for="temporal-slider">Range</label>
               <input id="temporal-slider" class="temporal-recurring-year-range" type="text">
-              <p><span data-bind="text: query.temporal_recurring_year_range" class="temporal-recurring-year-range-value"></span></p>
+              <p><span data-bind="text: ui.temporal.pending.yearsString" class="temporal-recurring-year-range-value"></span></p>
 
             </div>
             <div class="temporal-error">Start must be no later than End</div>
@@ -65,7 +91,7 @@
               <button id="temporal-recurring-submit"
                       class="button submit"
                       title="Apply your selections" type="button">Apply</button>
-              <button id="temporal-recurring-clear" data-bind="click: query.clearTemporal.bind($data, 'recurring')"
+              <button id="temporal-recurring-clear" data-bind="click: ui.temporal.pending.clear"
                       class="button temporal-clear temporal-recurring low-priority"
                       title="Clear your selections" type="button">Clear</button>
             </div>
@@ -244,7 +270,7 @@
   </div>
 </div>
 
-<div id="map" class="map" style="height:100%; z-index:-1;">
+<div id="map" class="map" style="height:100%">
   <div class="geojson-help">
     <div class="geojson-help-dropzone">
       <h1>Search by Shape File</h1>
@@ -265,8 +291,21 @@
   </div>
 </div>
 
-<div id="temporal-query" data-bind="with: ui.temporal">
-  <p><i class="fa fa-clock-o"></i> <span data-bind="visible: start"><strong>Start</strong> <span data-bind="text: start"></span></span> <span data-bind="visible: stop"><strong>Stop</strong> <span data-bind="text: stop"></span></span> <span data-bind="visible: years"><strong>Range</strong> <span data-bind="text: years"></span></span></p>
+<div id="temporal-query" data-bind="with: ui.temporal.applied">
+  <p>
+    <i class="fa fa-clock-o"></i>
+    <span data-bind="visible: start.date">
+      <strong>Start</strong>
+      <span data-bind="text: start.humanDateString"></span>
+    </span>
+    <span data-bind="visible: stop.date">
+      <strong>Stop</strong>
+      <span data-bind="text: stop.humanDateString"></span>
+    </span>
+    <span data-bind="visible: (start.date() || stop.date()) && isRecurring()">
+      <strong>Range</strong> <span data-bind="text: yearsString"></span>
+    </span>
+  </p>
 </div>
 
 <div class="landing-area landing-visible">

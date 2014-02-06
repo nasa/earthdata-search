@@ -41,14 +41,15 @@ ns.SearchPage = do (ko,
 
       @spatialError = ko.computed(@_computeSpatialError)
 
-      ko.computed(@_computeDatasetResults).extend(throttle: 500)
-      ko.computed(@_computeDatasetFacetsResults).extend(throttle: 500)
+      ko.computed(@_computeDatasetResults).extend(throttle: 100)
+      ko.computed(@_computeDatasetFacetsResults).extend(throttle: 100)
 
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
       "#{value} #{word}"
 
     _computeDatasetResults: =>
+      console.log "compute!"
       @datasets.search(@query.params())
 
     _computeDatasetFacetsResults: =>
