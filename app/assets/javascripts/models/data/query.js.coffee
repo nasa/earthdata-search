@@ -56,7 +56,6 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
       @_computeSpatialParams(params, spatial) if spatial?.length > 0
 
       temporal = @temporal()?.queryCondition()
-      console.log("temporal: #{temporal}")
       params.temporal = temporal if temporal?.length > 0
 
       for facet in @facets()
@@ -65,6 +64,11 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
         params[param].push(facet.term)
 
       params.placename = placename if placename?.length > 0
+
+      # DELETE ME
+      window.debugSpatial ?= true
+      if window.debugSpatial
+        params.echo_collection_id = ['C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS']
 
       day_night_flag = @day_night_flag()
       params.day_night_flag = day_night_flag if day_night_flag?.length > 0

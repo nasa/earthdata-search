@@ -22,7 +22,7 @@ ns.ProjectionSwitchingLayer = do (L) ->
 
     onRemove: (map) ->
       @_map = null
-      @layer.onRemove(map)
+      @layer?.onRemove(map)
       @layer = null
       map.off 'projectionchange', @_onProjectionChange
 

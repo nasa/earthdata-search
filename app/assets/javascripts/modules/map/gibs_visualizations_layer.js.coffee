@@ -1,12 +1,13 @@
 ns = @edsc.map
 
-ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date) ->
+ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsTileLayer=ns.L.GibsTileLayer) ->
+
+  yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
 
   class GibsVisualizationsLayer
     constructor: ->
       @_datasetIdsToLayers = {}
-      yesterday = new Date()
-      yesterday.setDate(yesterday.getDate() - 1)
       @_visualizedDate = dateUtil.isoUtcDateString(yesterday)
 
     onAdd: (map) ->
@@ -32,31 +33,32 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date) ->
       overlayZ = 11
 
       for dataset in datasets
+        id = dataset.id()
         params = dataset.gibs()
         if params.format == 'jpeg'
-          z = Math.max(baseZ++, 9)
+          z = Math.min(baseZ++, 9)
         else
-          z = Math.max(overlayZ++, 19)
+          z = Math.min(overlayZ++, 19)
 
-        if datasetIdsToLayers[dataset.id]?
-          layer = datasetIdsToLayers[dataset.id]
-          layer.setZIndex(z)
+        if datasetIdsToLayers[id]?
+          layer = datasetIdsToLayers[id]
         else
-          layer = new GibsTileLayer(L.extend({}, params, time: @_visualizedDate, zIndex: z))
+          layer = new GibsTileLayer(L.extend({}, params, time: @_visualizedDate))
           map.addLayer(layer)
+        layer.setZIndex(z)
 
-        newDatasetIdsToLayers[dataset.id] = layer
+        newDatasetIdsToLayers[id] = layer
 
       for own id, layer of datasetIdsToLayers
         unless newDatasetIdsToLayers[id]?
           map.removeLayer(layer)
 
-      datasetIdsToLayers = newDatasetIdsToLayers
+      @_datasetIdsToLayers = newDatasetIdsToLayers
 
       null
 
     _onVisualizedDateChange: (e) =>
-      @_visualizedDate = date = dateUtil.isoUtcDateString(e.date)
+      @_visualizedDate = date = dateUtil.isoUtcDateString(e.date || yesterday)
 
       for own id, layer of @_datasetIdsToLayers
         layer.updateOptions(time: date)
