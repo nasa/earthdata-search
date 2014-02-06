@@ -27,7 +27,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
     _load: (params, args...) =>
       requestId = ++@pendingRequestId
       @isLoading(@pendingRequestId != @completedRequestId)
-      console.log("Request: #{@path}", requestId, params)
+      console.log("Request (#{requestId}): #{@path}?#{$.param(params)}")
       xhr = getJSON @path, params, (data, status, xhr) =>
         if requestId > @completedRequestId
           @isLoaded(true)

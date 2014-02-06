@@ -3,8 +3,8 @@
 
 require "spec_helper"
 
-describe "Temporal", reset: false do
-  before :all do
+describe "Temporal" do
+  before :each do
     visit "/search"
   end
 
@@ -60,6 +60,7 @@ describe "Temporal", reset: false do
 
       click_link "Temporal"
       find_by_id("clear_temporal_stop").click
+      click_button "Apply"
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2001 Environmental Sustainability Index (ESI)")
@@ -83,6 +84,7 @@ describe "Temporal", reset: false do
       click_link "Temporal"
       page.find_by_id("clear_temporal_start").click
       page.find_by_id("clear_temporal_stop").click
+      click_button "Apply"
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2001 Environmental Sustainability Index (ESI)")
@@ -125,7 +127,7 @@ describe "Temporal", reset: false do
       click_link "Recurring"
       fill_in "Start", with: "12-01 00:00:00"
       fill_in "End", with: "12-31 00:00:00"
-      script = "edsc.models.page.current.query.temporal_recurring_year_range('1970 - 1975')"
+      script = "edsc.page.ui.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       click_button "Apply"
 
@@ -141,7 +143,7 @@ describe "Temporal", reset: false do
       click_link "Recurring"
       fill_in "Start", with: "12-01 00:00:00"
       fill_in "End", with: "12-31 00:00:00"
-      script = "edsc.models.page.current.query.temporal_recurring_year_range('1970 - 1975')"
+      script = "edsc.page.ui.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       click_button "Apply"
 
@@ -152,8 +154,8 @@ describe "Temporal", reset: false do
       expect(page).to have_content("Range 1970 - 1975")
 
       click_link "Temporal"
-      click_link "Recurring"
       page.find_by_id("temporal-recurring-clear").click
+      click_button "Apply"
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("Amazon River Basin Precipitation, 1972-1992")
@@ -176,7 +178,6 @@ describe "Temporal", reset: false do
       click_link "Temporal"
       click_link "Recurring"
       fill_in "Start", with: "12-10 00:00:00"
-      click_button "Apply"
 
       expect(page).to have_content("Start and End dates must both be selected")
     end

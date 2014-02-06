@@ -3,9 +3,6 @@
 
 .leaflet-container {
   background-color: #000;
-  // Leaflet sets this to -1, presumably for layering.  It breaks horribly on our page layout,
-  // rendering below all containers
-  z-index: 0 !important;
 }
 
 .projection-geo .projection-only-arctic,
@@ -45,7 +42,7 @@
   left: 0;
   right: 0;
   position: absolute;
-  z-index: 9;
+  z-index: 59;
   background-color: rgba(255, 255, 255, 0.75);
 }
 

@@ -10,7 +10,7 @@ ns.SedacTileLayer = do (L, ProjectionSwitchingLayer = ns.ProjectionSwitchingLaye
       transparent: true
 
     _buildLayerWithOptions: (newOptions) ->
-      L.extend(@options, newOptions)
-      new L.TileLayer.WMS(sedacUrl, @options)
+      L.extend(@options.wmsParams, newOptions)
+      new L.TileLayer.WMS(sedacUrl, @options.wmsParams)
 
   exports = SedacTileLayer
