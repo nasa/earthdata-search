@@ -39,6 +39,8 @@ ns.Map = do (window,
       @_datasetSubscription = page.datasets.details.subscribe(@_showDatasetSpatial)
       @_gibsVisualizationSubscription = page.datasets.visibleGibsDatasets.subscribe (datasets) ->
         map.fire('gibs.visibledatasetschange', datasets: datasets)
+      @_gibsVisualizationSubscription = page.query.temporal().stop.date.subscribe (date) ->
+        map.fire('visualizeddatechange', date: date)
 
       $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)
 
@@ -71,12 +73,14 @@ ns.Map = do (window,
 
     _rebuildLayers: ->
       layerControl = @_layerControl
-      needsNewBaseLayer = false
+      needsNewBaseLayer = true
       projection = @projection
 
       for own k, layer of @_baseMaps
         valid = layer.validForProjection(projection)
         hasLayer = layerControl._layers[L.stamp(layer)]?
+        needsNewBaseLayer &&= (!valid || !layer.layer?._map)
+
         if valid && !hasLayer
           layerControl.addBaseLayer(layer, k)
           layer.setZIndex(0) # Keep baselayers below overlays

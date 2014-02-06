@@ -55,7 +55,5 @@
               <p data-bind="if: granulesModel.isLoaded">
                 <span data-bind="text: $root.pluralize(granuleHits(), 'Granule', 'Granules')"></span>
               </p>
-              <p data-bind="if: gibs">
-                I haz GIBS: <span data-bind="text: gibs().product"></span>
-              </p>
+              <span class="badge badge-gibs" data-bind="if: gibs">GIBS</span>
             </li>

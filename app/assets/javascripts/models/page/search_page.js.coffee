@@ -52,7 +52,6 @@ ns.SearchPage = do (ko,
       "#{value} #{word}"
 
     _computeDatasetResults: =>
-      console.log "compute!"
       @datasets.search(@query.params())
 
     _computeDatasetFacetsResults: =>

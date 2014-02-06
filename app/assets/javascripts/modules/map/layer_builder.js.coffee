@@ -1,4 +1,4 @@
-ns = window.edsc.map
+ns = @edsc.map
 
 ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
                       SedacTileLayer = ns.L.SedacTileLayer,
