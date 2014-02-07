@@ -9,6 +9,8 @@ ns.User = do (ko, doPost=jQuery.post) ->
       @errors = ko.observable("")
       @isLoggedIn = ko.observable(false)
 
+      @_loadStateFromCookie()
+
     login: (form) =>
       data =
         token:
@@ -23,6 +25,8 @@ ns.User = do (ko, doPost=jQuery.post) ->
         token = response.token
         @token(token.id)
         @username(token.username)
+        @_setCookie("token", @token())
+        @_setCookie("username", @username())
 
       xhr.fail (response, type, reason) =>
         server_error = false
@@ -40,5 +44,27 @@ ns.User = do (ko, doPost=jQuery.post) ->
       @isLoggedIn(false)
       @token("")
       @username("")
+      @_setCookie("token", "")
+      @_setCookie("username", "")
+
+    # https://gist.github.com/dmix/2222990
+    _setCookie: (name, value) ->
+      document.cookie = name + "=" + escape(value)
+
+    _readCookie: (name) ->
+      nameEQ = name + "="
+      ca = document.cookie.split(";")
+      i = 0
+      while i < ca.length
+        c = ca[i]
+        c = c.substring(1, c.length)  while c.charAt(0) is " "
+        return c.substring(nameEQ.length, c.length).replace(/"/g, '')  if c.indexOf(nameEQ) is 0
+        i++
+      null
+
+    _loadStateFromCookie: =>
+      @token(@_readCookie("token"))
+      @username(@_readCookie("username"))
+      @isLoggedIn(@token() and @username())
 
   exports = User
