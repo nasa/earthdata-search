@@ -101,10 +101,10 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
 
     toggleViewAllDatasets: (datasets) =>
       if @allDatasetsVisible()
-        datasets.forEach(@removeVisibleDataset, this)
+        datasets().forEach(@removeVisibleDataset, this)
         @allDatasetsVisible(false)
       else
-        datasets.forEach(@addVisibleDataset, this)
+        datasets().forEach(@addVisibleDataset, this)
         @allDatasetsVisible(true)
 
   exports = DatasetsModel
