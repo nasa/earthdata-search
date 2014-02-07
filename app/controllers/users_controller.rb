@@ -3,15 +3,11 @@ class UsersController < ApplicationController
     username = params[:username]
     password = params[:password]
 
-    response = Echo::Client.get_token(username, password, "EDSC", request.remote_ip)
+    token = params['token']
+    token['user_ip_address'] = request.remote_ip
 
-    token = response.body['token']
+    response = Echo::Client.get_token(token['username'], token['password'], token['client_id'], token['user_ip_address'])
 
-    if response.status == 201
-      render json: token, status: response.status
-    else
-      errors = Array.wrap(response.body["errors"]["error"]).join(', ')
-      render json: errors, status: response.status
-    end
+    render json: response.body, status: response.status
   end
 end
