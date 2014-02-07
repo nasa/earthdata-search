@@ -42,11 +42,11 @@
                   <!-- /ko -->
                 <!-- /ko -->
                 <a href="#" class="button icon-button" data-pulse="#project-count" title="Add dataset to the current project"
-                   data-bind="visible: !$root.project.hasDataset($data), click: $root.project.toggleDataset">
+                   data-bind="visible: !$root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
                   <i class="edsc-icon-plus"></i>
                 </a>
                 <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove dataset from the current project"
-                   data-bind="visible: $root.project.hasDataset($data), click: $root.project.toggleDataset">
+                   data-bind="visible: $root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
                   <i class="edsc-icon-minus"></i>
                 </a>
               </div>
