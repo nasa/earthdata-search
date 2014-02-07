@@ -34,15 +34,15 @@ ns.SearchPage = do (ko,
         spatialType: new SpatialTypeModel()
         temporal: new TemporalModel(@query)
         datasetsList: new DatasetsListModel(@query, @datasets)
-        projectList: new ProjectListModel(@project)
+        projectList: new ProjectListModel(@project, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
 
       @bindingsLoaded = ko.observable(false)
 
       @spatialError = ko.computed(@_computeSpatialError)
 
-      ko.computed(@_computeDatasetResults).extend(throttle: 500)
-      ko.computed(@_computeDatasetFacetsResults).extend(throttle: 500)
+      ko.computed(@_computeDatasetResults).extend(throttle: 100)
+      ko.computed(@_computeDatasetFacetsResults).extend(throttle: 100)
 
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural

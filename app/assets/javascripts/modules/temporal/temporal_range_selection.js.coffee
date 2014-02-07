@@ -1,7 +1,7 @@
-query = @edsc.models.page.current.query
+uiModel = @edsc.page.ui.temporal
 edsc_date = @edsc.util.date
 
-current_year = new Date().getFullYear()
+current_year = new Date().getUTCFullYear()
 
 $(document).ready ->
   validateTemporalInputs = ->
@@ -61,32 +61,23 @@ $(document).ready ->
 
   addDayOfYear = (picker, input) ->
     if picker.find('.day-of-year-picker')?.length == 0
+      which = if input.is('.temporal-start') then 'start' else 'stop'
       day_of_year_div = $("<div class='day-of-year-picker'>
-        <label for='day-of-year-input'>Day of Year:</label>
-        <input id='day-of-year-input' class='day-of-year-input' type='text' placeholder='YYYY-DDD' >
+        <label for='day-of-year-#{which}-input'>Day of Year:</label>
+        <input id='day-of-year-#{which}-input' data-bind='value: ui.temporal.pending.#{which}.dayOfYearString' class='day-of-year-input' type='text' placeholder='YYYY-DDD' >
         <button id='day-of-year-submit' class='button text-button' data-input='" + input.attr("id") + "'>Set</button>
         </div>")
       day_of_year_div.appendTo(picker)
+      ko.applyBindings(@edsc.page, day_of_year_div[0])
 
   parseOrdinal = (value) ->
     match = /(\d{4})-(\d{3})/.exec(value)
     return null  unless match # Date is in the wrong format
     year = parseInt(match[1], 10)
     day = parseInt(match[2], 10)
-    date = new Date(year, 0, day)
-    return null  unless date.getFullYear() is year # Date is higher than the number of days in the year
+    date = new Date(Date.UTC(year, 0, day))
+    return null  unless date.getUTCFullYear() is year # Date is higher than the number of days in the year
     edsc_date.isoUtcDateTimeString(date)
-
-  findDayOfYear = (date) ->
-    one_day = 1000 * 60 * 60 * 24
-    date_year = new Date( date.getFullYear(), 0, 0)
-    day = Math.floor((date - date_year) / one_day).toString()
-    day = "0" + day  while day.length < 3
-    day
-
-  populateDayOfYear = (picker, date) ->
-    day = findDayOfYear(date)
-    $(picker).find(".day-of-year-input").val(date.getFullYear() + '-' + day)
 
   $(document).on 'click', '#day-of-year-submit', ->
     value = $(this).prev().val()
@@ -102,15 +93,12 @@ $(document).ready ->
     yearEnd: current_year,
     onShow: (dp,$input) ->
       setMinMaxOptions(this, $input, 'range')
-      populateDayOfYear(this, new Date($input.val())) if $input.val()
     onChangeDateTime: (dp,$input) ->
       # Default minutes and seconds to 00
       datetime = $input.val().split(":")
       datetime[1] = "00"
       datetime[2] = "00"
       $input.val(datetime.join(":"))
-
-      populateDayOfYear(this, new Date($input.val())) if $input.val()
 
       validateTemporalInputs()
 
@@ -122,8 +110,8 @@ $(document).ready ->
   $('.temporal-recurring-picker').datetimepicker({
     format: 'm-d H:i:s',
     className: 'recurring-datetimepicker',
-    yearStart: current_year,
-    yearEnd: current_year,
+    yearStart: 2007,
+    yearEnd: 2007,
     onShow: (dp,$input) ->
       updateMonthButtons($(this).find('.xdsoft_month'))
       setMinMaxOptions(this, $input, 'recurring')
@@ -147,17 +135,15 @@ $(document).ready ->
     value: [1960, current_year],
     tooltip: 'hide'
   }).on 'slide', (e) ->
-    query.temporal_recurring_year_range(e.value.join(" - "))
+    uiModel.pending.years(e.value)
 
-  query.temporal_recurring_year_range("1960 - " + current_year)
-
-  formatDateTimeString = (datetime) ->
-    if datetime?.length > 0 then datetime.replace(' ','T') + 'Z' else ''
+  uiModel.pending.years.subscribe (years) ->
+    $('.temporal-recurring-year-range').slider('setValue', years)
 
   # Submit temporal range search
   updateTemporalRange = ->
     if $('#temporal-date-range .temporal-error').is(":hidden")
-      query.switchTemporal('range')
+      uiModel.apply()
     else
       false
 
@@ -168,7 +154,7 @@ $(document).ready ->
   # Submit temporal recurring search
   updateTemporalRecurring = ->
     if $('#temporal-recurring .temporal-error').is(":hidden")
-      query.switchTemporal('recurring')
+      uiModel.apply()
     else
       false
 

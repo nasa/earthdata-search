@@ -68,7 +68,7 @@ footer, .toolbar {
   position: absolute;
   color: #fff;
   background: rgba(22,22,22,.9);
-  z-index: 30;
+  z-index: 60;
   padding: 8px 12px;
   border-radius: 5px;
   top: 15px;
@@ -89,7 +89,10 @@ footer, .toolbar {
 footer {
   height: 35px;
   z-index: 1000;
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   font-size: .7em;
 
   p {

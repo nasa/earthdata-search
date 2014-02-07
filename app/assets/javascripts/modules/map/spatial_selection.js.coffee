@@ -116,8 +116,11 @@ ns.SpatialSelection = do (window,
 
       if name == 'Shape File'
         @_shapefileLayer.activate()
-      else if name != 'Spatial' && @_shapefileLayer.isActive()
-        @_shapefileLayer.deactivate()
+      else if @_shapefileLayer?.isActive()
+        if name == 'Spatial'
+          @_shapefileLayer.hideHelp()
+        else
+          @_shapefileLayer.deactivate()
 
     _onDrawStart: (e) =>
       # Remove the old layer
