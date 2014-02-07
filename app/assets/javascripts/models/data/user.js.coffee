@@ -57,4 +57,15 @@ ns.User = do (ko, doPost=jQuery.post) ->
       @token(null)
       @username("")
 
+    loggedIn: (action) ->
+      if @isLoggedIn()
+        action()
+      else
+        @loginCallback = =>
+          @loginCallback = null
+          action()
+
+        @needsLogin(true)
+
+
   exports = User

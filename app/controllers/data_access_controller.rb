@@ -1,4 +1,5 @@
 class DataAccessController < ApplicationController
-  def index
+  def create
+    render text: params.inspect
   end
 end

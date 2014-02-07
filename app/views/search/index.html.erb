@@ -215,6 +215,10 @@
         </div>
         <div class="master-overlay-content panel-list">
         <div class="master-overlay-project-actions">
+          <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject">
+            <i class="edsc-icon-download"></i>
+          </a>
+
           <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
             <i class="edsc-icon-eye"></i>
           </a>
@@ -376,3 +380,6 @@
     </div>
   </div>
 </div>
+
+<form id="data-access" method="POST" action="/data_access">
+</form>
