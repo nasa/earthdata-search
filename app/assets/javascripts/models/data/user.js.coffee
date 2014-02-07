@@ -10,19 +10,31 @@ ns.User = do (ko, doPost=jQuery.post) ->
       @isLoggedIn = ko.observable(false)
 
     login: (form) =>
-      data = {
-        "username" : form.username.value
-        "password" : form.password.value
-      }
+      data =
+        token:
+          username: form.username.value
+          password: form.password.value
+          client_id: 'EDSC'
+
       @errors("")
 
       xhr = doPost "/login", data, (response) =>
         @isLoggedIn(true)
-        @token(response.id)
-        @username(response.username)
+        token = response.token
+        @token(token.id)
+        @username(token.username)
 
       xhr.fail (response, type, reason) =>
-        @errors(response.responseText)
+        server_error = false
+        try
+          errors = JSON.parse(response.responseText)
+          if errors?.errors?.length > 0
+            @errors(errors.errors[0])
+          else
+            server_error = true
+        catch
+          server_error = true
+        @errors("An error occurred when logging in.  Please retry later.") if server_error
 
     logout: =>
       @isLoggedIn(false)

@@ -354,6 +354,7 @@
       </div>
       <form data-bind="submit: user.login">
         <div class="modal-body">
+          <span data-bind="text: user.errors()"></span>
           <div>
             <label for="username">Username</label>
             <input type="text" id="username" />
