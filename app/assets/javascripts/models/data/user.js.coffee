@@ -4,25 +4,42 @@ ns.User = do (ko, doPost=jQuery.post) ->
 
   class User
     constructor: ->
-      @token = ko.observable("")
+      @token = ko.observable(null)
+      @name = ko.observable("")
       @username = ko.observable("")
+      @password = ko.observable("")
       @errors = ko.observable("")
-      @isLoggedIn = ko.observable(false)
+      @isLoggedIn = ko.computed =>
+        @token()?
+      @needsLogin = ko.observable(false)
+      @loginCallback = null
 
-    login: (form) =>
+    initiateLogin: =>
+      @needsLogin(true)
+
+    cancelLogin: =>
+      @clearLogin()
+
+    clearLogin: =>
+      @username("")
+      @password("")
+      @needsLogin(false)
+
+    login: () =>
       data =
         token:
-          username: form.username.value
-          password: form.password.value
+          username: @username()
+          password: @password()
           client_id: 'EDSC'
 
       @errors("")
 
       xhr = doPost "/login", data, (response) =>
-        @isLoggedIn(true)
         token = response.token
         @token(token.id)
-        @username(token.username)
+        @name(token.username)
+        @loginCallback?()
+        @clearLogin()
 
       xhr.fail (response, type, reason) =>
         server_error = false
@@ -37,8 +54,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
         @errors("An error occurred when logging in.  Please retry later.")
 
     logout: =>
-      @isLoggedIn(false)
-      @token("")
+      @token(null)
       @username("")
 
   exports = User

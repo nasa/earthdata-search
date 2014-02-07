@@ -1,4 +1,4 @@
-do (ko) ->
+do (ko, $=jQuery) ->
 
   ko.observableArray.fn.contains = (obj) ->
     @indexOf(obj) != -1
@@ -26,3 +26,15 @@ do (ko) ->
 
   ko.observableArray.fn.subscribeRemove = (callback) ->
     @subscribeChange('deleted', callback)
+
+
+  ko.bindingHandlers.showModal =
+    init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+
+    update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+      isShown = ko.unwrap(valueAccessor())
+      if isShown
+        method = 'show'
+      else
+        method = 'hide'
+      $(element).modal(method)

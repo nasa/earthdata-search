@@ -80,11 +80,4 @@ ns.Project = do (ko, QueryModel = ns.Query) ->
       if @searchGranulesDataset()
         @searchGranulesDataset().searchGranules(params)
 
-    downloadDataset: =>
-      # send to data_access
-      alert 'Download!'
-
-    loginAndDownloadDataset: =>
-      $("#login-modal").modal("show")
-
   exports = Project

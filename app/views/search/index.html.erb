@@ -92,11 +92,11 @@
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
 
   <!-- ko ifnot: user.isLoggedIn -->
-  <a href="#" class="button user-info" data-toggle="modal" data-target="#login-modal">Login</a>
+  <a href="#" class="button user-info" data-bind="click: user.initiateLogin" data-target="#login-modal">Login</a>
   <!-- /ko -->
   <!-- ko if: user.isLoggedIn -->
   <div class="dropdown user-info">
-    <a href="#" data-toggle="dropdown" data-bind="text: user.username" class="button dropdown-button"></a>
+    <a href="#" data-toggle="dropdown" data-bind="text: user.name" class="button dropdown-button"></a>
     <ul class="dropdown-menu">
       <li>
         <a href="#" data-bind="click: user.logout">Logout</a>
@@ -350,26 +350,26 @@
 
 </div>
 
-<div id="login-modal" class="modal" role="dialog" aria-labelledby="EDSC Login" aria-hidden="true" data-backdrop="false">
+<div id="login-modal" data-bind="showModal: user.needsLogin" class="modal" role="dialog" aria-labelledby="EDSC Login" data-backdrop="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <a href="#" title="close" data-dismiss="modal" aria-hidden="true" class="pull-right"><i class="fa fa-times-circle"></i></a>
+        <a href="#" title="close" data-bind="click: user.cancelLogin" aria-hidden="true" class="pull-right"><i class="fa fa-times-circle"></i></a>
         <h4 class="modal-title" id="myModalLabel">EDSC Login</h4>
       </div>
       <form data-bind="submit: user.login">
         <div class="modal-body">
           <div>
             <label for="username">Username</label>
-            <input type="text" id="username" />
+            <input type="text" id="username" data-bind="value: user.username" />
           </div>
           <div>
             <label for="password">Password</label>
-            <input type="password" id="password" />
+            <input type="password" id="password" data-bind="value: user.password" />
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-bind="click: user.cancelLogin">Close</button>
           <button type="submit" class="btn btn-primary">Login</button>
         </div>
       </form>

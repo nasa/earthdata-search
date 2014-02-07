@@ -28,16 +28,16 @@ ns.SearchPage = do (ko,
   class SearchPage
     constructor: ->
       @query = new QueryModel()
+      @user = new UserModel()
       @datasets = new DatasetsModel()
       @datasetFacets = new DatasetFacetsModel(@query)
       @project = new ProjectModel(@query)
-      @user = new UserModel()
 
       @ui =
         spatialType: new SpatialTypeModel()
         temporal: new TemporalModel(@query)
         datasetsList: new DatasetsListModel(@query, @datasets)
-        projectList: new ProjectListModel(@project)
+        projectList: new ProjectListModel(@project, @user)
         isLandingPage: ko.observable(null) # Used by modules/landing
 
       @bindingsLoaded = ko.observable(false)
