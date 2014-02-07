@@ -15,6 +15,18 @@
                   <i class="edsc-icon-location"></i>
                 </a>
                 <!-- /ko -->
+                <!-- ko if: $parent.ui.projectList.visible -->
+                  <!-- ko if: $root.user.isLoggedIn -->
+                  <a href="#" class="button icon-button" title="Download dataset" data-bind="click: $root.project.downloadDataset">
+                    <i class="edsc-icon-download"></i>
+                  </a>
+                  <!-- /ko -->
+                  <!-- ko ifnot: $root.user.isLoggedIn -->
+                  <a href="#" class="button icon-button" title="Download dataset" data-bind="click: $root.project.loginAndDownloadDataset">
+                    <i class="edsc-icon-download"></i>
+                  </a>
+                  <!-- /ko -->
+                <!-- /ko -->
                 <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
