@@ -34,7 +34,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
             server_error = true
         catch
           server_error = true
-        @errors("An error occurred when logging in.  Please retry later.")
+        @errors("An error occurred when logging in.  Please retry later.") if server_error
 
     logout: =>
       @isLoggedIn(false)

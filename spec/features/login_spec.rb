@@ -15,36 +15,68 @@ describe "Login", reset: false do
 
   before(:each) do
     click_link 'Login'
-    fill_in 'Username', with: 'edsc'
-    fill_in 'Password', with: 'EDSCtest!1'
-    click_button 'Login'
-    wait_for_xhr
   end
 
   after(:each) do
     reset_user
   end
 
-  it "logs a user in successfully" do
-    script = "window.edsc.models.page.current.user.isLoggedIn()"
-    response = page.evaluate_script(script)
+  context "successful login" do
+    before(:each) do
+      fill_in 'Username', with: 'edsc'
+      fill_in 'Password', with: 'EDSCtest!1'
+      click_button 'Login'
+      wait_for_xhr
+    end
 
-    expect(response).to eq(true)
-  end
+    it "logs a user in successfully" do
+      script = "window.edsc.models.page.current.user.isLoggedIn()"
+      response = page.evaluate_script(script)
 
-  it "display the user information while logged in" do
-    within(".toolbar") do
-      expect(page).to have_content("edsc")
+      expect(response).to eq(true)
+    end
+
+    it "display the user information while logged in" do
+      within(".toolbar") do
+        expect(page).to have_content("edsc")
+      end
+    end
+
+    it "logs the user out" do
+      click_link 'edsc'
+      click_link 'Logout'
+
+      script = "window.edsc.models.page.current.user.isLoggedIn()"
+      response = page.evaluate_script(script)
+
+      expect(response).to eq(false)
     end
   end
 
-  it "logs the user out" do
-    click_link 'edsc'
-    click_link 'Logout'
+  context "unsuccessful login" do
+    after(:each) do
+      click_button 'Close'
+    end
 
-    script = "window.edsc.models.page.current.user.isLoggedIn()"
-    response = page.evaluate_script(script)
+    it "displays an error with a blank username" do
+      click_button 'Login'
 
-    expect(response).to eq(false)
+      expect(page).to have_content "Username can't be blank"
+    end
+
+    it "displays an error with a blank password" do
+      fill_in 'Username', with: 'test'
+      click_button 'Login'
+
+      expect(page).to have_content "Password can't be blank"
+    end
+
+    it "displays an error with an invalid username or password" do
+      fill_in 'Username', with: 'test'
+      fill_in 'Password', with: 'test'
+      click_button 'Login'
+
+      expect(page).to have_content "Invalid username or password, please retry."
+    end
   end
 end
