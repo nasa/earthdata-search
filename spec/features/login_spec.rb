@@ -53,6 +53,24 @@ describe "Login", reset: false do
     end
   end
 
+  context "remembers login between sessions" do
+    it "remembers the login session" do
+      fill_in 'Username', with: 'edsc'
+      fill_in 'Password', with: 'EDSCtest!1'
+      click_button 'Login'
+
+      within(".toolbar") do
+        expect(page).to have_content("edsc")
+      end
+
+      visit '/search'
+
+      within(".toolbar") do
+        expect(page).to have_content("edsc")
+      end
+    end
+  end
+
   context "unsuccessful login" do
     after(:each) do
       click_button 'Close'
