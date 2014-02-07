@@ -1,0 +1,36 @@
+.data-access {
+  background-color: #222222;
+  color: #fff;
+  height: 100%;
+
+  a {
+    color: #fff;
+  }
+
+  // Non-scrollable header area
+  header {
+    margin: 1em;
+    color: $overlay-heading-font-color;
+
+    h2 {
+      font-weight: normal;
+      font-size: 1.2em;
+    }
+
+    a:hover {
+      color: #aaa;
+    }
+  }
+}
+
+.data-access-nav {
+  padding: 1em;
+  border-bottom: 1px solid #333;
+}
+
+// Scrollable content area
+.data-access-content {
+  margin: 1em;
+  height: 100%;
+  overflow-y: scroll;
+}

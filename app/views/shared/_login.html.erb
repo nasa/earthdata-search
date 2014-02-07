@@ -1,0 +1,13 @@
+<!-- ko ifnot: user.isLoggedIn -->
+<a href="#" class="button user-info" data-bind="click: user.initiateLogin" data-target="#login-modal">Login</a>
+<!-- /ko -->
+<!-- ko if: user.isLoggedIn -->
+<div class="dropdown user-info">
+  <a href="#" data-toggle="dropdown" data-bind="text: user.name" class="button dropdown-button"></a>
+  <ul class="dropdown-menu">
+    <li>
+      <a href="#" data-bind="click: user.logout">Logout</a>
+    </li>
+  </ul>
+</div>
+<!-- /ko -->

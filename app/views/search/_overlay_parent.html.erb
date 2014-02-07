@@ -1,0 +1,52 @@
+<section id="master-overlay-parent" class="master-overlay-parent">
+  <header>
+    <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+    <h2>Browse Datasets</h2>
+  </header>
+  <div class="master-overlay-content panel-group">
+    <div data-bind="if: query.facets().length > 0" class="panel panel-default selected-facets-panel">
+      <div class="panel-heading">
+        <h3 class="panel-title facet-title">
+          Values Selected
+        </h3>
+      </div>
+      <div class="panel-body facets">
+        <dl>
+          <!-- ko foreach: datasetFacets.appliedFacets -->
+              <dt data-bind="text: name" class="facet-title"></dt>
+                <dd class="facets">
+                  <!-- ko foreach: selectedValues -->
+                  <span data-bind="click: $root.datasetFacets.removeFacet" class="facets-item selected">
+                      <span data-bind="text: term" ></span>
+                      <i class="fa fa-times"></i>
+                    </span>
+                    <span data-bind="if: $parent.selectedValues().indexOf($data) < $parent.selectedValues().length - 1"> or </span>
+                  <!-- /ko -->
+                </dd>
+          <!-- /ko -->
+        </dl>
+      </div>
+    </div>
+    <!-- ko foreach: datasetFacets.results -->
+    <div data-bind="if: values().length > 0, css: class_name" class="panel panel-default">
+      <div class="panel-heading">
+        <h3 data-bind="click: toggleList" class="panel-title facet-title">
+          <i data-bind="css: {'fa-caret-down': closed(), 'fa-caret-up': opened()}" class="fa pull-right"></i>
+          <a data-bind="text: name, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
+        </h3>
+      </div>
+      <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed()}">
+        <div class="panel-body facets">
+          <!-- ko foreach: values() -->
+          <p class="facets-item" data-bind="click: $root.datasetFacets.toggleFacet, css: {selected: isSelected}">
+            <span data-bind="text: term"></span>
+            (<span data-bind="text: count"></span>)
+            <i class="fa fa-times"></i>
+          </p>
+          <!-- /ko -->
+        </div>
+      </div>
+    </div>
+    <!-- /ko -->
+  </div>
+</section>
