@@ -1,6 +1,6 @@
 ns = @edsc.models.data
 
-ns.User = do (ko, doPost=jQuery.post) ->
+ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
 
   class User
     constructor: ->
@@ -57,10 +57,11 @@ ns.User = do (ko, doPost=jQuery.post) ->
         @errors("An error occurred when logging in.  Please retry later.") if server_error
 
     logout: =>
-      @token(null)
-      @name(null)
-      @_setCookie("token", "")
-      @_setCookie("username", "")
+      xhr = getJSON "/logout", (data, status, xhr) =>
+        @token(null)
+        @name(null)
+        @_setCookie("token", "")
+        @_setCookie("username", "")
 
     # https://gist.github.com/dmix/2222990
     _setCookie: (name, value) ->
