@@ -21,6 +21,27 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
 
       @params = ko.computed(@_computeParams)
 
+    fromJson: (jsonObj) ->
+      @keywords(jsonObj.keywords)
+      @spatial(jsonObj.spatial)
+
+      console.warn "Need to deserialize facets and temporal"
+      # TODO: Temporal
+      # TODO: Facets
+
+      @placename(jsonObj.placename)
+      @day_night_flag(jsonObj.day_night_flag)
+
+    serialize: ->
+      {
+        keywords: @keywords()
+        spatial: @spatial()
+        temporal: @temporal()?.serialize()
+        # TODO: Facets
+        placename: @placename()
+        day_night_flag: @day_night_flag()
+      }
+
     clearFilters: =>
       @keywords('')
       @spatial('')

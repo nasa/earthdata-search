@@ -72,6 +72,16 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
         else
           null
 
+    fromJson: (jsonObj) ->
+      @date(new Date(jsonObj.date))
+      @year(jsonObj.year)
+
+    serialize: ->
+      {
+        date: @date()?.getTime(),
+        year: @year()
+      }
+
     copy: (other) ->
       @date(other.date())
       @year(other.year())
@@ -91,6 +101,18 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
 
       @years = ko.computed(@_computeYears())
       @yearsString = ko.computed => @years().join(' - ')
+
+    fromJson: (jsonObj) ->
+      @isRecurring(jsonObj.isRecurring)
+      @start.fromJson(jsonObj.start)
+      @stop.fromJson(jsonObj.stop)
+
+    serialize: ->
+      {
+        isRecurring: @isRecurring()
+        start: @start.serialize()
+        stop: @start.serialize()
+      }
 
     copy: (other) ->
       @start.copy(other.start)

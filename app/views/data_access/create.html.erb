@@ -1,4 +1,7 @@
 <% content_for :javascript do %>
+  <script>
+    this.edscPageData = <%= raw @project.to_json %>;
+  </script>
   <%= javascript_include_tag "data_access" %>
 <% end %>
 
@@ -6,55 +9,31 @@
   <%= render partial: 'shared/login' %>
 <% end %>
 
-<div class="data-access">
-  <nav class="data-access-nav">
-    <a href="javascript:history.back()">
-      <i class="edsc-icon-arrow-left"></i> Back to Search Session
-    </a>
-  </nav>
-  <div class="data-access-content">
-    <header>
-      <h2>Data Access</h2>
-      <p>Review and select service options for your data prior to download</p>
-    </header>
-    <div class="panel-group">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Dataset 1
-        </div>
-        <div class="panel-collapse">
-          <div class="panel-body">
-            <p>Granule 1</p>
-            <p>Granule 2</p>
-            <p>Granule 3</p>
-            <p>Granule 4</p>
-          </div>
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Dataset 2
-        </div>
-        <div class="panel-collapse facets-list-hide">
-          <div class="panel-body">
-            <p>Granule 1</p>
-            <p>Granule 2</p>
-            <p>Granule 3</p>
-            <p>Granule 4</p>
-          </div>
-        </div>
-      </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          Complete Request
+<div class="data-access">
+  <nav>
+    <a href="javascript:history.back()"><i class="edsc-icon-arrow-left"></i> Back to Search Session</a>
+  </nav>
+  <header>
+    <h1>Data Access</h1>
+    <p>Review and select service options for your data prior to download</p>
+  </header>
+  <ol data-bind="foreach: project.datasets">
+    <li class="access-item">
+      <h2 data-bind="text: dataset_id"></h2>
+      <div class="access-item-details">
+        <h3>Review &amp; Select Service Options</h3>
+        <div class="access-item-review">
+          <h4>Review</h4>
         </div>
-        <div class="panel-collapse facets-list-hide">
-          <div class="panel-body">
-            submit
-          </div>
+        <div class="access-item-options">
+          <h4>Service Options</h4>
         </div>
       </div>
-    </div>
-  </div>
+      <div class="access-item-actions">
+        <button>Back</button>
+        <button>Continue</button>
+      </div>
+    </li>
+  </ol>
 </div>

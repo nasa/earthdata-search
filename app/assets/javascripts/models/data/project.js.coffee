@@ -1,6 +1,8 @@
+#= require models/data/datasets
+
 ns = @edsc.models.data
 
-ns.Project = do (ko, QueryModel = ns.Query) ->
+ns.Project = do (ko, QueryModel = ns.Query, getJSON=jQuery.getJSON, DatasetsModel = ns.Datasets) ->
 
   class Project
     constructor: (@query) ->
@@ -67,6 +69,34 @@ ns.Project = do (ko, QueryModel = ns.Query) ->
 
     clearSearchGranules: =>
       @searchGranulesDataset(null)
+
+    fromJson: (jsonObj) ->
+      @query.fromJson(jsonObj.dataset_query)
+
+      ids = (dataset.id for dataset in jsonObj.datasets)
+
+      new DatasetsModel().search {echo_collection_id: ids}, (params, model) =>
+        @datasets(model.results())
+
+      # TODO set granule query conditions here, once we pass those to the results page
+
+    serialize: ->
+      project = {}
+      project.dataset_query = @query.serialize()
+      project.datasets = []
+
+      console.log "Ordering without per-dataset customizations"
+      for dataset in @datasets()
+        id = dataset.id()
+        serializedDataset =
+          id: id
+        if dataset.has_granules()
+          # TODO: Eventually this will need to have per-dataset customizations
+          serializedDataset.params =
+            echo_collection_id: id
+        project.datasets.push(serializedDataset)
+
+      project
 
     _onQueryChange: =>
       params = @query.params()

@@ -15,6 +15,7 @@ ui = models.ui
 ns = models.page
 
 ns.SearchPage = do (ko,
+                    setCurrent = ns.setCurrent,
                     QueryModel = data.Query,
                     DatasetsModel = data.Datasets
                     DatasetFacetsModel = data.DatasetFacets
@@ -64,5 +65,7 @@ ns.SearchPage = do (ko,
         return "Polygon is too large" if error.indexOf('ORA-13367') != -1
         return error if error.indexOf('ORA-') != -1
       null
+
+  setCurrent(new SearchPage())
 
   exports = SearchPage

@@ -15,16 +15,16 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
       @hits = ko.observable(0)
       @hasNextPage = ko.computed => @results().length < @hits()
 
-    search: (params) =>
+    search: (params, callback) =>
       params.page_num = @page = 1
-      @_load(params, true)
+      @_load(params, callback, true)
 
-    loadNextPage: (params) =>
+    loadNextPage: (params, callback) =>
       if @hasNextPage() and !@isLoading()
         params.page_num = ++@page
-        @_load(params, false)
+        @_load(params, callback, false)
 
-    _load: (params, args...) =>
+    _load: (params, callback, args...) =>
       requestId = ++@pendingRequestId
       @isLoading(@pendingRequestId != @completedRequestId)
       console.log("Request (#{requestId}): #{@path}?#{$.param(params)}")
@@ -36,6 +36,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
           @hits(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10))
           #console.log("Response: #{@path}", requestId, params, data)
           @_onSuccess(data, args...)
+          callback?(params, this)
         else
           console.log("Rejected out-of-sequence request: #{@path}", requestId, params, data)
         @isLoading(@pendingRequestId != @completedRequestId)

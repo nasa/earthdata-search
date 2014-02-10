@@ -16,30 +16,15 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
         @downloadDatasets([dataset])
 
     loginAndDownloadProject: =>
-      @user.loggedIn =>
+      #@user.loggedIn =>
         @downloadDatasets(@project.getDatasets())
 
     downloadDatasets: (datasets) =>
-      $serialized = $('<div>')
-      dataset_query = '<input name="dataset_query" type="text">'
-      dataset_id = '<input name="datasets[][id]" type="text">'
-      granule_query = '<input name="datasets[][granules]" type="text">'
-      params = $.extend({}, @project.query.params())
-      delete params.page_num
-      delete params.page_size
+      $project = $('<input name="project" type="text">')
 
-      $serialized.append($(dataset_query).val(JSON.stringify(params)))
+      $project.val(JSON.stringify(@project.serialize()))
 
-      console.log "Ordering without per-dataset customizations"
-      for dataset in datasets
-        id = dataset.id()
-        $serialized.append($(dataset_id).val(id))
-        if dataset.has_granules()
-          # TODO: Eventually this will need to have per-dataset customizations
-          granule_params = {echo_collection_id: id}
-          $serialized.append($(granule_query).val(JSON.stringify(granule_params)))
-
-      $('#data-access').empty().append($serialized).submit()
+      $('#data-access').empty().append($project).submit()
 
     toggleDataset: (dataset) =>
       project = @project
