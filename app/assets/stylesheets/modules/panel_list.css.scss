@@ -24,10 +24,14 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   border-radius: 3px;
 }
 
-.panel-list-thumbnail {
+.panel-list-thumbnail-container {
   float: left;
+  position:relative;
   margin-left: -($panel-list-thumbnail-size - 8px);
   margin-right: .5em;
+}
+
+.panel-list-thumbnail {
   height: $panel-list-thumbnail-size;
   width: $panel-list-thumbnail-size;
 }
@@ -39,6 +43,37 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   box-sizing: border-box;
   padding: 4px;
   border: 1px solid #888;
+}
+
+.badge {
+  position: absolute;
+  top: -.4em;
+  left: -2em;
+  display: block;
+  color: transparent;
+  font-size:.6em;
+  font-weight: bold;
+  width: 0;
+  height: 0;
+  border-left: 3em solid transparent;
+  border-right: 3em solid transparent;
+  border-bottom: 3em solid rgb(201, 81, 0);
+  box-shadow: 0 3px 2px -1px #ccc;
+  -webkit-transform: rotate(-0.125turn);
+  -ms-transform: rotate(-0.125turn);
+  -moz-transform: rotate(-0.125turn);
+  -o-transform: rotate(-0.125turn);
+  transform: rotate(-0.125turn);
+}
+
+.badge:after {
+  color: #fff;
+  text-shadow: 1px 1px 1px #840;
+  font-size:1.2em;
+  display:block;
+  text-indent: -1.2em;
+  padding-top: 1.2em;
+  content: "GIBS";
 }
 
 .panel-list-details {

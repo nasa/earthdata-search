@@ -45,11 +45,16 @@ describe "Project dataset list", reset: false do
 
   context 'when clicking the "Remove" button' do
     before(:each) do
+      first_project_dataset.click_link "View dataset"
       first_project_dataset.click_link "Remove dataset from the current project"
     end
 
     it "removes the selected dataset from the project list" do
       expect(page).to have_css('#project-datasets-list .panel-list-item', count: 1)
+    end
+
+    it "removes the selected dataset's visualizations" do
+      expect(page).to have_no_css('#dataset-results-list .panel-list-item.view-dataset')
     end
   end
 
@@ -63,7 +68,7 @@ describe "Project dataset list", reset: false do
     end
 
     it "un-highlights the selected dataset when clicking the button again" do
-      first_project_dataset.click_link "View dataset"
+      first_project_dataset.click_link "Hide dataset"
       expect(page).to have_no_css('#project-datasets-list .panel-list-item.view-dataset')
     end
 

@@ -5,14 +5,15 @@ ns.User = do (ko, doPost=jQuery.post) ->
   class User
     constructor: ->
       @token = ko.observable(null)
-      @name = ko.observable("")
+      @name = ko.observable(null)
       @username = ko.observable("")
       @password = ko.observable("")
       @errors = ko.observable("")
       @isLoggedIn = ko.computed =>
-        @token()?
+        @token()? && @name()?
       @needsLogin = ko.observable(false)
       @loginCallback = null
+      @_loadStateFromCookie()
 
     initiateLogin: =>
       @needsLogin(true)
@@ -25,7 +26,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
       @password("")
       @needsLogin(false)
 
-    login: () =>
+    login: (form) =>
       data =
         token:
           username: @username()
@@ -40,6 +41,8 @@ ns.User = do (ko, doPost=jQuery.post) ->
         @name(token.username)
         @loginCallback?()
         @clearLogin()
+        @_setCookie("token", @token())
+        @_setCookie("username", @name())
 
       xhr.fail (response, type, reason) =>
         server_error = false
@@ -51,11 +54,32 @@ ns.User = do (ko, doPost=jQuery.post) ->
             server_error = true
         catch
           server_error = true
-        @errors("An error occurred when logging in.  Please retry later.")
+        @errors("An error occurred when logging in.  Please retry later.") if server_error
 
     logout: =>
       @token(null)
       @username("")
+      @_setCookie("token", "")
+      @_setCookie("username", "")
+
+    # https://gist.github.com/dmix/2222990
+    _setCookie: (name, value) ->
+      document.cookie = name + "=" + escape(value)
+
+    _readCookie: (name) ->
+      nameEQ = name + "="
+      ca = document.cookie.split(";")
+      i = 0
+      while i < ca.length
+        c = ca[i]
+        c = c.substring(1, c.length)  while c.charAt(0) is " "
+        return c.substring(nameEQ.length, c.length).replace(/\"/g, '')  if c.indexOf(nameEQ) is 0
+        i++
+      null
+
+    _loadStateFromCookie: =>
+      @token(@_readCookie("token"))
+      @username(@_readCookie("username"))
 
     loggedIn: (action) ->
       if @isLoggedIn()

@@ -68,9 +68,8 @@ class DatasetExtra < ActiveRecord::Base
     dataset = dataset.dup.with_indifferent_access
 
     decorate_thumbnail(dataset)
-    decorate_spatial_constraint(dataset)
-
     decorate_granule_information(dataset)
+    decorate_gibs_layers(dataset)
 
     dataset
   end
@@ -81,18 +80,26 @@ class DatasetExtra < ActiveRecord::Base
     dataset[:thumbnail] = self.thumbnail_url
   end
 
-  def decorate_spatial_constraint(dataset)
-    point_spatial = dataset[:points]
-
-    constraint = nil
-    if point_spatial && point_spatial.size == 1
-      point = point_spatial.first.split
-      constraint = "point:#{point.reverse.join(',')}"
-    end
-    dataset[:spatial_constraint] = constraint
-  end
-
   def decorate_granule_information(dataset)
     dataset[:has_granules] = self.has_granules
+  end
+
+  def decorate_gibs_layers(dataset)
+    if dataset[:id] == 'C1000000016-LANCEMODIS'
+      dataset[:gibs] = {
+        product: 'MODIS_Terra_Snow_Cover',
+        format: 'png',
+        resolution: '500m'
+      }
+    elsif dataset[:id] == 'C1000000019-LANCEMODIS'
+      dataset[:gibs] = {
+        product: 'MODIS_Terra_Aerosol',
+        maxNativeZoom: 5,
+        format: 'png',
+        resolution: '2km',
+        arctic: false,
+        antarctic: false
+      }
+    end
   end
 end

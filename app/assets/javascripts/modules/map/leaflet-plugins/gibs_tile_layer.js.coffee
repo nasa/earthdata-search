@@ -1,4 +1,4 @@
-ns = window.edsc.map.L
+ns = @edsc.map.L
 
 ns.GibsTileLayer = do (L, ProjectionSwitchingLayer = ns.ProjectionSwitchingLayer) ->
 
@@ -42,7 +42,6 @@ ns.GibsTileLayer = do (L, ProjectionSwitchingLayer = ns.ProjectionSwitchingLayer
 
       if options['endpoint'] == 'geo' && options['product_geo']
         options['product'] = options['product_geo']
-
 
       new L.TileLayer(gibsUrl, options)
 

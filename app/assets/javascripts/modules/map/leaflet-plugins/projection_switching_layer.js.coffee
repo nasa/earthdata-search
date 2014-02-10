@@ -11,39 +11,52 @@ ns.ProjectionSwitchingLayer = do (L) ->
 
     # Given options (optional, see L.TileLayer docs) and a projection (optional,
     # see edsc.map.Map docs) constructs a new GIBS-based tile layer
-    constructor: (@name, options={}) ->
+    constructor: (options={}) ->
       @options = L.extend({}, @defaultOptions, options)
 
     # ILayer methods.  Delegate to the underlying L.TileLayer
     onAdd: (map) ->
-      @layer = @_buildLayerWithOptions(this["#{map.projection}Options"])
-      @layer.setZIndex(@zIndex ? 0)
-      @layer.onAdd(map)
-
-      # Retry loading a tile once if it errors
-      @layer.on 'tileerror', (e) ->
-        src = e.tile.src
-        retryCount = src.match(/&retry=(\d+)$/)
-        if !retryCount
-          e.tile.src += '&retry=1'
-
+      @_map = map
+      @updateOptions()
       map.on 'projectionchange', @_onProjectionChange
 
     onRemove: (map) ->
-      @layer.onRemove(map)
+      @_map = null
+      @layer?.onRemove(map)
       @layer = null
       map.off 'projectionchange', @_onProjectionChange
 
     setZIndex: (@zIndex) ->
+      @layer?.setZIndex(@zIndex)
 
     validForProjection: (proj) ->
       @options[proj] != false
 
     _onProjectionChange: (e) =>
-      @layer.onRemove(e.map)
-      @layer = @_buildLayerWithOptions(this["#{e.projection}Options"])
-      @layer.setZIndex(@zIndex ? 0)
-      @layer.addTo(e.map)
+      @updateOptions()
+
+    updateOptions: (options={}) ->
+      map = @_map
+
+      if @layer?
+        @layer.onRemove(map)
+        @layer.off 'tileerror'
+        @layer = null
+
+      projection = map.projection
+      return unless @validForProjection(projection)
+
+      options = L.extend({}, this["#{projection}Options"], options)
+      layer = @layer = @_buildLayerWithOptions(options)
+      layer.setZIndex(@zIndex ? 0)
+      layer.addTo(map)
+
+      # Retry loading a tile once if it errors
+      layer.on 'tileerror', (e) ->
+        src = e.tile.src
+        retryCount = src.match(/&retry=(\d+)$/)
+        if !retryCount
+          e.tile.src += '&retry=1'
 
     # Arctic projection options
     arcticOptions:

@@ -2,7 +2,7 @@ ns = @edsc.models.ui
 
 ns.ProjectList = do (ko, window, $ = jQuery) ->
   class ProjectList
-    constructor: (@project, @user) ->
+    constructor: (@project, @user, @datasetResults) ->
       @visible = ko.observable(false)
 
     showProject: =>
@@ -40,5 +40,14 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
           $serialized.append($(granule_query).val(JSON.stringify(granule_params)))
 
       $('#data-access').empty().append($serialized).submit()
+
+    toggleDataset: (dataset) =>
+      project = @project
+      if project.hasDataset(dataset)
+        project.removeDataset(dataset)
+        if @visible()
+          @datasetResults.removeVisibleDataset(dataset)
+      else
+        project.addDataset(dataset)
 
   exports = ProjectList

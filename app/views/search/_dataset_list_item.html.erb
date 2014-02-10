@@ -1,4 +1,5 @@
             <li data-bind="click: $parent.ui.datasetsList.clickDataset, css: {'view-dataset': $root.datasets.hasVisibleDataset($data), 'search-granules': $root.project.isSearchingGranules($data)}" class="panel-list-item master-overlay-forward">
+              <div class="panel-list-thumbnail-container">
               <!-- ko if: thumbnail -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
               <!-- /ko -->
@@ -7,6 +8,10 @@
                 No image available
               </div>
               <!-- /ko -->
+              <!-- ko if: gibs -->
+              <span class="badge badge-gibs"></span>
+              <!-- /ko -->
+              </div>
               <h3 data-bind="text: dataset_id"></h3>
               <div class="panel-list-item-actions">
                 <!-- ko if: $root.query.canQueryDatasetSpatial($data) -->
@@ -23,7 +28,7 @@
                 <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
-                <a href="#" class="button icon-button button-active" title="View dataset" data-bind="visible: $root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
+                <a href="#" class="button icon-button button-active" title="Hide dataset" data-bind="visible: $root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
                 <!-- ko if: $parent.ui.projectList.visible -->
@@ -42,11 +47,11 @@
                   <!-- /ko -->
                 <!-- /ko -->
                 <a href="#" class="button icon-button" data-pulse="#project-count" title="Add dataset to the current project"
-                   data-bind="visible: !$root.project.hasDataset($data), click: $root.project.toggleDataset">
+                   data-bind="visible: !$root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
                   <i class="edsc-icon-plus"></i>
                 </a>
                 <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove dataset from the current project"
-                   data-bind="visible: $root.project.hasDataset($data), click: $root.project.toggleDataset">
+                   data-bind="visible: $root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
                   <i class="edsc-icon-minus"></i>
                 </a>
               </div>
