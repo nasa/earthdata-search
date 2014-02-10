@@ -25,10 +25,9 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
       @keywords(jsonObj.keywords)
       @spatial(jsonObj.spatial)
 
-      console.warn "Need to deserialize facets and temporal"
+      console.warn "Need to deserialize temporal"
       # TODO: Temporal
-      # TODO: Facets
-
+      @facets(jsonObj.facets)
       @placename(jsonObj.placename)
       @day_night_flag(jsonObj.day_night_flag)
 
@@ -37,7 +36,7 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
         keywords: @keywords()
         spatial: @spatial()
         temporal: @temporal()?.serialize()
-        # TODO: Facets
+        facets: @facets()
         placename: @placename()
         day_night_flag: @day_night_flag()
       }

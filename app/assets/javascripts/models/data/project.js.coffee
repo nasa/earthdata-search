@@ -72,17 +72,24 @@ ns.Project = do (ko, QueryModel = ns.Query, getJSON=jQuery.getJSON, DatasetsMode
 
     fromJson: (jsonObj) ->
       @query.fromJson(jsonObj.dataset_query)
+      @granule_query.fromJson(jsonObj.granule_query)
 
       ids = (dataset.id for dataset in jsonObj.datasets)
 
       new DatasetsModel().search {echo_collection_id: ids}, (params, model) =>
         @datasets(model.results())
+        for ds in @datasets()
+          dataset_params = @query.params()
+          granule_params = @granule_query.params()
+          params = $.extend({}, dataset_params, granule_params)
+          ds.searchGranules(params)
 
       # TODO set granule query conditions here, once we pass those to the results page
 
     serialize: ->
       project = {}
       project.dataset_query = @query.serialize()
+      project.granule_query = @granule_query.serialize()
       project.datasets = []
 
       console.log "Ordering without per-dataset customizations"
