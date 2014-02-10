@@ -21,14 +21,11 @@ ns.AccessPage = do (ko,
       console.log accessData
       @project.fromJson(accessData)
       @bindingsLoaded = ko.observable(false)
+      @user = new UserModel()
 
       @ui =
         isLandingPage: false
 
-
-      # FIXME
-      @user =
-        isLoggedIn: false
 
   setCurrent(new AccessPage())
 

@@ -58,7 +58,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
 
     logout: =>
       @token(null)
-      @username("")
+      @name(null)
       @_setCookie("token", "")
       @_setCookie("username", "")
 
@@ -79,7 +79,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
 
     _loadStateFromCookie: =>
       @token(@_readCookie("token"))
-      @username(@_readCookie("username"))
+      @name(@_readCookie("username"))
 
     loggedIn: (action) ->
       if @isLoggedIn()
