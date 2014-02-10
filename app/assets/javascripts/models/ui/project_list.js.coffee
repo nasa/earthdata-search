@@ -16,7 +16,7 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
         @downloadDatasets([dataset])
 
     loginAndDownloadProject: =>
-      #@user.loggedIn =>
+      @user.loggedIn =>
         @downloadDatasets(@project.getDatasets())
 
     downloadDatasets: (datasets) =>

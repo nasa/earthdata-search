@@ -10,7 +10,7 @@ ns.User = do (ko, doPost=jQuery.post) ->
       @password = ko.observable("")
       @errors = ko.observable("")
       @isLoggedIn = ko.computed =>
-        @token()? && @name()?
+        @token() && @name()
       @needsLogin = ko.observable(false)
       @loginCallback = null
       @_loadStateFromCookie()
