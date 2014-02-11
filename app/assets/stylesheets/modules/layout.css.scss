@@ -103,6 +103,7 @@ footer, .toolbar {
 footer {
   height: 35px;
   z-index: 1000;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -132,6 +133,16 @@ footer {
   padding: 1em;
   border-radius: 5px;
   opacity: .9;
+}
+
+.modal-header {
+  background: #f3f3f3;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.modal-footer {
+  margin: 0;
 }
 
 /*

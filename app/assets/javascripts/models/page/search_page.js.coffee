@@ -1,4 +1,4 @@
-#= require models/data/query
+arch in#= require models/data/query
 #= require models/data/datasets
 #= require models/data/dataset_facets
 #= require models/data/project

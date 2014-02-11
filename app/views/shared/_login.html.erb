@@ -1,12 +1,12 @@
 <!-- ko ifnot: user.isLoggedIn -->
-<a href="#" class="button user-info" data-bind="click: user.initiateLogin" data-target="#login-modal">Login</a>
+<a href="#" class="button user-info" data-toggle="modal" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
 <!-- /ko -->
 <!-- ko if: user.isLoggedIn -->
 <div class="dropdown user-info">
-  <a href="#" data-toggle="dropdown" data-bind="text: user.name" class="button dropdown-button"></a>
-  <ul class="dropdown-menu">
+  <a href="#" data-toggle="dropdown" class="button dropdown-button"><i class="fa fa-user"></i> <strong><!--ko text: user.username--><!--/ko--></strong> <span class="caret"></span></a>
+  <ul class="dropdown-menu dropdown-menu-right">
     <li>
-      <a href="#" data-bind="click: user.logout">Logout</a>
+      <a href="#" class="dropdown-link" data-bind="click: user.logout">Logout</a>
     </li>
   </ul>
 </div>

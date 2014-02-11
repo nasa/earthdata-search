@@ -44,7 +44,7 @@
   }
 }
 
-.button, input[type="button"], input[type="reset"], input[type="submit"] {
+.button, input[type="button"], input[type="reset"], input[type="submit"], button {
   text-decoration: none;
   display: inline-block;
   padding: 6px 12px;
@@ -88,4 +88,8 @@
 
 .button-row {
   margin: 10px 0 0 0;
+}
+
+button {
+  @include dark-button;
 }
