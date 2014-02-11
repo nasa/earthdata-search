@@ -7,6 +7,5 @@ ns.setCurrent = do ($ = jQuery) ->
     $(document).ready ->
       ko.applyBindings(model)
       model.bindingsLoaded(true)
-      console.log model
 
     @edsc.models.page.current = @edsc.page = model

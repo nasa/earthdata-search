@@ -360,5 +360,9 @@
   </div>
 </div>
 
-<form id="data-access" method="POST" action="/data_access">
+<form id="data-access" method="POST" action="/data/configure" style="display:none;">
+  <div>
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+   <input id="data-access-project" name="project" type="hidden">
+  </div>
 </form>

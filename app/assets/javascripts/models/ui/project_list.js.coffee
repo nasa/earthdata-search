@@ -5,6 +5,8 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
     constructor: (@project, @user, @datasetResults) ->
       @visible = ko.observable(false)
 
+      @downloadableDatasets = ko.computed(@_computeDownloadableDatasets, this, deferEvaluation: true)
+
     showProject: =>
       @visible(true)
 
@@ -20,11 +22,11 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
         @downloadDatasets(@project.getDatasets())
 
     downloadDatasets: (datasets) =>
-      $project = $('<input name="project" type="text">')
+      $project = $('#data-access-project')
 
       $project.val(JSON.stringify(@project.serialize()))
 
-      $('#data-access').empty().append($project).submit()
+      $('#data-access').submit()
 
     toggleDataset: (dataset) =>
       project = @project
@@ -34,5 +36,8 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
           @datasetResults.removeVisibleDataset(dataset)
       else
         project.addDataset(dataset)
+
+    _computeDownloadableDatasets: ->
+      dataset for dataset in @project.datasets() when dataset.granuleAccessOptions().canDownload
 
   exports = ProjectList

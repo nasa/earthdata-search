@@ -8,17 +8,24 @@ ns.Datasets = do (ko
                   XhrModel=ns.XhrModel
                   Granules=ns.Granules
                   QueryModel = ns.Query
+                  toParam=jQuery.param
+                  extend=jQuery.extend
                   ) ->
-
   class Dataset
-    constructor: (jsonData) ->
+    constructor: (jsonData, @query) ->
       @_loadJson(jsonData)
 
-      @granulesModel = granulesModel = new Granules()
-      @granules = ko.computed -> granulesModel.results()
-      @granuleHits = ko.computed -> granulesModel.hits()
+      @granulesModel = granulesModel = new Granules(@query)
+      @granules = ko.computed(granulesModel.results, granulesModel, deferEvaluation: true)
+      @granuleHits = ko.computed(granulesModel.hits, granulesModel, deferEvaluation: true)
+      @granuleAccessOptions = ko.onDemandObservable(@_loadGranuleAccessOptions, this)
+      @granuleDownloadsUrl = ko.computed =>
+        params = @query.params()
+        paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
+        "/granules/download.html?#{paramStr}"
       @granule_query = new QueryModel()
       @granule_query.params.subscribe(@_onGranuleQueryChange)
+
       @spatial_constraint = ko.computed =>
         if @points?
           'point:' + @points()[0].split(/\s+/).reverse().join(',')
@@ -35,14 +42,32 @@ ns.Datasets = do (ko
         @gibs = ko.observable(null)
       @error = ko.observable(null)
 
-    searchGranules: (params) ->
-      @granulesModel.search(@_granuleParams(params))
+    searchGranules: (params, callback) ->
+      @granulesModel.search(@_granuleParams(params), callback)
 
-    loadNextGranules: (params) ->
-      @granulesModel.loadNextPage(@_granuleParams(params))
+    loadNextGranules: (params, callback) ->
+      @granulesModel.loadNextPage(@_granuleParams(params), callback)
+
+    granuleDownloadsUrl: ->
+
+
+    _loadGranuleAccessOptions: ->
+      params = @query.params()
+      downloadableParams = extend(@_granuleParams(params), online_only: true)
+      @searchGranules params, (_, granulesModel) =>
+        hits = @granuleHits()
+        granulesModel = new Granules().search downloadableParams, (params, model) =>
+          downloadableHits = model.hits()
+          options =
+            count: hits
+            canDownloadAll: hits == downloadableHits
+            canDownload: downloadableHits > 0
+            downloadCount: hits - downloadableHits
+          @granuleAccessOptions(options)
+      @granuleAccessOptions({})
 
     _granuleParams: (params) ->
-      $.extend({}, params, 'echo_collection_id[]': @id())
+      extend({}, params, 'echo_collection_id[]': @id())
 
     _onGranuleQueryChange: =>
       console.log 'granule query change'
@@ -56,9 +81,10 @@ ns.Datasets = do (ko
         @searchGranules(params)
 
   class DatasetsModel extends XhrModel
-    constructor: ->
+    constructor: (query) ->
       #super('http://localhost:3002/datasets')
-      super('/datasets.json')
+      super('/datasets.json', query)
+
       @details = ko.observable({})
       @detailsLoading = ko.observable(false)
       @_visibleDatasetIds = ko.observableArray()
@@ -68,11 +94,12 @@ ns.Datasets = do (ko
 
     _onSuccess: (data, replace) ->
       results = data.feed.entry;
+      query = @query
       if replace
-        @_searchResponse(new Dataset(result) for result in results)
+        @_searchResponse(new Dataset(result, query) for result in results)
       else
         currentResults = @_searchResponse
-        newResults = (new Dataset(result) for result in results)
+        newResults = (new Dataset(result, query) for result in results)
         currentResults.push.apply(currentResults, newResults)
 
     showDataset: (dataset) =>

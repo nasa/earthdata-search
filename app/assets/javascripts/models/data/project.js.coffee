@@ -2,12 +2,13 @@
 
 ns = @edsc.models.data
 
-ns.Project = do (ko, QueryModel = ns.Query, getJSON=jQuery.getJSON, DatasetsModel = ns.Datasets) ->
+ns.Project = do (ko, QueryModel = ns.Query, DatasetsModel = ns.Datasets) ->
 
   class Project
     constructor: (@query) ->
       @_datasetIds = ko.observableArray()
       @_datasetsById = {}
+      @id = ko.observable(null)
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
       @searchGranulesDataset = ko.observable(null)
       @query.params.subscribe(@_onQueryChange)
@@ -72,7 +73,7 @@ ns.Project = do (ko, QueryModel = ns.Query, getJSON=jQuery.getJSON, DatasetsMode
 
       ids = (dataset.id for dataset in jsonObj.datasets)
 
-      new DatasetsModel().search {echo_collection_id: ids}, (params, model) =>
+      new DatasetsModel(@query).search {echo_collection_id: ids}, (params, model) =>
         @datasets(model.results())
         # TODO, is there a better way to do this?
         for jsonDataset in jsonObj.datasets
