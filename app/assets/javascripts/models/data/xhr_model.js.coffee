@@ -1,9 +1,9 @@
 ns = @edsc.models.data
 
-ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
+ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
 
   class XhrModel
-    constructor: (@path) ->
+    constructor: (@path, @query) ->
       @_searchResponse = ko.mapping.fromJS([])
       @pendingRequestId = 0
       @completedRequestId = 0
@@ -15,6 +15,8 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
       @hits = ko.observable(0)
       @hasNextPage = ko.computed => @results().length < @hits()
 
+      ko.computed(@_computeSearchResults, this, deferEvaluation: true).extend(throttle: 100)
+
     search: (params, callback) =>
       params.page_num = @page = 1
       @_load(params, callback, true)
@@ -23,6 +25,9 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON) ->
       if @hasNextPage() and !@isLoading()
         params.page_num = ++@page
         @_load(params, callback, false)
+
+    _computeSearchResults: ->
+      @search(@query.params()) if @query?
 
     _load: (params, callback, args...) =>
       requestId = ++@pendingRequestId

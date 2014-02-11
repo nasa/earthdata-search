@@ -65,7 +65,7 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
 
     # https://gist.github.com/dmix/2222990
     _setCookie: (name, value) ->
-      document.cookie = name + "=" + escape(value)
+      document.cookie = "#{name}=#{escape(value)}; path=/;"
 
     _readCookie: (name) ->
       nameEQ = name + "="

@@ -28,6 +28,23 @@ do (ko, $=jQuery) ->
     @subscribeChange('deleted', callback)
 
 
+  ko.onDemandObservable = (callback, target) ->
+    _value = ko.observable()
+
+    result = ko.computed
+      read: ->
+        callback.call(target) unless result.loaded()
+        _value()
+      write: (newValue) ->
+        result.loaded(true);
+        _value(newValue)
+      deferEvaluation: true
+
+    result.loaded = ko.observable()
+    result.refresh = -> result.loaded(false)
+
+    result
+
   ko.bindingHandlers.showModal =
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
 

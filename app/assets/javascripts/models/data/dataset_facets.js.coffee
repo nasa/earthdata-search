@@ -52,8 +52,8 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
       @opened(!@opened())
 
   class DatasetFacetsModel extends XhrModel
-    constructor: (@queryModel) ->
-      super('/dataset_facets.json')
+    constructor: (query) ->
+      super('/dataset_facets.json', query)
       @results = ko.computed(@_prepareResults)
       @appliedFacets = ko.computed =>
         result for result in @results() when result.selectedValues().length > 0
@@ -71,18 +71,18 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
           value.parent = found for value in item.values
           found.setValues(item.values())
         else
-          results.push(new FacetsListModel(@queryModel, item))
+          results.push(new FacetsListModel(@query, item))
 
       results
 
     removeFacet: (facet) =>
       term = facet.term()
       param = facet.parent.param()
-      @queryModel.facets.remove (queryFacet) ->
+      @query.facets.remove (queryFacet) ->
         queryFacet.term == term && queryFacet.param == param
 
     addFacet: (facet) =>
-      @queryModel.facets.push(term: facet.term(), param: facet.parent.param())
+      @query.facets.push(term: facet.term(), param: facet.parent.param())
 
 
     toggleFacet: (facet) =>

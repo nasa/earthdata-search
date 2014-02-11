@@ -30,7 +30,7 @@ ns.SearchPage = do (ko,
     constructor: ->
       @query = new QueryModel()
       @user = new UserModel()
-      @datasets = new DatasetsModel()
+      @datasets = new DatasetsModel(@query)
       @datasetFacets = new DatasetFacetsModel(@query)
       @project = new ProjectModel(@query)
 
@@ -45,18 +45,9 @@ ns.SearchPage = do (ko,
 
       @spatialError = ko.computed(@_computeSpatialError)
 
-      ko.computed(@_computeDatasetResults).extend(throttle: 100)
-      ko.computed(@_computeDatasetFacetsResults).extend(throttle: 100)
-
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
       "#{value} #{word}"
-
-    _computeDatasetResults: =>
-      @datasets.search(@query.params())
-
-    _computeDatasetFacetsResults: =>
-      @datasetFacets.search(@query.params())
 
     _computeSpatialError: =>
       error = @datasets.error()

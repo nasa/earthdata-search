@@ -37,7 +37,20 @@
           <button>Back</button>
           <button>Continue</button>
         </div>
-      </li>
-    </ol>
+      </div>
+      <div class="access-item-actions">
+        <button>Back</button>
+        <button>Continue</button>
+      </div>
+    </li>
+  </ol>
+  <form id="data-access" method="POST" action="/data/retrieve" style="display:none;">
+    <div>
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <input id="data-access-project" name="project" type="hidden">
+    </div>
+  </form>
+  <div class="access-item-submission">
+    <button class="btn btn-primary" data-bind="click: ui.projectList.loginAndDownloadProject">Submit</button>
   </div>
 </div>
