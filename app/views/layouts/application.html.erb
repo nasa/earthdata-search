@@ -15,7 +15,7 @@
     <%= yield :javascript %>
     <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
 </head>
-<body class="env-<%= Rails.env %>" data-bind="css: {'is-landing': ui.isLandingPage}" >
+<body class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
     <header id="main-toolbar" class="toolbar">
       <h1><a class="ir" href="#">Earthdata Search</a></h1>

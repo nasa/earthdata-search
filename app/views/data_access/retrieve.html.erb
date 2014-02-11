@@ -9,7 +9,6 @@
   <%= render partial: 'shared/login' %>
 <% end %>
 
-
 <section class="data-access">
   <nav class="data-access-nav">
     <a href="javascript:history.back()"><i class="edsc-icon-arrow-left"></i> Back to Search Session</a>
@@ -28,7 +27,7 @@
       can assist you in managing a large number of download links.
     </p>
     <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.downloadableDatasets">
-      <li>
+      <li class="data-access-dataset">
         <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
         <div class="data-access-dataset-actions">
           <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: granuleDownloadsUrl}">View Download Links</a>

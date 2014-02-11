@@ -1,5 +1,4 @@
 .data-access {
-  background-color: #222222;
   height: 100%;
   color: $overlay-heading-font-color;
 
@@ -22,10 +21,6 @@
     border-bottom-width: 0px;
   }
 
-  li {
-    margin-bottom: .5em;
-  }
-
   .link {
     text-decoration: underline;
   }
@@ -34,6 +29,10 @@
 .data-access-datasets-list {
   list-style-type: disc;
   padding-left: 2em;
+}
+
+.data-access-dataset {
+  margin: 2em 0;
 }
 
 .data-access-dataset-name {
@@ -51,8 +50,8 @@
   border-bottom: 1px solid #333;
 }
 
-.data-access-content {
-}
-
 .data-access-next {
+  li {
+    margin-bottom: .5em;
+  }
 }
