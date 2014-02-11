@@ -12,7 +12,7 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) -
       $('#keywords').focus()
     else
       $('.landing-toolbar-container').append($content)
-    $content.css(top: 0, left: 0, position: 'relative')
+    $content.css(top: 0, left: 0, position: 'static')
 
 
   updateLandingPageAnimated = (isLandingPage) ->
