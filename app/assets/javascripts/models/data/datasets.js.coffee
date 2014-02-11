@@ -10,7 +10,7 @@ ns.Datasets = do (ko
                   QueryModel = ns.Query
                   toParam=jQuery.param
                   extend=jQuery.extend
-
+                  ) ->
   class Dataset
     constructor: (jsonData, @query) ->
       @_loadJson(jsonData)
