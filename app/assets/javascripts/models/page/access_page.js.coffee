@@ -7,7 +7,6 @@
 data = @edsc.models.data
 ui = @edsc.models.ui
 ns = @edsc.models.page
-ui = @edsc.models.ui
 
 ns.AccessPage = do (ko,
                     setCurrent = ns.setCurrent
@@ -23,7 +22,6 @@ ns.AccessPage = do (ko,
     constructor: ->
       @query = new QueryModel()
       @project = new ProjectModel(@query)
-      @project.fromJson(accessData)
       @bindingsLoaded = ko.observable(false)
       @user = new UserModel()
 
@@ -31,6 +29,8 @@ ns.AccessPage = do (ko,
         isLandingPage: false
         temporal: new TemporalModel(@query)
         projectList: new ProjectListModel(@project, @user)
+
+      @project.fromJson(accessData)
 
   setCurrent(new AccessPage())
 
