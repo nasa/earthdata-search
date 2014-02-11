@@ -1,3 +1,15 @@
+a:link, a:visited {
+  color: #2980b9;
+  
+  &.close {
+    color: #ccc;
+  }
+  
+  &.close:hover {
+    color: #999;
+  }
+}
+
 a:hover {
   text-decoration: none;
 }

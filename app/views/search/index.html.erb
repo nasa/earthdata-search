@@ -87,14 +87,14 @@
   </div>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
   <!-- ko ifnot: user.isLoggedIn -->
-  <a href="#" class="button user-info" data-toggle="modal" data-target="#login-modal"><i class="fa fa-lock"></i> Login</a>
+  <a href="#" class="button user-info" data-toggle="modal" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
   <!-- /ko -->
   <!-- ko if: user.isLoggedIn -->
   <div class="dropdown user-info">
-    <a href="#" data-toggle="dropdown" class="button dropdown-button"><i class="fa fa-user"></i> <!--ko text: user.username--><!--/ko--></a>
-    <ul class="dropdown-menu">
+    <a href="#" data-toggle="dropdown" class="button dropdown-button"><i class="fa fa-user"></i> <strong><!--ko text: user.username--><!--/ko--></strong> <span class="caret"></span></a>
+    <ul class="dropdown-menu dropdown-menu-right">
       <li>
-        <a href="#" data-bind="click: user.logout">Logout</a>
+        <a href="#" class="dropdown-link" data-bind="click: user.logout">Logout</a>
       </li>
     </ul>
   </div>
@@ -349,24 +349,23 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <a href="#" title="close" data-dismiss="modal" aria-hidden="true" class="pull-right"><i class="fa fa-times-circle"></i></a>
-        <h4 class="modal-title" id="myModalLabel">EDSC Login</h4>
+        <a href="#" title="close" data-dismiss="modal" aria-hidden="true" class="pull-right close"><i class="fa fa-times-circle"></i></a>
+        <h3 class="modal-title" id="myModalLabel">Sign In to Earthdata Search Client</h3>
       </div>
       <form data-bind="submit: user.login">
         <div class="modal-body">
           <span data-bind="text: user.errors()"></span>
-          <div>
+          <p>
             <label for="username">Username</label>
             <input type="text" id="username" />
-          </div>
-          <div>
+          </p>
+          <p>
             <label for="password">Password</label>
             <input type="password" id="password" />
-          </div>
+          </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Login</button>
+          <button type="submit" class="button-light"><i class="fa fa-lock"></i> Sign In</button>
         </div>
       </form>
     </div>

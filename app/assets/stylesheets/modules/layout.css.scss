@@ -122,6 +122,16 @@ footer {
   opacity: .9;
 }
 
+.modal-header {
+  background: #f3f3f3;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.modal-footer {
+  margin: 0;
+}
+
 /*
 Helper Classes
 -------------------------------------
