@@ -12,9 +12,10 @@
   }
 
   > header, > section {
-    margin: 1em 5em;
+    margin: 1em auto;
     padding: 1em;
     border-bottom: 1px solid #888;
+    max-width: 1000px;
   }
 
   > section:last-child {
@@ -23,6 +24,10 @@
 
   li {
     margin-bottom: .5em;
+  }
+
+  .link {
+    text-decoration: underline;
   }
 }
 
@@ -47,4 +52,7 @@
 }
 
 .data-access-content {
+}
+
+.data-access-next {
 }

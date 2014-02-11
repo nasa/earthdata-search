@@ -20,11 +20,18 @@
   </header>
   <section class="data-access-content" data-bind="visible: ui.projectList.downloadableDatasets().length > 0">
     <h2>The following datasets are available for immediate download</h2>
+    <p>
+      Click the "View Download Links" button to view a page containing links to your data.
+      You may bookmark this page for later access.
+      A browser download manager plugin such as Firefox's
+      <a class="link" href="https://addons.mozilla.org/en-US/firefox/addon/downthemall/">DownThemAll!</a>
+      can assist you in managing a large number of download links.
+    </p>
     <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.downloadableDatasets">
       <li>
         <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
         <div class="data-access-dataset-actions">
-          <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: granuleDownloadsUrl}">Download URLs</a>
+          <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: granuleDownloadsUrl}">View Download Links</a>
         </div>
       </li>
     </ul>
