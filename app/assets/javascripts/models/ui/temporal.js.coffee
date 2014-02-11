@@ -73,8 +73,8 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
           null
 
     fromJson: (jsonObj) ->
-      @date(new Date(jsonObj.date))
-      @year(jsonObj.year)
+      @date(new Date(jsonObj.date)) if jsonObj.date
+      @year(jsonObj.year) if jsonObj.year
 
     serialize: ->
       {

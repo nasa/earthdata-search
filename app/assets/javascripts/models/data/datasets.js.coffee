@@ -3,7 +3,12 @@
 
 ns = @edsc.models.data
 
-ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.Granules) ->
+ns.Datasets = do (ko
+                  getJSON=jQuery.getJSON
+                  XhrModel=ns.XhrModel
+                  Granules=ns.Granules
+                  QueryModel = ns.Query
+                  ) ->
 
   class Dataset
     constructor: (jsonData) ->
@@ -12,6 +17,8 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
       @granulesModel = granulesModel = new Granules()
       @granules = ko.computed -> granulesModel.results()
       @granuleHits = ko.computed -> granulesModel.hits()
+      @granule_query = new QueryModel()
+      @granule_query.params.subscribe(@_onGranuleQueryChange)
       @spatial_constraint = ko.computed =>
         if @points?
           'point:' + @points()[0].split(/\s+/).reverse().join(',')
@@ -36,6 +43,17 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
 
     _granuleParams: (params) ->
       $.extend({}, params, 'echo_collection_id[]': @id())
+
+    _onGranuleQueryChange: =>
+      console.log 'granule query change'
+      # TODO, what is the best way to get to the query params?
+      dataset_params = edsc.page.query.params()
+      granule_params = @granule_query.params()
+      # Don't want to search granules again if there are no
+      # real granule params, e.g., more than just page_size
+      if Object.keys(granule_params).length > 1
+        params = $.extend({}, dataset_params, granule_params)
+        @searchGranules(params)
 
   class DatasetsModel extends XhrModel
     constructor: ->

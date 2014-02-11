@@ -12,9 +12,6 @@ ns.Project = do (ko, QueryModel = ns.Query, getJSON=jQuery.getJSON, DatasetsMode
       @searchGranulesDataset = ko.observable(null)
       @query.params.subscribe(@_onQueryChange)
 
-      @granule_query = new QueryModel()
-      @granule_query.params.subscribe(@_onGranuleQueryChange)
-
     getDatasets: ->
       @_datasetsById[id] for id in @_datasetIds()
 
@@ -72,24 +69,20 @@ ns.Project = do (ko, QueryModel = ns.Query, getJSON=jQuery.getJSON, DatasetsMode
 
     fromJson: (jsonObj) ->
       @query.fromJson(jsonObj.dataset_query)
-      @granule_query.fromJson(jsonObj.granule_query)
 
       ids = (dataset.id for dataset in jsonObj.datasets)
 
       new DatasetsModel().search {echo_collection_id: ids}, (params, model) =>
         @datasets(model.results())
-        for ds in @datasets()
-          dataset_params = @query.params()
-          granule_params = @granule_query.params()
-          params = $.extend({}, dataset_params, granule_params)
-          ds.searchGranules(params)
-
-      # TODO set granule query conditions here, once we pass those to the results page
+        # TODO, is there a better way to do this?
+        for jsonDataset in jsonObj.datasets
+          for ds in @datasets()
+            if jsonDataset.id == ds.id()
+              ds.granule_query.fromJson(jsonDataset.params.granule_query)
 
     serialize: ->
       project = {}
       project.dataset_query = @query.serialize()
-      project.granule_query = @granule_query.serialize()
       project.datasets = []
 
       console.log "Ordering without per-dataset customizations"
@@ -98,9 +91,9 @@ ns.Project = do (ko, QueryModel = ns.Query, getJSON=jQuery.getJSON, DatasetsMode
         serializedDataset =
           id: id
         if dataset.has_granules()
-          # TODO: Eventually this will need to have per-dataset customizations
           serializedDataset.params =
             echo_collection_id: id
+            granule_query: dataset.granule_query.serialize()
         project.datasets.push(serializedDataset)
 
       project
@@ -109,12 +102,5 @@ ns.Project = do (ko, QueryModel = ns.Query, getJSON=jQuery.getJSON, DatasetsMode
       params = @query.params()
       for dataset in @getDatasets()
         dataset.searchGranules(params)
-
-    _onGranuleQueryChange: =>
-      dataset_params = @query.params()
-      granule_params = @granule_query.params()
-      params = $.extend({}, dataset_params, granule_params)
-      if @searchGranulesDataset()
-        @searchGranulesDataset().searchGranules(params)
 
   exports = Project

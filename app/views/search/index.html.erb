@@ -208,12 +208,12 @@
         <nav class="master-overlay-nav">
           Granule Filters
         </nav>
+        <!-- ko if: project.searchGranulesDataset() -->
         <header>
-          <!-- ko if: project.searchGranulesDataset() -->
           <h2 data-bind="text: project.searchGranulesDataset().dataset_id"></h2>
-          <!-- /ko -->
         </header>
         <%= render partial: 'granule_search' %>
+        <!-- /ko -->
       </section>
     </div>
   </div>

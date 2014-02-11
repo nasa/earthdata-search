@@ -1,4 +1,4 @@
-<div class="master-overlay-content">
+<div class="master-overlay-content" data-bind="with: project.searchGranulesDataset().granule_query">
   Filters
   <dl>
     <dt>Temporal</dt>
@@ -6,7 +6,7 @@
     <dt>Day / Night Flag</dt>
     <dd>
       <p>Find granules captured during the day, night or anytime.</p>
-      <select id="day-night-select" data-bind="options: project.granule_query.day_night_flag_options, optionsText: 'name', optionsValue: 'value', value: project.granule_query.day_night_flag"></select>
+      <select id="day-night-select" data-bind="options: day_night_flag_options, optionsText: 'name', optionsValue: 'value', value: day_night_flag"></select>
     </dd>
     <dt>Data Access</dt>
     <dd>Data Access stuff goes here</dd>
