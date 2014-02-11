@@ -78,7 +78,7 @@ ns.Project = do (ko, QueryModel = ns.Query, DatasetsModel = ns.Datasets) ->
         # TODO, is there a better way to do this?
         for jsonDataset in jsonObj.datasets
           for ds in @datasets()
-            if jsonDataset.id == ds.id()
+            if jsonDataset.id == ds.id() && jsonDataset.params
               ds.granule_query.fromJson(jsonDataset.params.granule_query)
 
     serialize: ->

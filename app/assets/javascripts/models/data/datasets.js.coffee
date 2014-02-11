@@ -18,7 +18,7 @@ ns.Datasets = do (ko
       @granulesModel = granulesModel = new Granules(@query)
       @granules = ko.computed(granulesModel.results, granulesModel, deferEvaluation: true)
       @granuleHits = ko.computed(granulesModel.hits, granulesModel, deferEvaluation: true)
-      @granuleAccessOptions = ko.onDemandObservable(@_loadGranuleAccessOptions, this)
+      @granuleAccessOptions = ko.computed(@_loadGranuleAccessOptions, this, deferEvaluation: true).extend(delayed: {})
       @granuleDownloadsUrl = ko.computed =>
         params = @query.params()
         paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
@@ -48,23 +48,34 @@ ns.Datasets = do (ko
     loadNextGranules: (params, callback) ->
       @granulesModel.loadNextPage(@_granuleParams(params), callback)
 
-    granuleDownloadsUrl: ->
-
-
     _loadGranuleAccessOptions: ->
       params = @query.params()
-      downloadableParams = extend(@_granuleParams(params), online_only: true)
+      downloadableParams = extend(@_granuleParams(params), online_only: true, page_size: 2000)
       @searchGranules params, (_, granulesModel) =>
-        hits = @granuleHits()
+        hits = granulesModel.hits()
         granulesModel = new Granules().search downloadableParams, (params, model) =>
           downloadableHits = model.hits()
+
+          sizeMB = 0
+          sizeMB += parseFloat(granule.granule_size) for granule in model.results()
+          size = sizeMB * 1024 * 1024
+
+          units = ['', 'Kilo', 'Mega', 'Giga', 'Tera', 'Peta', 'Exa']
+          while size > 1000 && units.length > 1
+            size = size / 1000
+            units.shift()
+
+          size = Math.round(size * 10) / 10
+          size = "> #{size}" if hits > 2000
+
           options =
             count: hits
+            size: size
+            sizeUnit: "#{units[0]}bytes"
             canDownloadAll: hits == downloadableHits
             canDownload: downloadableHits > 0
             downloadCount: hits - downloadableHits
           @granuleAccessOptions(options)
-      @granuleAccessOptions({})
 
     _granuleParams: (params) ->
       extend({}, params, 'echo_collection_id[]': @id())

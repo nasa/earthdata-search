@@ -13,7 +13,7 @@
 
   > header, > section, > .data-access-content, > .access-item-submission {
     margin: 1em auto;
-    padding: 1em;
+    padding: 1em 0;
     max-width: 1000px;
   }
 
@@ -74,10 +74,15 @@
     color: #fff;
     background-color: rgb(51, 75, 102);
     margin-bottom: 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
   }
 
   h4 {
     color: rgb(51, 75, 102);
+    font-size: 1.2em;
+    padding-bottom: .5em;
+    border-bottom: 1px solid rgb(51, 75, 102);
   }
 }
 
@@ -136,4 +141,25 @@
 
 .access-item-submission {
   text-align: right;
+}
+
+
+.summary {
+  line-height: 3em;
+}
+
+.summary-label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.summary-data {
+  font-weight: bold;
+  color: rgb(141, 155, 172);
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 3em;
+  width: 5em;
+  text-align: right;
+  padding-right: .5em;
 }

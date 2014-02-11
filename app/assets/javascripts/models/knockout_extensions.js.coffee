@@ -27,21 +27,21 @@ do (ko, $=jQuery) ->
   ko.observableArray.fn.subscribeRemove = (callback) ->
     @subscribeChange('deleted', callback)
 
+  # For observables that need to make an XHR or similar call to compute their value
+  ko.extenders.delayed = (target, initialValue) ->
+    target['throttleEvaluation'] = 100
 
-  ko.onDemandObservable = (callback, target) ->
-    _value = ko.observable()
+    _value = ko.observable(initialValue)
+    writeTimeoutInstance = null
 
     result = ko.computed
       read: ->
-        callback.call(target) unless result.loaded()
+        target()
         _value()
       write: (newValue) ->
-        result.loaded(true);
+        clearTimeout(writeTimeoutInstance)
         _value(newValue)
       deferEvaluation: true
-
-    result.loaded = ko.observable()
-    result.refresh = -> result.loaded(false)
 
     result
 

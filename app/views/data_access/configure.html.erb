@@ -22,15 +22,29 @@
       <h2 data-bind="text: dataset_id"></h2>
       <div class="access-item-details">
         <h3>Review &amp; Select Service Options</h3>
+        <!-- ko if: granuleAccessOptions().count && granuleAccessOptions().count > 0 -->
         <div class="access-item-review">
           <h4>Review</h4>
-          <p><span data-bind="text: granuleHits()"></span> Granules Selected</p>
-          <p><span data-bind="">##</span> Megabytes</p>
+          <p class="summary">
+            <span class="summary-data" data-bind="text: granuleAccessOptions().count"></span>
+            <span class="summary-label">Granules</span>
+          </p>
+          <p class="summary">
+            <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
+            <span class="summary-label" data-bind="text: granuleAccessOptions().sizeUnit"></span>
+          </p>
         </div>
         <div class="access-item-options">
           <h4>Service Options</h4>
         </div>
+        <!-- /ko -->
+        <!-- ko if: granuleAccessOptions().count === 0 -->
+        <div class="access-item-review">
+          <h4>Dataset Only</h4>
+        </div>
+        <!-- /ko -->
       </div>
+
       <div class="access-item-actions">
         <button class="button-back low-priority">Back</button>
         <button class="button-next">Continue</button>
