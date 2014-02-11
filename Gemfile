@@ -33,11 +33,16 @@ group :development do
   gem 'seed_dump'
 end
 
+group :production do
+  gem 'pg'
+end
+
 # Gems that are mostly used for testing but useful to have available via CLI
 group :development, :test do
   gem 'rspec-rails'
   gem 'colored'
   gem 'vcr'
+  gem 'sqlite3'
 
   # rspec-like environment for Javascript
   # The version available via rubygems (1.3.2) doesn't contain Rails 4 support
@@ -63,8 +68,6 @@ group :assets, :test do
 
   gem 'uglifier', '>= 1.3.0'
 end
-
-gem 'pg', '0.17.1'
 
 gem 'jquery-rails'
 gem 'bourbon'
