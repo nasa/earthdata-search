@@ -24,9 +24,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
     fromJson: (jsonObj) ->
       @keywords(jsonObj.keywords)
       @spatial(jsonObj.spatial)
-
-      console.warn "Need to deserialize temporal"
-      # TODO: Temporal
+      if jsonObj.temporal
+        @temporal().fromJson(jsonObj.temporal)
       @facets(jsonObj.facets)
       @placename(jsonObj.placename)
       @day_night_flag(jsonObj.day_night_flag)

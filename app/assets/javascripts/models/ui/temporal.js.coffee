@@ -111,7 +111,7 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
       {
         isRecurring: @isRecurring()
         start: @start.serialize()
-        stop: @start.serialize()
+        stop: @stop.serialize()
       }
 
     copy: (other) ->
