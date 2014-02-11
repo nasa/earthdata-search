@@ -354,7 +354,9 @@
       </div>
       <form data-bind="submit: user.login">
         <div class="modal-body">
-          <span data-bind="text: user.errors()"></span>
+          <!-- ko if: user.errors() -->
+          <span class="error" data-bind="text: user.errors()"></span>
+          <!-- /ko -->
           <p>
             <label for="username">Username</label>
             <input type="text" id="username" />
