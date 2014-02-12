@@ -10,7 +10,7 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
       @password = ko.observable("")
       @errors = ko.observable("")
       @isLoggedIn = ko.computed =>
-        @token() && @name()
+        @token()?.length > 0 && @name()?.length > 0
       @needsLogin = ko.observable(false)
       @loginCallback = null
       @_loadStateFromCookie()
@@ -42,7 +42,7 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
         @loginCallback?()
         @clearLogin()
         @_setCookie("token", @token())
-        @_setCookie("username", @name())
+        @_setCookie("name", @name())
 
       xhr.fail (response, type, reason) =>
         server_error = false
@@ -61,7 +61,8 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
         @token(null)
         @name(null)
         @_setCookie("token", "")
-        @_setCookie("username", "")
+        @_setCookie("name", "")
+        @clearLogin()
 
     # https://gist.github.com/dmix/2222990
     _setCookie: (name, value) ->
@@ -80,7 +81,7 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
 
     _loadStateFromCookie: =>
       @token(@_readCookie("token"))
-      @name(@_readCookie("username"))
+      @name(@_readCookie("name"))
 
     loggedIn: (action) ->
       if @isLoggedIn()

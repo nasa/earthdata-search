@@ -24,6 +24,7 @@ module Helpers
     # Logout the user
     def reset_user
       page.evaluate_script("window.edsc.models.page.current.user.logout()")
+      wait_for_xhr
     end
 
     def have_popover(title)
