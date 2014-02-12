@@ -108,7 +108,7 @@ ns.Datasets = do (ko
       if replace
         @_searchResponse(new Dataset(result, query) for result in results)
       else
-        currentResults = @_searchResponse
+        currentResults = @_searchResponse()
         newResults = (new Dataset(result, query) for result in results)
         currentResults.push.apply(currentResults, newResults)
 
