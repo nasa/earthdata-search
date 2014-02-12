@@ -110,7 +110,7 @@ ns.Datasets = do (ko
       else
         currentResults = @_searchResponse()
         newResults = (new Dataset(result, query) for result in results)
-        currentResults.push.apply(currentResults, newResults)
+        @_searchResponse(currentResults.concat(newResults))
 
     showDataset: (dataset) =>
       id = dataset.id()
