@@ -17,12 +17,12 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
 
     search: (params, callback) =>
       params.page_num = @page = 1
-      @_load(params, [], callback)
+      @_loadAndSet params, [], callback
 
     loadNextPage: (params, callback) =>
       if @hasNextPage() and !@isLoading()
         params.page_num = ++@page
-        @_load(params, @results(), callback)
+        @_loadAndSet params, @results(), callback
 
     _computeHasNextPage: ->
       @results().length < @hits()
@@ -32,6 +32,11 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
         params = @query.params()
         params.page_num = @page = 1
         @_load(params, current, callback)
+
+    _loadAndSet: (params, current, callback) ->
+      @_load params, current, (results) =>
+        callback?(results)
+        @results(results)
 
     _load: (params, current, callback) =>
       requestId = ++@pendingRequestId
@@ -49,6 +54,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
           if params.page_num? && params.page_num > 1
             results = current.concat(results)
 
+          console.log 'results', params.page_num, current.length, results.length
           callback?(results)
         else
           console.log("Rejected out-of-sequence request: #{@path}", requestId, params, data)
