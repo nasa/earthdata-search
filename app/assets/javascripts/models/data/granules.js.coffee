@@ -2,18 +2,19 @@
 
 ns = @edsc.models.data
 
-ns.Granules = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
+ns.Granules = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, extend=$.extend) ->
 
   class GranulesModel extends XhrModel
-    constructor: ->
-      super('/granules.json')
+    constructor: (query, @parentQuery) ->
+      super('/granules.json', query)
 
-    _onSuccess: (data, replace) ->
-      results = data.feed.entry;
+    _toResults: (data) ->
+      data.feed.entry
 
-      if replace
-        @_searchResponse(results)
-      else
-        currentResults.push.apply(@_searchResponse, results)
+    _computeSearchResponse: (callback, current) ->
+      if @query? && @parentQuery?
+        params = @parentQuery.params()
+        extend(params, @query.params())
+        @search(params, callback, current)
 
   exports = GranulesModel

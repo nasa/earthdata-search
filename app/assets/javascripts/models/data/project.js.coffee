@@ -69,21 +69,21 @@ ns.Project = do (ko, QueryModel = ns.Query, DatasetsModel = ns.Datasets) ->
       @searchGranulesDataset(null)
 
     fromJson: (jsonObj) ->
-      @query.fromJson(jsonObj.dataset_query)
+      @query.fromJson(jsonObj.datasetQuery)
 
       ids = (dataset.id for dataset in jsonObj.datasets)
 
-      new DatasetsModel(@query).search {echo_collection_id: ids}, (params, model) =>
-        @datasets(model.results())
+      new DatasetsModel(@query).search {echo_collection_id: ids}, (results) =>
+        @datasets(results)
         # TODO, is there a better way to do this?
         for jsonDataset in jsonObj.datasets
           for ds in @datasets()
             if jsonDataset.id == ds.id() && jsonDataset.params
-              ds.granule_query.fromJson(jsonDataset.params.granule_query)
+              ds.granuleQuery.fromJson(jsonDataset.params.granuleQuery)
 
     serialize: ->
       project = {}
-      project.dataset_query = @query.serialize()
+      project.datasetQuery = @query.serialize()
       project.datasets = []
 
       console.log "Ordering without per-dataset customizations"
@@ -94,7 +94,7 @@ ns.Project = do (ko, QueryModel = ns.Query, DatasetsModel = ns.Datasets) ->
         if dataset.has_granules()
           serializedDataset.params =
             echo_collection_id: id
-            granule_query: dataset.granule_query.serialize()
+            granuleQuery: dataset.granuleQuery.serialize()
         project.datasets.push(serializedDataset)
 
       project

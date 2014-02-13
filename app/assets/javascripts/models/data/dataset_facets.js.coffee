@@ -54,11 +54,13 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
   class DatasetFacetsModel extends XhrModel
     constructor: (query) ->
       super('/dataset_facets.json', query)
-      @appliedFacets = ko.computed =>
-        result for result in @results() when result.selectedValues().length > 0
+      @appliedFacets = ko.computed(@_computeResults, this, deferEvaluation: true)
 
-    _onSuccess: (data) ->
-      results = @_searchResponse()
+    _computeResults: ->
+      result for result in @results() when result.selectedValues().length > 0
+
+    _toResults: (data) ->
+      results = @results()
       for item in data
         found = ko.utils.arrayFirst results, (result) ->
           result.name == item.name
@@ -69,7 +71,6 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
         else
           results.push(new FacetsListModel(@query, item))
 
-      @_searchResponse(results)
       results
 
     removeFacet: (facet) =>

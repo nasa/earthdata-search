@@ -1,10 +1,10 @@
 ns = @edsc.models.data
 
 # FIXME: Get rid of dependency on jQuery, ui, and page model
-ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
+ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
 
   class Query
-    constructor: ->
+    constructor: (@_extraParams={}) ->
       @keywords = ko.observable("")
       @spatial = ko.observable("")
 
@@ -62,7 +62,7 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
       constraint? && (!spatial || spatial == constraint)
 
     _computeParams: =>
-      params = {}
+      params = extend({}, @_extraParams)
 
       keywords = @keywords()?.trim()
       if keywords?.length > 0

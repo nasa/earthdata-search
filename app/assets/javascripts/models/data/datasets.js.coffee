@@ -15,16 +15,15 @@ ns.Datasets = do (ko
     constructor: (jsonData, @query) ->
       @_loadJson(jsonData)
 
-      @granulesModel = granulesModel = new Granules(@query)
+      @granuleQuery = new QueryModel('echo_collection_id': @id())
+      @granulesModel = granulesModel = new Granules(@query, @granuleQuery)
       @granules = ko.computed(granulesModel.results, granulesModel, deferEvaluation: true)
       @granuleHits = ko.computed(granulesModel.hits, granulesModel, deferEvaluation: true)
-      @granuleAccessOptions = ko.computed(@_loadGranuleAccessOptions, this, deferEvaluation: true).extend(delayed: {})
+      @granuleAccessOptions = ko.asyncComputed([], 100, @_loadGranuleAccessOptions, this)
       @granuleDownloadsUrl = ko.computed =>
         params = @query.params()
         paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
         "/granules/download.html?#{paramStr}"
-      @granule_query = new QueryModel()
-      @granule_query.params.subscribe(@_onGranuleQueryChange)
 
       @spatial_constraint = ko.computed =>
         if @points?
@@ -48,16 +47,18 @@ ns.Datasets = do (ko
     loadNextGranules: (params, callback) ->
       @granulesModel.loadNextPage(@_granuleParams(params), callback)
 
-    _loadGranuleAccessOptions: ->
+    _loadGranuleAccessOptions: (current, callback) ->
       params = @query.params()
       downloadableParams = extend(@_granuleParams(params), online_only: true, page_size: 2000)
-      new Granules().search @_granuleParams(params), (_, granulesModel) =>
+      granulesModel = new Granules()
+      granulesModel.search @_granuleParams(params), =>
         hits = granulesModel.hits()
-        granulesModel = new Granules().search downloadableParams, (params, model) =>
-          downloadableHits = model.hits()
+        downloadableModel = new Granules()
+        downloadableModel.search downloadableParams, (results) =>
+          downloadableHits = downloadableModel.hits()
 
           sizeMB = 0
-          sizeMB += parseFloat(granule.granule_size) for granule in model.results()
+          sizeMB += parseFloat(granule.granule_size) for granule in results
           size = sizeMB * 1024 * 1024
 
           units = ['', 'Kilo', 'Mega', 'Giga', 'Tera', 'Peta', 'Exa']
@@ -75,20 +76,10 @@ ns.Datasets = do (ko
             canDownloadAll: hits == downloadableHits
             canDownload: downloadableHits > 0
             downloadCount: hits - downloadableHits
-          @granuleAccessOptions(options)
+          callback(options)
 
     _granuleParams: (params) ->
       extend({}, params, 'echo_collection_id[]': @id())
-
-    _onGranuleQueryChange: =>
-      dataset_params = @query.params()
-      granule_params = @granule_query.params()
-      # TODO on the access page when loading the granule information, this is called twice.
-      # The first call is with a 'blank' granule_query, and the second time (if there are extra
-      # granule params) will load the granule query passed from the search page.
-      # We need to only make one call to load granules
-      params = $.extend({}, dataset_params, granule_params)
-      @searchGranules(params)
 
   class DatasetsModel extends XhrModel
     constructor: (query) ->
@@ -102,15 +93,10 @@ ns.Datasets = do (ko
       @visibleGibsDatasets = ko.computed(@_computeVisibleGibsDatasets)
       @allDatasetsVisible = ko.observable(false)
 
-    _onSuccess: (data, replace) ->
+    _toResults: (data) ->
       results = data.feed.entry;
       query = @query
-      if replace
-        @_searchResponse(new Dataset(result, query) for result in results)
-      else
-        currentResults = @_searchResponse()
-        newResults = (new Dataset(result, query) for result in results)
-        @_searchResponse(currentResults.concat(newResults))
+      new Dataset(result, query) for result in results
 
     showDataset: (dataset) =>
       id = dataset.id()

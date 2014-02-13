@@ -28,22 +28,32 @@ do (ko, $=jQuery) ->
     @subscribeChange('deleted', callback)
 
   # For observables that need to make an XHR or similar call to compute their value
-  ko.extenders.delayed = (target, initialValue) ->
-    target['throttleEvaluation'] = 100
+  ko.asyncComputed = (initialValue, timeout, method, obj) ->
+    value = ko.observable(initialValue)
 
-    _value = ko.observable(initialValue)
-    writeTimeoutInstance = null
+    callAsyncMethod = ->
+      method.call obj, value.peek(), (newValue) ->
+        value(newValue)
 
-    result = ko.computed
+    asyncComputed = ko.computed
       read: ->
-        target()
-        _value()
-      write: (newValue) ->
-        clearTimeout(writeTimeoutInstance)
-        _value(newValue)
+        val = value.peek()
+        callAsyncMethod()
+        val
+      write: value
       deferEvaluation: true
 
-    result
+    isSetup = false
+
+    ko.computed
+      read: ->
+        # Causes an evaluation of computed, thereby setting up dependencies correctly
+        asyncComputed.extend(throttle: timeout) unless isSetup
+        isSetup = true
+        value()
+      write: value
+      deferEvaluation: true
+
 
   ko.bindingHandlers.showModal =
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->

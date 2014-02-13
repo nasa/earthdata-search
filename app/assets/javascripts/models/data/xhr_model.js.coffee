@@ -4,7 +4,8 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
 
   class XhrModel
     constructor: (@path, @query) ->
-      @_searchResponse = ko.computed(@_computeSearchResponse, this, deferEvaluation: true).extend(delayed: [])
+      @results = ko.asyncComputed([], 100, @_computeSearchResponse, this)
+
       @pendingRequestId = 0
       @completedRequestId = 0
       @isLoading = ko.observable(false)
@@ -12,28 +13,27 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
       @isLoaded = ko.observable(false)
 
       @hits = ko.observable(0)
-      @results = ko.computed(@_computeSearchResults, this, deferEvaluation: true)
       @hasNextPage = ko.computed(@_computeHasNextPage, this, deferEvaluation: true)
 
     search: (params, callback) =>
       params.page_num = @page = 1
-      @_load(params, callback, true)
+      @_load(params, [], callback)
 
     loadNextPage: (params, callback) =>
       if @hasNextPage() and !@isLoading()
         params.page_num = ++@page
-        @_load(params, callback, false)
+        @_load(params, @results(), callback)
 
     _computeHasNextPage: ->
       @results().length < @hits()
 
-    _computeSearchResults: ->
-      @_searchResponse()
+    _computeSearchResponse: (current, callback) ->
+      if @query?
+        params = @query.params()
+        params.page_num = @page = 1
+        @_load(params, current, callback)
 
-    _computeSearchResponse: ->
-      @search(@query.params()) if @query?
-
-    _load: (params, callback, args...) =>
+    _load: (params, current, callback) =>
       requestId = ++@pendingRequestId
       @isLoading(@pendingRequestId != @completedRequestId)
       console.log("Request (#{requestId}): #{@path}?#{$.param(params)}")
@@ -44,8 +44,12 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
           @error(null)
           @hits(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10))
           #console.log("Response: #{@path}", requestId, params, data)
-          @_onSuccess(data, args...)
-          callback?(params, this)
+          results = @_toResults(data)
+
+          if params.page_num? && params.page_num > 1
+            results = current.concat(results)
+
+          callback?(results)
         else
           console.log("Rejected out-of-sequence request: #{@path}", requestId, params, data)
         @isLoading(@pendingRequestId != @completedRequestId)
@@ -55,8 +59,8 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
           @_onFailure(response)
         @isLoading(@pendingRequestId != @completedRequestId)
 
-    _onSuccess: (data) ->
-      ko.mapping.fromJS(data, @_searchResponse)
+    _toResults: (data) ->
+      ko.mapping.fromJS(data)
 
     _onFailure: (response) ->
       errors = response.responseJSON?.errors
