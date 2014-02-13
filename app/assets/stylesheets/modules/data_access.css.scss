@@ -59,6 +59,10 @@
       @include linear-gradient(#666, #888);
     }
   }
+
+  .button-disabled {
+    @include linear-gradient(#111, #222);
+  }
 }
 
 .data-access-retrieve {
@@ -162,4 +166,21 @@
   width: 5em;
   text-align: right;
   padding-right: .5em;
+}
+
+.access-method-label {
+  width: 15em;
+  text-align: right;
+  padding-right: .5em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.access-method-options {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.access-method-radio-label {
+  padding-left: .5em;
 }

@@ -1,5 +1,6 @@
 #= require models/data/xhr_model
 #= require models/data/granules
+#= require models/data/service_options
 
 ns = @edsc.models.data
 
@@ -8,6 +9,7 @@ ns.Datasets = do (ko
                   XhrModel=ns.XhrModel
                   Granules=ns.Granules
                   QueryModel = ns.Query
+                  ServiceOptionsModel = ns.ServiceOptions
                   toParam=jQuery.param
                   extend=jQuery.extend
                   ) ->
@@ -24,6 +26,8 @@ ns.Datasets = do (ko
         params = @query.params()
         paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
         "/granules/download.html?#{paramStr}"
+
+      @serviceOptions = new ServiceOptionsModel()
 
       @spatial_constraint = ko.computed =>
         if @points?

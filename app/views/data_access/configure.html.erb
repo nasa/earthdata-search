@@ -36,6 +36,19 @@
         </div>
         <div class="access-item-options">
           <h4>Service Options</h4>
+          <div>
+            <!-- ko ifnot: granuleAccessOptions().canDownloadAll -->
+            <p>
+              Only <span data-bind="text: granuleAccessOptions().downloadCount"></span> of <span data-bind="text: granuleAccessOptions().count"></span> items can be downloaded
+            </p>
+            <!-- /ko -->
+            <p>
+              <span class="access-method-label">Data Access Method</span>
+              <!-- ko if: granuleAccessOptions().canDownload -->
+              <input data-bind="checked: serviceOptions.accessMethod, attr: { name: $index() + '-access-method', id: $index() + '-download' }" type="radio" id="download" value="download" /><label data-bind="attr: { for: $index() + '-download' }" class="access-method-radio-label">Download</label>
+              <!-- /ko -->
+            </p>
+          </div>
         </div>
         <!-- /ko -->
         <!-- ko if: granuleAccessOptions().count === 0 -->
@@ -46,8 +59,9 @@
       </div>
 
       <div class="access-item-actions">
-        <button class="button-back low-priority">Back</button>
-        <button class="button-next">Continue</button>
+        <button data-bind="visible: $index() > 0" class="button-back low-priority">Back</button>
+        <button data-bind="visible: ($index() < ($parent.project.datasets().length - 1)), css: {' button-disabled': !serviceOptions.readyToDownload() }" class="button-next">Continue</button>
+        <button data-bind="visible: ($index() === ($parent.project.datasets().length - 1)), css: { 'button-disabled': !$parent.project.allReadyToDownload() }, click: $parent.ui.projectList.loginAndDownloadProject" class="button-next">Submit</button>
       </div>
     </li>
   </ol>
@@ -57,7 +71,4 @@
       <input id="data-access-project" name="project" type="hidden">
     </div>
   </form>
-  <div class="access-item-submission">
-    <button class="button text-button" data-bind="click: ui.projectList.loginAndDownloadProject">Submit</button>
-  </div>
 </div>

@@ -12,6 +12,11 @@ ns.Project = do (ko, QueryModel = ns.Query, DatasetsModel = ns.Datasets) ->
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
       @searchGranulesDataset = ko.observable(null)
       @query.params.subscribe(@_onQueryChange)
+      @allReadyToDownload = ko.computed =>
+        result = true
+        for ds in @datasets()
+          result = false if !ds.serviceOptions.readyToDownload()
+        result
 
     getDatasets: ->
       @_datasetsById[id] for id in @_datasetIds()
