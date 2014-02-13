@@ -51,7 +51,9 @@ do (ko, $=jQuery) ->
         asyncComputed.extend(throttle: timeout) unless isSetup
         isSetup = true
         value()
-      write: value
+      write: (newValue) ->
+        isSetup = true
+        value(newValue)
       deferEvaluation: true
 
 

@@ -1,8 +1,12 @@
 #= require models/data/datasets
+#= require models/data/dataset
 
 ns = @edsc.models.data
 
-ns.Project = do (ko, QueryModel = ns.Query, DatasetsModel = ns.Datasets) ->
+ns.Project = do (ko,
+                 QueryModel = ns.Query,
+                 DatasetsModel = ns.Datasets
+                 Dataset = ns.Dataset) ->
 
   class Project
     constructor: (@query) ->
@@ -74,35 +78,21 @@ ns.Project = do (ko, QueryModel = ns.Query, DatasetsModel = ns.Datasets) ->
       @searchGranulesDataset(null)
 
     fromJson: (jsonObj) ->
-      @query.fromJson(jsonObj.datasetQuery)
+      query = @query
 
-      ids = (dataset.id for dataset in jsonObj.datasets)
+      query.fromJson(jsonObj.datasetQuery)
 
-      new DatasetsModel(@query).search {echo_collection_id: ids}, (results) =>
-        @datasets(results)
-        # TODO, is there a better way to do this?
-        for jsonDataset in jsonObj.datasets
-          for ds in @datasets()
-            if jsonDataset.id == ds.id() && jsonDataset.params
-              ds.granuleQuery.fromJson(jsonDataset.params.granuleQuery)
+      @datasets(new Dataset(dataset, query) for dataset in jsonObj.datasets)
+
+      new DatasetsModel(@query).search {echo_collection_id: @_datasetIds()}, (results) =>
+        for result in results
+          dataset = @_datasetsById[result.id()]
+          if dataset?
+            dataset.fromJson(result.json)
 
     serialize: ->
-      project = {}
-      project.datasetQuery = @query.serialize()
-      project.datasets = []
-
-      console.log "Ordering without per-dataset customizations"
-      for dataset in @datasets()
-        id = dataset.id()
-        serializedDataset =
-          id: id
-        if dataset.has_granules()
-          serializedDataset.params =
-            echo_collection_id: id
-            granuleQuery: dataset.granuleQuery.serialize()
-        project.datasets.push(serializedDataset)
-
-      project
+      datasetQuery: @query.serialize()
+      datasets: (ds.serialize() for ds in @datasets())
 
     _onQueryChange: =>
       params = @query.params()

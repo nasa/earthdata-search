@@ -24,9 +24,9 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
     fromJson: (jsonObj) ->
       @keywords(jsonObj.keywords)
       @spatial(jsonObj.spatial)
-      if jsonObj.temporal
+      if jsonObj.temporal?
         @temporal().fromJson(jsonObj.temporal)
-      @facets(jsonObj.facets)
+      @facets(jsonObj.facets ? [])
       @placename(jsonObj.placename)
       @day_night_flag(jsonObj.day_night_flag)
 
