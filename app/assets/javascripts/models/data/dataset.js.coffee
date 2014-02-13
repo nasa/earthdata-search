@@ -16,7 +16,7 @@ ns.Dataset = do (ko
       @granulesModel = granulesModel = new Granules(@query, @granuleQuery)
       @granules = ko.computed(granulesModel.results, granulesModel, deferEvaluation: true)
       @granuleHits = ko.computed(granulesModel.hits, granulesModel, deferEvaluation: true)
-      @granuleAccessOptions = ko.asyncComputed([], 100, @_loadGranuleAccessOptions, this)
+      @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
 
       @serviceOptions = new ServiceOptionsModel(this)
 
