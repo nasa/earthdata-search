@@ -1,4 +1,17 @@
 <% content_for :toolbar do %>
+  <!-- ko ifnot: user.isLoggedIn -->
+  <a href="#" class="button user-info" data-toggle="modal" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
+  <!-- /ko -->
+  <!-- ko if: user.isLoggedIn -->
+  <div class="dropdown user-info">
+    <a href="#" data-toggle="dropdown" class="button dropdown-button"><i class="fa fa-user"></i> <strong><!--ko text: user.username--><!--/ko--></strong> <span class="caret"></span></a>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li>
+        <a href="#" class="dropdown-link" data-bind="click: user.logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+  <!-- /ko -->
   <div class="landing-toolbar-container">
   <div class="landing-toolbar-content">
   <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
@@ -371,4 +384,33 @@
     </div>
   </div>
 
+</div>
+
+<div id="login-modal" class="modal" role="dialog" aria-labelledby="EDSC Login" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" title="close" data-dismiss="modal" aria-hidden="true" class="pull-right close"><i class="fa fa-times-circle"></i></a>
+        <h3 class="modal-title" id="myModalLabel">Sign In to Earthdata Search Client</h3>
+      </div>
+      <form data-bind="submit: user.login">
+        <div class="modal-body">
+          <!-- ko if: user.errors() -->
+          <span class="error" data-bind="text: user.errors()"></span>
+          <!-- /ko -->
+          <p>
+            <label for="username">Username</label>
+            <input type="text" id="username" />
+          </p>
+          <p>
+            <label for="password">Password</label>
+            <input type="password" id="password" />
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="button-light"><i class="fa fa-lock"></i> Sign In</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

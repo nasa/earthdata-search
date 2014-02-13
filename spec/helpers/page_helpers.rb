@@ -21,6 +21,11 @@ module Helpers
       wait_for_xhr
     end
 
+    # Logout the user
+    def reset_user
+      page.evaluate_script("window.edsc.models.page.current.user.logout()")
+    end
+
     def have_popover(title)
       have_css('.popover-title', text: title)
     end

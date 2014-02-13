@@ -34,13 +34,16 @@ module Echo
     end
 
     def self.get_token(username, password, client_id, ip)
-      xml = {
-        username: username,
-        password: password,
-        client_id: client_id,
-        user_ip_address: ip
-      }.to_xml(root: 'token')
-      Echo::Response.new(post("/echo-rest/tokens.xml", xml))
+      token = {
+        token:
+        {
+          username: username,
+          password: password,
+          client_id: client_id,
+          user_ip_address: ip
+        }
+      }
+      Echo::Response.new(post("/echo-rest/tokens.json", token.to_json))
     end
 
     def self.connection
@@ -55,7 +58,8 @@ module Echo
 
     def self.post(url, body)
       faraday_response = connection.post(url) do |req|
-        req.headers['Content-Type'] = 'application/xml'
+        req.headers['Content-Type'] = 'application/json'
+        puts body
         req.body = body if body
       end
       Echo::Response.new(faraday_response)

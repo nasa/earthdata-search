@@ -2,6 +2,7 @@
 #= require models/data/datasets
 #= require models/data/dataset_facets
 #= require models/data/project
+#= require models/data/user
 #= require models/ui/spatial_type
 #= require models/ui/temporal
 #= require models/ui/datasets_list
@@ -18,6 +19,7 @@ ns.SearchPage = do (ko,
                     DatasetsModel = data.Datasets
                     DatasetFacetsModel = data.DatasetFacets
                     ProjectModel = data.Project
+                    UserModel = data.User
                     SpatialTypeModel = ui.SpatialType
                     TemporalModel = ui.Temporal
                     DatasetsListModel = ui.DatasetsList
@@ -29,6 +31,7 @@ ns.SearchPage = do (ko,
       @datasets = new DatasetsModel()
       @datasetFacets = new DatasetFacetsModel(@query)
       @project = new ProjectModel(@query)
+      @user = new UserModel()
 
       @ui =
         spatialType: new SpatialTypeModel()

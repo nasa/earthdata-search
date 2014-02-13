@@ -1,6 +1,18 @@
-input[type="text"], input[type="search"] {
+form {
+  p {
+    margin: 15px 0 15px 0;
+  }
+}
+
+.datetime-field {
+  margin: 15px 0 15px 0;
+}
+
+input[type="text"], input[type="search"], input[type="password"] {
   padding: 5px;
   outline: none;
+  min-width: 150px;
+  color: #424242;
 }
 
 textarea {
@@ -8,6 +20,11 @@ textarea {
   min-height: 200px;
   font-size: 1em;
   padding: 5px;
+}
+
+label {
+  display: inline-block;
+  min-width: 100px;
 }
 
 fieldset {
@@ -20,5 +37,12 @@ fieldset {
     background: #fff;
     font-weight: bold;
     padding: .1em .4em;
+  }
+}
+
+#login-modal {
+  
+  input {
+    width: 300px;
   }
 }

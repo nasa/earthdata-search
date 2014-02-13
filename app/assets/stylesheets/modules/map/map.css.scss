@@ -83,6 +83,9 @@
 }
 
 .dropzone {
+  border: none;
+  border-radius: 0;
+  
   .dz-filename {
     height: 2em;
   }

@@ -8,3 +8,4 @@
 //= require modules/landing
 //= require modules/dropdown
 //= require modules/button_effects
+//= require modules/login
