@@ -18,7 +18,7 @@ ns.Dataset = do (ko
       @granuleHits = ko.computed(granulesModel.hits, granulesModel, deferEvaluation: true)
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
 
-      @serviceOptions = new ServiceOptionsModel(this)
+      @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
 
       @fromJson(jsonData)
 
@@ -70,6 +70,7 @@ ns.Dataset = do (ko
             canDownloadAll: hits == downloadableHits
             canDownload: downloadableHits > 0
             downloadCount: downloadableHits
+            accessMethod: null
           callback(options)
 
     _granuleParams: (params) ->
@@ -80,17 +81,19 @@ ns.Dataset = do (ko
       if @has_granules()
         result.params = @granuleQuery.params()
         result.granuleAccessOptions = @granuleAccessOptions() if @granuleAccessOptions().count?
+      result.serviceOptions = @serviceOptions.serialize()
       result
 
     fromJson: (jsonObj) ->
       jsonObj = extend({}, jsonObj)
 
       @granuleQuery.fromJson(jsonObj.params) if jsonObj.params?
-
       @granuleAccessOptions(jsonObj.granuleAccessOptions) if jsonObj.granuleAccessOptions?
+      @serviceOptions.fromJson(jsonObj.serviceOptions) if jsonObj.serviceOptions?
 
       delete jsonObj.params
       delete jsonObj.granuleAccessOptions
+      delete jsonObj.serviceOptions
 
       @json = jsonObj
 

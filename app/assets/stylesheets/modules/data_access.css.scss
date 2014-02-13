@@ -61,7 +61,11 @@
   }
 
   button:disabled {
-    @include linear-gradient(#111, #222);
+    @include linear-gradient(#cbcbcb, #cbcbcb);
+    box-shadow: none;
+    text-shadow: none;
+    color: #888;
+    border-color: #888;
   }
 }
 

@@ -5,7 +5,7 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
     constructor: (@project, @user, @datasetResults) ->
       @visible = ko.observable(false)
 
-      @downloadableDatasets = ko.computed(@_computeDownloadableDatasets, this, deferEvaluation: true)
+      @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
 
     showProject: =>
       @visible(true)
@@ -37,7 +37,7 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
       else
         project.addDataset(dataset)
 
-    _computeDownloadableDatasets: ->
-      dataset for dataset in @project.datasets() when dataset.granuleAccessOptions().canDownload
+    _computeDatasetsToDownload: ->
+      dataset for dataset in @project.datasets() when dataset.serviceOptions.accessMethod() == 'download'
 
   exports = ProjectList
