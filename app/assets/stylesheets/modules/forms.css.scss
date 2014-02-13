@@ -11,8 +11,8 @@ form {
 input[type="text"], input[type="search"], input[type="password"] {
   padding: 5px;
   outline: none;
-  min-width: 300px;
-  color: #000;
+  min-width: 150px;
+  color: #424242;
 }
 
 textarea {
@@ -37,5 +37,12 @@ fieldset {
     background: #fff;
     font-weight: bold;
     padding: .1em .4em;
+  }
+}
+
+#login-modal {
+  
+  input {
+    width: 300px;
   }
 }

@@ -50,6 +50,7 @@
   padding: 6px 12px;
   border-radius: 3px;
   outline: none;
+  color: #fff;
 
   &:hover, &:focus {
     text-decoration: none;
@@ -68,7 +69,8 @@
   }
 }
 
-.text-button {
+a.text-button {
+  color: #fff;
   @include dark-button;
 }
 
