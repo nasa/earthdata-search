@@ -3,6 +3,7 @@
 #= require models/data/user
 #= require models/ui/temporal
 #= require models/ui/project_list
+#= require models/ui/service_options_list
 
 data = @edsc.models.data
 ui = @edsc.models.ui
@@ -16,6 +17,7 @@ ns.AccessPage = do (ko,
                     UserModel = data.User
                     TemporalModel = ui.Temporal
                     ProjectListModel = ui.ProjectList
+                    ServiceOptionsListModel = ui.ServiceOptionsList
                     ) ->
 
   class AccessPage
@@ -29,6 +31,7 @@ ns.AccessPage = do (ko,
         isLandingPage: false
         temporal: new TemporalModel(@query)
         projectList: new ProjectListModel(@project, @user)
+        serviceOptionsList: new ServiceOptionsListModel()
 
       @project.fromJson(accessData)
 

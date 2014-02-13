@@ -60,7 +60,7 @@
     }
   }
 
-  .button-disabled {
+  button:disabled {
     @include linear-gradient(#111, #222);
   }
 }
@@ -124,6 +124,10 @@
   padding: 1em;
   margin-bottom: 1em;
   background-color: #cbcbcb;
+}
+
+.access-item-body.hidden {
+  display: none;
 }
 
 .access-item-details {
