@@ -27,7 +27,7 @@ ns.Datasets = do (ko
         paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
         "/granules/download.html?#{paramStr}"
 
-      @serviceOptions = new ServiceOptionsModel()
+      @serviceOptions = new ServiceOptionsModel(this)
 
       @spatial_constraint = ko.computed =>
         if @points?
@@ -79,7 +79,7 @@ ns.Datasets = do (ko
             sizeUnit: "#{units[0]}bytes"
             canDownloadAll: hits == downloadableHits
             canDownload: downloadableHits > 0
-            downloadCount: hits - downloadableHits
+            downloadCount: downloadableHits
           callback(options)
 
     _granuleParams: (params) ->
