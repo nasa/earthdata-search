@@ -8,6 +8,7 @@ html {
 
 body {
   font-size: 16px;
+  background-color: #222;
 }
 
 .wrap {
@@ -26,9 +27,18 @@ footer, .toolbar {
 .main-content {
   height: 100%;
   width: 100%;
-  position: fixed;
   // So we don't have to look at a blank map
   //background: asset-url('ssm.jpg') no-repeat center;
+}
+
+.search-page {
+  .main-content {
+    position: fixed;
+  }
+
+  footer {
+    position: absolute;
+  }
 }
 
 .toolbar {
@@ -93,7 +103,6 @@ footer, .toolbar {
 footer {
   height: 35px;
   z-index: 1000;
-  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;

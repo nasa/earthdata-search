@@ -1,17 +1,27 @@
+#= require models/data/datasets
+#= require models/data/dataset
+
 ns = @edsc.models.data
 
-ns.Project = do (ko, QueryModel = ns.Query) ->
+ns.Project = do (ko,
+                 QueryModel = ns.Query,
+                 DatasetsModel = ns.Datasets
+                 Dataset = ns.Dataset) ->
 
   class Project
     constructor: (@query) ->
       @_datasetIds = ko.observableArray()
       @_datasetsById = {}
+      @id = ko.observable(null)
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
       @searchGranulesDataset = ko.observable(null)
-      @query.params.subscribe(@_onQueryChange)
+      @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
 
-      @granule_query = new QueryModel()
-      @granule_query.params.subscribe(@_onGranuleQueryChange)
+    _computeAllReadyToDownload: ->
+      result = true
+      for ds in @datasets()
+        result = false if !ds.serviceOptions.readyToDownload()
+      result
 
     getDatasets: ->
       @_datasetsById[id] for id in @_datasetIds()
@@ -43,7 +53,8 @@ ns.Project = do (ko, QueryModel = ns.Query) ->
       @_datasetIds.remove(id)
       @_datasetIds.push(id)
 
-      dataset.searchGranules(@query.params())
+      # Force results to start being calculated
+      dataset.granulesModel.results()
 
       null
 
@@ -68,16 +79,21 @@ ns.Project = do (ko, QueryModel = ns.Query) ->
     clearSearchGranules: =>
       @searchGranulesDataset(null)
 
-    _onQueryChange: =>
-      params = @query.params()
-      for dataset in @getDatasets()
-        dataset.searchGranules(params)
+    fromJson: (jsonObj) ->
+      query = @query
 
-    _onGranuleQueryChange: =>
-      dataset_params = @query.params()
-      granule_params = @granule_query.params()
-      params = $.extend({}, dataset_params, granule_params)
-      if @searchGranulesDataset()
-        @searchGranulesDataset().searchGranules(params)
+      query.fromJson(jsonObj.datasetQuery)
+
+      @datasets(new Dataset(dataset, query) for dataset in jsonObj.datasets)
+
+      new DatasetsModel(@query).search {echo_collection_id: @_datasetIds()}, (results) =>
+        for result in results
+          dataset = @_datasetsById[result.id()]
+          if dataset?
+            dataset.fromJson(result.json)
+
+    serialize: ->
+      datasetQuery: @query.serialize()
+      datasets: (ds.serialize() for ds in @datasets())
 
   exports = Project

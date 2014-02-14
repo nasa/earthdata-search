@@ -12,13 +12,13 @@
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
-    <%= javascript_include_tag "https://cdn.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
+    <%= yield :javascript %>
+    <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
 </head>
-<body class="env-<%= Rails.env %>" data-bind="css: {'is-landing': ui.isLandingPage}" >
+<body class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
     <header id="main-toolbar" class="toolbar">
-      <h1><a class="ir" href="#">Earthdata Search</a></h1>
+      <h1><a class="ir" href="/search">Earthdata Search</a></h1>
       <div class="toolbar-content">
         <%= yield :toolbar %>
       </div>

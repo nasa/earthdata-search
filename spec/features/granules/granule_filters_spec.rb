@@ -22,17 +22,18 @@ describe "Granule search filters", reset: false do
     reset_project
   end
 
+  # TODO these granule numbers aren't working very well
   context "when choosing a day/night flag" do
     it "selecting day returns day granules" do
       select 'Day only', from: "day-night-select"
 
-      first_project_dataset.should have_content("1942386 Granules")
+      first_project_dataset.should have_content("1943924 Granules")
     end
 
     it "selecting night returns night granules" do
       select 'Night only', from: "day-night-select"
 
-      first_project_dataset.should have_content("434081 Granules")
+      first_project_dataset.should have_content("434414 Granules")
     end
 
     it "selecting both returns both day and night granules" do

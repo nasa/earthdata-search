@@ -1,22 +1,14 @@
+<% content_for :javascript do %>
+  <%= javascript_include_tag "search" %>
+<% end %>
+
 <% content_for :toolbar do %>
-  <!-- ko ifnot: user.isLoggedIn -->
-  <a href="#" class="button user-info" data-toggle="modal" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
-  <!-- /ko -->
-  <!-- ko if: user.isLoggedIn -->
-  <div class="dropdown user-info">
-    <a href="#" data-toggle="dropdown" class="button dropdown-button"><i class="fa fa-user"></i> <strong><!--ko text: user.username--><!--/ko--></strong> <span class="caret"></span></a>
-    <ul class="dropdown-menu dropdown-menu-right">
-      <li>
-        <a href="#" class="dropdown-link" data-bind="click: user.logout">Logout</a>
-      </li>
-    </ul>
-  </div>
-  <!-- /ko -->
+  <%= render partial: 'shared/login' %>
   <div class="landing-toolbar-container">
   <div class="landing-toolbar-content">
   <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
     <p>
-      <input id="keywords" name="keywords" class="autocomplete-placenames"
+      <input id="keywords" type="text" name="keywords" class="autocomplete-placenames"
              data-bind="value: query.keywords, valueUpdate: 'keyup'"
              placeholder="Type any topic or dataset name"
              autofocus>
@@ -130,58 +122,7 @@
 <% end %>
 
 <div class="master-overlay homepage-search is-master-overlay-secondary-hidden" id="datasets-overlay">
-  <section id="master-overlay-parent" class="master-overlay-parent">
-    <header>
-      <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-      <h2>Browse Datasets</h2>
-    </header>
-    <div class="master-overlay-content panel-group">
-      <div data-bind="if: query.facets().length > 0" class="panel panel-default selected-facets-panel">
-        <div class="panel-heading">
-          <h3 class="panel-title facet-title">
-            Values Selected
-          </h3>
-        </div>
-        <div class="panel-body facets">
-          <dl>
-            <!-- ko foreach: datasetFacets.appliedFacets -->
-                <dt data-bind="text: name" class="facet-title"></dt>
-                  <dd class="facets">
-                    <!-- ko foreach: selectedValues -->
-                    <span data-bind="click: $root.datasetFacets.removeFacet" class="facets-item selected">
-                        <span data-bind="text: term" ></span>
-                        <i class="fa fa-times"></i>
-                      </span>
-                      <span data-bind="if: $parent.selectedValues().indexOf($data) < $parent.selectedValues().length - 1"> or </span>
-                    <!-- /ko -->
-                  </dd>
-            <!-- /ko -->
-          </dl>
-        </div>
-      </div>
-      <!-- ko foreach: datasetFacets.results -->
-      <div data-bind="if: values().length > 0, css: class_name" class="panel panel-default">
-        <div class="panel-heading">
-          <h3 data-bind="click: toggleList" class="panel-title facet-title">
-            <i data-bind="css: {'fa-caret-down': closed(), 'fa-caret-up': opened()}" class="fa pull-right"></i>
-            <a data-bind="text: name, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
-          </h3>
-        </div>
-        <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed()}">
-          <div class="panel-body facets">
-            <!-- ko foreach: values() -->
-            <p class="facets-item" data-bind="click: $root.datasetFacets.toggleFacet, css: {selected: isSelected}">
-              <span data-bind="text: term"></span>
-              (<span data-bind="text: count"></span>)
-              <i class="fa fa-times"></i>
-            </p>
-            <!-- /ko -->
-          </div>
-        </div>
-      </div>
-      <!-- /ko -->
-    </div>
-  </section>
+  <%= render partial: 'overlay_parent' %>
   <div class="master-overlay-main">
     <div class="master-overlay-main-content" data-level="0">
       <section id="dataset-results">
@@ -236,6 +177,10 @@
         </div>
         <div class="master-overlay-content panel-list">
         <div class="master-overlay-project-actions">
+          <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject">
+            <i class="edsc-icon-download"></i>
+          </a>
+
           <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
             <i class="edsc-icon-eye"></i>
           </a>
@@ -262,12 +207,12 @@
         <nav class="master-overlay-nav">
           Granule Filters
         </nav>
+        <!-- ko if: project.searchGranulesDataset() -->
         <header>
-          <!-- ko if: project.searchGranulesDataset() -->
           <h2 data-bind="text: project.searchGranulesDataset().dataset_id"></h2>
-          <!-- /ko -->
         </header>
         <%= render partial: 'granule_search' %>
+        <!-- /ko -->
       </section>
     </div>
   </div>
@@ -386,7 +331,7 @@
 
 </div>
 
-<div id="login-modal" class="modal" role="dialog" aria-labelledby="EDSC Login" aria-hidden="true" data-backdrop="false">
+<div id="login-modal" data-bind="showModal: user.needsLogin" class="modal" role="dialog" aria-labelledby="EDSC Login" data-backdrop="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -400,11 +345,11 @@
           <!-- /ko -->
           <p>
             <label for="username">Username</label>
-            <input type="text" id="username" />
+            <input type="text" id="username" data-bind="value: user.username" />
           </p>
           <p>
             <label for="password">Password</label>
-            <input type="password" id="password" />
+            <input type="password" id="password" data-bind="value: user.password" />
           </p>
         </div>
         <div class="modal-footer">
@@ -414,3 +359,10 @@
     </div>
   </div>
 </div>
+
+<form id="data-access" method="POST" action="/data/configure" style="display:none;">
+  <div>
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+   <input id="data-access-project" name="project" type="hidden">
+  </div>
+</form>

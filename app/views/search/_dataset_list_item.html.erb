@@ -20,6 +20,11 @@
                   <i class="edsc-icon-location"></i>
                 </a>
                 <!-- /ko -->
+                <!-- ko if: $parent.ui.projectList.visible -->
+                  <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
+                    <i class="edsc-icon-download"></i>
+                  </a>
+                <!-- /ko -->
                 <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
@@ -57,7 +62,10 @@
                 <!-- /ko -->
               - <span data-bind="text: archive_center"></span>
               </p>
-              <p data-bind="if: granulesModel.isLoaded">
+              <p data-bind="if: granulesModel.isLoaded() && has_granules()">
                 <span data-bind="text: $root.pluralize(granuleHits(), 'Granule', 'Granules')"></span>
+              </p>
+              <p data-bind="ifnot: has_granules()">
+                Dataset only
               </p>
             </li>

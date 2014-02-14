@@ -15,6 +15,7 @@ ui = models.ui
 ns = models.page
 
 ns.SearchPage = do (ko,
+                    setCurrent = ns.setCurrent,
                     QueryModel = data.Query,
                     DatasetsModel = data.Datasets
                     DatasetFacetsModel = data.DatasetFacets
@@ -28,34 +29,25 @@ ns.SearchPage = do (ko,
   class SearchPage
     constructor: ->
       @query = new QueryModel()
-      @datasets = new DatasetsModel()
+      @user = new UserModel()
+      @datasets = new DatasetsModel(@query)
       @datasetFacets = new DatasetFacetsModel(@query)
       @project = new ProjectModel(@query)
-      @user = new UserModel()
 
       @ui =
         spatialType: new SpatialTypeModel()
         temporal: new TemporalModel(@query)
         datasetsList: new DatasetsListModel(@query, @datasets)
-        projectList: new ProjectListModel(@project, @datasets)
+        projectList: new ProjectListModel(@project, @user, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
 
       @bindingsLoaded = ko.observable(false)
 
       @spatialError = ko.computed(@_computeSpatialError)
 
-      ko.computed(@_computeDatasetResults).extend(throttle: 100)
-      ko.computed(@_computeDatasetFacetsResults).extend(throttle: 100)
-
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
       "#{value} #{word}"
-
-    _computeDatasetResults: =>
-      @datasets.search(@query.params())
-
-    _computeDatasetFacetsResults: =>
-      @datasetFacets.search(@query.params())
 
     _computeSpatialError: =>
       error = @datasets.error()
@@ -64,5 +56,7 @@ ns.SearchPage = do (ko,
         return "Polygon is too large" if error.indexOf('ORA-13367') != -1
         return error if error.indexOf('ORA-') != -1
       null
+
+  setCurrent(new SearchPage())
 
   exports = SearchPage

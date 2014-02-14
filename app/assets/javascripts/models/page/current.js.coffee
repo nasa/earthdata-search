@@ -1,15 +1,11 @@
-#= require models/page/search_page
-
 ns = @edsc.models.page
 
-ns.current = @edsc.page = do ($ = jQuery, SearchPageModel = ns.SearchPage) ->
+ns.setCurrent = do ($ = jQuery) ->
 
-  # We only have one page to worry about for now.  Eventually we'll have to
-  # worry about loading the correct page.
-  model = new SearchPageModel()
+  exports = (model) ->
 
-  $(document).ready ->
-    ko.applyBindings(model)
-    model.bindingsLoaded(true)
+    $(document).ready ->
+      ko.applyBindings(model)
+      model.bindingsLoaded(true)
 
-  exports = model
+    @edsc.models.page.current = @edsc.page = model

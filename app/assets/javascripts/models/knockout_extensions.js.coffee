@@ -1,4 +1,4 @@
-do (ko) ->
+do (ko, $=jQuery) ->
 
   ko.observableArray.fn.contains = (obj) ->
     @indexOf(obj) != -1
@@ -26,3 +26,44 @@ do (ko) ->
 
   ko.observableArray.fn.subscribeRemove = (callback) ->
     @subscribeChange('deleted', callback)
+
+  # For observables that need to make an XHR or similar call to compute their value
+  ko.asyncComputed = (initialValue, timeout, method, obj) ->
+    value = ko.observable(initialValue)
+
+    callAsyncMethod = ->
+      method.call obj, value.peek(), (newValue) ->
+        value(newValue)
+
+    asyncComputed = ko.computed
+      read: ->
+        val = value.peek()
+        callAsyncMethod()
+        val
+      write: value
+      deferEvaluation: true
+
+    isSetup = false
+
+    ko.computed
+      read: ->
+        # Causes an evaluation of computed, thereby setting up dependencies correctly
+        asyncComputed.extend(throttle: timeout) unless isSetup
+        isSetup = true
+        value()
+      write: (newValue) ->
+        isSetup = true
+        value(newValue)
+      deferEvaluation: true
+
+
+  ko.bindingHandlers.showModal =
+    init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+
+    update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+      isShown = ko.unwrap(valueAccessor())
+      if isShown
+        method = 'show'
+      else
+        method = 'hide'
+      $(element).modal(method)

@@ -1,10 +1,10 @@
 ns = @edsc.models.data
 
 # FIXME: Get rid of dependency on jQuery, ui, and page model
-ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
+ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
 
   class Query
-    constructor: ->
+    constructor: (@_extraParams={}) ->
       @keywords = ko.observable("")
       @spatial = ko.observable("")
 
@@ -20,6 +20,25 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
       @day_night_flag = ko.observable("")
 
       @params = ko.computed(@_computeParams)
+
+    fromJson: (jsonObj) ->
+      @keywords(jsonObj.keywords)
+      @spatial(jsonObj.spatial)
+      if jsonObj.temporal?
+        @temporal().fromJson(jsonObj.temporal)
+      @facets(jsonObj.facets ? [])
+      @placename(jsonObj.placename)
+      @day_night_flag(jsonObj.day_night_flag)
+
+    serialize: ->
+      {
+        keywords: @keywords()
+        spatial: @spatial()
+        temporal: @temporal()?.serialize()
+        facets: @facets()
+        placename: @placename()
+        day_night_flag: @day_night_flag()
+      }
 
     clearFilters: =>
       @keywords('')
@@ -43,7 +62,7 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page) ->
       constraint? && (!spatial || spatial == constraint)
 
     _computeParams: =>
-      params = {}
+      params = extend({}, @_extraParams)
 
       keywords = @keywords()?.trim()
       if keywords?.length > 0

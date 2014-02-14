@@ -1,0 +1,45 @@
+<% content_for :javascript do %>
+  <script>
+    this.edscPageData = <%= raw @project.to_json %>;
+  </script>
+  <%= javascript_include_tag "data_access" %>
+<% end %>
+
+<% content_for :toolbar do %>
+  <%= render partial: 'shared/login' %>
+<% end %>
+
+<section class="data-access data-access-retrieve">
+  <nav class="data-access-nav">
+    <a href="javascript:history.back()"><i class="edsc-icon-arrow-left"></i> Back to Data Access Options</a>
+  </nav>
+  <header class="data-access-header">
+    <h1>Success!</h1>
+    <p>Your request has been processed.  See below for information on accessing your data.</p>
+  </header>
+  <section class="data-access-content" data-bind="visible: ui.projectList.datasetsToDownload().length > 0">
+    <h2>The following datasets are available for immediate download</h2>
+    <p>
+      Click the "View Download Links" button to view a page containing links to your data.
+      You may bookmark this page for later access.
+      A browser download manager plugin such as Firefox's
+      <a class="link" href="https://addons.mozilla.org/en-US/firefox/addon/downthemall/">DownThemAll!</a>
+      can assist you in managing a large number of download links.
+    </p>
+    <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetsToDownload">
+      <li class="data-access-dataset">
+        <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
+        <div class="data-access-dataset-actions">
+          <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: granuleDownloadsUrl}">View Download Links</a>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <section class="data-access-next">
+    <h2>Next Steps</h2>
+    <ul>
+      <li><a class="link" href="#">Back to Earthdata Search Results</a></li>
+      <li><a class="link" href="#">Start a new New Earthdata Search</a></li>
+    </ul>
+  </section>
+</section>

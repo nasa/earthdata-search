@@ -14,7 +14,7 @@ describe "Login", reset: false do
   end
 
   before(:each) do
-    click_link 'Login'
+    click_link 'Sign In'
   end
 
   after(:each) do
@@ -25,7 +25,7 @@ describe "Login", reset: false do
     before(:each) do
       fill_in 'Username', with: 'edsc'
       fill_in 'Password', with: 'EDSCtest!1'
-      click_button 'Login'
+      click_button 'Sign In'
       wait_for_xhr
     end
 
@@ -57,7 +57,7 @@ describe "Login", reset: false do
     it "remembers the login session" do
       fill_in 'Username', with: 'edsc'
       fill_in 'Password', with: 'EDSCtest!1'
-      click_button 'Login'
+      click_button 'Sign In'
 
       within(".toolbar") do
         expect(page).to have_content("edsc")
@@ -73,18 +73,18 @@ describe "Login", reset: false do
 
   context "unsuccessful login" do
     after(:each) do
-      click_button 'Close'
+      find("a.close").click
     end
 
     it "displays an error with a blank username" do
-      click_button 'Login'
+      click_button 'Sign In'
 
       expect(page).to have_content "Username can't be blank"
     end
 
     it "displays an error with a blank password" do
       fill_in 'Username', with: 'test'
-      click_button 'Login'
+      click_button 'Sign In'
 
       expect(page).to have_content "Password can't be blank"
     end
@@ -92,7 +92,7 @@ describe "Login", reset: false do
     it "displays an error with an invalid username or password" do
       fill_in 'Username', with: 'test'
       fill_in 'Password', with: 'test'
-      click_button 'Login'
+      click_button 'Sign In'
 
       expect(page).to have_content "Invalid username or password, please retry."
     end

@@ -1,46 +1,19 @@
 #= require models/data/xhr_model
-#= require models/data/granules
+#= require models/data/dataset
 
 ns = @edsc.models.data
 
-ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.Granules) ->
-
-  class Dataset
-    constructor: (jsonData) ->
-      @_loadJson(jsonData)
-
-      @granulesModel = granulesModel = new Granules()
-      @granules = ko.computed -> granulesModel.results()
-      @granuleHits = ko.computed -> granulesModel.hits()
-      @spatial_constraint = ko.computed =>
-        if @points?
-          'point:' + @points()[0].split(/\s+/).reverse().join(',')
-        else
-          null
-
-    _loadJson: (jsonData) ->
-      @thumbnail = ko.observable(null)
-      @archive_center = ko.observable(null)
-      ko.mapping.fromJS(jsonData, {}, this)
-      if @gibs
-        @gibs = ko.observable(ko.mapping.toJS(@gibs))
-      else
-        @gibs = ko.observable(null)
-      @error = ko.observable(null)
-
-    searchGranules: (params) ->
-      @granulesModel.search(@_granuleParams(params))
-
-    loadNextGranules: (params) ->
-      @granulesModel.loadNextPage(@_granuleParams(params))
-
-    _granuleParams: (params) ->
-      $.extend({}, params, 'echo_collection_id[]': @id())
+ns.Datasets = do (ko
+                  getJSON=jQuery.getJSON
+                  XhrModel=ns.XhrModel
+                  Dataset=ns.Dataset
+                  ) ->
 
   class DatasetsModel extends XhrModel
-    constructor: ->
+    constructor: (query) ->
       #super('http://localhost:3002/datasets')
-      super('/datasets.json')
+      super('/datasets.json', query)
+
       @details = ko.observable({})
       @detailsLoading = ko.observable(false)
       @_visibleDatasetIds = ko.observableArray()
@@ -48,14 +21,10 @@ ns.Datasets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, Granules=ns.
       @visibleGibsDatasets = ko.computed(@_computeVisibleGibsDatasets)
       @allDatasetsVisible = ko.observable(false)
 
-    _onSuccess: (data, replace) ->
+    _toResults: (data) ->
       results = data.feed.entry;
-      if replace
-        @_searchResponse(new Dataset(result) for result in results)
-      else
-        currentResults = @_searchResponse
-        newResults = (new Dataset(result) for result in results)
-        currentResults.push.apply(currentResults, newResults)
+      query = @query
+      new Dataset(result, query) for result in results
 
     showDataset: (dataset) =>
       id = dataset.id()

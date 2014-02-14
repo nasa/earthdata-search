@@ -1,0 +1,194 @@
+.data-access {
+  height: 100%;
+  color: $overlay-heading-font-color;
+  padding-bottom: 70px;
+
+  a {
+    color: #fff;
+  }
+
+  a:hover {
+    color: #aaa;
+  }
+
+  > header, > section, > .data-access-content, > .access-item-submission {
+    margin: 1em auto;
+    padding: 1em 0;
+    max-width: 1000px;
+  }
+
+  > section:last-child {
+    border-bottom-width: 0px;
+  }
+
+  .link {
+    text-decoration: underline;
+  }
+
+  ol.data-access-content {
+    list-style: none;
+    counter-reset: accesslist;
+    padding: 0;
+
+    li {
+      position: relative;
+    }
+
+    li:before {
+      counter-increment: accesslist;
+      content: counter(accesslist);
+      display: block;
+      color: #e9e9e9;
+      font-size: 3em;
+      position: absolute;
+      width: 3em;
+      top: 0;
+      left: -3em;
+      line-height: 1em;
+      text-align: right;
+      padding-right: .2em;
+    }
+  }
+
+  button.low-priority {
+    @include linear-gradient(#888, #666);
+    box-shadow: none;
+    border: 1px solid #444;
+
+    &:hover {
+      @include linear-gradient(#666, #888);
+    }
+  }
+
+  button:disabled {
+    @include linear-gradient(#cbcbcb, #cbcbcb);
+    box-shadow: none;
+    text-shadow: none;
+    color: #888;
+    border-color: #888;
+  }
+}
+
+.data-access-retrieve {
+  > header, > section, > .data-access-content {
+    border-bottom: 1px solid #888;
+  }
+}
+
+.data-access-datasets-config {
+  color: #333;
+
+  h3 {
+    color: #fff;
+    background-color: rgb(51, 75, 102);
+    margin-bottom: 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+  }
+
+  h4 {
+    color: rgb(51, 75, 102);
+    font-size: 1.2em;
+    padding-bottom: .5em;
+    border-bottom: 1px solid rgb(51, 75, 102);
+  }
+}
+
+.data-access-datasets-list {
+  list-style-type: disc;
+  padding-left: 2em;
+}
+
+.data-access-dataset {
+  margin: 2em 0;
+}
+
+.data-access-dataset-name {
+  font-size:1.2em;
+  font-weight: bold;
+  margin: .5em 0;
+}
+
+.data-access-dataset-actions {
+  margin: .5em 0;
+}
+
+.data-access-nav {
+  padding: 1em;
+  border-bottom: 1px solid #333;
+}
+
+.data-access-next {
+  li {
+    margin-bottom: .5em;
+  }
+}
+
+.access-item {
+  padding: 1em;
+  margin-bottom: 1em;
+  background-color: #cbcbcb;
+}
+
+.access-item-body.hidden {
+  display: none;
+}
+
+.access-item-details {
+  background-color: #fff;
+  border: 1px solid rgb(51, 75, 102);
+  margin: 1em 0;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+
+  > * {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+
+.access-item-actions {
+  text-align: right;
+  margin-top: 1em;
+}
+
+.access-item-submission {
+  text-align: right;
+}
+
+
+.summary {
+  line-height: 3em;
+}
+
+.summary-label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.summary-data {
+  font-weight: bold;
+  color: rgb(141, 155, 172);
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 3em;
+  width: 5em;
+  text-align: right;
+  padding-right: .5em;
+}
+
+.access-method-label {
+  width: 15em;
+  text-align: right;
+  padding-right: .5em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.access-method-options {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.access-method-radio-label {
+  padding-left: .5em;
+}

@@ -1,32 +1,48 @@
 ns = @edsc.models.data
 
-ns.User = do (ko, doPost=jQuery.post) ->
+ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
 
   class User
     constructor: ->
-      @token = ko.observable("")
+      @token = ko.observable(null)
+      @name = ko.observable(null)
       @username = ko.observable("")
+      @password = ko.observable("")
       @errors = ko.observable("")
-      @isLoggedIn = ko.observable(false)
-
+      @isLoggedIn = ko.computed =>
+        @token()?.length > 0 && @name()?.length > 0
+      @needsLogin = ko.observable(false)
+      @loginCallback = null
       @_loadStateFromCookie()
+
+    initiateLogin: =>
+      @needsLogin(true)
+
+    cancelLogin: =>
+      @clearLogin()
+
+    clearLogin: =>
+      @username("")
+      @password("")
+      @needsLogin(false)
 
     login: (form) =>
       data =
         token:
-          username: form.username.value
-          password: form.password.value
+          username: @username()
+          password: @password()
           client_id: 'EDSC'
 
       @errors("")
 
       xhr = doPost "/login", data, (response) =>
-        @isLoggedIn(true)
         token = response.token
         @token(token.id)
-        @username(token.username)
+        @name(token.username)
+        @loginCallback?()
+        @clearLogin()
         @_setCookie("token", @token())
-        @_setCookie("username", @username())
+        @_setCookie("name", @name())
 
       xhr.fail (response, type, reason) =>
         server_error = false
@@ -41,15 +57,16 @@ ns.User = do (ko, doPost=jQuery.post) ->
         @errors("An error occurred when logging in.  Please retry later.") if server_error
 
     logout: =>
-      @isLoggedIn(false)
-      @token("")
-      @username("")
-      @_setCookie("token", "")
-      @_setCookie("username", "")
+      xhr = getJSON "/logout", (data, status, xhr) =>
+        @token(null)
+        @name(null)
+        @_setCookie("token", "")
+        @_setCookie("name", "")
+        @clearLogin()
 
     # https://gist.github.com/dmix/2222990
     _setCookie: (name, value) ->
-      document.cookie = name + "=" + escape(value)
+      document.cookie = "#{name}=#{escape(value)}; path=/;"
 
     _readCookie: (name) ->
       nameEQ = name + "="
@@ -58,13 +75,23 @@ ns.User = do (ko, doPost=jQuery.post) ->
       while i < ca.length
         c = ca[i]
         c = c.substring(1, c.length)  while c.charAt(0) is " "
-        return c.substring(nameEQ.length, c.length).replace(/"/g, '')  if c.indexOf(nameEQ) is 0
+        return c.substring(nameEQ.length, c.length).replace(/\"/g, '')  if c.indexOf(nameEQ) is 0
         i++
       null
 
     _loadStateFromCookie: =>
       @token(@_readCookie("token"))
-      @username(@_readCookie("username"))
-      @isLoggedIn(@token() and @username())
+      @name(@_readCookie("name"))
+
+    loggedIn: (action) ->
+      if @isLoggedIn()
+        action()
+      else
+        @loginCallback = =>
+          @loginCallback = null
+          action()
+
+        @needsLogin(true)
+
 
   exports = User

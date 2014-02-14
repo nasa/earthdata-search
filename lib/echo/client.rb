@@ -33,6 +33,10 @@ module Echo
       get("/catalog-rest/echo_catalog/provider_holdings.json")
     end
 
+    def self.get_token_info(token)
+      get("/echo-rest/tokens/#{token}/token_info.json", {}, {'Echo-Token' => token})
+    end
+
     def self.get_token(username, password, client_id, ip)
       token = {
         token:
@@ -52,14 +56,18 @@ module Echo
 
     private
 
-    def self.get(url, params={})
-      Echo::Response.new(connection.get(url, params))
+    def self.get(url, params={}, headers={})
+      faraday_response = connection.get(url, params) do |req|
+        headers.each do |header, value|
+          req.headers[header] = value
+        end
+      end
+      Echo::Response.new(faraday_response)
     end
 
     def self.post(url, body)
       faraday_response = connection.post(url) do |req|
         req.headers['Content-Type'] = 'application/json'
-        puts body
         req.body = body if body
       end
       Echo::Response.new(faraday_response)

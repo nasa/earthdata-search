@@ -28,7 +28,9 @@ describe "'Clear Filters' button" do
 
   context "clears temporal" do
     it "range" do
-      script = "edsc.models.page.current.query.temporal(['1978-12-01T00:00:00Z','1979-12-01T00:00:00Z'])"
+      script = "var temporal = edsc.models.page.current.query.temporal()
+                temporal.start.date(new Date('1978-12-01T00:00:00Z'));
+                temporal.stop.date(new Date('1979-12-01T00:00:00Z'));"
       page.evaluate_script(script)
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -42,7 +44,10 @@ describe "'Clear Filters' button" do
     end
 
     it "recurring" do
-      script = "edsc.models.page.current.query.temporal(['1970-12-01T00:00:00Z','1975-12-31T00:00:00Z',335,365])"
+      script = "var temporal = edsc.models.page.current.query.temporal()
+                temporal.start.date(new Date('1970-12-01T00:00:00Z'));
+                temporal.stop.date(new Date('1975-12-01T00:00:00Z'));
+                temporal.isRecurring(true)"
       page.evaluate_script(script)
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
