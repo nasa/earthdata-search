@@ -81,46 +81,73 @@ describe "Data Access workflow", reset: false do
       visit "/search"
     end
 
-    after :each do
-      script = "edsc.page.ui.serviceOptionsList.activeIndex(0);edsc.page.project.datasets()[0].serviceOptions.accessMethod(null);"
-      page.evaluate_script script
-    end
+    context "when displaying options for the first of multiple datasets" do
+      after :all do
+        script = "edsc.page.ui.serviceOptionsList.activeIndex(0);edsc.page.project.datasets()[0].serviceOptions.accessMethod(null);"
+        page.evaluate_script script
+      end
 
-    context "sends the project to the data access page" do
-      it "shows granule information" do
-        expect(page).to have_content "Data Access"
-        expect(page).to have_content "15 Minute Stream Flow Data: USGS (FIFE)"
+      it "displays granule information" do
         expect(page).to have_content "39 Granules"
         expect(page).to have_content "252.9 Kilobytes"
-        expect(page).to have_content "2000 Pilot Environmental Sustainability Index (ESI)"
       end
 
-      it "displays Data Access Method for datasets with downloadable granules" do
-        expect(page).to have_content "Data Access Method"
-        expect(page).to have_content "Download"
+      it 'displays a "continue" button' do
+        expect(page).to have_content "Continue"
       end
 
-      it "does not display Data Access Method for datasets without downloadable granules" do
+      it 'displays no "back" button' do
+        within(".data-access-content") do
+          expect(page).to have_no_content "Back"
+        end
+      end
+
+      context 'and clicking the "continue" button' do
+        before :all do
+          choose "Download"
+          click_button "Continue"
+        end
+
+        it 'displays the next dataset in the list' do
+          expect(page).to have_content "Dataset Only"
+        end
+      end
+    end
+
+    context "when displaying options for the last of multiple datasets" do
+      before :all do
         choose "Download"
         click_button "Continue"
-        expect(page).to have_content "Dataset Only"
-        expect(page).to have_no_content "Data Access Method"
-        expect(page).to have_no_content "Download"
       end
 
-      it "does not allow download until all Service Options are completed" do
-        expect(page).to have_content "Data Access Method"
-        expect(page).to have_content "Download"
-        expect(page).to have_css("button.button-next[disabled]")
+      after :all do
+        script = "edsc.page.ui.serviceOptionsList.activeIndex(0);edsc.page.project.datasets()[0].serviceOptions.accessMethod(null);"
+        page.evaluate_script script
       end
 
-      it "back button sends you to the previous dataset" do
-        choose "Download"
-        click_button "Continue"
+      it "displays granule information" do
         expect(page).to have_content "Dataset Only"
+      end
 
-        click_button "Back"
-        expect(page).to have_content "Data Access Method"
+      it 'displays a "submit" button' do
+        expect(page).to have_content "Submit"
+      end
+
+      it 'displays a "back" button' do
+        within(".data-access-content") do
+          expect(page).to have_content "Back"
+        end
+      end
+
+      context 'and clicking the "back" button' do
+        before :all do
+          click_button "Back"
+        end
+
+        it 'displays the previous dataset in the list' do
+          expect(page).to have_content "39 Granules"
+          expect(page).to have_content "252.9 Kilobytes"
+        end
       end
     end
   end
