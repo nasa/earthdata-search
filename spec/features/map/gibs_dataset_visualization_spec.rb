@@ -27,7 +27,7 @@ describe "Dataset GIBS visualizations", :reset => false do
 
   context "when viewing a GIBS-enabled dataset in the results list" do
     it "indicates that the dataset has GIBS visualizations" do
-      expect(first_dataset_result).to have_content('GIBS')
+      expect(first_dataset_result).to have_css('.badge-gibs')
     end
   end
 
