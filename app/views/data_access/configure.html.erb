@@ -33,7 +33,7 @@
               <span class="summary-data" data-bind="text: granuleAccessOptions().count"></span>
               <span class="summary-label">Granules</span>
             </p>
-            <p class="summary">
+            <p class="summary" data-bind="ifnot: isNaN(granuleAccessOptions().size)">
               <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
               <span class="summary-label" data-bind="text: granuleAccessOptions().sizeUnit"></span>
             </p>
