@@ -24,3 +24,6 @@
 /vagrant/.vagrant
 
 /fixtures/cassettes/*
+
+/config/database.yml
+
