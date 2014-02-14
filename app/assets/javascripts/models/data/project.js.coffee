@@ -15,7 +15,6 @@ ns.Project = do (ko,
       @id = ko.observable(null)
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
       @searchGranulesDataset = ko.observable(null)
-      @query.params.subscribe(@_onQueryChange)
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
 
     _computeAllReadyToDownload: ->
@@ -54,7 +53,8 @@ ns.Project = do (ko,
       @_datasetIds.remove(id)
       @_datasetIds.push(id)
 
-      dataset.searchGranules(@query.params())
+      # Force results to start being calculated
+      dataset.granulesModel.results()
 
       null
 
@@ -95,10 +95,5 @@ ns.Project = do (ko,
     serialize: ->
       datasetQuery: @query.serialize()
       datasets: (ds.serialize() for ds in @datasets())
-
-    _onQueryChange: =>
-      params = @query.params()
-      for dataset in @getDatasets()
-        dataset.searchGranules(params)
 
   exports = Project

@@ -4,7 +4,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
 
   class XhrModel
     constructor: (@path, @query) ->
-      @results = ko.asyncComputed([], 100, @_computeSearchResponse, this)
+      @results = ko.asyncComputed([], 500, @_computeSearchResponse, this)
 
       @pendingRequestId = 0
       @completedRequestId = 0
