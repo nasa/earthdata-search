@@ -70,7 +70,7 @@ describe "Dataset results", :reset => false do
     end
 
     it "un-highlights the selected dataset when clicking the button again" do
-      first_dataset_result.click_link "View dataset"
+      first_dataset_result.click_link "Hide dataset"
       expect(page).to have_no_css('#dataset-results .panel-list-item.view-dataset')
     end
   end
