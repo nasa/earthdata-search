@@ -13,7 +13,7 @@ describe "Dataset Facets" do
     #           I may understand the performance of the system
     it "shows how much time the facet search took" do
       search_time_element = find('#master-overlay-parent .panel-list-meta')
-      expect(search_time_element.text).to match(/Search Time: \d\.\d{3}s/)
+      expect(search_time_element.text).to match(/Search Time: \d+\.\d+s/)
     end
 
     it "shows the first Campaign facet" do

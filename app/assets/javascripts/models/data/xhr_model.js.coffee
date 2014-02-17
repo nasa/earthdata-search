@@ -56,7 +56,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
           if params.page_num? && params.page_num > 1
             results = current.concat(results)
 
-          @loadTime(((new Date() - start) / 1000).toFixed(3))
+          @loadTime(((new Date() - start) / 1000).toFixed(1))
           callback?(results)
         else
           console.log("Rejected out-of-sequence request: #{@path}", requestId, params, data)

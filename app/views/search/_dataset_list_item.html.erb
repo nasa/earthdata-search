@@ -62,8 +62,11 @@
                 <!-- /ko -->
               - <span data-bind="text: archive_center"></span>
               </p>
-              <p data-bind="if: granulesModel.isLoaded() && has_granules()">
+              <p class="dataset-granules-info" data-bind="if: granulesModel.isLoaded() && has_granules()">
                 <span data-bind="text: $root.pluralize(granuleHits(), 'Granule', 'Granules')"></span>
+                <span data-bind="if: granulesModel.loadTime() !== null" class="panel-list-muted">
+                  in <span data-bind="text: granulesModel.loadTime">0.000</span>s
+                </span>
               </p>
               <p data-bind="ifnot: has_granules()">
                 Dataset only

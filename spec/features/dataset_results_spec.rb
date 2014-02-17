@@ -60,7 +60,7 @@ describe "Dataset results", :reset => false do
   #           I may understand the performance of the system
   it "shows how much time the dataset search took" do
     search_time_element = find('#dataset-results .panel-list-meta')
-    expect(search_time_element.text).to match(/Search Time: \d\.\d{3}s/)
+    expect(search_time_element.text).to match(/Search Time: \d+\.\d+s/)
   end
 
   context "when clicking the 'View dataset' button" do
