@@ -9,7 +9,14 @@
       <select id="day-night-select" data-bind="options: day_night_flag_options, optionsText: 'name', optionsValue: 'value', value: day_night_flag"></select>
     </dd>
     <dt>Data Access</dt>
-    <dd>Data Access stuff goes here</dd>
+    <dd>
+      <p>
+        <input data-bind="checked: browse_only" type="checkbox" id="browse_only" value="browse_only" /><label for="browse_only">Find only granules that have browse images.</label>
+      </p>
+      <p>
+        <input data-bind="checked: online_only" type="checkbox" id="online_only" value="online_only" /><label for="online_only">Find only granules that are available online.</label>
+      </p>
+    </dd>
     <dt>Cloud Cover</dt>
     <dd>
       <p>Find granules by cloud cover percentage.</p>

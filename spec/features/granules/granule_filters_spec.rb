@@ -76,4 +76,22 @@ describe "Granule search filters", reset: false do
       expect(page).to filter_granules_from(before_granule_count)
     end
   end
+
+  context "when choosing data access options" do
+    after :each do
+      uncheck "Find only granules that have browse images."
+      uncheck "Find only granules that are available online."
+      expect(page).to have_content(before_granule_count.to_s + ' Granules')
+    end
+
+    it "selecting browse only loads granules with browse images" do
+      check "Find only granules that have browse images."
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+
+    it "selecting online only loads downloadable granules" do
+      check "Find only granules that are available online."
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+  end
 end

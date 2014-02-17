@@ -20,6 +20,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
       @day_night_flag = ko.observable("")
       @cloud_cover_min = ko.observable("")
       @cloud_cover_max = ko.observable("")
+      @browse_only = ko.observable(false)
+      @online_only = ko.observable(false)
 
       @params = ko.computed(@_computeParams)
 
@@ -33,6 +35,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
       @day_night_flag(jsonObj.day_night_flag)
       @cloud_cover_min(jsonObj.cloud_cover_min)
       @cloud_cover_max(jsonObj.cloud_cover_max)
+      @browse_only(jsonObj.browse_only)
+      @online_only(jsonObj.online_only)
 
     serialize: ->
       {
@@ -44,6 +48,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
         day_night_flag: @day_night_flag()
         cloud_cover_min: @cloud_cover_min()
         cloud_cover_max: @cloud_cover_max()
+        browse_only: @browse_only()
+        online_only: @online_only()
       }
 
     clearFilters: =>
@@ -56,6 +62,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
       @day_night_flag("")
       @cloud_cover_min("")
       @cloud_cover_max("")
+      @browse_only(false)
+      @online_only(false)
 
     toggleQueryDatasetSpatial: (dataset) =>
       constraint = dataset.spatial_constraint()
@@ -104,6 +112,11 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
         params.cloud_cover ||= {}
         params.cloud_cover["min"] = cloud_cover_min
         params.cloud_cover["max"] = cloud_cover_max
+      browse_only = @browse_only()
+      params.browse_only = true if browse_only
+
+      online_only = @online_only()
+      params.online_only = true if online_only
 
       params.page_size = 20
 
