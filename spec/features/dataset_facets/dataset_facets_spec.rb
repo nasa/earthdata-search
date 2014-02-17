@@ -1,13 +1,19 @@
-# EDSC_32 As a user, I want to see a list of dataset facets
-#         so that I may find datasets by topic
-
+# EDSC-32: As a user, I want to see a list of dataset facets so that I may find
+#          datasets by topic
 require "spec_helper"
 
 describe "Dataset Facets" do
-  context "facet listings", reset: false do
+  context "facet listing", reset: false do
     before do
       Capybara.reset_sessions!
       visit "/search"
+    end
+
+    # EDSC-145: As a user, I want to see how long my dataset searches take, so that
+    #           I may understand the performance of the system
+    it "shows how much time the facet search took" do
+      search_time_element = find('#master-overlay-parent .panel-list-meta')
+      expect(search_time_element.text).to match(/Search Time: \d\.\d{3}s/)
     end
 
     it "shows the first Campaign facet" do

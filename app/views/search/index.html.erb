@@ -150,6 +150,9 @@
           </p>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
+          <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
+            Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
+          </p>
           <ul id="dataset-results-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">

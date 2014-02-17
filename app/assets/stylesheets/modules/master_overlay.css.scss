@@ -110,6 +110,7 @@
 
 .master-overlay-info {
   margin: 1em;
+  margin-bottom: 0;
   color: $overlay-heading-font-color;
   font-style: italic;
   line-height:36px;
@@ -140,6 +141,7 @@
 // Scrollable content area
 .master-overlay-content {
   margin: 1em;
+  margin-top: 0;
   height: 100%;
   overflow-y: scroll;
 }

@@ -28,7 +28,7 @@ describe "Dataset results", :reset => false do
 
   it "does not load additional results after all results have been loaded" do
     fill_in "keywords", with: "AST"
-    expect(page).to have_css('#dataset-results .panel-list-item', count: 20)
+    expect(page).to have_text("23 Matching Datasets")
     page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 10000"
     expect(page).to have_css('#dataset-results .panel-list-item', count: 23)
     expect(page).to have_no_content('Loading datasets...')
@@ -54,6 +54,13 @@ describe "Dataset results", :reset => false do
     expect(page).to have_link('Browse Datasets')
     click_link 'Browse Datasets'
     expect(page).to have_no_link('Browse Datasets')
+  end
+
+  # EDSC-145: As a user, I want to see how long my dataset searches take, so that
+  #           I may understand the performance of the system
+  it "shows how much time the dataset search took" do
+    search_time_element = find('#dataset-results .panel-list-meta')
+    expect(search_time_element.text).to match(/Search Time: \d\.\d{3}s/)
   end
 
   context "when clicking the 'View dataset' button" do

@@ -4,7 +4,11 @@
     <h2>Browse Datasets</h2>
   </header>
   <div class="master-overlay-content panel-group">
-    <div data-bind="if: query.facets().length > 0" class="panel panel-default selected-facets-panel">
+    <p data-bind="if: datasetFacets.loadTime() !== null" class="panel-list-meta">
+      Search Time: <span data-bind="text: datasetFacets.loadTime">0.000</span>s
+    </p>
+    <!-- ko if: query.facets().length > 0 -->
+    <div class="panel panel-default selected-facets-panel">
       <div class="panel-heading">
         <h3 class="panel-title facet-title">
           Values Selected
@@ -27,6 +31,7 @@
         </dl>
       </div>
     </div>
+    <!-- /ko -->
     <!-- ko foreach: datasetFacets.results -->
     <div data-bind="if: values().length > 0, css: class_name" class="panel panel-default">
       <div class="panel-heading">
