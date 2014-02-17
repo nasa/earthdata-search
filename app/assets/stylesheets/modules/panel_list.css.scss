@@ -12,6 +12,10 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   }
 }
 
+.panel-list-list {
+  margin-top: 0;
+}
+
 .panel-list-item {
   color: #000;
   background-color: #fff;
@@ -22,6 +26,10 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   font-size: .8em;
   position: relative;
   border-radius: 3px;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .panel-list-thumbnail-container {
@@ -43,6 +51,14 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   box-sizing: border-box;
   padding: 4px;
   border: 1px solid #888;
+}
+
+.panel-list-meta {
+  text-align:right;
+  padding: 0;
+  margin: 0;
+  font-size: .8em;
+  color: #666;
 }
 
 .badge {
