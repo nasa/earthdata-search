@@ -74,7 +74,7 @@ ns.Dataset = do (ko
           callback(options)
 
     _granuleParams: (params) ->
-      extend({}, params, 'echo_collection_id[]': @id())
+      extend({}, params, 'echo_collection_id[]': @id(), @granuleQuery.params())
 
     serialize: ->
       result = {id: @id(), dataset_id: @dataset_id()}
