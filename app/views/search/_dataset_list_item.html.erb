@@ -1,4 +1,4 @@
-            <li data-bind="click: $parent.ui.datasetsList.clickDataset, css: {'view-dataset': $root.datasets.hasVisibleDataset($data), 'search-granules': $root.project.isSearchingGranules($data)}" class="panel-list-item master-overlay-forward">
+            <li data-bind="css: {'view-dataset': $root.datasets.hasVisibleDataset($data), 'search-granules': $root.project.isSearchingGranules($data)}" class="panel-list-item">
               <div class="panel-list-thumbnail-container">
               <!-- ko if: thumbnail -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
@@ -25,6 +25,9 @@
                     <i class="edsc-icon-download"></i>
                   </a>
                 <!-- /ko -->
+                <a href="#" class="button icon-button master-overlay-forward" data-bind="click: $parent.ui.datasetsList.clickDataset" title="View details">
+                  <i class="edsc-icon-info"></i>
+                </a>
                 <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>

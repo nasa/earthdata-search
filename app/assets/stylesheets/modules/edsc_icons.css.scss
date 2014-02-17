@@ -16,7 +16,8 @@
 	font-weight: normal;
 	font-variant: normal;
 	text-transform: none;
-  display:inline-block;
+	line-height: 1;
+  vertical-align: text-bottom;
 
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
@@ -30,50 +31,56 @@
 }
 
 .edsc-icon-rect:before {
-  content: "\e600";
+	content: "\e600";
 }
 .edsc-icon-poly:before {
-  content: "\e601";
+	content: "\e601";
 }
 .edsc-icon-poly-open:before {
-  content: "\e602";
+	content: "\e602";
 }
 .edsc-icon-rect-open:before {
-  content: "\e603";
+	content: "\e603";
 }
 .edsc-icon-stack:before {
-  content: "\e604";
+	content: "\e604";
 }
 .edsc-icon-cog:before {
-  content: "\e605";
+	content: "\e605";
 }
 .edsc-icon-rocket:before {
-  content: "\e606";
+	content: "\e606";
 }
 .edsc-icon-lock:before {
-  content: "\e607";
+	content: "\e607";
 }
 .edsc-icon-bookmark:before {
-  content: "\e608";
+	content: "\e608";
 }
 .edsc-icon-download:before {
-  content: "\e609";
+	content: "\e609";
 }
 .edsc-icon-location:before {
-  content: "\e60a";
+	content: "\e60a";
 }
 .edsc-icon-plus:before {
-  content: "\e60b";
+	content: "\e60b";
 }
 .edsc-icon-minus:before {
-  content: "\e60c";
-}
-.edsc-icon-arrow-left:before {
-  content: "\e60d";
+	content: "\e60c";
 }
 .edsc-icon-compose:before {
-  content: "\e60e";
+	content: "\e60e";
+}
+.edsc-icon-info:before {
+	content: "\e610";
+}
+.edsc-icon-file:before {
+	content: "\e611";
+}
+.edsc-icon-arrow-left:before {
+	content: "\e60d";
 }
 .edsc-icon-eye:before {
-  content: "\e60f";
+	content: "\e60f";
 }
