@@ -18,6 +18,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
                                  {name: "Night only", value: "NIGHT"},
                                  {name: "Both day and night", value: "BOTH"}]
       @day_night_flag = ko.observable("")
+      @cloud_cover_min = ko.observable("")
+      @cloud_cover_max = ko.observable("")
 
       @params = ko.computed(@_computeParams)
 
@@ -29,6 +31,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
       @facets(jsonObj.facets ? [])
       @placename(jsonObj.placename)
       @day_night_flag(jsonObj.day_night_flag)
+      @cloud_cover_min(jsonObj.cloud_cover_min)
+      @cloud_cover_max(jsonObj.cloud_cover_max)
 
     serialize: ->
       {
@@ -38,6 +42,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
         facets: @facets()
         placename: @placename()
         day_night_flag: @day_night_flag()
+        cloud_cover_min: @cloud_cover_min()
+        cloud_cover_max: @cloud_cover_max()
       }
 
     clearFilters: =>
@@ -48,6 +54,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
       @placename('')
       @facets.removeAll()
       @day_night_flag("")
+      @cloud_cover_min("")
+      @cloud_cover_max("")
 
     toggleQueryDatasetSpatial: (dataset) =>
       constraint = dataset.spatial_constraint()
@@ -89,6 +97,13 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
 
       day_night_flag = @day_night_flag()
       params.day_night_flag = day_night_flag if day_night_flag?.length > 0
+
+      cloud_cover_min = @cloud_cover_min()
+      cloud_cover_max = @cloud_cover_max()
+      if cloud_cover_min?.length > 0 || cloud_cover_max?.length > 0
+        params.cloud_cover ||= {}
+        params.cloud_cover["min"] = cloud_cover_min
+        params.cloud_cover["max"] = cloud_cover_max
 
       params.page_size = 20
 
