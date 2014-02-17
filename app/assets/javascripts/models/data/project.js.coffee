@@ -12,6 +12,7 @@ ns.Project = do (ko,
     constructor: (@query) ->
       @_datasetIds = ko.observableArray()
       @_datasetsById = {}
+      @selectedDatasetId = ko.observable(null)
       @id = ko.observable(null)
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
       @searchGranulesDataset = ko.observable(null)

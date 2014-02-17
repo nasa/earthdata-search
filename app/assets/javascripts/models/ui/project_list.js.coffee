@@ -34,10 +34,28 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
         project.removeDataset(dataset)
         if @visible()
           @datasetResults.removeVisibleDataset(dataset)
+        if @isSelected(dataset)
+          datasets = project.datasets()
+          selection = null
+          selection = datasets[0] if datasets.length > 0
+          project.selectedDatasetId(selection)
       else
         project.addDataset(dataset)
+        project.selectedDatasetId(dataset.id()) unless project.selectedDatasetId()?
 
     _computeDatasetsToDownload: ->
       dataset for dataset in @project.datasets() when dataset.serviceOptions.accessMethod() == 'download'
+
+    select: (dataset, event) =>
+      $target = $(event?.target)
+      return unless $target.closest('a').length == 0
+
+      if @isSelected(dataset)
+        @project.selectedDatasetId(null)
+      else
+        @project.selectedDatasetId(dataset.id())
+
+    isSelected: (dataset) =>
+      dataset.id() == @project.selectedDatasetId()
 
   exports = ProjectList
