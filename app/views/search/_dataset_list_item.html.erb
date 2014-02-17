@@ -20,21 +20,21 @@
                   <i class="edsc-icon-location"></i>
                 </a>
                 <!-- /ko -->
-                <!-- ko if: $parent.ui.projectList.visible -->
-                  <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
-                    <i class="edsc-icon-download"></i>
-                  </a>
-                <!-- /ko -->
                 <a href="#" class="button icon-button master-overlay-forward" data-bind="click: $parent.ui.datasetsList.clickDataset" title="View details">
                   <i class="edsc-icon-info"></i>
                 </a>
+                <% if is_project %>
+                  <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
+                    <i class="edsc-icon-download"></i>
+                  </a>
+                <% end %>
                 <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
                 <a href="#" class="button icon-button button-active" title="Hide dataset" data-bind="visible: $root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>
                 </a>
-                <!-- ko if: $parent.ui.projectList.visible -->
+                <% if is_project %>
                   <!-- ko if: has_granules -->
                   <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.project.searchGranules" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Filter granules">
                     <i class="edsc-icon-compose"></i>
@@ -48,7 +48,7 @@
                     <i class="edsc-icon-compose"></i>
                   </a>
                   <!-- /ko -->
-                <!-- /ko -->
+                <% end %>
                 <a href="#" class="button icon-button" data-pulse="#project-count" title="Add dataset to the current project"
                    data-bind="visible: !$root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
                   <i class="edsc-icon-plus"></i>

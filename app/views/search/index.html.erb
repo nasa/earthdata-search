@@ -156,7 +156,7 @@
           <ul id="dataset-results-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
-            <%= render partial: 'dataset_list_item' %>
+            <%= render partial: 'dataset_list_item', locals: {is_project: false} %>
           </ul>
           <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
             Loading datasets...
@@ -196,7 +196,7 @@
           <ul id="project-datasets-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">
-            <%= render partial: 'dataset_list_item' %>
+            <%= render partial: 'dataset_list_item', locals: {is_project: true} %>
           </ul>
         </div>
       </section>
