@@ -13,9 +13,9 @@ ns.ProjectionSwitcher = do (L) ->
     onAdd: (map) ->
       @map = map
       $root = $('<div class="projection-switcher leaflet-bar">
-                   <a href="#arctic" class="projection-switcher-arctic" title="North Polar Stereographic">N</a>
-                   <a href="#geo" class="leaflet-disabled projection-switcher-geo" title="WGS 84 / Plate Carree">=</a>
-                   <a href="#antarctic" class="projection-switcher-geo" title="South Polar Stereographic">S</a>
+                   <a href="#arctic" class="projection-switcher-arctic" title="North Polar Stereographic"></a>
+                   <a href="#geo" class="leaflet-disabled projection-switcher-geo" title="WGS 84 / Plate Carree"></a>
+                   <a href="#antarctic" class="projection-switcher-antarctic" title="South Polar Stereographic"></a>
                  </div>')
 
       @$root = $root

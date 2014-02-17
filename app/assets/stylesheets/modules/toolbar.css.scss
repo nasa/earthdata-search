@@ -1,0 +1,36 @@
+#temporal-query {
+  position: absolute;
+  color: #fff;
+  background: rgba(22,22,22,.9);
+  z-index: 60;
+  padding: 8px 12px;
+  border-radius: 5px;
+  top: 15px;
+  right: 10px;
+  box-shadow: 0 0 10px #424242;
+  font-size: 1em;
+}
+
+#temporal-query p {
+  margin: 0;
+}
+
+.leaflet-top.leaflet-right {
+  top: 50px;
+}
+
+.leaflet-bar.projection-switcher a {
+  @include retina-image(projection-sprite, 90px 30px, png, null, false);
+  
+  &.projection-switcher-arctic {
+    background-position: -59px -2px;
+  }
+  
+  &.projection-switcher-geo {
+    background-position: -31px -2px;
+  }
+  
+  &.projection-switcher-antarctic {
+    background-position: -3px -2px;
+  }
+}
