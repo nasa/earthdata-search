@@ -10,9 +10,6 @@ ns.DatasetsList = do ($=jQuery) ->
         @datasets.loadNextPage(@query.params())
 
     clickDataset: (dataset, event=null) =>
-      source = event?.target
-
-      if !source? || $(source).closest('a').length == 0
-        @datasets.showDataset(dataset)
+      @datasets.showDataset(dataset)
 
   exports = DatasetsList

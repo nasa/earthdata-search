@@ -85,7 +85,7 @@
 .dropzone {
   border: none;
   border-radius: 0;
-  
+
   .dz-filename {
     height: 2em;
   }
@@ -100,4 +100,8 @@
       height: auto;
     }
   }
+}
+
+.leaflet-top, .leaflet-bottom {
+  z-index: 58;
 }

@@ -12,6 +12,8 @@ module Helpers
       page.evaluate_script('edsc.models.page.current.project.datasets([])')
       page.evaluate_script('edsc.models.page.current.project.datasets()') # Read it back out to ensure it was applied
       page.evaluate_script('edsc.models.page.current.project.searchGranulesDataset(null)') # Read it back out to ensure it was applied
+      page.evaluate_script('edsc.models.page.current.project.selectedDatasetId(null)')
+      page.evaluate_script('edsc.models.page.current.ui.projectList._selectedDataset = null')
     end
 
     def project_dataset_ids

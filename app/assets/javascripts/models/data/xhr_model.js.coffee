@@ -12,6 +12,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
       @error = ko.observable(null)
       @isLoaded = ko.observable(false)
       @loadTime = ko.observable(null)
+      @currentRequest = null
 
       @hits = ko.observable(0)
       @hasNextPage = ko.computed(@_computeHasNextPage, this, deferEvaluation: true)
@@ -40,12 +41,16 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
         @results(results)
 
     _load: (params, current, callback) =>
+      if @currentRequest? && @currentRequest.readystate != 4
+        @currentRequest.abort()
+        console.log "Aborted (#{@pendingRequestId})"
       requestId = ++@pendingRequestId
       @isLoading(@pendingRequestId != @completedRequestId)
       console.log("Request (#{requestId}): #{@path}?#{$.param(params)}")
       start = new Date()
-      xhr = getJSON @path, params, (data, status, xhr) =>
+      @currentRequest = xhr = getJSON @path, params, (data, status, xhr) =>
         if requestId > @completedRequestId
+          @currentRequest = null
           @isLoaded(true)
           @completedRequestId = requestId
           @error(null)
@@ -57,11 +62,13 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
             results = current.concat(results)
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
+          @currentRequest = null
           callback?(results)
         else
           console.log("Rejected out-of-sequence request: #{@path}", requestId, params, data)
         @isLoading(@pendingRequestId != @completedRequestId)
       xhr.fail (response, type, reason) =>
+        @currentRequest = null
         if requestId > @completedRequestId
           @completedRequestId = requestId
           @_onFailure(response)

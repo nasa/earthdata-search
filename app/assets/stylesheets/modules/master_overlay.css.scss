@@ -82,11 +82,6 @@
   float: left;
 }
 
-.panel-list-item {
-  cursor: pointer;
-}
-
-
 .master-overlay-parent, .master-overlay-main, .master-overlay-main-content {
   z-index: 60;
   position: absolute;
@@ -136,6 +131,10 @@
 
 #project-datasets-list {
   margin-top: 0;
+
+  .panel-list-item {
+    cursor: pointer;
+  }
 }
 
 // Scrollable content area
