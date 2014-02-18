@@ -75,5 +75,28 @@ describe "Granule search filters", reset: false do
       fill_in "Maximum:", with: "5.0"
       expect(page).to filter_granules_from(before_granule_count)
     end
+
+    context "validates input" do
+      it "minimum must be more than 0.0" do
+        fill_in "Minimum", with: "-1.0"
+        fill_in "Maximum", with: ""
+        page.find(".master-overlay-secondary-content").click
+        expect(page).to have_content "Value must be between 0.0 and 100.0"
+      end
+
+      it "maximum must be less than 100.0" do
+        fill_in "Minimum", with: ""
+        fill_in "Maximum", with: "110.0"
+        page.find(".master-overlay-secondary-content").click
+        expect(page).to have_content "Value must be between 0.0 and 100.0"
+      end
+
+      it "minimum must be less than maximum" do
+        fill_in "Minimum", with: "5.0"
+        fill_in "Maximum", with: "1.0"
+        page.find(".master-overlay-secondary-content").click
+        expect(page).to have_content "Minimum must be less than Maximum"
+      end
+    end
   end
 end

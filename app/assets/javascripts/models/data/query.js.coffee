@@ -131,4 +131,13 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
 
       params[type] = spatial.join(',')
 
+    validateCloudCoverValue: (cloud_cover_value) ->
+      value = parseFloat(cloud_cover_value)
+      if isNaN(value)
+        true
+      else if value > 0.0 && value < 100.0
+        true
+      else
+        false
+
   exports = Query

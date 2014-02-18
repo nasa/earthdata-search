@@ -15,9 +15,12 @@
       <p>Find granules by cloud cover percentage.</p>
       <p>
         <label for="cloud-cover-min">Minimum:</label><input id="cloud-cover-min" data-bind="value: cloud_cover_min" type="text" placeholder="Example: 1.2">
+        <span data-bind="visible: !validateCloudCoverValue(cloud_cover_min())" class="error">Value must be between 0.0 and 100.0</span>
       </p>
       <p>
         <label for="cloud-cover-max">Maximum:</label><input id="cloud-cover-max" data-bind="value: cloud_cover_max" type="text" placeholder="Example: 4.2">
+        <span data-bind="visible: !validateCloudCoverValue(cloud_cover_max())" class="error">Value must be between 0.0 and 100.0</span>
+        <span data-bind="visible: parseFloat(cloud_cover_min()) && parseFloat(cloud_cover_max()) && parseFloat(cloud_cover_max()) < parseFloat(cloud_cover_min())" class="error">Minimum must be less than Maximum</span>
       </p>
     </dd>
     <dt>Orbit Spatial Parameters</dt>
