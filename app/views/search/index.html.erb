@@ -338,7 +338,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <a href="#" title="close" data-dismiss="modal" aria-hidden="true" class="pull-right close"><i class="fa fa-times-circle"></i></a>
+        <a href="#" title="close" data-bind="click: user.cancelLogin" aria-hidden="true" class="pull-right close"><i class="fa fa-times-circle"></i></a>
         <h3 class="modal-title" id="myModalLabel">Sign In to Earthdata Search Client</h3>
       </div>
       <form data-bind="submit: user.login">
