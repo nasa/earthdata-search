@@ -13,13 +13,11 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
       else
         @selectFirstDataset()
       @_selectedDataset = null
-      console.log 'oh'
       @visible(true)
 
     hideProject: =>
       @_selectedDataset = @project.selectedDatasetId()
       @project.selectedDatasetId(null)
-      console.log 'ok'
       @visible(false)
 
     loginAndDownloadDataset: (dataset) =>

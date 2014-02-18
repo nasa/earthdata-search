@@ -23,6 +23,10 @@ describe "Project dataset list", reset: false do
     expect(page).to have_css('#project-datasets-list .panel-list-item', count: 2)
   end
 
+  it "selects the first dataset" do
+    expect(page).to have_css('.panel-list-selected:first-child')
+  end
+
   it 'hides the "Browse Datasets" pane' do
     expect(page).to have_css('#datasets-overlay.is-master-overlay-parent-hidden')
   end
@@ -34,12 +38,38 @@ describe "Project dataset list", reset: false do
     expect(page).to have_visible_dataset_results
   end
 
-  context 'when clicking on a dataset' do
+  context "when clicking on a dataset's \"View details\" link" do
     it "shows the dataset's details" do
-      first_project_dataset.click
+      first_project_dataset.click_link 'View details'
       expect(page).to have_visible_dataset_details
       dataset_details.click_link "Back to Datasets"
       expect(page).to have_visible_project_overview
+    end
+  end
+
+  context "when clicking on the currently-selected dataset" do
+    before :each do
+      expect(page).to have_css('.panel-list-selected')
+      first_project_dataset.click
+    end
+
+    it "un-selects the currently-selected dataset" do
+      expect(page).to have_no_css('.panel-list-selected:first-child')
+    end
+  end
+
+  context "when clicking on a dataset that is not selected" do
+    before :each do
+      expect(page).to have_css('.panel-list-selected')
+      second_project_dataset.click
+    end
+
+    it "un-selects the currently-selected dataset" do
+      expect(page).to have_no_css('.panel-list-selected:first-child')
+    end
+
+    it "selects the clicked dataset" do
+      expect(page).to have_css('.panel-list-selected:last-child')
     end
   end
 
@@ -55,6 +85,12 @@ describe "Project dataset list", reset: false do
 
     it "removes the selected dataset's visualizations" do
       expect(page).to have_no_css('#dataset-results-list .panel-list-item.view-dataset')
+    end
+
+    context "for the currently-selected dataset" do
+      it "selects the first dataset remaining in the project list" do
+        expect(page).to have_css('.panel-list-selected:first-child')
+      end
     end
   end
 
