@@ -8,6 +8,7 @@ ns.Map = do (window,
              LayerBuilder = ns.LayerBuilder,
              SpatialSelection = ns.SpatialSelection,
              GibsVisualizationsLayer = ns.GibsVisualizationsLayer,
+             GranulesLayer = ns.GranulesLayer,
              page = @edsc.page) ->
 
   # Fix leaflet default image path
@@ -30,6 +31,7 @@ ns.Map = do (window,
 
       @_buildLayerSwitcher()
       map.addLayer(new GibsVisualizationsLayer())
+      map.addLayer(new GranulesLayer())
 
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())

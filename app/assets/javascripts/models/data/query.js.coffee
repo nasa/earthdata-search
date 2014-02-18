@@ -1,9 +1,12 @@
 ns = @edsc.models.data
 
-# FIXME: Get rid of dependency on jQuery, ui, and page model
-ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
+# FIXME: Get rid of dependency on page model
+ns.Query = do (ko,
+               KnockoutModel=@edsc.models.KnockoutModel
+               evilPageModels=@edsc.models.page
+               extend=$.extend) ->
 
-  class Query
+  class Query extends KnockoutModel
     constructor: (@_extraParams={}) ->
       @keywords = ko.observable("")
       @spatial = ko.observable("")
@@ -19,7 +22,7 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
                                  {name: "Both day and night", value: "BOTH"}]
       @day_night_flag = ko.observable("")
 
-      @params = ko.computed(@_computeParams)
+      @params = @computed(@_computeParams)
 
     fromJson: (jsonObj) ->
       @keywords(jsonObj.keywords)

@@ -1,11 +1,11 @@
 ns = @edsc.models.data
 
-ns.ServiceOptions = do (ko) ->
+ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
 
-  class ServiceOptionsModel
+  class ServiceOptionsModel extends KnockoutModel
     constructor: (@granuleAccessOptions) ->
       @accessMethod = ko.observable(null)
-      @readyToDownload = ko.computed(@_computeIsReadyToDownload, this, deferEvaluation: true)
+      @readyToDownload = @computed(@_computeIsReadyToDownload, this, deferEvaluation: true)
 
     _computeIsReadyToDownload: ->
       # == false because the value is undefined while granuleAccessOptions loads

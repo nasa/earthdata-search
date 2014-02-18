@@ -27,9 +27,17 @@ do (ko, $=jQuery) ->
   ko.observableArray.fn.subscribeRemove = (callback) ->
     @subscribeChange('deleted', callback)
 
+  # http://www.knockmeout.net/2012/05/quick-tip-skip-binding.html
+  ko.bindingHandlers.stopBinding =
+    init: ->
+      controlsDescendantBindings: true
+  ko.virtualElements.allowedBindings.stopBinding = true
+
   # For observables that need to make an XHR or similar call to compute their value
   ko.asyncComputed = (initialValue, timeout, method, obj) ->
     value = ko.observable(initialValue)
+
+    isSetup = ko.observable(false)
 
     callAsyncMethod = ->
       method.call obj, value.peek(), (newValue) ->
@@ -43,18 +51,26 @@ do (ko, $=jQuery) ->
       write: value
       deferEvaluation: true
 
-    isSetup = false
-
-    ko.computed
+    result = ko.computed
       read: ->
         # Causes an evaluation of computed, thereby setting up dependencies correctly
-        asyncComputed.extend(throttle: timeout) unless isSetup
-        isSetup = true
+        unless isSetup()
+          asyncComputed.extend(throttle: timeout)
+          isSetup(true)
         value()
       write: (newValue) ->
-        isSetup = true
+        isSetup(true) unless isSetup()
         value(newValue)
       deferEvaluation: true
+
+    result.isSetup = isSetup
+
+    originalDispose = result.dispose
+    result.dispose = ->
+      originalDispose()
+      asyncComputed.dispose()
+
+    result
 
 
   ko.bindingHandlers.showModal =

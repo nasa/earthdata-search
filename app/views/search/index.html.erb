@@ -232,6 +232,11 @@
 </div>
 
 <div id="map" class="map" style="height:100%">
+  <!-- ko stopBinding: true -->
+  <div id="granule-info" class="granule-info" data-bind="if: granules">
+    <p data-bind="text: granules().hits"></p>
+  </div>
+  <!-- /ko -->
   <div class="geojson-help">
     <div class="geojson-help-dropzone">
       <h1>Search by Shape File</h1>
