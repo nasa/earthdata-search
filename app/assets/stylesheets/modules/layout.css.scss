@@ -8,6 +8,7 @@ html {
 
 body {
   font-size: 16px;
+  background-color: #222;
 }
 
 .wrap {
@@ -16,6 +17,18 @@ body {
   height: auto !important;
   height: 100%;
   margin: -25px 0px -35px 0px;
+  // So we don't have to look at a blank map
+  //background: asset-url('ssm.jpg') no-repeat center;
+}
+
+.search-page {
+  .main-content {
+    position: fixed;
+  }
+
+  footer {
+    position: absolute;
+  }
 }
 
 footer, .toolbar {
