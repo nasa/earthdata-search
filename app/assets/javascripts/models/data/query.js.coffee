@@ -21,6 +21,8 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
       @cloud_cover_min = ko.observable("")
       @cloud_cover_max = ko.observable("")
 
+      @validQuery = ko.observable(true)
+
       @params = ko.computed(@_computeParams)
 
     fromJson: (jsonObj) ->
@@ -131,13 +133,21 @@ ns.Query = do (ko, evilPageModels=@edsc.models.page, extend=$.extend) ->
 
       params[type] = spatial.join(',')
 
-    validateCloudCoverValue: (cloud_cover_value) ->
+    validateCloudCoverValue: (cloud_cover_value) =>
       value = parseFloat(cloud_cover_value)
+      valid = false
       if isNaN(value)
-        true
-      else if value > 0.0 && value < 100.0
-        true
-      else
-        false
+        valid = true
+      else if value >= 0.0 && value <= 100.0
+        valid = true
+      valid
+
+    validateCloudCoverRange: (min, max) =>
+      valid_range = ((isNaN(parseFloat(min)) || isNaN(parseFloat(max))) || parseFloat(min) <= parseFloat(max))
+      valid_min = @validateCloudCoverValue(min)
+      valid_max = @validateCloudCoverValue(max)
+      valid = valid_range && valid_min && valid_max
+      @validQuery(valid)
+      valid_range
 
   exports = Query

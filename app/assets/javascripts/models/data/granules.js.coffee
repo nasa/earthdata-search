@@ -13,8 +13,9 @@ ns.Granules = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, extend=$.ext
 
     _computeSearchResponse: (callback, current) ->
       if @query? && @parentQuery?
-        params = @parentQuery.params()
-        extend(params, @query.params())
-        @_load(params, current, callback)
+        if @query.validQuery() && @parentQuery.validQuery()
+          params = @parentQuery.params()
+          extend(params, @query.params())
+          @_load(params, current, callback)
 
   exports = GranulesModel
