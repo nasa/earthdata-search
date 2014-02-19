@@ -5,10 +5,8 @@ ns.GranulesLayer = do (L
                        project = @edsc.page.project
                        extend = $.extend
                        $ = jQuery
+                       config = @edsc.config
                        ) ->
-
-  # The number of milliseconds needed to trigger a hover event
-  HOVER_TIMEOUT_MS = 500
 
   # The manhattan distance the mouse can move from the initial hover point
   # without canceling the hover
@@ -44,6 +42,7 @@ ns.GranulesLayer = do (L
         @_setHoverTimeout(e)
 
     _onMouseOut: (e) =>
+      @_hoverPoint = null
       @_clearHoverTimeout()
 
     _clearHoverTimeout: (e) ->
@@ -56,7 +55,7 @@ ns.GranulesLayer = do (L
       onHover = =>
         @_isHovering = true
         @_map.fire('edsc.hover', e)
-      @_hoverTimer = setTimeout(onHover, HOVER_TIMEOUT_MS)
+      @_hoverTimer = setTimeout(onHover, config.hoverTimeoutMs)
 
   class TooltipLayer
     constructor: (@_container) ->
@@ -137,8 +136,6 @@ ns.GranulesLayer = do (L
 
   class GranulesLayer
     constructor: ->
-      @_hoverTimer = null
-      @_hoverPoint = null
 
     onAdd: (map) ->
       @_granuleInfo = new GranuleInfo(project)

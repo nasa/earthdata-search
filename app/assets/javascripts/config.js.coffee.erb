@@ -14,6 +14,7 @@
     defaultAnimationDurationMs: 0
     maxPolygonSize: 50
     csrfToken: csrfToken
+    hoverTimeoutMs: 0
 
   <% elsif Rails.env.development? %>
   # Development config
@@ -21,6 +22,7 @@
     defaultAnimationDurationMs: 300
     maxPolygonSize: 50
     csrfToken: csrfToken
+    hoverTimeoutMs: 500
 
   <% elsif Rails.env.production? %>
   # Production config
@@ -28,5 +30,6 @@
     defaultAnimationDurationMs: 300
     maxPolygonSize: 50
     csrfToken: csrfToken
+    hoverTimeoutMs: 500
 
   <% end %>

@@ -196,6 +196,7 @@ ns.Map = do (window,
   $(document).ready ->
     projection = 'geo'
     map = new Map(document.getElementById('map'), projection)
+    page.map = map
 
     # Debugging spherical polygons
     #L.sphericalPolygon([
