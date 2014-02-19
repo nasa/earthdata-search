@@ -148,11 +148,11 @@
             </a>
             You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.
           </p>
-        </div>
-        <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
           <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
             Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
           </p>
+        </div>
+        <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
           <ul id="dataset-results-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
@@ -233,8 +233,18 @@
 
 <div id="map" class="map" style="height:100%">
   <!-- ko stopBinding: true -->
-  <div id="granule-info" class="granule-info" data-bind="if: granules">
-    <p data-bind="text: granules().hits"></p>
+  <div id="granule-info" class="granule-info map-tooltip" data-bind="if: granules() && isCurrent()">
+    <div class="map-tooltip-content">
+      <!-- ko if: !granules().isLoaded() -->
+      <p class="busy">Loading granules...</p>
+      <!-- /ko -->
+      <!-- ko if: granules().isLoaded() -->
+      <p>
+        <span data-bind="text: granules().hits() == 1 ? '1 Granule' : granules().hits() + ' Granules'"></span>
+        at this location
+      </p>
+      <!-- /ko -->
+    </div>
   </div>
   <!-- /ko -->
   <div class="geojson-help">

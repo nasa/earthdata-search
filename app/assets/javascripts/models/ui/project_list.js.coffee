@@ -49,7 +49,7 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
         @selectFirstDataset() if @isSelected(dataset)
       else
         project.addDataset(dataset)
-        project.selectedDatasetId(dataset.id()) unless project.selectedDatasetId()?
+        project.selectedDatasetId(dataset.id()) if @visible() && !project.selectedDatasetId()?
 
     _computeDatasetsToDownload: ->
       dataset for dataset in @project.datasets() when dataset.serviceOptions.accessMethod() == 'download'

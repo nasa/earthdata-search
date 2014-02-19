@@ -29,6 +29,11 @@ ns.XhrModel = do (ko
         params.page_num = ++@page
         @_loadAndSet params, @results(), callback
 
+    abort: ->
+      if @currentRequest? && @currentRequest.readystate != 4
+        @currentRequest.abort()
+        console.log "Aborted (#{@pendingRequestId}): #{@path}"
+
     _computeHasNextPage: ->
       @results().length < @hits()
 
@@ -44,9 +49,7 @@ ns.XhrModel = do (ko
         @results(results)
 
     _load: (params, current, callback) =>
-      if @currentRequest? && @currentRequest.readystate != 4
-        @currentRequest.abort()
-        console.log "Aborted (#{@pendingRequestId}): #{@path}"
+      @abort()
       requestId = ++@pendingRequestId
       @isLoading(@pendingRequestId != @completedRequestId)
       console.log("Request (#{requestId}): #{@path}?#{$.param(params)}")

@@ -34,6 +34,9 @@ ns.Dataset = do (ko
         paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
         "/granules/download.html?#{paramStr}"
 
+    hasAreaSpatial: ->
+      @has_granules()? && !@points?
+
     # A granules model not directly connected to the dataset model so classes can, e.g. query
     # for granules under a point without messing with displayed hits or timing values
     createGranulesModel: ->
