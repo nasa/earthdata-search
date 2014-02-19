@@ -3,7 +3,6 @@ require "spec_helper"
 describe "Granule search filters", reset: false do
   original_wait_time = nil
   before_granule_count = 0
-  after_granule_count = 0
 
   before(:all) do
     original_wait_time = Capybara.default_wait_time
@@ -22,7 +21,7 @@ describe "Granule search filters", reset: false do
 
     first_project_dataset.click_link "Filter granules"
 
-    number_granules = page.text.should match /\d+ Granules/
+    number_granules = expect(page.text).to match /\d+ Granules/
     before_granule_count = number_granules.to_s.split(" ")[0].to_i
   end
 
@@ -35,37 +34,69 @@ describe "Granule search filters", reset: false do
   context "when choosing a day/night flag" do
     after :each do
       select 'Anytime', from: "day-night-select"
-      expect(page).to have_content(before_granule_count.to_s + ' Granules')
+      expect(page).to reset_granules_to(before_granule_count)
     end
 
     it "selecting day returns day granules" do
       select 'Day only', from: "day-night-select"
-      expect(page).to have_no_content(before_granule_count.to_s + ' Granules')
-
-      number_granules = page.text.should match /\d+ Granules/
-      after_granule_count = number_granules.to_s.split(" ")[0].to_i
-
-      before_granule_count.should be > after_granule_count
+      expect(page).to filter_granules_from(before_granule_count)
     end
 
     it "selecting night returns night granules" do
       select 'Night only', from: "day-night-select"
-      expect(page).to have_no_content(before_granule_count.to_s + ' Granules')
-
-      number_granules = page.text.should match /\d+ Granules/
-      after_granule_count = number_granules.to_s.split(" ")[0].to_i
-
-      before_granule_count.should be > after_granule_count
+      expect(page).to filter_granules_from(before_granule_count)
     end
 
     it "selecting both returns both day and night granules" do
       select 'Both day and night', from: "day-night-select"
-      expect(page).to have_no_content(before_granule_count.to_s + ' Granules')
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+  end
 
-      number_granules = page.text.should match /\d+ Granules/
-      after_granule_count = number_granules.to_s.split(" ")[0].to_i
+  context "when choosing cloud cover" do
+    after :each do
+      script = "edsc.page.project.datasets()[0].granuleQuery.cloud_cover_min('');edsc.page.project.datasets()[0].granuleQuery.cloud_cover_max('')"
+      page.evaluate_script script
+      expect(page).to reset_granules_to(before_granule_count)
+    end
 
-      before_granule_count.should be > after_granule_count
+    it "filters with both min and max" do
+      fill_in "Minimum:", with: "2.5"
+      fill_in "Maximum:", with: "5.0"
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+
+    it "filters with only min" do
+      fill_in "Minimum:", with: "2.5"
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+
+    it "filters with only max" do
+      fill_in "Maximum:", with: "5.0"
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+
+    context "validates input" do
+      it "minimum must be more than 0.0" do
+        fill_in "Minimum", with: "-1.0"
+        fill_in "Maximum", with: ""
+        page.find(".master-overlay-secondary-content").click
+        expect(page).to have_content "Value must be between 0.0 and 100.0"
+      end
+
+      it "maximum must be less than 100.0" do
+        fill_in "Minimum", with: ""
+        fill_in "Maximum", with: "110.0"
+        page.find(".master-overlay-secondary-content").click
+        expect(page).to have_content "Value must be between 0.0 and 100.0"
+      end
+
+      it "minimum must be less than maximum" do
+        fill_in "Minimum", with: "5.0"
+        fill_in "Maximum", with: "1.0"
+        page.find(".master-overlay-secondary-content").click
+        expect(page).to have_content "Minimum must be less than Maximum"
+      end
     end
   end
 end
