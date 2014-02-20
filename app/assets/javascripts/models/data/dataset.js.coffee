@@ -50,7 +50,10 @@ ns.Dataset = do (ko
       @granulesModel.loadNextPage(@_granuleParams(params), callback)
 
     clone: ->
-      new Dataset(@json, @query)
+      result = new Dataset(@json, @query)
+      result.serviceOptions.fromJson(@serviceOptions.serialize())
+      result.granuleAccessOptions(@granuleAccessOptions)
+      result
 
     _loadGranuleAccessOptions: (current, callback) ->
       params = @query.params()
