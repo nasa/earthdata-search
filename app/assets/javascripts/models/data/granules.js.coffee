@@ -12,7 +12,7 @@ ns.Granules = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, extend=$.ext
       data.feed.entry
 
     _computeSearchResponse: (current, callback) ->
-      if @query? && @parentQuery?
+      if @query?.validQuery() && @parentQuery?.validQuery()
         parentParams = @parentQuery.params()
         params = {}
         for param in ['spatial', 'temporal']
