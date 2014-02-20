@@ -4,36 +4,44 @@
 ns = @edsc.models.data
 
 ns.Dataset = do (ko
+                 KnockoutModel = @edsc.models.KnockoutModel
                  Granules=ns.Granules
                  QueryModel = ns.Query
                  ServiceOptionsModel = ns.ServiceOptions
                  toParam=jQuery.param
                  extend=jQuery.extend
                  ) ->
-  class Dataset
+  class Dataset extends KnockoutModel
     constructor: (jsonData, @query) ->
-      @granuleQuery = new QueryModel('echo_collection_id': jsonData.id)
-      @granulesModel = granulesModel = new Granules(@query, @granuleQuery)
-      @granules = ko.computed(granulesModel.results, granulesModel, deferEvaluation: true)
-      @granuleHits = ko.computed(granulesModel.hits, granulesModel, deferEvaluation: true)
-      @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
+      @granuleQuery = @disposable(new QueryModel('echo_collection_id': jsonData.id))
+      @granulesModel = granulesModel = @disposable(new Granules(@granuleQuery, @query))
+      @granuleAccessOptions = @asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
 
-      @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
+      @serviceOptions = @disposable(new ServiceOptionsModel(@granuleAccessOptions))
 
       @fromJson(jsonData)
 
       # TODO: Is this needed?
       @error = ko.observable(null)
-      @spatial_constraint = ko.computed =>
+      @spatial_constraint = @computed =>
         if @points?
           'point:' + @points()[0].split(/\s+/).reverse().join(',')
         else
           null
 
-      @granuleDownloadsUrl = ko.computed =>
+      @granuleDownloadsUrl = @computed =>
         params = @query.params()
         paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
         "/granules/download.html?#{paramStr}"
+
+    hasAreaSpatial: ->
+      @has_granules()? && !@points?
+
+    # A granules model not directly connected to the dataset model so classes can, e.g. query
+    # for granules under a point without messing with displayed hits or timing values
+    createGranulesModel: ->
+      granuleQuery = new QueryModel('echo_collection_id': @id())
+      new Granules(granuleQuery, @query)
 
     searchGranules: (params, callback) ->
       @granulesModel.search(@_granuleParams(params), callback)
@@ -41,12 +49,17 @@ ns.Dataset = do (ko
     loadNextGranules: (params, callback) ->
       @granulesModel.loadNextPage(@_granuleParams(params), callback)
 
+    clone: ->
+      new Dataset(@json, @query)
+
     _loadGranuleAccessOptions: (current, callback) ->
       params = @query.params()
       downloadableParams = extend(@_granuleParams(params), online_only: true, page_size: 2000)
       granulesModel = new Granules()
       granulesModel.search @_granuleParams(params), =>
         hits = granulesModel.hits()
+        granulesModel.dispose()
+
         downloadableModel = new Granules()
         downloadableModel.search downloadableParams, (results) =>
           downloadableHits = downloadableModel.hits()
@@ -62,6 +75,8 @@ ns.Dataset = do (ko
 
           size = Math.round(size * 10) / 10
           size = "> #{size}" if hits > 2000
+
+          downloadableModel.dispose()
 
           options =
             count: hits

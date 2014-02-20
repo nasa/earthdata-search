@@ -13,6 +13,8 @@ ns.Project = do (ko,
       @_datasetIds = ko.observableArray()
       @_datasetsById = {}
       @selectedDatasetId = ko.observable(null)
+      @selectedDataset = ko.computed => @_datasetsById[@selectedDatasetId()]
+
       @id = ko.observable(null)
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
       @searchGranulesDataset = ko.observable(null)
@@ -33,7 +35,7 @@ ns.Project = do (ko,
       for ds in datasets
         id = ds.id()
         datasetIds.push(id)
-        datasetsById[id] = ds
+        datasetsById[id] = ds.clone()
       @_datasetsById = datasetsById
       @_datasetIds(datasetIds)
       null
@@ -50,19 +52,28 @@ ns.Project = do (ko,
 
     addDataset: (dataset) =>
       id = dataset.id()
-      @_datasetsById[id] = dataset
+
+      clonedDataset = dataset.clone()
+      @_datasetsById[id] = clonedDataset
       @_datasetIds.remove(id)
       @_datasetIds.push(id)
 
       # Force results to start being calculated
-      dataset.granulesModel.results()
+      clonedDataset.granulesModel.results()
 
       null
 
     removeDataset: (dataset) =>
       id = dataset.id()
+
+      @_datasetsById[id]?.dispose()
+
       delete @_datasetsById[id]
       @_datasetIds.remove(id)
+
+      dataset.dispose()
+      #dataset.granulesModel.connect()
+
       null
 
     hasDataset: (other) =>

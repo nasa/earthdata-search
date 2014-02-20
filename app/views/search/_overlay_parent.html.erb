@@ -2,11 +2,11 @@
   <header>
     <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
     <h2>Browse Datasets</h2>
+    <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
+      Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
+    </p>
   </header>
   <div class="master-overlay-content panel-group">
-    <p data-bind="if: datasetFacets.loadTime() !== null" class="panel-list-meta">
-      Search Time: <span data-bind="text: datasetFacets.loadTime">0.000</span>s
-    </p>
     <!-- ko if: query.facets().length > 0 -->
     <div class="panel panel-default selected-facets-panel">
       <div class="panel-heading">

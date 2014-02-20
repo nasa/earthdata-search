@@ -19,4 +19,5 @@
 //= require modules/map/layer_builder
 //= require modules/map/spatial_selection
 //= require modules/map/gibs_visualizations_layer
+//= require modules/map/granules_layer
 //= require modules/map/map

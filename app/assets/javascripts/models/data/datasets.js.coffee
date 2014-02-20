@@ -18,7 +18,7 @@ ns.Datasets = do (ko
       @detailsLoading = ko.observable(false)
       @_visibleDatasetIds = ko.observableArray()
       @_visibleDatasets = {}
-      @visibleGibsDatasets = ko.computed(@_computeVisibleGibsDatasets)
+      @visibleGibsDatasets = @computed(@_computeVisibleGibsDatasets)
       @allDatasetsVisible = ko.observable(false)
 
     _toResults: (data) ->

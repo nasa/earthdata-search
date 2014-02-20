@@ -1,10 +1,13 @@
 ns = @edsc.models.data
 
-ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
+ns.XhrModel = do (ko
+                  KnockoutModel=@edsc.models.KnockoutModel
+                  getJSON=jQuery.getJSON
+                  toParam=$.param) ->
 
-  class XhrModel
+  class XhrModel extends KnockoutModel
     constructor: (@path, @query) ->
-      @results = ko.asyncComputed([], 500, @_computeSearchResponse, this)
+      @results = @asyncComputed([], 500, @_computeSearchResponse, this)
 
       @pendingRequestId = 0
       @completedRequestId = 0
@@ -15,7 +18,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
       @currentRequest = null
 
       @hits = ko.observable(0)
-      @hasNextPage = ko.computed(@_computeHasNextPage, this, deferEvaluation: true)
+      @hasNextPage = @computed(@_computeHasNextPage, this, deferEvaluation: true)
 
     search: (params, callback) =>
       params.page_num = @page = 1
@@ -25,6 +28,11 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
       if @hasNextPage() and !@isLoading()
         params.page_num = ++@page
         @_loadAndSet params, @results(), callback
+
+    abort: ->
+      if @currentRequest? && @currentRequest.readystate != 4
+        @currentRequest.abort()
+        console.log "Aborted (#{@pendingRequestId}): #{@path}"
 
     _computeHasNextPage: ->
       @results().length < @hits()
@@ -41,9 +49,7 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
         @results(results)
 
     _load: (params, current, callback) =>
-      if @currentRequest? && @currentRequest.readystate != 4
-        @currentRequest.abort()
-        console.log "Aborted (#{@pendingRequestId})"
+      @abort()
       requestId = ++@pendingRequestId
       @isLoading(@pendingRequestId != @completedRequestId)
       console.log("Request (#{requestId}): #{@path}?#{$.param(params)}")
@@ -60,6 +66,8 @@ ns.XhrModel = do (ko, getJSON=jQuery.getJSON, toParam=$.param) ->
 
           if params.page_num? && params.page_num > 1
             results = current.concat(results)
+          else
+            result.dispose?() for result in current
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
           @currentRequest = null
