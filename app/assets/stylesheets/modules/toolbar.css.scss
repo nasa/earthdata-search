@@ -2,7 +2,7 @@
   position: absolute;
   color: #fff;
   background: rgba(22,22,22,.9);
-  z-index: 60;
+  z-index: 59;
   padding: 8px 12px;
   border-radius: 5px;
   top: 15px;
@@ -21,15 +21,15 @@
 
 .leaflet-bar.projection-switcher a {
   @include retina-image(projection-sprite, 90px 30px, png, null, false);
-  
+
   &.projection-switcher-arctic {
     background-position: -59px -2px;
   }
-  
+
   &.projection-switcher-geo {
     background-position: -31px -2px;
   }
-  
+
   &.projection-switcher-antarctic {
     background-position: -3px -2px;
   }
