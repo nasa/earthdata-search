@@ -104,7 +104,7 @@ describe "Granule search filters", reset: false do
     after :each do
       uncheck "Find only granules that have browse images."
       uncheck "Find only granules that are available online."
-      expect(page).to have_content(before_granule_count.to_s + ' Granules')
+      expect(page).to reset_granules_to(before_granule_count)
     end
 
     it "selecting browse only loads granules with browse images" do
@@ -114,6 +114,26 @@ describe "Granule search filters", reset: false do
 
     it "selecting online only loads downloadable granules" do
       check "Find only granules that are available online."
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+  end
+
+  context "when searching by granule id" do
+    after :each do
+      script = "edsc.page.project.datasets()[0].granuleQuery.granule_ids('');"
+      page.evaluate_script script
+      expect(page).to reset_granules_to(before_granule_count)
+    end
+
+    it "selecting Granule UR filters granules" do
+      choose "Search by Granule UR"
+      fill_in "granule_id_field", with: "%2006227720%"
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+
+    it "selecting Local Granule ID filters granules" do
+      choose "Search by Local Granule ID"
+      fill_in "granule_id_field", with: "%03232002054831%"
       expect(page).to filter_granules_from(before_granule_count)
     end
   end

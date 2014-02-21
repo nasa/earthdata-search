@@ -1,6 +1,19 @@
 <div class="master-overlay-content" data-bind="with: project.searchGranulesDataset().granuleQuery">
   Filters
   <dl>
+    <dt>Granule ID</dt>
+    <dd>
+      <p>
+        <input data-bind="checked: granuleIdsSelectedOptionValue" type="radio" id="granule_ur" name="granule_id_search" value="granule_ur"><label for="granule_ur" class="access-method-radio-label">Search by Granule UR</label>
+      </p>
+      <p>
+        <input data-bind="checked: granuleIdsSelectedOptionValue" type="radio" id="producer_granule_id" name="granule_id_search" value="producer_granule_id"><label for="producer_granule_id" class="access-method-radio-label">Search by Local Granule ID</label>
+      </p>
+      <p>
+        Enter one ID or pattern per line. Wildcards % (0 or more characters) and _ (exactly one character) indicate a pattern. Use \ to escape any wildcards in an ID.
+      </p>
+      <textarea data-bind="value: granule_ids" id="granule_id_field" name="Text1" cols="60" rows="5" ></textarea>
+    </dd>
     <dt>Temporal</dt>
     <dd>Temporal stuff goes here</dd>
     <dt>Day / Night Flag</dt>
