@@ -13,13 +13,16 @@ ns.Granules = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, extend=$.ext
 
     _computeSearchResponse: (current, callback) ->
       if @query?.validQuery() && @parentQuery?.validQuery()
-        parentParams = @parentQuery.params()
-        params = {}
-        for param in ['spatial', 'temporal']
-          parentValue = parentParams[param]
-          params[param] = parentValue if parentValue?
-        extend(params, @query.params())
+        params = @params()
         params.page_num = @page = 1
         @_load(params, current, callback)
+
+    params: ->
+      parentParams = @parentQuery.params()
+      params = {}
+      for param in ['spatial', 'temporal']
+        parentValue = parentParams[param]
+        params[param] = parentValue if parentValue?
+      extend(params, @query.params())
 
   exports = GranulesModel

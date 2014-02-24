@@ -4,36 +4,15 @@
 
 require "spec_helper"
 
-describe "Map Granule information", :reset => false do
-  original_wait_time = nil
-
+describe "Map Granule information", reset: false do
   before :all do
     Capybara.reset_sessions!
     visit "/search"
-
     first_dataset_result.click_link "Add dataset to the current project"
   end
 
   after :all do
     reset_project
-  end
-
-  def map_mousemove(selector='#map', x=10, y=10, lat=10, lng=10)
-    script = """
-             var target = $('#{selector}')[0];
-             var e = {containerPoint: {x: #{x}, y: #{y}},
-                      originalEvent: {target: target},
-                      latlng: {lat: #{lat}, lng: #{lng}}};
-             window.edsc.page.map.map.fire('mousemove', e);
-             null;
-    """
-    page.evaluate_script(script)
-    wait_for_xhr
-  end
-
-  def map_mouseout
-    page.evaluate_script("window.edsc.page.map.map.fire('mouseout');  null;")
-    wait_for_xhr
   end
 
   context 'when viewing dataset results' do
@@ -50,13 +29,22 @@ describe "Map Granule information", :reset => false do
         expect(page).to have_no_content('Granules at this location')
       end
     end
+
+    context 'clicking on the map' do
+      before :all do
+        map_mouseclick()
+      end
+
+      it "displays no popup" do
+        expect(page).to have_no_css('.leaflet-popup')
+      end
+    end
   end
 
   context 'when viewing a project' do
     before :all do
       dataset_results.click_link "View Project"
       expect(page).to have_css('.panel-list-selected')
-      page.evaluate_script('console.log("view project");')
     end
 
     after :all do
@@ -80,11 +68,46 @@ describe "Map Granule information", :reset => false do
 
         context 'and moving the mouse again' do
           before :all do
-            map_mousemove('#map', 50, 50, 39.1, -96.6)
+            map_mousemove('#map', 39.1, -96.6, 50, 50)
+          end
+
+          after :all do
+            map_mousemove()
           end
 
           it 'updates the granule count tooltip' do
             expect(page).to have_content('39 Granules at this location')
+          end
+        end
+      end
+
+      context 'clicking on the map' do
+        before :all do
+          map_mouseclick()
+        end
+
+        after :all do
+          find('.leaflet-popup-close-button').click
+        end
+
+        it "displays a popup containing granule information" do
+          within '.leaflet-popup' do
+            expect(page).to have_content('No Granules')
+            expect(page).to have_no_selector('.map-popup-pane-item')
+          end
+        end
+
+        context 'and clicking again elsewhere on the map' do
+          before :all do
+            map_mouseclick('#map', 39.1, -96.6, 50, 50)
+          end
+
+          after :all do
+            map_mouseclick()
+          end
+
+          it 'displays updated granule information' do
+            expect(page).to have_selector('.map-popup-pane-item', count: 20)
           end
         end
       end
@@ -124,6 +147,16 @@ describe "Map Granule information", :reset => false do
 
         it 'displays no tooltip' do
           expect(page).to have_no_content('Granules at this location')
+        end
+      end
+
+      context 'clicking on the map' do
+        before :all do
+          map_mouseclick()
+        end
+
+        it "displays no popup" do
+          expect(page).to have_no_css('.leaflet-popup')
         end
       end
     end
