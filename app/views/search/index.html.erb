@@ -261,13 +261,21 @@
         <!-- ko foreach: granules().results() -->
         <li class="map-popup-pane-item">
           <p class="map-popup-pane-label">
-            <div data-bind="text: time_start"></div>
-            <div data-bind="text: time_end"></div>
+            <span data-bind="text: time_start"></span>
+            <span data-bind="text: time_end"></span>
           </p>
+          <!-- ko if: browse_flag === "true" -->
+          <img class="browse-thumbnail" data-bind="attr: {src: edsc_browse_url, title: title}">
+          <!-- /ko -->
+          <!-- ko if: browse_flag !== "true" -->
+          <div class="browse-thumbnail browse-thumbnail-none">
+            No browse imagery
+          </div>
+          <!-- /ko -->
         </li>
         <!-- /ko -->
         <!-- ko if: granules().hasNextPage() -->
-        <li class="busy map-popup-pane-more">
+        <li class="busy map-popup-pane-item map-popup-pane-more">
           Loading...
         </li>
         <!-- /ko -->
