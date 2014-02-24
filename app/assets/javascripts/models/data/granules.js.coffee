@@ -24,7 +24,7 @@ ns.Granules = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, extend=$.ext
     params: ->
       parentParams = @parentQuery.params()
       params = {}
-      for param in ['spatial', 'temporal']
+      for param in ['bounding_box', 'point', 'line', 'polygon', 'temporal']
         parentValue = parentParams[param]
         params[param] = parentValue if parentValue?
       extend(params, @query.params())
