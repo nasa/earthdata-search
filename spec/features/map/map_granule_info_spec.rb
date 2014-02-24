@@ -1,6 +1,9 @@
 # EDSC-93: As a user, I want to see an indication of granule counts under my
 #          mouse cursor so I may find more information about granules under
 #          that point
+# EDSC-95: As a user, I want to see basic granule information such as start
+#          and end time at a point I select so I may find the most desirable
+#          granules at a particular location
 
 require "spec_helper"
 
@@ -107,7 +110,7 @@ describe "Map Granule information", reset: false do
           end
 
           it 'displays updated granule information' do
-            expect(page).to have_selector('.map-popup-pane-item', count: 20)
+            expect(page).to have_selector('.map-popup-pane-item:not(.busy)', count: 20)
           end
         end
       end
