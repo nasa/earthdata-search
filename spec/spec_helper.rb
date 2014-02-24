@@ -59,6 +59,8 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  wait_time = Capybara.default_wait_time
+
   config.before :each do
     if Capybara.current_driver == :rack_test
       DatabaseCleaner.strategy = :transaction
@@ -66,10 +68,15 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :truncation
     end
     DatabaseCleaner.start
+
+    unless example.metadata[:wait].nil?
+      Capybara.default_wait_time = example.metadata[:wait]
+    end
   end
 
   config.after do
     DatabaseCleaner.clean
+    Capybara.default_wait_time = wait_time unless example.metadata[:wait].nil?
   end
 
   config.after(:each) do
