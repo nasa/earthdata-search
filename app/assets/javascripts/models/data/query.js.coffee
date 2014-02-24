@@ -26,6 +26,7 @@ ns.Query = do (ko,
       @browse_only = ko.observable(false)
       @online_only = ko.observable(false)
       @granule_ids = ko.observable("")
+      @searchMultipleGranuleIDs = ko.observable(false)
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
 
       @validQuery = ko.observable(true)
@@ -82,6 +83,9 @@ ns.Query = do (ko,
       @spatial(constraint)
       false
 
+    toggleSearchMultiple: =>
+      @searchMultipleGranuleIDs(!@searchMultipleGranuleIDs())
+
     canQueryDatasetSpatial: (dataset) =>
       spatial = @spatial()
       constraint = dataset.spatial_constraint()
@@ -128,6 +132,9 @@ ns.Query = do (ko,
       online_only = @online_only()
       params.online_only = true if online_only
 
+      # TODO If searchMultipleGranuleIDs is false, we need to search for granule_ur || producer_granule_id
+      # right now it is only doing which radio button is selected.
+      # NCR 11014475
       granule_ids = @granule_ids()
       if granule_ids?.length > 0
         for id in granule_ids.split("\n")

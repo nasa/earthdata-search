@@ -1,8 +1,11 @@
 .master-overlay-secondary-content {
+  color: #C9C9C9;
+
   dt {
-    padding: 5px;
-    background-color: #CCC;
-    color: #000;
+    border-bottom: 2px solid #888;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 5px;
   }
 
   dd {

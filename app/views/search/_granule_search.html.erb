@@ -3,6 +3,12 @@
   <dl>
     <dt>Granule ID</dt>
     <dd>
+      <!-- ko ifnot: searchMultipleGranuleIDs -->
+      <input data-bind="value: granule_ids" type="text" />
+      <a href="#" data-bind="click: toggleSearchMultiple">Search Multiple</a>
+      <!-- /ko -->
+      <!-- ko if: searchMultipleGranuleIDs -->
+      <a href="#" data-bind="click: toggleSearchMultiple">Search One</a>
       <p>
         <input data-bind="checked: granuleIdsSelectedOptionValue" type="radio" id="granule_ur" name="granule_id_search" value="granule_ur"><label for="granule_ur" class="access-method-radio-label">Search by Granule UR</label>
       </p>
@@ -13,6 +19,7 @@
         Enter one ID or pattern per line. Wildcards % (0 or more characters) and _ (exactly one character) indicate a pattern. Use \ to escape any wildcards in an ID.
       </p>
       <textarea data-bind="value: granule_ids" id="granule_id_field" name="Text1" cols="60" rows="5" ></textarea>
+      <!-- /ko -->
     </dd>
     <dt>Temporal</dt>
     <dd>Temporal stuff goes here</dd>
