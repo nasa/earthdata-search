@@ -110,7 +110,7 @@ describe "Map Granule information", reset: false do
           end
 
           it 'displays updated granule information' do
-            expect(page).to have_selector('.map-popup-pane-item', count: 20)
+            expect(page).to have_selector('.map-popup-pane-item:not(.busy)', count: 20)
           end
         end
       end
