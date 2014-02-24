@@ -112,6 +112,15 @@
   left: 5px;
 }
 
+#map img.browse-thumbnail {
+  // Leaflet sets this to none !important, and the browse scaler doesn't
+  // always respect the values we send.  If there are problems generating
+  // the image, it'll come back as 200px despite us asking for 170px.
+  max-width: 170px !important;
+  max-height: 170px !important;
+}
+
+
 .browse-thumbnail-none {
   width: 100%;
   padding: 50px 0;
