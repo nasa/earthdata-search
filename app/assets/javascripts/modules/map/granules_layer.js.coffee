@@ -180,6 +180,7 @@ ns.GranulesLayer = do (L
       map.on 'popupclose', @_onPopupClose
       map.on 'edsc.hover', @_onHover
       map.on 'edsc.hoverout', @_onHoverOut
+      map.on 'mousedown', @_onMouseDown
 
     onRemove: (map) ->
       @_map = map
@@ -200,11 +201,15 @@ ns.GranulesLayer = do (L
       map.off 'popupclose', @_onPopupClose
       map.off 'edsc.hover', @_onHover
       map.off 'edsc.hoverout', @_onHoverOut
+      map.off 'mousedown', @_onMouseDown
 
       @_map = null
 
     _getMapElement: (className) ->
       @_map.getContainer().getElementsByClassName('granule-' + className)[0]
+
+    _onMouseDown: =>
+      @_clickStart = new Date()
 
     _onSelectionChange: (newValue) =>
       try
@@ -225,7 +230,10 @@ ns.GranulesLayer = do (L
       setTimeout(fn, 0)
 
     _onClick: (e) =>
-      if @_tooltipLayer.isEnabled() && @_granuleDetails.granules()?
+      duration = 0
+      duration = new Date() - @_clickStart if @_clickStart?
+      @_clickStart = null
+      if duration < 200 && @_tooltipLayer.isEnabled() && @_granuleDetails.granules()?
         map = @_map
 
         unless @_popup?
