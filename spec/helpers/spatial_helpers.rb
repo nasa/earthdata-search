@@ -65,7 +65,38 @@ module Helpers
       end
     end
 
+    def map_mousemove(*args)
+      map_position_event('mousemove', *args)
+      wait_for_xhr
+    end
+
+
+    def map_mouseout(*args)
+      map_position_event('mouseout', *args)
+      wait_for_xhr
+    end
+
+    def map_mouseclick(*args)
+      # Popover code requires the mouse to be over the map
+      map_position_event('mousemove', *args)
+      map_position_event('click', *args)
+      map_position_event('mouseout', *args)
+      wait_for_xhr
+    end
+
     private
+
+    def map_position_event(event, selector='#map', lat=10, lng=10, x=10, y=10)
+      script = """
+               var target = $('#{selector}')[0];
+               var e = {containerPoint: {x: #{x}, y: #{y}},
+                        originalEvent: {target: target},
+                        latlng: {lat: #{lat}, lng: #{lng}}};
+               window.edsc.page.map.map.fire('#{event}', e);
+               null;
+      """
+      page.evaluate_script(script)
+    end
 
     def create_spatial(type, *points)
       point_strs = points.map {|p| p.reverse.join(',')}
