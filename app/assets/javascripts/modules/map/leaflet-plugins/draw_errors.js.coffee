@@ -73,10 +73,11 @@ do (L) ->
 
   # Overrides _onMouseUp to validate before finishing the rectangle
   L.Draw.Rectangle.prototype._onMouseUp = ->
-    error = validateRectangle(@_shape.getBounds())
-    if error?
-      @_showErrorTooltip(error)
-      return
+    if @_shape?
+      error = validateRectangle(@_shape.getBounds())
+      if error?
+        @_showErrorTooltip(error)
+        return
 
     L.Draw.SimpleShape.prototype._onMouseUp.call(this)
 

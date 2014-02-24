@@ -2,6 +2,7 @@ ns = @edsc.map
 
 ns.GranulesLayer = do (L
                        ko
+                       document
                        project = @edsc.page.project
                        extend = $.extend
                        $ = jQuery
@@ -34,7 +35,7 @@ ns.GranulesLayer = do (L
       abs = Math.abs
 
       $target = $(e.originalEvent.target)
-      if $target.closest('.leaflet-control-container, .geojson-help').length > 0
+      if $target.closest('.leaflet-control-container, .geojson-help, .leaflet-popup-pane').length > 0
         @_clearHoverTimeout()
       else if !hoverPoint? || abs(point.x - hoverPoint.x) + abs(point.y - hoverPoint.y) > HOVER_SENSITIVITY_PX
         # Allow the mouse to move slightly without triggering another event
@@ -61,6 +62,7 @@ ns.GranulesLayer = do (L
     constructor: (@_container) ->
       @_container.style.display = 'none'
       @_enabled = true
+      @_paused = false
       @_point = null
 
     onAdd: (map) ->
@@ -84,7 +86,7 @@ ns.GranulesLayer = do (L
       return unless @_enabled
 
       $target = $(e.originalEvent.target)
-      if $target.closest('.leaflet-control-container, .geojson-help').length > 0
+      if $target.closest('.leaflet-control-container, .geojson-help, .leaflet-popup-pane').length > 0
         @_point = null
       @_updateDisplay()
 
@@ -95,7 +97,7 @@ ns.GranulesLayer = do (L
     _updateDisplay: ->
       container = @_container
       point = @_point
-      if @_enabled && point?
+      if @_enabled && !@_paused && point?
         container.style.display = 'block'
         container.style.top = (point.y + 5) + 'px'
         container.style.left = (point.x + 5) + 'px'
@@ -103,15 +105,30 @@ ns.GranulesLayer = do (L
         container.style.display = 'none'
 
     isEnabled: ->
-      @_enabled
+      @_enabled && @_point?
+
+    isPaused: ->
+      !@isEnabled() || @_paused
 
     enable: =>
-      @_enabled = true
-      @_updateDisplay()
+      unless @_enabled
+        @_enabled = true
+        @_updateDisplay()
 
     disable: =>
-      @_enabled = false
-      @_updateDisplay()
+      if @_enabled
+        @_enabled = false
+        @_updateDisplay()
+
+    pause: =>
+      unless @_paused
+        @_paused = true
+        @_updateDisplay()
+
+    resume: =>
+      if @_paused
+        @_paused = false
+        @_updateDisplay()
 
   class GranuleInfo
     constructor: (project) ->
@@ -122,7 +139,7 @@ ns.GranulesLayer = do (L
         @_granulesModel = null
         @_granulesModel = project.selectedDataset()?.createGranulesModel()
 
-    point: (latLng) ->
+    point: (latLng, callback) ->
       if latLng?
         @_point = latLng
         granules = @granules()
@@ -131,6 +148,12 @@ ns.GranulesLayer = do (L
           granules.results() # Force evaluation
       @_point
 
+    scrolled: (data, event) =>
+      granules = @granules()
+      elem = event.target
+      if granules? && elem.scrollLeft > (elem.scrollWidth - elem.offsetWidth - 200)
+        granules.loadNextPage(granules.params())
+
     dispose: ->
       @granules.dispose()
 
@@ -138,43 +161,117 @@ ns.GranulesLayer = do (L
     constructor: ->
 
     onAdd: (map) ->
-      @_granuleInfo = new GranuleInfo(project)
+      @_map = map
 
-      el = @_getInfoElement(map)
-      ko.applyBindings(@_granuleInfo, el) if el?
+      @_granuleInfo = new GranuleInfo(project)
+      @_granuleDetails = new GranuleInfo(project)
+
+      ko.applyBindings(@_granuleInfo, @_getMapElement('info'))
+
+      @_selectionChangeSubscription = @_granuleDetails.granules.subscribe(@_onSelectionChange)
 
       @_hoverLayer = new HoverLayer()
       map.addLayer(@_hoverLayer)
 
-      @_tooltipLayer = new TooltipLayer(el)
+      @_tooltipLayer = new TooltipLayer(@_getMapElement('info'))
       map.addLayer(@_tooltipLayer)
 
+      map.on 'click', @_onClick
+      map.on 'popupclose', @_onPopupClose
       map.on 'edsc.hover', @_onHover
       map.on 'edsc.hoverout', @_onHoverOut
 
     onRemove: (map) ->
-      @_granuleInfo.dispose()
+      @_map = map
 
-      el = @_getInfoElement(map)
-      ko.cleanNode(el) if el?
+      @_granuleInfo.dispose()
+      @_granuleDetails.dispose()
+
+      ko.cleanNode(@_getMapElement('info'))
+      ko.cleanNode(@_getMapElement('details'))
+
+      @_granuleChangeSubscription.dispose()
+      @_granuleResultsSubscription?.dispose()
 
       map.removeLayer(@_hoverLayer) if @_hoverLayer?
       map.removeLayer(@_tooltipLayer) if @_tooltipLayer?
 
+      map.off 'click', @_onClick
+      map.off 'popupclose', @_onPopupClose
       map.off 'edsc.hover', @_onHover
       map.off 'edsc.hoverout', @_onHoverOut
 
-    _getInfoElement: (map) ->
-      map.getContainer().getElementsByClassName('granule-info')[0]
+      @_map = null
+
+    _getMapElement: (className) ->
+      @_map.getContainer().getElementsByClassName('granule-' + className)[0]
+
+    _onSelectionChange: (newValue) =>
+      try
+        @_map.closePopup(@_popup)
+        @_granuleResultsSubscription?.dispose()
+        @_granuleResultsSubscription = newValue?.results.subscribe(@_onGranuleResultsChange)
+      catch e
+
+    _onGranuleResultsChange: (newValue) =>
+      # Update the popup after this change finishes, preserving its scroll position
+      fn = =>
+        popup = @_popup
+        if popup?
+          scroll = popup.getContent().getElementsByClassName('map-popup-pane-x')?[0]
+          scrollLeft = scroll?.scrollLeft
+          popup.update()
+          scroll.scrollLeft = scrollLeft if scrollLeft?
+      setTimeout(fn, 0)
+
+    _onClick: (e) =>
+      if @_tooltipLayer.isEnabled() && @_granuleDetails.granules()?
+        map = @_map
+
+        unless @_popup?
+          popupContent = '<div class="map-popover granule-details-container" data-bind="stopBinding: true">
+                            <div data-bind="template: {name: \'granule-details-template\'}"/>
+                          </div>'
+          @_popup = L.popup(
+            maxWidth: 1500
+            closeOnClick: false
+            autoPanPaddingTopLeft: [document.body.clientWidth / 2, 100]
+            autoPanPaddingBottomRight: [100, 100]
+            ).setContent($(popupContent)[0])
+
+        @_popup = @_popup
+          .setLatLng(e.latlng)
+          .openOn(map)
+
+        details = @_popup.getContent().firstElementChild
+        ko.applyBindings(@_granuleDetails, details)
+
+        @_stopLoading(@_granuleDetails)
+        @_load(@_granuleDetails, e.latlng)
+        @_tooltipLayer.pause()
+
+        @_popup.update()
+
+    _onPopupClose: (e) =>
+      if e.popup == @_popup
+        ko.cleanNode(@_popup.getContent().firstElementChild)
+        @_popup = null
 
     _onHoverOut: (e) =>
-      @_granuleInfo.isCurrent(false)
-      @_granuleInfo.granules()?.abort()
-      @_granuleInfo.granules()?.isLoaded(false)
+      @_tooltipLayer.resume()
+      @_stopLoading(@_granuleInfo)
 
     _onHover: (e) =>
-      if @_tooltipLayer.isEnabled()
-        @_granuleInfo.isCurrent(true)
-        @_granuleInfo.point(e.latlng)
+      unless @_tooltipLayer.isPaused()
+        @_load(@_granuleInfo, e.latlng)
+
+    _stopLoading: (info) ->
+      info.granules()?.abort()
+      info.granules()?.isLoaded(false)
+      info.isCurrent(false)
+
+    _load: (info, point) ->
+      info.isCurrent(true)
+      info.point(point)
 
   exports = GranulesLayer
