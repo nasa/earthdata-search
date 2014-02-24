@@ -24,9 +24,11 @@ ns.SpatialSelection = do (window,
       @_colorOptions = colorOptions =
         color: normalColor
         dashArray: null
+        clickable: false
       @_errorOptions = errorOptions =
         color: errorColor
         dashArray: null
+        clickable: false
       selectedOptions =
         dashArray: '10, 10'
 
