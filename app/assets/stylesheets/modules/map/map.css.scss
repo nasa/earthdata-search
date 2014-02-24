@@ -75,22 +75,24 @@
 .map-popup-pane-item {
   white-space: normal;
   display: inline-block;
+  vertical-align: top;
   margin: 8px 8px 8px 0;
+  &:first-child { margin: 8px; }
 
-  &:first-child {
-    margin: 8px;
-  }
   width: 182px;
-  height: 182px;
-  background: #222;
+  height: 182px + 48px; /* 4em */
+  background-color: #222;
   border: 1px solid #333;
   position: relative;
 
   .map-popup-pane-label {
     position: absolute;
+    line-height: 1.5em;
+    height: 48px; /* 4em */
     width:100%;
     margin:0;
     padding:.5em;
+    z-index: 1;
   }
 }
 
@@ -101,6 +103,18 @@
 
 .map-popup-pane-x {
   overflow-x: scroll;
+}
+
+.browse-thumbnail {
+  position: absolute;
+  display: block;
+  top: 53px; /* 5px margin */
+  left: 5px;
+}
+
+.browse-thumbnail-none {
+  width: 100%;
+  padding: 50px 0;
 }
 
 .geojson-svg {

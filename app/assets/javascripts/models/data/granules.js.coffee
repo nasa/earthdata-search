@@ -9,7 +9,11 @@ ns.Granules = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, extend=$.ext
       super('/granules.json', query)
 
     _toResults: (data) ->
-      data.feed.entry
+      results = data.feed.entry
+      for result in results
+        if result.browse_flag == "true"
+          result.edsc_browse_url = "https://api.echo.nasa.gov/browse-scaler/browse_images/granules/#{result.id}?h=170&w=170"
+      results
 
     _computeSearchResponse: (current, callback) ->
       if @query?.validQuery() && @parentQuery?.validQuery()
