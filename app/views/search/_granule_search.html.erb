@@ -4,7 +4,7 @@
     <dt>Granule ID</dt>
     <dd>
       <!-- ko ifnot: searchMultipleGranuleIDs -->
-      <input data-bind="value: granule_ids" type="text" />
+      <input data-bind="value: granule_ids" id="granule_id" type="text" />
       <a href="#" data-bind="click: toggleSearchMultiple">Search Multiple</a>
       <!-- /ko -->
       <!-- ko if: searchMultipleGranuleIDs -->

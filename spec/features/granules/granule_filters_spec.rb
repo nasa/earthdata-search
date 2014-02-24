@@ -125,16 +125,33 @@ describe "Granule search filters", reset: false do
       expect(page).to reset_granules_to(before_granule_count)
     end
 
-    it "selecting Granule UR filters granules" do
-      choose "Search by Granule UR"
-      fill_in "granule_id_field", with: "%2006227720%"
-      expect(page).to filter_granules_from(before_granule_count)
+    context "with single granule id field" do
+      it "selecting Granule ID filters granules" do
+        fill_in "granule_id", with: "%2006227720%"
+        expect(page).to filter_granules_from(before_granule_count)
+      end
     end
 
-    it "selecting Local Granule ID filters granules" do
-      choose "Search by Local Granule ID"
-      fill_in "granule_id_field", with: "%03232002054831%"
-      expect(page).to filter_granules_from(before_granule_count)
+    context "with granule id textarea" do
+      before :each do
+        click_link "Search Multiple"
+      end
+
+      after :each do
+        click_link "Search One"
+      end
+
+      it "selecting Granule UR filters granules" do
+        choose "Search by Granule UR"
+        fill_in "granule_id_field", with: "%2006227720%"
+        expect(page).to filter_granules_from(before_granule_count)
+      end
+
+      it "selecting Local Granule ID filters granules" do
+        choose "Search by Local Granule ID"
+        fill_in "granule_id_field", with: "%03232002054831%"
+        expect(page).to filter_granules_from(before_granule_count)
+      end
     end
   end
 end
