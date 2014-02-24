@@ -5,6 +5,27 @@
   background-color: #000;
 }
 
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: #222;
+  border: 1px solid #888;
+  color: #fff;
+}
+
+// Putting a white border around the tooltip, we need to erase the portion
+// of the border that appears above the tooltip arrow.  So hacky.
+.leaflet-popup-content-wrapper:after {
+  display: block;
+  color: transparent;
+  position: absolute;
+  content: '-';
+  left: 50%;
+  margin-left:-10px;
+  bottom:20px;
+  width: 19px;
+  height: 1px;
+  background: #222;
+}
+
 .projection-geo .projection-only-arctic,
 .projection-geo .projection-only-antarctic,
 .projection-arctic .projection-only-geo,
@@ -30,6 +51,56 @@
   padding: .5em;
   max-width: 20em;
   min-width: 10em;
+}
+
+.map-tooltip-action {
+  color: #00ffff;
+  font-size: .9em;
+  text-align:center;
+}
+
+.granule-details-container {
+  max-width: 700px;
+  min-width: 200px;
+}
+
+.map-popup-pane {
+  border: 1px solid #333;
+  background: #111;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.map-popup-pane-item {
+  white-space: normal;
+  display: inline-block;
+  margin: 8px 8px 8px 0;
+
+  &:first-child {
+    margin: 8px;
+  }
+  width: 182px;
+  height: 182px;
+  background: #222;
+  border: 1px solid #333;
+  position: relative;
+
+  .map-popup-pane-label {
+    position: absolute;
+    width:100%;
+    margin:0;
+    padding:.5em;
+  }
+}
+
+.map-popup-pane-more {
+  width: 182px;
+  display: inline-block;
+}
+
+.map-popup-pane-x {
+  overflow-x: scroll;
 }
 
 .geojson-svg {

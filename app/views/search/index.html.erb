@@ -243,10 +243,42 @@
         <span data-bind="text: granules().hits() == 1 ? '1 Granule' : granules().hits() + ' Granules'"></span>
         at this location
       </p>
+      <!-- ko if: granules().hits() > 0 -->
+      <p class="map-tooltip-action">Click map for details</p>
+      <!-- /ko -->
       <!-- /ko -->
     </div>
   </div>
   <!-- /ko -->
+  <%# Container lets leaflet move this around the DOM without messing up knockout bindings %>
+  <script id="granule-details-template" type="text/html">
+    <div id="map-granule-details" class="granule-details" data-bind="if: granules()">
+      <!-- ko if: !granules().isLoaded() -->
+      <p class="busy">Loading granules...</p>
+      <!-- /ko -->
+      <!-- ko if: granules().isLoaded() && granules().results().length > 0 -->
+      <ul class="map-popup-pane map-popup-pane-x" data-bind="event: {scroll: scrolled}">
+        <!-- ko foreach: granules().results() -->
+        <li class="map-popup-pane-item">
+          <p class="map-popup-pane-label">
+            <div data-bind="text: time_start"></div>
+            <div data-bind="text: time_end"></div>
+          </p>
+        </li>
+        <!-- /ko -->
+        <!-- ko if: granules().hasNextPage() -->
+        <li class="busy map-popup-pane-more">
+          Loading...
+        </li>
+        <!-- /ko -->
+      </ul>
+      <!-- /ko -->
+      <!-- ko if: granules().isLoaded() && granules().results().length == 0 -->
+      <p>No Granules</p>
+      <!-- /ko -->
+    </div>
+  </script>
+
   <div class="geojson-help">
     <div class="geojson-help-dropzone">
       <h1>Search by Shape File</h1>

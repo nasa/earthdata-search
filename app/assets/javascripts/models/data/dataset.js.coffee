@@ -52,7 +52,8 @@ ns.Dataset = do (ko
     clone: ->
       result = new Dataset(@json, @query)
       result.serviceOptions.fromJson(@serviceOptions.serialize())
-      result.granuleAccessOptions(@granuleAccessOptions())
+      if result.granuleAccessOptions.isSetup()
+        result.granuleAccessOptions(@granuleAccessOptions())
       result
 
     _loadGranuleAccessOptions: (current, callback) ->
@@ -98,7 +99,8 @@ ns.Dataset = do (ko
       result = {id: @id(), dataset_id: @dataset_id()}
       if @has_granules()
         result.params = @granuleQuery.serialize()
-        result.granuleAccessOptions = @granuleAccessOptions() if @granuleAccessOptions().count?
+        if @granuleAccessOptions.isSetup()
+          result.granuleAccessOptions = @granuleAccessOptions()
       result.serviceOptions = @serviceOptions.serialize()
       result
 
