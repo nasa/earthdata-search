@@ -48,7 +48,7 @@
               <!-- /ko -->
               <p>
                 <!-- ko if: granuleAccessOptions().canDownload -->
-                <span class="access-method-label">Data Access Method</span>
+                <span class="access-method-label">Select Data Access Method</span>
                 <input data-bind="checked: serviceOptions.accessMethod, attr: { name: $index() + '-access-method', id: $index() + '-download' }" type="radio" id="download" value="download" /><label data-bind="attr: { for: $index() + '-download' }" class="access-method-radio-label">Download</label>
                 <!-- /ko -->
               </p>

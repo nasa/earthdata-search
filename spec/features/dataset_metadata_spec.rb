@@ -4,7 +4,7 @@ describe 'Dataset metadata' do
   before do
     visit '/search'
     fill_in 'keywords', with: 'AST_L1AE'
-    find('li', text: 'ASTER Expedited L1A').click
+    find('li', text: 'ASTER Expedited L1A').click_link "View details"
     click_link 'Metadata'
   end
 

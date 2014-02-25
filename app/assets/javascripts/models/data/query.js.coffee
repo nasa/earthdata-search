@@ -25,6 +25,8 @@ ns.Query = do (ko,
       @cloud_cover_max = ko.observable("")
       @browse_only = ko.observable(false)
       @online_only = ko.observable(false)
+      @granule_ids = ko.observable("")
+      @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
 
       @validQuery = ko.observable(true)
 
@@ -42,6 +44,7 @@ ns.Query = do (ko,
       @cloud_cover_max(jsonObj.cloud_cover_max)
       @browse_only(jsonObj.browse_only)
       @online_only(jsonObj.online_only)
+      @granule_ids(jsonObj.granule_ids)
 
     serialize: ->
       {
@@ -55,13 +58,14 @@ ns.Query = do (ko,
         cloud_cover_max: @cloud_cover_max()
         browse_only: @browse_only()
         online_only: @online_only()
+        granule_ids: @granule_ids()
       }
 
     clearFilters: =>
       @keywords('')
       @spatial('')
       evilPageModels.current.ui.spatialType.selectNone()
-      @temporal().clear()
+      @temporal().clear() if @temporal()
       @placename('')
       @facets.removeAll()
       @day_night_flag("")
@@ -69,6 +73,7 @@ ns.Query = do (ko,
       @cloud_cover_max("")
       @browse_only(false)
       @online_only(false)
+      @granule_ids("")
 
     toggleQueryDatasetSpatial: (dataset) =>
       constraint = dataset.spatial_constraint()
@@ -122,6 +127,16 @@ ns.Query = do (ko,
 
       online_only = @online_only()
       params.online_only = true if online_only
+
+      # TODO If searchMultipleGranuleIDs is false, we need to search for granule_ur || producer_granule_id
+      # right now it is only doing which radio button is selected.
+      # NCR 11014475
+      granule_ids = @granule_ids()
+      if granule_ids?.length > 0
+        for id in granule_ids.split("\n")
+          param = @granuleIdsSelectedOptionValue()
+          params[param] ||= []
+          params[param].push(id)
 
       params.page_size = 20
 
