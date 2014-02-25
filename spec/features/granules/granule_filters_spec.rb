@@ -33,7 +33,7 @@ describe "Granule search filters", reset: false do
 
   context "when choosing a day/night flag" do
     after :each do
-      select 'Anytime', from: "day-night-select"
+      click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
 
@@ -55,8 +55,7 @@ describe "Granule search filters", reset: false do
 
   context "when choosing cloud cover" do
     after :each do
-      script = "edsc.page.project.datasets()[0].granuleQuery.cloud_cover_min('');edsc.page.project.datasets()[0].granuleQuery.cloud_cover_max('')"
-      page.evaluate_script script
+      click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
 
@@ -102,8 +101,7 @@ describe "Granule search filters", reset: false do
 
   context "when choosing data access options" do
     after :each do
-      uncheck "Find only granules that have browse images."
-      uncheck "Find only granules that are available online."
+      click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
 
@@ -120,8 +118,7 @@ describe "Granule search filters", reset: false do
 
   context "when searching by granule id" do
     after :each do
-      script = "edsc.page.project.datasets()[0].granuleQuery.granule_ids('');"
-      page.evaluate_script script
+      click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
 

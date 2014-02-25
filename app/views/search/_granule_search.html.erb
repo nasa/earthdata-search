@@ -1,14 +1,22 @@
-<div class="master-overlay-content" data-bind="with: project.searchGranulesDataset().granuleQuery">
+<!-- ko with: project.searchGranulesDataset().granuleQuery -->
+<div class="master-overlay-content">
   Filters
   <dl>
     <dt>Granule ID</dt>
-    <dd class="granule-id-search" data-bind="css: {'search-single': searchSingleGranuleID, 'search-multiple': searchMultipleGranuleIDs}">
+    <dd class="granule-id-search" data-bind="css: {'search-single': !searchMultipleGranuleIDs(), 'search-multiple': searchMultipleGranuleIDs}">
       <section class="single-granule-id-search">
         <input data-bind="value: granule_ids" id="granule_id" type="text" placeholder="Search Granule IDs..." />
         or 
-        <a href="#" data-bind="click: toggleSearchMultiple">Search Multiple</a>
+        <a href="#" data-bind="click: toggleSearchMultiple">
+          Search Multiple <i class="edsc-icon-arrow-right"></i>
+        </a>
       </section>
       <section class="multiple-granule-id-search">
+        <p>
+          <a href="#" data-bind="click: toggleSearchMultiple">
+            <i class="edsc-icon-arrow-left"></i> Search One
+          </a>
+        </p>
         <p>
           <input data-bind="checked: granuleIdsSelectedOptionValue" type="radio" id="granule_ur" name="granule_id_search" value="granule_ur"><label for="granule_ur" class="access-method-radio-label">Search by Granule UR</label>
         </p>
@@ -16,12 +24,9 @@
           <input data-bind="checked: granuleIdsSelectedOptionValue" type="radio" id="producer_granule_id" name="granule_id_search" value="producer_granule_id"><label for="producer_granule_id" class="access-method-radio-label">Search by Local Granule ID</label>
         </p>
         <p>
-          Enter one ID or pattern per line. Wildcards % (0 or more characters) and _ (exactly one character) indicate a pattern. Use \ to escape any wildcards in an ID.
+          Enter one ID or pattern per line. Wildcards % (0 or more characters)<br />and _ (exactly one character) indicate a pattern. Use \ to escape any<br />wildcards in an ID.
         </p>
         <textarea data-bind="value: granule_ids" id="granule_id_field" name="Text1" cols="60" rows="5" ></textarea>
-        <p>
-          <a href="#" data-bind="click: toggleSearchMultiple">Search One</a>
-        </p>
       </section>
     </dd>
     <dt>Temporal</dt>
@@ -60,3 +65,8 @@
   </dl>
 
 </div>
+<div class="granule-filter-actions">
+  <button id="granule-filters-submit" class="button submit" title="Apply your selections" type="button">Apply</button>
+  <button id="granule-filters-clear" data-bind="click: clearFilters" class="button low-priority" title="Clear your selections" type="button">Clear</button>
+</div>
+<!-- /ko -->

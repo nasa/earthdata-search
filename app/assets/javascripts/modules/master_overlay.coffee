@@ -66,9 +66,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       # be awesome to do this in CSS, but I don't know that it's possible without
       # even uglier results
       content.height(content.parents('.main-content').height() - content.offset().top - 40)
-      # FIXME: This gets the granule search to scroll, but it doesn't work well
+
       secondary_content = @root.find('.master-overlay-secondary-content').find(".master-overlay-content")
-      secondary_content.height(content.height() + 76)
+      secondary_content.height(content.height() + 8)
 
   $document = $(document)
 

@@ -27,7 +27,6 @@ ns.Query = do (ko,
       @online_only = ko.observable(false)
       @granule_ids = ko.observable("")
       @searchMultipleGranuleIDs = ko.observable(false)
-      @searchSingleGranuleID = ko.computed => !@searchMultipleGranuleIDs()
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
 
       @validQuery = ko.observable(true)
@@ -67,7 +66,7 @@ ns.Query = do (ko,
       @keywords('')
       @spatial('')
       evilPageModels.current.ui.spatialType.selectNone()
-      @temporal().clear()
+      @temporal().clear() if @temporal()
       @placename('')
       @facets.removeAll()
       @day_night_flag("")
