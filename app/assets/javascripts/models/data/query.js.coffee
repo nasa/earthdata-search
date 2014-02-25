@@ -27,6 +27,7 @@ ns.Query = do (ko,
       @online_only = ko.observable(false)
       @granule_ids = ko.observable("")
       @searchMultipleGranuleIDs = ko.observable(false)
+      @searchSingleGranuleID = ko.computed => !@searchMultipleGranuleIDs()
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
 
       @validQuery = ko.observable(true)
