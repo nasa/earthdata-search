@@ -26,7 +26,6 @@ ns.Query = do (ko,
       @browse_only = ko.observable(false)
       @online_only = ko.observable(false)
       @granule_ids = ko.observable("")
-      @searchMultipleGranuleIDs = ko.observable(false)
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
 
       @validQuery = ko.observable(true)
@@ -82,9 +81,6 @@ ns.Query = do (ko,
       constraint = "" if constraint == spatial
       @spatial(constraint)
       false
-
-    toggleSearchMultiple: =>
-      @searchMultipleGranuleIDs(!@searchMultipleGranuleIDs())
 
     canQueryDatasetSpatial: (dataset) =>
       spatial = @spatial()

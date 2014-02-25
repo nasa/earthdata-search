@@ -3,17 +3,17 @@
   Filters
   <dl>
     <dt>Granule ID</dt>
-    <dd class="granule-id-search" data-bind="css: {'search-single': !searchMultipleGranuleIDs(), 'search-multiple': searchMultipleGranuleIDs}">
+    <dd class="granule-id-search search-single">
       <section class="single-granule-id-search">
         <input data-bind="value: granule_ids" id="granule_id" type="text" placeholder="Search Granule IDs..." />
         or 
-        <a href="#" data-bind="click: toggleSearchMultiple">
+        <a href="#" class="search-granules-multiple">
           Search Multiple <i class="edsc-icon-arrow-right"></i>
         </a>
       </section>
       <section class="multiple-granule-id-search">
         <p>
-          <a href="#" data-bind="click: toggleSearchMultiple">
+          <a href="#" class="search-granules-one">
             <i class="edsc-icon-arrow-left"></i> Search One
           </a>
         </p>

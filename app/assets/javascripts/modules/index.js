@@ -9,3 +9,4 @@
 //= require modules/dropdown
 //= require modules/button_effects
 //= require modules/login
+//= require modules/granule_filters
