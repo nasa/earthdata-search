@@ -95,3 +95,7 @@ a.text-button {
 button {
   @include dark-button;
 }
+
+.btn-group {
+  min-height: 3em;
+}
