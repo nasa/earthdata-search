@@ -66,7 +66,7 @@
 
 </div>
 <div class="granule-filter-actions">
-  <button id="granule-filters-submit" class="button submit" title="Apply your selections" type="button">Apply</button>
+  <button data-bind="click: $root.ui.projectList.hideFilters" id="granule-filters-submit" class="button submit master-overlay-hide-secondary" title="Apply your selections" type="button">Apply</button>
   <button id="granule-filters-clear" data-bind="click: clearFilters" class="button low-priority" title="Clear your selections" type="button">Clear</button>
 </div>
 <!-- /ko -->

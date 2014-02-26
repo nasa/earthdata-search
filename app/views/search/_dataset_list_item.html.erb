@@ -36,10 +36,10 @@
                 </a>
                 <% if is_project %>
                   <!-- ko if: has_granules -->
-                  <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.project.searchGranules, css: {'granule-filters-applied': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Filter granules">
+                  <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.project.searchGranules, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Filter granules">
                     <i class="edsc-icon-compose"></i>
                   </a>
-                  <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.project.clearSearchGranules, css: {'granule-filters-applied': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Filter granules">
+                  <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.project.clearSearchGranules, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Filter granules">
                     <i class="edsc-icon-compose"></i>
                   </a>
                   <!-- /ko -->
