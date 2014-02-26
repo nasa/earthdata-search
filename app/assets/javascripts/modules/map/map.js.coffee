@@ -41,8 +41,6 @@ ns.Map = do (window,
       @_datasetSubscription = page.datasets.details.subscribe(@_showDatasetSpatial)
       @_gibsVisualizationSubscription = page.datasets.visibleGibsDatasets.subscribe (datasets) ->
         map.fire('gibs.visibledatasetschange', datasets: datasets)
-      @_gibsVisualizationSubscription = page.query.temporal().stop.date.subscribe (date) ->
-        map.fire('visualizeddatechange', date: date)
 
       $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)
 

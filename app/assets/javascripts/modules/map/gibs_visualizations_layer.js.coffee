@@ -1,24 +1,18 @@
 ns = @edsc.map
 
-ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsTileLayer=ns.L.GibsTileLayer) ->
-
-  yesterday = new Date()
-  yesterday.setDate(yesterday.getDate() - 1)
+ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=ns.L.GibsGranuleLayer) ->
 
   class GibsVisualizationsLayer
     constructor: ->
       @_datasetIdsToLayers = {}
-      @_visualizedDate = dateUtil.isoUtcDateString(yesterday)
 
     onAdd: (map) ->
       @_map = map
       map.on 'gibs.visibledatasetschange', @_onVisibleDatasetsChange
-      map.on 'visualizeddatechange', @_onVisualizedDateChange
 
     onRemove: (map) ->
       @_map = map
       map.off 'gibs.visibledatasetschange', @_onVisibleDatasetsChange
-      map.off 'visualizeddatechange', @_onVisualizedDateChange
 
     _onVisibleDatasetsChange: (e) =>
       @setVisibleDatasets(e.datasets)
@@ -43,7 +37,7 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsTileLayer=ns.L
         if datasetIdsToLayers[id]?
           layer = datasetIdsToLayers[id]
         else
-          layer = new GibsTileLayer(L.extend({}, params, time: @_visualizedDate))
+          layer = new GibsGranuleLayer(dataset.granulesModel, params)
           map.addLayer(layer)
         layer.setZIndex(z)
 
@@ -56,11 +50,5 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsTileLayer=ns.L
       @_datasetIdsToLayers = newDatasetIdsToLayers
 
       null
-
-    _onVisualizedDateChange: (e) =>
-      @_visualizedDate = date = dateUtil.isoUtcDateString(e.date || yesterday)
-
-      for own id, layer of @_datasetIdsToLayers
-        layer.updateOptions(time: date)
 
   exports = GibsVisualizationsLayer

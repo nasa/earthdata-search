@@ -16,6 +16,7 @@
 //= require modules/map/leaflet-plugins/polar_rectangle
 //= require modules/map/leaflet-plugins/draw_toolbar
 //= require modules/map/leaflet-plugins/shapefile_layer
+//= require modules/map/leaflet-plugins/gibs_granule_layer
 //= require modules/map/layer_builder
 //= require modules/map/spatial_selection
 //= require modules/map/gibs_visualizations_layer
