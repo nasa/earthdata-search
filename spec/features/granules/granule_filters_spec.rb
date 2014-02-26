@@ -33,6 +33,7 @@ describe "Granule search filters", reset: false do
 
   context "when choosing a day/night flag" do
     after :each do
+      first_project_dataset.click_link "Filter granules"
       click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
@@ -55,6 +56,7 @@ describe "Granule search filters", reset: false do
 
   context "when choosing cloud cover" do
     after :each do
+      first_project_dataset.click_link "Filter granules"
       click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
@@ -76,6 +78,10 @@ describe "Granule search filters", reset: false do
     end
 
     context "validates input" do
+      after :each do
+        first_project_dataset.click_link "Filter granules"
+      end
+
       it "minimum must be more than 0.0" do
         fill_in "Minimum", with: "-1.0"
         fill_in "Maximum", with: ""
@@ -101,6 +107,7 @@ describe "Granule search filters", reset: false do
 
   context "when choosing data access options" do
     after :each do
+      first_project_dataset.click_link "Filter granules"
       click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
@@ -118,6 +125,7 @@ describe "Granule search filters", reset: false do
 
   context "when searching by granule id" do
     after :each do
+      first_project_dataset.click_link "Filter granules"
       click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
@@ -132,10 +140,6 @@ describe "Granule search filters", reset: false do
     context "with granule id textarea" do
       before :each do
         click_link "Search Multiple"
-      end
-
-      after :each do
-        click_link "Search One"
       end
 
       it "selecting Granule UR filters granules" do
