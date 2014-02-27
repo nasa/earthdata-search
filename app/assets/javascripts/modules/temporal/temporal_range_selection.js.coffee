@@ -160,6 +160,7 @@ $(document).ready ->
 
   $(document).on 'change', '#show-recurring', ->
     $('.range-slider').toggle()
+    uiModel.pending.isRecurring(this.checked)
 
   $(document).on 'click', '#temporal-recurring-submit', ->
     if updateTemporalRecurring()
