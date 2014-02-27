@@ -3,7 +3,9 @@
 # for instance, a bounding rectangle drawn in a polar projection will
 # have a curved shape despite only having 4 vertices.
 
-do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
+ns = @edsc.map.L
+
+ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
 
   # Cartesian interpolation.  Averages lat and lng
   interpolateCartesian = (ll0, ll1) ->
@@ -70,14 +72,14 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
         depth1 += 1
 
     if maxDepthReached
-      console.warn("Max interpolation depth reach.  Interpolated shape has #{interpolatedPoints.length} points.")
+      console.warn("Max interpolation depth reached.  Interpolated shape has #{interpolatedPoints.length} points.")
 
     interpolatedPoints
 
-  # Overrides the default projectLatLngs in Polyline and Polygon to project and interpolate the
-  # path instead of just projecting it
-  projectLatlngs = ->
-    map = @_map
+  projectPath = (map, latlngs, holes=[], fn='geodetic', tolerance=1, maxDepth=10) ->
+    fn = interpolateGeodetic if fn == 'geodetic'
+    fn = interpolateCartesian if fn == 'cartesian'
+
     proj = (ll) ->
       # Avoid weird precision problems near infinity by clamping to a high min/max pixel value
       MAX_RES = 100000
@@ -91,9 +93,17 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
       result.y = Math.max(Math.min(result.y, MAX_RES), -MAX_RES)
       result
 
-    fn = @_interpolationFn
-    @_originalPoints = projectLatLngPath(@_latlngs, proj, fn)
-    @_holePoints = (projectLatLngPath(hole, proj, fn) for hole in @_holes ? [])
+    result =
+      boundary: projectLatLngPath(latlngs, proj, fn, tolerance, maxDepth)
+      holes: (projectLatLngPath(hole, proj, fn, tolernace, maxDepth) for hole in holes ? [])
+
+
+  # Overrides the default projectLatLngs in Polyline and Polygon to project and interpolate the
+  # path instead of just projecting it
+  projectLatlngs = ->
+    interpolated = interpolate(@_map, @_latlngs, @_holes, @_interpolationFn)
+    @_originalPoints = interpolated.boundary
+    @_holePoints = interpolated.holes
 
   # Override methods
   L.Polyline.prototype.projectLatlngs = projectLatlngs
@@ -102,3 +112,6 @@ do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
   # Give shapes an appropriate interpolation function.  Polygons use geodetic, rectangles cartesian
   L.Polyline.prototype._interpolationFn = interpolateGeodetic
   L.Rectangle.prototype._interpolationFn = interpolateCartesian
+
+  exports =
+    projectPath: projectPath

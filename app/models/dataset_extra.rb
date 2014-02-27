@@ -85,6 +85,18 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def decorate_gibs_layers(dataset)
+    if !Rails.env.production? && dataset[:id] == 'C186802637-LAADS'
+      # DELETE ME BEFORE GOING TO PRODUCTION
+      # Fake GIBS visualization for demonstrating compositing
+      dataset[:gibs] = {
+        name: 'Corrected Reflectance (True Color)',
+        source: 'Terra / MODIS',
+        product: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+        resolution: '250m',
+        format: 'jpeg'
+      }
+    end
+
     if dataset[:id] == 'C1000000016-LANCEMODIS'
       dataset[:gibs] = {
         product: 'MODIS_Terra_Snow_Cover',

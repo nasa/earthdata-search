@@ -1,6 +1,7 @@
 ns = @edsc.map
 
 ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=ns.L.GibsGranuleLayer) ->
+  MIN_PAGE_SIZE = 200
 
   class GibsVisualizationsLayer
     constructor: ->
@@ -23,8 +24,8 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=n
       datasetIdsToLayers = @_datasetIdsToLayers
       newDatasetIdsToLayers = {}
 
-      baseZ = 1
-      overlayZ = 11
+      baseZ = 6
+      overlayZ = 16
 
       for dataset in datasets
         id = dataset.id()
@@ -37,8 +38,19 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=n
         if datasetIdsToLayers[id]?
           layer = datasetIdsToLayers[id]
         else
-          layer = new GibsGranuleLayer(dataset.granulesModel, params)
+          # Ensure enough granules are loaded.  Once we have granule list views, we may
+          # want this to use a separate model instance so that we can set different desired
+          # page sizes and sort orders.  For now, that has very undesirable performance
+          # implications (running 2 granule queries when we really only need one), so we
+          # should wait for faster searches from the CMR before considering a change.
+          #
+          # Note: our algorithms rely on sort order being [-end_date, -start_date]
+          granules = dataset.granulesModel
+          pageSize = Math.max(MIN_PAGE_SIZE, granules.query.pageSize())
+          granules.query.pageSize(pageSize)
+          layer = new GibsGranuleLayer(granules, params)
           map.addLayer(layer)
+
         layer.setZIndex(z)
 
         newDatasetIdsToLayers[id] = layer

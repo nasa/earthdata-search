@@ -19,19 +19,19 @@ describe "Map Granule information", reset: false do
   end
 
   context 'when viewing dataset results' do
-    context 'hovering on the map' do
-      before :all do
-        map_mousemove()
-      end
+    #context 'hovering on the map' do
+    #  before :all do
+    #    map_mousemove()
+    #  end
 
-      after :all do
-        map_mouseout()
-      end
+    #  after :all do
+    #    map_mouseout()
+    #  end
 
-      it 'displays no tooltip' do
-        expect(page).to have_no_content('Granules at this location')
-      end
-    end
+    #  it 'displays no tooltip' do
+    #    expect(page).to have_no_content('Granules at this location')
+    #  end
+    #end
 
     context 'clicking on the map' do
       before :all do
@@ -56,33 +56,33 @@ describe "Map Granule information", reset: false do
     end
 
     context 'with a dataset selected' do
-      context 'hovering on the map' do
-        before :all do
-          map_mousemove()
-        end
+      #context 'hovering on the map' do
+      #  before :all do
+      #    map_mousemove()
+      #  end
 
-        after :all do
-          map_mouseout()
-        end
+      #  after :all do
+      #    map_mouseout()
+      #  end
 
-        it 'displays a tooltip containing granule counts under the point' do
-          expect(page).to have_content('0 Granules at this location')
-        end
+      #  it 'displays a tooltip containing granule counts under the point' do
+      #    expect(page).to have_content('0 Granules at this location')
+      #  end
 
-        context 'and moving the mouse again' do
-          before :all do
-            map_mousemove('#map', 39.1, -96.6, 50, 50)
-          end
+      #  context 'and moving the mouse again' do
+      #    before :all do
+      #      map_mousemove('#map', 39.1, -96.6, 50, 50)
+      #    end
 
-          after :all do
-            map_mousemove()
-          end
+      #    after :all do
+      #      map_mousemove()
+      #    end
 
-          it 'updates the granule count tooltip' do
-            expect(page).to have_content('39 Granules at this location')
-          end
-        end
-      end
+      #    it 'updates the granule count tooltip' do
+      #      expect(page).to have_content('39 Granules at this location')
+      #    end
+      #  end
+      #end
 
       context 'clicking on the map' do
         before :all do
@@ -115,18 +115,18 @@ describe "Map Granule information", reset: false do
         end
       end
 
-      context 'hovering on the map toolbar' do
-        before :all do
-          map_mousemove('a.leaflet-draw-draw-marker')
-        end
+      #context 'hovering on the map toolbar' do
+      #  before :all do
+      #    map_mousemove('a.leaflet-draw-draw-marker')
+      #  end
 
-        after :all do
-          map_mouseout()
-        end
+      #  after :all do
+      #    map_mouseout()
+      #  end
 
-        it 'displays no tooltip' do
-          expect(page).to have_no_content('Granules at this location')
-        end
+      #  it 'displays no tooltip' do
+      #    expect(page).to have_no_content('Granules at this location')
+      #  end
       end
     end
 
@@ -139,18 +139,18 @@ describe "Map Granule information", reset: false do
         first_project_dataset.click
       end
 
-      context 'hovering on the map' do
-        before :all do
-          map_mousemove()
-        end
+      #context 'hovering on the map' do
+      #  before :all do
+      #    map_mousemove()
+      #  end
 
-        after :all do
-          map_mouseout()
-        end
+      #  after :all do
+      #    map_mouseout()
+      #  end
 
-        it 'displays no tooltip' do
-          expect(page).to have_no_content('Granules at this location')
-        end
+      #  it 'displays no tooltip' do
+      #    expect(page).to have_no_content('Granules at this location')
+      #  end
       end
 
       context 'clicking on the map' do

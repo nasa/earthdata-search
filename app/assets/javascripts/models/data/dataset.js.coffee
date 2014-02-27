@@ -14,7 +14,7 @@ ns.Dataset = do (ko
   class Dataset extends KnockoutModel
     constructor: (jsonData, @query) ->
       @granuleQuery = @disposable(new QueryModel('echo_collection_id': jsonData.id))
-      @granuleQuery.sortKey(['-end_date', '-start_date'])
+      @granuleQuery.sortKey(['-start_date'])
       @granulesModel = granulesModel = @disposable(new Granules(@granuleQuery, @query))
       @granuleAccessOptions = @asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
 

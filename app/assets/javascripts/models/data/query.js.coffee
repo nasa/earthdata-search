@@ -28,6 +28,7 @@ ns.Query = do (ko,
       @online_only = ko.observable(false)
 
       @sortKey = ko.observable(null)
+      @pageSize = ko.observable(20)
 
       @validQuery = ko.observable(true)
 
@@ -111,7 +112,7 @@ ns.Query = do (ko,
       params.sort_key = @sortKey() if @sortKey()?
 
       # For testing GIBS visualizations
-      params.echo_collection_id = ['C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS']
+      #params.echo_collection_id = ['C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS', 'C186802637-LAADS']
 
       day_night_flag = @day_night_flag()
       params.day_night_flag = day_night_flag if day_night_flag?.length > 0
@@ -128,7 +129,7 @@ ns.Query = do (ko,
       online_only = @online_only()
       params.online_only = true if online_only
 
-      params.page_size = 20
+      params.page_size = @pageSize()
 
       params
 
