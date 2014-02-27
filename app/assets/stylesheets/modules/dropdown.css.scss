@@ -9,13 +9,16 @@
   position: relative;
 
   .dropdown-menu {
-    z-index: 1000;
+    z-index: 10;
+    margin: 1px 0 0 0;
+    border: none;
+    border-top-left-radius: 0;
   }
 }
 
 .dropdown-menu {
-  background-color: rgba(20,20,20,.9);
-  
+  @include linear-gradient($button-dark-bottom-gradient, #264463);
+
   a.dropdown-link:hover {
     background: #333;
   }
@@ -26,16 +29,7 @@
 }
 
 .temporal-dropdown {
-  width: 350px;
-
-  input[type="text"] {
-    width: 80px;
-    min-width: inherit;
-  }
-  
-  label {
-    min-width: 40px;
-  }
+  width: 380px;
 }
 
 .xdsoft_datetimepicker, .xdsoft_timepicker {
@@ -60,74 +54,41 @@ input.day-of-year-input {
   color: red;
 }
 
-// Override default Bootstrap tab CSS
-.nav-tabs {
-  border-color: #000;
-  margin: 15px 15px 0 15px;
-
-  a {
-    background: none;
-    color: #999;
-  }
-
-  li.active a, li.active:hover a {
-    background: #333;
-    border-color: #000;
-    border-bottom-color: #333;
-    color: #fff;
-  }
-
-  li:hover a {
-    background: #222;
-    border-color: #222;
-  }
-}
-
-.tab-content {
-  margin: 0 15px 12px 15px;
-  padding: 10px;
-  background: #333;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
+.temporal-filter {
+  margin: 0;
+  padding: 15px;
   clear: both;
 
   label {
-    display: inline-block;
     font-weight: bold;
-    width: 60px;
   }
 
-  input[type="text"] {
+  .datetime-field {
     display: inline-block;
-    width: 160px;
-    margin: 0;
+    margin: 0 0 5px 0;
+
+    input[type="text"] {
+      margin: 0 5px 0 0;
+      width: 165px;
+  }
   }
 }
 
 // Override default Slider CSS
 .range-slider {
-  margin-top: 10px;
+  margin: 10px 0 0 0;
+  display: none;
 
-  #temporal-slider {
-    display: none;
+  .slider.slider-horizontal input {
+    width: 310px;
   }
 
-  input {
-    width: 210px;
+  .slider.slider-horizontal .slider-track {
   }
-}
-
-.slider {
-  width: 110px;
-}
-
-.slider.slider-horizontal {
-  width: 110px;
 }
 
 .user-info {
-  
+
   .dropdown-button i {
     background: #315880;
     padding: 5px 7px;

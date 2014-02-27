@@ -158,6 +158,9 @@ $(document).ready ->
     else
       false
 
+  $(document).on 'change', '#show-recurring', ->
+    $('.range-slider').toggle()
+
   $(document).on 'click', '#temporal-recurring-submit', ->
     if updateTemporalRecurring()
       $(this).parents('.dropdown').removeClass('open')
