@@ -101,7 +101,7 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate)
   # Overrides the default projectLatLngs in Polyline and Polygon to project and interpolate the
   # path instead of just projecting it
   projectLatlngs = ->
-    interpolated = interpolate(@_map, @_latlngs, @_holes, @_interpolationFn)
+    interpolated = projectPath(@_map, @_latlngs, @_holes, @_interpolationFn)
     @_originalPoints = interpolated.boundary
     @_holePoints = interpolated.holes
 
