@@ -24,6 +24,11 @@
     background: #aaa;
     border: 1px solid #888;
   }
+
+  &.button-highlighted {
+    box-shadow: 0 0 5px #3498db;
+    border-color: #3498db;
+  }
 }
 
 @mixin dark-button {
@@ -94,4 +99,8 @@ a.text-button {
 
 button {
   @include dark-button;
+}
+
+.btn-group {
+  min-height: 3em;
 }

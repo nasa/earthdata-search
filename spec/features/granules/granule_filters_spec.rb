@@ -33,7 +33,8 @@ describe "Granule search filters", reset: false do
 
   context "when choosing a day/night flag" do
     after :each do
-      select 'Anytime', from: "day-night-select"
+      first_project_dataset.click_link "Filter granules"
+      click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
 
@@ -55,8 +56,8 @@ describe "Granule search filters", reset: false do
 
   context "when choosing cloud cover" do
     after :each do
-      script = "edsc.page.project.datasets()[0].granuleQuery.cloud_cover_min('');edsc.page.project.datasets()[0].granuleQuery.cloud_cover_max('')"
-      page.evaluate_script script
+      first_project_dataset.click_link "Filter granules"
+      click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
 
@@ -77,6 +78,10 @@ describe "Granule search filters", reset: false do
     end
 
     context "validates input" do
+      after :each do
+        first_project_dataset.click_link "Filter granules"
+      end
+
       it "minimum must be more than 0.0" do
         fill_in "Minimum", with: "-1.0"
         fill_in "Maximum", with: ""
@@ -102,9 +107,9 @@ describe "Granule search filters", reset: false do
 
   context "when choosing data access options" do
     after :each do
-      uncheck "Find only granules that have browse images."
-      uncheck "Find only granules that are available online."
-      expect(page).to have_content(before_granule_count.to_s + ' Granules')
+      first_project_dataset.click_link "Filter granules"
+      click_button "granule-filters-clear"
+      expect(page).to reset_granules_to(before_granule_count)
     end
 
     it "selecting browse only loads granules with browse images" do
@@ -115,6 +120,39 @@ describe "Granule search filters", reset: false do
     it "selecting online only loads downloadable granules" do
       check "Find only granules that are available online."
       expect(page).to filter_granules_from(before_granule_count)
+    end
+  end
+
+  context "when searching by granule id" do
+    after :each do
+      first_project_dataset.click_link "Filter granules"
+      click_button "granule-filters-clear"
+      expect(page).to reset_granules_to(before_granule_count)
+    end
+
+    context "with single granule id field" do
+      it "selecting Granule ID filters granules" do
+        fill_in "granule_id", with: "%2006227720%"
+        expect(page).to filter_granules_from(before_granule_count)
+      end
+    end
+
+    context "with granule id textarea" do
+      before :each do
+        click_link "Search Multiple"
+      end
+
+      it "selecting Granule UR filters granules" do
+        choose "Search by Granule UR"
+        fill_in "granule_id_field", with: "%2006227720%"
+        expect(page).to filter_granules_from(before_granule_count)
+      end
+
+      it "selecting Local Granule ID filters granules" do
+        choose "Search by Local Granule ID"
+        fill_in "granule_id_field", with: "%03232002054831%"
+        expect(page).to filter_granules_from(before_granule_count)
+      end
     end
   end
 end

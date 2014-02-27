@@ -96,6 +96,11 @@ ns.Dataset = do (ko
     _granuleParams: (params) ->
       extend({}, params, 'echo_collection_id[]': @id(), @granuleQuery.params())
 
+    granuleFiltersApplied: ->
+      # granuleQuery.params() will have echo_collection_id and page_size by default
+      params = @granuleQuery.params()
+      Object.keys(params).length > 2
+
     serialize: ->
       result = {id: @id(), dataset_id: @dataset_id()}
       if @has_granules()

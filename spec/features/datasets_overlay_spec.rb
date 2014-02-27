@@ -15,7 +15,7 @@ describe 'Datasets overlay', :reset => false do
     expect(page).to have_visible_dataset_results
     expect(page).to_not have_visible_dataset_details
 
-    first_dataset_result.click
+    first_dataset_result.click_link "View details"
 
     expect(page).to_not have_visible_dataset_results
     expect(page).to have_visible_dataset_details
@@ -30,7 +30,7 @@ describe 'Datasets overlay', :reset => false do
     end
 
     it "shows dataset details when clicking on a dataset" do
-      first_dataset_result.click
+      first_dataset_result.click_link "View details"
       expect(page).to have_visible_dataset_details
     end
   end

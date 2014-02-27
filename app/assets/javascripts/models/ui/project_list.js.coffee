@@ -66,4 +66,7 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
     isSelected: (dataset) =>
       dataset.id() == @project.selectedDatasetId()
 
+    hideFilters: =>
+      @project.searchGranulesDataset(null)
+
   exports = ProjectList
