@@ -17,10 +17,10 @@
 }
 
 .dropdown-menu {
-  @include linear-gradient($button-dark-bottom-gradient, #264463);
+  @include linear-gradient($button-dark-bottom-gradient, $dropdown-highlight);
 
   a.dropdown-link:hover {
-    background: #333;
+    background: $dropdown-highlight;
   }
 
   > li > a.dropdown-link:hover {
@@ -94,4 +94,10 @@ input.day-of-year-input {
     padding: 5px 7px;
     border-radius: 30px;
   }
+}
+
+.temporal-recurring-year-range-value {
+  display: block;
+  color: #fff;
+  clear: both;
 }
