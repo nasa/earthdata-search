@@ -61,6 +61,7 @@ input.day-of-year-input {
 
   label {
     font-weight: bold;
+    min-width: inherit;
   }
 
   .datetime-field {
@@ -76,11 +77,11 @@ input.day-of-year-input {
 
 // Override default Slider CSS
 .range-slider {
-  margin: 10px 0 0 0;
+  margin: 10px 0 20px 0;
   display: none;
 
   .slider.slider-horizontal input {
-    width: 310px;
+    width: 330px;
   }
 
   .slider.slider-horizontal .slider-track {
@@ -94,10 +95,4 @@ input.day-of-year-input {
     padding: 5px 7px;
     border-radius: 30px;
   }
-}
-
-.temporal-recurring-year-range-value {
-  display: block;
-  color: #fff;
-  clear: both;
 }

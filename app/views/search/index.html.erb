@@ -95,10 +95,8 @@
               <input type="checkbox" id="show-recurring"> <label for="show-recurring">Recurring?</label>
             </div>
             <div class="range-slider hidden">
-                <label for="temporal-slider">Date Range</label><br />
+              <label for="temporal-slider">Date Range:</label> <span data-bind="text: ui.temporal.pending.yearsString" class="temporal-recurring-year-range-value"></span><br />
               <input id="temporal-slider" class="temporal-recurring-year-range" type="text">
-              <p><span data-bind="text: ui.temporal.pending.yearsString" class="temporal-recurring-year-range-value"></span></p>
-
             </div>
             <div class="temporal-error">Start must be no later than End</div>
             <div class="button-row">
