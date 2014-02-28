@@ -194,3 +194,4 @@ $(document).ready ->
 
   $('.temporal').on 'change paste keyup', ->
     validateTemporalInputs()
+    event.stopPropagation()

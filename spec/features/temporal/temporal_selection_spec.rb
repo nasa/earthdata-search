@@ -7,6 +7,26 @@ def close_datetimepicker
   page.find(".xdsoft_time.xdsoft_current").click
 end
 
+def js_click_temporal
+  script = "$('.temporal-dropdown-button').click()"
+  page.execute_script script
+end
+
+def js_click_apply
+  script = "$('#temporal-submit').click()"
+  page.execute_script script
+end
+
+def js_click_clear
+  script = "$('#temporal-clear').click()"
+  page.execute_script script
+end
+
+def js_check_recurring
+  script = "$('#show-recurring').click()"
+  page.execute_script script
+end
+
 describe "Temporal" do
   before :each do
     visit "/search"
@@ -21,7 +41,7 @@ describe "Temporal" do
       click_link "Temporal"
       fill_in "Start", with: "2013-12-01 00:00:00"
       close_datetimepicker
-      click_button "Apply Filter"
+      js_click_apply
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
@@ -32,7 +52,7 @@ describe "Temporal" do
       click_link "Temporal"
       fill_in "End", with: "1970-12-01 00:00:00"
       close_datetimepicker
-      click_button "Apply Filter"
+      js_click_apply
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
@@ -45,7 +65,7 @@ describe "Temporal" do
       close_datetimepicker
       fill_in "End", with: "1975-12-01 00:00:00"
       close_datetimepicker
-      click_button "Apply Filter"
+      js_click_apply
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2000 Pilot Environmental Sustainability Index")
@@ -60,7 +80,7 @@ describe "Temporal" do
       close_datetimepicker
       fill_in "End", with: "1979-12-01 00:00:00"
       close_datetimepicker
-      click_button "Apply Filter"
+      js_click_apply
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
@@ -68,13 +88,9 @@ describe "Temporal" do
       expect(page).to have_content("Start 1978-12-01 00:00:00")
       expect(page).to have_content("Stop 1979-12-01 00:00:00")
 
-      click_link "Temporal"
-      # I can't just click the Clear button
-      fill_in "End", with: "1979-12-01 00:00:00"
-      close_datetimepicker
-      # until now
-      page.find_by_id("temporal-clear").click
-      click_button "Apply Filter"
+      js_click_temporal
+      js_click_clear
+      js_click_apply
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2001 Environmental Sustainability Index (ESI)")
@@ -89,7 +105,7 @@ describe "Temporal" do
       close_datetimepicker
       fill_in "End", with: "1979-12-01 00:00:00"
       close_datetimepicker
-      click_button "Apply Filter"
+      js_click_apply
 
       expect(page).to have_content("Start must be no later than End")
     end
@@ -99,10 +115,10 @@ describe "Temporal" do
       fill_in "Start", with: "2014-01-01 00:00:00" # clicking doesn't work the first time
       fill_in "Day of Year:", with: "1978-335"
       click_button "Set"
-      page.find_by_id("temporal-range-stop").click
+      fill_in "End", with: "2014-01-01 00:00:00"
       fill_in "Day of Year:", with: "1979-335"
       click_button "Set"
-      click_button "Apply Filter"
+      js_click_apply
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
@@ -116,19 +132,14 @@ describe "Temporal" do
   context "recurring range selection" do
     it "allows the user to search by recurring date time range" do
       click_link "Temporal"
-
-      # wont let me check recurring yet
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-
-      check "Recurring?"
+      js_check_recurring
       fill_in "Start", with: "12-01 00:00:00"
       close_datetimepicker
       fill_in "End", with: "12-31 00:00:00"
       close_datetimepicker
       script = "edsc.page.ui.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
-      click_button "Apply Filter"
+      js_click_apply
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
@@ -139,19 +150,14 @@ describe "Temporal" do
 
     it "allows the user to clear the recurring date time search" do
       click_link "Temporal"
-      
-      # wont let me check recurring yet
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-
-      check "Recurring?"
+      js_check_recurring
       fill_in "Start", with: "12-01 00:00:00"
       close_datetimepicker
       fill_in "End", with: "12-31 00:00:00"
       close_datetimepicker
       script = "edsc.page.ui.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
-      click_button "Apply Filter"
+      js_click_apply
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
@@ -159,12 +165,9 @@ describe "Temporal" do
       expect(page).to have_content("Stop 12-31 00:00:00")
       expect(page).to have_content("Range 1970 - 1975")
 
-      click_link "Temporal"
-      # wont let me click yet
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-      page.find_by_id("temporal-clear").click
-      click_button "Apply Filter"
+      js_click_temporal
+      js_click_clear
+      js_click_apply
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("Amazon River Basin Precipitation, 1972-1992")
@@ -175,29 +178,18 @@ describe "Temporal" do
 
     it "validates incorrect user input" do
       click_link "Temporal"
-      
-      # wont let me check recurring yet
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-
-      check "Recurring?"
+      js_check_recurring
       fill_in "Start", with: "12-10 00:00:00"
       close_datetimepicker
       fill_in "End", with: "12-01 00:00:00"
       close_datetimepicker
-      click_button "Apply Filter"
 
       expect(page).to have_content("Start must be no later than End")
     end
 
     it "validates both start and end are present" do
       click_link "Temporal"
-      
-      # wont let me check recurring yet
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-
-      check "Recurring?"
+      js_check_recurring
       fill_in "Start", with: "12-10 00:00:00"
       close_datetimepicker
 
