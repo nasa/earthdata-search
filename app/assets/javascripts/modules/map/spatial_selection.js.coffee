@@ -24,11 +24,10 @@ ns.SpatialSelection = do (window,
       @_colorOptions = colorOptions =
         color: normalColor
         dashArray: null
-        clickable: false
+        pointerEvents: 'stroke'
       @_errorOptions = errorOptions =
         color: errorColor
         dashArray: null
-        clickable: false
       selectedOptions =
         dashArray: '10, 10'
 
@@ -59,6 +58,8 @@ ns.SpatialSelection = do (window,
 
       map.on 'draw:drawstart', @_onDrawStart
       map.on 'draw:drawstop', @_onDrawStop
+      map.on 'draw:editstart', @_onEditStart
+      map.on 'draw:editend', @_onEditEnd
       map.on 'draw:created', @_onDrawCreated
       map.on 'draw:edited', @_onDrawEdited
       map.on 'draw:deleted', @_onDrawDeleted
@@ -86,6 +87,8 @@ ns.SpatialSelection = do (window,
       @_spatialErrorSubscription.dispose()
       map.off 'draw:drawstart', @_onDrawStart
       map.off 'draw:drawstop', @_onDrawStop
+      map.off 'draw:editstart', @_onEditStart
+      map.off 'draw:editend', @_onEditEnd
       map.off 'draw:created', @_onDrawCreated
       map.off 'draw:edited', @_onDrawEdited
       map.off 'draw:deleted', @_onDrawDeleted
@@ -139,6 +142,11 @@ ns.SpatialSelection = do (window,
         @_oldLayer = null
         @_drawnItems.addLayer(@_layer)
 
+    _onEditStart: (e) =>
+      @_layer?._path?.setAttribute?('pointer-events', 'all')
+
+    _onEditEnd: (e) =>
+      @_layer?._path?.setAttribute?('pointer-events', 'stroke')
 
     _onDrawCreated: (e) =>
       @_addLayer(e.target, e.layer, e.layerType)
