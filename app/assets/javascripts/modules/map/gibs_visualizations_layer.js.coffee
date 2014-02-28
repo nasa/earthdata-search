@@ -1,7 +1,7 @@
 ns = @edsc.map
 
 ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=ns.L.GibsGranuleLayer) ->
-  MIN_PAGE_SIZE = 200
+  MIN_PAGE_SIZE = 100
 
   class GibsVisualizationsLayer
     constructor: ->

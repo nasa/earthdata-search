@@ -116,9 +116,6 @@ ns.Query = do (ko,
 
       params.sort_key = @sortKey() if @sortKey()?
 
-      # For testing GIBS visualizations
-      #params.echo_collection_id = ['C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS', 'C186802637-LAADS']
-
       day_night_flag = @day_night_flag()
       params.day_night_flag = day_night_flag if day_night_flag?.length > 0
 

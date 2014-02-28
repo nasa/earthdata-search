@@ -102,10 +102,11 @@ ns.GibsGranuleLayer = do (L,
       result = []
       map = @_map
       if granule.polygons?
-        for polygon in granule.polygons when polygon.length > 0
-          interiors = dividePolygon(@_parsePolygon(polygon[0])).interiors
+        for polygonStr in granule.polygons when polygonStr.length > 0
+          polygon = @_parsePolygon(polygonStr[0])
+          divided = dividePolygon(polygon)
 
-          for interior in interiors when tileBounds.intersects(interior)
+          for interior in divided.interiors when tileBounds.intersects(interior)
             result.push(projectPath(map, interior, [], 'geodetic', 2, 5).boundary)
 
       result
@@ -185,7 +186,7 @@ ns.GibsGranuleLayer = do (L,
       drawnPaths = []
       maskedPaths = []
 
-      for granule in @_results
+      for granule, i in @_results
         start = granule.time_start?.substring(0, 10)
 
         # Note: GIBS is currently ambiguous about which day to use
