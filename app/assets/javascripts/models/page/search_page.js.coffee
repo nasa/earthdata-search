@@ -31,7 +31,7 @@ ns.SearchPage = do (ko,
       @query = new QueryModel()
 
       # For testing GIBS Visualizations
-      @query = new QueryModel(echo_collection_id: ['C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS', 'C90757596-LAADS'])
+      #@query = new QueryModel(echo_collection_id: ['C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS', 'C90757596-LAADS'])
 
       @user = new UserModel()
       @datasets = new DatasetsModel(@query)
