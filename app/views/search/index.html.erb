@@ -257,6 +257,10 @@
       <p class="busy">Loading granules...</p>
       <!-- /ko -->
       <!-- ko if: granules().isLoaded() && granules().results().length > 0 -->
+      <p class="map-popup-info">
+        <span data-bind="text: granules().hits() == 1 ? '1 Granule' : granules().hits() + ' Granules'"></span>
+        at this location
+      </p>
       <ul class="map-popup-pane map-popup-pane-x" data-bind="event: {scroll: scrolled}">
         <!-- ko foreach: granules().results() -->
         <li class="map-popup-pane-item">
