@@ -6,5 +6,8 @@ do ($=jQuery) ->
     event.preventDefault() if $(event.target).hasClass('dropdown-persistent')
 
   # TODO: Remove this after the bootstrap update mentioned in the previous handler
-  $(document).on 'click', '.dropdown-button', (event) ->
-    $('.dropdown.open').not($(this).closest('.dropdown')).removeClass('open')
+  # $(document).on 'click', '.dropdown-button', (event) ->
+  #   $('.dropdown.open').not($(this).closest('.dropdown')).removeClass('open')
+
+	$(document).on 'click', 'div.temporal-filter, input.temporal-start, input.temporal-stop, td.xdsoft_date, span.month, th.next, th.prev, th.switch, span.year', (event) ->
+		event.stopPropagation()
