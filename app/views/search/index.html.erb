@@ -33,7 +33,8 @@
         </ul>
         -->
         <div class="temporal-filter">
-          <div id="temporal-date-range" class="tab-pane active">
+          <div data-bind="visible: !ui.temporal.pending.isRecurring()" id="temporal-date-range" class="tab-pane active">
+
             <div class="datetime-field" id="temporal_start_button">
               <label for="temporal-range-start">Start</label><br />
               <input data-bind="value: ui.temporal.pending.start.humanDateString"
@@ -55,6 +56,7 @@
                       class="button temporal-clear low-priority" type="button">Clear</button> -->
             </div>
             <div class="temporal-error">Start must be no later than End</div>
+
             <!--
             <div class="button-row">
               <button id="temporal-range-submit"
@@ -66,47 +68,50 @@
             </div>
             -->
           </div>
-          <div id="temporal-recurring" class="tab-pane">
-            <!--
+          <div data-bind="visible: ui.temporal.pending.isRecurring()" id="temporal-recurring" class="tab-pane">
+
+
             <div class="datetime-field" id="temporal_start_button">
-              <label for="temporal-recurring-start">Start</label>
+              <label for="temporal-recurring-start">Start</label><br />
               <input data-bind="value: ui.temporal.pending.start.humanDateString"
                      id="temporal-recurring-start"
                      class="temporal temporal-recurring-picker temporal-start temporal-recurring-start"
                      type="text" placeholder="MM-DD HH:MM:SS"/>
-              <button data-bind="click: ui.temporal.pending.start.clear"
+              <!-- <button data-bind="click: ui.temporal.pending.start.clear"
                       id="clear_temporal_start"
                       class="button temporal-clear low-priority"
-                      type="button">Clear</button>
+                      type="button">Clear</button> -->
             </div>
             <div class="datetime-field" id="temporal_end_button">
-              <label for="temporal-recurring-stop">End</label>
+              <label for="temporal-recurring-stop">End</label><br />
               <input data-bind="value: ui.temporal.pending.stop.humanDateString"
                      id="temporal-recurring-stop"
                      class="temporal temporal-recurring-picker temporal-stop temporal-recurring-stop"
                      type="text" placeholder="MM-DD HH:MM:SS"/>
-              <button data-bind="click: ui.temporal.pending.stop.clear"
+              <!-- <button data-bind="click: ui.temporal.pending.stop.clear"
                       id="clear_temporal_stop"
                       class="button temporal-clear low-priority"
-                      type="button">Clear</button>
-            </div>
-            -->
-            <div>
-              <input type="checkbox" id="show-recurring"> <label for="show-recurring">Recurring?</label>
-            </div>
-            <div class="range-slider hidden">
-              <label for="temporal-slider">Date Range:</label> <span data-bind="text: ui.temporal.pending.yearsString" class="temporal-recurring-year-range-value"></span><br />
-              <input id="temporal-slider" class="temporal-recurring-year-range" type="text">
+                      type="button">Clear</button> -->
             </div>
             <div class="temporal-error">Start must be no later than End</div>
-            <div class="button-row">
-              <button id="temporal-recurring-submit"
-                      class="button submit"
-                      title="Apply your selections" type="button">Apply Filter</button>
-              <button id="temporal-recurring-clear" data-bind="click: ui.temporal.pending.clear"
-                      class="button temporal-clear temporal-recurring low-priority"
-                      title="Clear your selections" type="button">Clear</button>
-            </div>
+
+
+          </div>
+          <div>
+            <input type="checkbox" id="show-recurring"> <label for="show-recurring">Recurring?</label>
+          </div>
+          <div class="range-slider hidden">
+            <label for="temporal-slider">Date Range:</label> <span data-bind="text: ui.temporal.pending.yearsString" class="temporal-recurring-year-range-value"></span><br />
+            <input id="temporal-slider" class="temporal-recurring-year-range" type="text">
+          </div>
+
+          <div class="button-row">
+            <button id="temporal-submit"
+                    class="button submit"
+                    title="Apply your selections" type="button">Apply Filter</button>
+            <button id="temporal-clear" data-bind="click: ui.temporal.pending.clear"
+                    class="button temporal-clear temporal-recurring low-priority"
+                    title="Clear your selections" type="button">Clear</button>
           </div>
         </div>
       </li>

@@ -11,7 +11,7 @@ $(document).ready ->
     end_val = end.val()
 
     if start and end
-      error = $(".temporal-dropdown .tab-pane.active .temporal-error")
+      error = $(".temporal-dropdown .tab-pane:visible .temporal-error")
       error.show()
 
       if start.hasClass("temporal-recurring-start")
@@ -147,9 +147,9 @@ $(document).ready ->
     else
       false
 
-  $(document).on 'click', '#temporal-range-submit', ->
-    if updateTemporalRange()
-      $(this).parents('.dropdown').removeClass('open')
+  # $(document).on 'click', '#temporal-range-submit', ->
+  #   if updateTemporalRange()
+  #     $(this).parents('.dropdown').removeClass('open')
 
   # Submit temporal recurring search
   updateTemporalRecurring = ->
@@ -162,18 +162,23 @@ $(document).ready ->
     $('.range-slider').toggle()
     uiModel.pending.isRecurring(this.checked)
 
-  $(document).on 'click', '#temporal-recurring-submit', ->
-    if updateTemporalRecurring()
-      $(this).parents('.dropdown').removeClass('open')
+  $(document).on 'click', '#temporal-submit', ->
+    visible = $(this).parent().siblings(".tab-pane:visible")
+    if (visible.is("#temporal-date-range"))
+      if updateTemporalRange()
+        $(this).parents('.dropdown').removeClass('open')
+    else if (visible.is("#temporal-recurring"))
+      if updateTemporalRecurring()
+        $(this).parents('.dropdown').removeClass('open')
 
   $(document).on 'click', '.clear-filters.button, .temporal-clear', ->
     validateTemporalInputs()
 
-  $(document).on 'click', '.temporal-dropdown-link', ->
-    if $(this).hasClass('temporal-range')
-      updateTemporalRange()
-    else if $(this).hasClass('temporal-recurring')
-      updateTemporalRecurring()
+  # $(document).on 'click', '.temporal-dropdown-link', ->
+  #   if $(this).hasClass('temporal-range')
+  #     updateTemporalRange()
+  #   else if $(this).hasClass('temporal-recurring')
+  #     updateTemporalRecurring()
 
   $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker .xdsoft_today_button', ->
     updateMonthButtons($(this).siblings('.xdsoft_month'))
