@@ -2,6 +2,8 @@
 #         may understand the location and shape of my results
 # EDSC-88 As a user, I want to view point spatial extents on a map so that I may
 #         understand the location and shape of my results
+# EDSC-90 As a user, I want to view rectangular spatial extents on a map so that
+#         I may understand the location and shape of my results
 
 require "spec_helper"
 
@@ -66,6 +68,26 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
 
   context "for polygon datasets" do
     use_dataset 'AST_L1A', 'AST_L1A'
+
+    context "visualizing a dataset" do
+      hook_visualization
+
+      it "draws polygons on the map for granule spatial areas" do
+        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      end
+    end
+
+    context "removing a visualized dataset" do
+      hook_visualization_removal
+
+      it "hides the dataset's visualizations" do
+        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      end
+    end
+  end
+
+  context "for bounding box datasets" do
+    use_dataset 'C204200620-GSFCS4PA', 'AIRS-AMSU variables-CloudSat'
 
     context "visualizing a dataset" do
       hook_visualization

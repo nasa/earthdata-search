@@ -4,26 +4,6 @@ ns = @edsc.map
 ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns.L.GranuleLayer) ->
   MIN_PAGE_SIZE = 100
 
-  class GranuleFootprintsLayer
-    constructor: (@granules, options={}) ->
-      super(options)
-
-    onAdd: (map) ->
-      @_map = map
-      # TODO Events
-
-      @_resultsSubscription = @granules.results.subscribe(@_visualizeResults.bind(this))
-      @_visualizeResults(@granules.results())
-
-    onRemove: (map) ->
-      @_destroyLayer()
-      @_resultsSubscription.dispose()
-      @_results = null
-
-    _visualizeResults: (results) ->
-      @_createLayer()
-
-
   class GranuleVisualizationsLayer
     constructor: ->
       @_datasetIdsToLayers = {}

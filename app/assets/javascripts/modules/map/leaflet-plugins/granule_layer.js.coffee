@@ -91,22 +91,33 @@ ns.GranuleLayer = do (L,
 
       @tileDrawn() unless @options.async
 
-    _parsePolygon: (str) ->
-      latLng = L.latLng
-      coords = str.split(' ')
-      len = coords.length - 1
-      latLng(coords[i], coords[i+1]) for i in [0...len] by 2
-
     _granulePathsOverlappingTile: (granule, tileBounds) ->
       result = []
       map = @_map
-      if granule.polygons?
-        for polygonStr in granule.polygons when polygonStr.length > 0
-          polygon = @_parsePolygon(polygonStr[0])
-          divided = dividePolygon(polygon)
+      polygons = granule.getPolygons()
+      if polygons?
+        for polygon in polygons
+          divided = dividePolygon(polygon[0])
 
           for interior in divided.interiors when tileBounds.intersects(interior)
             result.push(projectPath(map, interior, [], 'geodetic', 2, 5).boundary)
+
+      rects = granule.getRectangles()
+      if rects?
+        for rect in rects
+          if rect[0].lng > rect[1].lng
+            divided = [[rect[0], L.latLng(rect[1].lat, 180)],
+                       [L.latLng(rect[0].lat, -180), rect[1]]]
+          else
+            divided = [rect]
+
+          paths = for box in divided
+            [L.latLng(box[0].lat, box[0].lng), L.latLng(box[0].lat, box[1].lng),
+             L.latLng(box[1].lat, box[1].lng), L.latLng(box[1].lat, box[0].lng),
+             L.latLng(box[0].lat, box[0].lng)]
+
+          for path in paths when tileBounds.intersects(path)
+            result.push(projectPath(map, path, [], 'cartesian', 2, 5).boundary)
 
       result
 
@@ -170,7 +181,7 @@ ns.GranuleLayer = do (L,
       ctx.restore()
 
     getTileUrl: (tilePoint, date) ->
-      L.TileLayer.prototype.getTileLayer.call(this, tilePoint) + "&time=#{date}" if @_url?
+      L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if @_url?
 
     _loadClippedImage: (canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths, retries=0) ->
       url = @getTileUrl(tilePoint, date)
