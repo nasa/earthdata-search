@@ -1,12 +1,11 @@
 ns = @edsc.map.L
 
-ns.GibsGranuleLayer = do (L,
-                          GibsTileLayer = ns.GibsTileLayer,
-                          projectPath=ns.interpolation.projectPath,
-                          dateUtil = @edsc.util.date
-                          Arc = @edsc.map.Arc
-                          dividePolygon = ns.sphericalPolygon.dividePolygon
-                          ) ->
+ns.GranuleLayer = do (L,
+                      GibsTileLayer = ns.GibsTileLayer,
+                      projectPath=ns.interpolation.projectPath,
+                      dateUtil = @edsc.util.date
+                      dividePolygon = ns.sphericalPolygon.dividePolygon
+                      ) ->
 
 
   isClockwise = (path) ->

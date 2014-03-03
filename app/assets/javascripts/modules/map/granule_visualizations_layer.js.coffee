@@ -69,7 +69,7 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLaye
           granules = dataset.granulesModel
           pageSize = Math.max(MIN_PAGE_SIZE, granules.query.pageSize())
           granules.query.pageSize(pageSize)
-          layer = new GibsGranuleLayer(granules, gibsParams)
+          layer = new GranuleLayer(granules, gibsParams)
           map.addLayer(layer)
 
         layer.setZIndex(z)
