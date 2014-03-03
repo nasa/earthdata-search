@@ -4,20 +4,16 @@
 #          support so I may understand why some datasets render differently
 
 require "spec_helper"
-require "date"
 
-describe "Dataset GIBS visualizations", :reset => false do
+describe "Dataset GIBS visualizations", reset: false, wait: 30 do
 
   gibs_dataset_id = 'C1000000019-LANCEMODIS'
-  gibs_dataset_product = 'MODIS_Terra_Aerosol'
-  yesterday = (Date.today - 1).iso8601
-  end_date = '2014-01-01 00:00:00'
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
 
   before :all do
     visit "/search"
     fill_in "keywords", with: gibs_dataset_id
-    wait_for_xhr
+    expect(page).to have_content('MOD04_L2')
   end
 
   after :all do
@@ -40,31 +36,9 @@ describe "Dataset GIBS visualizations", :reset => false do
       first_dataset_result.click_link "Hide dataset"
     end
 
-    it "displays GIBS tiles from the previous day" do
+    it "displays composite GIBS imagery corresponding to the first 200 granule results on an HTML canvas" do
       within gibs_tile_layer do
-        src = page.find('img:first-child', visible: false)['src']
-        expect(src).to match(/LAYER=#{gibs_dataset_product}/)
-        expect(src).to match(/TIME=#{yesterday}/)
-      end
-    end
-
-    context "with a temporal end date set" do
-      before :all do
-        page.evaluate_script("edsc.page.query.temporal().stop.humanDateString('#{end_date}')")
-        wait_for_xhr
-      end
-
-      after :all do
-        page.evaluate_script("edsc.page.query.temporal().stop.humanDateString(null)")
-        wait_for_xhr
-      end
-
-      it "displays GIBS tiles from the temporal end date" do
-        within gibs_tile_layer do
-          src = page.find('img:first-child', visible: false)['src']
-          expect(src).to match(/LAYER=#{gibs_dataset_product}/)
-          expect(src).to match(/TIME=#{end_date.split.first}/)
-        end
+        expect(page).to have_selector('canvas')
       end
     end
   end

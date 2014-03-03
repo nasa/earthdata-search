@@ -25,6 +25,10 @@ ns.Query = do (ko,
       @cloud_cover_max = ko.observable("")
       @browse_only = ko.observable(false)
       @online_only = ko.observable(false)
+
+      @sortKey = ko.observable(null)
+      @pageSize = ko.observable(20)
+
       @granule_ids = ko.observable("")
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
 
@@ -110,8 +114,7 @@ ns.Query = do (ko,
 
       params.placename = placename if placename?.length > 0
 
-      # For testing GIBS visualizations
-      #params.echo_collection_id = ['C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS']
+      params.sort_key = @sortKey() if @sortKey()?
 
       day_night_flag = @day_night_flag()
       params.day_night_flag = day_night_flag if day_night_flag?.length > 0
@@ -138,7 +141,7 @@ ns.Query = do (ko,
           params[param] ||= []
           params[param].push(id)
 
-      params.page_size = 20
+      params.page_size = @pageSize()
 
       params
 

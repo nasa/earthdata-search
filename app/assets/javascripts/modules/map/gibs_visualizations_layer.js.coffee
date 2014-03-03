@@ -1,24 +1,19 @@
 ns = @edsc.map
 
-ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsTileLayer=ns.L.GibsTileLayer) ->
-
-  yesterday = new Date()
-  yesterday.setDate(yesterday.getDate() - 1)
+ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=ns.L.GibsGranuleLayer) ->
+  MIN_PAGE_SIZE = 100
 
   class GibsVisualizationsLayer
     constructor: ->
       @_datasetIdsToLayers = {}
-      @_visualizedDate = dateUtil.isoUtcDateString(yesterday)
 
     onAdd: (map) ->
       @_map = map
       map.on 'gibs.visibledatasetschange', @_onVisibleDatasetsChange
-      map.on 'visualizeddatechange', @_onVisualizedDateChange
 
     onRemove: (map) ->
       @_map = map
       map.off 'gibs.visibledatasetschange', @_onVisibleDatasetsChange
-      map.off 'visualizeddatechange', @_onVisualizedDateChange
 
     _onVisibleDatasetsChange: (e) =>
       @setVisibleDatasets(e.datasets)
@@ -29,8 +24,8 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsTileLayer=ns.L
       datasetIdsToLayers = @_datasetIdsToLayers
       newDatasetIdsToLayers = {}
 
-      baseZ = 1
-      overlayZ = 11
+      baseZ = 6
+      overlayZ = 16
 
       for dataset in datasets
         id = dataset.id()
@@ -43,8 +38,19 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsTileLayer=ns.L
         if datasetIdsToLayers[id]?
           layer = datasetIdsToLayers[id]
         else
-          layer = new GibsTileLayer(L.extend({}, params, time: @_visualizedDate))
+          # Ensure enough granules are loaded.  Once we have granule list views, we may
+          # want this to use a separate model instance so that we can set different desired
+          # page sizes and sort orders.  For now, that has very undesirable performance
+          # implications (running 2 granule queries when we really only need one), so we
+          # should wait for faster searches from the CMR before considering a change.
+          #
+          # Note: our algorithms rely on sort order being [-end_date, -start_date]
+          granules = dataset.granulesModel
+          pageSize = Math.max(MIN_PAGE_SIZE, granules.query.pageSize())
+          granules.query.pageSize(pageSize)
+          layer = new GibsGranuleLayer(granules, params)
           map.addLayer(layer)
+
         layer.setZIndex(z)
 
         newDatasetIdsToLayers[id] = layer
@@ -56,11 +62,5 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsTileLayer=ns.L
       @_datasetIdsToLayers = newDatasetIdsToLayers
 
       null
-
-    _onVisualizedDateChange: (e) =>
-      @_visualizedDate = date = dateUtil.isoUtcDateString(e.date || yesterday)
-
-      for own id, layer of @_datasetIdsToLayers
-        layer.updateOptions(time: date)
 
   exports = GibsVisualizationsLayer

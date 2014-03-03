@@ -44,7 +44,7 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc) ->
       lon += 360 while lon < p1.lng - EPSILON
       lon -= 360 while lon > p2.lng + EPSILON
 
-      L.latLng(lat, lon)
+      new L.LatLng(lat, lon)
 
   # Determines the initial course direction from latlng1 setting off toward latlng2
   _course = (latlng1, latlng2) ->
