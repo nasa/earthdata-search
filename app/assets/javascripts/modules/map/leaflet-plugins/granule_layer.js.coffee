@@ -56,7 +56,7 @@ ns.GranuleLayer = do (L,
   # seems to be removed from more recent versions.
   GranuleCanvasLayer = L.TileLayer.extend
     options:
-      async: false
+      async: true
 
     setResults: (results) ->
       @_results = results
@@ -89,7 +89,7 @@ ns.GranuleLayer = do (L,
 
       @_redrawTile(tile)
 
-      @tileDrawn unless @options.async
+      @tileDrawn() unless @options.async
 
     _parsePolygon: (str) ->
       latLng = L.latLng
@@ -132,40 +132,73 @@ ns.GranuleLayer = do (L,
 
       intersects
 
+    _drawFootprint: (canvas, nwPoint, boundary, maskedPaths, drawnPaths) ->
+      colors = ['rgba(255, 0, 0, 0.5)',
+                'rgba(0, 255, 0, 0.5)',
+                'rgba(0, 0, 255, 0.5)',
+                'rgba(255, 255, 0, 0.5)',
+                'rgba(255, 0, 255, 0.5)',
+                'rgba(0, 255, 255, 0.5)',
+                'rgba(255, 255, 255, 0.5)']
+
+      ctx = canvas.getContext('2d')
+      ctx.save()
+      ctx.lineWidth = 1
+      ctx.translate(-nwPoint.x, -nwPoint.y)
+      tileSize = @options.tileSize
+      ctx.strokeStyle = 'rgba(128, 128, 128, .2)'
+      for path in drawnPaths
+        ctx.moveTo(path[0].x, path[0].y)
+        ctx.lineTo(p.x, p.y) for p in path[1...]
+        ctx.closePath()
+        ctx.stroke()
+      clipped ctx, boundary, maskedPaths, [], ->
+        for path in drawnPaths
+          ctx.beginPath()
+          ctx.moveTo(path[0].x, path[0].y)
+          ctx.lineTo(p.x, p.y) for p in path[1...]
+          ctx.closePath()
+          # For debugging clip paths
+          #ctx.fillStyle = colors[Math.abs(nwPoint.x + nwPoint.y) % colors.length]
+          #ctx.fill()
+          ctx.lineWidth = 2
+          ctx.strokeStyle = 'rgba(0, 0, 0, 1)'
+          ctx.stroke()
+          ctx.lineWidth = 1
+          ctx.strokeStyle = 'rgba(255, 255, 255, 1)'
+          ctx.stroke()
+      ctx.restore()
+
+    getTileUrl: (tilePoint, date) ->
+      L.TileLayer.prototype.getTileLayer.call(this, tilePoint) + "&time=#{date}" if @_url?
+
     _loadClippedImage: (canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths, retries=0) ->
-      #colors = ['rgba(255, 0, 0, 0.5)',
-      #          'rgba(0, 255, 0, 0.5)',
-      #          'rgba(0, 0, 255, 0.5)',
-      #          'rgba(255, 255, 0, 0.5)',
-      #          'rgba(255, 0, 255, 0.5)',
-      #          'rgba(0, 255, 255, 0.5)',
-      #          'rgba(255, 255, 255, 0.5)']
+      url = @getTileUrl(tilePoint, date)
 
-      url = @getTileUrl(tilePoint) + "&time=#{date}"
-      image = new Image()
-      image.onload = (e) =>
-        ctx = canvas.getContext('2d')
-        ctx.save()
-        ctx.translate(-nwPoint.x, -nwPoint.y)
-        clipped ctx, boundary, maskedPaths, drawnPaths, ->
-          ctx.drawImage(image, nwPoint.x, nwPoint.y)
-          #ctx.strokeStyle = colors[new Date(date) % colors.length]
-          #for path in drawnPaths
-          #  ctx.moveTo(path[0].x, path[0].y)
-          #  ctx.lineTo(p.x, p.y) for p in path[1...]
-          #  ctx.closePath()
-          #  ctx.stroke()
+      if url?
+        image = new Image()
+        image.onload = (e) =>
+          ctx = canvas.getContext('2d')
+          ctx.save()
+          ctx.translate(-nwPoint.x, -nwPoint.y)
+          clipped ctx, boundary, maskedPaths, drawnPaths, ->
+            ctx.drawImage(image, nwPoint.x, nwPoint.y)
 
-        ctx.restore()
-        @tileDrawn(canvas)
+          ctx.restore()
 
-      image.onerror = (e) =>
-        if retries == 0
-          @_loadClippedImage(canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths, 1)
-        else
-          console.error("Failed to load tile after 2 tries: #{url}")
+          for path, i in drawnPaths
+            @_drawFootprint(canvas, nwPoint, boundary, maskedPaths.concat(drawnPaths.slice(0, i)), [path])
 
-      image.src = url
+        image.onerror = (e) =>
+          if retries == 0
+            @_loadClippedImage(canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths, 1)
+          else
+            console.error("Failed to load tile after 2 tries: #{url}")
+
+        image.src = url
+      else
+        for path, i in drawnPaths
+          @_drawFootprint(canvas, nwPoint, boundary, maskedPaths.concat(drawnPaths.slice(0, i)), [path])
 
     drawTile: (canvas, tilePoint) ->
       return unless @_results? && @_results.length > 0
@@ -179,7 +212,7 @@ ns.GranuleLayer = do (L,
       bounds = new L.latLngBounds(@_map.layerPointToLatLng(nwPoint),
                                   @_map.layerPointToLatLng(sePoint))
 
-      bounds.pad(0.1)
+      #bounds.pad(0.1)
 
       date = null
       drawnPaths = []
@@ -188,16 +221,18 @@ ns.GranuleLayer = do (L,
       for granule, i in @_results
         start = granule.time_start?.substring(0, 10)
 
+        paths = @_granulePathsOverlappingTile(granule, bounds)
+
         # Note: GIBS is currently ambiguous about which day to use
         if start != date
           if drawnPaths.length > 0
             @_loadClippedImage(canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths)
 
           maskedPaths = maskedPaths.concat(drawnPaths)
-          drawnPaths = @_granulePathsOverlappingTile(granule, bounds)
+          drawnPaths = paths
           date = start
         else
-          drawnPaths = drawnPaths.concat(@_granulePathsOverlappingTile(granule, bounds))
+          drawnPaths = drawnPaths.concat(paths)
 
       if drawnPaths.length > 0
         @_loadClippedImage(canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths)
@@ -206,8 +241,7 @@ ns.GranuleLayer = do (L,
 
 
       console.log "#{maskedPaths.length} Overlapping Granules [(#{bounds.getNorth()}, #{bounds.getWest()}), (#{bounds.getSouth()}, #{bounds.getEast()})]"
-
-      return @tileDrawn(canvas) # DELETE ME
+      @tileDrawn(canvas)
 
     tileDrawn: (tile) ->
       # If we do upgrade, this will break, as well as our tile reloading calls.
@@ -234,6 +268,9 @@ ns.GranuleLayer = do (L,
       @_resultsSubscription.dispose()
       @_results = null
 
+    url: ->
+      super() if @_hasGibs
+
     _destroyFootprintsLayer: ->
       @_footprintsLayer?.onRemove(@_map)
       @_footprintsLayer = null
@@ -244,14 +281,12 @@ ns.GranuleLayer = do (L,
       @_footprintsLayer.onAdd(@_map)
 
     _buildLayerWithOptions: (newOptions) ->
-      layer = null
-      if @_hasGibs
-        # GranuleCanvasLayer needs to handle time
-        newOptions = L.extend({}, newOptions)
-        delete newOptions.time
+      # GranuleCanvasLayer needs to handle time
+      newOptions = L.extend({}, newOptions)
+      delete newOptions.time
 
-        layer = new GranuleCanvasLayer(@url(), @_toTileLayerOptions(newOptions))
-        layer.setResults(@_results)
+      layer = new GranuleCanvasLayer(@url(), @_toTileLayerOptions(newOptions))
+      layer.setResults(@_results)
       layer
 
     _loadResults: (results) ->
