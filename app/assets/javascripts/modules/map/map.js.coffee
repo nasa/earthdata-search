@@ -7,7 +7,7 @@ ns.Map = do (window,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
              LayerBuilder = ns.LayerBuilder,
              SpatialSelection = ns.SpatialSelection,
-             GibsVisualizationsLayer = ns.GibsVisualizationsLayer,
+             GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              GranulesLayer = ns.GranulesLayer,
              page = @edsc.page) ->
 
@@ -30,7 +30,7 @@ ns.Map = do (window,
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
 
       @_buildLayerSwitcher()
-      map.addLayer(new GibsVisualizationsLayer())
+      map.addLayer(new GranuleVisualizationsLayer())
       map.addLayer(new GranulesLayer())
 
       map.addControl(L.control.zoom(position: 'topright'))
@@ -39,8 +39,8 @@ ns.Map = do (window,
       @setProjection(projection)
 
       @_datasetSubscription = page.datasets.details.subscribe(@_showDatasetSpatial)
-      @_gibsVisualizationSubscription = page.datasets.visibleGibsDatasets.subscribe (datasets) ->
-        map.fire('gibs.visibledatasetschange', datasets: datasets)
+      @_granuleVisualizationSubscription = page.datasets.visibleDatasets.subscribe (datasets) ->
+        map.fire('edsc.visibledatasetschange', datasets: datasets)
 
       $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)
 
@@ -48,7 +48,7 @@ ns.Map = do (window,
     destroy: ->
       @map.remove()
       @_datasetSubscription.dispose()
-      @_gibsVisualizationSubscription.dispose()
+      @_granuleVisualizationSubscription.dispose()
       $('#dataset-results, #project-overview').off('edsc.navigate', @_hideDatasetSpatial)
 
     _createLayerMap: (productIds...) ->

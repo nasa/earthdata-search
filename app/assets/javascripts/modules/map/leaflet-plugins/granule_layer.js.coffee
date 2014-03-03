@@ -1,12 +1,11 @@
 ns = @edsc.map.L
 
-ns.GibsGranuleLayer = do (L,
-                          GibsTileLayer = ns.GibsTileLayer,
-                          projectPath=ns.interpolation.projectPath,
-                          dateUtil = @edsc.util.date
-                          Arc = @edsc.map.Arc
-                          dividePolygon = ns.sphericalPolygon.dividePolygon
-                          ) ->
+ns.GranuleLayer = do (L,
+                      GibsTileLayer = ns.GibsTileLayer,
+                      projectPath=ns.interpolation.projectPath,
+                      dateUtil = @edsc.util.date
+                      dividePolygon = ns.sphericalPolygon.dividePolygon
+                      ) ->
 
 
   isClockwise = (path) ->
@@ -215,30 +214,64 @@ ns.GibsGranuleLayer = do (L,
       # Tile loading seems to be handled via callbacks now.
       @_tileOnLoad.call(tile)
 
-  class GibsGranuleLayer extends GibsTileLayer
-    constructor: (@granules, options={}) ->
+  class GranuleLayer extends GibsTileLayer
+    constructor: (@granules, options) ->
+      @_hasGibs = options?.product?
+
       super(options)
 
     onAdd: (map) ->
       super(map)
 
-      @_resultsSubscription = @granules.results.subscribe (results) =>
-        @_results = results
-        @layer?.setResults(results)
-      @_results = @granules.results()
-      @layer?.setResults(@_results)
+      @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
+      @_loadResults(@granules.results())
 
     onRemove: (map) ->
+      @_destroyFootprintsLayer()
+
       super(map)
 
       @_resultsSubscription.dispose()
       @_results = null
 
-    _buildLayerWithOptions: (newOptions) ->
-      # GranuleCanvasLayer needs to handle time
-      newOptions = L.extend({}, newOptions)
-      delete newOptions.time
+    _destroyFootprintsLayer: ->
+      @_footprintsLayer?.onRemove(@_map)
+      @_footprintsLayer = null
 
-      layer = new GranuleCanvasLayer(@url(), @_toTileLayerOptions(newOptions))
-      layer.setResults(@_results)
+    _createFootprintsLayer: ->
+      @_destroyFootprintsLayer()
+      @_footprintsLayer = L.featureGroup()
+      @_footprintsLayer.onAdd(@_map)
+
+    _buildLayerWithOptions: (newOptions) ->
+      layer = null
+      if @_hasGibs
+        # GranuleCanvasLayer needs to handle time
+        newOptions = L.extend({}, newOptions)
+        delete newOptions.time
+
+        layer = new GranuleCanvasLayer(@url(), @_toTileLayerOptions(newOptions))
+        layer.setResults(@_results)
       layer
+
+    _loadResults: (results) ->
+      @_results = results
+      @layer?.setResults(results)
+
+      @_createFootprintsLayer()
+
+      @_visualizePoints(results)
+
+      bounds = @_footprintsLayer.getBounds()
+      if bounds.getNorthEast()?
+        @_map.fitBounds(bounds)
+
+    _visualizePoints: (granules) ->
+      footprints = @_footprintsLayer
+      added = []
+      for granule in granules
+        for point in granule.getPoints() ? []
+          pointStr = point.toString()
+          if added.indexOf(pointStr) == -1
+            added.push(pointStr)
+            footprints.addLayer(L.circleMarker(point))

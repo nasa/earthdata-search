@@ -48,15 +48,16 @@ ns.ProjectionSwitchingLayer = do (L) ->
 
       options = L.extend({}, this["#{projection}Options"], options)
       layer = @layer = @_buildLayerWithOptions(options)
-      layer.setZIndex(@zIndex ? 0)
-      layer.addTo(map)
+      if layer?
+        layer.setZIndex(@zIndex ? 0)
+        layer.addTo(map)
 
-      # Retry loading a tile once if it errors
-      layer.on 'tileerror', (e) ->
-        src = e.tile.src
-        retryCount = src.match(/&retry=(\d+)$/)
-        if !retryCount
-          e.tile.src += '&retry=1'
+        # Retry loading a tile once if it errors
+        layer.on 'tileerror', (e) ->
+          src = e.tile.src
+          retryCount = src.match(/&retry=(\d+)$/)
+          if !retryCount
+            e.tile.src += '&retry=1'
 
     # Arctic projection options
     arcticOptions:

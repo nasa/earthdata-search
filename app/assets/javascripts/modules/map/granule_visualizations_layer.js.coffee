@@ -1,19 +1,40 @@
 ns = @edsc.map
 
-ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=ns.L.GibsGranuleLayer) ->
+# Meta-layer for managing granule visualizations
+ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns.L.GranuleLayer) ->
   MIN_PAGE_SIZE = 100
 
-  class GibsVisualizationsLayer
+  class GranuleFootprintsLayer
+    constructor: (@granules, options={}) ->
+      super(options)
+
+    onAdd: (map) ->
+      @_map = map
+      # TODO Events
+
+      @_resultsSubscription = @granules.results.subscribe(@_visualizeResults.bind(this))
+      @_visualizeResults(@granules.results())
+
+    onRemove: (map) ->
+      @_destroyLayer()
+      @_resultsSubscription.dispose()
+      @_results = null
+
+    _visualizeResults: (results) ->
+      @_createLayer()
+
+
+  class GranuleVisualizationsLayer
     constructor: ->
       @_datasetIdsToLayers = {}
 
     onAdd: (map) ->
       @_map = map
-      map.on 'gibs.visibledatasetschange', @_onVisibleDatasetsChange
+      map.on 'edsc.visibledatasetschange', @_onVisibleDatasetsChange
 
     onRemove: (map) ->
       @_map = map
-      map.off 'gibs.visibledatasetschange', @_onVisibleDatasetsChange
+      map.off 'edsc.visibledatasetschange', @_onVisibleDatasetsChange
 
     _onVisibleDatasetsChange: (e) =>
       @setVisibleDatasets(e.datasets)
@@ -29,8 +50,8 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=n
 
       for dataset in datasets
         id = dataset.id()
-        params = dataset.gibs()
-        if params.format == 'jpeg'
+        gibsParams = dataset.gibs()
+        if gibsParams?.format == 'jpeg'
           z = Math.min(baseZ++, 9)
         else
           z = Math.min(overlayZ++, 19)
@@ -48,11 +69,10 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=n
           granules = dataset.granulesModel
           pageSize = Math.max(MIN_PAGE_SIZE, granules.query.pageSize())
           granules.query.pageSize(pageSize)
-          layer = new GibsGranuleLayer(granules, params)
+          layer = new GranuleLayer(granules, gibsParams)
           map.addLayer(layer)
 
         layer.setZIndex(z)
-
         newDatasetIdsToLayers[id] = layer
 
       for own id, layer of datasetIdsToLayers
@@ -63,4 +83,4 @@ ns.GibsVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=n
 
       null
 
-  exports = GibsVisualizationsLayer
+  exports = GranuleVisualizationsLayer
