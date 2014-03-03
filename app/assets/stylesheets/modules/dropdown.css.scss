@@ -50,8 +50,10 @@ input.day-of-year-input {
 }
 
 .temporal-error {
+  background: #c0392b;
+  padding: 5px;
+  margin: 2px 0 2px 0;
   display: none;
-  color: red;
 }
 
 .temporal-filter {
@@ -69,8 +71,8 @@ input.day-of-year-input {
     margin: 0 0 5px 0;
 
     input[type="text"] {
-      margin: 0 5px 0 0;
-      width: 165px;
+      margin: 0 3px 0 3px;
+      width: 166px;
   }
   }
 }
