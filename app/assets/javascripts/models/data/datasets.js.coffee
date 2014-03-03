@@ -18,7 +18,7 @@ ns.Datasets = do (ko
       @detailsLoading = ko.observable(false)
       @_visibleDatasetIds = ko.observableArray()
       @_visibleDatasets = {}
-      @visibleGibsDatasets = @computed(@_computeVisibleGibsDatasets)
+      @visibleDatasets = @computed(@_computeVisibleDatasets)
       @allDatasetsVisible = ko.observable(false)
 
     _toResults: (data) ->
@@ -54,13 +54,8 @@ ns.Datasets = do (ko
       @_visibleDatasetIds.remove(id)
       delete @_visibleDatasets[id]
 
-    _computeVisibleGibsDatasets: =>
-      result = []
-      for id in @_visibleDatasetIds()
-        dataset = @_visibleDatasets[id]
-        if dataset.gibs()?
-          result.push(dataset)
-      result
+    _computeVisibleDatasets: =>
+      @_visibleDatasets[id] for id in @_visibleDatasetIds()
 
     toggleVisibleDataset: (dataset) =>
       if @hasVisibleDataset(dataset)

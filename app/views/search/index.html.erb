@@ -269,7 +269,7 @@
             <span data-bind="text: time_end"></span>
           </p>
           <!-- ko if: browse_flag === "true" -->
-          <img class="browse-thumbnail" data-bind="attr: {src: edsc_browse_url, title: title}">
+          <img class="browse-thumbnail" data-bind="attr: {src: edsc_browse_url(), title: title}">
           <!-- /ko -->
           <!-- ko if: browse_flag !== "true" -->
           <div class="browse-thumbnail browse-thumbnail-none">

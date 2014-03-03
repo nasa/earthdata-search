@@ -7,6 +7,10 @@
 //= require toastr
 //= require history.js-1.8.6/jquery.history.js
 //= require dropzone-3.8.3
+//= require proj4
+//= require leaflet-0.7/leaflet-src
+//= require leaflet-plugins/leaflet-arc
+//= require leaflet.draw-0.2.2/leaflet.draw-src
 //= require namespaces
 //= require config
 //= require util/index

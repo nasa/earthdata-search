@@ -30,8 +30,9 @@ ns.SearchPage = do (ko,
     constructor: ->
       @query = new QueryModel()
 
-      # For testing GIBS Visualizations
-      #@query = new QueryModel(echo_collection_id: ['C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS', 'C90757596-LAADS'])
+      # For testing granule visualizations
+      #VISUALIZED_IDS = ['C1000000080-CDDIS', 'C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS', 'C90757596-LAADS']
+      #@query = new QueryModel(echo_collection_id: VISUALIZED_IDS)
 
       @user = new UserModel()
       @datasets = new DatasetsModel(@query)
