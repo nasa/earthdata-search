@@ -60,6 +60,7 @@ ns.Project = do (ko,
 
       # Force results to start being calculated
       clonedDataset.granulesModel.results()
+      clonedDataset.dqsModel.results()
 
       null
 

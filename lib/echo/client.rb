@@ -37,6 +37,15 @@ module Echo
       get("/echo-rest/tokens/#{token}/token_info.json", {}, {'Echo-Token' => token})
     end
 
+    def self.get_data_quality_summary(catalog_item_id)
+      response = get("/echo-rest/data_quality_summary_definitions", {'catalog_item_id' => catalog_item_id})
+      references = response.body["references"]
+      if references && references[0]
+        get("/echo-rest/data_quality_summary_definitions/#{references[0]["id"]}")
+      end
+      # NCR 11014478 will allow this to be only one call to echo-rest
+    end
+
     def self.get_token(username, password, client_id, ip)
       token = {
         token:

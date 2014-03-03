@@ -418,6 +418,29 @@
   </div>
 </div>
 
+<div id="dqs-modal" data-bind="showModal: ui.projectList.dataQualitySummaryModal" class="modal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
+  <!-- ko if: ui.projectList.dataQualitySummaryModal() -->
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" title="close" data-bind="click: ui.projectList.cancelDataQualitySummaryModal" aria-hidden="true" class="pull-right close"><i class="fa fa-times-circle"></i></a>
+        <h3 class="modal-title" id="myModalLabel">Data Quality Summary for <span data-bind="text: ui.projectList.dataQualitySummaryModal()[0].dataset_id"></span></h3>
+      </div>
+      <form data-bind="submit: ui.projectList.acceptDataQualitySummary">
+        <input type="hidden" data-bind="value: ui.projectList.dataQualitySummaryModal()[0].dataset_id" />
+        <div class="modal-body">
+          <div data-bind="html: ui.projectList.dataQualitySummaryModal()[1].summary">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="button-light">Accept</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /ko -->
+</div>
+
 <form id="data-access" method="POST" action="/data/configure" style="display:none;">
   <div>
     <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />

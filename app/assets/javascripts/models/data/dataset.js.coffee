@@ -1,5 +1,6 @@
 #= require models/data/granules
 #= require models/data/service_options
+#= require models/data/data_quality_summaries
 
 ns = @edsc.models.data
 
@@ -8,6 +9,7 @@ ns.Dataset = do (ko
                  Granules=ns.Granules
                  QueryModel = ns.Query
                  ServiceOptionsModel = ns.ServiceOptions
+                 DataQualitySummaryModel = ns.DataQualitySummary
                  toParam=jQuery.param
                  extend=jQuery.extend
                  ) ->
@@ -33,6 +35,8 @@ ns.Dataset = do (ko
         params = @query.params()
         paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
         "/granules/download.html?#{paramStr}"
+
+      @dqsModel = @disposable(new DataQualitySummaryModel(new QueryModel('catalog_item_id': jsonData.id)))
 
     hasAreaSpatial: ->
       @has_granules()? && !@points?

@@ -24,9 +24,17 @@
                   <i class="edsc-icon-info"></i>
                 </a>
                 <% if is_project %>
+                  <!-- ko if: dqsModel.isLoaded() && dqsModel.results().id && !dqsModel.results().accepted() -->
+                  <!-- put up a new icon until they accept the dqs -->
+                  <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
+                    <i class="edsc-icon-notification"></i>
+                  </a>
+                  <!-- /ko -->
+                  <!-- ko if: dqsModel.isLoaded() && (!dqsModel.results().id || dqsModel.results().accepted()) -->
                   <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
                     <i class="edsc-icon-download"></i>
                   </a>
+                  <!-- /ko -->
                 <% end %>
                 <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
                   <i class="edsc-icon-eye"></i>

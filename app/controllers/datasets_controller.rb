@@ -10,11 +10,9 @@ class DatasetsController < ApplicationController
       catalog_response.headers.each do |key, value|
         response.headers[key] = value if key.start_with?('echo-')
       end
-
-      respond_with(catalog_response.body, status: catalog_response.status)
-    else
-      respond_with(catalog_response.body, status: catalog_response.status)
     end
+
+    respond_with(catalog_response.body, status: catalog_response.status)
   end
 
   def show

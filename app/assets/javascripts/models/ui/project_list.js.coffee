@@ -7,6 +7,9 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
 
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
 
+      @dataQualitySummaryModal = ko.observable(false)
+      @dataQualitySummaryCallback = null
+
     showProject: =>
       if @_selectedDataset?
         @project.selectedDatasetId(@_selectedDataset)
@@ -22,11 +25,32 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
 
     loginAndDownloadDataset: (dataset) =>
       @user.loggedIn =>
-        @downloadDatasets([dataset])
+        @showDataQualitySummary [dataset], =>
+          @downloadDatasets([dataset])
 
     loginAndDownloadProject: =>
       @user.loggedIn =>
-        @downloadDatasets(@project.getDatasets())
+        @showDataQualitySummary @project.getDatasets(), =>
+          @downloadDatasets(@project.getDatasets())
+
+    showDataQualitySummary: (datasets, action) =>
+      for dataset in datasets
+        if dataset.dqsModel.results().accepted() || !dataset.dqsModel.results().id
+          action()
+        else
+          @dataQualitySummaryCallback = =>
+            @dataQualitySummaryCallback = null
+            action()
+
+          @dataQualitySummaryModal([dataset, dataset.dqsModel.results()])
+
+    acceptDataQualitySummary: =>
+      @dataQualitySummaryModal()[0].dqsModel.results().accepted(true)
+      @dataQualitySummaryModal(false)
+      @dataQualitySummaryCallback?()
+
+    cancelDataQualitySummaryModal: =>
+      @dataQualitySummaryModal(false)
 
     downloadDatasets: (datasets) =>
       $project = $('#data-access-project')
