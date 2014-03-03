@@ -23,7 +23,13 @@ ns.Granules = do (ko,
 
     getPolygons: ->
       if !@_polygons? && @polygons?
-        @_polygon = (polygon.map(@_parseSpatial) for polygon in @polygons)
+        @_polygons = (polygon.map(@_parseSpatial) for polygon in @polygons)
+      @_polygons
+
+    getRectangles: ->
+      if !@_rects? && @boxes?
+        @_rects = @boxes.map(@_parseSpatial)
+      @_rects
 
     _parseSpatial: (str) ->
       coords = str.split(' ')
