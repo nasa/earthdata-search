@@ -1,3 +1,5 @@
+# EDSC-86 As a user, I want to view polygon spatial extents on a map so that I
+#         may understand the location and shape of my results
 # EDSC-88 As a user, I want to view point spatial extents on a map so that I may
 #         understand the location and shape of my results
 
@@ -11,8 +13,6 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
   end
 
   context "for single point datasets" do
-
-
     use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data'
 
     context "visualizing a dataset" do
@@ -51,7 +51,7 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
       it "pans and zooms the map to encompass the dataset's points" do
         expect(page).to have_css('.leaflet-overlay-pane path', count: 57)
         zoom = page.evaluate_script("$('#map').data('map').map.getZoom()")
-        expect(zoom).to be(1)
+        expect(zoom).to be < 3
       end
     end
 
@@ -60,6 +60,26 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
 
       it "hides the dataset's visualizations" do
         expect(page).to have_no_css('.leaflet-overlay-pane path')
+      end
+    end
+  end
+
+  context "for polygon datasets" do
+    use_dataset 'AST_L1A', 'AST_L1A'
+
+    context "visualizing a dataset" do
+      hook_visualization
+
+      it "draws polygons on the map for granule spatial areas" do
+        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      end
+    end
+
+    context "removing a visualized dataset" do
+      hook_visualization_removal
+
+      it "hides the dataset's visualizations" do
+        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
     end
   end
