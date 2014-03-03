@@ -1,7 +1,7 @@
 ns = @edsc.map
 
 # Meta-layer for managing granule visualizations
-ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GibsGranuleLayer=ns.L.GibsGranuleLayer) ->
+ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns.L.GranuleLayer) ->
   MIN_PAGE_SIZE = 100
 
   class GranuleFootprintsLayer
