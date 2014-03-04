@@ -35,7 +35,7 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
 
     showDataQualitySummary: (datasets, action) =>
       for dataset in datasets
-        if dataset.dqsModel.results().accepted() || !dataset.dqsModel.results().id
+        if !dataset.dqsModel.results().id || dataset.dqsModel.results().accepted()
           action()
         else
           @dataQualitySummaryCallback = =>
@@ -55,7 +55,7 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
     downloadDatasets: (datasets) =>
       $project = $('#data-access-project')
 
-      $project.val(JSON.stringify(@project.serialize()))
+      $project.val(JSON.stringify(@project.serialize(datasets)))
 
       $('#data-access').submit()
 
