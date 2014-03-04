@@ -18,33 +18,40 @@ ns.GranuleLayer = do (L,
     sum > 0
 
   clockwise = (path) ->
-    if isClockwise(path) then path else path.concat().reverse()
+    if !Array.isArray(path) || isClockwise(path) then path else path.concat().reverse()
 
   counterclockwise = (path) ->
-    if isClockwise(path) then path.concat().reverse() else path
+    if Array.isArray(path) && isClockwise(path) then path.concat().reverse() else path
 
-  addPath = (ctx, path) ->
-    len = path.length
+  addPath = (ctx, path, isCounterclockwise) ->
+    if Array.isArray(path)
+      len = path.length
 
-    return if len < 2
+      return if len < 2
 
-    ctx.moveTo(path[0].x, path[0].y)
-    ctx.lineTo(point.x, point.y) for point in path[1...]
+      if isCounterclockwise != !isClockwise(path)
+        path = path.concat().reverse()
+
+      ctx.moveTo(path[0].x, path[0].y)
+      ctx.lineTo(point.x, point.y) for point in path[1...]
+    else
+      ctx.moveTo(path.x + 10, path.y)
+      ctx.arc(path.x, path.y, 10, 0, 2 * Math.PI, isCounterclockwise);
     null
 
   clipped = (ctx, boundary, maskedPaths, drawnPaths, fn) ->
     ctx.save()
     if maskedPaths.length > 0
       ctx.beginPath()
-      addPath(ctx, clockwise(boundary))
+      addPath(ctx, boundary, false)
       for path in maskedPaths
-        addPath(ctx, counterclockwise(path))
+        addPath(ctx, path, true)
         ctx.clip()
 
     if drawnPaths.length > 0
       ctx.beginPath()
       for path in drawnPaths
-        addPath(ctx, counterclockwise(path))
+        addPath(ctx, path, true)
       ctx.clip()
 
     fn()
@@ -71,13 +78,24 @@ ns.GranuleLayer = do (L,
       this
 
     _redrawTile: (tile) ->
-      @drawTile(tile, tile._tilePoint, @_map._zoom)
+      tilePoint = tile._tilePoint
+      @drawTile(tile, @_getBackTile(tilePoint), tilePoint, @_map._zoom)
 
     _createTile: ->
       tile = L.DomUtil.create('canvas', 'leaflet-tile')
       tile.width = tile.height = @options.tileSize
       tile.onselectstart = tile.onmousemove = L.Util.falseFn
       tile
+
+    _reset: (e) ->
+      @_backTiles = {}
+      L.TileLayer.prototype._reset.call(this, e)
+
+    _getBackTile: (tilePoint) ->
+      key = "#{tilePoint.x}:#{tilePoint.y}"
+      @_backTiles ?= {}
+      @_backTiles[key] ?= @_createTile()
+      @_backTiles[key]
 
     _loadTile: (tile, tilePoint) ->
       tile._layer = this
@@ -104,20 +122,13 @@ ns.GranuleLayer = do (L,
 
       rects = granule.getRectangles()
       if rects?
-        for rect in rects
-          if rect[0].lng > rect[1].lng
-            divided = [[rect[0], L.latLng(rect[1].lat, 180)],
-                       [L.latLng(rect[0].lat, -180), rect[1]]]
-          else
-            divided = [rect]
+        for path in rects when tileBounds.intersects(path)
+          result.push(projectPath(map, path, [], 'cartesian', 2, 5).boundary)
 
-          paths = for box in divided
-            [L.latLng(box[0].lat, box[0].lng), L.latLng(box[0].lat, box[1].lng),
-             L.latLng(box[1].lat, box[1].lng), L.latLng(box[1].lat, box[0].lng),
-             L.latLng(box[0].lat, box[0].lng)]
-
-          for path in paths when tileBounds.intersects(path)
-            result.push(projectPath(map, path, [], 'cartesian', 2, 5).boundary)
+      points = granule.getPoints()
+      if points?
+        for point in points when tileBounds.contains(point)
+          result.push(@_map.latLngToLayerPoint(point))
 
       result
 
@@ -144,30 +155,30 @@ ns.GranuleLayer = do (L,
       intersects
 
     _drawFootprint: (canvas, nwPoint, boundary, maskedPaths, drawnPaths) ->
-      colors = ['rgba(255, 0, 0, 0.5)',
-                'rgba(0, 255, 0, 0.5)',
-                'rgba(0, 0, 255, 0.5)',
-                'rgba(255, 255, 0, 0.5)',
-                'rgba(255, 0, 255, 0.5)',
-                'rgba(0, 255, 255, 0.5)',
-                'rgba(255, 255, 255, 0.5)']
+      #colors = ['rgba(255, 0, 0, 0.5)',
+      #          'rgba(0, 255, 0, 0.5)',
+      #          'rgba(0, 0, 255, 0.5)',
+      #          'rgba(255, 255, 0, 0.5)',
+      #          'rgba(255, 0, 255, 0.5)',
+      #          'rgba(0, 255, 255, 0.5)',
+      #          'rgba(255, 255, 255, 0.5)']
 
       ctx = canvas.getContext('2d')
       ctx.save()
+
+      # Faint stroke of whole path
       ctx.lineWidth = 1
       ctx.translate(-nwPoint.x, -nwPoint.y)
-      tileSize = @options.tileSize
       ctx.strokeStyle = 'rgba(128, 128, 128, .2)'
       for path in drawnPaths
-        ctx.moveTo(path[0].x, path[0].y)
-        ctx.lineTo(p.x, p.y) for p in path[1...]
-        ctx.closePath()
+        addPath(ctx, path, true)
         ctx.stroke()
+
+      # Bold stroke of unclipped portion of path, black + white
       clipped ctx, boundary, maskedPaths, [], ->
         for path in drawnPaths
           ctx.beginPath()
-          ctx.moveTo(path[0].x, path[0].y)
-          ctx.lineTo(p.x, p.y) for p in path[1...]
+          addPath(ctx, path, true)
           ctx.closePath()
           # For debugging clip paths
           #ctx.fillStyle = colors[Math.abs(nwPoint.x + nwPoint.y) % colors.length]
@@ -179,6 +190,38 @@ ns.GranuleLayer = do (L,
           ctx.strokeStyle = 'rgba(255, 255, 255, 1)'
           ctx.stroke()
       ctx.restore()
+
+    granuleAt: (p) ->
+      origin = @_map.getPixelOrigin()
+      tileSize = @_getTileSize()
+      tilePoint = p.add(origin).divideBy(tileSize).floor()
+
+      canvas = @_getBackTile(tilePoint)
+
+      tilePixel = p.subtract(@_getTilePos(tilePoint))
+
+      result = null
+      ctx = canvas.getContext('2d')
+      data = ctx.getImageData(tilePixel.x, tilePixel.y, 1, 1).data
+      if data[3] != 0
+        index = (data[0] << 16) + (data[1] << 8) + data[2]
+        result = @_results?[index]
+
+      result
+
+    _drawBackTile: (canvas, index, nwPoint, boundary, maskedPaths, drawnPaths) ->
+      ctx = canvas.getContext('2d')
+      ctx.save()
+
+      # http://www.w3.org/TR/2011/WD-2dcontext-20110405/#imagedata
+      ctx.fillStyle = '#' + (index + 0x1000000).toString(16).substr(-6)
+
+      ctx.translate(-nwPoint.x, -nwPoint.y)
+      tileSize = @options.tileSize
+      clipped ctx, boundary, maskedPaths, drawnPaths, ->
+        ctx.fillRect(nwPoint.x, nwPoint.y, tileSize, tileSize)
+      ctx.restore()
+
 
     getTileUrl: (tilePoint, date) ->
       L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if @_url?
@@ -198,7 +241,8 @@ ns.GranuleLayer = do (L,
           ctx.restore()
 
           for path, i in drawnPaths
-            @_drawFootprint(canvas, nwPoint, boundary, maskedPaths.concat(drawnPaths.slice(0, i)), [path])
+            masked = maskedPaths.concat(drawnPaths.slice(0, i))
+            @_drawFootprint(canvas, nwPoint, boundary, masked, [path])
 
         image.onerror = (e) =>
           if retries == 0
@@ -209,9 +253,10 @@ ns.GranuleLayer = do (L,
         image.src = url
       else
         for path, i in drawnPaths
-          @_drawFootprint(canvas, nwPoint, boundary, maskedPaths.concat(drawnPaths.slice(0, i)), [path])
+          masked = maskedPaths.concat(drawnPaths.slice(0, i))
+          @_drawFootprint(canvas, nwPoint, boundary, masked, [path])
 
-    drawTile: (canvas, tilePoint) ->
+    drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
 
       tileSize = @options.tileSize
@@ -223,7 +268,7 @@ ns.GranuleLayer = do (L,
       bounds = new L.latLngBounds(@_map.layerPointToLatLng(nwPoint),
                                   @_map.layerPointToLatLng(sePoint))
 
-      #bounds.pad(0.1)
+      bounds = bounds.pad(0.1)
 
       date = null
       drawnPaths = []
@@ -233,6 +278,9 @@ ns.GranuleLayer = do (L,
         start = granule.time_start?.substring(0, 10)
 
         paths = @_granulePathsOverlappingTile(granule, bounds)
+
+        if paths.length > 0
+          @_drawBackTile(back, i, nwPoint, boundary, maskedPaths.concat(drawnPaths), paths)
 
         # Note: GIBS is currently ambiguous about which day to use
         if start != date
@@ -268,28 +316,33 @@ ns.GranuleLayer = do (L,
     onAdd: (map) ->
       super(map)
 
+      map.on 'edsc.mousemove', @_onMouseMove
+      map.on 'edsc.mouseout', @_onMouseOut
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
 
     onRemove: (map) ->
-      @_destroyFootprintsLayer()
-
       super(map)
 
+      map.off 'edsc.mousemove', @_onMouseMove
+      map.off 'edsc.mouseout', @_onMouseOut
       @_resultsSubscription.dispose()
       @_results = null
 
     url: ->
       super() if @_hasGibs
 
-    _destroyFootprintsLayer: ->
-      @_footprintsLayer?.onRemove(@_map)
-      @_footprintsLayer = null
+    _onMouseOut: (e) =>
+      @_granuleFocusLayer?.onRemove(@_map)
+      @_granule = null
 
-    _createFootprintsLayer: ->
-      @_destroyFootprintsLayer()
-      @_footprintsLayer = L.featureGroup()
-      @_footprintsLayer.onAdd(@_map)
+    _onMouseMove: (e) =>
+      granule = @layer?.granuleAt(e.layerPoint)
+      if granule != @_granule
+        @_granule = granule
+        @_granuleFocusLayer?.onRemove(@_map)
+        @_granuleFocusLayer = @_layerForGranule(granule)
+        @_granuleFocusLayer?.onAdd(@_map)
 
     _buildLayerWithOptions: (newOptions) ->
       # GranuleCanvasLayer needs to handle time
@@ -304,20 +357,17 @@ ns.GranuleLayer = do (L,
       @_results = results
       @layer?.setResults(results)
 
-      @_createFootprintsLayer()
+    _layerForGranule: (granule) ->
+      return null unless granule?
 
-      @_visualizePoints(results)
+      layer = L.featureGroup()
+      layer.addLayer(L.circleMarker(point, clickable: false)) for point in granule.getPoints() ? []
+      layer.addLayer(L.sphericalPolygon(poly, clickable: false)) for poly in granule.getPolygons() ? []
 
-      bounds = @_footprintsLayer.getBounds()
-      if bounds.getNorthEast()?
-        @_map.fitBounds(bounds)
+      for rect in granule.getRectangles() ? []
+        # granule.getRectanges() returns a path, so it's really a polygon
+        shape = L.polygon(rect, clickable: false)
+        shape._interpolationFn = 'cartesian'
+        layer.addLayer(shape)
 
-    _visualizePoints: (granules) ->
-      footprints = @_footprintsLayer
-      added = []
-      for granule in granules
-        for point in granule.getPoints() ? []
-          pointStr = point.toString()
-          if added.indexOf(pointStr) == -1
-            added.push(pointStr)
-            footprints.addLayer(L.circleMarker(point))
+      layer

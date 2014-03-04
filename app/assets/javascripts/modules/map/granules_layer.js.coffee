@@ -17,19 +17,33 @@ ns.GranulesLayer = do (L
     constructor: ->
       @_hoverTimer = null
       @_hoverPoint = null
+      @_enabled = true
 
     onAdd: (map) ->
       @_map = map
       map.on 'mousemove', @_onMouseMove
       map.on 'mouseout', @_onMouseOut
+      map.on 'draw:drawstart draw:editstart draw:deletestart', @disable
+      map.on 'draw:drawstop draw:editstop draw:deletestop', @enable
 
     onRemove: (map) ->
       @_clearHoverTimeout()
       @_map = null
       map.off 'mousemove', @_onMouseMove
       map.off 'mouseout', @_onMouseOut
+      map.off 'draw:drawstart draw:editstart draw:deletestart', @disable
+      map.off 'draw:drawstop draw:editstop draw:deletestop', @enable
+
+    enable: =>
+      @_enabled = true
+
+    disable: (e) =>
+      @_enabled = false
+      @_onMouseOut(e)
 
     _onMouseMove: (e) =>
+      return unless @_enabled
+
       point = e.containerPoint
       hoverPoint = @_hoverPoint
       abs = Math.abs
@@ -37,12 +51,16 @@ ns.GranulesLayer = do (L
       $target = $(e.originalEvent.target)
       if $target.closest('.leaflet-control-container, .geojson-help, .leaflet-popup-pane').length > 0
         @_clearHoverTimeout()
-      else if !hoverPoint? || abs(point.x - hoverPoint.x) + abs(point.y - hoverPoint.y) > HOVER_SENSITIVITY_PX
-        # Allow the mouse to move slightly without triggering another event
-        @_hoverPoint = point
-        @_setHoverTimeout(e)
+        @_map.fire('edsc.mouseout', e)
+      else
+        @_map.fire('edsc.mousemove', e)
+        if !hoverPoint? || abs(point.x - hoverPoint.x) + abs(point.y - hoverPoint.y) > HOVER_SENSITIVITY_PX
+          # Allow the mouse to move slightly without triggering another hover event
+          @_hoverPoint = point
+          @_setHoverTimeout(e)
 
     _onMouseOut: (e) =>
+      @_map.fire('edsc.mouseout', e)
       @_hoverPoint = null
       @_clearHoverTimeout()
 

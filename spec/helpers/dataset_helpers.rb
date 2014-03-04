@@ -8,7 +8,6 @@ module Helpers
       end
 
       after :all do
-
         reset_search
         wait_for_xhr
       end
@@ -17,18 +16,21 @@ module Helpers
     def hook_visualization
       before :all do
         first_dataset_result.click_link "View dataset"
+        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
 
       after :all do
         first_dataset_result.click_link "Hide dataset"
+        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
     end
 
     def hook_visualization_removal
       before :all do
         first_dataset_result.click_link "View dataset"
-        wait_for_xhr
+        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
         first_dataset_result.click_link "Hide dataset"
+        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
     end
   end

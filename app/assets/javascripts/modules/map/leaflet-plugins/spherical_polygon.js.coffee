@@ -210,10 +210,13 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
 
     initialize: (latlngs, options) ->
       @_layers = {}
-      @_options = @options = options
+      @_options = L.extend(@options, options)
       @setLatLngs(latlngs)
 
     setLatLngs: (latlngs) ->
+      if latlngs[0] && Array.isArray(latlngs[0])
+        # Don't deal with holes
+        latlngs = latlngs[0]
       latlngs = (L.latLng(latlng) for latlng in latlngs)
 
       @_latlngs = latlngs
