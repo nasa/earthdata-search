@@ -111,7 +111,8 @@ ns.Query = do (ko,
       params.placename = placename if placename?.length > 0
 
       # For testing GIBS visualizations
-      #params.echo_collection_id = ['C14758250-LPDAAC_ECS', 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS']
+      #params.echo_collection_id = ['C14758250-LPDAAC_ECS']#, 'C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS']
+      params.free_text = "aster l1"
 
       day_night_flag = @day_night_flag()
       params.day_night_flag = day_night_flag if day_night_flag?.length > 0

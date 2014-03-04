@@ -25,28 +25,47 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
 
     loginAndDownloadDataset: (dataset) =>
       @user.loggedIn =>
-        @showDataQualitySummary [dataset], =>
+        @showDataQualitySummaryAndDownload [dataset], =>
           @downloadDatasets([dataset])
 
     loginAndDownloadProject: =>
       @user.loggedIn =>
-        @showDataQualitySummary @project.getDatasets(), =>
+        @showDataQualitySummaryAndDownload @project.getDatasets(), =>
           @downloadDatasets(@project.getDatasets())
 
-    showDataQualitySummary: (datasets, action) =>
+    showDataQualitySummaryAndDownload: (datasets, action) =>
+      accepted = true
       for dataset in datasets
-        if !dataset.dqsModel.results().id || dataset.dqsModel.results().accepted()
-          action()
-        else
-          @dataQualitySummaryCallback = =>
-            @dataQualitySummaryCallback = null
-            action()
+        if dataset.dqsModel.results().id && !dataset.dqsModel.results().accepted()
+          accepted = false
 
-          @dataQualitySummaryModal([dataset, dataset.dqsModel.results()])
+      if accepted
+        action()
+      else
+        @dataQualitySummaryCallback = =>
+          @dataQualitySummaryCallback = null
+          action()
+
+        @_loadDataQualitySummaryModel(datasets)
+
+    showDataQualitySummary: (datasets) =>
+      @_loadDataQualitySummaryModel(datasets)
+
+    _loadDataQualitySummaryModel: (datasets) =>
+      summaries = []
+      for dataset in datasets
+        summary = {}
+        summary["dataset"] = dataset
+        summary["summary"] = dataset.dqsModel.results()
+        summaries.push summary if summary["summary"].id
+
+      @dataQualitySummaryModal(summaries)
 
     acceptDataQualitySummary: =>
-      @dataQualitySummaryModal()[0].dqsModel.results().accepted(true)
-      @dataQualitySummaryModal(false)
+      for dqs in @dataQualitySummaryModal()
+        dqs.dataset.dqsModel.results().accepted(true)
+        @dataQualitySummaryModal(false)
+
       @dataQualitySummaryCallback?()
 
     cancelDataQualitySummaryModal: =>
@@ -92,5 +111,20 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
 
     hideFilters: =>
       @project.searchGranulesDataset(null)
+
+    datasetsHaveDQS: =>
+      result = false
+      for dataset in @project.datasets()
+        result = true if dataset.dqsModel.results().id
+
+      result
+
+    allDQSAccepted: =>
+      result = true
+      for dataset in @project.datasets()
+        result = false if dataset.dqsModel.results().id && !dataset.dqsModel.results().accepted()
+
+      result
+
 
   exports = ProjectList
