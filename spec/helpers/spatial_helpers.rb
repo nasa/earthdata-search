@@ -89,10 +89,13 @@ module Helpers
     def map_position_event(event, selector='#map', lat=10, lng=10, x=10, y=10)
       script = """
                var target = $('#{selector}')[0];
-               var e = {containerPoint: {x: #{x}, y: #{y}},
+               var map = window.edsc.page.map.map;
+               var latLng = L.latLng(#{lat}, #{lng});
+               var e = {containerPoint: map.latLngToContainerPoint(latLng),
                         originalEvent: {target: target},
-                        latlng: {lat: #{lat}, lng: #{lng}}};
-               window.edsc.page.map.map.fire('#{event}', e);
+                        layerPoint: map.latLngToLayerPoint(latLng),
+                        latlng: latLng};
+               map.fire('#{event}', e);
                null;
       """
       page.evaluate_script(script)
