@@ -212,7 +212,7 @@ describe "Login window", reset: false do
       end
 
       after :all do
-        click_link 'password'
+        click_link 'username'
         fill_in 'Email', with: ''
       end
 
@@ -243,7 +243,7 @@ describe "Login window", reset: false do
 
       after :all do
         within '#login-modal' do
-          click_link 'password'
+          click_link 'username'
         end
       end
 
