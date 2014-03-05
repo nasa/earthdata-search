@@ -1,10 +1,10 @@
 a:link, a:visited {
   color: #2980b9;
-  
+
   &.close {
     color: #ccc;
   }
-  
+
   &.close:hover {
     color: #999;
   }
@@ -60,6 +60,15 @@ ul {
 
 .error {
   background: #c0392b;
+  color: #fff;
+  display: block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.info-alert {
+  background: #3c5e87;
   color: #fff;
   display: block;
   padding: 5px 10px;
