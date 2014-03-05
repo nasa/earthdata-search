@@ -2,18 +2,47 @@
 
 ns = @edsc.models.data
 
-ns.Granules = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel, extend=$.extend) ->
+ns.Granules = do (ko,
+                  getJSON=jQuery.getJSON,
+                  XhrModel=ns.XhrModel,
+                  extend=$.extend,
+                  LatLng = L.latLng) ->
+
+  class Granule
+    constructor: (jsonData) ->
+      extend(this, jsonData)
+
+    edsc_browse_url: ->
+      "https://api.echo.nasa.gov/browse-scaler/browse_images/granules/#{@id}?h=170&w=170"
+
+    getPoints: ->
+      if !@_points? && @points?
+        merged = []
+        @_points = merged.concat.apply(merged, @points.map(@_parseSpatial))
+      @_points
+
+    getPolygons: ->
+      if !@_polygons? && @polygons?
+        @_polygons = (polygon.map(@_parseSpatial) for polygon in @polygons)
+      @_polygons
+
+    getRectangles: ->
+      if !@_rects? && @boxes?
+        @_rects = @boxes.map(@_parseSpatial)
+      @_rects
+
+    _parseSpatial: (str) ->
+      coords = str.split(' ')
+      len = coords.length - 1
+      new LatLng(coords[i], coords[i+1]) for i in [0...len] by 2
+
 
   class GranulesModel extends XhrModel
     constructor: (query, @parentQuery) ->
       super('/granules.json', query)
 
     _toResults: (data) ->
-      results = data.feed.entry
-      for result in results
-        if result.browse_flag == "true"
-          result.edsc_browse_url = "https://api.echo.nasa.gov/browse-scaler/browse_images/granules/#{result.id}?h=170&w=170"
-      results
+      new Granule(result) for result in data.feed.entry
 
     _computeSearchResponse: (current, callback) ->
       if @query?.validQuery() && @parentQuery?.validQuery()

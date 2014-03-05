@@ -18,11 +18,16 @@ class ApplicationController < ActionController::Base
                      'cdurbin',
                      'bmclaughlin',
                      'macrouch',
+                     'jgilman',
                      'kbaynes'
                     ]
         authenticate_or_request_with_http_basic do |username, password|
           whitelist.include?(username) && Echo::Client.get_token(username, password, 'EDSC', request.remote_ip).success?
         end
       end
+    end
+
+    def token
+      cookies['token']
     end
 end

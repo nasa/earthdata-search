@@ -11,22 +11,22 @@ module Echo
 
     CATALOG_URL="https://api.echo.nasa.gov"
 
-    def self.get_datasets(options={})
-      get('/catalog-rest/echo_catalog/datasets.json', options_to_item_query(options))
+    def self.get_datasets(options={}, token=nil)
+      get('/catalog-rest/echo_catalog/datasets.json', options_to_item_query(options), token_header(token))
     end
 
-    def self.get_dataset(id, options={})
-      get("/catalog-rest/echo_catalog/datasets/#{id}.echo10")
+    def self.get_dataset(id, options={}, token=nil)
+      get("/catalog-rest/echo_catalog/datasets/#{id}.echo10", {}, token_header(token))
     end
 
-    def self.get_granules(options={})
+    def self.get_granules(options={}, token=nil)
       options = options.dup
       format = options.delete(:format) || 'json'
-      get("/catalog-rest/echo_catalog/granules.#{format}", options_to_granule_query(options))
+      get("/catalog-rest/echo_catalog/granules.#{format}", options_to_granule_query(options), token_header(token))
     end
 
-    def self.get_facets(options={})
-      get("/catalog-rest/search_facet.json", options_to_facet_query(options))
+    def self.get_facets(options={}, token=nil)
+      get("/catalog-rest/search_facet.json", options_to_facet_query(options), token_header(token))
     end
 
     def self.get_provider_holdings
@@ -34,7 +34,7 @@ module Echo
     end
 
     def self.get_token_info(token)
-      get("/echo-rest/tokens/#{token}/token_info.json", {}, {'Echo-Token' => token})
+      get("/echo-rest/tokens/#{token}/token_info.json", {}, token_header(token))
     end
 
     def self.get_data_quality_summary(catalog_item_id)
@@ -59,17 +59,31 @@ module Echo
       Echo::Response.new(post("/echo-rest/tokens.json", token.to_json))
     end
 
+    def self.username_recall(params)
+      Rails.logger.info params.to_json
+      post('/echo-rest/users/username_recall.json', params.to_json)
+    end
+
+    def self.password_reset(params)
+      post('/echo-rest/users/password_reset.json', params.to_json)
+    end
+
     def self.connection
       Thread.current[:edsc_echo_connection] ||= self.build_connection
     end
 
     private
 
+    def self.token_header(token)
+      token.present? ? {'Echo-Token' => token} : {}
+    end
+
     def self.get(url, params={}, headers={})
       faraday_response = connection.get(url, params) do |req|
         headers.each do |header, value|
           req.headers[header] = value
         end
+        Rails.logger.info req.headers.inspect
       end
       Echo::Response.new(faraday_response)
     end

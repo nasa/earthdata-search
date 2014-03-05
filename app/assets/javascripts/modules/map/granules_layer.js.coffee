@@ -270,8 +270,9 @@ ns.GranulesLayer = do (L
       @_stopLoading(@_granuleInfo)
 
     _onHover: (e) =>
-      unless @_tooltipLayer.isPaused()
-        @_load(@_granuleInfo, e.latlng)
+      # Disabled for now
+      #unless @_tooltipLayer.isPaused()
+      #  @_load(@_granuleInfo, e.latlng)
 
     _stopLoading: (info) ->
       info.granules()?.abort()

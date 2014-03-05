@@ -1,6 +1,6 @@
 ns = window.edsc.map
 
-do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coordinate) ->
+ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coordinate) ->
 
   # Converts the given latlngs to L.latLng objects and ensures they're
   # normalized on the expected interval, [-180, 180]
@@ -262,3 +262,6 @@ do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coordinate) ->
   L.Edit.Poly = L.Edit.Poly.extend
     _getMiddleLatLng: (marker1, marker2) ->
       latlng = geoutil.gcInterpolate(marker1.getLatLng(), marker2.getLatLng())
+
+  exports =
+    dividePolygon: dividePolygon

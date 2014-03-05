@@ -24,10 +24,7 @@ ns.GibsTileLayer = do (L, ProjectionSwitchingLayer = ns.ProjectionSwitchingLayer
     antarcticOptions: L.extend({}, parent.antarcticOptions, projection: 'EPSG3031', endpoint: 'antarctic')
     geoOptions: L.extend({}, parent.geoOptions, projection: 'EPSG4326', endpoint: 'geo')
 
-    # Given a set of options, re-initializes the underlying T.TileLayer
-    # so that it uses those options.  If the underlying T.TileLayer does
-    # not yet exists, constructs it.
-    _buildLayerWithOptions: (newOptions) ->
+    _toTileLayerOptions: (newOptions) ->
       options = @options
       L.extend(options, newOptions)
 
@@ -43,6 +40,15 @@ ns.GibsTileLayer = do (L, ProjectionSwitchingLayer = ns.ProjectionSwitchingLayer
       if options['endpoint'] == 'geo' && options['product_geo']
         options['product'] = options['product_geo']
 
-      new L.TileLayer(gibsUrl, options)
+      options
+
+    url: ->
+      gibsUrl
+
+    # Given a set of options, re-initializes the underlying T.TileLayer
+    # so that it uses those options.  If the underlying T.TileLayer does
+    # not yet exists, constructs it.
+    _buildLayerWithOptions: (newOptions) ->
+      new L.TileLayer(@url(), @_toTileLayerOptions(newOptions))
 
   exports = GibsTileLayer

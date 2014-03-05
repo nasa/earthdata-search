@@ -107,5 +107,6 @@ RSpec.configure do |config|
   config.include Helpers::SpatialHelpers
   config.include Helpers::ProjectHelpers
   config.include Helpers::PageHelpers
+  config.include Helpers::DatasetHelpers
   config.include Helpers::DefaultTags
 end

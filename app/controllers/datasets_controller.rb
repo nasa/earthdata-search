@@ -2,7 +2,7 @@ class DatasetsController < ApplicationController
   respond_to :json
 
   def index
-    catalog_response = Echo::Client.get_datasets(request.query_parameters)
+    catalog_response = Echo::Client.get_datasets(request.query_parameters, token)
 
     if catalog_response.success?
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
@@ -16,7 +16,7 @@ class DatasetsController < ApplicationController
   end
 
   def show
-    response = Echo::Client.get_dataset(params[:id])
+    response = Echo::Client.get_dataset(params[:id], token)
 
     if response.success?
       respond_with(DatasetDetailsPresenter.new(response.body.first, params[:id]), status: response.status)
@@ -26,7 +26,7 @@ class DatasetsController < ApplicationController
   end
 
   def facets
-    response = Echo::Client.get_facets(request.query_parameters)
+    response = Echo::Client.get_facets(request.query_parameters, token)
 
 
     if response.success?
