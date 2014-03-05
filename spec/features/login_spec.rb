@@ -1,8 +1,8 @@
-# EDSC-97 As a user, I want to log in so that I may access my saved 
+# EDSC-97 As a user, I want to log in so that I may access my saved
 #         information and retrieve restricted data
-# EDSC-98 As a user, I want to see an indication that I am logged in 
+# EDSC-98 As a user, I want to see an indication that I am logged in
 #         so I may know the credentials I am currently using
-# EDSC-99 As a user, I want to log out so that nobody else may access 
+# EDSC-99 As a user, I want to log out so that nobody else may access
 #         my account
 
 require "spec_helper"
