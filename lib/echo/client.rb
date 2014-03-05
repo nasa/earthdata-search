@@ -37,11 +37,11 @@ module Echo
       get("/echo-rest/tokens/#{token}/token_info.json", {}, token_header(token))
     end
 
-    def self.get_data_quality_summary(catalog_item_id)
-      response = get("/echo-rest/data_quality_summary_definitions", {'catalog_item_id' => catalog_item_id})
+    def self.get_data_quality_summary(catalog_item_id, token=nil)
+      response = get("/echo-rest/data_quality_summary_definitions", {'catalog_item_id' => catalog_item_id}, token_header(token))
       references = response.body["references"]
       if references && references[0]
-        get("/echo-rest/data_quality_summary_definitions/#{references[0]["id"]}")
+        get("/echo-rest/data_quality_summary_definitions/#{references[0]["id"]}", {}, token_header(token))
       end
       # NCR 11014478 will allow this to be only one call to echo-rest
     end

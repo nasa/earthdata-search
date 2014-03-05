@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.ProjectList = do (ko, window, $ = jQuery) ->
+ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
   class ProjectList
     constructor: (@project, @user, @datasetResults) ->
       @visible = ko.observable(false)
@@ -62,11 +62,20 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
       @dataQualitySummaryModal(summaries)
 
     acceptDataQualitySummary: =>
-      for dqs in @dataQualitySummaryModal()
-        dqs.dataset.dqsModel.results().accepted(true)
-        @dataQualitySummaryModal(false)
+      summaries = @dataQualitySummaryModal()
+      dqs_ids = []
+      for dqs in summaries
+        dqs_ids.push dqs.summary.id
 
-      @dataQualitySummaryCallback?()
+      data =
+        dqs_ids: dqs_ids
+
+      xhr = doPost '/accept_data_quality_summaries', data, (response) =>
+        for dqs in summaries
+          dqs.dataset.dqsModel.results().accepted(true)
+          @dataQualitySummaryModal(false)
+
+        @dataQualitySummaryCallback?()
 
     cancelDataQualitySummaryModal: =>
       @dataQualitySummaryModal(false)

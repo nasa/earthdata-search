@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140210184122) do
+ActiveRecord::Schema.define(version: 20140305170556) do
+
+  create_table "accepted_data_quality_summaries", force: true do |t|
+    t.string   "dqs_id"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "dataset_extras", force: true do |t|
     t.string   "echo_id"

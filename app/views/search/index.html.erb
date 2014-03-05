@@ -119,7 +119,7 @@
           <p data-bind="visible: project.isEmpty()">
             Add datasets to your project to compare and retrieve their data.
           </p>
-          <p data-bind="visible: !project.isEmpty()">
+          <p data-bind="visible: !project.isEmpty()" class="button-details">
             <a class="button master-overlay-forward master-overlay-hide-parent" data-bind="click: ui.projectList.showProject" href="#">
               <i class="fa fa-folder-o"></i> View Project
             </a>
@@ -154,23 +154,23 @@
           <p>
             Batch compare, preview, refine, and download datasets you've added to your project.
           </p>
+          <div data-bind="visible: ui.projectList.datasetsHaveDQS(), css: {'alert-info': ui.projectList.allDQSAccepted(), 'alert-warning': !ui.projectList.allDQSAccepted()}" class="alert">Some of the datasets in your project have data quality information, <a data-bind="click: ui.projectList.showDataQualitySummary.bind($data,project.datasets())" class="alert-link" href="#">click here</a> to view</div>
         </div>
         <div class="master-overlay-content panel-list">
-        <div class="master-overlay-project-actions">
-          <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject">
-            <i class="edsc-icon-download"></i>
-          </a>
+          <div class="master-overlay-project-actions">
+            <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject">
+              <i class="edsc-icon-download"></i>
+            </a>
 
-          <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
-            <i class="edsc-icon-eye"></i>
-          </a>
-          <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
-            <i class="edsc-icon-eye"></i>
-          </a>
-          <div class="button icon-button empty-button"></div>
-          <div class="button icon-button empty-button"></div>
-        </div>
-          <div data-bind="visible: ui.projectList.datasetsHaveDQS(), css: {'alert-info': ui.projectList.allDQSAccepted(), 'alert-warning': !ui.projectList.allDQSAccepted()}" class="alert">Some of the datasets in your project have data quality information, <a data-bind="click: ui.projectList.showDataQualitySummary.bind($data,project.datasets())" class="alert-link" href="#">click here</a> to view</div>
+            <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
+              <i class="edsc-icon-eye"></i>
+            </a>
+            <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
+              <i class="edsc-icon-eye"></i>
+            </a>
+            <div class="button icon-button empty-button"></div>
+            <div class="button icon-button empty-button"></div>
+          </div>
           <ul id="project-datasets-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">

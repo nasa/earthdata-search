@@ -22,13 +22,15 @@ describe 'Data Quality Summaries', :reset => false do
   end
 
   context "when dataset is added to a project" do
-    it "shows a notification icon" do
-      expect(page).to have_css(".edsc-icon-notification", count: 2)
+    it "shows a warning alert" do
+      expect(page).to have_css ".alert-warning"
     end
 
-    context "when clicking on notification icon" do
+    context "when clicking on DQS link" do
       before :each do
-        first_project_dataset.click_link "Retrieve data"
+        within ".alert-warning" do
+          click_link "click here"
+        end
       end
 
       after :each do
@@ -48,13 +50,35 @@ describe 'Data Quality Summaries', :reset => false do
       end
 
       context "when accepting data quality summary" do
-        it "sends user to the data access page" do
+        it "changes the warning to an info alert" do
           click_button "Accept"
-          expect(page).to have_content "Data Access"
+          expect(page).to have_css ".alert-info"
         end
       end
 
     end
 
+  end
+
+  context "when removing a dataset from the project and adding it again" do
+    it "remembers the user accepted the data quality summary" do
+      within ".alert-warning" do
+        click_link "click here"
+      end
+      click_button "Accept"
+
+      first_project_dataset.click_link "Remove dataset from the current project"
+      first_project_dataset.click_link "Remove dataset from the current project"
+
+      click_link "Back to Dataset Search"
+
+      dataset_id = 'C190733714-LPDAAC_ECS'
+      dataset_title = 'ASTER L1B Registered Radiance at the Sensor V003'
+      add_dataset_to_project(dataset_id, dataset_title)
+
+      dataset_results.click_link "View Project"
+
+      expect(page).to have_css ".alert-info"
+    end
   end
 end

@@ -20,4 +20,10 @@ ns.DataQualitySummary = do (ko
       @name = jsonData.data_quality_summary_definition.name if jsonData
       @accepted = ko.observable(false)
 
+      @fromJSON(jsonData)
+
+    fromJSON: (json) =>
+      if json
+        @accepted(json.accepted)
+
   exports = DataQualitySummaryModel

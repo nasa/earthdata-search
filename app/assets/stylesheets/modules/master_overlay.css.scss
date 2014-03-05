@@ -108,7 +108,10 @@
   margin-bottom: 0;
   color: $overlay-heading-font-color;
   font-style: italic;
-  line-height:36px;
+
+  p.button-details {
+    line-height: 36px;
+  }
 
   .button {
     @include dark-button;
