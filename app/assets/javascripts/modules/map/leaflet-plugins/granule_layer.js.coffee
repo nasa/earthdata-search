@@ -89,7 +89,9 @@ ns.GranuleLayer = do (L,
 
     _reset: (e) ->
       @_backTiles = {}
+      tilesToLoad = @_tilesToLoad
       L.TileLayer.prototype._reset.call(this, e)
+      @fire('load') if tilesToLoad > 0
 
     _getBackTile: (tilePoint) ->
       key = "#{tilePoint.x}:#{tilePoint.y}"
@@ -301,6 +303,7 @@ ns.GranuleLayer = do (L,
 
       console.log "#{maskedPaths.length} Overlapping Granules [(#{bounds.getNorth()}, #{bounds.getWest()}), (#{bounds.getSouth()}, #{bounds.getEast()})]"
       @tileDrawn(canvas)
+      null
 
     tileDrawn: (tile) ->
       # If we do upgrade, this will break, as well as our tile reloading calls.
@@ -350,6 +353,13 @@ ns.GranuleLayer = do (L,
       delete newOptions.time
 
       layer = new GranuleCanvasLayer(@url(), @_toTileLayerOptions(newOptions))
+
+      # For tests to figure out if things are still loading
+      map = @_map
+      map.loadingLayers ?= 0
+      layer.on 'loading', -> map.loadingLayers++
+      layer.on 'load', -> map.loadingLayers--
+
       layer.setResults(@_results)
       layer
 
