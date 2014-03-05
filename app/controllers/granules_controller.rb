@@ -2,7 +2,7 @@ class GranulesController < ApplicationController
   respond_to :json
 
   def index
-    catalog_response = Echo::Client.get_granules(request.query_parameters)
+    catalog_response = Echo::Client.get_granules(request.query_parameters, token)
 
     if catalog_response.success?
       catalog_response.headers.each do |key, value|
@@ -24,7 +24,7 @@ class GranulesController < ApplicationController
       at_end = false
       page = 1
       until at_end
-        catalog_response = Echo::Client.get_granules(@params.merge(page_num: page))
+        catalog_response = Echo::Client.get_granules(@params.merge(page_num: page), token)
         at_end = catalog_response.headers['Echo-Cursor-At-End'] == 'true'
 
         if catalog_response.success?

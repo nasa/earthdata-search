@@ -8,14 +8,20 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
       @name = ko.observable(null)
       @username = ko.observable("")
       @password = ko.observable("")
+      @email = ko.observable("")
       @errors = ko.observable("")
+      @message = ko.observable("")
       @isLoggedIn = ko.computed =>
         @token()?.length > 0 && @name()?.length > 0
       @needsLogin = ko.observable(false)
+      @needsUsername = ko.observable(false)
+      @needsPassword = ko.observable(false)
       @loginCallback = null
       @_loadStateFromCookie()
 
     initiateLogin: =>
+      @errors("")
+      @message("")
       @needsLogin(true)
 
     cancelLogin: =>
@@ -26,14 +32,59 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
       @password("")
       @needsLogin(false)
 
-    login: (form) =>
+    beginLogin: =>
+      @needsUsername(false)
+      @needsPassword(false)
+
+    beginPasswordRecovery: =>
+      @needsUsername(false)
+      @needsPassword(true)
+
+    beginUsernameRecovery: =>
+      @needsUsername(true)
+      @needsPassword(false)
+
+    processLogin: (form) =>
+      # Fix chrome autocomplete issues
+      @username(document.getElementById('username')?.value) unless @username()?.length > 0
+      @password(document.getElementById('password')?.value) unless @password()?.length > 0
+      @email(document.getElementById('email')?.value) unless @email()?.length > 0
+
+      @errors("")
+      @message("")
+
+      if @needsUsername()
+        @recoverUsername()
+      else if @needsPassword()
+        @recoverPassword()
+      else
+        @login()
+
+    recoverUsername: ->
+      data =
+        email: @email()
+
+      xhr = doPost '/users/username_recall', data, (response) =>
+        @beginLogin()
+        @message("Username information has been sent to #{@email()}.")
+      xhr.fail(@_onXhrFail)
+
+    recoverPassword: ->
+      data =
+        username: @username()
+        email: @email()
+
+      xhr = doPost '/users/password_reset', data, (response) =>
+        @beginLogin()
+        @message("The password for #{@username()} has been reset.  Information on logging in has been sent to #{@email()}.")
+      xhr.fail(@_onXhrFail)
+
+    login: ->
       data =
         token:
           username: @username()
           password: @password()
           client_id: 'EDSC'
-
-      @errors("")
 
       xhr = doPost "/login", data, (response) =>
         token = response.token
@@ -44,17 +95,25 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
         @_setCookie("token", @token())
         @_setCookie("name", @name())
 
-      xhr.fail (response, type, reason) =>
-        server_error = false
-        try
-          errors = JSON.parse(response.responseText)
-          if errors?.errors?.length > 0
-            @errors(errors.errors[0])
-          else
-            server_error = true
-        catch
+      xhr.fail(@_onXhrFail)
+
+    _onXhrFail: (response, type, reason) =>
+      server_error = false
+      console.log response.responseText
+      try
+        errors = JSON.parse(response.responseText)?.errors
+        error = null
+        # Clean up the inconsistent mess that comes back from echo-rest
+        if errors?.length > 0
+          error = errors[0].replace('emailAddress', 'email')
+                           .replace('Parameter ', '')
+          error = error.charAt(0).toUpperCase() + error.slice(1);
+          @errors(error)
+        else
           server_error = true
-        @errors("An error occurred when logging in.  Please retry later.") if server_error
+      catch
+        server_error = true
+      @errors("An error occurred when logging in.  Please retry later.") if server_error
 
     logout: =>
       xhr = getJSON "/logout", (data, status, xhr) =>

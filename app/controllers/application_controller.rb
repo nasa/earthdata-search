@@ -26,4 +26,8 @@ class ApplicationController < ActionController::Base
         end
       end
     end
+
+    def token
+      cookies['token']
+    end
 end
