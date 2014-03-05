@@ -24,19 +24,22 @@ ns.GranuleLayer = do (L,
     if Array.isArray(path) && isClockwise(path) then path.concat().reverse() else path
 
   addPath = (ctx, path, isCounterclockwise) ->
-    if Array.isArray(path)
-      len = path.length
+    {path, poly, line} = path
 
+    if poly? || line?
+      poly ?= line
+      len = poly.length
       return if len < 2
 
-      if isCounterclockwise != !isClockwise(path)
-        path = path.concat().reverse()
+      if isCounterClockwise? && isCounterclockwise != !isClockwise(poly)
+        poly = poly.concat().reverse()
 
-      ctx.moveTo(path[0].x, path[0].y)
-      ctx.lineTo(point.x, point.y) for point in path[1...]
-    else
-      ctx.moveTo(path.x + 10, path.y)
-      ctx.arc(path.x, path.y, 10, 0, 2 * Math.PI, isCounterclockwise);
+      ctx.moveTo(poly[0].x, poly[0].y)
+      ctx.lineTo(p.x, p.y) for p in poly[1...]
+    else if point?
+      {x, y} = point
+      ctx.moveTo(x + 10, y)
+      ctx.arc(x, y, 10, 0, 2 * Math.PI, isCounterclockwise);
     null
 
   clipped = (ctx, boundary, maskedPaths, drawnPaths, fn) ->
@@ -45,8 +48,9 @@ ns.GranuleLayer = do (L,
       ctx.beginPath()
       addPath(ctx, boundary, false)
       for path in maskedPaths
-        addPath(ctx, path, true)
-        ctx.clip()
+        unless path.line?
+          addPath(ctx, path, true)
+          ctx.clip()
 
     if drawnPaths.length > 0
       ctx.beginPath()
@@ -120,51 +124,26 @@ ns.GranuleLayer = do (L,
           divided = dividePolygon(polygon[0])
 
           for interior in divided.interiors when tileBounds.intersects(interior)
-            result.push(projectPath(map, interior, [], 'geodetic', 2, 5).boundary)
+            result.push({poly: projectPath(map, interior, [], 'geodetic', 2, 5).boundary})
 
       rects = granule.getRectangles()
       if rects?
         for path in rects when tileBounds.intersects(path)
-          result.push(projectPath(map, path, [], 'cartesian', 2, 5).boundary)
+          result.push({poly: projectPath(map, path, [], 'cartesian', 2, 5).boundary})
 
       points = granule.getPoints()
       if points?
         for point in points when tileBounds.contains(point)
-          result.push(@_map.latLngToLayerPoint(point))
+          result.push({point: @_map.latLngToLayerPoint(point)})
+
+      lines = granule.getLines()
+      if lines?
+        for line in lines when tileBounds.intersects(line)
+          result.push({line: projectPath(map, line, [], 'geodetic', 2, 5).boundary})
 
       result
 
-    _clipPolygon: (ctx, str, tileBounds) ->
-      intersects = false
-      for polygon in dividePolygon(@_parsePolygon(str)).interiors
-
-        bounds = new L.LatLngBounds()
-        bounds.extend(latlng) for latlng in polygon
-
-        if tileBounds.intersects(bounds)
-          intersects = true
-          path = (@_map.latLngToLayerPoint(ll) for ll in polygon)
-
-          ctx.strokeStyle = "rgb(200,0,0)";
-          ctx.moveTo(path[0].x, path[0].y)
-
-          for point in path[1...]
-            ctx.lineTo(point.x, point.y)
-
-          ctx.closePath()
-          #ctx.stroke()
-
-      intersects
-
     _drawFootprint: (canvas, nwPoint, boundary, maskedPaths, drawnPaths) ->
-      #colors = ['rgba(255, 0, 0, 0.5)',
-      #          'rgba(0, 255, 0, 0.5)',
-      #          'rgba(0, 0, 255, 0.5)',
-      #          'rgba(255, 255, 0, 0.5)',
-      #          'rgba(255, 0, 255, 0.5)',
-      #          'rgba(0, 255, 255, 0.5)',
-      #          'rgba(255, 255, 255, 0.5)']
-
       ctx = canvas.getContext('2d')
       ctx.save()
 
@@ -181,10 +160,6 @@ ns.GranuleLayer = do (L,
         for path in drawnPaths
           ctx.beginPath()
           addPath(ctx, path, true)
-          ctx.closePath()
-          # For debugging clip paths
-          #ctx.fillStyle = colors[Math.abs(nwPoint.x + nwPoint.y) % colors.length]
-          #ctx.fill()
           ctx.lineWidth = 2
           ctx.strokeStyle = 'rgba(0, 0, 0, 1)'
           ctx.stroke()
@@ -216,12 +191,18 @@ ns.GranuleLayer = do (L,
       ctx.save()
 
       # http://www.w3.org/TR/2011/WD-2dcontext-20110405/#imagedata
-      ctx.fillStyle = '#' + (index + 0x1000000).toString(16).substr(-6)
+      ctx.strokeStyle = ctx.fillStyle = '#' + (index + 0x1000000).toString(16).substr(-6)
+      ctx.lineWidth = 4
 
       ctx.translate(-nwPoint.x, -nwPoint.y)
-      tileSize = @options.tileSize
-      clipped ctx, boundary, maskedPaths, drawnPaths, ->
-        ctx.fillRect(nwPoint.x, nwPoint.y, tileSize, tileSize)
+      clipped ctx, boundary, maskedPaths, [], ->
+        for path in drawnPaths
+          ctx.beginPath()
+          addPath(ctx, path, true)
+          if path.line?
+            ctx.stroke()
+          else
+            ctx.fill
       ctx.restore()
 
 
@@ -266,7 +247,7 @@ ns.GranuleLayer = do (L,
       nePoint = nwPoint.add([tileSize, 0])
       sePoint = nwPoint.add([tileSize, tileSize])
       swPoint = nwPoint.add([0, tileSize])
-      boundary = [nwPoint, nePoint, sePoint, swPoint]
+      boundary = {poly: [nwPoint, nePoint, sePoint, swPoint]}
       bounds = new L.latLngBounds(@_map.layerPointToLatLng(nwPoint),
                                   @_map.layerPointToLatLng(sePoint))
 
@@ -373,6 +354,7 @@ ns.GranuleLayer = do (L,
       layer = L.featureGroup()
       layer.addLayer(L.circleMarker(point, clickable: false)) for point in granule.getPoints() ? []
       layer.addLayer(L.sphericalPolygon(poly, clickable: false)) for poly in granule.getPolygons() ? []
+      layer.addLayer(L.polyline(line, clickable: false)) for line in granule.getLines() ? []
 
       for rect in granule.getRectangles() ? []
         # granule.getRectanges() returns a path, so it's really a polygon
