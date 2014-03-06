@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Data Quality Summaries', :reset => false do
-  before :all do
+  before :each do
     Capybara.reset_sessions!
     visit "/search"
     click_link 'Sign In'

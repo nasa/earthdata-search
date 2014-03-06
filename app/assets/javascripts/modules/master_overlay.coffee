@@ -65,7 +65,10 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       # boxes to have a height that stretches to the bottom of their parent.  It would
       # be awesome to do this in CSS, but I don't know that it's possible without
       # even uglier results
-      content.height(content.parents('.main-content').height() - content.offset().top - 40)
+      if $('.dqs-alert').is(':visible')
+        content.height(content.parents('.main-content').height() - content.offset().top - 110)
+      else
+        content.height(content.parents('.main-content').height() - content.offset().top - 40)
 
       secondary_content = @root.find('.master-overlay-secondary-content').find(".master-overlay-content")
       secondary_content.height(content.height() + 8)

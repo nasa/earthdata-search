@@ -154,7 +154,7 @@
           <p>
             Batch compare, preview, refine, and download datasets you've added to your project.
           </p>
-          <div data-bind="visible: ui.projectList.datasetsHaveDQS(), css: {'alert-info': ui.projectList.allDQSAccepted(), 'alert-warning': !ui.projectList.allDQSAccepted()}" class="alert">Some of the datasets in your project have data quality information, <a data-bind="click: ui.projectList.showDataQualitySummary.bind($data,project.datasets())" class="alert-link" href="#">click here</a> to view</div>
+          <div data-bind="visible: ui.projectList.datasetsHaveDQS(), css: {'alert-info': ui.projectList.allDQSAccepted(), 'alert-warning': !ui.projectList.allDQSAccepted()}" class="dqs-alert alert">Some of the datasets in your project have data quality information, <a data-bind="click: ui.projectList.showDataQualitySummary.bind($data,project.datasets())" class="alert-link" href="#">click here</a> to view</div>
         </div>
         <div class="master-overlay-content panel-list">
           <div class="master-overlay-project-actions">
