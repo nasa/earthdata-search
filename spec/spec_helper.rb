@@ -69,9 +69,7 @@ RSpec.configure do |config|
     end
     DatabaseCleaner.start
 
-    unless example.metadata[:wait].nil?
-      Capybara.default_wait_time = example.metadata[:wait]
-    end
+    Capybara.default_wait_time = example.metadata[:wait] || wait_time
   end
 
   config.after do

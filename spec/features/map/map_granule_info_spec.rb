@@ -127,7 +127,7 @@ describe "Map Granule information", reset: false do
       #  it 'displays no tooltip' do
       #    expect(page).to have_no_content('Granules at this location')
       #  end
-      end
+      #end
     end
 
     context 'with no dataset selected' do
@@ -151,7 +151,7 @@ describe "Map Granule information", reset: false do
       #  it 'displays no tooltip' do
       #    expect(page).to have_no_content('Granules at this location')
       #  end
-      end
+      #end
 
       context 'clicking on the map' do
         before :all do

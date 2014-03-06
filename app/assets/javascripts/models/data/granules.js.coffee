@@ -28,7 +28,21 @@ ns.Granules = do (ko,
 
     getRectangles: ->
       if !@_rects? && @boxes?
-        @_rects = @boxes.map(@_parseSpatial)
+        rects = []
+        for rect in @boxes.map(@_parseSpatial)
+          if rect[0].lng > rect[1].lng
+            divided = [[rect[0], L.latLng(rect[1].lat, 180)],
+                       [L.latLng(rect[0].lat, -180), rect[1]]]
+          else
+            divided = [rect]
+
+          for box in divided
+            rects.push([L.latLng(box[0].lat, box[0].lng), L.latLng(box[0].lat, box[1].lng),
+                        L.latLng(box[1].lat, box[1].lng), L.latLng(box[1].lat, box[0].lng),
+                        L.latLng(box[0].lat, box[0].lng)])
+
+        @_rects = rects
+
       @_rects
 
     _parseSpatial: (str) ->

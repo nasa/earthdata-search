@@ -14,46 +14,39 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
     visit "/search"
   end
 
-  context "for single point datasets" do
+  context "for point datasets" do
     use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data'
 
-    context "visualizing a dataset" do
+    context "visualizing a dataset's granules" do
       hook_visualization
 
       it "draws a single point on the map representing all of the dataset's granules" do
-        expect(page).to have_css('.leaflet-overlay-pane path', count: 1)
+        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
 
-      it "pans and zooms the map to the rendered point" do
-        expect(page).to have_css('.leaflet-overlay-pane path', count: 1)
-        zoom = page.evaluate_script("$('#map').data('map').map.getZoom()")
-        expect(zoom).to be(7)
-      end
-    end
+      context "and mousing over a visualized granule" do
+        before :all do
+          map_mousemove('#map', 39.1, -96.6)
+        end
 
-    context "removing a visualized dataset" do
-      hook_visualization_removal
+        after :all do
+          map_mouseout()
+        end
 
-      it "hides the dataset's visualizations" do
-        expect(page).to have_no_css('.leaflet-overlay-pane path')
-      end
-    end
-  end
-
-  context "for multi-point datasets" do
-    use_dataset 'C1000000080-CDDIS', 'CDDIS_DORIS_products_stcd'
-
-    context "visualizing a dataset" do
-      hook_visualization
-
-      it "draws points on the map for the dataset's unique granule points" do
-        expect(page).to have_css('.leaflet-overlay-pane path', count: 57)
+        it "draws the granule's footprint" do
+          expect(page).to have_selector('.leaflet-overlay-pane path')
+        end
       end
 
-      it "pans and zooms the map to encompass the dataset's points" do
-        expect(page).to have_css('.leaflet-overlay-pane path', count: 57)
-        zoom = page.evaluate_script("$('#map').data('map').map.getZoom()")
-        expect(zoom).to be < 3
+      context "and mousing off of a visualized granule" do
+        before :all do
+          map_mousemove('#map', 39.1, -96.6)
+          map_mouseout()
+        end
+
+        it "hides the granule's footprint" do
+          expect(page).to have_no_selector('.leaflet-overlay-pane path')
+        end
       end
     end
 
@@ -61,19 +54,44 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
       hook_visualization_removal
 
       it "hides the dataset's visualizations" do
-        expect(page).to have_no_css('.leaflet-overlay-pane path')
+        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
     end
   end
 
   context "for polygon datasets" do
-    use_dataset 'AST_L1A', 'AST_L1A'
+    use_dataset 'C1000000011-LANCEMODIS', 'MOD02QKM'
 
-    context "visualizing a dataset" do
+    context "visualizing a dataset's granules" do
       hook_visualization
 
       it "draws polygons on the map for granule spatial areas" do
         expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      end
+
+      context "and mousing over a visualized granule" do
+        before :all do
+          map_mousemove()
+        end
+
+        after :all do
+          map_mouseout()
+        end
+
+        it "draws the granule's footprint" do
+          expect(page).to have_selector('.leaflet-overlay-pane path')
+        end
+      end
+
+      context "and mousing off of a visualized granule" do
+        before :all do
+          map_mousemove()
+          map_mouseout()
+        end
+
+        it "hides the granule's footprint" do
+          expect(page).to have_no_selector('.leaflet-overlay-pane path')
+        end
       end
     end
 
@@ -89,11 +107,36 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
   context "for bounding box datasets" do
     use_dataset 'C204200620-GSFCS4PA', 'AIRS-AMSU variables-CloudSat'
 
-    context "visualizing a dataset" do
+    context "visualizing a dataset's granules" do
       hook_visualization
 
       it "draws polygons on the map for granule spatial areas" do
         expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      end
+
+      context "and mousing over a visualized granule" do
+        before :all do
+          map_mousemove()
+        end
+
+        after :all do
+          map_mouseout()
+        end
+
+        it "draws the granule's footprint" do
+          expect(page).to have_selector('.leaflet-overlay-pane path')
+        end
+      end
+
+      context "and mousing off of a visualized granule" do
+        before :all do
+          map_mousemove()
+          map_mouseout()
+        end
+
+        it "hides the granule's footprint" do
+          expect(page).to have_no_selector('.leaflet-overlay-pane path')
+        end
       end
     end
 
