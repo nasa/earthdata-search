@@ -68,5 +68,6 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
 
     hideFilters: =>
       @project.searchGranulesDataset(null)
+      $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
 
   exports = ProjectList
