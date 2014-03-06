@@ -66,6 +66,10 @@
   width: 36px;
   height: 32px;
   text-align: center;
+
+  &:hover {
+    color: #fff;
+  }
 }
 
 .toolbar {

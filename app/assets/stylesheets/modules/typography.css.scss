@@ -75,3 +75,15 @@ ul {
   border-radius: 5px;
   margin: 10px 0;
 }
+
+.message {
+  padding: 1em;
+  background: #f39c12;
+  border-left: 10px solid #dc7921;
+  color: #fff;
+
+  a:link, a:visited {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}

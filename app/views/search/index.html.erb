@@ -147,17 +147,9 @@
             <i class="edsc-icon-arrow-left"></i> Back to Dataset Search
           </a>
         </nav>
-        <header>
+        <header class="with-options">
           <h2>Project Datasets</h2>
-        </header>
-        <div class="master-overlay-info">
-          <p>
-            Batch compare, preview, refine, and download datasets you've added to your project.
-          </p>
-          <div data-bind="visible: ui.projectList.datasetsHaveDQS(), css: {'alert-info': ui.projectList.allDQSAccepted(), 'alert-warning': !ui.projectList.allDQSAccepted()}" class="dqs-alert alert">Some of the datasets in your project have data quality information, <a data-bind="click: ui.projectList.showDataQualitySummary.bind($data,project.datasets())" class="alert-link" href="#">click here</a> to view</div>
-        </div>
-        <div class="master-overlay-content panel-list">
-          <div class="master-overlay-project-actions">
+          <div class="master-overlay-project-actions actions">
             <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject">
               <i class="edsc-icon-download"></i>
             </a>
@@ -171,6 +163,11 @@
             <div class="button icon-button empty-button"></div>
             <div class="button icon-button empty-button"></div>
           </div>
+        </header>
+        <div class="master-overlay-info">
+          <div data-bind="visible: ui.projectList.datasetsHaveDQS(), css: {'message-info': ui.projectList.allDQSAccepted(), 'message-warning': !ui.projectList.allDQSAccepted()}" class="dqs-message message">Some of the datasets in your project have data quality information. You must <a data-bind="click: ui.projectList.showDataQualitySummary.bind($data,project.datasets())" class="alert-link" href="#">read and accept</a> these summaries before you can download project data.</div>
+        </div>
+        <div class="master-overlay-content panel-list">
           <ul id="project-datasets-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">
