@@ -179,6 +179,11 @@ ns.GranulesLayer = do (L
     constructor: ->
 
     onAdd: (map) ->
+      @_hoverLayer = new HoverLayer()
+      map.addLayer(@_hoverLayer)
+
+      return
+
       @_map = map
 
       @_granuleInfo = new GranuleInfo(project)
@@ -187,9 +192,6 @@ ns.GranulesLayer = do (L
       ko.applyBindings(@_granuleInfo, @_getMapElement('info'))
 
       @_selectionChangeSubscription = @_granuleDetails.granules.subscribe(@_onSelectionChange)
-
-      @_hoverLayer = new HoverLayer()
-      map.addLayer(@_hoverLayer)
 
       @_tooltipLayer = new TooltipLayer(@_getMapElement('info'))
       map.addLayer(@_tooltipLayer)
@@ -201,6 +203,9 @@ ns.GranulesLayer = do (L
       map.on 'mousedown', @_onMouseDown
 
     onRemove: (map) ->
+      map.removeLayer(@_hoverLayer) if @_hoverLayer?
+      return
+
       @_map = map
 
       @_granuleInfo.dispose()
@@ -212,7 +217,6 @@ ns.GranulesLayer = do (L
       @_granuleChangeSubscription.dispose()
       @_granuleResultsSubscription?.dispose()
 
-      map.removeLayer(@_hoverLayer) if @_hoverLayer?
       map.removeLayer(@_tooltipLayer) if @_tooltipLayer?
 
       map.off 'click', @_onClick

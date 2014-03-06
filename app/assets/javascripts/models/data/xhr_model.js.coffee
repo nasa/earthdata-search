@@ -20,11 +20,11 @@ ns.XhrModel = do (ko
       @hits = ko.observable(0)
       @hasNextPage = @computed(@_computeHasNextPage, this, deferEvaluation: true)
 
-    search: (params, callback) =>
+    search: (params=@query.params(), callback=null) =>
       params.page_num = @page = 1
       @_loadAndSet params, [], callback
 
-    loadNextPage: (params, callback) =>
+    loadNextPage: (params=@query.params(), callback=null) =>
       if @hasNextPage() and !@isLoading()
         params.page_num = ++@page
         @_loadAndSet params, @results(), callback

@@ -1,4 +1,4 @@
-            <li data-bind="<% if is_project %> click: $root.ui.projectList.select, <% end %>css: {'view-dataset': $root.datasets.hasVisibleDataset($data), 'search-granules': $root.project.isSearchingGranules($data)<% if is_project %>, 'panel-list-selected': $root.ui.projectList.isSelected($data) <% end %>}" class="panel-list-item">
+            <li data-bind="click: $root.ui.datasetsList.focusDataset, css: {'view-dataset': $root.datasets.hasVisibleDataset($data), 'search-granules': $root.project.isSearchingGranules($data)}" class="panel-list-item panel-list-item-with-thumb master-overlay-forward master-overlay-hide-parent">
               <div class="panel-list-thumbnail-container">
               <!-- ko if: thumbnail -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">

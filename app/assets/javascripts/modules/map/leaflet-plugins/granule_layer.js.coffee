@@ -313,6 +313,7 @@ ns.GranuleLayer = do (L,
   class GranuleLayer extends GibsTileLayer
     constructor: (@granules, options) ->
       @_hasGibs = options?.product?
+      @_stickyFocus = false
 
       super(options)
 
@@ -321,6 +322,8 @@ ns.GranuleLayer = do (L,
 
       map.on 'edsc.mousemove', @_onMouseMove
       map.on 'edsc.mouseout', @_onMouseOut
+      map.on 'click', @_onClick
+      map.on 'edsc.focusgranule', @_onFocusGranule
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
 
@@ -329,23 +332,57 @@ ns.GranuleLayer = do (L,
 
       map.off 'edsc.mousemove', @_onMouseMove
       map.off 'edsc.mouseout', @_onMouseOut
+      map.off 'click', @_onClick
+      map.off 'edsc.focusgranule', @_onFocusGranule
       @_resultsSubscription.dispose()
       @_results = null
+      @_granuleFocusLayer?.onRemove(@_map)
+      @_granuleStickyLayer?.onRemove(@_map)
 
     url: ->
       super() if @_hasGibs
 
     _onMouseOut: (e) =>
-      @_granuleFocusLayer?.onRemove(@_map)
-      @_granule = null
+      if @_granule?
+        @_map.fire('edsc.focusgranule', granule: null)
 
     _onMouseMove: (e) =>
       granule = @layer?.granuleAt(e.layerPoint)
-      if granule != @_granule
-        @_granule = granule
-        @_granuleFocusLayer?.onRemove(@_map)
-        @_granuleFocusLayer = @_layerForGranule(granule)
-        @_granuleFocusLayer?.onAdd(@_map)
+      if @_granule != granule
+        @_map.fire('edsc.focusgranule', granule: granule)
+
+    _onClick: (e) =>
+      granule = @layer?.granuleAt(e.layerPoint)
+      @_map.fire('edsc.focusgranule', granule: granule, sticky: @_stickied != granule)
+
+    _onFocusGranule: (e) =>
+      @_granule = granule = e.granule
+      sticky = e.sticky
+
+      @_granuleFocusLayer?.onRemove(@_map)
+      @_granuleFocusLayer = @_layerForGranule(granule, false)
+      @_granuleFocusLayer?.onAdd(@_map)
+
+      needsReload = (sticky == false && @_stickied != null) || (sticky && @_stickied != granule)
+
+      if sticky == false
+        @_stickied = null
+        @_granuleStickyLayer?.onRemove(@_map)
+        @_granuleStickyLayer = null
+        if @_restoreBounds?
+          @_map.fitBounds(@_restoreBounds)
+          @_restoreBounds = null
+
+      if sticky && @_stickied != granule
+        @_stickied = granule
+        @_granuleStickyLayer?.onRemove(@_map)
+        @_granuleStickyLayer = @_layerForGranule(granule, true)
+        if @_granuleStickyLayer?
+          @_granuleStickyLayer.onAdd(@_map)
+          @_restoreBounds ?= @_map.getBounds()
+          @_map.fitBounds(@_granuleFocusLayer.getBounds())
+
+      @_loadResults(@_results) if needsReload
 
     _buildLayerWithOptions: (newOptions) ->
       # GranuleCanvasLayer needs to handle time
@@ -365,19 +402,70 @@ ns.GranuleLayer = do (L,
 
     _loadResults: (results) ->
       @_results = results
+
+      if @_stickied?
+        results = results.concat()
+        index = results.indexOf(@_stickied)
+        if index != -1
+          results.splice(index, 1)
+          results.unshift(@_stickied)
+
       @layer?.setResults(results)
 
-    _layerForGranule: (granule) ->
+    _layerForGranule: (granule, sticky) ->
       return null unless granule?
 
+      if sticky
+        options =
+          fillOpacity: 0
+          clickable: false
+      else
+        options =
+          clickable: false
+
       layer = L.featureGroup()
-      layer.addLayer(L.circleMarker(point, clickable: false)) for point in granule.getPoints() ? []
-      layer.addLayer(L.sphericalPolygon(poly, clickable: false)) for poly in granule.getPolygons() ? []
+      layer.addLayer(L.circleMarker(point, options)) for point in granule.getPoints() ? []
+      layer.addLayer(L.sphericalPolygon(poly, options)) for poly in granule.getPolygons() ? []
 
       for rect in granule.getRectangles() ? []
         # granule.getRectanges() returns a path, so it's really a polygon
-        shape = L.polygon(rect, clickable: false)
+        shape = L.polygon(rect, options)
         shape._interpolationFn = 'cartesian'
         layer.addLayer(shape)
 
+      if sticky
+        temporal = [granule.time_start, granule.time_end].join(' to ')
+        icon = L.divIcon
+          className: 'granule-spatial-label',
+          html: temporal + '<a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+
+        marker = L.marker([0, 0], icon: icon)
+
+        firstShape = layer.getLayers()[0]
+        if firstShape._interiors?
+          firstShape = firstShape._interiors
+
+        firstShape?.on 'add', (e) ->
+          map = @_map
+
+          center = @getLatLng?()
+          unless center?
+            xmin = Infinity
+            xmax = -Infinity
+            ymin = Infinity
+            ymax = -Infinity
+            latlngs = @getLatLngs()
+            latlngs = latlngs[0] if Array.isArray(latlngs[0])
+            for latlng in latlngs
+              p = map.latLngToLayerPoint(latlng)
+              xmin = Math.min(xmin, p.x)
+              xmax = Math.max(xmax, p.x)
+              ymin = Math.min(ymin, p.y)
+              ymax = Math.max(ymax, p.y)
+            center = map.layerPointToLatLng(L.point((xmin + xmax) / 2, (ymin + ymax) / 2))
+          marker.setLatLng(center)
+          layer.addLayer(marker)
+
       layer
+
+  exports = GranuleLayer

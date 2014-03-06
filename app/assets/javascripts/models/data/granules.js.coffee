@@ -60,6 +60,10 @@ ns.Granules = do (ko,
 
     _computeSearchResponse: (current, callback) ->
       if @query?.validQuery() && @parentQuery?.validQuery()
+        results = []
+        @results([])
+        result.dispose?() for result in results
+        @isLoaded(false)
         params = @params()
         params.page_num = @page = 1
         @_load(params, current, callback)
