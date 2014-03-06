@@ -1,0 +1,32 @@
+// Override default Bootstrap tab CSS
+.nav-tabs {
+  border-color: #000;
+  margin: 15px 15px 0 15px;
+
+  a {
+    background: none;
+    color: #999;
+  }
+
+  li.active a, li.active:hover a {
+    background: #333;
+    border-color: #000;
+    border-bottom-color: #333;
+    color: #fff;
+  }
+
+  li:hover a {
+    background: #222;
+    border-color: #222;
+  }
+}
+
+.tab-content {
+  margin: 0 15px 12px 15px;
+  padding: 10px;
+  background: #333;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  clear: both;
+}
