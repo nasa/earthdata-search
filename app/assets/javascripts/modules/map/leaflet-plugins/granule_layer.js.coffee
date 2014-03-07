@@ -337,8 +337,15 @@ ns.GranuleLayer = do (L,
       map.off 'edsc.stickygranule', @_onStickyGranule
       @_resultsSubscription.dispose()
       @_results = null
-      @_granuleFocusLayer?.onRemove(@_map)
-      @_granuleStickyLayer?.onRemove(@_map)
+      @_granuleFocusLayer?.onRemove(map)
+      @_granuleFocusLayer = null
+      @_granuleStickyLayer?.onRemove(map)
+      @_granuleStickyLayer = null
+
+      if @_restoreBounds
+        map.fitBounds(@_restoreBounds)
+        @_restoreBounds = null
+
 
     url: ->
       super() if @_hasGibs
