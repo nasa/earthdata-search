@@ -78,9 +78,14 @@ ul {
 
 .message {
   padding: 1em;
-  background: #f39c12;
-  border-left: 10px solid #dc7921;
   color: #fff;
+  background: #323232;
+  border-left: 10px solid #27ae60;
+
+  &.message-warning {
+    background: #f39c12;
+    border-left: 10px solid #dc7921;
+  }
 
   a:link, a:visited {
     font-weight: bold;

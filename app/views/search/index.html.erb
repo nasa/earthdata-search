@@ -160,8 +160,6 @@
             <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
               <i class="edsc-icon-eye"></i>
             </a>
-            <div class="button icon-button empty-button"></div>
-            <div class="button icon-button empty-button"></div>
           </div>
         </header>
         <div class="master-overlay-info">
@@ -449,14 +447,8 @@
       <form data-bind="submit: ui.projectList.acceptDataQualitySummary">
         <div class="modal-body">
           <!-- ko foreach: ui.projectList.dataQualitySummaryModal() -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3>Data Quality Summary for <span data-bind="text: dataset.dataset_id"></span></h3>
-            </div>
-            <div class="panel-body">
-              <div data-bind="html: summary.summary"></div>
-            </div>
-          </div>
+          <h3>Data Quality Summary for <span data-bind="text: dataset.dataset_id"></span></h3>
+          <div data-bind="html: summary.summary"></div>
           <!-- /ko -->
         </div>
         <div class="modal-footer">
