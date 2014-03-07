@@ -210,7 +210,7 @@
 </div>
 
 <div id="map" class="map" style="height:100%">
-  <!-- ko if: ui.datasetsList.focused() && ui.datasetsList.focused().stickied() -->
+  <!-- ko if: ui.datasetsList.focused() && ui.datasetsList.focused().stickied() && ui.datasetsList.focused().stickied().browse_flag === 'true' -->
   <!-- ko with: ui.datasetsList.focused() -->
   <div class="granule-browse" data-bind="css: {busy: loadingBrowse()}">
     <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
