@@ -313,8 +313,6 @@ ns.GranuleLayer = do (L,
   class GranuleLayer extends GibsTileLayer
     constructor: (@granules, options) ->
       @_hasGibs = options?.product?
-      @_stickyFocus = false
-
       super(options)
 
     onAdd: (map) ->
@@ -324,6 +322,7 @@ ns.GranuleLayer = do (L,
       map.on 'edsc.mouseout', @_onMouseOut
       map.on 'click', @_onClick
       map.on 'edsc.focusgranule', @_onFocusGranule
+      map.on 'edsc.stickygranule', @_onStickyGranule
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
 
@@ -334,6 +333,7 @@ ns.GranuleLayer = do (L,
       map.off 'edsc.mouseout', @_onMouseOut
       map.off 'click', @_onClick
       map.off 'edsc.focusgranule', @_onFocusGranule
+      map.off 'edsc.stickygranule', @_onStickyGranule
       @_resultsSubscription.dispose()
       @_results = null
       @_granuleFocusLayer?.onRemove(@_map)
@@ -353,36 +353,37 @@ ns.GranuleLayer = do (L,
 
     _onClick: (e) =>
       granule = @layer?.granuleAt(e.layerPoint)
-      @_map.fire('edsc.focusgranule', granule: granule, sticky: @_stickied != granule)
+      granule = null if @_stickied == granule
+      @_map.fire('edsc.stickygranule', granule: granule)
 
     _onFocusGranule: (e) =>
       @_granule = granule = e.granule
-      sticky = e.sticky
 
       @_granuleFocusLayer?.onRemove(@_map)
       @_granuleFocusLayer = @_layerForGranule(granule, false)
       @_granuleFocusLayer?.onAdd(@_map)
 
-      needsReload = (sticky == false && @_stickied != null) || (sticky && @_stickied != granule)
+    _onStickyGranule: (e) =>
+      granule = e.granule
+      return if @_stickied == granule
 
-      if sticky == false
-        @_stickied = null
-        @_granuleStickyLayer?.onRemove(@_map)
-        @_granuleStickyLayer = null
-        if @_restoreBounds?
-          @_map.fitBounds(@_restoreBounds)
-          @_restoreBounds = null
+      @_stickied = granule
 
-      if sticky && @_stickied != granule
-        @_stickied = granule
-        @_granuleStickyLayer?.onRemove(@_map)
-        @_granuleStickyLayer = @_layerForGranule(granule, true)
-        if @_granuleStickyLayer?
-          @_granuleStickyLayer.onAdd(@_map)
-          @_restoreBounds ?= @_map.getBounds()
-          @_map.fitBounds(@_granuleFocusLayer.getBounds())
+      @_granuleStickyLayer?.onRemove(@_map)
+      @_granuleStickyLayer = null
 
-      @_loadResults(@_results) if needsReload
+      if !granule? && @_restoreBounds?
+        @_map.fitBounds(@_restoreBounds)
+        @_restoreBounds = null
+
+      @_granuleStickyLayer = @_layerForGranule(granule, true)
+      if @_granuleStickyLayer?
+        @_granuleStickyLayer.onAdd(@_map)
+        @_restoreBounds ?= @_map.getBounds()
+        @_map.fitBounds(@_granuleFocusLayer.getBounds())
+
+      @_loadResults(@_results)
+
 
     _buildLayerWithOptions: (newOptions) ->
       # GranuleCanvasLayer needs to handle time
@@ -406,7 +407,11 @@ ns.GranuleLayer = do (L,
       if @_stickied?
         results = results.concat()
         index = results.indexOf(@_stickied)
-        if index != -1
+        if index == -1
+          @_stickied = null
+          @_granuleStickyLayer?.onRemove(@_map)
+          @_granuleStickyLayer = null
+        else
           results.splice(index, 1)
           results.unshift(@_stickied)
 

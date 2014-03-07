@@ -7,11 +7,13 @@ ns.GranulesList = do ($=jQuery)->
       @granules = @dataset.granulesModel
       @_map = $('#map').data('map').map
       @_map.on 'edsc.focusgranule', @_onFocusGranule
+      @_map.on 'edsc.stickygranule', @_onStickyGranule
       @focused = ko.observable(null)
       @stickied = ko.observable(null)
 
     dispose: ->
       @_map.off 'edsc.focusgranule', @_onFocusGranule
+      @_map.off 'edsc.stickygranule', @_onStickyGranule
       @dataset.dispose()
 
     scrolled: (data, event) =>
@@ -20,14 +22,10 @@ ns.GranulesList = do ($=jQuery)->
         @granules.loadNextPage()
 
     _onFocusGranule: (e) =>
-      granule = e.granule
-      sticky = e.sticky
       @focused(e.granule)
-      stickied = @stickied()
-      if stickied == granule && sticky == false
-        @stickied(null)
-      else if stickied != granule && sticky
-        @stickied(granule)
+
+    _onStickyGranule: (e) =>
+      @stickied(e.granule)
 
     onGranuleMouseover: (granule) =>
       if granule != @focused()
@@ -41,6 +39,7 @@ ns.GranulesList = do ($=jQuery)->
       granule == @stickied()
 
     toggleStickyFocus: (granule) =>
-      @_map.fire 'edsc.focusgranule', granule: granule, sticky: (@stickied() != granule)
+      granule = null if @stickied() == granule
+      @_map.fire 'edsc.stickygranule', granule: granule
 
   exports = GranulesList
