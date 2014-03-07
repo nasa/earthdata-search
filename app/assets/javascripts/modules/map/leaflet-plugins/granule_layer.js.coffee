@@ -1,6 +1,7 @@
 ns = @edsc.map.L
 
 ns.GranuleLayer = do (L,
+                      $ = jQuery,
                       GibsTileLayer = ns.GibsTileLayer,
                       projectPath=ns.interpolation.projectPath,
                       dateUtil = @edsc.util.date
@@ -352,6 +353,7 @@ ns.GranuleLayer = do (L,
         @_map.fire('edsc.focusgranule', granule: granule)
 
     _onClick: (e) =>
+      return unless $(e.originalEvent.target).closest('a').length == 0
       granule = @layer?.granuleAt(e.layerPoint)
       granule = null if @_stickied == granule
       @_map.fire('edsc.stickygranule', granule: granule)

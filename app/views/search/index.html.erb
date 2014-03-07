@@ -210,6 +210,15 @@
 </div>
 
 <div id="map" class="map" style="height:100%">
+  <!-- ko if: ui.datasetsList.focused() && ui.datasetsList.focused().stickied() -->
+  <!-- ko with: ui.datasetsList.focused() -->
+  <div class="granule-browse" data-bind="css: {busy: loadingBrowse()}">
+    <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
+      <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad()}" alt="Browse preview" title="View full image">
+    </a>
+  </div>
+  <!-- /ko -->
+  <!-- /ko -->
   <%#
   <!-- ko stopBinding: true -->
   <div id="granule-info" class="granule-info map-tooltip" data-bind="if: granules() && isCurrent()">
@@ -229,7 +238,9 @@
     </div>
   </div>
   <!-- /ko -->
+   %>
   <%# Container lets leaflet move this around the DOM without messing up knockout bindings %>
+  <%#
   <script id="granule-details-template" type="text/html">
     <div id="map-granule-details" class="granule-details" data-bind="if: granules()">
       <!-- ko if: !granules().isLoaded() -->

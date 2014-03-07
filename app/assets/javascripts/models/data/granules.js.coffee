@@ -12,8 +12,15 @@ ns.Granules = do (ko,
     constructor: (jsonData) ->
       extend(this, jsonData)
 
-    edsc_browse_url: ->
-      "https://api.echo.nasa.gov/browse-scaler/browse_images/granules/#{@id}?h=170&w=170"
+    edsc_browse_url: (w, h) ->
+      w ?= 170
+      h ?= w
+      "https://api.echo.nasa.gov/browse-scaler/browse_images/granules/#{@id}?h=#{h}&w=#{w}"
+
+    edsc_full_browse_url: ->
+      for link in @links
+        return link.href if link.rel.indexOf('browse') != -1
+      null
 
     getPoints: ->
       if !@_points? && @points?

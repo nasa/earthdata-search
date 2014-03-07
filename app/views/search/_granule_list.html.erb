@@ -22,6 +22,11 @@
           <ul id="project-datasets-list" class="panel-list-list" data-bind="foreach: granules.results()">
 
             <li class="panel-list-item" data-bind="css: {'panel-list-item-with-thumb': browse_flag === 'true', 'panel-list-focused': $parent.focused() === $data, 'panel-list-selected': $parent.isStickied($data)}, event: { mouseenter: $parent.onGranuleMouseover, mouseleave: $parent.onGranuleMouseout, click: $parent.toggleStickyFocus}">
+              <!-- ko if: browse_flag === 'true' -->
+                <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
+                  <img class="panel-list-thumbnail" data-bind="attr: {src: edsc_browse_url(65)}" alt="Browse Image">
+                </a>
+              <!-- /ko -->
               <a class="panel-list-remove panel-list-when-selected" href="#" title="remove"><i class="fa fa-times"></i></a>
 
               <h3 data-bind="text: title"></h3>

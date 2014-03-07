@@ -42,6 +42,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 }
 
 .panel-list-thumbnail-container {
+  display: block;
   float: left;
   position:relative;
   margin-left: -($panel-list-thumbnail-size - 4px);
@@ -101,6 +102,10 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   .panel-list-when-selected {
     visibility: visible;
   }
+}
+
+.panel-list-selected.panel-list-item-with-thumb {
+  padding-left: $panel-list-thumbnail-size;
 }
 
 .panel-list-when-selected {

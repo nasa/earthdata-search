@@ -10,6 +10,7 @@ ns.GranulesList = do ($=jQuery)->
       @_map.on 'edsc.stickygranule', @_onStickyGranule
       @focused = ko.observable(null)
       @stickied = ko.observable(null)
+      @loadingBrowse = ko.observable(false)
 
     dispose: ->
       @_map.off 'edsc.focusgranule', @_onFocusGranule
@@ -26,6 +27,10 @@ ns.GranulesList = do ($=jQuery)->
 
     _onStickyGranule: (e) =>
       @stickied(e.granule)
+      @loadingBrowse(e.granule?)
+
+    finishLoad: ->
+      @loadingBrowse(false)
 
     onGranuleMouseover: (granule) =>
       if granule != @focused()
@@ -38,7 +43,8 @@ ns.GranulesList = do ($=jQuery)->
     isStickied: (granule) =>
       granule == @stickied()
 
-    toggleStickyFocus: (granule) =>
+    toggleStickyFocus: (granule, e) =>
+      return true if $(e?.target).closest('a').length > 0
       granule = null if @stickied() == granule
       @_map.fire 'edsc.stickygranule', granule: granule
 

@@ -239,3 +239,24 @@ p.map-popup-info {
     }
   }
 }
+
+.granule-browse {
+  position: absolute;
+  z-index: 49;
+  right: 20px;
+  bottom: 140px;
+
+  &.busy {
+    width: 256px;
+    height: 256px;
+    background-color: #222;
+
+    img {
+      display: none;
+    }
+  }
+
+  a {
+    display: block;
+  }
+}
