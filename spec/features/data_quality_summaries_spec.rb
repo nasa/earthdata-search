@@ -60,7 +60,7 @@ describe 'Data Quality Summaries', :reset => false do
 
   end
 
-  context "when logging out, DQS acceptance persits" do
+  context "when logging out, DQS acceptance persists" do
     it "remembers the user accepted the data quality summary" do
       within ".message-warning" do
         click_link "read and accept"

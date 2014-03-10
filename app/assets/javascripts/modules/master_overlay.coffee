@@ -52,6 +52,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         if currentLevel != value
           @_content().attr('data-level', value)
           @current().trigger('edsc.navigate')
+        @_fixContentHeight()
       else
         # getter
         parseInt(@_content().attr('data-level'), 10)
@@ -65,10 +66,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       # boxes to have a height that stretches to the bottom of their parent.  It would
       # be awesome to do this in CSS, but I don't know that it's possible without
       # even uglier results
-      if $('.dqs-message').is(':visible')
-        content.height(content.parents('.main-content').height() - content.offset().top - 65)
-      else
-        content.height(content.parents('.main-content').height() - content.offset().top + 50)
+      content.height(content.parents('.main-content').height() - $(content[@level()]).offset().top - 40)
 
       secondary_content = @root.find('.master-overlay-secondary-content').find(".master-overlay-content")
       secondary_content.height(content.height() + 8)
