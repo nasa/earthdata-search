@@ -209,7 +209,7 @@
   <!-- ko with: ui.datasetsList.focused() -->
   <div class="granule-browse" data-bind="css: {busy: loadingBrowse()}">
     <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
-      <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad()}" alt="Browse preview" title="View full image">
+      <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad}" alt="Browse preview" title="View full image">
     </a>
   </div>
   <!-- /ko -->

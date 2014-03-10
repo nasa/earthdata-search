@@ -55,6 +55,22 @@ module Helpers
       nth_panel(project_overview, n)
     end
 
+    def granule_list
+      page.find('#granule-list')
+    end
+
+    def first_granule_list_item
+      nth_panel(granule_list, 1)
+    end
+
+    def second_granule_list_item
+      nth_panel(granule_list, 2)
+    end
+
+    def nth_granule_list_item(n)
+      nth_panel(granule_list, n)
+    end
+
     private
 
     def nth_panel(root, n)

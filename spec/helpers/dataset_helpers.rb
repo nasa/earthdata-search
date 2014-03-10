@@ -13,18 +13,21 @@ module Helpers
       end
     end
 
-    def hook_granule_results(around=:all)
-      before around do
-        first_dataset_result.click
-        sleep(1) # Wait for sliding transitions
-        expect(page).to have_no_text("Loading granules...")
-      end
+    def view_granule_results
+      first_dataset_result.click
+      sleep(1) # Wait for sliding transitions
+      expect(page).to have_no_text("Loading granules...")
+    end
 
-      after around do
-        find('#granule-list').click_link('Back to Datasets')
-        wait_for_visualization_unload
-        sleep(1) # Wait for sliding transitions
-      end
+    def leave_granule_results
+      find('#granule-list').click_link('Back to Datasets')
+      wait_for_visualization_unload
+      sleep(1) # Wait for sliding transitions
+    end
+
+    def hook_granule_results(scope=:all)
+      before(scope) { view_granule_results }
+      after(scope) { leave_granule_results }
     end
 
     def hook_visualization
