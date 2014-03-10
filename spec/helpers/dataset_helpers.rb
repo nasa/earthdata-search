@@ -13,6 +13,18 @@ module Helpers
       end
     end
 
+    def hook_granule_results
+      before :all do
+        first_dataset_result.click
+        expect(page).to have_no_text("Loading granules...")
+      end
+
+      after :all do
+        find('#granule-list').click_link('Back to Datasets')
+        wait_for_visualization_unload
+      end
+    end
+
     def hook_visualization
       before :all do
         first_dataset_result.click_link "View dataset"
