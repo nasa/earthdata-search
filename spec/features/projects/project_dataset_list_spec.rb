@@ -20,7 +20,7 @@ describe "Project dataset list", reset: false do
   end
 
   it "displays datasets that have been added to the project" do
-    expect(page).to have_css('#project-datasets-list .panel-list-item', count: 2)
+    expect(project_overview).to have_css('.panel-list-item', count: 2)
   end
 
   it 'hides the "Browse Datasets" pane' do
@@ -50,11 +50,11 @@ describe "Project dataset list", reset: false do
     end
 
     it "removes the selected dataset from the project list" do
-      expect(page).to have_css('#project-datasets-list .panel-list-item', count: 1)
+      expect(project_overview).to have_css('.panel-list-item', count: 1)
     end
 
     it "removes the selected dataset's visualizations" do
-      expect(page).to have_no_link('Hide dataset')
+      expect(project_overview).to have_no_link('Hide dataset')
     end
   end
 
@@ -64,35 +64,35 @@ describe "Project dataset list", reset: false do
     end
 
     it "highlights the selected dataset" do
-      expect(page).to have_link('Hide dataset', count: 1)
+      expect(project_overview).to have_link('Hide dataset', count: 1)
     end
 
     it "un-highlights the selected dataset when clicking the button again" do
       first_project_dataset.click_link "Hide dataset"
-      expect(page).to have_no_link('Hide dataset')
+      expect(project_overview).to have_no_link('Hide dataset')
     end
 
     it "keeps the selected dataset highlighted when returning to the project" do
       click_link "Back to Dataset Search"
 
       dataset_results.click_link "View Project"
-      expect(page).to have_link('Hide dataset', count: 1)
+      expect(project_overview).to have_link('Hide dataset', count: 1)
     end
   end
 
   context "when clicking the 'View all datasets' button" do
-    before(:each) do
+    before :each do
       click_link 'View all datasets'
     end
 
     it "highlights all project datasets" do
-      expect(page).to have_css('.master-overlay-project-actions a.button-active', count: 1)
-      expect(page).to have_link('Hide dataset', count: 2)
+      expect(project_overview).to have_css('.master-overlay-project-actions a.button-active', count: 1)
+      expect(project_overview).to have_link('Hide dataset', count: 2)
     end
 
     it "un-highlights all project datasets when clicking the button again" do
       click_link 'Hide all datasets'
-      expect(page).to have_no_link('Hide dataset')
+      expect(project_overview).to have_no_link('Hide dataset')
     end
   end
 
