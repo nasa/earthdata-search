@@ -2,7 +2,7 @@
 
 ns = @edsc.models.ui
 
-ns.DatasetsList = do (GranulesList=ns.GranulesList) ->
+ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
 
   class DatasetsList
     constructor: (@query, @datasets) ->
@@ -17,6 +17,7 @@ ns.DatasetsList = do (GranulesList=ns.GranulesList) ->
       @datasets.showDataset(dataset)
 
     focusDataset: (dataset, event=null) =>
+      return true if $(event?.target).closest('a').length > 0
       dataset = dataset.clone()
       @focused(new GranulesList(dataset))
       @datasets.addVisibleDataset(dataset)
