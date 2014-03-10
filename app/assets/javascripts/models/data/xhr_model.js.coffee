@@ -24,10 +24,13 @@ ns.XhrModel = do (ko
       params.page_num = @page = 1
       @_loadAndSet params, [], callback
 
-    loadNextPage: (params=@query.params(), callback=null) =>
+    loadNextPage: (params=@params(), callback=null) =>
       if @hasNextPage() and !@isLoading()
         params.page_num = ++@page
         @_loadAndSet params, @results(), callback
+
+    params: ->
+      @query.params()
 
     abort: ->
       if @currentRequest? && @currentRequest.readystate != 4
