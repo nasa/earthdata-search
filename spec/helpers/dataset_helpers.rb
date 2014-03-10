@@ -13,15 +13,17 @@ module Helpers
       end
     end
 
-    def hook_granule_results
-      before :all do
+    def hook_granule_results(around=:all)
+      before around do
         first_dataset_result.click
+        sleep(1) # Wait for sliding transitions
         expect(page).to have_no_text("Loading granules...")
       end
 
-      after :all do
+      after around do
         find('#granule-list').click_link('Back to Datasets')
         wait_for_visualization_unload
+        sleep(1) # Wait for sliding transitions
       end
     end
 
