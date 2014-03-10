@@ -29,7 +29,7 @@ ns.GranulesList = do ($=jQuery)->
       @stickied(e.granule)
       @loadingBrowse(e.granule?)
 
-    finishLoad: ->
+    finishLoad: =>
       @loadingBrowse(false)
 
     onGranuleMouseover: (granule) =>
