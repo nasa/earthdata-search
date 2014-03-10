@@ -55,9 +55,11 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       summaries = []
       for dataset in datasets
         summary = {}
-        summary["dataset"] = dataset
-        summary["summary"] = dataset.dqsModel.results()
-        summaries.push summary if summary["summary"].id
+        if dataset.dqsModel.results()?
+          for s in dataset.dqsModel.results()
+            summary["dataset"] = dataset
+            summary["summary"] = s
+            summaries.push summary if summary["summary"].id
 
       @dataQualitySummaryModal(summaries)
 
@@ -72,7 +74,8 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
 
       xhr = doPost '/accept_data_quality_summaries', data, (response) =>
         for dqs in summaries
-          dqs.dataset.dqsModel.results().accepted(true)
+          for s in dqs.dataset.dqsModel.results()
+            s.accepted(true)
           @dataQualitySummaryModal(false)
 
         @dataQualitySummaryCallback?()
@@ -124,14 +127,16 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     datasetsHaveDQS: =>
       result = false
       for dataset in @project.datasets()
-        result = true if dataset.dqsModel.results().id
+        result = true if dataset.dqsModel.results()?.length > 0
 
       result
 
     allDQSAccepted: =>
       result = true
       for dataset in @project.datasets()
-        result = false if dataset.dqsModel.results().id && !dataset.dqsModel.results().accepted()
+        if dataset.dqsModel.results()?.length > 0
+          for dqs in dataset.dqsModel.results()
+            result = false if !dqs.accepted()
 
       result
 

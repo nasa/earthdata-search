@@ -66,9 +66,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       # be awesome to do this in CSS, but I don't know that it's possible without
       # even uglier results
       if $('.dqs-message').is(':visible')
-        content.height(content.parents('.main-content').height() - content.offset().top - 110)
+        content.height(content.parents('.main-content').height() - content.offset().top - 65)
       else
-        content.height(content.parents('.main-content').height() - content.offset().top - 40)
+        content.height(content.parents('.main-content').height() - content.offset().top + 50)
 
       secondary_content = @root.find('.master-overlay-secondary-content').find(".master-overlay-content")
       secondary_content.height(content.height() + 8)

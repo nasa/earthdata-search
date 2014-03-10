@@ -38,11 +38,12 @@ module Echo
     end
 
     def self.get_data_quality_summary(catalog_item_id, token=nil)
-      response = get("/echo-rest/data_quality_summary_definitions", {'catalog_item_id' => catalog_item_id}, token_header(token))
-      references = response.body["references"]
-      if references && references[0]
-        get("/echo-rest/data_quality_summary_definitions/#{references[0]["id"]}", {}, token_header(token))
+      response = get("/echo-rest/data_quality_summary_definitions.json", {'catalog_item_id' => catalog_item_id}, token_header(token))
+      results = []
+      response.body.each do |r|
+        results << get("/echo-rest/data_quality_summary_definitions/#{r["reference"]["id"]}", {}, token_header(token)).body
       end
+      results
       # NCR 11014478 will allow this to be only one call to echo-rest
     end
 

@@ -11,7 +11,9 @@ ns.DataQualitySummary = do (ko
       super("/data_quality_summary.json", query)
 
     _toResults: (data) ->
-      new DataQualitySummary(data)
+      if data
+        for result in data
+          new DataQualitySummary(result)
 
   class DataQualitySummary extends KnockoutModel
     constructor: (jsonData) ->
