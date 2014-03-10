@@ -6843,8 +6843,13 @@
 					"id": 245
 				},
 				{
-					"order": 0,
-					"id": 246
+					"order": 21,
+					"id": 246,
+					"prevSize": 32,
+					"code": 58899,
+					"name": "notification",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
 					"order": 0,
@@ -6882,7 +6887,12 @@
 				},
 				{
 					"order": 0,
-					"id": 253
+					"id": 253,
+					"prevSize": 32,
+					"code": 58899,
+					"name": "",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
 					"order": 0,
@@ -13467,7 +13477,7 @@
 					"prevSize": 32,
 					"code": 58895,
 					"name": "eye",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -14020,7 +14030,7 @@
 					"prevSize": 32,
 					"code": 58893,
 					"name": "arrow-left",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -14037,7 +14047,7 @@
 					"prevSize": 32,
 					"code": 58898,
 					"name": "arrow-right",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{

@@ -17,17 +17,10 @@
 	font-variant: normal;
 	text-transform: none;
 	line-height: 1;
-  vertical-align: text-bottom;
 
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-}
-
-/* This is meant to match the corresponding FontAwesome class */
-.edsc-icon-fw {
-  width: 1.2857142857142858em;
-  text-align: center;
 }
 
 .edsc-icon-rect:before {
@@ -72,11 +65,14 @@
 .edsc-icon-compose:before {
 	content: "\e60e";
 }
+.edsc-icon-file:before {
+	content: "\e611";
+}
 .edsc-icon-info:before {
 	content: "\e610";
 }
-.edsc-icon-file:before {
-	content: "\e611";
+.edsc-icon-notification:before {
+	content: "\e613";
 }
 .edsc-icon-arrow-left:before {
 	content: "\e60d";
