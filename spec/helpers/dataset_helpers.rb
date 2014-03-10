@@ -4,7 +4,7 @@ module Helpers
     def use_dataset(id, text)
       before :all do
         fill_in "keywords", with: id
-        expect(page).to have_content(text)
+        expect(first_dataset_result).to have_content(text)
       end
 
       after :all do
