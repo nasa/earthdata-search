@@ -451,7 +451,8 @@ ns.GranuleLayer = do (L,
         temporal = [granule.time_start, granule.time_end].join(' to ')
         icon = L.divIcon
           className: 'granule-spatial-label',
-          html: temporal + '<a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+          html: '<span class="granule-spatial-label-temporal">' + temporal +
+            '</span><a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
 
         marker = L.marker([0, 0], icon: icon)
 

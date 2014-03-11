@@ -45,9 +45,7 @@ module Helpers
 
     def wait_for_visualization_load
       require "timeout"
-      start = Time.now
       sleep(0.1) while page.evaluate_script('window.edsc.page.map.map.loadingLayers') != 0
-      puts "(Waited #{Time.now - start}s for visualizations to load)"
     end
   end
 end
