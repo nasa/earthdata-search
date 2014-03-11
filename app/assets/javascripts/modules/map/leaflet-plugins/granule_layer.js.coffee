@@ -307,6 +307,7 @@ ns.GranuleLayer = do (L,
       map.on 'click', @_onClick
       map.on 'edsc.focusgranule', @_onFocusGranule
       map.on 'edsc.stickygranule', @_onStickyGranule
+      @_isFocused = map.focusedDataset?.id() == @dataset.id()
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
 
@@ -319,7 +320,6 @@ ns.GranuleLayer = do (L,
       map.off 'click', @_onClick
       map.off 'edsc.focusgranule', @_onFocusGranule
       map.off 'edsc.stickygranule', @_onStickyGranule
-      @_isFocused = map.focusedDataset?.id() == @dataset.id()
       @_resultsSubscription.dispose()
       @_results = null
       @_granuleFocusLayer?.onRemove(map)
