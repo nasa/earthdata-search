@@ -385,8 +385,12 @@ ns.GranuleLayer = do (L,
       @_granuleStickyLayer = @_layerForGranule(granule, true)
       if @_granuleStickyLayer?
         @_granuleStickyLayer.onAdd(@_map)
+
         @_restoreBounds ?= @_map.getBounds()
-        @_map.fitBounds(@_granuleFocusLayer.getBounds())
+        bounds = @_granuleFocusLayer.getBounds()
+        # Avoid zooming and panning tiny amounts
+        unless @_map.getBounds().contains(bounds)
+          @_map.fitBounds(bounds.pad(0.2))
 
       @_loadResults(@_results)
 
