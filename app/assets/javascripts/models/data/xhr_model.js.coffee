@@ -19,6 +19,7 @@ ns.XhrModel = do (ko
 
       @hits = ko.observable(0)
       @hasNextPage = ko.observable(true)
+      @hitsEstimated = ko.observable(false)
 
     search: (params=@query.params(), callback=null) =>
       params.page_num = @page = 1
@@ -36,9 +37,6 @@ ns.XhrModel = do (ko
       if @currentRequest? && @currentRequest.readystate != 4
         @currentRequest.abort()
         console.log "Aborted (#{@pendingRequestId}): #{@path}"
-
-    _computeHasNextPage: ->
-      @results().length < @hits()
 
     _computeSearchResponse: (current, callback) ->
       if @query?
@@ -64,6 +62,7 @@ ns.XhrModel = do (ko
           @completedRequestId = requestId
           @error(null)
           @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
+          @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
           #console.log("Response: #{@path}", requestId, params, data)
           results = @_toResults(data)
 

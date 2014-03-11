@@ -14,6 +14,7 @@
           <!-- ko if: granules.isLoaded() -->
           <p>
             Showing <span data-bind="text: granules.results().length"></span> of
+            <span data-bind="visible: granules.hitsEstimated() && granules.hasNextPage()">approximately</span>
             <span data-bind="text: granules.hits() == 1 ? '1 matching granule' : granules.hits() + ' matching granules'"></span>
           </p>
           <!-- /ko -->
