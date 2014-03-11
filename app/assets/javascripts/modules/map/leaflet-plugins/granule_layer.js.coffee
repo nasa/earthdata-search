@@ -293,13 +293,15 @@ ns.GranuleLayer = do (L,
       @_tileOnLoad.call(tile)
 
   class GranuleLayer extends GibsTileLayer
-    constructor: (@granules, options) ->
+    constructor: (@dataset, options) ->
+      @granules = @dataset.granulesModel
       @_hasGibs = options?.product?
       super(options)
 
     onAdd: (map) ->
       super(map)
 
+      map.on 'edsc.focusdataset', @_onFocusDataset
       map.on 'edsc.mousemove', @_onMouseMove
       map.on 'edsc.mouseout', @_onMouseOut
       map.on 'click', @_onClick
@@ -311,11 +313,13 @@ ns.GranuleLayer = do (L,
     onRemove: (map) ->
       super(map)
 
+      map.off 'edsc.focusdataset', @_onFocusDataset
       map.off 'edsc.mousemove', @_onMouseMove
       map.off 'edsc.mouseout', @_onMouseOut
       map.off 'click', @_onClick
       map.off 'edsc.focusgranule', @_onFocusGranule
       map.off 'edsc.stickygranule', @_onStickyGranule
+      @_isFocused = map.focusedDataset?.id() == @dataset.id()
       @_resultsSubscription.dispose()
       @_results = null
       @_granuleFocusLayer?.onRemove(map)
@@ -330,22 +334,34 @@ ns.GranuleLayer = do (L,
     url: ->
       super() if @_hasGibs
 
+    _onFocusDataset: (e) =>
+      @_isFocused = e.dataset?.id() == @dataset.id()
+      unless @_isFocused
+        @_granuleFocusLayer?.onRemove(map)
+        @_granuleFocusLayer = null
+        @_granuleStickyLayer?.onRemove(map)
+        @_granuleStickyLayer = null
+
     _onMouseOut: (e) =>
+      return unless @_isFocused
       if @_granule?
         @_map.fire('edsc.focusgranule', granule: null)
 
     _onMouseMove: (e) =>
+      return unless @_isFocused
       granule = @layer?.granuleAt(e.layerPoint)
       if @_granule != granule
         @_map.fire('edsc.focusgranule', granule: granule)
 
     _onClick: (e) =>
+      return unless @_isFocused
       return unless $(e.originalEvent.target).closest('a').length == 0
       granule = @layer?.granuleAt(e.layerPoint)
       granule = null if @_stickied == granule
       @_map.fire('edsc.stickygranule', granule: granule)
 
     _onFocusGranule: (e) =>
+      return unless @_isFocused
       @_granule = granule = e.granule
 
       @_granuleFocusLayer?.onRemove(@_map)
@@ -353,6 +369,7 @@ ns.GranuleLayer = do (L,
       @_granuleFocusLayer?.onAdd(@_map)
 
     _onStickyGranule: (e) =>
+      return unless @_isFocused
       granule = e.granule
       return if @_stickied == granule
 
@@ -372,7 +389,6 @@ ns.GranuleLayer = do (L,
         @_map.fitBounds(@_granuleFocusLayer.getBounds())
 
       @_loadResults(@_results)
-
 
     _buildLayerWithOptions: (newOptions) ->
       # GranuleCanvasLayer needs to handle time

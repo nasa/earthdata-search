@@ -46,10 +46,9 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns
           # should wait for faster searches from the CMR before considering a change.
           #
           # Note: our algorithms rely on sort order being [-end_date, -start_date]
-          granules = dataset.granulesModel
           #pageSize = Math.max(MIN_PAGE_SIZE, granules.query.pageSize())
           #granules.query.pageSize(pageSize)
-          layer = new GranuleLayer(granules, gibsParams)
+          layer = new GranuleLayer(dataset, gibsParams)
           map.addLayer(layer)
 
         layer.setZIndex(z)

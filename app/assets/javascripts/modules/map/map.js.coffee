@@ -51,6 +51,10 @@ ns.Map = do (window,
       @_granuleVisualizationSubscription.dispose()
       $('#dataset-results, #project-overview').off('edsc.navigate', @_hideDatasetSpatial)
 
+    focusDataset: (dataset) ->
+      @map.focusedDataset = dataset
+      @map.fire 'edsc.focusdataset', dataset: dataset
+
     _createLayerMap: (productIds...) ->
       layerForProduct = LayerBuilder.layerForProduct
       result = {}
