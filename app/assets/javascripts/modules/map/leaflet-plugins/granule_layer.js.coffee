@@ -448,7 +448,7 @@ ns.GranuleLayer = do (L,
         layer.addLayer(shape)
 
       if sticky
-        temporal = [granule.time_start, granule.time_end].join(' to ')
+        temporal = granule.getTemporal()
         icon = L.divIcon
           className: 'granule-spatial-label',
           html: '<span class="granule-spatial-label-temporal">' + temporal +
