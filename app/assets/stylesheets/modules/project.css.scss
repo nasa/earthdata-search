@@ -7,14 +7,4 @@
     font-size: 1.2em;
     padding: 4px 6px;
   }
-
-  .empty-button {
-      background: transparent;
-      height: auto;
-
-    &:hover, .button-active:hover {
-      background: transparent;
-      border: none;
-    }
-  }
 }

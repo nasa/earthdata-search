@@ -26,10 +26,20 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   font-size: .8em;
   position: relative;
   border-radius: 3px;
+  cursor: pointer;
 
   &:first-child {
     margin-top: 0;
   }
+}
+
+.empty-button {
+  visibility: hidden;
+}
+
+
+.panel-list-reject-focus {
+  cursor: auto;
 }
 
 .panel-list-item-with-thumb {
