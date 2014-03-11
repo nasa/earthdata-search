@@ -98,7 +98,7 @@ ns.Granules = do (ko,
         @_load(params, current, callback)
 
     params: ->
-      parentParams = @parentQuery.params()
+      parentParams = @parentQuery.globalParams()
       params = {}
       for param in ['bounding_box', 'point', 'line', 'polygon', 'temporal']
         parentValue = parentParams[param]

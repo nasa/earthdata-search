@@ -327,7 +327,6 @@ ns.GranuleLayer = do (L,
         map.fitBounds(@_restoreBounds)
         @_restoreBounds = null
 
-
     url: ->
       super() if @_hasGibs
 
