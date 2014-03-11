@@ -81,6 +81,7 @@ ns.Granules = do (ko,
   class GranulesModel extends XhrModel
     constructor: (query, @parentQuery) ->
       super('/granules.json', query)
+      @_resultsComputed = false
 
     _toResults: (data) ->
       new Granule(result) for result in data.feed.entry
@@ -88,7 +89,8 @@ ns.Granules = do (ko,
     _computeSearchResponse: (current, callback) ->
       if @query?.validQuery() && @parentQuery?.validQuery()
         results = []
-        @results([])
+        @results([]) if @_resultsComputed
+        @_resultsComputed = true
         result.dispose?() for result in results
         @isLoaded(false)
         params = @params()
