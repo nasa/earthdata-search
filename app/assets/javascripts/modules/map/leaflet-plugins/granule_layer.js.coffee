@@ -203,7 +203,7 @@ ns.GranuleLayer = do (L,
           if path.line?
             ctx.stroke()
           else
-            ctx.fill
+            ctx.fill()
       ctx.restore()
 
 
