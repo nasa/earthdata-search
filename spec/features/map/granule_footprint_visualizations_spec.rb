@@ -108,6 +108,51 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
     end
   end
 
+  context "for line datasets", pq: true do
+    use_dataset 'C5920490-LARC_ASDC', 'CAL_IIR_L2_Track-Beta-V3-01'
+
+    context "visualizing a dataset's granules" do
+      hook_granule_results
+
+      it "draws lines on the map for granule spatial areas" do
+        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      end
+
+      context "and mousing over a visualized granule" do
+        before :all do
+          first_granule_list_item.trigger(:mouseover)
+        end
+
+        after :all do
+          first_granule_list_item.trigger(:mouseout)
+        end
+
+        it "draws the granule's footprint" do
+          expect(page).to have_selector('.leaflet-overlay-pane path')
+        end
+      end
+
+      context "and mousing off of a visualized granule" do
+        before :all do
+          first_granule_list_item.trigger(:mouseover)
+          first_granule_list_item.trigger(:mouseout)
+        end
+
+        it "hides the granule's footprint" do
+          expect(page).to have_no_selector('.leaflet-overlay-pane path')
+        end
+      end
+    end
+
+    context "removing a visualized dataset" do
+      hook_granule_results_back
+
+      it "hides the dataset's visualizations" do
+        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      end
+    end
+  end
+
   context "for bounding box datasets" do
     before :all do
       create_bounding_box(0, 0, 15, 15)
@@ -157,7 +202,7 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
     end
   end
 
-  context "granule selection", pq: true do
+  context "granule selection" do
     is_temporal_ordered_script = """
       var layers = $('#map').data('map').map._layers, key, layer, result;
       for (key in layers) {
