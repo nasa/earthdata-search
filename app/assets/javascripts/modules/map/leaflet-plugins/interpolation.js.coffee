@@ -72,7 +72,7 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate)
         depth1 += 1
 
     if maxDepthReached
-      console.warn("Max interpolation depth reached.  Interpolated shape has #{interpolatedPoints.length} points.")
+      console.debug "Max interpolation depth reached." #  Interpolated shape has #{interpolatedPoints.length} points."
 
     interpolatedPoints
 

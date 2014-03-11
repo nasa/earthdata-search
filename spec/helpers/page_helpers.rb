@@ -15,6 +15,25 @@ module Helpers
       end
     end
 
+    def synchronize(seconds=Capybara.default_wait_time)
+      start_time = Time.now
+
+      if @synchronized
+        yield
+      else
+        @synchronized = true
+        begin
+          yield
+        rescue => e
+          raise e if (Time.now - start_time) >= seconds
+          sleep(0.05)
+          retry
+        ensure
+          @synchronized = false
+        end
+      end
+    end
+
     # Resets the query filters and waits for all the resulting xhr requests to finish.
     def reset_search(wait=true)
       page.evaluate_script('window.edsc.models.page.current.query.clearFilters()')

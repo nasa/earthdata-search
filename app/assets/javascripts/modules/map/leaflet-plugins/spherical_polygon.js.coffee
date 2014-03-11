@@ -210,7 +210,7 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
 
     initialize: (latlngs, options) ->
       @_layers = {}
-      @_options = L.extend(@options, options)
+      @_options = L.extend({}, @options, options)
       @setLatLngs(latlngs)
 
     setLatLngs: (latlngs) ->

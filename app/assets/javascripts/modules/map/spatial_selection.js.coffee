@@ -25,6 +25,7 @@ ns.SpatialSelection = do (window,
         color: normalColor
         dashArray: null
         pointerEvents: 'stroke'
+        fillOpacity: 0
       @_errorOptions = errorOptions =
         color: errorColor
         dashArray: null

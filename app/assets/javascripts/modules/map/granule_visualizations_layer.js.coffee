@@ -2,7 +2,7 @@ ns = @edsc.map
 
 # Meta-layer for managing granule visualizations
 ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns.L.GranuleLayer) ->
-  MIN_PAGE_SIZE = 100
+  #MIN_PAGE_SIZE = 100
 
   class GranuleVisualizationsLayer
     constructor: ->
@@ -47,8 +47,8 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns
           #
           # Note: our algorithms rely on sort order being [-end_date, -start_date]
           granules = dataset.granulesModel
-          pageSize = Math.max(MIN_PAGE_SIZE, granules.query.pageSize())
-          granules.query.pageSize(pageSize)
+          #pageSize = Math.max(MIN_PAGE_SIZE, granules.query.pageSize())
+          #granules.query.pageSize(pageSize)
           layer = new GranuleLayer(granules, gibsParams)
           map.addLayer(layer)
 

@@ -8,16 +8,9 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
 
     showProject: =>
-      if @_selectedDataset?
-        @project.selectedDatasetId(@_selectedDataset)
-      else
-        @selectFirstDataset()
-      @_selectedDataset = null
       @visible(true)
 
     hideProject: =>
-      @_selectedDataset = @project.selectedDatasetId()
-      @project.selectedDatasetId(null)
       @visible(false)
 
     loginAndDownloadDataset: (dataset) =>
@@ -35,36 +28,16 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
 
       $('#data-access').submit()
 
-    selectFirstDataset: ->
-      datasets = @project.datasets()
-      selection = null
-      selection = datasets[0].id() if datasets.length > 0
-      @project.selectedDatasetId(selection)
-
     toggleDataset: (dataset) =>
       project = @project
       if project.hasDataset(dataset)
         project.removeDataset(dataset)
         @datasetResults.removeVisibleDataset(dataset) if @visible()
-        @selectFirstDataset() if @isSelected(dataset)
       else
         project.addDataset(dataset)
-        project.selectedDatasetId(dataset.id()) if @visible() && !project.selectedDatasetId()?
 
     _computeDatasetsToDownload: ->
       dataset for dataset in @project.datasets() when dataset.serviceOptions.accessMethod() == 'download'
-
-    select: (dataset, event) =>
-      $target = $(event?.target)
-      return unless $target.closest('a').length == 0
-
-      if @isSelected(dataset)
-        @project.selectedDatasetId(null)
-      else
-        @project.selectedDatasetId(dataset.id())
-
-    isSelected: (dataset) =>
-      dataset.id() == @project.selectedDatasetId()
 
     hideFilters: =>
       @project.searchGranulesDataset(null)
