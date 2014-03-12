@@ -7,7 +7,7 @@ ns.XhrModel = do (ko
 
   class XhrModel extends KnockoutModel
     constructor: (@path, @query) ->
-      @results = @asyncComputed([], 500, @_computeSearchResponse, this)
+      @results = @asyncComputed([], 2000, @_computeSearchResponse, this)
 
       @pendingRequestId = 0
       @completedRequestId = 0
@@ -64,14 +64,9 @@ ns.XhrModel = do (ko
           @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
           @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
           #console.log("Response: #{@path}", requestId, params, data)
-          results = @_toResults(data)
+          results = @_toResults(data, current, params)
 
-          if params.page_num? && params.page_num > 1
-            results = current.concat(results)
-          else
-            result.dispose?() for result in current
-
-          @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results.length))
+          @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length ? 0))
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
           @currentRequest = null
@@ -85,9 +80,6 @@ ns.XhrModel = do (ko
           @completedRequestId = requestId
           @_onFailure(response)
         @isLoading(@pendingRequestId != @completedRequestId)
-
-    _toResults: (data) ->
-      ko.mapping.fromJS(data)
 
     _onFailure: (response) ->
       errors = response.responseJSON?.errors

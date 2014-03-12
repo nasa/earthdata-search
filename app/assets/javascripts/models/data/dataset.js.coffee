@@ -13,12 +13,41 @@ ns.Dataset = do (ko
                  toParam=jQuery.param
                  extend=jQuery.extend
                  ) ->
+
+  datasets = ko.observableArray()
+
+  randomKey = Math.random()
+
+  register = (dataset) ->
+    dataset.reference()
+    datasets.push(dataset)
+    subscription = dataset.refCount.subscribe (count) ->
+      if count <= 0
+        datasets.remove(dataset)
+        subscription.dispose()
+
+    dataset
+
+
   class Dataset extends KnockoutModel
-    constructor: (jsonData, @query) ->
+    @findOrCreate: (jsonData, query) ->
+      id = jsonData.id
+      for dataset in datasets()
+        return dataset.reference() if dataset.id() == id
+      register(new Dataset(jsonData, query, randomKey))
+
+    @visible: ko.computed
+      read: -> dataset for dataset in datasets() when dataset.visible()
+
+    constructor: (jsonData, @query, inKey) ->
+      throw "Datasets should not be constructed directly" unless inKey == randomKey
+
       @granuleQuery = @disposable(new QueryModel('echo_collection_id': jsonData.id))
       @granuleQuery.sortKey(['-start_date'])
       @granulesModel = granulesModel = @disposable(new Granules(@granuleQuery, @query))
       @granuleAccessOptions = @asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
+
+      @visible = ko.observable(false)
 
       @serviceOptions = @disposable(new ServiceOptionsModel(@granuleAccessOptions))
 
@@ -39,27 +68,12 @@ ns.Dataset = do (ko
 
       @dqsModel = @disposable(new DataQualitySummaryModel(new QueryModel('catalog_item_id': jsonData.id)))
 
-    hasAreaSpatial: ->
-      @has_granules()? && !@points?
-
     # A granules model not directly connected to the dataset model so classes can, e.g. query
     # for granules under a point without messing with displayed hits or timing values
     createGranulesModel: ->
       granuleQuery = new QueryModel('echo_collection_id': @id())
+      granuleQuery.sortKey(['-start_date'])
       new Granules(granuleQuery, @query)
-
-    searchGranules: (params, callback) ->
-      @granulesModel.search(@_granuleParams(params), callback)
-
-    loadNextGranules: (params, callback) ->
-      @granulesModel.loadNextPage(@_granuleParams(params), callback)
-
-    clone: ->
-      result = new Dataset(@json, @query)
-      result.serviceOptions.fromJson(@serviceOptions.serialize())
-      if result.granuleAccessOptions.isSetup()
-        result.granuleAccessOptions(@granuleAccessOptions())
-      result
 
     _loadGranuleAccessOptions: (current, callback) ->
       params = @query.params()
@@ -137,3 +151,6 @@ ns.Dataset = do (ko
         @gibs = ko.observable(ko.mapping.toJS(@gibs))
       else
         @gibs = ko.observable(null)
+
+    equals: (other) ->
+      other.id() == @id()

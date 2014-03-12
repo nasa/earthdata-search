@@ -20,16 +20,11 @@ ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
       return true if $(event?.target).closest('a').length > 0
       return false unless dataset.has_granules()
 
-      dataset = dataset.clone()
       @focused()?.dispose()
       @focused(new GranulesList(dataset))
-      @datasets.addVisibleDataset(dataset)
 
     unfocusDataset: (dataset, event=null) =>
-      focused = @focused()
-      if focused?
-        @datasets.removeVisibleDataset(focused.dataset)
-        focused.dispose()
+      @focused()?.dispose()
       setTimeout((=> @focused(null)), 400)
 
   exports = DatasetsList

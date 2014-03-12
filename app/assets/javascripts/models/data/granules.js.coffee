@@ -72,6 +72,9 @@ ns.Granules = do (ko,
 
       @_rects
 
+    equals: (other) ->
+      other.id == @id
+
     _parseSpatial: (str) ->
       coords = str.split(' ')
       len = coords.length - 1
@@ -83,15 +86,21 @@ ns.Granules = do (ko,
       super('/granules.json', query)
       @_resultsComputed = false
 
-    _toResults: (data) ->
-      new Granule(result) for result in data.feed.entry
+    _toResults: (data, current, params) ->
+      entries = data.feed.entry
+      newItems = (new Granule(entry) for entry in entries)
+
+      if params.page_num > 1
+        current.concat(newItems)
+      else
+        granule.dispose() for granule in current
+        newItems
 
     _computeSearchResponse: (current, callback) ->
       if @query?.validQuery() && @parentQuery?.validQuery()
         results = []
         @results([]) if @_resultsComputed
         @_resultsComputed = true
-        result.dispose?() for result in results
         @isLoaded(false)
         params = @params()
         params.page_num = @page = 1

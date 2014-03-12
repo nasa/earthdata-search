@@ -9,6 +9,7 @@ ns.Map = do (window,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              GranulesLayer = ns.GranulesLayer,
+             Dataset = @edsc.models.data.Dataset,
              page = @edsc.page) ->
 
   # Fix leaflet default image path
@@ -39,7 +40,7 @@ ns.Map = do (window,
       @setProjection(projection)
 
       @_datasetSubscription = page.datasets.details.subscribe(@_showDatasetSpatial)
-      @_granuleVisualizationSubscription = page.datasets.visibleDatasets.subscribe (datasets) ->
+      @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 
       $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)

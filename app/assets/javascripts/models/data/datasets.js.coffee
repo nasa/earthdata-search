@@ -16,26 +16,19 @@ ns.Datasets = do (ko
 
       @details = ko.observable({})
       @detailsLoading = ko.observable(false)
-      @_visibleDatasetIds = ko.observableArray()
-      @_visibleDatasets = {}
       @visibleDatasets = @computed(@_computeVisibleDatasets)
       @allDatasetsVisible = ko.observable(false)
 
-    _toResults: (data) ->
-      results = data.feed.entry;
+    _toResults: (data, current, params) ->
       query = @query
+      entries = data.feed.entry
+      newItems = (Dataset.findOrCreate(entry, query) for entry in entries)
 
-      # Reuse where possible
-      #current = @results.peek()
-      #ids = ds.id for ds in ids
-      #for result in results
-      #  index = ids.indexOf(result.id)
-      #  if index != -1
-      #    current[index]
-      #  else
-      #    new Dataset(result, query)
-
-      new Dataset(result, query) for result in results
+      if params.page_num > 1
+        current.concat(newItems)
+      else
+        dataset.dispose() for dataset in current
+        newItems
 
     showDataset: (dataset) =>
       id = dataset.id()
@@ -51,35 +44,16 @@ ns.Datasets = do (ko
         $content = $('#dataset-information')
         $content.height($content.parents('.main-content').height() - $content.offset().top - 40)
 
-    hasVisibleDataset: (dataset) =>
-      @_visibleDatasetIds.indexOf(dataset.id()) != -1
-
-    addVisibleDataset: (dataset) ->
-      unless @hasVisibleDataset(dataset)
-        id = dataset.id()
-        @_visibleDatasets[id] = dataset
-        @_visibleDatasetIds.push(id)
-
-    removeVisibleDataset: (dataset) ->
-      id = dataset.id()
-      @_visibleDatasetIds.remove(id)
-      delete @_visibleDatasets[id]
-
     _computeVisibleDatasets: =>
-      @_visibleDatasets[id] for id in @_visibleDatasetIds()
+      dataset for dataset in @results() when dataset.visible()
 
     toggleVisibleDataset: (dataset) =>
-      if @hasVisibleDataset(dataset)
-        @removeVisibleDataset(dataset)
-      else
-        @addVisibleDataset(dataset)
+      dataset.visible(!dataset.visible())
 
     toggleViewAllDatasets: (datasets) =>
-      if @allDatasetsVisible()
-        datasets().forEach(@removeVisibleDataset, this)
-        @allDatasetsVisible(false)
-      else
-        datasets().forEach(@addVisibleDataset, this)
-        @allDatasetsVisible(true)
+      visible = !@allDatasetsVisible()
+      for dataset in datasets()
+        dataset.visible(visible)
+      @allDatasetsVisible(visible)
 
   exports = DatasetsModel

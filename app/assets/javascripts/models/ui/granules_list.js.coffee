@@ -4,6 +4,11 @@ ns.GranulesList = do ($=jQuery)->
 
   class GranulesList
     constructor: (@dataset) ->
+      @dataset.reference()
+
+      @_wasVisible = @dataset.visible()
+      @dataset.visible(true)
+
       @granules = @dataset.granulesModel
       map = $('#map').data('map')
       @_map = map.map
@@ -22,6 +27,7 @@ ns.GranulesList = do ($=jQuery)->
 
       @_map.off 'edsc.focusgranule', @_onFocusGranule
       @_map.off 'edsc.stickygranule', @_onStickyGranule
+      @dataset.visible(@_wasVisible)
       @dataset.dispose()
 
     scrolled: (data, event) =>
