@@ -25,7 +25,7 @@ ns.GranuleLayer = do (L,
     if Array.isArray(path) && isClockwise(path) then path.concat().reverse() else path
 
   addPath = (ctx, path, isCounterclockwise) ->
-    {path, poly, line} = path
+    {path, poly, line, point} = path
 
     if poly? || line?
       poly ?= line
@@ -203,7 +203,7 @@ ns.GranuleLayer = do (L,
           if path.line?
             ctx.stroke()
           else
-            ctx.fill
+            ctx.fill()
       ctx.restore()
 
 
