@@ -30,8 +30,7 @@
               <a class="panel-list-remove panel-list-when-selected" href="#" title="remove"><i class="fa fa-times"></i></a>
 
               <h3 data-bind="text: title"></h3>
-              <span data-bind="text: time_start"></span> to
-              <span data-bind="text: time_end"></span>
+              <span data-bind="text: getTemporal()"></span>
             </li>
           </ul>
           <p class="busy panel-list-load-more" data-bind="visible: granules.isLoading()">
