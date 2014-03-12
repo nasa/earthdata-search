@@ -119,8 +119,8 @@
           <p data-bind="visible: project.isEmpty()">
             Add datasets to your project to compare and retrieve their data.
           </p>
-          <p data-bind="visible: !project.isEmpty()">
-            <a class="button master-overlay-forward master-overlay-hide-parent" data-bind="click: ui.projectList.showProject" href="#">
+          <p data-bind="visible: !project.isEmpty()" class="button-details">
+            <a class="button master-overlay-hide-parent master-overlay-forward" data-bind="click: ui.projectList.showProject" href="#">
               <i class="fa fa-folder-o"></i> View Project
             </a>
             You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.
@@ -147,29 +147,25 @@
             <i class="edsc-icon-arrow-left"></i> Back to Dataset Search
           </a>
         </nav>
-        <header>
+        <header class="with-options">
           <h2>Project Datasets</h2>
+          <div class="master-overlay-project-actions actions">
+            <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject">
+              <i class="edsc-icon-download"></i>
+            </a>
+
+            <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
+              <i class="edsc-icon-eye"></i>
+            </a>
+            <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
+              <i class="edsc-icon-eye"></i>
+            </a>
+          </div>
         </header>
         <div class="master-overlay-info">
-          <p>
-            Batch compare, preview, refine, and download datasets you've added to your project.
-          </p>
+          <div data-bind="visible: ui.projectList.datasetsHaveDQS(), css: {'message-info': ui.projectList.allDQSAccepted(), 'message-warning': !ui.projectList.allDQSAccepted()}" class="dqs-message message">Some of the datasets in your project have data quality information. You must <a data-bind="click: ui.projectList.showDataQualitySummary.bind($data,project.datasets())" class="alert-link" href="#">read and accept</a> these summaries before you can download project data.</div>
         </div>
         <div class="master-overlay-content panel-list">
-        <div class="master-overlay-project-actions">
-          <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject">
-            <i class="edsc-icon-download"></i>
-          </a>
-
-          <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
-            <i class="edsc-icon-eye"></i>
-          </a>
-          <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
-            <i class="edsc-icon-eye"></i>
-          </a>
-          <div class="button icon-button empty-button"></div>
-          <div class="button icon-button empty-button"></div>
-        </div>
           <ul id="project-datasets-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">
@@ -447,6 +443,30 @@
       </form>
     </div>
   </div>
+</div>
+
+<div id="dqs-modal" data-bind="showModal: ui.projectList.dataQualitySummaryModal" class="modal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
+  <!-- ko if: ui.projectList.dataQualitySummaryModal() -->
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" title="close" data-bind="click: ui.projectList.cancelDataQualitySummaryModal" aria-hidden="true" class="pull-right close"><i class="fa fa-times-circle"></i></a>
+        <h3 class="modal-title" id="myModalLabel">Data Quality Summaries</h3>
+      </div>
+      <form data-bind="submit: ui.projectList.acceptDataQualitySummary">
+        <div class="modal-body">
+          <!-- ko foreach: ui.projectList.dataQualitySummaryModal() -->
+          <h3>Data Quality Summary for <span data-bind="text: dataset.dataset_id"></span></h3>
+          <div data-bind="html: summary.summary"></div>
+          <!-- /ko -->
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="button-light">Accept</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /ko -->
 </div>
 
 <form id="data-access" method="POST" action="/data/configure" style="display:none;">

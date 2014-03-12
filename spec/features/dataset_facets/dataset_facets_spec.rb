@@ -61,7 +61,7 @@ describe "Dataset Facets" do
     end
 
     it "shows the first Detailed Variable Keyword facet" do
-      expect(page).to have_content("Detailed Variable Keyword AEROSOL INDEX")
+      expect(page).to have_content("Detailed Variable Keyword AEROSOL BACKSCATTER CROSS SECTION PROFILE")
     end
 
     it "shows the first Processing Level facet" do

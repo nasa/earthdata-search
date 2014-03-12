@@ -16,12 +16,21 @@
     color: $overlay-heading-font-color;
 
     h2 {
-      font-weight: normal;
       font-size: 1.2em;
+      margin: 0;
     }
 
-    a:hover {
-      color: #aaa;
+    &.with-options {
+      margin: .5em 1em 1em 1em;
+
+      h2 {
+        display: inline-block;
+        padding: 10px 0 0 0;
+      }
+
+      .actions {
+        float: right;
+      }
     }
   }
 }
@@ -104,11 +113,16 @@
 }
 
 .master-overlay-info {
-  margin: 1em;
-  margin-bottom: 0;
+  margin: 0;
   color: $overlay-heading-font-color;
-  font-style: italic;
-  line-height:36px;
+
+  p {
+    margin: 1em;
+  }
+
+  p.button-details {
+    line-height: 36px;
+  }
 
   .button {
     @include dark-button;
@@ -140,7 +154,6 @@
 // Scrollable content area
 .master-overlay-content {
   margin: 1em;
-  margin-top: 0;
   height: 100%;
   overflow-y: scroll;
 }

@@ -102,8 +102,8 @@ ns.Project = do (ko,
           if dataset?
             dataset.fromJson(result.json)
 
-    serialize: ->
+    serialize: (datasets=@datasets) ->
       datasetQuery: @query.serialize()
-      datasets: (ds.serialize() for ds in @datasets())
+      datasets: (ds.serialize() for ds in datasets)
 
   exports = Project
