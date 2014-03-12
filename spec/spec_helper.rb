@@ -79,6 +79,7 @@ RSpec.configure do |config|
   config.after :each do
     DatabaseCleaner.clean
     if example.exception != nil
+      # Failure only code goes here
       if defined?(page) && page && page.driver && page.driver.console_messages
         puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
       end
