@@ -16,7 +16,7 @@ ns.Datasets = do (ko
 
       @details = ko.observable({})
       @detailsLoading = ko.observable(false)
-      @visibleDatasets = @computed(@_computeVisibleDatasets)
+      @visibleDatasets = @computed(@_computeVisibleDatasets, this, deferEvaluation: true)
       @allDatasetsVisible = ko.observable(false)
 
     _toResults: (data, current, params) ->

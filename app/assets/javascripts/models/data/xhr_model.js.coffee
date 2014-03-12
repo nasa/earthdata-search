@@ -7,7 +7,7 @@ ns.XhrModel = do (ko
 
   class XhrModel extends KnockoutModel
     constructor: (@path, @query) ->
-      @results = @asyncComputed([], 2000, @_computeSearchResponse, this)
+      @results = @asyncComputed([], 500, @_computeSearchResponse, this)
 
       @pendingRequestId = 0
       @completedRequestId = 0
@@ -55,6 +55,7 @@ ns.XhrModel = do (ko
       @isLoading(@pendingRequestId != @completedRequestId)
       console.log("Request (#{requestId}): #{@path}?#{$.param(params)}")
       start = new Date()
+
       @currentRequest = xhr = getJSON @path, params, (data, status, xhr) =>
         if requestId > @completedRequestId
           @currentRequest = null

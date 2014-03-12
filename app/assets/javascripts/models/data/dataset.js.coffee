@@ -33,7 +33,7 @@ ns.Dataset = do (ko
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
       for dataset in datasets()
-        return dataset.reference() if dataset.id() == id
+        return dataset.reference() if dataset.id.peek() == id
       register(new Dataset(jsonData, query, randomKey))
 
     @visible: ko.computed
@@ -151,6 +151,3 @@ ns.Dataset = do (ko
         @gibs = ko.observable(ko.mapping.toJS(@gibs))
       else
         @gibs = ko.observable(null)
-
-    equals: (other) ->
-      other.id() == @id()

@@ -6,7 +6,7 @@ ns.KnockoutModel = do (ko) ->
     reference: ->
       @refCount ?= ko.observable(0)
       refs = @refCount
-      val = refs() + 1
+      val = refs.peek() + 1
       refs(val)
       this
 
@@ -14,7 +14,7 @@ ns.KnockoutModel = do (ko) ->
       val = 0
       refs = @refCount
       if refs?
-        val = refs() - 1
+        val = refs.peek() - 1
         refs(val)
       if val <= 0
         @_disposables ?= []
