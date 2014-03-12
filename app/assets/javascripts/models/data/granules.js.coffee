@@ -48,6 +48,11 @@ ns.Granules = do (ko,
         @_polygons = (polygon.map(@_parseSpatial) for polygon in @polygons)
       @_polygons
 
+    getLines: ->
+      if !@_lines? && @lines?
+        @_lines = @lines.map(@_parseSpatial)
+      @_lines
+
     getRectangles: ->
       if !@_rects? && @boxes?
         rects = []
