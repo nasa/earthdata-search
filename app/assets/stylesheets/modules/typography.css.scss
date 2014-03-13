@@ -75,3 +75,20 @@ ul {
   border-radius: 5px;
   margin: 10px 0;
 }
+
+.message {
+  padding: 1em;
+  color: #fff;
+  background: #323232;
+  border-left: 10px solid #27ae60;
+
+  &.message-warning {
+    background: #f39c12;
+    border-left: 10px solid #dc7921;
+  }
+
+  a:link, a:visited {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}

@@ -24,6 +24,17 @@ ns.Datasets = do (ko
     _toResults: (data) ->
       results = data.feed.entry;
       query = @query
+
+      # Reuse where possible
+      #current = @results.peek()
+      #ids = ds.id for ds in ids
+      #for result in results
+      #  index = ids.indexOf(result.id)
+      #  if index != -1
+      #    current[index]
+      #  else
+      #    new Dataset(result, query)
+
       new Dataset(result, query) for result in results
 
     showDataset: (dataset) =>

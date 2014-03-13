@@ -13,8 +13,30 @@ ns.Granules = do (ko,
     constructor: (jsonData) ->
       extend(this, jsonData)
 
-    edsc_browse_url: ->
-      "https://api.echo.nasa.gov/browse-scaler/browse_images/granules/#{@id}?h=170&w=170"
+    edsc_browse_url: (w, h) ->
+      w ?= 170
+      h ?= w
+      "https://api.echo.nasa.gov/browse-scaler/browse_images/granules/#{@id}?h=#{h}&w=#{w}"
+
+    edsc_full_browse_url: ->
+      for link in @links
+        return link.href if link.rel.indexOf('browse') != -1
+      null
+
+    getTemporal: ->
+      time_end = @_normalizeTime(@time_end)
+      time_start = @_normalizeTime(@time_start)
+
+      return time_start if time_start == time_end
+      return time_start unless time_end?
+      return time_end unless time_start?
+
+      "#{time_start} to #{time_end}"
+
+    _normalizeTime: (time) ->
+      return null unless time?
+
+      time.replace(/\.0+Z/, 'Z')
 
     getPoints: ->
       if !@_points? && @points?
@@ -26,6 +48,11 @@ ns.Granules = do (ko,
       if !@_polygons? && @polygons?
         @_polygons = (polygon.map(@_parseSpatial) for polygon in @polygons)
       @_polygons
+
+    getLines: ->
+      if !@_lines? && @lines?
+        @_lines = @lines.map(@_parseSpatial)
+      @_lines
 
     getRectangles: ->
       if !@_rects? && @boxes?
@@ -62,6 +89,10 @@ ns.Granules = do (ko,
 
     _computeSearchResponse: (current, callback) ->
       if @query?.validQuery() && @parentQuery?.validQuery()
+        results = []
+        @results([])
+        result.dispose?() for result in results
+        @isLoaded(false)
         params = @params()
         params.page_num = @page = 1
         @_load(params, current, callback)

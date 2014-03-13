@@ -1,6 +1,7 @@
 ns = @edsc.map.L
 
 ns.GranuleLayer = do (L,
+                      $ = jQuery,
                       GibsTileLayer = ns.GibsTileLayer,
                       projectPath=ns.interpolation.projectPath,
                       dateUtil = @edsc.util.date
@@ -24,19 +25,22 @@ ns.GranuleLayer = do (L,
     if Array.isArray(path) && isClockwise(path) then path.concat().reverse() else path
 
   addPath = (ctx, path, isCounterclockwise) ->
-    if Array.isArray(path)
-      len = path.length
+    {path, poly, line, point} = path
 
+    if poly? || line?
+      poly ?= line
+      len = poly.length
       return if len < 2
 
-      if isCounterclockwise != !isClockwise(path)
-        path = path.concat().reverse()
+      if isCounterClockwise? && isCounterclockwise != !isClockwise(poly)
+        poly = poly.concat().reverse()
 
-      ctx.moveTo(path[0].x, path[0].y)
-      ctx.lineTo(point.x, point.y) for point in path[1...]
-    else
-      ctx.moveTo(path.x + 10, path.y)
-      ctx.arc(path.x, path.y, 10, 0, 2 * Math.PI, isCounterclockwise);
+      ctx.moveTo(poly[0].x, poly[0].y)
+      ctx.lineTo(p.x, p.y) for p in poly[1...]
+    else if point?
+      {x, y} = point
+      ctx.moveTo(x + 10, y)
+      ctx.arc(x, y, 10, 0, 2 * Math.PI, isCounterclockwise);
     null
 
   clipped = (ctx, boundary, maskedPaths, drawnPaths, fn) ->
@@ -45,8 +49,9 @@ ns.GranuleLayer = do (L,
       ctx.beginPath()
       addPath(ctx, boundary, false)
       for path in maskedPaths
-        addPath(ctx, path, true)
-        ctx.clip()
+        unless path.line?
+          addPath(ctx, path, true)
+          ctx.clip()
 
     if drawnPaths.length > 0
       ctx.beginPath()
@@ -120,51 +125,26 @@ ns.GranuleLayer = do (L,
           divided = dividePolygon(polygon[0])
 
           for interior in divided.interiors when tileBounds.intersects(interior)
-            result.push(projectPath(map, interior, [], 'geodetic', 2, 5).boundary)
+            result.push({poly: projectPath(map, interior, [], 'geodetic', 2, 5).boundary})
 
       rects = granule.getRectangles()
       if rects?
         for path in rects when tileBounds.intersects(path)
-          result.push(projectPath(map, path, [], 'cartesian', 2, 5).boundary)
+          result.push({poly: projectPath(map, path, [], 'cartesian', 2, 5).boundary})
 
       points = granule.getPoints()
       if points?
         for point in points when tileBounds.contains(point)
-          result.push(@_map.latLngToLayerPoint(point))
+          result.push({point: @_map.latLngToLayerPoint(point)})
+
+      lines = granule.getLines()
+      if lines?
+        for line in lines when tileBounds.intersects(line)
+          result.push({line: projectPath(map, line, [], 'geodetic', 2, 5).boundary})
 
       result
 
-    _clipPolygon: (ctx, str, tileBounds) ->
-      intersects = false
-      for polygon in dividePolygon(@_parsePolygon(str)).interiors
-
-        bounds = new L.LatLngBounds()
-        bounds.extend(latlng) for latlng in polygon
-
-        if tileBounds.intersects(bounds)
-          intersects = true
-          path = (@_map.latLngToLayerPoint(ll) for ll in polygon)
-
-          ctx.strokeStyle = "rgb(200,0,0)";
-          ctx.moveTo(path[0].x, path[0].y)
-
-          for point in path[1...]
-            ctx.lineTo(point.x, point.y)
-
-          ctx.closePath()
-          #ctx.stroke()
-
-      intersects
-
     _drawFootprint: (canvas, nwPoint, boundary, maskedPaths, drawnPaths) ->
-      #colors = ['rgba(255, 0, 0, 0.5)',
-      #          'rgba(0, 255, 0, 0.5)',
-      #          'rgba(0, 0, 255, 0.5)',
-      #          'rgba(255, 255, 0, 0.5)',
-      #          'rgba(255, 0, 255, 0.5)',
-      #          'rgba(0, 255, 255, 0.5)',
-      #          'rgba(255, 255, 255, 0.5)']
-
       ctx = canvas.getContext('2d')
       ctx.save()
 
@@ -181,10 +161,6 @@ ns.GranuleLayer = do (L,
         for path in drawnPaths
           ctx.beginPath()
           addPath(ctx, path, true)
-          ctx.closePath()
-          # For debugging clip paths
-          #ctx.fillStyle = colors[Math.abs(nwPoint.x + nwPoint.y) % colors.length]
-          #ctx.fill()
           ctx.lineWidth = 2
           ctx.strokeStyle = 'rgba(0, 0, 0, 1)'
           ctx.stroke()
@@ -216,12 +192,18 @@ ns.GranuleLayer = do (L,
       ctx.save()
 
       # http://www.w3.org/TR/2011/WD-2dcontext-20110405/#imagedata
-      ctx.fillStyle = '#' + (index + 0x1000000).toString(16).substr(-6)
+      ctx.strokeStyle = ctx.fillStyle = '#' + (index + 0x1000000).toString(16).substr(-6)
+      ctx.lineWidth = 4
 
       ctx.translate(-nwPoint.x, -nwPoint.y)
-      tileSize = @options.tileSize
-      clipped ctx, boundary, maskedPaths, drawnPaths, ->
-        ctx.fillRect(nwPoint.x, nwPoint.y, tileSize, tileSize)
+      clipped ctx, boundary, maskedPaths, [], ->
+        for path in drawnPaths
+          ctx.beginPath()
+          addPath(ctx, path, true)
+          if path.line?
+            ctx.stroke()
+          else
+            ctx.fill()
       ctx.restore()
 
 
@@ -266,7 +248,7 @@ ns.GranuleLayer = do (L,
       nePoint = nwPoint.add([tileSize, 0])
       sePoint = nwPoint.add([tileSize, tileSize])
       swPoint = nwPoint.add([0, tileSize])
-      boundary = [nwPoint, nePoint, sePoint, swPoint]
+      boundary = {poly: [nwPoint, nePoint, sePoint, swPoint]}
       bounds = new L.latLngBounds(@_map.layerPointToLatLng(nwPoint),
                                   @_map.layerPointToLatLng(sePoint))
 
@@ -313,7 +295,6 @@ ns.GranuleLayer = do (L,
   class GranuleLayer extends GibsTileLayer
     constructor: (@granules, options) ->
       @_hasGibs = options?.product?
-
       super(options)
 
     onAdd: (map) ->
@@ -321,6 +302,9 @@ ns.GranuleLayer = do (L,
 
       map.on 'edsc.mousemove', @_onMouseMove
       map.on 'edsc.mouseout', @_onMouseOut
+      map.on 'click', @_onClick
+      map.on 'edsc.focusgranule', @_onFocusGranule
+      map.on 'edsc.stickygranule', @_onStickyGranule
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
 
@@ -329,23 +313,67 @@ ns.GranuleLayer = do (L,
 
       map.off 'edsc.mousemove', @_onMouseMove
       map.off 'edsc.mouseout', @_onMouseOut
+      map.off 'click', @_onClick
+      map.off 'edsc.focusgranule', @_onFocusGranule
+      map.off 'edsc.stickygranule', @_onStickyGranule
       @_resultsSubscription.dispose()
       @_results = null
+      @_granuleFocusLayer?.onRemove(map)
+      @_granuleFocusLayer = null
+      @_granuleStickyLayer?.onRemove(map)
+      @_granuleStickyLayer = null
+
+      if @_restoreBounds
+        map.fitBounds(@_restoreBounds)
+        @_restoreBounds = null
+
 
     url: ->
       super() if @_hasGibs
 
     _onMouseOut: (e) =>
-      @_granuleFocusLayer?.onRemove(@_map)
-      @_granule = null
+      if @_granule?
+        @_map.fire('edsc.focusgranule', granule: null)
 
     _onMouseMove: (e) =>
       granule = @layer?.granuleAt(e.layerPoint)
-      if granule != @_granule
-        @_granule = granule
-        @_granuleFocusLayer?.onRemove(@_map)
-        @_granuleFocusLayer = @_layerForGranule(granule)
-        @_granuleFocusLayer?.onAdd(@_map)
+      if @_granule != granule
+        @_map.fire('edsc.focusgranule', granule: granule)
+
+    _onClick: (e) =>
+      return unless $(e.originalEvent.target).closest('a').length == 0
+      granule = @layer?.granuleAt(e.layerPoint)
+      granule = null if @_stickied == granule
+      @_map.fire('edsc.stickygranule', granule: granule)
+
+    _onFocusGranule: (e) =>
+      @_granule = granule = e.granule
+
+      @_granuleFocusLayer?.onRemove(@_map)
+      @_granuleFocusLayer = @_layerForGranule(granule, false)
+      @_granuleFocusLayer?.onAdd(@_map)
+
+    _onStickyGranule: (e) =>
+      granule = e.granule
+      return if @_stickied == granule
+
+      @_stickied = granule
+
+      @_granuleStickyLayer?.onRemove(@_map)
+      @_granuleStickyLayer = null
+
+      if !granule? && @_restoreBounds?
+        @_map.fitBounds(@_restoreBounds)
+        @_restoreBounds = null
+
+      @_granuleStickyLayer = @_layerForGranule(granule, true)
+      if @_granuleStickyLayer?
+        @_granuleStickyLayer.onAdd(@_map)
+        @_restoreBounds ?= @_map.getBounds()
+        @_map.fitBounds(@_granuleFocusLayer.getBounds())
+
+      @_loadResults(@_results)
+
 
     _buildLayerWithOptions: (newOptions) ->
       # GranuleCanvasLayer needs to handle time
@@ -365,19 +393,76 @@ ns.GranuleLayer = do (L,
 
     _loadResults: (results) ->
       @_results = results
+
+      if @_stickied?
+        results = results.concat()
+        index = results.indexOf(@_stickied)
+        if index == -1
+          @_stickied = null
+          @_granuleStickyLayer?.onRemove(@_map)
+          @_granuleStickyLayer = null
+        else
+          results.splice(index, 1)
+          results.unshift(@_stickied)
+
       @layer?.setResults(results)
 
-    _layerForGranule: (granule) ->
+    _layerForGranule: (granule, sticky) ->
       return null unless granule?
 
+      if sticky
+        options =
+          fillOpacity: 0
+          clickable: false
+      else
+        options =
+          clickable: false
+
       layer = L.featureGroup()
-      layer.addLayer(L.circleMarker(point, clickable: false)) for point in granule.getPoints() ? []
-      layer.addLayer(L.sphericalPolygon(poly, clickable: false)) for poly in granule.getPolygons() ? []
+      layer.addLayer(L.circleMarker(point, options)) for point in granule.getPoints() ? []
+      layer.addLayer(L.sphericalPolygon(poly, options)) for poly in granule.getPolygons() ? []
+      layer.addLayer(L.polyline(line, options)) for line in granule.getLines() ? []
 
       for rect in granule.getRectangles() ? []
         # granule.getRectanges() returns a path, so it's really a polygon
-        shape = L.polygon(rect, clickable: false)
+        shape = L.polygon(rect, options)
         shape._interpolationFn = 'cartesian'
         layer.addLayer(shape)
 
+      if sticky
+        temporal = granule.getTemporal()
+        icon = L.divIcon
+          className: 'granule-spatial-label',
+          html: '<span class="granule-spatial-label-temporal">' + temporal +
+            '</span><a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+
+        marker = L.marker([0, 0], icon: icon)
+
+        firstShape = layer.getLayers()[0]
+        if firstShape._interiors?
+          firstShape = firstShape._interiors
+
+        firstShape?.on 'add', (e) ->
+          map = @_map
+
+          center = @getLatLng?()
+          unless center?
+            xmin = Infinity
+            xmax = -Infinity
+            ymin = Infinity
+            ymax = -Infinity
+            latlngs = @getLatLngs()
+            latlngs = latlngs[0] if Array.isArray(latlngs[0])
+            for latlng in latlngs
+              p = map.latLngToLayerPoint(latlng)
+              xmin = Math.min(xmin, p.x)
+              xmax = Math.max(xmax, p.x)
+              ymin = Math.min(ymin, p.y)
+              ymax = Math.max(ymax, p.y)
+            center = map.layerPointToLatLng(L.point((xmin + xmax) / 2, (ymin + ymax) / 2))
+          marker.setLatLng(center)
+          layer.addLayer(marker)
+
       layer
+
+  exports = GranuleLayer

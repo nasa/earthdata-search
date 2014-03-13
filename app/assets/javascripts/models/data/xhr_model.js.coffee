@@ -18,16 +18,19 @@ ns.XhrModel = do (ko
       @currentRequest = null
 
       @hits = ko.observable(0)
-      @hasNextPage = @computed(@_computeHasNextPage, this, deferEvaluation: true)
+      @hasNextPage = ko.observable(true)
 
-    search: (params, callback) =>
+    search: (params=@query.params(), callback=null) =>
       params.page_num = @page = 1
       @_loadAndSet params, [], callback
 
-    loadNextPage: (params, callback) =>
+    loadNextPage: (params=@params(), callback=null) =>
       if @hasNextPage() and !@isLoading()
         params.page_num = ++@page
         @_loadAndSet params, @results(), callback
+
+    params: ->
+      @query.params()
 
     abort: ->
       if @currentRequest? && @currentRequest.readystate != 4
@@ -60,7 +63,7 @@ ns.XhrModel = do (ko
           @isLoaded(true)
           @completedRequestId = requestId
           @error(null)
-          @hits(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10))
+          @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
           #console.log("Response: #{@path}", requestId, params, data)
           results = @_toResults(data)
 
@@ -68,6 +71,8 @@ ns.XhrModel = do (ko
             results = current.concat(results)
           else
             result.dispose?() for result in current
+
+          @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results.length))
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
           @currentRequest = null

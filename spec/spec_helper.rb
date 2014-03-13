@@ -57,7 +57,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  # config.use_transactional_fixtures = true
 
   wait_time = Capybara.default_wait_time
 
@@ -73,11 +73,13 @@ RSpec.configure do |config|
   end
 
   config.after do
-    DatabaseCleaner.clean
+    Capybara.default_wait_time = wait_time unless example.metadata[:wait].nil?
   end
 
-  config.after(:each) do
+  config.after :each do
+    DatabaseCleaner.clean
     if example.exception != nil
+      # Failure only code goes here
       if defined?(page) && page && page.driver && page.driver.console_messages
         puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
       end

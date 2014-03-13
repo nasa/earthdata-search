@@ -1,4 +1,5 @@
-            <li data-bind="<% if is_project %> click: $root.ui.projectList.select, <% end %>css: {'view-dataset': $root.datasets.hasVisibleDataset($data), 'search-granules': $root.project.isSearchingGranules($data)<% if is_project %>, 'panel-list-selected': $root.ui.projectList.isSelected($data) <% end %>}" class="panel-list-item">
+            <li data-bind="click: $root.ui.datasetsList.focusDataset"
+                class="panel-list-item panel-list-item-with-thumb master-overlay-forward master-overlay-hide-parent">
               <div class="panel-list-thumbnail-container">
               <!-- ko if: thumbnail -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
@@ -36,10 +37,10 @@
                 </a>
                 <% if is_project %>
                   <!-- ko if: has_granules -->
-                  <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Filter granules">
+                    <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
                     <i class="edsc-icon-compose"></i>
                   </a>
-                  <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.project.clearSearchGranules, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Filter granules">
+                  <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.project.clearSearchGranules, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
                     <i class="edsc-icon-compose"></i>
                   </a>
                   <!-- /ko -->

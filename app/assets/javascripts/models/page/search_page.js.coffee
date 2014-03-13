@@ -34,6 +34,7 @@ ns.SearchPage = do (ko,
       #VISUALIZED_IDS = [
       #  'C204200620-GSFCS4PA', # Bounding-box granules
       #  'C1000000080-CDDIS', # Point-based granules, distributed geographically
+      #  'C5920490-LARC_ASDC', # Line-based granules
       #  'C14758250-LPDAAC_ECS', # AST_L1A
       #  'C1000000016-LANCEMODIS', # GIBS
       #  'C1000000019-LANCEMODIS', # GIBS
