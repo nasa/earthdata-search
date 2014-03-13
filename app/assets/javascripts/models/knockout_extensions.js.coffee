@@ -55,7 +55,7 @@ do (ko, $=jQuery) ->
       read: ->
         # Causes an evaluation of computed, thereby setting up dependencies correctly
         unless isSetup()
-          asyncComputed().extend(throttle: timeout)
+          asyncComputed.extend(throttle: timeout)
           isSetup(true)
         value()
       write: (newValue) ->
