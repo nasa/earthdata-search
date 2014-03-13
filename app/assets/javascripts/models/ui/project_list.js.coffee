@@ -66,8 +66,15 @@ ns.ProjectList = do (ko, window, $ = jQuery) ->
     isSelected: (dataset) =>
       dataset.id() == @project.selectedDatasetId()
 
+    showFilters: (dataset) =>
+      if @project.searchGranulesDataset(dataset)
+        $('.temporal-filter').temporalSelectors({
+          uiModel: dataset.granulesModel.temporal,
+          modelPath: "project.searchGranulesDataset().granulesModel.temporal.pending"
+        })
+
     hideFilters: =>
-      @project.searchGranulesDataset(null)
       $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
+      @project.searchGranulesDataset(null)
 
   exports = ProjectList

@@ -1,6 +1,7 @@
 #= require models/data/xhr_model
 
 ns = @edsc.models.data
+models = @edsc.models
 
 ns.Granules = do (ko,
                   getJSON=jQuery.getJSON,
@@ -54,6 +55,7 @@ ns.Granules = do (ko,
   class GranulesModel extends XhrModel
     constructor: (query, @parentQuery) ->
       super('/granules.json', query)
+      @temporal = new models.ui.Temporal(query)
 
     _toResults: (data) ->
       new Granule(result) for result in data.feed.entry

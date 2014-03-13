@@ -51,6 +51,7 @@ ns.SearchPage = do (ko,
         datasetsList: new DatasetsListModel(@query, @datasets)
         projectList: new ProjectListModel(@project, @user, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
+        granuleTemporal: null
 
       @bindingsLoaded = ko.observable(false)
 

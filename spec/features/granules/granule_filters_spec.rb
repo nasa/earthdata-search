@@ -6,7 +6,7 @@ describe "Granule search filters", reset: false do
 
   before(:all) do
     original_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 30 # Ugh, so slow
+    Capybara.default_wait_time = 60 # Ugh, so slow
 
     Capybara.reset_sessions!
     visit "/search"
@@ -155,4 +155,38 @@ describe "Granule search filters", reset: false do
       end
     end
   end
+
+  context "when searching by temporal" do
+    after :each do
+      first_project_dataset.click_link "Filter granules"
+      click_button "granule-filters-clear"
+      expect(page).to reset_granules_to(before_granule_count)
+    end
+
+    context "temporal range" do
+      it "selecting temporal range filters granules" do
+        fill_in "Start", with: "2013-12-01 00:00:00"
+        close_datetimepicker
+        fill_in "End", with: "2013-12-31 00:00:00"
+        close_datetimepicker
+        js_click_apply ".master-overlay-content"
+        expect(page).to filter_granules_from(before_granule_count)
+      end
+    end
+
+    context "temporal recurring" do
+      it "selecting temporal recurring filters granules" do
+        js_check_recurring 'granule'
+        fill_in "Start", with: "12-01 00:00:00"
+        close_datetimepicker
+        fill_in "End", with: "12-31 00:00:00"
+        close_datetimepicker
+        script = "edsc.page.project.searchGranulesDataset().granulesModel.temporal.pending.years([2005, 2010])"
+        page.execute_script(script)
+        js_click_apply ".master-overlay-content"
+        expect(page).to filter_granules_from(before_granule_count)
+      end
+    end
+  end
+
 end
