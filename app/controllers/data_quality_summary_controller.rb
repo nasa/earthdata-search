@@ -28,6 +28,7 @@ class DataQualitySummaryController < ApplicationController
   private
 
   def get_user_id
-    Echo::Client.get_token_info(token).body["token_info"]["user_guid"]
+    response = Echo::Client.get_token_info(token).body
+    response["token_info"]["user_guid"] if response["token_info"]
   end
 end

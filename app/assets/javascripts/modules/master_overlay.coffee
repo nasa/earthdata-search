@@ -69,7 +69,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       content.height(content.parents('.main-content').height() - $(content[@level()]).offset().top - 40)
 
       secondary_content = @root.find('.master-overlay-secondary-content').find(".master-overlay-content")
-      secondary_content.height(content.height() + 8)
+      secondary_content.height(content.height() - 48)
 
   $document = $(document)
 

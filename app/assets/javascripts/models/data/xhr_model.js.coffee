@@ -72,7 +72,7 @@ ns.XhrModel = do (ko
           else
             result.dispose?() for result in current
 
-          @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results.length))
+          @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length))
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
           @currentRequest = null

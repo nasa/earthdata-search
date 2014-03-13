@@ -19,7 +19,7 @@ describe "Granule search filters", reset: false do
 
     expect(page).to have_content('Granules')
 
-    first_project_dataset.click_link "Filter granules"
+    first_project_dataset.click_link "Show granule filters"
 
     number_granules = expect(page.text).to match /\d+ Granules/
     before_granule_count = number_granules.to_s.split(" ")[0].to_i
@@ -33,7 +33,7 @@ describe "Granule search filters", reset: false do
 
   context "when choosing a day/night flag" do
     after :each do
-      first_project_dataset.click_link "Filter granules"
+      first_project_dataset.click_link "Show granule filters"
       click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
@@ -56,7 +56,7 @@ describe "Granule search filters", reset: false do
 
   context "when choosing cloud cover" do
     after :each do
-      first_project_dataset.click_link "Filter granules"
+      first_project_dataset.click_link "Show granule filters"
       click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
@@ -79,7 +79,7 @@ describe "Granule search filters", reset: false do
 
     context "validates input" do
       after :each do
-        first_project_dataset.click_link "Filter granules"
+        first_project_dataset.click_link "Hide granule filters"
       end
 
       it "minimum must be more than 0.0" do
@@ -107,7 +107,7 @@ describe "Granule search filters", reset: false do
 
   context "when choosing data access options" do
     after :each do
-      first_project_dataset.click_link "Filter granules"
+      first_project_dataset.click_link "Show granule filters"
       click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
@@ -125,7 +125,7 @@ describe "Granule search filters", reset: false do
 
   context "when searching by granule id" do
     after :each do
-      first_project_dataset.click_link "Filter granules"
+      first_project_dataset.click_link "Show granule filters"
       click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
@@ -158,7 +158,7 @@ describe "Granule search filters", reset: false do
 
   context "when searching by temporal" do
     after :each do
-      first_project_dataset.click_link "Filter granules"
+      first_project_dataset.click_link "Show granule filters"
       click_button "granule-filters-clear"
       expect(page).to reset_granules_to(before_granule_count)
     end
