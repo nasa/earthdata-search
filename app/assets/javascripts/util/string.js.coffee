@@ -1,4 +1,4 @@
-window.edsc.util.string = do (Date) ->
+@edsc.util.string = do ->
 
   # Pad the given str (string) by prepending the given char (string) until it
   # is at least len (int) characters long

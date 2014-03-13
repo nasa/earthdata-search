@@ -7,23 +7,15 @@ ns.GranuleLayer = do (L
                       dateUtil = @edsc.util.date
                       dividePolygon = ns.sphericalPolygon.dividePolygon
                       capitalize = @edsc.util.string.capitalize
+                      arrayUtil = @edsc.util.array
                       ) ->
 
 
   isClockwise = (path) ->
     sum = 0
-    len = path.length
-    for i in [0...len]
-      p0 = path[i]
-      p1 = path[(i + 1) % len]
-      sum += (p1.x - p0.x) * (p1.y + p0.y);
+    for [{x0, y0}, {x1, y1}] in arrayUtil.pairs(path)
+      sum += (x1 - x0) * (y1 + y0)
     sum > 0
-
-  clockwise = (path) ->
-    if !Array.isArray(path) || isClockwise(path) then path else path.concat().reverse()
-
-  counterclockwise = (path) ->
-    if Array.isArray(path) && isClockwise(path) then path.concat().reverse() else path
 
   addPath = (ctx, path, isCounterclockwise) ->
     {path, poly, line, point} = path
@@ -33,7 +25,7 @@ ns.GranuleLayer = do (L
       len = poly.length
       return if len < 2
 
-      if isCounterClockwise? && isCounterclockwise != !isClockwise(poly)
+      if isCounterclockwise != !isClockwise(poly)
         poly = poly.concat().reverse()
 
       ctx.moveTo(poly[0].x, poly[0].y)
@@ -364,7 +356,7 @@ ns.GranuleLayer = do (L
       @_granule = granule = e.granule
 
       @_granuleFocusLayer?.onRemove(@_map)
-      @_granuleFocusLayer = @_layerForGranule(granule, false)
+      @_granuleFocusLayer = @_focusLayer(granule, false)
       @_granuleFocusLayer?.onAdd(@_map)
 
     _onEdscStickygranule: (e) ->
@@ -380,7 +372,7 @@ ns.GranuleLayer = do (L
         @_map.fitBounds(@_restoreBounds)
         @_restoreBounds = null
 
-      @_granuleStickyLayer = @_layerForGranule(granule, true)
+      @_granuleStickyLayer = @_stickyLayer(granule, true)
       if @_granuleStickyLayer?
         @_granuleStickyLayer.onAdd(@_map)
 
@@ -424,17 +416,7 @@ ns.GranuleLayer = do (L
 
       @layer?.setResults(results)
 
-    _layerForGranule: (granule, sticky) ->
-      return null unless granule?
-
-      if sticky
-        options =
-          fillOpacity: 0
-          clickable: false
-      else
-        options =
-          clickable: false
-
+    _granuleLayer: (granule, options) ->
       layer = L.featureGroup()
       layer.addLayer(L.circleMarker(point, options)) for point in granule.getPoints() ? []
       layer.addLayer(L.sphericalPolygon(poly, options)) for poly in granule.getPolygons() ? []
@@ -445,40 +427,46 @@ ns.GranuleLayer = do (L
         shape = L.polygon(rect, options)
         shape._interpolationFn = 'cartesian'
         layer.addLayer(shape)
+      layer
 
-      if sticky
-        temporal = granule.getTemporal()
-        icon = L.divIcon
-          className: 'granule-spatial-label',
-          html: '<span class="granule-spatial-label-temporal">' + temporal +
-            '</span><a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+    _focusLayer: (granule) ->
+      return null unless granule?
 
-        marker = L.marker([0, 0], icon: icon)
+      @_granuleLayer(granule, clickable: false)
 
-        firstShape = layer.getLayers()[0]
-        if firstShape._interiors?
-          firstShape = firstShape._interiors
 
-        firstShape?.on 'add', (e) ->
-          map = @_map
+    _stickyLayer: (granule) ->
+      return null unless granule?
 
-          center = @getLatLng?()
-          unless center?
-            xmin = Infinity
-            xmax = -Infinity
-            ymin = Infinity
-            ymax = -Infinity
-            latlngs = @getLatLngs()
-            latlngs = latlngs[0] if Array.isArray(latlngs[0])
-            for latlng in latlngs
-              p = map.latLngToLayerPoint(latlng)
-              xmin = Math.min(xmin, p.x)
-              xmax = Math.max(xmax, p.x)
-              ymin = Math.min(ymin, p.y)
-              ymax = Math.max(ymax, p.y)
-            center = map.layerPointToLatLng(L.point((xmin + xmax) / 2, (ymin + ymax) / 2))
-          marker.setLatLng(center)
-          layer.addLayer(marker)
+      layer = @_granuleLayer(granule, fillOpacity: 0, clickable: false)
+
+      temporal = granule.getTemporal()
+      icon = L.divIcon
+        className: 'granule-spatial-label',
+        html: '<span class="granule-spatial-label-temporal">' + temporal +
+              '</span><a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+
+      marker = L.marker([0, 0], icon: icon)
+
+      firstShape = layer.getLayers()[0]
+      firstShape = firstShape._interiors if firstShape._interiors?
+
+      firstShape?.on 'add', (e) ->
+        map = @_map
+
+        center = @getLatLng?()
+        unless center?
+          latlngs = @getLatLngs()
+          latlngs = latlngs[0] if Array.isArray(latlngs[0])
+          points = (map.latLngToLayerPoint(latlng) for latlng in latlngs)
+          xs = (x for {x} in points)
+          ys = (y for {y} in points)
+          cx = (Math.min.apply(null, xs) + Math.max.apply(null, xs)) / 2
+          cy = (Math.min.apply(null, ys) + Math.max.apply(null, ys)) / 2
+          center = map.layerPointToLatLng(L.point(cx, cy))
+
+        marker.setLatLng(center)
+        layer.addLayer(marker)
 
       layer
 
