@@ -12,6 +12,10 @@ window.edsc.util.string = do (Date) ->
   dasherize = (str) ->
     str.trim().replace(/[_\s]+/g, '-').replace(/([A-Z])/g, '-$1').replace(/-+/g, '-').toLowerCase()
 
+  capitalize = (str) ->
+    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+
   exports =
     padLeft: padLeft
     dasherize: dasherize
+    capitalize: capitalize

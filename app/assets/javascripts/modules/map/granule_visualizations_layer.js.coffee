@@ -39,15 +39,7 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns
         if datasetIdsToLayers[id]?
           layer = datasetIdsToLayers[id]
         else
-          # Ensure enough granules are loaded.  Once we have granule list views, we may
-          # want this to use a separate model instance so that we can set different desired
-          # page sizes and sort orders.  For now, that has very undesirable performance
-          # implications (running 2 granule queries when we really only need one), so we
-          # should wait for faster searches from the CMR before considering a change.
-          #
-          # Note: our algorithms rely on sort order being [-end_date, -start_date]
-          #pageSize = Math.max(MIN_PAGE_SIZE, granules.query.pageSize())
-          #granules.query.pageSize(pageSize)
+          # Note: our algorithms rely on sort order being [-start_date]
           layer = new GranuleLayer(dataset, gibsParams)
           map.addLayer(layer)
 

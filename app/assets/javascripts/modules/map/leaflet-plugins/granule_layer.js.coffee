@@ -1,11 +1,12 @@
 ns = @edsc.map.L
 
-ns.GranuleLayer = do (L,
-                      $ = jQuery,
-                      GibsTileLayer = ns.GibsTileLayer,
-                      projectPath=ns.interpolation.projectPath,
+ns.GranuleLayer = do (L
+                      $ = jQuery
+                      GibsTileLayer = ns.GibsTileLayer
+                      projectPath=ns.interpolation.projectPath
                       dateUtil = @edsc.util.date
                       dividePolygon = ns.sphericalPolygon.dividePolygon
+                      capitalize = @edsc.util.string.capitalize
                       ) ->
 
 
@@ -301,31 +302,19 @@ ns.GranuleLayer = do (L,
     onAdd: (map) ->
       super(map)
 
-      map.on 'edsc.focusdataset', @_onFocusDataset
-      map.on 'edsc.mousemove', @_onMouseMove
-      map.on 'edsc.mouseout', @_onMouseOut
-      map.on 'click', @_onClick
-      map.on 'edsc.focusgranule', @_onFocusGranule
-      map.on 'edsc.stickygranule', @_onStickyGranule
-      @_isFocused = map.focusedDataset?.id() == @dataset.id()
+      @_handle(map, 'on', 'edsc.focusdataset')
+      @setFocus(map.focusedDataset?.id() == @dataset.id())
+
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
 
     onRemove: (map) ->
       super(map)
 
-      map.off 'edsc.focusdataset', @_onFocusDataset
-      map.off 'edsc.mousemove', @_onMouseMove
-      map.off 'edsc.mouseout', @_onMouseOut
-      map.off 'click', @_onClick
-      map.off 'edsc.focusgranule', @_onFocusGranule
-      map.off 'edsc.stickygranule', @_onStickyGranule
+      @_handle(map, 'off', 'edsc.focusdataset')
       @_resultsSubscription.dispose()
       @_results = null
-      @_granuleFocusLayer?.onRemove(map)
-      @_granuleFocusLayer = null
-      @_granuleStickyLayer?.onRemove(map)
-      @_granuleStickyLayer = null
+      @setFocus(false)
 
       if @_restoreBounds
         map.fitBounds(@_restoreBounds)
@@ -334,42 +323,51 @@ ns.GranuleLayer = do (L,
     url: ->
       super() if @_hasGibs
 
-    _onFocusDataset: (e) =>
-      @_isFocused = e.dataset?.id() == @dataset.id()
-      unless @_isFocused
+    setFocus: (focus) ->
+      return if @_isFocused == focus
+      @_isFocused = focus
+      map = @_map
+      events = ['edsc.mousemove', 'edsc.mouseout', 'click', 'edsc.focusgranule', 'edsc.stickygranule']
+      if focus
+        @_handle(map, 'on', events...)
+      else
+        @_handle(map, 'off', events...)
         @_granuleFocusLayer?.onRemove(map)
         @_granuleFocusLayer = null
         @_granuleStickyLayer?.onRemove(map)
         @_granuleStickyLayer = null
 
-    _onMouseOut: (e) =>
-      return unless @_isFocused
+    _handle: (obj, onOrOff, events...) ->
+      for event in events
+        method = '_on' + event.split('.').map(capitalize).join('')
+        obj[onOrOff] event, this[method].bind(this)
+
+    _onEdscFocusdataset: (e) ->
+      @setFocus(e.dataset?.id() == @dataset.id())
+
+    _onEdscMouseout: (e) ->
       if @_granule?
         @_map.fire('edsc.focusgranule', granule: null)
 
-    _onMouseMove: (e) =>
-      return unless @_isFocused
+    _onEdscMousemove: (e) ->
       granule = @layer?.granuleAt(e.layerPoint)
       if @_granule != granule
         @_map.fire('edsc.focusgranule', granule: granule)
 
-    _onClick: (e) =>
-      return unless @_isFocused
+    _onClick: (e) ->
       return unless $(e.originalEvent.target).closest('a').length == 0
       granule = @layer?.granuleAt(e.layerPoint)
       granule = null if @_stickied == granule
       @_map.fire('edsc.stickygranule', granule: granule)
 
-    _onFocusGranule: (e) =>
-      return unless @_isFocused
+    _onEdscFocusgranule: (e) ->
       @_granule = granule = e.granule
 
       @_granuleFocusLayer?.onRemove(@_map)
       @_granuleFocusLayer = @_layerForGranule(granule, false)
       @_granuleFocusLayer?.onAdd(@_map)
 
-    _onStickyGranule: (e) =>
-      return unless @_isFocused
+    _onEdscStickygranule: (e) ->
       granule = e.granule
       return if @_stickied == granule
 

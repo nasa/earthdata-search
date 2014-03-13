@@ -28,7 +28,6 @@ ns.Dataset = do (ko
 
     dataset
 
-
   class Dataset extends KnockoutModel
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
