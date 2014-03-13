@@ -109,31 +109,31 @@ ns.GranuleLayer = do (L
 
       @tileDrawn() unless @options.async
 
+    _addIntersections: (result, paths, bounds, type, interpolation) ->
+      return null unless paths?
+
+      for path in paths
+        shapeBounds = L.latLngBounds(path)
+        if shapeBounds.intersects(bounds)
+          intersection = {}
+          intersection[type] = projectPath(@_map, path, [], interpolation, 2, 5).boundary
+          result.push(intersection)
+      null
+
     _granulePathsOverlappingTile: (granule, tileBounds) ->
       result = []
       map = @_map
-      polygons = granule.getPolygons()
-      if polygons?
-        for polygon in polygons
-          divided = dividePolygon(polygon[0])
+      intersects = @_intersects
 
-          for interior in divided.interiors when tileBounds.intersects(interior)
-            result.push({poly: projectPath(map, interior, [], 'geodetic', 2, 5).boundary})
+      for polygon in granule.getPolygons() ? []
+        interiors = dividePolygon(polygon[0]).interiors
+        @_addIntersections(result, interiors, tileBounds, 'poly', 'geodetic')
 
-      rects = granule.getRectangles()
-      if rects?
-        for path in rects when tileBounds.intersects(path)
-          result.push({poly: projectPath(map, path, [], 'cartesian', 2, 5).boundary})
+      @_addIntersections(result, granule.getRectangles(), tileBounds, 'poly', 'geodetic')
+      @_addIntersections(result, granule.getLines(), tileBounds, 'line', 'geodetic')
 
-      points = granule.getPoints()
-      if points?
-        for point in points when tileBounds.contains(point)
-          result.push({point: @_map.latLngToLayerPoint(point)})
-
-      lines = granule.getLines()
-      if lines?
-        for line in lines when tileBounds.intersects(line)
-          result.push({line: projectPath(map, line, [], 'geodetic', 2, 5).boundary})
+      for point in granule.getPoints() ? [] when tileBounds.contains(point)
+        result.push({point: @_map.latLngToLayerPoint(point)})
 
       result
 
@@ -236,15 +236,14 @@ ns.GranuleLayer = do (L
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
 
+      layerPointToLatLng = @_map.layerPointToLatLng.bind(@_map)
       tileSize = @options.tileSize
       nwPoint = @_getTilePos(tilePoint)
       nePoint = nwPoint.add([tileSize, 0])
       sePoint = nwPoint.add([tileSize, tileSize])
       swPoint = nwPoint.add([0, tileSize])
       boundary = {poly: [nwPoint, nePoint, sePoint, swPoint]}
-      bounds = new L.latLngBounds(@_map.layerPointToLatLng(nwPoint),
-                                  @_map.layerPointToLatLng(sePoint))
-
+      bounds = new L.latLngBounds(boundary.poly.map(layerPointToLatLng))
       bounds = bounds.pad(0.1)
 
       date = null
