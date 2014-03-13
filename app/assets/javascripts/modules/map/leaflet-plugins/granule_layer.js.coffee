@@ -374,15 +374,17 @@ ns.GranuleLayer = do (L
       if @_granuleStickyLayer?
         @_granuleStickyLayer.onAdd(@_map)
 
-        @_restoreBounds ?= @_map.getBounds()
-        bounds = @_granuleFocusLayer.getBounds()
-        # Avoid zooming and panning tiny amounts
-        unless @_map.getBounds().contains(bounds)
-          @_map.fitBounds(bounds.pad(0.2))
+        if @layer.options.endpoint == 'geo'
+          @_restoreBounds ?= @_map.getBounds()
+          bounds = @_granuleFocusLayer.getBounds()
+          # Avoid zooming and panning tiny amounts
+          unless @_map.getBounds().contains(bounds)
+            @_map.fitBounds(bounds.pad(0.2))
 
       @_loadResults(@_results)
 
     _buildLayerWithOptions: (newOptions) ->
+      @_restoreBounds = null
       # GranuleCanvasLayer needs to handle time
       newOptions = L.extend({}, newOptions)
       delete newOptions.time
@@ -456,12 +458,8 @@ ns.GranuleLayer = do (L
         unless center?
           latlngs = @getLatLngs()
           latlngs = latlngs[0] if Array.isArray(latlngs[0])
-          points = (map.latLngToLayerPoint(latlng) for latlng in latlngs)
-          xs = (x for {x} in points)
-          ys = (y for {y} in points)
-          cx = (Math.min.apply(null, xs) + Math.max.apply(null, xs)) / 2
-          cy = (Math.min.apply(null, ys) + Math.max.apply(null, ys)) / 2
-          center = map.layerPointToLatLng(L.point(cx, cy))
+          bounds = L.bounds(map.latLngToLayerPoint(latlng) for latlng in latlngs)
+          center = map.layerPointToLatLng(bounds.getCenter())
 
         marker.setLatLng(center)
         layer.addLayer(marker)
