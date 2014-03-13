@@ -32,7 +32,7 @@
     <dt>Temporal</dt>
     <dd>
       <!-- ko with: granulesModel.temporal.pending -->
-      <%= render partial: 'temporal_template', locals: {prefix: 'granule'} %>
+      <%= render partial: 'temporal_template', locals: {prefix: 'granule', show_actions: false} %>
       <!-- /ko -->
     </dd>
     <dt>Day / Night Flag</dt>
@@ -70,7 +70,7 @@
 
 </div>
 <div class="granule-filter-actions">
-  <button data-bind="click: $root.ui.projectList.hideFilters" id="granule-filters-submit" class="button submit" title="Apply your selections" type="button">Apply</button>
+  <button data-bind="click: $root.ui.projectList.applyFilters" id="granule-filters-submit" class="button submit" title="Apply your selections" type="button">Apply</button>
   <button id="granule-filters-clear" data-bind="click: granuleQuery.clearFilters" class="button low-priority" title="Clear your selections" type="button">Clear</button>
 </div>
 <!-- /ko -->

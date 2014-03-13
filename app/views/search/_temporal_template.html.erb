@@ -41,7 +41,7 @@
     <input id="<%= prefix %>-temporal-slider" class="temporal-recurring-year-range" type="text">
   </div>
 
-  <div class="button-row">
+  <div class="button-row <%= "hidden" unless show_actions %>">
     <button id="temporal-submit"
             class="button submit"
             title="Apply your selections" type="button">Apply Filter</button>

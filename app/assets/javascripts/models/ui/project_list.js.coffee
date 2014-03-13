@@ -120,6 +120,10 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
           modelPath: "project.searchGranulesDataset().granulesModel.temporal.pending"
         })
 
+    applyFilters: =>
+      $('.master-overlay-content #temporal-submit').click()
+      @hideFilters()
+
     hideFilters: =>
       $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
       @project.searchGranulesDataset(null)
