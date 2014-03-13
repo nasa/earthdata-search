@@ -8,7 +8,7 @@ ns.Map = do (window,
              LayerBuilder = ns.LayerBuilder,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
-             GranulesLayer = ns.GranulesLayer,
+             MouseEventsLayer = ns.MouseEventsLayer,
              Dataset = @edsc.models.data.Dataset,
              page = @edsc.page) ->
 
@@ -32,7 +32,7 @@ ns.Map = do (window,
 
       @_buildLayerSwitcher()
       map.addLayer(new GranuleVisualizationsLayer())
-      map.addLayer(new GranulesLayer())
+      map.addLayer(new MouseEventsLayer())
 
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())
