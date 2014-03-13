@@ -6,15 +6,6 @@ ns.DataQualitySummary = do (ko
                             KnockoutModel = @edsc.models.KnockoutModel
                             XhrModel=ns.XhrModel
                             ) ->
-  class DataQualitySummaryModel extends XhrModel
-    constructor: (query) ->
-      super("/data_quality_summary.json", query)
-
-    _toResults: (data) ->
-      if data
-        for result in data
-          new DataQualitySummary(result)
-
   class DataQualitySummary extends KnockoutModel
     constructor: (jsonData) ->
       @summary = jsonData.data_quality_summary_definition.summary if jsonData
@@ -27,5 +18,15 @@ ns.DataQualitySummary = do (ko
     fromJSON: (json) =>
       if json
         @accepted(json.accepted)
+
+  class DataQualitySummaryModel extends XhrModel
+    constructor: (query) ->
+      super("/data_quality_summary.json", query)
+
+    _toResults: (data, current, params) ->
+      result.dispose() for result in current
+
+      if data
+        new DataQualitySummary(result) for result in data
 
   exports = DataQualitySummaryModel

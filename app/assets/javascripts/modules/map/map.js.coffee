@@ -8,7 +8,8 @@ ns.Map = do (window,
              LayerBuilder = ns.LayerBuilder,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
-             GranulesLayer = ns.GranulesLayer,
+             MouseEventsLayer = ns.MouseEventsLayer,
+             Dataset = @edsc.models.data.Dataset,
              page = @edsc.page) ->
 
   # Fix leaflet default image path
@@ -31,7 +32,7 @@ ns.Map = do (window,
 
       @_buildLayerSwitcher()
       map.addLayer(new GranuleVisualizationsLayer())
-      map.addLayer(new GranulesLayer())
+      map.addLayer(new MouseEventsLayer())
 
       map.addControl(L.control.zoom(position: 'topright'))
       map.addControl(new ProjectionSwitcher())
@@ -39,7 +40,7 @@ ns.Map = do (window,
       @setProjection(projection)
 
       @_datasetSubscription = page.datasets.details.subscribe(@_showDatasetSpatial)
-      @_granuleVisualizationSubscription = page.datasets.visibleDatasets.subscribe (datasets) ->
+      @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 
       $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)
@@ -50,6 +51,10 @@ ns.Map = do (window,
       @_datasetSubscription.dispose()
       @_granuleVisualizationSubscription.dispose()
       $('#dataset-results, #project-overview').off('edsc.navigate', @_hideDatasetSpatial)
+
+    focusDataset: (dataset) ->
+      @map.focusedDataset = dataset
+      @map.fire 'edsc.focusdataset', dataset: dataset
 
     _createLayerMap: (productIds...) ->
       layerForProduct = LayerBuilder.layerForProduct

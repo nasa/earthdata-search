@@ -4,17 +4,30 @@ ns.GranulesList = do ($=jQuery)->
 
   class GranulesList
     constructor: (@dataset) ->
+      @dataset.reference()
+
+      @_wasVisible = @dataset.visible()
+      @dataset.visible(true)
+
       @granules = @dataset.granulesModel
-      @_map = $('#map').data('map').map
+      map = $('#map').data('map')
+      @_map = map.map
       @_map.on 'edsc.focusgranule', @_onFocusGranule
       @_map.on 'edsc.stickygranule', @_onStickyGranule
+
+      map.focusDataset(@dataset)
+
       @focused = ko.observable(null)
       @stickied = ko.observable(null)
       @loadingBrowse = ko.observable(false)
 
     dispose: ->
+      map = $('#map').data('map')
+      map.focusDataset(null)
+
       @_map.off 'edsc.focusgranule', @_onFocusGranule
       @_map.off 'edsc.stickygranule', @_onStickyGranule
+      @dataset.visible(@_wasVisible)
       @dataset.dispose()
 
     scrolled: (data, event) =>

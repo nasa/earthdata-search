@@ -17,12 +17,25 @@
     hoverTimeoutMs: 0
 
   <% elsif Rails.env.development? %>
+
+  visualizationDatasetParams =
+    echo_collection_id: [
+      'C204200620-GSFCS4PA', # Bounding-box granules
+      'C1000000080-CDDIS', # Point-based granules, distributed geographically
+      'C5920490-LARC_ASDC', # Line-based granules
+      'C14758250-LPDAAC_ECS', # AST_L1A
+      'C1000000016-LANCEMODIS', # GIBS
+      'C1000000019-LANCEMODIS', # GIBS
+      'C90757596-LAADS' # Opaque GIBS (fake, for testing)
+    ]
+
   # Development config
   exports =
     defaultAnimationDurationMs: 300
     maxPolygonSize: 50
     csrfToken: csrfToken
     hoverTimeoutMs: 500
+    #baseQueryParams: visualizationDatasetParams
 
   <% elsif Rails.env.production? %>
   # Production config

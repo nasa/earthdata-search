@@ -95,7 +95,7 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate)
 
     result =
       boundary: projectLatLngPath(latlngs, proj, fn, tolerance, maxDepth)
-      holes: (projectLatLngPath(hole, proj, fn, tolernace, maxDepth) for hole in holes ? [])
+      holes: (projectLatLngPath(hole, proj, fn, tolerance, maxDepth) for hole in holes ? [])
 
 
   # Overrides the default projectLatLngs in Polyline and Polygon to project and interpolate the

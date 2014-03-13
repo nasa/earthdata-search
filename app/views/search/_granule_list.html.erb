@@ -14,7 +14,11 @@
           <!-- ko if: granules.isLoaded() -->
           <p>
             Showing <span data-bind="text: granules.results().length"></span> of
+            <span data-bind="if: granules.hitsEstimated() && granules.hasNextPage()">approximately</span>
             <span data-bind="text: granules.hits() == 1 ? '1 matching granule' : granules.hits() + ' matching granules'"></span>
+          </p>
+          <p data-bind="if: granules.loadTime() !== null" class="panel-list-meta">
+            Search Time: <span data-bind="text: granules.loadTime">0.000</span>s
           </p>
           <!-- /ko -->
         </div>
