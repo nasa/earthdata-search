@@ -93,7 +93,6 @@ ns.Granules = do (ko,
       if params.page_num > 1
         current.concat(newItems)
       else
-        granule.dispose() for granule in current
         newItems
 
     _computeSearchResponse: (current, callback) ->

@@ -13,8 +13,8 @@ ns.GranuleLayer = do (L
 
   isClockwise = (path) ->
     sum = 0
-    for [{x0, y0}, {x1, y1}] in arrayUtil.pairs(path)
-      sum += (x1 - x0) * (y1 + y0)
+    for [p0, p1] in arrayUtil.pairs(path)
+      sum += (p1.x - p0.x) * (p1.y + p0.y)
     sum > 0
 
   addPath = (ctx, path, isCounterclockwise) ->
