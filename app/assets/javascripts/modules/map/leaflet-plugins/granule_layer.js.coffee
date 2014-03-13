@@ -303,10 +303,10 @@ ns.GranuleLayer = do (L
     onRemove: (map) ->
       super(map)
 
+      @setFocus(false, map)
       @_handle(map, 'off', 'edsc.focusdataset')
       @_resultsSubscription.dispose()
       @_results = null
-      @setFocus(false)
 
       if @_restoreBounds
         map.fitBounds(@_restoreBounds)
@@ -315,10 +315,9 @@ ns.GranuleLayer = do (L
     url: ->
       super() if @_hasGibs
 
-    setFocus: (focus) ->
+    setFocus: (focus, map=@_map) ->
       return if @_isFocused == focus
       @_isFocused = focus
-      map = @_map
       events = ['edsc.mousemove', 'edsc.mouseout', 'click', 'edsc.focusgranule', 'edsc.stickygranule']
       if focus
         @_handle(map, 'on', events...)
@@ -332,34 +331,34 @@ ns.GranuleLayer = do (L
     _handle: (obj, onOrOff, events...) ->
       for event in events
         method = '_on' + event.split('.').map(capitalize).join('')
-        obj[onOrOff] event, this[method].bind(this)
+        obj[onOrOff] event, this[method]
 
-    _onEdscFocusdataset: (e) ->
+    _onEdscFocusdataset: (e) =>
       @setFocus(e.dataset?.id() == @dataset.id())
 
-    _onEdscMouseout: (e) ->
+    _onEdscMouseout: (e) =>
       if @_granule?
         @_map.fire('edsc.focusgranule', granule: null)
 
-    _onEdscMousemove: (e) ->
+    _onEdscMousemove: (e) =>
       granule = @layer?.granuleAt(e.layerPoint)
       if @_granule != granule
         @_map.fire('edsc.focusgranule', granule: granule)
 
-    _onClick: (e) ->
+    _onClick: (e) =>
       return unless $(e.originalEvent.target).closest('a').length == 0
       granule = @layer?.granuleAt(e.layerPoint)
       granule = null if @_stickied == granule
       @_map.fire('edsc.stickygranule', granule: granule)
 
-    _onEdscFocusgranule: (e) ->
+    _onEdscFocusgranule: (e) =>
       @_granule = granule = e.granule
 
       @_granuleFocusLayer?.onRemove(@_map)
       @_granuleFocusLayer = @_focusLayer(granule, false)
       @_granuleFocusLayer?.onAdd(@_map)
 
-    _onEdscStickygranule: (e) ->
+    _onEdscStickygranule: (e) =>
       granule = e.granule
       return if @_stickied == granule
 
