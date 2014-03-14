@@ -149,7 +149,7 @@
         </nav>
         <header class="with-options">
           <h2>Project Datasets</h2>
-          <div class="master-overlay-project-actions actions">
+          <div class="master-overlay-global-actions actions">
             <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject">
               <i class="edsc-icon-download"></i>
             </a>
@@ -445,7 +445,7 @@
   </div>
 </div>
 
-<div id="dqs-modal" data-bind="showModal: ui.projectList.dataQualitySummaryModal" class="modal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
+<div id="dqs-modal" data-bind="showModal: ui.projectList.dataQualitySummaryModal" class="modal" role="dialog" aria-labelledby="myModalLabel">
   <!-- ko if: ui.projectList.dataQualitySummaryModal() -->
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

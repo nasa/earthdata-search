@@ -1,8 +1,11 @@
-<section data-bind="with: datasets.details" id="dataset-details">
+<section id="dataset-details">
   <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
   <nav class="master-overlay-nav">
-    <a href="#" class="master-overlay-back"><i class="fa fa-arrow-circle-left"></i> Back to Datasets</a>
+    <a href="#" class="master-overlay-back">
+      <i class="fa fa-arrow-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Datasets</span>
+    </a>
   </nav>
+  <!-- ko with: datasets.details -->
   <header >
     <h2 data-bind="if: $parent.datasets.detailsLoading">Details Loading...</h2>
     <!-- ko ifnot: $parent.datasets.detailsLoading -->
@@ -77,4 +80,5 @@
       </dl>
     </div>
   </div>
+  <!-- /ko -->
 </section>

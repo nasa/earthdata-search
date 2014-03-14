@@ -86,7 +86,7 @@ describe "Project dataset list", reset: false do
     end
 
     it "highlights all project datasets" do
-      expect(project_overview).to have_css('.master-overlay-project-actions a.button-active', count: 1)
+      expect(project_overview).to have_css('.master-overlay-global-actions a.button-active', count: 1)
       expect(project_overview).to have_link('Hide dataset', count: 2)
     end
 
