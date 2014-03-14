@@ -52,6 +52,18 @@ describe "Granule search filters", reset: false do
       select 'Both day and night', from: "day-night-select"
       expect(page).to filter_granules_from(before_granule_count)
     end
+
+    it "clicking the clear button selects Anytime" do
+      select 'Day only', from: "day-night-select"
+      expect(page).to filter_granules_from(before_granule_count)
+
+      first_project_dataset.click_link "Show granule filters"
+      click_button "granule-filters-clear"
+      expect(page).to reset_granules_to(before_granule_count)
+
+      expect(page).to have_select("day-night-select", selected: "Anytime")
+      click_button "granule-filters-submit"
+    end
   end
 
   context "when choosing cloud cover" do
@@ -75,6 +87,20 @@ describe "Granule search filters", reset: false do
     it "filters with only max" do
       fill_in "Maximum:", with: "5.0"
       expect(page).to filter_granules_from(before_granule_count)
+    end
+
+    it "clicking the clear button clears minimum and maximum" do
+      fill_in "Minimum:", with: "2.5"
+      fill_in "Maximum:", with: "5.0"
+      expect(page).to filter_granules_from(before_granule_count)
+
+      first_project_dataset.click_link "Show granule filters"
+      click_button "granule-filters-clear"
+      expect(page).to reset_granules_to(before_granule_count)
+
+      expect(page).to have_field("Minimum", with: "")
+      expect(page).to have_field("Maximum", with: "")
+      click_button "granule-filters-submit"
     end
 
     context "validates input" do
@@ -121,6 +147,20 @@ describe "Granule search filters", reset: false do
       check "Find only granules that are available online."
       expect(page).to filter_granules_from(before_granule_count)
     end
+
+    it "clicking the clear button unchecks data access options" do
+      check "Find only granules that have browse images."
+      check "Find only granules that are available online."
+      expect(page).to filter_granules_from(before_granule_count)
+
+      first_project_dataset.click_link "Show granule filters"
+      click_button "granule-filters-clear"
+      expect(page).to reset_granules_to(before_granule_count)
+
+      expect(page).to have_unchecked_field("Find only granules that have browse images.")
+      expect(page).to have_unchecked_field("Find only granules that are available online.")
+      click_button "granule-filters-submit"
+    end
   end
 
   context "when searching by granule id" do
@@ -134,6 +174,18 @@ describe "Granule search filters", reset: false do
       it "selecting Granule ID filters granules" do
         fill_in "granule_id", with: "%2006227720%"
         expect(page).to filter_granules_from(before_granule_count)
+      end
+
+      it "clicking the clear button clears granule id field" do
+        fill_in "granule_id", with: "%2006227720%"
+        expect(page).to filter_granules_from(before_granule_count)
+
+        first_project_dataset.click_link "Show granule filters"
+        click_button "granule-filters-clear"
+        expect(page).to reset_granules_to(before_granule_count)
+
+        expect(page).to have_field("granule_id", with: "")
+        click_button "granule-filters-submit"
       end
     end
 
@@ -153,6 +205,19 @@ describe "Granule search filters", reset: false do
         fill_in "granule_id_field", with: "%03232002054831%"
         expect(page).to filter_granules_from(before_granule_count)
       end
+
+      it "clicking the clear button clears granule id textarea" do
+        choose "Search by Granule UR"
+        fill_in "granule_id_field", with: "%2006227720%"
+        expect(page).to filter_granules_from(before_granule_count)
+
+        first_project_dataset.click_link "Show granule filters"
+        click_button "granule-filters-clear"
+        expect(page).to reset_granules_to(before_granule_count)
+
+        expect(page).to have_field("granule_id_field", with: "")
+        click_button "granule-filters-submit"
+      end
     end
   end
 
@@ -163,29 +228,43 @@ describe "Granule search filters", reset: false do
       expect(page).to reset_granules_to(before_granule_count)
     end
 
-    context "temporal range" do
-      it "selecting temporal range filters granules" do
-        fill_in "Start", with: "2013-12-01 00:00:00"
-        close_datetimepicker
-        fill_in "End", with: "2013-12-31 00:00:00"
-        close_datetimepicker
-        js_click_apply ".master-overlay-content"
-        expect(page).to filter_granules_from(before_granule_count)
-      end
+    it "selecting temporal range filters granules" do
+      fill_in "Start", with: "2013-12-01 00:00:00"
+      close_datetimepicker
+      fill_in "End", with: "2013-12-31 00:00:00"
+      close_datetimepicker
+      js_click_apply ".master-overlay-content"
+      expect(page).to filter_granules_from(before_granule_count)
     end
 
-    context "temporal recurring" do
-      it "selecting temporal recurring filters granules" do
-        js_check_recurring 'granule'
-        fill_in "Start", with: "12-01 00:00:00"
-        close_datetimepicker
-        fill_in "End", with: "12-31 00:00:00"
-        close_datetimepicker
-        script = "edsc.page.project.searchGranulesDataset().granulesModel.temporal.pending.years([2005, 2010])"
-        page.execute_script(script)
-        js_click_apply ".master-overlay-content"
-        expect(page).to filter_granules_from(before_granule_count)
-      end
+    it "selecting temporal recurring filters granules" do
+      js_check_recurring 'granule'
+      fill_in "Start", with: "12-01 00:00:00"
+      close_datetimepicker
+      fill_in "End", with: "12-31 00:00:00"
+      close_datetimepicker
+      script = "edsc.page.project.searchGranulesDataset().granulesModel.temporal.pending.years([2005, 2010])"
+      page.execute_script(script)
+      js_click_apply ".master-overlay-content"
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+
+    it "clicking the clear button clears temporal fields" do
+      fill_in "Start", with: "2013-12-01 00:00:00"
+      close_datetimepicker
+      fill_in "End", with: "2013-12-31 00:00:00"
+      close_datetimepicker
+      js_click_apply ".master-overlay-content"
+      expect(page).to filter_granules_from(before_granule_count)
+
+      first_project_dataset.click_link "Show granule filters"
+      click_button "granule-filters-clear"
+      expect(page).to reset_granules_to(before_granule_count)
+
+      expect(page).to have_field("Start", with: "")
+      expect(page).to have_field("End", with: "")
+      expect(page).to have_unchecked_field("Recurring?")
+      click_button "granule-filters-submit"
     end
   end
 

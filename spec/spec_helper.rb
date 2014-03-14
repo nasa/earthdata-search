@@ -61,10 +61,6 @@ RSpec.configure do |config|
 
   wait_time = Capybara.default_wait_time
 
-  config.before :all do
-    load Rails.root + "db/seeds.rb"
-  end
-
   config.before :each do
     if Capybara.current_driver == :rack_test
       DatabaseCleaner.strategy = :transaction
