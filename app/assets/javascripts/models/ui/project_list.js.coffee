@@ -113,7 +113,8 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       if @project.searchGranulesDataset(dataset)
         $('.granule-temporal-filter').temporalSelectors({
           uiModel: dataset.granulesModel.temporal,
-          modelPath: "project.searchGranulesDataset().granulesModel.temporal.pending"
+          modelPath: "project.searchGranulesDataset().granulesModel.temporal.pending",
+          prefix: 'granule'
         })
 
     applyFilters: =>

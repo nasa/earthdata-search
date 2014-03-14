@@ -4,6 +4,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
     root = this;
     uiModel = options["uiModel"]
     uiModelPath = options["modelPath"]
+    prefix = options["prefix"]
     current_year = new Date().getUTCFullYear()
 
     validateTemporalInputs = ->
@@ -51,8 +52,8 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
       })
 
     updateMonthButtons = (month_label) ->
-      prev_button = root.find(month_label).siblings('button.xdsoft_prev')
-      next_button = root.find(month_label).siblings('button.xdsoft_next')
+      prev_button = month_label.siblings('button.xdsoft_prev')
+      next_button = month_label.siblings('button.xdsoft_next')
       prev_button.show()
       next_button.show()
       month = month_label.find('span').text()
@@ -91,6 +92,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
 
     root.find('.temporal-range-picker').datetimepicker({
       format: 'Y-m-d H:i:s',
+      className: prefix + '-datetimepicker',
       yearStart: '1960',
       yearEnd: current_year,
       onShow: (dp,$input) ->
@@ -111,7 +113,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
 
     root.find('.temporal-recurring-picker').datetimepicker({
       format: 'm-d H:i:s',
-      className: 'recurring-datetimepicker',
+      className: prefix + '-datetimepicker recurring-datetimepicker',
       yearStart: 2007,
       yearEnd: 2007,
       onShow: (dp,$input) ->
@@ -169,19 +171,21 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
         if updateTemporalRecurring()
           $(this).parents('.dropdown').removeClass('open')
 
-    $(document).on 'click', '.clear-filters.button, .temporal-clear', ->
+    if prefix == 'dataset'
+      $(document).on 'click', '.clear-filters.button', ->
+        validateTemporalInputs()
+
+    if prefix == 'granule'
+      $(document).on 'click', '.granule-filters-clear', ->
+        validateTemporalInputs()
+
+    $(root).on 'click', '.temporal-clear', ->
       validateTemporalInputs()
 
-    $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker .xdsoft_today_button', ->
+    $('.' + prefix + '-datetimepicker.recurring-datetimepicker .xdsoft_mounthpicker').on 'click', '.xdsoft_today_button, button.xdsoft_prev, button.xdsoft_next', ->
       updateMonthButtons($(this).siblings('.xdsoft_month'))
 
-    $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker button.xdsoft_prev', ->
-      updateMonthButtons($(this).siblings('.xdsoft_month'))
-
-    $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker button.xdsoft_next', ->
-      updateMonthButtons($(this).siblings('.xdsoft_month'))
-
-    $(document).on 'click', 'input.day-of-year-input', ->
+    $('.' + prefix + '-datetimepicker').on 'click', 'input.day-of-year-input', ->
       $(this).focus()
 
     root.find('.temporal').on 'change paste keyup', ->
@@ -192,5 +196,6 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
   $(document).ready ->
     $('.dataset-temporal-filter').temporalSelectors({
       uiModel: temporalModel,
-      modelPath: "ui.temporal.pending"
+      modelPath: "ui.temporal.pending",
+      prefix: 'dataset'
     })
