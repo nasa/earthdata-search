@@ -154,6 +154,13 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
       # Clear temporal when switching types
       @pending.isRecurring.subscribe => @pending.clear()
 
+      # Copy applied to pending on change
+      @applied.isRecurring.subscribe => @pending.isRecurring(@applied.isRecurring())
+      @applied.start.date.subscribe => @pending.start.date(@applied.start.date())
+      @applied.start.year.subscribe => @pending.start.year(@applied.start.year())
+      @applied.stop.date.subscribe => @pending.stop.date(@applied.stop.date())
+      @applied.stop.year.subscribe => @pending.stop.year(@applied.stop.year())
+
     apply: =>
       @applied.copy(@pending)
 

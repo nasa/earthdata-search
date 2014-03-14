@@ -156,7 +156,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
       else
         false
 
-    $(document).on 'click', '#temporal-submit', ->
+    root.find('#temporal-submit').on 'click', ->
       visible = $(this).parent().siblings(".tab-pane:visible")
       if (visible.is("#temporal-date-range"))
         if updateTemporalRange()

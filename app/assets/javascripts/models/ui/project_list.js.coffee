@@ -93,9 +93,6 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     _computeDatasetsToDownload: ->
       dataset for dataset in @project.datasets() when dataset.serviceOptions.accessMethod() == 'download'
 
-    hideFilters: =>
-      @project.searchGranulesDataset(null)
-
     datasetsHaveDQS: =>
       result = false
       for dataset in @project.datasets()
