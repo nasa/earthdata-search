@@ -39,6 +39,14 @@
             Search Time: <span data-bind="text: granules.loadTime">0.000</span>s
           </p>
           <!-- /ko -->
+          <div data-bind="visible: $root.ui.projectList.datasetHasDQS(dataset), css: {'message-info': $root.ui.projectList.dqsAccepted(dataset), 'message-warning': !$root.ui.projectList.dqsAccepted(dataset)}"
+               class="dqs-message message">
+            Some of the datasets in your project have data quality information. You must
+            <a data-bind="click: $root.ui.projectList.showDataQualitySummary.bind(dataset, [dataset])" class="alert-link" href="#">
+              read and accept
+            </a>
+            these summaries before you can download project data.
+          </div>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
           <ul id="project-datasets-list" class="panel-list-list" data-bind="foreach: granules.results()">
