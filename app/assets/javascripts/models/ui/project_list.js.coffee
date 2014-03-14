@@ -87,7 +87,6 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       project = @project
       if project.hasDataset(dataset)
         project.removeDataset(dataset)
-        @datasetResults.removeVisibleDataset(dataset) if @visible()
       else
         project.addDataset(dataset)
 

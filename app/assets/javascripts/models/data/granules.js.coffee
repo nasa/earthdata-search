@@ -73,6 +73,9 @@ ns.Granules = do (ko,
 
       @_rects
 
+    equals: (other) ->
+      other.id == @id
+
     _parseSpatial: (str) ->
       coords = str.split(' ')
       len = coords.length - 1
@@ -83,22 +86,29 @@ ns.Granules = do (ko,
     constructor: (query, @parentQuery) ->
       super('/granules.json', query)
       @temporal = new models.ui.Temporal(query)
+      @_resultsComputed = false
 
-    _toResults: (data) ->
-      new Granule(result) for result in data.feed.entry
+    _toResults: (data, current, params) ->
+      entries = data.feed.entry
+      newItems = (new Granule(entry) for entry in entries)
+
+      if params.page_num > 1
+        current.concat(newItems)
+      else
+        newItems
 
     _computeSearchResponse: (current, callback) ->
       if @query?.validQuery() && @parentQuery?.validQuery()
         results = []
-        @results([])
-        result.dispose?() for result in results
+        @results([]) if @_resultsComputed
+        @_resultsComputed = true
         @isLoaded(false)
         params = @params()
         params.page_num = @page = 1
         @_load(params, current, callback)
 
     params: ->
-      parentParams = @parentQuery.params()
+      parentParams = @parentQuery.globalParams()
       params = {}
       for param in ['bounding_box', 'point', 'line', 'polygon', 'temporal']
         parentValue = parentParams[param]

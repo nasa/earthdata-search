@@ -59,19 +59,18 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
     _computeResults: ->
       result for result in @results() when result.selectedValues().length > 0
 
-    _toResults: (data) ->
-      results = @results()
+    _toResults: (data, current, params) ->
       for item in data
-        found = ko.utils.arrayFirst results, (result) ->
+        found = ko.utils.arrayFirst current, (result) ->
           result.name == item.name
         if found
           values = item.values
           value.parent = found for value in item.values
           found.setValues(item.values)
         else
-          results.push(new FacetsListModel(@query, item))
+          current.push(new FacetsListModel(@query, item))
 
-      results
+      current
 
     removeFacet: (facet) =>
       term = facet.term

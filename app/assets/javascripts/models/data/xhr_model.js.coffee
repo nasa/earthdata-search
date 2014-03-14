@@ -19,6 +19,7 @@ ns.XhrModel = do (ko
 
       @hits = ko.observable(0)
       @hasNextPage = ko.observable(true)
+      @hitsEstimated = ko.observable(false)
 
     search: (params=@query.params(), callback=null) =>
       params.page_num = @page = 1
@@ -37,9 +38,6 @@ ns.XhrModel = do (ko
         @currentRequest.abort()
         console.log "Aborted (#{@pendingRequestId}): #{@path}"
 
-    _computeHasNextPage: ->
-      @results().length < @hits()
-
     _computeSearchResponse: (current, callback) ->
       if @query?
         params = @query.params()
@@ -57,6 +55,7 @@ ns.XhrModel = do (ko
       @isLoading(@pendingRequestId != @completedRequestId)
       console.log("Request (#{requestId}): #{@path}?#{$.param(params)}")
       start = new Date()
+
       @currentRequest = xhr = getJSON @path, params, (data, status, xhr) =>
         if requestId > @completedRequestId
           @currentRequest = null
@@ -64,15 +63,11 @@ ns.XhrModel = do (ko
           @completedRequestId = requestId
           @error(null)
           @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
+          @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
           #console.log("Response: #{@path}", requestId, params, data)
-          results = @_toResults(data)
+          results = @_toResults(data, current, params)
 
-          if params.page_num? && params.page_num > 1
-            results = current.concat(results)
-          else
-            result.dispose?() for result in current
-
-          @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length))
+          @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length ? 0))
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
           @currentRequest = null
@@ -86,9 +81,6 @@ ns.XhrModel = do (ko
           @completedRequestId = requestId
           @_onFailure(response)
         @isLoading(@pendingRequestId != @completedRequestId)
-
-    _toResults: (data) ->
-      ko.mapping.fromJS(data)
 
     _onFailure: (response) ->
       errors = response.responseJSON?.errors

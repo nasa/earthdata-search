@@ -1,5 +1,5 @@
-            <li data-bind="click: $root.ui.datasetsList.focusDataset"
-                class="panel-list-item panel-list-item-with-thumb master-overlay-forward master-overlay-hide-parent">
+            <li data-bind="click: $root.ui.datasetsList.focusDataset, css: {'master-overlay-forward': has_granules(), 'master-overlay-hide-parent': has_granules()}"
+                class="panel-list-item panel-list-item-with-thumb">
               <div class="panel-list-thumbnail-container">
               <!-- ko if: thumbnail -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
@@ -21,6 +21,14 @@
                   <i class="edsc-icon-location"></i>
                 </a>
                 <!-- /ko -->
+                <!-- ko if: has_granules() -->
+                <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !visible(), click: $root.datasets.toggleVisibleDataset">
+                  <i class="edsc-icon-eye"></i>
+                </a>
+                <a href="#" class="button icon-button button-active" title="Hide dataset" data-bind="visible: visible(), click: $root.datasets.toggleVisibleDataset">
+                  <i class="edsc-icon-eye"></i>
+                </a>
+                <!-- /ko -->
                 <a href="#" class="button icon-button master-overlay-forward" data-bind="click: $parent.ui.datasetsList.clickDataset" title="View details">
                   <i class="edsc-icon-info"></i>
                 </a>
@@ -28,14 +36,6 @@
                   <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
                     <i class="edsc-icon-download"></i>
                   </a>
-                <% end %>
-                <a href="#" class="button icon-button" title="View dataset" data-bind="visible: !$root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
-                  <i class="edsc-icon-eye"></i>
-                </a>
-                <a href="#" class="button icon-button button-active" title="Hide dataset" data-bind="visible: $root.datasets.hasVisibleDataset($data), click: $root.datasets.toggleVisibleDataset">
-                  <i class="edsc-icon-eye"></i>
-                </a>
-                <% if is_project %>
                   <!-- ko if: has_granules -->
                     <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
                     <i class="edsc-icon-compose"></i>

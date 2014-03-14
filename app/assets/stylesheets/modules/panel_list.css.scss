@@ -32,6 +32,10 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   }
 }
 
+.empty-button {
+  visibility: hidden;
+}
+
 .panel-list-item-with-thumb {
   padding-left: $panel-list-thumbnail-size + 4px;
 }

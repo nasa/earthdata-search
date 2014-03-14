@@ -3,13 +3,26 @@ ns = @edsc.models
 ns.KnockoutModel = do (ko) ->
 
   class KnockoutModel
-    dispose: ->
-      @_disposables ?= []
-      for disposable in @_disposables
-        disposable?.dispose?()
-      @_disposables = []
+    reference: ->
+      @refCount ?= ko.observable(0)
+      refs = @refCount
+      val = refs.peek() + 1
+      refs(val)
+      this
 
-      @isDisposed = true
+    dispose: ->
+      val = 0
+      refs = @refCount
+      if refs?
+        val = refs.peek() - 1
+        refs(val)
+      if val <= 0
+        @_disposables ?= []
+        for disposable in @_disposables
+          disposable?.dispose?()
+        @_disposables = []
+
+        @isDisposed = true
 
     disposable: (obj) ->
       @_disposables ?= []

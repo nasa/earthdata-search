@@ -32,8 +32,9 @@ ns.Project = do (ko,
       datasetsById = {}
       for ds in datasets
         id = ds.id()
+        ds.reference()
         datasetIds.push(id)
-        datasetsById[id] = ds.clone()
+        datasetsById[id] = ds
       @_datasetsById = datasetsById
       @_datasetIds(datasetIds)
       null
@@ -41,47 +42,31 @@ ns.Project = do (ko,
     isEmpty: () ->
       @_datasetIds.isEmpty()
 
-    toggleDataset: (dataset) =>
-      if @hasDataset(dataset)
-        @removeDataset(dataset)
-      else
-        @addDataset(dataset)
-      null
-
     addDataset: (dataset) =>
       id = dataset.id()
 
-      clonedDataset = dataset.clone()
-      @_datasetsById[id] = clonedDataset
+      dataset.reference()
+      @_datasetsById[id] = dataset
       @_datasetIds.remove(id)
       @_datasetIds.push(id)
 
       # Force results to start being calculated
-      clonedDataset.granulesModel.results()
+      dataset.granulesModel.results()
 
       null
 
     removeDataset: (dataset) =>
       id = dataset.id()
-
       @_datasetsById[id]?.dispose()
-
       delete @_datasetsById[id]
       @_datasetIds.remove(id)
-
-      dataset.dispose()
-      #dataset.granulesModel.connect()
-
       null
 
     hasDataset: (other) =>
       @_datasetIds.indexOf(other.id()) != -1
 
     isSearchingGranules: (dataset) =>
-      if @searchGranulesDataset() == dataset
-        true
-      else
-        false
+      @searchGranulesDataset() == dataset
 
     clearSearchGranules: =>
       @searchGranulesDataset(null)
@@ -91,7 +76,7 @@ ns.Project = do (ko,
 
       query.fromJson(jsonObj.datasetQuery)
 
-      @datasets(new Dataset(dataset, query) for dataset in jsonObj.datasets)
+      @datasets(Dataset.findOrCreate(dataset, query) for dataset in jsonObj.datasets)
 
       new DatasetsModel(@query).search {echo_collection_id: @_datasetIds()}, (results) =>
         for result in results

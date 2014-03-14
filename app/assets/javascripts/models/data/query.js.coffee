@@ -36,6 +36,9 @@ ns.Query = do (ko,
 
       @params = @computed(@_computeParams)
 
+      # Parameters shared by datasets and granules
+      @globalParams = @computed(@_computeGlobalParams)
+
     fromJson: (jsonObj) ->
       @keywords(jsonObj.keywords)
       @spatial(jsonObj.spatial)
@@ -91,8 +94,19 @@ ns.Query = do (ko,
       constraint = dataset.spatial_constraint()
       constraint? && (!spatial || spatial == constraint)
 
+    _computeGlobalParams: =>
+      params = {}
+
+      spatial = @spatial()
+      @_computeSpatialParams(params, spatial) if spatial?.length > 0
+
+      temporal = @temporal()?.queryCondition()
+      params.temporal = temporal if temporal?.length > 0
+
+      params
+
     _computeParams: =>
-      params = extend({}, @_extraParams)
+      params = extend({}, @_extraParams, @_computeGlobalParams())
 
       keywords = @keywords()?.trim()
       if keywords?.length > 0
@@ -100,12 +114,6 @@ ns.Query = do (ko,
         if placename? && placename.length > 0 && keywords.indexOf(placename) == 0
           keywords = keywords.replace(placename, '')
         params.free_text = keywords
-
-      spatial = @spatial()
-      @_computeSpatialParams(params, spatial) if spatial?.length > 0
-
-      temporal = @temporal()?.queryCondition()
-      params.temporal = temporal if temporal?.length > 0
 
       for facet in @facets()
         param = facet.param

@@ -1,28 +1,21 @@
 ns = @edsc.map.L
 
-ns.GranuleLayer = do (L,
-                      $ = jQuery,
-                      GibsTileLayer = ns.GibsTileLayer,
-                      projectPath=ns.interpolation.projectPath,
+ns.GranuleLayer = do (L
+                      $ = jQuery
+                      GibsTileLayer = ns.GibsTileLayer
+                      projectPath=ns.interpolation.projectPath
                       dateUtil = @edsc.util.date
                       dividePolygon = ns.sphericalPolygon.dividePolygon
+                      capitalize = @edsc.util.string.capitalize
+                      arrayUtil = @edsc.util.array
                       ) ->
 
 
   isClockwise = (path) ->
     sum = 0
-    len = path.length
-    for i in [0...len]
-      p0 = path[i]
-      p1 = path[(i + 1) % len]
-      sum += (p1.x - p0.x) * (p1.y + p0.y);
+    for [p0, p1] in arrayUtil.pairs(path)
+      sum += (p1.x - p0.x) * (p1.y + p0.y)
     sum > 0
-
-  clockwise = (path) ->
-    if !Array.isArray(path) || isClockwise(path) then path else path.concat().reverse()
-
-  counterclockwise = (path) ->
-    if Array.isArray(path) && isClockwise(path) then path.concat().reverse() else path
 
   addPath = (ctx, path, isCounterclockwise) ->
     {path, poly, line, point} = path
@@ -32,7 +25,7 @@ ns.GranuleLayer = do (L,
       len = poly.length
       return if len < 2
 
-      if isCounterClockwise? && isCounterclockwise != !isClockwise(poly)
+      if isCounterclockwise != !isClockwise(poly)
         poly = poly.concat().reverse()
 
       ctx.moveTo(poly[0].x, poly[0].y)
@@ -116,31 +109,31 @@ ns.GranuleLayer = do (L,
 
       @tileDrawn() unless @options.async
 
+    _addIntersections: (result, paths, bounds, type, interpolation) ->
+      return null unless paths?
+
+      for path in paths
+        shapeBounds = L.latLngBounds(path)
+        if shapeBounds.intersects(bounds)
+          intersection = {}
+          intersection[type] = projectPath(@_map, path, [], interpolation, 2, 5).boundary
+          result.push(intersection)
+      null
+
     _granulePathsOverlappingTile: (granule, tileBounds) ->
       result = []
       map = @_map
-      polygons = granule.getPolygons()
-      if polygons?
-        for polygon in polygons
-          divided = dividePolygon(polygon[0])
+      intersects = @_intersects
 
-          for interior in divided.interiors when tileBounds.intersects(interior)
-            result.push({poly: projectPath(map, interior, [], 'geodetic', 2, 5).boundary})
+      for polygon in granule.getPolygons() ? []
+        interiors = dividePolygon(polygon[0]).interiors
+        @_addIntersections(result, interiors, tileBounds, 'poly', 'geodetic')
 
-      rects = granule.getRectangles()
-      if rects?
-        for path in rects when tileBounds.intersects(path)
-          result.push({poly: projectPath(map, path, [], 'cartesian', 2, 5).boundary})
+      @_addIntersections(result, granule.getRectangles(), tileBounds, 'poly', 'geodetic')
+      @_addIntersections(result, granule.getLines(), tileBounds, 'line', 'geodetic')
 
-      points = granule.getPoints()
-      if points?
-        for point in points when tileBounds.contains(point)
-          result.push({point: @_map.latLngToLayerPoint(point)})
-
-      lines = granule.getLines()
-      if lines?
-        for line in lines when tileBounds.intersects(line)
-          result.push({line: projectPath(map, line, [], 'geodetic', 2, 5).boundary})
+      for point in granule.getPoints() ? [] when tileBounds.contains(point)
+        result.push({point: @_map.latLngToLayerPoint(point)})
 
       result
 
@@ -243,15 +236,14 @@ ns.GranuleLayer = do (L,
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
 
+      layerPointToLatLng = @_map.layerPointToLatLng.bind(@_map)
       tileSize = @options.tileSize
       nwPoint = @_getTilePos(tilePoint)
       nePoint = nwPoint.add([tileSize, 0])
       sePoint = nwPoint.add([tileSize, tileSize])
       swPoint = nwPoint.add([0, tileSize])
       boundary = {poly: [nwPoint, nePoint, sePoint, swPoint]}
-      bounds = new L.latLngBounds(@_map.layerPointToLatLng(nwPoint),
-                                  @_map.layerPointToLatLng(sePoint))
-
+      bounds = new L.latLngBounds(boundary.poly.map(layerPointToLatLng))
       bounds = bounds.pad(0.1)
 
       date = null
@@ -293,49 +285,61 @@ ns.GranuleLayer = do (L,
       @_tileOnLoad.call(tile)
 
   class GranuleLayer extends GibsTileLayer
-    constructor: (@granules, options) ->
+    constructor: (@dataset, options) ->
+      @granules = @dataset.granulesModel
       @_hasGibs = options?.product?
       super(options)
 
     onAdd: (map) ->
       super(map)
 
-      map.on 'edsc.mousemove', @_onMouseMove
-      map.on 'edsc.mouseout', @_onMouseOut
-      map.on 'click', @_onClick
-      map.on 'edsc.focusgranule', @_onFocusGranule
-      map.on 'edsc.stickygranule', @_onStickyGranule
+      @_handle(map, 'on', 'edsc.focusdataset')
+      @setFocus(map.focusedDataset?.id() == @dataset.id())
+
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
 
     onRemove: (map) ->
       super(map)
 
-      map.off 'edsc.mousemove', @_onMouseMove
-      map.off 'edsc.mouseout', @_onMouseOut
-      map.off 'click', @_onClick
-      map.off 'edsc.focusgranule', @_onFocusGranule
-      map.off 'edsc.stickygranule', @_onStickyGranule
+      @setFocus(false, map)
+      @_handle(map, 'off', 'edsc.focusdataset')
       @_resultsSubscription.dispose()
       @_results = null
-      @_granuleFocusLayer?.onRemove(map)
-      @_granuleFocusLayer = null
-      @_granuleStickyLayer?.onRemove(map)
-      @_granuleStickyLayer = null
 
       if @_restoreBounds
         map.fitBounds(@_restoreBounds)
         @_restoreBounds = null
 
-
     url: ->
       super() if @_hasGibs
 
-    _onMouseOut: (e) =>
+    setFocus: (focus, map=@_map) ->
+      return if @_isFocused == focus
+      @_isFocused = focus
+      events = ['edsc.mousemove', 'edsc.mouseout', 'click', 'edsc.focusgranule', 'edsc.stickygranule']
+      if focus
+        @_handle(map, 'on', events...)
+      else
+        @_handle(map, 'off', events...)
+        @_granuleFocusLayer?.onRemove(map)
+        @_granuleFocusLayer = null
+        @_granuleStickyLayer?.onRemove(map)
+        @_granuleStickyLayer = null
+
+    _handle: (obj, onOrOff, events...) ->
+      for event in events
+        method = '_on' + event.split('.').map(capitalize).join('')
+        obj[onOrOff] event, this[method]
+
+    _onEdscFocusdataset: (e) =>
+      @setFocus(e.dataset?.id() == @dataset.id())
+
+    _onEdscMouseout: (e) =>
       if @_granule?
         @_map.fire('edsc.focusgranule', granule: null)
 
-    _onMouseMove: (e) =>
+    _onEdscMousemove: (e) =>
       granule = @layer?.granuleAt(e.layerPoint)
       if @_granule != granule
         @_map.fire('edsc.focusgranule', granule: granule)
@@ -346,14 +350,14 @@ ns.GranuleLayer = do (L,
       granule = null if @_stickied == granule
       @_map.fire('edsc.stickygranule', granule: granule)
 
-    _onFocusGranule: (e) =>
+    _onEdscFocusgranule: (e) =>
       @_granule = granule = e.granule
 
       @_granuleFocusLayer?.onRemove(@_map)
-      @_granuleFocusLayer = @_layerForGranule(granule, false)
+      @_granuleFocusLayer = @_focusLayer(granule, false)
       @_granuleFocusLayer?.onAdd(@_map)
 
-    _onStickyGranule: (e) =>
+    _onEdscStickygranule: (e) =>
       granule = e.granule
       return if @_stickied == granule
 
@@ -366,16 +370,21 @@ ns.GranuleLayer = do (L,
         @_map.fitBounds(@_restoreBounds)
         @_restoreBounds = null
 
-      @_granuleStickyLayer = @_layerForGranule(granule, true)
+      @_granuleStickyLayer = @_stickyLayer(granule, true)
       if @_granuleStickyLayer?
         @_granuleStickyLayer.onAdd(@_map)
-        @_restoreBounds ?= @_map.getBounds()
-        @_map.fitBounds(@_granuleFocusLayer.getBounds())
+
+        if @layer.options.endpoint == 'geo'
+          @_restoreBounds ?= @_map.getBounds()
+          bounds = @_granuleFocusLayer.getBounds()
+          # Avoid zooming and panning tiny amounts
+          unless @_map.getBounds().contains(bounds)
+            @_map.fitBounds(bounds.pad(0.2))
 
       @_loadResults(@_results)
 
-
     _buildLayerWithOptions: (newOptions) ->
+      @_restoreBounds = null
       # GranuleCanvasLayer needs to handle time
       newOptions = L.extend({}, newOptions)
       delete newOptions.time
@@ -407,17 +416,7 @@ ns.GranuleLayer = do (L,
 
       @layer?.setResults(results)
 
-    _layerForGranule: (granule, sticky) ->
-      return null unless granule?
-
-      if sticky
-        options =
-          fillOpacity: 0
-          clickable: false
-      else
-        options =
-          clickable: false
-
+    _granuleLayer: (granule, options) ->
       layer = L.featureGroup()
       layer.addLayer(L.circleMarker(point, options)) for point in granule.getPoints() ? []
       layer.addLayer(L.sphericalPolygon(poly, options)) for poly in granule.getPolygons() ? []
@@ -428,40 +427,42 @@ ns.GranuleLayer = do (L,
         shape = L.polygon(rect, options)
         shape._interpolationFn = 'cartesian'
         layer.addLayer(shape)
+      layer
 
-      if sticky
-        temporal = granule.getTemporal()
-        icon = L.divIcon
-          className: 'granule-spatial-label',
-          html: '<span class="granule-spatial-label-temporal">' + temporal +
-            '</span><a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+    _focusLayer: (granule) ->
+      return null unless granule?
 
-        marker = L.marker([0, 0], icon: icon)
+      @_granuleLayer(granule, clickable: false)
 
-        firstShape = layer.getLayers()[0]
-        if firstShape._interiors?
-          firstShape = firstShape._interiors
 
-        firstShape?.on 'add', (e) ->
-          map = @_map
+    _stickyLayer: (granule) ->
+      return null unless granule?
 
-          center = @getLatLng?()
-          unless center?
-            xmin = Infinity
-            xmax = -Infinity
-            ymin = Infinity
-            ymax = -Infinity
-            latlngs = @getLatLngs()
-            latlngs = latlngs[0] if Array.isArray(latlngs[0])
-            for latlng in latlngs
-              p = map.latLngToLayerPoint(latlng)
-              xmin = Math.min(xmin, p.x)
-              xmax = Math.max(xmax, p.x)
-              ymin = Math.min(ymin, p.y)
-              ymax = Math.max(ymax, p.y)
-            center = map.layerPointToLatLng(L.point((xmin + xmax) / 2, (ymin + ymax) / 2))
-          marker.setLatLng(center)
-          layer.addLayer(marker)
+      layer = @_granuleLayer(granule, fillOpacity: 0, clickable: false)
+
+      temporal = granule.getTemporal()
+      icon = L.divIcon
+        className: 'granule-spatial-label',
+        html: '<span class="granule-spatial-label-temporal">' + temporal +
+              '</span><a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+
+      marker = L.marker([0, 0], icon: icon)
+
+      firstShape = layer.getLayers()[0]
+      firstShape = firstShape._interiors if firstShape._interiors?
+
+      firstShape?.on 'add', (e) ->
+        map = @_map
+
+        center = @getLatLng?()
+        unless center?
+          latlngs = @getLatLngs()
+          latlngs = latlngs[0] if Array.isArray(latlngs[0])
+          bounds = L.bounds(map.latLngToLayerPoint(latlng) for latlng in latlngs)
+          center = map.layerPointToLatLng(bounds.getCenter())
+
+        marker.setLatLng(center)
+        layer.addLayer(marker)
 
       layer
 

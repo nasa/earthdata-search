@@ -15,6 +15,7 @@ ui = models.ui
 ns = models.page
 
 ns.SearchPage = do (ko,
+                    config = @edsc.config
                     setCurrent = ns.setCurrent,
                     QueryModel = data.Query,
                     DatasetsModel = data.Datasets
@@ -28,19 +29,7 @@ ns.SearchPage = do (ko,
 
   class SearchPage
     constructor: ->
-      @query = new QueryModel()
-
-      # For testing granule visualizations
-      #VISUALIZED_IDS = [
-      #  'C204200620-GSFCS4PA', # Bounding-box granules
-      #  'C1000000080-CDDIS', # Point-based granules, distributed geographically
-      #  'C5920490-LARC_ASDC', # Line-based granules
-      #  'C14758250-LPDAAC_ECS', # AST_L1A
-      #  'C1000000016-LANCEMODIS', # GIBS
-      #  'C1000000019-LANCEMODIS', # GIBS
-      #  'C90757596-LAADS'] # Opaque GIBS (fake, for testing)
-      #@query = new QueryModel(echo_collection_id: VISUALIZED_IDS)
-
+      @query = new QueryModel(config.baseQueryParams)
       @user = new UserModel()
       @datasets = new DatasetsModel(@query)
       @datasetFacets = new DatasetFacetsModel(@query)
