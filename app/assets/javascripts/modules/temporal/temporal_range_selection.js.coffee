@@ -186,7 +186,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
 
 
   $(document).ready ->
-    $('.temporal-filter').temporalSelectors({
+    $('.dataset-temporal-filter').temporalSelectors({
       uiModel: temporalModel,
       modelPath: "ui.temporal.pending"
     })
