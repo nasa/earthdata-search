@@ -17,9 +17,10 @@ class DataQualitySummaryController < ApplicationController
   end
 
   def accept
-    user_id = get_user_id
-    params["dqs_ids"].each do |dqs_id|
-      AcceptedDataQualitySummary.create!({dqs_id: dqs_id, user_id: user_id})
+    if user_id = get_user_id
+      params["dqs_ids"].each do |dqs_id|
+        AcceptedDataQualitySummary.create!({dqs_id: dqs_id, user_id: user_id})
+      end
     end
 
     render json: nil, status: :ok
