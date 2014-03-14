@@ -86,7 +86,7 @@ ns.Granules = do (ko,
   class GranulesModel extends XhrModel
     constructor: (query, @parentQuery) ->
       super('/granules.json', query)
-      @temporal = new uiModel.Temporal(query)
+      @temporal = @disposable(new uiModel.Temporal(query))
       @_resultsComputed = false
 
     _toResults: (data, current, params) ->
