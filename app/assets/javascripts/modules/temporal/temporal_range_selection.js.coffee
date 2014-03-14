@@ -139,8 +139,12 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
     }).on 'slide', (e) ->
       uiModel.pending.years(e.value)
 
+    # Set the slider when the years change
     uiModel.pending.years.subscribe (years) ->
       root.find('.temporal-recurring-year-range').slider('setValue', years)
+
+    # Initialize the slider to current value of years
+    root.find('.temporal-recurring-year-range').slider('setValue', uiModel.pending.years())
 
     # Submit temporal range search
     updateTemporalRange = ->
