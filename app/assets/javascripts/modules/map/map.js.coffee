@@ -43,14 +43,14 @@ ns.Map = do (window,
       @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 
-      $('#dataset-results, #project-overview').on('edsc.navigate', @_hideDatasetSpatial)
+      $('#dataset-results, #project-overview, #granule-list').on('edsc.navigate', @_hideDatasetSpatial)
 
     # Removes the map from the page
     destroy: ->
       @map.remove()
       @_datasetSubscription.dispose()
       @_granuleVisualizationSubscription.dispose()
-      $('#dataset-results, #project-overview').off('edsc.navigate', @_hideDatasetSpatial)
+      $('#dataset-results, #project-overview, #granule-list').off('edsc.navigate', @_hideDatasetSpatial)
 
     focusDataset: (dataset) ->
       @map.focusedDataset = dataset
@@ -163,6 +163,7 @@ ns.Map = do (window,
       @_rebuildLayers()
 
     _showDatasetSpatial: (dataset) =>
+      console.log dataset
       dataset = dataset.summaryData
 
       @_hideDatasetSpatial()

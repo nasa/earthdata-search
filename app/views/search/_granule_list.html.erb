@@ -11,7 +11,7 @@
           <h2 data-bind="text: dataset.title"></h2>
           <!-- ko with: dataset -->
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button icon-button master-overlay-forward" data-bind="click: $root.ui.datasetsList.clickDataset" title="View details">
+            <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.datasetsList.showDatasetDetails" title="View details">
               <i class="edsc-icon-info"></i>
             </a>
             <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">

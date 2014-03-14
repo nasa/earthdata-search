@@ -32,8 +32,10 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @root.toggleClass(@scope('is-secondary-hidden'), !show)
       @_fixContentHeight()
 
-    forward: ->
+    forward: (source) ->
       @level(Math.min(@level() + 1, @children().length))
+      if source?
+        @current().find(@scope(".breadcrumb")).text("Back to #{source}")
 
     back: ->
       @level(Math.max(@level() - 1, 0))
