@@ -1,5 +1,5 @@
 <div class="<%= prefix %>-temporal-filter temporal-filter">
-  <div data-bind="visible: !isRecurring()" id="temporal-date-range" class="tab-pane active">
+  <div data-bind="visible: !isRecurring()" id="temporal-date-range" class="tab-pane active temporal-date-range">
     <div class="datetime-field" id="temporal_start_button">
       <label for="<%= prefix %>-temporal-range-start">Start</label><br />
       <input data-bind="value: start.humanDateString"
@@ -16,7 +16,7 @@
     </div>
     <div class="temporal-error">Start must be no later than End</div>
   </div>
-  <div data-bind="visible: isRecurring()" id="temporal-recurring" class="tab-pane">
+  <div data-bind="visible: isRecurring()" id="temporal-recurring" class="tab-pane temporal-recurring">
     <div class="datetime-field" id="temporal_start_button">
       <label for="<%= prefix %>-temporal-recurring-start">Start</label><br />
       <input data-bind="value: start.humanDateString"
@@ -43,7 +43,7 @@
 
   <div class="button-row <%= "hidden" unless show_actions %>">
     <button id="temporal-submit"
-            class="button submit"
+            class="button submit temporal-submit"
             title="Apply your selections" type="button">Apply Filter</button>
     <button id="temporal-clear" data-bind="click: clear"
             class="button temporal-clear temporal-recurring low-priority"
