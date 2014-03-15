@@ -118,7 +118,7 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
         })
 
     applyFilters: =>
-      $('.master-overlay-content #temporal-submit').click()
+      $('.master-overlay-content .temporal-submit').click()
       @hideFilters()
 
     hideFilters: =>
