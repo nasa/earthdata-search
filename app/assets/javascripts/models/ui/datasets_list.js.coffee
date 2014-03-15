@@ -13,7 +13,7 @@ ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
         @datasets.loadNextPage(@query.params())
 
-    clickDataset: (dataset, event=null) =>
+    showDatasetDetails: (dataset, event=null) =>
       @datasets.showDataset(dataset)
 
     focusDataset: (dataset, event=null) =>

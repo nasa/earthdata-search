@@ -93,20 +93,23 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     _computeDatasetsToDownload: ->
       dataset for dataset in @project.datasets() when dataset.serviceOptions.accessMethod() == 'download'
 
+    datasetHasDQS: (dataset) =>
+      result = true if dataset.dqsModel.results()?.length > 0
+
     datasetsHaveDQS: =>
       result = false
-      for dataset in @project.datasets()
-        result = true if dataset.dqsModel.results()?.length > 0
-
+      result ||= @datasetHasDQS(dataset) for dataset in @project.datasets()
       result
+
+    dqsAccepted: (dataset) =>
+      if dataset.dqsModel.results()?.length > 0
+        for dqs in dataset.dqsModel.results()
+          return false unless dqs.accepted()
+      true
 
     allDQSAccepted: =>
       result = true
-      for dataset in @project.datasets()
-        if dataset.dqsModel.results()?.length > 0
-          for dqs in dataset.dqsModel.results()
-            result = false if !dqs.accepted()
-
+      result &&= @dqsAccepted(dataset) for dataset in @project.datasets()
       result
 
     showFilters: (dataset) =>

@@ -136,11 +136,19 @@
   }
 }
 
-.master-overlay-project-actions {
+.master-overlay-global-actions {
   padding: .5em;
   text-align: right;
   border: 1px solid transparent;
   border-radius: 3px;
+  font-size: 0.8em;
+
+  .button {
+    @include light-button;
+
+    font-size: 1.2em;
+    padding: 4px 6px;
+  }
 }
 
 .master-overlay-forward {
@@ -191,6 +199,8 @@ a.master-overlay-close {
 .master-overlay-main-content {
   &[data-level="1"] { left:-100%; }
   &[data-level="2"] { left:-200%; }
+  &[data-level="3"] { left:-300%; }
+  &[data-level="4"] { left:-400%; }
 }
 
 .is-hidden {
