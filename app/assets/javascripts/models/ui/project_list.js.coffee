@@ -114,6 +114,7 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
 
     showFilters: (dataset) =>
       if @project.searchGranulesDataset(dataset)
+        @_destroyGranulePickers()
         $('.granule-temporal-filter').temporalSelectors({
           uiModel: dataset.granulesModel.temporal,
           modelPath: "(project.searchGranulesDataset() ? project.searchGranulesDataset().granulesModel.temporal.pending : null)",
@@ -125,7 +126,12 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       @hideFilters()
 
     hideFilters: =>
+      @_destroyGranulePickers()
       $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
-      @project.searchGranulesDataset(null)
+      @project.clearSearchGranules()
+
+    _destroyGranulePickers: ->
+      $('.granule-temporal-filter .temporal').datetimepicker('destroy')
+
 
   exports = ProjectList
