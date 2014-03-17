@@ -108,4 +108,5 @@ RSpec.configure do |config|
   config.include Helpers::PageHelpers
   config.include Helpers::DatasetHelpers
   config.include Helpers::DefaultTags
+  config.include Helpers::TemporalHelpers
 end

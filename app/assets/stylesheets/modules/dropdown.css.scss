@@ -36,6 +36,10 @@
   z-index:1001;
 }
 
+.xdsoft_label.xdsoft_month {
+  margin-left: 1px;
+}
+
 // Hide jquery.datetimepicker's year field
 .recurring-datetimepicker .xdsoft_year {
   display: none;
@@ -80,7 +84,6 @@ input.day-of-year-input {
 // Override default Slider CSS
 .range-slider {
   margin: 10px 0 20px 0;
-  display: none;
 
   .slider.slider-horizontal input {
     width: 330px;

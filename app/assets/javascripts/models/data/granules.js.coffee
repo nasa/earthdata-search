@@ -1,12 +1,14 @@
 #= require models/data/xhr_model
 
 ns = @edsc.models.data
+models = @edsc.models
 
 ns.Granules = do (ko,
                   getJSON=jQuery.getJSON,
                   XhrModel=ns.XhrModel,
                   extend=$.extend,
-                  LatLng = L?.latLng) ->
+                  LatLng = L?.latLng,
+                  uiModel = models.ui) ->
 
   class Granule
     constructor: (jsonData) ->
@@ -84,6 +86,7 @@ ns.Granules = do (ko,
   class GranulesModel extends XhrModel
     constructor: (query, @parentQuery) ->
       super('/granules.json', query)
+      @temporal = @disposable(new uiModel.Temporal(query))
       @_resultsComputed = false
 
     _toResults: (data, current, params) ->

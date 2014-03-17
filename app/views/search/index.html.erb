@@ -22,63 +22,9 @@
     </a>
     <ul class="dropdown-menu temporal-dropdown">
       <li>
-        <div class="temporal-filter">
-          <div data-bind="visible: !ui.temporal.pending.isRecurring()" id="temporal-date-range" class="tab-pane active">
-
-            <div class="datetime-field" id="temporal_start_button">
-              <label for="temporal-range-start">Start</label><br />
-              <input data-bind="value: ui.temporal.pending.start.humanDateString"
-                     id="temporal-range-start"
-                     class="temporal temporal-range-picker temporal-start temporal-range-start"
-                     type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
-            </div>
-            <div class="datetime-field" id="temporal_end_button">
-              <label for="temporal-range-stop">End</label><br />
-              <input data-bind="value: ui.temporal.pending.stop.humanDateString"
-                     id="temporal-range-stop"
-                     class="temporal temporal-range-picker temporal-stop temporal-range-stop"
-                     type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
-            </div>
-            <div class="temporal-error">Start must be no later than End</div>
-          </div>
-          <div data-bind="visible: ui.temporal.pending.isRecurring()" id="temporal-recurring" class="tab-pane">
-
-
-            <div class="datetime-field" id="temporal_start_button">
-              <label for="temporal-recurring-start">Start</label><br />
-              <input data-bind="value: ui.temporal.pending.start.humanDateString"
-                     id="temporal-recurring-start"
-                     class="temporal temporal-recurring-picker temporal-start temporal-recurring-start"
-                     type="text" placeholder="MM-DD HH:MM:SS"/>
-            </div>
-            <div class="datetime-field" id="temporal_end_button">
-              <label for="temporal-recurring-stop">End</label><br />
-              <input data-bind="value: ui.temporal.pending.stop.humanDateString"
-                     id="temporal-recurring-stop"
-                     class="temporal temporal-recurring-picker temporal-stop temporal-recurring-stop"
-                     type="text" placeholder="MM-DD HH:MM:SS"/>
-            </div>
-            <div class="temporal-error">Start must be no later than End</div>
-
-
-          </div>
-          <div>
-            <input type="checkbox" id="show-recurring"> <label for="show-recurring">Recurring?</label>
-          </div>
-          <div class="range-slider hidden">
-            <label for="temporal-slider">Date Range:</label> <span data-bind="text: ui.temporal.pending.yearsString" class="temporal-recurring-year-range-value"></span><br />
-            <input id="temporal-slider" class="temporal-recurring-year-range" type="text">
-          </div>
-
-          <div class="button-row">
-            <button id="temporal-submit"
-                    class="button submit"
-                    title="Apply your selections" type="button">Apply Filter</button>
-            <button id="temporal-clear" data-bind="click: ui.temporal.pending.clear"
-                    class="button temporal-clear temporal-recurring low-priority"
-                    title="Clear your selections" type="button">Clear</button>
-          </div>
-        </div>
+        <!-- ko with: ui.temporal.pending -->
+        <%= render partial: 'temporal_template', locals: {prefix: 'dataset', show_actions: true} %>
+        <!-- /ko -->
       </li>
     </ul>
   </div>

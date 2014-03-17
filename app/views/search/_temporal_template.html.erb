@@ -1,0 +1,52 @@
+<div class="<%= prefix %>-temporal-filter temporal-filter">
+  <div data-bind="visible: !isRecurring()" id="temporal-date-range" class="tab-pane active temporal-date-range">
+    <div class="datetime-field" id="temporal_start_button">
+      <label for="<%= prefix %>-temporal-range-start">Start</label><br />
+      <input data-bind="value: start.humanDateString"
+             id="<%= prefix %>-temporal-range-start"
+             class="temporal temporal-range-picker temporal-start temporal-range-start"
+             type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
+    </div>
+    <div class="datetime-field" id="temporal_end_button">
+      <label for="<%= prefix %>-temporal-range-stop">End</label><br />
+      <input data-bind="value: stop.humanDateString"
+             id="<%= prefix %>-temporal-range-stop"
+             class="temporal temporal-range-picker temporal-stop temporal-range-stop"
+             type="text" placeholder="YYYY-MM-DD HH:MM:SS"/>
+    </div>
+    <div class="temporal-error">Start must be no later than End</div>
+  </div>
+  <div data-bind="visible: isRecurring()" id="temporal-recurring" class="tab-pane temporal-recurring">
+    <div class="datetime-field" id="temporal_start_button">
+      <label for="<%= prefix %>-temporal-recurring-start">Start</label><br />
+      <input data-bind="value: start.humanDateString"
+             id="<%= prefix %>-temporal-recurring-start"
+             class="temporal temporal-recurring-picker temporal-start temporal-recurring-start"
+             type="text" placeholder="MM-DD HH:MM:SS"/>
+    </div>
+    <div class="datetime-field" id="temporal_end_button">
+      <label for="<%= prefix %>-temporal-recurring-stop">End</label><br />
+      <input data-bind="value: stop.humanDateString"
+             id="<%= prefix %>-temporal-recurring-stop"
+             class="temporal temporal-recurring-picker temporal-stop temporal-recurring-stop"
+             type="text" placeholder="MM-DD HH:MM:SS"/>
+    </div>
+    <div class="temporal-error">Start must be no later than End</div>
+  </div>
+  <div>
+    <input data-bind="checked: isRecurring" type="checkbox" id="<%= prefix %>-show-recurring"><label for="<%= prefix %>-show-recurring">Recurring?</label>
+  </div>
+  <div data-bind="visible: isRecurring()" class="range-slider">
+    <label for="<%= prefix %>-temporal-slider">Date Range:</label> <span data-bind="text: yearsString" class="temporal-recurring-year-range-value"></span><br />
+    <input id="<%= prefix %>-temporal-slider" class="temporal-recurring-year-range" type="text">
+  </div>
+
+  <div class="button-row <%= "hidden" unless show_actions %>">
+    <button id="temporal-submit"
+            class="button submit temporal-submit"
+            title="Apply your selections" type="button">Apply Filter</button>
+    <button id="temporal-clear" data-bind="click: clear"
+            class="button temporal-clear temporal-recurring low-priority"
+            title="Clear your selections" type="button">Clear</button>
+  </div>
+</div>
