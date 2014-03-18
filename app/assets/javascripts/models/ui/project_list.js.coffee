@@ -103,6 +103,9 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
 
     dqsAccepted: (dataset) =>
       if dataset.dqsModel.results()?.length > 0
+        # Resize the list after DQS warning is displayed
+        $('.master-overlay').masterOverlay('contentHeightChanged')
+
         for dqs in dataset.dqsModel.results()
           return false unless dqs.accepted()
       true
