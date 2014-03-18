@@ -1,4 +1,4 @@
-$panel-list-item-height: 65px;
+$panel-list-item-height: 85px;
 $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list {
@@ -6,9 +6,8 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 
   .button {
     @include light-button;
-
     font-size: 1.2em;
-    padding: 4px 6px;
+    padding: 7px 10px;
   }
 }
 
@@ -17,18 +16,26 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 }
 
 .panel-list-item {
-  color: #000;
-  background-color: #fff;
-  border: 1px solid #111;
-  margin: .2em 0;
-  height: $panel-list-thumbnail-size + 16px;
+  color: #fff;
+  background-color: #222;
+  border-left: 10px solid #323232;
+  margin: 0 0 1px 0;
+  height: $panel-list-thumbnail-size + 20px;
   padding: 10px 10px 10px 14px;
   font-size: .8em;
   position: relative;
-  border-radius: 3px;
 
   &:first-child {
     margin-top: 0;
+  }
+
+  &:hover {
+    border-left-color: #7f8c8d;
+    background-color: #262626;
+  }
+
+  h3 {
+    overflow: hidden;
   }
 }
 
@@ -56,15 +63,18 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 .panel-list-thumbnail {
   height: $panel-list-thumbnail-size;
   width: $panel-list-thumbnail-size;
+  border: 5px solid #323232;
 }
 
 .panel-list-thumbnail-placeholder {
-  color: #888;
+  color: #bbb;
   font-weight: bold;
   text-align: center;
   box-sizing: border-box;
-  padding: 4px;
-  border: 1px solid #888;
+  padding: 12px 4px 4px 4px;
+  background: #e3e3e3;
+  border: 5px solid #111;
+  line-height: 1.2em;
 }
 
 .panel-list-meta {
@@ -86,15 +96,24 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   height: 100px;
 }
 
-.panel-list-details, .panel-list-muted {
+.panel-list-muted {
   font-size: .9em;
   padding: 0;
   color: #7f8c8d;
 }
 
+.panel-list-details {
+  font-size: .8em;
+  background: #111;
+  border-radius: 5px;
+  padding: 4px 8px;
+  display: inline;
+  color: #fff;
+}
+
 .panel-list-item-actions {
   position: absolute;
-  padding: .5em;
+  padding: 1em;
   right: 0;
   bottom: 0;
 }

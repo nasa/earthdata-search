@@ -53,6 +53,7 @@
 .master-overlay-main {
   background-color: $master-overlay-main-bg-color;
   width: 40%;
+  min-width: 35em;
   left: 20%;
   overflow: hidden;
 }
@@ -105,7 +106,7 @@
   top: 1em;
   z-index: 50;
   opacity: 0;
-  @include transition(opacity 0.3s ease-in-out 0.3s);
+  @include transition(opacity 0.3s ease-in-out);
 }
 
 .is-hidden .master-overlay-minimized {
@@ -141,13 +142,10 @@
   text-align: right;
   border: 1px solid transparent;
   border-radius: 3px;
-  font-size: 0.8em;
 
   .button {
     @include light-button;
-
-    font-size: 1.2em;
-    padding: 4px 6px;
+    padding: 6px 6px;
   }
 }
 
@@ -161,7 +159,7 @@
 
 // Scrollable content area
 .master-overlay-content {
-  margin: 1em;
+  margin: 0;
   height: 100%;
   overflow-y: scroll;
 }
