@@ -26,7 +26,7 @@ module Echo
     end
 
     def self.get_facets(options={}, token=nil)
-      get("/catalog-rest/search_facet.json", options_to_facet_query(options), token_header(token))
+      get("/catalog-rest/search_facet.json", options_to_item_query(options), token_header(token))
     end
 
     def self.get_provider_holdings
