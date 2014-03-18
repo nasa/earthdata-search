@@ -73,6 +73,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       secondary_content = @root.find('.master-overlay-secondary-content').find(".master-overlay-content")
       secondary_content.height(secondary_content.parents('.main-content').height() - $(secondary_content).offset().top - 90) if secondary_content.offset()
 
+      parent_content = @root.find('.master-overlay-parent').find(".master-overlay-content")
+      parent_content.height(parent_content.parents('.main-content').height() - $(parent_content).offset().top - 40) if parent_content && parent_content.offset()
+
   $document = $(document)
 
   # Hide the project list after the back animation completes
