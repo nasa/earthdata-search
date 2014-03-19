@@ -36,7 +36,7 @@ describe "Dataset GIBS visualizations", reset: false, wait: 30 do
       first_dataset_result.click_link "Hide dataset"
     end
 
-    it "displays composite GIBS imagery corresponding to the first 200 granule results on an HTML canvas" do
+    it "displays composite GIBS imagery corresponding to the first 20 granule results on an HTML canvas" do
       within gibs_tile_layer do
         expect(page).to have_selector('canvas')
       end
