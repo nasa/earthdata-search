@@ -10,6 +10,7 @@ ns.Query = do (ko,
     constructor: (@_extraParams={}) ->
       @keywords = ko.observable("")
       @spatial = ko.observable("")
+      @pageSize = ko.observable(20)
 
       @temporal = ko.observable(null)
 
@@ -27,7 +28,6 @@ ns.Query = do (ko,
       @online_only = ko.observable(false)
 
       @sortKey = ko.observable(null)
-      @pageSize = ko.observable(20)
 
       @granule_ids = ko.observable("")
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
