@@ -7,7 +7,7 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
   class Facet
     constructor: (@parent, item) ->
       @term = item.term
-      @count = item.count
+      @count = ko.observable(item.count)
 
       param = @parent.param
       @isSelected = ko.computed =>
@@ -38,7 +38,7 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
         oldFacet = facetsByTerm[newFacet.term]
         if oldFacet?
           value = oldFacet
-          value.count = newFacet.count
+          value.count(newFacet.count)
         else
           value = new Facet(this, newFacet)
         values.push(value)

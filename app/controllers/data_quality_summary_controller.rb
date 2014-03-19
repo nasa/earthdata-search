@@ -29,6 +29,8 @@ class DataQualitySummaryController < ApplicationController
   private
 
   def get_user_id
+    # Dont make a call to ECHO if user is not logged in
+    return nil if token.empty?
     response = Echo::Client.get_token_info(token).body
     response["token_info"]["user_guid"] if response["token_info"]
   end

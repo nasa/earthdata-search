@@ -2,13 +2,13 @@
 #          datasets by topic
 require "spec_helper"
 
-describe "Dataset Facets" do
-  context "facet listing", reset: false do
-    before do
-      Capybara.reset_sessions!
-      visit "/search"
-    end
+describe "Dataset Facets", reset: false do
+  before :all do
+    Capybara.reset_sessions!
+    visit "/search"
+  end
 
+  context "facet listing" do
     # EDSC-145: As a user, I want to see how long my dataset searches take, so that
     #           I may understand the performance of the system
     it "shows how much time the facet search took" do
@@ -80,8 +80,8 @@ describe "Dataset Facets" do
   end
 
   context "selecting facets" do
-    before do
-      visit "/search"
+    after :each do
+      reset_search
     end
 
     it "shows the user which facets have been applied to the query" do
@@ -104,16 +104,14 @@ describe "Dataset Facets" do
       # select a second campaign
       find(".facets-item", text: "LBA").click
       within(:css, '.selected-facets-panel') do
-        expect(page).to have_content("EOSDIS or LBA")
+        expect(page).to have_content("EOSDIS and LBA")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("p.facets-item.selected")
-
-      reset_search
     end
 
     context "removes facet from query on second click" do
-      before do
+      before :each do
         find(".facets-item", text: "EOSDIS").click
       end
 
