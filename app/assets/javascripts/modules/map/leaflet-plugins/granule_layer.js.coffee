@@ -8,6 +8,7 @@ ns.GranuleLayer = do (L
                       capitalize = @edsc.util.string.capitalize
                       arrayUtil = @edsc.util.array
                       help = @edsc.help
+                      config = @edsc.config
                       ) ->
 
   MAX_RETRIES = 1 # Maximum number of times to attempt to reload an image
@@ -178,7 +179,8 @@ ns.GranuleLayer = do (L
       setTimeout((=> @_drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)), 0)
       setTimeout((=> @_drawFullBackTile(back, paths.concat().reverse(), nwPoint)), 0)
 
-      console.log "#{paths.length} Overlapping Granules [(#{bounds.getNorth()}, #{bounds.getWest()}), (#{bounds.getSouth()}, #{bounds.getEast()})]"
+      if paths.length > 0 && config.debug
+        console.log "#{paths.length} Overlapping Granules [(#{bounds.getNorth()}, #{bounds.getWest()}), (#{bounds.getSouth()}, #{bounds.getEast()})]"
       null
 
     _drawOutlines: (canvas, paths, nwPoint) ->

@@ -77,12 +77,12 @@ ns.Dataset = do (ko
     _loadGranuleAccessOptions: (current, callback) ->
       params = @query.params()
       downloadableParams = extend(@_granuleParams(params), online_only: true, page_size: 2000)
-      granulesModel = new Granules()
+      granulesModel = @createGranulesModel()
       granulesModel.search @_granuleParams(params), =>
         hits = granulesModel.hits()
         granulesModel.dispose()
 
-        downloadableModel = new Granules()
+        downloadableModel = @createGranulesModel()
         downloadableModel.search downloadableParams, (results) =>
           downloadableHits = downloadableModel.hits()
 

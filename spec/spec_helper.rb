@@ -5,15 +5,18 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 require 'capybara-screenshot/rspec'
-require 'capybara-webkit'
+#require 'capybara-webkit'
+require 'capybara/poltergeist'
 
 require 'fileutils'
 
 # Out-of-date assets hose specs and lead to confusing errors
 FileUtils.rm_rf(Rails.root.join("public/assets"))
 
-Capybara.javascript_driver = :webkit
-Capybara.default_driver = :webkit
+#Capybara.javascript_driver = :webkit
+#Capybara.default_driver = :webkit
+Capybara.javascript_driver = :poltergeist
+Capybara.default_driver = :poltergeist
 
 # For debugging
 #Capybara.javascript_driver = :selenium
@@ -36,7 +39,13 @@ module JSON
   class << self
     def parse(source, opts = {})
       opts = ({:max_nesting => 350}).merge(opts)
-      Parser.new(source, opts).parse
+      result = nil
+      begin
+        result = Parser.new(source, opts).parse
+      rescue => e
+        puts "Bad json: #{source}"
+      end
+      result
     end
   end
 end
@@ -80,9 +89,9 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
     if example.exception != nil
       # Failure only code goes here
-      if defined?(page) && page && page.driver && page.driver.console_messages
-        puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
-      end
+      #if defined?(page) && page && page.driver && page.driver.console_messages
+      #  puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
+      #end
     end
   end
 

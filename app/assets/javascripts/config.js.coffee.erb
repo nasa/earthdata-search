@@ -5,9 +5,9 @@
 
   <% if Rails.env.test? %>
 
-  window.onerror = (message, filename, lineno, colno, e) ->
-    console.error "#{message} [#{filename}:#{lineno}]"
-    false
+  #window.onerror = (message, filename, lineno, colno, e) ->
+  #  console.error "#{message} [#{filename}:#{lineno}]"
+  #  false
 
   # Test config
   exports =
@@ -35,6 +35,7 @@
     maxPolygonSize: 50
     csrfToken: csrfToken
     hoverTimeoutMs: 500
+    debug: true
     #baseQueryParams: visualizationDatasetParams
 
   <% elsif Rails.env.production? %>

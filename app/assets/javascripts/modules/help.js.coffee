@@ -60,7 +60,8 @@
   index = 0
 
   hideCurrent = ->
-    $(queue[index].element).popover('destroy')
+    if queue[index]?
+      $(queue[index].element).popover('destroy')
 
   close = ->
     hideCurrent()
