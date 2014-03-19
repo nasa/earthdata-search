@@ -4,10 +4,10 @@ ns.GranuleLayer = do (L
                       $ = jQuery
                       GibsTileLayer = ns.GibsTileLayer
                       projectPath=ns.interpolation.projectPath
-                      dateUtil = @edsc.util.date
                       dividePolygon = ns.sphericalPolygon.dividePolygon
                       capitalize = @edsc.util.string.capitalize
                       arrayUtil = @edsc.util.array
+                      help = @edsc.help
                       ) ->
 
   MAX_RETRIES = 1 # Maximum number of times to attempt to reload an image
@@ -246,7 +246,7 @@ ns.GranuleLayer = do (L
 
     _drawClippedImagery: (canvas, boundary, paths, nwPoint, tilePoint, callback) ->
       if !@_url? || paths.length == 0
-        callback()
+        callback?()
         return
 
       ctx = canvas.getContext('2d')
@@ -417,7 +417,12 @@ ns.GranuleLayer = do (L
       newOptions = L.extend({}, newOptions)
       delete newOptions.time
 
-      layer = new GranuleCanvasLayer(@url(), @_toTileLayerOptions(newOptions))
+      url = @url()
+
+      # Make sure help is displayed after the master overlay is updated for positioning reasons
+      setTimeout((-> help.add('gibs_accuracy')), 0) if url?
+
+      layer = new GranuleCanvasLayer(url, @_toTileLayerOptions(newOptions))
 
       # For tests to figure out if things are still loading
       map = @_map
