@@ -3,11 +3,20 @@ module Echo
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def options_to_item_query(options={})
+      def options_to_item_query(options={}, remove_spatial=false)
         query = options.dup.symbolize_keys
 
         load_freetext_query(query)
         and_query(query)
+
+        # TODO: Spatial is currently breaking facet searches.
+        # Remove this after it has been fixed in catalog rest
+        if remove_spatial
+          query.delete(:point)
+          query.delete(:bounding_box)
+          query.delete(:polygon)
+          query.delete(:line)
+        end
 
         query
       end

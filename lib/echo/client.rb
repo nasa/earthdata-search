@@ -26,7 +26,8 @@ module Echo
     end
 
     def self.get_facets(options={}, token=nil)
-      get("/catalog-rest/search_facet.json", options_to_item_query(options), token_header(token))
+      # TODO: Remove true after spatial is fixed for facet searches in catalog rest
+      get("/catalog-rest/search_facet.json", options_to_item_query(options, true), token_header(token))
     end
 
     def self.get_provider_holdings
