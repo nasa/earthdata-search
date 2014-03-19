@@ -11,6 +11,25 @@
                 it to have an appropriate number of points.  You may edit the polygon to correct any problems
                 by clicking on this button.  <p>To avoid problems, please use areas with no
                 more than #{config.maxPolygonSize} points."
+    gibs_accuracy:
+      once: true
+      title: "Approximate Granule Imagery"
+      content: 'This dataset shows approximate full-resolution browse obtained from
+                <a href="https://earthdata.nasa.gov/about-eosdis/system-description/global-imagery-browse-services-gibs" target="_blank">GIBS</a>.
+                Imagery may not correspond to the indicated granule in the following circumstances:
+                <ol>
+                  <li>
+                    When multiple granules collected the same day overlap.
+                  </li>
+                  <li>
+                    When a granule is collected within a few minutes of midnight UTC.
+                  </li>
+                </ol>
+                In either case, we may present imagery collected from an overlapping granule collected within
+                approximately one day of the indicated granule.
+                '
+      placement: 'top'
+      element: '#map-center'
 
   template = "<div class='popover tour'>
                 <div class='arrow'></div>
@@ -32,15 +51,12 @@
     template: template
     container: 'body'
 
-  currentTour = null
-
   defaultTourOptions =
     reflex: true
     placement: 'left'
-    onEnd: ->
-      currentTour = null
 
   queue = []
+  shown = {}
   index = 0
 
   hideCurrent = ->
@@ -72,6 +88,7 @@
     $el.popover(queue[index])
     $el.attr('data-original-title', '')
     $el.popover('show')
+    shown[queue[index].key] = true
 
     $(queue[index].target ? $el).addClass('popover-advance')
 
@@ -85,7 +102,8 @@
   $(document).on 'click', '.popover [data-role=end]', close
 
   add = (key, options={}) ->
-    queue.push($.extend({}, defaultHelpOptions, tourOptions[key], options, key: key))
+    options = $.extend({}, defaultHelpOptions, tourOptions[key], options, key: key)
+    queue.push(options) unless options.once && shown[key]
     showCurrent()
 
   current = ->
