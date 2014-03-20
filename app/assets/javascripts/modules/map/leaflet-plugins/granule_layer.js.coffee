@@ -389,9 +389,11 @@ ns.GranuleLayer = do (L
 
     _onEdscStickygranule: (e) =>
       granule = e.granule
+
       return if @_stickied == granule
 
       @_stickied = granule
+      @layer?.stickyId = granule?.id # Ugly hack for testing
 
       @_granuleStickyLayer?.onRemove(@_map)
       @_granuleStickyLayer = null
@@ -432,24 +434,28 @@ ns.GranuleLayer = do (L
       layer.on 'loading', -> map.loadingLayers++
       layer.on 'load', -> map.loadingLayers--
 
-      layer.setResults(@_results)
+      layer.setResults(@_reorderedResults(@_results))
+      layer.stickyId = @_stickied?.id # Ugly hack for testing
       layer
 
-    _loadResults: (results) ->
-      @_results = results
-
+    _reorderedResults: (results) ->
       if @_stickied?
         results = results.concat()
         index = results.indexOf(@_stickied)
         if index == -1
           @_stickied = null
+          @layer?.stickyId = null
           @_granuleStickyLayer?.onRemove(@_map)
           @_granuleStickyLayer = null
         else
           results.splice(index, 1)
           results.unshift(@_stickied)
 
-      @layer?.setResults(results)
+      results
+
+    _loadResults: (results) ->
+      @_results = results
+      @layer?.setResults(@_reorderedResults(results))
 
     _granuleLayer: (granule, options) ->
       layer = L.featureGroup()

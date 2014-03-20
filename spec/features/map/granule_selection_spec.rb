@@ -5,6 +5,7 @@ describe "Granule selection", reset: false, wait: 10 do
   Capybara.ignore_hidden_elements = true
 
   is_temporal_ordered_script = """
+    (function() {
       var layers = $('#map').data('map').map._layers, key, layer, result;
       for (key in layers) {
         if (layers[key]._getBackTile) {
@@ -16,9 +17,10 @@ describe "Granule selection", reset: false, wait: 10 do
         result = true;
       }
       else {
-        result = layer._results[0].getTemporal() > layer._results[1].getTemporal()
+        result = layer._results[0].getTemporal() > layer._results[1].getTemporal() && layer._results[0].id != layer.stickyId;
       }
-      result;
+      return result;
+    })();
     """
 
 
@@ -61,7 +63,9 @@ describe "Granule selection", reset: false, wait: 10 do
     end
 
     it "displays the granule above all other granules" do
-      expect(page.evaluate_script(is_temporal_ordered_script)).to be_false
+      synchronize do
+        expect(page.evaluate_script(is_temporal_ordered_script)).to be_false
+      end
     end
 
     context "and clicking on it again" do
@@ -120,7 +124,9 @@ describe "Granule selection", reset: false, wait: 10 do
     end
 
     it "displays the granule above all other granules" do
-      expect(page.evaluate_script(is_temporal_ordered_script)).to be_false
+      synchronize do
+        expect(page.evaluate_script(is_temporal_ordered_script)).to be_false
+      end
     end
 
     context "and clicking on it again" do

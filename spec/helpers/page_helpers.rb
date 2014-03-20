@@ -9,9 +9,8 @@ module Helpers
     #            spawns xhr requests, because evaluate_script will happen synchronously.
     #            Use with care.
     def wait_for_xhr
-      require "timeout"
-      Timeout.timeout(Capybara.default_wait_time) do
-        sleep(0.1) while page.evaluate_script('window.edsc.util.xhr.hasPending()')
+      synchronize(120) do
+        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
       end
     end
 
