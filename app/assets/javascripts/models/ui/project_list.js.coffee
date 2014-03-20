@@ -91,6 +91,8 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       if project.hasDataset(dataset)
         project.removeDataset(dataset)
       else
+        # Force dataset to load DQS information
+        @datasetHasDQS(dataset)
         project.addDataset(dataset)
 
     _computeDatasetsToDownload: ->
