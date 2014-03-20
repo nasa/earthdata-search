@@ -19,6 +19,7 @@ describe 'Data Quality Summaries', :reset => false do
 
     dataset_results.click_link "View Project"
     expect(page).to have_content "Project Datasets"
+    wait_for_xhr
   end
 
   context "when dataset is added to a project" do
