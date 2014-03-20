@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Project dataset list", reset: false do
+describe "Project dataset list", reset: false, wait: 10 do
   before(:all) do
     Capybara.reset_sessions!
     visit "/search"

@@ -7,7 +7,7 @@
 
 require "spec_helper"
 
-describe "Granule footprint visualizations", reset: false, wait: 30 do
+describe "Granule footprint visualizations", reset: false, wait: 60 do
   extend Helpers::DatasetHelpers
 
   before :all do
@@ -108,7 +108,7 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
     end
   end
 
-  context "for line datasets", pq: true do
+  context "for line datasets" do
     use_dataset 'C5920490-LARC_ASDC', 'CAL_IIR_L2_Track-Beta-V3-01'
 
     context "visualizing a dataset's granules" do

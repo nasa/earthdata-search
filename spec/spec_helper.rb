@@ -4,6 +4,8 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+require 'capybara-screenshot/rspec'
+
 if ENV['driver'] == 'poltergeist'
   require 'capybara/poltergeist'
   Capybara.javascript_driver = :poltergeist
@@ -48,6 +50,11 @@ module JSON
   end
 end
 
+Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
+  meta = example.metadata
+  "#{File.basename(meta[:file_path])}-#{meta[:line_number]}"
+end
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -66,6 +73,7 @@ RSpec.configure do |config|
   # instead of true.
   # config.use_transactional_fixtures = true
 
+  Capybara.default_wait_time = 30
   wait_time = Capybara.default_wait_time
 
   config.before :each do
@@ -75,16 +83,14 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras']}
     end
     DatabaseCleaner.start
-
-    Capybara.default_wait_time = example.metadata[:wait] || wait_time
   end
 
   config.before :all do
     Capybara.default_wait_time = self.class.metadata[:wait] || wait_time
   end
 
-  config.after do
-    Capybara.default_wait_time = wait_time unless example.metadata[:wait].nil?
+  config.after :all do
+    Capybara.default_wait_time = wait_time
   end
 
   config.after :each do
@@ -93,16 +99,6 @@ RSpec.configure do |config|
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
         puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
-
-        meta = example.metadata
-        filename = File.basename(meta[:file_path])
-        line_number = meta[:line_number]
-        screenshot_name = "#{filename}-#{line_number}.png"
-        screenshot_path = "#{Rails.root.join("tmp/screenshots")}/#{screenshot_name}"
-
-        page.save_screenshot(screenshot_path)
-
-        puts meta[:full_description] + "\n  Screenshot: #{screenshot_path}"
       end
     end
   end

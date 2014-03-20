@@ -15,7 +15,7 @@ module Helpers
     def view_granule_results
       first_dataset_result.click
       sleep(1) # Wait for sliding transitions
-      expect(page).to have_no_text("Loading granules...")
+      wait_for_xhr
       wait_for_visualization_load
     end
 

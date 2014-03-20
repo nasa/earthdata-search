@@ -14,7 +14,7 @@ describe "Granule list", reset: false, wait: 30 do
     visit "/search"
   end
 
-  context "for all datasets with granules", pq: true do
+  context "for all datasets with granules" do
     use_dataset 'C14758250-LPDAAC_ECS', 'ASTER L1A'
     hook_granule_results
 
