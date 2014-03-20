@@ -25,7 +25,6 @@ describe 'Site landing page' do
 
   it 'does not reveal the full search interface when the user enters a keyword without pressing "enter"' do
     fill_in "keywords", with: "A"
-    click_link "Temporal"
     expect(page).to have_no_link('Clear Filters')
   end
 
@@ -36,15 +35,16 @@ describe 'Site landing page' do
 
   it "reveals the full search interface when the user applies a temporal filter" do
     click_link "Temporal"
-    fill_in "Start", with: "2013-12-01 00:00:00"
-    click_button "Apply"
-
+    fill_in "End", with: "2013-12-01 00:00:00"
+    # Do this in Javascript because of capybara clickfailed bug
+    page.execute_script("$('#temporal-submit:visible').click()")
     expect(page).to have_link('Clear Filters')
   end
 
   it "reveals the full search interface when the user selects a spatial tool" do
     click_link "Spatial"
-    click_link "Point"
+    # Do this in Javascript because of capybara clickfailed bug
+    page.execute_script("$('.dropdown-menu .select-point:visible').click()")
     expect(page).to have_link('Clear Filters')
   end
 

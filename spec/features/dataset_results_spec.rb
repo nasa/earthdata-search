@@ -63,7 +63,7 @@ describe "Dataset results", :reset => false do
     expect(search_time_element.text).to match(/Search Time: \d+\.\d+s/)
   end
 
-  context "when clicking the 'View dataset' button" do
+  context 'when clicking the "View dataset" button' do
     before(:each) do
       first_dataset_result.click_link "View dataset"
     end
@@ -72,13 +72,13 @@ describe "Dataset results", :reset => false do
       reset_visible_datasets
     end
 
-    it "highlights the selected dataset" do
-      expect(page).to have_css('#dataset-results .panel-list-item.view-dataset', count: 1)
+    it 'highlights the "View dataset" button' do
+      expect(page).to have_css('#dataset-results a[title="Hide dataset"].button-active', count: 1)
     end
 
     it "un-highlights the selected dataset when clicking the button again" do
       first_dataset_result.click_link "Hide dataset"
-      expect(page).to have_no_css('#dataset-results .panel-list-item.view-dataset')
+      expect(page).to have_no_css('#dataset-results a[title="Hide dataset"].button-active')
     end
   end
 end
