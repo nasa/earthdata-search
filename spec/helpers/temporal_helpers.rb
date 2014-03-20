@@ -20,12 +20,12 @@ module Helpers
     end
 
     def js_check_recurring(prefix)
-      script = "$('#" + prefix+ "-show-recurring').prop('checked', true);"
+      script = "$('#" + prefix+ "-show-recurring').click()"
       page.execute_script script
     end
 
     def js_uncheck_recurring(prefix)
-      script = "$('#" + prefix+ "-show-recurring').prop('checked', false);"
+      script = "if ($('#" + prefix+ "-show-recurring').is(':checked')) {$('#" + prefix+ "-show-recurring').click()}"
       page.execute_script script
     end
   end
