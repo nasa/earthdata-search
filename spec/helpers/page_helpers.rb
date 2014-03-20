@@ -46,6 +46,18 @@ module Helpers
       wait_for_xhr
     end
 
+    def logout
+      reset_user
+    end
+
+    def login(username='edsc', password='EDSCtest!1')
+      click_link 'Sign In'
+      fill_in 'Username', with: username
+      fill_in 'Password', with: password
+      click_button 'Sign In'
+      wait_for_xhr
+    end
+
     def have_popover(title)
       have_css('.popover-title', text: title)
     end
