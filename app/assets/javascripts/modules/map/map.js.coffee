@@ -29,6 +29,7 @@ ns.Map = do (window,
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
+      map.loadingLayers = 0
 
       @_buildLayerSwitcher()
       map.addLayer(new GranuleVisualizationsLayer())
