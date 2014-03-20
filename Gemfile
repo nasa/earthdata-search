@@ -70,6 +70,9 @@ group :assets, :test do
   gem 'coffee-script', :require => 'coffee_script'
   gem 'coffee-rails', '~> 4.0.0'
 
+  gem 'therubyracer', :require => 'v8'
+  gem 'libv8', '~> 3.11.8.3'
+
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   #gem 'therubyracer', :platforms => :ruby
 
