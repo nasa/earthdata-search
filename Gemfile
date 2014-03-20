@@ -72,7 +72,7 @@ group :assets, :test do
 
   gem 'therubyracer', :require => 'v8'
   gem 'libv8', '~> 3.11.8.3'
-
+  gem 'headless'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   #gem 'therubyracer', :platforms => :ruby
 
