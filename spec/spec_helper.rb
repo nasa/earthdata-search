@@ -4,8 +4,6 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
-require 'capybara-screenshot/rspec'
-
 if ENV['driver'] == 'poltergeist'
   require 'capybara/poltergeist'
   Capybara.javascript_driver = :poltergeist
@@ -20,6 +18,7 @@ require 'fileutils'
 
 # Out-of-date assets hose specs and lead to confusing errors
 FileUtils.rm_rf(Rails.root.join("public/assets"))
+FileUtils.mkdir_p(Rails.root.join("tmp/screenshots"))
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -94,6 +93,16 @@ RSpec.configure do |config|
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
         puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
+
+        meta = example.metadata
+        filename = File.basename(meta[:file_path])
+        line_number = meta[:line_number]
+        screenshot_name = "#{filename}-#{line_number}.png"
+        screenshot_path = "#{Rails.root.join("tmp/screenshots")}/#{screenshot_name}"
+
+        page.save_screenshot(screenshot_path)
+
+        puts meta[:full_description] + "\n  Screenshot: #{screenshot_path}"
       end
     end
   end
