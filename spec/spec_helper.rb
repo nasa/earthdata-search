@@ -5,22 +5,21 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 require 'capybara-screenshot/rspec'
-#require 'capybara-webkit'
-require 'capybara/poltergeist'
+
+if ENV['driver'] == 'poltergeist'
+  require 'capybara/poltergeist'
+  Capybara.javascript_driver = :poltergeist
+  Capybara.default_driver = :poltergeist
+else
+  require 'capybara-webkit'
+  Capybara.javascript_driver = :webkit
+  Capybara.default_driver = :webkit
+end
 
 require 'fileutils'
 
 # Out-of-date assets hose specs and lead to confusing errors
 FileUtils.rm_rf(Rails.root.join("public/assets"))
-
-#Capybara.javascript_driver = :webkit
-#Capybara.default_driver = :webkit
-Capybara.javascript_driver = :poltergeist
-Capybara.default_driver = :poltergeist
-
-# For debugging
-#Capybara.javascript_driver = :selenium
-#Capybara.default_driver = :selenium
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -81,6 +80,10 @@ RSpec.configure do |config|
     Capybara.default_wait_time = example.metadata[:wait] || wait_time
   end
 
+  config.before :all do
+    Capybara.default_wait_time = self.class.metadata[:wait] || wait_time
+  end
+
   config.after do
     Capybara.default_wait_time = wait_time unless example.metadata[:wait].nil?
   end
@@ -89,9 +92,9 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
     if example.exception != nil
       # Failure only code goes here
-      #if defined?(page) && page && page.driver && page.driver.console_messages
-      #  puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
-      #end
+      if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
+        puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
+      end
     end
   end
 

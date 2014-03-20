@@ -24,6 +24,7 @@ group :test do
   gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
+  gem 'fuubar'
 end
 
 group :development do

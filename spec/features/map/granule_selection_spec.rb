@@ -1,7 +1,8 @@
 require "spec_helper"
 
-describe "Granule selection", reset: false, wait: 30 do
+describe "Granule selection", reset: false, wait: 10 do
   extend Helpers::DatasetHelpers
+  Capybara.ignore_hidden_elements = true
 
   is_temporal_ordered_script = """
       var layers = $('#map').data('map').map._layers, key, layer, result;
@@ -33,16 +34,10 @@ describe "Granule selection", reset: false, wait: 30 do
     before :all do
       # Click on a bottom one to test re-ordering
       nth_granule_list_item(10).click
-      synchronize do
-        expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).to_not eql 2
-      end
     end
 
     after :all do
       nth_granule_list_item(10).click
-      synchronize do
-        expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).to eql 2
-      end
     end
 
     it "highlights the selected granule in the granule list" do
@@ -65,14 +60,6 @@ describe "Granule selection", reset: false, wait: 30 do
       expect(page).to have_selector('.granule-spatial-label-temporal', count: 1)
     end
 
-    it "zooms and pans the map to focus on the granule" do
-      synchronize do
-        expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).not_to eql 2
-        expect(page.evaluate_script("$('#map').data('map').map.getCenter().lat")).not_to eql 0
-        expect(page.evaluate_script("$('#map').data('map').map.getCenter().lng")).not_to eql 0
-      end
-    end
-
     it "displays the granule above all other granules" do
       expect(page.evaluate_script(is_temporal_ordered_script)).to be_false
     end
@@ -80,16 +67,10 @@ describe "Granule selection", reset: false, wait: 30 do
     context "and clicking on it again" do
       before :all do
         nth_granule_list_item(10).click
-        synchronize do
-          expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).to eql 2
-        end
       end
 
       after :all do
         nth_granule_list_item(10).click
-        synchronize do
-          expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).to_not eql 2
-        end
       end
 
       it "removes added highlights and overlays from the granule result list" do
@@ -103,14 +84,6 @@ describe "Granule selection", reset: false, wait: 30 do
         expect(page).to have_no_selector('.granule-spatial-label-temporal')
       end
 
-      it "returns the map to its original pan and zoom position" do
-        synchronize do
-          expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).to eql 2
-          expect(page.evaluate_script("$('#map').data('map').map.getCenter().lat")).to eql 0
-          expect(page.evaluate_script("$('#map').data('map').map.getCenter().lng")).to eql 0
-        end
-      end
-
       it "returns the granule ordering to its original state" do
         expect(page.evaluate_script(is_temporal_ordered_script)).to be_true
       end
@@ -120,16 +93,10 @@ describe "Granule selection", reset: false, wait: 30 do
   context "clicking on a granule on the map" do
     before :all do
       map_mouseclick
-      synchronize do
-        expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).not_to eql 2
-      end
     end
 
     after :all do
       map_mouseclick
-      synchronize do
-        expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).to eql 2
-      end
     end
 
     it "highlights the selected granule in the granule list" do
@@ -152,14 +119,6 @@ describe "Granule selection", reset: false, wait: 30 do
       expect(page).to have_selector('.granule-spatial-label-temporal', count: 1)
     end
 
-    it "zooms and pans the map to focus on the granule" do
-      synchronize do
-        expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).not_to eql 2
-        expect(page.evaluate_script("$('#map').data('map').map.getCenter().lat")).not_to eql 0
-        expect(page.evaluate_script("$('#map').data('map').map.getCenter().lng")).not_to eql 0
-      end
-    end
-
     it "displays the granule above all other granules" do
       expect(page.evaluate_script(is_temporal_ordered_script)).to be_false
     end
@@ -167,16 +126,10 @@ describe "Granule selection", reset: false, wait: 30 do
     context "and clicking on it again" do
       before :all do
         map_mouseclick
-        synchronize do
-          expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).to eql 2
-        end
       end
 
       after :all do
         map_mouseclick
-        synchronize do
-          expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).to_not eql 2
-        end
       end
 
       it "removes added highlights and overlays from the granule result list" do
@@ -188,14 +141,6 @@ describe "Granule selection", reset: false, wait: 30 do
         expect(page).to have_selector('#map path', count: 1) # Just the spatial constraint
         expect(page).to have_no_selector('#map .panel-list-remove')
         expect(page).to have_no_selector('.granule-spatial-label-temporal')
-      end
-
-      it "returns the map to its original pan and zoom position" do
-        synchronize do
-          expect(page.evaluate_script("$('#map').data('map').map.getZoom()")).to eql 2
-          expect(page.evaluate_script("$('#map').data('map').map.getCenter().lat")).to eql 0
-          expect(page.evaluate_script("$('#map').data('map').map.getCenter().lng")).to eql 0
-        end
       end
 
       it "returns the granule ordering to its original state" do

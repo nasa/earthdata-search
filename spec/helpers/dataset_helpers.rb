@@ -45,7 +45,7 @@ module Helpers
 
     def wait_for_visualization_load
       synchronize do
-        expect(page.evaluate_script('window.edsc.page.map.map.loadingLayers')).to eql(0)
+        expect(page.evaluate_script('edsc.page.map.map.loadingLayers')).to eql(0)
       end
     end
   end

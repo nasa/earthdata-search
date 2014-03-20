@@ -16,15 +16,16 @@ class GranulesController < ApplicationController
   end
 
   class GranuleUrlStreamer
-    def initialize(params)
+    def initialize(params, token)
       @params = params
+      @token = token
     end
 
     def each
       at_end = false
       page = 1
       until at_end
-        catalog_response = Echo::Client.get_granules(@params.merge(page_num: page), token)
+        catalog_response = Echo::Client.get_granules(@params.merge(page_num: page), @token)
         at_end = catalog_response.headers['Echo-Cursor-At-End'] == 'true'
 
         if catalog_response.success?
@@ -48,7 +49,7 @@ class GranulesController < ApplicationController
   end
 
   def download
-    @urls = GranuleUrlStreamer.new(request.query_parameters)
+    @urls = GranuleUrlStreamer.new(request.query_parameters, token)
     render stream: true, layout: false
   end
 end

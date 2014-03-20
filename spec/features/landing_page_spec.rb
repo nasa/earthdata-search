@@ -17,8 +17,8 @@ describe 'Site landing page' do
 
   it 'reveals the full search interface when the user enters a keyword and presses "enter"' do
     fill_in "keywords", with: "A"
-    keypress_script = "var e = $.Event('keypress', { which: 13 }); $('#keywords').trigger(e);"
-    page.driver.browser.execute_script(keypress_script)
+    keypress_script = "var e = $.Event('keypress', { which: 13 }); $('#keywords').trigger(e); null;"
+    page.driver.browser.evaluate_script(keypress_script)
 
     expect(page).to have_link('Clear Filters')
   end

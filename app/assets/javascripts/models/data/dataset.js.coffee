@@ -122,7 +122,7 @@ ns.Dataset = do (ko
       return false
 
     serialize: ->
-      result = {id: @id(), dataset_id: @dataset_id()}
+      result = {id: @id(), dataset_id: @dataset_id(), has_granules: @has_granules()}
       if @has_granules()
         result.params = @granuleQuery.serialize()
         if @granuleAccessOptions.isSetup()
