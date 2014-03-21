@@ -3,11 +3,11 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
   class MasterOverlay extends plugin.Base
     constructor: (root, namespace, options={}) ->
       super(root, namespace, options)
-      $(window).on 'load resize', @_fixContentHeight
+      $(window).on 'load resize', @contentHeightChanged
 
     destroy: ->
       super()
-      $(window).off 'load resize', @_fixContentHeight
+      $(window).off 'load resize', @contentHeightChanged
 
     show: -> @toggle(true)
 
@@ -26,11 +26,11 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
     toggleParent: (show = @root.hasClass(@scope('is-parent-hidden'))) ->
       @root.toggleClass(@scope('is-parent-hidden'), !show)
-      @_fixContentHeight()
+      @contentHeightChanged()
 
     toggleSecondary: (show = @root.hasClass(@scope('is-secondary-hidden'))) ->
       @root.toggleClass(@scope('is-secondary-hidden'), !show)
-      @_fixContentHeight()
+      @contentHeightChanged()
 
     forward: (source) ->
       @level(Math.min(@level() + 1, @children().length))
@@ -54,7 +54,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         if currentLevel != value
           @_content().attr('data-level', value)
           @current().trigger('edsc.navigate')
-        @_fixContentHeight()
+        @contentHeightChanged()
       else
         # getter
         parseInt(@_content().attr('data-level'), 10)
@@ -62,16 +62,21 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     _content: ->
       @root.find(@scope('.main-content'))
 
-    _fixContentHeight: =>
+    contentHeightChanged: =>
       content = @_content().find(@scope('.content'))
       # When the window is first loaded or later resized, update the master overlay content
       # boxes to have a height that stretches to the bottom of their parent.  It would
       # be awesome to do this in CSS, but I don't know that it's possible without
       # even uglier results
-      content.height(content.parents('.main-content').height() - $(content[@level()]).offset().top - 40)
+      main_height = $('.main-content').height()
+      for div in content
+        $(div).height(main_height - $(div).offset().top - 40)
 
       secondary_content = @root.find('.master-overlay-secondary-content').find(".master-overlay-content")
-      secondary_content.height(content.height() + 8)
+      secondary_content.height(main_height - $(secondary_content).offset().top - 90) if secondary_content.offset()
+
+      parent_content = @root.find('.master-overlay-parent').find(".master-overlay-content")
+      parent_content.height(main_height - $(parent_content).offset().top - 40) if parent_content.offset()
 
   $document = $(document)
 

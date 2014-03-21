@@ -3,30 +3,6 @@
 
 require "spec_helper"
 
-def close_datetimepicker
-  page.find(".xdsoft_time.xdsoft_current").click
-end
-
-def js_click_temporal
-  script = "$('.temporal-dropdown-button').click()"
-  page.execute_script script
-end
-
-def js_click_apply
-  script = "$('#temporal-submit').click()"
-  page.execute_script script
-end
-
-def js_click_clear
-  script = "$('#temporal-clear').click()"
-  page.execute_script script
-end
-
-def js_check_recurring
-  script = "$('#show-recurring').click()"
-  page.execute_script script
-end
-
 describe "Temporal" do
   before :each do
     visit "/search"
@@ -41,7 +17,7 @@ describe "Temporal" do
       click_link "Temporal"
       fill_in "Start", with: "2013-12-01 00:00:00"
       close_datetimepicker
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
@@ -52,7 +28,7 @@ describe "Temporal" do
       click_link "Temporal"
       fill_in "End", with: "1970-12-01 00:00:00"
       close_datetimepicker
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
@@ -65,7 +41,7 @@ describe "Temporal" do
       close_datetimepicker
       fill_in "End", with: "1975-12-01 00:00:00"
       close_datetimepicker
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2000 Pilot Environmental Sustainability Index")
@@ -80,7 +56,7 @@ describe "Temporal" do
       close_datetimepicker
       fill_in "End", with: "1979-12-01 00:00:00"
       close_datetimepicker
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
@@ -90,7 +66,7 @@ describe "Temporal" do
 
       js_click_temporal
       js_click_clear
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2001 Environmental Sustainability Index (ESI)")
@@ -105,7 +81,7 @@ describe "Temporal" do
       close_datetimepicker
       fill_in "End", with: "1979-12-01 00:00:00"
       close_datetimepicker
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_content("Start must be no later than End")
     end
@@ -118,7 +94,7 @@ describe "Temporal" do
       fill_in "End", with: "2014-01-01 00:00:00"
       fill_in "Day of Year:", with: "1979-335"
       click_button "Set"
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
@@ -132,14 +108,14 @@ describe "Temporal" do
   context "recurring range selection" do
     it "allows the user to search by recurring date time range" do
       click_link "Temporal"
-      js_check_recurring
+      js_check_recurring "dataset"
       fill_in "Start", with: "12-01 00:00:00"
       close_datetimepicker
       fill_in "End", with: "12-31 00:00:00"
       close_datetimepicker
       script = "edsc.page.ui.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
@@ -150,14 +126,14 @@ describe "Temporal" do
 
     it "allows the user to clear the recurring date time search" do
       click_link "Temporal"
-      js_check_recurring
+      js_check_recurring "dataset"
       fill_in "Start", with: "12-01 00:00:00"
       close_datetimepicker
       fill_in "End", with: "12-31 00:00:00"
       close_datetimepicker
       script = "edsc.page.ui.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
@@ -167,7 +143,7 @@ describe "Temporal" do
 
       js_click_temporal
       js_click_clear
-      js_click_apply
+      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("Amazon River Basin Precipitation, 1972-1992")
@@ -178,7 +154,7 @@ describe "Temporal" do
 
     it "validates incorrect user input" do
       click_link "Temporal"
-      js_check_recurring
+      js_check_recurring "dataset"
       fill_in "Start", with: "12-10 00:00:00"
       close_datetimepicker
       fill_in "End", with: "12-01 00:00:00"
@@ -189,7 +165,7 @@ describe "Temporal" do
 
     it "validates both start and end are present" do
       click_link "Temporal"
-      js_check_recurring
+      js_check_recurring "dataset"
       fill_in "Start", with: "12-10 00:00:00"
       close_datetimepicker
 

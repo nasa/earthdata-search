@@ -9,6 +9,7 @@
   position: relative;
 
   .dropdown-menu {
+    position: absolute;
     z-index: 70;
     margin: 1px 0 0 0;
     border: none;
@@ -34,6 +35,10 @@
 
 .xdsoft_datetimepicker, .xdsoft_timepicker {
   z-index:1001;
+}
+
+.xdsoft_label.xdsoft_month {
+  margin-left: 1px;
 }
 
 // Hide jquery.datetimepicker's year field
@@ -80,7 +85,6 @@ input.day-of-year-input {
 // Override default Slider CSS
 .range-slider {
   margin: 10px 0 20px 0;
-  display: none;
 
   .slider.slider-horizontal input {
     width: 330px;

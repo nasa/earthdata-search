@@ -20,8 +20,9 @@ class PlacenamesController < ApplicationController
         preposition = ""
       end
 
-      if placename == current
-        # Completion has already been performed and placename hasn't changed
+      if placename == current || placename[/^C\d/] || placename.include?('_')
+        # Completion has already been performed and placename hasn't changed or
+        # the search is for an explicit collection id (avoids many requests in CI)
         result = []
       else
         result = PlacesClient.get_place_completions(placename).map do |completion|

@@ -3,10 +3,20 @@ module Echo
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def options_to_item_query(options={})
+      def options_to_item_query(options={}, remove_spatial=false)
         query = options.dup.symbolize_keys
 
         load_freetext_query(query)
+        and_query(query)
+
+        # TODO: Spatial is currently breaking facet searches.
+        # Remove this after it has been fixed in catalog rest
+        if remove_spatial
+          query.delete(:point)
+          query.delete(:bounding_box)
+          query.delete(:polygon)
+          query.delete(:line)
+        end
 
         query
       end
@@ -15,31 +25,6 @@ module Echo
         query = options.dup.symbolize_keys
         query.delete(:free_text)
         options_to_item_query(query)
-      end
-
-      def options_to_facet_query(options={})
-        options = options.with_indifferent_access
-
-        simple_facet_params = {
-          :campaign => :campaign_sn,
-          :platform => :platform_sn,
-          :instrument => :instrument_sn,
-          :sensor => :sensor_sn,
-          :two_d_coordinate_system_name => :twod_coord_name,
-          :processing_level => :processing_level
-        }
-
-        simple_facet_params.each do |param, facet_param|
-          if options[param].present?
-            return {filter: facet_param, value: options[param].first}
-          end
-        end
-
-        if options[:science_keywords].present?
-          keyword, value = options[:science_keywords].first
-          return {filter: "#{keyword}_keyword", value: value}
-        end
-        {}
       end
 
       private
@@ -72,6 +57,31 @@ module Echo
           value.map {|v| catalog_escape(v)}
         elsif !value.is_a?(TrueClass) && !value.is_a?(FalseClass) && !value.is_a?(Numeric)
           Rails.logger.warn("Unrecognized value type for #{value} (#{value.class})")
+        end
+      end
+
+      # If Campaigns, Platforms, Instruments, or Sensors are selected
+      # add the option to perform an AND search in the catalog
+      def and_query(query)
+        if query[:campaign]
+          query[:options] ||= Hash.new
+          query[:options][:campaign] = Hash.new
+          query[:options][:campaign][:and] = true
+        end
+        if query[:platform]
+          query[:options] ||= Hash.new
+          query[:options][:platform] = Hash.new
+          query[:options][:platform][:and] = true
+        end
+        if query[:instrument]
+          query[:options] ||= Hash.new
+          query[:options][:instrument] = Hash.new
+          query[:options][:instrument][:and] = true
+        end
+        if query[:sensor]
+          query[:options] ||= Hash.new
+          query[:options][:sensor] = Hash.new
+          query[:options][:sensor][:and] = true
         end
       end
     end

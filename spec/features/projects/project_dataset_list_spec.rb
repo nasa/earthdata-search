@@ -8,7 +8,7 @@ describe "Project dataset list", reset: false do
 
   before(:each) do
     first_dataset_result.click_link "Add dataset to the current project"
-    second_dataset_result.click_link "Add dataset to the current project"
+    nth_dataset_result(10).click_link "Add dataset to the current project"
 
     dataset_results.click_link "View Project"
   end

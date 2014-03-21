@@ -5,9 +5,6 @@ require "spec_helper"
 describe "Place name autocomplete" do
   before do
     visit "/search"
-    # Hack to avoid Capybara::Webkit::ClickFailed: bug caused by the autocomplete
-    # dialog overflowing outside its container
-    page.evaluate_script('$(".toolbar").height(300)')
   end
 
   it "displays suggestions when the user provides types a few letters" do
@@ -39,19 +36,21 @@ describe "Place name autocomplete" do
 
   it "adds no spatial constraint when the user ignores a suggestion" do
     fill_in "keywords", with: "tex"
-    #find('#map').click # Click away from box
     expect(page).to have_no_css('#map .leaflet-marker-icon')
   end
 
   context "when the user has accepted a suggestion" do
     before :each do
       fill_in "keywords", with: "modis over tex"
+      wait_for_xhr
       find('.tt-suggestion p', text: 'Texas, United States').click
       expect(page).to have_field('keywords', with: 'modis over Texas, United States')
+      wait_for_xhr
     end
 
     it "removes the placename from the search box if the user alters the spatial constraint" do
       create_point(0, 0)
+      wait_for_xhr
       expect(page).to have_field('keywords', with: 'modis')
     end
   end

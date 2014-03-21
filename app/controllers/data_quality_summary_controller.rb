@@ -17,9 +17,10 @@ class DataQualitySummaryController < ApplicationController
   end
 
   def accept
-    user_id = get_user_id
-    params["dqs_ids"].each do |dqs_id|
-      AcceptedDataQualitySummary.create!({dqs_id: dqs_id, user_id: user_id})
+    if user_id = get_user_id
+      params["dqs_ids"].each do |dqs_id|
+        AcceptedDataQualitySummary.create!({dqs_id: dqs_id, user_id: user_id})
+      end
     end
 
     render json: nil, status: :ok
@@ -28,6 +29,9 @@ class DataQualitySummaryController < ApplicationController
   private
 
   def get_user_id
-    Echo::Client.get_token_info(token).body["token_info"]["user_guid"]
+    # Dont make a call to ECHO if user is not logged in
+    return nil unless token.present?
+    response = Echo::Client.get_token_info(token).body
+    response["token_info"]["user_guid"] if response["token_info"]
   end
 end

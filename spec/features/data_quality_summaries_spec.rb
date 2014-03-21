@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Data Quality Summaries', :reset => false do
-  before :each do
+  def setup_project
     Capybara.reset_sessions!
     visit "/search"
     click_link 'Sign In'
@@ -19,9 +19,14 @@ describe 'Data Quality Summaries', :reset => false do
 
     dataset_results.click_link "View Project"
     expect(page).to have_content "Project Datasets"
+    wait_for_xhr
   end
 
   context "when dataset is added to a project" do
+    before :all do
+      setup_project
+    end
+
     it "shows a warning alert" do
       expect(page).to have_css ".message-warning"
     end
@@ -40,6 +45,7 @@ describe 'Data Quality Summaries', :reset => false do
 
       it "displays data quality summary" do
         expect(page).to have_content "Data Quality Summary for ASTER L1A Reconstructed Unprocessed Instrument Data V003"
+        expect(page).to have_content "Data Quality Summary for ASTER L1B Registered Radiance at the Sensor V003"
       end
 
       it "returns to project page when closing DQS modal" do
@@ -61,6 +67,10 @@ describe 'Data Quality Summaries', :reset => false do
   end
 
   context "when logging out, DQS acceptance persists" do
+    before :all do
+      setup_project
+    end
+
     it "remembers the user accepted the data quality summary" do
       within ".message-warning" do
         click_link "read and accept"

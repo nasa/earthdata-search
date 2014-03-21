@@ -260,3 +260,20 @@ p.map-popup-info {
     display: block;
   }
 }
+
+// Anchor point for help
+#map-center {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  left: 80%;
+  top: 50%;
+}
+
+.is-master-overlay-parent-hidden + #map #map-center {
+  left: 70%;
+}
+
+.is-hidden + #map #map-center {
+  left: 50%;
+}

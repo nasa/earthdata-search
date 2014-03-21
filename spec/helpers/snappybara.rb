@@ -44,7 +44,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.after(:suite) do
+  config.after(:all) do
     Capybara.reset_sessions!
   end
 end

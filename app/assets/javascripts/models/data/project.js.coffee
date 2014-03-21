@@ -68,9 +68,6 @@ ns.Project = do (ko,
     isSearchingGranules: (dataset) =>
       @searchGranulesDataset() == dataset
 
-    searchGranules: (dataset) =>
-      @searchGranulesDataset(dataset)
-
     clearSearchGranules: =>
       @searchGranulesDataset(null)
 

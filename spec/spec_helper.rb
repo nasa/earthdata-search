@@ -5,19 +5,27 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 require 'capybara-screenshot/rspec'
-require 'capybara-webkit'
+require 'headless'
+
+
+if ENV['driver'] == 'poltergeist'
+  require 'capybara/poltergeist'
+  Capybara.javascript_driver = :poltergeist
+  Capybara.default_driver = :poltergeist
+else
+  require 'capybara-webkit'
+  Capybara.javascript_driver = :webkit
+  Capybara.default_driver = :webkit
+end
+
+# Avoid appending screenshot paths in CI environments, since it messes with repeat failure detection
+Capybara::Screenshot.append_screenshot_path = false if ENV["CAPYBARA_APPEND_SCREENSHOT_PATH"] == 'false'
 
 require 'fileutils'
 
 # Out-of-date assets hose specs and lead to confusing errors
 FileUtils.rm_rf(Rails.root.join("public/assets"))
-
-Capybara.javascript_driver = :webkit
-Capybara.default_driver = :webkit
-
-# For debugging
-#Capybara.javascript_driver = :selenium
-#Capybara.default_driver = :selenium
+FileUtils.mkdir_p(Rails.root.join("tmp/screenshots"))
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -36,9 +44,20 @@ module JSON
   class << self
     def parse(source, opts = {})
       opts = ({:max_nesting => 350}).merge(opts)
-      Parser.new(source, opts).parse
+      result = nil
+      begin
+        result = Parser.new(source, opts).parse
+      rescue => e
+        puts "Bad json: #{source}"
+      end
+      result
     end
   end
+end
+
+Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
+  meta = example.metadata
+  "#{File.basename(meta[:file_path])}-#{meta[:line_number]}"
 end
 
 RSpec.configure do |config|
@@ -59,28 +78,35 @@ RSpec.configure do |config|
   # instead of true.
   # config.use_transactional_fixtures = true
 
+  Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
   wait_time = Capybara.default_wait_time
+
+  config.before(:suite) do
+    Headless.new(:destroy_on_exit => false).start
+  end
 
   config.before :each do
     if Capybara.current_driver == :rack_test
       DatabaseCleaner.strategy = :transaction
     else
-      DatabaseCleaner.strategy = :truncation
+      DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras']}
     end
     DatabaseCleaner.start
-
-    Capybara.default_wait_time = example.metadata[:wait] || wait_time
   end
 
-  config.after do
-    Capybara.default_wait_time = wait_time unless example.metadata[:wait].nil?
+  config.before :all do
+    Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
+  end
+
+  config.after :all do
+    Capybara.default_wait_time = wait_time
   end
 
   config.after :each do
     DatabaseCleaner.clean
     if example.exception != nil
       # Failure only code goes here
-      if defined?(page) && page && page.driver && page.driver.console_messages
+      if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
         puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
       end
     end
@@ -108,4 +134,5 @@ RSpec.configure do |config|
   config.include Helpers::PageHelpers
   config.include Helpers::DatasetHelpers
   config.include Helpers::DefaultTags
+  config.include Helpers::TemporalHelpers
 end

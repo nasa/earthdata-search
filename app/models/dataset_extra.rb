@@ -85,7 +85,7 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def decorate_gibs_layers(dataset)
-    if !Rails.env.production? && dataset[:id] == 'C90757596-LAADS'
+    if Rails.env.development? && dataset[:id] == 'C90757596-LAADS'
       # DELETE ME BEFORE GOING TO PRODUCTION
       # Fake GIBS visualization for demonstrating compositing
       dataset[:gibs] = {
