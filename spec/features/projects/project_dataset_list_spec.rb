@@ -74,7 +74,7 @@ describe "Project dataset list", reset: false do
 
     it "keeps the selected dataset highlighted when returning to the project" do
       click_link "Back to Dataset Search"
-
+      sleep(1) # Wait for sliding transition
       dataset_results.click_link "View Project"
       expect(project_overview).to have_link('Hide dataset', count: 1)
     end

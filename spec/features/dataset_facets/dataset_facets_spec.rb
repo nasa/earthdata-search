@@ -176,6 +176,8 @@ describe "Dataset Facets", reset: false do
       end
       expect(page).to have_no_css(".selected-facets-panel.facets")
       expect(page).to have_css("#collapse0.facets-list-hide")
+      find(".facet-title", text: "Campaigns").click
+      expect(page).to have_css("#collapse0.facets-list-show")
     end
   end
 end
