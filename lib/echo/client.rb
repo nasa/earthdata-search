@@ -62,7 +62,6 @@ module Echo
     end
 
     def self.username_recall(params)
-      Rails.logger.info params.to_json
       post('/echo-rest/users/username_recall.json', params.to_json)
     end
 
@@ -85,7 +84,6 @@ module Echo
         headers.each do |header, value|
           req.headers[header] = value
         end
-        Rails.logger.info req.headers.inspect
       end
       Echo::Response.new(faraday_response)
     end
