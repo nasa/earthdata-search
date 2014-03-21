@@ -5,11 +5,10 @@
 
 require "spec_helper"
 
-describe "Granule list", reset: false, wait: 30 do
+describe "Granule list", reset: false do
   extend Helpers::DatasetHelpers
 
   before :all do
-    Capybara.default_wait_time = 30
     Capybara.reset_sessions!
     visit "/search"
   end

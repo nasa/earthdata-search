@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Granule selection", reset: false, wait: 10 do
+describe "Granule selection", reset: false do
   extend Helpers::DatasetHelpers
   Capybara.ignore_hidden_elements = true
 

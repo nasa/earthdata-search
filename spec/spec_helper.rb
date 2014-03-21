@@ -75,7 +75,7 @@ RSpec.configure do |config|
   # instead of true.
   # config.use_transactional_fixtures = true
 
-  Capybara.default_wait_time = 30
+  Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 30).to_i
   wait_time = Capybara.default_wait_time
 
   config.before(:suite) do
@@ -92,7 +92,7 @@ RSpec.configure do |config|
   end
 
   config.before :all do
-    Capybara.default_wait_time = self.class.metadata[:wait] || wait_time
+    Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
   end
 
   config.after :all do
