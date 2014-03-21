@@ -6,6 +6,7 @@ module Echo
       def options_to_item_query(options={}, remove_spatial=false)
         query = options.dup.symbolize_keys
 
+        query.delete(:placename)
         load_freetext_query(query)
         and_query(query)
 
