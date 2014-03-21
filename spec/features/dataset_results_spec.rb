@@ -1,17 +1,16 @@
 require "spec_helper"
 
-describe "Dataset results", :reset => false do
-  before :all do
-    Capybara.reset_sessions!
+describe "Dataset results", reset: true do
+  before :each do
     visit "/search"
     # scrolling in these specs doesn't work unless the window is resized
     page.driver.resize_window(1000, 1000)
   end
 
-  after :each do
-    page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 0"
-    reset_search
-  end
+  #after :each do
+  #  page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 0"
+  #  reset_search
+  #end
 
   let(:ast_l1a_id) { 'C14758250-LPDAAC_ECS' }
   let(:airh2ccf_id) { 'C186815383-GSFCS4PA' }
