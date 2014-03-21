@@ -24,6 +24,4 @@ rspec.xml
 /.tmp
 /vagrant/.vagrant
 
-/fixtures/cassettes/*
-
 /config/database.yml
