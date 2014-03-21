@@ -18,6 +18,9 @@ else
   Capybara.default_driver = :webkit
 end
 
+# Avoid appending screenshot paths in CI environments, since it messes with repeat failure detection
+Capybara::Screenshot.append_screenshot_path = false if ENV["CAPYBARA_APPEND_SCREENSHOT_PATH"] == 'false'
+
 require 'fileutils'
 
 # Out-of-date assets hose specs and lead to confusing errors
