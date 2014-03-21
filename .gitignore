@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 .DS_Store
+rspec.xml
 
 # Ignore bundler config
 /.bundle
@@ -23,7 +24,4 @@
 /.tmp
 /vagrant/.vagrant
 
-/fixtures/cassettes/*
-
 /config/database.yml
-

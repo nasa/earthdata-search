@@ -29,6 +29,7 @@ ns.Map = do (window,
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
+      map.loadingLayers = 0
 
       @_buildLayerSwitcher()
       map.addLayer(new GranuleVisualizationsLayer())
@@ -163,7 +164,6 @@ ns.Map = do (window,
       @_rebuildLayers()
 
     _showDatasetSpatial: (dataset) =>
-      console.log dataset
       dataset = dataset.summaryData
 
       @_hideDatasetSpatial()
@@ -182,6 +182,7 @@ ns.Map = do (window,
     _showRectangle: (layer, points) -> L.rectangle(points, color: "#ff7800", weight: 1).addTo(layer)
     _showPoint:     (layer, points) -> L.marker(points...).addTo(layer)
     _showPolygon:   (layer, points) -> L.sphericalPolygon(points, color: "#ff7800", weight: 1).addTo(layer)
+
 
     _parseSpatial: (s) ->
       s = s[0] if s instanceof Array

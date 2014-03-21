@@ -5,7 +5,7 @@
 
 #require "spec_helper"
 #
-#describe "Browse thumbnails", reset: false, wait: 30 do
+#describe "Browse thumbnails", reset: false do
 #  before :all do
 #    Capybara.reset_sessions!
 #    visit "/search"

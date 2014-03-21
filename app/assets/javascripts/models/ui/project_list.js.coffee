@@ -29,8 +29,11 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     showDataQualitySummaryAndDownload: (datasets, action) =>
       accepted = true
       for dataset in datasets
-        if dataset.dqsModel.results().id && !dataset.dqsModel.results().accepted()
-          accepted = false
+        results = dataset.dqsModel.results()
+        if results?
+          for result in results
+            if result.id && !result.accepted()
+              accepted = false
 
       if accepted
         action()
@@ -88,6 +91,8 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       if project.hasDataset(dataset)
         project.removeDataset(dataset)
       else
+        # Force dataset to load DQS information
+        @datasetHasDQS(dataset)
         project.addDataset(dataset)
 
     _computeDatasetsToDownload: ->

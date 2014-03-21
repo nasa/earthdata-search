@@ -5,7 +5,7 @@
 
 require "spec_helper"
 
-describe "Dataset GIBS visualizations", reset: false, wait: 30 do
+describe "Dataset GIBS visualizations", reset: false do
 
   gibs_dataset_id = 'C1000000019-LANCEMODIS'
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'

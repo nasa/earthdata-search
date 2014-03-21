@@ -11,11 +11,9 @@ describe "Granule list", reset: false do
   before :all do
     Capybara.reset_sessions!
     visit "/search"
-    # scrolling in these specs doesn't work unless the window is resized
-    page.driver.resize_window(1000, 1000)
   end
 
-  context "for all datasets with granules", pq: true do
+  context "for all datasets with granules" do
     use_dataset 'C14758250-LPDAAC_ECS', 'ASTER L1A'
     hook_granule_results
 
@@ -31,10 +29,9 @@ describe "Granule list", reset: false do
       expect(granule_list).to have_link('Filter granules')
     end
 
-    it "TODO: Enable when EDSC-66 is merged"
-    #it "displays relevant data quality summaries" do
-    #  expect(granule_list).to have_link('read and accept')
-    #end
+    it "displays relevant data quality summaries" do
+      expect(granule_list).to have_link('read and accept')
+    end
 
     context "clicking on the dataset details button" do
       before :all do
@@ -98,18 +95,17 @@ describe "Granule list", reset: false do
     end
 
     context "clicking on a data quality summary" do
-      it "TODO: Enable when EDSC-66 is merged"
-    #  before :all do
-    #    granule_list.click_link('read and accept')
-    #  end
+      before :all do
+        granule_list.click_link('read and accept')
+      end
 
-    #  after :all do
-    #    find('div.modal').click_link('close')
-    #  end
+      after :all do
+        find('div.modal').click_link('close')
+      end
 
-    #  it "shows the data quality summary" do
-    #    expect(page).to have_content("Data Quality Summaries")
-    #  end
+      it "shows the data quality summary" do
+        expect(page).to have_content("Data Quality Summaries")
+      end
     end
   end
 
@@ -119,17 +115,7 @@ describe "Granule list", reset: false do
     context "clicking on a dataset result" do
       hook_granule_results(:each)
 
-      it "displays the first 20 granule results" do
-        expect(page).to have_css('#granule-list .panel-list-item', count: 20)
-      end
-
-      it "loads more granule results when the user scrolls to the bottom of the current list" do
-        expect(page).to have_css('#granule-list .panel-list-item', count: 20)
-        page.execute_script "$('#granule-list .master-overlay-content')[0].scrollTop = 10000"
-        expect(page).to have_css('#granule-list .panel-list-item', count: 39)
-      end
-
-      it "does not load additional results after all results have been loaded" do
+      it "displays the first granule results in a list that pages by 20" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 20)
         page.execute_script "$('#granule-list .master-overlay-content')[0].scrollTop = 10000"
         expect(page).to have_css('#granule-list .panel-list-item', count: 39)
@@ -158,7 +144,9 @@ describe "Granule list", reset: false do
     use_dataset 'C179002048-SEDAC', '2008 Natural Resource Management Index (NRMI)'
 
     context "clicking on a dataset result" do
-      hook_granule_results
+      before :all do
+        view_granule_results
+      end
 
       it "shows no granules" do
         expect(page).to have_no_css('#granule-list .panel-list-item')

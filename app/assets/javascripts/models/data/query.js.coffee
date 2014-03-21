@@ -111,7 +111,7 @@ ns.Query = do (ko,
       keywords = @keywords()?.trim()
       if keywords?.length > 0
         placename = @placename()
-        if placename? && placename.length > 0 && keywords.indexOf(placename) == 0
+        if placename? && placename.length > 0 && keywords.indexOf(placename) != -1
           keywords = keywords.replace(placename, '')
         params.free_text = keywords
 
@@ -119,8 +119,6 @@ ns.Query = do (ko,
         param = facet.param
         params[param] ||= []
         params[param].push(facet.term)
-
-      params.placename = placename if placename?.length > 0
 
       params.sort_key = @sortKey() if @sortKey()?
 

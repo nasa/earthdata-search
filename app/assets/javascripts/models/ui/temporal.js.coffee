@@ -148,7 +148,7 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string, 
     constructor: (@query) ->
       @applied = applied = @disposable(new TemporalCondition())
       @pending = pending = @disposable(new TemporalCondition())
-      @query.temporal(@applied)
+      @query.temporal(applied)
 
       # Clear temporal when switching types
       pending.isRecurring.subscribe @disposable(=> pending.clear())
