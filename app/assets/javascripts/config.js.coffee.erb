@@ -37,7 +37,7 @@
     hoverTimeoutMs: 500
     #baseQueryParams: visualizationDatasetParams
 
-  <% elsif Rails.env.production? %>
+  <% elsif Rails.env.production? || Rails.env.ops? || Rails.env.uat? || Rails.env.sit? %>
   # Production config
   exports =
     defaultAnimationDurationMs: 300
