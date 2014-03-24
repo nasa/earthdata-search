@@ -1,0 +1,86 @@
+.timeline {
+  height: 100px;
+  min-height: 100px;
+  position: relative;
+}
+
+.timeline-tools {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4em;
+  background-color: #000;
+  text-align: center;
+  height: 100%;
+
+  h1 {
+    font-size: .7em;
+    padding: .5em 0;
+    background-color: #151515;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  a {
+    display: block;
+    font-size: 2em;
+    color: #7a7a7a;
+    line-height: 1em;
+
+    &:hover {
+      color: #aaa;
+    }
+  }
+}
+
+.timeline-display {
+  background-color: #1a1a1a;
+  display: block;
+  position: absolute;
+  left:0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  text {
+    fill: #fff;
+  }
+
+}
+
+.timeline-timeline {
+  stroke: #a5a5a5;
+  stroke-width: 2;
+}
+
+.timeline-tick {
+  stroke: #3d3d3d;
+}
+
+.timeline-tick-crossing {
+  stroke: #1a1a1a;
+  fill: #fff;
+  stroke-width: 2;
+}
+
+.timeline-dataset {
+  font-size: 14px;
+}
+
+.timeline-display-top {
+  fill: #2b2b2b;
+}
+
+.timeline-axis-label {
+  font-size: 14px;
+}
+
+.timeline-axis-super-label {
+  font-weight: bold;
+}
+
+.timeline-axis-sub-label {
+  text-transform: uppercase;
+}

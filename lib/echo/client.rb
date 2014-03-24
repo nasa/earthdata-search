@@ -30,6 +30,16 @@ module Echo
       get("/catalog-rest/search_facet.json", options_to_item_query(options, true), token_header(token))
     end
 
+    def self.get_timeline(start_date, end_date, interval, options={}, token=nil)
+      params = {start_date: start_date, end_date: end_date, interval: interval}.merge(options)
+      get('/catalog-rest/echo_catalog/granules/timeline.json', params, token_header(token))
+      # Params:
+      # echo_collection_id[]=C189399410-GSFCS4PA
+      # start_date=1960-02-03T13%3A00%3A00
+      # end_date=2014-02-24T13%3A00%3A00
+      # interval=day
+    end
+
     def self.get_provider_holdings
       get("/catalog-rest/echo_catalog/provider_holdings.json")
     end
