@@ -75,6 +75,7 @@
   left: 0%;
 
   section {
+    height: 100%;
     width: 25%;
     float: left;
     position: relative;
@@ -165,8 +166,8 @@
 
 // Scrollable content area
 .master-overlay-content {
-  margin: 1em;
-  height: 100%;
+  padding: 0 1em;
+  height: 80%;
   overflow-y: scroll;
 }
 
