@@ -25,4 +25,18 @@ class UsersController < ApplicationController
 
     render json: nil, status: :ok
   end
+
+  def new
+  end
+
+  def create
+    if params[:user][:password] != params[:user][:password_confirmation]
+      render action: 'new'
+      return
+    else
+      params[:user].delete("password_confirmation")
+    end
+
+    response = Echo::Client.create_user({user: params[:user]})
+  end
 end

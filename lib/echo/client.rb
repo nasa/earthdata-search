@@ -9,7 +9,7 @@ module Echo
   class Client
     include Echo::QueryTransformations
 
-    CATALOG_URL="https://api.echo.nasa.gov"
+    CATALOG_URL="https://testbed.echo.nasa.gov"
 
     def self.get_datasets(options={}, token=nil)
       get('/catalog-rest/echo_catalog/datasets.json', options_to_item_query(options), token_header(token))
@@ -58,6 +58,10 @@ module Echo
         }
       }
       Echo::Response.new(post("/echo-rest/tokens.json", token.to_json))
+    end
+
+    def self.create_user(user)
+      post('/echo-rest/users.json', user.to_json)
     end
 
     def self.username_recall(params)

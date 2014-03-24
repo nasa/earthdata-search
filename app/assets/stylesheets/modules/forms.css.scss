@@ -46,3 +46,16 @@ fieldset {
     width: 300px;
   }
 }
+
+.new-account-form {
+
+  label {
+    display: inline-block;
+    min-width: 200px;
+  }
+
+  .field-error {
+    box-shadow: 0 0 5px #c0392b;
+    border-color: #c0392b;
+  }
+}

@@ -19,6 +19,29 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
       @loginCallback = null
       @_loadStateFromCookie()
 
+      # account fields
+      @usernameError = ko.observable(false)
+      @passwordError = ko.observable(false)
+      @emailError = ko.observable(false)
+      @passwordConfirmation = ko.observable("")
+      @passwordConfirmationError = ko.observable(false)
+      @firstName = ko.observable("")
+      @firstNameError = ko.observable(false)
+      @lastName = ko.observable("")
+      @lastNameError = ko.observable(false)
+      @organizationName = ko.observable("")
+      @organizationNameError = ko.observable(false)
+      @domain = ko.observable("")
+      @domainError = ko.observable(false)
+      @userType = ko.observable("")
+      @userTypeError = ko.observable(false)
+      @primaryStudyArea = ko.observable("")
+      @primaryStudyAreaError = ko.observable(false)
+      @country = ko.observable("")
+      @countryError = ko.observable(false)
+      @region = ko.computed =>
+        if @country() == "United States" then "USA" else "INTERNATIONAL"
+
     initiateLogin: =>
       @errors("")
       @message("")
@@ -151,6 +174,105 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
           action()
 
         @needsLogin(true)
+
+    createAccount: =>
+      @_validateNewAccountForm()
+      # if @errors()?.length == 0
+      xhr = doPost '/users', @_buildUserData(), (response) =>
+        @errors("The password for #{@username()} has been reset.  Information on logging in has been sent to #{@email()}.")
+      xhr.fail(@_onCreateFail)
+
+    _onCreateFail: (response, type, reason) =>
+      console.log response.responseText
+      # display errors
+      # parse error text and highlight fields with errors
+
+
+    _buildUserData: =>
+      user =
+        username: @username()
+        first_name: @firstName()
+        last_name: @lastName()
+        password: @password()
+        password_confirmation: @passwordConfirmation()
+        email: @email()
+        user_domain: @domain()
+        organization_name: @organizationName()
+        user_type: @userType()
+        primary_study_area: @primaryStudyArea()
+        # This isn't working as expected, I am getting a 500 error from echo-rest
+        addresses: [ {country: @country()} ]
+        user_region: @region()
+        # Should this be true?
+        opt_in: false
+
+      data =
+        user: user
+
+
+    _validateNewAccountForm: =>
+      @_resetErrors()
+      errors = []
+      unless @username()?.length > 0
+        errors.push "Please provide username"
+        @usernameError(true)
+
+      unless @password()?.length > 0
+        errors.push "Please provide password"
+        @passwordError(true)
+
+      unless @password() == @passwordConfirmation()
+        errors.push "Password must match confirmation"
+        @passwordError(true)
+        @passwordConfirmationError(true)
+
+      unless @firstName()?.length > 0
+        errors.push "Please provide first name"
+        @firstNameError(true)
+
+      unless @lastName()?.length > 0
+        errors.push "Please provide last name"
+        @lastNameError(true)
+
+      unless @email()?.length > 0
+        errors.push "Please provide email"
+        @emailError(true)
+
+      unless @domain()?.length > 0
+        errors.push "Please select domain"
+        @domainError(true)
+
+      unless @organizationName()?.length > 0
+        errors.push "Please provide organization name"
+        @organizationNameError(true)
+
+      unless @userType()?.length > 0
+        errors.push "Please select type of user"
+        @userTypeError(true)
+
+      unless @primaryStudyArea()?.length > 0
+        errors.push "Please select primary study area"
+        @primaryStudyAreaError(true)
+
+      unless @country()?.length > 0
+        errors.push "Please select country"
+        @countryError(true)
+
+      @errors(errors.join(", "))
+
+    _resetErrors: =>
+      @emailError(false)
+      @usernameError(false)
+      @passwordError(false)
+      @passwordConfirmationError(false)
+      @firstNameError(false)
+      @lastNameError(false)
+      @organizationNameError(false)
+      @domainError(false)
+      @userTypeError(false)
+      @primaryStudyAreaError(false)
+      @countryError(false)
+
 
 
   exports = User
