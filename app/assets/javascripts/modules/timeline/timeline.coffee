@@ -1,4 +1,4 @@
-do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.string, dateUtil=@edsc.util.date) ->
+do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@edsc.util.string, dateUtil=@edsc.util.date) ->
   # Height for the top area, where arrows are drawn for date selection
   TOP_HEIGHT = 26
 
@@ -34,7 +34,7 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
 
       @root.append(@_createDisplay())
 
-      @end = new Date() - 0
+      @end = config.present()
       @start = @end - MS_PER_MONTH
       @_updateTimeline()
 
@@ -97,15 +97,14 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
 
       @tlDatasets.appendChild(el)
 
-      if @tlDatasets.children.length == @_datasets.length
+      if @tlDatasets.childNodes.length == @_datasets.length
         @root.find(@scope('.tools')).removeClass('busy')
       null
 
 
     datasets: (datasets) ->
-      datasets = (dataset for dataset in datasets when dataset.has_granules())
       if datasets?.length > 0
-        @_datasets = datasets[0...3]
+        @_datasets = datasets
         @_updateDatasetNames()
         @tlDatasets.innerHTML = ''
         @show()
@@ -251,16 +250,12 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
 
       g
 
-
     _setHeight: ->
       if @_datasets?.length > 0
         datasetsHeight = @_datasets.length * DATASET_HEIGHT + 2 * DATASET_PADDING
         @_translate(@axis, 0, TOP_HEIGHT + datasetsHeight)
         @root.height(TOP_HEIGHT + datasetsHeight + AXIS_HEIGHT)
 
-      $('.master-overlay').masterOverlay('contentHeightChanged')
-
-
-
+      $('.master-overlay').masterOverlay().masterOverlay('contentHeightChanged')
 
   plugin.create('timeline', Timeline)

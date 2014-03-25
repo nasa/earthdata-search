@@ -23,9 +23,8 @@ ns.GranuleTimeline = do (ko
       delete params.sort_key
       params
 
-    _computeSearchResponse: (current, callback) ->
+    _computeSearchResponse: (current, callback) =>
       $('#timeline').timeline('loadstart', @dataset.id())
-      @isLoaded(false)
       @_load(@params(), current, callback)
 
     _toResults: (data, current, params) ->
@@ -48,8 +47,13 @@ ns.GranuleTimeline = do (ko
       else if  @projectList.visible()
         result = @projectList.project.datasets()
 
+      # Pick only the first 3 datasets with granules
+      result = (dataset for dataset in result when dataset.has_granules())
+      result = result[0...3]
+
       currentTimelines = @_datasetsToTimelines
       newTimelines = {}
+
       for dataset in result
         id = dataset.id()
         if currentTimelines[id]
@@ -66,7 +70,7 @@ ns.GranuleTimeline = do (ko
 
       $timeline = $('#timeline')
       $timeline.timeline('datasets', result)
-      for data in result when data.isLoaded()
+      for own key, data of newTimelines when !data.isLoading()
         $timeline.timeline('data', data.dataset.id(), data.results())
 
       result

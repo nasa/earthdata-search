@@ -12,8 +12,8 @@ module Helpers
       end
     end
 
-    def view_granule_results
-      first_dataset_result.click
+    def view_granule_results(item=first_dataset_result)
+      item.click
       sleep(1) # Wait for sliding transitions
       wait_for_xhr
       wait_for_visualization_load
