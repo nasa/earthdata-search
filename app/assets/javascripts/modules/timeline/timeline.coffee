@@ -93,6 +93,7 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
 
 
     datasets: (datasets) ->
+      datasets = (dataset for dataset in datasets when dataset.has_granules())
       if datasets?.length > 0
         @_datasets = datasets[0...3]
         @_updateDatasetNames()
