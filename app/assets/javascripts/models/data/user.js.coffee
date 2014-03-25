@@ -177,16 +177,29 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
 
     createAccount: =>
       @_validateNewAccountForm()
-      # if @errors()?.length == 0
-      xhr = doPost '/users', @_buildUserData(), (response) =>
-        @errors("The password for #{@username()} has been reset.  Information on logging in has been sent to #{@email()}.")
-      xhr.fail(@_onCreateFail)
+      if @errors()?.length == 0
+        xhr = doPost '/users', @_buildUserData(), (response) =>
+          @login()
+        xhr.fail(@_onCreateFail)
 
     _onCreateFail: (response, type, reason) =>
+      server_error = false
       console.log response.responseText
-      # display errors
-      # parse error text and highlight fields with errors
+      try
+        errors = JSON.parse(response.responseText)?.errors
 
+        for error in errors
+          if error.indexOf('Username') >= 0
+            @usernameError(true)
+          if error.indexOf('Password') >= 0
+            @passwordError(true)
+          if error.indexOf('Email') >= 0
+            @emailError(true)
+
+        @errors(errors)
+      catch
+        server_error = true
+      @errors("An error occurred when creating account.  Please retry later.") if server_error
 
     _buildUserData: =>
       user =
@@ -200,8 +213,8 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
         organization_name: @organizationName()
         user_type: @userType()
         primary_study_area: @primaryStudyArea()
-        # This isn't working as expected, I am getting a 500 error from echo-rest
-        addresses: [ {country: @country()} ]
+        # Country needs to be converted to addresses in controller
+        country: @country()
         user_region: @region()
         # Should this be true?
         opt_in: false
@@ -272,7 +285,5 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
       @userTypeError(false)
       @primaryStudyAreaError(false)
       @countryError(false)
-
-
 
   exports = User
