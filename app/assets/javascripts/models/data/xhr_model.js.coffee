@@ -21,7 +21,7 @@ ns.XhrModel = do (ko
       @hasNextPage = ko.observable(true)
       @hitsEstimated = ko.observable(false)
 
-    search: (params=@query.params(), callback=null) =>
+    search: (params=@params(), callback=null) =>
       params.page_num = @page = 1
       @_loadAndSet params, [], callback
 
@@ -40,7 +40,7 @@ ns.XhrModel = do (ko
 
     _computeSearchResponse: (current, callback) ->
       if @query?
-        params = @query.params()
+        params = @params()
         params.page_num = @page = 1
         @_load(params, current, callback)
 

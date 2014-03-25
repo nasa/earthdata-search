@@ -59,6 +59,10 @@
   stroke: #3d3d3d;
 }
 
+.timeline-data rect {
+  fill: #25c85b;
+}
+
 .timeline-tick-crossing {
   stroke: #1a1a1a;
   fill: #fff;
@@ -67,6 +71,7 @@
 
 .timeline-dataset {
   font-size: 14px;
+  font-weight: bold;
 }
 
 .timeline-display-top {

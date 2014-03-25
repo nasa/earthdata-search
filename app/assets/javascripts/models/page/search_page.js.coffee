@@ -7,6 +7,7 @@
 #= require models/ui/temporal
 #= require models/ui/datasets_list
 #= require models/ui/project_list
+#= require models/ui/granule_timeline
 
 models = @edsc.models
 data = models.data
@@ -25,7 +26,8 @@ ns.SearchPage = do (ko,
                     SpatialTypeModel = ui.SpatialType
                     TemporalModel = ui.Temporal
                     DatasetsListModel = ui.DatasetsList
-                    ProjectListModel = ui.ProjectList) ->
+                    ProjectListModel = ui.ProjectList
+                    GranuleTimelineModel = ui.GranuleTimeline) ->
 
   class SearchPage
     constructor: ->
@@ -59,6 +61,12 @@ ns.SearchPage = do (ko,
         return error if error.indexOf('ORA-') != -1
       null
 
-  setCurrent(new SearchPage())
+  current = new SearchPage()
+  setCurrent(current)
+
+  $(document).ready ->
+    $('.timeline').timeline()
+    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.project)
+    console.log $('.timeline').data('timeline')
 
   exports = SearchPage

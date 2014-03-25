@@ -1,4 +1,4 @@
-do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.string, date=@edsc.util.date) ->
+do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.string, dateUtil=@edsc.util.date) ->
   # Height for the top area, where arrows are drawn for date selection
   TOP_HEIGHT = 26
 
@@ -28,7 +28,6 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
 
   MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-
   class Timeline extends plugin.Base
     constructor: (root, namespace, options={}) ->
       super(root, namespace, options)
@@ -49,13 +48,53 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
     hide: ->
       @root.hide()
 
+    params: ->
+      start_date: new Date(@start).toISOString()
+      end_date: new Date(@end).toISOString()
+      interval: 'hour'
+
+    data: (id, intervals) ->
+      index = -1
+      for dataset, i in @_datasets
+        if dataset.id() == id
+          index = i
+          break
+      return if index == -1
+
+      match = @svg.getElementsByClassName(id)
+      el = null
+      if match.length > 0
+        el = match[0]
+        el.innerHTML = ''
+        el.parentNode.removeChild(el)
+      else
+        el = document.createElementNS(SVG_NS, 'g')
+        el.setAttribute('class', "#{id} #{@scope('data')}")
+        @_translate(el, 0, DATASET_HEIGHT * index) if index > 0
+
+      for [start, end, _] in intervals
+        startPos = @timeToPosition(start * 1000)
+        endPos = @timeToPosition(end * 1000)
+        rect = document.createElementNS(SVG_NS, 'rect')
+        rect.setAttribute('x', startPos)
+        rect.setAttribute('y', 5)
+        rect.setAttribute('width', endPos - startPos)
+        rect.setAttribute('height', DATASET_HEIGHT - 7)
+        rect.setAttribute('rx', 10)
+        rect.setAttribute('ry', 10)
+        el.appendChild(rect)
+
+      @tlDatasets.appendChild(el)
+      null
+
+
     datasets: (datasets) ->
       if datasets?
-        @datasets = datasets[0...3]
+        @_datasets = datasets[0...3]
         @_setHeight()
         @_updateDatasetNames()
 
-      @datasets
+      @_datasets
 
     _translate: (el, x, y) ->
       el.setAttribute('transform', "translate(#{x}, #{y})")
@@ -122,7 +161,7 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
       line
 
     _updateDatasetNames: ->
-      datasets = @datasets
+      datasets = @_datasets
       overlay = @olDatasets
       overlay.innerHTML = ''
       y = 0
@@ -196,9 +235,9 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
 
 
     _setHeight: ->
-      if @datasets?
+      if @_datasets?
         @show()
-        datasetsHeight = @datasets.length * DATASET_HEIGHT + 2 * DATASET_PADDING
+        datasetsHeight = @_datasets.length * DATASET_HEIGHT + 2 * DATASET_PADDING
         @_translate(@axis, 0, TOP_HEIGHT + datasetsHeight)
         @root.height(TOP_HEIGHT + datasetsHeight + AXIS_HEIGHT)
 
@@ -206,6 +245,3 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
         @hide()
 
   plugin.create('timeline', Timeline)
-
-  $(document).ready ->
-    $('.timeline').timeline()
