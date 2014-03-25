@@ -21,7 +21,7 @@ ns.XhrModel = do (ko
       @hasNextPage = ko.observable(true)
       @hitsEstimated = ko.observable(false)
 
-    search: (params=@query.params(), callback=null) =>
+    search: (params=@params(), callback=null) =>
       params.page_num = @page = 1
       @_loadAndSet params, [], callback
 
@@ -36,11 +36,10 @@ ns.XhrModel = do (ko
     abort: ->
       if @currentRequest? && @currentRequest.readystate != 4
         @currentRequest.abort()
-        console.log "Aborted (#{@pendingRequestId}): #{@path}"
 
     _computeSearchResponse: (current, callback) ->
       if @query?
-        params = @query.params()
+        params = @params()
         params.page_num = @page = 1
         @_load(params, current, callback)
 
@@ -53,7 +52,8 @@ ns.XhrModel = do (ko
       @abort()
       requestId = ++@pendingRequestId
       @isLoading(@pendingRequestId != @completedRequestId)
-      console.log("Request (#{requestId}): #{@path}?#{$.param(params)}")
+      url = "#{@path}?#{$.param(params)}"
+      console.log("Request (#{requestId}): #{url}")
       start = new Date()
 
       @currentRequest = xhr = getJSON @path, params, (data, status, xhr) =>
@@ -65,6 +65,7 @@ ns.XhrModel = do (ko
           @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
           @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
           #console.log("Response: #{@path}", requestId, params, data)
+          console.log("Complete (#{requestId}): #{url}")
           results = @_toResults(data, current, params)
 
           @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length ? 0))
@@ -75,7 +76,9 @@ ns.XhrModel = do (ko
         else
           console.log("Rejected out-of-sequence request: #{@path}", requestId, params, data)
         @isLoading(@pendingRequestId != @completedRequestId)
+
       xhr.fail (response, type, reason) =>
+        console.log("Fail (#{requestId}) [#{reason}]: #{url}")
         @currentRequest = null
         if requestId > @completedRequestId
           @completedRequestId = requestId

@@ -322,7 +322,7 @@
 
 </div>
 
-<% content_for :javascript do %>
+<% content_for :header do %>
 <div id="login-modal" data-bind="showModal: user.needsLogin" class="modal" role="dialog" aria-labelledby="EDSC Login" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -425,4 +425,9 @@
    <input id="data-access-project" name="project" type="hidden">
   </div>
 </form>
+<% end %>
+
+
+<% content_for :footer do %>
+  <%= render partial: 'timeline' %>
 <% end %>

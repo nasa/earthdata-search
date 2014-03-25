@@ -63,20 +63,26 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @root.find(@scope('.main-content'))
 
     contentHeightChanged: =>
-      content = @_content().find(@scope('.content'))
       # When the window is first loaded or later resized, update the master overlay content
       # boxes to have a height that stretches to the bottom of their parent.  It would
       # be awesome to do this in CSS, but I don't know that it's possible without
       # even uglier results
-      main_height = $('.main-content').height()
-      for div in content
-        $(div).height(main_height - $(div).offset().top - 40)
+      # PQ: I still don't quite understand why we need to set the padding here as opposed to
+      # using CSS.  It seems like box-sizing: border-box should allow us to use CSS-based padding
+      # and have the height work, but it doesn't.
+      main = $('.main-content')
+      windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+      height = windowHeight - main.position().top - $('body > footer').outerHeight()
+      main.height(height)
 
-      secondary_content = @root.find('.master-overlay-secondary-content').find(".master-overlay-content")
-      secondary_content.height(main_height - $(secondary_content).offset().top - 90) if secondary_content.offset()
+      for div in @root.find(@scope('.content'))
+        $div = $(div)
+        $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 10, 10))
 
-      parent_content = @root.find('.master-overlay-parent').find(".master-overlay-content")
-      parent_content.height(main_height - $(parent_content).offset().top - 40) if parent_content.offset()
+      tabPaneHeight = @root.find('.tab-pane.active').find(@scope('.content')).height()
+      for div in @root.find('.tab-pane:not(.active)').find(@scope('.content'))
+        $(div).height(tabPaneHeight)
+      null
 
   $document = $(document)
 

@@ -30,6 +30,10 @@ module Echo
       get("/catalog-rest/search_facet.json", options_to_item_query(options, true), token_header(token))
     end
 
+    def self.get_timeline(options={}, token=nil)
+      get('/catalog-rest/echo_catalog/granules/timeline.json', options, token_header(token))
+    end
+
     def self.get_provider_holdings
       get("/catalog-rest/echo_catalog/provider_holdings.json")
     end
