@@ -44,8 +44,7 @@ describe "Login", reset: false do
 
     it "logs the user out" do
       click_link 'edsc'
-      # Do this in Javascript because of capybara clickfailed bug
-      page.execute_script("$('.dropdown-menu .dropdown-link-logout').click()")
+      click_logout
 
       script = "window.edsc.models.page.current.user.isLoggedIn()"
       response = page.evaluate_script(script)

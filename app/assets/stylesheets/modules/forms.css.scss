@@ -47,8 +47,13 @@ fieldset {
   }
 }
 
+.accounts {
+  max-width: 1000px;
+  margin: 1em auto;
+}
+
 .new-account-form {
-  margin-bottom: 33px;
+  margin-bottom: 43px;
 
   label {
     display: inline-block;
