@@ -12,7 +12,8 @@
   <!-- ko ifnot: isLoggedIn -->
   <form data-bind="submit: createAccount" class="new-account-form">
     <fieldset>
-      <legend>Create new account</legend>
+      <h3>Create new user account</h3>
+      <h5>All fields are required</h5>
 
       <!-- ko if: errors() -->
       <span class="error" data-bind="text: errors()"></span>
@@ -107,9 +108,9 @@
   </form>
   <!-- /ko -->
   <!-- ko if: isLoggedIn -->
-  <div>
+  <div class="confirmation">
     <p>
-      User account <span data-bind="text: name"></span> has been created and you have been logged in.
+      User account <strong><span data-bind="text: name"></span></strong> has been created and you have been logged in.
     </p>
     <p>
       <a href="/search">Return to search</a>

@@ -48,6 +48,7 @@ fieldset {
 }
 
 .new-account-form {
+  margin-bottom: 33px;
 
   label {
     display: inline-block;
@@ -58,4 +59,11 @@ fieldset {
     box-shadow: 0 0 5px #c0392b;
     border-color: #c0392b;
   }
+}
+
+.confirmation {
+  @include linear-gradient(#fff, #f3f3f3);
+  border-radius: 5px;
+  padding: 1em;
+  border-color: #e3e3e3;
 }
