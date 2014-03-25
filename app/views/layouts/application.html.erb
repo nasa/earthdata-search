@@ -17,6 +17,7 @@
 </head>
 <body class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
+    <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
       <h1><a class="ir" href="/search">Earthdata Search</a></h1>
       <div class="toolbar-content">
@@ -28,6 +29,7 @@
     </section>
     </div>
     <footer>
+      <%= yield :footer %>
       <div class="footer-content">
         <p><span class="version">v <strong>0.5.1</strong></span> • <strong>NASA Official:</strong> Kevin Murphy • <span class="nasa-links"><a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> • <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> • <a href="http://www.usa.gov">USA.gov</a> • <a href="http://www.usa.gov">ExpectMore.gov</a></span></p>
       </div>

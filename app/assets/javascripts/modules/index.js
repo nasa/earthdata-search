@@ -1,4 +1,3 @@
-//= require modules/doc_example
 //= require modules/master_overlay
 //= require modules/toolbar
 //= require modules/help
@@ -10,3 +9,4 @@
 //= require modules/button_effects
 //= require modules/login
 //= require modules/granule_filters
+//= require modules/timeline/index

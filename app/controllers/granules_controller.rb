@@ -15,6 +15,11 @@ class GranulesController < ApplicationController
     end
   end
 
+  def timeline
+    catalog_response = Echo::Client.get_timeline(request.query_parameters, token)
+    respond_with(catalog_response.body, status: catalog_response.status)
+  end
+
   class GranuleUrlStreamer
     def initialize(params, token)
       @params = params

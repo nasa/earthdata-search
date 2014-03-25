@@ -14,7 +14,8 @@ ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
         @datasets.loadNextPage(@query.params())
 
     showDatasetDetails: (dataset, event=null) =>
-      @datasets.showDataset(dataset)
+      @datasets.showDataset dataset, ->
+        $('.master-overlay').masterOverlay('contentHeightChanged')
 
     focusDataset: (dataset, event=null) =>
       return true if $(event?.target).closest('a').length > 0

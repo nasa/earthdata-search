@@ -30,7 +30,7 @@ ns.Datasets = do (ko
         dataset.dispose() for dataset in current
         newItems
 
-    showDataset: (dataset) =>
+    showDataset: (dataset, callback) =>
       id = dataset.id()
 
       path = "/datasets/#{id}.json"
@@ -41,8 +41,7 @@ ns.Datasets = do (ko
         details.summaryData = dataset
         @details(details)
         @detailsLoading(false)
-        $content = $('#dataset-information')
-        $content.height($content.parents('.main-content').height() - $content.offset().top - 40)
+        callback?(details)
 
     _computeVisibleDatasets: =>
       dataset for dataset in @results() when dataset.visible()

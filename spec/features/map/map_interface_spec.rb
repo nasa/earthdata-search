@@ -33,7 +33,7 @@ describe "Map interface" do
         if src =~ /TILEROW=0&TILECOL=0/
           # For the upper-left tile
           style = img['style']
-          expect(style).to match (/-440px, -115px/) # In upper left position
+          expect(style).to match (/-440px, -163px/) # In upper left position
         end
       end
     end
