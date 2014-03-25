@@ -76,7 +76,13 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       main.height(height)
 
       for div in @root.find(@scope('.content'))
-        $(div).height(height - $(div).position().top - 10)
+        $div = $(div)
+        $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 10, 10))
+
+      tabPaneHeight = @root.find('.tab-pane.active').find(@scope('.content')).height()
+      for div in @root.find('.tab-pane:not(.active)').find(@scope('.content'))
+        $(div).height(tabPaneHeight)
+      null
 
   $document = $(document)
 
