@@ -2,6 +2,11 @@
   height: 100px;
   min-height: 100px;
   position: relative;
+
+  .busy {
+    background-position-y: bottom;
+    padding: 0;
+  }
 }
 
 .timeline-tools {

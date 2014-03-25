@@ -57,6 +57,13 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
       end_date: new Date(@end).toISOString()
       interval: 'hour'
 
+
+    loadstart: (id) ->
+      @root.find(@scope('.tools')).addClass('busy')
+      match = @svg.getElementsByClassName(id)
+      if match.length > 0
+        match[0].innerHTML = ''
+
     data: (id, intervals) ->
       index = -1
       for dataset, i in @_datasets
@@ -89,6 +96,9 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
         el.appendChild(rect)
 
       @tlDatasets.appendChild(el)
+
+      if @tlDatasets.children.length == @_datasets.length
+        @root.find(@scope('.tools')).removeClass('busy')
       null
 
 
@@ -97,6 +107,7 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
       if datasets?.length > 0
         @_datasets = datasets[0...3]
         @_updateDatasetNames()
+        @tlDatasets.innerHTML = ''
         @show()
       else
         @hide()

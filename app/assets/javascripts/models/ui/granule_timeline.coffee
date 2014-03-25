@@ -24,6 +24,8 @@ ns.GranuleTimeline = do (ko
       params
 
     _computeSearchResponse: (current, callback) ->
+      $('#timeline').timeline('loadstart', @dataset.id())
+      @isLoaded(false)
       @_load(@params(), current, callback)
 
     _toResults: (data, current, params) ->
@@ -61,7 +63,11 @@ ns.GranuleTimeline = do (ko
         v.dispose()
 
       @_datasetsToTimelines = newTimelines
-      $('#timeline').timeline('datasets', result)
+
+      $timeline = $('#timeline')
+      $timeline.timeline('datasets', result)
+      for data in result when data.isLoaded()
+        $timeline.timeline('data', data.dataset.id(), data.results())
 
       result
 
