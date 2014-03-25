@@ -21,6 +21,9 @@ module VCR
             cassette = 'google'
           elsif uri.start_with? 'http://ogre.adc4gis.com'
             cassette = 'ogre'
+          elsif request.uri.include? '/echo-rest/users.json'
+            cassette = 'echo-rest-users'
+            opts[:record] = :none
           elsif request.uri.include? '/catalog-rest/'
             cassette = 'catalog-rest'
           elsif request.uri.include? '/echo-rest/'

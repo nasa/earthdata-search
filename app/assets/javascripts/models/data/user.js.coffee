@@ -273,6 +273,24 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
 
       @errors(errors.join(", "))
 
+    clearAccountForm: =>
+      @errors("")
+      @_resetErrors()
+      @_resetFields()
+
+    _resetFields: =>
+      @email("")
+      @username("")
+      @password("")
+      @passwordConfirmation("")
+      @firstName("")
+      @lastName("")
+      @organizationName("")
+      @domain("")
+      @userType("")
+      @primaryStudyArea("")
+      @country("")
+
     _resetErrors: =>
       @emailError(false)
       @usernameError(false)

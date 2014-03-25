@@ -9,7 +9,7 @@ module Echo
   class Client
     include Echo::QueryTransformations
 
-    CATALOG_URL = ENV['ECHO_ENDPOINT'] || "https://api.echo.nasa.gov"
+    CATALOG_URL = ENV['ECHO_ENDPOINT'] || "https://testbed.echo.nasa.gov"
 
     def self.get_datasets(options={}, token=nil)
       get('/catalog-rest/echo_catalog/datasets.json', options_to_item_query(options), token_header(token))
