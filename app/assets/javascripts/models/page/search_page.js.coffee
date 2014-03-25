@@ -66,7 +66,6 @@ ns.SearchPage = do (ko,
 
   $(document).ready ->
     $('.timeline').timeline()
-    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.project)
-    console.log $('.timeline').data('timeline')
+    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.ui.projectList)
 
   exports = SearchPage

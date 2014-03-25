@@ -44,9 +44,13 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
 
     show: ->
       @root.show()
+      @_setHeight()
+      null
 
     hide: ->
       @root.hide()
+      @_setHeight()
+      null
 
     params: ->
       start_date: new Date(@start).toISOString()
@@ -89,10 +93,12 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
 
 
     datasets: (datasets) ->
-      if datasets?
+      if datasets?.length > 0
         @_datasets = datasets[0...3]
-        @_setHeight()
         @_updateDatasetNames()
+        @show()
+      else
+        @hide()
 
       @_datasets
 
@@ -235,13 +241,14 @@ do (document, window, $=jQuery, plugin=@edsc.util.plugin, string=@edsc.util.stri
 
 
     _setHeight: ->
-      if @_datasets?
-        @show()
+      if @_datasets?.length > 0
         datasetsHeight = @_datasets.length * DATASET_HEIGHT + 2 * DATASET_PADDING
         @_translate(@axis, 0, TOP_HEIGHT + datasetsHeight)
         @root.height(TOP_HEIGHT + datasetsHeight + AXIS_HEIGHT)
 
-      else
-        @hide()
+      $('.master-overlay').masterOverlay('contentHeightChanged')
+
+
+
 
   plugin.create('timeline', Timeline)

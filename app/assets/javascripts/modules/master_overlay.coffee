@@ -70,9 +70,13 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       # PQ: I still don't quite understand why we need to set the padding here as opposed to
       # using CSS.  It seems like box-sizing: border-box should allow us to use CSS-based padding
       # and have the height work, but it doesn't.
-      main_height = @root.find(@scope('.main')).outerHeight()
+      main = $('.main-content')
+      windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+      height = windowHeight - main.position().top - $('body > footer').outerHeight()
+      main.height(height)
+
       for div in @root.find(@scope('.content'))
-        $(div).height(main_height - $(div).position().top - 10)
+        $(div).height(height - $(div).position().top - 10)
 
   $document = $(document)
 

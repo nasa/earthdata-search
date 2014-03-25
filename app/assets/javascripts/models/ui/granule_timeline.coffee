@@ -32,7 +32,7 @@ ns.GranuleTimeline = do (ko
       intervals
 
   class GranuleTimeline extends KnockoutModel
-    constructor: (@datasetsList, @project) ->
+    constructor: (@datasetsList, @projectList) ->
       @_datasetsToTimelines = {}
       @datasets = ko.computed(@_computeDatasets)
       @interval = ko.observable($('#timeline').timeline('params'))
@@ -40,7 +40,11 @@ ns.GranuleTimeline = do (ko
     _computeDatasets: =>
       interval = @interval
       focused = @datasetsList.focused()
-      result = if focused? then [focused] else @project.datasets()
+      result = []
+      if focused?
+        result = [focused.dataset]
+      else if  @projectList.visible()
+        result = @projectList.project.datasets()
 
       currentTimelines = @_datasetsToTimelines
       newTimelines = {}
