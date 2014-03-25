@@ -115,6 +115,9 @@ describe "Shapefile search", reset: false do
     end
 
     after :all do
+      within '#map' do
+        click_link "Cancel"
+      end
       clear_shapefile
       clear_spatial
     end

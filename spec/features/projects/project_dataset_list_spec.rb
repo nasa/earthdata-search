@@ -8,7 +8,7 @@ describe "Project dataset list", reset: false do
 
   before(:each) do
     first_dataset_result.click_link "Add dataset to the current project"
-    second_dataset_result.click_link "Add dataset to the current project"
+    nth_dataset_result(10).click_link "Add dataset to the current project"
 
     dataset_results.click_link "View Project"
   end
@@ -74,7 +74,7 @@ describe "Project dataset list", reset: false do
 
     it "keeps the selected dataset highlighted when returning to the project" do
       click_link "Back to Dataset Search"
-
+      sleep(1) # Wait for sliding transition
       dataset_results.click_link "View Project"
       expect(project_overview).to have_link('Hide dataset', count: 1)
     end

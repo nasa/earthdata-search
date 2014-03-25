@@ -24,7 +24,7 @@
                       <span data-bind="text: term" ></span>
                       <i class="fa fa-times"></i>
                     </span>
-                    <span data-bind="if: $parent.selectedValues().indexOf($data) < $parent.selectedValues().length - 1"> or </span>
+                    <span data-bind="if: $parent.selectedValues().indexOf($data) < $parent.selectedValues().length - 1"> and </span>
                   <!-- /ko -->
                 </dd>
           <!-- /ko -->
@@ -42,7 +42,7 @@
       </div>
       <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed()}">
         <div class="panel-body facets">
-          <!-- ko foreach: values() -->
+          <!-- ko foreach: values -->
           <p class="facets-item" data-bind="click: $root.datasetFacets.toggleFacet, css: {selected: isSelected}">
             <span data-bind="text: term"></span>
             (<span data-bind="text: count"></span>)

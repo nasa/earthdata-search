@@ -11,8 +11,14 @@ module Helpers
     end
 
     def reset_visible_datasets
-      page.evaluate_script('edsc.models.page.current.datasets._visibleDatasetIds([])')
-      page.evaluate_script('edsc.models.page.current.datasets.allDatasetsVisible(false)')
+      page.evaluate_script("""
+        var i, len, visible = edsc.models.data.Dataset.visible();
+        for (i = 0, len = visible.length; i < len; i++) {
+          visible[i].visible(false);
+        }
+        edsc.models.page.current.datasets.allDatasetsVisible(false)
+        null
+      """)
     end
 
     def have_visible_facets

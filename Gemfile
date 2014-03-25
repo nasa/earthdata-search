@@ -20,8 +20,11 @@ group :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'capybara'
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
+  #gem 'poltergeist'
   gem 'capybara-screenshot'
+  gem 'rspec_junit_formatter'
+  gem 'fuubar'
 end
 
 group :development do
@@ -67,6 +70,9 @@ group :assets, :test do
   gem 'coffee-script', :require => 'coffee_script'
   gem 'coffee-rails', '~> 4.0.0'
 
+  gem 'therubyracer', :require => 'v8'
+  gem 'libv8', '~> 3.11.8.3'
+  gem 'headless'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   #gem 'therubyracer', :platforms => :ruby
 

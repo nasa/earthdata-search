@@ -1,6 +1,6 @@
-ns = window.edsc.map
+ns = edsc.map
 
-ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coordinate) ->
+ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coordinate, config=@edsc.config) ->
 
   # Converts the given latlngs to L.latLng objects and ensures they're
   # normalized on the expected interval, [-180, 180]
@@ -214,8 +214,9 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
       @setLatLngs(latlngs)
 
     setLatLngs: (latlngs) ->
-      if latlngs[0] && Array.isArray(latlngs[0])
+      if latlngs[0] && Array.isArray(latlngs[0]) && latlngs[0].length > 2
         # Don't deal with holes
+        console.warn "Polygon with hole detected.  Ignoring." if config.warn
         latlngs = latlngs[0]
       latlngs = (L.latLng(latlng) for latlng in latlngs)
 

@@ -1,18 +1,21 @@
 RSpec::Matchers.define :filter_granules_from do |expected|
   match do |selector|
-    click_button "granule-filters-submit"
-    expect(selector).to have_no_content(expected.to_s + ' Granules')
-    expect(selector).to have_css(".button-highlighted")
+    wait_for_xhr
+    synchronize do
+      number_granules = expect(selector.text).to match_regex /\d+ Granule/
+      after_granule_count = number_granules.to_s.split(" ")[0].to_i
 
-    number_granules = expect(selector.text).to match_regex /\d+ Granule/
-    after_granule_count = number_granules.to_s.split(" ")[0].to_i
-
-    expected > after_granule_count
+      expect(expected).to be > after_granule_count
+    end
   end
 end
 
 RSpec::Matchers.define :reset_granules_to do |expected|
   match do |selector|
-    expect(selector).to have_content(expected.to_s + ' Granules')
+    wait_for_xhr
+    synchronize do
+      raise "Granules not displayed" unless selector.text =~ /(\d+) Granules/
+      expect($1.to_i).to be >= expected.to_i
+    end
   end
 end

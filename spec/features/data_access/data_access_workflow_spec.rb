@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe "Data Access workflow", reset: false do
-  original_wait_time = nil
-
   downloadable_dataset_id = 'C179003030-ORNL_DAAC'
   downloadable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
 
@@ -10,10 +8,6 @@ describe "Data Access workflow", reset: false do
   non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   before(:all) do
-    original_wait_time = Capybara.default_wait_time
-    Capybara.default_wait_time = 30 # Ugh, so slow
-
-    Capybara.reset_sessions!
     visit "/search"
 
     click_link 'Sign In'
@@ -26,7 +20,6 @@ describe "Data Access workflow", reset: false do
   after(:all) do
     reset_user
     visit "/search"
-    Capybara.default_wait_time = original_wait_time
   end
 
   context "when the user is not logged in" do

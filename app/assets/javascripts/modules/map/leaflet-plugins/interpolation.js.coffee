@@ -5,7 +5,7 @@
 
 ns = @edsc.map.L
 
-ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate) ->
+ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate, config = @edsc.config) ->
 
   # Cartesian interpolation.  Averages lat and lng
   interpolateCartesian = (ll0, ll1) ->
@@ -71,7 +71,7 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate)
         points.unshift(p)
         depth1 += 1
 
-    if maxDepthReached
+    if maxDepthReached && config.debug
       console.debug "Max interpolation depth reached." #  Interpolated shape has #{interpolatedPoints.length} points."
 
     interpolatedPoints

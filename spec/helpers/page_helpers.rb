@@ -9,9 +9,8 @@ module Helpers
     #            spawns xhr requests, because evaluate_script will happen synchronously.
     #            Use with care.
     def wait_for_xhr
-      require "timeout"
-      Timeout.timeout(Capybara.default_wait_time) do
-        sleep(0.1) while page.evaluate_script('window.edsc.util.xhr.hasPending()')
+      synchronize(120) do
+        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
       end
     end
 
@@ -43,6 +42,18 @@ module Helpers
     # Logout the user
     def reset_user
       page.evaluate_script("window.edsc.models.page.current.user.logout()")
+      wait_for_xhr
+    end
+
+    def logout
+      reset_user
+    end
+
+    def login(username='edsc', password='EDSCtest!1')
+      click_link 'Sign In'
+      fill_in 'Username', with: username
+      fill_in 'Password', with: password
+      click_button 'Sign In'
       wait_for_xhr
     end
 

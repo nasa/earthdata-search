@@ -7,7 +7,7 @@
 
 require "spec_helper"
 
-describe "Granule footprint visualizations", reset: false, wait: 30 do
+describe "Granule footprint visualizations", reset: false, wait: 60 do
   extend Helpers::DatasetHelpers
 
   before :all do
@@ -60,11 +60,11 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
   end
 
   context "for polygon datasets" do
+    use_dataset 'C1000000011-LANCEMODIS', 'MOD02QKM'
+
     before :all do
       create_bounding_box(0, 0, 15, 15)
     end
-
-    use_dataset 'C1000000011-LANCEMODIS', 'MOD02QKM'
 
     context "visualizing a dataset's granules" do
       hook_granule_results
@@ -108,7 +108,7 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
     end
   end
 
-  context "for line datasets", pq: true do
+  context "for line datasets" do
     use_dataset 'C5920490-LARC_ASDC', 'CAL_IIR_L2_Track-Beta-V3-01'
 
     context "visualizing a dataset's granules" do
@@ -154,11 +154,11 @@ describe "Granule footprint visualizations", reset: false, wait: 30 do
   end
 
   context "for bounding box datasets" do
+    use_dataset 'C204200620-GSFCS4PA', 'CloudSat'
+
     before :all do
       create_bounding_box(0, 0, 15, 15)
     end
-
-    use_dataset 'C204200620-GSFCS4PA', 'AIRS-AMSU variables-CloudSat'
 
     context "visualizing a dataset's granules" do
       hook_granule_results

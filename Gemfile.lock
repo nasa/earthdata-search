@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/bilts/capybara-webkit.git
+  revision: c1ce4f9bb64b629d07fab64b6c76e516135f7d92
+  branch: disable-screenshots
+  specs:
+    capybara-webkit (1.1.1)
+      capybara (>= 2.0.2, < 2.2.0)
+      json
+
+GIT
   remote: https://github.com/namick/obfuscate_id.git
   revision: bc9c14fa3768db1b73f221895c57e1233120bac1
   ref: bc9c14fa3768db1b73f221895c57e1233120bac1
@@ -67,9 +76,6 @@ GEM
     capybara-screenshot (0.3.14)
       capybara (>= 1.0, < 3)
       launchy
-    capybara-webkit (1.0.0)
-      capybara (~> 2.0, >= 2.0.2)
-      json
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     coffee-rails (4.0.1)
@@ -106,6 +112,10 @@ GEM
     faraday_middleware (0.9.0)
       faraday (>= 0.7.4, < 0.9)
     ffi (1.9.0)
+    fuubar (1.3.2)
+      rspec (>= 2.14.0, < 3.1.0)
+      ruby-progressbar (~> 1.3)
+    headless (1.0.1)
     hiera (1.2.1)
       json_pure
     highline (1.6.20)
@@ -125,11 +135,12 @@ GEM
     librarian-puppet (0.9.10)
       json
       thor (~> 0.15)
+    libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.25)
-    mini_portile (0.5.1)
+    mime-types (1.25.1)
+    mini_portile (0.5.3)
     minitest (4.7.5)
     multi_json (1.8.4)
     multi_xml (0.5.5)
@@ -141,7 +152,7 @@ GEM
     net-ssh (2.7.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    nokogiri (1.6.0)
+    nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     pg (0.17.1)
     polyglot (0.3.3)
@@ -171,6 +182,7 @@ GEM
     rake (10.1.1)
     rdoc (4.0.1)
       json (~> 1.4)
+    ref (1.0.5)
     rgen (0.6.6)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -187,6 +199,11 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rspec_junit_formatter (0.1.6)
+      builder
+      rspec (~> 2.0)
+      rspec-core (!= 2.12.0)
+    ruby-progressbar (1.4.2)
     rubyzip (1.0.0)
     rvm-capistrano (1.5.1)
       capistrano (~> 2.15.4)
@@ -216,6 +233,9 @@ GEM
     sqlite3 (1.3.8)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
+    therubyracer (0.11.4)
+      libv8 (~> 3.11.8.12)
+      ref
     thor (0.18.1)
     thread_safe (0.1.3)
       atomic
@@ -247,7 +267,7 @@ DEPENDENCIES
   capistrano
   capybara
   capybara-screenshot
-  capybara-webkit
+  capybara-webkit!
   coffee-rails (~> 4.0.0)
   coffee-script
   colored
@@ -258,10 +278,13 @@ DEPENDENCIES
   factory_girl_rails
   faraday
   faraday_middleware
+  fuubar
+  headless
   jasmine!
   jquery-rails
   knockoutjs-rails
   librarian-puppet
+  libv8 (~> 3.11.8.3)
   multi_xml
   obfuscate_id!
   pg
@@ -269,11 +292,13 @@ DEPENDENCIES
   quiet_assets
   rails (~> 4.0.0)
   rspec-rails
+  rspec_junit_formatter
   rvm-capistrano
   sass-rails (~> 4.0.0)
   seed_dump
   sqlite3
   term-ansicolor
+  therubyracer
   toastr-rails
   uglifier (>= 1.3.0)
   unicorn

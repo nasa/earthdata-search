@@ -28,9 +28,10 @@ describe "'Clear Filters' button" do
 
   context "clears temporal" do
     it "range" do
-      script = "var temporal = edsc.models.page.current.query.temporal()
+      script = "var temporal = edsc.models.page.current.query.temporal();
                 temporal.start.date(new Date('1978-12-01T00:00:00Z'));
-                temporal.stop.date(new Date('1979-12-01T00:00:00Z'));"
+                temporal.stop.date(new Date('1979-12-01T00:00:00Z'));
+                null;"
       page.evaluate_script(script)
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -39,15 +40,16 @@ describe "'Clear Filters' button" do
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       click_link "Temporal"
-      expect(page.find("#temporal-range-start")).to have_no_text("1978-12-01 00:00:00")
-      expect(page.find("#temporal-range-stop")).to have_no_text("1979-12-01 00:00:00")
+      expect(page.find("#dataset-temporal-range-start")).to have_no_text("1978-12-01 00:00:00")
+      expect(page.find("#dataset-temporal-range-stop")).to have_no_text("1979-12-01 00:00:00")
     end
 
     it "recurring" do
-      script = "var temporal = edsc.models.page.current.query.temporal()
+      script = "var temporal = edsc.models.page.current.query.temporal();
                 temporal.start.date(new Date('1970-12-01T00:00:00Z'));
                 temporal.stop.date(new Date('1975-12-01T00:00:00Z'));
-                temporal.isRecurring(true)"
+                temporal.isRecurring(true);
+                null;"
       page.evaluate_script(script)
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -56,9 +58,8 @@ describe "'Clear Filters' button" do
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       click_link "Temporal"
-      click_link "Recurring"
-      expect(page.find("#temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")
-      expect(page.find("#temporal-recurring-stop")).to have_no_text("1975-12-31 00:00:00")
+      expect(page.find("#dataset-temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")
+      expect(page.find("#dataset-temporal-recurring-stop")).to have_no_text("1975-12-31 00:00:00")
       expect(page.find(".temporal-recurring-year-range-value")).to have_text("1960 - #{Time.new.year}")
     end
   end

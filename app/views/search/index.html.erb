@@ -147,6 +147,7 @@
 </div>
 
 <div id="map" class="map" style="height:100%">
+  <div id="map-center"></div>
   <!-- ko if: ui.datasetsList.focused() && ui.datasetsList.focused().stickied() && ui.datasetsList.focused().stickied().browse_flag === 'true' -->
   <!-- ko with: ui.datasetsList.focused() -->
   <div class="granule-browse" data-bind="css: {busy: loadingBrowse()}">
