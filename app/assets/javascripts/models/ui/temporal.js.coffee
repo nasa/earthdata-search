@@ -133,13 +133,21 @@ ns.Temporal = do (ko,
       return result unless start.date()? || stop.date()?
 
       if @isRecurring()
-        start_offset = 1000 * 60 * 60 * 24 * start.dayOfYear()
-        end_offset = 1000 * 60 * 60 * 24 * stop.dayOfYear()
+        if start.date() && stop.date()
+          one_day = 1000 * 60 * 60 * 24
+          year = 2007 # Sunday is January 1st, not a leap year
+          #year = 2012 # Sunday is January 1st, leap year
+          start_in_year = new Date(start.date())
+          start_in_year.setUTCFullYear(year)
+          start_offset = start_in_year - Date.UTC(year, 0, 0)
 
-        for year in [start.year()..stop.year()]
-          year_start = Date.UTC(year, 0, 0)
-          result.push [year_start + start_offset, year_start + end_offset]
+          stop_in_year = new Date(stop.date())
+          stop_in_year.setUTCFullYear(year)
+          stop_offset = stop_in_year - Date.UTC(year, 0, 0)
 
+          for year in [start.year()..stop.year()]
+            year_start = Date.UTC(year, 0, 0)
+            result.push [year_start + start_offset, year_start + stop_offset]
       else
         start_date = start.date() ? Date.UTC(1970, 0, 0)
         stop_date = stop.date() ? config.present()

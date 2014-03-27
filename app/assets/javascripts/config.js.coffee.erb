@@ -16,7 +16,7 @@
     csrfToken: csrfToken
     hoverTimeoutMs: 0
     gibsUrl: "/images/gibs-example.jpeg?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}"
-    present: -> new Date(2014, 2, 1) - 0
+    present: -> Date.UTC(2014, 2, 1)
 
   <% elsif Rails.env.development? %>
 

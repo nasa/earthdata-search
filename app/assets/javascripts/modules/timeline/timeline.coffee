@@ -62,7 +62,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @root.find(@scope('.tools')).addClass('busy')
       match = @svg.getElementsByClassName(id)
       if match.length > 0
-        match[0].innerHTML = ''
+        @_empty(match[0])
 
     data: (id, intervals) ->
       index = -1
@@ -76,7 +76,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       el = null
       if match.length > 0
         el = match[0]
-        el.innerHTML = ''
+        @_empty(el)
         el.parentNode.removeChild(el)
       else
         el = @_buildSvgElement('g', class: "#{id} #{@scope('data')}")
@@ -106,12 +106,16 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         @_datasets = datasets
         @_updateDatasetNames()
         @_drawTemporalBounds()
-        @tlDatasets.innerHTML = ''
+        @_empty(@tlDatasets)
         @show()
       else
         @hide()
 
       @_datasets
+
+    _empty: (node) ->
+      $(node).empty()
+      # node.innerHTML = '' # Works for browsers but not capybara-webkit
 
     _buildSvgElement: (name, attrs={}) ->
       el = document.createElementNS(SVG_NS, name)
@@ -180,7 +184,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     _updateDatasetNames: ->
       datasets = @_datasets
       overlay = @olDatasets
-      overlay.innerHTML = ''
+      @_empty(overlay)
       y = 0
       for dataset in datasets
         txt = @_buildSvgElement('text', y: y)
@@ -201,7 +205,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     _drawTemporalBounds: ->
       overlay = @selectionOverlay
       datasets = @_datasets
-      overlay.innerHTML = ''
+      @_empty(overlay)
 
       global = datasets[0].query.temporal().ranges()
 
