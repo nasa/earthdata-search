@@ -1,6 +1,10 @@
 ns = @edsc.models.ui
 
-ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string, KnockoutModel=@edsc.models.KnockoutModel) ->
+ns.Temporal = do (ko,
+                  config=@edsc.config,
+                  dateUtil=@edsc.util.date,
+                  stringUtil = @edsc.util.string,
+                  KnockoutModel=@edsc.models.KnockoutModel) ->
 
   current_year = new Date().getUTCFullYear()
 
@@ -97,6 +101,7 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string, 
       @stop = @disposable(new TemporalDate(current_year, @isRecurring))
 
       @queryCondition = @computed(@_computeQueryCondition)
+      @ranges = @computed(@_computeRanges, this, deferEvaluation: true)
 
       @years = @computed(@_computeYears())
       @yearsString = @computed => @years().join(' - ')
@@ -121,6 +126,26 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string, 
     clear: =>
       @start.clear()
       @stop.clear()
+
+    _computeRanges: ->
+      {start, stop} = this
+      result = []
+      return result unless start.date()? || stop.date()?
+
+      if @isRecurring()
+        start_offset = 1000 * 60 * 60 * 24 * start.dayOfYear()
+        end_offset = 1000 * 60 * 60 * 24 * stop.dayOfYear()
+
+        for year in [start.year()..stop.year()]
+          year_start = Date.UTC(year, 0, 0)
+          result.push [year_start + start_offset, year_start + end_offset]
+
+      else
+        start_date = start.date() ? Date.UTC(1970, 0, 0)
+        stop_date = stop.date() ? config.present()
+        result.push [start_date, stop_date]
+
+      result
 
     _computeYears: =>
       read: =>
