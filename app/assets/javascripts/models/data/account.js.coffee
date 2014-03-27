@@ -39,7 +39,20 @@ ns.Account = do (ko
 
 
     createAccount: =>
+      # Fix chrome autocomplete issues
+      @username(document.getElementById('username')?.value) unless @username()?.length > 0
+      @password(document.getElementById('password')?.value) unless @password()?.length > 0
+      @email(document.getElementById('email')?.value) unless @email()?.length > 0
+      @firstName(document.getElementById('first_name')?.value) unless @firstName()?.length > 0
+      @lastName(document.getElementById('last_name')?.value) unless @lastName()?.length > 0
+      @organizationName(document.getElementById('organization_name')?.value) unless @organizationName()?.length > 0
+      @domain(document.getElementById('user_domain')?.value) unless @domain()?.length > 0
+      @userType(document.getElementById('user_type')?.value) unless @userType()?.length > 0
+      @primaryStudyArea(document.getElementById('primary_study_area')?.value) unless @primaryStudyArea()?.length > 0
+      @country(document.getElementById('country')?.value) unless @country()?.length > 0
+
       @_validateNewAccountForm()
+
       if @errors()?.length == 0
         xhr = doPost '/users', @_buildUserData(), (response) =>
           @user.username(@username())
@@ -138,7 +151,7 @@ ns.Account = do (ko
         @countryError(true)
 
       if errors?.length > 1
-        @errors("Please fill in all required fields, identified highlighted below")
+        @errors("Please fill in all required fields, highlighted below")
       else
         @errors(errors.join(", "))
 
