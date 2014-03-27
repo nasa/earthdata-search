@@ -113,11 +113,6 @@ ns.Account = do (ko
         errors.push "Please provide password"
         @passwordError(true)
 
-      unless @password() == @passwordConfirmation()
-        errors.push "Password must match confirmation"
-        @passwordError(true)
-        @passwordConfirmationError(true)
-
       unless @firstName()?.length > 0
         errors.push "Please provide first name"
         @firstNameError(true)
@@ -151,9 +146,14 @@ ns.Account = do (ko
         @countryError(true)
 
       if errors?.length > 1
-        @errors("Please fill in all required fields, highlighted below")
-      else
-        @errors(errors.join(", "))
+        errors = ["Please fill in all required fields, highlighted below"]
+
+      unless @password() == @passwordConfirmation()
+        errors.push "Password must match confirmation"
+        @passwordError(true)
+        @passwordConfirmationError(true)
+
+      @errors(errors)
 
     clearAccountForm: =>
       @errors("")

@@ -18,7 +18,9 @@
         <h5>All fields are required</h5>
 
         <!-- ko if: errors() -->
-        <span class="error" data-bind="text: errors()"></span>
+        <p data-bind="foreach: errors">
+          <span class="error" data-bind="text: $data"></span>
+        </p>
         <!-- /ko -->
 
         <p>
