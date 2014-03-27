@@ -152,5 +152,4 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
 
         @needsLogin(true)
 
-
   exports = User

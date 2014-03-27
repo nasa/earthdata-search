@@ -65,6 +65,10 @@ module Echo
       Echo::Response.new(post("/echo-rest/tokens.json", token.to_json))
     end
 
+    def self.create_user(user)
+      post('/echo-rest/users.json', user.to_json)
+    end
+
     def self.username_recall(params)
       post('/echo-rest/users/username_recall.json', params.to_json)
     end

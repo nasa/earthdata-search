@@ -25,4 +25,24 @@ class UsersController < ApplicationController
 
     render json: nil, status: :ok
   end
+
+  def new
+  end
+
+  def create
+    # Country needs to be converted to addresses
+    country = params[:user][:country]
+    params[:user].delete("country")
+    params[:user][:addresses] = [{country: country}]
+
+    if params[:user][:password] != params[:user][:password_confirmation]
+      render json: {errors: "Password must match confirmation"}, status: 422
+      return
+    else
+      params[:user].delete("password_confirmation")
+    end
+
+    response = Echo::Client.create_user({user: params[:user]})
+    render json: response.body, status: response.status
+  end
 end
