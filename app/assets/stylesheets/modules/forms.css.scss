@@ -55,6 +55,11 @@ fieldset {
 .account-form {
   margin-bottom: 43px;
 
+  a:link, a:visited {
+    color: #2980b9;
+    text-decoration: underline;
+  }
+
   label {
     display: inline-block;
     min-width: 200px;
@@ -64,6 +69,10 @@ fieldset {
     box-shadow: 0 0 5px #c0392b;
     border-color: #c0392b;
   }
+}
+
+.data-access-content .account-form {
+  margin-bottom: 0;
 }
 
 .confirmation {

@@ -33,8 +33,9 @@ ns.AccessPage = do (ko,
       @ui =
         isLandingPage: false
         temporal: new TemporalModel(@query)
+        # TODO: Why is this needed on this page?  There is no project list here.
         projectList: new ProjectListModel(@project, @user)
-        serviceOptionsList: new ServiceOptionsListModel()
+        serviceOptionsList: new ServiceOptionsListModel(@account)
 
       @project.fromJson(accessData)
 

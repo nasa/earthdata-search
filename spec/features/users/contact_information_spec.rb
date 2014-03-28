@@ -1,4 +1,4 @@
-# EDSC-102 As a user, I want to view my contact information 
+# EDSC-102 As a user, I want to view my contact information
 # so that I may verify it is correct
 
 require 'spec_helper'
@@ -30,6 +30,6 @@ describe 'Contact Information', reset: false do
     expect(page).to have_select("Country", selected: "United States")
     expect(page).to have_select("State", selected: "VA")
     expect(page).to have_field("Zip", with: "22314")
-    expect(page).to have_select("Receive order notifications", selected: "Never (no order emails will be sent)")
+    expect(page).to have_select("Receive delayed access notifications", selected: "Never")
   end
 end
