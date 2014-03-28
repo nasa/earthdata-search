@@ -6,7 +6,8 @@
 // Layout Dimensions
 // ========================================
 
-$toolbar-search-field-width: 400px;
+$toolbar-search-field-width: 375px;
+$toolbar-search-field-sm-width: 250px;
 
 
 // Colors
@@ -29,5 +30,5 @@ $toolbar-accent-border: #21303f;
 // Master Overlay
 $master-overlay-parent-bg-color: transparentize(#111, .2);
 $master-overlay-parent-on-main-bg-color: transparentize(#111, .3); // Used when drawing parent overlapping main
-$master-overlay-main-bg-color: transparentize(#111, .2);
+$master-overlay-main-bg-color: transparentize(#111, .1);
 $overlay-heading-font-color: #c9c9c9;

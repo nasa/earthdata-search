@@ -1,7 +1,7 @@
 @mixin light-button {
-  background: #ddd;
-  color: #000;
-  border: 1px solid transparent;
+  background: #1c1c1c;
+  color: #bdc3c7;
+  border: 1px solid #424242;
 
   &.button-disabled {
     color: #aaa;
@@ -14,15 +14,20 @@
   }
 
   &.button-active {
-    background: #888;
-    border: 1px solid #444;
+    border: 1px solid #2980b9;
+    background: #2980b9;
     color: #fff;
-    text-shadow: 1px 1px 1px $button-dark-text-shadow;
   }
 
-  &:hover, .button-active:hover {
-    background: #aaa;
-    border: 1px solid #888;
+  &:hover {
+    background: #111;
+    border: 1px solid #2980b9;
+    color: #2980b9;
+  }
+
+  &.button-active:hover {
+    background: #2980b9;
+    color: #fff;
   }
 
   &.button-highlighted {
@@ -64,7 +69,7 @@
 
 .icon-button {
   width: 36px;
-  height: 32px;
+  height: 36px;
   text-align: center;
 
   &:hover {
