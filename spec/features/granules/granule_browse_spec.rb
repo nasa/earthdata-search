@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Granule browse display", reset: false, wait: 120 do # Huge wait time because browse scaler can be very slow
+describe "Granule browse display", reset: false do
   extend Helpers::DatasetHelpers
 
   before :all do
@@ -40,12 +40,9 @@ describe "Granule browse display", reset: false, wait: 120 do # Huge wait time b
 
     context "returning to the search page with granule browse visible on the map" do
       before :all do
-        first_dataset_result.click
-        sleep(1) # Wait for sliding transitions
+        view_granule_results
         first_granule_list_item.click
-        find('#granule-list').click_link('Back to Datasets')
-        wait_for_visualization_unload
-        sleep(1)
+        leave_granule_results
       end
 
       it "hides the granule browse" do

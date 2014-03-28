@@ -1,5 +1,5 @@
 module OverlayUtil
-  OVERLAY_IDS = ['project-overview', 'dataset-results', 'dataset-details', 'master-overlay-parent', 'granule-search']
+  OVERLAY_IDS = ['project-overview', 'dataset-results', 'dataset-details', 'master-overlay-parent', 'granule-search', 'granule-list']
 
   def self.has_visible_overlay_content?(page, id)
     datasets_overlay_visible?(page) && current_overlay_id(page).include?(id)
@@ -29,6 +29,11 @@ module OverlayUtil
 
   def self.define_overlay_matchers
     OVERLAY_IDS.each { |id| define_visible_overlay_matcher_for_id(id) }
+
+    RSpec::Matchers.define "have_visible_overlay" do |id|
+      match_for_should     { |page| OverlayUtil::expect_visible_overlay_content!(page, id, true)  }
+      match_for_should_not { |page| OverlayUtil::expect_visible_overlay_content!(page, id, false) }
+    end
   end
 
   private

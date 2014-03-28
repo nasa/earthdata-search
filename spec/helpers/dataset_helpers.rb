@@ -12,17 +12,29 @@ module Helpers
       end
     end
 
-    def view_granule_results(item=first_dataset_result)
-      item.click
-      sleep(1) # Wait for sliding transitions
+    def view_granule_results(from='dataset-results')
+      expect(page).to have_visible_overlay(from)
+      page.evaluate_script("$('##{from} .panel-list-item:first-child').click()")
+      #item.click # This causes intermittent failures based on timing
       wait_for_xhr
       wait_for_visualization_load
+      expect(page).to have_visible_granule_list
+    rescue => e
+      Capybara::Screenshot.screenshot_and_save_page
+      puts "Visible overlay: #{OverlayUtil::current_overlay_id(page)}"
+      raise e
     end
 
-    def leave_granule_results
-      find('#granule-list').click_link('Back to Datasets')
+    def leave_granule_results(to='dataset-results')
+      expect(page).to have_visible_granule_list
+      page.evaluate_script("$('#granule-list a.master-overlay-back').click()")
+      #find('#granule-list').click_link('Back to Datasets')
       wait_for_visualization_unload
-      sleep(1) # Wait for sliding transitions
+      expect(page).to have_visible_overlay(to)
+    rescue => e
+      Capybara::Screenshot.screenshot_and_save_page
+      puts "Visible overlay: #{OverlayUtil::current_overlay_id(page)}"
+      raise e
     end
 
     def hook_granule_results(scope=:all)
@@ -44,7 +56,7 @@ module Helpers
     end
 
     def wait_for_visualization_load
-      synchronize do
+      synchronize(120) do
         expect(page.evaluate_script('edsc.page.map.map.loadingLayers')).to eql(0)
       end
     end
