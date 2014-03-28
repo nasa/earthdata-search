@@ -1,6 +1,7 @@
 #= require models/data/query
 #= require models/data/project
 #= require models/data/user
+#= require models/data/account
 #= require models/ui/temporal
 #= require models/ui/project_list
 #= require models/ui/service_options_list
@@ -15,6 +16,7 @@ ns.AccessPage = do (ko,
                     QueryModel = data.Query
                     ProjectModel = data.Project
                     UserModel = data.User
+                    AccountModel = data.Account
                     TemporalModel = ui.Temporal
                     ProjectListModel = ui.ProjectList
                     ServiceOptionsListModel = ui.ServiceOptionsList
@@ -26,6 +28,7 @@ ns.AccessPage = do (ko,
       @project = new ProjectModel(@query)
       @bindingsLoaded = ko.observable(false)
       @user = new UserModel()
+      @account = new AccountModel(@user)
 
       @ui =
         isLandingPage: false

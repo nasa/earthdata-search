@@ -77,6 +77,18 @@ module Echo
       post('/echo-rest/users/password_reset.json', params.to_json)
     end
 
+    def self.get_contact_info(user_id, token)
+      get("/echo-rest/users/#{user_id}.json", {}, token_header(token))
+    end
+
+    def self.get_phones(user_id, token)
+      get("/echo-rest/users/#{user_id}/phones.json", {}, token_header(token))
+    end
+
+    def self.get_preferences(user_id, token)
+      get("/echo-rest/users/#{user_id}/preferences.json", {}, token_header(token))
+    end
+
     def self.connection
       Thread.current[:edsc_echo_connection] ||= self.build_connection
     end

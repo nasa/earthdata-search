@@ -1,5 +1,5 @@
 <% content_for :javascript do %>
-  <%= javascript_include_tag "create_account" %>
+  <%= javascript_include_tag "account" %>
 <% end %>
 <% content_for :toolbar do %>
 <!-- ko with: account -->
@@ -102,7 +102,7 @@
 
         <p>
           <label for="country">Country</label>
-          <select data-bind="value: country, css: { 'field-error': countryError() }" id="country">
+          <select data-bind="value: address.country, css: { 'field-error': countryError() }" id="country">
             <%= render partial: "country_options" %>
           </select>
         </p>

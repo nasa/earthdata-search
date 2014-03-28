@@ -1,0 +1,81 @@
+<div class="contact-info-form">
+  <form>
+  <fieldset>
+  <!-- ko with: account -->
+    <p>
+      <label for="order_contact_first_name">First name*</label>
+      <input data-bind="value: firstName" id="order_contact_first_name" size="30" type="text">
+    </p>
+    <p>
+      <label for="order_contact_last_name">Last name*</label>
+      <input data-bind="value: lastName" id="order_contact_last_name" size="30" type="text">
+    </p>
+    <p>
+      <label for="order_contact_email">Email*</label>
+      <input data-bind="value: email" id="order_contact_email" size="30" type="text">
+    </p>
+    <p>
+      <label for="order_notification_level">Receive order notifications</label>
+      <select id="order_notification_level" name="order_notification_level">
+        <option value="VERBOSE">Always (receive all order state changes and status)</option>
+        <option value="DETAIL">When orders change to any state</option>
+        <option value="INFO" selected="selected">When orders reach a final state</option>
+        <option value="CRITICAL">When orders fail or are rejected</option>
+        <option value="NONE">Never (no order emails will be sent)</option>
+      </select>
+    </p>
+    <p>
+      <label for="order_contact_organization">Organization name</label>
+      <input data-bind="value: organizationName" id="order_contact_organization" size="30" type="text">
+    </p>
+        
+
+    <h3 class="title">Phone</h3>
+          
+    <p>
+      <label for="order_phone_number">Phone number*</label>
+      <input data-bind="value: phone.number" id="order_phone_number" size="30" type="text">
+    </p>
+    <p>
+      <label for="order_fax_number">Fax number</label>
+      <input data-bind="value: fax.number" id="order_fax_number" size="30" type="text">
+    </p>
+
+
+        <h3 class="title">Address</h3>
+          
+
+    <p>
+      <label for="order_address_street1">Street*</label>
+      <input data-bind="value: address.street1" id="order_address_street1" maxlength="128" size="40" type="text">
+    </p>
+    <p>
+      <input data-bind="value: address.street2" id="order_address_street2" maxlength="128" size="40" type="text">
+    </p>
+    <p>
+      <input data-bind="value: address.street3" id="order_address_street3" maxlength="128" size="40" type="text">
+    </p>
+    <p>
+      <label for="order_address_city">City*</label>
+      <input data-bind="value: address.city" id="order_address_city" size="30" type="text">
+    </p>
+    <p>
+      <label for="order_address_country">Country*</label>
+      <select data-bind="value: address.country" id="order_address_country">
+        <%= render partial: "users/country_options" %>
+      </select>
+    </p>
+    <p>
+      <label for="order_address_state" class="">State</label>
+      <select data-bind="value: address.state" id="order_address_state">
+        <%= render partial: "users/state_options" %>
+      </select>
+    </p>
+    <p>
+      <label for="order_address_zip" class="">Zip</label>
+      <input data-bind="value: address.zip" id="order_address_zip" size="30" type="text">
+    </p>
+  <!-- /ko -->
+  </fieldset>
+  </form>
+</div>

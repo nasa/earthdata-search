@@ -4,10 +4,44 @@ ns = @edsc.models.data
 
 ns.Account = do (ko
                 doPost=jQuery.post
+                getJSON=jQuery.getJSON
                 UserModel=ns.User) ->
 
-  class Account
+  class Address
     constructor: ->
+      @street1 = ko.observable("")
+      @street2 = ko.observable("")
+      @street3 = ko.observable("")
+      @city = ko.observable("")
+      @state = ko.observable("")
+      @zip = ko.observable("")
+      @country = ko.observable("")
+
+    from_json: (json) =>
+      @street1(json.street1)
+      @street2(json.street2)
+      @street3(json.street3)
+      @city(json.city)
+      @state(json.state)
+      @zip(json.zip)
+      @country(json.country)
+
+    clear: =>
+      @street1("")
+      @street2("")
+      @street3("")
+      @city("")
+      @state("")
+      @zip("")
+      @country("")
+
+  class Phone
+    constructor: (type) ->
+      @number = ko.observable("")
+      @type = type
+
+  class Account
+    constructor: (@user) ->
       @username = ko.observable("")
       @usernameError = ko.observable(false)
       @password = ko.observable("")
@@ -28,15 +62,52 @@ ns.Account = do (ko
       @userTypeError = ko.observable(false)
       @primaryStudyArea = ko.observable("")
       @primaryStudyAreaError = ko.observable(false)
-      @country = ko.observable("")
+      @address = new Address()
       @countryError = ko.observable(false)
       @region = ko.computed =>
-        if @country() == "United States" then "USA" else "INTERNATIONAL"
+        if @address.country() == "United States" then "USA" else "INTERNATIONAL"
+
+      @phone = new Phone("BUSINESS")
+      @fax = new Phone("BUSINESS_FAX")
+      @notificationLevel = ko.observable("")
 
       @errors = ko.observable("")
 
-      @user = new UserModel()
+      if @user.name()?.length > 0
+        @_from_user()
+      else
+        @user = new UserModel()
 
+    _from_user: =>
+      # call echo to get user information
+      xhr = getJSON "/users/get_contact_info", (data, status, xhr) =>
+        user = data.user
+        userId = data.user.id
+        @firstName(user.first_name)
+        @lastName(user.last_name)
+        @email(user.email)
+        @organizationName(user.organization_name)
+        @address.from_json(user.addresses[0])
+        @get_phones(userId)
+        @get_preferences(userId)
+
+    get_phones: (userId) =>
+      params =
+        user_id: userId
+
+      xhr = getJSON "/users/get_phones", params, (data) =>
+        for obj in data
+          if obj.phone.phone_number_type == "BUSINESS"
+            @phone.number(obj.phone.number)
+          else if obj.phone.phone_number_type == "BUSINESS_FAX"
+            @fax.number(obj.phone.number)
+
+    get_preferences: (userId) =>
+      params =
+        user_id: userId
+
+      xhr = getJSON "/users/get_preferences", params, (data) =>
+        @notificationLevel(data.preferences.order_notification_level)
 
     createAccount: =>
       # Fix chrome autocomplete issues
@@ -49,7 +120,7 @@ ns.Account = do (ko
       @domain(document.getElementById('user_domain')?.value) unless @domain()?.length > 0
       @userType(document.getElementById('user_type')?.value) unless @userType()?.length > 0
       @primaryStudyArea(document.getElementById('primary_study_area')?.value) unless @primaryStudyArea()?.length > 0
-      @country(document.getElementById('country')?.value) unless @country()?.length > 0
+      @address.country(document.getElementById('country')?.value) unless @address.country()?.length > 0
 
       @_validateNewAccountForm()
 
@@ -93,7 +164,7 @@ ns.Account = do (ko
         user_type: @userType()
         primary_study_area: @primaryStudyArea()
         # Country needs to be converted to addresses in controller
-        country: @country()
+        country: @address.country()
         user_region: @region()
         # Should this be true?
         opt_in: false
@@ -141,7 +212,7 @@ ns.Account = do (ko
         errors.push "Please select primary study area"
         @primaryStudyAreaError(true)
 
-      unless @country()?.length > 0
+      unless @address.country()?.length > 0
         errors.push "Please select country"
         @countryError(true)
 
@@ -171,7 +242,7 @@ ns.Account = do (ko
       @domain("")
       @userType("")
       @primaryStudyArea("")
-      @country("")
+      @address.clear()
 
     _resetErrors: =>
       @emailError(false)
