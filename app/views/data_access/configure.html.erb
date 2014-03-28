@@ -65,8 +65,7 @@
 
         <div class="access-item-actions">
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
-          <button data-bind="visible: ($index() < ($parent.project.datasets().length - 1)), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
-          <button data-bind="visible: ($index() === ($parent.project.datasets().length - 1)), enable: $parent.project.allReadyToDownload(), click: $parent.ui.projectList.loginAndDownloadProject" class="button-next">Submit</button>
+          <button data-bind="enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
         </div>
       </div>
     </li>
@@ -76,11 +75,15 @@
         <h2>Contact Information &amp; Submit</h2>
       </div>
 
-      <div class="access-item-body">
+      <div class="access-item-body" data-bind="css: { hidden: project.datasets().length != ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
           <div class="account-form">
             <%= render partial: 'users/contact_info_form' %>
           </div>
+        </div>
+        <div class="access-item-actions">
+          <button data-bind="click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
+          <button data-bind="enable: project.allReadyToDownload(), click: ui.projectList.loginAndDownloadProject" class="button-next">Submit</button>
         </div>
       </div>
     </li>
