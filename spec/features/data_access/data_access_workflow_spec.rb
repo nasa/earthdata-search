@@ -74,6 +74,22 @@ describe "Data Access workflow", reset: false do
       visit "/search"
     end
 
+    it "displays current contact information" do
+      expect(page).to have_field("First name", with: "Earthdata")
+      expect(page).to have_field("Last name", with: "Search")
+      expect(page).to have_field("Email", with: "patrick+edsc@element84.com")
+      expect(page).to have_field("Organization name", with: "EDSC")
+      expect(page).to have_field("Phone number", with: "555-555-5555")
+      expect(page).to have_field("Fax number", with: "555-555-6666")
+      expect(page).to have_field("Street", with: "101 N. Columbus St.")
+      expect(page).to have_field("street2", with: "Suite 200")
+      expect(page).to have_field("street3", with: "")
+      expect(page).to have_select("Country", selected: "United States")
+      expect(page).to have_select("State", selected: "VA")
+      expect(page).to have_field("Zip", with: "22314")
+      expect(page).to have_select("Receive order notifications", selected: "Never (no order emails will be sent)")
+    end
+
     context "when displaying options for the first of multiple datasets" do
       after :all do
         script = "edsc.page.ui.serviceOptionsList.activeIndex(0);edsc.page.project.datasets()[0].serviceOptions.accessMethod(null);"
