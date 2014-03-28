@@ -105,11 +105,11 @@ describe "Timeline display", reset: false do
       add_dataset_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
       dataset_results.click_link "View Project"
-      view_granule_results(first_project_dataset)
+      view_granule_results('project-overview')
     end
 
     after :all do
-      leave_granule_results
+      leave_granule_results('project-overview')
       click_link('Back to Dataset Search')
       reset_project
     end

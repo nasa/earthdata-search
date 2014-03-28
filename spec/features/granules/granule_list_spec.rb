@@ -145,7 +145,9 @@ describe "Granule list", reset: false do
 
     context "clicking on a dataset result" do
       before :all do
-        view_granule_results
+        expect(page).to have_visible_dataset_results
+        first_dataset_result.click
+        wait_for_xhr
       end
 
       it "shows no granules" do
