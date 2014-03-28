@@ -2,12 +2,13 @@ ns = @edsc.models.data
 
 ns.XhrModel = do (ko
                   KnockoutModel=@edsc.models.KnockoutModel
+                  config=@edsc.config
                   getJSON=jQuery.getJSON
                   toParam=$.param) ->
 
   class XhrModel extends KnockoutModel
     constructor: (@path, @query) ->
-      @results = @asyncComputed([], 500, @_computeSearchResponse, this)
+      @results = @asyncComputed([], config.xhrRateLimitMs, @_computeSearchResponse, this)
 
       @pendingRequestId = 0
       @completedRequestId = 0
