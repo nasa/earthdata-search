@@ -33,7 +33,9 @@ describe "Data download page", reset: false do
       # Download the first
       choose 'Download'
       click_on 'Continue'
-      # No actions available on the second, so submit
+      # No actions available on the second, continue
+      click_on 'Continue'
+      # Confirm address
       click_on 'Submit'
     end
 
@@ -73,6 +75,9 @@ describe "Data download page", reset: false do
       dataset_results.click_link "View Project"
       click_link "Retrieve project data"
 
+      # No options available, continue to set address
+      click_on 'Continue'
+      # Confirm address
       click_on 'Submit'
     end
 

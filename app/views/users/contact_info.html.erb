@@ -1,0 +1,19 @@
+<% content_for :javascript do %>
+  <%= javascript_include_tag "account" %>
+<% end %>
+<% content_for :toolbar do %>
+<!-- ko with: account -->
+  <!-- ko if: user.isLoggedIn -->
+    <%= render partial: 'shared/login' %>
+  <!-- /ko -->
+<!-- /ko -->
+<% end %>
+
+<div class="accounts">
+  <form class="account-form">
+    <fieldset>
+      <h3>Update Contact Information</h3>
+      <%= render partial: 'contact_info_form' %>
+    </fieldset>
+  </form>
+</div>

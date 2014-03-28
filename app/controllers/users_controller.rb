@@ -28,6 +28,8 @@ class UsersController < ApplicationController
 
   def new
   end
+  def contact_info
+  end
 
   def create
     # Country needs to be converted to addresses
@@ -43,6 +45,21 @@ class UsersController < ApplicationController
     end
 
     response = Echo::Client.create_user({user: params[:user]})
+    render json: response.body, status: response.status
+  end
+
+  def get_contact_info
+    response = Echo::Client.get_contact_info(get_user_id, token)
+    render json: response.body, status: response.status
+  end
+
+  def get_phones
+    response = Echo::Client.get_phones(params[:user_id], token)
+    render json: response.body, status: response.status
+  end
+
+  def get_preferences
+    response = Echo::Client.get_preferences(params[:user_id], token)
     render json: response.body, status: response.status
   end
 end

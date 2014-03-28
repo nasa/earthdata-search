@@ -122,8 +122,8 @@ describe "Data Access workflow", reset: false do
         expect(page).to have_content "Dataset Only"
       end
 
-      it 'displays a "submit" button' do
-        expect(page).to have_content "Submit"
+      it 'displays a "continue" button to confirm contact information' do
+        expect(page).to have_content "Continue"
       end
 
       it 'displays a "back" button' do
@@ -140,6 +140,83 @@ describe "Data Access workflow", reset: false do
         it 'displays the previous dataset in the list' do
           expect(page).to have_content "39 Granules"
           expect(page).to have_content "252.9 Kilobytes"
+        end
+      end
+    end
+
+    context "on the final step before submitting" do
+      before :all do
+        choose "Download"
+        click_button "Continue"
+        click_button "Continue"
+      end
+
+      after :all do
+        script = "edsc.page.ui.serviceOptionsList.activeIndex(0);edsc.page.project.datasets()[0].serviceOptions.accessMethod(null);"
+        page.evaluate_script script
+      end
+
+      it "displays current contact information" do
+        account_form = page.find('.account-form')
+        expect(account_form).to have_text("Earthdata Search (patrick+edsc@element84.com)")
+        expect(account_form).to have_text("EDSC")
+
+        expect(account_form).to have_text("101 N. Columbus St.")
+        expect(account_form).to have_text("Suite 200")
+        expect(account_form).to have_text("Alexandria, VA 22314")
+        expect(account_form).to have_no_text("United States")
+
+        expect(account_form).to have_text("555-555-5555 (Phone)")
+        expect(account_form).to have_text("555-555-6666 (Fax)")
+      end
+
+      it 'displays a "submit" button' do
+        expect(page).to have_content "Submit"
+      end
+
+      it 'displays a "back" button' do
+        within(".data-access-content") do
+          expect(page).to have_content "Back"
+        end
+      end
+
+      context 'clicking the "edit" button for contact information' do
+        before :all do
+          click_link 'Edit'
+        end
+
+        after :all do
+          click_on 'Cancel'
+        end
+
+        it "presents a populated form to edit contact information" do
+          expect(page).to have_field("First name", with: "Earthdata")
+          expect(page).to have_field("Last name", with: "Search")
+          expect(page).to have_field("Email", with: "patrick+edsc@element84.com")
+          expect(page).to have_field("Organization name", with: "EDSC")
+          expect(page).to have_field("Phone number", with: "555-555-5555")
+          expect(page).to have_field("Fax number", with: "555-555-6666")
+          expect(page).to have_field("Street", with: "101 N. Columbus St.")
+          expect(page).to have_field("street2", with: "Suite 200")
+          expect(page).to have_field("street3", with: "")
+          expect(page).to have_select("Country", selected: "United States")
+          expect(page).to have_select("State", selected: "VA")
+          expect(page).to have_field("Zip", with: "22314")
+          expect(page).to have_select("Receive delayed access notifications", selected: "Never")
+        end
+      end
+
+      context 'clicking the "back" button' do
+        before :all do
+          click_button "Back"
+        end
+
+        after :all do
+          click_button "Continue"
+        end
+
+        it 'displays the previous dataset in the list' do
+          expect(page).to have_content "Dataset Only"
         end
       end
     end

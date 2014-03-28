@@ -49,6 +49,10 @@ module Helpers
       reset_user
     end
 
+    def click_contact_information
+      page.execute_script("$('.dropdown-menu .dropdown-link-contact-info').click()")
+    end
+
     def click_logout
       # Do this in Javascript because of capybara clickfailed bug
       page.execute_script("$('.dropdown-menu .dropdown-link-logout').click()")

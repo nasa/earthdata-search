@@ -11,5 +11,5 @@
 //= require config
 //= require util/index
 //= require models/index
-//= require models/page/create_account
+//= require models/page/account_page
 //= require bootstrap/bootstrap
