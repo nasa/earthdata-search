@@ -3,6 +3,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list {
   margin-bottom: $panel-list-item-height + 5px;
+  clear: both;
 
   .button {
     @include light-button;
@@ -17,9 +18,9 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list-item {
   color: #fff;
-  background-color: #222;
-  border-left: 10px solid #323232;
-  margin: 0 0 1px 0;
+  background-color: #292929;
+  border-left: 10px solid #424242;
+  margin: 5px 5px 6px 5px;
   height: $panel-list-thumbnail-size + 20px;
   padding: 10px 10px 10px 14px;
   font-size: .8em;
@@ -29,9 +30,9 @@ $panel-list-thumbnail-size: $panel-list-item-height;
     margin-top: 0;
   }
 
-  &:hover {
-    border-left-color: #7f8c8d;
-    background-color: #262626;
+  &.master-overlay-forward:hover {
+    border-left-color: #525252;
+    background-color: #393939;
   }
 
   h3 {
@@ -48,8 +49,8 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 }
 
 .panel-list-focused {
-  border-color: #00f;
-  background-color: #ddf;
+  border-left-color: #525252;
+  background-color: #393939;
 }
 
 .panel-list-thumbnail-container {
@@ -119,8 +120,8 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 }
 
 .panel-list-selected {
-  padding-left: 10px;
-  border-left: 5px solid #00f;
+  border-left-color: #2980b9;
+  background: #494949;
 
   .panel-list-when-selected {
     visibility: visible;
@@ -141,6 +142,6 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   font-size: 1.5em;
 
   &:hover {
-    color: #800;
+    color: #e74c3c;
   }
 }
