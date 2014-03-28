@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Granule browse display", reset: false, wait: 30 do
+describe "Granule browse display", reset: false, wait: 120 do # Huge wait time because browse scaler can be very slow
   extend Helpers::DatasetHelpers
 
   before :all do

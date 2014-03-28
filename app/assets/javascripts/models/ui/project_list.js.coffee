@@ -29,8 +29,11 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     showDataQualitySummaryAndDownload: (datasets, action) =>
       accepted = true
       for dataset in datasets
-        if dataset.dqsModel.results().id && !dataset.dqsModel.results().accepted()
-          accepted = false
+        results = dataset.dqsModel.results()
+        if results?
+          for result in results
+            if result.id && !result.accepted()
+              accepted = false
 
       if accepted
         action()
@@ -88,13 +91,12 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       if project.hasDataset(dataset)
         project.removeDataset(dataset)
       else
+        # Force dataset to load DQS information
+        @datasetHasDQS(dataset)
         project.addDataset(dataset)
 
     _computeDatasetsToDownload: ->
       dataset for dataset in @project.datasets() when dataset.serviceOptions.accessMethod() == 'download'
-
-    hideFilters: =>
-      @project.searchGranulesDataset(null)
 
     datasetHasDQS: (dataset) =>
       result = true if dataset.dqsModel.results()?.length > 0
@@ -106,6 +108,9 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
 
     dqsAccepted: (dataset) =>
       if dataset.dqsModel.results()?.length > 0
+        # Resize the list after DQS warning is displayed
+        $('.master-overlay').masterOverlay('contentHeightChanged')
+
         for dqs in dataset.dqsModel.results()
           return false unless dqs.accepted()
       true
@@ -114,6 +119,27 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       result = true
       result &&= @dqsAccepted(dataset) for dataset in @project.datasets()
       result
+
+    showFilters: (dataset) =>
+      if @project.searchGranulesDataset(dataset)
+        @_destroyGranulePickers()
+        $('.granule-temporal-filter').temporalSelectors({
+          uiModel: dataset.granulesModel.temporal,
+          modelPath: "(project.searchGranulesDataset() ? project.searchGranulesDataset().granulesModel.temporal.pending : null)",
+          prefix: 'granule'
+        })
+
+    applyFilters: =>
+      $('.master-overlay-content .temporal-submit').click()
+      @hideFilters()
+
+    hideFilters: =>
+      @_destroyGranulePickers()
+      $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
+      @project.clearSearchGranules()
+
+    _destroyGranulePickers: ->
+      $('.granule-temporal-filter .temporal').datetimepicker('destroy')
 
 
   exports = ProjectList

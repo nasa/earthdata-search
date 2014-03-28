@@ -37,10 +37,10 @@
                     <i class="edsc-icon-download"></i>
                   </a>
                   <!-- ko if: has_granules -->
-                  <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.project.searchGranules, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
+                    <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
                     <i class="edsc-icon-compose"></i>
                   </a>
-                  <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.project.clearSearchGranules, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
+                  <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
                     <i class="edsc-icon-compose"></i>
                   </a>
                   <!-- /ko -->

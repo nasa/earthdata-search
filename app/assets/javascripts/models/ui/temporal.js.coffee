@@ -1,23 +1,22 @@
 ns = @edsc.models.ui
 
-ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) ->
+ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string, KnockoutModel=@edsc.models.KnockoutModel) ->
 
   current_year = new Date().getUTCFullYear()
 
-  class TemporalDate
+  class TemporalDate extends KnockoutModel
     constructor: (@defaultYear, @isRecurring) ->
       @date = ko.observable(null)
       @year = ko.observable(@defaultYear)
 
-      @year.subscribe (year) =>
+      @year.subscribe @disposable((year) =>
         if @isRecurring()
           date = @date()
           if date?
             date.setUTCFullYear(year)
-            @date(new Date(date.getTime()))
+            @date(new Date(date.getTime())))
 
-
-      @humanDateString = ko.computed
+      @humanDateString = @computed
         read: =>
           if @date()?
             dateStr = dateUtil.isoUtcDateTimeString(@date())
@@ -32,7 +31,7 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
           else
             @date(null)
 
-      @dayOfYearString = ko.computed
+      @dayOfYearString = @computed
         read: =>
           date = @date()
           if date?
@@ -53,7 +52,7 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
             return
           @date(date)
 
-      @dayOfYear = ko.computed =>
+      @dayOfYear = @computed =>
         date = @date()
         if date?
           one_day = 1000 * 60 * 60 * 24
@@ -66,7 +65,7 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
         else
           null
 
-      @queryDateString = ko.computed =>
+      @queryDateString = @computed =>
         if @date()
           @date().toISOString()
         else
@@ -91,16 +90,16 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
       @date(null)
       @year(@defaultYear)
 
-  class TemporalCondition
+  class TemporalCondition extends KnockoutModel
     constructor: (@query) ->
       @isRecurring = ko.observable(false)
-      @start = new TemporalDate(1960, @isRecurring)
-      @stop = new TemporalDate(current_year, @isRecurring)
+      @start = @disposable(new TemporalDate(1960, @isRecurring))
+      @stop = @disposable(new TemporalDate(current_year, @isRecurring))
 
-      @queryCondition = ko.computed(@_computeQueryCondition)
+      @queryCondition = @computed(@_computeQueryCondition)
 
-      @years = ko.computed(@_computeYears())
-      @yearsString = ko.computed => @years().join(' - ')
+      @years = @computed(@_computeYears())
+      @yearsString = @computed => @years().join(' - ')
 
     fromJson: (jsonObj) ->
       @isRecurring(jsonObj.isRecurring)
@@ -145,14 +144,21 @@ ns.Temporal = do (ko, dateUtil=@edsc.util.date, stringUtil = @edsc.util.string) 
 
       result.join(',')
 
-  class Temporal
+  class Temporal extends KnockoutModel
     constructor: (@query) ->
-      @applied = new TemporalCondition()
-      @pending = new TemporalCondition()
-      @query.temporal(@applied)
+      @applied = applied = @disposable(new TemporalCondition())
+      @pending = pending = @disposable(new TemporalCondition())
+      @query.temporal(applied)
 
       # Clear temporal when switching types
-      @pending.isRecurring.subscribe => @pending.clear()
+      pending.isRecurring.subscribe @disposable(=> pending.clear())
+
+      # Copy applied to pending on change
+      applied.isRecurring.subscribe @disposable((val) => pending.isRecurring(val))
+      applied.start.date.subscribe @disposable((val) => pending.start.date(val))
+      applied.start.year.subscribe @disposable((val) => pending.start.year(val))
+      applied.stop.date.subscribe @disposable((val) => pending.stop.date(val))
+      applied.stop.year.subscribe @disposable((val) => pending.stop.year(val))
 
     apply: =>
       @applied.copy(@pending)

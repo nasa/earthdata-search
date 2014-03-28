@@ -1,17 +1,15 @@
-uiModel = @edsc.page.ui.temporal
-edsc_date = @edsc.util.date
+do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.temporal, plugin=@edsc.util.plugin, page=@edsc.page) ->
 
-current_year = new Date().getUTCFullYear()
+  current_year = new Date().getUTCFullYear()
 
-$(document).ready ->
-  validateTemporalInputs = ->
-    start = $(".temporal-start:visible")
-    end = $(".temporal-stop:visible")
+  validateTemporalInputs = (root) ->
+    start = root.find(".temporal-start:visible")
+    end = root.find(".temporal-stop:visible")
     start_val = start.val()
     end_val = end.val()
 
     if start and end
-      error = $(".temporal-dropdown .tab-pane:visible .temporal-error")
+      error = root.find(".tab-pane:visible .temporal-error")
       error.show()
 
       if start.hasClass("temporal-recurring-start")
@@ -29,13 +27,13 @@ $(document).ready ->
           error.text("Start must be no later than End")
 
 
-  setMinMaxOptions = (datetimepicker, $input, temporal_type) ->
+  setMinMaxOptions = (root, datetimepicker, $input, temporal_type) ->
     min_date = false
     max_date = false
     format = if temporal_type == "range" then 'Y-m-d' else 'm-d'
 
-    start_val = $('input.temporal-' + temporal_type + '-start').val()
-    stop_val = $('input.temporal-' + temporal_type + '-stop').val()
+    start_val = root.find('input.temporal-' + temporal_type + '-start').val()
+    stop_val = root.find('input.temporal-' + temporal_type + '-stop').val()
 
     if $input.hasClass('temporal-' + temporal_type + '-start') and stop_val
       max_date = stop_val.split(' ')[0]
@@ -49,8 +47,8 @@ $(document).ready ->
     })
 
   updateMonthButtons = (month_label) ->
-    prev_button = $(month_label).siblings('button.xdsoft_prev')
-    next_button = $(month_label).siblings('button.xdsoft_next')
+    prev_button = month_label.siblings('button.xdsoft_prev')
+    next_button = month_label.siblings('button.xdsoft_next')
     prev_button.show()
     next_button.show()
     month = month_label.find('span').text()
@@ -58,17 +56,6 @@ $(document).ready ->
       prev_button.hide()
     else if month == "December"
       next_button.hide()
-
-  addDayOfYear = (picker, input) ->
-    if picker.find('.day-of-year-picker')?.length == 0
-      which = if input.is('.temporal-start') then 'start' else 'stop'
-      day_of_year_div = $("<div class='day-of-year-picker'>
-        <label for='day-of-year-#{which}-input'>Day of Year:</label>
-        <input id='day-of-year-#{which}-input' data-bind='value: ui.temporal.pending.#{which}.dayOfYearString' class='day-of-year-input' type='text' placeholder='YYYY-DDD' >
-        <button id='day-of-year-submit' class='button text-button' data-input='" + input.attr("id") + "'>Set</button>
-        </div>")
-      day_of_year_div.appendTo(picker)
-      ko.applyBindings(@edsc.page, day_of_year_div[0])
 
   parseOrdinal = (value) ->
     match = /(\d{4})-(\d{3})/.exec(value)
@@ -79,119 +66,137 @@ $(document).ready ->
     return null  unless date.getUTCFullYear() is year # Date is higher than the number of days in the year
     edsc_date.isoUtcDateTimeString(date)
 
-  $(document).on 'click', '#day-of-year-submit', ->
-    value = $(this).prev().val()
-    date = parseOrdinal(value)
-    if date
-      $("#" + $(this).attr("data-input") + ":visible").val(date).trigger('change')
-      $(this).parents('.xdsoft_datetimepicker').hide()
-      validateTemporalInputs()
+  $.fn.temporalSelectors = (options) ->
+    root = this
+    uiModel = options["uiModel"]
+    uiModelPath = options["modelPath"]
+    prefix = options["prefix"]
 
-  $('.temporal-range-picker').datetimepicker({
-    format: 'Y-m-d H:i:s',
-    yearStart: '1960',
-    yearEnd: current_year,
-    onShow: (dp,$input) ->
-      setMinMaxOptions(this, $input, 'range')
-    onChangeDateTime: (dp,$input) ->
-      # Default minutes and seconds to 00
-      datetime = $input.val().split(":")
-      datetime[1] = "00"
-      datetime[2] = "00"
-      $input.val(datetime.join(":"))
+    # Sanity check
+    console.error "Temporal selectors double initialization" if root.data('temporal-selectors')
+    root.data('temporal-selectors', true)
 
-      validateTemporalInputs()
+    root.find('.temporal-range-picker').datetimepicker
+      format: 'Y-m-d H:i:s',
+      className: prefix + '-datetimepicker',
+      yearStart: '1960',
+      yearEnd: current_year,
+      onShow: (dp,$input) ->
+        setMinMaxOptions(root, this, $input, 'range')
+      onChangeDateTime: (dp,$input) ->
+        # Default minutes and seconds to 00
+        datetime = $input.val().split(":")
+        datetime[1] = "00"
+        datetime[2] = "00"
+        $input.val(datetime.join(":"))
 
-      $input.trigger('change')
-    onGenerate: (dp,$input) ->
-      addDayOfYear(this, $input)
-  })
+        validateTemporalInputs(root)
 
-  $('.temporal-recurring-picker').datetimepicker({
-    format: 'm-d H:i:s',
-    className: 'recurring-datetimepicker',
-    yearStart: 2007,
-    yearEnd: 2007,
-    onShow: (dp,$input) ->
-      updateMonthButtons($(this).find('.xdsoft_month'))
-      setMinMaxOptions(this, $input, 'recurring')
-    onChangeDateTime: (dp,$input) ->
-      # Default minutes and seconds to 00
-      datetime = $input.val().split(":")
-      datetime[1] = "00"
-      datetime[2] = "00"
-      $input.val(datetime.join(":"))
+        $input.trigger('change')
+      onGenerate: ($dp, input) ->
+        picker = this
+        if picker.find('.day-of-year-picker')?.length == 0
+          which = if input.is('.temporal-start') then 'start' else 'stop'
+          day_of_year_div = $("<div class='day-of-year-picker' data-bind='if: #{uiModelPath}'>
+            <label for='day-of-year-#{which}-input'>Day of Year:</label>
+            <input id='day-of-year-#{which}-input' data-bind='value: #{uiModelPath}.#{which}.dayOfYearString()' class='day-of-year-input' type='text' placeholder='YYYY-DDD' >
+            <button class='button text-button day-of-year-submit' data-input='" + input.attr("id") + "'>Set</button>
+            </div>")
+          day_of_year_div.appendTo(picker)
+          day_of_year_div.find('.day-of-year-submit').on 'click', ->
+            value = $(this).prev().val()
+            date = parseOrdinal(value)
+            if date
+              $("#" + $(this).attr("data-input") + ":visible").val(date).trigger('change')
+              $(this).parents('.xdsoft_datetimepicker').hide()
+              validateTemporalInputs(root)
+          ko.applyBindings(page, day_of_year_div[0])
 
-      validateTemporalInputs()
+    root.find('.temporal-recurring-picker').datetimepicker
+      format: 'm-d H:i:s',
+      className: prefix + '-datetimepicker recurring-datetimepicker',
+      yearStart: 2007,
+      yearEnd: 2007,
+      onShow: (dp,$input) ->
+        updateMonthButtons($(this).find('.xdsoft_month'))
+        setMinMaxOptions(root, this, $input, 'recurring')
+      onChangeDateTime: (dp,$input) ->
+        # Default minutes and seconds to 00
+        datetime = $input.val().split(":")
+        datetime[1] = "00"
+        datetime[2] = "00"
+        $input.val(datetime.join(":"))
 
-      $input.trigger('change')
-    onChangeMonth: (dp,$input) ->
-      updateMonthButtons($(this).find('.xdsoft_month'))
-  })
+        validateTemporalInputs(root)
 
-  $('.temporal-recurring-year-range').slider({
-    min: 1960,
-    max: current_year,
-    value: [1960, current_year],
-    tooltip: 'hide'
-  }).on 'slide', (e) ->
-    uiModel.pending.years(e.value)
+        $input.trigger('change')
+      onChangeMonth: (dp,$input) ->
+        updateMonthButtons($(this).find('.xdsoft_month'))
 
-  uiModel.pending.years.subscribe (years) ->
-    $('.temporal-recurring-year-range').slider('setValue', years)
+    root.find('.temporal-recurring-year-range').slider({
+      min: 1960,
+      max: current_year,
+      value: [1960, current_year],
+      tooltip: 'hide'
+    }).on 'slide', (e) ->
+      uiModel.pending.years(e.value)
 
-  # Submit temporal range search
-  updateTemporalRange = ->
-    if $('#temporal-date-range .temporal-error').is(":hidden")
-      uiModel.apply()
-    else
-      false
+    # Set the slider when the years change
+    uiModel.pending.years.subscribe (years) ->
+      root.find('.temporal-recurring-year-range').slider('setValue', years)
 
-  # $(document).on 'click', '#temporal-range-submit', ->
-  #   if updateTemporalRange()
-  #     $(this).parents('.dropdown').removeClass('open')
+    # Initialize the slider to current value of years
+    root.find('.temporal-recurring-year-range').slider('setValue', uiModel.pending.years())
 
-  # Submit temporal recurring search
-  updateTemporalRecurring = ->
-    if $('#temporal-recurring .temporal-error').is(":hidden")
-      uiModel.apply()
-    else
-      false
+    # Submit temporal range search
+    updateTemporalRange = ->
+      if root.find('#temporal-date-range .temporal-error').is(":hidden")
+        uiModel.apply()
+      else
+        false
 
-  $(document).on 'change', '#show-recurring', ->
-    $('.range-slider').toggle()
-    uiModel.pending.isRecurring(this.checked)
+    # Submit temporal recurring search
+    updateTemporalRecurring = ->
 
-  $(document).on 'click', '#temporal-submit', ->
-    visible = $(this).parent().siblings(".tab-pane:visible")
-    if (visible.is("#temporal-date-range"))
-      if updateTemporalRange()
-        $(this).parents('.dropdown').removeClass('open')
-    else if (visible.is("#temporal-recurring"))
-      if updateTemporalRecurring()
-        $(this).parents('.dropdown').removeClass('open')
+      if root.find('#temporal-recurring .temporal-error').is(":hidden")
+        uiModel.apply()
+      else
+        false
 
-  $(document).on 'click', '.clear-filters.button, .temporal-clear', ->
-    validateTemporalInputs()
+    root.find('.temporal-submit').on 'click', ->
+      visible = $(this).parent().siblings(".tab-pane:visible")
+      if (visible.is(".temporal-date-range"))
+        if updateTemporalRange()
+          $(this).parents('.dropdown').removeClass('open')
+      else if (visible.is(".temporal-recurring"))
+        if updateTemporalRecurring()
+          $(this).parents('.dropdown').removeClass('open')
 
-  # $(document).on 'click', '.temporal-dropdown-link', ->
-  #   if $(this).hasClass('temporal-range')
-  #     updateTemporalRange()
-  #   else if $(this).hasClass('temporal-recurring')
-  #     updateTemporalRecurring()
+    root.find('.temporal').on 'change paste keyup', ->
+      validateTemporalInputs(root)
+      event.stopPropagation()
 
-  $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker .xdsoft_today_button', ->
-    updateMonthButtons($(this).siblings('.xdsoft_month'))
+  $(document).on 'click', '.clear-filters.button', ->
+    validateTemporalInputs($('.dataset-temporal-filter'))
 
-  $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker button.xdsoft_prev', ->
-    updateMonthButtons($(this).siblings('.xdsoft_month'))
+  $(document).on 'click', '.granule-filters-clear', ->
+    validateTemporalInputs($('.granule-temporal-filter'))
 
-  $(document).on 'click', '.recurring-datetimepicker .xdsoft_mounthpicker button.xdsoft_next', ->
+  $(document).on 'click', '.temporal-filter .temporal-clear', ->
+    validateTemporalInputs($(this).closest('.temporal-filter'))
+
+  # safe global stuff
+  $(document).on 'click', '.xdsoft_today_button, button.xdsoft_prev, button.xdsoft_next', ->
     updateMonthButtons($(this).siblings('.xdsoft_month'))
 
   $(document).on 'click', 'input.day-of-year-input', ->
+    # What does this even do?
     $(this).focus()
 
-  $('.temporal').on 'change paste keyup', ->
-    validateTemporalInputs()
-    event.stopPropagation()
+
+  $(document).ready ->
+    $('.dataset-temporal-filter').temporalSelectors({
+      uiModel: temporalModel,
+      modelPath: "ui.temporal.pending",
+      prefix: 'dataset'
+    })

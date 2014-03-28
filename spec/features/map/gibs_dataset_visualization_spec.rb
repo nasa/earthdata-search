@@ -5,7 +5,7 @@
 
 require "spec_helper"
 
-describe "Dataset GIBS visualizations", reset: false, wait: 30 do
+describe "Dataset GIBS visualizations", reset: false do
 
   gibs_dataset_id = 'C1000000019-LANCEMODIS'
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
@@ -36,7 +36,7 @@ describe "Dataset GIBS visualizations", reset: false, wait: 30 do
       first_dataset_result.click_link "Hide dataset"
     end
 
-    it "displays composite GIBS imagery corresponding to the first 200 granule results on an HTML canvas" do
+    it "displays composite GIBS imagery corresponding to the first 20 granule results on an HTML canvas" do
       within gibs_tile_layer do
         expect(page).to have_selector('canvas')
       end

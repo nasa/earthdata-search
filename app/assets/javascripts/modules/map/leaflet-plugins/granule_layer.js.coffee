@@ -4,12 +4,14 @@ ns.GranuleLayer = do (L
                       $ = jQuery
                       GibsTileLayer = ns.GibsTileLayer
                       projectPath=ns.interpolation.projectPath
-                      dateUtil = @edsc.util.date
                       dividePolygon = ns.sphericalPolygon.dividePolygon
                       capitalize = @edsc.util.string.capitalize
                       arrayUtil = @edsc.util.array
+                      help = @edsc.help
+                      config = @edsc.config
                       ) ->
 
+  MAX_RETRIES = 1 # Maximum number of times to attempt to reload an image
 
   isClockwise = (path) ->
     sum = 0
@@ -17,7 +19,7 @@ ns.GranuleLayer = do (L
       sum += (p1.x - p0.x) * (p1.y + p0.y)
     sum > 0
 
-  addPath = (ctx, path, isCounterclockwise) ->
+  addPath = (ctx, path) ->
     {path, poly, line, point} = path
 
     if poly? || line?
@@ -25,36 +27,13 @@ ns.GranuleLayer = do (L
       len = poly.length
       return if len < 2
 
-      if isCounterclockwise != !isClockwise(poly)
-        poly = poly.concat().reverse()
-
       ctx.moveTo(poly[0].x, poly[0].y)
       ctx.lineTo(p.x, p.y) for p in poly[1...]
+      ctx.closePath() unless line?
     else if point?
       {x, y} = point
       ctx.moveTo(x + 10, y)
-      ctx.arc(x, y, 10, 0, 2 * Math.PI, isCounterclockwise);
-    null
-
-  clipped = (ctx, boundary, maskedPaths, drawnPaths, fn) ->
-    ctx.save()
-    if maskedPaths.length > 0
-      ctx.beginPath()
-      addPath(ctx, boundary, false)
-      for path in maskedPaths
-        unless path.line?
-          addPath(ctx, path, true)
-          ctx.clip()
-
-    if drawnPaths.length > 0
-      ctx.beginPath()
-      for path in drawnPaths
-        addPath(ctx, path, true)
-      ctx.clip()
-
-    fn()
-    ctx.restore()
-
+      ctx.arc(x, y, 10, 0, 2 * Math.PI, isCounterclockwise ? true);
     null
 
   # The first few methods are ported from L.TileLayer.Canvas, which is in our leaflet version but
@@ -137,31 +116,6 @@ ns.GranuleLayer = do (L
 
       result
 
-    _drawFootprint: (canvas, nwPoint, boundary, maskedPaths, drawnPaths) ->
-      ctx = canvas.getContext('2d')
-      ctx.save()
-
-      # Faint stroke of whole path
-      ctx.lineWidth = 1
-      ctx.translate(-nwPoint.x, -nwPoint.y)
-      ctx.strokeStyle = 'rgba(128, 128, 128, .2)'
-      for path in drawnPaths
-        addPath(ctx, path, true)
-        ctx.stroke()
-
-      # Bold stroke of unclipped portion of path, black + white
-      clipped ctx, boundary, maskedPaths, [], ->
-        for path in drawnPaths
-          ctx.beginPath()
-          addPath(ctx, path, true)
-          ctx.lineWidth = 2
-          ctx.strokeStyle = 'rgba(0, 0, 0, 1)'
-          ctx.stroke()
-          ctx.lineWidth = 1
-          ctx.strokeStyle = 'rgba(255, 255, 255, 1)'
-          ctx.stroke()
-      ctx.restore()
-
     granuleAt: (p) ->
       origin = @_map.getPixelOrigin()
       tileSize = @_getTileSize()
@@ -174,64 +128,14 @@ ns.GranuleLayer = do (L
       result = null
       ctx = canvas.getContext('2d')
       data = ctx.getImageData(tilePixel.x, tilePixel.y, 1, 1).data
-      if data[3] != 0
+      if data[3] == 255
         index = (data[0] << 16) + (data[1] << 8) + data[2]
         result = @_results?[index]
 
       result
 
-    _drawBackTile: (canvas, index, nwPoint, boundary, maskedPaths, drawnPaths) ->
-      ctx = canvas.getContext('2d')
-      ctx.save()
-
-      # http://www.w3.org/TR/2011/WD-2dcontext-20110405/#imagedata
-      ctx.strokeStyle = ctx.fillStyle = '#' + (index + 0x1000000).toString(16).substr(-6)
-      ctx.lineWidth = 4
-
-      ctx.translate(-nwPoint.x, -nwPoint.y)
-      clipped ctx, boundary, maskedPaths, [], ->
-        for path in drawnPaths
-          ctx.beginPath()
-          addPath(ctx, path, true)
-          if path.line?
-            ctx.stroke()
-          else
-            ctx.fill()
-      ctx.restore()
-
-
     getTileUrl: (tilePoint, date) ->
       L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if @_url?
-
-    _loadClippedImage: (canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths, retries=0) ->
-      url = @getTileUrl(tilePoint, date)
-
-      if url?
-        image = new Image()
-        image.onload = (e) =>
-          ctx = canvas.getContext('2d')
-          ctx.save()
-          ctx.translate(-nwPoint.x, -nwPoint.y)
-          clipped ctx, boundary, maskedPaths, drawnPaths, ->
-            ctx.drawImage(image, nwPoint.x, nwPoint.y)
-
-          ctx.restore()
-
-          for path, i in drawnPaths
-            masked = maskedPaths.concat(drawnPaths.slice(0, i))
-            @_drawFootprint(canvas, nwPoint, boundary, masked, [path])
-
-        image.onerror = (e) =>
-          if retries == 0
-            @_loadClippedImage(canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths, 1)
-          else
-            console.error("Failed to load tile after 2 tries: #{url}")
-
-        image.src = url
-      else
-        for path, i in drawnPaths
-          masked = maskedPaths.concat(drawnPaths.slice(0, i))
-          @_drawFootprint(canvas, nwPoint, boundary, masked, [path])
 
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
@@ -243,40 +147,166 @@ ns.GranuleLayer = do (L
       sePoint = nwPoint.add([tileSize, tileSize])
       swPoint = nwPoint.add([0, tileSize])
       boundary = {poly: [nwPoint, nePoint, sePoint, swPoint]}
+      boundary.poly.reverse() unless isClockwise(boundary.poly)
       bounds = new L.latLngBounds(boundary.poly.map(layerPointToLatLng))
       bounds = bounds.pad(0.1)
 
       date = null
-      drawnPaths = []
-      maskedPaths = []
+      paths = []
 
       for granule, i in @_results
-        start = granule.time_start?.substring(0, 10)
+        overlaps = @_granulePathsOverlappingTile(granule, bounds)
 
-        paths = @_granulePathsOverlappingTile(granule, bounds)
+        if overlaps.length > 0
+          url = @getTileUrl(tilePoint, granule.time_start?.substring(0, 10))
+          for path in overlaps
+            path.index = i
+            path.url = url
+            path.granule = granule
+            path.poly.reverse() if path.poly? && isClockwise(path.poly)
+        paths = paths.concat(overlaps)
 
-        if paths.length > 0
-          @_drawBackTile(back, i, nwPoint, boundary, maskedPaths.concat(drawnPaths), paths)
+      # Marks the tile as drawn.  As a callback to _drawClippedPaths, the user
+      # gets faster feedback.  As a callback to _drawClippedImagery, the feedback
+      # is slower but the total CPU work and stutter is reduced.  Right now it's
+      # using the former, but if performance is ever a problem, step 1 is to switch
+      # to the latter
+      imageryCallback = =>
+        @tileDrawn(canvas)
 
-        # Note: GIBS is currently ambiguous about which day to use
-        if start != date
-          if drawnPaths.length > 0
-            @_loadClippedImage(canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths)
+      setTimeout((=> @_drawOutlines(canvas, paths, nwPoint)), 0)
+      setTimeout((=> @_drawClippedPaths(canvas, boundary, paths, nwPoint, imageryCallback)), 0)
+      setTimeout((=> @_drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)), 0)
+      setTimeout((=> @_drawFullBackTile(back, paths.concat().reverse(), nwPoint)), 0)
 
-          maskedPaths = maskedPaths.concat(drawnPaths)
-          drawnPaths = paths
-          date = start
+      if paths.length > 0 && config.debug
+        console.log "#{paths.length} Overlapping Granules [(#{bounds.getNorth()}, #{bounds.getWest()}), (#{bounds.getSouth()}, #{bounds.getEast()})]"
+      null
+
+    _drawOutlines: (canvas, paths, nwPoint) ->
+      ctx = canvas.getContext('2d')
+      ctx.save()
+      ctx.translate(-nwPoint.x, -nwPoint.y)
+
+      # Faint stroke of whole path
+      ctx.strokeStyle = 'rgba(128, 128, 128, .2)'
+      for path in paths
+        ctx.beginPath()
+        addPath(ctx, path)
+        ctx.stroke()
+      ctx.restore()
+      null
+
+    _drawClippedPaths: (canvas, boundary, paths, nwPoint, callback) ->
+      ctx = canvas.getContext('2d')
+      ctx.save()
+      ctx.translate(-nwPoint.x, -nwPoint.y)
+      ctx.strokeStyle = 'rgba(205, 84, 0, 1)'
+
+      for path in paths
+        ctx.beginPath()
+        addPath(ctx, path)
+        ctx.stroke()
+        addPath(ctx, boundary)
+        ctx.clip()
+      ctx.restore()
+      callback?()
+      null
+
+    _loadImage: (url, callback, retries=0) ->
+      if url?
+        image = new Image()
+        image.onload = (e) ->
+          callback(this)
+
+        image.onerror = (e) =>
+          if retries < MAX_RETRIES
+            @_loadImage(url, callback, retries + 1)
+          else
+            console.error("Failed to load tile after #{MAX_RETRIES} tries: #{url}")
+            callback(null)
+        image.src = url
+      else
+        callback(null)
+
+    _drawClippedImage: (ctx, boundary, paths, nwPoint, image) ->
+      if image?
+        ctx.beginPath()
+        ctx.save()
+        addPath(ctx, path) for path in paths
+        ctx.clip()
+        ctx.globalCompositeOperation = 'destination-over'
+        ctx.drawImage(image, nwPoint.x, nwPoint.y)
+        ctx.restore()
+
+      for path in paths
+        ctx.beginPath()
+        addPath(ctx, path)
+        addPath(ctx, boundary)
+        ctx.clip()
+      null
+
+    _drawClippedImagery: (canvas, boundary, paths, nwPoint, tilePoint, callback) ->
+      if !@_url? || paths.length == 0
+        callback?()
+        return
+
+      ctx = canvas.getContext('2d')
+      ctx.save()
+      ctx.translate(-nwPoint.x, -nwPoint.y)
+
+      url = null
+      currentPaths = []
+      pathsByUrl = []
+
+      for path in paths
+        if path.url != url
+          # Draw everything in current
+          if currentPaths.length > 0
+            pathsByUrl.push({url: url, urlPaths: currentPaths})
+          currentPaths = [path]
+          url = path.url
         else
-          drawnPaths = drawnPaths.concat(paths)
+          currentPaths.push(path)
 
-      if drawnPaths.length > 0
-        @_loadClippedImage(canvas, tilePoint, date, nwPoint, boundary, maskedPaths, drawnPaths)
+      if currentPaths.length > 0
+        pathsByUrl.push({url: url, urlPaths: currentPaths})
 
-        maskedPaths = maskedPaths.concat(drawnPaths)
+      queue = []
+      index = 0
+
+      self = this
+      for {url, urlPaths}, i in pathsByUrl
+        do (i, urlPaths, url) ->
+          self._loadImage url, (image) ->
+            queue[i] = ->
+              self._drawClippedImage(ctx, boundary, urlPaths, nwPoint, image)
+
+            while queue[index]?
+              queue[index]()
+              queue[index] = null # Allow GC of image data
+              index++
+            if index == pathsByUrl.length
+              ctx.restore()
+              callback?()
+      null
 
 
-      console.log "#{maskedPaths.length} Overlapping Granules [(#{bounds.getNorth()}, #{bounds.getWest()}), (#{bounds.getSouth()}, #{bounds.getEast()})]"
-      @tileDrawn(canvas)
+    _drawFullBackTile: (canvas, paths, nwPoint) ->
+      ctx = canvas.getContext('2d')
+
+      ctx.save()
+      ctx.translate(-nwPoint.x, -nwPoint.y)
+      for path in paths
+        ctx.strokeStyle = ctx.fillStyle = '#' + (path.index + 0x1000000).toString(16).substr(-6)
+        ctx.beginPath()
+        addPath(ctx, path)
+        if path.line?
+          ctx.lineWidth = 4
+          ctx.stroke()
+        else
+          ctx.fill()
+      ctx.restore()
       null
 
     tileDrawn: (tile) ->
@@ -359,9 +389,11 @@ ns.GranuleLayer = do (L
 
     _onEdscStickygranule: (e) =>
       granule = e.granule
+
       return if @_stickied == granule
 
       @_stickied = granule
+      @layer?.stickyId = granule?.id # Ugly hack for testing
 
       @_granuleStickyLayer?.onRemove(@_map)
       @_granuleStickyLayer = null
@@ -389,7 +421,12 @@ ns.GranuleLayer = do (L
       newOptions = L.extend({}, newOptions)
       delete newOptions.time
 
-      layer = new GranuleCanvasLayer(@url(), @_toTileLayerOptions(newOptions))
+      url = @url()
+
+      # Make sure help is displayed after the master overlay is updated for positioning reasons
+      setTimeout((-> help.add('gibs_accuracy')), 0) if url?
+
+      layer = new GranuleCanvasLayer(url, @_toTileLayerOptions(newOptions))
 
       # For tests to figure out if things are still loading
       map = @_map
@@ -397,24 +434,28 @@ ns.GranuleLayer = do (L
       layer.on 'loading', -> map.loadingLayers++
       layer.on 'load', -> map.loadingLayers--
 
-      layer.setResults(@_results)
+      layer.setResults(@_reorderedResults(@_results))
+      layer.stickyId = @_stickied?.id # Ugly hack for testing
       layer
 
-    _loadResults: (results) ->
-      @_results = results
-
+    _reorderedResults: (results) ->
       if @_stickied?
         results = results.concat()
         index = results.indexOf(@_stickied)
         if index == -1
           @_stickied = null
+          @layer?.stickyId = null
           @_granuleStickyLayer?.onRemove(@_map)
           @_granuleStickyLayer = null
         else
           results.splice(index, 1)
           results.unshift(@_stickied)
 
-      @layer?.setResults(results)
+      results
+
+    _loadResults: (results) ->
+      @_results = results
+      @layer?.setResults(@_reorderedResults(results))
 
     _granuleLayer: (granule, options) ->
       layer = L.featureGroup()

@@ -9,7 +9,7 @@ module Echo
   class Client
     include Echo::QueryTransformations
 
-    CATALOG_URL="https://api.echo.nasa.gov"
+    CATALOG_URL = ENV['ECHO_ENDPOINT'] || "https://api.echo.nasa.gov"
 
     def self.get_datasets(options={}, token=nil)
       get('/catalog-rest/echo_catalog/datasets.json', options_to_item_query(options), token_header(token))
@@ -26,7 +26,8 @@ module Echo
     end
 
     def self.get_facets(options={}, token=nil)
-      get("/catalog-rest/search_facet.json", options_to_facet_query(options), token_header(token))
+      # TODO: Remove true after spatial is fixed for facet searches in catalog rest
+      get("/catalog-rest/search_facet.json", options_to_item_query(options, true), token_header(token))
     end
 
     def self.get_provider_holdings
@@ -61,7 +62,6 @@ module Echo
     end
 
     def self.username_recall(params)
-      Rails.logger.info params.to_json
       post('/echo-rest/users/username_recall.json', params.to_json)
     end
 
@@ -84,7 +84,6 @@ module Echo
         headers.each do |header, value|
           req.headers[header] = value
         end
-        Rails.logger.info req.headers.inspect
       end
       Echo::Response.new(faraday_response)
     end

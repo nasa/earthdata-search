@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protected
 
     def authenticate
-      if Rails.env.production?
+      if Rails.env.production? || Rails.env.ops? || Rails.env.uat? || Rails.env.sit?
         whitelist = [
                      'pquinn',
                      'dpilone',
