@@ -1,4 +1,4 @@
-# EDSC-106 As a user, I want to create an account so that I may enjoy 
+# EDSC-106 As a user, I want to create an account so that I may enjoy
 #          the benefits of being a logged-in user
 
 require 'spec_helper'
@@ -201,5 +201,5 @@ describe 'Create new account', reset: false do
       expect(page).to have_css '#country.field-error'
     end
   end
-  
+
 end

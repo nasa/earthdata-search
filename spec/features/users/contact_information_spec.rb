@@ -17,7 +17,7 @@ describe 'Contact Information', reset: false do
     wait_for_xhr
   end
 
-  it "shows the user the current contact information" do
+  it "shows the current user's contact information" do
     expect(page).to have_field("First name", with: "Earthdata")
     expect(page).to have_field("Last name", with: "Search")
     expect(page).to have_field("Email", with: "patrick+edsc@element84.com")
@@ -31,5 +31,29 @@ describe 'Contact Information', reset: false do
     expect(page).to have_select("State", selected: "VA")
     expect(page).to have_field("Zip", with: "22314")
     expect(page).to have_select("Receive delayed access notifications", selected: "Never")
+  end
+
+  context "filling in valid changes and submitting" do
+    before :all do
+      fill_in "First name", with: "Edsc"
+      fill_in "Phone number", with: "555-444-4444"
+      fill_in "Street", with: "101 North Columbus St."
+      # click_on "Save"
+    end
+
+    after :all do
+      fill_in "First name", with: "Earthdata"
+      fill_in "Phone number", with: "555-555-5555"
+      fill_in "Street", with: "101 N. Columbus St."
+      # click_on "Save"
+    end
+
+    it "persists the changes"
+    it "displays a confirmation message"
+  end
+
+  context "filling in invalid changes and submitting" do
+    it "rejects the updates"
+    it "displays appropriate error messages"
   end
 end

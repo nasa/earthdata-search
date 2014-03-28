@@ -204,6 +204,34 @@ describe "Data Access workflow", reset: false do
           expect(page).to have_field("Zip", with: "22314")
           expect(page).to have_select("Receive delayed access notifications", selected: "Never")
         end
+
+        it "disables the data access submit button"
+
+        context "filling in valid changes and submitting" do
+          before :all do
+            fill_in "First name", with: "Edsc"
+            fill_in "Phone number", with: "555-444-4444"
+            fill_in "Street", with: "101 North Columbus St."
+            # click_on "Save"
+          end
+
+          after :all do
+            fill_in "First name", with: "Earthdata"
+            fill_in "Phone number", with: "555-555-5555"
+            fill_in "Street", with: "101 N. Columbus St."
+            # click_on "Save"
+          end
+
+          it "persists the changes"
+          it "displays a confirmation message"
+          it "enables the data access submit button"
+        end
+
+        context "filling in invalid changes and submitting" do
+          it "rejects the updates"
+          it "displays appropriate error messages"
+          it "keeps the data access submit button disabled"
+        end
       end
 
       context 'clicking the "back" button' do
