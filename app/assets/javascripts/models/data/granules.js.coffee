@@ -6,6 +6,7 @@ models = @edsc.models
 ns.Granules = do (ko,
                   getJSON=jQuery.getJSON,
                   XhrModel=ns.XhrModel,
+                  scalerUrl = @edsc.config.browseScalerUrl
                   extend=$.extend,
                   LatLng = L?.latLng,
                   uiModel = models.ui) ->
@@ -17,7 +18,7 @@ ns.Granules = do (ko,
     edsc_browse_url: (w, h) ->
       w ?= 170
       h ?= w
-      "https://api.echo.nasa.gov/browse-scaler/browse_images/granules/#{@id}?h=#{h}&w=#{w}"
+      "#{scalerUrl}/#{@id}?h=#{h}&w=#{w}"
 
     edsc_full_browse_url: ->
       for link in @links

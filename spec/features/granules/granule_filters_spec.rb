@@ -18,8 +18,11 @@ describe "Granule search filters", reset: false, wait: 60 do
 
     first_project_dataset.click_link "Show granule filters"
 
-    number_granules = expect(page.text).to match /\d+ Granules/
-    before_granule_count = number_granules.to_s.split(" ")[0].to_i
+    before_granule_count = 0
+    synchronize do
+      number_granules = expect(page.text).to match /\d+ Granules/
+      before_granule_count = number_granules.to_s.split(" ")[0].to_i
+    end
   end
 
   after(:all) do

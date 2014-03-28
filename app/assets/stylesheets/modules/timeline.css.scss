@@ -22,7 +22,7 @@
 
   h1 {
     font-size: .7em;
-    padding: .5em 0;
+    padding: .2em 0;
     background-color: #151515;
     margin: 0;
     text-transform: uppercase;
@@ -48,6 +48,7 @@
   top: 0;
   right: 0;
   bottom: 0;
+  cursor: move;
 
   text {
     fill: #fff;
@@ -81,6 +82,7 @@
 
 .timeline-display-top {
   fill: #2b2b2b;
+  cursor: pointer;
 }
 
 .timeline-axis-label {
@@ -93,4 +95,30 @@
 
 .timeline-axis-sub-label {
   text-transform: uppercase;
+}
+
+.timeline-selection {
+  fill: #c74105;
+  stroke: #c74105;
+}
+
+.timeline-selection path {
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+
+.timeline-selection-region {
+  fill-opacity: .5;
+  stroke-width: 0;
+}
+
+.timeline-date-label {
+  cursor: pointer;
+
+  &:hover {
+    text {
+      fill: #0ff;
+    }
+  }
 }
