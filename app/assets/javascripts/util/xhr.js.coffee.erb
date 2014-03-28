@@ -8,12 +8,14 @@ window.edsc.util.xhr = do (window, $=jQuery) ->
   window.setTimeout = (f, args...) ->
     id = null
     onTimeout = ->
-      if typeof f == "string"
-        eval(f)
-      else
-        f()
-      index = timeoutPool.indexOf(id)
-      timeoutPool.splice(id, 1) if index > -1
+      try
+        if typeof f == "string"
+          eval(f)
+        else
+          f()
+      finally
+        index = timeoutPool.indexOf(id)
+        timeoutPool.splice(id, 1) if index > -1
 
     id = realSetTimeout(onTimeout, args...)
 
