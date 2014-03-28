@@ -49,6 +49,11 @@ module Helpers
       reset_user
     end
 
+    def click_logout
+      # Do this in Javascript because of capybara clickfailed bug
+      page.execute_script("$('.dropdown-menu .dropdown-link-logout').click()")
+    end
+
     def login(username='edsc', password='EDSCtest!1')
       click_link 'Sign In'
       fill_in 'Username', with: username

@@ -322,8 +322,8 @@
 
 </div>
 
-<% content_for :javascript do %>
-<div id="login-modal" data-bind="showModal: user.needsLogin" class="modal" role="dialog" aria-labelledby="EDSC Login" data-keyboard="false">
+<% content_for :header do %>
+<div id="login-modal" data-bind="showModal: user.needsLogin" class="modal" role="dialog" aria-labelledby="EDSC Login" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -378,6 +378,9 @@
               <a href="#" data-bind="click: user.beginPasswordRecovery">password</a>?
             </p>
             <p>
+              Need an <%= link_to "EOSDIS user account", new_user_path %>?
+            </p>
+            <p>
               Need help? <a href="mailto:support@earthdata.nasa.gov">Contact URS Support.</a>
             </p>
           </div>
@@ -422,4 +425,9 @@
    <input id="data-access-project" name="project" type="hidden">
   </div>
 </form>
+<% end %>
+
+
+<% content_for :footer do %>
+  <%= render partial: 'timeline' %>
 <% end %>

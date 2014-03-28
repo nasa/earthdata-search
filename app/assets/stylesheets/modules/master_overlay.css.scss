@@ -76,13 +76,19 @@
   left: 0%;
 
   section {
+    height: 100%;
     width: 25%;
     float: left;
     position: relative;
   }
 
   dl {
+    margin: 0;
     font-size: .8em;
+  }
+
+  .tab-content {
+    padding-bottom: 0;
   }
 }
 
@@ -163,8 +169,8 @@
 
 // Scrollable content area
 .master-overlay-content {
-  margin: 0;
-  height: 100%;
+  padding: 0 1em;
+  height: 80%;
   overflow-y: scroll;
 }
 

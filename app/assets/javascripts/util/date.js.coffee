@@ -1,4 +1,4 @@
-window.edsc.util.date = do (string = window.edsc.util.string) ->
+@edsc.util.date = do (string = window.edsc.util.string) ->
 
   # Returns an ISO-formatted date string (YYYY-MM-DD) containing the UTC value of the given date
   isoUtcDateString = (date) ->

@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/bilts/capybara-webkit.git
+  revision: c1ce4f9bb64b629d07fab64b6c76e516135f7d92
+  branch: disable-screenshots
+  specs:
+    capybara-webkit (1.1.1)
+      capybara (>= 2.0.2, < 2.2.0)
+      json
+
+GIT
   remote: https://github.com/namick/obfuscate_id.git
   revision: bc9c14fa3768db1b73f221895c57e1233120bac1
   ref: bc9c14fa3768db1b73f221895c57e1233120bac1
@@ -58,7 +67,7 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
-    capybara (2.2.1)
+    capybara (2.1.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
@@ -67,9 +76,6 @@ GEM
     capybara-screenshot (0.3.14)
       capybara (>= 1.0, < 3)
       launchy
-    capybara-webkit (1.1.0)
-      capybara (~> 2.0, >= 2.0.2)
-      json
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     cliver (0.3.2)
@@ -135,7 +141,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    mini_portile (0.5.2)
+    mini_portile (0.5.3)
     minitest (4.7.5)
     multi_json (1.8.4)
     multi_xml (0.5.5)
@@ -268,7 +274,7 @@ DEPENDENCIES
   capistrano
   capybara
   capybara-screenshot
-  capybara-webkit
+  capybara-webkit!
   coffee-rails (~> 4.0.0)
   coffee-script
   colored

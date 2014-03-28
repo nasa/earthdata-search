@@ -20,7 +20,7 @@ group :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'capybara'
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
   gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
@@ -70,11 +70,12 @@ group :assets, :test do
   gem 'coffee-script', :require => 'coffee_script'
   gem 'coffee-rails', '~> 4.0.0'
 
-  gem 'therubyracer', :require => 'v8'
-  gem 'libv8', '~> 3.11.8.3'
-  gem 'headless'
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  #gem 'therubyracer', :platforms => :ruby
+  # This is necessary for NASA/Bamboo deployments and breaks in AWS
+  unless ENV['AWS_DEPLOYMENT'] == 'true'
+    gem 'therubyracer', :require => 'v8'
+    gem 'libv8', '~> 3.11.8.3'
+    gem 'headless'
+  end
 
   gem 'uglifier', '>= 1.3.0'
 end

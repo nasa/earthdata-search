@@ -28,6 +28,7 @@ body {
 
   footer {
     position: absolute;
+    bottom: 0;
   }
 }
 
@@ -38,6 +39,11 @@ footer, .toolbar {
 
 .main-content {
   height: 100%;
+  // 86px = header-height.  35px = footer-height.
+  // Using sass variables breaks this expression
+  height: calc(100% - 86px - 35px);
+  height: -moz-calc(100% - 86px - 35px);
+  height: -webkit-calc(100% - 86px - 35px);
   width: 100%;
   // So we don't have to look at a blank map
   //background: asset-url('ssm.jpg') no-repeat center;
@@ -80,12 +86,14 @@ footer, .toolbar {
   }
 }
 
-footer {
-  height: 35px;
+
+body > footer {
   z-index: 1000;
-  position: absolute;
-  left: 0;
-  right: 0;
+  width: 100%;
+}
+
+.footer-content {
+  height: 35px;
   font-size: .7em;
 
   p {
