@@ -17,6 +17,16 @@ ns.Account = do (ko
       @zip = ko.observable("")
       @country = ko.observable("")
 
+    to_json: =>
+      address =
+        street1: @street1()
+        street2: @street2()
+        street3: @street3()
+        city: @city()
+        state: @state()
+        zip: @zip()
+        country: @country()
+
     from_json: (json) =>
       @street1(json.street1)
       @street2(json.street2)
@@ -37,8 +47,15 @@ ns.Account = do (ko
 
   class Phone
     constructor: (type) ->
+      @id = ko.observable("")
       @number = ko.observable("")
       @type = type
+
+    to_json: =>
+      phone =
+        id: @id()
+        number: @number()
+        phone_number_type: @type
 
   class Account
     constructor: (@user) ->
@@ -83,9 +100,13 @@ ns.Account = do (ko
       xhr = getJSON "/users/get_contact_info", (data, status, xhr) =>
         user = data.user
         userId = data.user.id
+        @username(user.username)
         @firstName(user.first_name)
         @lastName(user.last_name)
         @email(user.email)
+        @domain(user.user_domain)
+        @userType(user.user_type)
+        @primaryStudyArea(user.primary_study_area)
         @organizationName(user.organization_name)
         @address.from_json(user.addresses[0])
         @get_phones(userId)
@@ -99,8 +120,10 @@ ns.Account = do (ko
         for obj in data
           if obj.phone.phone_number_type == "BUSINESS"
             @phone.number(obj.phone.number)
+            @phone.id(obj.phone.id)
           else if obj.phone.phone_number_type == "BUSINESS_FAX"
             @fax.number(obj.phone.number)
+            @fax.id(obj.phone.id)
 
     get_preferences: (userId) =>
       params =
@@ -108,6 +131,12 @@ ns.Account = do (ko
 
       xhr = getJSON "/users/get_preferences", params, (data) =>
         @notificationLevel(data.preferences.order_notification_level)
+
+    updateContactInformation: =>
+      xhr = doPost '/users/update_contact_info', @_buildUserData(), (response) =>
+        # set success message
+
+        #set failure message
 
     createAccount: =>
       # Fix chrome autocomplete issues
@@ -156,22 +185,24 @@ ns.Account = do (ko
         username: @username()
         first_name: @firstName()
         last_name: @lastName()
-        password: @password()
-        password_confirmation: @passwordConfirmation()
+        password: @password() if @password()?.length > 0
+        password_confirmation: @passwordConfirmation() if @passwordConfirmation()?.length > 0
         email: @email()
         user_domain: @domain()
         organization_name: @organizationName()
         user_type: @userType()
         primary_study_area: @primaryStudyArea()
-        # Country needs to be converted to addresses in controller
-        country: @address.country()
         user_region: @region()
         # Should this be true?
         opt_in: false
 
+        addresses: @address.to_json()
+        phone: @phone.to_json() if @phone.number()?.length > 0
+        fax: @fax.to_json() if @fax.number()?.length > 0
+        preferences: @notificationLevel() if @notificationLevel()?.length > 0
+
       data =
         user: user
-
 
     _validateNewAccountForm: =>
       @_resetErrors()
