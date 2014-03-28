@@ -102,7 +102,7 @@
 
         <p>
           <label for="country">Country</label>
-          <select data-bind="value: address.country, css: { 'field-error': countryError() }" id="country">
+          <select data-bind="value: address.country, css: { 'field-error': address.countryError() }" id="country">
             <%= render partial: "country_options" %>
           </select>
         </p>

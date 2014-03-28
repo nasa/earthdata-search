@@ -77,9 +77,12 @@
 
       <div class="access-item-body" data-bind="css: { hidden: project.datasets().length != ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
-          <div class="account-form">
+          <form data-bind="submit: account.updateContactInformation" class="account-form">
             <%= render partial: 'users/contact_info_form' %>
-          </div>
+            <p>
+              <button>Update Information</button>
+            </p>
+          </form>
         </div>
         <div class="access-item-actions">
           <button data-bind="click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>

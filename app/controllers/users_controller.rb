@@ -32,10 +32,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    # Country needs to be converted to addresses
-    country = params[:user][:country]
-    params[:user].delete("country")
-    params[:user][:addresses] = [{country: country}]
+    # Address needs to be converted to addresses
+    address = params[:user].delete("address")
+
+    params[:user][:addresses] = [address]
 
     if params[:user][:password] != params[:user][:password_confirmation]
       render json: {errors: "Password must match confirmation"}, status: 422
@@ -48,51 +48,16 @@ class UsersController < ApplicationController
     render json: response.body, status: response.status
   end
 
-  def get_contact_info
-    response = Echo::Client.get_contact_info(get_user_id, token)
-    render json: response.body, status: response.status
-  end
-
-  def get_phones
-    response = Echo::Client.get_phones(params[:user_id], token)
-    render json: response.body, status: response.status
-  end
-
   def get_preferences
-    response = Echo::Client.get_preferences(params[:user_id], token)
+    response = Echo::Client.get_preferences(get_user_id, token)
     render json: response.body, status: response.status
   end
 
   def update_contact_info
-    user = {user: params.delete('user')}
-    phones = [user[:user].delete("phone"), user[:user].delete("fax")]
-    preferences = {
-      preferences: {
-        order_notification_level: user[:user].delete("preferences")
-      }
-    }
+    preferences = {preferences: params.delete('preferences')}
     user_id = get_user_id
 
-    addresses = user[:user].delete('addresses')
-    user[:user][:addresses] = [addresses]
-    user[:user][:id] = user_id
-
-    contact_info_response = Echo::Client.update_contact_info(user_id, user, token)
-
-    preference_response = Echo::Client.update_preferences(user_id, preferences, token)
-
-    phones_response = nil
-    phones.each do |phone|
-      p = {
-        phone: phone
-      }
-      phones_response = Echo::Client.update_phones(user_id, p, token)
-    end
-
-    puts contact_info_response.body.inspect
-    puts preference_response.body.inspect
-    puts phones_response.body.inspect
-
-    render json: phones_response.body, status: phones_response.status
+    response = Echo::Client.update_preferences(user_id, preferences, token)
+    render json: response.body, status: response.status
   end
 end

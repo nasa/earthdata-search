@@ -33,74 +33,85 @@
 <!-- /ko -->
 <!-- ko if: !ui.serviceOptionsList || ui.serviceOptionsList.isEditingAccount() -->
 <!-- ko with: account -->
+
+  <!-- ko if: errors() -->
+  <p data-bind="foreach: errors">
+    <span class="error" data-bind="text: $data"></span>
+  </p>
+  <!-- /ko -->
+
+  <!-- ko if: message() -->
+  <p class="confirmation-message" data-bind="text: message"></p>
+  <!-- /ko -->
+
   <p>
     <label for="first_name">First name*</label>
-    <input data-bind="value: firstName" id="first_name" size="30" type="text">
+    <input data-bind="value: firstName, css: { 'field-error': firstNameError() }" id="first_name" size="30" type="text">
   </p>
   <p>
     <label for="last_name">Last name*</label>
-    <input data-bind="value: lastName" id="last_name" size="30" type="text">
+    <input data-bind="value: lastName, css: { 'field-error': lastNameError() }" id="last_name" size="30" type="text">
   </p>
   <p>
     <label for="email">Email*</label>
-    <input data-bind="value: email" id="email" size="30" type="text">
+    <input data-bind="value: email, css: { 'field-error': emailError() }" id="email" size="30" type="text">
   </p>
   <p>
     <label for="organization_name">Organization name</label>
-    <input data-bind="value: organizationName" id="organization_name" size="30" type="text">
+    <input data-bind="value: organizationName, css: { 'field-error': organizationNameError() }" id="organization_name" size="30" type="text">
   </p>
 
   <h4>Address</h4>
 
   <p>
-    <label for="street1">Street*</label>
-    <input data-bind="value: address.street1" id="street1" maxlength="128" size="30" type="text">
+    <label for="street1">Street</label>
+    <input data-bind="value: address.street1, css: { 'field-error': address.street1Error() }" id="street1" maxlength="128" size="30" type="text">
   </p>
   <p>
     <label></label>
-    <input data-bind="value: address.street2" id="street2" maxlength="128" size="30" type="text">
+    <input data-bind="value: address.street2, css: { 'field-error': address.street2Error() }" id="street2" maxlength="128" size="30" type="text">
   </p>
   <p>
     <label></label>
-    <input data-bind="value: address.street3" id="street3" maxlength="128" size="30" type="text">
+    <input data-bind="value: address.street3, css: { 'field-error': address.street3Error() }" id="street3" maxlength="128" size="30" type="text">
   </p>
   <p>
-    <label for="city">City*</label>
-    <input data-bind="value: address.city" id="city" size="30" type="text">
+    <label for="city">City</label>
+    <input data-bind="value: address.city, css: { 'field-error': address.cityError() }" id="city" size="30" type="text">
   </p>
   <p>
-    <label for="country">Country*</label>
-    <select data-bind="value: address.country" id="country">
+    <label for="country">Country</label>
+    <select data-bind="value: address.country, css: { 'field-error': address.countryError() }" id="country">
       <%= render partial: "users/country_options" %>
     </select>
   </p>
   <!-- ko if: address.country() == 'United States' -->
   <p>
     <label for="state" class="">State</label>
-    <select data-bind="value: address.state" id="state">
+    <select data-bind="value: address.state, css: { 'field-error': address.stateError() }" id="state">
       <%= render partial: "users/state_options" %>
     </select>
   </p>
   <!-- /ko -->
   <p>
     <label for="zip" class="">Zip</label>
-    <input data-bind="value: address.zip" id="zip" size="30" type="text">
+    <input data-bind="value: address.zip, css: { 'field-error': address.zipError() }" id="zip" size="30" type="text">
   </p>
 
   <h4>Phone</h4>
 
   <p>
-    <label for="phone_number">Phone number*</label>
-    <input data-bind="value: phone.number" id="phone_number" size="30" type="text">
+    <label for="phone_number">Phone number</label>
+    <input data-bind="value: phone.number, css: { 'field-error': phoneError() }" id="phone_number" size="30" type="text">
   </p>
   <p>
     <label for="fax_number">Fax number</label>
-    <input data-bind="value: fax.number" id="fax_number" size="30" type="text">
+    <input data-bind="value: fax.number, css: { 'field-error': faxError() }" id="fax_number" size="30" type="text">
   </p>
 
   <p>
     <label for="notification_level">Receive delayed access notifications</label>
-    <select data-bind="value: notificationLevel" id="notification_level">
+    <select data-bind="value: notificationLevel, css: { 'field-error': notificationLevelError() }" id="notification_level">
       <option value="VERBOSE">Always</option>
       <option value="DETAIL">When requests change state</option>
       <option value="INFO">When requests reach a completed or failed state</option>

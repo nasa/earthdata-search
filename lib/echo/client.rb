@@ -89,14 +89,6 @@ module Echo
       get("/echo-rest/users/#{user_id}/preferences.json", {}, token_header(token))
     end
 
-    def self.update_contact_info(user_id, params, token)
-      put("/echo-rest/users/#{user_id}.json", params.to_json, token_header(token))
-    end
-
-    def self.update_phones(user_id, phone, token)
-      put("/echo-rest/users/#{user_id}/phones/#{phone[:phone][:id]}.json", phone.to_json, token_header(token))
-    end
-
     def self.update_preferences(user_id, params, token)
       put("/echo-rest/users/#{user_id}/preferences.json", params.to_json, token_header(token))
     end
