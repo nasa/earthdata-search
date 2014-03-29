@@ -24,7 +24,10 @@ module Helpers
         begin
           yield
         rescue => e
-          raise e if (Time.now - start_time) >= seconds
+          if (Time.now - start_time) >= seconds
+            Capybara::Screenshot.screenshot_and_save_page
+            raise e
+          end
           sleep(0.05)
           retry
         ensure

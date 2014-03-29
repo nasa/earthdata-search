@@ -89,6 +89,10 @@ module Echo
       get("/echo-rest/users/#{user_id}/preferences.json", {}, token_header(token))
     end
 
+    def self.update_preferences(user_id, params, token)
+      put("/echo-rest/users/#{user_id}/preferences.json", params.to_json, token_header(token))
+    end
+
     def self.connection
       Thread.current[:edsc_echo_connection] ||= self.build_connection
     end
@@ -110,6 +114,17 @@ module Echo
 
     def self.post(url, body)
       faraday_response = connection.post(url) do |req|
+        req.headers['Content-Type'] = 'application/json'
+        req.body = body if body
+      end
+      Echo::Response.new(faraday_response)
+    end
+
+    def self.put(url, body, headers={})
+      faraday_response = connection.put(url) do |req|
+        headers.each do |header, value|
+          req.headers[header] = value
+        end
         req.headers['Content-Type'] = 'application/json'
         req.body = body if body
       end

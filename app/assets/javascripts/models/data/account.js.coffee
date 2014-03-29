@@ -16,6 +16,17 @@ ns.Account = do (ko
       @state = ko.observable("")
       @zip = ko.observable("")
       @country = ko.observable("")
+      @countryError = ko.observable(false)
+
+    to_json: =>
+      address =
+        street1: @street1()
+        street2: @street2()
+        street3: @street3()
+        city: @city()
+        state: @state()
+        zip: @zip()
+        country: @country()
 
     from_json: (json) =>
       @street1(json.street1)
@@ -37,8 +48,15 @@ ns.Account = do (ko
 
   class Phone
     constructor: (type) ->
+      @id = ko.observable("")
       @number = ko.observable("")
       @type = type
+
+    to_json: =>
+      phone =
+        id: @id()
+        number: @number()
+        phone_number_type: @type
 
   class Account
     constructor: (@user) ->
@@ -63,15 +81,16 @@ ns.Account = do (ko
       @primaryStudyArea = ko.observable("")
       @primaryStudyAreaError = ko.observable(false)
       @address = new Address()
-      @countryError = ko.observable(false)
       @region = ko.computed =>
         if @address.country() == "United States" then "USA" else "INTERNATIONAL"
 
       @phone = new Phone("BUSINESS")
       @fax = new Phone("BUSINESS_FAX")
       @notificationLevel = ko.observable("")
+      @role = ko.observable("Main User Contact")
 
       @errors = ko.observable("")
+      @message = ko.observable("")
 
       if @user.name()?.length > 0
         @_from_user()
@@ -79,35 +98,78 @@ ns.Account = do (ko
         @user = new UserModel()
 
     _from_user: =>
-      # call echo to get user information
-      xhr = getJSON "/users/get_contact_info", (data, status, xhr) =>
-        user = data.user
-        userId = data.user.id
-        @firstName(user.first_name)
-        @lastName(user.last_name)
-        @email(user.email)
-        @organizationName(user.organization_name)
-        @address.from_json(user.addresses[0])
-        @get_phones(userId)
-        @get_preferences(userId)
+      xhr = getJSON "/users/get_preferences", (data) =>
+        @_preferencesFromJson(data)
+      xhr.fail (response, type, reason) =>
+        @errors(["Contact information could not be loaded, please try again later"])
 
-    get_phones: (userId) =>
-      params =
-        user_id: userId
+    updateContactInformation: (callback) =>
+      @message('')
+      @_validateContactInfoForm()
 
-      xhr = getJSON "/users/get_phones", params, (data) =>
-        for obj in data
-          if obj.phone.phone_number_type == "BUSINESS"
-            @phone.number(obj.phone.number)
-          else if obj.phone.phone_number_type == "BUSINESS_FAX"
-            @fax.number(obj.phone.number)
+      if @errors()?.length == 0
+        xhr = doPost '/users/update_contact_info', @_buildPreferences(), (response) =>
+          @_preferencesFromJson(response)
+          @message("Successfully updated contact information")
+          callback?()
+        xhr.fail (response, type, reason) =>
+          server_error = false
+          try
+            errors = JSON.parse(response.responseText)?.errors
 
-    get_preferences: (userId) =>
-      params =
-        user_id: userId
+            for error in errors
+              if error.indexOf('Username') >= 0
+                @usernameError(true)
+              if error.indexOf('Password') >= 0
+                @passwordError(true)
+              if error.indexOf('Email') >= 0
+                @emailError(true)
+              # TODO: list other account fields here
 
-      xhr = getJSON "/users/get_preferences", params, (data) =>
-        @notificationLevel(data.preferences.order_notification_level)
+            @errors(errors)
+          catch
+            server_error = true
+          @errors(["Contact information could not be updated, please try again later"]) if server_error
+
+    _preferencesFromJson: (json) =>
+      prefs = json.preferences
+      @notificationLevel(prefs.order_notification_level)
+      contact = prefs.general_contact
+      if contact?
+        @firstName(contact.first_name)
+        @lastName(contact.last_name)
+        @email(contact.email)
+        @organizationName(contact.organization)
+        @role(contact.role)
+        @address.from_json(contact.address)
+        for phone in contact.phones ? []
+          if phone.phone_number_type == "BUSINESS"
+            @phone.number(phone.number)
+            @phone.id(phone.id)
+          else if phone.phone_number_type == "BUSINESS_FAX"
+            @fax.number(phone.number)
+            @fax.id(phone.id)
+
+    _buildPreferences: =>
+      phones = []
+      phones.push(@phone.to_json()) if @phone.number()?.length > 0
+      phones.push(@fax.to_json()) if @fax.number()?.length > 0
+
+      contact =
+        first_name: @firstName()
+        last_name: @lastName()
+        email: @email()
+        organization: @organizationName()
+        address: @address.to_json()
+        phones: phones
+        role: @role()
+
+      prefs =
+        general_contact: contact
+        order_notification_level: @notificationLevel()
+
+      data =
+        preferences: prefs
 
     createAccount: =>
       # Fix chrome autocomplete issues
@@ -156,22 +218,42 @@ ns.Account = do (ko
         username: @username()
         first_name: @firstName()
         last_name: @lastName()
-        password: @password()
-        password_confirmation: @passwordConfirmation()
+        password: @password() if @password()?.length > 0
+        password_confirmation: @passwordConfirmation() if @passwordConfirmation()?.length > 0
         email: @email()
         user_domain: @domain()
         organization_name: @organizationName()
         user_type: @userType()
         primary_study_area: @primaryStudyArea()
-        # Country needs to be converted to addresses in controller
-        country: @address.country()
         user_region: @region()
         # Should this be true?
         opt_in: false
 
+        address: {country: @address.country()}
+
       data =
         user: user
 
+    _validateContactInfoForm: =>
+      @_resetErrors()
+      errors = []
+
+      unless @firstName()?.length > 0
+        errors.push "Please provide first name"
+        @firstNameError(true)
+
+      unless @lastName()?.length > 0
+        errors.push "Please provide last name"
+        @lastNameError(true)
+
+      unless @email()?.length > 0
+        errors.push "Please provide email"
+        @emailError(true)
+
+      if errors?.length > 1
+        errors = ["Please fill in all required fields, highlighted below"]
+
+      @errors(errors)
 
     _validateNewAccountForm: =>
       @_resetErrors()
@@ -214,7 +296,7 @@ ns.Account = do (ko
 
       unless @address.country()?.length > 0
         errors.push "Please select country"
-        @countryError(true)
+        @address.countryError(true)
 
       if errors?.length > 1
         errors = ["Please fill in all required fields, highlighted below"]
@@ -255,6 +337,6 @@ ns.Account = do (ko
       @domainError(false)
       @userTypeError(false)
       @primaryStudyAreaError(false)
-      @countryError(false)
+      @address.countryError(false)
 
   exports = Account
