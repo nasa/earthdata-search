@@ -88,6 +88,9 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
 
       xhr = doPost "/login", data, (response) =>
         token = response.token
+        unless token?
+          console.log("Error logging in")
+          return
         @token(token.id)
         @name(token.username)
         @loginCallback?()

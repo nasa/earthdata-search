@@ -32,19 +32,20 @@ class UsersController < ApplicationController
   end
 
   def create
+    user = params[:user].with_indifferent_access
     # Address needs to be converted to addresses
-    address = params[:user].delete("address")
+    address = user.delete("address")
 
-    params[:user][:addresses] = [address]
+    user[:addresses] = [address]
 
-    if params[:user][:password] != params[:user][:password_confirmation]
+    if user[:password] != user[:password_confirmation]
       render json: {errors: "Password must match confirmation"}, status: 422
       return
     else
-      params[:user].delete("password_confirmation")
+      user.delete("password_confirmation")
     end
 
-    response = Echo::Client.create_user({user: params[:user]})
+    response = Echo::Client.create_user({user: user})
     render json: response.body, status: response.status
   end
 

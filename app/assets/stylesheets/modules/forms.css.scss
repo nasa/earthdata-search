@@ -71,6 +71,10 @@ fieldset {
   }
 }
 
+.required label:after {
+  content:'*';
+}
+
 .data-access-content .account-form {
   margin-bottom: 0;
 }

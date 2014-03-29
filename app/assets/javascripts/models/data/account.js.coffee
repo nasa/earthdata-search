@@ -10,17 +10,11 @@ ns.Account = do (ko
   class Address
     constructor: ->
       @street1 = ko.observable("")
-      @street1Error = ko.observable(false)
       @street2 = ko.observable("")
-      @street2Error = ko.observable(false)
       @street3 = ko.observable("")
-      @street3Error = ko.observable(false)
       @city = ko.observable("")
-      @cityError = ko.observable(false)
       @state = ko.observable("")
-      @stateError = ko.observable(false)
       @zip = ko.observable("")
-      @zipError = ko.observable(false)
       @country = ko.observable("")
       @countryError = ko.observable(false)
 
@@ -91,12 +85,9 @@ ns.Account = do (ko
         if @address.country() == "United States" then "USA" else "INTERNATIONAL"
 
       @phone = new Phone("BUSINESS")
-      @phoneError = ko.observable(false)
       @fax = new Phone("BUSINESS_FAX")
-      @faxError = ko.observable(false)
       @notificationLevel = ko.observable("")
-      @notificationLevelError = ko.observable(false)
-      @role = ko.observable("")
+      @role = ko.observable("Main User Contact")
 
       @errors = ko.observable("")
       @message = ko.observable("")
@@ -112,16 +103,17 @@ ns.Account = do (ko
       xhr.fail (response, type, reason) =>
         @errors(["Contact information could not be loaded, please try again later"])
 
-    updateContactInformation: =>
+    updateContactInformation: (callback) =>
+      @message('')
       @_validateContactInfoForm()
 
       if @errors()?.length == 0
         xhr = doPost '/users/update_contact_info', @_buildPreferences(), (response) =>
           @_preferencesFromJson(response)
           @message("Successfully updated contact information")
+          callback?()
         xhr.fail (response, type, reason) =>
           server_error = false
-          console.log response.responseText
           try
             errors = JSON.parse(response.responseText)?.errors
 
@@ -143,19 +135,20 @@ ns.Account = do (ko
       prefs = json.preferences
       @notificationLevel(prefs.order_notification_level)
       contact = prefs.general_contact
-      @firstName(contact.first_name)
-      @lastName(contact.last_name)
-      @email(contact.email)
-      @organizationName(contact.organization)
-      @role(contact.role)
-      @address.from_json(contact.address)
-      for phone in contact.phones
-        if phone.phone_number_type == "BUSINESS"
-          @phone.number(phone.number)
-          @phone.id(phone.id)
-        else if phone.phone_number_type == "BUSINESS_FAX"
-          @fax.number(phone.number)
-          @fax.id(phone.id)
+      if contact?
+        @firstName(contact.first_name)
+        @lastName(contact.last_name)
+        @email(contact.email)
+        @organizationName(contact.organization)
+        @role(contact.role)
+        @address.from_json(contact.address)
+        for phone in contact.phones ? []
+          if phone.phone_number_type == "BUSINESS"
+            @phone.number(phone.number)
+            @phone.id(phone.id)
+          else if phone.phone_number_type == "BUSINESS_FAX"
+            @fax.number(phone.number)
+            @fax.id(phone.id)
 
     _buildPreferences: =>
       phones = []
@@ -236,7 +229,7 @@ ns.Account = do (ko
         # Should this be true?
         opt_in: false
 
-        address: @address.to_json()
+        address: {country: @address.country()}
 
       data =
         user: user
@@ -344,15 +337,6 @@ ns.Account = do (ko
       @domainError(false)
       @userTypeError(false)
       @primaryStudyAreaError(false)
-      @address.street1Error(false)
-      @address.street2Error(false)
-      @address.street3Error(false)
-      @address.cityError(false)
-      @address.stateError(false)
-      @address.zipError(false)
       @address.countryError(false)
-      @notificationLevelError(false)
-      @phoneError(false)
-      @faxError(false)
 
   exports = Account
