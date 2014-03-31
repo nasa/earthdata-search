@@ -35,5 +35,12 @@
       </div>
     </footer>
     <%= yield :global %>
+
+    <% unless Rails.env.test? || Rails.env.development? %>
+      <%= javascript_include_tag "ntpagetag" %>
+      <noscript>
+        <img src="<%= image_path "https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0" %>" alt="">
+      </noscript>
+    <% end %>
 </body>
 </html>
