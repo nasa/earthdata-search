@@ -1,6 +1,10 @@
 ns = @edsc.models.data
 
-ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
+ns.User = do (ko
+              doPost=jQuery.post
+              getJSON=jQuery.getJSON
+              cookieUtil=@edsc.util.cookies
+              ) ->
 
   class User
     constructor: ->
@@ -95,8 +99,8 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
         @name(token.username)
         @loginCallback?()
         @clearLogin()
-        @_setCookie("token", @token())
-        @_setCookie("name", @name())
+        cookieUtil.setCookie("token", @token())
+        cookieUtil.setCookie("name", @name())
 
       xhr.fail(@_onXhrFail)
 
@@ -122,28 +126,13 @@ ns.User = do (ko, doPost=jQuery.post, getJSON=jQuery.getJSON) ->
       xhr = getJSON "/logout", (data, status, xhr) =>
         @token(null)
         @name(null)
-        @_setCookie("token", "")
-        @_setCookie("name", "")
+        cookieUtil.setCookie("token", "")
+        cookieUtil.setCookie("name", "")
         @clearLogin()
 
-    # https://gist.github.com/dmix/2222990
-    _setCookie: (name, value) ->
-      document.cookie = "#{name}=#{escape(value)}; path=/;"
-
-    _readCookie: (name) ->
-      nameEQ = name + "="
-      ca = document.cookie.split(";")
-      i = 0
-      while i < ca.length
-        c = ca[i]
-        c = c.substring(1, c.length)  while c.charAt(0) is " "
-        return c.substring(nameEQ.length, c.length).replace(/\"/g, '')  if c.indexOf(nameEQ) is 0
-        i++
-      null
-
     _loadStateFromCookie: =>
-      @token(@_readCookie("token"))
-      @name(@_readCookie("name"))
+      @token(cookieUtil.readCookie("token"))
+      @name(cookieUtil.readCookie("name"))
 
     loggedIn: (action) ->
       if @isLoggedIn()

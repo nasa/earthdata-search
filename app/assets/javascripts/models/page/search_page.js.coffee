@@ -8,6 +8,7 @@
 #= require models/ui/datasets_list
 #= require models/ui/project_list
 #= require models/ui/granule_timeline
+#= require models/ui/preferences
 
 models = @edsc.models
 data = models.data
@@ -27,7 +28,8 @@ ns.SearchPage = do (ko,
                     TemporalModel = ui.Temporal
                     DatasetsListModel = ui.DatasetsList
                     ProjectListModel = ui.ProjectList
-                    GranuleTimelineModel = ui.GranuleTimeline) ->
+                    GranuleTimelineModel = ui.GranuleTimeline
+                    PreferencesModel = ui.Preferences) ->
 
   class SearchPage
     constructor: ->
@@ -44,6 +46,7 @@ ns.SearchPage = do (ko,
         projectList: new ProjectListModel(@project, @user, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
         granuleTemporal: null
+        preferences: new PreferencesModel(@user)
 
       @bindingsLoaded = ko.observable(false)
 

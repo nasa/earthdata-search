@@ -61,4 +61,23 @@ class UsersController < ApplicationController
     response = Echo::Client.update_preferences(user_id, preferences, token)
     render json: response.body, status: response.status
   end
+
+  def get_site_preferences
+    user = User.where(echo_id: get_user_id).first
+    if user
+      render json: user.preferences, status: :ok
+    else
+      render json: nil, status: :ok
+    end
+  end
+
+  def set_site_preferences
+    user = User.where(echo_id: get_user_id).first
+
+    if user
+      user.preferences = params[:preferences]
+      user.save
+      render json: user.preferences, status: :ok
+    end
+  end
 end
