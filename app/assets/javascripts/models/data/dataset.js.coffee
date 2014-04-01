@@ -60,10 +60,19 @@ ns.Dataset = do (ko
         else
           null
 
-      @granuleDownloadsUrl = @computed =>
-        params = @query.params()
-        paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
-        "/granules/download.html?#{paramStr}"
+      @granuleDownloadsUrl = @computed
+        read: =>
+          params = @query.params()
+          paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
+          "/granules/download.html?#{paramStr}"
+        deferEvaluation: true
+
+      @granuleScriptUrl = @computed
+        read: =>
+          params = @query.params()
+          paramStr = toParam(@_granuleParams(params))
+          "/data/download.sh?#{paramStr}"
+        deferEvaluation: true
 
       @dqsModel = @disposable(new DataQualitySummaryModel(new QueryModel('catalog_item_id': jsonData.id)))
 
