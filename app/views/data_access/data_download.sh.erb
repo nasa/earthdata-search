@@ -39,7 +39,7 @@ fail_on_echo_error() {
     fi
 }
 
-if command -v false_curl >/dev/null 2>&1
+if command -v curl >/dev/null 2>&1
 then
     echo_post() {
         echo_response=$(curl -qsSi -XPOST -H"Content-Type: application/json" -d"$2" "$api_endpoint$1")
@@ -47,7 +47,7 @@ then
     }
 
     echo_get() {
-        echo_response=$(curl -qsSi -XGET "$api_endpoint$1$2")
+        echo_response=$(curl -qsSi -XGET -H"Echo-Token: $echo_token" "$api_endpoint$1?$2")
         fail_on_echo_error "$echo_response"
     }
 
@@ -63,7 +63,7 @@ then
     }
 
     echo_get() {
-        echo_response=$(wget -qSO - "$api_endpoint$1$2" 2>&1)
+        echo_response=$(wget --header="Echo-Token: $echo_token" -qSO - "$api_endpoint$1?$2" 2>&1)
         fail_on_echo_error "$echo_response"
     }
 
@@ -77,7 +77,7 @@ fi
 get_echo_token() {
     local _post_body="{\"token\": {\"username\": \"$urs_username\", \"password\": \"$urs_password\", \"client_id\": \"$client_id\", \"user_ip_address\": \"$user_ip_address\"}}"
     echo_post $login_path "$_post_body"
-    echo_token=$(echo "$echo_response" | sed 's/^.*"id":"\([^"]*\)".*$/\1/')
+    echo_token=$(echo "$echo_response" | grep -o '"id":"[^"]*"' | sed 's/^.*"id":"\([^"]*\)".*$/\1/')
 }
 
 fetch_results() {
@@ -86,7 +86,7 @@ fetch_results() {
 
     while [ "$at_end" != '' ]
     do
-        echo_get $granules_path $query"&page_size=2000&page_num=$page_num"
+        echo_get $granules_path $query"&online_only=true&page_size=2000&page_num=$page_num"
 
         mkdir -p echo-download
         cd echo-download
@@ -98,6 +98,6 @@ fetch_results() {
     done
 }
 
-#get_urs_password
+get_urs_password
 get_echo_token
 fetch_results
