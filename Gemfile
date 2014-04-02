@@ -56,6 +56,10 @@ group :development, :test do
   # so we're specifying a newer version here.  This should be removed once we have
   # a newer release
   gem 'jasmine', :git => 'https://github.com/pivotal/jasmine-gem.git', :ref => 'e8105401'
+
+  gem 'therubyracer', :require => 'v8'
+  gem 'libv8', '~> 3.11.8.3'
+  gem 'headless'
 end
 
 group :assets, :development, :test do
@@ -69,13 +73,6 @@ group :assets, :test do
   gem 'sass-rails',   '~> 4.0.0'
   gem 'coffee-script', :require => 'coffee_script'
   gem 'coffee-rails', '~> 4.0.0'
-
-  # This is necessary for NASA/Bamboo deployments and breaks in AWS
-  unless ENV['AWS_DEPLOYMENT'] == 'true'
-    gem 'therubyracer', :require => 'v8'
-    gem 'libv8', '~> 3.11.8.3'
-    gem 'headless'
-  end
 
   gem 'uglifier', '>= 1.3.0'
 end
