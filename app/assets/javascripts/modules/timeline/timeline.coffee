@@ -26,6 +26,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
   MS_PER_YEAR = MS_PER_DAY * 366
 
+  MS_PER_DECADE = MS_PER_YEAR * 10
+
   MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
   MIN_X = -1000000
@@ -33,6 +35,40 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
   MAX_X = 1000000
   MAX_Y = 1000000
 
+  formatTime = (date) -> string.padLeft(date.getUTCHours(), '0', 2) + ':' + string.padLeft(date.getUTCMinutes(), '0', 2)
+  formatDay = (date) -> string.padLeft(date.getUTCDate(), '0', 2)
+  formatMonth = (date) -> MONTHS[date.getUTCMonth()]
+  formatDate = (date) -> formatMonth(date) + ' ' + formatDay(date)
+  formatYear = (date) -> string.padLeft(date.getUTCFullYear(), '0', 2)
+  formatDecade = (date) -> string.padLeft(date.getUTCFullYear(), '0', 2)
+
+
+  LABELS = [
+    ((date) -> [formatTime(date), formatDate(date)]),
+    ((date) -> [formatTime(date), formatDate(date)]),
+    ((date) -> [formatDay(date), formatMonth(date)]),
+    ((date) -> [formatMonth(date), formatYear(date)]),
+    ((date) -> [formatYear(date)]),
+    ((date) -> [formatYear(date)])
+  ]
+
+  RESOLUTIONS = [
+    'minute',
+    'hour',
+    'day',
+    'month',
+    'year',
+    'decade'
+  ]
+
+  ZOOM_LEVELS = [
+    MS_PER_MINUTE,
+    MS_PER_HOUR,
+    MS_PER_DAY,
+    MS_PER_MONTH,
+    MS_PER_YEAR,
+    MS_PER_DECADE
+  ]
 
   class Timeline extends plugin.Base
     constructor: (root, namespace, options={}) ->
@@ -40,6 +76,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @root.append(@_createDisplay())
 
+      @zoom = 3
       @end = config.present()
       @start = @end - MS_PER_MONTH
       @originPx = 0
@@ -55,9 +92,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     range: ->
       # Query and draw bounds that are 3x wider than needed, centered on the visible range.
       # This prevents an in-progress drag from needing to redraw or re-query
-      {start, end} = this
+      {start, end, zoom} = this
       span = end - start
-      [start - span, end + span]
+      [start - span, end + span, RESOLUTIONS[zoom - 2]]
 
     startTime: ->
       @start
@@ -75,14 +112,14 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @_setHeight()
       null
 
-    loadstart: (id, start, end) ->
+    loadstart: (id, start, end, resolution) ->
       @root.find(@scope('.tools')).addClass('busy')
       match = @svg.getElementsByClassName(id)
       if match.length > 0
         match[0].setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
         @_empty(match[0])
 
-    data: (id, start, end, intervals) =>
+    data: (id, start, end, resolution, intervals) =>
       index = -1
       for dataset, i in @_datasets
         if dataset.id() == id
@@ -149,7 +186,39 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
     positionToTime: (p) ->
       {originPx, start, scale} = this
-      (p - originPx) * scale + start
+      Math.floor((p - originPx) * scale + start)
+
+    zoomIn: ->
+     @_zoom(-1)
+
+    zoomOut: ->
+     @_zoom(1)
+
+    _zoom: (levels, center_t=(@end + @start) / 2) ->
+      @zoom = Math.min(Math.max(@zoom + levels, 2), ZOOM_LEVELS.length - 1)
+
+      # We want to zoom in a way that keeps the center_t at the same pixel so you
+      # can double-click or scoll-wheel to zoom and your mouse stays over the same time
+
+      x = @timeToPosition(center_t)
+
+      timeSpan = ZOOM_LEVELS[@zoom]
+
+      scale = timeSpan / @width
+
+      @start = center_t - (scale * x)
+      @end = @start + timeSpan
+
+      present = config.present()
+
+      if @end > present
+        @end = present
+        @start = @end - timeSpan
+
+      @scale = scale
+
+      @_updateTimeline()
+      #console.log 'zoom', @zoom, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
     #_overlaps: (start0, end0, start1, end1) ->
     #  start0 < start1 < end0 || start0 < end1 < end0 || (start1 < start0 && end0 < end1)
@@ -190,8 +259,32 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       svg.appendChild(selection)
 
       @_setupDragBehavior(svg)
+      @_setupZoomBehavior(svg)
 
       svg
+
+    _setupZoomBehavior: (svg) ->
+      allowWheel = true
+
+      rateLimit = ->
+        allowWheel = false
+        setTimeout((-> allowWheel = true), 100)
+
+      L.DomEvent.addListener svg, 'mousewheel', (e) =>
+        return unless allowWheel
+
+        draggable = @snap.select(@scope('.draggable'))
+        transform = draggable.transform().local
+        origin = parseInt(/^t(\d+),/.exec(transform)?[1] ? 0, 10)
+
+        x = e.clientX - svg.clientLeft - origin
+        time = @positionToTime(x)
+        levels = e.deltaY
+        if levels != 0
+          dir = if levels > 0 then 1 else -1
+          @_zoom(dir, time)
+
+        rateLimit()
 
     _setupDragBehavior: (svg) ->
       @snap = Snap(svg)
@@ -293,7 +386,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       null
 
     _updateTimeline: ->
-      {axis, timeline, start, end, root} = this
+      {axis, timeline, start, end, root, zoom} = this
 
       @_empty(axis)
 
@@ -304,12 +397,13 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @scale = (end - start) / width # ms per pixel
 
       range = @range()
-      @_drawDayIntervals(range[0], range[1])
+
+      @_drawIntervals(range[0], range[1], zoom - 1)
 
       unless @_contains(@_loadedRange..., @start, @end)
         @root.find(@scope('.tools')).addClass('busy')
         for node in @tlDatasets.childNodes
-          node.setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
+          node.setAttribute('class', "#{node.getAttribute('class')} #{@scope('loading')}")
 
       @root.trigger(@scopedEventName('rangechange'), range)
 
@@ -372,21 +466,31 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       parent.appendChild(rect)
       rect
 
-    _drawDayIntervals: (start, end) ->
+    _roundTime: (time, zoom) ->
+      date = new Date(time)
+      components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
+      components = components.slice(0, components.length - zoom)
+      components.push(0) if components.length == 1
+      Date.UTC(components...)
+
+    _drawIntervals: (start, end, zoom) ->
       axis = @axis
 
-      # Make this 3x as wide as it needs to be to allow dragging without redrawing
-      start = new Date(Math.floor(start / MS_PER_DAY) * MS_PER_DAY)
-      end = new Date(Math.floor(end / MS_PER_DAY) * MS_PER_DAY)
+
+      start = @_roundTime(start, zoom)
+      end = @_roundTime(end, zoom)
+
+      timespan = ZOOM_LEVELS[zoom]
+
+      #start = new Date(Math.floor(start / ) * MS_PER_DAY)
+      #end = new Date(Math.floor(end / MS_PER_DAY) * MS_PER_DAY)
       time = end
 
       while time >= start
         date = new Date(time)
-        day = string.padLeft(date.getUTCDate(), '0', 2)
-        month = MONTHS[date.getUTCMonth()]
-        interval = @_buildIntervalDisplay(@timeToPosition(time), 0, day, month)
+        interval = @_buildIntervalDisplay(@timeToPosition(time), 0, LABELS[zoom](date)...)
         axis.appendChild(interval)
-        time -= MS_PER_DAY
+        time -= timespan
 
     _buildIntervalDisplay: (x, y, text, subText) ->
       g = @_buildSvgElement('g', class: @scope('date-label'))
@@ -395,9 +499,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       label = @_buildSvgElement('text', x: 5, y: y + 20, class: "#{@scope('axis-label')} #{@scope('axis-super-label')}")
       label.innerHTML = text
 
-      subLabel = @_buildSvgElement('text', x: 5, y: y + 34, class: "#{@scope('axis-label')} #{@scope('axis-sub-label')}")
-      subLabel.innerHTML = subText
-
       line = @_buildSvgElement('line', class: @scope('tick'), x1: 0, y1: MIN_Y, x2: 0, y2: MAX_Y)
 
       circle = @_buildSvgElement('circle', class: @scope('tick-crossing'), r: 6)
@@ -405,7 +506,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       g.appendChild(line)
       g.appendChild(circle)
       g.appendChild(label)
-      g.appendChild(subLabel)
+
+      if subText
+        subLabel = @_buildSvgElement('text', x: 5, y: y + 34, class: "#{@scope('axis-label')} #{@scope('axis-sub-label')}")
+        subLabel.innerHTML = subText
+        g.appendChild(subLabel)
 
       g
 
