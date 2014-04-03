@@ -28,6 +28,12 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
   MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
+  MIN_X = -1000000
+  MIN_Y = -1000000
+  MAX_X = 1000000
+  MAX_Y = 1000000
+
+
   class Timeline extends plugin.Base
     constructor: (root, namespace, options={}) ->
       super(root, namespace, options)
@@ -36,11 +42,22 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @end = config.present()
       @start = @end - MS_PER_MONTH
+      @originPx = 0
+
+      @_loadedRange = []
+
       @_updateTimeline()
 
     destroy: ->
       @root.find('svg').remove()
       super()
+
+    range: ->
+      # Query and draw bounds that are 3x wider than needed, centered on the visible range.
+      # This prevents an in-progress drag from needing to redraw or re-query
+      {start, end} = this
+      span = end - start
+      [start - span, end + span]
 
     show: ->
       @root.show()
@@ -52,25 +69,22 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @_setHeight()
       null
 
-    params: ->
-      start_date: new Date(@start).toISOString()
-      end_date: new Date(@end).toISOString()
-      interval: 'hour'
-
-
-    loadstart: (id) ->
+    loadstart: (id, start, end) ->
       @root.find(@scope('.tools')).addClass('busy')
       match = @svg.getElementsByClassName(id)
       if match.length > 0
+        match[0].setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
         @_empty(match[0])
 
-    data: (id, intervals) ->
+    data: (id, start, end, intervals) =>
       index = -1
       for dataset, i in @_datasets
         if dataset.id() == id
           index = i
           break
       return if index == -1
+
+      @_loadedRange = [start, end]
 
       match = @svg.getElementsByClassName(id)
       el = null
@@ -79,12 +93,12 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         @_empty(el)
         el.parentNode.removeChild(el)
       else
-        el = @_buildSvgElement('g', class: "#{id} #{@scope('data')}")
+        el = @_buildSvgElement('g')
         @_translate(el, 0, DATASET_HEIGHT * index) if index > 0
 
-      for [start, end, _] in intervals
-        startPos = @timeToPosition(start * 1000)
-        endPos = @timeToPosition(end * 1000)
+      for [startTime, endTime, _] in intervals
+        startPos = @timeToPosition(startTime * 1000)
+        endPos = @timeToPosition(endTime * 1000)
         rect = @_buildSvgElement 'rect',
           x: startPos
           y: 5
@@ -94,12 +108,16 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
           ry: 10
         el.appendChild(rect)
 
-      @tlDatasets.appendChild(el)
+      # Remove 'timeline-loading' class
+      el.setAttribute('class', "#{id} #{@scope('data')}")
 
-      if @tlDatasets.childNodes.length == @_datasets.length
+      @tlDatasets.appendChild(el)
+      children = @tlDatasets.childNodes
+      loading = @tlDatasets.getElementsByClassName(@scope('loading'))
+
+      if children.length == @_datasets.length && loading.length == 0 && @_contains(start, end, @start, @end)
         @root.find(@scope('.tools')).removeClass('busy')
       null
-
 
     datasets: (datasets) ->
       if datasets?.length > 0
@@ -112,6 +130,20 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         @hide()
 
       @_datasets
+
+    timeToPosition: (t) ->
+      {originPx, start, scale} = this
+      originPx + (t - start) / scale
+
+    positionToTime: (p) ->
+      {originPx, start, scale} = this
+      (p - originPx) * scale + start
+
+    #_overlaps: (start0, end0, start1, end1) ->
+    #  start0 < start1 < end0 || start0 < end1 < end0 || (start1 < start0 && end0 < end1)
+
+    _contains: (start0, end0, start1, end1) ->
+      start0 < start1 < end0 && start0 < end1 < end0
 
     _empty: (node) ->
       $(node).empty()
@@ -145,9 +177,59 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       svg.appendChild(overlay)
       svg.appendChild(selection)
 
+      @_setupDragBehavior(svg)
+
       svg
 
+    _setupDragBehavior: (svg) ->
+      @snap = Snap(svg)
+
+      draggable = @snap.select(@scope('.draggable'))
+      selection = @snap.select(@scope('.selection'))
+      labels = @snap.select(@scope('.dataset'))
+      originalTransform = draggable.transform().local
+
+      xRe = /^t(\d+),/
+      match = xRe.exec(originalTransform)
+      x0 = parseInt(match?[1] ? 0, 10)
+      x = @originPx ?= 0
+      start = @start
+      end = @end
+      present = config.present()
+
+      onmove = (dx, dy) =>
+        span = end - start
+        @start = start - dx * @scale
+        @end = @start + span
+
+        if @end > present
+          @end = present
+          @start = present - span
+          dx = -Math.floor((@start - start) / @scale)
+
+        @originPx = -(x + dx) # x offset from its original position
+
+        t = if originalTransform? then 'T' else 't'
+        attrs = {transform: originalTransform + t + [dx, 0]}
+        draggable.attr(attrs)
+        selection.attr(attrs)
+
+      onstart = =>
+        originalTransform = draggable.transform().local
+        x = parseInt(xRe.exec(originalTransform)?[1] ? 0, 10) - x0
+        start = @start
+        end = @end
+        present = config.present()
+
+      onend = =>
+        @_updateTimeline()
+
+      draggable.drag(onmove, onstart, onend)
+      selection.drag(onmove, onstart, onend)
+      labels.drag(onmove, onstart, onend)
+
     _createSelectionOverlay: (svg) ->
+
       @selectionOverlay = selection = @_buildSvgElement('g', class: @scope('selection'))
       selection
 
@@ -165,7 +247,14 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       overlay
 
     _createTimeline: (svg) ->
-      @timeline = timeline = @_buildSvgElement('g')
+      @timeline = timeline = @_buildSvgElement('g', class: @scope('draggable'))
+
+      background = @_buildSvgElement 'rect',
+        class: @scope('background')
+        x: MIN_X
+        y: MIN_Y
+        width: MAX_X - MIN_X
+        height: MAX_Y - MIN_Y
 
       @tlDatasets = datasets = @_buildSvgElement('g')
       @_translate(datasets, 0, TOP_HEIGHT)
@@ -173,9 +262,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @axis = axis = @_buildSvgElement('g')
       @_translate(axis, 0, TOP_HEIGHT)
 
-      line = @_buildSvgElement('line', class: @scope('timeline'), x1: -1000000, y1: 0, x2: 1000000, y2: 0)
-      axis.appendChild(line)
-
+      timeline.appendChild(background)
       timeline.appendChild(axis)
       timeline.appendChild(datasets)
 
@@ -194,13 +281,25 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       null
 
     _updateTimeline: ->
-      {timeline, start, end, root} = this
+      {axis, timeline, start, end, root} = this
+
+      @_empty(axis)
+
+      line = @_buildSvgElement('line', class: @scope('timeline'), x1: MIN_X, y1: 0, x2: MAX_X, y2: 0)
+      axis.appendChild(line)
 
       @width = width = @root.width() - @root.find(@scope('.tools')).width()
-      @originPx = 0
       @scale = (end - start) / width # ms per pixel
 
-      @_drawDayIntervals()
+      range = @range()
+      @_drawDayIntervals(range[0], range[1])
+
+      unless @_contains(@_loadedRange..., @start, @end)
+        @root.find(@scope('.tools')).addClass('busy')
+        for node in @tlDatasets.childNodes
+          node.setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
+
+      @root.trigger(@scopedEventName('rangechange'), range)
 
     _drawTemporalBounds: ->
       overlay = @selectionOverlay
@@ -242,7 +341,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       offsetTop = 0
       halfwidth = 10
       height = 10
-      line = @_buildSvgElement('line', x1: timePt, y1: offsetTop + height, x2: timePt, y2: 1000000)
+      line = @_buildSvgElement('line', x1: timePt, y1: offsetTop + height, x2: timePt, y2: MAX_Y)
       triangle = @_buildSvgElement 'path', d: "m#{timePt-halfwidth} #{offsetTop} l #{halfwidth} #{height} l #{halfwidth} #{-height} z"
 
       parent.appendChild(line)
@@ -261,20 +360,15 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       parent.appendChild(rect)
       rect
 
-    timeToPosition: (t) ->
-      {originPx, start, scale} = this
-      originPx + (t - start) / scale
+    _drawDayIntervals: (start, end) ->
+      axis = @axis
 
-    positionToTime: (p) ->
-      {originPx, start, scale} = this
-      (p - originPx) * scale + start
+      # Make this 3x as wide as it needs to be to allow dragging without redrawing
+      start = new Date(Math.floor(start / MS_PER_DAY) * MS_PER_DAY)
+      end = new Date(Math.floor(end / MS_PER_DAY) * MS_PER_DAY)
+      time = end
 
-    _drawDayIntervals: () ->
-      {start, end, axis} = this
-
-      time = new Date(Math.floor(end / MS_PER_DAY) * MS_PER_DAY)
-
-      for i in [0...35]
+      while time >= start
         date = new Date(time)
         day = string.padLeft(date.getUTCDate(), '0', 2)
         month = MONTHS[date.getUTCMonth()]
@@ -292,7 +386,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       subLabel = @_buildSvgElement('text', x: 5, y: y + 34, class: "#{@scope('axis-label')} #{@scope('axis-sub-label')}")
       subLabel.innerHTML = subText
 
-      line = @_buildSvgElement('line', class: @scope('tick'), x1: 0, y1: -1000000, x2: 0, y2: 1000000)
+      line = @_buildSvgElement('line', class: @scope('tick'), x1: 0, y1: MIN_Y, x2: 0, y2: MAX_Y)
 
       circle = @_buildSvgElement('circle', class: @scope('tick-crossing'), r: 6)
 
