@@ -59,6 +59,12 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       span = end - start
       [start - span, end + span]
 
+    startTime: ->
+      @start
+
+    endTime: ->
+      @end
+
     show: ->
       @root.show()
       @_setHeight()
@@ -131,6 +137,12 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_datasets
 
+    timeSpanToPx: (t) ->
+      t / @scale
+
+    pxToTimeSpan: (p) ->
+      @scale / p
+
     timeToPosition: (t) ->
       {originPx, start, scale} = this
       originPx + (t - start) / scale
@@ -186,7 +198,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       draggable = @snap.select(@scope('.draggable'))
       selection = @snap.select(@scope('.selection'))
-      labels = @snap.select(@scope('.dataset'))
+      labels = @snap.select(@scope('.overlay'))
       originalTransform = draggable.transform().local
 
       xRe = /^t(\d+),/
@@ -234,7 +246,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       selection
 
     _createFixedOverlay: (svg) ->
-      @overlay = overlay = @_buildSvgElement('g')
+      @overlay = overlay = @_buildSvgElement('g', class: @scope('overlay'))
 
       rect = @_buildSvgElement('rect', class: @scope('display-top'), width: 10000, height: TOP_HEIGHT)
 

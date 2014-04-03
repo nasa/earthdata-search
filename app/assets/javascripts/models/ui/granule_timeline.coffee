@@ -53,7 +53,7 @@ ns.GranuleTimeline = do (ko
       @_load(params, current, callback) if changed
 
     _toResults: (data, current, params) ->
-      intervals = data[0].intervals
+      intervals = data[0].intervals ? []
       $('#timeline').timeline('data', @dataset.id(), @range()..., intervals)
       intervals
 
@@ -61,7 +61,6 @@ ns.GranuleTimeline = do (ko
     constructor: (@datasetsList, @projectList) ->
       @_datasetsToTimelines = {}
 
-      @datasets = ko.computed(@_computeDatasets)
       @range = ko.observable(null)
 
       $timeline = $('#timeline')
@@ -70,6 +69,7 @@ ns.GranuleTimeline = do (ko
         @range(range)
 
       @range($timeline.timeline('range'))
+      @datasets = ko.computed(@_computeDatasets)
 
     _computeDatasets: =>
       range = @range
@@ -105,7 +105,7 @@ ns.GranuleTimeline = do (ko
       @_datasetsToTimelines = newTimelines
 
       for own key, data of newTimelines when !data.isLoading.peek()
-        $timeline.timeline('data', data.dataset.id(), range..., data.results.peek())
+        $timeline.timeline('data', data.dataset.id(), range()..., data.results.peek())
 
       result
 
