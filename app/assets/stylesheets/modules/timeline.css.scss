@@ -20,6 +20,7 @@
   background-color: #2a2a2a;
   text-align: center;
   height: 100%;
+  box-shadow: 5px 0 5px 0 rgba(0,0,0,.7);
 
   h1 {
     font-size: .7em;
@@ -88,7 +89,7 @@
 }
 
 .timeline-axis-label {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .timeline-axis-super-label {
