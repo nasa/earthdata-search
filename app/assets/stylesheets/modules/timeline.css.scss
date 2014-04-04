@@ -40,6 +40,12 @@
   }
 }
 
+.timeline-min-zoom a.timeline-zoom-in,
+.timeline-max-zoom a.timeline-zoom-out {
+  color: #555;
+  cursor: default;
+}
+
 .timeline-display {
   background-color: #1a1a1a;
   display: block;
@@ -67,6 +73,10 @@
 
 .timeline-data rect {
   fill: #25c85b;
+
+  &.timeline-imprecise {
+    fill-opacity: .5;
+  }
 }
 
 .timeline-tick-crossing {

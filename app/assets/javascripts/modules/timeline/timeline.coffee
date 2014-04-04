@@ -39,9 +39,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
   formatDay = (date) -> string.padLeft(date.getUTCDate(), '0', 2)
   formatMonth = (date) -> MONTHS[date.getUTCMonth()]
   formatDate = (date) -> formatMonth(date) + ' ' + formatDay(date)
-  formatYear = (date) -> string.padLeft(date.getUTCFullYear(), '0', 2)
-  formatDecade = (date) -> string.padLeft(date.getUTCFullYear(), '0', 2)
-
+  formatYear = (date) -> date.getUTCFullYear()
 
   LABELS = [
     ((date) -> [formatTime(date), formatDate(date)]),
@@ -75,6 +73,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       super(root, namespace, options)
 
       @root.append(@_createDisplay())
+
+      @_data = {}
 
       @zoom = 3
       @end = config.present()
@@ -120,6 +120,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         @_empty(match[0])
 
     data: (id, start, end, resolution, intervals) =>
+      @_loadedRange = [start, end, resolution]
+      @_data[id] = [start, end, resolution, intervals]
+      @_drawData(id)
+
+    _drawData: (id) ->
       index = -1
       for dataset, i in @_datasets
         if dataset.id() == id
@@ -127,7 +132,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
           break
       return if index == -1
 
-      @_loadedRange = [start, end]
+      zoom = @zoom
+
+      [start, end, resolution, intervals] = @_data[id] ? [@start - 1 , @end + 1, RESOLUTIONS[zoom - 2], []]
 
       match = @svg.getElementsByClassName(id)
       el = null
@@ -143,6 +150,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         startPos = @timeToPosition(startTime * 1000)
         endPos = @timeToPosition(endTime * 1000)
         rect = @_buildSvgElement 'rect',
+          class: @scope('imprecise') if resolution != RESOLUTIONS[zoom - 2]
           x: startPos
           y: 5
           width: endPos - startPos
@@ -162,12 +170,16 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         @root.find(@scope('.tools')).removeClass('busy')
       null
 
+    refresh: ->
+      @datasets(@_datasets)
+
     datasets: (datasets) ->
       if datasets?.length > 0
         @_datasets = datasets
         @_updateDatasetNames()
         @_drawTemporalBounds()
         @_empty(@tlDatasets)
+        @_data = {}
         @show()
       else
         @hide()
@@ -197,6 +209,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     _zoom: (levels, center_t=(@end + @start) / 2) ->
       @zoom = Math.min(Math.max(@zoom + levels, 2), ZOOM_LEVELS.length - 1)
 
+      @root.toggleClass(@scope('max-zoom'), @zoom == ZOOM_LEVELS.length - 1)
+      @root.toggleClass(@scope('min-zoom'), @zoom == 2)
+
       # We want to zoom in a way that keeps the center_t at the same pixel so you
       # can double-click or scoll-wheel to zoom and your mouse stays over the same time
 
@@ -206,7 +221,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       scale = timeSpan / @width
 
-      @start = center_t - (scale * x)
+      @start = center_t - (scale * (x - @originPx))
       @end = @start + timeSpan
 
       present = config.present()
@@ -218,7 +233,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @scale = scale
 
       @_updateTimeline()
-      #console.log 'zoom', @zoom, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
+      #console.log 'zoom', @zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
     #_overlaps: (start0, end0, start1, end1) ->
     #  start0 < start1 < end0 || start0 < end1 < end0 || (start1 < start0 && end0 < end1)
@@ -233,7 +248,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     _buildSvgElement: (name, attrs={}) ->
       el = document.createElementNS(SVG_NS, name)
       for own attr, value of attrs
-        el.setAttribute(attr, value)
+        el.setAttribute(attr, value) if value?
       el
 
     _translate: (el, x, y) ->
@@ -258,12 +273,13 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       svg.appendChild(overlay)
       svg.appendChild(selection)
 
+      @snap = Snap(svg)
       @_setupDragBehavior(svg)
-      @_setupZoomBehavior(svg)
+      @_setupScrollBehavior(svg)
 
       svg
 
-    _setupZoomBehavior: (svg) ->
+    _setupScrollBehavior: (svg) ->
       allowWheel = true
 
       rateLimit = ->
@@ -279,59 +295,73 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
         x = e.clientX - svg.clientLeft - origin
         time = @positionToTime(x)
-        levels = e.deltaY
-        if levels != 0
-          dir = if levels > 0 then 1 else -1
-          @_zoom(dir, time)
+        deltaX = e.wheelDeltaX
+        deltaY = e.wheelDeltaY
+        if Math.abs(deltaY) > Math.abs(deltaX)
+          levels = if deltaY > 0 then -1 else 1
+          @_zoom(levels, time)
+          rateLimit()
+        else if deltaX != 0
+          @_pan(deltaX)
 
-        rateLimit()
+        e.preventDefault()
 
     _setupDragBehavior: (svg) ->
-      @snap = Snap(svg)
-
       draggable = @snap.select(@scope('.draggable'))
       selection = @snap.select(@scope('.selection'))
       labels = @snap.select(@scope('.overlay'))
-      originalTransform = draggable.transform().local
 
-      xRe = /^t(\d+),/
-      match = xRe.exec(originalTransform)
-      x0 = parseInt(match?[1] ? 0, 10)
-      x = @originPx ?= 0
-      start = @start
-      end = @end
+      onmove = (dx, dy) => @_pan(dx, false)
+      onend = @_finishPan
+
+      draggable.drag(onmove, null, onend)
+      selection.drag(onmove, null, onend)
+      labels.drag(onmove, null, onend)
+
+    _pan: (dx, commit=true, accumulate=false) ->
+      draggable = @snap.select(@scope('.draggable'))
+      selection = @snap.select(@scope('.selection'))
+
+      @_startPan() unless @_panTransform
+
+      start = @_panStart
+      end = @_panEnd
+      originalTransform = @_panTransform
       present = config.present()
 
-      onmove = (dx, dy) =>
-        span = end - start
-        @start = start - dx * @scale
-        @end = @start + span
+      span = end - start
+      @start = start - dx * @scale
+      @end = @start + span
 
-        if @end > present
-          @end = present
-          @start = present - span
-          dx = -Math.floor((@start - start) / @scale)
+      if @end > present
+        @end = present
+        @start = present - span
+        dx = -Math.floor((@start - start) / @scale)
 
-        @originPx = -(x + dx) # x offset from its original position
 
-        t = if originalTransform? then 'T' else 't'
-        attrs = {transform: originalTransform + t + [dx, 0]}
-        draggable.attr(attrs)
-        selection.attr(attrs)
+      @originPx = -(@_panStartX + dx) # x offset from its original position
 
-      onstart = =>
-        originalTransform = draggable.transform().local
-        x = parseInt(xRe.exec(originalTransform)?[1] ? 0, 10) - x0
-        start = @start
-        end = @end
-        present = config.present()
+      t = if originalTransform? then 'T' else 't'
+      attrs = {transform: originalTransform + t + [dx, 0]}
+      draggable.attr(attrs)
+      selection.attr(attrs)
 
-      onend = =>
-        @_updateTimeline()
+      @_finishPan() if commit
 
-      draggable.drag(onmove, onstart, onend)
-      selection.drag(onmove, onstart, onend)
-      labels.drag(onmove, onstart, onend)
+    _startPan: ->
+
+      draggable = @snap.select(@scope('.draggable'))
+      @_panTransform = draggable.transform().local
+      xRe = /^t(\d+),/
+      match = xRe.exec(@_panTransform)
+      @_panX0 = parseInt(match?[1] ? 0, 10) unless @_panX0
+      @_panStartX = parseInt(match?[1] ? 0, 10) - @_panX0
+      @_panStart = @start
+      @_panEnd = @end
+
+    _finishPan: =>
+      @_updateTimeline()
+      @_panTransform = @_panStart = @_panEnd = null
 
     _createSelectionOverlay: (svg) ->
 
@@ -390,6 +420,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_empty(axis)
 
+      @root.find('h1').text(RESOLUTIONS[zoom - 1])
+
       line = @_buildSvgElement('line', class: @scope('timeline'), x1: MIN_X, y1: 0, x2: MAX_X, y2: 0)
       axis.appendChild(line)
 
@@ -399,8 +431,12 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       range = @range()
 
       @_drawIntervals(range[0], range[1], zoom - 1)
+      for own k, _ of @_data
+        @_drawData(k)
 
-      unless @_contains(@_loadedRange..., @start, @end)
+      resolution = range[2]
+      [loadedStart, loadedEnd, loadedResolution] = @_loadedRange
+      unless loadedResolution == resolution && @_contains(loadedStart, loadedEnd, start, end)
         @root.find(@scope('.tools')).addClass('busy')
         for node in @tlDatasets.childNodes
           node.setAttribute('class', "#{node.getAttribute('class')} #{@scope('loading')}")
@@ -466,31 +502,30 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       parent.appendChild(rect)
       rect
 
-    _roundTime: (time, zoom) ->
+    _roundTime: (time, zoom, decrement=false) ->
       date = new Date(time)
       components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
       components = components.slice(0, components.length - zoom)
+      components[components.length - 1]-- if decrement
       components.push(0) if components.length == 1
       Date.UTC(components...)
 
     _drawIntervals: (start, end, zoom) ->
       axis = @axis
 
-
       start = @_roundTime(start, zoom)
       end = @_roundTime(end, zoom)
 
+      # Wrong for months and leap years
       timespan = ZOOM_LEVELS[zoom]
 
-      #start = new Date(Math.floor(start / ) * MS_PER_DAY)
-      #end = new Date(Math.floor(end / MS_PER_DAY) * MS_PER_DAY)
       time = end
 
       while time >= start
         date = new Date(time)
         interval = @_buildIntervalDisplay(@timeToPosition(time), 0, LABELS[zoom](date)...)
         axis.appendChild(interval)
-        time -= timespan
+        time = @_roundTime(time, zoom, true)
 
     _buildIntervalDisplay: (x, y, text, subText) ->
       g = @_buildSvgElement('g', class: @scope('date-label'))
