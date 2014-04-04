@@ -313,7 +313,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         @fire('predrag')
         self._pan(@_newPos.x, false)
         @fire('drag')
-      draggable.on 'dragend', @_finishPan
+      draggable.on 'dragend', (e) ->
+        self._pan(@_newPos.x - @_startPos.x)
 
       draggable.enable()
 
