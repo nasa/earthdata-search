@@ -67,12 +67,12 @@ RSpec::Matchers.define :have_time_offset do |selector, dt|
           var timelineObj = $('#timeline').data('timeline');
           var snap = timelineObj.snap;
           var transform = snap.select('#{selector}').transform().local;
-          return (transform && transform.length > 0) ? parseInt(transform.substring(1), 10) : (-1234 + 64);
+          return (transform && transform.length > 0) ? parseInt(transform.substring(1), 10) : (-1234 + 48);
         })();
       """
 
       # No rounding
-      actual_dx -= 64
+      actual_dx -= 48
 
       # Allow 5px variance for rounding errors
       delta = 5
