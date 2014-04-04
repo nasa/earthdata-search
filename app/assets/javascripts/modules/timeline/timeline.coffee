@@ -547,7 +547,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       if @_datasets?.length > 0
         datasetsHeight = @_datasets.length * DATASET_HEIGHT + 2 * DATASET_PADDING
         @_translate(@axis, 0, TOP_HEIGHT + datasetsHeight)
-        @root.height(TOP_HEIGHT + datasetsHeight + AXIS_HEIGHT)
+        totalHeight = Math.max(TOP_HEIGHT + datasetsHeight + AXIS_HEIGHT, 100)
+        @root.height(totalHeight)
+        $(@svg).height(totalHeight)
 
       $('.master-overlay').masterOverlay().masterOverlay('contentHeightChanged')
 
