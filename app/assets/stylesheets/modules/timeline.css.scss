@@ -2,6 +2,8 @@
   height: 100px;
   min-height: 100px;
   position: relative;
+  border-top: 1px solid #727272;
+  box-shadow: 0 -10px 15px 0 rgba(0,0,0,.3);
 
   .busy {
     background-position-y: bottom;
@@ -15,24 +17,26 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: 4em;
-  background-color: #000;
+  width: 3em;
+  background-color: #2a2a2a;
   text-align: center;
   height: 100%;
+  box-shadow: 5px 0 5px 0 rgba(0,0,0,.7);
+  border-top: 1px solid #000;
 
   h1 {
     font-size: .7em;
     padding: .2em 0;
-    background-color: #151515;
     margin: 0;
     text-transform: uppercase;
   }
 
   a {
     display: block;
-    font-size: 2em;
+    font-size: 1.6em;
     color: #7a7a7a;
     line-height: 1em;
+    margin-top: 5px;
 
     &:hover {
       color: #aaa;
@@ -56,6 +60,7 @@
   bottom: 0;
   width: 100%;
   cursor: move;
+  border-bottom: 1px solid #727272;
 
   text {
     fill: #fff;
@@ -92,12 +97,12 @@
 }
 
 .timeline-display-top {
-  fill: #2b2b2b;
+  fill: #2a2a2a;
   cursor: pointer;
 }
 
 .timeline-axis-label {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .timeline-axis-super-label {
@@ -106,6 +111,7 @@
 
 .timeline-axis-sub-label {
   text-transform: uppercase;
+  fill: #424242;
 }
 
 .timeline-selection {
@@ -129,7 +135,7 @@
 
   &:hover {
     text {
-      fill: #0ff;
+      fill: #3498db;
     }
   }
 }

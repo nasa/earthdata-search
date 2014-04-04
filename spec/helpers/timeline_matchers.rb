@@ -65,12 +65,12 @@ RSpec::Matchers.define :have_time_offset do |selector, dt|
       actual_dx = page.evaluate_script """
         (function() {
           var transform = $('#timeline').find('#{selector}').attr('transform');
-          return (transform && transform.length > 0) ? parseInt(transform.replace('translate(', ''), 10) : (-1234 + 64);
+          return (transform && transform.length > 0) ? parseInt(transform.replace('translate(', ''), 10) : (-1234 + 48);
         })();
       """
 
       # No rounding
-      actual_dx -= 64
+      actual_dx -= 48
 
       # Allow 5px variance for rounding errors
       delta = 5
