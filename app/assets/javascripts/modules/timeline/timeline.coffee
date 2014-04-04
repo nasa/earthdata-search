@@ -273,7 +273,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       svg.appendChild(overlay)
       svg.appendChild(selection)
 
-      @snap = Snap(svg)
       @_setupDragBehavior(svg)
       @_setupScrollBehavior(svg)
 
@@ -286,12 +285,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         allowWheel = false
         setTimeout((-> allowWheel = true), 100)
 
-      L.DomEvent.addListener svg, 'mousewheel', (e) =>
+      L.DomEvent.on svg, 'mousewheel', (e) =>
         return unless allowWheel
 
-        draggable = @snap.select(@scope('.draggable'))
-        transform = draggable.transform().local
-        origin = parseInt(/^t(\d+),/.exec(transform)?[1] ? 0, 10)
+        transform = @root.find(@scope('.draggable')).attr('transform')
+        origin = parseInt(/^[^\d]*(\d+),/.exec(transform)?[1] ? 0, 10)
 
         x = e.clientX - svg.clientLeft - origin
         time = @positionToTime(x)
@@ -307,21 +305,19 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         e.preventDefault()
 
     _setupDragBehavior: (svg) ->
-      draggable = @snap.select(@scope('.draggable'))
-      selection = @snap.select(@scope('.selection'))
-      labels = @snap.select(@scope('.overlay'))
+      L.DomUtil.setPosition(svg, L.point(0, 0), true)
 
-      onmove = (dx, dy) => @_pan(dx, false)
-      onend = @_finishPan
+      self = this
+      draggable = new L.Draggable(svg)
+      draggable._updatePosition = ->
+        @fire('predrag')
+        self._pan(@_newPos.x, false)
+        @fire('drag')
+      draggable.on 'dragend', @_finishPan
 
-      draggable.drag(onmove, null, onend)
-      selection.drag(onmove, null, onend)
-      labels.drag(onmove, null, onend)
+      draggable.enable()
 
-    _pan: (dx, commit=true, accumulate=false) ->
-      draggable = @snap.select(@scope('.draggable'))
-      selection = @snap.select(@scope('.selection'))
-
+    _pan: (dx, commit=true) ->
       @_startPan() unless @_panTransform
 
       start = @_panStart
@@ -337,25 +333,22 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         @end = present
         @start = present - span
         dx = -Math.floor((@start - start) / @scale)
-
-
       @originPx = -(@_panStartX + dx) # x offset from its original position
 
-      t = if originalTransform? then 'T' else 't'
-      attrs = {transform: originalTransform + t + [dx, 0]}
-      draggable.attr(attrs)
-      selection.attr(attrs)
+      t = if originalTransform?.length > 0 then 'T' else 't'
+
+      draggables = @root.find([@scope('.draggable'), @scope('.selection')].join(', '))
+      draggables.attr('transform', "translate(#{-@originPx + @_panX0},0)")
 
       @_finishPan() if commit
 
     _startPan: ->
+      @_panTransform = @root.find(@scope('.draggable')).attr('transform')
 
-      draggable = @snap.select(@scope('.draggable'))
-      @_panTransform = draggable.transform().local
-      xRe = /^t(\d+),/
+      xRe = /^[^\d]*(\d+),/
       match = xRe.exec(@_panTransform)
-      @_panX0 = parseInt(match?[1] ? 0, 10) unless @_panX0
-      @_panStartX = parseInt(match?[1] ? 0, 10) - @_panX0
+      @_panX0 = 64
+      @_panStartX = parseInt(match?[1] ? @_panX0, 10) - @_panX0
       @_panStart = @start
       @_panEnd = @end
 
