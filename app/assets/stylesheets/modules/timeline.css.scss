@@ -3,6 +3,7 @@
   min-height: 100px;
   position: relative;
   border-top: 1px solid #727272;
+  box-shadow: 0 -10px 15px 0 rgba(0,0,0,.3);
 
   .busy {
     background-position-y: bottom;
@@ -21,6 +22,7 @@
   text-align: center;
   height: 100%;
   box-shadow: 5px 0 5px 0 rgba(0,0,0,.7);
+  border-top: 1px solid #000;
 
   h1 {
     font-size: .7em;
@@ -98,6 +100,7 @@
 
 .timeline-axis-sub-label {
   text-transform: uppercase;
+  fill: #424242;
 }
 
 .timeline-selection {
