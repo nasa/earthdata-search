@@ -1,4 +1,4 @@
-do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) ->
+do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = @edsc.util.url, help=@edsc.help) ->
 
   updateLandingPageState = ->
     uiModel.isLandingPage(History.getState().hash == '/')
@@ -15,7 +15,6 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) -
       $('#timeline').timeline('refresh')
       $('.landing-toolbar-container').append($content)
     $content.css(top: 0, left: 0, position: 'static')
-
 
   updateLandingPageAnimated = (isLandingPage) ->
     $content = $('.landing-toolbar-content')
@@ -46,6 +45,7 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) -
       if isFirstUpdate
         isFirstUpdate = false
         updateLandingPage(isLandingPage)
+        help.startTour() if isLandingPage
       else
         updateLandingPageAnimated(isLandingPage)
 

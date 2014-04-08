@@ -1,9 +1,16 @@
-<%# This code is dead weight outside of test mode and is potentially dangerous %>
-<% if Rails.env.test? %>
-window.edsc.util.xhr = do (window, $=jQuery) ->
+@edsc.util.xhr = do (window, $=jQuery) ->
+  callbacks = []
+
   timeoutPool = []
   realSetTimeout = window.setTimeout
   realClearTimeout = window.clearTimeout
+
+  hasPending = ->
+    xhrPool.length > 0 || timeoutPool.length > 0
+
+  runCallbacks = ->
+    unless hasPending()
+      callbacks.pop()() while callbacks.length > 0
 
   window.setTimeout = (f, args...) ->
     id = null
@@ -15,9 +22,12 @@ window.edsc.util.xhr = do (window, $=jQuery) ->
           f()
       finally
         index = timeoutPool.indexOf(id)
-        timeoutPool.splice(id, 1) if index > -1
+        timeoutPool.splice(index, 1) if index > -1
+        runCallbacks()
 
     id = realSetTimeout(onTimeout, args...)
+    timeoutPool.push(id)
+    id
 
   window.clearTimeout = (id) ->
     index = timeoutPool.indexOf(id)
@@ -32,11 +42,16 @@ window.edsc.util.xhr = do (window, $=jQuery) ->
     complete: (xhr) ->
       index = xhrPool.indexOf(xhr)
       xhrPool.splice(index, 1) if (index > -1)
+      runCallbacks()
 
+  wait = (callback) ->
+    setTimeout((->
+      if hasPending()
+        callbacks.push(callback)
+      else
+        callback()), 0)
 
-  hasPending = ->
-    xhrPool.length > 0 || timeoutPool.length > 0
 
   exports =
     hasPending: hasPending
-<% end %>
+    wait: wait
