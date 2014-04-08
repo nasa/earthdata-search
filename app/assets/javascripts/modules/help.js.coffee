@@ -1,4 +1,4 @@
-@edsc.help = do ($=jQuery, config=@edsc.config) ->
+@edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page) ->
 
   tourOptions =
     shapefile_multiple:
@@ -31,6 +31,109 @@
       placement: 'top'
       element: '#map-center'
 
+  tour = [{
+      title: "Welcome to Earthdata Search"
+      content: 'Enter your search terms or click "Next »" to take an introductory tour.'
+      element: '.landing-dialog'
+      showNext: true
+      cleanup: (nextFn, closeFn) ->
+        $(window).off 'statechange anchorchange', closeFn
+      advanceHook: (nextFn, closeFn) ->
+        $(window).one 'statechange anchorchange', closeFn
+    }, {
+      title: "Keyword Search"
+      content: 'Here you can enter search terms to find relevant data.  Search terms can be science
+                terms, instrument names, or even dataset IDs.  Let\'s start by searching for
+                "Snow Cover NRT" to find near real-time snow cover data.  Type "Snow Cover NRT" in the
+                keywords box and press "Enter."'
+      element: '#keywords'
+      advanceHook: (nextFn, closeFn) ->
+        $(window).one 'statechange anchorchange', ->
+          if $.trim($('#keywords').val().toLowerCase()) == 'snow cover nrt'
+            nextFn()
+          else
+            closeFn()
+    }, {
+      title: "Browse Datasets"
+      content: 'In addition to searching for keywords, you can narrow your search through this list of
+                terms.  Click "Terra" to select the Terra satellite'
+      wait: true
+      element: '.facets-item:contains(Terra)'
+    }, {
+      title: 'Spatial Search'
+      content: 'If you are not interested in data covering the whole Earth, you may restrict your search
+               to a spatial area.  Select this tool and draw a bounding box over an area where you would
+               expect to find snow.'
+      element: '.leaflet-draw-draw-rectangle:visible'
+      advanceHook: (nextFn, closeFn) ->
+        subscription = page.query.params.subscribe (p) ->
+          if p['bounding_box']?
+            nextFn()
+          else
+            closeFn()
+          subscription.dispose()
+    }, {
+      title: 'Dataset Results'
+      content: 'Your dataset results appear here.  This result has a "GIBS" badge, indicating that it
+               has advanced visualizations.  Click on the dataset to preview its data.'
+      wait: true
+      element: '.panel-list-item:contains(MOD10_L2)'
+    }, {
+      title: 'Matching Granules'
+      content: 'Here we see a list of data granules with corresponding imagery rendered drawn on the map.
+                Click a granule to bring it to the top of the stack.'
+      wait: true
+      element: '#granule-list .panel-list-item:nth-child(2)'
+    }, {
+      title: 'Map View'
+      content: 'On the map view, you may select granules, select alternate base layers or projections, and pan and zoom to
+                an area of interest.  Select the "Land / Water Map" base layer now to make the data stand
+                out more and zoom or pan the map.  Click "Next »" when you are ready to continue.'
+      showNext: true
+      element: '#map-center'
+    }, {
+      title: 'Granule Timeline'
+      content: 'Below the map there is a timeline view showing when this dataset has data.  You can pan
+                and zoom this view to change the period of time and granularity of data it displays.  Zoom
+                into a particular day by scrolling over that day. Try panning and zooming the timeline now.'
+
+      element: '#timeline'
+      placement: 'top'
+      cleanup: (nextFn, closeFn) ->
+        $('#timeline').off 'timeline.rangechange', closeFn
+      advanceHook: (nextFn, closeFn) ->
+        $('#timeline').one 'timeline.rangechange', nextFn
+    # TODO: Temporal extents here when available
+    # TODO: Temporal focus on a single day when available
+    }, {
+      title: 'Back to Datasets'
+      content: 'Let\'s go back to our dataset results'
+      element: '#granule-list .master-overlay-back'
+    }, {
+      title: 'Comparing Multiple Datasets'
+      content: 'Earthdata Search allows you to visualize and compare two or more datasets using projects.
+                Add this dataset to your project now.'
+      waitOnAnimate: true
+      placement: 'right'
+      element: '.panel-list-item:contains(MOD10_L2) .add-to-project'
+    }, {
+      title: 'Projects'
+      content: 'From here, you can start a new search to find additional datasets to compare.  You may add
+                more datasets to your project now.  Click "View Project" when you are ready to continue.'
+      placement: 'left'
+      element: '#view-project'
+    }, {
+      title: 'Project (cont.)'
+      content: 'From the project list, you may visualize multiple datasets using the <i class="edsc-icon-eye"></i>
+                button, view their granule results by clicking on them, set advanced filters using the
+                <i class="edsc-icon-compose"></i> button or compare datasets on the timeline.
+                When you are satisfied with the data you have selected, you
+                may access the underlying data by clicking on the <i class="edsc-icon-download"></i>
+                button.  For this tour, though, we will stop here.  Feel free to keep exploring, or
+                <a href="/">Click Here</a> to start a new search.'
+      element: '.master-overlay-main'
+    }]
+
   template = "<div class='popover tour'>
                 <div class='arrow'></div>
                 <h3 class='popover-title'></h3>
@@ -58,15 +161,21 @@
   queue = []
   shown = {}
   index = 0
+  next = null
+  close = null
+
+  tourRunning = false
 
   hideCurrent = ->
     if queue[index]?
+      queue[index].cleanup?(next, close)
       $(queue[index].element).popover('destroy')
 
   close = ->
     hideCurrent()
     queue = []
     index = 0
+    tourRunning = false
 
   prev = ->
     if index > 0
@@ -82,33 +191,67 @@
     else
       close()
 
-  showCurrent = ->
+  showCurrentImmediate = ->
     $('.popover-advance').removeClass('popover-advance')
 
     $el = $(queue[index].element)
+
+    if $el.length > 1
+      console.error "Too many elements matched selector #{queue[index].element}.  Showing the first.", $el
+      $el = $el.first()
+
     $el.popover(queue[index])
     $el.attr('data-original-title', '')
     $el.popover('show')
     shown[queue[index].key] = true
 
-    $(queue[index].target ? $el).addClass('popover-advance')
+    unless queue[index].advanceHook
+      $(queue[index].target ? $el).addClass('popover-advance')
 
     $tip = $el.data('bs.popover').$tip
     $tip.toggleClass('is-popover-single', queue.length == 1)
-    $tip.find('[data-role=prev]').toggleClass('disabled', index == 0)
-    $tip.find('[data-role=next]').toggleClass('disabled', index == queue.length - 1)
+
+    queue[index].advanceHook?(next, close)
+    queue[index].closeHook?(close)
+
+    if tourRunning
+      $tip.find('[data-role=prev]').hide()
+      $tip.find('[data-role=next]').toggle(queue[index].showNext)
+    else
+      $tip.find('[data-role=prev]').show().toggleClass('disabled', index == 0)
+      $tip.find('[data-role=next]').show().toggleClass('disabled', index == queue.length - 1)
+
+  showCurrent = ->
+    if queue[index].wait
+      wait(showCurrentImmediate)
+    else if queue[index].waitOnAnimate
+      setTimeout(showCurrentImmediate, 500)
+    else
+      showCurrentImmediate()
 
   $(document).on 'click', '.popover [data-role=prev]', prev
   $(document).on 'click', '.popover [data-role=next], .popover-advance', next
   $(document).on 'click', '.popover [data-role=end]', close
 
   add = (key, options={}) ->
-    options = $.extend({}, defaultHelpOptions, tourOptions[key], options, key: key)
-    queue.push(options) unless options.once && shown[key]
-    showCurrent()
+    unless tourRunning
+      options = $.extend({}, defaultHelpOptions, tourOptions[key], options, key: key)
+      queue.push(options) unless options.once && shown[key]
+      showCurrent()
 
   current = ->
-    queue[index]
+    if tourRunning then nil else queue[index]
+
+  startTour = ->
+    close()
+    tourRunning = true
+
+    for stop, i in tour
+      options = $.extend({}, defaultHelpOptions, stop, key: "tour_#{i}")
+      queue.push(options)
+
+    showCurrent()
+
 
   exports =
     add: add
@@ -116,3 +259,4 @@
     next: next
     prev: prev
     close: close
+    startTour: startTour

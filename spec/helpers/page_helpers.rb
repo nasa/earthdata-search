@@ -69,12 +69,20 @@ module Helpers
       wait_for_xhr
     end
 
-    def have_popover(title)
-      have_css('.popover-title', text: title)
+    def have_popover(title=nil)
+      if title.nil?
+        have_css('.tour')
+      else
+        have_css('.popover-title', text: title)
+      end
     end
 
-    def have_no_popover(title)
-      have_no_css('.popover-title', text: title)
+    def have_no_popover(title=nil)
+      if title.nil?
+        have_no_css('.tour')
+      else
+        have_no_css('.popover-title', text: title)
+      end
     end
 
     private
