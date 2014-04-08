@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "Timeline panning", reset: false do
+describe "Timeline zooming", reset: false do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 
   day_start = DateTime.new(2009, 2, 24, 12, 0, 0, '+0')
