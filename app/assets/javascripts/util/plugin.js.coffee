@@ -35,12 +35,12 @@
       if args.length > 0 && typeof args[0] == 'string'
         # Method call
         [method, args...] = args
-        result = @map ->
-          instance = $.data(this, pluginName)
+        result = for el in this
+          instance = $.data(el, pluginName)
 
           if !instance
             console.warn "#{pluginName} not found on element"
-            this
+            el
 
           else if /^debug_/.test(method)
             # Calling $el.<pluginName>('debug_attrname') returns the attribute named attrname for
@@ -50,14 +50,14 @@
 
           else if method == 'destroy'
             # Special case when calling the 'destroy' method, we also need to remove its data
-            $.removeData(this, pluginName)
+            $.removeData(el, pluginName)
             instance.destroy() if typeof instance?.destroy == 'function'
 
           else if !/^_/.test(method) && typeof instance?[method] == 'function'
             # Calling $el.<pluginName>(method, args...) calls the given method passing the given args
             instance[method](args...)
           else
-            console.error "Could not call #{method} on #{pluginName} instance:", this
+            console.error "Could not call #{method} on #{pluginName} instance:", el
             null
         result[0]
       else if args.length < 2

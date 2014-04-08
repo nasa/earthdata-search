@@ -37,3 +37,46 @@ RSpec::Matchers.define :have_highlighted_selection do |start, stop|
     expect(page).to have_fencepost(stop)
   end
 end
+
+RSpec::Matchers.define :have_timeline_range do |start, stop|
+  match do |page|
+    expected_start_time = start.to_time.to_i * 1000
+    expected_end_time = stop.to_time.to_i * 1000
+
+    synchronize do
+      actual_start_time = page.evaluate_script "$('#timeline').timeline('startTime')"
+      actual_end_time = page.evaluate_script "$('#timeline').timeline('endTime')"
+
+      # Allow 30m variance for rounding errors
+      delta = 60 * 30 * 1000
+      expect(actual_start_time).to be_within(delta).of(expected_start_time)
+      expect(actual_end_time).to be_within(delta).of(expected_end_time)
+    end
+  end
+end
+
+RSpec::Matchers.define :have_time_offset do |selector, dt|
+  match do |page|
+    expected_dt_ms = dt.to_i * 1000
+
+    synchronize do
+      expected_dx = page.evaluate_script "-$('#timeline').timeline('timeSpanToPx', #{expected_dt_ms});"
+
+      actual_dx = page.evaluate_script """
+        (function() {
+          var transform = $('#timeline').find('#{selector}').attr('transform');
+          return (transform && transform.length > 0) ? parseInt(transform.replace('translate(', ''), 10) : (-1234 + 48);
+        })();
+      """
+
+      # No rounding
+      actual_dx -= 48
+
+      # Allow 5px variance for rounding errors
+      delta = 5
+
+      expect(expected_dx).to be_within(delta).of(actual_dx)
+    end
+
+  end
+end

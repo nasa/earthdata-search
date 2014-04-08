@@ -10,13 +10,22 @@ ns.GranuleTimeline = do (ko
                          ) ->
   # intervals: 'year', 'month', 'day', 'hour', 'minute'
   class GranuleTimelineData extends XhrModel
-    constructor: (@dataset, @interval) ->
+    constructor: (@dataset, @range) ->
       super("/granules/timeline.json", this)
+      @prevParams = {}
       @params = ko.computed(@_computeParams)
-      @results()
+
+      # Start computing, but avoid introducing a dependency on results in the caller
+      @results.peek()
 
     _computeParams: =>
-      params = extend({}, @dataset.granulesModel.params(), @interval())
+      [start, end, interval] = @range()
+      timelineParams =
+        start_date: new Date(start).toISOString()
+        end_date: new Date(end).toISOString()
+        interval: interval
+
+      params = extend({}, @dataset.granulesModel.params(), timelineParams)
       delete params.temporal
       delete params.page_num
       delete params.page_size
@@ -24,22 +33,46 @@ ns.GranuleTimeline = do (ko
       params
 
     _computeSearchResponse: (current, callback) =>
-      $('#timeline').timeline('loadstart', @dataset.id())
-      @_load(@params(), current, callback)
+      params = @params()
+      prev = @prevParams
+
+      changed = false
+      reload = false
+
+      keys = (k for own k, v of params).concat(k for own k, v of prev)
+      for k in keys
+        if params[k] != prev[k]
+          changed = true
+          if k != 'start_date' && k != 'end_date' && k != 'interval'
+            reload = true
+            break
+
+      @prevParams = params
+
+      $('#timeline').timeline('loadstart', @dataset.id(), @range()...) if reload
+      @_load(params, current, callback) if changed
 
     _toResults: (data, current, params) ->
-      intervals = data[0].intervals
-      $('#timeline').timeline('data', @dataset.id(), intervals)
+      intervals = data[0].intervals ? []
+      $('#timeline').timeline('data', @dataset.id(), @range()..., intervals)
       intervals
 
   class GranuleTimeline extends KnockoutModel
     constructor: (@datasetsList, @projectList) ->
       @_datasetsToTimelines = {}
+
+      @range = ko.observable(null)
+
+      $timeline = $('#timeline')
+
+      $timeline.on 'timeline.rangechange', (e, range...) =>
+        @range(range)
+
+      @range($timeline.timeline('range'))
       @datasets = ko.computed(@_computeDatasets)
-      @interval = ko.observable($('#timeline').timeline('params'))
 
     _computeDatasets: =>
-      interval = @interval
+      range = @range
       focused = @datasetsList.focused()
       result = []
       if focused?
@@ -51,6 +84,9 @@ ns.GranuleTimeline = do (ko
       result = (dataset for dataset in result when dataset.has_granules())
       result = result[0...3]
 
+      $timeline = $('#timeline')
+      $timeline.timeline('datasets', result)
+
       currentTimelines = @_datasetsToTimelines
       newTimelines = {}
 
@@ -60,7 +96,7 @@ ns.GranuleTimeline = do (ko
           newTimelines[id] = currentTimelines[id]
           delete currentTimelines[id]
         else
-          data = new GranuleTimelineData(dataset, interval)
+          data = new GranuleTimelineData(dataset, range)
           newTimelines[id] = data
 
       for own k, v of currentTimelines
@@ -68,13 +104,9 @@ ns.GranuleTimeline = do (ko
 
       @_datasetsToTimelines = newTimelines
 
-      $timeline = $('#timeline')
-      $timeline.timeline('datasets', result)
-      for own key, data of newTimelines when !data.isLoading()
-        $timeline.timeline('data', data.dataset.id(), data.results())
+      for own key, data of newTimelines when !data.isLoading.peek()
+        $timeline.timeline('data', data.dataset.id(), range()..., data.results.peek())
 
       result
-
-
 
   exports = GranuleTimeline

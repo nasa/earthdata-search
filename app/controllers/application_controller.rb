@@ -20,7 +20,10 @@ class ApplicationController < ActionController::Base
                      'macrouch',
                      'jgilman',
                      'kbaynes',
-                     'mcechini'
+                     'mcechini',
+                     'jbehnke',
+                     'rboller',
+                     'dawnlowe'
                     ]
         authenticate_or_request_with_http_basic do |username, password|
           whitelist.include?(username) && Echo::Client.get_token(username, password, 'EDSC', request.remote_ip).success?

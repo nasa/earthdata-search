@@ -13,7 +13,7 @@
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= yield :javascript %>
-    <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
+    <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
 </head>
 <body class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
@@ -31,7 +31,7 @@
     <footer>
       <%= yield :footer %>
       <div class="footer-content">
-        <p><span class="version">v <strong>0.8.0</strong></span> • <strong>NASA Official:</strong> Kevin Murphy • <span class="nasa-links"><a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> • <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> • <a href="http://www.usa.gov">USA.gov</a> • <a href="http://www.usa.gov">ExpectMore.gov</a></span></p>
+        <p><span class="version">v <strong>0.8.2</strong></span> • <strong>NASA Official:</strong> Kevin Murphy • <span class="nasa-links"><a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> • <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> • <a href="http://www.usa.gov">USA.gov</a> • <a href="http://www.usa.gov">ExpectMore.gov</a></span></p>
       </div>
     </footer>
     <%= yield :global %>
@@ -42,5 +42,6 @@
         <img src="<%= image_path "https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0" %>" alt="">
       </noscript>
     <% end %>
+    <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
 </body>
 </html>

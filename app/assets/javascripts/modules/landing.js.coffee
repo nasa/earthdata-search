@@ -7,10 +7,12 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) -
     $content = $('.landing-toolbar-content')
     $('.landing-hidden').toggle(!isLandingPage)
     $('.landing-visible').toggle(isLandingPage)
-    if (isLandingPage)
+    if isLandingPage
+      $('#timeline').timeline('hide')
       $('.landing-dialog-toolbar').append($content)
       $('#keywords').focus()
     else
+      $('#timeline').timeline('refresh')
       $('.landing-toolbar-container').append($content)
     $content.css(top: 0, left: 0, position: 'static')
 
@@ -22,6 +24,7 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) -
     $('.landing-toolbar-container').append($content)
 
     if isLandingPage
+      $('#timeline').timeline('hide')
       $('.landing-hidden').fadeOut()
       $('.landing-visible').fadeIn
         complete: ->
