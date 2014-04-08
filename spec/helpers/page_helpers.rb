@@ -26,7 +26,7 @@ module Helpers
         rescue => e
           if (Time.now - start_time) >= seconds
             Capybara::Screenshot.screenshot_and_save_page
-            raise e
+            raise
           end
           sleep(0.05)
           retry

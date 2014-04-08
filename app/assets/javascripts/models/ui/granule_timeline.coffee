@@ -19,11 +19,11 @@ ns.GranuleTimeline = do (ko
       @results.peek()
 
     _computeParams: =>
-      [start, end] = @range()
+      [start, end, interval] = @range()
       timelineParams =
         start_date: new Date(start).toISOString()
         end_date: new Date(end).toISOString()
-        interval: 'hour'
+        interval: interval
 
       params = extend({}, @dataset.granulesModel.params(), timelineParams)
       delete params.temporal

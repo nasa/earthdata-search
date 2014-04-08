@@ -26,6 +26,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
   MS_PER_YEAR = MS_PER_DAY * 366
 
+  MS_PER_DECADE = MS_PER_YEAR * 10
+
   MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
   MIN_X = -1000000
@@ -33,6 +35,38 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
   MAX_X = 1000000
   MAX_Y = 1000000
 
+  formatTime = (date) -> string.padLeft(date.getUTCHours(), '0', 2) + ':' + string.padLeft(date.getUTCMinutes(), '0', 2)
+  formatDay = (date) -> string.padLeft(date.getUTCDate(), '0', 2)
+  formatMonth = (date) -> MONTHS[date.getUTCMonth()]
+  formatDate = (date) -> formatMonth(date) + ' ' + formatDay(date)
+  formatYear = (date) -> date.getUTCFullYear()
+
+  LABELS = [
+    ((date) -> [formatTime(date), formatDate(date)]),
+    ((date) -> [formatTime(date), formatDate(date)]),
+    ((date) -> [formatDay(date), formatMonth(date)]),
+    ((date) -> [formatMonth(date), formatYear(date)]),
+    ((date) -> [formatYear(date)]),
+    ((date) -> [formatYear(date)])
+  ]
+
+  RESOLUTIONS = [
+    'minute',
+    'hour',
+    'day',
+    'month',
+    'year',
+    'decade'
+  ]
+
+  ZOOM_LEVELS = [
+    MS_PER_MINUTE,
+    MS_PER_HOUR,
+    MS_PER_DAY,
+    MS_PER_MONTH,
+    MS_PER_YEAR,
+    MS_PER_DECADE
+  ]
 
   class Timeline extends plugin.Base
     constructor: (root, namespace, options={}) ->
@@ -40,6 +74,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @root.append(@_createDisplay())
 
+      @_data = {}
+
+      @zoom = 3
       @end = config.present()
       @start = @end - MS_PER_MONTH
       @originPx = 0
@@ -55,9 +92,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     range: ->
       # Query and draw bounds that are 3x wider than needed, centered on the visible range.
       # This prevents an in-progress drag from needing to redraw or re-query
-      {start, end} = this
+      {start, end, zoom} = this
       span = end - start
-      [start - span, end + span]
+      [start - span, end + span, RESOLUTIONS[zoom - 2]]
 
     startTime: ->
       @start
@@ -75,14 +112,19 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @_setHeight()
       null
 
-    loadstart: (id, start, end) ->
+    loadstart: (id, start, end, resolution) ->
       @root.find(@scope('.tools')).addClass('busy')
       match = @svg.getElementsByClassName(id)
       if match.length > 0
         match[0].setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
         @_empty(match[0])
 
-    data: (id, start, end, intervals) =>
+    data: (id, start, end, resolution, intervals) =>
+      @_loadedRange = [start, end, resolution]
+      @_data[id] = [start, end, resolution, intervals]
+      @_drawData(id)
+
+    _drawData: (id) ->
       index = -1
       for dataset, i in @_datasets
         if dataset.id() == id
@@ -90,7 +132,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
           break
       return if index == -1
 
-      @_loadedRange = [start, end]
+      zoom = @zoom
+
+      [start, end, resolution, intervals] = @_data[id] ? [@start - 1 , @end + 1, RESOLUTIONS[zoom - 2], []]
 
       match = @svg.getElementsByClassName(id)
       el = null
@@ -106,6 +150,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         startPos = @timeToPosition(startTime * 1000)
         endPos = @timeToPosition(endTime * 1000)
         rect = @_buildSvgElement 'rect',
+          class: @scope('imprecise') if resolution != RESOLUTIONS[zoom - 2]
           x: startPos
           y: 5
           width: endPos - startPos
@@ -125,12 +170,16 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         @root.find(@scope('.tools')).removeClass('busy')
       null
 
+    refresh: ->
+      @datasets(@_datasets)
+
     datasets: (datasets) ->
       if datasets?.length > 0
         @_datasets = datasets
         @_updateDatasetNames()
         @_drawTemporalBounds()
         @_empty(@tlDatasets)
+        @_data = {}
         @show()
       else
         @hide()
@@ -149,7 +198,42 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
     positionToTime: (p) ->
       {originPx, start, scale} = this
-      (p - originPx) * scale + start
+      Math.floor((p - originPx) * scale + start)
+
+    zoomIn: ->
+     @_zoom(-1)
+
+    zoomOut: ->
+     @_zoom(1)
+
+    _zoom: (levels, center_t=(@end + @start) / 2) ->
+      @zoom = Math.min(Math.max(@zoom + levels, 2), ZOOM_LEVELS.length - 1)
+
+      @root.toggleClass(@scope('max-zoom'), @zoom == ZOOM_LEVELS.length - 1)
+      @root.toggleClass(@scope('min-zoom'), @zoom == 2)
+
+      # We want to zoom in a way that keeps the center_t at the same pixel so you
+      # can double-click or scoll-wheel to zoom and your mouse stays over the same time
+
+      x = @timeToPosition(center_t)
+
+      timeSpan = ZOOM_LEVELS[@zoom]
+
+      scale = timeSpan / @width
+
+      @start = center_t - (scale * (x - @originPx))
+      @end = @start + timeSpan
+
+      present = config.present()
+
+      if @end > present
+        @end = present
+        @start = @end - timeSpan
+
+      @scale = scale
+
+      @_updateTimeline()
+      #console.log 'zoom', @zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
     #_overlaps: (start0, end0, start1, end1) ->
     #  start0 < start1 < end0 || start0 < end1 < end0 || (start1 < start0 && end0 < end1)
@@ -164,7 +248,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     _buildSvgElement: (name, attrs={}) ->
       el = document.createElementNS(SVG_NS, name)
       for own attr, value of attrs
-        el.setAttribute(attr, value)
+        el.setAttribute(attr, value) if value?
       el
 
     _translate: (el, x, y) ->
@@ -190,55 +274,88 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       svg.appendChild(selection)
 
       @_setupDragBehavior(svg)
+      @_setupScrollBehavior(svg)
 
       svg
 
+    _setupScrollBehavior: (svg) ->
+      allowWheel = true
+
+      rateLimit = ->
+        allowWheel = false
+        setTimeout((-> allowWheel = true), 100)
+
+      L.DomEvent.on svg, 'mousewheel', (e) =>
+        return unless allowWheel
+
+        transform = @root.find(@scope('.draggable')).attr('transform')
+        origin = parseInt(/^[^\d]*(\d+),/.exec(transform)?[1] ? 0, 10)
+
+        x = e.clientX - svg.clientLeft - origin
+        time = @positionToTime(x)
+        deltaX = e.wheelDeltaX
+        deltaY = e.wheelDeltaY
+        if Math.abs(deltaY) > Math.abs(deltaX)
+          levels = if deltaY > 0 then -1 else 1
+          @_zoom(levels, time)
+          rateLimit()
+        else if deltaX != 0
+          @_pan(deltaX)
+
+        e.preventDefault()
+
     _setupDragBehavior: (svg) ->
-      @snap = Snap(svg)
+      L.DomUtil.setPosition(svg, L.point(0, 0), true)
 
-      draggable = @snap.select(@scope('.draggable'))
-      selection = @snap.select(@scope('.selection'))
-      labels = @snap.select(@scope('.overlay'))
-      originalTransform = draggable.transform().local
+      self = this
+      draggable = new L.Draggable(svg)
+      draggable._updatePosition = ->
+        @fire('predrag')
+        self._pan(@_newPos.x, false)
+        @fire('drag')
+      draggable.on 'dragend', (e) ->
+        self._pan(@_newPos.x - @_startPos.x)
 
-      xRe = /^t(\d+),/
-      match = xRe.exec(originalTransform)
-      x0 = parseInt(match?[1] ? 0, 10)
-      x = @originPx ?= 0
-      start = @start
-      end = @end
+      draggable.enable()
+
+    _pan: (dx, commit=true) ->
+      @_startPan() unless @_panTransform
+
+      start = @_panStart
+      end = @_panEnd
+      originalTransform = @_panTransform
       present = config.present()
 
-      onmove = (dx, dy) =>
-        span = end - start
-        @start = start - dx * @scale
-        @end = @start + span
+      span = end - start
+      @start = start - dx * @scale
+      @end = @start + span
 
-        if @end > present
-          @end = present
-          @start = present - span
-          dx = -Math.floor((@start - start) / @scale)
+      if @end > present
+        @end = present
+        @start = present - span
+        dx = -Math.floor((@start - start) / @scale)
+      @originPx = -(@_panStartX + dx) # x offset from its original position
 
-        @originPx = -(x + dx) # x offset from its original position
+      t = if originalTransform?.length > 0 then 'T' else 't'
 
-        t = if originalTransform? then 'T' else 't'
-        attrs = {transform: originalTransform + t + [dx, 0]}
-        draggable.attr(attrs)
-        selection.attr(attrs)
+      draggables = @root.find([@scope('.draggable'), @scope('.selection')].join(', '))
+      draggables.attr('transform', "translate(#{-@originPx + @_panX0},0)")
 
-      onstart = =>
-        originalTransform = draggable.transform().local
-        x = parseInt(xRe.exec(originalTransform)?[1] ? 0, 10) - x0
-        start = @start
-        end = @end
-        present = config.present()
+      @_finishPan() if commit
 
-      onend = =>
-        @_updateTimeline()
+    _startPan: ->
+      @_panTransform = @root.find(@scope('.draggable')).attr('transform')
 
-      draggable.drag(onmove, onstart, onend)
-      selection.drag(onmove, onstart, onend)
-      labels.drag(onmove, onstart, onend)
+      xRe = /^[^\d]*(\d+),/
+      match = xRe.exec(@_panTransform)
+      @_panX0 = 64
+      @_panStartX = parseInt(match?[1] ? @_panX0, 10) - @_panX0
+      @_panStart = @start
+      @_panEnd = @end
+
+    _finishPan: =>
+      @_updateTimeline()
+      @_panTransform = @_panStart = @_panEnd = null
 
     _createSelectionOverlay: (svg) ->
 
@@ -293,9 +410,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       null
 
     _updateTimeline: ->
-      {axis, timeline, start, end, root} = this
+      {axis, timeline, start, end, root, zoom} = this
 
       @_empty(axis)
+
+      @root.find('h1').text(RESOLUTIONS[zoom - 1])
 
       line = @_buildSvgElement('line', class: @scope('timeline'), x1: MIN_X, y1: 0, x2: MAX_X, y2: 0)
       axis.appendChild(line)
@@ -304,12 +423,17 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @scale = (end - start) / width # ms per pixel
 
       range = @range()
-      @_drawDayIntervals(range[0], range[1])
 
-      unless @_contains(@_loadedRange..., @start, @end)
+      @_drawIntervals(range[0], range[1], zoom - 1)
+      for own k, _ of @_data
+        @_drawData(k)
+
+      resolution = range[2]
+      [loadedStart, loadedEnd, loadedResolution] = @_loadedRange
+      unless loadedResolution == resolution && @_contains(loadedStart, loadedEnd, start, end)
         @root.find(@scope('.tools')).addClass('busy')
         for node in @tlDatasets.childNodes
-          node.setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
+          node.setAttribute('class', "#{node.getAttribute('class')} #{@scope('loading')}")
 
       @root.trigger(@scopedEventName('rangechange'), range)
 
@@ -372,21 +496,30 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       parent.appendChild(rect)
       rect
 
-    _drawDayIntervals: (start, end) ->
+    _roundTime: (time, zoom, decrement=false) ->
+      date = new Date(time)
+      components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
+      components = components.slice(0, components.length - zoom)
+      components[components.length - 1]-- if decrement
+      components.push(0) if components.length == 1
+      Date.UTC(components...)
+
+    _drawIntervals: (start, end, zoom) ->
       axis = @axis
 
-      # Make this 3x as wide as it needs to be to allow dragging without redrawing
-      start = new Date(Math.floor(start / MS_PER_DAY) * MS_PER_DAY)
-      end = new Date(Math.floor(end / MS_PER_DAY) * MS_PER_DAY)
+      start = @_roundTime(start, zoom)
+      end = @_roundTime(end, zoom)
+
+      # Wrong for months and leap years
+      timespan = ZOOM_LEVELS[zoom]
+
       time = end
 
       while time >= start
         date = new Date(time)
-        day = string.padLeft(date.getUTCDate(), '0', 2)
-        month = MONTHS[date.getUTCMonth()]
-        interval = @_buildIntervalDisplay(@timeToPosition(time), 0, day, month)
+        interval = @_buildIntervalDisplay(@timeToPosition(time), 0, LABELS[zoom](date)...)
         axis.appendChild(interval)
-        time -= MS_PER_DAY
+        time = @_roundTime(time, zoom, true)
 
     _buildIntervalDisplay: (x, y, text, subText) ->
       g = @_buildSvgElement('g', class: @scope('date-label'))
@@ -395,9 +528,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       label = @_buildSvgElement('text', x: 5, y: y + 20, class: "#{@scope('axis-label')} #{@scope('axis-super-label')}")
       label.innerHTML = text
 
-      subLabel = @_buildSvgElement('text', x: 5, y: y + 34, class: "#{@scope('axis-label')} #{@scope('axis-sub-label')}")
-      subLabel.innerHTML = subText
-
       line = @_buildSvgElement('line', class: @scope('tick'), x1: 0, y1: MIN_Y, x2: 0, y2: MAX_Y)
 
       circle = @_buildSvgElement('circle', class: @scope('tick-crossing'), r: 6)
@@ -405,7 +535,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       g.appendChild(line)
       g.appendChild(circle)
       g.appendChild(label)
-      g.appendChild(subLabel)
+
+      if subText
+        subLabel = @_buildSvgElement('text', x: 5, y: y + 34, class: "#{@scope('axis-label')} #{@scope('axis-sub-label')}")
+        subLabel.innerHTML = subText
+        g.appendChild(subLabel)
 
       g
 
@@ -413,7 +547,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       if @_datasets?.length > 0
         datasetsHeight = @_datasets.length * DATASET_HEIGHT + 2 * DATASET_PADDING
         @_translate(@axis, 0, TOP_HEIGHT + datasetsHeight)
-        @root.height(TOP_HEIGHT + datasetsHeight + AXIS_HEIGHT)
+        totalHeight = Math.max(TOP_HEIGHT + datasetsHeight + AXIS_HEIGHT, 100)
+        @root.height(totalHeight)
+        $(@svg).height(totalHeight)
 
       $('.master-overlay').masterOverlay().masterOverlay('contentHeightChanged')
 

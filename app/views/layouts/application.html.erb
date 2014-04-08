@@ -14,7 +14,6 @@
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= yield :javascript %>
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
-    <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
 </head>
 <body class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
@@ -43,5 +42,6 @@
         <img src="<%= image_path "https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0" %>" alt="">
       </noscript>
     <% end %>
+    <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
 </body>
 </html>

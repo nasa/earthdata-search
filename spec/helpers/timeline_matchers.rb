@@ -64,10 +64,8 @@ RSpec::Matchers.define :have_time_offset do |selector, dt|
 
       actual_dx = page.evaluate_script """
         (function() {
-          var timelineObj = $('#timeline').data('timeline');
-          var snap = timelineObj.snap;
-          var transform = snap.select('#{selector}').transform().local;
-          return (transform && transform.length > 0) ? parseInt(transform.substring(1), 10) : (-1234 + 48);
+          var transform = $('#timeline').find('#{selector}').attr('transform');
+          return (transform && transform.length > 0) ? parseInt(transform.replace('translate(', ''), 10) : (-1234 + 48);
         })();
       """
 
