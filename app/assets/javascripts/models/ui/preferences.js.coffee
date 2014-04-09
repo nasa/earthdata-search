@@ -18,27 +18,18 @@ ns.Preferences = do (ko
       @getPreferences()
 
     getPreferences: =>
-      # if not logged in get preferences from cookies
-      # if logged in get preferences from Rails
-      # if both exist, merge?
-      # if neither exist, use defaults
-
-
-      if @user.isLoggedIn()
-        console.log "Load site preferences"
-        prefs = xhr = getJSON '/users/site_preferences', (data, status, xhr) =>
-          console.log data
-          @fromJson(data) if data?
+      console.log "Load site preferences"
+      prefs = xhr = getJSON '/users/site_preferences', (data, status, xhr) =>
+        console.log data
+        @fromJson(data) if data?
 
     setPreferences: =>
-      # if not logged in set preferences in cookies
-      # if logged in set preferences in database and delete cookies
-      
-      xhr = doPost '/users/site_preferences', {preferences: @serialize()}, (response) =>
-        @fromJson(response.text)
+      xhr = doPost '/users/site_preferences', {site_preferences: @serialize()}, (response) =>
+        @fromJson(response)
 
     fromJson: (jsonObj) =>
-      @show_tour(jsonObj.show_tour) if jsonObj.show_tour
+      if jsonObj
+        @show_tour(jsonObj.show_tour) if jsonObj.show_tour
 
     serialize: =>
       json =

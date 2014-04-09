@@ -63,21 +63,37 @@ class UsersController < ApplicationController
   end
 
   def get_site_preferences
-    user = User.where(echo_id: get_user_id).first
-    if user
-      render json: user.preferences, status: :ok
+    user_id = get_user_id
+
+    if user_id
+      user = User.where(echo_id: get_user_id).first
+      if user
+        render json: user.site_preferences, status: :ok
+      else
+        render json: nil, status: :ok
+      end
     else
-      render json: nil, status: :ok
+      site_preferences = session[:site_preferences]
+      render json: site_preferences, status: :ok
     end
   end
 
   def set_site_preferences
-    user = User.where(echo_id: get_user_id).first
+    user_id = get_user_id
 
-    if user
-      user.preferences = params[:preferences]
+    if user_id
+      user = User.where(echo_id: user_id).first
+
+      unless user
+        user = User.create!({echo_id: user_id})
+      end
+
+      user.site_preferences = params[:site_preferences]
       user.save
-      render json: user.preferences, status: :ok
+      render json: user.site_preferences, status: :ok
+    else
+      session[:site_preferences] = params[:site_preferences]
+      render json: session[:site_preferences], status: :ok
     end
   end
 end
