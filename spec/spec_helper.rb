@@ -7,7 +7,6 @@ require 'rspec/autorun'
 require 'capybara-screenshot/rspec'
 require 'headless'
 
-
 if ENV['driver'] == 'poltergeist'
   require 'capybara/poltergeist'
   Capybara.javascript_driver = :poltergeist
@@ -37,6 +36,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 FactoryGirl.find_definitions
 
+
 load "#{::Rails.root}/db/seeds.rb" if ENV["seed"] == "true"
 
 # http://stackoverflow.com/questions/11012407/set-json-max-nesting-option-from-within-ruby-on-rails-application/11013407#11013407
@@ -61,6 +61,7 @@ Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
 end
 
 RSpec.configure do |config|
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -128,6 +129,7 @@ RSpec.configure do |config|
 
   config.extend SharedBrowserSession
 
+  config.include Helpers::TimelineHelpers
   config.include Helpers::OverlayHelpers
   config.include Helpers::SpatialHelpers
   config.include Helpers::ProjectHelpers

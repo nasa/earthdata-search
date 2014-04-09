@@ -1,4 +1,4 @@
-do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) ->
+do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = @edsc.util.url, help=@edsc.help) ->
 
   updateLandingPageState = ->
     uiModel.isLandingPage(History.getState().hash == '/')
@@ -7,13 +7,14 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) -
     $content = $('.landing-toolbar-content')
     $('.landing-hidden').toggle(!isLandingPage)
     $('.landing-visible').toggle(isLandingPage)
-    if (isLandingPage)
+    if isLandingPage
+      $('#timeline').timeline('hide')
       $('.landing-dialog-toolbar').append($content)
       $('#keywords').focus()
     else
+      $('#timeline').timeline('refresh')
       $('.landing-toolbar-container').append($content)
     $content.css(top: 0, left: 0, position: 'static')
-
 
   updateLandingPageAnimated = (isLandingPage) ->
     $content = $('.landing-toolbar-content')
@@ -22,6 +23,7 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) -
     $('.landing-toolbar-container').append($content)
 
     if isLandingPage
+      $('#timeline').timeline('hide')
       $('.landing-hidden').fadeOut()
       $('.landing-visible').fadeIn
         complete: ->
@@ -43,6 +45,7 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = edsc.util.url) -
       if isFirstUpdate
         isFirstUpdate = false
         updateLandingPage(isLandingPage)
+        help.startTour() if isLandingPage
       else
         updateLandingPageAnimated(isLandingPage)
 
