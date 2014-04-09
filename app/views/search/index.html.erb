@@ -62,7 +62,10 @@
           <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
         </header>
         <div class="master-overlay-info">
-          <p data-bind="visible: project.isEmpty()">
+          <p data-bind="visible: project.isEmpty()" class="button-details">
+            <a id="view-project" class="button master-overlay-hide-parent master-overlay-forward low-priority" data-bind="click: ui.projectList.showProject" href="#">
+              <i class="fa fa-question-circle"></i> Learn More
+            </a>
             Add datasets to your project to compare and retrieve their data.
           </p>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
@@ -96,14 +99,14 @@
         <header class="with-options">
           <h2>Project Datasets</h2>
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject">
+            <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject, visible: !project.isEmpty()">
               <i class="edsc-icon-download"></i>
             </a>
 
-            <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
+            <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible() && !project.isEmpty(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
               <i class="edsc-icon-eye"></i>
             </a>
-            <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
+            <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible() && !project.isEmpty(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
               <i class="edsc-icon-eye"></i>
             </a>
           </div>
@@ -117,6 +120,20 @@
               data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">
             <%= render partial: 'dataset_list_item', locals: {is_project: true} %>
           </ul>
+          <div class="master-overlay-help" data-bind="if: project.datasets().length == 0">
+            <p>
+              Use this space to collect datasets of interest as you adjust your search parameters.
+            </p>
+            <p>
+              To add a dataset to your project, click the <i class="edsc-icon-plus"></i> icon on the desired dataset.
+              Once collected, you can use the tools available in this view to compare datasets on the map or on a timeline
+              and choose granules you want from each.
+            </p>
+            <p>
+              When you are satisfied with your selections, click the <i class="edsc-icon-download"></i> button to
+              access your data.
+            </p>
+          </div>
         </div>
       </section>
       <%= render partial: 'granule_list' %>
