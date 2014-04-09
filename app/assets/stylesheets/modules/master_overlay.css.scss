@@ -136,6 +136,12 @@
     float: right;
     font-style: normal;
     line-height: 1.428571429em; // Bootstrap value.  Weird.
+
+    &.low-priority {
+      box-shadow: none;
+      text-shadow: none;
+      @include light-button;
+    }
   }
 
   em {
@@ -215,4 +221,8 @@ a.master-overlay-close {
   .master-overlay-parent { left:-60%; }
   .master-overlay-main   { left: -40%; }
   .master-overlay-secondary { right: -60%; }
+}
+
+.master-overlay-help p {
+  margin-bottom: 1em;
 }
