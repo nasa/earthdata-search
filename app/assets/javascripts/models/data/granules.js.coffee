@@ -90,6 +90,13 @@ ns.Granules = do (ko,
       @temporal = @disposable(new uiModel.Temporal(query))
       @_resultsComputed = false
 
+      focusedTemporal = @parentQuery.focusedTemporal()
+      @computed =>
+        newFocus = @parentQuery.focusedTemporal()
+        if newFocus != focusedTemporal && @isLoaded()
+          @results.readImmediate()
+        focusedTemporal = newFocus
+
     _toResults: (data, current, params) ->
       entries = data.feed.entry
       newItems = (new Granule(entry) for entry in entries)

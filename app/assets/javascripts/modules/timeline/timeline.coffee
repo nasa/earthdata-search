@@ -9,6 +9,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
   DATASET_PADDING = 5
 
+  OFFSET_X = 48
+
   DATASET_TEXT_OFFSET = TOP_HEIGHT + DATASET_FONT_HEIGHT + DATASET_PADDING
 
   # Height for the axis of the timeline, containing date displays
@@ -85,6 +87,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_updateTimeline()
 
+      @root.on 'click', '.timeline-date-label', @_onLabelClick
+
     destroy: ->
       @root.find('svg').remove()
       super()
@@ -110,6 +114,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     hide: ->
       @root.hide()
       @_setHeight()
+      @focus()
       null
 
     loadstart: (id, start, end, resolution) ->
@@ -232,11 +237,49 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @scale = scale
 
+      @focus()
       @_updateTimeline()
       #console.log 'zoom', @zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
-    #_overlaps: (start0, end0, start1, end1) ->
-    #  start0 < start1 < end0 || start0 < end1 < end0 || (start1 < start0 && end0 < end1)
+    focus: (t0, t1) ->
+      root = @root
+
+      root.find(@scope('.unfocused')).remove()
+
+      t0 = null if t0 == @_focus
+      @_focus = t0
+
+      if t0?
+        root.trigger(@scopedEventName('focusset'), [t0, t1, RESOLUTIONS[@zoom - 1]])
+        startPt = @timeToPosition(t0)
+        stopPt = @timeToPosition(t1)
+
+        parent = root.find(@scope('.selection'))[0]
+
+        left = @_buildRect(class: @scope('unfocused'), x1: startPt)
+        parent.appendChild(left)
+
+        right = @_buildRect(class: @scope('unfocused'), x: stopPt)
+        parent.appendChild(right)
+      else
+        root.trigger(@scopedEventName('focusremove'))
+
+      null
+
+    _getTransformX: (el, defaultValue=0) ->
+      return defaultValue unless el
+      re = /^[^\d\-]*(-?[\d\.]+),/
+      transform = el.getAttribute('transform')
+      parseFloat(re.exec(transform)?[1] ? defaultValue)
+
+    _onLabelClick: (e) =>
+      group = e.currentTarget
+      next = group.nextSibling
+
+      x0 = @_getTransformX(group)
+      x1 = @_getTransformX(next, x0)
+
+      @focus(@positionToTime(x0), @positionToTime(x1))
 
     _contains: (start0, end0, start1, end1) ->
       start0 < start1 < end0 && start0 < end1 < end0
@@ -288,8 +331,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       L.DomEvent.on svg, 'mousewheel', (e) =>
         return unless allowWheel
 
-        transform = @root.find(@scope('.draggable')).attr('transform')
-        origin = parseInt(/^[^\d]*(\d+),/.exec(transform)?[1] ? 0, 10)
+        draggable = @root.find(@scope('.draggable'))[0]
+        origin = @_getTransformX(draggable)
 
         x = e.clientX - svg.clientLeft - origin
         time = @positionToTime(x)
@@ -319,11 +362,10 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       draggable.enable()
 
     _pan: (dx, commit=true) ->
-      @_startPan() unless @_panTransform
+      @_startPan() unless @_panStart?
 
       start = @_panStart
       end = @_panEnd
-      originalTransform = @_panTransform
       present = config.present()
 
       span = end - start
@@ -336,26 +378,20 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         dx = -Math.floor((@start - start) / @scale)
       @originPx = -(@_panStartX + dx) # x offset from its original position
 
-      t = if originalTransform?.length > 0 then 'T' else 't'
-
       draggables = @root.find([@scope('.draggable'), @scope('.selection')].join(', '))
-      draggables.attr('transform', "translate(#{-@originPx + @_panX0},0)")
+      draggables.attr('transform', "translate(#{-@originPx + OFFSET_X},0)")
 
       @_finishPan() if commit
 
     _startPan: ->
-      @_panTransform = @root.find(@scope('.draggable')).attr('transform')
-
-      xRe = /^[^\d]*(\d+),/
-      match = xRe.exec(@_panTransform)
-      @_panX0 = 64
-      @_panStartX = parseInt(match?[1] ? @_panX0, 10) - @_panX0
+      draggable = @root.find(@scope('.draggable'))[0]
+      @_panStartX = @_getTransformX(draggable, OFFSET_X) - OFFSET_X
       @_panStart = @start
       @_panEnd = @end
 
     _finishPan: =>
       @_updateTimeline()
-      @_panTransform = @_panStart = @_panEnd = null
+      @_panStartX = @_panStart = @_panEnd = null
 
     _createSelectionOverlay: (svg) ->
 
@@ -496,11 +532,19 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       parent.appendChild(rect)
       rect
 
-    _roundTime: (time, zoom, decrement=false) ->
+    _buildRect: (attrs) ->
+      attrs = $.extend({x: MIN_X, x1: MAX_X, y: MIN_Y, y1: MAX_Y}, attrs)
+      attrs['width'] ?= attrs.x1 - attrs.x
+      attrs['height'] ?= attrs.y1 - attrs.y
+      delete attrs.x1
+      delete attrs.y1
+      @_buildSvgElement 'rect', attrs
+
+    _roundTime: (time, zoom, increment=false) ->
       date = new Date(time)
       components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
       components = components.slice(0, components.length - zoom)
-      components[components.length - 1]-- if decrement
+      components[components.length - 1]++ if increment
       components.push(0) if components.length == 1
       Date.UTC(components...)
 
@@ -513,19 +557,29 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       # Wrong for months and leap years
       timespan = ZOOM_LEVELS[zoom]
 
-      time = end
+      time = start
 
-      while time >= start
+      while time <= end
         date = new Date(time)
-        interval = @_buildIntervalDisplay(@timeToPosition(time), 0, LABELS[zoom](date)...)
+        next = @_roundTime(time, zoom, true)
+        interval = @_buildIntervalDisplay(@timeToPosition(time), @timeToPosition(next), LABELS[zoom](date)...)
         axis.appendChild(interval)
-        time = @_roundTime(time, zoom, true)
+        time = next
 
-    _buildIntervalDisplay: (x, y, text, subText) ->
+    _buildIntervalDisplay: (x0, x1, text, subText) ->
       g = @_buildSvgElement('g', class: @scope('date-label'))
-      @_translate(g, x, y)
+      @_translate(g, x0, 0)
 
-      label = @_buildSvgElement('text', x: 5, y: y + 20, class: "#{@scope('axis-label')} #{@scope('axis-super-label')}")
+      if x1?
+        # Something to click on
+        bg = @_buildSvgElement 'rect',
+          x: 0
+          y: 0
+          width: x1 - x0
+          height: MAX_Y - MIN_Y
+        g.appendChild(bg)
+
+      label = @_buildSvgElement('text', x: 5, y: 20, class: "#{@scope('axis-label')} #{@scope('axis-super-label')}")
       label.innerHTML = text
 
       line = @_buildSvgElement('line', class: @scope('tick'), x1: 0, y1: MIN_Y, x2: 0, y2: MAX_Y)
@@ -537,7 +591,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       g.appendChild(label)
 
       if subText
-        subLabel = @_buildSvgElement('text', x: 5, y: y + 34, class: "#{@scope('axis-label')} #{@scope('axis-sub-label')}")
+        subLabel = @_buildSvgElement('text', x: 5, y: 34, class: "#{@scope('axis-label')} #{@scope('axis-sub-label')}")
         subLabel.innerHTML = subText
         g.appendChild(subLabel)
 

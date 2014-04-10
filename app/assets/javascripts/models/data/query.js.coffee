@@ -13,6 +13,8 @@ ns.Query = do (ko,
       @pageSize = ko.observable(20)
 
       @temporal = ko.observable(null)
+      @focusedTemporal = ko.observable(null)
+      @focusedInterval = ko.observable(null)
 
       @facets = ko.observableArray()
       @placename = ko.observable("")
@@ -100,7 +102,7 @@ ns.Query = do (ko,
       spatial = @spatial()
       @_computeSpatialParams(params, spatial) if spatial?.length > 0
 
-      temporal = @temporal()?.queryCondition()
+      temporal = @focusedTemporal() ? @temporal()?.queryCondition()
       params.temporal = temporal if temporal?.length > 0
 
       params

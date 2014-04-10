@@ -39,14 +39,17 @@ do (ko, $=jQuery) ->
 
     isSetup = ko.observable(false)
 
+    isPendingRead = true
+
     callAsyncMethod = ->
       method.call obj, value.peek(), (newValue) ->
         value(newValue)
+      isPendingRead = true
 
     asyncComputed = ko.computed
       read: ->
         val = value.peek()
-        callAsyncMethod()
+        callAsyncMethod() if isPendingRead
         val
       write: value
       deferEvaluation: true
@@ -64,6 +67,10 @@ do (ko, $=jQuery) ->
       deferEvaluation: true
 
     result.isSetup = isSetup
+
+    result.readImmediate = ->
+      callAsyncMethod()
+      isPendingRead = false
 
     originalDispose = result.dispose
     result.dispose = ->

@@ -68,8 +68,21 @@ ns.GranuleTimeline = do (ko
       $timeline.on 'timeline.rangechange', (e, range...) =>
         @range(range)
 
+      $timeline.on 'timeline.focusset', (e, t0, t1, interval) =>
+        query = @datasetsList.query
+        query.focusedInterval(interval)
+        query.focusedTemporal((new Date(t).toISOString() for t in [t0, t1]).join(','))
+
+      $timeline.on 'timeline.focusremove', (e) =>
+        query = @datasetsList.query
+        query.focusedInterval(null)
+        query.focusedTemporal(null)
+
       @range($timeline.timeline('range'))
       @datasets = ko.computed(@_computeDatasets)
+
+    clear: ->
+      $('#timeline').timeline('focus')
 
     _computeDatasets: =>
       range = @range
