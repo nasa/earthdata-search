@@ -440,7 +440,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       y = 0
       for dataset in datasets
         txt = @_buildSvgElement('text', y: y)
-        txt.innerHTML = dataset.title()
+        txt.textContent = dataset.title()
         overlay.appendChild(txt)
         y += DATASET_HEIGHT
       null
@@ -580,7 +580,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         g.appendChild(bg)
 
       label = @_buildSvgElement('text', x: 5, y: 20, class: "#{@scope('axis-label')} #{@scope('axis-super-label')}")
-      label.innerHTML = text
+      label.textContent = text
 
       line = @_buildSvgElement('line', class: @scope('tick'), x1: 0, y1: MIN_Y, x2: 0, y2: MAX_Y)
 
@@ -592,7 +592,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       if subText
         subLabel = @_buildSvgElement('text', x: 5, y: 34, class: "#{@scope('axis-label')} #{@scope('axis-sub-label')}")
-        subLabel.innerHTML = subText
+        subLabel.textContent = subText
         g.appendChild(subLabel)
 
       g

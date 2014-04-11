@@ -35,7 +35,7 @@
             <span data-bind="if: granules.hitsEstimated() && granules.hasNextPage()">approximately</span>
             <span data-bind="text: granules.hits() == 1 ? '1 matching granule' : granules.hits() + ' matching granules'"></span>
             <!-- ko if: granules.parentQuery.focusedInterval() -->
-            on the selected <span data-bind="text: granules.parentQuery.focusedInterval"></span>.
+            for the selected <span data-bind="text: granules.parentQuery.focusedInterval"></span>.
             (<a href="#" data-bind="click: $root.ui.granuleTimeline.clear">Show All</a>)
             <!-- /ko -->
           </p>
