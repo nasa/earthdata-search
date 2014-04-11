@@ -28,7 +28,7 @@ describe "Timeline date selection", reset: false do
   end
 
   context "clicking on a time span in the time line" do
-    before(:all) { find('text', text: '1987').click }
+    before(:all) { click_timeline_date('1987') }
 
     it "highlights the selected time span" do
       expect(page).to have_focused_time_span(start_1987, start_1988)
@@ -48,8 +48,8 @@ describe "Timeline date selection", reset: false do
     end
 
     context "twice" do
-      before(:all) { find('text', text: '1987').click }
-      after(:all) { find('text', text: '1987').click }
+      before(:all) { click_timeline_date('1987') }
+      after(:all) { click_timeline_date('1987') }
 
       it "removes the time span highlight" do
         expect(page).to have_no_selector('.timeline-unfocused')
@@ -72,8 +72,7 @@ describe "Timeline date selection", reset: false do
       before(:all) { find('.timeline-zoom-in').click }
       after(:all) do
         find('.timeline-zoom-out').click
-        find('text', text: '1987').click
-        wait_for_xhr
+        click_timeline_date('1987')
       end
 
       it "removes the time span highlight" do
@@ -93,8 +92,8 @@ describe "Timeline date selection", reset: false do
       end
 
       context "clicking another time span" do
-        before(:all) { find('.timeline-date-label', text: 'Feb1989').find('text', text: 'Feb').click }
-        after(:all) { find('.timeline-date-label', text: 'Feb1989').find('text', text: 'Feb').click }
+        before(:all) { click_timeline_date('Feb', '1989') }
+        after(:all) { click_timeline_date('Feb', '1989') }
 
         it "selects a time span with an appropriately scaled range" do
           expect(page).to have_focused_time_span(start_feb_1989, start_mar_1989)
@@ -114,7 +113,7 @@ describe "Timeline date selection", reset: false do
 
     context 'and clicking the "Show All" link' do
       before(:all) { click_link('Show All') }
-      after(:all) { find('text', text: '1987').click }
+      after(:all) { click_timeline_date('1987') }
 
       it "removes the time span highlight" do
         expect(page).to have_no_selector('.timeline-unfocused')
@@ -134,8 +133,8 @@ describe "Timeline date selection", reset: false do
     end
 
     context 'and clicking a different time span' do
-      before(:all) { find('text', text: '1988').click }
-      after(:all) { find('text', text: '1987').click }
+      before(:all) { click_timeline_date('1988') }
+      after(:all) { click_timeline_date('1987') }
 
       it "highlights only the new time span" do
         expect(page).to have_focused_time_span(start_1988, start_1989)
