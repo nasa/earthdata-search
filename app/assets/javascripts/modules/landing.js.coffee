@@ -1,4 +1,8 @@
-do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = @edsc.util.url, help=@edsc.help) ->
+do ($=jQuery
+    uiModel = @edsc.models.page.current.ui
+    urlUtil = @edsc.util.url
+    help = @edsc.help
+    preferences = @edsc.page.preferences) ->
 
   updateLandingPageState = ->
     uiModel.isLandingPage(History.getState().hash == '/')
@@ -45,7 +49,6 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = @edsc.util.url, 
       if isFirstUpdate
         isFirstUpdate = false
         updateLandingPage(isLandingPage)
-        help.startTour() if isLandingPage
       else
         updateLandingPageAnimated(isLandingPage)
 
@@ -56,6 +59,9 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = @edsc.util.url, 
     updateLandingPageState()
 
     $(window).on 'statechange anchorchange', updateLandingPageState
+
+    $(window).on 'preferencesloaded', ->
+      help.startTour() if uiModel.isLandingPage() && preferences.showTour()
 
     $('.landing-area').on 'keypress', '#keywords', (e) ->
       urlUtil.pushState('/search') if e.which == 13

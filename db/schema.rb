@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310152648) do
+ActiveRecord::Schema.define(version: 20140401163908) do
 
   create_table "accepted_data_quality_summaries", force: true do |t|
     t.string   "dqs_id"
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(version: 20140310152648) do
   create_table "projects", force: true do |t|
     t.string   "username"
     t.text     "jsondata"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "echo_id"
+    t.text     "site_preferences"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

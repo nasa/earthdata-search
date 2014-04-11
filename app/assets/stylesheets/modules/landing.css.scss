@@ -25,6 +25,17 @@
   background-color: transparentize(#111, .2);
   border-radius: 6px;
   box-shadow: 0 0 20px 0 transparentize(#111, .3);
+
+  .show-tour {
+    float: right;
+    color: #fff;
+    text-decoration: underline;
+
+    &:hover {
+      color: #aaa;
+    }
+  }
+
 }
 
 .landing-dialog-toolbar {

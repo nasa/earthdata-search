@@ -22,6 +22,7 @@ class UsersController < ApplicationController
 
   def logout
     session[:token] = nil
+    session[:user_id] = nil
 
     render json: nil, status: :ok
   end
@@ -60,5 +61,40 @@ class UsersController < ApplicationController
 
     response = Echo::Client.update_preferences(user_id, preferences, token)
     render json: response.body, status: response.status
+  end
+
+  def get_site_preferences
+    user_id = get_user_id
+
+    if user_id
+      user = User.where(echo_id: get_user_id).first
+      if user
+        render json: user.site_preferences, status: :ok
+      else
+        render json: nil, status: :ok
+      end
+    else
+      site_preferences = session[:site_preferences]
+      render json: site_preferences, status: :ok
+    end
+  end
+
+  def set_site_preferences
+    user_id = get_user_id
+
+    if user_id
+      user = User.where(echo_id: user_id).first
+
+      unless user
+        user = User.create!({echo_id: user_id})
+      end
+
+      user.site_preferences = params[:site_preferences]
+      user.save
+      render json: user.site_preferences, status: :ok
+    else
+      session[:site_preferences] = params[:site_preferences]
+      render json: session[:site_preferences], status: :ok
+    end
   end
 end

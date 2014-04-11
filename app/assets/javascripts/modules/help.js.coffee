@@ -1,4 +1,4 @@
-@edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page) ->
+@edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page, preferences = @edsc.page.preferences) ->
 
   tourOptions =
     shapefile_multiple:
@@ -231,7 +231,17 @@
 
   $(document).on 'click', '.popover [data-role=prev]', prev
   $(document).on 'click', '.popover [data-role=next], .popover-advance', next
-  $(document).on 'click', '.popover [data-role=end]', close
+  $(document).on 'click', '.popover [data-role=end]', ->
+    if tourRunning
+      preferences.showTour(false)
+      preferences.save()
+    close()
+
+  $(document).on 'click', '.show-tour', (e) ->
+    e.preventDefault()
+    startTour()
+
+
 
   add = (key, options={}) ->
     unless tourRunning
@@ -251,7 +261,6 @@
       queue.push(options)
 
     showCurrent()
-
 
   exports =
     add: add
