@@ -90,6 +90,13 @@ ns.Granules = do (ko,
       @temporal = @disposable(new uiModel.Temporal(query))
       @_resultsComputed = false
 
+      focusedTemporal = @parentQuery.focusedTemporal()
+      @computed =>
+        newFocus = @parentQuery.focusedTemporal()
+        if newFocus != focusedTemporal && @isLoaded()
+          @results.readImmediate()
+        focusedTemporal = newFocus
+
     _toResults: (data, current, params) ->
       entries = data.feed.entry
       newItems = (new Granule(entry) for entry in entries)
@@ -99,15 +106,22 @@ ns.Granules = do (ko,
       else
         newItems
 
-    _computeSearchResponse: (current, callback) ->
+    _computeSearchResponse: (current, callback, needsLoad=true) ->
       if @query?.validQuery() && @parentQuery?.validQuery()
         results = []
-        @results([]) if @_resultsComputed
-        @_resultsComputed = true
-        @isLoaded(false)
         params = @params()
         params.page_num = @page = 1
-        @_load(params, current, callback)
+
+        if needsLoad
+          if params.temporal == 'no-data'
+            @results([])
+            @hits(0)
+            return
+
+          @results([]) if @_resultsComputed
+          @_resultsComputed = true
+          @isLoaded(false)
+          @_load(params, current, callback)
 
     params: =>
       parentParams = @parentQuery.globalParams()
@@ -115,6 +129,24 @@ ns.Granules = do (ko,
       for param in ['bounding_box', 'point', 'line', 'polygon', 'temporal']
         parentValue = parentParams[param]
         params[param] = parentValue if parentValue?
+      focusedTemporal = @parentQuery.focusedTemporal()
       extend(params, @query.params())
+      if focusedTemporal?
+
+        granuleTemporal = @query.temporal()
+        datasetTemporal = @parentQuery.temporal()
+        condition = null
+        if granuleTemporal.queryCondition()?
+          condition = granuleTemporal
+        else if datasetTemporal.queryCondition()?
+          condition = datasetTemporal
+
+        focusedTemporal = condition.intersect(focusedTemporal...) if condition?
+
+        if focusedTemporal?
+          params.temporal = (t.toISOString() for t in focusedTemporal).join(',')
+        else
+          params.temporal = 'no-data'
+      params
 
   exports = GranulesModel

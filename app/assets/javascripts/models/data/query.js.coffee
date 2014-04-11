@@ -13,6 +13,8 @@ ns.Query = do (ko,
       @pageSize = ko.observable(20)
 
       @temporal = ko.observable(null)
+      @focusedTemporal = ko.observable(null)
+      @focusedInterval = ko.observable(null)
 
       @facets = ko.observableArray()
       @placename = ko.observable("")

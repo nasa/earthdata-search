@@ -134,8 +134,17 @@
   cursor: pointer;
 
   &:hover {
+    fill: #2a2a2a;
+
     text {
       fill: #3498db;
     }
   }
+}
+
+.timeline-unfocused {
+  pointer-events: none;
+  fill: #000;
+  fill-opacity: .5;
+  stroke: #3498db;
 }
