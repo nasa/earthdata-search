@@ -1,4 +1,4 @@
-@edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page) ->
+@edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page, uiModel = @edsc.models.page.current.ui) ->
 
   tourOptions =
     shapefile_multiple:
@@ -172,6 +172,7 @@
       $(queue[index].element).popover('destroy')
 
   close = ->
+    uiModel.preferences.hideTour() if tourRunning
     hideCurrent()
     queue = []
     index = 0

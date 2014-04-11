@@ -1,19 +1,16 @@
-#= require models/data/xhr_model
 
 ns = @edsc.models.ui
 
 ns.Preferences = do (ko
-                     XhrModel = @edsc.models.data.XhrModel
                      getJSON = jQuery.getJSON
                      doPost = jQuery.post
-                     extend = $.extend
-                     cookieUtil = @edsc.util.cookies
+                     help = @edsc.help
                      ) ->
 
   class Preferences
     constructor: (@user) ->
       # Default Preferences
-      @show_tour = ko.observable(true)
+      @showTour = ko.observable(true)
 
       @getPreferences()
 
@@ -23,17 +20,26 @@ ns.Preferences = do (ko
         console.log data
         @fromJson(data) if data?
 
+        $(window).trigger 'preferencesloaded'
+
     setPreferences: =>
       xhr = doPost '/users/site_preferences', {site_preferences: @serialize()}, (response) =>
         @fromJson(response)
 
     fromJson: (jsonObj) =>
       if jsonObj
-        @show_tour(jsonObj.show_tour) if jsonObj.show_tour
+        @showTour(jsonObj.show_tour == "true") if jsonObj.show_tour
 
     serialize: =>
       json =
-        show_tour: @show_tour()
+        show_tour: @showTour()
 
+    startTour: ->
+      # this help is undefined
+      help.startTour()
+
+    hideTour: =>
+      @showTour(false)
+      @setPreferences()
 
   exports = Preferences
