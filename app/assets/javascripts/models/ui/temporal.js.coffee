@@ -127,6 +127,13 @@ ns.Temporal = do (ko,
       @start.clear()
       @stop.clear()
 
+    intersect: (start, stop) ->
+      for [rangeStart, rangeStop] in @ranges()
+        intersectStart = Math.max(start, rangeStart)
+        intersectStop = Math.min(stop, rangeStop)
+        return [new Date(intersectStart), new Date(intersectStop)] if intersectStart < intersectStop
+      return null
+
     _computeRanges: ->
       {start, stop} = this
       result = []

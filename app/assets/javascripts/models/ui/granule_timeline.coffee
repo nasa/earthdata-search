@@ -71,7 +71,7 @@ ns.GranuleTimeline = do (ko
       $timeline.on 'timeline.focusset', (e, t0, t1, interval) =>
         query = @datasetsList.query
         query.focusedInterval(interval)
-        query.focusedTemporal((new Date(t).toISOString() for t in [t0, t1]).join(','))
+        query.focusedTemporal((new Date(t) for t in [t0, t1]))
 
       $timeline.on 'timeline.focusremove', (e) =>
         query = @datasetsList.query

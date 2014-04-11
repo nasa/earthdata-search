@@ -113,6 +113,11 @@ ns.Granules = do (ko,
         params.page_num = @page = 1
 
         if needsLoad
+          if params.temporal == 'no-data'
+            @results([])
+            @hits(0)
+            return
+
           @results([]) if @_resultsComputed
           @_resultsComputed = true
           @isLoaded(false)
@@ -126,7 +131,22 @@ ns.Granules = do (ko,
         params[param] = parentValue if parentValue?
       focusedTemporal = @parentQuery.focusedTemporal()
       extend(params, @query.params())
-      params.temporal = focusedTemporal if focusedTemporal?
+      if focusedTemporal?
+
+        granuleTemporal = @query.temporal()
+        datasetTemporal = @parentQuery.temporal()
+        condition = null
+        if granuleTemporal.queryCondition()?
+          condition = granuleTemporal
+        else if datasetTemporal.queryCondition()?
+          condition = datasetTemporal
+
+        focusedTemporal = condition.intersect(focusedTemporal...) if condition?
+
+        if focusedTemporal?
+          params.temporal = (t.toISOString() for t in focusedTemporal).join(',')
+        else
+          params.temporal = 'no-data'
       params
 
   exports = GranulesModel
