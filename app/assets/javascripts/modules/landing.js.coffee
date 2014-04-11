@@ -1,4 +1,8 @@
-do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = @edsc.util.url, help=@edsc.help) ->
+do ($=jQuery
+    uiModel = @edsc.models.page.current.ui
+    urlUtil = @edsc.util.url
+    help = @edsc.help
+    preferences = @edsc.page.preferences) ->
 
   updateLandingPageState = ->
     uiModel.isLandingPage(History.getState().hash == '/')
@@ -57,7 +61,7 @@ do ($=jQuery, uiModel = @edsc.models.page.current.ui, urlUtil = @edsc.util.url, 
     $(window).on 'statechange anchorchange', updateLandingPageState
 
     $(window).on 'preferencesloaded', ->
-      help.startTour() if uiModel.isLandingPage && uiModel.preferences.showTour()
+      help.startTour() if uiModel.isLandingPage && preferences.showTour()
 
     $('.landing-area').on 'keypress', '#keywords', (e) ->
       urlUtil.pushState('/search') if e.which == 13

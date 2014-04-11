@@ -3,12 +3,12 @@
 #= require models/data/dataset_facets
 #= require models/data/project
 #= require models/data/user
+#= require models/data/preferences
 #= require models/ui/spatial_type
 #= require models/ui/temporal
 #= require models/ui/datasets_list
 #= require models/ui/project_list
 #= require models/ui/granule_timeline
-#= require models/ui/preferences
 
 models = @edsc.models
 data = models.data
@@ -29,7 +29,7 @@ ns.SearchPage = do (ko,
                     DatasetsListModel = ui.DatasetsList
                     ProjectListModel = ui.ProjectList
                     GranuleTimelineModel = ui.GranuleTimeline
-                    PreferencesModel = ui.Preferences) ->
+                    PreferencesModel = data.Preferences) ->
 
   class SearchPage
     constructor: ->
@@ -38,6 +38,7 @@ ns.SearchPage = do (ko,
       @datasets = new DatasetsModel(@query)
       @datasetFacets = new DatasetFacetsModel(@query)
       @project = new ProjectModel(@query)
+      @preferences = new PreferencesModel(@user)
 
       @ui =
         spatialType: new SpatialTypeModel()
@@ -46,7 +47,6 @@ ns.SearchPage = do (ko,
         projectList: new ProjectListModel(@project, @user, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
         granuleTemporal: null
-        preferences: new PreferencesModel(@user)
 
       @bindingsLoaded = ko.observable(false)
 

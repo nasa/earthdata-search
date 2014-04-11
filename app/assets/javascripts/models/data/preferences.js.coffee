@@ -1,10 +1,9 @@
 
-ns = @edsc.models.ui
+ns = @edsc.models.data
 
 ns.Preferences = do (ko
                      getJSON = jQuery.getJSON
                      doPost = jQuery.post
-                     help = @edsc.help
                      ) ->
 
   class Preferences
@@ -12,19 +11,20 @@ ns.Preferences = do (ko
       # Default Preferences
       @showTour = ko.observable(true)
 
-      @getPreferences()
+      @load()
 
-    getPreferences: =>
-      console.log "Load site preferences"
-      prefs = xhr = getJSON '/users/site_preferences', (data, status, xhr) =>
-        console.log data
+    load: ->
+      getJSON '/users/site_preferences', (data, status, xhr) =>
+        console.log "Loaded site preferences", data
         @fromJson(data) if data?
 
         $(window).trigger 'preferencesloaded'
+      null
 
-    setPreferences: =>
-      xhr = doPost '/users/site_preferences', {site_preferences: @serialize()}, (response) =>
-        @fromJson(response)
+    save: ->
+      console.log 'Saving preferences'
+      doPost '/users/site_preferences', {site_preferences: @serialize()}, @fromJson
+      null
 
     fromJson: (jsonObj) =>
       if jsonObj
@@ -33,13 +33,5 @@ ns.Preferences = do (ko
     serialize: =>
       json =
         show_tour: @showTour()
-
-    startTour: ->
-      # this help is undefined
-      help.startTour()
-
-    hideTour: =>
-      @showTour(false)
-      @setPreferences()
 
   exports = Preferences

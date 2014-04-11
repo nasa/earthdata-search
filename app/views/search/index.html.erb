@@ -40,7 +40,6 @@
     </ul>
   </div>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
-  <a href="#" class="button landing-visible" data-bind="click: ui.preferences.startTour">Show Tour</a>
 </div>
 </div>
 <% end %>
@@ -310,6 +309,7 @@
     </div>
 
     <div class="landing-dialog-header">
+      <a href="#" class="show-tour" data-bind="visible: !preferences.showTour()">Take a Tour</a>
       <h2>Discover Earth Science Data</h2>
       <p>Search NASA Earth Science data by keyword and filter by <i class="fa fa-clock-o"></i> <strong>time</strong> or <i class="fa fa-crop"></i> <strong>space</strong>.</p>
     </div>
