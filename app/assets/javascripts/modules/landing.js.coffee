@@ -61,7 +61,7 @@ do ($=jQuery
     $(window).on 'statechange anchorchange', updateLandingPageState
 
     $(window).on 'preferencesloaded', ->
-      help.startTour() if uiModel.isLandingPage && preferences.showTour()
+      help.startTour() if uiModel.isLandingPage() && preferences.showTour()
 
     $('.landing-area').on 'keypress', '#keywords', (e) ->
       urlUtil.pushState('/search') if e.which == 13
