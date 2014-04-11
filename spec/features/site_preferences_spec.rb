@@ -24,9 +24,8 @@ describe 'Site Preferences' do
       click_button 'Close'
       expect(page).to have_no_css '.tour'
 
-      script = 'edsc.page.preferences.showTour()'
-      response = evaluate_script(script)
-      expect(response).to eq(false)
+      visit '/'
+      expect(page).to have_no_css '.tour'
     end
 
     it "shows Take a Tour link after closing the tour" do
@@ -44,9 +43,8 @@ describe 'Site Preferences' do
       click_button 'Close'
       expect(page).to have_no_css '.tour'
 
-      script = 'edsc.page.preferences.showTour()'
-      response = evaluate_script(script)
-      expect(response).to eq(false)
+      visit '/'
+      expect(page).to have_no_css '.tour'
     end
 
     it "shows Take a Tour link after closing the tour" do

@@ -22,6 +22,7 @@ class UsersController < ApplicationController
 
   def logout
     session[:token] = nil
+    session[:user_id] = nil
 
     render json: nil, status: :ok
   end

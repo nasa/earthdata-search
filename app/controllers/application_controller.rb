@@ -36,9 +36,14 @@ class ApplicationController < ActionController::Base
     end
 
     def get_user_id
+      # Dont make a call to ECHO if we already know the user id
+      return session[:user_id] if session[:user_id]
+
       # Dont make a call to ECHO if user is not logged in
       return nil unless token.present?
+
       response = Echo::Client.get_token_info(token).body
-      response["token_info"]["user_guid"] if response["token_info"]
+      session[:user_id] = response["token_info"]["user_guid"] if response["token_info"]
+      session[:user_id]
     end
 end
