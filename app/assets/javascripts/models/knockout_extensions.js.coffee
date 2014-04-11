@@ -42,14 +42,13 @@ do (ko, $=jQuery) ->
     isPendingRead = true
 
     callAsyncMethod = ->
-      method.call obj, value.peek(), (newValue) ->
-        value(newValue)
+      method.call obj, value.peek(), value, isPendingRead
       isPendingRead = true
 
     asyncComputed = ko.computed
       read: ->
         val = value.peek()
-        callAsyncMethod() if isPendingRead
+        callAsyncMethod()
         val
       write: value
       deferEvaluation: true

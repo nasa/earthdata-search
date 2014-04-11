@@ -25,6 +25,7 @@ describe "Timeline date selection", reset: false do
     zoom_out_button.click
     pan_timeline(-20.years)
     wait_for_xhr
+    expect(granule_list).to have_text('Showing 20 of 39 matching granules')
   end
 
   context "clicking on a time span in the time line" do
@@ -69,7 +70,10 @@ describe "Timeline date selection", reset: false do
     end
 
     context "and zooming the timeline" do
-      before(:all) { find('.timeline-zoom-in').click }
+      before(:all) do
+        find('.timeline-zoom-in').click
+        wait_for_xhr
+      end
       after(:all) do
         find('.timeline-zoom-out').click
         click_timeline_date('1987')
@@ -112,7 +116,11 @@ describe "Timeline date selection", reset: false do
     end
 
     context 'and clicking the "Show All" link' do
-      before(:all) { click_link('Show All') }
+      before(:all)  do
+        click_link('Show All')
+        wait_for_xhr
+      end
+
       after(:all) { click_timeline_date('1987') }
 
       it "removes the time span highlight" do

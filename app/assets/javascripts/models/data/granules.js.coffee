@@ -106,15 +106,17 @@ ns.Granules = do (ko,
       else
         newItems
 
-    _computeSearchResponse: (current, callback) ->
+    _computeSearchResponse: (current, callback, needsLoad=true) ->
       if @query?.validQuery() && @parentQuery?.validQuery()
         results = []
-        @results([]) if @_resultsComputed
-        @_resultsComputed = true
-        @isLoaded(false)
         params = @params()
         params.page_num = @page = 1
-        @_load(params, current, callback)
+
+        if needsLoad
+          @results([]) if @_resultsComputed
+          @_resultsComputed = true
+          @isLoaded(false)
+          @_load(params, current, callback)
 
     params: =>
       parentParams = @parentQuery.globalParams()
@@ -122,6 +124,9 @@ ns.Granules = do (ko,
       for param in ['bounding_box', 'point', 'line', 'polygon', 'temporal']
         parentValue = parentParams[param]
         params[param] = parentValue if parentValue?
+      focusedTemporal = @parentQuery.focusedTemporal()
       extend(params, @query.params())
+      params.temporal = focusedTemporal if focusedTemporal?
+      params
 
   exports = GranulesModel

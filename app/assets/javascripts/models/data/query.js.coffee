@@ -102,7 +102,7 @@ ns.Query = do (ko,
       spatial = @spatial()
       @_computeSpatialParams(params, spatial) if spatial?.length > 0
 
-      temporal = @focusedTemporal() ? @temporal()?.queryCondition()
+      temporal = @temporal()?.queryCondition()
       params.temporal = temporal if temporal?.length > 0
 
       params
