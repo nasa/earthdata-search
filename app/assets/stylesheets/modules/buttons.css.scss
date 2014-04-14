@@ -39,8 +39,7 @@
 @mixin dark-button {
   @include linear-gradient($button-dark-top-gradient, $button-dark-bottom-gradient);
   color: #fff;
-  box-shadow: 0 0 3px #424242;
-  border: 1px solid $button-dark-text-shadow;
+  border: none;
   text-shadow: 1px 1px 1px $button-dark-text-shadow;
 
   &:hover {
@@ -54,10 +53,22 @@
   }
 }
 
+@mixin dark-outline-button {
+  border: 2px solid $button-dark-top-gradient;
+  background: transparent;
+  color: $button-dark-top-gradient;
+  text-shadow: none;
+  font-weight: bold;
+
+  &:hover {
+    background: #f3f3f3;
+  }
+}
+
 .button, input[type="button"], input[type="reset"], input[type="submit"], button {
   text-decoration: none;
   display: inline-block;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 3px;
   outline: none;
   color: #fff;
@@ -113,4 +124,14 @@ button {
 .btn-group {
   float: right;
   min-height: 3em;
+}
+
+.button-small {
+  font-size: .8em;
+  padding: 6px 10px;
+
+  &.button-outline {
+    @include dark-outline-button;
+    padding: 4px 8px;
+  }
 }

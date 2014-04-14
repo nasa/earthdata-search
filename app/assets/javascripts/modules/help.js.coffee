@@ -140,10 +140,10 @@
                 <div class='popover-content'></div>
                 <div class='popover-navigation'>
                   <div class='btn-group'>
-                    <button class='btn btn-sm btn-default' data-role='prev'>« Prev</button>
-                    <button class='btn btn-sm btn-default' data-role='next'>Next »</button>
+                    <button class='button-small button-outline' data-role='prev'>« Prev</button>
+                    <button class='button-small' data-role='next'>Next »</button>
                   </div>
-                  <button class='btn btn-sm btn-default' data-role='end'>Close</button>
+                  <button class='button-small button-outline' data-role='end'>Close</button>
                 </div>
               </div>"
 
