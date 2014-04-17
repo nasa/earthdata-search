@@ -85,6 +85,20 @@ module Helpers
       end
     end
 
+    def keypress(selector, key)
+      keyCode = case key
+                when :enter then 13
+                when :left then 37
+                when :up then 38
+                when :right then 39
+                when :down then 40
+                else key.to_i
+                end
+
+      script = "$('#{selector}').trigger($.Event('keydown', { keyCode: #{keyCode} }));"
+      page.execute_script script
+    end
+
     private
 
     def page

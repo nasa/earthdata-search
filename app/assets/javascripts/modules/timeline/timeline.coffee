@@ -88,6 +88,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @_updateTimeline()
 
       @root.on 'click', '.timeline-date-label', @_onLabelClick
+      @root.on 'keydown', @_onKeydown
 
     destroy: ->
       @root.find('svg').remove()
@@ -271,6 +272,31 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       re = /^[^\d\-]*(-?[\d\.]+),/
       transform = el.getAttribute('transform')
       parseFloat(re.exec(transform)?[1] ? defaultValue)
+
+    _onKeydown: (e) =>
+      focus = @_focus
+      key = e.keyCode
+      left = 37
+      up = 38
+      right = 39
+      down = 40
+      if focus && (key == left || key == right)
+        zoom = @zoom - 1
+
+        focusEnd = @_roundTime(focus, zoom, 1)
+
+        if key == left
+          t0 = @_roundTime(focus, zoom, -1)
+          t1 = focus
+          dx = @timeSpanToPx(focusEnd - focus)
+        else
+          t0 = focusEnd
+          t1 = @_roundTime(focus, zoom, 2)
+          dx = -@timeSpanToPx(t1 - t0)
+
+        @_pan(dx)
+        @focus(t0, t1)
+
 
     _onLabelClick: (e) =>
       group = e.currentTarget
@@ -540,11 +566,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       delete attrs.y1
       @_buildSvgElement 'rect', attrs
 
-    _roundTime: (time, zoom, increment=false) ->
+    _roundTime: (time, zoom, increment=0) ->
       date = new Date(time)
       components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
       components = components.slice(0, components.length - zoom)
-      components[components.length - 1]++ if increment
+      components[components.length - 1] += increment
       components.push(0) if components.length == 1
       Date.UTC(components...)
 
@@ -554,14 +580,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       start = @_roundTime(start, zoom)
       end = @_roundTime(end, zoom)
 
-      # Wrong for months and leap years
-      timespan = ZOOM_LEVELS[zoom]
-
       time = start
 
       while time <= end
         date = new Date(time)
-        next = @_roundTime(time, zoom, true)
+        next = @_roundTime(time, zoom, 1)
         interval = @_buildIntervalDisplay(@timeToPosition(time), @timeToPosition(next), LABELS[zoom](date)...)
         axis.appendChild(interval)
         time = next
