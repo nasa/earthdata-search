@@ -44,13 +44,14 @@ module Helpers
     end
 
     def upload_shapefile(path)
+      clear_spatial
+      clear_popover
+      wait_for_xhr
+
       script = "$('input[type=file]').css({visibility: 'visible', height: '28px', width: '300px', position: 'absolute', 'z-index':500000}).show().attr('name', 'shapefile')"
       page.evaluate_script(script)
 
       attach_file('shapefile', Rails.root.join(path))
-
-      clear_spatial
-      clear_popover
     end
 
     def clear_popover
