@@ -282,15 +282,17 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       down = 40
       if focus && (key == left || key == right)
         zoom = @zoom - 1
+
+        focusEnd = @_roundTime(focus, zoom, 1)
+
         if key == left
           t0 = @_roundTime(focus, zoom, -1)
           t1 = focus
+          dx = @timeSpanToPx(focusEnd - focus)
         else
-          t0 = @_roundTime(focus, zoom, 1)
+          t0 = focusEnd
           t1 = @_roundTime(focus, zoom, 2)
-
-        dx = @timeSpanToPx(t1 - t0)
-        dx = -dx if key == right
+          dx = -@timeSpanToPx(t1 - t0)
 
         @_pan(dx)
         @focus(t0, t1)

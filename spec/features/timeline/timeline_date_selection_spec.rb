@@ -6,11 +6,16 @@ require "spec_helper"
 describe "Timeline date selection", reset: false do
   extend Helpers::DatasetHelpers
 
+  present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
+
+  start_1986 = DateTime.new(1986, 1, 1, 0, 0, 0, '+0')
   start_1987 = DateTime.new(1987, 1, 1, 0, 0, 0, '+0')
   start_1988 = DateTime.new(1988, 1, 1, 0, 0, 0, '+0')
   start_1989 = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
+  start_jan_1989 = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
   start_feb_1989 = DateTime.new(1989, 2, 1, 0, 0, 0, '+0')
   start_mar_1989 = DateTime.new(1989, 3, 1, 0, 0, 0, '+0')
+  start_apr_1989 = DateTime.new(1989, 4, 1, 0, 0, 0, '+0')
 
   before :all do
     visit '/search'
@@ -46,6 +51,32 @@ describe "Timeline date selection", reset: false do
 
     it "provides a link to show all granules" do
       expect(granule_list).to have_link('Show All')
+    end
+
+    context "pressing the left arrow key" do
+      before(:all) { keypress('#timeline', :left); wait_for_xhr }
+      after(:all) { keypress('#timeline', :right); wait_for_xhr }
+
+      it "selects the previous time span" do
+        expect(page).to have_focused_time_span(start_1986, start_1987)
+      end
+
+      it "pans the timeline to center on the previous time span" do
+        expect(page).to have_time_offset('.timeline-draggable', -21.years)
+      end
+    end
+
+    context "pressing the right arrow key" do
+      before(:all) { keypress('#timeline', :right); wait_for_xhr }
+      after(:all) { keypress('#timeline', :left); wait_for_xhr }
+
+      it "selects the next time span" do
+        expect(page).to have_focused_time_span(start_1988, start_1989)
+      end
+
+      it "pans the timeline to center on the next time span" do
+        expect(page).to have_time_offset('.timeline-draggable', -19.years)
+      end
     end
 
     context "twice" do
@@ -101,6 +132,24 @@ describe "Timeline date selection", reset: false do
 
         it "selects a time span with an appropriately scaled range" do
           expect(page).to have_focused_time_span(start_feb_1989, start_mar_1989)
+        end
+
+        context "pressing the left arrow key" do
+          before(:all) { keypress('#timeline', :left); wait_for_xhr }
+          after(:all) { keypress('#timeline', :right); wait_for_xhr }
+
+          it "selects the previous scaled time span" do
+            expect(page).to have_focused_time_span(start_jan_1989, start_feb_1989)
+          end
+        end
+
+        context "pressing the right arrow key" do
+          before(:all) { keypress('#timeline', :right); wait_for_xhr }
+          after(:all) { keypress('#timeline', :left); wait_for_xhr }
+
+          it "selects the next scaled time span" do
+            expect(page).to have_focused_time_span(start_mar_1989, start_apr_1989)
+          end
         end
       end
     end

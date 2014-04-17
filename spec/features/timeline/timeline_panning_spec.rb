@@ -23,7 +23,7 @@ describe "Timeline panning", reset: false do
     after(:all)  { pan_timeline( 5.days) }
 
     it "moves the timeline display" do
-      expect(page).to have_timeline_range(start - 5.day, present - 5.days)
+      expect(page).to have_timeline_range(start - 5.days, present - 5.days)
       expect(page).to have_time_offset('.timeline-draggable', -5.days)
     end
 
