@@ -1,14 +1,14 @@
-# EDSC-105: As a user, I want to save my site-viewing preferences 
+# EDSC-105: As a user, I want to save my site-viewing preferences
 #           so that I may customize my experience with the site
-# EDSC-138: As a user, I want the system to remember when I dismiss 
-#           the introductory tour so that it does not interfere with 
+# EDSC-138: As a user, I want the system to remember when I dismiss
+#           the introductory tour so that it does not interfere with
 #           subsequent visits
 
 require 'spec_helper'
 
-describe 'Site Preferences' do
+describe 'Site Preferences', reset: true do
   before :each do
-    visit '/'    
+    visit '/'
   end
 
   context "when user is logged in" do
@@ -23,6 +23,7 @@ describe 'Site Preferences' do
     it "sets site preferences when closing the tour" do
       click_button 'Close'
       expect(page).to have_no_css '.tour'
+      wait_for_xhr
 
       visit '/'
       expect(page).to have_no_css '.tour'
@@ -42,6 +43,7 @@ describe 'Site Preferences' do
     it "sets site preferences when closing the tour" do
       click_button 'Close'
       expect(page).to have_no_css '.tour'
+      wait_for_xhr
 
       visit '/'
       expect(page).to have_no_css '.tour'
