@@ -9,6 +9,10 @@
     background-position-y: bottom;
     padding: 0;
   }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .timeline-tools {
