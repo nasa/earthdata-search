@@ -16,7 +16,7 @@ describe "Site tour", reset: true do
     # doing so is slow and highly redundant because the tour is so serial.
     it "shows an introductory tour walking the user through finding and visualizing data and adding it to a project" do
       expect(page).to have_popover('Welcome to Earthdata Search')
-      click_on 'Next »'
+      click_on 'Next'
 
       expect(page).to have_popover('Keyword Search')
       fill_in 'keywords', with: 'snow cover nrt'
@@ -35,7 +35,7 @@ describe "Site tour", reset: true do
       second_granule_list_item.click
 
       expect(page).to have_popover('Map View')
-      click_on 'Next »'
+      click_on 'Next'
 
       expect(page).to have_popover('Granule Timeline')
       find('.timeline-zoom-in').click
@@ -64,7 +64,7 @@ describe "Site tour", reset: true do
 
     context "starting the tour and searching for terms other than those prompted by the tour" do
       before :each do
-        click_on 'Next »'
+        click_on 'Next'
         expect(page).to have_popover
         fill_in "keywords", with: "AST_L1A"
         click_on 'Browse All Data'
