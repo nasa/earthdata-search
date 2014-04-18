@@ -102,6 +102,7 @@ ns.Temporal = do (ko,
 
       @queryCondition = @computed(@_computeQueryCondition)
       @ranges = @computed(@_computeRanges, this, deferEvaluation: true)
+      @isSet = @computed(@_computeIsSet, this, deferEvaluation: true)
 
       @years = @computed(@_computeYears())
       @yearsString = @computed => @years().join(' - ')
@@ -134,10 +135,13 @@ ns.Temporal = do (ko,
         return [new Date(intersectStart), new Date(intersectStop)] if intersectStart < intersectStop
       return null
 
+    _computeIsSet: ->
+      @start.date()? || @stop.date()?
+
     _computeRanges: ->
       {start, stop} = this
       result = []
-      return result unless start.date()? || stop.date()?
+      return result unless @isSet()
 
       if @isRecurring()
         if start.date() && stop.date()

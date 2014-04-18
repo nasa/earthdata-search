@@ -70,6 +70,107 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     MS_PER_DECADE
   ]
 
+
+  updateSvgElement = (el, attrs={}) ->
+    for own attr, value of attrs
+      el.setAttribute(attr, value) if value?
+    el
+
+  buildSvgElement = (name, attrs={}) ->
+    updateSvgElement(document.createElementNS(SVG_NS, name), attrs)
+
+
+  getTransformX = (el, defaultValue=0) ->
+    return defaultValue unless el
+    re = /^[^\d\-]*(-?[\d\.]+),/
+    transform = el.getAttribute('transform') ? el.parentNode.getAttribute('transform')
+    parseFloat(re.exec(transform)?[1] ? defaultValue)
+
+  TimelineDraggable = L.Draggable.extend
+    initialize: (element, dragStartTarget) ->
+      @on 'dragstart predrag drag dragend', ((e) -> L.Util.extend(e, @state())), this
+
+      L.DomUtil.setPosition(element, L.point(0, 0), true)
+      L.Draggable.prototype.initialize.call(this, element, dragStartTarget)
+
+      @enable()
+
+    state: ->
+      offset = getTransformX(@_element)
+      {dx: @_newPos.x, start: @_startPoint.x - offset, end: @_startPoint.x + @_newPos.x - offset}
+
+    _updatePosition: ->
+      @fire('predrag')
+      @fire('drag')
+
+  TimelineDraggable.prototype.addEventListener = TimelineDraggable.prototype.on
+
+  TemporalFencepost = TimelineDraggable.extend
+    initialize: (parent, x) ->
+      @line = buildSvgElement('line')
+      @triangle = buildSvgElement('path')
+
+      @update(x)
+
+      parent.appendChild(@line)
+      parent.appendChild(@triangle)
+
+      TimelineDraggable.prototype.initialize.call(this, @triangle)
+
+      @on 'dragend', @_onEnd, this
+      @on 'predrag', @_onUpdate, this
+
+    dispose: ->
+      {line, triangle} = this
+      @line = @triangle = null
+
+      line.parentNode.removeChild(line)
+      triangle.parentNode.removeChild(triangle)
+      @disable()
+
+    update: (x) ->
+      @x = x
+      y = 0
+      half_w = 10
+      h = 10
+      updateSvgElement(@line, x1: x, y1: y + h, x2: x, y2: MAX_Y)
+      updateSvgElement(@triangle, d: "m#{x - half_w} #{y} l #{half_w} #{h} l #{half_w} #{-h} z")
+      @fire('update', {x: x})
+      this
+
+    _onUpdate: ({dx}) ->
+      @_startX ?= @x
+      @update(@_startX + dx)
+
+    _onEnd: ({dx}) ->
+      @fire('commit', x: @_startX + dx)
+      @_startX = null
+
+  class TemporalSelection
+    constructor: (parent, @left, @right, attrs) ->
+      @left.on 'update', @update, this
+      @right.on 'update', @update, this
+
+      @rect = buildSvgElement('rect', attrs)
+      parent.appendChild(@rect)
+      @update()
+
+    dispose: ->
+      {left, right, update, rect} = this
+      left.off 'update', update, this
+      right.off 'update', update, this
+
+      rect.parentNode.removeChild(rect)
+      @rect = null
+
+    update: (attrs) ->
+      x = Math.min(@left.x, @right.x)
+      width = Math.abs(@right.x - @left.x)
+
+      updateSvgElement @rect, $.extend({}, attrs, {x: x, width: width})
+      this
+
+
   class Timeline extends plugin.Base
     constructor: (root, namespace, options={}) ->
       super(root, namespace, options)
@@ -244,8 +345,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
     focus: (t0, t1) ->
       root = @root
-
-      root.find(@scope('.unfocused')).remove()
+      overlay = @focusOverlay
+      @_empty(overlay)
 
       t0 = null if t0 == @_focus
       @_focus = t0
@@ -255,23 +356,17 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         startPt = @timeToPosition(t0)
         stopPt = @timeToPosition(t1)
 
-        parent = root.find(@scope('.selection'))[0]
-
         left = @_buildRect(class: @scope('unfocused'), x1: startPt)
-        parent.appendChild(left)
+        overlay.appendChild(left)
 
         right = @_buildRect(class: @scope('unfocused'), x: stopPt)
-        parent.appendChild(right)
+        overlay.appendChild(right)
       else
         root.trigger(@scopedEventName('focusremove'))
 
       null
 
-    _getTransformX: (el, defaultValue=0) ->
-      return defaultValue unless el
-      re = /^[^\d\-]*(-?[\d\.]+),/
-      transform = el.getAttribute('transform')
-      parseFloat(re.exec(transform)?[1] ? defaultValue)
+    _getTransformX: getTransformX
 
     _onKeydown: (e) =>
       focus = @_focus
@@ -314,11 +409,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       $(node).empty()
       # node.innerHTML = '' # Works for browsers but not capybara-webkit
 
-    _buildSvgElement: (name, attrs={}) ->
-      el = document.createElementNS(SVG_NS, name)
-      for own attr, value of attrs
-        el.setAttribute(attr, value) if value?
-      el
+    _buildSvgElement: buildSvgElement
 
     _translate: (el, x, y) ->
       el.setAttribute('transform', "translate(#{x}, #{y})")
@@ -332,6 +423,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       selection = @_createSelectionOverlay(svg)
       @_translate(selection, offset, 0)
 
+      focus = @_createFocusOverlay(svg)
+      @_translate(focus, offset, 0)
+
       overlay = @_createFixedOverlay(svg)
       @_translate(overlay, offset, 0)
 
@@ -341,11 +435,31 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       svg.appendChild(timeline)
       svg.appendChild(overlay)
       svg.appendChild(selection)
+      svg.appendChild(focus)
 
       @_setupDragBehavior(svg)
       @_setupScrollBehavior(svg)
 
       svg
+
+    _setupTemporalSelection: (el) ->
+      self = this
+      draggable = new TimelineDraggable(el)
+
+      updateGlobalTemporal = ({end}) ->
+
+      left = null
+      right = null
+
+      draggable.on 'dragstart', ({end}) =>
+        overlay = @selectionOverlay
+        @_empty(overlay)
+        [left, right] = @_createSelectionRegion(overlay, end, end, @globalTemporal, [0...@_datasets.length])
+
+      draggable.on 'drag', ({end}) ->
+        right.update(end)
+      draggable.on 'dragend', ({end}) ->
+        right.fire('commit', x: right.x)
 
     _setupScrollBehavior: (svg) ->
       allowWheel = true
@@ -374,18 +488,12 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         e.preventDefault()
 
     _setupDragBehavior: (svg) ->
-      L.DomUtil.setPosition(svg, L.point(0, 0), true)
-
       self = this
-      draggable = new L.Draggable(svg)
-      draggable._updatePosition = ->
-        @fire('predrag')
-        self._pan(@_newPos.x, false)
-        @fire('drag')
-      draggable.on 'dragend', (e) ->
-        self._pan(@_newPos.x - @_startPos.x)
-
-      draggable.enable()
+      draggable = new TimelineDraggable(svg)
+      draggable.on 'drag', ({dx}) =>
+        @_pan(dx, false)
+      draggable.on 'dragend', ({dx}) =>
+        @_pan(dx)
 
     _pan: (dx, commit=true) ->
       @_startPan() unless @_panStart?
@@ -404,7 +512,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         dx = -Math.floor((@start - start) / @scale)
       @originPx = -(@_panStartX + dx) # x offset from its original position
 
-      draggables = @root.find([@scope('.draggable'), @scope('.selection')].join(', '))
+      draggables = @root.find([@scope('.draggable'), @scope('.selection'), @scope('.focus')].join(', '))
       draggables.attr('transform', "translate(#{-@originPx + OFFSET_X},0)")
 
       @_finishPan() if commit
@@ -420,14 +528,17 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @_panStartX = @_panStart = @_panEnd = null
 
     _createSelectionOverlay: (svg) ->
+      @selectionOverlay = @_buildSvgElement('g', class: @scope('selection'))
 
-      @selectionOverlay = selection = @_buildSvgElement('g', class: @scope('selection'))
-      selection
+    _createFocusOverlay: (svg) ->
+      @focusOverlay = @_buildSvgElement('g', class: @scope('focus'))
 
     _createFixedOverlay: (svg) ->
       @overlay = overlay = @_buildSvgElement('g', class: @scope('overlay'))
 
       rect = @_buildSvgElement('rect', class: @scope('display-top'), width: 10000, height: TOP_HEIGHT)
+
+      @_setupTemporalSelection(rect)
 
       @olDatasets = datasets = @_buildSvgElement('g', class: @scope('dataset'))
       @_translate(datasets, 5, DATASET_TEXT_OFFSET)
@@ -504,59 +615,42 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       datasets = @_datasets
       @_empty(overlay)
 
-      global = datasets[0].query.temporal().ranges()
+      return unless datasets.length > 0
 
-      fenceposts = []
+      globalIndexes = []
+      for dataset, index in datasets
+        temporal = dataset.granulesModel.temporal.applied
+        if temporal.isSet()
+          @_createTemporalRegion(overlay, temporal, [index])
+        else
+          globalIndexes.push(index)
 
-      for [start, stop] in global
-        fenceposts.push(start)
-        fenceposts.push(stop)
+      @globalTemporal = datasets[0].query.temporal()
+      @_createTemporalRegion(overlay, @globalTemporal, globalIndexes)
 
-      if datasets.length > 0
-        # TODO: It's kind of a mess the way temporal is specified differently between datasets
-        #       and granules.  For datasets, there's an observable TemporalCondition in the query.
-        #       For granules, there's a non-observable Temporal on the object itself which has a
-        #       query.
-        for dataset, index in datasets
-          # OMG law of demeter
-          ranges = dataset.granulesModel.temporal.applied.ranges()
-          isGlobal = ranges.length == 0
-          if isGlobal
-            ranges = global
-          for range in ranges
-            @_drawSelectionArea(overlay, range, TOP_HEIGHT + DATASET_HEIGHT * index, DATASET_HEIGHT)
-            unless isGlobal
-              fenceposts.push(range[0])
-              fenceposts.push(range[1])
+    _createSelectionRegion: (overlay, x0, x1, temporal, indexes) ->
+      left = new TemporalFencepost(overlay, x0)
+      right = new TemporalFencepost(overlay, x1)
 
-      for time in fenceposts
-        @_drawFencepost(overlay, time)
+      update = ->
+        leftX = Math.min(left.x, right.x)
+        rightX = Math.max(left.x, right.x)
+        temporal.start.date(new Date(@positionToTime(leftX)))
+        temporal.stop.date(new Date(@positionToTime(rightX)))
 
-      null
+      left.on 'commit', update, this
+      right.on 'commit', update, this
 
-    _drawFencepost: (parent, time) ->
-      timePt = @timeToPosition(time)
-      offsetTop = 0
-      halfwidth = 10
-      height = 10
-      line = @_buildSvgElement('line', x1: timePt, y1: offsetTop + height, x2: timePt, y2: MAX_Y)
-      triangle = @_buildSvgElement 'path', d: "m#{timePt-halfwidth} #{offsetTop} l #{halfwidth} #{height} l #{halfwidth} #{-height} z"
+      for index in indexes
+        new TemporalSelection overlay, left, right,
+          class: @scope('selection-region')
+          y: TOP_HEIGHT + DATASET_HEIGHT * index
+          height: DATASET_HEIGHT
+      [left, right]
 
-      parent.appendChild(line)
-      parent.appendChild(triangle)
-
-    _drawSelectionArea: (parent, range, offset, height) ->
-      startPt = @timeToPosition(range[0])
-      stopPt = @timeToPosition(range[1])
-
-      rect = @_buildSvgElement 'rect',
-        class: @scope('selection-region')
-        x: startPt
-        y: offset
-        width: stopPt - startPt
-        height: height
-      parent.appendChild(rect)
-      rect
+    _createTemporalRegion: (overlay, temporal, indexes) ->
+      for [start, stop] in temporal.ranges()
+        @_createSelectionRegion(overlay, @timeToPosition(start), @timeToPosition(stop), temporal, indexes)
 
     _buildRect: (attrs) ->
       attrs = $.extend({x: MIN_X, x1: MAX_X, y: MIN_Y, y1: MAX_Y}, attrs)
