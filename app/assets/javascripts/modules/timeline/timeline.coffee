@@ -97,7 +97,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
     state: ->
       offset = getTransformX(@_element)
-      {dx: @_newPos.x, start: @_startPoint.x - offset, end: @_startPoint.x + @_newPos.x - offset}
+      {dx: @_newPos.x - @_startPos.x, start: @_startPoint.x - offset, end: @_startPoint.x + @_newPos.x - offset}
 
     _updatePosition: ->
       @fire('predrag')
@@ -119,6 +119,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @on 'dragend', @_onEnd, this
       @on 'predrag', @_onUpdate, this
+
 
     dispose: ->
       {line, triangle} = this
@@ -143,7 +144,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @update(@_startX + dx)
 
     _onEnd: ({dx}) ->
-      @fire('commit', x: @_startX + dx)
+      @_onUpdate({dx: dx})
+      @fire('commit', x: @x)
       @_startX = null
 
   class TemporalSelection
@@ -188,7 +190,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_updateTimeline()
 
-      @root.on 'click', '.timeline-date-label', @_onLabelClick
+      @root.on 'click', @scope('.date-label'), @_onLabelClick
       @root.on 'keydown', @_onKeydown
 
     destroy: ->
@@ -423,6 +425,10 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       selection = @_createSelectionOverlay(svg)
       @_translate(selection, offset, 0)
 
+      top = @_buildRect(class: @scope('display-top'), y: 0, y1: TOP_HEIGHT)
+      @_setupTemporalSelection(top)
+      @_translate(top, offset, 0)
+
       focus = @_createFocusOverlay(svg)
       @_translate(focus, offset, 0)
 
@@ -433,6 +439,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @_translate(timeline, offset, 0)
 
       svg.appendChild(timeline)
+      svg.appendChild(top)
       svg.appendChild(overlay)
       svg.appendChild(selection)
       svg.appendChild(focus)
@@ -446,8 +453,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       self = this
       draggable = new TimelineDraggable(el)
 
-      updateGlobalTemporal = ({end}) ->
-
       left = null
       right = null
 
@@ -456,10 +461,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         @_empty(overlay)
         [left, right] = @_createSelectionRegion(overlay, end, end, @globalTemporal, [0...@_datasets.length])
 
-      draggable.on 'drag', ({end}) ->
-        right.update(end)
-      draggable.on 'dragend', ({end}) ->
-        right.fire('commit', x: right.x)
+      draggable.on 'drag', (e) -> right._onUpdate(e)
+      draggable.on 'dragend', (e) -> right._onEnd(e)
 
     _setupScrollBehavior: (svg) ->
       allowWheel = true
@@ -512,7 +515,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         dx = -Math.floor((@start - start) / @scale)
       @originPx = -(@_panStartX + dx) # x offset from its original position
 
-      draggables = @root.find([@scope('.draggable'), @scope('.selection'), @scope('.focus')].join(', '))
+      draggables = @root.find([@scope('.draggable'), @scope('.selection'), @scope('.display-top'), @scope('.focus')].join(', '))
       draggables.attr('transform', "translate(#{-@originPx + OFFSET_X},0)")
 
       @_finishPan() if commit
@@ -536,14 +539,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     _createFixedOverlay: (svg) ->
       @overlay = overlay = @_buildSvgElement('g', class: @scope('overlay'))
 
-      rect = @_buildSvgElement('rect', class: @scope('display-top'), width: 10000, height: TOP_HEIGHT)
-
-      @_setupTemporalSelection(rect)
-
       @olDatasets = datasets = @_buildSvgElement('g', class: @scope('dataset'))
       @_translate(datasets, 5, DATASET_TEXT_OFFSET)
 
-      overlay.appendChild(rect)
       overlay.appendChild(datasets)
 
       overlay
@@ -637,6 +635,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         rightX = Math.max(left.x, right.x)
         temporal.start.date(new Date(@positionToTime(leftX)))
         temporal.stop.date(new Date(@positionToTime(rightX)))
+        null
 
       left.on 'commit', update, this
       right.on 'commit', update, this
