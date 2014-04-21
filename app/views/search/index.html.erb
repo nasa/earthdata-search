@@ -37,6 +37,7 @@
       <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
       <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="edsc-icon-fw edsc-icon-location"></i> Point</a></li>
       <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile"><i class="edsc-icon-fw edsc-icon-file"></i> Shape File</a></li>
+      <li><a href="#" class="dropdown-link select-grid" data-bind="click: selectGrid"><i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates</a></li>
     </ul>
   </div>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
@@ -256,6 +257,16 @@
       <button data-bind="click: ui.spatialType.selectNone"
               class="button text-button" type="button">Cancel</button>
     </div>
+  </div>
+
+  <div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid().selected()">
+    <label for="map-grid-system">
+      <i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates
+    </label>
+    <select id="map-grid-system" name="map-grid-system" data-bind="value: selected, options: available, optionsText: 'name', optionsCaption: 'Coordinate System...'">
+    </select>
+    <input type="text" id="map-grid-coordinates" name="map-grid-coordinates" data-bind="value: coordinates" placeholder="Coordinates...">
+    <label for="map-grid-coordinates" class="map-grid-hint" data-bind="text: hint"></label>
   </div>
 </div>
 
