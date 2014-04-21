@@ -52,6 +52,7 @@ module Helpers
       page.evaluate_script(script)
 
       attach_file('shapefile', Rails.root.join(path))
+      wait_for_xhr
     end
 
     def clear_popover
