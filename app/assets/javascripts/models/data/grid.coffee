@@ -29,6 +29,23 @@ ns.GridCondition = do (ko, KnockoutModel=@edsc.models.KnockoutModel) ->
       @selected = ko.observable(null)
       @coordinates = ko.observable(null)
 
+      @error = @computed =>
+        coordinates = @coordinates()?.trim()
+        if coordinates? && coordinates.length > 0
+          coords = coordinates.split(/\s+/)
+          for coord in coords
+            ranges = coord.split(',')
+            return "Coordinate must be two comma-separated numbers: #{coord}" unless ranges.length == 2
+            for range in ranges
+              match = range.match(/^(\d+)(?:-(\d+))?$/)
+              unless match?
+                return "Invalid coordinate: #{range}"
+              [all, min, max] = match
+              min = parseInt(min, 10)
+              max = parseInt(max, 10)
+              return "Range minimum is greater than its maximum: #{range}" if min > max
+        null
+
       @queryCoordinates = @computed
         read: =>
           coords = @coordinates()
@@ -54,7 +71,7 @@ ns.GridCondition = do (ko, KnockoutModel=@edsc.models.KnockoutModel) ->
           selected = @selected()
           if selected
             condition = {name: selected.name}
-            condition.coordinates = @queryCoordinates() if @queryCoordinates()
+            condition.coordinates = @queryCoordinates() if @queryCoordinates() && !@error()
             condition
           else
             null
@@ -64,12 +81,13 @@ ns.GridCondition = do (ko, KnockoutModel=@edsc.models.KnockoutModel) ->
           @selected(systems[0])
           @coordinates(params?.coordinates)
 
+
       @hint = @computed =>
         sel = @selected()
         if sel?
           "Enter #{sel.axis0.label} and #{sel.axis1.label} coordinates separated by spaces, e.g. \"2,3 5,7 8,8\""
         else
-          ""
+          "Choose a coordinate system"
 
     clear: ->
       @selected(null)
