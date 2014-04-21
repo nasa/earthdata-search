@@ -134,4 +134,9 @@ button {
     @include dark-outline-button;
     padding: 4px 8px;
   }
+
+  &.button-outline-light {
+    @include light-button;
+    font-weight: bold;
+  }
 }
