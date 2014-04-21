@@ -49,8 +49,15 @@
               <!-- /ko -->
               <p>
                 <!-- ko if: granuleAccessOptions().canDownload -->
-                <span class="access-method-label">Select Data Access Method</span>
-                <input data-bind="checked: serviceOptions.accessMethod, attr: { name: $index() + '-access-method', id: $index() + '-download' }" type="radio" id="download" value="download" /><label data-bind="attr: { for: $index() + '-download' }" class="access-method-radio-label">Download</label>
+                  <!-- ko foreach: serviceOptions.accessMethod -->
+                  <!-- ko if: $index() == 0 -->
+                  <span class="access-method-label">Select Data Access Method</span>
+                  <!-- /ko -->
+                  <!-- ko if: $index() > 0 -->
+                  <span data-bind="text: '(' + ($index() + 1) + ')'" class="access-method-label"></span>
+                  <!-- /ko -->
+                  <input data-bind="checked: $data.method, attr: { name: $index() + '-access-method', id: $index() + '-download' }" type="radio" id="download" value="download" /><label data-bind="attr: { for: $index() + '-download' }" class="access-method-radio-label">Download</label><br />
+                  <!-- /ko -->
                 <!-- /ko -->
               </p>
             </div>
@@ -64,6 +71,7 @@
         </div>
 
         <div class="access-item-actions">
+          <button data-bind="visible: granuleAccessOptions().canDownload, click: serviceOptions.addAccessMethod">Additional access method</button>
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
           <button data-bind="enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
         </div>

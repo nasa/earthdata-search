@@ -10,11 +10,7 @@ describe "Data download page", reset: false do
   before(:all) do
     visit "/search"
 
-    click_link 'Sign In'
-    fill_in 'Username', with: 'edsc'
-    fill_in 'Password', with: 'EDSCtest!1'
-    click_button 'Sign In'
-    wait_for_xhr
+    login
   end
 
   after(:all) do

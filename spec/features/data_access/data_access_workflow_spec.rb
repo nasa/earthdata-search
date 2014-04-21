@@ -10,11 +10,7 @@ describe "Data Access workflow", reset: false do
   before(:all) do
     visit "/search"
 
-    click_link 'Sign In'
-    fill_in 'Username', with: 'edsc'
-    fill_in 'Password', with: 'EDSCtest!1'
-    click_button 'Sign In'
-    wait_for_xhr
+    login
   end
 
   after(:all) do
@@ -38,10 +34,7 @@ describe "Data Access workflow", reset: false do
 
     after :all do
       reset_user
-      click_link 'Sign In'
-      fill_in 'Username', with: 'edsc'
-      fill_in 'Password', with: 'EDSCtest!1'
-      click_button 'Sign In'
+      login
     end
 
     it "forces the user to login before showing data access page" do
@@ -76,8 +69,7 @@ describe "Data Access workflow", reset: false do
 
     context "when displaying options for the first of multiple datasets" do
       after :all do
-        script = "edsc.page.ui.serviceOptionsList.activeIndex(0);edsc.page.project.datasets()[0].serviceOptions.accessMethod(null);"
-        page.evaluate_script script
+        reset_access_page
       end
 
       it "displays granule information" do
@@ -114,8 +106,7 @@ describe "Data Access workflow", reset: false do
       end
 
       after :all do
-        script = "edsc.page.ui.serviceOptionsList.activeIndex(0);edsc.page.project.datasets()[0].serviceOptions.accessMethod(null);"
-        page.evaluate_script script
+        reset_access_page
       end
 
       it "displays granule information" do
@@ -152,8 +143,7 @@ describe "Data Access workflow", reset: false do
       end
 
       after :all do
-        script = "edsc.page.ui.serviceOptionsList.activeIndex(0);edsc.page.project.datasets()[0].serviceOptions.accessMethod(null);"
-        page.evaluate_script script
+        reset_access_page
       end
 
       it "displays current contact information" do
