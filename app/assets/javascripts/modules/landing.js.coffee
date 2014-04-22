@@ -7,7 +7,11 @@ do ($=jQuery
   updateLandingPageState = ->
     uiModel.isLandingPage(History.getState().hash == '/')
 
+  hasLeftLandingPage = false
   updateLandingPage = (isLandingPage) ->
+    if !isLandingPage && !hasLeftLandingPage
+      $(document).trigger('searchready')
+      hasLeftLandingPage = true
     $content = $('.landing-toolbar-content')
     $('.landing-hidden').toggle(!isLandingPage)
     $('.landing-visible').toggle(isLandingPage)

@@ -34,7 +34,7 @@
 
   exports = showBanner
 
-  $(document).ready ->
+  $(document).on 'searchready', ->
     $.getJSON '/events', (data, status, xhr) ->
       for event in data
         start = event.start_date

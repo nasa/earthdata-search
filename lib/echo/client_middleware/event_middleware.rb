@@ -14,7 +14,7 @@ module Echo
         env[:body] = Array.wrap(body['calendar_events']).reject do |event|
           title = event['title']
           end_date = event['end_date']
-          reject = title == 'ASTER GDEM V2 Tutorial' || end_date < now
+          reject = title == 'ASTER GDEM V2 Tutorial' || (end_date.present? && end_date < now)
           # Remove markup from the message body, which seems to assume Reverb formatting
           event['message'] = sanitizer.sanitize(event['message']).gsub('&nbsp;', ' ').gsub(/\s+/, ' ') unless reject
           reject
