@@ -1,4 +1,4 @@
-@edsc.banner = do (config = @edsc.config, $=jQuery) ->
+@edsc.banner = do (config = @edsc.config, date = @edsc.util.date, $=jQuery) ->
   banners = []
   $banner = null
 
@@ -33,3 +33,10 @@
       setTimeout(removeBannerAndOpenNext, config.defaultAnimationDurationMs)
 
   exports = showBanner
+
+  $(document).ready ->
+    $.getJSON '/events', (data, status, xhr) ->
+      for event in data
+        start = event.start_date
+        end = event.end_date
+        showBanner(event.id, "#{event.title} (#{date.timeSpanToHuman(start, end)})", event.message)

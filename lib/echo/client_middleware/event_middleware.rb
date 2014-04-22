@@ -24,7 +24,7 @@ module Echo
 
       def parse_response?(env)
         body = env[:body]
-        body.is_a?(Hash) && body['calendar_events']
+        body.is_a?(Hash) && (body['calendar_events'] || body['nil_classes'])
       end
     end
   end
