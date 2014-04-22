@@ -259,9 +259,7 @@
     </div>
   </div>
 
-  <div data-bind="text: ui.spatialType.name()"></div>
-  <div data-bind="text: query.grid()"></div>
-  <div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid().selected()">
+  <div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid.selected()">
     <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
     <label for="map-grid-system">
       <i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates

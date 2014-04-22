@@ -13,7 +13,7 @@ ns.Query = do (ko,
     constructor: (@_extraParams={}) ->
       @keywords = ko.observable("")
       @spatial = ko.observable("")
-      @grid = ko.observable(new GridCondition())
+      @grid = new GridCondition()
       @pageSize = ko.observable(20)
 
       @temporal = ko.observable(null)
@@ -81,7 +81,7 @@ ns.Query = do (ko,
       @spatial('')
       evilPageModels.current.ui.spatialType.selectNone()
       @temporal().clear() if @temporal()
-      @grid().clear()
+      @grid.clear()
       @placename('')
       @facets.removeAll()
       @day_night_flag("")
@@ -112,7 +112,7 @@ ns.Query = do (ko,
       temporal = @temporal()?.queryCondition()
       params.temporal = temporal if temporal?.length > 0
 
-      grid = @grid().queryCondition()
+      grid = @grid.queryCondition()
       params.two_d_coordinate_system = grid if grid?
 
       params
