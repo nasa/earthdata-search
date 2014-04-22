@@ -1,0 +1,36 @@
+.banner {
+  position: absolute;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 1.2em;
+  padding: .5em 1em;
+  background: #f39c12;
+  overflow: hidden;
+  box-shadow:         0 0 5px black;
+  @include transition(top 0.3s ease-in-out);
+}
+
+.banner-hidden {
+  top: -3em;
+}
+
+.banner-title {
+  font-size: 1em;
+  display: inline;
+}
+
+.banner-message {
+  display: inline;
+}
+
+a.banner-close {
+  float:right;
+  font-size:1.2em;
+  color: #333;
+
+  &:hover {
+    color: #444;
+  }
+}
