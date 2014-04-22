@@ -90,6 +90,7 @@ describe "Shapefile search", reset: false, wait: 30 do
   context "when removing an uploaded shapefile" do
     before :all do
       upload_shapefile('doc/example-data/shapefiles/simple.geojson')
+      expect(page).to have_spatial_constraint('polygon:100,0:101,0:101,1:100,1')
       click_link "Remove file"
     end
 
