@@ -35,7 +35,9 @@ end
 
 RSpec::Matchers.define :have_spatial_constraint do |expected|
   match do |page|
-    MapUtil.spatial(page) == expected
+    synchronize do
+      expect(MapUtil.spatial(page)).to eql(expected)
+    end
   end
 
   failure_message_for_should do |page|

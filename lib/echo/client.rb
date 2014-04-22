@@ -12,7 +12,7 @@ module Echo
     CATALOG_URL = ENV['ECHO_ENDPOINT'] || "https://api.echo.nasa.gov"
 
     def self.get_datasets(options={}, token=nil)
-      get('/catalog-rest/echo_catalog/datasets.json', options_to_item_query(options), token_header(token))
+      get('/catalog-rest/echo_catalog/datasets.json', options_to_dataset_query(options), token_header(token))
     end
 
     def self.get_dataset(id, options={}, token=nil)
@@ -27,7 +27,7 @@ module Echo
 
     def self.get_facets(options={}, token=nil)
       # TODO: Remove true after spatial is fixed for facet searches in catalog rest
-      get("/catalog-rest/search_facet.json", options_to_item_query(options, true), token_header(token))
+      get("/catalog-rest/search_facet.json", options_to_facet_query(options), token_header(token))
     end
 
     def self.get_timeline(options={}, token=nil)

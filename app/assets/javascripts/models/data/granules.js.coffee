@@ -125,14 +125,10 @@ ns.Granules = do (ko,
 
     params: =>
       parentParams = @parentQuery.globalParams()
-      params = {}
-      for param in ['bounding_box', 'point', 'line', 'polygon', 'temporal']
-        parentValue = parentParams[param]
-        params[param] = parentValue if parentValue?
+      params = extend({}, parentParams, @query.params())
       focusedTemporal = @parentQuery.focusedTemporal()
-      extend(params, @query.params())
-      if focusedTemporal?
 
+      if focusedTemporal?
         granuleTemporal = @query.temporal()
         datasetTemporal = @parentQuery.temporal()
         condition = null
