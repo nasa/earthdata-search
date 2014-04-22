@@ -21,7 +21,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'capybara-webkit', git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
-  #gem 'poltergeist'
+  gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
   gem 'fuubar'
