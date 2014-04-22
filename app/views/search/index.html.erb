@@ -258,18 +258,18 @@
               class="button text-button" type="button">Cancel</button>
     </div>
   </div>
+</div>
 
-  <div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid.selected()">
-    <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
-    <label for="map-grid-system">
-      <i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates
-    </label>
-    <select id="map-grid-system" name="map-grid-system" data-bind="value: selected, options: available, optionsText: 'label', optionsCaption: 'Coordinate System...'">
-    </select>
-    <input type="text" id="map-grid-coordinates" name="map-grid-coordinates" data-bind="value: coordinates" placeholder="Coordinates...">
-    <a href="#" class="button text-button">Set</a>
-    <label for="map-grid-coordinates" class="map-grid-hint" data-bind="text: hint"></label>
-  </div>
+<div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid.selected()">
+  <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
+  <label for="map-grid-system">
+    <i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates
+  </label>
+  <select id="map-grid-system" name="map-grid-system" data-bind="value: selected, options: available, optionsText: 'label', optionsCaption: 'Coordinate System...'">
+  </select>
+  <input type="text" id="map-grid-coordinates" name="map-grid-coordinates" data-bind="value: coordinates" placeholder="Coordinates...">
+  <a href="#" class="button text-button">Set</a>
+  <label for="map-grid-coordinates" class="map-grid-hint" data-bind="text: hint"></label>
 </div>
 
 <div id="temporal-query" data-bind="with: ui.temporal.applied">
