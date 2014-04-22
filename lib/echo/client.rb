@@ -4,7 +4,8 @@ module Echo
                               :logging => Echo::ClientMiddleware::LoggingMiddleware,
                               :errors => Echo::ClientMiddleware::ErrorsMiddleware,
                               :echo10_datasets => Echo::ClientMiddleware::Echo10DatasetMiddleware,
-                              :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware)
+                              :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware,
+                              :events => Echo::ClientMiddleware::EventMiddleware)
 
   class Client
     include Echo::QueryTransformations
@@ -93,6 +94,10 @@ module Echo
       put("/echo-rest/users/#{user_id}/preferences.json", params.to_json, token_header(token))
     end
 
+    def self.get_availability_events
+      get('/echo-rest/calendar_events', severity: 'ALERT')
+    end
+
     def self.connection
       Thread.current[:edsc_echo_connection] ||= self.build_connection
     end
@@ -142,6 +147,7 @@ module Echo
         conn.response :json, :content_type => /\bjson$/
         conn.response :echo10_granules, :content_type => "application/echo10+xml"
         conn.response :echo10_datasets, :content_type => "application/echo10+xml"
+        conn.response :events, :content_type => /\bxml$/
         conn.response :xml, :content_type => /\bxml$/
 
         conn.adapter  Faraday.default_adapter
