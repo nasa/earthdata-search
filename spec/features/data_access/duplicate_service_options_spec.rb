@@ -70,4 +70,23 @@ describe 'Duplicate Service Options', reset: false do
       expect(page).to have_no_button 'Add access method'
     end
   end
+
+  context "when submitting with multiple access options" do
+    before :all do
+      click_button 'Add access method'
+      choose '0-download'
+      choose '1-download'
+      click_button 'Continue'
+      click_button 'Continue'
+      click_button 'Submit'
+    end
+
+    after :all do
+      click_link 'Back to Data Access Options'
+    end
+
+    it "displays download links twice" do
+      expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)', count: 2
+    end
+  end
 end

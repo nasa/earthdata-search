@@ -13,6 +13,7 @@
 
   .remove-access-item {
     color: #000;
+    float: right;
   }
 
   > header, > section, > .data-access-content, > .access-item-submission {
@@ -152,6 +153,10 @@
 
 .access-item-actions {
   text-align: right;
+  margin-top: 1em;
+}
+
+.add-access-item {
   margin-top: 1em;
 }
 
