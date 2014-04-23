@@ -64,15 +64,6 @@ footer, .toolbar {
     margin: 0;
   }
 
-  .tt-query, .tt-hint {
-    padding: .5em;
-    margin: 2px 0 0 20px;
-    width: $toolbar-search-field-width;
-    border: 1px solid $toolbar-accent-border;
-    border-radius: 3px;
-    box-shadow: inset 0 1px 5px 1px rgba(0,0,0,0.2);
-  }
-
   input:focus {
     outline: none;
   }

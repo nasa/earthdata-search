@@ -350,7 +350,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       overlay = @focusOverlay
       @_empty(overlay)
 
-      console.log "t0: #{t0}, @_focus: #{@_focus}"
       t0 = null if Math.abs(t0 - @_focus) < 1000
       @_focus = t0
 
