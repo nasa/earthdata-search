@@ -9,14 +9,27 @@ module Echo
         load_freetext_query(query)
         and_query(query)
 
+        query
+      end
+
+      def options_to_dataset_query(options={})
+        query = options_to_item_query(options)
+
+        # catalog-rest rejects two_d_coordinate_system[coordinates] on dataset queries for no good reason
+        query[:two_d_coordinate_system].delete('coordinates') if query[:two_d_coordinate_system].present?
+
+        query
+      end
+
+      def options_to_facet_query(options={})
+        query = options_to_dataset_query(options)
+
         # TODO: Spatial is currently breaking facet searches.
         # Remove this after it has been fixed in catalog rest
-        if remove_spatial
-          query.delete(:point)
-          query.delete(:bounding_box)
-          query.delete(:polygon)
-          query.delete(:line)
-        end
+        query.delete(:point)
+        query.delete(:bounding_box)
+        query.delete(:polygon)
+        query.delete(:line)
 
         query
       end

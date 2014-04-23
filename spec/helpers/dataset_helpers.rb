@@ -4,6 +4,7 @@ module Helpers
       before :all do
         fill_in "keywords", with: id
         expect(first_dataset_result).to have_content(text)
+        wait_for_xhr
       end
 
       after :all do

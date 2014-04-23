@@ -92,3 +92,40 @@ RSpec::Matchers.define :have_focused_time_span do |start, stop|
     expect(page).to have_selector("rect[x^=\"#{expected_end_px.to_i}\"]")
   end
 end
+
+RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
+  match do |page|
+    condition = []
+    condition << start.to_i
+    condition << stop.to_i
+    condition += range unless range.nil?
+
+    script = "(function(temporal) {"
+    script += "  return temporal.queryCondition();"
+
+    if dataset_n.nil?
+      script += "})(edsc.page.query.temporal());"
+    else
+      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
+    end
+
+    synchronize do
+      actual = page.evaluate_script(script).split(',')
+      actual[0] = DateTime.parse(actual[0]).to_i
+      actual[1] = DateTime.parse(actual[1]).to_i
+
+      delta = (start.to_i - stop.to_i).abs / 100
+
+      expect(actual.size).to eql(condition.size)
+
+      expect(actual[0]).to be_within(delta).of(condition[0])
+      expect(actual[1]).to be_within(delta).of(condition[1])
+
+      if actual.size > 2
+        expect(actual[2]).to eql(condition[2])
+        expect(actual[3]).to eql(condition[2])
+      end
+    end
+    true
+  end
+end

@@ -10,6 +10,7 @@ describe "Site tour", reset: true do
   context "on the landing page" do
     before :each do
       visit "/"
+      wait_for_xhr
     end
 
     # Single spec for the tour which tests every stop.  Normally I'd like this to be separate tests per stop, but

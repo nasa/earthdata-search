@@ -28,4 +28,8 @@ ns.SpatialType = do (ko) ->
       @name('Shape File')
       @icon ('edsc-icon-file')
 
+    selectGrid: =>
+      @name('Grid Coordinates')
+      @icon ('edsc-icon-globe')
+
   exports = SpatialType

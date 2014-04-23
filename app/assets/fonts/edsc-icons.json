@@ -1,7 +1,7 @@
 {
 	"metadata": {
 		"name": "edsc-icons",
-		"lastOpened": 1393354262335,
+		"lastOpened": 1398109179026,
 		"created": 1381083457739
 	},
 	"iconSets": [
@@ -13,7 +13,7 @@
 					"prevSize": 32,
 					"code": 58883,
 					"name": "rect-open",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -22,7 +22,7 @@
 					"prevSize": 32,
 					"code": 58882,
 					"name": "poly-open",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -31,7 +31,7 @@
 					"prevSize": 32,
 					"code": 58880,
 					"name": "rect",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -40,7 +40,7 @@
 					"prevSize": 32,
 					"code": 58881,
 					"name": "poly",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				}
 			],
@@ -5972,7 +5972,7 @@
 					"prevSize": 32,
 					"code": 58897,
 					"name": "file",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6013,7 +6013,7 @@
 					"prevSize": 32,
 					"code": 58884,
 					"name": "stack",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6102,7 +6102,7 @@
 					"prevSize": 32,
 					"code": 58890,
 					"name": "location",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6219,7 +6219,7 @@
 					"prevSize": 32,
 					"code": 58889,
 					"name": "download",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6392,7 +6392,7 @@
 					"prevSize": 32,
 					"code": 58887,
 					"name": "lock",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6421,7 +6421,7 @@
 					"prevSize": 32,
 					"code": 58885,
 					"name": "cog",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6494,7 +6494,7 @@
 					"prevSize": 32,
 					"code": 58886,
 					"name": "rocket",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6630,8 +6630,13 @@
 					"id": 193
 				},
 				{
-					"order": 0,
-					"id": 194
+					"order": 21,
+					"id": 194,
+					"prevSize": 32,
+					"code": 58900,
+					"name": "globe",
+					"tempChar": "",
+					"ligatures": ""
 				},
 				{
 					"order": 0,
@@ -6667,7 +6672,7 @@
 					"prevSize": 32,
 					"code": 58888,
 					"name": "bookmark",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6843,12 +6848,12 @@
 					"id": 245
 				},
 				{
-					"order": 21,
+					"order": 20,
 					"id": 246,
 					"prevSize": 32,
 					"code": 58899,
 					"name": "notification",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6861,7 +6866,7 @@
 					"prevSize": 32,
 					"code": 58896,
 					"name": "info",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6916,7 +6921,7 @@
 					"prevSize": 32,
 					"code": 58892,
 					"name": "minus",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -6925,7 +6930,7 @@
 					"prevSize": 32,
 					"code": 58891,
 					"name": "plus",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -9629,7 +9634,7 @@
 					"prevSize": 32,
 					"code": 58894,
 					"name": "compose",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -14030,7 +14035,7 @@
 					"prevSize": 32,
 					"code": 58893,
 					"name": "arrow-left",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -14047,7 +14052,7 @@
 					"prevSize": 32,
 					"code": 58898,
 					"name": "arrow-right",
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": ""
 				},
 				{
@@ -14420,6 +14425,8 @@
 		"showLiga": false,
 		"showGrid": true,
 		"showGlyphs": true,
-		"showQuickUse": true
-	}
+		"showQuickUse": true,
+		"search": ""
+	},
+	"externalSets": []
 }
