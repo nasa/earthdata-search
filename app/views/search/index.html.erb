@@ -2,8 +2,11 @@
   <%= javascript_include_tag "search" %>
 <% end %>
 
-<% content_for :toolbar do %>
+<% content_for :toolbar_secondary do %>
   <%= render partial: 'shared/login' %>
+<% end %>
+
+<% content_for :toolbar do %>
   <div class="landing-toolbar-container">
   <div class="landing-toolbar-content">
   <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
