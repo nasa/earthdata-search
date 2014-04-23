@@ -80,12 +80,11 @@ footer, .toolbar {
   form {
     display: inline-block;
   }
-
-  .user-info {
-    float: right;
-  }
 }
 
+.toolbar-secondary {
+  float: right;
+}
 
 body > footer {
   z-index: 1000;

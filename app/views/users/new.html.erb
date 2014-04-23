@@ -1,7 +1,7 @@
 <% content_for :javascript do %>
   <%= javascript_include_tag "account" %>
 <% end %>
-<% content_for :toolbar do %>
+<% content_for :toolbar_secondary do %>
 <!-- ko with: account -->
   <!-- ko if: user.isLoggedIn -->
     <%= render partial: 'shared/login' %>

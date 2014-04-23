@@ -1,4 +1,4 @@
-@edsc.banner = do (config = @edsc.config, date = @edsc.util.date, $=jQuery) ->
+@edsc.banner = do (config = @edsc.config, date = @edsc.util.date, $=jQuery, preferences = @edsc.page.preferences) ->
   banners = []
   $banner = null
 
@@ -29,14 +29,40 @@
 
   closeBanner = ->
     if $banner?
+      preferences.dismissedEvents.push($banner.data('banner.key'))
+      preferences.save()
       $banner.addClass('banner-hidden')
       setTimeout(removeBannerAndOpenNext, config.defaultAnimationDurationMs)
 
-  exports = showBanner
+  allEvents = []
+
+  showAllEvents = ->
+    dismissed = preferences.dismissedEvents()
+    # For pruning dismissed events that are no longer relevant
+    pruned = []
+    for event in allEvents
+      start = event.start_date
+      end = event.end_date
+      if dismissed.indexOf(event.id) == -1
+        showBanner(event.id, "#{event.title} (#{date.timeSpanToHuman(start, end)})", event.message)
+      else
+        pruned.push(event.id)
+    preferences.dismissedEvents(pruned)
+    null
+
+  $(document).on 'click', '.banner-show-events', ->
+    banners = []
+    closeBanner()
+    preferences.dismissedEvents([])
+    preferences.save()
+    showAllEvents()
 
   $(document).on 'searchready', ->
-    $.getJSON '/events', (data, status, xhr) ->
-      for event in data
-        start = event.start_date
-        end = event.end_date
-        showBanner(event.id, "#{event.title} (#{date.timeSpanToHuman(start, end)})", event.message)
+    preferences.onload ->
+      $.getJSON '/events', (data, status, xhr) ->
+        allEvents = data
+        if data.length > 0
+          $('.toolbar-secondary').prepend('<a href="#" class="banner-show-events" title="Show Outage Notices"><i class="fa fa-warning"></i></a>')
+          showAllEvents()
+
+  exports = showBanner

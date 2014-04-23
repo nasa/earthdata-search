@@ -21,6 +21,9 @@
     <header id="main-toolbar" class="toolbar">
       <h1><a class="ir" href="/search">Earthdata Search</a></h1>
       <div class="toolbar-content">
+        <div class="toolbar-secondary">
+          <%= yield :toolbar_secondary %>
+        </div>
         <%= yield :toolbar %>
       </div>
     </header>
@@ -42,6 +45,6 @@
         <img src="<%= image_path "https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0" %>" alt="">
       </noscript>
     <% end %>
-    <%= javascript_include_tag "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
+    <%= javascript_include_tag "https://cdn.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
 </body>
 </html>

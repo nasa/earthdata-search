@@ -34,3 +34,15 @@ a.banner-close {
     color: #444;
   }
 }
+
+a.banner-show-events {
+  &:link, &:visited {
+    display: inline-block;
+    margin: 0 1em;
+    color: #f39c12;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+}
