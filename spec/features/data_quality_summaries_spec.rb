@@ -4,11 +4,7 @@ describe 'Data Quality Summaries', :reset => false do
   def setup_project
     Capybara.reset_sessions!
     visit "/search"
-    click_link 'Sign In'
-    fill_in 'Username', with: 'edsc'
-    fill_in 'Password', with: 'EDSCtest!1'
-    click_button 'Sign In'
-    wait_for_xhr
+    login
 
     dataset_id = 'C14758250-LPDAAC_ECS'
     dataset_title = 'ASTER L1A Reconstructed Unprocessed Instrument Data V003'
@@ -83,11 +79,7 @@ describe 'Data Quality Summaries', :reset => false do
       click_link "Back to Dataset Search"
 
       reset_user
-      click_link 'Sign In'
-      fill_in 'Username', with: 'edsc'
-      fill_in 'Password', with: 'EDSCtest!1'
-      click_button 'Sign In'
-      wait_for_xhr
+      login
 
       dataset_id = 'C190733714-LPDAAC_ECS'
       dataset_title = 'ASTER L1B Registered Radiance at the Sensor V003'

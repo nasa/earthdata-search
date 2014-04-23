@@ -96,7 +96,12 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
         project.addDataset(dataset)
 
     _computeDatasetsToDownload: ->
-      dataset for dataset in @project.datasets() when dataset.serviceOptions.accessMethod() == 'download'
+      datasets = []
+      for dataset in @project.datasets()
+        for m in dataset.serviceOptions.accessMethod()
+          datasets.push(dataset) if m.method() == 'download'
+
+      datasets
 
     datasetHasDQS: (dataset) =>
       result = true if dataset.dqsModel.results()?.length > 0
