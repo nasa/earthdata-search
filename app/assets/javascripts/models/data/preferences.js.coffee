@@ -10,16 +10,28 @@ ns.Preferences = do (ko
     constructor: (@user) ->
       # Default Preferences
       @showTour = ko.observable(true)
+      @isLoaded = ko.observable(false)
 
       @load()
 
     load: ->
       getJSON '/users/site_preferences', (data, status, xhr) =>
-        console.log "Loaded site preferences", data
-        @fromJson(data) if data?
+        console.log "Loaded site preferences, #{JSON.stringify(data)}"
+        @fromJson(data)
 
-        $(window).trigger 'preferencesloaded'
+        @isLoaded(true)
       null
+
+    onload: (fn) ->
+      ko.computed
+        read: =>
+          @isLoaded()
+        disposeWhen: =>
+          isLoaded = @isLoaded()
+          fn(this) if isLoaded
+          isLoaded
+      null
+
 
     save: ->
       console.log 'Saving preferences'

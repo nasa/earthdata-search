@@ -60,7 +60,7 @@ do ($=jQuery
 
     $(window).on 'statechange anchorchange', updateLandingPageState
 
-    $(window).on 'preferencesloaded', ->
+    preferences.onload ->
       help.startTour() if uiModel.isLandingPage() && preferences.showTour()
 
     $('.landing-area').on 'keypress', '#keywords', (e) ->
