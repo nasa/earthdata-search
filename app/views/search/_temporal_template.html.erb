@@ -34,7 +34,7 @@
     <div class="temporal-error">Start must be no later than End</div>
   </div>
   <div>
-    <input data-bind="checked: isRecurring" type="checkbox" id="<%= prefix %>-show-recurring"><label for="<%= prefix %>-show-recurring">Recurring?</label>
+    <input data-bind="checked: isRecurring" type="checkbox" id="<%= prefix %>-show-recurring"> <label for="<%= prefix %>-show-recurring">Recurring?</label>
   </div>
   <div data-bind="visible: isRecurring()" class="range-slider">
     <label for="<%= prefix %>-temporal-slider">Date Range:</label> <span data-bind="text: yearsString" class="temporal-recurring-year-range-value"></span><br />
