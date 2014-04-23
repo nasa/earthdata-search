@@ -661,6 +661,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @_buildSvgElement 'rect', attrs
 
     _roundTime: (time, zoom, increment=0) ->
+      time = Math.round(time / 1000) * 1000
       date = new Date(time)
       components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
       components = components.slice(0, components.length - zoom)
