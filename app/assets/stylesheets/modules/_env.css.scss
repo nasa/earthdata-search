@@ -5,6 +5,10 @@
   // down, causing some specs to fail because of capybara-webkit issues with element stacking
   width: 1280px;
 
+  // The test environment has no tophat and a narrow screen width, so we need this to avoid drawing
+  // notifications over the toolbar and triggering boatloads of ClickFailed events
+  padding-top: 3em;
+
   // With our styles, capybara-screenshot shows the page with the bare minimum height of something
   // like 200px, not enough to see anything.  This forces it to use a taller height.
   .wrap { min-height: 800px; }

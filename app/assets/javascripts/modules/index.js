@@ -1,6 +1,7 @@
 //= require modules/master_overlay
 //= require modules/toolbar
 //= require modules/help
+//= require modules/banner
 //= require modules/map/index
 //= require modules/temporal/index
 //= require modules/autocomplete

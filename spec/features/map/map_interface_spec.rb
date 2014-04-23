@@ -7,7 +7,7 @@
 
 require "spec_helper"
 
-describe "Map interface" do
+describe "Map interface", reset: false do
   before do
     visit "/search"
   end
@@ -24,17 +24,10 @@ describe "Map interface" do
     it "displays the whole Earth centered in plate carree projection on the main page" do
       expect(page).to have_css('#map.leaflet-container')
 
-      # 'visible: false' because leaflet fails to load the tiles and therefore keeps them hidden
       MapUtil.tiles(page, '#map').each do |img|
         src = img['src']
         expect(src).to match(/TILEMATRIXSET=EPSG4326/) # Plate Carree
         expect(src).to match(/TILEMATRIX=2&/) # Zoomed to show whole Earth
-
-        if src =~ /TILEROW=0&TILECOL=0/
-          # For the upper-left tile
-          style = img['style']
-          expect(style).to match (/-440px, -163px/) # In upper left position
-        end
       end
     end
 

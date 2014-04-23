@@ -26,6 +26,8 @@ module VCR
             opts[:record] = :none
           elsif request.uri.include? '/echo_catalog/granules/timeline'
             cassette = 'timeline'
+          elsif request.uri.include? '/echo-rest/calendar_events'
+            cassette = 'events'
           elsif request.uri.include? '/catalog-rest/'
             cassette = 'catalog-rest'
           elsif request.uri.include? '/echo-rest/'
