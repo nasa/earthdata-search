@@ -127,6 +127,7 @@ ns.SpatialSelection = do (window,
           @_shapefileLayer.hideHelp()
         else
           @_shapefileLayer.deactivate()
+      currentPage.ui.spatialType.name(name)
 
     _onDrawStart: (e) =>
       # Remove the old layer

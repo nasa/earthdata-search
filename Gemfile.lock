@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/bilts/capybara-webkit.git
-  revision: c1ce4f9bb64b629d07fab64b6c76e516135f7d92
+  revision: 042822d7c6f78457bd2ba118f38c553cc7589c8d
   branch: disable-screenshots
   specs:
     capybara-webkit (1.1.1)
