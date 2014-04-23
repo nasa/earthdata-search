@@ -11,6 +11,10 @@
     color: #aaa;
   }
 
+  .remove-access-item {
+    color: #000;
+  }
+
   > header, > section, > .data-access-content, > .access-item-submission {
     margin: 1em auto;
     padding: 1em 0;
@@ -155,6 +159,10 @@
   text-align: right;
 }
 
+.access-item-selection {
+  padding: 1em 0;
+  border-bottom: 1px solid #334b66;
+}
 
 .summary {
   line-height: 3em;

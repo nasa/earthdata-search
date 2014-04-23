@@ -8,7 +8,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
 
   class ServiceOptionsModel extends KnockoutModel
     constructor: (@granuleAccessOptions) ->
-      @accessMethod = ko.observableArray() #([ko.observable(null)]) #ko.observable(null)
+      @accessMethod = ko.observableArray()
       @accessMethod.push(new ServiceOptions(null))
       @readyToDownload = @computed(@_computeIsReadyToDownload, this, deferEvaluation: true)
 
@@ -17,11 +17,13 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
       for m in @accessMethod()
         method = false unless m.method()?
       # == false because the value is undefined while granuleAccessOptions loads
-      # @accessMethod()[0]? || @granuleAccessOptions().canDownload == false
       method || @granuleAccessOptions().canDownload == false
 
     addAccessMethod: =>
       @accessMethod.push(new ServiceOptions(null))
+
+    removeAccessMethod: (method) =>
+      @accessMethod.remove(method)
 
     serialize: ->
       methods = []

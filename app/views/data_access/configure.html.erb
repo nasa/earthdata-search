@@ -47,18 +47,17 @@
                 Only <span data-bind="text: granuleAccessOptions().downloadCount"></span> of <span data-bind="text: granuleAccessOptions().count"></span> items can be downloaded
               </p>
               <!-- /ko -->
-              <p>
-                <!-- ko if: granuleAccessOptions().canDownload -->
-                  <!-- ko foreach: serviceOptions.accessMethod -->
-                  <!-- ko if: $index() == 0 -->
-                  <span class="access-method-label">Select Data Access Method</span>
-                  <!-- /ko -->
-                  <!-- ko if: $index() > 0 -->
-                  <span data-bind="text: '(' + ($index() + 1) + ')'" class="access-method-label"></span>
-                  <!-- /ko -->
-                  <input data-bind="checked: $data.method, attr: { name: $index() + '-access-method', id: $index() + '-download' }" type="radio" id="download" value="download" /><label data-bind="attr: { for: $index() + '-download' }" class="access-method-radio-label">Download</label><br />
-                  <!-- /ko -->
+              <!-- ko if: granuleAccessOptions().canDownload -->
+                <!-- ko foreach: serviceOptions.accessMethod -->
+                <p class="access-item-selection">
+                  <span class="access-method-label">Select Data Access Method <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a></span>
+                  <input data-bind="checked: $data.method, attr: { name: $index() + '-access-method', id: $index() + '-download' }" type="radio" id="download" value="download" /><label data-bind="attr: { for: $index() + '-download' }" class="access-method-radio-label">Download</label>
+                </p>
                 <!-- /ko -->
+              <!-- /ko -->
+              <p class="access-item-actions" data-bind="visible: granuleAccessOptions().canDownload">
+                <span>Access these granules again with different options</span>
+                <button data-bind="click: serviceOptions.addAccessMethod">Add access method</button>
               </p>
             </div>
           </div>
@@ -71,7 +70,6 @@
         </div>
 
         <div class="access-item-actions">
-          <button data-bind="visible: granuleAccessOptions().canDownload, click: serviceOptions.addAccessMethod">Additional access method</button>
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
           <button data-bind="enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
         </div>

@@ -23,16 +23,35 @@ describe 'Duplicate Service Options', reset: false do
     end
 
     it "shows 'additional access method' button" do
-      expect(page).to have_button 'Additional access method'
+      expect(page).to have_button 'Add access method'
     end
 
     context "when clicking 'additional access method' button" do
       before :all do
-        click_button 'Additional access method'
+        click_button 'Add access method'
       end
 
       it "adds an additional service option" do
-        expect(page).to have_content 'Download', count: 2
+        expect(page).to have_content 'Select Data Access Method', count: 2
+      end
+
+      it "displays a 'remove access method' icon" do
+        expect(page).to have_css '.remove-access-item', count: 2
+      end
+
+      context "when clicking the 'remove access method' icon" do
+        before :all do
+          # click_on 'Remove access method'
+          first('.remove-access-item').click
+        end
+
+        it "removes the access method" do
+          expect(page).to have_content 'Select Data Access Method', count: 1
+        end
+
+        it "does not display a remove access method icon for the last access method" do
+          expect(page).to have_no_css '.remove-access-item'
+        end
       end
     end
   end
@@ -48,7 +67,7 @@ describe 'Duplicate Service Options', reset: false do
     end
 
     it "does not show 'additional access method' button" do
-      expect(page).to have_no_button 'Additional access method'
+      expect(page).to have_no_button 'Add access method'
     end
   end
 end
