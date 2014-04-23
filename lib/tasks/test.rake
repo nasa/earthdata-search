@@ -16,8 +16,19 @@ end
 
 namespace :ci do
   task :prepare do
+    require 'cliver'
+    len = 0
+    Cliver::Dependency::new('node', '> 0.0.0').installed_versions do |path, version|
+      puts "Node.js #{path.inspect} #{version.inspect}"
+      len += 1
+    end
+    puts "Node.js installation count: #{len}"
     FileUtils.mkdir_p 'build_output'
+  end
+
+  task :cleancache do
+    FileUtils.rm_rf 'tmp/cache/assets'
   end
 end
 
-Rake::Task[:spec].enhance(['ci:prepare', 'jasmine:ci'])
+Rake::Task[:spec].enhance(['ci:prepare', 'jasmine:ci', 'ci:cleancache'])
