@@ -35,8 +35,9 @@ ns.Preferences = do (ko
 
 
     save: ->
-      console.log 'Saving preferences'
-      doPost '/users/site_preferences', {site_preferences: @serialize()}
+      serialized = @serialize()
+      console.log "Saving site preferences, #{JSON.stringify(serialized)}"
+      doPost '/users/site_preferences', {site_preferences: serialized}
       null
 
     fromJson: (jsonObj) =>

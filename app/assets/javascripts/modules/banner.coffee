@@ -50,9 +50,11 @@
     preferences.dismissedEvents(pruned)
     null
 
-  $(document).on 'click', '.banner-show-events', ->
+  $(document).on 'click', '.banner-show-events', (e) ->
+    e.preventDefault()
     banners = []
-    closeBanner()
+    $banner?.remove()
+    $banner = null
     preferences.dismissedEvents([])
     preferences.save()
     showAllEvents()

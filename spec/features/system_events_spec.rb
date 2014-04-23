@@ -27,6 +27,7 @@ describe "System event notification", reset: true do
     context "closing a notification" do
       before :each do
         find('.banner').click_link('close')
+        wait_for_xhr
       end
 
       it "hides the dismissed notification" do
@@ -35,6 +36,38 @@ describe "System event notification", reset: true do
 
       it "shows the next notification" do
         expect(page).to have_text('Second Notification')
+      end
+
+      context "and reloading the page" do
+        before :each do
+          visit '/search'
+          wait_for_xhr
+        end
+
+        it "does not show the closed notification again" do
+          expect(page).to have_no_text('LARC-ECS Maintenance')
+        end
+
+        it "continues to show other notifications" do
+          expect(page).to have_text('Second Notification')
+        end
+      end
+
+      context "and clicking on toolbar's notification icon" do
+        before :each do
+          click_on 'Show Outage Notices'
+          wait_for_xhr
+        end
+
+        it "shows the dismissed notification" do
+          expect(page).to have_text('LARC-ECS Maintenance')
+        end
+
+        it "shows the dismissed notification on subsequent page loads" do
+          visit '/search'
+          wait_for_xhr
+          expect(page).to have_text('LARC-ECS Maintenance')
+        end
       end
     end
   end
