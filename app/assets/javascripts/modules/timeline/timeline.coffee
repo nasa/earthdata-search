@@ -228,9 +228,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         match[0].setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
         @_empty(match[0])
 
-    data: (id, start, end, resolution, intervals) =>
+    data: (id, start, end, resolution, intervals, color) =>
       @_loadedRange = [start, end, resolution]
-      @_data[id] = [start, end, resolution, intervals]
+      @_data[id] = [start, end, resolution, intervals, color]
       @_drawData(id)
 
     _drawData: (id) ->
@@ -243,7 +243,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       zoom = @zoom
 
-      [start, end, resolution, intervals] = @_data[id] ? [@start - 1 , @end + 1, RESOLUTIONS[zoom - 2], []]
+      [start, end, resolution, intervals, color] = @_data[id] ? [@start - 1 , @end + 1, RESOLUTIONS[zoom - 2], [], null]
 
       match = @svg.getElementsByClassName(id)
       el = null
@@ -266,6 +266,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
           height: DATASET_HEIGHT - 7
           rx: 10
           ry: 10
+        rect.setAttribute('style', "fill: #{color}") if color?
         el.appendChild(rect)
 
       # Remove 'timeline-loading' class
@@ -574,11 +575,20 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       overlay = @olDatasets
       @_empty(overlay)
       y = 0
+
       for dataset in datasets
         txt = @_buildSvgElement('text', y: y)
         txt.textContent = dataset.title()
         overlay.appendChild(txt)
         y += DATASET_HEIGHT
+
+
+      fn = =>
+        bbox = overlay.getBBox()
+        rect = @_buildSvgElement('rect', x: 0, y: -DATASET_FONT_HEIGHT - DATASET_PADDING, width: bbox.width - bbox.x, height: y, class: @scope('shadow'))
+        overlay.insertBefore(rect, overlay.firstChild) if overlay.firstChild
+      setTimeout(fn, 0)
+
       null
 
     _updateTimeline: ->

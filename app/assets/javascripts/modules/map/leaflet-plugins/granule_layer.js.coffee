@@ -201,7 +201,7 @@ ns.GranuleLayer = do (L
       ctx = canvas.getContext('2d')
       ctx.save()
       ctx.translate(-nwPoint.x, -nwPoint.y)
-      ctx.strokeStyle = 'rgba(205, 84, 0, 1)'
+      ctx.strokeStyle = @options.color
 
       for path in paths
         ctx.beginPath()
@@ -318,6 +318,7 @@ ns.GranuleLayer = do (L
     constructor: (@dataset, options) ->
       @granules = @dataset.granulesModel
       @_hasGibs = options?.product?
+      @color = options?.color ? '#25c85b';
       super(options)
 
     onAdd: (map) ->
@@ -426,7 +427,7 @@ ns.GranuleLayer = do (L
       # Make sure help is displayed after the master overlay is updated for positioning reasons
       setTimeout((-> help.add('gibs_accuracy')), 0) if url?
 
-      layer = new GranuleCanvasLayer(url, @_toTileLayerOptions(newOptions))
+      layer = new GranuleCanvasLayer(url, L.extend(@_toTileLayerOptions(newOptions), color: @color))
 
       # For tests to figure out if things are still loading
       map = @_map
@@ -473,13 +474,13 @@ ns.GranuleLayer = do (L
     _focusLayer: (granule) ->
       return null unless granule?
 
-      @_granuleLayer(granule, clickable: false)
+      @_granuleLayer(granule, clickable: false, color: @color, fillColor: @color, opacity: 1)
 
 
     _stickyLayer: (granule) ->
       return null unless granule?
 
-      layer = @_granuleLayer(granule, fillOpacity: 0, clickable: false)
+      layer = @_granuleLayer(granule, fillOpacity: 0, clickable: false, color: @color, fillColor: @color, opacity: 1)
 
       temporal = granule.getTemporal()
       icon = L.divIcon

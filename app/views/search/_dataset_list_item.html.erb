@@ -59,12 +59,12 @@
                   <i class="edsc-icon-minus"></i>
                 </a>
               </div>
-              <p class="panel-list-details">
-              <span data-bind="text: short_name"></span>
-              <!-- ko if: version_id() != 'Undefined' -->
-              v<span data-bind="text: version_id"></span>
+              <p class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForDataset($data)}"<% end %>>
+                <span data-bind="text: short_name"></span>
+                <!-- ko if: version_id() != 'Undefined' -->
+                v<span data-bind="text: version_id"></span>
                 <!-- /ko -->
-              - <span data-bind="text: archive_center"></span>
+                - <span data-bind="text: archive_center"></span>
               </p>
               <p class="dataset-granules-info" data-bind="if: granulesModel.isLoaded() && has_granules()">
                 <span data-bind="text: $root.pluralize(granulesModel.hits(), 'Granule', 'Granules')"></span>
