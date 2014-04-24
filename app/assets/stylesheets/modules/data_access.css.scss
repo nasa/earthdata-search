@@ -11,6 +11,25 @@
     color: #aaa;
   }
 
+  .granule-list {
+    div {
+      height: 200px;
+      overflow: scroll;
+    }
+
+    a {
+      color: #000;
+    }
+
+    h5 {
+      margin-bottom: 0;
+    }
+
+    span {
+      font-size: .9em;
+    }
+  }
+
   .remove-access-item {
     color: #000;
     float: right;

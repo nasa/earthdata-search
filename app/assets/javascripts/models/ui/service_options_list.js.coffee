@@ -4,6 +4,7 @@ ns.ServiceOptionsList = do (ko) ->
   class ServiceOptionsList
     constructor: (@accountForm, @projectList) ->
       @activeIndex = ko.observable(0)
+      @showGranules = ko.observable(false)
 
     showNext: =>
       @activeIndex(@activeIndex() + 1)
@@ -17,5 +18,12 @@ ns.ServiceOptionsList = do (ko) ->
           @projectList.loginAndDownloadProject()
       else
         @projectList.loginAndDownloadProject()
+
+    showGranuleList: =>
+      @showGranules(true)
+
+    hideGranuleList: =>
+      @showGranules(false)
+
 
   exports = ServiceOptionsList

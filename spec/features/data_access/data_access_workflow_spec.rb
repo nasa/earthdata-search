@@ -87,6 +87,22 @@ describe "Data Access workflow", reset: false do
         end
       end
 
+      context "when viewing granule list" do
+        before :all do
+          click_link 'Expand List'
+        end
+
+        after :all do
+          click_link 'Collapse List'
+        end
+
+        it "displays granule iformation" do
+          expect(page).to have_content "FIFE_STRM_15M.80611715.s15"
+        end
+
+        it "displays more granules when scrolling"
+      end
+
       context 'and clicking the "continue" button' do
         before :all do
           choose "Download"
