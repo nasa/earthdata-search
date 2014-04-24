@@ -333,12 +333,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @start = center_t - (scale * (x - @originPx))
       @end = @start + timeSpan
 
-      present = config.present()
-
-      if @end > present
-        @end = present
-        @start = @end - timeSpan
-
       @scale = scale
 
       @focus()
@@ -503,16 +497,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       start = @_panStart
       end = @_panEnd
-      present = config.present()
 
       span = end - start
       @start = start - dx * @scale
       @end = @start + span
 
-      if @end > present
-        @end = present
-        @start = present - span
-        dx = -Math.floor((@start - start) / @scale)
       @originPx = -(@_panStartX + dx) # x offset from its original position
 
       draggables = @root.find([@scope('.draggable'), @scope('.selection'), @scope('.display-top'), @scope('.focus')].join(', '))
