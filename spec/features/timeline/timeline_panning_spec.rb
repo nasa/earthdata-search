@@ -38,9 +38,10 @@ describe "Timeline panning", reset: false do
 
   context "when dragging beyond the present" do
     before(:all) { pan_timeline(5.days) }
+    after(:all) { pan_timeline(-5.days) }
 
-    it "stops panning the timeline display at the present" do
-      expect(page).to have_timeline_range(start, present)
+    it "allows the user to pan into the future" do
+      expect(page).to have_timeline_range(start + 5.days, present + 5.days)
     end
   end
 end

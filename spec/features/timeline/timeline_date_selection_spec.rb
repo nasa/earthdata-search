@@ -28,7 +28,7 @@ describe "Timeline date selection", reset: false do
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
     zoom_out_button.click
-    pan_timeline(-20.years)
+    pan_timeline(-25.years)
     wait_for_xhr
     expect(granule_list).to have_text('Showing 20 of 39 matching granules')
   end
@@ -62,7 +62,7 @@ describe "Timeline date selection", reset: false do
       end
 
       it "pans the timeline to center on the previous time span" do
-        expect(page).to have_time_offset('.timeline-draggable', -21.years)
+        expect(page).to have_time_offset('.timeline-draggable', -26.years)
       end
     end
 
@@ -75,7 +75,7 @@ describe "Timeline date selection", reset: false do
       end
 
       it "pans the timeline to center on the next time span" do
-        expect(page).to have_time_offset('.timeline-draggable', -19.years)
+        expect(page).to have_time_offset('.timeline-draggable', -24.years)
       end
     end
 

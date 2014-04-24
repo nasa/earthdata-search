@@ -26,7 +26,7 @@ describe "Timeline temporal selection", reset: false do
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
     zoom_out_button.click
-    pan_timeline(-20.years)
+    pan_timeline(-25.years)
     wait_for_xhr
   end
 
