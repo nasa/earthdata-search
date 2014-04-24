@@ -25,5 +25,11 @@ ns.ServiceOptionsList = do (ko) ->
     hideGranuleList: =>
       @showGranules(false)
 
+    scrolled: (data, event) =>
+      elem = event.target
+      if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
+        dataset = @projectList.project.datasets()[@activeIndex()]
+        dataset.granulesModel.loadNextPage()
+
 
   exports = ServiceOptionsList

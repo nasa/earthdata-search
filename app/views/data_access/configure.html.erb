@@ -51,7 +51,7 @@
             <p>
               <a data-bind="if: $root.ui.serviceOptionsList.showGranules, click: $root.ui.serviceOptionsList.hideGranuleList" href="#">Collapse List</a>
             </p>
-            <div>
+            <div data-bind="event: {scroll: $root.ui.serviceOptionsList.scrolled}">
             <!-- ko foreach: granulesModel.results() -->
               <h5 data-bind="text: title"></h5>
               <span data-bind="text: getTemporal()"></span>
