@@ -2,10 +2,8 @@
 #You can remove it if you don't need it.
 #This file is loaded *after* jasmine.yml is interpreted.
 #
-#Example: using a different boot file.
-#Jasmine.configure do |config|
-#   @config.boot_dir = '/absolute/path/to/boot_dir'
-#   @config.boot_files = lambda { ['/absolute/path/to/boot_dir/file.js'] }
-#end
-#
 
+Jasmine.configure do |config|
+  Headless.new(:destroy_on_exit => false).start
+  config.formatters = [Jasmine::Formatters::Console, Jasmine::Formatters::JunitXml]
+end

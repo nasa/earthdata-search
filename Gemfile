@@ -51,11 +51,8 @@ group :development, :test do
   gem 'vcr'
   gem 'sqlite3'
 
-  # rspec-like environment for Javascript
-  # The version available via rubygems (1.3.2) doesn't contain Rails 4 support
-  # so we're specifying a newer version here.  This should be removed once we have
-  # a newer release
-  gem 'jasmine', :git => 'https://github.com/pivotal/jasmine-gem.git', :ref => 'e8105401'
+  gem 'jasmine'
+  gem 'jasmine_junitxml_formatter'
 
   gem 'therubyracer', :require => 'v8'
   gem 'libv8', '~> 3.11.8.3'
