@@ -8,6 +8,52 @@ ns.Project = do (ko,
                  DatasetsModel = ns.Datasets
                  Dataset = ns.Dataset) ->
 
+  # Maintains a finite pool of values to be distributed on demand.  Calling
+  # next() on the pool returns either an unused value, prioritizing those
+  # which have been returned to the pool most recently or, in the case where
+  # there are no unused values, the value which has been checked out of the
+  # pool the longest.
+  class ValuePool
+    constructor: (values) ->
+      @_pool = values.concat()
+
+    use: (value) ->
+      @_remove(value)
+      @_pool.push(value)
+      value
+
+    next: ->
+      @use(@_pool[0])
+
+    has: (value) ->
+      @_pool.indexOf(value) != -1
+
+    unuse: (value) ->
+      @_remove(value)
+      @_pool.unshift(value)
+      value
+
+    _remove: (value) ->
+      index = @_pool.indexOf(value)
+      @_pool.splice(index, 1) unless index == -1
+
+  colorPool = new ValuePool([
+    '#3498DB',
+    '#E67E22',
+    '#2ECC71',
+    '#E74C3C',
+    '#9B59B6'
+  ])
+
+  class ProjectDataset
+    constructor: (@dataset, @meta={}) ->
+      @dataset.reference()
+      @meta.color ?= colorPool.next()
+
+    dispose: ->
+      colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
+      @dataset.dispose()
+
   class Project
     constructor: (@query) ->
       @_datasetIds = ko.observableArray()
@@ -25,19 +71,26 @@ ns.Project = do (ko,
       result
 
     getDatasets: ->
-      @_datasetsById[id] for id in @_datasetIds()
+      @_datasetsById[id]?.dataset for id in @_datasetIds()
 
     setDatasets: (datasets) ->
       datasetIds = []
       datasetsById = {}
-      for ds in datasets
+      for ds, i in datasets
         id = ds.id()
-        ds.reference()
         datasetIds.push(id)
-        datasetsById[id] = ds
+        datasetsById[id] = new ProjectDataset(ds)
       @_datasetsById = datasetsById
       @_datasetIds(datasetIds)
       null
+
+    # This seems like a UI concern, but really it's something that spans several
+    # views and something we may eventually want to persist with the project or
+    # allow the user to alter.
+    colorForDataset: (dataset) ->
+      return null unless @hasDataset(dataset)
+
+      @_datasetsById[dataset.id()].meta.color
 
     isEmpty: () ->
       @_datasetIds.isEmpty()
@@ -45,8 +98,7 @@ ns.Project = do (ko,
     addDataset: (dataset) =>
       id = dataset.id()
 
-      dataset.reference()
-      @_datasetsById[id] = dataset
+      @_datasetsById[id] ?= new ProjectDataset(dataset)
       @_datasetIds.remove(id)
       @_datasetIds.push(id)
 
@@ -82,7 +134,7 @@ ns.Project = do (ko,
         for result in results
           dataset = @_datasetsById[result.id()]
           if dataset?
-            dataset.fromJson(result.json)
+            dataset.dataset.fromJson(result.json)
 
     serialize: (datasets=@datasets) ->
       datasetQuery: @query.serialize()

@@ -53,7 +53,7 @@ module Helpers
           $svg.simulate('drag', { dx: dx, dy: 0#{x_opts}});
         })();
       """
-      page.evaluate_script script
+      page.execute_script script
       wait_for_xhr
     end
   end

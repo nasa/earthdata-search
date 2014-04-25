@@ -1,7 +1,7 @@
 ns = @edsc.map
 
 # Meta-layer for managing granule visualizations
-ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns.L.GranuleLayer) ->
+ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.extend, GranuleLayer=ns.L.GranuleLayer, project = @edsc.page.project) ->
   #MIN_PAGE_SIZE = 100
 
   class GranuleVisualizationsLayer
@@ -30,8 +30,8 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns
 
       for dataset in datasets
         id = dataset.id()
-        gibsParams = dataset.gibs()
-        if gibsParams?.format == 'jpeg'
+        options = dataset.gibs()
+        if options?.format == 'jpeg'
           z = Math.min(baseZ++, 9)
         else
           z = Math.min(overlayZ++, 19)
@@ -39,8 +39,10 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, GranuleLayer=ns
         if datasetIdsToLayers[id]?
           layer = datasetIdsToLayers[id]
         else
+          color = project.colorForDataset(dataset)
+          options = extend({color: color}, options) if color
           # Note: our algorithms rely on sort order being [-start_date]
-          layer = new GranuleLayer(dataset, gibsParams)
+          layer = new GranuleLayer(dataset, options)
           map.addLayer(layer)
 
         layer.setZIndex(z)

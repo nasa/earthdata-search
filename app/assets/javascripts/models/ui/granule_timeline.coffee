@@ -10,7 +10,7 @@ ns.GranuleTimeline = do (ko
                          ) ->
   # intervals: 'year', 'month', 'day', 'hour', 'minute'
   class GranuleTimelineData extends XhrModel
-    constructor: (@dataset, @range) ->
+    constructor: (@dataset, @range, @color) ->
       super("/granules/timeline.json", this)
       @prevParams = {}
       @params = ko.computed(@_computeParams)
@@ -54,7 +54,7 @@ ns.GranuleTimeline = do (ko
 
     _toResults: (data, current, params) ->
       intervals = data[0].intervals ? []
-      $('#timeline').timeline('data', @dataset.id(), @range()..., intervals)
+      $('#timeline').timeline('data', @dataset.id(), @range()..., intervals, @color)
       intervals
 
   class GranuleTimeline extends KnockoutModel
@@ -103,13 +103,15 @@ ns.GranuleTimeline = do (ko
       currentTimelines = @_datasetsToTimelines
       newTimelines = {}
 
+      project = @projectList.project
       for dataset in result
         id = dataset.id()
         if currentTimelines[id]
           newTimelines[id] = currentTimelines[id]
           delete currentTimelines[id]
         else
-          data = new GranuleTimelineData(dataset, range)
+          data = new GranuleTimelineData(dataset, range, project.colorForDataset(dataset))
+
           newTimelines[id] = data
 
       for own k, v of currentTimelines
@@ -118,7 +120,7 @@ ns.GranuleTimeline = do (ko
       @_datasetsToTimelines = newTimelines
 
       for own key, data of newTimelines when !data.isLoading.peek()
-        $timeline.timeline('data', data.dataset.id(), range()..., data.results.peek())
+        $timeline.timeline('data', data.dataset.id(), range()..., data.results.peek(), data.color)
 
       result
 

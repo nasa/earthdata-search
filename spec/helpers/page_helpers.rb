@@ -38,13 +38,13 @@ module Helpers
 
     # Resets the query filters and waits for all the resulting xhr requests to finish.
     def reset_search(wait=true)
-      page.evaluate_script('window.edsc.models.page.current.query.clearFilters()')
+      page.execute_script('window.edsc.models.page.current.query.clearFilters()')
       wait_for_xhr
     end
 
     # Logout the user
     def reset_user
-      page.evaluate_script("window.edsc.models.page.current.user.logout()")
+      page.execute_script("window.edsc.models.page.current.user.logout()")
       wait_for_xhr
     end
 
@@ -103,7 +103,7 @@ module Helpers
       script = "edsc.page.ui.serviceOptionsList.activeIndex(0);
                 edsc.page.project.datasets()[0].serviceOptions.accessMethod.removeAll();
                 edsc.page.project.datasets()[0].serviceOptions.addAccessMethod();"
-      page.evaluate_script script
+      page.execute_script script
     end
 
     private

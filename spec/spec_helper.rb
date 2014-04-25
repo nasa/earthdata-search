@@ -104,7 +104,11 @@ RSpec.configure do |config|
   end
 
   config.after :each do
-    DatabaseCleaner.clean
+    begin
+      DatabaseCleaner.clean
+    rescue => e
+      $stderr.puts "Database cleaner clean failed #{e}"
+    end
     if example.exception != nil
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)

@@ -1,6 +1,7 @@
 ns = @edsc.models.ui
 
 ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
+
   class ProjectList
     constructor: (@project, @user, @datasetResults) ->
       @visible = ko.observable(false)
