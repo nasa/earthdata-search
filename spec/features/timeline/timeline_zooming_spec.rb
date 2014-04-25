@@ -78,8 +78,14 @@ describe "Timeline zooming", reset: false do
     end
 
     context "to year resolution" do
-      before(:all) { find('.timeline-zoom-out').click }
-      after(:all) { find('.timeline-zoom-in').click }
+      before(:all) do
+        find('.timeline-zoom-out').click
+        find('.timeline-zoom-out').click
+      end
+      after(:all) do
+        find('.timeline-zoom-in').click
+        find('.timeline-zoom-in').click
+      end
 
       it "disables the zoom-out button" do
         expect(page).to have_selector('.timeline-max-zoom')
