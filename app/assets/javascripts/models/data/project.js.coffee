@@ -49,7 +49,6 @@ ns.Project = do (ko,
     constructor: (@dataset, @meta={}) ->
       @dataset.reference()
       @meta.color ?= colorPool.next()
-      console.log @meta.color
 
     dispose: ->
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)

@@ -9,9 +9,9 @@ module Helpers
     end
 
     def reset_project
-      page.evaluate_script('edsc.models.page.current.project.datasets([])')
-      page.evaluate_script('edsc.models.page.current.project.datasets()') # Read it back out to ensure it was applied
-      page.evaluate_script('edsc.models.page.current.project.searchGranulesDataset(null)') # Read it back out to ensure it was applied
+      page.execute_script('edsc.models.page.current.project.datasets([])')
+      page.execute_script('edsc.models.page.current.project.datasets()') # Read it back out to ensure it was applied
+      page.execute_script('edsc.models.page.current.project.searchGranulesDataset(null)')
     end
 
     def project_dataset_ids

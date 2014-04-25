@@ -15,7 +15,7 @@ module Helpers
 
     def view_granule_results(from='dataset-results')
       expect(page).to have_visible_overlay(from)
-      page.evaluate_script("$('##{from} .panel-list-item:first-child').click()")
+      page.execute_script("$('##{from} .panel-list-item:first-child').click()")
       #item.click # This causes intermittent failures based on timing
       wait_for_xhr
       wait_for_visualization_load
@@ -28,8 +28,9 @@ module Helpers
 
     def leave_granule_results(to='dataset-results')
       expect(page).to have_visible_granule_list
-      page.evaluate_script("$('#granule-list a.master-overlay-back').click()")
+      page.execute_script("$('#granule-list a.master-overlay-back').click()")
       #find('#granule-list').click_link('Back to Datasets')
+      wait_for_xhr
       wait_for_visualization_unload
       expect(page).to have_visible_overlay(to)
     rescue => e

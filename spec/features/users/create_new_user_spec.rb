@@ -50,7 +50,7 @@ describe 'Create new account', reset: false do
 
   after :each do
     script = 'edsc.page.account.clearAccountForm()'
-    page.evaluate_script script
+    page.execute_script script
   end
 
   context 'when creating a new account' do
@@ -85,7 +85,7 @@ describe 'Create new account', reset: false do
 
     after :each do
       script = 'edsc.page.account.clearAccountForm()'
-      page.evaluate_script script
+      page.execute_script script
     end
   end
 

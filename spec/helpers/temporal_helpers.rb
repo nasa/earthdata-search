@@ -21,7 +21,7 @@ module Helpers
       else
         script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
       end
-      page.evaluate_script(script)
+      page.execute_script(script)
       wait_for_xhr
     end
 
@@ -33,7 +33,7 @@ module Helpers
       else
         script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
       end
-      page.evaluate_script(script)
+      page.execute_script(script)
       wait_for_xhr
     end
 

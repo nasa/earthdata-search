@@ -32,7 +32,7 @@ describe "'Clear Filters' button" do
                 temporal.start.date(new Date('1978-12-01T00:00:00Z'));
                 temporal.stop.date(new Date('1979-12-01T00:00:00Z'));
                 null;"
-      page.evaluate_script(script)
+      page.execute_script(script)
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
 
@@ -50,7 +50,7 @@ describe "'Clear Filters' button" do
                 temporal.stop.date(new Date('1975-12-01T00:00:00Z'));
                 temporal.isRecurring(true);
                 null;"
-      page.evaluate_script(script)
+      page.execute_script(script)
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
 

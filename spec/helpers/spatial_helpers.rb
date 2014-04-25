@@ -6,7 +6,7 @@ module Helpers
       # And selenium freaks out if we try to use jQuery to do this
       # We resort to dealing directly with the click handler
       script = "edsc.models.page.current.ui.spatialType.select#{name}()"
-      page.evaluate_script(script)
+      page.execute_script(script)
     end
 
     def choose_tool_from_map_toolbar(name)
@@ -40,7 +40,7 @@ module Helpers
         edsc.models.page.current.query.spatial(null);
         edsc.models.page.current.ui.spatialType.selectNone();
       """
-      page.evaluate_script(script)
+      page.execute_script(script)
     end
 
     def upload_shapefile(path)
@@ -48,14 +48,14 @@ module Helpers
       clear_popover
 
       script = "$('input[type=file]').css({visibility: 'visible', height: '28px', width: '300px', position: 'absolute', 'z-index':500000}).show().attr('name', 'shapefile')"
-      page.evaluate_script(script)
+      page.execute_script(script)
 
       attach_file('shapefile', Rails.root.join(path))
       wait_for_xhr
     end
 
     def clear_popover
-      page.evaluate_script('edsc.help.close()')
+      page.execute_script('edsc.help.close()')
     end
 
     def clear_shapefile
@@ -99,13 +99,13 @@ module Helpers
                map.fire('#{event}', e);
                null;
       """
-      page.evaluate_script(script)
+      page.execute_script(script)
     end
 
     def create_spatial(type, *points)
       point_strs = points.map {|p| p.reverse.join(',')}
       script = "edsc.models.page.current.query.spatial('#{type}:#{point_strs.join(':')}')"
-      page.evaluate_script(script)
+      page.execute_script(script)
     end
 
 
