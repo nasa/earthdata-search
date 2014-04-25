@@ -13,3 +13,15 @@ Rake::Task[:test].enhance(['doc:ui']) do
   puts "[6/6] Running Ruby specs"
   Rake::Task['spec'].invoke
 end
+
+namespace :ci do
+  task :prepare do
+    FileUtils.mkdir_p 'build_output'
+  end
+
+  task :cleancache do
+    FileUtils.rm_rf 'tmp/cache/assets'
+  end
+end
+
+Rake::Task[:spec].enhance(['ci:prepare', 'jasmine:ci', 'ci:cleancache'])

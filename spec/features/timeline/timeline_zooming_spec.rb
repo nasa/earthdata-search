@@ -6,11 +6,11 @@ require "spec_helper"
 describe "Timeline zooming", reset: false do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 
-  day_start = DateTime.new(2009, 2, 24, 12, 0, 0, '+0')
-  day_end = DateTime.new(2009, 2, 25, 12, 0, 0, '+0')
+  day_start = DateTime.new(2014, 2, 13, 0, 0, 0, '+0')
+  day_end = DateTime.new(2014, 2, 14, 0, 0, 0, '+0')
 
-  year_start = DateTime.new(2008, 8, 26, 0, 0, 0, '+0')
-  year_end = DateTime.new(2009, 8, 27, 0, 0, 0, '+0')
+  year_start = DateTime.new(2013, 8, 14, 12, 0, 0, '+0')
+  year_end = DateTime.new(2014, 8, 15, 12, 0, 0, '+0')
 
   start = present - 31.days
 
@@ -23,15 +23,6 @@ describe "Timeline zooming", reset: false do
 
     dataset_results.click_link "View Project"
     wait_for_xhr
-
-    # Zoom out and back in to prevent re-centering from messing with tests depending on order
-    zoom_out_button = find('.timeline-zoom-out')
-    zoom_in_button = find('.timeline-zoom-in')
-
-    zoom_out_button.click
-    zoom_out_button.click
-    zoom_in_button.click
-    zoom_in_button.click
   end
 
   context "when zooming in on the timeline" do

@@ -53,5 +53,11 @@ describe "Place name autocomplete" do
       wait_for_xhr
       expect(page).to have_field('keywords', with: 'modis')
     end
+
+    it "removes the spatial constraint if the user removes the placename from the search box" do
+      fill_in "keywords", with: "modis"
+      expect(page).to have_field('keywords', with: 'modis')
+      expect(page).to have_no_css('#map .leaflet-marker-icon')
+    end
   end
 end

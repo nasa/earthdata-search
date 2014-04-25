@@ -49,6 +49,7 @@ RSpec::Matchers.define :have_timeline_range do |start, stop|
 
       # Allow 30m variance for rounding errors
       delta = 60 * 30 * 1000
+
       expect(actual_start_time).to be_within(delta).of(expected_start_time)
       expect(actual_end_time).to be_within(delta).of(expected_end_time)
     end

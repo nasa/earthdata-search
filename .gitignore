@@ -5,7 +5,7 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 .DS_Store
-rspec.xml
+build_output
 
 # Ignore bundler config
 /.bundle
