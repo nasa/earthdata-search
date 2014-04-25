@@ -49,6 +49,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     ((date) -> [formatDay(date), formatMonth(date)]),
     ((date) -> [formatMonth(date), formatYear(date)]),
     ((date) -> [formatYear(date)]),
+    ((date) -> [formatYear(date)]),
     ((date) -> [formatYear(date)])
   ]
 
@@ -58,7 +59,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     'day',
     'month',
     'year',
-    'decade'
+    'year',
+    'year'
   ]
 
   ZOOM_LEVELS = [
@@ -67,7 +69,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     MS_PER_DAY,
     MS_PER_MONTH,
     MS_PER_YEAR,
-    MS_PER_DECADE
+    MS_PER_DECADE,
+    MS_PER_DECADE * 5
   ]
 
 
@@ -662,7 +665,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       time = Math.round(time / 1000) * 1000
       date = new Date(time)
       components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
-      components = components.slice(0, components.length - zoom)
+      components = components.slice(0, Math.max(components.length - zoom, 1))
       components[components.length - 1] += increment
       components.push(0) if components.length == 1
       Date.UTC(components...)
