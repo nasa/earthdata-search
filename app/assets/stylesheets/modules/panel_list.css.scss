@@ -50,6 +50,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 .panel-list-focused {
   border-left-color: #525252;
   background-color: #393939;
+  cursor: pointer;
 }
 
 .panel-list-thumbnail-container {
