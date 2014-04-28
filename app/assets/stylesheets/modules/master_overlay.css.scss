@@ -135,6 +135,11 @@
       -webkit-transform: translateY(-50%);
       transform: translateY(-50%);
     }
+
+    a {
+      position: relative;
+      z-index:1;
+    }
     height: 36px;
   }
 
