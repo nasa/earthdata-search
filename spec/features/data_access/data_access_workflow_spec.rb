@@ -95,7 +95,7 @@ describe "Data Access workflow", reset: false do
         end
 
         after :all do
-          click_link 'Collapse List'
+          click_link 'Hide List'
         end
 
         it "displays granule iformation" do
