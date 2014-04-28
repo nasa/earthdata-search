@@ -118,12 +118,14 @@ describe "Granule search filters", reset: false, wait: 60 do
     context "validates input" do
       after :each do
         first_project_dataset.click_link "Hide granule filters"
+        wait_for_xhr
       end
 
       it "minimum must be more than 0.0" do
         fill_in "Minimum", with: "-1.0"
         fill_in "Maximum", with: ""
         page.find(".master-overlay-secondary-content").click
+        wait_for_xhr
         expect(page).to have_content "Value must be between 0.0 and 100.0"
       end
 
@@ -131,6 +133,7 @@ describe "Granule search filters", reset: false, wait: 60 do
         fill_in "Minimum", with: ""
         fill_in "Maximum", with: "110.0"
         page.find(".master-overlay-secondary-content").click
+        wait_for_xhr
         expect(page).to have_content "Value must be between 0.0 and 100.0"
       end
 
@@ -138,6 +141,7 @@ describe "Granule search filters", reset: false, wait: 60 do
         fill_in "Minimum", with: "5.0"
         fill_in "Maximum", with: "1.0"
         page.find(".master-overlay-secondary-content").click
+        wait_for_xhr
         expect(page).to have_content "Minimum must be less than Maximum"
       end
     end
