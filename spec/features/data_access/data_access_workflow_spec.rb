@@ -87,10 +87,35 @@ describe "Data Access workflow", reset: false do
         end
       end
 
+      context "when viewing granule list" do
+        before :all do
+          page.driver.resize_window(1000, 1000)
+          click_link 'Expand List'
+          wait_for_xhr
+        end
+
+        after :all do
+          click_link 'Hide List'
+        end
+
+        it "displays granule iformation" do
+          expect(page).to have_content "FIFE_STRM_15M.80611715.s15"
+        end
+
+        it "displays more granules when scrolling" do
+          page.execute_script "$('.granule-list div')[0].scrollTop = 10000"
+          expect(page).to have_css '.granule-list h5', count: 39
+        end
+      end
+
       context 'and clicking the "continue" button' do
         before :all do
           choose "Download"
           click_button "Continue"
+        end
+
+        after :all do
+          reset_access_page
         end
 
         it 'displays the next dataset in the list' do
