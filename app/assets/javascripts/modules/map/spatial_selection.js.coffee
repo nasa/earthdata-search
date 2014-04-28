@@ -115,11 +115,6 @@ ns.SpatialSelection = do (window,
 
       @_currentTool = name
 
-      link = $(@_getToolLinksForName(name)).filter(':visible')[0]
-      event = document.createEvent("MouseEvents")
-      event.initMouseEvent("click", true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null)
-      link?.dispatchEvent(event)
-
       if name == 'Shape File'
         @_shapefileLayer.activate()
       else if @_shapefileLayer?.isActive()
@@ -127,6 +122,12 @@ ns.SpatialSelection = do (window,
           @_shapefileLayer.hideHelp()
         else
           @_shapefileLayer.deactivate()
+
+      link = $(@_getToolLinksForName(name)).filter(':visible')[0]
+      event = document.createEvent("MouseEvents")
+      event.initMouseEvent("click", true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null)
+      link?.dispatchEvent(event)
+
       currentPage.ui.spatialType.name(name)
 
     _onDrawStart: (e) =>

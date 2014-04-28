@@ -2,7 +2,6 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
 
   now = new Date()
   today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
-  console.log today
   current_year = new Date().getUTCFullYear()
 
   validateTemporalInputs = (root) ->

@@ -93,6 +93,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
 
     _removeFile: =>
       @map.removeLayer(@_jsonLayer) if @_jsonLayer?
+      @map.fire 'shapefile:stop'
       @_file = null
 
     _geoJsonResponse: (file, response) =>
@@ -120,6 +121,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       @_jsonLayer = jsonLayer
 
       @map.addLayer(jsonLayer)
+      @map.fire 'shapefile:start'
       @map.fitBounds(jsonLayer.getBounds())
 
       children = jsonLayer.getLayers()
@@ -161,6 +163,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
           target: map
           layer: layer
           layerType: layerType
+        map.fire 'draw:drawstop'
 
     _simplifyPoints: (latlngs) ->
       if latlngs.length > MAX_POLYGON_SIZE
