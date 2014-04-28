@@ -1,5 +1,8 @@
 do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.temporal, plugin=@edsc.util.plugin, page=@edsc.page) ->
 
+  now = new Date()
+  today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+  console.log today
   current_year = new Date().getUTCFullYear()
 
   validateTemporalInputs = (root) ->
@@ -43,6 +46,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
     datetimepicker.setOptions({
       minDate: min_date,
       maxDate: max_date,
+      startDate: today,
       formatDate: format
     })
 
@@ -76,24 +80,25 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
     console.error "Temporal selectors double initialization" if root.data('temporal-selectors')
     root.data('temporal-selectors', true)
 
+    onChangeDateTime = (dp, $input) ->
+      validateTemporalInputs(root)
+      $input.trigger('change')
+
+
     root.find('.temporal-range-picker').datetimepicker
       format: 'Y-m-d H:i:s',
+      allowBlank: true,
       className: prefix + '-datetimepicker',
       yearStart: '1960',
       yearEnd: current_year,
+      startDate: today,
       onShow: (dp,$input) ->
         setMinMaxOptions(root, this, $input, 'range')
-      onChangeDateTime: (dp,$input) ->
-        # Default minutes and seconds to 00
-        datetime = $input.val().split(":")
-        datetime[1] = "00"
-        datetime[2] = "00"
-        $input.val(datetime.join(":"))
-
-        validateTemporalInputs(root)
-
-        $input.trigger('change')
-      onGenerate: ($dp, input) ->
+      onChangeDateTime: onChangeDateTime
+      onGenerate: (time, input) ->
+        time.setHours(0)
+        time.setMinutes(0)
+        time.setSeconds(0)
         picker = this
         if picker.find('.day-of-year-picker')?.length == 0
           which = if input.is('.temporal-start') then 'start' else 'stop'
@@ -114,24 +119,21 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
 
     root.find('.temporal-recurring-picker').datetimepicker
       format: 'm-d H:i:s',
+      allowBlank: true,
       className: prefix + '-datetimepicker recurring-datetimepicker',
       yearStart: 2007,
       yearEnd: 2007,
+      startDate: today,
       onShow: (dp,$input) ->
         updateMonthButtons($(this).find('.xdsoft_month'))
         setMinMaxOptions(root, this, $input, 'recurring')
-      onChangeDateTime: (dp,$input) ->
-        # Default minutes and seconds to 00
-        datetime = $input.val().split(":")
-        datetime[1] = "00"
-        datetime[2] = "00"
-        $input.val(datetime.join(":"))
-
-        validateTemporalInputs(root)
-
-        $input.trigger('change')
+      onChangeDateTime: onChangeDateTime
       onChangeMonth: (dp,$input) ->
         updateMonthButtons($(this).find('.xdsoft_month'))
+      onGenerate: (time, input) ->
+        time.setHours(0)
+        time.setMinutes(0)
+        time.setSeconds(0)
 
     root.find('.temporal-recurring-year-range').slider({
       min: 1960,
