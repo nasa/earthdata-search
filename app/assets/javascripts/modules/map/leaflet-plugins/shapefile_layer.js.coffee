@@ -83,19 +83,17 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
     hide: ->
       $('.dz-preview').hide()
       @map.removeLayer(@_jsonLayer) if @_jsonLayer?
-      @map.fire 'draw:drawstop'
 
     show: ->
       $('.dz-preview').show()
       @map.addLayer(@_jsonLayer) if @_jsonLayer?
-      @map.fire 'draw:drawstart'
 
     remove: ->
       @_dropzone.removeFile(@_file) if @_file?
 
     _removeFile: =>
       @map.removeLayer(@_jsonLayer) if @_jsonLayer?
-      @map.fire 'draw:drawstop'
+      @map.fire 'shapefile:stop'
       @_file = null
 
     _geoJsonResponse: (file, response) =>
@@ -123,7 +121,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       @_jsonLayer = jsonLayer
 
       @map.addLayer(jsonLayer)
-      @map.fire 'draw:drawstart'
+      @map.fire 'shapefile:start'
       @map.fitBounds(jsonLayer.getBounds())
 
       children = jsonLayer.getLayers()
@@ -160,10 +158,12 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
 
       if layer?
         map = @map
+        map.fire 'draw:drawstart'
         map.fire 'draw:created',
           target: map
           layer: layer
           layerType: layerType
+        map.fire 'draw:drawstop'
 
     _simplifyPoints: (latlngs) ->
       if latlngs.length > MAX_POLYGON_SIZE
