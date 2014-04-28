@@ -27,7 +27,7 @@ ns.Query = do (ko,
                                  {name: "Day only", value: "DAY"},
                                  {name: "Night only", value: "NIGHT"},
                                  {name: "Both day and night", value: "BOTH"}]
-      @day_night_flag = ko.observable("")
+      @day_night_flag = ko.observable(null)
       @cloud_cover_min = ko.observable("")
       @cloud_cover_max = ko.observable("")
       @browse_only = ko.observable(false)
@@ -84,7 +84,7 @@ ns.Query = do (ko,
       @grid.clear()
       @placename('')
       @facets.removeAll()
-      @day_night_flag("")
+      @day_night_flag(null)
       @cloud_cover_min("")
       @cloud_cover_max("")
       @browse_only(false)

@@ -70,13 +70,13 @@
             <a class="button master-overlay-hide-parent master-overlay-forward low-priority" data-bind="click: ui.projectList.showProject" href="#">
               <i class="fa fa-question-circle"></i> Learn More
             </a>
-            Add datasets to your project to compare and retrieve their data.
+            <span>Add datasets to your project to compare and retrieve their data.</span>
           </p>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
             <a id="view-project" class="button master-overlay-hide-parent master-overlay-forward" data-bind="click: ui.projectList.showProject" href="#">
               <i class="fa fa-folder-o"></i> View Project
             </a>
-            You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.
+            <span>You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.</span>
           </p>
           <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
             Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
