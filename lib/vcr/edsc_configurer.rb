@@ -17,8 +17,8 @@ module VCR
         lock.synchronize do
           cassette = 'global'
           uri = request.uri
-          if uri.start_with? 'https://maps.googleapis.com'
-            cassette = 'google'
+          if uri.start_with? 'http://api.geonames.org'
+            cassette = 'geonames'
           elsif uri.start_with? 'http://ogre.adc4gis.com'
             cassette = 'ogre'
           elsif request.uri.include? '/echo-rest/users.json'

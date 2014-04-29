@@ -26,24 +26,21 @@ class PlacenamesController < ApplicationController
         result = []
       else
         result = PlacesClient.get_place_completions(placename).map do |completion|
+          name = [completion['toponymName'], completion['adminName1'], completion['countryName']].map(&:presence).uniq.compact.join(', ')
+          bbox = completion['bbox']
+          if bbox
+            spatial = "bounding_box:#{bbox['west']},#{bbox['south']}:#{bbox['east']},#{bbox['north']}"
+          else
+            spatial = "point:#{completion['lng']},#{completion['lat']}"
+          end
           {
-            placename: preposition + completion['description'],
-            value: prefix + completion['description'],
-            ref: completion['reference'],
-            terms: completion['terms'].map {|t| t['value']}
+            placename: preposition + name,
+            value: prefix + name,
+            spatial: spatial
           }
         end
       end
     end
-
-    respond_with(result)
-  end
-
-  def show
-    result = {}
-
-    spatial = PlacesClient.get_spatial_for_place(params[:id])
-    result[:spatial] = spatial if spatial.present?
 
     respond_with(result)
   end
