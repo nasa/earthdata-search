@@ -26,9 +26,20 @@ class ApplicationController < ActionController::Base
                      'dawnlowe'
                     ]
         authenticate_or_request_with_http_basic do |username, password|
-          whitelist.include?(username) && Echo::Client.get_token(username, password, 'EDSC', request.remote_ip).success?
+          whitelist.include?(username) && authenticate_token(username, password)
         end
       end
+    end
+
+    # This is only used to avoid a POST to ECHO every time a
+    # request comes in while the app is still whitelisted
+    # TODO: Remove after the app is no longer whitelisted!
+    def authenticate_token(username, password)
+      unless session[:authenticate_token]
+        session[:authenticate_token] = Echo::Client.get_token(username, password, 'EDSC', request.remote_ip).body["token"]["id"]
+      end
+
+      session[:authenticate_token]
     end
 
     def token
