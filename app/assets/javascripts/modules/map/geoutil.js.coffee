@@ -97,9 +97,9 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
       a2 = angles[(i + 1) % len]
       delta += _angleDelta(a1, a2)
 
-    direction = 0 if Math.abs(delta) < EPSILON
+    delta = 0 if Math.abs(delta) < EPSILON
 
-    direction
+    delta
 
   # Returns a number indicating which pole(s) the given latlngs cross
   # North Pole: (containsPole(...) & NORTH_POLE) != 0
@@ -145,6 +145,7 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
     else if delta < EPSILON
       angles = (latlng.lng for latlng in latlngs)
       dir = _rotationDirection(angles)
+
       if dir > 0
         NORTH_POLE
       else if dir < 0
@@ -163,6 +164,8 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
     # http://trs-new.jpl.nasa.gov/dspace/bitstream/2014/40409/3/JPL%20Pub%2007-3%20%20w%20Errata.pdf
     # Page 7
 
+    PI = Math.PI
+
     crossesMeridian = false
     sum = 0
     len = latlngs.length
@@ -171,17 +174,29 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
       latlngB = latlngs[(i + 1) % len]
       latlngC = latlngs[(i + 2) % len]
 
-      crossesMeridian = true if Math.abs(latlngA.lng - latlngB.lng) > 180
-
       thetaA = latlngA.lng * DEG_TO_RAD
-      phiB = latlngB.lat * DEG_TO_RAD
       thetaB = latlngB.lng * DEG_TO_RAD
       thetaC = latlngC.lng * DEG_TO_RAD
+      phiB = latlngB.lat * DEG_TO_RAD
+
+      if Math.abs(thetaB - thetaA) > PI
+        crossesMeridian = !crossesMeridian
+        if thetaB > thetaA
+          thetaB -= 2 * Math.PI
+        else
+          thetaB += 2 * Math.PI
+
+      if Math.abs(thetaC - thetaB) > PI
+        crossesMeridian = !crossesMeridian
+        if thetaC > thetaB
+          thetaC -= 2 * Math.PI
+        else
+          thetaC += 2 * Math.PI
 
       sum += (thetaC - thetaA) * Math.sin(phiB)
 
+    sum = 4*Math.PI + sum if crossesMeridian
     area = -sum / 2
-    area = -area if crossesMeridian
     area = 4*Math.PI + area if area < 0
     area
 

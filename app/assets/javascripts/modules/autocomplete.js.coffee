@@ -26,14 +26,12 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
     # When the user selects a typeahead value,
     # TODO: Upgrade to typeahead-0.10 when available and verify that typeahead:cursorchanged triggers with arrow keys
     $placenameInputs.on 'typeahead:autocompleted typeahead:selected', (event, datum) ->
-      {placename, ref, value} = datum
+      {placename, spatial, value} = datum
       currentPage.query.keywords(value)
 
-      $.getJSON "/placenames/#{ref}", (data) ->
-        # Avoid overwriting our own value with the subscription below
-        currentPage.query.placename(null)
-        currentPage.query.spatial(data.spatial)
-        currentPage.query.placename(placename)
+      currentPage.query.placename(null)
+      currentPage.query.spatial(spatial)
+      currentPage.query.placename(placename)
 
     $('.autocomplete-placenames').on 'keyup', ->
       newValue = $(this).typeahead('val')

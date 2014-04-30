@@ -4,6 +4,7 @@ ns.ServiceOptionsList = do (ko) ->
   class ServiceOptionsList
     constructor: (@accountForm, @projectList) ->
       @activeIndex = ko.observable(0)
+      @showGranules = ko.observable(false)
 
     showNext: =>
       @activeIndex(@activeIndex() + 1)
@@ -17,5 +18,18 @@ ns.ServiceOptionsList = do (ko) ->
           @projectList.loginAndDownloadProject()
       else
         @projectList.loginAndDownloadProject()
+
+    showGranuleList: =>
+      @showGranules(true)
+
+    hideGranuleList: =>
+      @showGranules(false)
+
+    scrolled: (data, event) =>
+      elem = event.target
+      if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
+        dataset = @projectList.project.datasets()[@activeIndex()]
+        dataset.granulesModel.loadNextPage()
+
 
   exports = ServiceOptionsList

@@ -15,32 +15,32 @@ ns.MouseEventsLayer = do (L
     constructor: ->
       @_hoverTimer = null
       @_hoverPoint = null
-      @_enabled = true
+      @_disabled = 0
 
     onAdd: (map) ->
       @_map = map
       map.on 'mousemove', @_onMouseMove
       map.on 'mouseout', @_onMouseOut
-      map.on 'draw:drawstart draw:editstart draw:deletestart', @disable
-      map.on 'draw:drawstop draw:editstop draw:deletestop', @enable
+      map.on 'draw:drawstart draw:editstart draw:deletestart shapefile:start', @disable
+      map.on 'draw:drawstop draw:editstop draw:deletestop shapefile:stop', @enable
 
     onRemove: (map) ->
       @_clearHoverTimeout()
       @_map = null
       map.off 'mousemove', @_onMouseMove
       map.off 'mouseout', @_onMouseOut
-      map.off 'draw:drawstart draw:editstart draw:deletestart', @disable
-      map.off 'draw:drawstop draw:editstop draw:deletestop', @enable
+      map.off 'draw:drawstart draw:editstart draw:deletestart shapefile:start', @disable
+      map.off 'draw:drawstop draw:editstop draw:deletestop shapefile:stop', @enable
 
     enable: =>
-      @_enabled = true
+      @_disabled -= 1
 
     disable: (e) =>
-      @_enabled = false
+      @_disabled += 1
       @_onMouseOut(e)
 
     _onMouseMove: (e) =>
-      return unless @_enabled
+      return unless @_disabled == 0
 
       point = e.containerPoint
       hoverPoint = @_hoverPoint

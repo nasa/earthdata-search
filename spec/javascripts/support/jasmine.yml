@@ -11,7 +11,12 @@
 #   - dist/**/*.js
 #
 src_files:
-  - assets/application.js
+  - assets/leaflet-0.7/leaflet-src
+  - assets/namespaces.js.coffee
+  - assets/config.js.coffee
+  - assets/modules/map/coordinate.js.coffee
+  - assets/modules/map/arc.js.coffee
+  - assets/modules/map/geoutil.js.coffee
 
 # stylesheets
 #
@@ -38,7 +43,7 @@ stylesheets:
 #   - helpers/**/*.js
 #
 helpers:
-  - helpers/**/*.js
+  - helpers/**/*.{js,coffee}
 
 # spec_files
 #
@@ -51,7 +56,7 @@ helpers:
 #   - **/*[sS]pec.js
 #
 spec_files:
-  - '**/*[sS]pec.js'
+  - '**/*[sS]pec.{js,coffee}'
 
 # src_dir
 #

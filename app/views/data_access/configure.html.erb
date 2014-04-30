@@ -39,6 +39,31 @@
               <span class="summary-label" data-bind="text: granuleAccessOptions().sizeUnit"></span>
             </p>
           </div>
+
+          <div class="granule-list">
+            <h4>Granule List</h4>
+            <!-- ko ifnot: $root.ui.serviceOptionsList.showGranules -->
+            <p>
+              <a class="button-control" data-bind="ifnot: $root.ui.serviceOptionsList.showGranules, click: $root.ui.serviceOptionsList.showGranuleList" href="#"><i class="fa fa-arrow-circle-o-down"></i> Expand List</a>
+            </p>
+            <!-- /ko -->
+            <!-- ko if: $root.ui.serviceOptionsList.showGranules -->
+            <p>
+              <a class="button-control" data-bind="if: $root.ui.serviceOptionsList.showGranules, click: $root.ui.serviceOptionsList.hideGranuleList" href="#"><i class="fa fa-arrow-circle-o-up"></i> Hide List</a>
+            </p>
+            <div data-bind="event: {scroll: $root.ui.serviceOptionsList.scrolled}">
+              <ul>
+              <!-- ko foreach: granulesModel.results() -->
+                <li>
+                  <h5 data-bind="text: title"></h5>
+                  <span data-bind="text: getTemporal()"></span>
+                </li>
+              <!-- /ko -->
+              </ul>
+            </div>
+            <!-- /ko -->
+          </div>
+
           <div class="access-item-options">
             <h4>Service Options</h4>
             <div>
@@ -50,15 +75,15 @@
               <!-- ko if: granuleAccessOptions().canDownload -->
                 <!-- ko foreach: serviceOptions.accessMethod -->
                 <p class="access-item-selection">
-                  <span class="access-method-label">Select Data Access Method</span>
+                  <span class="access-method-label">Select Data Access Method:</span>
                   <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
                   <input data-bind="checked: $data.method, attr: { name: $index() + '-access-method', id: $index() + '-download' }" type="radio" id="download" value="download" /><label data-bind="attr: { for: $index() + '-download' }" class="access-method-radio-label">Download</label>
                 </p>
                 <!-- /ko -->
               <!-- /ko -->
               <p class="add-access-item" data-bind="visible: granuleAccessOptions().canDownload">
-                <button data-bind="click: serviceOptions.addAccessMethod">Add access method</button>
-                <span>Access these granules again with different options</span>
+                <button data-bind="click: serviceOptions.addAccessMethod" class="button-small"> <i class="fa fa-plus-circle"></i> Add access method</button>
+                <span class="instructions"> <i class="fa fa-arrow-circle-left"></i> Access these granules again with different options</span>
               </p>
             </div>
           </div>

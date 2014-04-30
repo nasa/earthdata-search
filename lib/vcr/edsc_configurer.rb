@@ -20,8 +20,8 @@ module VCR
           if request.uri.include?('fail%25+hard') || request.uri.include?('fail+hard')
             cassette = 'expired-token'
             opts[:record] = :none
-          elsif uri.start_with? 'https://maps.googleapis.com'
-            cassette = 'google'
+          elsif uri.start_with? 'http://api.geonames.org'
+            cassette = 'geonames'
           elsif uri.start_with? 'http://ogre.adc4gis.com'
             cassette = 'ogre'
           elsif request.uri.include? '/echo-rest/users.json'
