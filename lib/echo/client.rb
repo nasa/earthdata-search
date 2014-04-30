@@ -66,6 +66,10 @@ module Echo
       Echo::Response.new(post("/echo-rest/tokens.json", token.to_json))
     end
 
+    def self.token_expires_soon(token)
+      get("/echo-rest/tokens/#{token}/expires_soon.json")
+    end
+
     def self.create_user(user)
       post('/echo-rest/users.json', user.to_json)
     end
