@@ -74,8 +74,12 @@ describe 'Duplicate Service Options', reset: false do
   context "when submitting with multiple access options" do
     before :all do
       click_button 'Add access method'
-      choose '0-download'
-      choose '1-download'
+      within '.access-item-selection:first-child' do
+        choose 'Download'
+      end
+      within '.access-item-selection:nth-child(2)' do
+        choose 'Download'
+      end
       click_button 'Continue'
       click_button 'Continue'
       click_button 'Submit'

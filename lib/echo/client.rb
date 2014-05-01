@@ -98,7 +98,15 @@ module Echo
       get('/echo-rest/calendar_events', severity: 'ALERT')
     end
 
-    def self.connection
+    def self.get_order_information(item_ids, token)
+      get('/echo-rest/order_information.json', {catalog_item_id: item_ids}, token_header(token))
+    end
+
+    def self.get_option_definition(id)
+      get("/echo-rest/option_definitions/#{id}.json")
+    end
+
+   def self.connection
       Thread.current[:edsc_echo_connection] ||= self.build_connection
     end
 

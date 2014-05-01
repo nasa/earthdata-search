@@ -3,24 +3,40 @@ ns = @edsc.models.data
 ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
 
   class ServiceOptions
-    constructor: (method) ->
+    constructor: (method, @availableMethods) ->
       @method = ko.observable(method)
 
   class ServiceOptionsModel extends KnockoutModel
     constructor: (@granuleAccessOptions) ->
       @accessMethod = ko.observableArray()
-      @accessMethod.push(new ServiceOptions(null))
+      @isLoaded = @computed
+        read: =>
+          opts = @granuleAccessOptions()
+          methods = opts.methods
+          result = methods?
+          @_onAccessOptionsLoad(opts) if result
+          result
+        deferEvaluation: true
+
       @readyToDownload = @computed(@_computeIsReadyToDownload, this, deferEvaluation: true)
 
+    _onAccessOptionsLoad: (options) ->
+      availableMethods = options.methods
+      methods = @accessMethod.peek()
+      for method in methods
+        method.availableMethods = availableMethods
+      @addAccessMethod() if methods.length == 0
+
     _computeIsReadyToDownload: ->
-      method = true
+      return false unless @isLoaded()
+      return true if @granuleAccessOptions().methods?.length == 0
+
       for m in @accessMethod()
-        method = false unless m.method()?
-      # == false because the value is undefined while granuleAccessOptions loads
-      method || @granuleAccessOptions().canDownload == false
+        return false unless m.method()?
+      true
 
     addAccessMethod: =>
-      @accessMethod.push(new ServiceOptions(null))
+      @accessMethod.push(new ServiceOptions(null, @granuleAccessOptions().methods))
 
     removeAccessMethod: (method) =>
       @accessMethod.remove(method)

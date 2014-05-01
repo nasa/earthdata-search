@@ -74,7 +74,7 @@ describe "Data Access workflow", reset: false do
 
       it "displays granule information" do
         expect(page).to have_content "39 Granules"
-        expect(page).to have_content "252.9 Kilobytes"
+        expect(page).to have_content "246.9 Kilobytes"
       end
 
       it 'displays a "continue" button' do
@@ -98,7 +98,7 @@ describe "Data Access workflow", reset: false do
           click_link 'Hide List'
         end
 
-        it "displays granule iformation" do
+        it "displays granule information" do
           expect(page).to have_content "FIFE_STRM_15M.80611715.s15"
         end
 
@@ -155,7 +155,7 @@ describe "Data Access workflow", reset: false do
 
         it 'displays the previous dataset in the list' do
           expect(page).to have_content "39 Granules"
-          expect(page).to have_content "252.9 Kilobytes"
+          expect(page).to have_content "246.9 Kilobytes"
         end
       end
     end
