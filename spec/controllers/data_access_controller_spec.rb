@@ -2,17 +2,6 @@ require "spec_helper"
 
 describe DataAccessController do
   describe "GET options" do
-    #it "assigns @teams" do
-    #  team = Team.create
-    #  get :index
-    #  expect(assigns(:teams)).to eq([team])
-    #end
-
-    #it "renders the index template" do
-    #  get :index
-    #  expect(response).to render_template("index")
-    #end
-
     let(:hits) { 0 }
     let(:downloadable) { 0 }
     let(:orderable) { 0 }
