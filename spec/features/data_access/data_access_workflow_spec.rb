@@ -106,6 +106,14 @@ describe "Data Access workflow", reset: false do
           page.execute_script "$('.granule-list div')[0].scrollTop = 10000"
           expect(page).to have_css '.granule-list h5', count: 39
         end
+
+        it "displays an option to download" do
+          expect(page).to have_field('Download')
+        end
+
+        it "displays options provided by orders" do
+          expect(page).to have_field('Ftp_Pull')
+        end
       end
 
       context 'and clicking the "continue" button' do
