@@ -54,6 +54,39 @@ class DatasetExtra < ActiveRecord::Base
     end
   end
 
+  def self.load_option_defs
+    params = {page_num: 0, page_size: 20}
+    processed_count = 0
+
+    begin
+      params[:page_num] += 1
+      response = Echo::Client.get_datasets(params)
+      datasets = response.body
+      hits = response.headers['echo-hits'].to_i
+
+      datasets['feed']['entry'].each do |dataset|
+        # Skip datasets that we've seen before which have no browseable granules.  Saves tons of time
+        granules = Echo::Client.get_granules(format: 'json', echo_collection_id: [dataset['id']], page_size: 1).body
+
+        granule = granules['feed']['entry'].first
+        if granule
+          order_info = Echo::Client.get_order_information([granule['id']], nil).body
+          refs = Array.wrap(order_info).first['order_information']['option_definition_refs']
+          if refs
+            opts = refs.map {|r| [r['id'], r['name']]}
+            puts "#{dataset['id'].inspect} => #{opts.inspect},"
+          end
+        end
+
+        processed_count += 1
+
+        #puts "#{processed_count} / #{hits}"
+      end
+    end while processed_count < hits && datasets.size > 0
+
+    nil
+  end
+
   def self.decorate_all(datasets)
     ids = datasets.map {|r| r['id']}
     extras = DatasetExtra.where(echo_id: ids).index_by(&:echo_id)

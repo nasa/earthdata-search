@@ -100,7 +100,7 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       datasets = []
       for dataset in @project.datasets()
         for m in dataset.serviceOptions.accessMethod()
-          datasets.push(dataset) if m.method() == 'download'
+          datasets.push(dataset) if m.method() == 'Download'
 
       datasets
 

@@ -12,6 +12,7 @@ ns.Dataset = do (ko
                  DataQualitySummaryModel = ns.DataQualitySummary
                  toParam=jQuery.param
                  extend=jQuery.extend
+                 getJSON = jQuery.getJSON
                  ) ->
 
   datasets = ko.observableArray()
@@ -83,41 +84,11 @@ ns.Dataset = do (ko
       granuleQuery.sortKey(['-start_date'])
       new Granules(granuleQuery, @query)
 
-    _loadGranuleAccessOptions: (current, callback) ->
-      params = @query.params()
-      downloadableParams = extend(@_granuleParams(params), online_only: true, page_size: 2000)
-      granulesModel = @createGranulesModel()
-      granulesModel.search @_granuleParams(params), =>
-        hits = granulesModel.hits()
-        granulesModel.dispose()
+    _loadGranuleAccessOptions: ->
+      params = @_granuleParams(@query.params())
 
-        downloadableModel = @createGranulesModel()
-        downloadableModel.search downloadableParams, (results) =>
-          downloadableHits = downloadableModel.hits()
-
-          sizeMB = 0
-          sizeMB += parseFloat(granule.granule_size) for granule in results
-          size = sizeMB * 1024 * 1024
-
-          units = ['', 'Kilo', 'Mega', 'Giga', 'Tera', 'Peta', 'Exa']
-          while size > 1000 && units.length > 1
-            size = size / 1000
-            units.shift()
-
-          size = Math.round(size * 10) / 10
-          size = "> #{size}" if hits > 2000
-
-          downloadableModel.dispose()
-
-          options =
-            count: hits
-            size: size
-            sizeUnit: "#{units[0]}bytes"
-            canDownloadAll: hits == downloadableHits
-            canDownload: downloadableHits > 0
-            downloadCount: downloadableHits
-            accessMethod: null
-          callback(options)
+      getJSON '/data/options', params, (data, status, xhr) =>
+        @granuleAccessOptions(data)
 
     _granuleParams: (params) ->
       extend({}, params, 'echo_collection_id[]': @id(), @granuleQuery.params())
