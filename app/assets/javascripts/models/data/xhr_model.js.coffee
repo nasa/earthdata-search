@@ -86,6 +86,11 @@ ns.XhrModel = do (ko
           @_onFailure(response)
         @isLoading(@pendingRequestId != @completedRequestId)
 
+        if response.status == 403
+          # TODO: don't reference page logout the user
+          edsc.page.user.logout()
+          edsc.banner(null, 'Session has ended', 'Please sign in')
+
     _onFailure: (response) ->
       errors = response.responseJSON?.errors
       @error(errors?.error)

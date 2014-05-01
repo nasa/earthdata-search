@@ -17,7 +17,10 @@ module VCR
         lock.synchronize do
           cassette = 'global'
           uri = request.uri
-          if uri.start_with? 'http://api.geonames.org'
+          if request.uri.include?('fail%25+hard') || request.uri.include?('fail+hard')
+            cassette = 'expired-token'
+            opts[:record] = :none
+          elsif uri.start_with? 'http://api.geonames.org'
             cassette = 'geonames'
           elsif uri.start_with? 'http://ogre.adc4gis.com'
             cassette = 'ogre'

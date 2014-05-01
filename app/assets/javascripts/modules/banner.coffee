@@ -29,8 +29,9 @@
 
   closeBanner = ->
     if $banner?
-      preferences.dismissedEvents.push($banner.data('banner.key'))
-      preferences.save()
+      if $banner.data('banner.key')?
+        preferences.dismissedEvents.push($banner.data('banner.key'))
+        preferences.save()
       $banner.addClass('banner-hidden')
       setTimeout(removeBannerAndOpenNext, config.defaultAnimationDurationMs)
 
