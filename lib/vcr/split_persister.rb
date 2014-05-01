@@ -42,9 +42,10 @@ module VCR
 
       obj.each do |k, v|
         if k == 'http_interactions'
+          v = v.sort_by {|interaction| unique_key(interaction)}
           v.each do |interaction|
             response = interaction.extract!('response')
-            digest = Digest::SHA1.hexdigest(@destination_serializer.serialize(interaction['request']))
+            digest = Digest::SHA1.hexdigest(unique_key(interaction))
             interaction['digest'] = digest
             requests[k] << interaction
             responses[digest] = response
@@ -54,15 +55,17 @@ module VCR
         end
       end
 
-      requests['http_interactions'].sort_by! {|interaction| interaction['digest']}
-      responses = Hash[responses.sort_by{|digest, _| digest}]
-
       @persister[file_name(name, 'requests')] = @destination_serializer.serialize(requests)
       @persister[file_name(name, 'responses')] = @destination_serializer.serialize(responses)
       content
     end
 
     private
+
+    def unique_key(interaction)
+      req = interaction['request']
+      "#{req['uri']}::#{req['method']}::#{req['body']['string']}"
+    end
 
     def file_name(root, type)
       "#{root}#{type}.#{@destination_serializer.file_extension}"
