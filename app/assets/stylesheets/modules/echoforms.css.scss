@@ -1,0 +1,117 @@
+$echoforms-label-column-width: 11em;
+
+$group-border-color: #888;
+
+$font-color: #444;
+$error-font-color: #b94a48;
+$help-font-color: #3a87ad;
+$header-font-color: #7f8c8d;
+$header-help-font-color: $font-color;
+
+// The root control
+.echoforms-control-ui {
+  color: $font-color;
+  font-family: Helvetica, Arial, sans-serif;
+  border-left: $echoforms-label-column-width solid transparent;
+
+  > .echoforms-children {
+    margin-left: -$echoforms-label-column-width;
+  }
+
+  p {
+    margin: {
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+
+}
+
+// All controls
+.echoforms-control {
+  clear: both;
+  padding: .7em 0;
+
+  > .echoforms-label,
+  > .echoforms-elements,
+  > .echoforms-help > .echoforms-help-item {
+    display: block;
+    padding: {
+      top: .2em;
+      bottom: .2em;
+    }
+  }
+}
+
+// All non-grouping controls
+.echoforms-typed-control {
+  > * {
+    margin-left: $echoforms-label-column-width;
+    padding-left: 1em;
+  }
+
+  > .echoforms-label {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    margin-left: 0;
+    width: $echoforms-label-column-width;
+    padding: .3em .5em .2em;
+    text-align: right;
+  }
+}
+
+// <group> controls
+.echoforms-control-group {
+  border: solid $group-border-color;
+  border-width: 1px 0px;
+
+  > .echoforms-help > .echoforms-help-item {
+    padding: .5em 1em;
+    color: $header-help-font-color;
+  }
+
+  > .echoforms-label {
+    font-size:1em;
+    color: $header-font-color;
+  }
+
+  &:first-child {
+    border-top-width: 0;
+  }
+
+  &:last-child {
+    border-bottom-width: 0;
+  }
+}
+
+// <input type="xs:boolean"> controls (checkboxes)
+.echoforms-control-checkbox {
+  > .echoforms-elements,
+  > .echoforms-label {
+    display: inline;
+    float: none;
+  }
+}
+
+// <output> controls
+.echoforms-control-output {
+  > .echoforms-elements {
+    // Use the same vertical padding as their corresponding label
+    padding: {
+      top: .3em;
+      bottom: .2em;
+    }
+  }
+
+}
+
+.echoforms-error {
+  color: $error-font-color;
+}
+
+.echoforms-help-item {
+  color: $help-font-color;
+  font-style: italic;
+}

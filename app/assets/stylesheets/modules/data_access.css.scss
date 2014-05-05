@@ -205,10 +205,6 @@
 
 .access-item-selection {
   padding: .5em 0;
-  border-bottom: 1px solid #ccc;
-}
-
-.summary {
 }
 
 .summary-label {
@@ -249,4 +245,13 @@
 
 .access-method-radio-label {
   padding-left: .5em;
+}
+
+.access-form {
+  padding: 0 1em;
+  border-bottom: 1px solid #ccc;
+
+  > .echoforms-control-ui {
+    padding-top: 0;
+  }
 }
