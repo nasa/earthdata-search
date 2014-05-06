@@ -84,9 +84,6 @@ class DataAccessController < ApplicationController
 
   private
 
-  def create_order(granule_query, option_id, option_name, model)
-  end
-
   def get_downloadable_access_methods(granules, hits)
     result = []
     downloadable = granules.select {|granule| granule['online_access_flag'] == 'true'}
