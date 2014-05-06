@@ -5,6 +5,24 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
   class ServiceOptions
     constructor: (method, @availableMethods) ->
       @method = ko.observable(method)
+      @isValid = ko.observable(true)
+
+    serialize: ->
+      method = @method()
+      result = {method: method, model: @model}
+      for available in @availableMethods
+        if available.name == method
+          result.type = available.type
+          result.id = available.id
+          break
+      result
+
+    fromJson: (jsonObj) ->
+      @method(jsonObj.method)
+      @model = jsonObj.model
+      @type = jsonObj.type
+      @orderId = jsonObj.order_id
+      this
 
   class ServiceOptionsModel extends KnockoutModel
     constructor: (@granuleAccessOptions) ->
@@ -32,7 +50,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
       return true if @granuleAccessOptions().methods?.length == 0
 
       for m in @accessMethod()
-        return false unless m.method()?
+        return false unless m.method()? && m.isValid()
       true
 
     addAccessMethod: =>
@@ -42,14 +60,14 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
       @accessMethod.remove(method)
 
     serialize: ->
-      methods = []
-      for m in @accessMethod()
-        methods.push(m.method())
-      {accessMethod: methods}
+      {accessMethod: (m.serialize() for m in @accessMethod())}
 
     fromJson: (jsonObj) ->
       @accessMethod.removeAll()
-      for method in jsonObj.accessMethod
-        @accessMethod.push(new ServiceOptions(method))
+      for json in jsonObj.accessMethod
+        method = new ServiceOptions(null)
+        method.fromJson(json)
+        @accessMethod.push(method)
+      this
 
   exports = ServiceOptionsModel

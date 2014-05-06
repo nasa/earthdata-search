@@ -98,6 +98,10 @@ module Echo
       put("/echo-rest/users/#{user_id}/preferences.json", params.to_json, token_header(token))
     end
 
+    def self.get_user(user_id, token)
+      get("/echo-rest/users/#{user_id}", {}, token_header(token))
+    end
+
     def self.get_availability_events
       get('/echo-rest/calendar_events', severity: 'ALERT')
     end
@@ -108,6 +112,53 @@ module Echo
 
     def self.get_option_definition(id)
       get("/echo-rest/option_definitions/#{id}.json")
+    end
+
+    def self.create_order(granule_query, option_id, option_name, option_model, user_id, token)
+      # For testing without submitting a boatload of orders
+      # return {order_id: 1234}
+      catalog_response = Echo::Client.get_granules(granule_query, token)
+      granules = catalog_response.body['feed']['entry']
+
+      order_response = post("/echo-rest/orders.json", {order: {}}.to_json, token_header(token))
+      id = order_response.body['order']['id']
+      puts "Response: #{order_response.body.inspect}"
+
+      common_options = {quantity: 1}
+      unless option_id.nil?
+        common_options[:option_selection] = {
+          id: option_id,
+          option_definition_name: option_name,
+          content: option_model
+        }
+      end
+      order_items = granules.map {|g| {order_item: {catalog_item_id: g['id']}.merge(common_options)}}
+      items_response = post("/echo-rest/orders/#{id}/order_items/bulk_action", order_items.to_json, token_header(token))
+
+      prefs_response = get_preferences(user_id, token)
+      user_response = get_user(user_id, token)
+
+      contact = prefs_response.body['preferences']['general_contact']
+      user = user_response.body['user']
+      user_info = {
+        user_information: {
+          shipping_contact: contact,
+          billing_contact: contact,
+          order_contact: contact,
+          user_domain: user['user_domain'],
+          user_region: user['user_region']
+        }
+      }
+      user_info_response = put("/echo-rest/orders/#{id}/user_information", user_info.to_json, token_header(token))
+
+      submission_response = post("/echo-rest/orders/#{id}/submit", nil, token_header(token))
+
+      puts "Order response: #{order_response.body.inspect}"
+      puts "Items response: #{items_response.body.inspect}"
+      puts "User info response: #{user_info_response.body.inspect}"
+      puts "Submission response: #{submission_response.body.inspect}"
+
+      {order_id: id, response: submission_response}
     end
 
    def self.connection
@@ -129,9 +180,12 @@ module Echo
       Echo::Response.new(faraday_response)
     end
 
-    def self.post(url, body)
+    def self.post(url, body, headers={})
       faraday_response = connection.post(url) do |req|
         req.headers['Content-Type'] = 'application/json'
+        headers.each do |header, value|
+          req.headers[header] = value
+        end
         req.body = body if body
       end
       Echo::Response.new(faraday_response)

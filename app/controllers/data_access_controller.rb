@@ -9,6 +9,24 @@ class DataAccessController < ApplicationController
 
   def retrieve
     @project = JSON.parse(params[:project])
+
+    @project['datasets'].each do |dataset|
+      params = Rack::Utils.parse_query(dataset['params'])
+      params.merge!(page_size: 2000, page_num: 1)
+
+      access_methods = dataset['serviceOptions']['accessMethod']
+      access_methods.each do |method|
+        if method['type'] == 'order'
+          order_response = Echo::Client.create_order(params,
+                                                     method['id'],
+                                                     method['method'],
+                                                     method['model'],
+                                                     get_user_id,
+                                                     token)
+          method[:order_id] = order_response[:order_id]
+        end
+      end
+    end
   end
 
   def data_download
@@ -66,12 +84,16 @@ class DataAccessController < ApplicationController
 
   private
 
+  def create_order(granule_query, option_id, option_name, model)
+  end
+
   def get_downloadable_access_methods(granules, hits)
     result = []
     downloadable = granules.select {|granule| granule['online_access_flag'] == 'true'}
     if downloadable.size > 0
       result << {
         name: 'Download',
+        type: 'download',
         all: downloadable.size == granules.size,
         count: (hits.to_f * downloadable.size / granules.size).round
       }
@@ -101,6 +123,8 @@ class DataAccessController < ApplicationController
     end
 
     defs.map do |option_id, config|
+      config[:id] = option_id
+      config[:type] = 'order'
       config[:form] = Echo::Client.get_option_definition(option_id).body['option_definition']['form']
       config[:all] = config[:count] == granules.size
       config[:count] = (hits.to_f * config[:count] / granules.size).round
