@@ -89,3 +89,28 @@ do (ko, $=jQuery) ->
       else
         method = 'hide'
       $(element).modal(method)
+
+
+  ko.bindingHandlers.echoform =
+    init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+    update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
+      $el = $(element)
+      $el.echoforms('destroy')
+      $el.off('echoforms:modelchange')
+      null
+
+      options = ko.unwrap(valueAccessor())
+      methodName = options.method()
+      if methodName?
+        method = null
+        for available in options.availableMethods
+          if available.name == methodName
+            method = available
+            break
+        if available?.form?
+          $el.echoforms(form: available.form)
+          $el.on 'echoforms:modelchange', ->
+            modelString = $(this).echoforms('serialize');
+            options.model = modelString
+            null
+      null

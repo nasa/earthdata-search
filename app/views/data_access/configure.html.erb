@@ -74,11 +74,12 @@
                   <a data-bind="visible: $parent.serviceOptions.accessMethod().length > 1, click: $parent.serviceOptions.removeAccessMethod" class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
                   <!-- ko foreach: availableMethods -->
                   <label>
-                    <input data-bind="checked: $parent.method, attr: { value: name, name: $parentContext.$parentContext.$index() + '-access-method' }" type="radio" />
+                    <input data-bind="checked: $parent.method, attr: { value: name, name: $parentContext.$index() + '-access-method' }" type="radio" />
                     <span data-bind="text: name"></span>
                   </label>
                   <!-- /ko -->
                 </p>
+                <div class="access-form" data-bind="echoform: $data"></div>
                 <!-- /ko -->
               <!-- /ko -->
               <p class="add-access-item" data-bind="visible: granuleAccessOptions().methods.length > 0">
