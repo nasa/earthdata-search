@@ -95,9 +95,9 @@ do (ko, $=jQuery) ->
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
     update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
       $el = $(element)
-      $el.echoforms('destroy')
-      $el.off('echoforms:modelchange')
-      null
+      if $el.data('echoforms')
+        $el.echoforms('destroy')
+        $el.off('echoforms:modelchange')
 
       options = ko.unwrap(valueAccessor())
       methodName = options.method()
@@ -109,8 +109,17 @@ do (ko, $=jQuery) ->
             break
         if available?.form?
           $el.echoforms(form: available.form)
-          $el.on 'echoforms:modelchange', ->
-            modelString = $(this).echoforms('serialize');
-            options.model = modelString
+          syncModel = ->
+            isValid = $(this).echoforms('isValid')
+            options.isValid(isValid)
+            if isValid
+              modelString = $(this).echoforms('serialize')
+              options.model = modelString
+            else
+              options.model = null
             null
+          $el.on 'echoforms:modelchange', syncModel
+          syncModel.call($el)
+        else
+          options.isValid(true)
       null

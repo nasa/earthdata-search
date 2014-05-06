@@ -104,7 +104,8 @@ ns.Dataset = do (ko
     serialize: ->
       result = {id: @id(), dataset_id: @dataset_id(), has_granules: @has_granules()}
       if @has_granules()
-        result.params = @granuleQuery.serialize()
+        result.query = @granuleQuery.serialize()
+        result.params = $.param(@granuleQuery.params())
         if @granuleAccessOptions.isSetup()
           result.granuleAccessOptions = @granuleAccessOptions()
       result.serviceOptions = @serviceOptions.serialize()
@@ -113,11 +114,11 @@ ns.Dataset = do (ko
     fromJson: (jsonObj) ->
       jsonObj = extend({}, jsonObj)
 
-      @granuleQuery.fromJson(jsonObj.params) if jsonObj.params?
+      @granuleQuery.fromJson(jsonObj.query) if jsonObj.query?
       @granuleAccessOptions(jsonObj.granuleAccessOptions) if jsonObj.granuleAccessOptions?
       @serviceOptions.fromJson(jsonObj.serviceOptions) if jsonObj.serviceOptions?
 
-      delete jsonObj.params
+      delete jsonObj.query
       delete jsonObj.granuleAccessOptions
       delete jsonObj.serviceOptions
 

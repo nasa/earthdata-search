@@ -36,6 +36,20 @@
       </li>
     </ul>
   </section>
+  <section class="data-access-content" data-bind="visible: ui.projectList.submittedOrders().length > 0">
+    <h2>The following datasets are being processed</h2>
+    <p>
+      When the data becomes available, an email containing download links will be sent to the address you provided.
+    </p>
+    <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.submittedOrders">
+      <li class="data-access-dataset">
+        <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
+        <div class="data-access-dataset-actions">
+          <a class="button text-button" href="#" target="_blank">Track Status</a>
+        </div>
+      </li>
+    </ul>
+  </section>
   <section class="data-access-next">
     <h2>Next Steps</h2>
     <ul>

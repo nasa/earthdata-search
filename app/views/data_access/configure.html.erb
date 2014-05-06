@@ -33,6 +33,9 @@
             <p class="summary">
               <span class="summary-data" data-bind="text: granuleAccessOptions().hits"></span>
               <span class="summary-label">Granules</span>
+              <span class="summary-caveat" data-bind="if: granuleAccessOptions().hits > 2000">
+                Access methods other than "Download" are limited to the first 2000 granules.
+              </span>
             </p>
             <p class="summary" data-bind="if: granuleAccessOptions().size != 0">
               <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
@@ -125,6 +128,7 @@
     <div>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
       <input id="data-access-project" name="project" type="hidden">
+      <input id="data-access-account" name="account" type="hidden">
     </div>
   </form>
 </div>
