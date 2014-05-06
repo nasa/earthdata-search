@@ -122,7 +122,7 @@ module Echo
 
       order_response = post("/echo-rest/orders.json", {order: {}}.to_json, token_header(token))
       id = order_response.body['order']['id']
-      puts "Response: #{order_response.body.inspect}"
+      Rails.logger.info "Response: #{order_response.body.inspect}"
 
       common_options = {quantity: 1}
       unless option_id.nil?
@@ -153,10 +153,10 @@ module Echo
 
       submission_response = post("/echo-rest/orders/#{id}/submit", nil, token_header(token))
 
-      puts "Order response: #{order_response.body.inspect}"
-      puts "Items response: #{items_response.body.inspect}"
-      puts "User info response: #{user_info_response.body.inspect}"
-      puts "Submission response: #{submission_response.body.inspect}"
+      Rails.logger.info "Order response: #{order_response.body.inspect}"
+      Rails.logger.info "Items response: #{items_response.body.inspect}"
+      Rails.logger.info "User info response: #{user_info_response.body.inspect}"
+      Rails.logger.info "Submission response: #{submission_response.body.inspect}"
 
       {order_id: id, response: submission_response}
     end
