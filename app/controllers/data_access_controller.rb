@@ -25,7 +25,7 @@ class DataAccessController < ApplicationController
                                                      get_user_id,
                                                      token)
           method[:order_id] = order_response[:order_id]
-          order = Order.find_or_create_by_order_id(order_response[:order_id])
+          order = Order.find_or_create_by(order_id: order_response[:order_id])
           order.description = "#{dataset['dataset_id']} (#{pluralize order_response[:count], 'granule'})"
           order.save!
         end

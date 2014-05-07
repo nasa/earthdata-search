@@ -27,7 +27,7 @@
       <tbody>
         <% @orders.each do |order| %>
         <tr>
-          <td><%= o = Order.find_by_order_id(order['order']['id']);  o ? o.description : order['order']['id'] %></td>
+          <td><%= o = Order.find_by(order_id: order['order']['id']);  o ? o.description : order['order']['id'] %></td>
           <td><%= time_ago_in_words(order['order']['submitted_at'], include_seconds: true).capitalize %> ago</td>
           <td><%= order['order']['state'].humanize %></td>
         </tr>
