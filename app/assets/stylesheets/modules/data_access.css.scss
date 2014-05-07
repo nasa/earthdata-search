@@ -260,3 +260,16 @@
     padding-top: 0;
   }
 }
+
+.data-retrievals {
+  width: 1000px;
+
+  tr {
+    border-bottom: 1px solid #444;
+  }
+
+  th, td {
+    padding: .5em 0;
+    text-align: left;
+  }
+}

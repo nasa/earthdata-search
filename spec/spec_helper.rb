@@ -90,7 +90,7 @@ RSpec.configure do |config|
     if Capybara.current_driver == :rack_test
       DatabaseCleaner.strategy = :transaction
     else
-      DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras']}
+      DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras', 'orders']}
     end
     DatabaseCleaner.start
   end
