@@ -36,6 +36,15 @@
       </li>
     </ul>
   </section>
+  <section class="data-access-content" data-bind="visible: ui.projectList.datasetOnly().length > 0">
+    <h2>The following datasets are available for download</h2>
+    <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetOnly">
+      <li class="data-access-dataset">
+        <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
+        <p data-bind="text: details().description"></p>
+      </li>
+    </ul>
+  </section>
   <section class="data-access-content" data-bind="visible: ui.projectList.submittedOrders().length > 0">
     <h2>The following datasets are being processed</h2>
     <p>

@@ -47,6 +47,9 @@ ns.Dataset = do (ko
       @granulesModel = granulesModel = @disposable(new Granules(@granuleQuery, @query))
       @granuleAccessOptions = @asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
 
+      @details = @asyncComputed({}, 100, @_computeDetails, this)
+      @detailsLoaded = ko.observable(false)
+
       @visible = ko.observable(false)
 
       @serviceOptions = @disposable(new ServiceOptionsModel(@granuleAccessOptions))
@@ -100,6 +103,16 @@ ns.Dataset = do (ko
       for own key, value of params
         return true if ignored_params.indexOf(key) == -1
       return false
+
+    _computeDetails: ->
+      id = @id()
+      path = "/datasets/#{id}.json"
+      console.log("Request: #{path}", this)
+      getJSON path, (data) =>
+        details = data['dataset']
+        details.summaryData = this
+        @detailsLoaded(true)
+        @details(details)
 
     serialize: ->
       result = {id: @id(), dataset_id: @dataset_id(), has_granules: @has_granules()}

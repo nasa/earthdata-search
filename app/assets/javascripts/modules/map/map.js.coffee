@@ -40,7 +40,9 @@ ns.Map = do (window,
       map.addControl(new SpatialSelection())
       @setProjection(projection)
 
-      @_datasetSubscription = page.datasets.details.subscribe(@_showDatasetSpatial)
+      # TODO: I need to be subscribed to selected.details, but I can't because details doesn't 
+      # exist until a dataset is selected
+      @_datasetSubscription = page.ui.datasetsList.selected.subscribe(@_showDatasetSpatial)
       @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 
@@ -164,7 +166,9 @@ ns.Map = do (window,
       @_rebuildLayers()
 
     _showDatasetSpatial: (dataset) =>
-      dataset = dataset.summaryData
+      # TODO: This is failing because details() doesn't exist yet
+      dataset = dataset.details().summaryData
+      # dataset = dataset.summaryData
 
       @_hideDatasetSpatial()
 
