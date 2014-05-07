@@ -1,0 +1,39 @@
+<% content_for :javascript do %>
+  <%= javascript_include_tag "account" %>
+<% end %>
+<% content_for :toolbar_secondary do %>
+  <%= render partial: 'shared/login' %>
+<% end %>
+
+<div class="data-access">
+  <nav class="data-access-nav">
+    <a href="javascript:history.back()"><i class="edsc-icon-arrow-left"></i> Back to Search Session</a>
+  </nav>
+  <header>
+    <h1>Recent Data Retrievals</h1>
+  </header>
+  <div class="data-access-content">
+  <% if @orders.size == 0 %>
+    <p>No recent retrievals</p>
+  <% else %>
+    <table class="data-retrievals">
+      <thead>
+        <tr>
+          <th>Contents</th>
+          <th>Submitted</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+        <tr>
+          <td><%= o = Order.find_by_order_id(order['order']['id']);  o ? o.description : order['order']['id'] %></td>
+          <td><%= time_ago_in_words(order['order']['submitted_at'], include_seconds: true).capitalize %> ago</td>
+          <td><%= order['order']['state'].humanize %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+</div>

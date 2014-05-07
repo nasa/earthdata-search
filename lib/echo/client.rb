@@ -114,9 +114,13 @@ module Echo
       get("/echo-rest/option_definitions/#{id}.json")
     end
 
+    def self.get_orders(token)
+      get('/echo-rest/orders.json', {}, token_header(token))
+    end
+
     def self.create_order(granule_query, option_id, option_name, option_model, user_id, token)
       # For testing without submitting a boatload of orders
-      # return {order_id: 1234}
+      #return {order_id: 1234, count: 2000}
       catalog_response = Echo::Client.get_granules(granule_query, token)
       granules = catalog_response.body['feed']['entry']
 
@@ -158,7 +162,7 @@ module Echo
       Rails.logger.info "User info response: #{user_info_response.body.inspect}"
       Rails.logger.info "Submission response: #{submission_response.body.inspect}"
 
-      {order_id: id, response: submission_response}
+      {order_id: id, response: submission_response, count: granules.size}
     end
 
    def self.connection
