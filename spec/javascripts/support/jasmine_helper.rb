@@ -4,6 +4,6 @@
 #
 
 Jasmine.configure do |config|
-  Headless.new(:destroy_on_exit => false).start
+  # Headless.new(:destroy_on_exit => false).start
   config.formatters = [Jasmine::Formatters::Console, Jasmine::Formatters::JunitXml]
 end
