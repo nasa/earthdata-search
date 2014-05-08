@@ -5,7 +5,6 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 require 'capybara-screenshot/rspec'
-require 'headless'
 
 if ENV['driver'] == 'poltergeist'
   require 'capybara/poltergeist'
@@ -81,10 +80,6 @@ RSpec.configure do |config|
 
   Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
   wait_time = Capybara.default_wait_time
-
-  config.before(:suite) do
-    Headless.new(:destroy_on_exit => false).start
-  end
 
   config.before :each do
     if Capybara.current_driver == :rack_test
