@@ -50,6 +50,10 @@ class DataAccessController < ApplicationController
     end
   end
 
+  def cancel
+
+  end
+
   # This rolls up getting information on data access into an API that approximates
   # what we'd like ECHO / CMR to support.
   def options

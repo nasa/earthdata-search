@@ -27,7 +27,15 @@
       <tbody>
         <% @orders.each do |order| %>
         <tr>
-          <td><%= o = Order.find_by(order_id: order['order']['id']);  o ? o.description : order['order']['id'] %></td>
+          <td>
+            <a href="#"
+               title="remove"
+               data-remote="true"
+               data-method="delete"
+               data-confirm="Are you sure you want to remove this order?  This action cannot be undone."
+               rel="nofollow"><i class="fa fa-times"></i></a>
+            <%= o = Order.find_by(order_id: order['order']['id']);  o ? o.description : order['order']['id'] %>
+          </td>
           <td><%= time_ago_in_words(order['order']['submitted_at'], include_seconds: true).capitalize %> ago</td>
           <td><%= order['order']['state'].humanize %></td>
         </tr>
