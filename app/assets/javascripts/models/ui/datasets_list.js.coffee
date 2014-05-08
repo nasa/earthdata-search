@@ -16,6 +16,8 @@ ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
 
     showDatasetDetails: (dataset, event=null) =>
       @selected(dataset)
+      # load the details
+      @selected().details()
       $('.master-overlay').masterOverlay('contentHeightChanged')
 
     focusDataset: (dataset, event=null) =>
