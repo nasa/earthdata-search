@@ -62,4 +62,18 @@ describe DatasetDetailsPresenter do
     @dataset.contacts.should eq([{:name=>"PLEASE CONTACT ORNL DAAC User Services", :phones=>["(865) 241-3952 (Direct Line)", "(865) 574-4665 (Fax)"], :email=>"ornldaac@ornl.gov"}])
   end
 
+  it "capitalizes online access url descriptions" do
+    online_access_urls = [{"URL"=>"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/data-download", "URLDescription"=>"data download page"}]
+    @dataset.online_access_urls = online_access_urls
+    presenter = DatasetDetailsPresenter.new(@dataset)
+    @dataset.online_access_urls.should eq([{"URL"=>"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/data-download", "URLDescription"=>"Data download page"}])
+  end
+
+  it "capitalizes online resource descriptions" do
+    online_resources = [{"URL"=>"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001", "Description"=>"data set home page"}]
+    @dataset.online_resources = online_resources
+    presenter = DatasetDetailsPresenter.new(@dataset)
+    @dataset.online_resources.should eq([{"URL"=>"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001", "Description"=>"Data set home page"}])
+  end
+
 end

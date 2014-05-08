@@ -58,8 +58,9 @@ describe "Data download page", reset: false do
       expect(page).to have_link('Download Access Script')
     end
 
-    it "displays no links for direct downloads for datasets that were not chosen for direct download" do
-      expect(page).to have_no_content(non_downloadable_dataset_title)
+    it "displays links for direct downloads for dataset only datasets" do
+      expect(page).to have_content(non_downloadable_dataset_title)
+      expect(page).to have_content('Data download page')
     end
 
     context "upon clicking on a direct download link" do
@@ -143,7 +144,9 @@ describe "Data download page", reset: false do
     end
 
     it "displays no tracking links for datasets that were not chosen for asychronous access" do
-      expect(page).to have_no_content(non_orderable_dataset_title)
+      within '.data-access-orders' do
+        expect(page).to have_no_content(non_orderable_dataset_title)
+      end
     end
   end
 

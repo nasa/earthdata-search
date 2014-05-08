@@ -17,7 +17,7 @@
     <h1>Success!</h1>
     <p>Your request has been processed.  See below for information on accessing your data.</p>
   </header>
-  <section class="data-access-content" data-bind="visible: ui.projectList.datasetsToDownload().length > 0">
+  <section class="data-access-content data-access-downloads" data-bind="visible: ui.projectList.datasetsToDownload().length > 0">
     <h2>The following datasets are available for immediate download</h2>
     <p>
       Click the "View Download Links" button to view a page containing links to your data.
@@ -36,16 +36,18 @@
       </li>
     </ul>
   </section>
-  <section class="data-access-content" data-bind="visible: ui.projectList.datasetOnly().length > 0">
-    <h2>The following datasets are available for download</h2>
+  <section class="data-access-content data-access-dataset-only" data-bind="visible: ui.projectList.datasetOnly().length > 0">
+    <h2>The following datasets are available on the provider's website</h2>
     <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetOnly">
       <li class="data-access-dataset">
         <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
-        <p data-bind="text: details().description"></p>
+        <!-- ko foreach: details().online_access_urls -->
+        <p><a class="link" target="_blank" data-bind="text: $data.URLDescription, attr: {href: $data.URL}"></a></p>
+        <!-- /ko -->
       </li>
     </ul>
   </section>
-  <section class="data-access-content" data-bind="visible: ui.projectList.submittedOrders().length > 0">
+  <section class="data-access-content data-access-orders" data-bind="visible: ui.projectList.submittedOrders().length > 0">
     <h2>The following datasets are being processed</h2>
     <p>
       When the data becomes available, an email containing download links will be sent to the address you provided.
