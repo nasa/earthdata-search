@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401163908) do
+ActiveRecord::Schema.define(version: 20140506202507) do
 
   create_table "accepted_data_quality_summaries", force: true do |t|
     t.string   "dqs_id"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20140401163908) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "has_granules"
+  end
+
+  create_table "orders", force: true do |t|
+    t.string   "order_id"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "projects", force: true do |t|

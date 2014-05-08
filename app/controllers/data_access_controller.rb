@@ -1,6 +1,7 @@
 require 'json'
 
 class DataAccessController < ApplicationController
+  include ActionView::Helpers::TextHelper
   respond_to :json
 
   def configure
@@ -24,6 +25,9 @@ class DataAccessController < ApplicationController
                                                      get_user_id,
                                                      token)
           method[:order_id] = order_response[:order_id]
+          order = Order.find_or_create_by(order_id: order_response[:order_id])
+          order.description = "#{dataset['dataset_id']} (#{pluralize order_response[:count], 'granule'})"
+          order.save!
         end
       end
     end
@@ -34,6 +38,16 @@ class DataAccessController < ApplicationController
     # TODO: These could be dangerous
     @user_id = cookies['name']
     @query = request.env['QUERY_STRING']
+  end
+
+  def status
+    if token.present?
+      order_response = Echo::Client.get_orders(token)
+      @orders = order_response.body.select {|o| o['order']['submitted_at']}
+      @orders.sort_by! {|o| o['order']['submitted_at']}.reverse!
+    else
+      @orders = []
+    end
   end
 
   # This rolls up getting information on data access into an API that approximates
