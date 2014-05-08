@@ -22,7 +22,7 @@ group :test do
   gem 'capybara'
   # This is a revision which disables screenshots, one behind the disable-screenshots
   #  branch, which also tries (and fails) to avoid problems with concurrent test runs.
-  gem 'capybara-webkit', git: 'https://github.com/bilts/capybara-webkit.git', ref: 'c1ce4f9'
+  gem 'capybara-webkit', git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
   gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
