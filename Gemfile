@@ -58,7 +58,6 @@ group :development, :test do
 
   gem 'therubyracer', :require => 'v8'
   gem 'libv8', '~> 3.11.8.3'
-  gem 'headless'
 end
 
 group :assets, :development, :test do
