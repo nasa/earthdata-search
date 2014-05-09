@@ -10,6 +10,7 @@
 //= require namespaces
 //= require config
 //= require util/index
+//= require modules/global_hooks
 //= require models/index
 //= require models/page/account_page
 //= require bootstrap/bootstrap

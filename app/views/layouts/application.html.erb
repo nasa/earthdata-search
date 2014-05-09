@@ -45,6 +45,6 @@
         <img src="<%= image_path "https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0" %>" alt="">
       </noscript>
     <% end %>
-    <%= javascript_include_tag "https://cdn.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
+    <%= javascript_include_tag "https://cdn.earthdata.nasa.gov/tophat/tophat.js" unless true || Rails.env.test? %>
 </body>
 </html>

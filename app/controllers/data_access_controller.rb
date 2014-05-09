@@ -43,15 +43,16 @@ class DataAccessController < ApplicationController
   def status
     if token.present?
       order_response = Echo::Client.get_orders(token)
-      @orders = order_response.body.select {|o| o['order']['submitted_at']}
-      @orders.sort_by! {|o| o['order']['submitted_at']}.reverse!
+      @orders = order_response.body
+      @orders.sort_by! {|o| o['order']['created_at']}.reverse!
     else
       @orders = []
     end
   end
 
-  def cancel
-
+  def remove
+    order_response = Echo::Client.delete_order(params[:order_id], token)
+    render json: order_response.body, status: order_response.status
   end
 
   # This rolls up getting information on data access into an API that approximates

@@ -118,6 +118,10 @@ module Echo
       get('/echo-rest/orders.json', {}, token_header(token))
     end
 
+    def self.delete_order(order_id, token)
+      delete("/echo-rest/orders/#{order_id}", {}, token_header(token))
+    end
+
     def self.create_order(granule_query, option_id, option_name, option_model, user_id, token)
       # For testing without submitting a boatload of orders
       #return {order_id: 1234, count: 2000}
@@ -175,35 +179,31 @@ module Echo
       token.present? ? {'Echo-Token' => token} : {}
     end
 
-    def self.get(url, params={}, headers={})
-      faraday_response = connection.get(url, params) do |req|
+    def self.request(method, url, params, body, headers)
+      faraday_response = connection.send(method, url, params) do |req|
+        req.headers['Content-Type'] = 'application/json' unless method == :get
         headers.each do |header, value|
           req.headers[header] = value
         end
+        req.body = body if body
       end
       Echo::Response.new(faraday_response)
+    end
+
+    def self.get(url, params={}, headers={})
+      request(:get, url, params, nil, headers)
+    end
+
+    def self.delete(url, params={}, headers={})
+      request(:delete, url, params, nil, headers)
     end
 
     def self.post(url, body, headers={})
-      faraday_response = connection.post(url) do |req|
-        req.headers['Content-Type'] = 'application/json'
-        headers.each do |header, value|
-          req.headers[header] = value
-        end
-        req.body = body if body
-      end
-      Echo::Response.new(faraday_response)
+      request(:post, url, nil, body, headers)
     end
 
     def self.put(url, body, headers={})
-      faraday_response = connection.put(url) do |req|
-        headers.each do |header, value|
-          req.headers[header] = value
-        end
-        req.headers['Content-Type'] = 'application/json'
-        req.body = body if body
-      end
-      Echo::Response.new(faraday_response)
+      request(:put, url, nil, body, headers)
     end
 
     def self.build_connection
