@@ -60,7 +60,7 @@ describe "Data download page", reset: false do
 
     it "displays links for direct downloads for dataset only datasets" do
       expect(page).to have_content(non_downloadable_dataset_title)
-      expect(page).to have_content('Data download page')
+      expect(page).to have_content('data download page')
     end
 
     context "upon clicking on a direct download link" do

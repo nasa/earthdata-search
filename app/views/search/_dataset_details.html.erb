@@ -20,6 +20,10 @@
   <div class="tab-content">
     <div class="tab-pane active" id="dataset-information">
       <dl class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
+        <dt>Download Page:</dt>
+        <dd data-bind="foreach: $data.online_access_urls">
+          <p><a data-bind="attr: {href: URL}, text: URLDescription" target="_blank"></a></p>
+        </dd>
         <dt>Description:</dt>
         <dd data-bind="text: $data.description"></dd>
         <dt>Archive Center:</dt>
@@ -49,10 +53,6 @@
         <dt>Science Keywords:</dt>
         <dd data-bind="foreach: $data.science_keywords">
           <p data-bind="text: $data"></p>
-        </dd>
-        <dt>Online Access:</dt>
-        <dd data-bind="foreach: $data.online_access_urls">
-          <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
         </dd>
         <dt>Online Resources:</dt>
         <dd data-bind="foreach: $data.online_resources">

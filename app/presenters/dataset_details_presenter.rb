@@ -7,8 +7,6 @@ class DatasetDetailsPresenter
     @dataset.contacts = contacts(dataset.contacts)
     @dataset.temporal = temporal(dataset.temporal)
     @dataset.associated_difs = associated_difs(dataset.associated_difs)
-    @dataset.online_access_urls = capitilize_descriptions(dataset.online_access_urls) if dataset.online_access_urls
-    @dataset.online_resources = capitilize_descriptions(dataset.online_resources) if dataset.online_resources
 
     metadata_url = "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/#{@dataset.id}"
     @dataset.native_url = "#{metadata_url}"
@@ -16,13 +14,6 @@ class DatasetDetailsPresenter
     @dataset.echo10_url = "#{metadata_url}.echo10"
     @dataset.iso19115_url = "#{metadata_url}.iso19115"
     @dataset.smap_iso_url = nil #"#{metadata_url}.smap_iso"
-  end
-
-  def capitilize_descriptions(urls)
-    urls.each do |hash|
-      hash['URLDescription'].capitalize! if hash['URLDescription']
-      hash['Description'].capitalize! if hash['Description']
-    end
   end
 
   def associated_difs(dif_id)

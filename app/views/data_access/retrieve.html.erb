@@ -41,8 +41,10 @@
     <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetOnly">
       <li class="data-access-dataset">
         <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
-        <!-- ko foreach: details().online_access_urls -->
-        <p><a class="link" target="_blank" data-bind="text: $data.URLDescription, attr: {href: $data.URL}"></a></p>
+        <!-- ko foreach: links -->
+        <p>
+          <a data-bind="attr: {href: $data.href}, text: $data.title" target="_blank"></a>
+        </p>
         <!-- /ko -->
       </li>
     </ul>

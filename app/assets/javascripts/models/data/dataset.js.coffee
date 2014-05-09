@@ -33,7 +33,10 @@ ns.Dataset = do (ko
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
       for dataset in datasets()
-        return dataset.reference() if dataset.id.peek() == id
+        if dataset.id.peek() == id
+          if jsonData.links? && !dataset.links?
+            dataset.fromJson(jsonData)
+          return dataset.reference()
       register(new Dataset(jsonData, query, randomKey))
 
     @visible: ko.computed
@@ -137,8 +140,8 @@ ns.Dataset = do (ko
 
       @json = jsonObj
 
-      @thumbnail = ko.observable(null)
-      @archive_center = ko.observable(null)
+      @thumbnail ?= ko.observable(null)
+      @archive_center ?= ko.observable(null)
       ko.mapping.fromJS(jsonObj, {}, this)
       if @gibs
         @gibs = ko.observable(ko.mapping.toJS(@gibs))
