@@ -81,7 +81,6 @@ describe 'Duplicate Service Options', reset: false do
         choose 'Download'
       end
       click_button 'Continue'
-      click_button 'Continue'
       click_button 'Submit'
     end
 
