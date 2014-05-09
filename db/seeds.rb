@@ -1,5 +1,14 @@
-Order.create!([order_id: 'AD73E6AD-E901-D1B6-3FD4-666C7A6A1564',
-               description: "15 Minute Stream Flow Data: USGS (FIFE) (39 granules)"])
+
+Order.create!([
+               {
+                 order_id: 'E806E9C6-615E-2161-97D9-905D96D2F832',
+                 description: "15 Minute Stream Flow Data: USGS (FIFE) (39 granules)"
+               },
+               {
+                 order_id: 'AD73E6AD-E901-D1B6-3FD4-666C7A6A1564',
+                 description: "15 Minute Stream Flow Data: USGS (FIFE) (39 granules)"
+               }
+              ])
 
 DatasetExtra.create!([
   {echo_id: "C179003030-ORNL_DAAC", has_browseable_granules: false, thumbnail_url: nil, has_granules: true},
