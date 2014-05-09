@@ -85,7 +85,7 @@
                 <div class="access-form" data-bind="echoform: $data"></div>
                 <!-- /ko -->
               <!-- /ko -->
-              <p class="add-access-item" data-bind="visible: granuleAccessOptions().methods.length > 0">
+              <p class="add-access-item" data-bind="visible: serviceOptions.canAddAccessMethod()">
                 <button data-bind="click: serviceOptions.addAccessMethod" class="button-small"> <i class="fa fa-plus-circle"></i> Add access method</button>
                 <span class="instructions"> <i class="fa fa-arrow-circle-left"></i> Access these granules again with different options</span>
               </p>
