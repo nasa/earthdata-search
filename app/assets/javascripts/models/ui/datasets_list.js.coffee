@@ -7,6 +7,9 @@ ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
   class DatasetsList
     constructor: (@query, @datasets) ->
       @focused = ko.observable(null)
+      @selected = ko.observable({})
+      @fixOverlayHeight = ko.computed =>
+        setTimeout((=> $('.master-overlay').masterOverlay('contentHeightChanged')), 0) if @selected().detailsLoaded?()
 
     scrolled: (data, event) =>
       elem = event.target
@@ -14,8 +17,9 @@ ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
         @datasets.loadNextPage(@query.params())
 
     showDatasetDetails: (dataset, event=null) =>
-      @datasets.showDataset dataset, ->
-        $('.master-overlay').masterOverlay('contentHeightChanged')
+      @selected(dataset)
+      # load the details
+      @selected().details()
 
     focusDataset: (dataset, event=null) =>
       return true if $(event?.target).closest('a').length > 0

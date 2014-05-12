@@ -33,7 +33,10 @@ ns.Dataset = do (ko
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
       for dataset in datasets()
-        return dataset.reference() if dataset.id.peek() == id
+        if dataset.id.peek() == id
+          if jsonData.links? && !dataset.links?
+            dataset.fromJson(jsonData)
+          return dataset.reference()
       register(new Dataset(jsonData, query, randomKey))
 
     @visible: ko.computed
@@ -46,6 +49,9 @@ ns.Dataset = do (ko
       @granuleQuery.sortKey(['-start_date'])
       @granulesModel = granulesModel = @disposable(new Granules(@granuleQuery, @query))
       @granuleAccessOptions = @asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
+
+      @details = @asyncComputed({}, 100, @_computeDetails, this)
+      @detailsLoaded = ko.observable(false)
 
       @visible = ko.observable(false)
 
@@ -101,6 +107,16 @@ ns.Dataset = do (ko
         return true if ignored_params.indexOf(key) == -1
       return false
 
+    _computeDetails: ->
+      id = @id()
+      path = "/datasets/#{id}.json"
+      console.log("Request: #{path}", this)
+      getJSON path, (data) =>
+        details = data['dataset']
+        details.summaryData = this
+        @details(details)
+        @detailsLoaded(true)
+
     serialize: ->
       result = {id: @id(), dataset_id: @dataset_id(), has_granules: @has_granules()}
       if @has_granules()
@@ -124,8 +140,8 @@ ns.Dataset = do (ko
 
       @json = jsonObj
 
-      @thumbnail = ko.observable(null)
-      @archive_center = ko.observable(null)
+      @thumbnail ?= ko.observable(null)
+      @archive_center ?= ko.observable(null)
       ko.mapping.fromJS(jsonObj, {}, this)
       if @gibs
         @gibs = ko.observable(ko.mapping.toJS(@gibs))

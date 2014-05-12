@@ -56,7 +56,7 @@ describe 'Duplicate Service Options', reset: false do
     end
   end
 
-  context "when setting options for non-downloadable dataset" do
+  context 'when setting options for a dataset whose only option is "Download"' do
     before :all do
       choose 'Download'
       click_button 'Continue'

@@ -40,7 +40,7 @@ ns.Map = do (window,
       map.addControl(new SpatialSelection())
       @setProjection(projection)
 
-      @_datasetSubscription = page.datasets.details.subscribe(@_showDatasetSpatial)
+      @_datasetSubscription = page.ui.datasetsList.selected.subscribe(@_showDatasetSpatial)
       @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 
@@ -164,8 +164,6 @@ ns.Map = do (window,
       @_rebuildLayers()
 
     _showDatasetSpatial: (dataset) =>
-      dataset = dataset.summaryData
-
       @_hideDatasetSpatial()
 
       layer = new L.FeatureGroup()

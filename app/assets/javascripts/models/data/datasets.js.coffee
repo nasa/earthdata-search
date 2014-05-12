@@ -14,8 +14,6 @@ ns.Datasets = do (ko
       #super('http://localhost:3002/datasets')
       super('/datasets.json', query)
 
-      @details = ko.observable({})
-      @detailsLoading = ko.observable(false)
       @visibleDatasets = @computed(@_computeVisibleDatasets, this, deferEvaluation: true)
       @allDatasetsVisible = ko.observable(false)
 
@@ -29,19 +27,6 @@ ns.Datasets = do (ko
       else
         dataset.dispose() for dataset in current
         newItems
-
-    showDataset: (dataset, callback) =>
-      id = dataset.id()
-
-      path = "/datasets/#{id}.json"
-      console.log("Request: #{path}", this)
-      @detailsLoading(true)
-      getJSON path, (data) =>
-        details = data['dataset']
-        details.summaryData = dataset
-        @details(details)
-        @detailsLoading(false)
-        callback?(details)
 
     _computeVisibleDatasets: =>
       dataset for dataset in @results() when dataset.visible()

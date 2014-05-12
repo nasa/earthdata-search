@@ -7,6 +7,7 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       @visible = ko.observable(false)
 
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
+      @datasetOnly = ko.computed(@_computeDatasetOnly, this, deferEvaluation: true)
       @submittedOrders = ko.computed(@_computeSubmittedOrders, this, deferEvaluation: true)
 
       @dataQualitySummaryModal = ko.observable(false)
@@ -111,6 +112,12 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
         for m in dataset.serviceOptions.accessMethod() when m.type == 'order'
           orders.push(url: "https://reverb.echo.nasa.gov/reverb/orders/#{m.orderId}", dataset_id: dataset.dataset_id)
       orders
+
+    _computeDatasetOnly: ->
+      datasets = []
+      for dataset in @project.datasets()
+        datasets.push(dataset) if dataset.granuleAccessOptions().hits == 0
+      datasets
 
     datasetHasDQS: (dataset) =>
       result = true if dataset.dqsModel.results()?.length > 0
