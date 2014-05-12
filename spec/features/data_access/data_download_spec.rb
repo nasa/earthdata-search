@@ -58,7 +58,7 @@ describe "Data download page", reset: false do
 
     it "displays links for direct downloads for dataset only datasets" do
       expect(page).to have_content(non_downloadable_dataset_title)
-      expect(page).to have_content('data download page')
+      expect(page).to have_content('Data download page')
     end
 
     context "upon clicking on a direct download link" do
@@ -89,10 +89,15 @@ describe "Data download page", reset: false do
 
   context "when no datasets have been selected for direct download" do
     before :all do
-      add_dataset_to_project(non_downloadable_dataset_id, non_downloadable_dataset_title)
+      add_dataset_to_project(orderable_dataset_id, orderable_dataset_title)
 
       dataset_results.click_link "View Project"
       click_link "Retrieve project data"
+
+      choose 'Ftp_Pull'
+      select 'FTP Pull', from: 'Offered Media Delivery Types'
+      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      click_on 'Continue'
 
       # Confirm address
       click_on 'Submit'

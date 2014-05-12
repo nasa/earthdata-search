@@ -41,9 +41,9 @@
     <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetOnly">
       <li class="data-access-dataset">
         <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
-        <!-- ko foreach: links -->
-        <p>
-          <a data-bind="attr: {href: $data.href}, text: $data.title" target="_blank"></a>
+        <!-- ko foreach: $data.links ? links() : [] -->
+        <p data-bind="if: $data.rel() == 'enclosure' || $data.rel().indexOf('/data') > -1">
+          <a class="link" data-bind="attr: {href: $data.href}, text: edsc.util.string.capitalize($data.title())" target="_blank"></a>
         </p>
         <!-- /ko -->
       </li>

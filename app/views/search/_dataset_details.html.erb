@@ -22,7 +22,7 @@
       <dl class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
         <dt>Download Page:</dt>
         <dd data-bind="foreach: $data.online_access_urls">
-          <p><a data-bind="attr: {href: URL}, text: URLDescription" target="_blank"></a></p>
+          <p><a data-bind="attr: {href: URL}, text: edsc.util.string.capitalize(URLDescription)" target="_blank"></a></p>
         </dd>
         <dt>Description:</dt>
         <dd data-bind="text: $data.description"></dd>
