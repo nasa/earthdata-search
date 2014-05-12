@@ -134,7 +134,7 @@ describe "Data Access workflow", reset: false do
 
     context "when displaying options for the last of multiple datasets" do
       before :all do
-        choose "Download"
+        choose "Ftp_Pull"
         click_button "Continue"
       end
 
@@ -168,9 +168,29 @@ describe "Data Access workflow", reset: false do
       end
     end
 
-    context "on the final step before submitting" do
+    context "on the final dataset's step when contact information is not required" do
       before :all do
         choose "Download"
+        click_button "Continue"
+      end
+
+      after :all do
+        reset_access_page
+      end
+
+      it "displays a submit button" do
+        expect(page).to have_button("Submit")
+      end
+
+      it "does not ask for contact information" do
+        expect(page).to have_no_text("Contact Information")
+      end
+
+    end
+
+    context "on the final step before submitting when contact information is required" do
+      before :all do
+        choose "Ftp_Pull"
         click_button "Continue"
         click_button "Continue"
       end

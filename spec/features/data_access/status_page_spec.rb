@@ -25,6 +25,32 @@ describe "Data access status page", reset: false do
     it "indicates current order status" do
       expect(page).to have_content("Closed")
     end
+
+    it "shows remove buttons next to items that can be removed" do
+      within('tbody tr:nth-child(2)') do
+        expect(page).to have_selector('a[title="remove"]')
+      end
+    end
+
+    it "does not show remove buttons next to items that cannot be removed" do
+      within('tbody tr:first-child') do
+        expect(page).to have_no_selector('a[title="remove"]')
+      end
+    end
+
+    context "clicking the remove button" do
+      before :all do
+        click_link "remove"
+      end
+
+      after :all do
+        visit '/data/status'
+      end
+
+      it "removes the dataset from the list" do
+        expect(page).to have_no_selector('tbody tr:nth-child(2)')
+      end
+    end
   end
 
   context "when the current user has no recent data retrievals" do

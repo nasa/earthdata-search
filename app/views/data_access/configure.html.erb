@@ -110,11 +110,13 @@
 
         <div class="access-item-actions">
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
-          <button data-bind="enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
+          <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
+          <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next">Submit</button>
         </div>
       </div>
     </li>
     <!-- /ko -->
+    <!-- ko if: ui.serviceOptionsList.needsContactInfo() -->
     <li class="access-item">
       <div class="access-item-header">
         <h2>Contact Information &amp; Submit</h2>
@@ -132,6 +134,7 @@
         </div>
       </div>
     </li>
+    <!-- /ko -->
   </ol>
   <form id="data-access" method="POST" action="/data/retrieve" style="display:none;">
     <div>

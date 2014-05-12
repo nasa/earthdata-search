@@ -15,6 +15,8 @@ module VCR
       lock = Mutex.new
       c.around_http_request do |request|
         lock.synchronize do
+          opts = opts.dup
+
           cassette = 'global'
           uri = request.uri
           if request.uri.include?('fail%25+hard') || request.uri.include?('fail+hard')
@@ -29,10 +31,13 @@ module VCR
             opts[:record] = :none
           elsif request.uri.include? '/echo_catalog/granules/timeline'
             cassette = 'timeline'
-          elsif request.uri.include? '/echo-rest/calendar_events'
-            cassette = 'events'
           elsif request.uri.include? '/catalog-rest/'
             cassette = 'catalog-rest'
+          elsif (request.method == :delete ||
+                 (request.uri.include?('/orders.json') && request.method == :get) ||
+                 request.uri.include?('/echo-rest/calendar_events'))
+            cassette = 'hand-edited'
+            opts[:record] = :none
           elsif request.uri.include? '/echo-rest/'
             cassette = 'echo-rest'
           end

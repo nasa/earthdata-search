@@ -5,6 +5,15 @@ ns.ServiceOptionsList = do (ko) ->
     constructor: (@accountForm, @projectList) ->
       @activeIndex = ko.observable(0)
       @showGranules = ko.observable(false)
+      @needsContactInfo = ko.computed =>
+        for dataset in @projectList.project.datasets()
+          for m in dataset.serviceOptions.accessMethod()
+            method = m.method()
+            return true if method? && method != 'Download'
+        false
+      @isLastOption = ko.computed =>
+        datasets = @projectList.project.datasets()
+        @activeIndex() == datasets.length - 1 && !@needsContactInfo()
 
     showNext: =>
       @activeIndex(@activeIndex() + 1)
