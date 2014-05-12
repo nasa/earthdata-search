@@ -114,8 +114,8 @@ ns.Dataset = do (ko
       getJSON path, (data) =>
         details = data['dataset']
         details.summaryData = this
-        @detailsLoaded(true)
         @details(details)
+        @detailsLoaded(true)
 
     serialize: ->
       result = {id: @id(), dataset_id: @dataset_id(), has_granules: @has_granules()}
