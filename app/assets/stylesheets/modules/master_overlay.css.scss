@@ -45,28 +45,45 @@
 .master-overlay-parent {
   // background-color: $master-overlay-parent-bg-color;
   @include retina-image(denim, 145px 145px, png, null, true);
-  width: 20%;
+  @media (min-width: 1201px) {
+    width: 240px;
+  }
+  @media (max-width: 1200px) {
+    width: 20%;
+  }
+  max-width: 240px;
   left: 0;
 }
 
 // The main section in the overlay.  Dataset results, pinned datasets, whatnot.
 .master-overlay-main {
   background-color: $master-overlay-main-bg-color;
-  width: 40%;
-  left: 20%;
+  @media (min-width: 1201px) {
+    width: 500px;
+    left: 240px;
+  }
+  @media (max-width: 1200px) {
+    width: 40%;
+    left: 20%;
+  }
   overflow: hidden;
 }
 
 // The secondary section in the overlay. Granule filters
 .master-overlay-secondary {
   background-color: $master-overlay-main-bg-color;
-  width: 60%;
+  @media (min-width: 1201px) {
+    left: 500px;
+  }
+  @media (max-width: 1200px) {
+    left: 40%;
+  }
   right: 0%;
   overflow: hidden;
   z-index: 60;
   position: absolute;
   height: 100%;
-  transition-property: right;
+  transition-property: right, left;
   transition-duration: 0.3s;
 }
 
@@ -77,6 +94,7 @@
   section {
     height: 100%;
     width: 25%;
+    max-width: 600px;
     float: left;
     position: relative;
   }
@@ -199,12 +217,6 @@
   display: block;
 }
 
-// DELETE ME After icons are added for close button
-a.master-overlay-close {
-  color: rgba(255, 255, 255, .3);
-  @include transition (color 0.15s ease-in-out);
-}
-
 .master-overlay-when-parent-hidden {
   display: none;
 }
@@ -214,12 +226,12 @@ a.master-overlay-close {
 }
 
 .is-master-overlay-parent-hidden {
-  .master-overlay-parent { left:-20%; }
+  .master-overlay-parent { left:-240px; }
   .master-overlay-main   { left:0%; }
 }
 
 .is-master-overlay-secondary-hidden {
-  .master-overlay-secondary { right: -60%; }
+  .master-overlay-secondary { right: -60%; left: 100%; }
 }
 
 .master-overlay-main-content {
@@ -232,7 +244,7 @@ a.master-overlay-close {
 .is-hidden {
   .master-overlay-parent { left:-60%; }
   .master-overlay-main   { left: -40%; }
-  .master-overlay-secondary { right: -60%; }
+  .master-overlay-secondary { right: -60%; left: 100%; }
 }
 
 .master-overlay-help p {
