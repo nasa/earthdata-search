@@ -48,8 +48,15 @@ describe 'Site landing page' do
     expect(page).to have_link('Clear Filters')
   end
 
-  it 'reveals the full serach interface when the user loads  "/search" directly' do
+  it 'reveals the full search interface when the user loads  "/search" directly' do
     visit "/search"
     expect(page).to have_link('Clear Filters')
+  end
+
+  it 'goes back to the landing page when the user clicks the site logo from the search page' do
+    visit "/search"
+    expect(page).to have_link('Clear Filters')
+    click_link 'Earthdata Search'
+    expect(page).to have_no_link('Clear Filters')
   end
 end
