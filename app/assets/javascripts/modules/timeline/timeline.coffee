@@ -341,6 +341,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @focus()
       @_updateTimeline()
+      @_drawTemporalBounds()
       #console.log 'zoom', @zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
     focus: (t0, t1) ->
