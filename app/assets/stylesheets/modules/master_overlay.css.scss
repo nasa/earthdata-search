@@ -1,7 +1,6 @@
 // The main search page has a master-detail type view, where both master and
 // detail lay on top of the map.  This module describes the master overlay.
 
-
 // The container for the entire overlay
 .master-overlay {
   color: #fff;
@@ -45,39 +44,22 @@
 .master-overlay-parent {
   // background-color: $master-overlay-parent-bg-color;
   @include retina-image(denim, 145px 145px, png, null, true);
-  @media (min-width: 1201px) {
-    width: 240px;
-  }
-  @media (max-width: 1200px) {
-    width: 20%;
-  }
-  max-width: 240px;
+  width: 20%;
   left: 0;
 }
 
 // The main section in the overlay.  Dataset results, pinned datasets, whatnot.
 .master-overlay-main {
   background-color: $master-overlay-main-bg-color;
-  @media (min-width: 1201px) {
-    width: 500px;
-    left: 240px;
-  }
-  @media (max-width: 1200px) {
-    width: 40%;
-    left: 20%;
-  }
+  width: 40%;
+  left: 20%;
   overflow: hidden;
 }
 
 // The secondary section in the overlay. Granule filters
 .master-overlay-secondary {
   background-color: $master-overlay-main-bg-color;
-  @media (min-width: 1201px) {
-    left: 500px;
-  }
-  @media (max-width: 1200px) {
-    left: 40%;
-  }
+  left: 40%;
   right: 0%;
   overflow: hidden;
   z-index: 60;
@@ -249,4 +231,24 @@
 
 .master-overlay-help p {
   margin-bottom: 1em;
+}
+
+$browser-split: 1500px;
+
+@media (min-width: $browser-split) {
+  $parent-width: $browser-split * 0.2;
+  $main-width: $browser-split * 0.4;
+
+  .master-overlay-parent {
+    width: $parent-width;
+  }
+
+  .master-overlay-main {
+    width: $main-width;
+    left: $parent-width;
+  }
+
+  .master-overlay-secondary {
+    left: $main-width;
+  }
 }
