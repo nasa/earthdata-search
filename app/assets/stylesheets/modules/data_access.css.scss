@@ -3,6 +3,11 @@
   color: $overlay-heading-font-color;
   padding-bottom: 70px;
 
+  h1 {
+    border-bottom: 1px solid #333;
+    padding: 0 0 .2em 0;
+  }
+
   a {
     color: #fff;
   }
@@ -42,7 +47,13 @@
     float: right;
   }
 
-  > header, > section, > .data-access-content, > .access-item-submission {
+  > header {
+    margin: 1em auto;
+    padding: 0;
+    max-width: 1000px;
+  }
+
+  > section, > .data-access-content, > .access-item-submission {
     margin: 1em auto;
     padding: 1em 0;
     max-width: 1000px;
@@ -266,10 +277,29 @@
 
   tr {
     border-bottom: 1px solid #444;
+
+    &.odd {
+      background: #333;
+    }
   }
 
   th, td {
-    padding: .5em 0;
+    padding: .5em 0 .5em .5em;
     text-align: left;
+  }
+
+  .order-state {
+    background: #34495e;
+    padding: .3em .6em;
+    border-radius: 2px;
+    color: #fff;
+
+    &.processing, &.validated, &.quoted {
+      background: #27ae60;
+    }
+
+    &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
+      background: #e74c3c;
+    }
   }
 }
