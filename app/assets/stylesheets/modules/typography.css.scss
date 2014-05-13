@@ -31,7 +31,7 @@ hgroup {
 }
 
 header .ir {
-  @include retina-image(search-logo, 145px 40px, png, null, true);
+  @include retina-image($logo, 145px 40px, png, null, true);
   height: 40px;
   width: 145px;
   float: left;
