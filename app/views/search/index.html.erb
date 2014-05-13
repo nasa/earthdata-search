@@ -107,10 +107,10 @@
               <i class="edsc-icon-download"></i>
             </a>
 
-            <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible() && !project.isEmpty(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
+            <a href="#" title="View all datasets" data-bind="visible: !$root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button" >
               <i class="edsc-icon-eye"></i>
             </a>
-            <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible() && !project.isEmpty(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
+            <a href="#" title="Hide all datasets" data-bind="visible: $root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button button-active" >
               <i class="edsc-icon-eye"></i>
             </a>
           </div>
