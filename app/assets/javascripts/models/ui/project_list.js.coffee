@@ -13,6 +13,8 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       @dataQualitySummaryModal = ko.observable(false)
       @dataQualitySummaryCallback = null
 
+      @allDatasetsVisible = ko.computed(@_computeAllDatasetsVisible, this, deferEvaluation: true)
+
     showProject: =>
       @visible(true)
 
@@ -162,5 +164,15 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     _destroyGranulePickers: ->
       $('.granule-temporal-filter .temporal').datetimepicker('destroy')
 
+    toggleViewAllDatasets: =>
+      visible = !@allDatasetsVisible()
+      for dataset in @project.datasets()
+        dataset.visible(visible)
+
+    _computeAllDatasetsVisible: =>
+      all_visible = true
+      for dataset in @project.datasets()
+        all_visible = false if !dataset.visible()
+      all_visible
 
   exports = ProjectList
