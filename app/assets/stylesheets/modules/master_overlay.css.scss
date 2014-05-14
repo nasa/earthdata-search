@@ -76,7 +76,6 @@
   section {
     height: 100%;
     width: 25%;
-    max-width: 600px;
     float: left;
     position: relative;
   }
@@ -233,16 +232,24 @@
   margin-bottom: 1em;
 }
 
-$browser-split: 1500px;
+$browser-split: 1550px;
+$parent-split: 1200px;
 
-@media (min-width: $browser-split) {
-  $parent-width: $browser-split * 0.2;
-  $main-width: $browser-split * 0.4;
+$main-width: $browser-split * 0.4;
+$parent-width: $parent-split * 0.2;
 
+@media (min-width: $parent-split) {
   .master-overlay-parent {
     width: $parent-width;
   }
 
+  .master-overlay-main {
+    left: $parent-width;
+  }
+
+}
+
+@media (min-width: $browser-split) {
   .master-overlay-main {
     width: $main-width;
     left: $parent-width;
