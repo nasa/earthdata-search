@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><%= "[DEV]" if Rails.env.development? %> Earthdata Search</title>
+    <title><%= Rails.configuration.env_name %> Earthdata Search</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
@@ -45,6 +45,7 @@
         <img src="<%= image_path "https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0" %>" alt="">
       </noscript>
     <% end %>
+<<<<<<< HEAD
     <% if Rails.configuration.respond_to?(:analytics_id) %>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -57,5 +58,8 @@
     </script>
     <% end %>
     <%= javascript_include_tag "https://cdn.sit.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
+=======
+    <%= javascript_include_tag Rails.configuration.tophat_url %>
+>>>>>>> de619398e362351b9f07342505f6d4237bb291d6
 </body>
 </html>
