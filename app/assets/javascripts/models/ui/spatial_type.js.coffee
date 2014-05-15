@@ -1,10 +1,10 @@
 ns = @edsc.models.ui
 
-ns.SpatialType = do (ko) ->
+ns.SpatialType = do (ko, $=jQuery) ->
 
   # Keeps track of the user's interface selections for the purpose of keeping buttons in sync
   class SpatialType
-    constructor: ->
+    constructor: (@query) ->
       @icon = ko.observable('fa-crop')
       @name = ko.observable('Spatial')
 

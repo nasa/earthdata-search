@@ -7,7 +7,8 @@ ns = @edsc.models.data
 ns.Dataset = do (ko
                  KnockoutModel = @edsc.models.KnockoutModel
                  Granules=ns.Granules
-                 QueryModel = ns.Query
+                 GranuleQuery = ns.query.GranuleQuery
+                 DataQualitySummaryQuery = ns.query.DataQualitySummaryQuery
                  ServiceOptionsModel = ns.ServiceOptions
                  DataQualitySummaryModel = ns.DataQualitySummary
                  toParam=jQuery.param
@@ -45,8 +46,8 @@ ns.Dataset = do (ko
     constructor: (jsonData, @query, inKey) ->
       throw "Datasets should not be constructed directly" unless inKey == randomKey
 
-      @granuleQuery = @disposable(new QueryModel('echo_collection_id': jsonData.id))
-      @granuleQuery.sortKey(['-start_date'])
+      @hasAtomData = ko.observable(false)
+      @granuleQuery = @disposable(new GranuleQuery(jsonData.id, @query))
       @granulesModel = granulesModel = @disposable(new Granules(@granuleQuery, @query))
       @granuleAccessOptions = @asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
 
@@ -81,14 +82,12 @@ ns.Dataset = do (ko
           "/data/download.sh?#{paramStr}"
         deferEvaluation: true
 
-      @dqsModel = @disposable(new DataQualitySummaryModel(new QueryModel('catalog_item_id': jsonData.id)))
+      @dqsModel = @disposable(new DataQualitySummaryModel(new DataQualitySummaryQuery(jsonData.id)))
 
     # A granules model not directly connected to the dataset model so classes can, e.g. query
     # for granules under a point without messing with displayed hits or timing values
     createGranulesModel: ->
-      granuleQuery = new QueryModel('echo_collection_id': @id())
-      granuleQuery.sortKey(['-start_date'])
-      new Granules(granuleQuery, @query)
+      new Granules(new GranuleQuery(@id(), @query), @query)
 
     _loadGranuleAccessOptions: ->
       params = @_granuleParams(@query.params())
@@ -143,6 +142,7 @@ ns.Dataset = do (ko
       @thumbnail ?= ko.observable(null)
       @archive_center ?= ko.observable(null)
       ko.mapping.fromJS(jsonObj, {}, this)
+      @hasAtomData(jsonObj.links?)
       if @gibs
         @gibs = ko.observable(ko.mapping.toJS(@gibs))
       else

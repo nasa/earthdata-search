@@ -1,3 +1,4 @@
+#= require models/data/grid
 #= require models/data/xhr_model
 
 ns = @edsc.models.data
@@ -9,7 +10,7 @@ ns.Granules = do (ko,
                   scalerUrl = @edsc.config.browseScalerUrl
                   extend=$.extend,
                   LatLng = L?.latLng,
-                  uiModel = models.ui) ->
+                  Temporal = models.ui.Temporal) ->
 
   class Granule
     constructor: (jsonData) ->
@@ -87,7 +88,7 @@ ns.Granules = do (ko,
   class GranulesModel extends XhrModel
     constructor: (query, @parentQuery) ->
       super('/granules.json', query)
-      @temporal = @disposable(new uiModel.Temporal(query))
+      @temporal = query.temporal
       @_resultsComputed = false
 
       focusedTemporal = @parentQuery.focusedTemporal()
@@ -107,7 +108,7 @@ ns.Granules = do (ko,
         newItems
 
     _computeSearchResponse: (current, callback, needsLoad=true) ->
-      if @query?.validQuery() && @parentQuery?.validQuery()
+      if @query?.isValid()
         results = []
         params = @params()
         params.page_num = @page = 1
@@ -129,8 +130,8 @@ ns.Granules = do (ko,
       focusedTemporal = @parentQuery.focusedTemporal()
 
       if focusedTemporal?
-        granuleTemporal = @query.temporal()
-        datasetTemporal = @parentQuery.temporal()
+        granuleTemporal = @query.temporal.applied
+        datasetTemporal = @parentQuery.temporal.applied
         condition = null
         if granuleTemporal.queryCondition()?
           condition = granuleTemporal

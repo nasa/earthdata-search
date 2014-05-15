@@ -4,7 +4,7 @@
 ns = @edsc.models.data
 
 ns.Project = do (ko,
-                 QueryModel = ns.Query,
+                 QueryModel = ns.query.DatasetQuery,
                  DatasetsModel = ns.Datasets
                  Dataset = ns.Dataset) ->
 
