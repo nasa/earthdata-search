@@ -23,7 +23,8 @@ class ApplicationController < ActionController::Base
                      'mcechini',
                      'jbehnke',
                      'rboller',
-                     'dawnlowe'
+                     'dawnlowe',
+                     'dnewman'
                     ]
         authenticate_or_request_with_http_basic do |username, password|
           whitelist.include?(username) && authenticate_token(username, password)

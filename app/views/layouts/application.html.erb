@@ -34,7 +34,15 @@
     <footer>
       <%= yield :footer %>
       <div class="footer-content">
-        <p><span class="version">v <strong>0.10.1</strong></span> • <strong>NASA Official:</strong> Kevin Murphy • <span class="nasa-links"><a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> • <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> • <a href="http://www.usa.gov">USA.gov</a> • <a href="http://www.usa.gov">ExpectMore.gov</a></span></p>
+        <p>
+          <span class="version">v <strong><%= Rails.configuration.version %></strong></span> •
+          <strong>NASA Official:</strong> Kevin Murphy •
+          <span class="nasa-links">
+            <a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> •
+            <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> •
+            <a href="http://www.usa.gov">USA.gov</a> • <a href="http://www.usa.gov">ExpectMore.gov</a>
+        </span>
+        </p>
       </div>
     </footer>
     <%= yield :global %>
