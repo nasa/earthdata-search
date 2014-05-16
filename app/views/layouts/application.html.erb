@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><%= "[DEV]" if Rails.env.development? %> Earthdata Search</title>
+    <title><%= Rails.configuration.env_name %> Earthdata Search</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
@@ -19,7 +19,7 @@
     <div class="wrap">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
-      <h1><a class="ir" href="<%= root_path %>">Earthdata Search</a></h1>
+      <h1><a class="ir" href="<%= root_path %>" title="Earthdata Search Alpha">Earthdata Search</a></h1>
       <div class="toolbar-content">
         <div class="toolbar-secondary">
           <%= yield :toolbar_secondary %>
@@ -56,6 +56,6 @@
       ga('send', 'pageview');
     </script>
     <% end %>
-    <%= javascript_include_tag "https://cdn.sit.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
+    <%= javascript_include_tag Rails.configuration.tophat_url if Rails.configuration.tophat_url.present? %>
 </body>
 </html>
