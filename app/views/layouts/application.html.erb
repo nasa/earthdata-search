@@ -56,6 +56,6 @@
       ga('send', 'pageview');
     </script>
     <% end %>
-    <%= javascript_include_tag Rails.configuration.tophat_url %>
+    <%= javascript_include_tag Rails.configuration.tophat_url if Rails.configuration.tophat_url.present? %>
 </body>
 </html>
