@@ -626,7 +626,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         else
           globalIndexes.push(index)
 
-      @globalTemporal = datasets[0].query.temporal()
+      @globalTemporal = datasets[0].query.temporal.applied
       @_createTemporalRegion(overlay, @globalTemporal, globalIndexes)
 
     _createSelectionRegion: (overlay, x0, x1, temporal, indexes) ->

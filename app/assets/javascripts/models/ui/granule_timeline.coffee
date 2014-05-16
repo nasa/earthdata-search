@@ -33,6 +33,7 @@ ns.GranuleTimeline = do (ko
       params
 
     _computeSearchResponse: (current, callback) =>
+      return unless @dataset.granulesModel.query.isValid()
       params = @params()
       prev = @prevParams
 

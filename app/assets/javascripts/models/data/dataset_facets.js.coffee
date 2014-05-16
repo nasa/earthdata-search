@@ -79,6 +79,7 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
         queryFacet.term == term && queryFacet.param == param
 
     addFacet: (facet) =>
+      @query.facets([]) unless @query.facets()?
       @query.facets.push(term: facet.term, param: facet.parent.param)
 
     toggleFacet: (facet) =>

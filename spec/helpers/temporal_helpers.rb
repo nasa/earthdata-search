@@ -17,7 +17,7 @@ module Helpers
       script += "  temporal.stop.humanDateString('#{stop}');\n" unless stop.nil?
 
       if dataset_n.nil?
-        script += "})(edsc.page.query.temporal());"
+        script += "})(edsc.page.query.temporal.applied);"
       else
         script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
       end
@@ -29,7 +29,7 @@ module Helpers
       script = "(function(temporal) {\n"
       script += "  temporal.clear();\n"
       if dataset_n.nil?
-        script += "})(edsc.page.query.temporal());"
+        script += "})(edsc.page.query.temporal.applied);"
       else
         script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
       end

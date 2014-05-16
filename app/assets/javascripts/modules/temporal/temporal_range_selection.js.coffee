@@ -1,4 +1,4 @@
-do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.temporal, plugin=@edsc.util.plugin, page=@edsc.page) ->
+do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.query.temporal, plugin=@edsc.util.plugin, page=@edsc.page) ->
 
   now = new Date()
   today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
@@ -158,7 +158,6 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
 
     # Submit temporal recurring search
     updateTemporalRecurring = ->
-
       if root.find('#temporal-recurring .temporal-error').is(":hidden")
         uiModel.apply()
       else
@@ -198,6 +197,6 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.ui.t
   $(document).ready ->
     $('.dataset-temporal-filter').temporalSelectors({
       uiModel: temporalModel,
-      modelPath: "ui.temporal.pending",
+      modelPath: "query.temporal.pending",
       prefix: 'dataset'
     })

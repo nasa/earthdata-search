@@ -75,12 +75,12 @@ ns.GridCondition = do (ko, KnockoutModel=@edsc.models.KnockoutModel) ->
             condition
           else
             null
+
         write: (params) =>
           name = params?.name
           systems = (sys for sys in @available when sys.name == name)
           @selected(systems[0])
-          @coordinates(params?.coordinates)
-
+          @queryCoordinates(params?.coordinates)
 
       @hint = @computed =>
         sel = @selected()

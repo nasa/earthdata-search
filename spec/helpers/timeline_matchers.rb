@@ -105,7 +105,7 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
     script += "  return temporal.queryCondition();"
 
     if dataset_n.nil?
-      script += "})(edsc.page.query.temporal());"
+      script += "})(edsc.page.query.temporal.applied);"
     else
       script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
     end

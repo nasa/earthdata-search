@@ -1,3 +1,4 @@
+#= require models/data/grid
 #= require models/data/query
 #= require models/data/datasets
 #= require models/data/dataset_facets
@@ -19,13 +20,12 @@ ns = models.page
 ns.SearchPage = do (ko,
                     config = @edsc.config
                     setCurrent = ns.setCurrent,
-                    QueryModel = data.Query,
+                    QueryModel = data.query.DatasetQuery,
                     DatasetsModel = data.Datasets
                     DatasetFacetsModel = data.DatasetFacets
                     ProjectModel = data.Project
                     UserModel = data.User
                     SpatialTypeModel = ui.SpatialType
-                    TemporalModel = ui.Temporal
                     DatasetsListModel = ui.DatasetsList
                     ProjectListModel = ui.ProjectList
                     GranuleTimelineModel = ui.GranuleTimeline
@@ -41,16 +41,18 @@ ns.SearchPage = do (ko,
       @preferences = new PreferencesModel(@user)
 
       @ui =
-        spatialType: new SpatialTypeModel()
-        temporal: new TemporalModel(@query)
+        spatialType: new SpatialTypeModel(@query)
         datasetsList: new DatasetsListModel(@query, @datasets)
         projectList: new ProjectListModel(@project, @user, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
-        granuleTemporal: null
 
       @bindingsLoaded = ko.observable(false)
 
       @spatialError = ko.computed(@_computeSpatialError)
+
+    clearFilters: =>
+      @query.clearFilters()
+      @ui.spatialType.selectNone()
 
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
