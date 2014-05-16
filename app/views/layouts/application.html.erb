@@ -19,7 +19,7 @@
     <div class="wrap">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
-      <h1><a class="ir" href="<%= root_path %>">Earthdata Search</a></h1>
+      <h1><a class="ir" href="<%= root_path %>" title="Earthdata Search Alpha">Earthdata Search</a></h1>
       <div class="toolbar-content">
         <div class="toolbar-secondary">
           <%= yield :toolbar_secondary %>
@@ -45,7 +45,6 @@
         <img src="<%= image_path "https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0" %>" alt="">
       </noscript>
     <% end %>
-<<<<<<< HEAD
     <% if Rails.configuration.respond_to?(:analytics_id) %>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -57,9 +56,6 @@
       ga('send', 'pageview');
     </script>
     <% end %>
-    <%= javascript_include_tag "https://cdn.sit.earthdata.nasa.gov/tophat/tophat.js" unless Rails.env.test? %>
-=======
     <%= javascript_include_tag Rails.configuration.tophat_url %>
->>>>>>> de619398e362351b9f07342505f6d4237bb291d6
 </body>
 </html>
