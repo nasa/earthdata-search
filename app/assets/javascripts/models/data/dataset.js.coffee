@@ -100,7 +100,7 @@ ns.Dataset = do (ko
 
     granuleFiltersApplied: ->
       # granuleQuery.params() will have echo_collection_id and page_size by default
-      params = @granuleQuery.params()
+      params = @granuleQuery.ownParams()
       ignored_params = ['page_size', 'page_num', 'sort_key', 'echo_collection_id']
       for own key, value of params
         return true if ignored_params.indexOf(key) == -1

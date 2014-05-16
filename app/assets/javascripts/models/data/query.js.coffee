@@ -148,6 +148,7 @@ ns.query = do (ko,
   class Query extends KnockoutModel
     constructor: (@parentQuery) ->
       @params = @computed(read: @serialize, write: @fromJson, deferEvaluation: true)
+      @ownParams = @computed(read: @_computeOwnParams, deferEvaluation: true)
       @globalParams = @computed(read: @_computeGlobalParams, deferEvaluation: true)
 
     queryComponent: (obj, observable=null, propagate=false) ->
@@ -171,15 +172,15 @@ ns.query = do (ko,
       for component in @_components
         component.params({})
 
-    _writeComponents: (components) ->
-      params = {}
-      params = extend(params, @parentQuery.globalParams()) if @parentQuery
+    _writeComponents: (components, inheritedParams) ->
+      inheritedParams ?= @parentQuery?.globalParams() ? {}
+      params = extend({}, inheritedParams)
       for component in components
         extend(true, params, component.params())
       params
 
     _computeGlobalParams: => @_writeComponents(@_propagated)
-    _computeParams: =>
+    _computeOwnParams: => @_writeComponents(@_components, {})
 
   class DatasetQuery extends Query
     constructor: (parentQuery) ->
