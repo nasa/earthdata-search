@@ -60,6 +60,10 @@ module VCR
       content
     end
 
+    def absolute_path_to_file(*args)
+      @persister.absolute_path_to_file(*args)
+    end
+
     private
 
     def unique_key(interaction)
