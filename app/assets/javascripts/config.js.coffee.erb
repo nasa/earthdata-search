@@ -46,7 +46,7 @@
     present: -> new Date() - 0
     #baseQueryParams: visualizationDatasetParams
 
-  <% elsif Rails.env.production? || Rails.env.ops? || Rails.env.uat? || Rails.env.sit? %>
+  <% else %>
   # Production config
   exports =
     defaultAnimationDurationMs: 300
