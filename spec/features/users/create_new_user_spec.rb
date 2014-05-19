@@ -64,6 +64,8 @@ describe 'Create new account', reset: false do
     after :all do
       click_link user[:username]
       click_logout
+      click_link 'Sign In'
+      click_link 'EOSDIS user account'
     end
 
     it 'logs in the new user' do

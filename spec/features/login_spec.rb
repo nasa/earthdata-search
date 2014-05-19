@@ -37,7 +37,7 @@ describe "Login", reset: false do
     end
 
     it "display the user information while logged in" do
-      within(".toolbar") do
+      within("#main-toolbar") do
         expect(page).to have_content("edsc")
       end
     end
@@ -46,7 +46,7 @@ describe "Login", reset: false do
       click_link 'edsc'
       click_logout
 
-      script = "window.edsc.models.page.current.user.isLoggedIn()"
+      script = "edsc.page.user.isLoggedIn()"
       response = page.evaluate_script(script)
 
       expect(response).to eq(false)
@@ -59,13 +59,13 @@ describe "Login", reset: false do
       fill_in 'Password', with: 'EDSCtest!1'
       click_button 'Sign In'
 
-      within(".toolbar") do
+      within("#main-toolbar") do
         expect(page).to have_content("edsc")
       end
 
       visit '/search'
 
-      within(".toolbar") do
+      within("#main-toolbar") do
         expect(page).to have_content("edsc")
       end
     end
