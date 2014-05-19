@@ -198,6 +198,11 @@
   display: block;
 }
 
+a.master-overlay-close {
+  color: rgba(255, 255, 255, .3);
+  @include transition (color 0.15s ease-in-out);
+}
+
 .master-overlay-when-parent-hidden {
   display: none;
 }

@@ -23,8 +23,13 @@ class UsersController < ApplicationController
   def logout
     session[:token] = nil
     session[:user_id] = nil
+    cookies["token"] = nil
+    cookies["name"] = nil
 
-    render json: nil, status: :ok
+    respond_to do |format|
+      format.html { redirect_to root_url }
+      format.json { render json: nil, status: :ok }
+    end
   end
 
   def new

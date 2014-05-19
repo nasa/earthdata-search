@@ -113,7 +113,7 @@ describe "Temporal" do
       close_datetimepicker
       fill_in "End", with: "12-31 00:00:00"
       close_datetimepicker
-      script = "edsc.page.ui.temporal.pending.years([1970, 1975])"
+      script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
 
@@ -131,7 +131,7 @@ describe "Temporal" do
       close_datetimepicker
       fill_in "End", with: "12-31 00:00:00"
       close_datetimepicker
-      script = "edsc.page.ui.temporal.pending.years([1970, 1975])"
+      script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
 

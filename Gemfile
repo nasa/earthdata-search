@@ -48,6 +48,7 @@ end
 
 # Gems that are mostly used for testing but useful to have available via CLI
 group :development, :test do
+  gem 'thin'
   gem 'rspec-rails'
   gem 'colored'
   gem 'vcr'

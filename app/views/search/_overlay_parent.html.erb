@@ -7,7 +7,7 @@
     </p>
   </header>
   <div class="master-overlay-content panel-group">
-    <!-- ko if: query.facets().length > 0 -->
+    <!-- ko if: query.facets() && query.facets().length > 0 -->
     <div class="panel panel-default selected-facets-panel">
       <div class="panel-heading">
         <h3 class="panel-title facet-title">

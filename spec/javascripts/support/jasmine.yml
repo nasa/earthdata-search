@@ -12,11 +12,18 @@
 #
 src_files:
   - assets/leaflet-0.7/leaflet-src
+  - assets/jquery.js
+  - assets/knockout.js
   - assets/namespaces.js.coffee
   - assets/config.js.coffee
+  - assets/util/string.js.coffee
+  - assets/util/date.js.coffee
   - assets/modules/map/coordinate.js.coffee
   - assets/modules/map/arc.js.coffee
   - assets/modules/map/geoutil.js.coffee
+  - assets/models/knockout_model.js.coffee
+  - assets/models/data/grid.coffee
+  - assets/models/data/query.js.coffee
 
 # stylesheets
 #

@@ -1,170 +1,55 @@
 #= require models/data/grid
+#= require models/ui/temporal
 
 ns = @edsc.models.data
 
 # FIXME: Get rid of dependency on page model
-ns.Query = do (ko,
+ns.query = do (ko,
                GridCondition=@edsc.models.data.GridCondition
                KnockoutModel=@edsc.models.KnockoutModel
-               evilPageModels=@edsc.models.page
+               Temporal=@edsc.models.ui.Temporal
                extend=$.extend) ->
 
-  class Query extends KnockoutModel
-    constructor: (@_extraParams={}) ->
-      @keywords = ko.observable("")
-      @spatial = ko.observable("")
-      @grid = new GridCondition()
-      @pageSize = ko.observable(20)
+  ko.extenders.queryable = (target, paramObj) ->
+    paramObj.value = target
+    target.params = ko.computed(null, paramObj, paramObj)
+    target
 
-      @temporal = ko.observable(null)
-      @focusedTemporal = ko.observable(null)
-      @focusedInterval = ko.observable(null)
+  class QueryParam
+    constructor: (name) ->
+      name = ko.observable(name) unless ko.isObservable(name)
+      @name = name
 
-      @facets = ko.observableArray()
-      @placename = ko.observable("")
+    canWrite: ->
+      value = @value()
+      value = value.trim() if typeof value == "string"
+      value? && (!value.length? || value.length > 0)
 
-      @day_night_flag_options = [{name: "Anytime", value: null},
-                                 {name: "Day only", value: "DAY"},
-                                 {name: "Night only", value: "NIGHT"},
-                                 {name: "Both day and night", value: "BOTH"}]
-      @day_night_flag = ko.observable(null)
-      @cloud_cover_min = ko.observable("")
-      @cloud_cover_max = ko.observable("")
-      @browse_only = ko.observable(false)
-      @online_only = ko.observable(false)
+    canReadFrom: (query) ->
+      query[@name()]?
 
-      @sortKey = ko.observable(null)
+    writeTo: (query) ->
+      query[@name()] = @value()
 
-      @granule_ids = ko.observable("")
-      @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
+    readFrom: (query) ->
+      @value(query[@name()])
 
-      @validQuery = ko.observable(true)
+    read: ->
+      query = null
+      if @canWrite()
+        query = {}
+        @writeTo(query)
+      query
 
-      @params = @computed(@_computeParams)
+    write: (query) ->
+      if @canReadFrom(query)
+        @readFrom(query)
+      else
+        @value(@defaultValue ? null)
 
-      # Parameters shared by datasets and granules
-      @globalParams = @computed(@_computeGlobalParams)
-
-    fromJson: (jsonObj) ->
-      @keywords(jsonObj.keywords)
-      @spatial(jsonObj.spatial)
-      if jsonObj.temporal?
-        @temporal().fromJson(jsonObj.temporal)
-      @grid.queryCondition(jsonObj.two_d_coordinate_system)
-      @facets(jsonObj.facets ? [])
-      @placename(jsonObj.placename)
-      @day_night_flag(jsonObj.day_night_flag)
-      @cloud_cover_min(jsonObj.cloud_cover_min)
-      @cloud_cover_max(jsonObj.cloud_cover_max)
-      @browse_only(jsonObj.browse_only)
-      @online_only(jsonObj.online_only)
-      @granule_ids(jsonObj.granule_ids)
-
-    serialize: ->
-      {
-        keywords: @keywords()
-        spatial: @spatial()
-        temporal: @temporal()?.serialize()
-        two_d_coordinate_system: @grid.queryCondition()
-        facets: @facets()
-        placename: @placename()
-        day_night_flag: @day_night_flag()
-        cloud_cover_min: @cloud_cover_min()
-        cloud_cover_max: @cloud_cover_max()
-        browse_only: @browse_only()
-        online_only: @online_only()
-        granule_ids: @granule_ids()
-      }
-
-    clearFilters: =>
-      @keywords('')
-      @spatial('')
-      evilPageModels.current.ui.spatialType.selectNone()
-      @temporal().clear() if @temporal()
-      @grid.clear()
-      @placename('')
-      @facets.removeAll()
-      @day_night_flag(null)
-      @cloud_cover_min("")
-      @cloud_cover_max("")
-      @browse_only(false)
-      @online_only(false)
-      @granule_ids("")
-
-    toggleQueryDatasetSpatial: (dataset) =>
-      constraint = dataset.spatial_constraint()
-      spatial = @spatial()
-      constraint = "" if constraint == spatial
-      @spatial(constraint)
-      false
-
-    canQueryDatasetSpatial: (dataset) =>
-      spatial = @spatial()
-      constraint = dataset.spatial_constraint()
-      constraint? && (!spatial || spatial == constraint)
-
-    _computeGlobalParams: =>
-      params = {}
-
-      spatial = @spatial()
-      @_computeSpatialParams(params, spatial) if spatial?.length > 0
-
-      temporal = @temporal()?.queryCondition()
-      params.temporal = temporal if temporal?.length > 0
-
-      grid = @grid.queryCondition()
-      params.two_d_coordinate_system = grid if grid?
-
-      params
-
-    _computeParams: =>
-      params = extend({}, @_extraParams, @_computeGlobalParams())
-
-      keywords = @keywords()?.trim()
-      if keywords?.length > 0
-        placename = @placename()
-        if placename? && placename.length > 0 && keywords.indexOf(placename) != -1
-          keywords = keywords.replace(placename, '')
-        params.free_text = keywords
-
-      for facet in @facets()
-        param = facet.param
-        params[param] ||= []
-        params[param].push(facet.term)
-
-      params.sort_key = @sortKey() if @sortKey()?
-
-      day_night_flag = @day_night_flag()
-      params.day_night_flag = day_night_flag if day_night_flag?.length > 0
-
-      cloud_cover_min = @cloud_cover_min()
-      cloud_cover_max = @cloud_cover_max()
-      if cloud_cover_min?.length > 0 || cloud_cover_max?.length > 0
-        params.cloud_cover ||= {}
-        params.cloud_cover["min"] = cloud_cover_min
-        params.cloud_cover["max"] = cloud_cover_max
-      browse_only = @browse_only()
-      params.browse_only = true if browse_only
-
-      online_only = @online_only()
-      params.online_only = true if online_only
-
-      # TODO If searchMultipleGranuleIDs is false, we need to search for granule_ur || producer_granule_id
-      # right now it is only doing which radio button is selected.
-      # NCR 11014475
-      granule_ids = @granule_ids()
-      if granule_ids?.length > 0
-        for id in granule_ids.split("\n")
-          param = @granuleIdsSelectedOptionValue()
-          params[param] ||= []
-          params[param].push(id)
-
-      params.page_size = @pageSize()
-
-      params
-
-    _computeSpatialParams: (params, spatialStr) ->
-      spatial = spatialStr.split(':')
+  class SpatialParam extends QueryParam
+    writeTo: (query) ->
+      spatial = @value().split(':')
       type = spatial.shift()
 
       if type != 'point' && type != 'bounding_box'  && type != 'line'
@@ -183,23 +68,203 @@ ns.Query = do (ko,
       if type == 'polygon'
         spatial.push(spatial[0])
 
-      params[type] = spatial.join(',')
+      query[type] = spatial.join(',')
+
+    canReadFrom: (query) ->
+      query.point? || query.bounding_box? || query.line? || query.polygon?
+
+    readFrom: (query) ->
+      types = (t for t in ['point', 'bounding_box', 'line', 'polygon'] when query[t]?)
+      type = types[0]
+      value = query[type]
+      # Replace every second comma with a colon
+      value = value.replace(/([^,]*,[^,]*)(,|$)/g, '$1:')
+      value = value.slice(0, -1)
+
+      # Remove the last point in polygons
+      value = value.replace(/:[^:]*$/, '') if type == 'polygon'
+      @value("#{type}:#{value}")
+
+  class KeywordParam extends QueryParam
+    constructor: (name, @placename) ->
+      super(name)
+
+    canWrite: ->
+      super() && @value() != @placename()
+
+    writeTo: (query) ->
+      placename = @placename()
+      value = @value()
+      if placename? && placename.length > 0 && value? && value.indexOf(placename) != -1
+        value = value.replace(placename, '')
+      query[@name()] = value
+
+  class FacetParam extends QueryParam
+    writeTo: (query) ->
+      for facet in @value()
+        param = facet.param
+        query[param] ?= []
+        query[param].push(facet.term)
+      query
+
+    canReadFrom: (query) ->
+      true
+
+    readFrom: (query) ->
+      @value([])
+
+  class BooleanParam extends QueryParam
+    canWrite: ->
+      @value() is true || @value() is 'true'
+
+  class DelimitedParam extends QueryParam
+    constructor: (name, @delimiter="\n") ->
+      super(name)
+
+    readFrom: (query) ->
+      @value(query[@name()].join(@delimiter))
+
+    writeTo: (query) ->
+      query[@name()] = @value().split(@delimiter)
+
+  class Range
+    constructor: ->
+      @min = ko.observable()
+      @max = ko.observable()
+      @params = ko.computed
+        read: =>
+          min = @min()
+          max = @max()
+          return null unless min? || max?
+          params = {}
+          params.min = min if min?
+          params.max = max if max?
+          params
+        write: (value) =>
+          @min(value?.min)
+          @max(value?.max)
+        deferEvaluation: true
+
+  class Query extends KnockoutModel
+    constructor: (@parentQuery) ->
+      @params = @computed(read: @serialize, write: @fromJson, deferEvaluation: true)
+      @ownParams = @computed(read: @_computeOwnParams, deferEvaluation: true)
+      @globalParams = @computed(read: @_computeGlobalParams, deferEvaluation: true)
+
+    queryComponent: (obj, observable=null, propagate=false) ->
+      @_components ?= []
+      @_propagated ?= []
+      unless ko.isObservable(observable)
+        obj.defaultValue = observable
+        observable = ko.observable(observable)
+      observable = observable.extend(queryable: obj)
+      @_components.push(observable)
+      @_propagated.push(observable) if propagate
+      observable
+
+    fromJson: (query) =>
+      for component in @_components
+        component.params(query)
+
+    serialize: => @_writeComponents(@_components)
+
+    clearFilters: =>
+      for component in @_components
+        component.params({})
+
+    _writeComponents: (components, inheritedParams) ->
+      inheritedParams ?= @parentQuery?.globalParams() ? {}
+      params = extend({}, inheritedParams)
+      for component in components
+        extend(true, params, component.params())
+      params
+
+    _computeGlobalParams: => @_writeComponents(@_propagated)
+    _computeOwnParams: => @_writeComponents(@_components, {})
+
+  class DatasetQuery extends Query
+    constructor: (parentQuery) ->
+      super(parentQuery)
+      @focusedTemporal = ko.observable(null)
+      @focusedInterval = ko.observable(null)
+      @placename = ko.observable("")
+      @grid = new GridCondition()
+      @temporal = new Temporal()
+
+      @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, true)
+      @spatial = @queryComponent(new SpatialParam(), '', true)
+      @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, true)
+      @facets = @queryComponent(new FacetParam(), ko.observableArray())
+      @pageSize = @queryComponent(new QueryParam('page_size'), 20)
+      @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
+
+    clearFilters: =>
+      @focusedTemporal(null)
+      @focusedInterval(null)
+      @placename("")
+      super()
+
+    toggleQueryDatasetSpatial: (dataset) =>
+      constraint = dataset.spatial_constraint()
+      spatial = @spatial()
+      constraint = "" if constraint == spatial
+      @spatial(constraint)
+      false
+
+    canQueryDatasetSpatial: (dataset) =>
+      spatial = @spatial()
+      constraint = dataset.spatial_constraint()
+      constraint? && (!spatial || spatial == constraint)
+
+  class DataQualitySummaryQuery extends Query
+    constructor: (datasetId, parentQuery) ->
+      super(parentQuery)
+      @queryComponent(new QueryParam('catalog_item_id'), datasetId)
+
+  class GranuleQuery extends Query
+    constructor: (datasetId, parentQuery) ->
+      super(parentQuery)
+      @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
+      @dayNightFlagOptions = [{name: "Anytime", value: null},
+                              {name: "Day only", value: "DAY"},
+                              {name: "Night only", value: "NIGHT"},
+                              {name: "Both day and night", value: "BOTH"}]
+      @isValid = @computed(read: @_computeIsValid, deferEvaluation: true)
+
+      @temporal = new Temporal()
+      @cloudCover = new Range()
+
+      @queryComponent(new QueryParam('echo_collection_id'), datasetId)
+      @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition)
+      @sortKey = @queryComponent(new QueryParam('sort_key'), ['-start_date'])
+
+      @dayNightFlag = @queryComponent(new QueryParam('day_night_flag'), null)
+      @browseOnly = @queryComponent(new BooleanParam('browse_only'), false)
+      @onlineOnly = @queryComponent(new BooleanParam('online_only'), false)
+      @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
+      @granuleIds = @queryComponent(new DelimitedParam(@granuleIdsSelectedOptionValue), '')
+
+      @pageSize = @queryComponent(new QueryParam('page_size'), 20)
+
+    fromJson: (query) =>
+      granule_option = 'granule_ur'
+      granule_option = 'producer_granule_id' if query.producer_granule_id
+      @granuleIdsSelectedOptionValue(granule_option)
+      super(query)
+
+    _computeIsValid: =>
+      (@validateCloudCoverValue(@cloudCover.min()) &&
+       @validateCloudCoverValue(@cloudCover.max()) &&
+       @validateCloudCoverRange(@cloudCover.min(), @cloudCover.max()))
 
     validateCloudCoverValue: (cloud_cover_value) =>
       value = parseFloat(cloud_cover_value)
-      valid = false
-      if isNaN(value)
-        valid = true
-      else if value >= 0.0 && value <= 100.0
-        valid = true
-      valid
+      isNaN(value) || (value >= 0.0 && value <= 100.0)
 
     validateCloudCoverRange: (min, max) =>
-      valid_range = ((isNaN(parseFloat(min)) || isNaN(parseFloat(max))) || parseFloat(min) <= parseFloat(max))
-      valid_min = @validateCloudCoverValue(min)
-      valid_max = @validateCloudCoverValue(max)
-      valid = valid_range && valid_min && valid_max
-      @validQuery(valid)
-      valid_range
+      isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max)
 
-  exports = Query
+  exports =
+    DatasetQuery: DatasetQuery
+    GranuleQuery: GranuleQuery
+    DataQualitySummaryQuery: DataQualitySummaryQuery
