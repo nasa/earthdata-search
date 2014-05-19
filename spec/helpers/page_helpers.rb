@@ -58,7 +58,8 @@ module Helpers
 
     def click_logout
       # Do this in Javascript because of capybara clickfailed bug
-      page.execute_script("$('.dropdown-menu .dropdown-link-logout').click()")
+      # page.execute_script("$('.dropdown-menu .dropdown-link-logout').click()")
+      visit '/logout'
     end
 
     def login(username='edsc', password='EDSCtest!1')
