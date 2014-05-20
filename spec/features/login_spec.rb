@@ -38,12 +38,12 @@ describe "Login", reset: false do
 
     it "display the user information while logged in" do
       within("#main-toolbar") do
-        expect(page).to have_content("edsc")
+        expect(page).to have_link("Manage user account")
       end
     end
 
     it "logs the user out" do
-      click_link 'edsc'
+      click_link 'Manage user account'
       click_logout
 
       script = "edsc.page.user.isLoggedIn()"
@@ -60,13 +60,13 @@ describe "Login", reset: false do
       click_button 'Sign In'
 
       within("#main-toolbar") do
-        expect(page).to have_content("edsc")
+        expect(page).to have_link("Manage user account")
       end
 
       visit '/search'
 
       within("#main-toolbar") do
-        expect(page).to have_content("edsc")
+        expect(page).to have_link("Manage user account")
       end
     end
   end

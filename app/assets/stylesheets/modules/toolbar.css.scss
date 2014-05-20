@@ -20,7 +20,7 @@
 }
 
 .leaflet-bar.projection-switcher a {
-  @include retina-image(projection-sprite, 90px 30px, png, null, true);
+  @include retina-image(projection-sprite, 90px 30px, png, null, '@2x');
 
   &.projection-switcher-arctic {
     background-position: -59px -2px;

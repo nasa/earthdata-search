@@ -43,7 +43,7 @@
 // panel to dataset search results
 .master-overlay-parent {
   // background-color: $master-overlay-parent-bg-color;
-  @include retina-image(denim, 145px 145px, png, null, true);
+  @include retina-image(denim, 145px 145px, png, null, '@2x');
   width: 20%;
   left: 0;
 }

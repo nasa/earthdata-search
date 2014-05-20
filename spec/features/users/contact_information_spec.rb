@@ -9,7 +9,7 @@ describe 'Contact Information', reset: false do
     visit '/search'
     login
 
-    click_link 'edsc'
+    click_link 'Manage user account'
     # TODO: Both of these fail to get me to the contact info page
     # click_link 'Contact Information'
     # click_contact_information
