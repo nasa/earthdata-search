@@ -82,7 +82,7 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate,
 
     proj = (ll) ->
       # Avoid weird precision problems near infinity by clamping to a high min/max pixel value
-      MAX_RES = 100000
+      MAX_RES = 10000000
 
       # Fix problems where 90 degrees projects to NaN in our south polar projection
       if ll.lat == 90
