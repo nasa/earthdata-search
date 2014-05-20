@@ -94,11 +94,18 @@ input.day-of-year-input {
   }
 }
 
-.user-info {
+.toolbar {
+  .fa {
+    padding: 5px 0;
+  }
 
-  .dropdown-button i {
-    background: #315880;
+  .fa-caret-down {
+    padding-left: 5px;
+  }
+
+  .fa-user {
     padding: 5px 7px;
+    background: #315880;
     border-radius: 30px;
   }
 }
