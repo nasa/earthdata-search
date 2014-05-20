@@ -90,7 +90,6 @@ do (ko, $=jQuery) ->
         method = 'hide'
       $(element).modal(method)
 
-
   ko.bindingHandlers.echoform =
     init: (element, valueAccessor, allBindings, viewModel, bindingContext) ->
     update: (element, valueAccessor, allBindings, viewModel, bindingContext) ->

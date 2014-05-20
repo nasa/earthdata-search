@@ -12,6 +12,7 @@
 //= require namespaces
 //= require config
 //= require util/index
+//= require modules/echoformsext
 //= require models/index
 //= require models/page/access_page
 //= require bootstrap/bootstrap
