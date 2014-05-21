@@ -1,4 +1,4 @@
-@edsc.banner = do (config = @edsc.config, date = @edsc.util.date, $=jQuery, preferences = @edsc.page.preferences) ->
+@edsc.banner = do (date = @edsc.util.date, $=jQuery, preferences = @edsc.page.preferences) ->
   banners = []
   $banner = null
 
@@ -8,32 +8,50 @@
       <p class=\"banner-message\"></p>
     </div>"
 
-  showBanner = (key, title, message, options={}) ->
-    if $banner
-      banners.push([key, title, message, options])
-    else
+  displayBanner = (key, title, message, options={}) ->
+    unless $banner
       $banner = $(template)
+      $banner.addClass(options.className) if options.className?
       $banner.find('.banner-title').text(title)
-      $banner.find('.banner-message').text(message)
+      $message = $banner.find('.banner-message')
+      if options.html
+        $message.html(message)
+      else
+        $message.text(message)
       $banner.data('banner.key', key)
+      $banner.data('banner.persist', options.persist)
       $('body').after($banner)
       # Do this in a timeout so the element has time to be placed in the DOM and animations can happen
       setTimeout((-> $banner.removeClass('banner-hidden')), 0)
-      $banner.on 'click', '.banner-close', closeBanner
+      $banner.on 'click', '.banner-close', onClickClose
+
+  showBanner = (args...) ->
+    options = args[3] ? {}
+    if options.immediate
+      $banner?.remove()
+      $banner = null
+      banners.unshift(args)
+    else
+      banners.push(args)
+    displayBanner(args...)
 
   removeBannerAndOpenNext = ->
     $banner?.remove()
     $banner = null
     if banners.length > 0
-      showBanner(banners.shift()...)
+      displayBanner(banners[0]...)
 
-  closeBanner = ->
+  removeBannersWithKey = (key) ->
+    banners = (banner for banner in banners when banner[0] != key)
+    if $banner?.data('banner.key') == key
+      removeBannerAndOpenNext()
+
+  onClickClose = ->
     if $banner?
-      if $banner.data('banner.key')?
+      if $banner.data('banner.key')? && $banner.data('banner.persist')
         preferences.dismissedEvents.push($banner.data('banner.key'))
         preferences.save()
-      $banner.addClass('banner-hidden')
-      setTimeout(removeBannerAndOpenNext, config.defaultAnimationDurationMs)
+      removeBannerAndOpenNext()
 
   allEvents = []
 
@@ -45,24 +63,11 @@
       start = event.start_date
       end = event.end_date
       if dismissed.indexOf(event.id) == -1
-        showBanner(event.id, "#{event.title} (#{date.timeSpanToHuman(start, end)})", event.message)
+        showBanner(event.id, "#{event.title} (#{date.timeSpanToHuman(start, end)})", event.message, persist: true)
       else
         pruned.push(event.id)
     preferences.dismissedEvents(pruned)
     null
-
-  # DELETE BEFORE 1.0 RELEASE
-  $(document).ready ->
-    isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-    isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-
-    if !isChrome && !isSafari
-      showBanner(
-        'unsupportedbrowser',
-        'Your browser is not yet supported',
-        'The Earthdata Search Alpha Preview is designed to work best in Chrome and Safari browsers.')
-  # END DELETE
-
 
   $(document).on 'click', '.banner-show-events', (e) ->
     e.preventDefault()
@@ -80,5 +85,41 @@
         if data.length > 0
           $('.toolbar-secondary').prepend('<a href="#" class="banner-show-events" title="Show Outage Notices"><i class="fa fa-warning"></i></a>')
           showAllEvents()
+
+  # Errors for XHRs
+  $(document).ajaxSend (event, xhr, settings) ->
+    removeBannersWithKey(settings.url.split('?')[0])
+
+
+  $(document).on 'click', '.banner-ajax-retry', ->
+    {retry} = banners[0][3] if banners.length > 0
+    retry?()
+
+
+  $(document).ajaxError (event, xhr, settings) ->
+    if xhr.status? && xhr.status >= 500
+      url = settings.url.split('?')[0]
+      title = "An unexpected error occurred"
+      resource = url.match(/([^\/\.]+)(?:\.[^\/]*)?$/)?[1]
+      if resource?
+        resource = resource.replace('_', ' ')
+        title = "Error retrieving #{resource}"
+      error = xhr.responseJSON?.errors?.error ? 'There was a problem completing the request'
+      retry = settings.retry
+      error += ' <a class="banner-ajax-retry" href="#">Retry</a>' if retry?
+
+      showBanner(url, title, error, className: 'banner-error', immediate: true, html: true, retry: retry)
+
+  # DELETE BEFORE 1.0 RELEASE
+  $(document).ready ->
+    isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+
+    if !isChrome && !isSafari
+      showBanner(
+        'unsupportedbrowser',
+        'Your browser is not yet supported',
+        'The Earthdata Search Alpha Preview is designed to work best in Chrome and Safari browsers.')
+  # END DELETE
 
   exports = showBanner
