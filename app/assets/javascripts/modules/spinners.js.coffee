@@ -52,6 +52,9 @@ do ($ = jQuery) ->
       if url.indexOf('accept_data_quality_summaries') > -1
         $(dqs_accept).removeClass('busy')
         $(dqs_button).prop("disabled",false)
+      if url.indexOf('login') > -1
+        $(login).removeClass('busy')
+        $(login_button).prop("disabled",false)
       $(configure).removeClass('busy') if url.indexOf('data/options') > -1
 
       null
