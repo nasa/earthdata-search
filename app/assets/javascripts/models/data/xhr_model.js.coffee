@@ -52,7 +52,6 @@ ns.XhrModel = do (ko
         @results(results)
 
     _load: (params, current, callback) =>
-      console.log 'load called'
       @abort()
       @isLoading(true)
       @isError(false)

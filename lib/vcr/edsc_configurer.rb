@@ -24,6 +24,12 @@ module VCR
           if request.uri.include?('fail%25+hard') || request.uri.include?('fail+hard')
             cassette = 'expired-token'
             record = :none
+          elsif (request.method == :delete ||
+                 (request.uri.include?('/orders.json') && request.method == :get) ||
+                 request.uri.include?('/echo-rest/calendar_events') ||
+                 (request.uri.include?('/datasets.json') && request.uri.include?('trigger500')))
+            cassette = 'hand-edited'
+            record = :none
           elsif uri.start_with? 'http://api.geonames.org'
             cassette = 'geonames'
           elsif uri.start_with? 'http://ogre.adc4gis.com'
@@ -35,11 +41,6 @@ module VCR
             cassette = 'timeline'
           elsif request.uri.include? '/catalog-rest/'
             cassette = 'catalog-rest'
-          elsif (request.method == :delete ||
-                 (request.uri.include?('/orders.json') && request.method == :get) ||
-                 request.uri.include?('/echo-rest/calendar_events'))
-            cassette = 'hand-edited'
-            record = :none
           elsif request.uri.include? '/echo-rest/'
             cassette = 'echo-rest'
           end
