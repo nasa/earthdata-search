@@ -102,9 +102,16 @@ body > footer {
   }
 }
 
+.panel-list-meta.busy {
+  background: asset-url('spinner.gif') no-repeat left top;
+}
+
 .busy {
   background: asset-url('spinner.gif') no-repeat center top;
   padding-top: 16px;
+}
+
+.panel-list-load-more {
   text-align: center;
 }
 
