@@ -88,7 +88,7 @@
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
             <%= render partial: 'dataset_list_item', locals: {is_project: false} %>
           </ul>
-          <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
+          <p class="panel-list-load-more busy" data-bind="visible: datasets.isLoading">
             Loading datasets...
           </p>
         </div>
@@ -420,6 +420,7 @@
           </div>
         </div>
         <div class="modal-footer">
+          <div class="loading"></div>
           <button type="submit" class="button-light">
             <i class="fa fa-lock"></i>
             <span data-bind="text: (user.needsUsername() || user.needsPassword()) ? 'Recover' : 'Sign In'">Sign In</span></button>
@@ -445,6 +446,7 @@
           <!-- /ko -->
         </div>
         <div class="modal-footer">
+          <div class="loading"></div>
           <button type="submit" class="button-light">Accept</button>
         </div>
       </form>

@@ -26,7 +26,7 @@
       <a class="link" href="https://addons.mozilla.org/en-US/firefox/addon/downthemall/">DownThemAll!</a>
       can assist you in managing a large number of download links.
     </p>
-    <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetsToDownload">
+    <ul class="data-access-datasets-list busy" data-bind="foreach: ui.projectList.datasetsToDownload">
       <li class="data-access-dataset">
         <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
         <div class="data-access-dataset-actions">
@@ -38,7 +38,7 @@
   </section>
   <section class="data-access-content data-access-dataset-only" data-bind="visible: ui.projectList.datasetOnly().length > 0">
     <h2>The following datasets are available on the provider's website</h2>
-    <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetOnly">
+    <ul class="data-access-datasets-list busy" data-bind="foreach: ui.projectList.datasetOnly">
       <li class="data-access-dataset">
         <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
         <!-- ko foreach: hasAtomData() ? links() : [] -->
@@ -54,7 +54,7 @@
     <p>
       When the data becomes available, an email containing download links will be sent to the address you provided.
     </p>
-    <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.submittedOrders">
+    <ul class="data-access-datasets-list busy" data-bind="foreach: ui.projectList.submittedOrders">
       <li class="data-access-dataset">
         <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
         <div class="data-access-dataset-actions">

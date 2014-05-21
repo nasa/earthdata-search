@@ -5,14 +5,16 @@
       <i class="fa fa-arrow-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Datasets</span>
     </a>
   </nav>
-  <!-- ko if: $root.ui.datasetsList.selected().detailsLoaded -->
-  <!-- ko with: $root.ui.datasetsList.selected().details -->
+  <!-- ko if: $root.ui.datasetsList.selected() -->
   <header >
-    <h2 data-bind="if: $parent.detailsLoaded">Details Loading...</h2>
-    <!-- ko ifnot: $parent.detailsLoaded -->
-    <h2 data-bind="text: $data.dataset_id"></h2>
+    <h2 data-bind="ifnot: $root.ui.datasetsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
+    <!-- ko if: $root.ui.datasetsList.selected().detailsLoaded -->
+    <h2 data-bind="text: $root.ui.datasetsList.selected().dataset_id"></h2>
     <!-- /ko -->
   </header>
+  <!-- /ko -->
+  <!-- ko if: $root.ui.datasetsList.selected().detailsLoaded -->
+  <!-- ko with: $root.ui.datasetsList.selected().details -->
   <ul id="dataset-details-nav" class="nav nav-tabs">
     <li class="active"><a href="#dataset-information" data-toggle="tab">Information</a></li>
     <li><a href="#dataset-metadata" data-toggle="tab">Metadata</a></li>

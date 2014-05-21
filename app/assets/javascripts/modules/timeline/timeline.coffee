@@ -225,7 +225,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       null
 
     loadstart: (id, start, end, resolution) ->
-      @root.find(@scope('.tools')).addClass('busy')
       match = @svg.getElementsByClassName(id)
       if match.length > 0
         match[0].setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
@@ -279,8 +278,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       children = @tlDatasets.childNodes
       loading = @tlDatasets.getElementsByClassName(@scope('loading'))
 
-      if children.length == @_datasets.length && loading.length == 0 && @_contains(start, end, @start, @end)
-        @root.find(@scope('.tools')).removeClass('busy')
       null
 
     refresh: ->
@@ -605,7 +602,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       resolution = range[2]
       [loadedStart, loadedEnd, loadedResolution] = @_loadedRange
       unless loadedResolution == resolution && @_contains(loadedStart, loadedEnd, start, end)
-        @root.find(@scope('.tools')).addClass('busy')
         for node in @tlDatasets.childNodes
           node.setAttribute('class', "#{node.getAttribute('class')} #{@scope('loading')}")
 
