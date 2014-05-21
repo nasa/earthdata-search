@@ -21,7 +21,11 @@ module VCR
 
           cassette = 'global'
           uri = request.uri
-          if request.uri.include?('fail%25+hard') || request.uri.include?('fail+hard')
+          if uri.start_with? 'http://api.geonames.org'
+            cassette = 'geonames'
+          elsif uri.start_with? 'http://ogre.adc4gis.com'
+            cassette = 'ogre'
+          elsif request.uri.include?('fail%25+hard') || request.uri.include?('fail+hard')
             cassette = 'expired-token'
             record = :none
           elsif (request.method == :delete ||
@@ -30,10 +34,6 @@ module VCR
                  (request.uri.include?('/datasets.json') && request.uri.include?('trigger500')))
             cassette = 'hand-edited'
             record = :none
-          elsif uri.start_with? 'http://api.geonames.org'
-            cassette = 'geonames'
-          elsif uri.start_with? 'http://ogre.adc4gis.com'
-            cassette = 'ogre'
           elsif request.uri.include? '/echo-rest/users.json'
             cassette = 'echo-rest-users'
             record = :none

@@ -51,6 +51,7 @@
       if $banner.data('banner.key')? && $banner.data('banner.persist')
         preferences.dismissedEvents.push($banner.data('banner.key'))
         preferences.save()
+      banners.shift()
       removeBannerAndOpenNext()
 
   allEvents = []
