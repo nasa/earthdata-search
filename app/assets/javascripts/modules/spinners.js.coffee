@@ -16,7 +16,6 @@ do ($ = jQuery) ->
     # Show spinner at start of ajax request
     $(document).ajaxSend (event, jqxhr, settings) ->
       url = settings.url
-      # alert url
 
       $(facets).addClass('busy') if url.indexOf('dataset_facets.json') > -1
       if url.indexOf('datasets.json') > -1
@@ -39,7 +38,6 @@ do ($ = jQuery) ->
     # Hide spinner when ajax request finishes
     $(document).ajaxComplete (event, jqxhr, settings) ->
       url = settings.url
-      # alert 'Stopped ' + url
 
       $(facets).removeClass('busy') if url.indexOf('dataset_facets.json') > -1
       if url.indexOf('datasets.json') > -1
