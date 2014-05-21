@@ -27,7 +27,7 @@
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
           <h3>Review &amp; Select Service Options</h3>
-          <!-- ko if: granuleAccessOptions().hits && granuleAccessOptions().hits > 0 -->
+          <!-- ko if: granuleAccessOptions().hits != null && has_granules() -->
           <div class="access-item-review">
             <h4>Review</h4>
             <p class="summary">
@@ -37,12 +37,16 @@
                 Access methods other than "Download" are limited to the first 2000 granules.
               </span>
             </p>
-            <p class="summary" data-bind="if: granuleAccessOptions().size != 0">
+            <p class="summary" data-bind="if: granuleAccessOptions().size && granuleAccessOptions().size != 0">
               <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
               <span class="summary-label" data-bind="text: granuleAccessOptions().sizeUnit"></span>
             </p>
           </div>
 
+          <!-- ko if: granuleAccessOptions().hits == 0 -->
+          <p>There are no matching granules to access for this dataset</p>
+          <!-- /ko -->
+          <!-- ko if: granuleAccessOptions().hits > 0 -->
           <div class="granule-list">
             <h4>Granule List</h4>
             <!-- ko ifnot: $root.ui.serviceOptionsList.showGranules -->
@@ -92,7 +96,8 @@
             </div>
           </div>
           <!-- /ko -->
-          <!-- ko if: granuleAccessOptions().hits === 0 -->
+          <!-- /ko -->
+          <!-- ko if: !has_granules() -->
           <div class="access-item-review">
             <h4>Dataset Only</h4>
             <div>
