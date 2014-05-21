@@ -51,6 +51,19 @@
     preferences.dismissedEvents(pruned)
     null
 
+  # DELETE BEFORE 1.0 RELEASE
+  $(document).ready ->
+    isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+
+    if !isChrome && !isSafari
+      showBanner(
+        'unsupportedbrowser',
+        'Your browser is not yet supported',
+        'The Earthdata Search Alpha Preview is designed to work best in Chrome and Safari browsers.')
+  # END DELETE
+
+
   $(document).on 'click', '.banner-show-events', (e) ->
     e.preventDefault()
     banners = []
