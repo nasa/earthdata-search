@@ -122,6 +122,14 @@ button {
   @include dark-button;
 }
 
+button:disabled {
+  @include linear-gradient(#cbcbcb, #cbcbcb);
+  box-shadow: none;
+  text-shadow: none;
+  color: #888;
+  border-color: #888;
+}
+
 .btn-group {
   float: right;
   min-height: 3em;
