@@ -13,6 +13,11 @@ describe "Site tour", reset: true do
       wait_for_xhr
     end
 
+    after :each do
+      wait_for_xhr
+      Capybara.reset_sessions!
+    end
+
     # Single spec for the tour which tests every stop.  Normally I'd like this to be separate tests per stop, but
     # doing so is slow and highly redundant because the tour is so serial.
     it "shows an introductory tour walking the user through finding and visualizing data and adding it to a project" do

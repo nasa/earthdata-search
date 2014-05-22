@@ -91,7 +91,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   position: absolute;
   top: 0;
   display: block;
-  @include retina-image(gibs, 50px 50px, png, null, '@2x');
+  @include retina-image(gibs, 50px 50px, png, null, '@2x', true);
   background-repeat: no-repeat;
   width: 100px;
   height: 100px;
