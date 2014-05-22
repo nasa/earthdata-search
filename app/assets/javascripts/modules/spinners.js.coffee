@@ -32,4 +32,3 @@ do ($=jQuery) ->
 
   $(document).ajaxComplete (event, xhr, settings) ->
     spinner.remove() for spinner in spinners when spinner.matchesRequest(settings)
-    $('.master-overlay').masterOverlay('contentHeightChanged')
