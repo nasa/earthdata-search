@@ -31,7 +31,7 @@ ns.GibsTileLayer = do (L,
     geoOptions: L.extend({}, parent.geoOptions, projection: 'EPSG4326', endpoint: 'geo')
 
     onAdd: (map) ->
-      @options.time = dateUtil.isoUtcDateString(map.time) if @options.syncTime && map.time?
+      @options.time = dateUtil.isoUtcDateString(map.time ? yesterday) if @options.syncTime
       super(map)
       map.on 'edsc.timechange', @_onTimeChange
 
