@@ -65,7 +65,9 @@ do ($=jQuery
     $(window).on 'statechange anchorchange', updateLandingPageState
 
     preferences.onload ->
-      help.startTour() if uiModel.isLandingPage() && preferences.showTour()
+      if preferences.showTour()
+        # Let the DOM finish any refresh operations before showing the tour
+        setTimeout((-> help.startTour() if uiModel.isLandingPage()), 0)
 
     $('.landing-area').on 'keypress', '#keywords', (e) ->
       urlUtil.pushState('/search') if e.which == 13
