@@ -4,7 +4,6 @@
 ns = @edsc.models.data
 
 ns.Datasets = do (ko
-                  getJSON=jQuery.getJSON
                   XhrModel=ns.XhrModel
                   Dataset=ns.Dataset
                   ) ->

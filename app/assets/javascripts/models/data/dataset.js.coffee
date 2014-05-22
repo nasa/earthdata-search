@@ -13,7 +13,7 @@ ns.Dataset = do (ko
                  DataQualitySummaryModel = ns.DataQualitySummary
                  toParam=jQuery.param
                  extend=jQuery.extend
-                 getJSON = jQuery.getJSON
+                 ajax = jQuery.ajax
                  ) ->
 
   datasets = ko.observableArray()
@@ -92,8 +92,13 @@ ns.Dataset = do (ko
     _loadGranuleAccessOptions: ->
       params = @_granuleParams(@query.params())
 
-      getJSON '/data/options', params, (data, status, xhr) =>
-        @granuleAccessOptions(data)
+      ajax
+        dataType: 'json'
+        url: '/data/options'
+        data: params
+        retry: => @_loadGranuleAccessOptions()
+        success: (data, status, xhr) =>
+          @granuleAccessOptions(data)
 
     _granuleParams: (params) ->
       extend({}, params, 'echo_collection_id[]': @id(), @granuleQuery.params())
@@ -110,11 +115,15 @@ ns.Dataset = do (ko
       id = @id()
       path = "/datasets/#{id}.json"
       console.log("Request: #{path}", this)
-      getJSON path, (data) =>
-        details = data['dataset']
-        details.summaryData = this
-        @details(details)
-        @detailsLoaded(true)
+      ajax
+        dataType: 'json'
+        url: path
+        retry: => @_computeDetails()
+        success: (data) =>
+          details = data['dataset']
+          details.summaryData = this
+          @details(details)
+          @detailsLoaded(true)
 
     serialize: ->
       result = {id: @id(), dataset_id: @dataset_id(), has_granules: @has_granules()}
