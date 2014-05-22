@@ -3,17 +3,19 @@ ns = @edsc.models.data
 ns.XhrModel = do (ko
                   KnockoutModel=@edsc.models.KnockoutModel
                   config=@edsc.config
-                  getJSON=jQuery.getJSON
+                  ajax=jQuery.ajax
                   toParam=$.param) ->
+
 
   class XhrModel extends KnockoutModel
     constructor: (@path, @query) ->
       @results = @asyncComputed([], config.xhrRateLimitMs, @_computeSearchResponse, this)
 
-      @pendingRequestId = 0
       @completedRequestId = 0
       @isLoading = ko.observable(false)
       @error = ko.observable(null)
+      @isError = ko.observable(false)
+
       @isLoaded = ko.observable(false)
       @loadTime = ko.observable(null)
       @currentRequest = null
@@ -51,17 +53,22 @@ ns.XhrModel = do (ko
 
     _load: (params, current, callback) =>
       @abort()
-      requestId = ++@pendingRequestId
-      @isLoading(@pendingRequestId != @completedRequestId)
+      @isLoading(true)
+      @isError(false)
+
+      requestId = @completedRequestId + 1
       url = "#{@path}?#{$.param(params)}"
       console.log("Request (#{requestId}): #{url}")
       start = new Date()
 
-      @currentRequest = xhr = getJSON @path, params, (data, status, xhr) =>
-        if requestId > @completedRequestId
+      @currentRequest = xhr = $.ajax
+        dataType: 'json'
+        url: @path
+        data: params
+        retry: => @_load(params, current, callback)
+        success: (data, status, xhr) =>
           @currentRequest = null
           @isLoaded(true)
-          @completedRequestId = requestId
           @error(null)
           @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
           @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
@@ -72,26 +79,25 @@ ns.XhrModel = do (ko
           @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length ? 0))
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
-          @currentRequest = null
           callback?(results)
-        else
-          console.log("Rejected out-of-sequence request: #{@path}", requestId, params, data)
-        @isLoading(@pendingRequestId != @completedRequestId)
 
-      xhr.fail (response, type, reason) =>
-        console.log("Fail (#{requestId}) [#{reason}]: #{url}")
-        @currentRequest = null
-        if requestId > @completedRequestId
+        complete: =>
           @completedRequestId = requestId
-          @_onFailure(response)
-        @isLoading(@pendingRequestId != @completedRequestId)
+          @currentRequest = null
+          @isLoading(false)
 
-        if response.status == 403
-          # TODO: don't reference page logout the user
-          edsc.page.user.logout()
-          edsc.banner(null, 'Session has ended', 'Please sign in')
+        error: (response, type, reason) =>
+          @isError(true)
+          console.log("Fail (#{requestId}) [#{reason}]: #{url}")
+          @_onFailure(response)
+      null
 
     _onFailure: (response) ->
+      if response.status == 403
+        # TODO: don't reference page logout the user
+        edsc.page.user.logout()
+        edsc.banner(null, 'Session has ended', 'Please sign in')
+
       errors = response.responseJSON?.errors
       @error(errors?.error)
 

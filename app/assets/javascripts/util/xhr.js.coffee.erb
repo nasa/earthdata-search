@@ -1,4 +1,4 @@
-@edsc.util.xhr = do (window, $=jQuery) ->
+@edsc.util.xhr = do (window, document, $=jQuery) ->
   callbacks = []
 
   timeoutPool = []
@@ -36,10 +36,10 @@
     return
 
   xhrPool = []
-  $.ajaxSetup
-    beforeSend: (xhr) ->
+  $(document)
+    .ajaxSend (event, xhr) ->
       xhrPool.push(xhr)
-    complete: (xhr) ->
+    .ajaxComplete (event, xhr) ->
       index = xhrPool.indexOf(xhr)
       xhrPool.splice(index, 1) if (index > -1)
       runCallbacks()

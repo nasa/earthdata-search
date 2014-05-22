@@ -25,6 +25,24 @@
   display: inline;
 }
 
+.banner-error {
+  background-color: #c0392b;
+  color: #fff;
+
+  .banner-message a {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  a.banner-close {
+    color: #fff;
+
+    &:hover {
+      color: #aaa;
+    }
+  }
+}
+
 a.banner-close {
   float:right;
   font-size:1.2em;

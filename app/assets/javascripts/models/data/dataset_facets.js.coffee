@@ -2,7 +2,7 @@
 
 ns = @edsc.models.data
 
-ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
+ns.DatasetFacets = do (ko, XhrModel=ns.XhrModel) ->
 
   class Facet
     constructor: (@parent, item) ->
