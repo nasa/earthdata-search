@@ -110,7 +110,7 @@
         <div class="access-item-actions">
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
           <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
-          <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next">Submit</button>
+          <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>
       </div>
     </li>
@@ -129,7 +129,7 @@
         </div>
         <div class="access-item-actions">
           <button data-bind="click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
-          <button data-bind="enable: project.allReadyToDownload(), click: ui.serviceOptionsList.submitRequest" class="button-next">Submit</button>
+          <button data-bind="enable: project.allReadyToDownload(), click: ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>
       </div>
     </li>

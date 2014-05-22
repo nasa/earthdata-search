@@ -24,6 +24,7 @@ do ($=jQuery) ->
     new XhrSpinner('/accept_data_quality_summaries', '#dqs-modal .loading', '#dqs-modal .modal-button'), # accepting dqs
     new XhrSpinner('/login', '#login-modal .loading', '#login-modal .modal-button'), # login
     new XhrSpinner('/data/options', '.data-access-next'), # data access configure / retrieval
+    new XhrSpinner('/update_contact_info', '.access-submit') # updating contact info before submitting an access request
   ]
 
   $(document).ajaxSend (event, xhr, settings) ->
