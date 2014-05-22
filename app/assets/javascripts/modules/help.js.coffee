@@ -28,7 +28,7 @@
                 In either case, we may present imagery collected from an overlapping granule collected within
                 approximately one day of the indicated granule.
                 '
-      placement: 'top'
+      placement: 'left'
       element: '#map-center'
 
   tour = [{
