@@ -16,7 +16,6 @@
   <header>
     <h1>Data Access</h1>
     <p>Review and select service options for your data prior to download</p>
-    <div class="loading busy"></div>
   </header>
   <ol class="data-access-content data-access-datasets-config">
     <!-- ko foreach: project.datasets -->
@@ -26,7 +25,7 @@
       </div>
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
-          <h3>Review &amp; Select Service Options</h3>
+          <h3 data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
           <!-- ko if: granuleAccessOptions().hits && granuleAccessOptions().hits > 0 -->
           <div class="access-item-review">
             <h4>Review</h4>
