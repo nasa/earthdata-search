@@ -102,9 +102,20 @@ body > footer {
   }
 }
 
+.panel-list-meta.busy {
+  background: asset-url('spinner.gif') no-repeat left top;
+}
+
 .busy {
   background: asset-url('spinner.gif') no-repeat center top;
   padding-top: 16px;
+}
+
+h3.busy {
+  background-position: right 10px center;
+}
+
+.panel-list-load-more {
   text-align: center;
 }
 
@@ -126,6 +137,7 @@ body > footer {
 
 .modal-footer {
   margin: 0;
+  height: 78px;
 }
 
 /*

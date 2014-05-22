@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.ServiceOptionsList = do (ko) ->
+ns.ServiceOptionsList = do (ko, $=jQuery) ->
   class ServiceOptionsList
     constructor: (@accountForm, @projectList) ->
       @activeIndex = ko.observable(0)
@@ -24,9 +24,11 @@ ns.ServiceOptionsList = do (ko) ->
     submitRequest: =>
       if @accountForm.isEditingAccount()
         @accountForm.saveAccountEdit =>
-          @projectList.loginAndDownloadProject()
+          $('.access-submit').prop('disabled', true)
+          @projectList.downloadDatasets(@projectList.project.getDatasets())
       else
-        @projectList.loginAndDownloadProject()
+        $('.access-submit').prop('disabled', true)
+        @projectList.downloadDatasets(@projectList.project.getDatasets())
 
     showGranuleList: =>
       @showGranules(true)

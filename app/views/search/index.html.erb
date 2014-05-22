@@ -420,7 +420,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="button-light">
+          <div class="loading"></div>
+          <button type="submit" class="modal-button">
             <i class="fa fa-lock"></i>
             <span data-bind="text: (user.needsUsername() || user.needsPassword()) ? 'Recover' : 'Sign In'">Sign In</span></button>
         </div>
@@ -445,7 +446,8 @@
           <!-- /ko -->
         </div>
         <div class="modal-footer">
-          <button type="submit" class="button-light">Accept</button>
+          <div class="loading"></div>
+          <button type="submit" class="modal-button">Accept</button>
         </div>
       </form>
     </div>

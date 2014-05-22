@@ -1,3 +1,4 @@
+//= require modules/spinners
 //= require modules/master_overlay
 //= require modules/toolbar
 //= require modules/help

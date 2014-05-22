@@ -122,6 +122,14 @@ button {
   @include dark-button;
 }
 
+button:disabled {
+  @include linear-gradient(#cbcbcb, #cbcbcb);
+  box-shadow: none;
+  text-shadow: none;
+  color: #888;
+  border-color: #888;
+}
+
 .btn-group {
   float: right;
   min-height: 3em;
@@ -140,4 +148,10 @@ button {
     @include light-button;
     font-weight: bold;
   }
+}
+
+.modal-button {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
 }
