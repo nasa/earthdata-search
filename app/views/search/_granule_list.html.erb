@@ -32,7 +32,7 @@
           <!-- ko if: granules.isLoaded() -->
           <p>
             Showing <span data-bind="text: granules.results().length"></span> of
-            <span data-bind="if: granules.hitsEstimated() && granules.hasNextPage()">approximately</span>
+            <span data-bind="if: granules.hitsEstimated() && granules.hasNextPage()">about</span>
             <span data-bind="text: granules.hits() == 1 ? '1 matching granule' : granules.hits() + ' matching granules'"></span>
             <!-- ko if: granules.parentQuery.focusedInterval() -->
             for the selected <span data-bind="text: granules.parentQuery.focusedInterval"></span>.
