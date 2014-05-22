@@ -3,6 +3,7 @@ ns = @edsc.map
 ns.Map = do (window,
              document,
              L,
+             ko,
              ProjExt = ns.L.Proj,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
              LayerBuilder = ns.LayerBuilder,
@@ -40,6 +41,7 @@ ns.Map = do (window,
       map.addControl(new SpatialSelection())
       @setProjection(projection)
 
+      @time = ko.computed(@_computeTime, this)
       @_datasetSubscription = page.ui.datasetsList.selected.subscribe(@_showDatasetSpatial)
       @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
@@ -49,6 +51,7 @@ ns.Map = do (window,
     # Removes the map from the page
     destroy: ->
       @map.remove()
+      @time.dispose()
       @_datasetSubscription.dispose()
       @_granuleVisualizationSubscription.dispose()
       $('#dataset-results, #project-overview, #granule-list').off('edsc.navigate', @_hideDatasetSpatial)
@@ -56,6 +59,18 @@ ns.Map = do (window,
     focusDataset: (dataset) ->
       @map.focusedDataset = dataset
       @map.fire 'edsc.focusdataset', dataset: dataset
+
+    _computeTime: ->
+      time = null
+      query = page.query
+      focused = query.focusedTemporal()
+      if focused?
+        time = new Date(focused[1] - 1) # Go to the previous day on day boundaries
+      else
+        time = query.temporal.applied.stop.date()
+      unless time == @map.time
+        @map.time = time
+        @map.fire 'edsc.timechange', time: time
 
     _createLayerMap: (productIds...) ->
       layerForProduct = LayerBuilder.layerForProduct

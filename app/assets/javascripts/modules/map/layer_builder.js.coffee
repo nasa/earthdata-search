@@ -1,11 +1,7 @@
 ns = @edsc.map
 
 ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
-                      SedacTileLayer = ns.L.SedacTileLayer,
-                      dateUtil = window.edsc.util.date) ->
-
-  yesterday = new Date()
-  yesterday.setDate(yesterday.getDate() - 1)
+                      SedacTileLayer = ns.L.SedacTileLayer) ->
 
   gibsParams =
     blue_marble:
@@ -25,7 +21,7 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
       product: 'MODIS_Terra_CorrectedReflectance_TrueColor'
       resolution: '250m'
       format: 'jpeg'
-      time: dateUtil.isoUtcDateString(yesterday)
+      syncTime: true
     land_water_map:
       name: 'Land / Water Map'
       source: 'OpenStreetMap / Coastlines'
