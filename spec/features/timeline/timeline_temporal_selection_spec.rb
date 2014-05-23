@@ -41,6 +41,35 @@ describe "Timeline temporal selection", reset: false do
       unset_temporal(0)
     end
 
+    context 'clicking on the timeline header' do
+      before(:all) { page.execute_script("$('.timeline-display-top').click()") }
+      after(:all) do
+        set_temporal(local_start_date, local_stop_date, nil, 0)
+        set_temporal(global_start_date, global_stop_date)
+      end
+
+      it 'clears the temporal constraint' do
+        expect(page).to have_no_temporal
+      end
+
+      it 'clears dataset-specific temporal constraints' do
+        expect(page).to have_no_temporal(0)
+      end
+    end
+
+    context 'clicking on the close link in the temporal constraint display' do
+      before(:all) { click_link 'Remove temporal constraint' }
+      after(:all) { set_temporal(global_start_date, global_stop_date) }
+
+      it 'clears the global temporal constraint' do
+        expect(page).to have_no_temporal
+      end
+
+      it 'does not clear dataset-specific temporal constraints' do
+        expect(page).to have_temporal(local_start_date, local_stop_date, nil, 0)
+      end
+    end
+
     context 'dragging the start fencepost of the global temporal condition' do
       before(:all) { drag_temporal(global_start_date, start_drag_date) }
       after(:all) { set_temporal(global_start_date, global_stop_date) }

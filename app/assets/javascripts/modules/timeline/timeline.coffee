@@ -447,6 +447,12 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
     _setupTemporalSelection: (el) ->
       self = this
+
+      $(el).on 'click', =>
+        for dataset in @_datasets
+          dataset.granulesModel.temporal.applied.clear()
+        @globalTemporal.clear()
+
       draggable = new TimelineDraggable(el)
 
       left = null

@@ -130,3 +130,23 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
     true
   end
 end
+
+
+RSpec::Matchers.define :have_no_temporal do |dataset_n=nil|
+  match do |page|
+    script = "(function(temporal) {"
+    script += "  return temporal.queryCondition();"
+
+    if dataset_n.nil?
+      script += "})(edsc.page.query.temporal.applied);"
+    else
+      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
+    end
+
+    synchronize do
+      actual = page.evaluate_script(script)
+      expect(actual).to eql('')
+    end
+    true
+  end
+end
