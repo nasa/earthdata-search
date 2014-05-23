@@ -193,11 +193,14 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_updateTimeline()
 
-      @root.on 'click', @scope('.date-label'), @_onLabelClick
-      @root.on 'keydown', @_onKeydown
+      @root.on 'click.timeline', @scope('.date-label'), @_onLabelClick
+      @root.on 'mouseover.timeline', @scope('.date-label'), @_onLabelMouseover
+      @root.on 'mouseout.timeline', @scope('.date-label'), @_onLabelMouseout
+      @root.on 'keydown.timeline', @_onKeydown
 
     destroy: ->
       @root.find('svg').remove()
+      @root.off('.timeline')
       super()
 
     range: ->
@@ -388,18 +391,39 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
           t1 = @_roundTime(focus, zoom, 2)
           dx = -@timeSpanToPx(t1 - t0)
 
-        @_pan(dx)
-        @focus(t0, t1)
+        if @_canFocusTimespan(t0, t1)
+          @_pan(dx)
+          @focus(t0, t1)
 
+    _canFocusTimespan: (start, stop) ->
+      return true if @globalTemporal.intersect(start, stop)?
+      for dataset in @_datasets
+        dataset.granulesModel.temporal.applied.intersect(start, stop)?
+      false
 
-    _onLabelClick: (e) =>
-      group = e.currentTarget
+    _timespanForLabel: (group) ->
       next = group.nextSibling
 
       x0 = @_getTransformX(group)
       x1 = @_getTransformX(next, x0)
 
-      @focus(@positionToTime(x0), @positionToTime(x1))
+      [@positionToTime(x0), @positionToTime(x1)]
+
+    _onLabelClick: (e) =>
+      label = e.currentTarget
+      [start, stop] = @_timespanForLabel(label)
+      if @_canFocusTimespan(start, stop)
+        @focus(start, stop)
+
+    _onLabelMouseover: (e) =>
+      label = e.currentTarget
+      [start, stop] = @_timespanForLabel(label)
+      unless @_canFocusTimespan(start, stop)
+        label.setAttribute('class', "#{@scope('date-label')} #{@scope('nofocus')}")
+
+    _onLabelMouseout: (e) =>
+      label = e.currentTarget
+      label.setAttribute('class', @scope('date-label'))
 
     _contains: (start0, end0, start1, end1) ->
       start0 < start1 < end0 && start0 < end1 < end0
