@@ -42,7 +42,6 @@ ns.GibsTileLayer = do (L,
     _onTimeChange: (e) =>
       if @options.syncTime
         date = e.time ? yesterday
-        console.log 'time', dateUtil.isoUtcDateString(date)
         @updateOptions(time: dateUtil.isoUtcDateString(date))
 
     _toTileLayerOptions: (newOptions) ->

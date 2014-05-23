@@ -71,16 +71,16 @@ describe "Base layer date display", reset: false do
     context 'selecting both a temporal range and a date on the timeline' do
       before(:all) do
         set_temporal(start_date, stop_date)
-        click_timeline_date('02', 'Feb')
+        click_timeline_date('15', 'Feb')
       end
 
       after(:all) do
-        click_timeline_date('02', 'Feb')
+        click_timeline_date('15', 'Feb')
         unset_temporal
       end
 
       it 'updates the selected base layer to show the date selected on the timeline' do
-        expect('#map').to have_tiles_with_date('2014-02-02')
+        expect('#map').to have_tiles_with_date('2014-02-15')
       end
     end
   end
