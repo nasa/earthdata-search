@@ -198,6 +198,13 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @root.on 'mouseout.timeline', @scope('.date-label'), @_onLabelMouseout
       @root.on 'keydown.timeline', @_onKeydown
 
+      @root.on 'blur.timeline,', (e) =>
+        @_hasFocus = false
+      @root.on 'focus.timeline', (e) =>
+        # We want click behavior when we have focus, but not when the focus came from the
+        # click's mousedown.  Ugh.
+        setTimeout((=> @_hasFocus = true), 500)
+
     destroy: ->
       @root.find('svg').remove()
       @root.off('.timeline')
@@ -346,12 +353,14 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       #console.log 'zoom', @zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
     focus: (t0, t1) ->
+      if  Math.abs(t0 - @_focus) < 1000
+        return unless @_hasFocus # Regaining input focus, don't do anything (EDSC-323)
+        t0 = null
+      @_focus = t0
+
       root = @root
       overlay = @focusOverlay
       @_empty(overlay)
-
-      t0 = null if Math.abs(t0 - @_focus) < 1000
-      @_focus = t0
 
       if t0?
         root.trigger(@scopedEventName('focusset'), [t0, t1, RESOLUTIONS[@zoom - 1]])
