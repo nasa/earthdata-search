@@ -36,11 +36,15 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
       source: 'SEDAC / L1 Admin Boundaries'
       wmsParams:
         layers: 'cartographic:esri-administrative-boundaries_level-1'
+        format: 'image/png'
+        transparent: true
     coastlines:
       name: 'Coastlines'
       source: 'SEDAC / Coastlines v3'
       wmsParams:
         layers: 'gpw-v3-coastlines'
+        format: 'image/png'
+        transparent: true
 
   layerForProduct = (id) ->
     return new GibsTileLayer(gibsParams[id]) if gibsParams[id]?
