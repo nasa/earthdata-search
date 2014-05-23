@@ -486,9 +486,9 @@ ns.GranuleLayer = do (L
       icon = L.divIcon
         className: 'granule-spatial-label',
         html: '<span class="granule-spatial-label-temporal">' + temporal +
-              '</span><a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+              '</span><a class="todo panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
 
-      marker = L.marker([0, 0], icon: icon)
+      marker = L.marker([0, 0], clickable: false, icon: icon)
 
       firstShape = layer.getLayers()[0]
       firstShape = firstShape._interiors if firstShape._interiors?

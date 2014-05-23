@@ -238,6 +238,10 @@ p.map-popup-info {
       color: #800;
     }
   }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .granule-browse {
