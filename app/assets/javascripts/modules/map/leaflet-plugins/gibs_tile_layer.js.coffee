@@ -1,12 +1,20 @@
 ns = @edsc.map.L
 
-ns.GibsTileLayer = do (L, ProjectionSwitchingLayer = ns.ProjectionSwitchingLayer, gibsUrl = @edsc.config.gibsUrl) ->
+ns.GibsTileLayer = do (L,
+                       ProjectionSwitchingLayer = ns.ProjectionSwitchingLayer,
+                       gibsUrl = @edsc.config.gibsUrl,
+                       dateUtil = window.edsc.util.date,
+                       config = @edsc.config
+                       ) ->
 
   # TODO: Add blue marble north / south
   # http://map1.vis.earthdata.nasa.gov/wmts-bluemarble-antarctic/blue_marble_antarctic/default/EPSG3031_BlueMarble/0/0/0.jpg
   # http://map1.vis.earthdata.nasa.gov/wmts-bluemarble-arctic/blue_marble_arctic/default/EPSG3413_BlueMarble/0/0/0.jpg
 
   parent = ProjectionSwitchingLayer.prototype
+
+  yesterday = new Date(config.present())
+  yesterday.setDate(yesterday.getDate() - 1)
 
   # Wraps L.TileLayer to handle GIBS-based tile layers, with the additional
   # ability to change layer projections.
@@ -21,6 +29,21 @@ ns.GibsTileLayer = do (L, ProjectionSwitchingLayer = ns.ProjectionSwitchingLayer
     arcticOptions: L.extend({}, parent.arcticOptions, projection: 'EPSG3413', endpoint: 'arctic')
     antarcticOptions: L.extend({}, parent.antarcticOptions, projection: 'EPSG3031', endpoint: 'antarctic')
     geoOptions: L.extend({}, parent.geoOptions, projection: 'EPSG4326', endpoint: 'geo')
+
+    onAdd: (map) ->
+      @options.time = dateUtil.isoUtcDateString(map.time ? yesterday) if @options.syncTime
+      super(map)
+      map.on 'edsc.timechange', @_onTimeChange
+
+    onRemove: (map) ->
+      super(map)
+      map.off 'edsc.timechange', @_onTimeChange
+
+    _onTimeChange: (e) =>
+      if @options.syncTime
+        date = e.time ? yesterday
+        console.log 'time', dateUtil.isoUtcDateString(date)
+        @updateOptions(time: dateUtil.isoUtcDateString(date))
 
     _toTileLayerOptions: (newOptions) ->
       options = @options
