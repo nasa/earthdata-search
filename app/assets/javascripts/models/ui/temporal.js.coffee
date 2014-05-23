@@ -132,7 +132,10 @@ ns.Temporal = do (ko,
       @stop.clear()
 
     intersect: (start, stop) ->
-      for [rangeStart, rangeStop] in @ranges()
+      ranges = @ranges()
+      # No temporal means from the beginning of time to the end of time
+      return [start, stop] if ranges.length == 0
+      for [rangeStart, rangeStop] in ranges
         intersectStart = Math.max(start, rangeStart)
         intersectStop = Math.min(stop, rangeStop)
         return [new Date(intersectStart), new Date(intersectStop)] if intersectStart < intersectStop

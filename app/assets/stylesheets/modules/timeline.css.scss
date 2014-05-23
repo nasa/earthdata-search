@@ -139,7 +139,7 @@
   stroke-width: 0;
 }
 
-.timeline-date-label {
+.timeline-date-label:not(.timeline-nofocus) {
   cursor: pointer;
 
   &:hover {
@@ -149,6 +149,10 @@
       fill: #3498db;
     }
   }
+}
+
+.timeline-nofocus {
+  cursor: not-allowed;
 }
 
 .timeline-unfocused {

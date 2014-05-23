@@ -132,13 +132,10 @@ ns.Granules = do (ko,
       if focusedTemporal?
         granuleTemporal = @query.temporal.applied
         datasetTemporal = @parentQuery.temporal.applied
-        condition = null
-        if granuleTemporal.queryCondition()?
-          condition = granuleTemporal
-        else if datasetTemporal.queryCondition()?
-          condition = datasetTemporal
+        condition = datasetTemporal
+        condition = granuleTemporal if granuleTemporal.isSet()
 
-        focusedTemporal = condition.intersect(focusedTemporal...) if condition?
+        focusedTemporal = condition.intersect(focusedTemporal...)
 
         if focusedTemporal?
           params.temporal = (t.toISOString() for t in focusedTemporal).join(',')
