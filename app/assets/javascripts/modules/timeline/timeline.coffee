@@ -505,7 +505,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       rateLimit = ->
         allowWheel = false
-        setTimeout((-> allowWheel = true), 100)
+        setTimeout((-> allowWheel = true), 300)
 
       L.DomEvent.on svg, 'mousewheel', (e) =>
         return unless allowWheel
