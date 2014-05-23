@@ -70,19 +70,20 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       # PQ: I still don't quite understand why we need to set the padding here as opposed to
       # using CSS.  It seems like box-sizing: border-box should allow us to use CSS-based padding
       # and have the height work, but it doesn't.
-      main = $('.main-content')
-      windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-      height = windowHeight - main.position().top - $('body > footer').outerHeight()
-      main.height(height)
+      setTimeout((=>
+        main = $('.main-content')
+        windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+        height = windowHeight - main.position().top - $('body > footer').outerHeight()
+        main.height(height)
 
-      for div in @root.find(@scope('.content'))
-        $div = $(div)
-        $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 10, 10))
+        for div in @root.find(@scope('.content'))
+          $div = $(div)
+          $div.height(height - $div.position().top - parseInt($div.data(@scope('pad')) ? 10, 10))
 
-      tabPaneHeight = @root.find('.tab-pane.active').find(@scope('.content')).height()
-      for div in @root.find('.tab-pane:not(.active)').find(@scope('.content'))
-        $(div).height(tabPaneHeight)
-      null
+        tabPaneHeight = @root.find('.tab-pane.active').find(@scope('.content')).height()
+        for div in @root.find('.tab-pane:not(.active)').find(@scope('.content'))
+          $(div).height(tabPaneHeight)
+        null), 0)
 
   $document = $(document)
 
@@ -95,6 +96,10 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     window.clearTimeout(timeout)
 
   plugin.create('masterOverlay', MasterOverlay)
+
+  $(document).ajaxComplete (event, xhr, settings) ->
+    if settings.url.indexOf('/granules.json') != -1 || settings.url.indexOf('/data_quality_summary.json') != -1
+      $('.master-overlay').masterOverlay('contentHeightChanged')
 
   $document.ready ->
     $('.master-overlay').masterOverlay()
