@@ -289,6 +289,7 @@
     <span data-bind="visible: (start.date() || stop.date()) && isRecurring()">
       <strong>Range</strong> <span data-bind="text: yearsString"></span>
     </span>
+    <a href="#" data-bind="click: clear, visible: start.date() || stop.date()" title="Remove temporal constraint"><i class="fa fa-times-circle"></i></a>
   </p>
 </div>
 
