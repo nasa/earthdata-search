@@ -260,14 +260,15 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       for [startTime, endTime, _] in intervals
         startPos = @timeToPosition(startTime * 1000)
         endPos = @timeToPosition(endTime * 1000)
-        rect = @_buildSvgElement 'rect',
-          class: @scope('imprecise') if resolution != RESOLUTIONS[zoom - 2]
+        attrs =
           x: startPos
           y: 5
           width: endPos - startPos
           height: DATASET_HEIGHT - 7
           rx: 10
           ry: 10
+        attrs['class'] = @scope('imprecise') if resolution != RESOLUTIONS[zoom - 2]
+        rect = @_buildSvgElement 'rect', attrs
         rect.setAttribute('style', "fill: #{color}") if color?
         el.appendChild(rect)
 

@@ -14,7 +14,7 @@ ns.Map = do (window,
              page = @edsc.page) ->
 
   # Fix leaflet default image path
-  L.Icon.Default.imagePath = '/assets/leaflet-0.7'
+  L.Icon.Default.imagePath = '/assets/leaflet-0.7/images' unless L.Icon.Default.imagePath?
 
   # Constructs and performs basic operations on maps
   # This class wraps the details of setting up the map used by the application,
