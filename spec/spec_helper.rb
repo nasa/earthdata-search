@@ -99,10 +99,19 @@ RSpec.configure do |config|
   end
 
   config.after :each do
+    tries = 0
     begin
+      tries += 1
       DatabaseCleaner.clean
     rescue => e
-      $stderr.puts "Database cleaner clean failed #{e}"
+      $stderr.puts "Database cleaner clean failed: #{e}"
+      if tries < 3
+        sleep 1
+        $stderr.puts "Retrying database clean"
+        retry
+      else
+        $stderr.puts "Database cleaner clean failed after #{tries} tries: #{e}"
+      end
     end
     if example.exception != nil
       # Failure only code goes here
