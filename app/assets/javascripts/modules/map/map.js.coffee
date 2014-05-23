@@ -154,7 +154,7 @@ ns.Map = do (window,
         center: [-90, 0]
       geo:
         crs: ProjExt.epsg4326
-        minZoom: 1
+        minZoom: 0
         maxZoom: 7
         zoom: 2
         continuousWorld: false

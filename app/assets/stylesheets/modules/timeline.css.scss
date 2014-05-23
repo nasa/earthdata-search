@@ -159,5 +159,9 @@
   pointer-events: none;
   fill: #000;
   fill-opacity: .5;
+  stroke: desaturate(#3498db, 50%);
+}
+
+.timeline:focus .timeline-unfocused {
   stroke: #3498db;
 }
