@@ -21,7 +21,7 @@ ns.DatasetFacets = do (ko, XhrModel=ns.XhrModel) ->
       @name = item.name
       @class_name = ko.computed => @name.toLowerCase().replace(' ', '-')
       @param = item.param
-      @opened = ko.observable(true)
+      @opened = ko.observable(false)
       @closed = ko.computed => !@opened()
 
       values = (new Facet(this, value) for value in item.values)
