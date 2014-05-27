@@ -25,7 +25,7 @@
       </div>
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
-          <h3>Review &amp; Select Service Options</h3>
+          <h3 data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
           <!-- ko if: granuleAccessOptions().hits != null && has_granules() -->
           <div class="access-item-review">
             <h4>Review</h4>
