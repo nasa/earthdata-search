@@ -79,7 +79,7 @@ ns.GranuleTimeline = do (ko
         query.focusedInterval(null)
         query.focusedTemporal(null)
 
-      @range($timeline.timeline('range'))
+      @range(null)
       @datasets = ko.computed(@_computeDatasets)
 
     clear: ->
@@ -99,6 +99,14 @@ ns.GranuleTimeline = do (ko
       result = result[0...3]
 
       $timeline = $('#timeline')
+
+      # First load.  Construct if there are datasets, otherwise wait
+      if !$timeline.data('timeline')?
+        if result.length > 0
+          $timeline.timeline()
+        else
+          return
+
       $timeline.timeline('datasets', result)
 
       currentTimelines = @_datasetsToTimelines
