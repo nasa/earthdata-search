@@ -61,7 +61,7 @@ footer, .toolbar {
 .toolbar {
   @include linear-gradient(rgba(44, 62, 80, 1), $toolbar-background-bottom);
   //background: asset-url('header-drop.png') repeat-x top;
-  padding: 35px 1em 50px 1em;
+  padding: 25px 0 60px 0;
   height: 58px;
   border-bottom: 1px solid #242424;
 
