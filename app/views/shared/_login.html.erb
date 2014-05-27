@@ -1,9 +1,19 @@
 <!-- ko ifnot: user.isLoggedIn -->
-<a href="#" class="button user-info" data-bind="click: user.initiateLogin" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
+<a href="#" class="button user-info sign-in" data-bind="click: user.initiateLogin" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
 <!-- /ko -->
 <!-- ko if: user.isLoggedIn -->
+<div class="dropdown save-dropdown">
+  <a href="javascript:void(0)" data-toggle="dropdown" class="save" title="Save your session">
+    <i class="fa fa-check-circle save-success"></i> <i class="fa fa-floppy-o"></i>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-right dropdown-form">
+    <li>
+      <input class="save-project-name" type="text" placeholder="Name your project"> <input type="button" value="Save">
+    </li>
+  </ul>
+</div>
 <div class="dropdown user-info">
-  <a href="#" data-toggle="dropdown" class="button dropdown-button" title="Manage user account"><i class="fa fa-user"></i><i class="fa fa-caret-down"></i></a>
+  <a href="#" data-toggle="dropdown" class="gravatar-dropdown" title="Manage user account"><img src="http://www.gravatar.com/avatar/b9802276d84112acceaf83c6ab10940f.png" width="42"><i class="fa fa-caret-down"></i></a>
   <ul class="dropdown-menu dropdown-menu-right">
     <li>
       <a href="/contact_info" class="dropdown-link dropdown-link-contact-info">Contact Information</a>
