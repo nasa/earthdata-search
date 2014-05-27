@@ -104,6 +104,16 @@ ns.GranuleTimeline = do (ko
       currentTimelines = @_datasetsToTimelines
       newTimelines = {}
 
+      lastDate = Number.MIN_VALUE
+      listChanged = false
+      for dataset in result
+        listChanged = listChanged || !currentTimelines[dataset.id()]?
+        if dataset.time_end?()?
+          lastDate = Math.max(lastDate, new Date(dataset.time_end()).getTime())
+      [start, end] = @range.peek()
+      if listChanged && lastDate > Number.MIN_VALUE && lastDate < start
+        $timeline.timeline('panToTime', lastDate)
+
       project = @projectList.project
       for dataset in result
         id = dataset.id()

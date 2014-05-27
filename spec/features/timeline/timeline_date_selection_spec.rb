@@ -22,16 +22,18 @@ describe "Timeline date selection", reset: false do
 
   before :all do
     visit '/search'
+    # Give the window a fixed size
+    page.driver.resize_window(1280, 1024)
   end
 
   use_dataset('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
+
   hook_granule_results
 
   before :all do
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
-    zoom_out_button.click
-    pan_timeline(-25.years)
+    pan_to_time(present - 20.years)
     wait_for_xhr
     expect(granule_list).to have_text('Showing 20 of 39 matching granules')
   end
@@ -56,7 +58,7 @@ describe "Timeline date selection", reset: false do
         end
 
         it 'does not pan the timeline' do
-          expect(page).to have_time_offset('.timeline-draggable', -25.years)
+          expect(page).to have_end_time(-20.years)
         end
       end
 
@@ -108,7 +110,7 @@ describe "Timeline date selection", reset: false do
       end
 
       it "pans the timeline to center on the previous time span" do
-        expect(page).to have_time_offset('.timeline-draggable', -26.years)
+        expect(page).to have_end_time(-21.years)
       end
     end
 
@@ -121,7 +123,7 @@ describe "Timeline date selection", reset: false do
       end
 
       it "pans the timeline to center on the next time span" do
-        expect(page).to have_time_offset('.timeline-draggable', -24.years)
+        expect(page).to have_end_time(-19.years)
       end
     end
 
