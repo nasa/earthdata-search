@@ -6,6 +6,7 @@ ns = @edsc.models.data
 
 ns.Dataset = do (ko
                  KnockoutModel = @edsc.models.KnockoutModel
+                 scalerUrl = @edsc.config.browseScalerUrl
                  Granules=ns.Granules
                  GranuleQuery = ns.query.GranuleQuery
                  DataQualitySummaryQuery = ns.query.DataQualitySummaryQuery
@@ -83,6 +84,13 @@ ns.Dataset = do (ko
         deferEvaluation: true
 
       @dqsModel = @disposable(new DataQualitySummaryModel(new DataQualitySummaryQuery(jsonData.id)))
+
+    thumbnail: ->
+      granule = @browseable_granule?()
+      if granule?
+        "#{scalerUrl}/#{granule}?h=85&w=85"
+      else
+        null
 
     # A granules model not directly connected to the dataset model so classes can, e.g. query
     # for granules under a point without messing with displayed hits or timing values
