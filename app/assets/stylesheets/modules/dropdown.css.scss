@@ -132,26 +132,10 @@ input.day-of-year-input {
     color: rgba(255,255,255,.4);
     @include transition(all 0.2s ease-in-out);
   }
+}
 
-  .gravatar-dropdown {
-      display: block;
-      float: left;
-      padding: 9px;
-      border-left: 1px solid rgba(255,255,255,.1);
-      color: rgba(255,255,255,.4);
-      outline: none;
-      @include transition(all 0.2s ease-in-out);
-
-      &:hover {
-        background: #263646;
-
-        .fa-caret-down {
-          color: rgba(255,255,255,1);
-        }
-      }
-  }
-
-  a.feedback, a.save {
+.toolbar-secondary {
+  a.toolbar-button {
     font-size: 1.4em;
     padding: 15px 20px;
     border-left: 1px solid rgba(255,255,255,.1);
@@ -160,13 +144,18 @@ input.day-of-year-input {
     color: rgba(255,255,255,.4);
     @include transition(all 0.2s ease-in-out);
     outline: none;
+    text-decoration: none;
 
     &:hover {
       background: #263646;
       color: rgba(255,255,255,1);
+      .fa-caret-down {
+        color: rgba(255,255,255,1);
+      }
     }
   }
 
+  /*
   i.save-success {
     font-size: .6em;
     float: left;
@@ -179,4 +168,5 @@ input.day-of-year-input {
     background: #263646;
     border-radius: 30px;
   }
+  */
 }
