@@ -111,6 +111,14 @@ body > footer {
   padding-top: 16px;
 }
 
+button.busy, button.busy:disabled {
+  background: asset-url('spinner.gif') no-repeat center top;
+  box-shadow: none;
+  text-shadow: none;
+  color: #888;
+  border-color: #888;
+}
+
 h3.busy {
   background-position: right 10px center;
 }

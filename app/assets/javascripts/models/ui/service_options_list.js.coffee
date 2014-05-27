@@ -22,12 +22,13 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
       @activeIndex(@activeIndex() - 1)
 
     submitRequest: =>
+      $('.access-submit').prop('disabled', true)
       if @accountForm.isEditingAccount()
         @accountForm.saveAccountEdit =>
-          $('.access-submit').prop('disabled', true)
           @projectList.downloadDatasets(@projectList.project.getDatasets())
+        # re-enable button if saveAccountEdit fails
+        $('.access-submit').prop('disabled', false)
       else
-        $('.access-submit').prop('disabled', true)
         @projectList.downloadDatasets(@projectList.project.getDatasets())
 
     showGranuleList: =>
