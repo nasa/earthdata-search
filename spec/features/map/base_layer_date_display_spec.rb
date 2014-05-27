@@ -5,15 +5,26 @@ require "spec_helper"
 describe "Base layer date display", reset: false do
   extend Helpers::DatasetHelpers
 
+  present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
+
   start_date = DateTime.new(2014, 2, 10, 12, 30, 0, '+0')
   stop_date = DateTime.new(2014, 2, 20, 16, 30, 0, '+0')
 
   before :all do
     visit '/search'
+    # Give the window a fixed size
+    page.driver.resize_window(1280, 1024)
   end
 
   use_dataset('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
   hook_granule_results
+
+  before :all do
+    zoom_in_button = find('.timeline-zoom-in')
+    zoom_in_button.click
+    pan_to_time(present)
+    wait_for_xhr
+  end
 
   context 'when viewing a time-independent base layer' do
     before(:all) do
