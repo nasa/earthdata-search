@@ -19,14 +19,14 @@
   </header>
   <ol class="data-access-content data-access-datasets-config">
     <!-- ko foreach: project.datasets -->
-    <li class="access-item dataset-access-item busy">
+    <li class="access-item">
       <div class="access-item-header">
         <h2 data-bind="text: dataset_id"></h2>
       </div>
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
-          <h3>Review &amp; Select Service Options</h3>
-          <!-- ko if: granuleAccessOptions().hits != null && has_granules() -->
+          <h3 data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
+          <!-- ko if: granuleAccessOptions().hits && granuleAccessOptions().hits > 0 -->
           <div class="access-item-review">
             <h4>Review</h4>
             <p class="summary">
