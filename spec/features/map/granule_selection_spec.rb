@@ -68,6 +68,28 @@ describe "Granule selection", reset: false do
       end
     end
 
+    context "pressing the up button" do
+      before :all do
+        keypress('body', :up)
+      end
+      after :all do
+        keypress('body', :down)
+      end
+
+      it "highlights the previous granule"
+    end
+
+    context "pressing the down button" do
+      before :all do
+        keypress('body', :up)
+      end
+      after :all do
+        keypress('body', :down)
+      end
+
+      it "highlights the next granule"
+    end
+
     context "and clicking on it again" do
       before :all do
         nth_granule_list_item(10).click
