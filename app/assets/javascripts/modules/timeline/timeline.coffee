@@ -628,12 +628,15 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_empty(axis)
 
-      @root.find('h1').text(RESOLUTIONS[zoom - 1])
+      root.find('h1').text(RESOLUTIONS[zoom - 1])
 
       line = @_buildSvgElement('line', class: @scope('timeline'), x1: MIN_X, y1: 0, x2: MAX_X, y2: 0)
       axis.appendChild(line)
 
-      @width = width = @root.width() - @root.find(@scope('.tools')).width()
+      elWidth = root.width()
+      elWidth = $(window).width() if elWidth == 0
+
+      @width = width = $(window).width() - root.find(@scope('.tools')).width()
       @scale = (end - start) / width # ms per pixel
 
       range = @range()
@@ -648,7 +651,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         for node in @tlDatasets.childNodes
           node.setAttribute('class', "#{node.getAttribute('class')} #{@scope('loading')}")
 
-      @root.trigger(@scopedEventName('rangechange'), range)
+      root.trigger(@scopedEventName('rangechange'), range)
 
     _drawTemporalBounds: ->
       overlay = @selectionOverlay
