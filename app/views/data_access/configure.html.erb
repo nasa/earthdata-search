@@ -17,7 +17,7 @@
     <h1>Data Access</h1>
     <p>Review and select service options for your data prior to download</p>
   </header>
-  <ol class="data-access-content data-access-datasets-config">
+  <ol class="data-access-content data-access-datasets-config" data-bind="css: { 'knockout-template': !bindingsLoaded }">
     <!-- ko foreach: project.datasets -->
     <li class="access-item">
       <div class="access-item-header">
