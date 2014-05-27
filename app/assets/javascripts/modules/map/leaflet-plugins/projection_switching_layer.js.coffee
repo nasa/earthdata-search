@@ -71,7 +71,7 @@ ns.ProjectionSwitchingLayer = do (L) ->
 
     # Geo projection options
     geoOptions:
-      noWrap: false
+      noWrap: true # Set this to false when people inevitibly ask us for imagery across the meridian
       continuousWorld: false
 
     _buildLayerWithOptions: (newOptions) ->

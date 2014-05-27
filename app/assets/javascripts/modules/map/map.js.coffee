@@ -158,7 +158,7 @@ ns.Map = do (window,
         maxZoom: 7
         zoom: 2
         continuousWorld: false
-        noWrap: false
+        noWrap: true # Set this to false when people inevitibly ask us for imagery across the meridian
         worldCopyJump: true
         center: [0, 0]
 
