@@ -14,7 +14,14 @@ ns.GranulesList = do ($=jQuery)->
       @_map = map.map
       @_map.on 'edsc.focusgranule', @_onFocusGranule
       @_map.on 'edsc.stickygranule', @_onStickyGranule
-      $('#granule-list').on 'keydown', @_onKeyDown
+      $granuleList = $('#granule-list')
+      $granuleList.on 'keydown', @_onKeyDown
+
+      @_hasFocus = false
+      $granuleList.on 'blur', (e) =>
+        @_hasFocus = false
+      $granuleList.on 'focus.panel-list-item', (e) =>
+        setTimeout((=> @_hasFocus = true), 500)
 
       map.focusDataset(@dataset)
 
@@ -46,7 +53,6 @@ ns.GranulesList = do ($=jQuery)->
       list.scrollTo('.panel-list-selected',{duration: 100, offsetTop: list.offset().top}) if e.granule?
 
     _onKeyDown: (e) =>
-      # TODO: add focus changes from EDSC-323
       stickied = @stickied()
       key = e.keyCode
       up = 38
@@ -77,6 +83,7 @@ ns.GranulesList = do ($=jQuery)->
       granule == @stickied()
 
     toggleStickyFocus: (granule, e) =>
+      return if @stickied() && !@_hasFocus
       return true if $(e?.target).closest('a').length > 0
       granule = null if @stickied() == granule
       @_map.fire 'edsc.stickygranule', granule: granule

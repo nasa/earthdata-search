@@ -15,6 +15,14 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   margin-top: 0;
 }
 
+#granule-list:focus {
+  .panel-list-list {
+    outline-style: solid;
+    outline-width: 5px;
+    outline-color: #5B9DD9;
+  }
+}
+
 .panel-list-item {
   color: #fff;
   background-color: #292929;
