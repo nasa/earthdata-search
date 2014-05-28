@@ -79,7 +79,7 @@ ns.GranuleTimeline = do (ko
         query.focusedInterval(null)
         query.focusedTemporal(null)
 
-      @range($timeline.timeline('range'))
+      @range(null)
       @datasets = ko.computed(@_computeDatasets)
 
     clear: ->
@@ -99,10 +99,28 @@ ns.GranuleTimeline = do (ko
       result = result[0...3]
 
       $timeline = $('#timeline')
+
+      # First load.  Construct if there are datasets, otherwise wait
+      if !$timeline.data('timeline')?
+        if result.length > 0
+          $timeline.timeline()
+        else
+          return
+
       $timeline.timeline('datasets', result)
 
       currentTimelines = @_datasetsToTimelines
       newTimelines = {}
+
+      lastDate = Number.MIN_VALUE
+      listChanged = false
+      for dataset in result
+        listChanged = listChanged || !currentTimelines[dataset.id()]?
+        if dataset.time_end?()?
+          lastDate = Math.max(lastDate, new Date(dataset.time_end()).getTime())
+      [start, end] = @range.peek()
+      if listChanged && lastDate > Number.MIN_VALUE && lastDate < start
+        $timeline.timeline('panToTime', lastDate)
 
       project = @projectList.project
       for dataset in result

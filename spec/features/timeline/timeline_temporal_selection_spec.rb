@@ -10,6 +10,8 @@ describe "Timeline temporal selection", reset: false do
     date.iso8601.gsub('T', ' ').gsub(/\+.*$/, '')
   end
 
+  present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
+
   global_start_date = DateTime.new(1987, 1, 1, 0, 0, 0, '+0')
   global_stop_date = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
   local_start_date = DateTime.new(1986, 1, 1, 0, 0, 0, '+0')
@@ -25,8 +27,8 @@ describe "Timeline temporal selection", reset: false do
     dataset_results.click_link "View Project"
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
-    zoom_out_button.click
-    pan_timeline(-25.years)
+    pan_to_time(present - 25.years)
+
     wait_for_xhr
   end
 

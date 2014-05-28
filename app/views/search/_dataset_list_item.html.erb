@@ -1,10 +1,10 @@
             <li data-bind="click: $root.ui.datasetsList.focusDataset, css: {'master-overlay-forward': has_granules(), 'master-overlay-hide-parent': has_granules()}"
                 class="panel-list-item panel-list-item-with-thumb">
               <div class="panel-list-thumbnail-container">
-              <!-- ko if: thumbnail -->
-              <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail, alt: dataset_id}">
+              <!-- ko if: thumbnail() -->
+              <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
               <!-- /ko -->
-              <!-- ko ifnot: thumbnail -->
+              <!-- ko ifnot: thumbnail() -->
               <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
                 <i class="fa fa-camera"></i><br />No image available
               </div>

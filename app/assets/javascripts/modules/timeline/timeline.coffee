@@ -184,9 +184,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_data = {}
 
-      @zoom = 3
+      @zoom = 4
       @end = config.present()
-      @start = @end - MS_PER_MONTH
+      @start = @end - ZOOM_LEVELS[@zoom]
       @originPx = 0
 
       @_loadedRange = []
@@ -376,6 +376,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         root.trigger(@scopedEventName('focusremove'))
 
       null
+
+    panToTime: (time) ->
+      @_pan(@timeSpanToPx(@end - time))
 
     _getTransformX: getTransformX
 
@@ -625,12 +628,15 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_empty(axis)
 
-      @root.find('h1').text(RESOLUTIONS[zoom - 1])
+      root.find('h1').text(RESOLUTIONS[zoom - 1])
 
       line = @_buildSvgElement('line', class: @scope('timeline'), x1: MIN_X, y1: 0, x2: MAX_X, y2: 0)
       axis.appendChild(line)
 
-      @width = width = @root.width() - @root.find(@scope('.tools')).width()
+      elWidth = root.width()
+      elWidth = $(window).width() if elWidth == 0
+
+      @width = width = $(window).width() - root.find(@scope('.tools')).width()
       @scale = (end - start) / width # ms per pixel
 
       range = @range()
@@ -645,7 +651,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         for node in @tlDatasets.childNodes
           node.setAttribute('class', "#{node.getAttribute('class')} #{@scope('loading')}")
 
-      @root.trigger(@scopedEventName('rangechange'), range)
+      root.trigger(@scopedEventName('rangechange'), range)
 
     _drawTemporalBounds: ->
       overlay = @selectionOverlay
@@ -703,6 +709,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       date = new Date(time)
       components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
       components = components.slice(0, Math.max(components.length - zoom, 1))
+      # Zoom to decade
+      if zoom == ZOOM_LEVELS.length - 2
+        components[0] = Math.floor(components[0] / 10) * 10
+        increment *= 10
+
       components[components.length - 1] += increment
       components.push(0) if components.length == 1
       Date.UTC(components...)

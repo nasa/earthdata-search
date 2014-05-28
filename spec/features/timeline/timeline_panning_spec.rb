@@ -5,7 +5,7 @@ require "spec_helper"
 
 describe "Timeline panning", reset: false do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
-  start = present - 31.days
+  start = present - 365.days
 
   before :all do
     visit '/search'
@@ -15,20 +15,21 @@ describe "Timeline panning", reset: false do
     set_temporal(DateTime.new(2014, 2, 10, 12, 30, 0, '+0'), DateTime.new(2014, 2, 20, 16, 30, 0, '+0'))
 
     dataset_results.click_link "View Project"
+    pan_to_time(present)
     wait_for_xhr
   end
 
   context "when dragging the timeline" do
-    before(:all) { pan_timeline(-5.days) }
-    after(:all)  { pan_timeline( 5.days) }
+    before(:all) { pan_timeline(-25.days) }
+    after(:all)  { pan_timeline( 25.days) }
 
     it "moves the timeline display" do
-      expect(page).to have_timeline_range(start - 5.days, present - 5.days)
-      expect(page).to have_time_offset('.timeline-draggable', -5.days)
+      expect(page).to have_timeline_range(start - 25.days, present - 25.days)
+      expect(page).to have_time_offset('.timeline-draggable', -25.days)
     end
 
     it "moves the selected temporal extents" do
-      expect(page).to have_time_offset('.timeline-selection', -5.days)
+      expect(page).to have_time_offset('.timeline-selection', -25.days)
     end
 
     it "keeps dataset names in their original location" do
@@ -37,11 +38,11 @@ describe "Timeline panning", reset: false do
   end
 
   context "when dragging beyond the present" do
-    before(:all) { pan_timeline(5.days) }
-    after(:all) { pan_timeline(-5.days) }
+    before(:all) { pan_timeline(25.days) }
+    after(:all) { pan_timeline(-25.days) }
 
     it "allows the user to pan into the future" do
-      expect(page).to have_timeline_range(start + 5.days, present + 5.days)
+      expect(page).to have_timeline_range(start + 25.days, present + 25.days)
     end
   end
 end

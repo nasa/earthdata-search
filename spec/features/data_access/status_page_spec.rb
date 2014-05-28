@@ -1,6 +1,22 @@
 require "spec_helper"
 
 describe "Data access status page", reset: false do
+  before :all do
+    Order.create!([
+                   {
+                     order_id: 'E806E9C6-615E-2161-97D9-905D96D2F832',
+                     description: "15 Minute Stream Flow Data: USGS (FIFE) (39 granules)"
+                   },
+                   {
+                     order_id: 'AD73E6AD-E901-D1B6-3FD4-666C7A6A1564',
+                     description: "15 Minute Stream Flow Data: USGS (FIFE) (39 granules)"
+                   }
+                  ])
+  end
+
+  after :all do
+    Order.destroy_all
+  end
 
   context "when the current user has recent data retrievals" do
     before :all do

@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe "Project dataset color coding", reset: false do
+  present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 
   first_color_hex = '#3498DB'
   first_color_rgb = 'rgb(52, 152, 219)'
@@ -14,8 +15,7 @@ describe "Project dataset color coding", reset: false do
     view_granule_results
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
-    zoom_out_button.click
-    pan_timeline(-20.years)
+    pan_to_time(present - 20.years)
     wait_for_xhr
     leave_granule_results
   end
