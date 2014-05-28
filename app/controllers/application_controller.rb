@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
 
-  before_action :authenticate
-
   protected
 
   def handle_timeout
@@ -12,44 +10,6 @@ class ApplicationController < ActionController::Base
     if request.xhr?
       render json: {errors: {error: 'The server took too long to complete the request'}}, status: 504
     end
-  end
-
-  def authenticate
-    if Rails.env.production? || Rails.env.ops? || Rails.env.uat? || Rails.env.sit?
-      whitelist = [
-                   'pquinn',
-                   'dpilone',
-                   'aemitchel',
-                   'arthurcohen',
-                   'nakamura8402',
-                   'kjmurphy',
-                   'jsiarto',
-                   'cdurbin',
-                   'bmclaughlin',
-                   'macrouch',
-                   'jgilman',
-                   'kbaynes',
-                   'mcechini',
-                   'jbehnke',
-                   'rboller',
-                   'dawnlowe',
-                   'dnewman'
-                  ]
-      authenticate_or_request_with_http_basic do |username, password|
-        whitelist.include?(username) && authenticate_token(username, password)
-      end
-    end
-  end
-
-  # This is only used to avoid a POST to ECHO every time a
-  # request comes in while the app is still whitelisted
-  # TODO: Remove after the app is no longer whitelisted!
-  def authenticate_token(username, password)
-    unless session[:authenticate_token]
-      session[:authenticate_token] = Echo::Client.get_token(username, password, 'EDSC', request.remote_ip).body["token"]["id"]
-    end
-
-    session[:authenticate_token]
   end
 
   def token
