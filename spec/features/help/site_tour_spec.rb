@@ -29,6 +29,9 @@ describe "Site tour", reset: true do
       click_on 'Browse All Data'
 
       expect(page).to have_popover('Browse Datasets')
+      find_link('Platforms').click
+
+      expect(page).to have_popover('Browse Datasets')
       find(".facets-item", text: "Terra").click
 
       expect(page).to have_popover('Spatial Search')
