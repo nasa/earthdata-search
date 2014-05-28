@@ -69,25 +69,37 @@ describe "Granule selection", reset: false do
     end
 
     context "pressing the up button" do
+      previous_granule = nil
       before :all do
-        keypress('body', :up)
+        previous_granule = page.evaluate_script("$('.panel-list-selected').prev().find('h3').text()")
+        keypress('#granule-list', :up)
       end
       after :all do
-        keypress('body', :down)
+        keypress('#granule-list', :down)
       end
 
-      it "highlights the previous granule"
+      it "highlights the previous granule" do
+        selected_granule = page.evaluate_script("$('.panel-list-selected h3').text()")
+
+        expect(selected_granule).to eq(previous_granule)
+      end
     end
 
     context "pressing the down button" do
+      next_granule = nil
       before :all do
-        keypress('body', :up)
+        next_granule = page.evaluate_script("$('.panel-list-selected').next().find('h3').text()")
+        keypress('#granule-list', :down)
       end
       after :all do
-        keypress('body', :down)
+        keypress('#granule-list', :up)
       end
 
-      it "highlights the next granule"
+      it "highlights the next granule" do
+        selected_granule = page.evaluate_script("$('.panel-list-selected h3').text()")
+
+        expect(selected_granule).to eq(next_granule)
+      end
     end
 
     context "and clicking on it again" do

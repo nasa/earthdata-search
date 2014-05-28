@@ -2,6 +2,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.color-2.1.2
+//= require scrollTo-1.9
 //= require knockout
 //= require knockout.mapping
 //= require toastr

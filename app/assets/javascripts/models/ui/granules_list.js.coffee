@@ -14,8 +14,7 @@ ns.GranulesList = do ($=jQuery)->
       @_map = map.map
       @_map.on 'edsc.focusgranule', @_onFocusGranule
       @_map.on 'edsc.stickygranule', @_onStickyGranule
-      # TODO: This shouldn't be on 'body'
-      $('body').on 'keydown', @_onKeyDown
+      $('#granule-list').on 'keydown', @_onKeyDown
 
       map.focusDataset(@dataset)
 
@@ -43,6 +42,8 @@ ns.GranulesList = do ($=jQuery)->
     _onStickyGranule: (e) =>
       @stickied(e.granule)
       @loadingBrowse(e.granule?)
+      list = $('.master-overlay-content.panel-list')
+      list.scrollTo('.panel-list-selected',{duration: 100, offsetTop: list.offset().top}) if e.granule?
 
     _onKeyDown: (e) =>
       # TODO: add focus changes from EDSC-323
@@ -59,9 +60,7 @@ ns.GranulesList = do ($=jQuery)->
         if index < granules.length-1 && key == down
           @_map.fire 'edsc.stickygranule', granule: granules[index+1]
 
-          # scrool height to newly stickied granule?
-      # e.preventDefault()
-
+        e.preventDefault()
 
     finishLoad: =>
       @loadingBrowse(false)
