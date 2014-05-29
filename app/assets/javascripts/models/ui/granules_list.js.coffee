@@ -47,10 +47,18 @@ ns.GranulesList = do ($=jQuery)->
       @focused(e.granule)
 
     _onStickyGranule: (e) =>
+      lastSelected = $('.panel-list-selected')
       @stickied(e.granule)
       @loadingBrowse(e.granule?)
-      list = $('.master-overlay-content.panel-list')
-      list.scrollTo('.panel-list-selected',{duration: 100, offsetTop: list.offset().top}) if e.granule?
+      if e.granule?
+        list = $('.master-overlay-content.panel-list')
+        duration = edsc.config.defaultAnimationDurationMs
+        if e.key == "map" # scroll till visible
+          # TODO: Just scroll until the selected granule is visible
+          list.scrollTo('.panel-list-selected',{duration: duration, offsetTop: list.offset().top}) if e.granule?
+        else if e.key == "up" || e.key == "down" # scroll one item up/down
+          list.scrollTo('.panel-list-selected',{duration: duration, offsetTop: lastSelected.offset().top}) if e.granule?
+        # Do nothing for e.key == "mouse"
 
     _onKeyDown: (e) =>
       stickied = @stickied()
@@ -62,9 +70,9 @@ ns.GranulesList = do ($=jQuery)->
         index = granules.indexOf(stickied)
 
         if index > 0 && key == up
-          @_map.fire 'edsc.stickygranule', granule: granules[index-1]
+          @_map.fire 'edsc.stickygranule', granule: granules[index-1], key: 'up'
         if index < granules.length-1 && key == down
-          @_map.fire 'edsc.stickygranule', granule: granules[index+1]
+          @_map.fire 'edsc.stickygranule', granule: granules[index+1], key: 'down'
 
         e.preventDefault()
 
@@ -86,6 +94,6 @@ ns.GranulesList = do ($=jQuery)->
       return if @stickied() && !@_hasFocus
       return true if $(e?.target).closest('a').length > 0
       granule = null if @stickied() == granule
-      @_map.fire 'edsc.stickygranule', granule: granule
+      @_map.fire 'edsc.stickygranule', granule: granule, key: 'mouse'
 
   exports = GranulesList

@@ -36,6 +36,7 @@ describe "Granule selection", reset: false do
     before :all do
       # Click on a bottom one to test re-ordering
       nth_granule_list_item(10).click
+      wait_for_xhr
     end
 
     after :all do
@@ -69,9 +70,9 @@ describe "Granule selection", reset: false do
     end
 
     context "pressing the up button" do
-      previous_granule = nil
+      original_offset = nil
       before :all do
-        previous_granule = page.evaluate_script("$('.panel-list-selected').prev().find('h3').text()")
+        original_offset = page.evaluate_script("$('.panel-list-selected').offset().top")
         keypress('#granule-list', :up)
       end
       after :all do
@@ -79,16 +80,20 @@ describe "Granule selection", reset: false do
       end
 
       it "highlights the previous granule" do
-        selected_granule = page.evaluate_script("$('.panel-list-selected h3').text()")
+        expect(page).to have_css('.panel-list-list li:nth-child(9).panel-list-selected')
+      end
 
-        expect(selected_granule).to eq(previous_granule)
+      it "scrolls to the selected granule" do
+        offset = page.evaluate_script("$('.panel-list-selected').offset().top")
+
+        expect(offset).to eq(original_offset)
       end
     end
 
     context "pressing the down button" do
-      next_granule = nil
+      original_offset = nil
       before :all do
-        next_granule = page.evaluate_script("$('.panel-list-selected').next().find('h3').text()")
+        original_offset = page.evaluate_script("$('.panel-list-selected').offset().top")
         keypress('#granule-list', :down)
       end
       after :all do
@@ -96,9 +101,13 @@ describe "Granule selection", reset: false do
       end
 
       it "highlights the next granule" do
-        selected_granule = page.evaluate_script("$('.panel-list-selected h3').text()")
+        expect(page).to have_css('.panel-list-list li:nth-child(11).panel-list-selected')
+      end
 
-        expect(selected_granule).to eq(next_granule)
+      it "scrolls to the selected granule" do
+        offset = page.evaluate_script("$('.panel-list-selected').offset().top")
+
+        expect(offset).to eq(original_offset)
       end
     end
 
@@ -129,7 +138,9 @@ describe "Granule selection", reset: false do
   end
 
   context "clicking on a granule on the map" do
+    original_offset = nil
     before :all do
+      original_offset = page.evaluate_script("$('.panel-list-list').offset().top")
       map_mouseclick
     end
 
@@ -161,6 +172,12 @@ describe "Granule selection", reset: false do
       synchronize do
         expect(page.evaluate_script(is_temporal_ordered_script)).to be_false
       end
+    end
+
+    it "scrolls to the selected granule" do
+      offset = page.evaluate_script("$('.panel-list-selected').offset().top")
+
+      expect(offset).to eq(original_offset)
     end
 
     context "and clicking on it again" do
