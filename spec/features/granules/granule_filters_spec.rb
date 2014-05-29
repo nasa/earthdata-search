@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Granule search filters", reset: false, wait: 60 do
+describe "Granule search filters", reset: false do
   before_granule_count = 0
 
   before(:all) do

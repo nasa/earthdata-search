@@ -111,6 +111,7 @@ ns.Temporal = do (ko,
 
     clear: =>
       @queryCondition(null)
+      @isRecurring(false)
 
     copy: (other) ->
       @queryCondition(other.queryCondition())
