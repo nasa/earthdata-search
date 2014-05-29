@@ -1,3 +1,5 @@
+#= require util/url
+#= require util/deparam
 #= require models/data/grid
 #= require models/data/query
 #= require models/data/datasets
@@ -17,10 +19,13 @@ ui = models.ui
 
 ns = models.page
 
-ns.SearchPage = do (ko,
+ns.SearchPage = do (ko
+                    window
                     config = @edsc.config
-                    setCurrent = ns.setCurrent,
-                    QueryModel = data.query.DatasetQuery,
+                    urlUtil = @edsc.util.url
+                    deparam = @edsc.util.deparam
+                    setCurrent = ns.setCurrent
+                    QueryModel = data.query.DatasetQuery
                     DatasetsModel = data.Datasets
                     DatasetFacetsModel = data.DatasetFacets
                     ProjectModel = data.Project
@@ -33,7 +38,7 @@ ns.SearchPage = do (ko,
 
   class SearchPage
     constructor: ->
-      @query = new QueryModel(config.baseQueryParams)
+      @query = new QueryModel()
       @user = new UserModel()
       @datasets = new DatasetsModel(@query)
       @datasetFacets = new DatasetFacetsModel(@query)
@@ -66,8 +71,31 @@ ns.SearchPage = do (ko,
         return error if error.indexOf('ORA-') != -1
       null
 
+    serialize: ->
+      @project.serialized()
+
+    load: (params) ->
+      @project.serialized(params)
+
   current = new SearchPage()
   setCurrent(current)
+
+  loadFromUrl = ->
+    unless current.ui.isLandingPage() # Avoid problem where switching to /search overwrites uncommited search conditions
+      current.load(deparam(window.location.search.substring(1)))
+
+  loadFromUrl()
+
+  $(window).on 'statechange anchorchange', loadFromUrl
+
+  historyChanged = false
+  history = ko.computed
+    read: ->
+      historyChanged = true if urlUtil.saveState(@serialize(), !historyChanged)
+
+    owner: current
+
+  history.extend(throttle: config.xhrRateLimitMs)
 
   $(document).ready ->
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.ui.projectList)

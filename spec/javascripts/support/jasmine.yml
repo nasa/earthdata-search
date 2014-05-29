@@ -16,6 +16,7 @@ src_files:
   - assets/knockout.js
   - assets/namespaces.js.coffee
   - assets/config.js.coffee
+  - assets/util/deparam.js
   - assets/util/string.js.coffee
   - assets/util/date.js.coffee
   - assets/modules/map/coordinate.js.coffee

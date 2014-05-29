@@ -48,7 +48,7 @@
                 keywords box and press <strong>Enter.</strong>'
       element: '#keywords'
       advanceHook: (nextFn, closeFn) ->
-        $(window).one 'statechange anchorchange', ->
+        $(window).one 'searchready', (e) ->
           if $.trim($('#keywords').val().toLowerCase()) == 'snow cover nrt'
             nextFn()
           else

@@ -44,14 +44,20 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
           query.placename(null)
           query.spatial(null)
 
-    currentPage.query.keywords.subscribe (newValue) ->
+    readKeywords = (newValue) ->
       $keywords = $('#keywords')
       currentValue = $keywords.typeahead('val')
       unless newValue == currentValue
         $keywords.typeahead('val', newValue ? "")
 
-    currentPage.query.spatial.subscribe (newValue) ->
+    readSpatial = (newValue) ->
       currentPlacename = currentPage.query.placename()
       for input in $('.autocomplete-placenames')
         if input.value.indexOf(currentPlacename) != -1
           input.value = input.value.replace(currentPlacename, '')
+
+    readKeywords(currentPage.query.keywords())
+    readSpatial(currentPage.query.spatial())
+
+    currentPage.query.keywords.subscribe readKeywords
+    currentPage.query.spatial.subscribe readSpatial

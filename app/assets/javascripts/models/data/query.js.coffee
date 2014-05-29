@@ -3,8 +3,8 @@
 
 ns = @edsc.models.data
 
-# FIXME: Get rid of dependency on page model
 ns.query = do (ko,
+               param = $.param
                GridCondition=@edsc.models.data.GridCondition
                KnockoutModel=@edsc.models.KnockoutModel
                Temporal=@edsc.models.ui.Temporal
@@ -100,18 +100,30 @@ ns.query = do (ko,
       query[@name()] = value
 
   class FacetParam extends QueryParam
+    names: ->
+      ['campaign', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'science_keywords', 'processing_level']
+
     writeTo: (query) ->
       for facet in @value()
-        param = facet.param
-        query[param] ?= []
-        query[param].push(facet.term)
+        name = facet.param
+        query[name] ?= []
+        query[name].push(facet.term)
       query
 
     canReadFrom: (query) ->
       true
 
     readFrom: (query) ->
-      @value([])
+      values = {}
+      values[name] = query[name] for name in @names() when query[name]?
+      result = []
+      querystr = param(values)
+      if querystr.length > 0
+        facets = querystr.split('&')
+        for facet in facets
+          [k, v] = facet.split('=')
+          result.push(param: decodeURIComponent(k), term: decodeURIComponent(v).replace(/\+/g, ' '))
+      @value(result)
 
   class BooleanParam extends QueryParam
     canWrite: ->
@@ -147,26 +159,26 @@ ns.query = do (ko,
 
   class Query extends KnockoutModel
     constructor: (@parentQuery) ->
-      @params = @computed(read: @serialize, write: @fromJson, deferEvaluation: true)
+      @params = @computed(read: @_computeParams, write: @fromJson, deferEvaluation: true)
       @ownParams = @computed(read: @_computeOwnParams, deferEvaluation: true)
       @globalParams = @computed(read: @_computeGlobalParams, deferEvaluation: true)
 
-    queryComponent: (obj, observable=null, propagate=false) ->
+    queryComponent: (obj, observable=null, options={}) ->
       @_components ?= []
       @_propagated ?= []
+      @_serialized ?= []
       unless ko.isObservable(observable)
         obj.defaultValue = observable
         observable = ko.observable(observable)
       observable = observable.extend(queryable: obj)
       @_components.push(observable)
-      @_propagated.push(observable) if propagate
+      @_propagated.push(observable) if options.propagate
+      @_serialized.push(observable) unless options.ephemeral
       observable
 
     fromJson: (query) =>
       for component in @_components
         component.params(query)
-
-    serialize: => @_writeComponents(@_components)
 
     clearFilters: =>
       for component in @_components
@@ -179,6 +191,8 @@ ns.query = do (ko,
         extend(true, params, component.params())
       params
 
+    serialize: -> @_writeComponents(@_serialized)
+    _computeParams: => @_writeComponents(@_components)
     _computeGlobalParams: => @_writeComponents(@_propagated)
     _computeOwnParams: => @_writeComponents(@_components, {})
 
@@ -191,11 +205,11 @@ ns.query = do (ko,
       @grid = new GridCondition()
       @temporal = new Temporal()
 
-      @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, true)
-      @spatial = @queryComponent(new SpatialParam(), '', true)
-      @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, true)
+      @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
+      @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
+      @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, propagate: true)
       @facets = @queryComponent(new FacetParam(), ko.observableArray())
-      @pageSize = @queryComponent(new QueryParam('page_size'), 20)
+      @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
 
     clearFilters: =>
@@ -225,6 +239,7 @@ ns.query = do (ko,
     constructor: (datasetId, parentQuery) ->
       super(parentQuery)
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
+      #@granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
       @dayNightFlagOptions = [{name: "Anytime", value: null},
                               {name: "Day only", value: "DAY"},
                               {name: "Night only", value: "NIGHT"},
@@ -236,7 +251,7 @@ ns.query = do (ko,
 
       @queryComponent(new QueryParam('echo_collection_id'), datasetId)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition)
-      @sortKey = @queryComponent(new QueryParam('sort_key'), ['-start_date'])
+      @sortKey = @queryComponent(new QueryParam('sort_key'), ['-start_date'], ephemeral: true)
 
       @dayNightFlag = @queryComponent(new QueryParam('day_night_flag'), null)
       @browseOnly = @queryComponent(new BooleanParam('browse_only'), false)
@@ -244,7 +259,7 @@ ns.query = do (ko,
       @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
       @granuleIds = @queryComponent(new DelimitedParam(@granuleIdsSelectedOptionValue), '')
 
-      @pageSize = @queryComponent(new QueryParam('page_size'), 20)
+      @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
 
     fromJson: (query) =>
       granule_option = 'granule_ur'

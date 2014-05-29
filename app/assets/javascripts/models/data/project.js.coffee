@@ -64,6 +64,11 @@ ns.Project = do (ko,
       @searchGranulesDataset = ko.observable(null)
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
 
+      @serialized = ko.computed
+        read: @_readSerialized
+        write: @_writeSerialized
+        owner: this
+
     _computeAllReadyToDownload: ->
       result = true
       for ds in @datasets()
@@ -139,5 +144,11 @@ ns.Project = do (ko,
     serialize: (datasets=@datasets) ->
       datasetQuery: @query.serialize()
       datasets: (ds.serialize() for ds in datasets)
+
+    _readSerialized: ->
+      @query.serialize()
+
+    _writeSerialized: (value) ->
+      @query.fromJson(value)
 
   exports = Project
