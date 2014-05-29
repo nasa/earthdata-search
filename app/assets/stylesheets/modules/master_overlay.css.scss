@@ -203,6 +203,41 @@ a.master-overlay-close {
   @include transition (color 0.15s ease-in-out);
 }
 
+a.master-overlay-back, a.master-overlay-show-parent {
+  background: $button-dark-bottom-gradient;
+  padding: 8px 10px 8px 5px;
+  color: #fff;
+  text-shadow: 1px 1px rgba(0,0,0,.4);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 1px;
+  border-top-left-radius: 1px;
+  margin-left: 25px;
+  @include transition(all 0.2s ease-in-out);
+}
+
+a.master-overlay-back:before, a.master-overlay-show-parent:before {
+	content:"";
+  position: absolute;
+  float: left;
+  left: 24px;
+  top: 10px;
+	width:0;
+	height:0;
+	border-color:transparent $button-dark-bottom-gradient transparent transparent;
+	border-style:solid;
+	border-width: 17px 17px 17px 0;
+  @include transition(all 0.2s ease-in-out);
+}
+
+a.master-overlay-back:hover, a.master-overlay-show-parent:hover {
+  background: #2b4c6f;
+}
+
+a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
+  border-color:transparent #2b4c6f transparent transparent;
+}
+
 .master-overlay-when-parent-hidden {
   display: none;
 }
