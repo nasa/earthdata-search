@@ -52,13 +52,18 @@ ns.GranulesList = do ($=jQuery)->
       @loadingBrowse(e.granule?)
       if e.granule?
         list = $('.master-overlay-content.panel-list')
-        duration = edsc.config.defaultAnimationDurationMs
-        if e.key == "map" # scroll till visible
-          # TODO: Just scroll until the selected granule is visible
-          list.scrollTo('.panel-list-selected',{duration: duration, offsetTop: list.offset().top}) if e.granule?
-        else if e.key == "up" || e.key == "down" # scroll one item up/down
-          list.scrollTo('.panel-list-selected',{duration: duration, offsetTop: lastSelected.offset().top}) if e.granule?
-        # Do nothing for e.key == "mouse"
+        topBound = list.offset().top
+        bottomBound = topBound + list.height() - 150
+
+        selected = $('.panel-list-selected')
+        selectedOffset = selected.offset().top
+
+        if selectedOffset > bottomBound
+          offset = bottomBound
+        else if selectedOffset < topBound
+          offset = topBound + 50
+
+        list.scrollTo(selected, {duration: edsc.config.defaultAnimationDurationMs, offsetTop: offset}) if offset?
 
     _onKeyDown: (e) =>
       stickied = @stickied()

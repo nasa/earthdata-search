@@ -23,6 +23,20 @@ describe "Granule selection", reset: false do
     })();
     """
 
+  is_granule_panel_visible_script = """
+    (function() {
+      var list = $('.master-overlay-content.panel-list');
+      var top = list.offset().top;
+      var bottom = top + list.height() - 150;
+      var selected = $('.panel-list-selected').offset().top;
+
+      if (selected > top && selected < bottom) {
+        return true;
+      } else {
+        return false;
+      }
+    })();
+  """
 
   before :all do
     visit "/search"
@@ -70,9 +84,7 @@ describe "Granule selection", reset: false do
     end
 
     context "pressing the up button" do
-      original_offset = nil
       before :all do
-        original_offset = page.evaluate_script("$('.panel-list-selected').offset().top")
         keypress('#granule-list', :up)
       end
       after :all do
@@ -84,16 +96,12 @@ describe "Granule selection", reset: false do
       end
 
       it "scrolls to the selected granule" do
-        offset = page.evaluate_script("$('.panel-list-selected').offset().top")
-
-        expect(offset).to eq(original_offset)
+        expect(page.evaluate_script(is_granule_panel_visible_script)).to be_true
       end
     end
 
     context "pressing the down button" do
-      original_offset = nil
       before :all do
-        original_offset = page.evaluate_script("$('.panel-list-selected').offset().top")
         keypress('#granule-list', :down)
       end
       after :all do
@@ -105,9 +113,7 @@ describe "Granule selection", reset: false do
       end
 
       it "scrolls to the selected granule" do
-        offset = page.evaluate_script("$('.panel-list-selected').offset().top")
-
-        expect(offset).to eq(original_offset)
+        expect(page.evaluate_script(is_granule_panel_visible_script)).to be_true
       end
     end
 
@@ -138,9 +144,7 @@ describe "Granule selection", reset: false do
   end
 
   context "clicking on a granule on the map" do
-    original_offset = nil
     before :all do
-      original_offset = page.evaluate_script("$('.panel-list-list').offset().top")
       map_mouseclick
     end
 
@@ -175,9 +179,7 @@ describe "Granule selection", reset: false do
     end
 
     it "scrolls to the selected granule" do
-      offset = page.evaluate_script("$('.panel-list-selected').offset().top")
-
-      expect(offset).to eq(original_offset)
+      expect(page.evaluate_script(is_granule_panel_visible_script)).to be_true
     end
 
     context "and clicking on it again" do
