@@ -291,7 +291,6 @@ describe "Granule search filters", reset: false do
 
       expect(page).to have_field("Start", with: "")
       expect(page).to have_field("End", with: "")
-      expect(page).to have_unchecked_field("Recurring?")
       click_button "granule-filters-submit"
     end
   end
