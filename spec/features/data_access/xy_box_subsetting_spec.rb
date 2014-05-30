@@ -8,6 +8,7 @@ describe "Data Access XY Box Subsetting", reset: false do
   before reset_scope do
     visit '/search'
     login
+    wait_for_xhr
   end
 
   context 'when ordering a dataset with XY Box subsetting and a spatial constraint in the northern hemisphere' do
@@ -17,11 +18,13 @@ describe "Data Access XY Box Subsetting", reset: false do
       create_bounding_box(80, 0, 85, 10)
       click_on 'read and accept'
       click_on 'Accept'
+      wait_for_xhr
       click_link "Retrieve project data"
     end
 
     after reset_scope do
       visit '/search'
+      wait_for_xhr
     end
 
     context 'selecting the spatial subsetting option' do
@@ -120,11 +123,13 @@ describe "Data Access XY Box Subsetting", reset: false do
       create_point(-80, 10)
       click_on 'read and accept'
       click_on 'Accept'
+      wait_for_xhr
       click_link "Retrieve project data"
     end
 
     after reset_scope do
       visit '/search'
+      wait_for_xhr
     end
 
     context 'selecting the spatial subsetting option' do
@@ -223,11 +228,13 @@ describe "Data Access XY Box Subsetting", reset: false do
       dataset_results.click_link "View Project"
       click_on 'read and accept'
       click_on 'Accept'
+      wait_for_xhr
       click_link "Retrieve project data"
     end
 
     after reset_scope do
       visit '/search'
+      wait_for_xhr
     end
 
     context 'selecting the spatial subsetting option' do
@@ -261,11 +268,13 @@ describe "Data Access XY Box Subsetting", reset: false do
       dataset_results.click_link "View Project"
       click_on 'read and accept'
       click_on 'Accept'
+      wait_for_xhr
       click_link "Retrieve project data"
     end
 
     after reset_scope do
       visit '/search'
+      wait_for_xhr
     end
 
     context 'selecting the spatial subsetting option' do
