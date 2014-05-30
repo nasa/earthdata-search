@@ -20,19 +20,31 @@ ns.query = do (ko,
       name = ko.observable(name) unless ko.isObservable(name)
       @name = name
 
+    names: ->
+      @name.validValues ? [@name()]
+
     canWrite: ->
       value = @value()
       value = value.trim() if typeof value == "string"
       value? && (!value.length? || value.length > 0)
 
     canReadFrom: (query) ->
-      query[@name()]?
+      for name in @names()
+        if query[name]?
+          return true
+      false
 
     writeTo: (query) ->
       query[@name()] = @value()
 
     readFrom: (query) ->
-      @value(query[@name()])
+      for name in @names()
+        value = query[name]
+        if value?
+          @name(name)
+          @value(value)
+          break
+      null
 
     read: ->
       query = null
@@ -140,7 +152,13 @@ ns.query = do (ko,
       super(name)
 
     readFrom: (query) ->
-      @value(query[@name()].join(@delimiter))
+      for name in @names()
+        value = query[name]
+        if value?
+          @name(name)
+          @value(value.join(@delimiter))
+          break
+      null
 
     writeTo: (query) ->
       query[@name()] = @value().split(@delimiter)
@@ -245,10 +263,9 @@ ns.query = do (ko,
 
   class GranuleQuery extends Query
     constructor: (datasetId, parentQuery) ->
-      console.log 'constructed', datasetId
       super(parentQuery)
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
-      #@granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
+      @granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
       @dayNightFlagOptions = [{name: "Anytime", value: null},
                               {name: "Day only", value: "DAY"},
                               {name: "Night only", value: "NIGHT"},
