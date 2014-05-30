@@ -249,6 +249,7 @@ p.map-popup-info {
   z-index: 49;
   right: 20px;
   bottom: 140px;
+  border: 1px solid rgba(255,255,255,.6);
 
   &.busy {
     width: 256px;
