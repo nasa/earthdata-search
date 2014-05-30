@@ -9,8 +9,17 @@ module Helpers
     #            spawns xhr requests, because evaluate_script will happen synchronously.
     #            Use with care.
     def wait_for_xhr
+      #@waiting ||= 0
       synchronize(120) do
-        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
+        #message = lambda do |time, value|
+        #  @waiting += time
+        #  puts "window.edsc.util.xhr.hasPending() -> %.3f #{value.inspect}.  Total: %.3f" % [time, @waiting]
+        #end
+        #result = Echo::Util.time(::Logger.new(STDOUT), message) do
+        #  page.evaluate_script('window.edsc.util.xhr.hasPending()')
+        #end
+
+        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')[0]).to be_false
       end
     end
 

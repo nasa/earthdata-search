@@ -67,6 +67,8 @@ ns.XhrModel = do (ko
         data: params
         retry: => @_load(params, current, callback)
         success: (data, status, xhr) =>
+          #console.profile(@path)
+
           @currentRequest = null
           @isLoaded(true)
           @error(null)
@@ -85,6 +87,7 @@ ns.XhrModel = do (ko
           @completedRequestId = requestId
           @currentRequest = null
           @isLoading(false)
+          #console.profileEnd(@path)
 
         error: (response, type, reason) =>
           @isError(true)

@@ -50,12 +50,12 @@ ns.GranuleTimeline = do (ko
 
       @prevParams = params
 
-      $('#timeline').timeline('loadstart', @dataset.id(), @range()...) if reload
+      $('#timeline').timeline('loadstart', @dataset.id, @range()...) if reload
       @_load(params, current, callback) if changed
 
     _toResults: (data, current, params) ->
       intervals = data[0].intervals ? []
-      $('#timeline').timeline('data', @dataset.id(), @range()..., intervals, @color)
+      $('#timeline').timeline('data', @dataset.id, @range()..., intervals, @color)
       intervals
 
   class GranuleTimeline extends KnockoutModel
@@ -95,7 +95,7 @@ ns.GranuleTimeline = do (ko
         result = @projectList.project.datasets()
 
       # Pick only the first 3 datasets with granules
-      result = (dataset for dataset in result when dataset.has_granules())
+      result = (dataset for dataset in result when dataset.has_granules)
       result = result[0...3]
 
       $timeline = $('#timeline')
@@ -115,7 +115,7 @@ ns.GranuleTimeline = do (ko
       lastDate = Number.MIN_VALUE
       listChanged = false
       for dataset in result
-        listChanged = listChanged || !currentTimelines[dataset.id()]?
+        listChanged = listChanged || !currentTimelines[dataset.id]?
         if dataset.time_end?()?
           lastDate = Math.max(lastDate, new Date(dataset.time_end()).getTime())
       [start, end] = @range.peek()
@@ -124,7 +124,7 @@ ns.GranuleTimeline = do (ko
 
       project = @projectList.project
       for dataset in result
-        id = dataset.id()
+        id = dataset.id
         if currentTimelines[id]
           newTimelines[id] = currentTimelines[id]
           delete currentTimelines[id]
@@ -139,7 +139,7 @@ ns.GranuleTimeline = do (ko
       @_datasetsToTimelines = newTimelines
 
       for own key, data of newTimelines when !data.isLoading.peek()
-        $timeline.timeline('data', data.dataset.id(), range()..., data.results.peek(), data.color)
+        $timeline.timeline('data', data.dataset.id, range()..., data.results.peek(), data.color)
 
       result
 

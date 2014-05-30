@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Granule search filters", reset: false, wait: 60 do
+describe "Granule search filters", reset: false do
   before_granule_count = 0
 
   before(:all) do
@@ -291,7 +291,6 @@ describe "Granule search filters", reset: false, wait: 60 do
 
       expect(page).to have_field("Start", with: "")
       expect(page).to have_field("End", with: "")
-      expect(page).to have_unchecked_field("Recurring?")
       click_button "granule-filters-submit"
     end
   end

@@ -23,7 +23,7 @@ ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
 
     focusDataset: (dataset, event=null) =>
       return true if $(event?.target).closest('a').length > 0
-      return false unless dataset.has_granules()
+      return false unless dataset.has_granules
 
       @focused()?.dispose()
       @focused(new GranulesList(dataset))

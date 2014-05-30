@@ -248,7 +248,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     _drawData: (id) ->
       index = -1
       for dataset, i in @_datasets
-        if dataset.id() == id
+        if dataset.id == id
           index = i
           break
       return if index == -1
@@ -610,7 +610,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       for dataset in datasets
         txt = @_buildSvgElement('text', y: y)
-        txt.textContent = dataset.title()
+        txt.textContent = dataset.title
         overlay.appendChild(txt)
         y += DATASET_HEIGHT
 
