@@ -217,16 +217,16 @@ a.master-overlay-back, a.master-overlay-show-parent {
 }
 
 a.master-overlay-back:before, a.master-overlay-show-parent:before {
-	content:"";
+  content:"";
   position: absolute;
   float: left;
   left: 24px;
   top: 10px;
-	width:0;
-	height:0;
-	border-color:transparent $button-dark-bottom-gradient transparent transparent;
-	border-style:solid;
-	border-width: 17px 17px 17px 0;
+  width:0;
+  height:0;
+  border-color: transparent $button-dark-bottom-gradient transparent transparent;
+  border-style: solid;
+  border-width: 17px 17px 17px 0;
   @include transition(all 0.2s ease-in-out);
 }
 
