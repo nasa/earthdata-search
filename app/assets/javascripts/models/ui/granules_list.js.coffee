@@ -75,9 +75,9 @@ ns.GranulesList = do ($=jQuery)->
         index = granules.indexOf(stickied)
 
         if index > 0 && key == up
-          @_map.fire 'edsc.stickygranule', granule: granules[index-1], key: 'up'
+          @_map.fire 'edsc.stickygranule', granule: granules[index-1]
         if index < granules.length-1 && key == down
-          @_map.fire 'edsc.stickygranule', granule: granules[index+1], key: 'down'
+          @_map.fire 'edsc.stickygranule', granule: granules[index+1]
 
         e.preventDefault()
 
@@ -99,6 +99,6 @@ ns.GranulesList = do ($=jQuery)->
       return if @stickied() && !@_hasFocus
       return true if $(e?.target).closest('a').length > 0
       granule = null if @stickied() == granule
-      @_map.fire 'edsc.stickygranule', granule: granule, key: 'mouse'
+      @_map.fire 'edsc.stickygranule', granule: granule
 
   exports = GranulesList
