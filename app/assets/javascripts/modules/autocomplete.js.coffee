@@ -23,6 +23,8 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
       source: engine.ttAdapter()
     $placenameInputs.typeahead(uiOpts, dsOpts)
 
+    currentSpatial = null
+
     # When the user selects a typeahead value,
     # TODO: Upgrade to typeahead-0.10 when available and verify that typeahead:cursorchanged triggers with arrow keys
     $placenameInputs.on 'typeahead:autocompleted typeahead:selected', (event, datum) ->
@@ -32,6 +34,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
       currentPage.query.placename(null)
       currentPage.query.spatial(spatial)
       currentPage.query.placename(placename)
+      currentSpatial = spatial
 
     $('.autocomplete-placenames').on 'keyup', ->
       newValue = $(this).typeahead('val')
@@ -51,10 +54,15 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
         $keywords.typeahead('val', newValue ? "")
 
     readSpatial = (newValue) ->
-      currentPlacename = currentPage.query.placename()
+      currentPlacename = currentPage.query.placename.peek()
       for input in $('.autocomplete-placenames')
-        if input.value.indexOf(currentPlacename) != -1
-          input.value = input.value.replace(currentPlacename, '')
+        console.log currentSpatial, newValue
+        if input.value.indexOf(currentPlacename) != -1 && currentSpatial != null && newValue != currentSpatial
+          currentKeywords = currentPage.query.keywords.peek()
+          currentPage.query.keywords(currentKeywords.replace(currentPlacename, ''))
+          currentPage.query.placename('')
+        else if currentSpatial == null
+          currentSpatial = newValue
 
     readKeywords(currentPage.query.keywords())
     readSpatial(currentPage.query.spatial())

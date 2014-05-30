@@ -89,6 +89,12 @@ ns.query = do (ko,
     constructor: (name, @placename) ->
       super(name)
 
+    canReadFrom: (query) ->
+      super(query) || query.placename?
+
+    readFrom: (query) ->
+      @value([query[@name()], query.placename].join(''))
+
     canWrite: ->
       super() && @value() != @placename()
 
@@ -159,11 +165,12 @@ ns.query = do (ko,
 
   class Query extends KnockoutModel
     constructor: (@parentQuery) ->
-      @params = @computed(read: @_computeParams, write: @fromJson, deferEvaluation: true)
+      @params = @computed(read: @_computeParams, write: @_readParams, deferEvaluation: true)
       @ownParams = @computed(read: @_computeOwnParams, deferEvaluation: true)
       @globalParams = @computed(read: @_computeGlobalParams, deferEvaluation: true)
 
     queryComponent: (obj, observable=null, options={}) ->
+      @_all ?= []
       @_components ?= []
       @_propagated ?= []
       @_serialized ?= []
@@ -171,18 +178,19 @@ ns.query = do (ko,
         obj.defaultValue = observable
         observable = ko.observable(observable)
       observable = observable.extend(queryable: obj)
-      @_components.push(observable)
+      @_all.push(observable)
+      @_components.push(observable) unless options.query is false
       @_propagated.push(observable) if options.propagate
       @_serialized.push(observable) unless options.ephemeral
       observable
 
-    fromJson: (query) =>
-      for component in @_components
+    _readComponents: (components, query) ->
+      for component in components
         component.params(query)
 
-    clearFilters: =>
-      for component in @_components
-        component.params({})
+    fromJson: (query) => @_readComponents(@_serialized, query)
+    clearFilters: (query) => @_readComponents(@_all, {})
+    _readParams: (query) => @_readComponents(@_components, query)
 
     _writeComponents: (components, inheritedParams) ->
       inheritedParams ?= @parentQuery?.globalParams() ? {}
@@ -201,10 +209,10 @@ ns.query = do (ko,
       super(parentQuery)
       @focusedTemporal = ko.observable(null)
       @focusedInterval = ko.observable(null)
-      @placename = ko.observable("")
       @grid = new GridCondition()
       @temporal = new Temporal()
 
+      @placename = @queryComponent(new QueryParam('placename'), '', query: false)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
       @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, propagate: true)
