@@ -68,14 +68,19 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 }
 
 .panel-list-thumbnail-placeholder {
-  color: #bbb;
-  font-weight: bold;
+  color: #999;
   text-align: center;
   box-sizing: border-box;
-  padding: 12px 4px 4px 4px;
-  background: #e3e3e3;
+  padding: 10px 4px 4px 4px;
+  @include linear-gradient(#1c1c1c, #181818);
   border: 5px solid #111;
   line-height: 1.2em;
+
+  i {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+    opacity: .3;
+  }
 }
 
 .panel-list-meta {
