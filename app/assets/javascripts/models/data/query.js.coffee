@@ -237,6 +237,7 @@ ns.query = do (ko,
 
   class GranuleQuery extends Query
     constructor: (datasetId, parentQuery) ->
+      console.log 'constructed', datasetId
       super(parentQuery)
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
       #@granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']

@@ -29,7 +29,7 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.exte
       overlayZ = 16
 
       for dataset in datasets
-        id = dataset.id()
+        id = dataset.id
         options = dataset.gibs()
         if options?.format == 'jpeg'
           z = Math.min(baseZ++, 9)

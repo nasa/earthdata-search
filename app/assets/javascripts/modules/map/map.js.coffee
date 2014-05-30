@@ -183,10 +183,10 @@ ns.Map = do (window,
 
       layer = new L.FeatureGroup()
 
-      @_showLine(layer, @_parseSpatial(s))      for s in dataset.lines?()    if dataset.lines?
-      @_showRectangle(layer, @_parseSpatial(s)) for s in dataset.boxes?()    if dataset.boxes?
-      @_showPoint(layer, @_parseSpatial(s))     for s in dataset.points?()   if dataset.points?
-      @_showPolygon(layer, @_parseSpatial(s))   for s in dataset.polygons?() if dataset.polygons?
+      @_showLine(layer, @_parseSpatial(s))      for s in dataset.lines    if dataset.lines?
+      @_showRectangle(layer, @_parseSpatial(s)) for s in dataset.boxes    if dataset.boxes?
+      @_showPoint(layer, @_parseSpatial(s))     for s in dataset.points   if dataset.points?
+      @_showPolygon(layer, @_parseSpatial(s))   for s in dataset.polygons if dataset.polygons?
 
       layer.addTo(@map)
       @_datasetSpatialLayer = layer

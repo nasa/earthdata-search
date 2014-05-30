@@ -35,7 +35,7 @@ ns.Dataset = do (ko
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
       for dataset in datasets()
-        if dataset.id.peek() == id
+        if dataset.id == id
           if jsonData.links? && !dataset.links?
             dataset.fromJson(jsonData)
           return dataset.reference()
@@ -48,8 +48,16 @@ ns.Dataset = do (ko
       throw "Datasets should not be constructed directly" unless inKey == randomKey
 
       @hasAtomData = ko.observable(false)
-      @granuleQuery = @disposable(new GranuleQuery(jsonData.id, @query))
-      @granulesModel = granulesModel = @disposable(new Granules(@granuleQuery, @query))
+
+      @granuleQueryLoaded = ko.observable(false)
+      Object.defineProperty this, 'granuleQuery',
+        get: ->
+          @granuleQueryLoaded(true)
+          @_granuleQuery ?= @disposable(new GranuleQuery(jsonData.id, @query))
+
+      Object.defineProperty this, 'granulesModel',
+        get: -> @_granulesModel ?= @disposable(new Granules(@granuleQuery, @query))
+
       @granuleAccessOptions = @asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
 
       @details = @asyncComputed({}, 100, @_computeDetails, this)
@@ -61,11 +69,9 @@ ns.Dataset = do (ko
 
       @fromJson(jsonData)
 
-      # TODO: Is this needed?
-      @error = ko.observable(null)
       @spatial_constraint = @computed =>
         if @points?
-          'point:' + @points()[0].split(/\s+/).reverse().join(',')
+          'point:' + @points[0].split(/\s+/).reverse().join(',')
         else
           null
 
@@ -86,16 +92,11 @@ ns.Dataset = do (ko
       @dqsModel = @disposable(new DataQualitySummaryModel(new DataQualitySummaryQuery(jsonData.id)))
 
     thumbnail: ->
-      granule = @browseable_granule?()
+      granule = @browseable_granule
       if granule?
         "#{scalerUrl}/#{granule}?h=85&w=85"
       else
         null
-
-    # A granules model not directly connected to the dataset model so classes can, e.g. query
-    # for granules under a point without messing with displayed hits or timing values
-    createGranulesModel: ->
-      new Granules(new GranuleQuery(@id(), @query), @query)
 
     _loadGranuleAccessOptions: ->
       params = @_granuleParams(@query.params())
@@ -109,7 +110,7 @@ ns.Dataset = do (ko
           @granuleAccessOptions(data)
 
     _granuleParams: (params) ->
-      extend({}, params, 'echo_collection_id[]': @id(), @granuleQuery.params())
+      extend({}, params, 'echo_collection_id[]': @id, @granuleQuery.params())
 
     granuleFiltersApplied: ->
       # granuleQuery.params() will have echo_collection_id and page_size by default
@@ -120,7 +121,7 @@ ns.Dataset = do (ko
       return false
 
     _computeDetails: ->
-      id = @id()
+      id = @id
       path = "/datasets/#{id}.json"
       console.log("Request: #{path}", this)
       ajax
@@ -134,8 +135,8 @@ ns.Dataset = do (ko
           @detailsLoaded(true)
 
     serialize: ->
-      result = {id: @id(), dataset_id: @dataset_id(), has_granules: @has_granules()}
-      if @has_granules()
+      result = {id: @id, dataset_id: @dataset_id, has_granules: @has_granules}
+      if @has_granules
         result.query = @granuleQuery.serialize()
         result.params = $.param(@granuleQuery.params())
         if @granuleAccessOptions.isSetup()
@@ -158,9 +159,11 @@ ns.Dataset = do (ko
 
       @thumbnail ?= ko.observable(null)
       @archive_center ?= ko.observable(null)
-      ko.mapping.fromJS(jsonObj, {}, this)
+
+      this[key] = value for own key, value of jsonObj
+
       @hasAtomData(jsonObj.links?)
       if @gibs
-        @gibs = ko.observable(ko.mapping.toJS(@gibs))
+        @gibs = ko.observable(@gibs)
       else
         @gibs = ko.observable(null)

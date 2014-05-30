@@ -82,7 +82,7 @@ ns.Project = do (ko,
       datasetIds = []
       datasetsById = {}
       for ds, i in datasets
-        id = ds.id()
+        id = ds.id
         datasetIds.push(id)
         datasetsById[id] = new ProjectDataset(ds)
       @_datasetsById = datasetsById
@@ -95,13 +95,13 @@ ns.Project = do (ko,
     colorForDataset: (dataset) ->
       return null unless @hasDataset(dataset)
 
-      @_datasetsById[dataset.id()].meta.color
+      @_datasetsById[dataset.id].meta.color
 
     isEmpty: () ->
       @_datasetIds.isEmpty()
 
     addDataset: (dataset) =>
-      id = dataset.id()
+      id = dataset.id
 
       @_datasetsById[id] ?= new ProjectDataset(dataset)
       @_datasetIds.remove(id)
@@ -113,14 +113,14 @@ ns.Project = do (ko,
       null
 
     removeDataset: (dataset) =>
-      id = dataset.id()
+      id = dataset.id
       @_datasetsById[id]?.dispose()
       delete @_datasetsById[id]
       @_datasetIds.remove(id)
       null
 
     hasDataset: (other) =>
-      @_datasetIds.indexOf(other.id()) != -1
+      @_datasetIds.indexOf(other.id) != -1
 
     isSearchingGranules: (dataset) =>
       @searchGranulesDataset() == dataset
@@ -137,7 +137,7 @@ ns.Project = do (ko,
 
       new DatasetsModel(@query).search {echo_collection_id: @_datasetIds()}, (results) =>
         for result in results
-          dataset = @_datasetsById[result.id()]
+          dataset = @_datasetsById[result.id]
           if dataset?
             dataset.dataset.fromJson(result.json)
 

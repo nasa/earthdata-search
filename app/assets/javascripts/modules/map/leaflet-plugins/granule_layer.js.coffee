@@ -325,7 +325,7 @@ ns.GranuleLayer = do (L
       super(map)
 
       @_handle(map, 'on', 'edsc.focusdataset')
-      @setFocus(map.focusedDataset?.id() == @dataset.id())
+      @setFocus(map.focusedDataset?.id == @dataset.id)
 
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
@@ -364,7 +364,7 @@ ns.GranuleLayer = do (L
         obj[onOrOff] event, this[method]
 
     _onEdscFocusdataset: (e) =>
-      @setFocus(e.dataset?.id() == @dataset.id())
+      @setFocus(e.dataset?.id == @dataset.id)
 
     _onEdscMouseout: (e) =>
       if @_granule?
