@@ -13,8 +13,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
     hide: -> @toggle(false)
 
-    toggle: (show = @root.hasClass('is-hidden')) ->
+    toggle: (show = @root.hasClass('is-hidden'), event=true) ->
       @root.toggleClass('is-hidden', !show)
+      @_triggerStateChange() if event
 
     showParent: -> @toggleParent(true)
 
@@ -24,18 +25,22 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
     hideSecondary: -> @toggleSecondary(false)
 
-    toggleParent: (show = @root.hasClass(@scope('is-parent-hidden'))) ->
+    toggleParent: (show = @root.hasClass(@scope('is-parent-hidden')), event=true) ->
       @root.toggleClass(@scope('is-parent-hidden'), !show)
       @contentHeightChanged()
+      @_triggerStateChange() if event
 
-    toggleSecondary: (show = @root.hasClass(@scope('is-secondary-hidden'))) ->
+    toggleSecondary: (show = @root.hasClass(@scope('is-secondary-hidden')), event=true) ->
       @root.toggleClass(@scope('is-secondary-hidden'), !show)
       @contentHeightChanged()
+      @root.trigger('edsc.hidden')
+      @_triggerStateChange() if event
+
+    _triggerStateChange: ->
+      @root.trigger('edsc.olstatechange')
 
     forward: (source) ->
       @level(Math.min(@level() + 1, @children().length))
-      if source?
-        @current().find(@scope(".breadcrumb")).text("Back to #{source}")
 
     back: ->
       @level(Math.max(@level() - 1, 0))
@@ -46,7 +51,13 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     current: ->
       @children().eq(@level())
 
-    level: (value=null) ->
+    _setBreadcrumbs: ->
+      prev = @children().eq(Math.max(@level() - 1, 0))
+      title = prev.data(@scope('title'))
+      if title?
+        @current().find(@scope(".breadcrumb")).text("Back to #{title}")
+
+    level: (value=null, event=true) ->
       if value?
         # setter
         value = parseInt(value, 10)
@@ -54,10 +65,31 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         if currentLevel != value
           @_content().attr('data-level', value)
           @current().trigger('edsc.navigate')
+        @_setBreadcrumbs()
         @contentHeightChanged()
+        @_triggerStateChange() if event
       else
         # getter
         parseInt(@_content().attr('data-level'), 10)
+
+    state: (arg) ->
+      if arg?
+        i = 0
+        @toggle(arg[i++] == 't', false)
+        @toggleParent(arg[i++] == 't', false)
+        #@toggleSecondary(arg[i++] == 't', false)
+        #for child in @_content().children()
+        #  $(child).toggle(arg[i++] == 't')
+        #@level(parseInt(arg[i++], 10), false)
+      else
+        bool = (v) -> if v then 't' else 'f'
+        res = ''
+        res += bool(!@root.hasClass('is-hidden'))
+        res += bool(!@root.hasClass(@scope('is-parent-hidden')))
+        #res += bool(!@root.hasClass(@scope('is-secondary-hidden')))
+        #res += bool(($(child).is(':visible'))) for child in @_content().children()
+        #res += @level()
+        res
 
     _content: ->
       @root.find(@scope('.main-content'))
@@ -70,7 +102,8 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       # PQ: I still don't quite understand why we need to set the padding here as opposed to
       # using CSS.  It seems like box-sizing: border-box should allow us to use CSS-based padding
       # and have the height work, but it doesn't.
-      setTimeout((=>
+      clearTimeout(@_timeout) if @_timeout
+      @_timeout = setTimeout((=>
         main = $('.main-content')
         windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
         height = windowHeight - main.position().top - $('body > footer').outerHeight()
@@ -100,6 +133,3 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
   $(document).ajaxComplete (event, xhr, settings) ->
     if settings.url.indexOf('/granules.json') != -1 || settings.url.indexOf('/data_quality_summary.json') != -1
       $('.master-overlay').masterOverlay('contentHeightChanged')
-
-  $document.ready ->
-    $('.master-overlay').masterOverlay()

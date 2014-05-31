@@ -21,6 +21,7 @@ ns = models.page
 
 ns.SearchPage = do (ko
                     window
+                    extend = $.extend
                     config = @edsc.config
                     urlUtil = @edsc.util.url
                     deparam = @edsc.util.deparam
@@ -54,6 +55,14 @@ ns.SearchPage = do (ko
       @bindingsLoaded = ko.observable(false)
 
       @spatialError = ko.computed(@_computeSpatialError)
+      @overlayState = ko.observable(null)
+      ko.computed =>
+        state = @overlayState()?[1]
+        isRelevant = @datasetFacets.isRelevant
+        if !state || state == 't'
+          isRelevant(true)
+        else
+          setTimeout((-> isRelevant(false)), config.defaultAnimationDurationMs)
 
     clearFilters: =>
       @query.clearFilters()
@@ -72,10 +81,14 @@ ns.SearchPage = do (ko
       null
 
     serialize: ->
-      @project.serialized()
+      result = {}
+      result = extend(result, @project.serialized())
+      result.o = @overlayState() if @overlayState()
+      result
 
     load: (params) ->
       @project.serialized(params)
+      @overlayState(params.o)
 
   current = new SearchPage()
   setCurrent(current)
@@ -87,6 +100,7 @@ ns.SearchPage = do (ko
   loadFromUrl()
 
   $(window).on 'statechange anchorchange', loadFromUrl
+  $(document).on 'ready', loadFromUrl
 
   historyChanged = false
   history = ko.computed
@@ -99,5 +113,10 @@ ns.SearchPage = do (ko
 
   $(document).ready ->
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.ui.projectList)
+
+    $overlay = $('.master-overlay')
+    $overlay.masterOverlay()
+    $overlay.on 'edsc.olstatechange', -> current.overlayState($overlay.masterOverlay('state'))
+    ko.computed -> $overlay.masterOverlay('state', current.overlayState())
 
   exports = SearchPage

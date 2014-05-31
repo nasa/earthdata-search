@@ -56,7 +56,6 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
     readSpatial = (newValue) ->
       currentPlacename = currentPage.query.placename.peek()
       for input in $('.autocomplete-placenames')
-        console.log currentSpatial, newValue
         if input.value.indexOf(currentPlacename) != -1 && currentSpatial != null && newValue != currentSpatial
           currentKeywords = currentPage.query.keywords.peek()
           currentPage.query.keywords(currentKeywords.replace(currentPlacename, ''))

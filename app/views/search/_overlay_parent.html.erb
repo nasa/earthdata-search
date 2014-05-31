@@ -32,6 +32,7 @@
       </div>
     </div>
     <!-- /ko -->
+    <!-- ko if: datasetFacets.isRelevant() -->
     <!-- ko foreach: datasetFacets.results -->
     <!-- ko if: values().length > 0 -->
     <div data-bind="css: class_name" class="panel panel-default">
@@ -53,6 +54,7 @@
         </div>
       </div>
     </div>
+    <!-- /ko -->
     <!-- /ko -->
     <!-- /ko -->
   </div>
