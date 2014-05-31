@@ -5,7 +5,7 @@ require "spec_helper"
 
 describe "Shapefile search", reset: false, wait: 30 do
   before :all do
-    visit "/search"
+    load_page :search
   end
 
   context "when uploading a shapefile containing multiple features" do

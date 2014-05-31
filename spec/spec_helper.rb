@@ -145,4 +145,5 @@ RSpec.configure do |config|
   config.include Helpers::DatasetHelpers
   config.include Helpers::DefaultTags
   config.include Helpers::TemporalHelpers
+  config.include Helpers::UrlHelpers
 end

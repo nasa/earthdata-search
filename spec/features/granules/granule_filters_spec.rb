@@ -6,7 +6,7 @@ describe "Granule search filters", reset: false do
   before(:all) do
     page.driver.resize_window(2000, 3000) # Avoid having to scroll to click
 
-    visit "/search"
+    load_page :search
     fill_in "keywords", with: "ASTER L1A"
     expect(page).to have_content('ASTER L1A')
 

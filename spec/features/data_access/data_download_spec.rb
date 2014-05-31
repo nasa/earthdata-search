@@ -14,14 +14,14 @@ describe "Data download page", reset: false do
   non_orderable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   before(:all) do
-    visit "/search"
+    load_page :search
 
     login
   end
 
   after(:all) do
     reset_user
-    visit "/search"
+    load_page :search
   end
 
   context "when datasets have been selected for direct download" do
@@ -40,7 +40,7 @@ describe "Data download page", reset: false do
     end
 
     after :all do
-      visit "/search"
+      load_page :search
     end
 
     it "displays information on using direct download" do
@@ -104,7 +104,7 @@ describe "Data download page", reset: false do
     end
 
     after :all do
-      visit '/search'
+      load_page :search
     end
 
     it "displays no information on direct downloads" do
@@ -132,7 +132,7 @@ describe "Data download page", reset: false do
     end
 
     after :all do
-      visit "/search"
+      load_page :search
     end
 
     it "displays information on obtaining data asynchronously" do
@@ -163,7 +163,7 @@ describe "Data download page", reset: false do
     end
 
     after :all do
-      visit '/search'
+      load_page :search
     end
 
     it "displays no information on direct downloads" do

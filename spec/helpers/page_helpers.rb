@@ -1,13 +1,5 @@
 module Helpers
   module PageHelpers
-    # Important: This will only wait for xhr that has started at the time of the call (duh, right?)
-    #            Unfortunately, since the capybara-webkit UI is async, if you interact with the UI
-    #            in a way that spawns an xhr call (say, filling in a text field or clicking a button)
-    #            and then call this method, it's very likely that the xhr call will not have spawned
-    #            yet when you call this method.
-    #            Usually you only want to call this method after making an evaluate_script call that
-    #            spawns xhr requests, because evaluate_script will happen synchronously.
-    #            Use with care.
     def wait_for_xhr
       #@waiting ||= 0
       synchronize(120) do

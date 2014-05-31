@@ -20,13 +20,13 @@ describe "Data access status page", reset: false do
 
   context "when the current user has recent data retrievals" do
     before :all do
-      visit '/search'
+      load_page :search
       login
       visit '/data/status'
     end
 
     after :all do
-      visit '/search'
+      load_page :search
       logout
     end
 

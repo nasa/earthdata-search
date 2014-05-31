@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Dataset Facets", reset: false do
   before :all do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search, facets: true
   end
 
   context "facet listing" do

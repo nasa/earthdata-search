@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Data Quality Summaries', :reset => false do
   def setup_project
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
     login
 
     dataset_id = 'C14758250-LPDAAC_ECS'

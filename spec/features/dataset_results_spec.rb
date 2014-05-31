@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Dataset results", reset: true do
   before :each do
-    visit "/search"
+    load_page :search, facets: true
     # scrolling in these specs doesn't work unless the window is resized
     page.driver.resize_window(1000, 1000)
   end

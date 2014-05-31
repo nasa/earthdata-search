@@ -13,7 +13,7 @@ describe "Timeline temporal display", reset: false do
   stop_year = 2014
 
   before :all do
-    visit '/search'
+    load_page :search
 
     add_dataset_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
     add_dataset_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')

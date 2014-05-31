@@ -9,7 +9,7 @@ describe "Site tour", reset: true do
 
   context "on the landing page" do
     before :each do
-      visit "/"
+      visit "/" # Load the root url with no extra params
       wait_for_xhr
     end
 
@@ -97,7 +97,7 @@ describe "Site tour", reset: true do
 
   context "directly loading the search page" do
     before :each do
-      visit "/search"
+      load_page :search
     end
 
     it "shows no tour" do

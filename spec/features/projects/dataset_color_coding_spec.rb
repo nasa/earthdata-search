@@ -10,7 +10,7 @@ describe "Project dataset color coding", reset: false do
 
   before(:all) do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
 
     view_granule_results
     zoom_out_button = find('.timeline-zoom-out')

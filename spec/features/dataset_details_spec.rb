@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'Dataset details', reset: false do
   before :all do
     Capybara.reset_sessions!
-    visit '/search'
+    load_page :search
   end
 
   after :all do

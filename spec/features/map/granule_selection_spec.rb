@@ -39,7 +39,7 @@ describe "Granule selection", reset: false do
   """
 
   before :all do
-    visit "/search"
+    load_page :search
     create_bounding_box(0, 0, 15, 15)
   end
 

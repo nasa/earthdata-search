@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "'Clear Filters' button" do
   before do
-    visit '/search'
+    load_page :search, facets: true
   end
 
   it "clears keywords" do

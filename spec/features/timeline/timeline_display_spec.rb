@@ -8,7 +8,7 @@ describe "Timeline display", reset: false do
   extend Helpers::DatasetHelpers
 
   before :all do
-    visit '/search'
+    load_page :search
   end
 
   context 'in the dataset results list' do

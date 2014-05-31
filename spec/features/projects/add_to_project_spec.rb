@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Add to project", reset: false do
   before(:all) do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
   end
 
   context "in the dataset results list" do

@@ -11,7 +11,7 @@ describe "Login window", reset: false do
 
   before(:all) do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
     click_link 'Sign In'
   end
 

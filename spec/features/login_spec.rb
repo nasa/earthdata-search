@@ -10,7 +10,7 @@ require "spec_helper"
 describe "Login", reset: false do
   before(:all) do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
   end
 
   before(:each) do
@@ -63,7 +63,7 @@ describe "Login", reset: false do
         expect(page).to have_link("Manage user account")
       end
 
-      visit '/search'
+      load_page :search
 
       within("#main-toolbar") do
         expect(page).to have_link("Manage user account")

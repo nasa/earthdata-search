@@ -56,9 +56,14 @@ ns.SearchPage = do (ko
 
       @spatialError = ko.computed(@_computeSpatialError)
       @overlayState = ko.observable(null)
+
+      first = true
       ko.computed =>
         state = @overlayState()?[1]
         isRelevant = @datasetFacets.isRelevant
+        if first
+          first = false
+          return
         if !state || state == 't'
           isRelevant(true)
         else

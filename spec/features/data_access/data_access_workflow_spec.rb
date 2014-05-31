@@ -8,14 +8,14 @@ describe "Data Access workflow", reset: false do
   non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   before(:all) do
-    visit "/search"
+    load_page :search
 
     login
   end
 
   after(:all) do
     reset_user
-    visit "/search"
+    load_page :search
   end
 
   context "when the user is not logged in" do
@@ -29,7 +29,7 @@ describe "Data Access workflow", reset: false do
     end
 
     after :each do
-      visit "/search"
+      load_page :search
     end
 
     after :all do
@@ -64,7 +64,7 @@ describe "Data Access workflow", reset: false do
     end
 
     after :all do
-      visit "/search"
+      load_page :search
     end
 
     context "when displaying options for the first of multiple datasets" do

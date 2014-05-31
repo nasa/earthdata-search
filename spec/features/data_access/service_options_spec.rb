@@ -5,7 +5,7 @@ describe 'Service Options', reset: false do
   downloadable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
 
   before :all do
-    visit '/search'
+    load_page :search
     login
   end
 
@@ -18,7 +18,7 @@ describe 'Service Options', reset: false do
     end
 
     after :all do
-      visit '/search'
+      load_page :search
     end
 
     context "when setting options for a dataset with order options" do
@@ -55,7 +55,7 @@ describe 'Service Options', reset: false do
     end
 
     after :all do
-      visit '/search'
+      load_page :search
     end
 
     it 'displays no service options' do

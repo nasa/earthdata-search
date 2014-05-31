@@ -6,7 +6,7 @@ describe "Data Access XY Box Subsetting", reset: false do
   xy_box_dataset = ['C115003855-NSIDC_ECS', 'MODIS/Aqua Sea Ice Extent Daily L3 Global 1km EASE-Grid Day V005']
 
   before reset_scope do
-    visit '/search'
+    load_page :search
     login
     wait_for_xhr
   end
@@ -23,8 +23,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     end
 
     after reset_scope do
-      visit '/search'
-      wait_for_xhr
+      load_page :search
     end
 
     context 'selecting the spatial subsetting option' do
@@ -128,8 +127,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     end
 
     after reset_scope do
-      visit '/search'
-      wait_for_xhr
+      load_page :search
     end
 
     context 'selecting the spatial subsetting option' do
@@ -233,8 +231,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     end
 
     after reset_scope do
-      visit '/search'
-      wait_for_xhr
+      load_page :search
     end
 
     context 'selecting the spatial subsetting option' do
@@ -273,8 +270,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     end
 
     after reset_scope do
-      visit '/search'
-      wait_for_xhr
+      load_page :search
     end
 
     context 'selecting the spatial subsetting option' do

@@ -8,7 +8,7 @@ require "spec_helper"
 describe "System event notification", reset: true do
 
   before :each do
-    visit '/'
+    load_page :root
   end
 
   it "displays no system events on the home page" do
@@ -40,7 +40,7 @@ describe "System event notification", reset: true do
 
       context "and reloading the page" do
         before :each do
-          visit '/search'
+          load_page :search
           wait_for_xhr
         end
 
@@ -64,7 +64,7 @@ describe "System event notification", reset: true do
         end
 
         it "shows the dismissed notification on subsequent page loads" do
-          visit '/search'
+          load_page :search
           wait_for_xhr
           expect(page).to have_text('LARC-ECS Maintenance')
         end
