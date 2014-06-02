@@ -90,12 +90,16 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
+  file_time = 0
+
   config.before :all do
+    file_time = Time.now
     Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
   end
 
   config.after :all do
     Capybara.default_wait_time = wait_time
+    puts "  (Finished in #{Time.now - file_time}s)"
   end
 
   config.after :each do
