@@ -407,7 +407,7 @@ ns.GranuleLayer = do (L
       if @_granuleStickyLayer?
         @_granuleStickyLayer.onAdd(@_map)
 
-        if @layer.options.endpoint == 'geo'
+        if @layer.options.endpoint == 'geo' && @_granuleFocusLayer?
           @_restoreBounds ?= @_map.getBounds()
           bounds = @_granuleFocusLayer.getBounds()
           # Avoid zooming and panning tiny amounts

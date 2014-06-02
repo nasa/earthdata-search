@@ -37,6 +37,7 @@ ns.GranulesList = do ($=jQuery)->
       @_map.off 'edsc.stickygranule', @_onStickyGranule
       @dataset.visible(@_wasVisible)
       @dataset.dispose()
+      @stickied(null)
 
     scrolled: (data, event) =>
       elem = event.target
@@ -51,9 +52,9 @@ ns.GranulesList = do ($=jQuery)->
       @stickied(e.granule)
       @loadingBrowse(e.granule?)
       if e.granule?
-        list = $('.master-overlay-content.panel-list')
+        list = $('#granule-list .master-overlay-content.panel-list')
         topBound = list.offset().top
-        bottomBound = topBound + list.height() - 150
+        bottomBound = topBound + list.height() - 175
 
         selected = $('.panel-list-selected')
         selectedOffset = selected.offset().top
