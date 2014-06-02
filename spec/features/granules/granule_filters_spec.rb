@@ -248,8 +248,8 @@ describe "Granule search filters", reset: false do
   context "when searching by temporal" do
     after :each do
       first_project_dataset.click_link "Show granule filters"
-      js_uncheck_recurring 'granule'
       click_button "granule-filters-clear"
+      js_uncheck_recurring 'granule'
       expect(page).to reset_granules_to(before_granule_count)
     end
 
