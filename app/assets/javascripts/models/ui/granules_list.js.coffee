@@ -21,6 +21,8 @@ ns.GranulesList = do ($=jQuery)->
       $granuleList.on 'blur', (e) =>
         @_hasFocus = false
       $granuleList.on 'focus.panel-list-item', (e) =>
+        # We want click behavior when we have focus, but not when the focus came from the
+        # click's mousedown.  Ugh.
         setTimeout((=> @_hasFocus = true), 500)
 
       map.focusDataset(@dataset)
@@ -97,9 +99,9 @@ ns.GranulesList = do ($=jQuery)->
       granule == @stickied()
 
     toggleStickyFocus: (granule, e) =>
-      return if @stickied() && !@_hasFocus
+      return if @isStickied(granule) && !@_hasFocus
       return true if $(e?.target).closest('a').length > 0
-      granule = null if @stickied() == granule
+      granule = null if @isStickied(granule)
       @_map.fire 'edsc.stickygranule', granule: granule
 
   exports = GranulesList
