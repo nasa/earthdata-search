@@ -10,13 +10,8 @@ describe "Login window", reset: false do
   email = 'patrick+edscrecovery@element84.com'
 
   before(:all) do
-    Capybara.reset_sessions!
-    load_page :search
+    load_page :search, overlay: false
     click_link 'Sign In'
-  end
-
-  after(:all) do
-    reset_user
   end
 
   context "clicking the link to a recover a password" do

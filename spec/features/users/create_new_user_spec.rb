@@ -43,7 +43,7 @@ describe 'Create new account', reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    load_page :search
+    load_page :search, overlay: false
     click_link 'Sign In'
     click_link 'EOSDIS user account'
   end

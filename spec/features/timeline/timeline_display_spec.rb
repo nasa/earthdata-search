@@ -19,6 +19,7 @@ describe "Timeline display", reset: false do
 
   context 'in the project list' do
     before :all do
+      wait_for_xhr
       # No granules
       add_dataset_to_project('C179001887-SEDAC', '2000 Pilot Environmental Sustainability Index (ESI)')
 
