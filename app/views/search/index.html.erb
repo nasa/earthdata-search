@@ -83,6 +83,7 @@
           </p>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: ui.datasetsList.scrolled}">
+          <!-- ko if: datasets.isRelevant -->
           <ul id="dataset-results-list"
               class="panel-list-list knockout-template"
               data-bind="foreach: datasets.results, css: { 'knockout-template': !bindingsLoaded }">
@@ -91,6 +92,7 @@
           <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
             Loading datasets...
           </p>
+          <!-- /ko -->
         </div>
       </section>
       <section id="project-overview" data-bind="visible: ui.projectList.visible">

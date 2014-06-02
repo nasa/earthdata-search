@@ -77,18 +77,18 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         i = 0
         @toggle(arg[i++] == 't', false)
         @toggleParent(arg[i++] == 't', false)
-        #@toggleSecondary(arg[i++] == 't', false)
-        #for child in @_content().children()
-        #  $(child).toggle(arg[i++] == 't')
-        #@level(parseInt(arg[i++], 10), false)
+        @toggleSecondary(arg[i++] == 't', false)
+        for child in @_content().children()
+          $(child).toggle(arg[i++] == 't')
+        @level(parseInt(arg[i++], 10), false)
       else
         bool = (v) -> if v then 't' else 'f'
         res = ''
         res += bool(!@root.hasClass('is-hidden'))
         res += bool(!@root.hasClass(@scope('is-parent-hidden')))
-        #res += bool(!@root.hasClass(@scope('is-secondary-hidden')))
-        #res += bool(($(child).is(':visible'))) for child in @_content().children()
-        #res += @level()
+        res += bool(!@root.hasClass(@scope('is-secondary-hidden')))
+        res += bool(($(child).is(':visible'))) for child in @_content().children()
+        res += @level()
         res
 
     _content: ->

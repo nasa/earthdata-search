@@ -57,17 +57,28 @@ ns.SearchPage = do (ko
       @spatialError = ko.computed(@_computeSpatialError)
       @overlayState = ko.observable(null)
 
+      @datasets.isRelevant(false) # Avoid load until the URL says it's ok
+
       first = true
       ko.computed =>
-        state = @overlayState()?[1]
-        isRelevant = @datasetFacets.isRelevant
+        state = @overlayState()
         if first
           first = false
           return
-        if !state || state == 't'
-          isRelevant(true)
+        if !state
+          @datasetFacets.isRelevant(true)
+          @datasets.isRelevant(true)
+        if state[0] == 'f'
+          @datasetFacets.isRelevant(false)
+          @datasets.isRelevant(false)
+        if state[1] == 't'
+          @datasetFacets.isRelevant(true)
         else
-          setTimeout((-> isRelevant(false)), config.defaultAnimationDurationMs)
+          setTimeout((=> @datasetFacets.isRelevant(false)), config.defaultAnimationDurationMs)
+        if state[7] == '0'
+          @datasets.isRelevant(true)
+        else
+          setTimeout((=> @datasets.isRelevant(false)), config.defaultAnimationDurationMs)
 
     clearFilters: =>
       @query.clearFilters()
@@ -87,12 +98,13 @@ ns.SearchPage = do (ko
 
     serialize: ->
       result = {}
-      result = extend(result, @project.serialized())
+      result = extend(result, @project.serialized(), @ui.datasetsList.serialized())
       result.o = @overlayState() if @overlayState()
       result
 
     load: (params) ->
       @project.serialized(params)
+      @ui.datasetsList.serialized(params)
       @overlayState(params.o)
 
   current = new SearchPage()

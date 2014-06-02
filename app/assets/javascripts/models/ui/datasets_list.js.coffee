@@ -1,8 +1,9 @@
 #= require models/ui/granules_list
 
 ns = @edsc.models.ui
+data = @edsc.models.data
 
-ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
+ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, Dataset=data.Dataset, GranulesList=ns.GranulesList) ->
 
   class DatasetsList
     constructor: (@query, @datasets) ->
@@ -10,6 +11,11 @@ ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
       @selected = ko.observable({})
       @fixOverlayHeight = ko.computed =>
         $('.master-overlay').masterOverlay('contentHeightChanged') if @selected().detailsLoaded?()
+
+      @serialized = ko.computed
+        read: @_toQuery
+        write: @_fromQuery
+        owner: this
 
     scrolled: (data, event) =>
       elem = event.target
@@ -28,8 +34,27 @@ ns.DatasetsList = do ($=jQuery, GranulesList=ns.GranulesList) ->
       @focused()?.dispose()
       @focused(new GranulesList(dataset))
 
-    unfocusDataset: (dataset, event=null) =>
-      @focused()?.dispose()
-      setTimeout((=> @focused(null)), 400)
+    unfocusDataset: =>
+      if @focused()?
+        @focused().dispose()
+        setTimeout((=> @focused(null)), 400)
+
+    _toQuery: ->
+      result = {}
+      result.foc = @focused().dataset.id if @focused()?
+      result.sel = @selected().id if @selected().id?
+      result
+
+    _fromQuery: (value) ->
+      if value.foc? || value.sel?
+        ids = (value[p] for p in ['foc', 'sel'] when value[p]?)
+        new DatasetsModel(@query).search {echo_collection_id: ids}, (results) =>
+          for result in results
+            if value.foc == result.id
+              @focusDataset(Dataset.findOrCreate(result, @query))
+            if value.sel == result.id
+              @showDatasetDetails(Dataset.findOrCreate(result, @query))
+      @unfocusDataset() unless value.foc?
+
 
   exports = DatasetsList
