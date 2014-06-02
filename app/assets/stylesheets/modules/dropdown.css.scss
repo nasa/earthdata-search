@@ -2,18 +2,41 @@
   a:link, a:visited {
     color: #fff;
   }
+
+  a.ir {
+    margin: 10px 0 0 10px;
+  }
+
+  a.sign-in {
+    margin: 10px;
+  }
 }
 
 .dropdown {
   display: inline-block;
   position: relative;
 
+  &.save-dropdown {
+    float: left;
+    display: block;
+  }
+
   .dropdown-menu {
     position: absolute;
     z-index: 70;
-    margin: 1px 0 0 0;
+    margin: 0;
+    background: #263646;
     border: none;
     border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .dropdown-form {
+    width: 280px;
+  }
+
+  .dropdown-form li {
+    padding: 10px 15px;
   }
 }
 
@@ -31,6 +54,11 @@
 
 .temporal-dropdown {
   width: 380px;
+}
+
+.save-project-name {
+  display: inline-block;
+  width: 180px;
 }
 
 .xdsoft_datetimepicker, .xdsoft_timepicker {
@@ -78,7 +106,7 @@ input.day-of-year-input {
     input[type="text"] {
       margin: 0 3px 0 3px;
       width: 166px;
-  }
+    }
   }
 }
 
@@ -94,11 +122,51 @@ input.day-of-year-input {
   }
 }
 
-.user-info {
+.toolbar {
+  .fa {
+    padding: 0;
+  }
 
-  .dropdown-button i {
-    background: #315880;
-    padding: 5px 7px;
+  .fa-caret-down {
+    padding-left: 5px;
+    color: rgba(255,255,255,.4);
+    @include transition(all 0.2s ease-in-out);
+  }
+}
+
+.toolbar-secondary {
+  a.toolbar-button {
+    font-size: 1.4em;
+    padding: 15px 20px;
+    border-left: 1px solid rgba(255,255,255,.1);
+    display: block;
+    float: left;
+    color: rgba(255,255,255,.4);
+    @include transition(all 0.2s ease-in-out);
+    outline: none;
+    text-decoration: none;
+
+    &:hover {
+      background: #263646;
+      color: rgba(255,255,255,1);
+      .fa-caret-down {
+        color: rgba(255,255,255,1);
+      }
+    }
+  }
+
+  /*
+  i.save-success {
+    font-size: .6em;
+    float: left;
+    padding: 8px 10px 0 0;
+    color: #2ecc71;
+  }
+
+  img {
+    padding: 2px;
+    background: #263646;
     border-radius: 30px;
   }
+  */
 }

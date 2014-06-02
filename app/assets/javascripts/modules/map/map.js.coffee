@@ -3,6 +3,7 @@ ns = @edsc.map
 ns.Map = do (window,
              document,
              L,
+             ko,
              ProjExt = ns.L.Proj,
              ProjectionSwitcher = ns.L.ProjectionSwitcher
              LayerBuilder = ns.LayerBuilder,
@@ -40,7 +41,8 @@ ns.Map = do (window,
       map.addControl(new SpatialSelection())
       @setProjection(projection)
 
-      @_datasetSubscription = page.datasets.details.subscribe(@_showDatasetSpatial)
+      @time = ko.computed(@_computeTime, this)
+      @_datasetSubscription = page.ui.datasetsList.selected.subscribe(@_showDatasetSpatial)
       @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 
@@ -49,6 +51,7 @@ ns.Map = do (window,
     # Removes the map from the page
     destroy: ->
       @map.remove()
+      @time.dispose()
       @_datasetSubscription.dispose()
       @_granuleVisualizationSubscription.dispose()
       $('#dataset-results, #project-overview, #granule-list').off('edsc.navigate', @_hideDatasetSpatial)
@@ -56,6 +59,18 @@ ns.Map = do (window,
     focusDataset: (dataset) ->
       @map.focusedDataset = dataset
       @map.fire 'edsc.focusdataset', dataset: dataset
+
+    _computeTime: ->
+      time = null
+      query = page.query
+      focused = query.focusedTemporal()
+      if focused?
+        time = new Date(focused[1] - 1) # Go to the previous day on day boundaries
+      else
+        time = query.temporal.applied.stop.date()
+      unless time == @map.time
+        @map.time = time
+        @map.fire 'edsc.timechange', time: time
 
     _createLayerMap: (productIds...) ->
       layerForProduct = LayerBuilder.layerForProduct
@@ -139,11 +154,11 @@ ns.Map = do (window,
         center: [-90, 0]
       geo:
         crs: ProjExt.epsg4326
-        minZoom: 1
+        minZoom: 0
         maxZoom: 7
         zoom: 2
         continuousWorld: false
-        noWrap: false
+        noWrap: true # Set this to false when people inevitibly ask us for imagery across the meridian
         worldCopyJump: true
         center: [0, 0]
 
@@ -164,16 +179,14 @@ ns.Map = do (window,
       @_rebuildLayers()
 
     _showDatasetSpatial: (dataset) =>
-      dataset = dataset.summaryData
-
       @_hideDatasetSpatial()
 
       layer = new L.FeatureGroup()
 
-      @_showLine(layer, @_parseSpatial(s))      for s in dataset.lines?()    if dataset.lines?
-      @_showRectangle(layer, @_parseSpatial(s)) for s in dataset.boxes?()    if dataset.boxes?
-      @_showPoint(layer, @_parseSpatial(s))     for s in dataset.points?()   if dataset.points?
-      @_showPolygon(layer, @_parseSpatial(s))   for s in dataset.polygons?() if dataset.polygons?
+      @_showLine(layer, @_parseSpatial(s))      for s in dataset.lines    if dataset.lines?
+      @_showRectangle(layer, @_parseSpatial(s)) for s in dataset.boxes    if dataset.boxes?
+      @_showPoint(layer, @_parseSpatial(s))     for s in dataset.points   if dataset.points?
+      @_showPolygon(layer, @_parseSpatial(s))   for s in dataset.polygons if dataset.polygons?
 
       layer.addTo(@map)
       @_datasetSpatialLayer = layer

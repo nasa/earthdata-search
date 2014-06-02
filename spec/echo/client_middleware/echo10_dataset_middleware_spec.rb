@@ -122,12 +122,12 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "temporal" => "1984-12-25T00:00:00.000Z to 1994-12-25T00:00:00.000Z",
           "contacts" => [
             {
-              :name => "PLEASE CONTACT ORNL DAAC User Services",
-              :phones => [
+              "name" => "PLEASE CONTACT ORNL DAAC User Services",
+              "phones" => [
                 "(865) 241-3952 (Direct Line)",
                 "(865) 574-4665 (Fax)"
                 ],
-              :email => "ornldaac@ornl.gov"
+              "email" => "ornldaac@ornl.gov"
             }
           ],
           "science_keywords" => [
@@ -147,8 +147,8 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
             }
           ],
           "associated_difs" => {
-            :url => "http://gcmd.gsfc.nasa.gov/getdif.htm?DIF_ID",
-            :id => "DIF_ID"
+            "url" => "http://gcmd.gsfc.nasa.gov/getdif.htm?DIF_ID",
+            "id" => "DIF_ID"
           },
           "spatial" => ["Point: (39.1\xC2\xB0, -96.6\xC2\xB0)"],
           "browse_images" => [],

@@ -23,6 +23,20 @@ describe "Granule selection", reset: false do
     })();
     """
 
+  is_granule_panel_visible_script = """
+    (function() {
+      var list = $('.master-overlay-content.panel-list');
+      var top = list.offset().top;
+      var bottom = top + list.height() - 150;
+      var selected = $('.panel-list-selected').offset().top;
+
+      if (selected > top && selected < bottom) {
+        return true;
+      } else {
+        return false;
+      }
+    })();
+  """
 
   before :all do
     visit "/search"
@@ -36,6 +50,7 @@ describe "Granule selection", reset: false do
     before :all do
       # Click on a bottom one to test re-ordering
       nth_granule_list_item(10).click
+      wait_for_xhr
     end
 
     after :all do
@@ -65,6 +80,40 @@ describe "Granule selection", reset: false do
     it "displays the granule above all other granules" do
       synchronize do
         expect(page.evaluate_script(is_temporal_ordered_script)).to be_false
+      end
+    end
+
+    context "pressing the up button" do
+      before :all do
+        keypress('#granule-list', :up)
+      end
+      after :all do
+        keypress('#granule-list', :down)
+      end
+
+      it "highlights the previous granule" do
+        expect(page).to have_css('.panel-list-list li:nth-child(9).panel-list-selected')
+      end
+
+      it "scrolls to the selected granule" do
+        expect(page.evaluate_script(is_granule_panel_visible_script)).to be_true
+      end
+    end
+
+    context "pressing the down button" do
+      before :all do
+        keypress('#granule-list', :down)
+      end
+      after :all do
+        keypress('#granule-list', :up)
+      end
+
+      it "highlights the next granule" do
+        expect(page).to have_css('.panel-list-list li:nth-child(11).panel-list-selected')
+      end
+
+      it "scrolls to the selected granule" do
+        expect(page.evaluate_script(is_granule_panel_visible_script)).to be_true
       end
     end
 
@@ -127,6 +176,10 @@ describe "Granule selection", reset: false do
       synchronize do
         expect(page.evaluate_script(is_temporal_ordered_script)).to be_false
       end
+    end
+
+    it "scrolls to the selected granule" do
+      expect(page.evaluate_script(is_granule_panel_visible_script)).to be_true
     end
 
     context "and clicking on it again" do

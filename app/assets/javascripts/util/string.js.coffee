@@ -13,7 +13,7 @@
     str.trim().replace(/[_\s]+/g, '-').replace(/([A-Z])/g, '-$1').replace(/-+/g, '-').toLowerCase()
 
   capitalize = (str) ->
-    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() if str?
 
   exports =
     padLeft: padLeft

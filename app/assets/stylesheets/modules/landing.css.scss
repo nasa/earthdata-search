@@ -1,5 +1,6 @@
 .landing-toolbar-container {
-  margin-left: 145px;
+  margin-left: $toolbar-logo-width;
+  padding-top: 8px;
 }
 
 .landing-area {
@@ -19,7 +20,7 @@
 }
 
 .landing-dialog {
-  width: 800px;
+  width: 700px;
   margin: 10em auto 0;
   color: #fff;
   background-color: transparentize(#111, .2);

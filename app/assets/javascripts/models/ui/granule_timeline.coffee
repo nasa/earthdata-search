@@ -33,6 +33,7 @@ ns.GranuleTimeline = do (ko
       params
 
     _computeSearchResponse: (current, callback) =>
+      return unless @dataset.granulesModel.query.isValid()
       params = @params()
       prev = @prevParams
 
@@ -49,12 +50,12 @@ ns.GranuleTimeline = do (ko
 
       @prevParams = params
 
-      $('#timeline').timeline('loadstart', @dataset.id(), @range()...) if reload
+      $('#timeline').timeline('loadstart', @dataset.id, @range()...) if reload
       @_load(params, current, callback) if changed
 
     _toResults: (data, current, params) ->
       intervals = data[0].intervals ? []
-      $('#timeline').timeline('data', @dataset.id(), @range()..., intervals, @color)
+      $('#timeline').timeline('data', @dataset.id, @range()..., intervals, @color)
       intervals
 
   class GranuleTimeline extends KnockoutModel
@@ -78,7 +79,7 @@ ns.GranuleTimeline = do (ko
         query.focusedInterval(null)
         query.focusedTemporal(null)
 
-      @range($timeline.timeline('range'))
+      @range(null)
       @datasets = ko.computed(@_computeDatasets)
 
     clear: ->
@@ -94,18 +95,36 @@ ns.GranuleTimeline = do (ko
         result = @projectList.project.datasets()
 
       # Pick only the first 3 datasets with granules
-      result = (dataset for dataset in result when dataset.has_granules())
+      result = (dataset for dataset in result when dataset.has_granules)
       result = result[0...3]
 
       $timeline = $('#timeline')
+
+      # First load.  Construct if there are datasets, otherwise wait
+      if !$timeline.data('timeline')?
+        if result.length > 0
+          $timeline.timeline()
+        else
+          return
+
       $timeline.timeline('datasets', result)
 
       currentTimelines = @_datasetsToTimelines
       newTimelines = {}
 
+      lastDate = Number.MIN_VALUE
+      listChanged = false
+      for dataset in result
+        listChanged = listChanged || !currentTimelines[dataset.id]?
+        if dataset.time_end?()?
+          lastDate = Math.max(lastDate, new Date(dataset.time_end()).getTime())
+      [start, end] = @range.peek()
+      if listChanged && lastDate > Number.MIN_VALUE && lastDate < start
+        $timeline.timeline('panToTime', lastDate)
+
       project = @projectList.project
       for dataset in result
-        id = dataset.id()
+        id = dataset.id
         if currentTimelines[id]
           newTimelines[id] = currentTimelines[id]
           delete currentTimelines[id]
@@ -120,7 +139,7 @@ ns.GranuleTimeline = do (ko
       @_datasetsToTimelines = newTimelines
 
       for own key, data of newTimelines when !data.isLoading.peek()
-        $timeline.timeline('data', data.dataset.id(), range()..., data.results.peek(), data.color)
+        $timeline.timeline('data', data.dataset.id, range()..., data.results.peek(), data.color)
 
       result
 

@@ -1,11 +1,7 @@
 ns = @edsc.map
 
 ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
-                      SedacTileLayer = ns.L.SedacTileLayer,
-                      dateUtil = window.edsc.util.date) ->
-
-  yesterday = new Date()
-  yesterday.setDate(yesterday.getDate() - 1)
+                      SedacTileLayer = ns.L.SedacTileLayer) ->
 
   gibsParams =
     blue_marble:
@@ -25,7 +21,7 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
       product: 'MODIS_Terra_CorrectedReflectance_TrueColor'
       resolution: '250m'
       format: 'jpeg'
-      time: dateUtil.isoUtcDateString(yesterday)
+      syncTime: true
     land_water_map:
       name: 'Land / Water Map'
       source: 'OpenStreetMap / Coastlines'
@@ -40,11 +36,15 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
       source: 'SEDAC / L1 Admin Boundaries'
       wmsParams:
         layers: 'cartographic:esri-administrative-boundaries_level-1'
+        format: 'image/png'
+        transparent: true
     coastlines:
       name: 'Coastlines'
       source: 'SEDAC / Coastlines v3'
       wmsParams:
         layers: 'gpw-v3-coastlines'
+        format: 'image/png'
+        transparent: true
 
   layerForProduct = (id) ->
     return new GibsTileLayer(gibsParams[id]) if gibsParams[id]?

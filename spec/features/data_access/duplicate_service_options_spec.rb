@@ -56,7 +56,7 @@ describe 'Duplicate Service Options', reset: false do
     end
   end
 
-  context "when setting options for non-downloadable dataset" do
+  context 'when setting options for a dataset whose only option is "Download"' do
     before :all do
       choose 'Download'
       click_button 'Continue'
@@ -74,9 +74,12 @@ describe 'Duplicate Service Options', reset: false do
   context "when submitting with multiple access options" do
     before :all do
       click_button 'Add access method'
-      choose '0-download'
-      choose '1-download'
-      click_button 'Continue'
+      within '.access-item-selection:first-child' do
+        choose 'Download'
+      end
+      within '.access-item-selection:nth-child(3)' do
+        choose 'Download'
+      end
       click_button 'Continue'
       click_button 'Submit'
     end

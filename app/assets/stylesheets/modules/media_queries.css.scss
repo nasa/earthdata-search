@@ -7,14 +7,4 @@
 	    @include transition (width 0.5s ease-in-out);
 	  }
 	}
-
-	.master-overlay-parent {
-	  width: 30%;
-	}
-
-	// The main section in the overlay.  Dataset results, pinned datasets, whatnot.
-	.master-overlay-main {
-	  width: 40%;
-	  left: 30%;
-	}
 }

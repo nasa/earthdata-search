@@ -1,3 +1,6 @@
+#= require util/url
+#= require util/deparam
+#= require models/data/grid
 #= require models/data/query
 #= require models/data/datasets
 #= require models/data/dataset_facets
@@ -16,16 +19,18 @@ ui = models.ui
 
 ns = models.page
 
-ns.SearchPage = do (ko,
+ns.SearchPage = do (ko
+                    window
                     config = @edsc.config
-                    setCurrent = ns.setCurrent,
-                    QueryModel = data.Query,
+                    urlUtil = @edsc.util.url
+                    deparam = @edsc.util.deparam
+                    setCurrent = ns.setCurrent
+                    QueryModel = data.query.DatasetQuery
                     DatasetsModel = data.Datasets
                     DatasetFacetsModel = data.DatasetFacets
                     ProjectModel = data.Project
                     UserModel = data.User
                     SpatialTypeModel = ui.SpatialType
-                    TemporalModel = ui.Temporal
                     DatasetsListModel = ui.DatasetsList
                     ProjectListModel = ui.ProjectList
                     GranuleTimelineModel = ui.GranuleTimeline
@@ -33,7 +38,7 @@ ns.SearchPage = do (ko,
 
   class SearchPage
     constructor: ->
-      @query = new QueryModel(config.baseQueryParams)
+      @query = new QueryModel()
       @user = new UserModel()
       @datasets = new DatasetsModel(@query)
       @datasetFacets = new DatasetFacetsModel(@query)
@@ -41,16 +46,18 @@ ns.SearchPage = do (ko,
       @preferences = new PreferencesModel(@user)
 
       @ui =
-        spatialType: new SpatialTypeModel()
-        temporal: new TemporalModel(@query)
+        spatialType: new SpatialTypeModel(@query)
         datasetsList: new DatasetsListModel(@query, @datasets)
         projectList: new ProjectListModel(@project, @user, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
-        granuleTemporal: null
 
       @bindingsLoaded = ko.observable(false)
 
       @spatialError = ko.computed(@_computeSpatialError)
+
+    clearFilters: =>
+      @query.clearFilters()
+      @ui.spatialType.selectNone()
 
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural
@@ -64,11 +71,33 @@ ns.SearchPage = do (ko,
         return error if error.indexOf('ORA-') != -1
       null
 
+    serialize: ->
+      @project.serialized()
+
+    load: (params) ->
+      @project.serialized(params)
+
   current = new SearchPage()
   setCurrent(current)
 
+  loadFromUrl = ->
+    unless current.ui.isLandingPage() # Avoid problem where switching to /search overwrites uncommited search conditions
+      current.load(deparam(window.location.search.substring(1)))
+
+  loadFromUrl()
+
+  $(window).on 'statechange anchorchange', loadFromUrl
+
+  historyChanged = false
+  history = ko.computed
+    read: ->
+      historyChanged = true if urlUtil.saveState(@serialize(), !historyChanged)
+
+    owner: current
+
+  history.extend(throttle: config.xhrRateLimitMs)
+
   $(document).ready ->
-    $('#timeline').timeline()
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.ui.projectList)
 
   exports = SearchPage

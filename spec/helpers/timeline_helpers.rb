@@ -5,6 +5,10 @@ module Helpers
       drag_element_by_time('svg', dt)
     end
 
+    def pan_to_time(time)
+      page.execute_script("$('#timeline').timeline('panToTime', #{time.to_i * 1000})")
+    end
+
     def click_timeline_date(text, subtext=nil)
       if subtext.nil?
         page.find('.timeline-date-label text', text: text).click
@@ -20,7 +24,7 @@ module Helpers
       old_time = old_date.to_i * 1000
       position = page.evaluate_script "$('#timeline').timeline('timeToPosition', #{old_time})"
 
-      selector = ".timeline-selection line[x1^=\"#{position.to_s[0, 3]}\"] + path"
+      selector = ".timeline-selection line[x1^=\"#{position.to_s[0, 4]}\"] + path"
 
       unless page.all(selector).size > 0
         selector = '.timeline-display-top'

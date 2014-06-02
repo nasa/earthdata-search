@@ -5,7 +5,6 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 require 'capybara-screenshot/rspec'
-#require 'headless'
 
 if ENV['driver'] == 'poltergeist'
   require 'capybara/poltergeist'
@@ -82,15 +81,11 @@ RSpec.configure do |config|
   Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
   wait_time = Capybara.default_wait_time
 
-  # config.before(:suite) do
-  #   Headless.new(:destroy_on_exit => false).start
-  # end
-
   config.before :each do
     if Capybara.current_driver == :rack_test
       DatabaseCleaner.strategy = :transaction
     else
-      DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras']}
+      DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras', 'orders']}
     end
     DatabaseCleaner.start
   end
@@ -104,10 +99,19 @@ RSpec.configure do |config|
   end
 
   config.after :each do
+    tries = 0
     begin
+      tries += 1
       DatabaseCleaner.clean
     rescue => e
-      $stderr.puts "Database cleaner clean failed #{e}"
+      $stderr.puts "Database cleaner clean failed: #{e}"
+      if tries < 3
+        sleep 1
+        $stderr.puts "Retrying database clean"
+        retry
+      else
+        $stderr.puts "Database cleaner clean failed after #{tries} tries: #{e}"
+      end
     end
     if example.exception != nil
       # Failure only code goes here

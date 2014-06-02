@@ -31,9 +31,9 @@ hgroup {
 }
 
 header .ir {
-  @include retina-image(search-logo, 145px 40px, png, null, true);
+  @include retina-image($logo, $toolbar-logo-width 40px, png, null, '@2x', true);
   height: 40px;
-  width: 145px;
+  width: $toolbar-logo-width;
   float: left;
 }
 

@@ -11,14 +11,21 @@ ns.Temporal = do (ko,
   class TemporalDate extends KnockoutModel
     constructor: (@defaultYear, @isRecurring) ->
       @date = ko.observable(null)
-      @year = ko.observable(@defaultYear)
 
-      @year.subscribe @disposable((year) =>
-        if @isRecurring()
+      @_year = @defaultYear
+      @year = @computed
+        read: =>
           date = @date()
+          @_year = date?.getUTCFullYear() ? @defaultYear
+          @_year
+        write: (year) =>
+          year ?= @defaultYear
+          date = @date.peek()
           if date?
+            date = new Date(date.getTime())
             date.setUTCFullYear(year)
-            @date(new Date(date.getTime())))
+            @date(date)
+          @_year = year
 
       @humanDateString = @computed
         read: =>
@@ -27,6 +34,7 @@ ns.Temporal = do (ko,
             dateStr = dateStr.substring(5) if @isRecurring()
             dateStr
           else
+            #throw 'ugh' if @tag
             ""
         write: (dateStr) =>
           if dateStr?.length > 0
@@ -69,38 +77,26 @@ ns.Temporal = do (ko,
         else
           null
 
-      @queryDateString = @computed =>
-        if @date()
-          @date().toISOString()
-        else
-          null
-
-    fromJson: (jsonObj) ->
-      @date(new Date(jsonObj.date)) if jsonObj.date
-      @year(jsonObj.year) if jsonObj.year
-
-    serialize: ->
-      {
-        date: @date()?.getTime(),
-        year: @year()
-      }
-
-    copy: (other) ->
-      @date(other.date())
-      @year(other.year())
-      @isRecurring(other.isRecurring())
-
-    clear: =>
-      @date(null)
-      @year(@defaultYear)
+      @queryDateString = @computed
+        read: =>
+          if @date()
+            @date().toISOString()
+          else
+            null
+        write: (val) =>
+          if !!val
+            date = new Date(val)
+          else
+            date = null
+          @date(date)
 
   class TemporalCondition extends KnockoutModel
-    constructor: (@query) ->
+    constructor: ->
       @isRecurring = ko.observable(false)
       @start = @disposable(new TemporalDate(1960, @isRecurring))
       @stop = @disposable(new TemporalDate(current_year, @isRecurring))
 
-      @queryCondition = @computed(@_computeQueryCondition)
+      @queryCondition = @computed(@_computeQueryCondition())
       @ranges = @computed(@_computeRanges, this, deferEvaluation: true)
       @isSet = @computed(@_computeIsSet, this, deferEvaluation: true)
 
@@ -108,28 +104,22 @@ ns.Temporal = do (ko,
       @yearsString = @computed => @years().join(' - ')
 
     fromJson: (jsonObj) ->
-      @isRecurring(jsonObj.isRecurring)
-      @start.fromJson(jsonObj.start)
-      @stop.fromJson(jsonObj.stop)
+      @queryCondition(jsonObj)
 
     serialize: ->
-      {
-        isRecurring: @isRecurring()
-        start: @start.serialize()
-        stop: @stop.serialize()
-      }
-
-    copy: (other) ->
-      @start.copy(other.start)
-      @stop.copy(other.stop)
-      @isRecurring(other.isRecurring())
+      @queryCondition()
 
     clear: =>
-      @start.clear()
-      @stop.clear()
+      @queryCondition(null)
+
+    copy: (other) ->
+      @queryCondition(other.queryCondition())
 
     intersect: (start, stop) ->
-      for [rangeStart, rangeStop] in @ranges()
+      ranges = @ranges()
+      # No temporal means from the beginning of time to the end of time
+      return [start, stop] if ranges.length == 0
+      for [rangeStart, rangeStop] in ranges
         intersectStart = Math.max(start, rangeStart)
         intersectStop = Math.min(stop, rangeStop)
         return [new Date(intersectStart), new Date(intersectStop)] if intersectStart < intersectStop
@@ -166,7 +156,7 @@ ns.Temporal = do (ko,
 
       result
 
-    _computeYears: =>
+    _computeYears: ->
       read: =>
         if @isRecurring()
           [@start.year(), @stop.year()]
@@ -176,33 +166,49 @@ ns.Temporal = do (ko,
         @start.year(values[0])
         @stop.year(values[1])
 
-    _computeQueryCondition: =>
-      start = @start
-      stop = @stop
+    _computeQueryCondition: ->
+      read: =>
+        start = @start
+        stop = @stop
 
-      return null unless start.date()? || stop.date()?
+        return null unless start.date()? || stop.date()?
 
-      result = [start.queryDateString(), stop.queryDateString()]
+        result = [start.queryDateString(), stop.queryDateString()]
 
-      result = result.concat(start.dayOfYear(), stop.dayOfYear()) if @isRecurring()
+        result = result.concat(start.dayOfYear(), stop.dayOfYear()) if @isRecurring()
 
-      result.join(',')
+        result.join(',')
+
+      write: (value) =>
+        unless value?
+          @start.date(null)
+          @stop.date(null)
+          return
+
+        [start, stop, startDay, stopDay]  = value.split(',')
+        throw @tag unless stop?
+
+        @isRecurring(startDay?)
+        @start.queryDateString(start) if start && start.length > 0
+        @stop.queryDateString(stop) if stop && stop.length > 0
 
   class Temporal extends KnockoutModel
-    constructor: (@query) ->
+    constructor: ->
       @applied = applied = @disposable(new TemporalCondition())
       @pending = pending = @disposable(new TemporalCondition())
-      @query.temporal(applied)
+
+      @applied.tag = 'applied'
+      @pending.tag = 'pending'
+      @applied.start.tag = 'applied start'
+      @applied.stop.tag = 'applied stop'
+      @pending.start.tag = 'pending start'
+      @pending.stop.tag = 'pending stop'
 
       # Clear temporal when switching types
       pending.isRecurring.subscribe @disposable(=> pending.clear())
 
       # Copy applied to pending on change
-      applied.isRecurring.subscribe @disposable((val) => pending.isRecurring(val))
-      applied.start.date.subscribe @disposable((val) => pending.start.date(val))
-      applied.start.year.subscribe @disposable((val) => pending.start.year(val))
-      applied.stop.date.subscribe @disposable((val) => pending.stop.date(val))
-      applied.stop.year.subscribe @disposable((val) => pending.stop.year(val))
+      applied.queryCondition.subscribe @disposable((val) => pending.queryCondition(val))
 
     apply: =>
       @applied.copy(@pending)

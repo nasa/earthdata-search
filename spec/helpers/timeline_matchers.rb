@@ -47,17 +47,52 @@ RSpec::Matchers.define :have_timeline_range do |start, stop|
       actual_start_time = page.evaluate_script "$('#timeline').timeline('startTime')"
       actual_end_time = page.evaluate_script "$('#timeline').timeline('endTime')"
 
-      # Allow 30m variance for rounding errors
-      delta = 60 * 30 * 1000
+      # Allow 1% variance for rounding errors
+      delta = 1000 * (start.to_i - stop.to_i).abs / 100
 
       expect(actual_start_time).to be_within(delta).of(expected_start_time)
       expect(actual_end_time).to be_within(delta).of(expected_end_time)
     end
   end
+
+  failure_message_for_should do |page|
+    actual_start_time = page.evaluate_script "$('#timeline').timeline('startTime')"
+    actual_start_time = Time.at(actual_start_time / 1000).utc.to_datetime if actual_start_time.present?
+    actual_end_time = page.evaluate_script "$('#timeline').timeline('endTime')"
+    actual_end_time = Time.at(actual_end_time / 1000).utc.to_datetime if actual_end_time.present?
+
+    "expected to find a timeline range of #{start} - #{stop}, got #{actual_start_time} - #{actual_end_time}"
+  end
+end
+
+RSpec::Matchers.define :have_end_time do |dt|
+  match do |page|
+    present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
+
+    expected_end_time = (present + dt).to_i * 1000
+
+    synchronize do
+      actual_end_time = page.evaluate_script "$('#timeline').timeline('endTime')"
+
+      # Allow 1% variance for rounding errors
+      delta = 1000 * (dt.to_i).abs / 100
+
+      expect(actual_end_time).to be_within(delta).of(expected_end_time)
+    end
+    true
+  end
+
+  failure_message_for_should do |page|
+    expected_end_time = Time.now + dt
+    actual_end_time = page.evaluate_script "$('#timeline').timeline('endTime')"
+    actual_end_time = Time.at(actual_end_time / 1000).utc.to_datetime if actual_end_time.present?
+
+    "expected timeline to have end time of #{expected_end_time}, got #{actual_end_time}"
+  end
 end
 
 RSpec::Matchers.define :have_time_offset do |selector, dt|
-  match do |page|
+   match do |page|
     expected_dt_ms = dt.to_i * 1000
 
     synchronize do
@@ -78,7 +113,7 @@ RSpec::Matchers.define :have_time_offset do |selector, dt|
 
       expect(expected_dx).to be_within(delta).of(actual_dx)
     end
-
+    true
   end
 end
 
@@ -105,7 +140,7 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
     script += "  return temporal.queryCondition();"
 
     if dataset_n.nil?
-      script += "})(edsc.page.query.temporal());"
+      script += "})(edsc.page.query.temporal.applied);"
     else
       script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
     end
@@ -126,6 +161,41 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
         expect(actual[2]).to eql(condition[2])
         expect(actual[3]).to eql(condition[2])
       end
+    end
+    true
+  end
+
+  failure_message_for_should do |page|
+    script = "(function(temporal) {"
+    script += "  return temporal.queryCondition();"
+
+    if dataset_n.nil?
+      script += "})(edsc.page.query.temporal.applied);"
+    else
+      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
+    end
+
+    actual = page.evaluate_script(script).split(',').join(' - ')
+
+    "expected a temporal range of #{start} - #{stop}, got #{actual}"
+  end
+end
+
+
+RSpec::Matchers.define :have_no_temporal do |dataset_n=nil|
+  match do |page|
+    script = "(function(temporal) {"
+    script += "  return temporal.queryCondition();"
+
+    if dataset_n.nil?
+      script += "})(edsc.page.query.temporal.applied);"
+    else
+      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
+    end
+
+    synchronize do
+      actual = page.evaluate_script(script)
+      expect(actual).to eql('')
     end
     true
   end

@@ -3,6 +3,11 @@
   color: $overlay-heading-font-color;
   padding-bottom: 70px;
 
+  h1 {
+    border-bottom: 1px solid #333;
+    padding: 0 0 .2em 0;
+  }
+
   a {
     color: #fff;
   }
@@ -42,7 +47,13 @@
     float: right;
   }
 
-  > header, > section, > .data-access-content, > .access-item-submission {
+  > header {
+    margin: 1em auto;
+    padding: 0;
+    max-width: 1000px;
+  }
+
+  > section, > .data-access-content, > .access-item-submission {
     margin: 1em auto;
     padding: 1em 0;
     max-width: 1000px;
@@ -95,14 +106,6 @@
     &:hover {
       @include linear-gradient(#828282, #626262);
     }
-  }
-
-  button:disabled {
-    @include linear-gradient(#cbcbcb, #cbcbcb);
-    box-shadow: none;
-    text-shadow: none;
-    color: #888;
-    border-color: #888;
   }
 }
 
@@ -205,10 +208,6 @@
 
 .access-item-selection {
   padding: .5em 0;
-  border-bottom: 1px solid #ccc;
-}
-
-.summary {
 }
 
 .summary-label {
@@ -232,6 +231,11 @@
   padding-right: .25em;
 }
 
+.summary-caveat {
+  font-size: .8em;
+  color: #b94a48;
+}
+
 .access-method-label {
   width: 14em;
   text-align: left;
@@ -249,4 +253,45 @@
 
 .access-method-radio-label {
   padding-left: .5em;
+}
+
+.access-form {
+  padding: 0 1em;
+  border-bottom: 1px solid #ccc;
+
+  > .echoforms-control-ui {
+    padding-top: 0;
+  }
+}
+
+.data-retrievals {
+  width: 1000px;
+
+  tr {
+    border-bottom: 1px solid #444;
+
+    &.odd {
+      background: #333;
+    }
+  }
+
+  th, td {
+    padding: .5em 0 .5em .5em;
+    text-align: left;
+  }
+
+  .order-state {
+    background: #34495e;
+    padding: .3em .6em;
+    border-radius: 2px;
+    color: #fff;
+
+    &.processing, &.validated, &.quoted {
+      background: #27ae60;
+    }
+
+    &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
+      background: #e74c3c;
+    }
+  }
 }

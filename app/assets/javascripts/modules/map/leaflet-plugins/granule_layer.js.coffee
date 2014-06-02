@@ -325,7 +325,7 @@ ns.GranuleLayer = do (L
       super(map)
 
       @_handle(map, 'on', 'edsc.focusdataset')
-      @setFocus(map.focusedDataset?.id() == @dataset.id())
+      @setFocus(map.focusedDataset?.id == @dataset.id)
 
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
@@ -364,7 +364,7 @@ ns.GranuleLayer = do (L
         obj[onOrOff] event, this[method]
 
     _onEdscFocusdataset: (e) =>
-      @setFocus(e.dataset?.id() == @dataset.id())
+      @setFocus(e.dataset?.id == @dataset.id)
 
     _onEdscMouseout: (e) =>
       if @_granule?
@@ -407,7 +407,7 @@ ns.GranuleLayer = do (L
       if @_granuleStickyLayer?
         @_granuleStickyLayer.onAdd(@_map)
 
-        if @layer.options.endpoint == 'geo'
+        if @layer.options.endpoint == 'geo' && @_granuleFocusLayer?
           @_restoreBounds ?= @_map.getBounds()
           bounds = @_granuleFocusLayer.getBounds()
           # Avoid zooming and panning tiny amounts
@@ -486,9 +486,9 @@ ns.GranuleLayer = do (L
       icon = L.divIcon
         className: 'granule-spatial-label',
         html: '<span class="granule-spatial-label-temporal">' + temporal +
-              '</span><a class="panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+              '</span><a class="todo panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
 
-      marker = L.marker([0, 0], icon: icon)
+      marker = L.marker([0, 0], clickable: false, icon: icon)
 
       firstShape = layer.getLayers()[0]
       firstShape = firstShape._interiors if firstShape._interiors?

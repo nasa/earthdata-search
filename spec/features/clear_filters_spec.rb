@@ -28,7 +28,7 @@ describe "'Clear Filters' button" do
 
   context "clears temporal" do
     it "range" do
-      script = "var temporal = edsc.models.page.current.query.temporal();
+      script = "var temporal = edsc.models.page.current.query.temporal.applied;
                 temporal.start.date(new Date('1978-12-01T00:00:00Z'));
                 temporal.stop.date(new Date('1979-12-01T00:00:00Z'));
                 null;"
@@ -45,7 +45,7 @@ describe "'Clear Filters' button" do
     end
 
     it "recurring" do
-      script = "var temporal = edsc.models.page.current.query.temporal();
+      script = "var temporal = edsc.models.page.current.query.temporal.applied;
                 temporal.start.date(new Date('1970-12-01T00:00:00Z'));
                 temporal.stop.date(new Date('1975-12-01T00:00:00Z'));
                 temporal.isRecurring(true);

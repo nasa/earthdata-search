@@ -1,7 +1,6 @@
 // The main search page has a master-detail type view, where both master and
 // detail lay on top of the map.  This module describes the master overlay.
 
-
 // The container for the entire overlay
 .master-overlay {
   color: #fff;
@@ -16,7 +15,7 @@
     color: $overlay-heading-font-color;
 
     h2 {
-      font-size: 1.2em;
+      font-size: 1.1em;
       margin: 0;
     }
 
@@ -44,7 +43,7 @@
 // panel to dataset search results
 .master-overlay-parent {
   // background-color: $master-overlay-parent-bg-color;
-  @include retina-image(denim, 145px 145px, png, null, true);
+  @include retina-image(denim, 145px 145px, png, null, '@2x', true);
   width: 20%;
   left: 0;
 }
@@ -60,13 +59,13 @@
 // The secondary section in the overlay. Granule filters
 .master-overlay-secondary {
   background-color: $master-overlay-main-bg-color;
-  width: 60%;
+  left: 40%;
   right: 0%;
   overflow: hidden;
   z-index: 60;
   position: absolute;
   height: 100%;
-  transition-property: right;
+  transition-property: right, left;
   transition-duration: 0.3s;
 }
 
@@ -199,10 +198,44 @@
   display: block;
 }
 
-// DELETE ME After icons are added for close button
 a.master-overlay-close {
   color: rgba(255, 255, 255, .3);
   @include transition (color 0.15s ease-in-out);
+}
+
+a.master-overlay-back, a.master-overlay-show-parent {
+  background: $button-dark-bottom-gradient;
+  padding: 8px 10px 8px 5px;
+  color: #fff;
+  text-shadow: 1px 1px rgba(0,0,0,.4);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 1px;
+  border-top-left-radius: 1px;
+  margin-left: 25px;
+  @include transition(all 0.2s ease-in-out);
+}
+
+a.master-overlay-back:before, a.master-overlay-show-parent:before {
+  content:"";
+  position: absolute;
+  float: left;
+  left: 24px;
+  top: 10px;
+  width:0;
+  height:0;
+  border-color: transparent $button-dark-bottom-gradient transparent transparent;
+  border-style: solid;
+  border-width: 17px 17px 17px 0;
+  @include transition(all 0.2s ease-in-out);
+}
+
+a.master-overlay-back:hover, a.master-overlay-show-parent:hover {
+  background: #2b4c6f;
+}
+
+a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
+  border-color:transparent #2b4c6f transparent transparent;
 }
 
 .master-overlay-when-parent-hidden {
@@ -214,12 +247,12 @@ a.master-overlay-close {
 }
 
 .is-master-overlay-parent-hidden {
-  .master-overlay-parent { left:-20%; }
+  .master-overlay-parent { left:-240px; }
   .master-overlay-main   { left:0%; }
 }
 
 .is-master-overlay-secondary-hidden {
-  .master-overlay-secondary { right: -60%; }
+  .master-overlay-secondary { right: -60%; left: 100%; }
 }
 
 .master-overlay-main-content {
@@ -232,9 +265,37 @@ a.master-overlay-close {
 .is-hidden {
   .master-overlay-parent { left:-60%; }
   .master-overlay-main   { left: -40%; }
-  .master-overlay-secondary { right: -60%; }
+  .master-overlay-secondary { right: -60%; left: 100%; }
 }
 
 .master-overlay-help p {
   margin-bottom: 1em;
+}
+
+$browser-split: 1550px;
+$parent-split: 1200px;
+
+$main-width: $browser-split * 0.4;
+$parent-width: $parent-split * 0.2;
+
+@media (min-width: $parent-split) {
+  .master-overlay-parent {
+    width: $parent-width;
+  }
+
+  .master-overlay-main {
+    left: $parent-width;
+  }
+
+}
+
+@media (min-width: $browser-split) {
+  .master-overlay-main {
+    width: $main-width;
+    left: $parent-width;
+  }
+
+  .master-overlay-secondary {
+    left: $main-width;
+  }
 }

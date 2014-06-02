@@ -7,9 +7,13 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       @visible = ko.observable(false)
 
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
+      @datasetOnly = ko.computed(@_computeDatasetOnly, this, deferEvaluation: true)
+      @submittedOrders = ko.computed(@_computeSubmittedOrders, this, deferEvaluation: true)
 
       @dataQualitySummaryModal = ko.observable(false)
       @dataQualitySummaryCallback = null
+
+      @allDatasetsVisible = ko.computed(@_computeAllDatasetsVisible, this, deferEvaluation: true)
 
     showProject: =>
       @visible(true)
@@ -100,8 +104,21 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       datasets = []
       for dataset in @project.datasets()
         for m in dataset.serviceOptions.accessMethod()
-          datasets.push(dataset) if m.method() == 'download'
+          datasets.push(dataset) if m.type == 'download'
 
+      datasets
+
+    _computeSubmittedOrders: ->
+      orders = []
+      for dataset in @project.datasets()
+        for m in dataset.serviceOptions.accessMethod() when m.type == 'order'
+          orders.push(url: "https://reverb.echo.nasa.gov/reverb/orders/#{m.orderId}", dataset_id: dataset.dataset_id)
+      orders
+
+    _computeDatasetOnly: ->
+      datasets = []
+      for dataset in @project.datasets()
+        datasets.push(dataset) if dataset.granuleAccessOptions().hits == 0
       datasets
 
     datasetHasDQS: (dataset) =>
@@ -147,5 +164,15 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     _destroyGranulePickers: ->
       $('.granule-temporal-filter .temporal').datetimepicker('destroy')
 
+    toggleViewAllDatasets: =>
+      visible = !@allDatasetsVisible()
+      for dataset in @project.datasets()
+        dataset.visible(visible)
+
+    _computeAllDatasetsVisible: =>
+      all_visible = true
+      for dataset in @project.datasets()
+        all_visible = false if !dataset.visible()
+      all_visible
 
   exports = ProjectList

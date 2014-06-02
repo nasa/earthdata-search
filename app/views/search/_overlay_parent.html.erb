@@ -7,7 +7,7 @@
     </p>
   </header>
   <div class="master-overlay-content panel-group">
-    <!-- ko if: query.facets().length > 0 -->
+    <!-- ko if: query.facets() && query.facets().length > 0 -->
     <div class="panel panel-default selected-facets-panel">
       <div class="panel-heading">
         <h3 class="panel-title facet-title">
@@ -33,7 +33,8 @@
     </div>
     <!-- /ko -->
     <!-- ko foreach: datasetFacets.results -->
-    <div data-bind="if: values().length > 0, css: class_name" class="panel panel-default">
+    <!-- ko if: values().length > 0 -->
+    <div data-bind="css: class_name" class="panel panel-default">
       <div class="panel-heading">
         <h3 data-bind="click: toggleList" class="panel-title facet-title">
           <i data-bind="css: {'fa-caret-down': closed(), 'fa-caret-up': opened()}" class="fa pull-right"></i>
@@ -52,6 +53,7 @@
         </div>
       </div>
     </div>
+    <!-- /ko -->
     <!-- /ko -->
   </div>
 </section>

@@ -1,3 +1,4 @@
+//= require modules/spinners
 //= require modules/master_overlay
 //= require modules/toolbar
 //= require modules/help
@@ -7,7 +8,7 @@
 //= require modules/autocomplete
 //= require modules/landing
 //= require modules/dropdown
-//= require modules/button_effects
+//= require modules/global_hooks
 //= require modules/login
 //= require modules/granule_filters
 //= require modules/timeline/index

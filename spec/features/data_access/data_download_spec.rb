@@ -7,6 +7,12 @@ describe "Data download page", reset: false do
   non_downloadable_dataset_id = 'C179001887-SEDAC'
   non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
+  orderable_dataset_id = 'C179003030-ORNL_DAAC'
+  orderable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+
+  non_orderable_dataset_id = 'C179001887-SEDAC'
+  non_orderable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
+
   before(:all) do
     visit "/search"
 
@@ -29,8 +35,6 @@ describe "Data download page", reset: false do
       # Download the first
       choose 'Download'
       click_on 'Continue'
-      # No actions available on the second, continue
-      click_on 'Continue'
       # Confirm address
       click_on 'Submit'
     end
@@ -41,6 +45,7 @@ describe "Data download page", reset: false do
 
     it "displays information on using direct download" do
       expect(page).to have_content('The following datasets are available for immediate download')
+      expect(page).to have_content(downloadable_dataset_title)
     end
 
     it "displays a link to access a page containing direct download urls for datasets chosen for direct download" do
@@ -51,8 +56,9 @@ describe "Data download page", reset: false do
       expect(page).to have_link('Download Access Script')
     end
 
-    it "displays no links for direct downloads for datasets that were not chosen for direct download" do
-      expect(page).to have_no_content(non_downloadable_dataset_title)
+    it "displays links for direct downloads for dataset only datasets" do
+      expect(page).to have_content(non_downloadable_dataset_title)
+      expect(page).to have_content('Data download page')
     end
 
     context "upon clicking on a direct download link" do
@@ -83,13 +89,16 @@ describe "Data download page", reset: false do
 
   context "when no datasets have been selected for direct download" do
     before :all do
-      add_dataset_to_project(non_downloadable_dataset_id, non_downloadable_dataset_title)
+      add_dataset_to_project(orderable_dataset_id, orderable_dataset_title)
 
       dataset_results.click_link "View Project"
       click_link "Retrieve project data"
 
-      # No options available, continue to set address
+      choose 'Ftp_Pull'
+      select 'FTP Pull', from: 'Offered Media Delivery Types'
+      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
       click_on 'Continue'
+
       # Confirm address
       click_on 'Submit'
     end
@@ -100,6 +109,65 @@ describe "Data download page", reset: false do
 
     it "displays no information on direct downloads" do
       expect(page).to have_no_content('The following datasets are available for immediate download')
+    end
+  end
+
+  context "when datasets have been selected for asynchronous access" do
+    before :all do
+      add_dataset_to_project(orderable_dataset_id, orderable_dataset_title)
+      add_dataset_to_project(non_orderable_dataset_id, non_orderable_dataset_title)
+
+      dataset_results.click_link "View Project"
+      click_link "Retrieve project data"
+
+      choose 'Ftp_Pull'
+      select 'FTP Pull', from: 'Offered Media Delivery Types'
+      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      click_on 'Continue'
+
+      # No actions available on the second, continue
+      click_on 'Continue'
+      # Confirm address
+      click_on 'Submit'
+    end
+
+    after :all do
+      visit "/search"
+    end
+
+    it "displays information on obtaining data asynchronously" do
+      expect(page).to have_content('The following datasets are being processed')
+      expect(page).to have_content(orderable_dataset_title)
+    end
+
+    it "displays a link to track their status" do
+      expect(page).to have_link('Track Status')
+    end
+
+    it "displays no tracking links for datasets that were not chosen for asychronous access" do
+      within '.data-access-orders' do
+        expect(page).to have_no_content(non_orderable_dataset_title)
+      end
+    end
+  end
+
+  context "when no datasets have been selected for asynchronous access" do
+    before :all do
+      add_dataset_to_project(downloadable_dataset_id, downloadable_dataset_title)
+
+      dataset_results.click_link "View Project"
+      click_link "Retrieve project data"
+
+      choose 'Download'
+      click_on 'Submit'
+    end
+
+    after :all do
+      visit '/search'
+    end
+
+    it "displays no information on direct downloads" do
+      expect(page).to have_no_content('The following datasets are being processed')
     end
   end
 end

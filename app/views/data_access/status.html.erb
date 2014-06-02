@@ -1,0 +1,52 @@
+<% content_for :javascript do %>
+  <%= javascript_include_tag "account" %>
+<% end %>
+<% content_for :toolbar_secondary do %>
+  <%= render partial: 'shared/login' %>
+<% end %>
+
+<div class="data-access">
+  <nav class="data-access-nav">
+    <a href="javascript:history.back()"><i class="edsc-icon-arrow-left"></i> Back <%= request.referrer && request.referrer.include?('search') ? 'to Search Session' : '' %></a>
+  </nav>
+  <header>
+    <h1>Recent Data Retrievals</h1>
+  </header>
+  <div class="data-access-content">
+  <% if @orders.size == 0 %>
+    <p>No recent retrievals</p>
+  <% else %>
+    <table class="data-retrievals">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Contents</th>
+          <th>Created</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+        <tr class="<%= cycle("odd", "even") -%>">
+          <td>
+            <% if ['QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].include? order['order']['state'] %>
+            <a href="/data/remove?order_id=<%= order['order']['id'] %>"
+               title="remove"
+               data-remote="true"
+               data-method="post"
+               data-confirm="Are you sure you want to remove this order?  This action cannot be undone."
+               rel="nofollow"><i class="fa fa-times-circle"></i></a>
+            <% end %>
+          </td>
+          <td><%= o = Order.find_by(order_id: order['order']['id']);  o ? o.description : order['order']['id'] %></td>
+          <td>
+            <%= time_ago_in_words(order['order']['created_at'], include_seconds: true).capitalize %> ago
+          </td>
+          <td><span class="order-state <%= order['order']['state'].downcase %>"><%= order['order']['state'].humanize %></span></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+</div>

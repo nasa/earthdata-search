@@ -9,8 +9,17 @@ module Helpers
     #            spawns xhr requests, because evaluate_script will happen synchronously.
     #            Use with care.
     def wait_for_xhr
+      #@waiting ||= 0
       synchronize(120) do
-        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
+        #message = lambda do |time, value|
+        #  @waiting += time
+        #  puts "window.edsc.util.xhr.hasPending() -> %.3f #{value.inspect}.  Total: %.3f" % [time, @waiting]
+        #end
+        #result = Echo::Util.time(::Logger.new(STDOUT), message) do
+        #  page.evaluate_script('window.edsc.util.xhr.hasPending()')
+        #end
+
+        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')[0]).to be_false
       end
     end
 
@@ -38,7 +47,7 @@ module Helpers
 
     # Resets the query filters and waits for all the resulting xhr requests to finish.
     def reset_search(wait=true)
-      page.execute_script('window.edsc.models.page.current.query.clearFilters()')
+      page.execute_script('edsc.page.clearFilters()')
       wait_for_xhr
     end
 
@@ -58,7 +67,8 @@ module Helpers
 
     def click_logout
       # Do this in Javascript because of capybara clickfailed bug
-      page.execute_script("$('.dropdown-menu .dropdown-link-logout').click()")
+      # page.execute_script("$('.dropdown-menu .dropdown-link-logout').click()")
+      visit '/logout'
     end
 
     def login(username='edsc', password='EDSCtest!1')

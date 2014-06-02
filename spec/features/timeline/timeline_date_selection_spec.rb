@@ -17,24 +17,72 @@ describe "Timeline date selection", reset: false do
   start_mar_1989 = DateTime.new(1989, 3, 1, 0, 0, 0, '+0')
   start_apr_1989 = DateTime.new(1989, 4, 1, 0, 0, 0, '+0')
 
+  temporal_start_date = DateTime.new(1987, 1, 1, 0, 0, 0, '+0')
+  temporal_stop_date = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
+
   before :all do
     visit '/search'
+    # Give the window a fixed size
+    page.driver.resize_window(1280, 1024)
   end
 
   use_dataset('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
+
   hook_granule_results
 
   before :all do
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
-    zoom_out_button.click
-    pan_timeline(-25.years)
+    pan_to_time(present - 20.years)
     wait_for_xhr
     expect(granule_list).to have_text('Showing 20 of 39 matching granules')
   end
 
+  context 'when a temporal constraint is set' do
+    before(:all) { set_temporal(temporal_start_date, temporal_stop_date) }
+    after(:all) { unset_temporal }
+
+    context 'clicking on a date within the temporal constraint' do
+      before(:all) { click_timeline_date('1987') }
+      after(:all) { click_timeline_date('1987') }
+
+      it 'sets the focused time span to the given date' do
+        expect(page).to have_focused_time_span(start_1987, start_1988)
+      end
+
+      context 'and arrowing to a date outside of the constraint' do
+        before(:all) { keypress('#timeline', :left); wait_for_xhr }
+
+        it 'does not update the focused time span' do
+          expect(page).to have_focused_time_span(start_1987, start_1988)
+        end
+
+        it 'does not pan the timeline' do
+          expect(page).to have_end_time(-20.years)
+        end
+      end
+
+      context 'clicking on a date outside of the temporal constraint' do
+        before(:all) { click_timeline_date('1986') }
+
+        it 'does not set the focused time span' do
+          expect(page).to have_focused_time_span(start_1987, start_1988)
+        end
+      end
+    end
+
+    context 'clicking on a date outside of the temporal constraint' do
+      before(:all) { click_timeline_date('1986') }
+
+      it 'does not set the focused time span' do
+        expect(page).to have_no_selector('.timeline-unfocused')
+      end
+    end
+  end
+
   context "clicking on a time span in the time line" do
     before(:all) { click_timeline_date('1987') }
+    after(:all) { click_timeline_date('1987') }
 
     it "highlights the selected time span" do
       expect(page).to have_focused_time_span(start_1987, start_1988)
@@ -62,7 +110,7 @@ describe "Timeline date selection", reset: false do
       end
 
       it "pans the timeline to center on the previous time span" do
-        expect(page).to have_time_offset('.timeline-draggable', -26.years)
+        expect(page).to have_end_time(-21.years)
       end
     end
 
@@ -75,7 +123,7 @@ describe "Timeline date selection", reset: false do
       end
 
       it "pans the timeline to center on the next time span" do
-        expect(page).to have_time_offset('.timeline-draggable', -24.years)
+        expect(page).to have_end_time(-19.years)
       end
     end
 

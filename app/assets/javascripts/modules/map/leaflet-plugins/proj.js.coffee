@@ -68,7 +68,18 @@ ns.Proj = do (L, proj4) ->
                          GIBS_MAX_STEREO_RESOLUTION,
                          new Proj4Projection('+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'))
 
+  # NSIDC EASE-Grid North
+  epsg3408 =
+    projection: new Proj4Projection("+proj=laea +lat_0=90 +lon_0=0 +x_0=0 +y_0=0 +a=6371228 +b=6371228 +units=m +no_defs")
+
+  # NSIDC EASE-Grid South
+  epsg3409 =
+    projection: new Proj4Projection("+proj=laea +lat_0=-90 +lon_0=0 +x_0=0 +y_0=0 +a=6371228 +b=6371228 +units=m +no_defs")
+
+
   exports =
     epsg4326: epsg4326
     epsg3413: epsg3413
     epsg3031: epsg3031
+    epsg3408: epsg3408
+    epsg3409: epsg3409

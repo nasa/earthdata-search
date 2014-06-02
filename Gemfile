@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0.0'
+gem 'rails', '~> 4.1.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -22,7 +22,7 @@ group :test do
   gem 'capybara'
   # This is a revision which disables screenshots, one behind the disable-screenshots
   #  branch, which also tries (and fails) to avoid problems with concurrent test runs.
-  gem 'capybara-webkit', git: 'https://github.com/bilts/capybara-webkit.git', ref: 'c1ce4f9'
+  gem 'capybara-webkit', git: 'https://github.com/bilts/capybara-webkit.git', branch: 'disable-screenshots'
   gem 'poltergeist'
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
@@ -48,6 +48,7 @@ end
 
 # Gems that are mostly used for testing but useful to have available via CLI
 group :development, :test do
+  gem 'thin'
   gem 'rspec-rails'
   gem 'colored'
   gem 'vcr'
@@ -58,7 +59,6 @@ group :development, :test do
 
   gem 'therubyracer', :require => 'v8'
   gem 'libv8', '~> 3.11.8.3'
-#  gem 'headless'
 end
 
 group :assets, :development, :test do

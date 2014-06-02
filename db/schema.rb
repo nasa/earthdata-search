@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401163908) do
+ActiveRecord::Schema.define(version: 20140527185236) do
 
   create_table "accepted_data_quality_summaries", force: true do |t|
     t.string   "dqs_id"
@@ -23,10 +23,18 @@ ActiveRecord::Schema.define(version: 20140401163908) do
   create_table "dataset_extras", force: true do |t|
     t.string   "echo_id"
     t.boolean  "has_browseable_granules"
-    t.string   "thumbnail_url"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "has_granules"
+    t.string   "browseable_granule"
+    t.string   "granule"
+  end
+
+  create_table "orders", force: true do |t|
+    t.string   "order_id"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "projects", force: true do |t|

@@ -74,7 +74,7 @@ describe "Data Access workflow", reset: false do
 
       it "displays granule information" do
         expect(page).to have_content "39 Granules"
-        expect(page).to have_content "252.9 Kilobytes"
+        expect(page).to have_content "246.9 Kilobytes"
       end
 
       it 'displays a "continue" button' do
@@ -98,13 +98,21 @@ describe "Data Access workflow", reset: false do
           click_link 'Hide List'
         end
 
-        it "displays granule iformation" do
+        it "displays granule information" do
           expect(page).to have_content "FIFE_STRM_15M.80611715.s15"
         end
 
         it "displays more granules when scrolling" do
           page.execute_script "$('.granule-list div')[0].scrollTop = 10000"
           expect(page).to have_css '.granule-list h5', count: 39
+        end
+
+        it "displays an option to download" do
+          expect(page).to have_field('Download')
+        end
+
+        it "displays options provided by orders" do
+          expect(page).to have_field('Ftp_Pull')
         end
       end
 
@@ -126,7 +134,7 @@ describe "Data Access workflow", reset: false do
 
     context "when displaying options for the last of multiple datasets" do
       before :all do
-        choose "Download"
+        choose "Ftp_Pull"
         click_button "Continue"
       end
 
@@ -155,14 +163,34 @@ describe "Data Access workflow", reset: false do
 
         it 'displays the previous dataset in the list' do
           expect(page).to have_content "39 Granules"
-          expect(page).to have_content "252.9 Kilobytes"
+          expect(page).to have_content "246.9 Kilobytes"
         end
       end
     end
 
-    context "on the final step before submitting" do
+    context "on the final dataset's step when contact information is not required" do
       before :all do
         choose "Download"
+        click_button "Continue"
+      end
+
+      after :all do
+        reset_access_page
+      end
+
+      it "displays a submit button" do
+        expect(page).to have_button("Submit")
+      end
+
+      it "does not ask for contact information" do
+        expect(page).to have_no_text("Contact Information")
+      end
+
+    end
+
+    context "on the final step before submitting when contact information is required" do
+      before :all do
+        choose "Ftp_Pull"
         click_button "Continue"
         click_button "Continue"
       end

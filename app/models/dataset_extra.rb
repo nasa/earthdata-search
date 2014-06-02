@@ -1,5 +1,47 @@
 class DatasetExtra < ActiveRecord::Base
-  def self.load_thumbnails
+  def self.load
+    response = Echo::Client.get_provider_holdings
+    results = response.body
+    hits = response.headers['echo-dataset-hits'].to_i
+
+    processed_count = 0
+
+    results.each do |result|
+      id = result['echo_collection_id']
+      extra = DatasetExtra.find_or_create_by(echo_id: id)
+
+      extra.has_granules = result["granule_count"].to_i > 0
+      extra.has_browseable_granules = false unless extra.has_granules
+
+      if extra.has_granules
+        if extra.has_browseable_granules.nil? || (extra.has_browseable_granules && extra.browseable_granule.nil?)
+          browseable = Echo::Client.get_granules(format: 'json',
+                                                 echo_collection_id: [id],
+                                                 page_size: 1, browse_only: true).body['feed']['entry']
+          extra.has_browseable_granules = browseable.size > 0
+          if extra.has_browseable_granules
+            extra.granule = extra.browseable_granule = browseable.first['id']
+          end
+        end
+        if extra.granule.nil?
+          granules = Echo::Client.get_granules(format: 'json',
+                                               echo_collection_id: [id],
+                                               page_size: 1).body['feed']['entry']
+
+          extra.granule = granules.first['id'] if granules.first
+        end
+        puts "Provider has granules but no granules found: #{result['echo_collection_id']}" unless extra.granule
+      end
+
+      extra.save
+
+      processed_count += 1
+
+      puts "#{processed_count} / #{hits}"
+    end
+  end
+
+  def self.load_option_defs
     params = {page_num: 0, page_size: 20}
     processed_count = 0
 
@@ -10,48 +52,26 @@ class DatasetExtra < ActiveRecord::Base
       hits = response.headers['echo-hits'].to_i
 
       datasets['feed']['entry'].each do |dataset|
-        extra = DatasetExtra.find_or_create_by(echo_id: dataset['id'])
-
         # Skip datasets that we've seen before which have no browseable granules.  Saves tons of time
-        if extra.has_browseable_granules.nil? || extra.has_browseable_granules
-          granules = Echo::Client.get_granules(format: 'echo10', echo_collection_id: [dataset['id']], page_size: 1, browse_only: true).body
+        granules = Echo::Client.get_granules(format: 'json', echo_collection_id: [dataset['id']], page_size: 1).body
 
-          granule = granules.first
-          if granule
-            extra.thumbnail_url = granule.browse_urls.first
-            puts "First result for dataset has no browse: #{dataset['id']}" if extra.thumbnail_url.nil?
+        granule = granules['feed']['entry'].first
+        if granule
+          order_info = Echo::Client.get_order_information([granule['id']], nil).body
+          refs = Array.wrap(order_info).first['order_information']['option_definition_refs']
+          if refs
+            opts = refs.map {|r| [r['id'], r['name']]}
+            puts "#{dataset['id'].inspect} => #{opts.inspect},"
           end
-
-          extra.has_browseable_granules = !granule.nil?
-          extra.save
         end
 
         processed_count += 1
 
-        puts "#{processed_count} / #{hits}"
+        #puts "#{processed_count} / #{hits}"
       end
     end while processed_count < hits && datasets.size > 0
 
     nil
-  end
-
-  def self.load_granule_information
-    response = Echo::Client.get_provider_holdings
-    results = response.body
-    hits = response.headers['echo-dataset-hits'].to_i
-
-    processed_count = 0
-
-    results.each do |result|
-        extra = DatasetExtra.find_or_create_by(echo_id: result["echo_collection_id"])
-
-        extra.has_granules = result["granule_count"].to_i > 0
-        extra.save
-
-        processed_count += 1
-
-        puts "#{processed_count} / #{hits}"
-    end
   end
 
   def self.decorate_all(datasets)
@@ -67,7 +87,7 @@ class DatasetExtra < ActiveRecord::Base
   def decorate(dataset)
     dataset = dataset.dup.with_indifferent_access
 
-    decorate_thumbnail(dataset)
+    decorate_browseable_granule(dataset)
     decorate_granule_information(dataset)
     decorate_gibs_layers(dataset)
 
@@ -76,8 +96,8 @@ class DatasetExtra < ActiveRecord::Base
 
   private
 
-  def decorate_thumbnail(dataset)
-    dataset[:thumbnail] = self.thumbnail_url
+  def decorate_browseable_granule(dataset)
+    dataset[:browseable_granule] = self.browseable_granule
   end
 
   def decorate_granule_information(dataset)

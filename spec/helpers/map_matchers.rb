@@ -1,7 +1,7 @@
 module MapUtil
   def self.tiles(node, selector)
     # 'visible: false' because leaflet fails to load the tiles and therefore keeps them hidden
-    node.all("#{selector} .leaflet-tile", visible: false)
+    node.all("#{selector} img.leaflet-tile", visible: false)
   end
 
   def self.spatial(page)
@@ -21,6 +21,23 @@ RSpec::Matchers.define :have_tiles_with_zoom_level do |expected|
   match do |selector|
     MapUtil.tiles(Capybara.current_session, selector).any? do |img|
       img['src'] =~ /TILEMATRIX=#{expected}/
+    end
+  end
+end
+
+RSpec::Matchers.define :have_tiles_with_date do |expected|
+  match do |selector|
+    MapUtil.tiles(Capybara.current_session, selector).any? do |img|
+      puts "#{img['src']} vs #{expected}" unless img['src'] =~ /TIME=#{expected}/
+      img['src'] =~ /TIME=#{expected}/
+    end
+  end
+end
+
+RSpec::Matchers.define :have_tiles_with_no_date do |expected|
+  match do |selector|
+    !MapUtil.tiles(Capybara.current_session, selector).any? do |img|
+      img['src'] =~ /TIME=#{expected}/
     end
   end
 end

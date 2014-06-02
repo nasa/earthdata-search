@@ -25,6 +25,24 @@
   display: inline;
 }
 
+.banner-error {
+  background-color: #c0392b;
+  color: #fff;
+
+  .banner-message a {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  a.banner-close {
+    color: #fff;
+
+    &:hover {
+      color: #aaa;
+    }
+  }
+}
+
 a.banner-close {
   float:right;
   font-size:1.2em;
@@ -37,9 +55,12 @@ a.banner-close {
 
 a.banner-show-events {
   &:link, &:visited {
-    display: inline-block;
-    margin: 0 1em;
+    display: block;
+    float: left;
+    margin: 1.1em;
     color: #f39c12;
+    @include transition(color 0.2s ease-in-out);
+    text-shadow: 0 0 20px #2980b9;
   }
 
   &:hover {

@@ -10,6 +10,8 @@ describe "Timeline temporal selection", reset: false do
     date.iso8601.gsub('T', ' ').gsub(/\+.*$/, '')
   end
 
+  present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
+
   global_start_date = DateTime.new(1987, 1, 1, 0, 0, 0, '+0')
   global_stop_date = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
   local_start_date = DateTime.new(1986, 1, 1, 0, 0, 0, '+0')
@@ -25,8 +27,8 @@ describe "Timeline temporal selection", reset: false do
     dataset_results.click_link "View Project"
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
-    zoom_out_button.click
-    pan_timeline(-25.years)
+    pan_to_time(present - 25.years)
+
     wait_for_xhr
   end
 
@@ -39,6 +41,35 @@ describe "Timeline temporal selection", reset: false do
     after :all do
       unset_temporal
       unset_temporal(0)
+    end
+
+    context 'clicking on the timeline header' do
+      before(:all) { page.execute_script("$('.timeline-display-top').click()") }
+      after(:all) do
+        set_temporal(local_start_date, local_stop_date, nil, 0)
+        set_temporal(global_start_date, global_stop_date)
+      end
+
+      it 'clears the temporal constraint' do
+        expect(page).to have_no_temporal
+      end
+
+      it 'clears dataset-specific temporal constraints' do
+        expect(page).to have_no_temporal(0)
+      end
+    end
+
+    context 'clicking on the close link in the temporal constraint display' do
+      before(:all) { click_link 'Remove temporal constraint' }
+      after(:all) { set_temporal(global_start_date, global_stop_date) }
+
+      it 'clears the global temporal constraint' do
+        expect(page).to have_no_temporal
+      end
+
+      it 'does not clear dataset-specific temporal constraints' do
+        expect(page).to have_temporal(local_start_date, local_stop_date, nil, 0)
+      end
     end
 
     context 'dragging the start fencepost of the global temporal condition' do

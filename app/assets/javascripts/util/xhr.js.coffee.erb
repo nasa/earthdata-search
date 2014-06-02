@@ -1,20 +1,23 @@
-@edsc.util.xhr = do (window, $=jQuery) ->
+@edsc.util.xhr = do (window, document, $=jQuery) ->
   callbacks = []
 
+  timeouts = 0
+  xhrs = 0
   timeoutPool = []
   realSetTimeout = window.setTimeout
   realClearTimeout = window.clearTimeout
 
   hasPending = ->
-    xhrPool.length > 0 || timeoutPool.length > 0
+    [xhrPool.length > 0 || timeoutPool.length > 0, xhrs, timeouts]
 
   runCallbacks = ->
-    unless hasPending()
+    unless hasPending()[0]
       callbacks.pop()() while callbacks.length > 0
 
   window.setTimeout = (f, args...) ->
     id = null
     onTimeout = ->
+      timeouts++
       try
         if typeof f == "string"
           eval(f)
@@ -36,17 +39,18 @@
     return
 
   xhrPool = []
-  $.ajaxSetup
-    beforeSend: (xhr) ->
+  $(document)
+    .ajaxSend (event, xhr, settings) ->
       xhrPool.push(xhr)
-    complete: (xhr) ->
+    .ajaxComplete (event, xhr) ->
+      xhrs++
       index = xhrPool.indexOf(xhr)
       xhrPool.splice(index, 1) if (index > -1)
       runCallbacks()
 
   wait = (callback) ->
     setTimeout((->
-      if hasPending()
+      if hasPending()[0]
         callbacks.push(callback)
       else
         callback()), 0)

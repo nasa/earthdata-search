@@ -21,11 +21,11 @@
     <a href="#" class="button temporal-dropdown-button dropdown-button" data-toggle="dropdown">
       <i class="fa fa-clock-o"></i>
       <span class="dropdown-value">Temporal</span>
-      <span class="caret"></span>
+      <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu temporal-dropdown">
       <li>
-        <!-- ko with: ui.temporal.pending -->
+        <!-- ko with: query.temporal.pending -->
         <%= render partial: 'temporal_template', locals: {prefix: 'dataset', show_actions: true} %>
         <!-- /ko -->
       </li>
@@ -34,7 +34,7 @@
 
 
   <div class="dropdown" data-bind="with: ui.spatialType">
-    <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button"><i class="fa fa-fw" data-bind="css: icon"></i> <span class="dropdown-value" data-bind="text: name">Spatial</span> <span class="caret"></span></a>
+    <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button"><i class="fa fa-fw" data-bind="css: icon"></i> <span class="dropdown-value" data-bind="text: name">Spatial</span> <i class="fa fa-caret-down"></i></a>
     <ul class="dropdown-menu spatial-selection">
       <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
       <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
@@ -43,7 +43,7 @@
       <li><a href="#" class="dropdown-link select-grid" data-bind="click: selectGrid"><i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates</a></li>
     </ul>
   </div>
-  <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: query.clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
+  <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
 </div>
 </div>
 <% end %>
@@ -57,7 +57,7 @@
         <nav class="master-overlay-nav master-overlay-when-parent-hidden">
           <a href="#" class="master-overlay-show-parent">
             <i class="fa fa-search"></i> Browse Datasets
-            <span data-bind="if: query.facets().length > 0">
+            <span data-bind="if: query.facets() && query.facets().length > 0">
                (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
             </span>
           </a>
@@ -107,10 +107,10 @@
               <i class="edsc-icon-download"></i>
             </a>
 
-            <a href="#" title="View all datasets" data-bind="visible: !datasets.allDatasetsVisible() && !project.isEmpty(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button" >
+            <a href="#" title="View all datasets" data-bind="visible: !$root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button" >
               <i class="edsc-icon-eye"></i>
             </a>
-            <a href="#" title="Hide all datasets" data-bind="visible: datasets.allDatasetsVisible() && !project.isEmpty(), click: datasets.toggleViewAllDatasets.bind($data, project.datasets)" class="button icon-button button-active" >
+            <a href="#" title="Hide all datasets" data-bind="visible: $root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button button-active" >
               <i class="edsc-icon-eye"></i>
             </a>
           </div>
@@ -275,7 +275,7 @@
   <label for="map-grid-coordinates" class="map-grid-hint" data-bind="text: hint"></label>
 </div>
 
-<div id="temporal-query" data-bind="with: ui.temporal.applied">
+<div id="temporal-query" data-bind="with: query.temporal.applied">
   <p>
     <i class="fa fa-clock-o"></i>
     <span data-bind="visible: start.date">
@@ -289,6 +289,7 @@
     <span data-bind="visible: (start.date() || stop.date()) && isRecurring()">
       <strong>Range</strong> <span data-bind="text: yearsString"></span>
     </span>
+    <a href="#" data-bind="click: clear, visible: start.date() || stop.date()" title="Remove temporal constraint"><i class="fa fa-times-circle"></i></a>
   </p>
 </div>
 
@@ -350,7 +351,7 @@
     </div>
     <div class="landing-dialog-actions">
       <a href="#datasets-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
-      <p><i class="fa fa-arrow-circle-left"></i> See new and featured datasets or use categories to narrow your results.</p>
+      <p><i class="fa fa-arrow-circle-left"></i> See featured datasets or use categories to narrow your results.</p>
     </div>
   </div>
 
@@ -420,7 +421,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="button-light">
+          <div class="loading"></div>
+          <button type="submit" class="modal-button">
             <i class="fa fa-lock"></i>
             <span data-bind="text: (user.needsUsername() || user.needsPassword()) ? 'Recover' : 'Sign In'">Sign In</span></button>
         </div>
@@ -445,7 +447,8 @@
           <!-- /ko -->
         </div>
         <div class="modal-footer">
-          <button type="submit" class="button-light">Accept</button>
+          <div class="loading"></div>
+          <button type="submit" class="modal-button">Accept</button>
         </div>
       </form>
     </div>

@@ -184,20 +184,30 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_data = {}
 
-      @zoom = 3
+      @zoom = 4
       @end = config.present()
-      @start = @end - MS_PER_MONTH
+      @start = @end - ZOOM_LEVELS[@zoom]
       @originPx = 0
 
       @_loadedRange = []
 
       @_updateTimeline()
 
-      @root.on 'click', @scope('.date-label'), @_onLabelClick
-      @root.on 'keydown', @_onKeydown
+      @root.on 'click.timeline', @scope('.date-label'), @_onLabelClick
+      @root.on 'mouseover.timeline', @scope('.date-label'), @_onLabelMouseover
+      @root.on 'mouseout.timeline', @scope('.date-label'), @_onLabelMouseout
+      @root.on 'keydown.timeline', @_onKeydown
+
+      @root.on 'blur.timeline', (e) =>
+        @_hasFocus = false
+      @root.on 'focus.timeline', (e) =>
+        # We want click behavior when we have focus, but not when the focus came from the
+        # click's mousedown.  Ugh.
+        setTimeout((=> @_hasFocus = true), 500)
 
     destroy: ->
       @root.find('svg').remove()
+      @root.off('.timeline')
       super()
 
     range: ->
@@ -225,7 +235,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       null
 
     loadstart: (id, start, end, resolution) ->
-      @root.find(@scope('.tools')).addClass('busy')
       match = @svg.getElementsByClassName(id)
       if match.length > 0
         match[0].setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
@@ -239,7 +248,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     _drawData: (id) ->
       index = -1
       for dataset, i in @_datasets
-        if dataset.id() == id
+        if dataset.id == id
           index = i
           break
       return if index == -1
@@ -261,14 +270,15 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       for [startTime, endTime, _] in intervals
         startPos = @timeToPosition(startTime * 1000)
         endPos = @timeToPosition(endTime * 1000)
-        rect = @_buildSvgElement 'rect',
-          class: @scope('imprecise') if resolution != RESOLUTIONS[zoom - 2]
+        attrs =
           x: startPos
           y: 5
           width: endPos - startPos
           height: DATASET_HEIGHT - 7
           rx: 10
           ry: 10
+        attrs['class'] = @scope('imprecise') if resolution != RESOLUTIONS[zoom - 2]
+        rect = @_buildSvgElement 'rect', attrs
         rect.setAttribute('style', "fill: #{color}") if color?
         el.appendChild(rect)
 
@@ -279,8 +289,6 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       children = @tlDatasets.childNodes
       loading = @tlDatasets.getElementsByClassName(@scope('loading'))
 
-      if children.length == @_datasets.length && loading.length == 0 && @_contains(start, end, @start, @end)
-        @root.find(@scope('.tools')).removeClass('busy')
       null
 
     refresh: ->
@@ -341,15 +349,18 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @focus()
       @_updateTimeline()
+      @_drawTemporalBounds()
       #console.log 'zoom', @zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
     focus: (t0, t1) ->
+      if  Math.abs(t0 - @_focus) < 1000
+        return unless @_hasFocus # Regaining input focus, don't do anything (EDSC-323)
+        t0 = null
+      @_focus = t0
+
       root = @root
       overlay = @focusOverlay
       @_empty(overlay)
-
-      t0 = null if Math.abs(t0 - @_focus) < 1000
-      @_focus = t0
 
       if t0?
         root.trigger(@scopedEventName('focusset'), [t0, t1, RESOLUTIONS[@zoom - 1]])
@@ -365,6 +376,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         root.trigger(@scopedEventName('focusremove'))
 
       null
+
+    panToTime: (time) ->
+      @_pan(@timeSpanToPx(@end - time))
 
     _getTransformX: getTransformX
 
@@ -389,18 +403,39 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
           t1 = @_roundTime(focus, zoom, 2)
           dx = -@timeSpanToPx(t1 - t0)
 
-        @_pan(dx)
-        @focus(t0, t1)
+        if @_canFocusTimespan(t0, t1)
+          @_pan(dx)
+          @focus(t0, t1)
 
+    _canFocusTimespan: (start, stop) ->
+      return true if @globalTemporal.intersect(start, stop)?
+      for dataset in @_datasets
+        dataset.granulesModel.temporal.applied.intersect(start, stop)?
+      false
 
-    _onLabelClick: (e) =>
-      group = e.currentTarget
+    _timespanForLabel: (group) ->
       next = group.nextSibling
 
       x0 = @_getTransformX(group)
       x1 = @_getTransformX(next, x0)
 
-      @focus(@positionToTime(x0), @positionToTime(x1))
+      [@positionToTime(x0), @positionToTime(x1)]
+
+    _onLabelClick: (e) =>
+      label = e.currentTarget
+      [start, stop] = @_timespanForLabel(label)
+      if @_canFocusTimespan(start, stop)
+        @focus(start, stop)
+
+    _onLabelMouseover: (e) =>
+      label = e.currentTarget
+      [start, stop] = @_timespanForLabel(label)
+      unless @_canFocusTimespan(start, stop)
+        label.setAttribute('class', "#{@scope('date-label')} #{@scope('nofocus')}")
+
+    _onLabelMouseout: (e) =>
+      label = e.currentTarget
+      label.setAttribute('class', @scope('date-label'))
 
     _contains: (start0, end0, start1, end1) ->
       start0 < start1 < end0 && start0 < end1 < end0
@@ -449,6 +484,12 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
     _setupTemporalSelection: (el) ->
       self = this
+
+      $(el).on 'click', =>
+        for dataset in @_datasets
+          dataset.granulesModel.temporal.applied.clear()
+        @globalTemporal.clear()
+
       draggable = new TimelineDraggable(el)
 
       left = null
@@ -467,7 +508,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       rateLimit = ->
         allowWheel = false
-        setTimeout((-> allowWheel = true), 100)
+        setTimeout((-> allowWheel = true), 300)
 
       L.DomEvent.on svg, 'mousewheel', (e) =>
         return unless allowWheel
@@ -569,7 +610,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       for dataset in datasets
         txt = @_buildSvgElement('text', y: y)
-        txt.textContent = dataset.title()
+        txt.textContent = dataset.title
         overlay.appendChild(txt)
         y += DATASET_HEIGHT
 
@@ -587,12 +628,15 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
 
       @_empty(axis)
 
-      @root.find('h1').text(RESOLUTIONS[zoom - 1])
+      root.find('h1').text(RESOLUTIONS[zoom - 1])
 
       line = @_buildSvgElement('line', class: @scope('timeline'), x1: MIN_X, y1: 0, x2: MAX_X, y2: 0)
       axis.appendChild(line)
 
-      @width = width = @root.width() - @root.find(@scope('.tools')).width()
+      elWidth = root.width()
+      elWidth = $(window).width() if elWidth == 0
+
+      @width = width = $(window).width() - root.find(@scope('.tools')).width()
       @scale = (end - start) / width # ms per pixel
 
       range = @range()
@@ -604,11 +648,10 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       resolution = range[2]
       [loadedStart, loadedEnd, loadedResolution] = @_loadedRange
       unless loadedResolution == resolution && @_contains(loadedStart, loadedEnd, start, end)
-        @root.find(@scope('.tools')).addClass('busy')
         for node in @tlDatasets.childNodes
           node.setAttribute('class', "#{node.getAttribute('class')} #{@scope('loading')}")
 
-      @root.trigger(@scopedEventName('rangechange'), range)
+      root.trigger(@scopedEventName('rangechange'), range)
 
     _drawTemporalBounds: ->
       overlay = @selectionOverlay
@@ -625,7 +668,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         else
           globalIndexes.push(index)
 
-      @globalTemporal = datasets[0].query.temporal()
+      @globalTemporal = datasets[0].query.temporal.applied
       @_createTemporalRegion(overlay, @globalTemporal, globalIndexes)
 
     _createSelectionRegion: (overlay, x0, x1, temporal, indexes) ->
@@ -666,6 +709,11 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       date = new Date(time)
       components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
       components = components.slice(0, Math.max(components.length - zoom, 1))
+      # Zoom to decade
+      if zoom == ZOOM_LEVELS.length - 2
+        components[0] = Math.floor(components[0] / 10) * 10
+        increment *= 10
+
       components[components.length - 1] += increment
       components.push(0) if components.length == 1
       Date.UTC(components...)

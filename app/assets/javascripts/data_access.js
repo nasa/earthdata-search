@@ -7,9 +7,13 @@
 //= require toastr
 //= require history.js-1.8.6/jquery.history.js
 //= require dropzone-3.8.3
+//= require echoforms/wgxpath.install.patched
+//= require echoforms/jquery.echoforms.min
 //= require namespaces
 //= require config
 //= require util/index
+//= require modules/echoformsext
+//= require modules/spinners
 //= require models/index
 //= require models/page/access_page
 //= require bootstrap/bootstrap

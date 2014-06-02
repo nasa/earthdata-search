@@ -9,6 +9,15 @@ html {
 body {
   font-size: 16px;
   background-color: #222;
+  padding-top: 25px;
+}
+
+// Fixes to rendering glitches caused by tophat loading after page render
+#earthdata-tophat {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  top: 0;
 }
 
 .wrap {
@@ -16,7 +25,7 @@ body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: -25px 0px -35px 0px;
+  margin: -25px 0px -10px 0px;
   // So we don't have to look at a blank map
   //background: asset-url('ssm.jpg') no-repeat center;
 }
@@ -52,7 +61,7 @@ footer, .toolbar {
 .toolbar {
   @include linear-gradient(rgba(44, 62, 80, 1), $toolbar-background-bottom);
   //background: asset-url('header-drop.png') repeat-x top;
-  padding: 35px 1em 50px 1em;
+  padding: 25px 0 60px 0;
   height: 58px;
   border-bottom: 1px solid #242424;
 
@@ -102,9 +111,28 @@ body > footer {
   }
 }
 
+.panel-list-meta.busy {
+  background: asset-url('spinner.gif') no-repeat left top;
+}
+
 .busy {
   background: asset-url('spinner.gif') no-repeat center top;
   padding-top: 16px;
+}
+
+button.busy, button.busy:disabled {
+  background: asset-url('spinner.gif') no-repeat center top;
+  box-shadow: none;
+  text-shadow: none;
+  color: #888;
+  border-color: #888;
+}
+
+h3.busy {
+  background-position: right 10px center;
+}
+
+.panel-list-load-more {
   text-align: center;
 }
 
@@ -126,6 +154,7 @@ body > footer {
 
 .modal-footer {
   margin: 0;
+  height: 78px;
 }
 
 /*

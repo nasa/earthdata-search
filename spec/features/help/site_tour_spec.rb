@@ -13,6 +13,11 @@ describe "Site tour", reset: true do
       wait_for_xhr
     end
 
+    after :each do
+      wait_for_xhr
+      Capybara.reset_sessions!
+    end
+
     # Single spec for the tour which tests every stop.  Normally I'd like this to be separate tests per stop, but
     # doing so is slow and highly redundant because the tour is so serial.
     it "shows an introductory tour walking the user through finding and visualizing data and adding it to a project" do
@@ -22,6 +27,9 @@ describe "Site tour", reset: true do
       expect(page).to have_popover('Keyword Search')
       fill_in 'keywords', with: 'snow cover nrt'
       click_on 'Browse All Data'
+
+      expect(page).to have_popover('Browse Datasets')
+      find_link('Platforms').click
 
       expect(page).to have_popover('Browse Datasets')
       find(".facets-item", text: "Terra").click

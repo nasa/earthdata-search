@@ -12,26 +12,15 @@
   # Test config
   exports =
     defaultAnimationDurationMs: 0
-    xhrRateLimitMs: 500
+    xhrRateLimitMs: 100
     maxPolygonSize: 50
     csrfToken: csrfToken
     hoverTimeoutMs: 0
-    gibsUrl: "/images/gibs-example.jpeg?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}"
-    browseScalerUrl: "/images/gibs-example.jpeg#"
+    gibsUrl: "/assets/gibs-example.jpeg?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}"
+    browseScalerUrl: "/assets/gibs-example.jpeg#"
     present: -> Date.UTC(2014, 2, 1)
 
   <% elsif Rails.env.development? %>
-
-  visualizationDatasetParams =
-    echo_collection_id: [
-      'C204200620-GSFCS4PA', # Bounding-box granules
-      'C1000000080-CDDIS', # Point-based granules, distributed geographically
-      'C5920490-LARC_ASDC', # Line-based granules
-      'C14758250-LPDAAC_ECS', # AST_L1A
-      'C1000000016-LANCEMODIS', # GIBS
-      'C1000000019-LANCEMODIS', # GIBS
-      'C90757596-LAADS' # Opaque GIBS (fake, for testing)
-    ]
 
   # Development config
   exports =
@@ -44,9 +33,8 @@
     gibsUrl: 'https://map1{s}.vis.earthdata.nasa.gov/wmts-{endpoint}/wmts.cgi?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}'
     browseScalerUrl: "https://api.echo.nasa.gov/browse-scaler/browse_images/granules"
     present: -> new Date() - 0
-    #baseQueryParams: visualizationDatasetParams
 
-  <% elsif Rails.env.production? || Rails.env.ops? || Rails.env.uat? || Rails.env.sit? %>
+  <% else %>
   # Production config
   exports =
     defaultAnimationDurationMs: 300

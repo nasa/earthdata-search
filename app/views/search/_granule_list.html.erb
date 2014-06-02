@@ -1,4 +1,4 @@
-      <section id="granule-list" data-bind="visible: ui.datasetsList.focused()">
+      <section id="granule-list" data-bind="visible: ui.datasetsList.focused()" tabIndex="2">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
           <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.datasetsList.unfocusDataset">
@@ -17,7 +17,7 @@
             <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
               <i class="edsc-icon-download"></i>
             </a>
-            <!-- ko if: has_granules() -->
+            <!-- ko if: has_granules -->
             <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Filter granules">
               <i class="edsc-icon-compose"></i>
             </a>
@@ -32,7 +32,7 @@
           <!-- ko if: granules.isLoaded() -->
           <p>
             Showing <span data-bind="text: granules.results().length"></span> of
-            <span data-bind="if: granules.hitsEstimated() && granules.hasNextPage()">approximately</span>
+            <span data-bind="if: granules.hitsEstimated() && granules.hasNextPage()">about</span>
             <span data-bind="text: granules.hits() == 1 ? '1 matching granule' : granules.hits() + ' matching granules'"></span>
             <!-- ko if: granules.parentQuery.focusedInterval() -->
             for the selected <span data-bind="text: granules.parentQuery.focusedInterval"></span>.
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
-          <ul id="project-datasets-list" class="panel-list-list" data-bind="foreach: granules.results()">
+          <ul class="panel-list-list" data-bind="foreach: granules.results()">
 
             <li class="panel-list-item" data-bind="css: {'panel-list-item-with-thumb': browse_flag === 'true', 'panel-list-focused': $parent.focused() === $data, 'panel-list-selected': $parent.isStickied($data)}, event: { mouseenter: $parent.onGranuleMouseover, mouseleave: $parent.onGranuleMouseout, click: $parent.toggleStickyFocus}">
 
@@ -62,7 +62,7 @@
                   <img class="panel-list-thumbnail" data-bind="attr: {src: edsc_browse_url(65)}" alt="Browse Image">
                 </a>
               <!-- /ko -->
-              <a class="panel-list-remove panel-list-when-selected" href="#" title="remove"><i class="fa fa-times"></i></a>
+              <a class="todo panel-list-remove panel-list-when-selected" href="#" title="remove"><i class="fa fa-times"></i></a>
 
               <h3 data-bind="text: title"></h3>
               <span data-bind="text: getTemporal()"></span>

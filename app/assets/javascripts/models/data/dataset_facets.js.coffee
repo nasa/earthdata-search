@@ -2,7 +2,7 @@
 
 ns = @edsc.models.data
 
-ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
+ns.DatasetFacets = do (ko, XhrModel=ns.XhrModel) ->
 
   class Facet
     constructor: (@parent, item) ->
@@ -21,7 +21,7 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
       @name = item.name
       @class_name = ko.computed => @name.toLowerCase().replace(' ', '-')
       @param = item.param
-      @opened = ko.observable(true)
+      @opened = ko.observable(false)
       @closed = ko.computed => !@opened()
 
       values = (new Facet(this, value) for value in item.values)
@@ -79,6 +79,7 @@ ns.DatasetFacets = do (ko, getJSON=jQuery.getJSON, XhrModel=ns.XhrModel) ->
         queryFacet.term == term && queryFacet.param == param
 
     addFacet: (facet) =>
+      @query.facets([]) unless @query.facets()?
       @query.facets.push(term: facet.term, param: facet.parent.param)
 
     toggleFacet: (facet) =>

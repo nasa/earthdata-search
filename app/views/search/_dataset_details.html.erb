@@ -5,20 +5,27 @@
       <i class="fa fa-arrow-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Datasets</span>
     </a>
   </nav>
-  <!-- ko with: datasets.details -->
+  <!-- ko if: $root.ui.datasetsList.selected() -->
   <header >
-    <h2 data-bind="if: $parent.datasets.detailsLoading">Details Loading...</h2>
-    <!-- ko ifnot: $parent.datasets.detailsLoading -->
-    <h2 data-bind="text: $data.dataset_id"></h2>
+    <h2 data-bind="ifnot: $root.ui.datasetsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
+    <!-- ko if: $root.ui.datasetsList.selected().detailsLoaded -->
+    <h2 data-bind="text: $root.ui.datasetsList.selected().dataset_id"></h2>
     <!-- /ko -->
   </header>
+  <!-- /ko -->
+  <!-- ko if: $root.ui.datasetsList.selected().detailsLoaded -->
+  <!-- ko with: $root.ui.datasetsList.selected().details -->
   <ul id="dataset-details-nav" class="nav nav-tabs">
     <li class="active"><a href="#dataset-information" data-toggle="tab">Information</a></li>
     <li><a href="#dataset-metadata" data-toggle="tab">Metadata</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="dataset-information">
-      <dl class="master-overlay-content" data-bind="ifnot: $parent.datasets.detailsLoading">
+      <dl class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
+        <dt>Download Page:</dt>
+        <dd data-bind="foreach: $data.online_access_urls">
+          <p><a data-bind="attr: {href: URL}, text: edsc.util.string.capitalize(URLDescription)" target="_blank"></a></p>
+        </dd>
         <dt>Description:</dt>
         <dd data-bind="text: $data.description"></dd>
         <dt>Archive Center:</dt>
@@ -49,10 +56,6 @@
         <dd data-bind="foreach: $data.science_keywords">
           <p data-bind="text: $data"></p>
         </dd>
-        <dt>Online Access:</dt>
-        <dd data-bind="foreach: $data.online_access_urls">
-          <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
-        </dd>
         <dt>Online Resources:</dt>
         <dd data-bind="foreach: $data.online_resources">
           <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
@@ -80,5 +83,6 @@
       </dl>
     </div>
   </div>
+  <!-- /ko -->
   <!-- /ko -->
 </section>
