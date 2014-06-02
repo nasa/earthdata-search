@@ -1,4 +1,4 @@
-      <section id="granule-list" data-bind="visible: ui.datasetsList.focused()">
+      <section id="granule-list" data-bind="visible: ui.datasetsList.focused()" tabIndex="2">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
           <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.datasetsList.unfocusDataset">
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
-          <ul id="project-datasets-list" class="panel-list-list" data-bind="foreach: granules.results()">
+          <ul class="panel-list-list" data-bind="foreach: granules.results()">
 
             <li class="panel-list-item" data-bind="css: {'panel-list-item-with-thumb': browse_flag === 'true', 'panel-list-focused': $parent.focused() === $data, 'panel-list-selected': $parent.isStickied($data)}, event: { mouseenter: $parent.onGranuleMouseover, mouseleave: $parent.onGranuleMouseout, click: $parent.toggleStickyFocus}">
 

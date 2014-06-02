@@ -198,7 +198,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @root.on 'mouseout.timeline', @scope('.date-label'), @_onLabelMouseout
       @root.on 'keydown.timeline', @_onKeydown
 
-      @root.on 'blur.timeline,', (e) =>
+      @root.on 'blur.timeline', (e) =>
         @_hasFocus = false
       @root.on 'focus.timeline', (e) =>
         # We want click behavior when we have focus, but not when the focus came from the

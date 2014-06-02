@@ -125,8 +125,14 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   bottom: 0;
 }
 
+#granule-list:focus {
+  .panel-list-selected {
+    border-left-color: #2980b9;
+  }
+}
+
 .panel-list-selected {
-  border-left-color: #2980b9;
+  border-left-color: desaturate(#2980b9, 50%);
   background: #494949;
 
   .panel-list-when-selected {

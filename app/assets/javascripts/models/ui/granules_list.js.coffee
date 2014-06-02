@@ -14,6 +14,16 @@ ns.GranulesList = do ($=jQuery)->
       @_map = map.map
       @_map.on 'edsc.focusgranule', @_onFocusGranule
       @_map.on 'edsc.stickygranule', @_onStickyGranule
+      $granuleList = $('#granule-list')
+      $granuleList.on 'keydown', @_onKeyDown
+
+      @_hasFocus = false
+      $granuleList.on 'blur', (e) =>
+        @_hasFocus = false
+      $granuleList.on 'focus.panel-list-item', (e) =>
+        # We want click behavior when we have focus, but not when the focus came from the
+        # click's mousedown.  Ugh.
+        setTimeout((=> @_hasFocus = true), 500)
 
       map.focusDataset(@dataset)
 
@@ -29,6 +39,7 @@ ns.GranulesList = do ($=jQuery)->
       @_map.off 'edsc.stickygranule', @_onStickyGranule
       @dataset.visible(@_wasVisible)
       @dataset.dispose()
+      @stickied(null)
 
     scrolled: (data, event) =>
       elem = event.target
@@ -39,8 +50,39 @@ ns.GranulesList = do ($=jQuery)->
       @focused(e.granule)
 
     _onStickyGranule: (e) =>
+      lastSelected = $('.panel-list-selected')
       @stickied(e.granule)
       @loadingBrowse(e.granule?)
+      if e.granule?
+        list = $('#granule-list .master-overlay-content.panel-list')
+        topBound = list.offset().top
+        bottomBound = topBound + list.height() - 175
+
+        selected = $('.panel-list-selected')
+        selectedOffset = selected.offset().top
+
+        if selectedOffset > bottomBound
+          offset = bottomBound
+        else if selectedOffset < topBound
+          offset = topBound + 50
+
+        list.scrollTo(selected, {duration: edsc.config.defaultAnimationDurationMs, offsetTop: offset}) if offset?
+
+    _onKeyDown: (e) =>
+      stickied = @stickied()
+      key = e.keyCode
+      up = 38
+      down = 40
+      if stickied && (key == up || key == down)
+        granules = @granules.results()
+        index = granules.indexOf(stickied)
+
+        if index > 0 && key == up
+          @_map.fire 'edsc.stickygranule', granule: granules[index-1]
+        if index < granules.length-1 && key == down
+          @_map.fire 'edsc.stickygranule', granule: granules[index+1]
+
+        e.preventDefault()
 
     finishLoad: =>
       @loadingBrowse(false)
@@ -57,8 +99,9 @@ ns.GranulesList = do ($=jQuery)->
       granule == @stickied()
 
     toggleStickyFocus: (granule, e) =>
+      return if @isStickied(granule) && !@_hasFocus
       return true if $(e?.target).closest('a').length > 0
-      granule = null if @stickied() == granule
+      granule = null if @isStickied(granule)
       @_map.fire 'edsc.stickygranule', granule: granule
 
   exports = GranulesList
