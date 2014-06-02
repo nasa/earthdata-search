@@ -25,6 +25,16 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
     hideSecondary: -> @toggleSecondary(false)
 
+    hideLevel: (level) ->
+      fn = =>
+        @children().eq(level).hide()
+        @_triggerStateChange()
+      @_levelTimeout = window.setTimeout(fn, config.defaultAnimationDurationMs)
+
+    showNext: ->
+      clearTimeout(@_levelTimeout)
+      @current().next().show()
+
     toggleParent: (show = @root.hasClass(@scope('is-parent-hidden')), event=true) ->
       @root.toggleClass(@scope('is-parent-hidden'), !show)
       @contentHeightChanged()
@@ -63,6 +73,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         value = parseInt(value, 10)
         currentLevel = @level()
         if currentLevel != value
+          @hideLevel(currentLevel) if @current().hasClass(@scope('hide-self')) && currentLevel > value
           @_content().attr('data-level', value)
           @current().trigger('edsc.navigate')
         @_setBreadcrumbs()
@@ -119,14 +130,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         null), 0)
 
   $document = $(document)
-
-  # Hide the project list after the back animation completes
-  timeout = null
-  $document.on 'edsc.navigate', '#dataset-results', ->
-    window.setTimeout(page.current.ui.projectList.hideProject, config.defaultAnimationDurationMs)
-
-  $document.on 'edsc.navigate', '#project-overview', ->
-    window.clearTimeout(timeout)
 
   plugin.create('masterOverlay', MasterOverlay)
 

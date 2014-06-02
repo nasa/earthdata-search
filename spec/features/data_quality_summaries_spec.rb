@@ -3,19 +3,9 @@ require 'spec_helper'
 describe 'Data Quality Summaries', :reset => false do
   def setup_project
     Capybara.reset_sessions!
-    load_page :search
+    load_page :search # This load is necessary due to our failure to refresh the page on load
     login
-
-    dataset_id = 'C14758250-LPDAAC_ECS'
-    dataset_title = 'ASTER L1A Reconstructed Unprocessed Instrument Data V003'
-    add_dataset_to_project(dataset_id, dataset_title)
-    dataset_id = 'C190733714-LPDAAC_ECS'
-    dataset_title = 'ASTER L1B Registered Radiance at the Sensor V003'
-    add_dataset_to_project(dataset_id, dataset_title)
-
-    dataset_results.click_link "View Project"
-    expect(page).to have_content "Project Datasets"
-    wait_for_xhr
+    load_page :search, project: ['C14758250-LPDAAC_ECS', 'C190733714-LPDAAC_ECS'], view: :project
   end
 
   context "when dataset is added to a project" do
@@ -72,21 +62,9 @@ describe 'Data Quality Summaries', :reset => false do
         click_link "read and accept"
       end
       click_button "Accept"
+      wait_for_xhr
 
-      first_project_dataset.click_link "Remove dataset from the current project"
-      first_project_dataset.click_link "Remove dataset from the current project"
-
-      click_link "Back to Dataset Search"
-
-      reset_user
-      login
-
-      dataset_id = 'C190733714-LPDAAC_ECS'
-      dataset_title = 'ASTER L1B Registered Radiance at the Sensor V003'
-      add_dataset_to_project(dataset_id, dataset_title)
-
-      dataset_results.click_link "View Project"
-
+      setup_project
       expect(page).to have_css ".message-info"
     end
   end

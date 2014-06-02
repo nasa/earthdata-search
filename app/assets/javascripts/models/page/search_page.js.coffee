@@ -68,13 +68,16 @@ ns.SearchPage = do (ko
         if !state
           @datasetFacets.isRelevant(true)
           @datasets.isRelevant(true)
+          return
         if state[0] == 'f'
           @datasetFacets.isRelevant(false)
           @datasets.isRelevant(false)
+          return
         if state[1] == 't'
           @datasetFacets.isRelevant(true)
         else
           setTimeout((=> @datasetFacets.isRelevant(false)), config.defaultAnimationDurationMs)
+        @ui.projectList.visible(state[3] == 't' && state[7] == '1')
         if state[7] == '0'
           @datasets.isRelevant(true)
         else
@@ -116,7 +119,7 @@ ns.SearchPage = do (ko
 
   loadFromUrl()
 
-  $(window).on 'statechange anchorchange', loadFromUrl
+  $(window).on 'edsc.pagechange', loadFromUrl
   $(document).on 'ready', loadFromUrl
 
   historyChanged = false

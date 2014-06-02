@@ -161,11 +161,10 @@ ns.Project = do (ko,
       if ds
         if ds != @_datasetIds().join('!')
           ds = ds.split('!')
-          new DatasetsModel(@query).search {echo_collection_id: ds}, (results) =>
-            for result in results
-              dataset = Dataset.findOrCreate(result, @query)
+          DatasetsModel.forIds ds, @query, (datasets) =>
+            for dataset in datasets
               @addDataset(dataset)
-              @searchGranulesDataset(dataset) if result.id == value.sg
+              @searchGranulesDataset(dataset) if dataset.id == value.sg
       else
         @datasets([])
 

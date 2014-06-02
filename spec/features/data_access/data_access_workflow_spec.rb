@@ -7,34 +7,14 @@ describe "Data Access workflow", reset: false do
   non_downloadable_dataset_id = 'C179001887-SEDAC'
   non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
-  before(:all) do
-    load_page :search
-
-    login
-  end
-
-  after(:all) do
-    reset_user
-    load_page :search
-  end
-
   context "when the user is not logged in" do
     before(:each) do
-      reset_user
-      add_dataset_to_project(downloadable_dataset_id, downloadable_dataset_title)
-      add_dataset_to_project(non_downloadable_dataset_id, non_downloadable_dataset_title)
-
-      dataset_results.click_link "View Project"
+      load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
       click_link "Retrieve project data"
     end
 
     after :each do
-      load_page :search
-    end
-
-    after :all do
-      reset_user
-      login
+      Capybara.reset_sessions!
     end
 
     it "forces the user to login before showing data access page" do
@@ -56,15 +36,13 @@ describe "Data Access workflow", reset: false do
 
   context "when the user is logged in" do
     before(:all) do
-      add_dataset_to_project(downloadable_dataset_id, downloadable_dataset_title)
-      add_dataset_to_project(non_downloadable_dataset_id, non_downloadable_dataset_title)
-
-      dataset_results.click_link "View Project"
+      load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
+      login
       click_link "Retrieve project data"
     end
 
     after :all do
-      load_page :search
+      Capybara.reset_sessions!
     end
 
     context "when displaying options for the first of multiple datasets" do

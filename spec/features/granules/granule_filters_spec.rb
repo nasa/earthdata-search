@@ -1,18 +1,12 @@
 require "spec_helper"
 
-describe "Granule search filters", reset: false do
+describe "Granule search filters", reset: true do
   before_granule_count = 0
 
-  before(:all) do
+  before(:each) do
     page.driver.resize_window(2000, 3000) # Avoid having to scroll to click
 
-    load_page :search
-    fill_in "keywords", with: "ASTER L1A"
-    expect(page).to have_content('ASTER L1A')
-
-    first_dataset_result.click_link "Add dataset to the current project"
-
-    dataset_results.click_link "View Project"
+    load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project
 
     expect(page).to have_content('Granules')
 
@@ -25,23 +19,7 @@ describe "Granule search filters", reset: false do
     end
   end
 
-  after(:all) do
-    reset_overlay
-    reset_project
-  end
-
-
-  before :each do
-    wait_for_xhr
-  end
-
   context "when choosing a day/night flag" do
-    after :each do
-      first_project_dataset.click_link "Show granule filters"
-      click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
-    end
-
     it "selecting day returns day granules" do
       select 'Day only', from: "day-night-select"
       click_button "granule-filters-submit"
@@ -75,12 +53,6 @@ describe "Granule search filters", reset: false do
   end
 
   context "when choosing cloud cover" do
-    after :each do
-      first_project_dataset.click_link "Show granule filters"
-      click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
-    end
-
     it "filters with both min and max" do
       fill_in "Minimum:", with: "2.5"
       fill_in "Maximum:", with: "5.0"
@@ -116,11 +88,6 @@ describe "Granule search filters", reset: false do
     end
 
     context "validates input" do
-      after :each do
-        first_project_dataset.click_link "Hide granule filters"
-        wait_for_xhr
-      end
-
       it "minimum must be more than 0.0" do
         fill_in "Minimum", with: "-1.0"
         fill_in "Maximum", with: ""
@@ -148,12 +115,6 @@ describe "Granule search filters", reset: false do
   end
 
   context "when choosing data access options" do
-    after :each do
-      first_project_dataset.click_link "Show granule filters"
-      click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
-    end
-
     it "selecting browse only loads granules with browse images" do
       check "Find only granules that have browse images."
       click_button "granule-filters-submit"
@@ -183,12 +144,6 @@ describe "Granule search filters", reset: false do
   end
 
   context "when searching by granule id" do
-    after :each do
-      first_project_dataset.click_link "Show granule filters"
-      click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
-    end
-
     context "with single granule id field" do
       it "selecting Granule ID filters granules" do
         fill_in "granule_id", with: "%2006227720%"
@@ -246,13 +201,6 @@ describe "Granule search filters", reset: false do
   end
 
   context "when searching by temporal" do
-    after :each do
-      first_project_dataset.click_link "Show granule filters"
-      click_button "granule-filters-clear"
-      js_uncheck_recurring 'granule'
-      expect(page).to reset_granules_to(before_granule_count)
-    end
-
     it "selecting temporal range filters granules" do
       fill_in "Start", with: "2013-12-01 00:00:00"
       close_datetimepicker

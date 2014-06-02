@@ -8,13 +8,15 @@ describe "Timeline panning", reset: false do
   start = present - 365.days
 
   before :all do
-    load_page :search
+    load_page :search, project: ['C179003030-ORNL_DAAC'], view: :project, temporal: [DateTime.new(2014, 2, 10, 12, 30, 0, '+0')]
+    #load_page :search
 
-    add_dataset_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
+    #add_dataset_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
-    set_temporal(DateTime.new(2014, 2, 10, 12, 30, 0, '+0'), DateTime.new(2014, 2, 20, 16, 30, 0, '+0'))
+    #set_temporal(DateTime.new(2014, 2, 10, 12, 30, 0, '+0'), DateTime.new(2014, 2, 20, 16, 30, 0, '+0'))
 
-    dataset_results.click_link "View Project"
+    #dataset_results.click_link "View Project"
+    wait_for_xhr
     pan_to_time(present)
     wait_for_xhr
   end

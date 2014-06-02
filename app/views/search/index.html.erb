@@ -67,13 +67,13 @@
         </header>
         <div class="master-overlay-info">
           <p data-bind="visible: project.isEmpty()" class="button-details">
-            <a class="button master-overlay-hide-parent master-overlay-forward low-priority" data-bind="click: ui.projectList.showProject" href="#">
+            <a class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#">
               <i class="fa fa-question-circle"></i> Learn More
             </a>
             <span>Add datasets to your project to compare and retrieve their data.</span>
           </p>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
-            <a id="view-project" class="button master-overlay-hide-parent master-overlay-forward" data-bind="click: ui.projectList.showProject" href="#">
+            <a id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
               <i class="fa fa-folder-o"></i> View Project
             </a>
             <span>You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.</span>
@@ -95,7 +95,7 @@
           <!-- /ko -->
         </div>
       </section>
-      <section id="project-overview" data-bind="visible: ui.projectList.visible">
+      <section id="project-overview" class="master-overlay-hide-self">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
           <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: project.clearSearchGranules">

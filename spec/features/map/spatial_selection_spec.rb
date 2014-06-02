@@ -6,11 +6,6 @@ require "spec_helper"
 describe "Spatial" do
   before do
     load_page :search
-
-    # Close the overlay
-    within ".master-overlay-main #dataset-results" do
-      click_link "close"
-    end
   end
 
   let(:spatial_dropdown) do

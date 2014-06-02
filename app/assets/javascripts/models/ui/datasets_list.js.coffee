@@ -3,7 +3,7 @@
 ns = @edsc.models.ui
 data = @edsc.models.data
 
-ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, Dataset=data.Dataset, GranulesList=ns.GranulesList) ->
+ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.GranulesList) ->
 
   class DatasetsList
     constructor: (@query, @datasets) ->
@@ -30,6 +30,7 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, Dataset=data.Datase
     focusDataset: (dataset, event=null) =>
       return true if $(event?.target).closest('a').length > 0
       return false unless dataset.has_granules
+      return false if @focused()?.dataset.id == dataset.id
 
       @focused()?.dispose()
       @focused(new GranulesList(dataset))
@@ -47,13 +48,14 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, Dataset=data.Datase
 
     _fromQuery: (value) ->
       if value.foc? || value.sel?
-        ids = (value[p] for p in ['foc', 'sel'] when value[p]?)
-        new DatasetsModel(@query).search {echo_collection_id: ids}, (results) =>
-          for result in results
-            if value.foc == result.id
-              @focusDataset(Dataset.findOrCreate(result, @query))
-            if value.sel == result.id
-              @showDatasetDetails(Dataset.findOrCreate(result, @query))
+        ids = [value.foc, value.sel]
+        ids = [value.foc] if value.foc == value.sel
+        ids = (id for id in ids when id?)
+        DatasetsModel.forIds ids, @query, (datasets) =>
+          for dataset in datasets
+            @focusDataset(dataset) if value.foc == dataset.id
+            @showDatasetDetails(dataset) if value.sel == dataset.id
+
       @unfocusDataset() unless value.foc?
 
 
