@@ -2,6 +2,7 @@
 ns = @edsc.models.data
 
 ns.Preferences = do (ko
+                     window
                      getJSON = jQuery.getJSON
                      doPost = jQuery.post
                      ) ->
@@ -16,11 +17,18 @@ ns.Preferences = do (ko
       @load()
 
     load: ->
-      getJSON '/users/site_preferences', (data, status, xhr) =>
-        console.log "Loaded site preferences, #{JSON.stringify(data)}"
+      data = window.edscprefs
+      window.edscprefs = null
 
+      if data?
         @fromJson(data)
         @isLoaded(true)
+      else
+        getJSON '/users/site_preferences', (data, status, xhr) =>
+          console.log "Loaded site preferences, #{JSON.stringify(data)}"
+
+          @fromJson(data)
+          @isLoaded(true)
       null
 
     onload: (fn) ->
