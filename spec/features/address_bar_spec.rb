@@ -10,19 +10,19 @@ describe 'Address bar', reset: false do
 
   context 'when searching by keywords' do
     before(:all) do
-      visit '/search'
+      visit '/search?o=ffftfft0'
       fill_in "keywords", with: 'C1000000019-LANCEMODIS'
     end
 
     it 'saves the keyword condition in the address bar' do
-      expect(page).to have_query_string('free_text=C1000000019-LANCEMODIS')
+      expect(page).to have_query_string('free_text=C1000000019-LANCEMODIS&o=ffftfft0')
     end
 
     context 'clearing filters' do
       before(:all) { click_link "Clear Filters" }
 
-      it 'removes the temporal condition from the address bar' do
-        expect(page).to have_query_string(nil)
+      it 'removes the keyword condition from the address bar' do
+        expect(page).to have_query_string('o=ffftfft0')
       end
     end
   end
@@ -41,7 +41,7 @@ describe 'Address bar', reset: false do
 
   context 'when searching by temporal' do
     before(:all) do
-      visit '/search'
+      visit '/search?o=ffftfft0'
       click_link "Temporal"
       js_check_recurring "dataset"
       fill_in "Start", with: "12-01 00:00:00"
@@ -54,7 +54,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the temporal condition in the address bar' do
-      expect(page).to have_query_string('temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365')
+      expect(page).to have_query_string('temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365&o=ffftfft0')
     end
 
     context 'clearing filters' do
@@ -64,7 +64,7 @@ describe 'Address bar', reset: false do
       end
 
       it 'removes the temporal condition from the address bar' do
-        expect(page).to have_query_string(nil)
+        expect(page).to have_query_string('o=ffftfft0')
       end
     end
   end
@@ -94,19 +94,19 @@ describe 'Address bar', reset: false do
 
   context 'when searching by spatial' do
     before(:all) do
-      visit '/search'
+      visit '/search?o=ffftfft0'
       create_bounding_box(0, 0, 10, 10)
     end
 
     it 'saves the spatial condition in the address bar' do
-      expect(page).to have_query_string('bounding_box=0%2C0%2C10%2C10')
+      expect(page).to have_query_string('bounding_box=0%2C0%2C10%2C10&o=ffftfft0')
     end
 
     context 'clearing filters' do
       before(:all) { click_link "Clear Filters" }
 
       it 'removes the spatial condition from the address bar' do
-        expect(page).to have_query_string(nil)
+        expect(page).to have_query_string('o=ffftfft0')
       end
     end
   end
