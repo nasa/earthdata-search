@@ -3,8 +3,8 @@
 
 require "spec_helper"
 
-describe "Spatial" do
-  before do
+describe "Spatial tool", reset: false do
+  before :all do
     load_page :search
   end
 
@@ -16,7 +16,7 @@ describe "Spatial" do
   let(:rectangle_button) { page.find('#map .leaflet-draw-draw-rectangle') }
   let(:polygon_button)   { page.find('#map .leaflet-draw-draw-polygon') }
 
-  context "tool selection" do
+  context "selection" do
     context "when no tool is currently selected" do
       context "choosing the point selection tool from the site toolbar" do
         before(:each) { choose_tool_from_site_toolbar('Point') }
@@ -58,7 +58,6 @@ describe "Spatial" do
       end
     end
 
-
     context "choosing a tool when a point is already selected" do
       before(:each) do
         create_point
@@ -94,6 +93,12 @@ describe "Spatial" do
         expect(spatial_dropdown).to have_text('Spatial')
       end
     end
+  end
+end
+
+describe "Spatial" do
+  before :each do
+    load_page :search
   end
 
   context "point selection" do
