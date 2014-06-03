@@ -20,6 +20,11 @@ module Helpers
         o = 'tffttft1' if options[:view] == :project
         o = nil if options[:facets]
 
+        if options[:focus]
+          params['foc'] = options[:focus]
+          o = 'tfftftt1'
+        end
+
         params['o'] = o unless o.nil?
 
         @params = params

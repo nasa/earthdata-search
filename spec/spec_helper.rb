@@ -91,6 +91,7 @@ RSpec.configure do |config|
   end
 
   file_time = 0
+  timings = {}
 
   config.before :all do
     file_time = Time.now
@@ -99,7 +100,14 @@ RSpec.configure do |config|
 
   config.after :all do
     Capybara.default_wait_time = wait_time
-    puts "  (Finished in #{Time.now - file_time}s)"
+    timings[self.class.display_name] = Time.now - file_time
+  end
+
+  config.after :suite do
+    puts
+    puts "Slowest specs"
+    puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3f - #{k}s" % v}.join("\n"))
+    puts
   end
 
   config.after :each do

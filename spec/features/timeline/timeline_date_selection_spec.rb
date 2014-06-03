@@ -21,14 +21,10 @@ describe "Timeline date selection", reset: false do
   temporal_stop_date = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
 
   before :all do
-    load_page :search
+    load_page :search, focus: 'C179003030-ORNL_DAAC'
     # Give the window a fixed size
     page.driver.resize_window(1280, 1024)
   end
-
-  use_dataset('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
-
-  hook_granule_results
 
   before :all do
     zoom_out_button = find('.timeline-zoom-out')
