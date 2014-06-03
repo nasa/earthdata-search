@@ -90,6 +90,25 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
+  config.after :all do |example_from_block_arg|
+    example = config.respond_to?(:expose_current_running_example_as) ? example_from_block_arg : self.example
+
+    if Capybara.page.respond_to?(:save_page) && Capybara.page.current_url
+      # Attempt to detect before :all block failures
+      examples = self.class.descendant_filtered_examples
+      exceptions = self.class.descendant_filtered_examples.map(&:exception)
+      if !exceptions.any?(&:nil?) && exceptions.uniq.size == 1
+        # Failure only code goes here
+        if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
+          puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
+        end
+        paths = Capybara::Screenshot.screenshot_and_save_page
+        puts "     Screenshot: #{paths[:image]}"
+        puts "     HTML page: #{paths[:html]}"
+      end
+    end
+  end
+
   count = 0
   index = 0
   file_time = 0
