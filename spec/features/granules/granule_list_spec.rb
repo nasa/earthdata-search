@@ -107,6 +107,29 @@ describe "Granule list", reset: false do
         expect(page).to have_content("Data Quality Summaries")
       end
     end
+
+    context "clicking the remove granule button" do
+      before :all do
+        first_granule_list_item.click
+        first_granule_list_item.click_link "Exclude this granule"
+      end
+
+      after :all do
+        click_button "granule-filters-clear"
+        granule_list.click_link('Hide granule filters')
+      end
+
+      it "removes the granule from the granule list" do
+        expect(granule_list).to have_no_content("SC:AST_L1A.003:2131388327")
+      end
+
+      it "adds the granule id to the exclude granule filter" do
+        granule_list.click_link 'Filter granules'
+
+        expect(page).to have_field("exclude_granule_id", with: "G1001380013-LPDAAC_ECS")
+      end
+    end
+
   end
 
   context "for datasets with many granule results" do
