@@ -62,7 +62,7 @@
                   <img class="panel-list-thumbnail" data-bind="attr: {src: edsc_browse_url(65)}" alt="Browse Image">
                 </a>
               <!-- /ko -->
-              <a class="todo panel-list-remove panel-list-when-selected" href="#" title="remove"><i class="fa fa-times"></i></a>
+              <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><i class="fa fa-times"></i></a>
 
               <h3 data-bind="text: title"></h3>
               <span data-bind="text: getTemporal()"></span>

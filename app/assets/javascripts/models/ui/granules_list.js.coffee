@@ -104,4 +104,9 @@ ns.GranulesList = do ($=jQuery)->
       granule = null if @isStickied(granule)
       @_map.fire 'edsc.stickygranule', granule: granule
 
+    removeGranule: (granule, e) =>
+      granuleIds = @granules.query.excludedGranuleIds()
+      granuleIds += '\n' if granuleIds?.length > 0
+      @granules.query.excludedGranuleIds(granuleIds + granule.id)
+
   exports = GranulesList
