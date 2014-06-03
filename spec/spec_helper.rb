@@ -90,8 +90,14 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
+  count = 0
+  index = 0
   file_time = 0
   timings = {}
+
+  config.before :suite do
+    count = self.class.children.size
+  end
 
   config.before :all do
     file_time = Time.now
@@ -101,6 +107,8 @@ RSpec.configure do |config|
   config.after :all do
     Capybara.default_wait_time = wait_time
     timings[self.class.display_name] = Time.now - file_time
+    index += 1
+    puts " (Suite #{index} of #{count})"
   end
 
   config.after :suite do

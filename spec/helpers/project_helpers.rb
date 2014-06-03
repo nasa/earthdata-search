@@ -2,7 +2,9 @@ module Helpers
   module ProjectHelpers
 
     def add_dataset_to_project(id, name)
+      wait_for_xhr
       fill_in "keywords", with: id
+      wait_for_xhr
       expect(page).to have_content(name)
       expect(page).to have_css('#dataset-results .panel-list-item', count: 1)
       first_dataset_result.click_link "Add dataset to the current project"
