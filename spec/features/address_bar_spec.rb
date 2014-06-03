@@ -157,4 +157,67 @@ describe 'Address bar', reset: false do
       expect(page).to have_no_text('2000 Pilot Environmental Sustainability Index (ESI)')
     end
   end
+
+  context 'when adding datasets to a project' do
+    before(:all) do
+      visit '/search/datasets'
+      add_dataset_to_project('C179001887-SEDAC', '2000 Pilot Environmental Sustainability Index (ESI)')
+      add_dataset_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
+      click_link "Clear Filters"
+    end
+
+    it 'saves the project in the address bar' do
+      expect(page).to have_query_string('ds=C179001887-SEDAC!C179002914-ORNL_DAAC')
+    end
+  end
+
+  context 'when loading a url containing project datasets' do
+    before(:all) { visit '/search/project?ds=C179001887-SEDAC!C179002914-ORNL_DAAC' }
+
+    it 'restores the project' do
+      expect(page).to have_visible_project_overview
+      expect(project_overview).to have_text('2000 Pilot Environmental Sustainability Index (ESI)')
+      expect(project_overview).to have_text('30 Minute Rainfall Data (FIFE)')
+    end
+  end
+
+  context "when viewing a dataset's granules" do
+    before(:all) do
+      visit '/search/datasets'
+      view_granule_results
+    end
+
+    it 'saves the selected dataset in the address bar' do
+      expect(page).to have_path('/search/C179003030-ORNL_DAAC/granules')
+    end
+  end
+
+  context "when loading a url containing a dataset's granules" do
+    before(:all) { visit '/search/C179003030-ORNL_DAAC/granules' }
+
+    it 'restores the dataset granules view' do
+      expect(page).to have_visible_granule_list
+      expect(granule_list).to have_text('15 Minute Stream Flow')
+    end
+  end
+
+  context "when viewing a dataset's details" do
+    before(:all) do
+      visit '/search/datasets'
+      first_dataset_result.click_link('View details')
+    end
+
+    it 'saves the selected dataset in the address bar' do
+      expect(page).to have_path('/search/C179003030-ORNL_DAAC/details')
+    end
+  end
+
+  context "when loading a url containing a dataset's details" do
+    before(:all) { visit '/search/C179003030-ORNL_DAAC/details' }
+
+    it 'restores the dataset details view' do
+      expect(page).to have_visible_dataset_details
+      expect(dataset_details).to have_text('15 Minute Stream Flow')
+    end
+  end
 end

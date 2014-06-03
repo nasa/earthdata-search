@@ -43,7 +43,7 @@
       $overlay = $('.master-overlay')
       $overlay.masterOverlay()
       @overlay = $overlay.data('master-overlay')
-      @overlayState(@overlay.state())
+      @overlayState(@overlay.state()) unless @overlayState()?
       $overlay.on 'edsc.olstatechange', => @overlayState(@overlay.state())
       ko.computed => @overlay.state(@overlayState())
 
@@ -69,6 +69,10 @@
 
     _readPath: ->
       state = @overlayState()
+      path = @_pathForState(state)
+      path
+
+    _pathForState: (state) ->
       return '/' if !state? || @page.ui.isLandingPage()
 
       root = '/search'

@@ -9,8 +9,9 @@ module Helpers
         url = '' if url == 'root'
         url = '/' + url unless url.start_with?('/')
         # Debugging
-        #puts "Page: #{[url, query.presence].compact.join('?')}"
-        [path_from_options(url, options), params_from_options(options)].compact.join('?')
+        result = [path_from_options(url, options), params_from_options(options)].compact.join('?')
+        #puts "Page: #{result}"
+        result
       end
 
       private
