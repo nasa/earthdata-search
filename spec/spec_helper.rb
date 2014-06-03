@@ -106,7 +106,7 @@ RSpec.configure do |config|
   config.after :suite do
     puts
     puts "Slowest specs"
-    puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3f - #{k}s" % v}.join("\n"))
+    puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3fs - #{k}" % v}.join("\n"))
     puts
   end
 
