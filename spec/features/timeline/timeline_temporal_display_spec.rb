@@ -13,18 +13,8 @@ describe "Timeline temporal display", reset: false do
   stop_year = 2014
 
   before :all do
-    load_page :search
-
-    add_dataset_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
-    add_dataset_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
-
-    dataset_results.click_link "View Project"
+    load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC'], view: :project
     wait_for_xhr
-  end
-
-  after :all do
-    click_link("Back to Dataset Search")
-    reset_project
   end
 
   context "when there is no temporal range selected" do

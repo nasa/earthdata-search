@@ -39,12 +39,8 @@ describe "Granule selection", reset: false do
   """
 
   before :all do
-    load_page :search
-    create_bounding_box(0, 0, 15, 15)
+    load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C1000000011-LANCEMODIS'
   end
-
-  use_dataset 'C1000000011-LANCEMODIS', 'MOD02QKM'
-  hook_granule_results
 
   context "clicking on a granule in the result list" do
     before :all do

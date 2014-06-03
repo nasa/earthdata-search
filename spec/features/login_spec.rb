@@ -10,7 +10,7 @@ require "spec_helper"
 describe "Login", reset: false do
   before(:all) do
     Capybara.reset_sessions!
-    load_page :search
+    load_page :search, overlay: false
   end
 
   before(:each) do
