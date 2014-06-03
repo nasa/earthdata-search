@@ -206,6 +206,29 @@ describe "Granule selection", reset: false do
         expect(page.evaluate_script(is_temporal_ordered_script)).to be_true
       end
     end
+
+    context "clicking the remove icon on the map" do
+      before :all do
+        within '#map' do
+          click_link 'Exclude this granule'
+        end
+        find('#temporal-query').click # Ensure the capybara cursor is in a reasonable place
+      end
+
+      after :all do
+        granule_list.click_link 'Filter granules'
+        click_button "granule-filters-clear"
+        granule_list.click_link('Hide granule filters')
+      end
+
+      it "removes the granule from the list" do
+        expect(granule_list).to have_no_content("LANCEMODIS:287196720")
+      end
+
+      it "removes the granule from the map" do
+        expect(page).to have_selector('#map path', count: 1) # Just the spatial constraint
+      end
+    end
   end
 
 end

@@ -376,6 +376,8 @@ ns.GranuleLayer = do (L
         @_map.fire('edsc.focusgranule', granule: granule)
 
     _onClick: (e) =>
+      if $(e.originalEvent.target).closest('a').hasClass('panel-list-remove')
+        return @_map.fire('edsc.excludestickygranule')
       return unless $(e.originalEvent.target).closest('a').length == 0
       granule = @layer?.granuleAt(e.layerPoint)
       granule = null if @_stickied == granule
@@ -486,7 +488,7 @@ ns.GranuleLayer = do (L
       icon = L.divIcon
         className: 'granule-spatial-label',
         html: '<span class="granule-spatial-label-temporal">' + temporal +
-              '</span><a class="todo panel-list-remove" href="#" title="remove"><i class="fa fa-times"></i></a>'
+              '</span><a class="panel-list-remove" href="#" title="Exclude this granule"><i class="fa fa-times"></i></a>'
 
       marker = L.marker([0, 0], clickable: false, icon: icon)
 
