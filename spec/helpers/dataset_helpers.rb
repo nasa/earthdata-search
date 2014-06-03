@@ -2,9 +2,10 @@ module Helpers
   module DatasetHelpers
     def use_dataset(id, text)
       before :all do
-        fill_in "keywords", with: id
-        expect(first_dataset_result).to have_content(text)
         wait_for_xhr
+        fill_in "keywords", with: id
+        wait_for_xhr
+        expect(first_dataset_result).to have_content(text)
       end
 
       after :all do

@@ -11,6 +11,10 @@ describe "Timeline display", reset: false do
     load_page :search
   end
 
+  after :each do
+    wait_for_xhr
+  end
+
   context 'in the dataset results list' do
     it 'displays no timeline' do
       expect(page).to have_no_selector('#timeline')

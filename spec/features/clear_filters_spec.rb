@@ -31,6 +31,7 @@ describe "'Clear Filters' button", reset: false do
       script = "var temporal = edsc.models.page.current.query.temporal.applied;
                 temporal.start.date(new Date('1978-12-01T00:00:00Z'));
                 temporal.stop.date(new Date('1979-12-01T00:00:00Z'));
+                temporal.isRecurring(false);
                 null;"
       page.execute_script(script)
 
