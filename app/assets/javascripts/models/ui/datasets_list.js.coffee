@@ -45,25 +45,25 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
       result = {}
       focused = @focused()?.dataset.id ? @_pendingFocus
       selected = @selected()?.id ? @_pendingSelect
-      result.foc = focused if focused?
-      result.sel = selected if selected?
+      result.focused = focused if focused?
+      result.selected = selected if selected?
       result
 
     _fromQuery: (value) ->
-      @_pendingFocus = value.foc
+      @_pendingFocus = value.focused
       @_pendingSelect = value.selected
       if @_pendingFocus? || @_pendingSelect?
         ids = [@_pendingFocus, @_pendingSelect]
-        ids = [@_pendingFocus] if value.foc == value.sel
+        ids = [ids[0]] if ids[0] == ids[1]
         ids = (id for id in ids when id?)
         DatasetsModel.forIds ids, @query, (datasets) =>
           for dataset in datasets
-            @focusDataset(dataset) if value.foc == dataset.id
-            @showDatasetDetails(dataset) if value.sel == dataset.id
+            @focusDataset(dataset) if @_pendingFocus == dataset.id
+            @showDatasetDetails(dataset) if @_pendingSelect == dataset.id
           @_pendingFocus = null
           @_pendingSelect = null
 
-      @unfocusDataset() unless value.foc?
+      @unfocusDataset() unless value.focused?
 
 
   exports = DatasetsList

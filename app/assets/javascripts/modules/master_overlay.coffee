@@ -85,22 +85,24 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
     state: (arg) ->
       if arg?
-        i = 0
-        @toggle(arg[i++] == 't', false)
-        @toggleParent(arg[i++] == 't', false)
-        @toggleSecondary(arg[i++] == 't', false)
+        @toggle(arg.visible, false)
+        @toggleParent(arg.parent, false)
+        @toggleSecondary(arg.secondary, false)
+        children = arg.children
         for child in @_content().children()
-          $(child).toggle(arg[i++] == 't')
-        @level(parseInt(arg[i++], 10), false)
+          $child = $(child)
+          id = $child.attr('id')
+          $child.toggle(children.indexOf(id) != -1)
+        @level(children.indexOf(arg.current), false)
       else
-        bool = (v) -> if v then 't' else 'f'
-        res = ''
-        res += bool(!@root.hasClass('is-hidden'))
-        res += bool(!@root.hasClass(@scope('is-parent-hidden')))
-        res += bool(!@root.hasClass(@scope('is-secondary-hidden')))
-        res += bool(($(child).is(':visible'))) for child in @_content().children()
-        res += @level()
-        res
+        children = ($(child).attr('id') for child in @children())
+        {
+          visible: !@root.hasClass('is-hidden')
+          parent: !@root.hasClass(@scope('is-parent-hidden'))
+          secondary: !@root.hasClass(@scope('is-secondary-hidden'))
+          children: children
+          current: children[@level()]
+        }
 
     _content: ->
       @root.find(@scope('.main-content'))

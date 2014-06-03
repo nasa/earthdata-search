@@ -10,25 +10,25 @@ describe 'Address bar', reset: false do
 
   context 'when searching by keywords' do
     before(:all) do
-      visit '/search?o=ffftfft0'
+      visit '/search/map'
       fill_in "keywords", with: 'C1000000019-LANCEMODIS'
     end
 
     it 'saves the keyword condition in the address bar' do
-      expect(page).to have_query_string('free_text=C1000000019-LANCEMODIS&o=ffftfft0')
+      expect(page).to have_query_string('free_text=C1000000019-LANCEMODIS')
     end
 
     context 'clearing filters' do
       before(:all) { click_link "Clear Filters" }
 
       it 'removes the keyword condition from the address bar' do
-        expect(page).to have_query_string('o=ffftfft0')
+        expect(page).to have_query_string(nil)
       end
     end
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search?free_text=C1000000019-LANCEMODIS' }
+    before(:all) { visit '/search/datasets?free_text=C1000000019-LANCEMODIS' }
 
     it 'loads the condition into the keywords field' do
       expect(page).to have_field('keywords', with: 'C1000000019-LANCEMODIS')
@@ -41,7 +41,7 @@ describe 'Address bar', reset: false do
 
   context 'when searching by temporal' do
     before(:all) do
-      visit '/search?o=ffftfft0'
+      visit '/search/map'
       click_link "Temporal"
       js_check_recurring "dataset"
       fill_in "Start", with: "12-01 00:00:00"
@@ -54,7 +54,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the temporal condition in the address bar' do
-      expect(page).to have_query_string('temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365&o=ffftfft0')
+      expect(page).to have_query_string('temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365')
     end
 
     context 'clearing filters' do
@@ -64,13 +64,13 @@ describe 'Address bar', reset: false do
       end
 
       it 'removes the temporal condition from the address bar' do
-        expect(page).to have_query_string('o=ffftfft0')
+        expect(page).to have_query_string(nil)
       end
     end
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search?temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
+    before(:all) { visit '/search/datasets?temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
 
     it 'loads the condition into the temporal fields' do
       click_link "Temporal"
@@ -94,25 +94,25 @@ describe 'Address bar', reset: false do
 
   context 'when searching by spatial' do
     before(:all) do
-      visit '/search?o=ffftfft0'
+      visit '/search/map'
       create_bounding_box(0, 0, 10, 10)
     end
 
     it 'saves the spatial condition in the address bar' do
-      expect(page).to have_query_string('bounding_box=0%2C0%2C10%2C10&o=ffftfft0')
+      expect(page).to have_query_string('bounding_box=0%2C0%2C10%2C10')
     end
 
     context 'clearing filters' do
       before(:all) { click_link "Clear Filters" }
 
       it 'removes the spatial condition from the address bar' do
-        expect(page).to have_query_string('o=ffftfft0')
+        expect(page).to have_query_string(nil)
       end
     end
   end
 
   context 'when loading a url containing a spatial condition' do
-    before(:all) { visit '/search?bounding_box=0%2C0%2C10%2C10' }
+    before(:all) { visit '/search/datasets?bounding_box=0%2C0%2C10%2C10' }
 
     it 'draws the condition on the map' do
       expect(page).to have_selector('#map path', count: 1)

@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Displaying system errors", reset: false do
 
   before :all do
-    load_page :root
+    load_page :search
   end
 
   context 'when a system error occurs' do

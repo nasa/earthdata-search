@@ -8,26 +8,26 @@ this.edsc.util.url = do(window,
     History.pushState(data, title, path + window.location.search)
 
   savedState = null
+  savedPath = null
 
-  saveState = (state, push = false) ->
-    path = window.location.pathname
+  saveState = (path, state, push = false) ->
     paramStr = param(state)
     paramStr = '?' + paramStr if paramStr.length > 0
-    path = path + paramStr
 
-    if window.location.search != paramStr
+    if window.location.pathname != path || window.location.search != paramStr
       savedState = paramStr
+      savedPath = path
       if push
-        History.pushState(state, document.title, path)
+        History.pushState(state, document.title, path + paramStr)
       else
-        History.replaceState(state, document.title, path)
+        History.replaceState(state, document.title, path + paramStr)
       true
     else
       false
 
   # Raise a new event to avoid getting a statechange event when we ourselves change the state
   $(window).on 'statechange anchorchange', ->
-    if window.location.search != savedState
+    if window.location.search != savedState || window.location.pathname != savedPath
       $(window).trigger('edsc.pagechange')
 
   exports =

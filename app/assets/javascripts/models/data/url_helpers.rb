@@ -4,7 +4,29 @@ module Helpers
   module UrlHelpers
 
     class QueryBuilder
-      def initialize(options)
+      def add_to(url, options)
+        url = url.to_s
+        url = '' if url == 'root'
+        url = '/' + url unless url.start_with?('/')
+        # Debugging
+        #puts "Page: #{[url, query.presence].compact.join('?')}"
+        [path_from_options(url, options), params_from_options(options)].compact.join('?')
+      end
+
+      private
+
+      def path_from_options(url, options)
+        if url == '/search'
+          url = '/search/datasets'
+          url = '/search/map' if options[:overlay] == false
+          url = '/search/project' if options[:view] == :project
+          url = '/search' if options[:facets]
+          url = "/search/#{options[:focus]}/granules" if options[:focus]
+        end
+        url
+      end
+
+      def params_from_options(options)
         params = {}
 
         [:bounding_box, :point, :polygon].each do |type|
@@ -15,37 +37,14 @@ module Helpers
 
         params['ds'] = options[:project].join('!') if options[:project]
 
-        o = 'tfftfft0' # No facets visible
-        o = 'ftftfft0' if options[:overlay] == false
-        o = 'tffttft1' if options[:view] == :project
-        o = nil if options[:facets]
-
-        if options[:focus]
-          params['foc'] = options[:focus]
-          o = 'tfftftt1'
-        end
-
-        params['o'] = o unless o.nil?
-
-        @params = params
+        query_from_params(params)
       end
 
-      def query
+      def query_from_params(params)
         uri = Addressable::URI.new
-        uri.query_values = @params
+        uri.query_values = params
         uri.query
       end
-
-      def add_to(url)
-        url = url.to_s
-        url = '' if url == 'root'
-        url = '/' + url unless url.start_with?('/')
-        # Debugging
-        #puts "Page: #{[url, query.presence].compact.join('?')}"
-        [url, query.presence].compact.join('?')
-      end
-
-      private
 
       def temporal(start, stop=nil, range=nil)
         start = start.strftime('%Y-%m-%dT%H:%M:%S.000Z') if start && start.is_a?(DateTime)
@@ -60,7 +59,7 @@ module Helpers
     end
 
     def load_page(url, options={})
-      visit QueryBuilder.new(options).add_to(url)
+      visit QueryBuilder.new.add_to(url, options)
     end
   end
 end
