@@ -97,7 +97,7 @@ describe "Site tour", reset: true do
 
   context "directly loading the search page" do
     before :each do
-      load_page :search
+      load_page :search, overlay: false
     end
 
     it "shows no tour" do

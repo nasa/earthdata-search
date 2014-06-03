@@ -24,9 +24,7 @@ describe "Timeline date selection", reset: false do
     load_page :search, focus: 'C179003030-ORNL_DAAC'
     # Give the window a fixed size
     page.driver.resize_window(1280, 1024)
-  end
 
-  before :all do
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
     pan_to_time(present - 20.years)
