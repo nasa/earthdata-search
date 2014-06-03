@@ -16,6 +16,7 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
         read: @_toQuery
         write: @_fromQuery
         owner: this
+        deferEvaluation: true
 
     scrolled: (data, event) =>
       elem = event.target
@@ -42,19 +43,25 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
 
     _toQuery: ->
       result = {}
-      result.foc = @focused().dataset.id if @focused()?
-      result.sel = @selected().id if @selected().id?
+      focused = @focused()?.dataset.id ? @_pendingFocus
+      selected = @selected()?.id ? @_pendingSelect
+      result.foc = focused if focused?
+      result.sel = selected if selected?
       result
 
     _fromQuery: (value) ->
-      if value.foc? || value.sel?
-        ids = [value.foc, value.sel]
-        ids = [value.foc] if value.foc == value.sel
+      @_pendingFocus = value.foc
+      @_pendingSelect = value.selected
+      if @_pendingFocus? || @_pendingSelect?
+        ids = [@_pendingFocus, @_pendingSelect]
+        ids = [@_pendingFocus] if value.foc == value.sel
         ids = (id for id in ids when id?)
         DatasetsModel.forIds ids, @query, (datasets) =>
           for dataset in datasets
             @focusDataset(dataset) if value.foc == dataset.id
             @showDatasetDetails(dataset) if value.sel == dataset.id
+          @_pendingFocus = null
+          @_pendingSelect = null
 
       @unfocusDataset() unless value.foc?
 
