@@ -3,7 +3,7 @@
 ns = @edsc.models.ui
 data = @edsc.models.data
 
-ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.GranulesList) ->
+ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datasets, GranulesList=ns.GranulesList) ->
 
   class DatasetsList
     constructor: (@query, @datasets, @project) ->
@@ -46,7 +46,7 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
 
     unfocusDataset: =>
       if @focused()?
-        setTimeout((=> @focused(null)), 400)
+        @_unfocusTimeout = setTimeout((=> @focused(null)), config.defaultAnimationDurationMs)
 
     _readFocused: ->
       current = @_focusedList
@@ -56,6 +56,7 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
         @_focusedList = null
       else if current?.dataset != dataset
         current?.dispose()
+        clearTimeout(@_unfocusTimeout)
         @_focusedList = new GranulesList(dataset)
       @_focusedList
 
@@ -63,7 +64,9 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
       @_hasFocus(focus?)
       @_focusedList?.dispose()
       @_focusedList = focus
-      @project.focus(focus?.dataset) unless @_hasSelected()
+      clearTimeout(@_unfocusTimeout)
+      dataset = focus?.dataset
+      @project.focus(dataset) if dataset || !@_hasSelected()
 
     _readSelected: ->
       if @_hasSelected()
