@@ -46,7 +46,6 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
 
     unfocusDataset: =>
       if @focused()?
-        @focused().dispose()
         setTimeout((=> @focused(null)), 400)
 
     _readFocused: ->
