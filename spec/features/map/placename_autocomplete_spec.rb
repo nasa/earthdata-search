@@ -6,7 +6,7 @@ describe "Place name autocomplete" do
   texas_constraint = 'bounding_box:-106.6456527709961,25.8371639251709:-93.5080337524414,36.50070571899414'
 
   before do
-    visit "/search"
+    load_page :search, overlay: false
   end
 
   it "displays suggestions when the user provides types a few letters" do

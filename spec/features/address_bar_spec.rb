@@ -10,7 +10,7 @@ describe 'Address bar', reset: false do
 
   context 'when searching by keywords' do
     before(:all) do
-      visit '/search'
+      visit '/search/map'
       fill_in "keywords", with: 'C1000000019-LANCEMODIS'
     end
 
@@ -21,14 +21,14 @@ describe 'Address bar', reset: false do
     context 'clearing filters' do
       before(:all) { click_link "Clear Filters" }
 
-      it 'removes the temporal condition from the address bar' do
+      it 'removes the keyword condition from the address bar' do
         expect(page).to have_query_string(nil)
       end
     end
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search?free_text=C1000000019-LANCEMODIS' }
+    before(:all) { visit '/search/datasets?free_text=C1000000019-LANCEMODIS' }
 
     it 'loads the condition into the keywords field' do
       expect(page).to have_field('keywords', with: 'C1000000019-LANCEMODIS')
@@ -41,7 +41,7 @@ describe 'Address bar', reset: false do
 
   context 'when searching by temporal' do
     before(:all) do
-      visit '/search'
+      visit '/search/map'
       click_link "Temporal"
       js_check_recurring "dataset"
       fill_in "Start", with: "12-01 00:00:00"
@@ -70,7 +70,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search?temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
+    before(:all) { visit '/search/datasets?temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
 
     it 'loads the condition into the temporal fields' do
       click_link "Temporal"
@@ -94,7 +94,7 @@ describe 'Address bar', reset: false do
 
   context 'when searching by spatial' do
     before(:all) do
-      visit '/search'
+      visit '/search/map'
       create_bounding_box(0, 0, 10, 10)
     end
 
@@ -112,7 +112,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a spatial condition' do
-    before(:all) { visit '/search?bounding_box=0%2C0%2C10%2C10' }
+    before(:all) { visit '/search/datasets?bounding_box=0%2C0%2C10%2C10' }
 
     it 'draws the condition on the map' do
       expect(page).to have_selector('#map path', count: 1)
@@ -155,6 +155,69 @@ describe 'Address bar', reset: false do
 
     it 'filters datasets using the condition' do
       expect(page).to have_no_text('2000 Pilot Environmental Sustainability Index (ESI)')
+    end
+  end
+
+  context 'when adding datasets to a project' do
+    before(:all) do
+      visit '/search/datasets'
+      add_dataset_to_project('C179001887-SEDAC', '2000 Pilot Environmental Sustainability Index (ESI)')
+      add_dataset_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
+      click_link "Clear Filters"
+    end
+
+    it 'saves the project in the address bar' do
+      expect(page).to have_query_string('ds=C179001887-SEDAC!C179002914-ORNL_DAAC')
+    end
+  end
+
+  context 'when loading a url containing project datasets' do
+    before(:all) { visit '/search/project?ds=C179001887-SEDAC!C179002914-ORNL_DAAC' }
+
+    it 'restores the project' do
+      expect(page).to have_visible_project_overview
+      expect(project_overview).to have_text('2000 Pilot Environmental Sustainability Index (ESI)')
+      expect(project_overview).to have_text('30 Minute Rainfall Data (FIFE)')
+    end
+  end
+
+  context "when viewing a dataset's granules" do
+    before(:all) do
+      visit '/search/datasets'
+      view_granule_results
+    end
+
+    it 'saves the selected dataset in the address bar' do
+      expect(page).to have_path('/search/C179003030-ORNL_DAAC/granules')
+    end
+  end
+
+  context "when loading a url containing a dataset's granules" do
+    before(:all) { visit '/search/C179003030-ORNL_DAAC/granules' }
+
+    it 'restores the dataset granules view' do
+      expect(page).to have_visible_granule_list
+      expect(granule_list).to have_text('15 Minute Stream Flow')
+    end
+  end
+
+  context "when viewing a dataset's details" do
+    before(:all) do
+      visit '/search/datasets'
+      first_dataset_result.click_link('View details')
+    end
+
+    it 'saves the selected dataset in the address bar' do
+      expect(page).to have_path('/search/C179003030-ORNL_DAAC/details')
+    end
+  end
+
+  context "when loading a url containing a dataset's details" do
+    before(:all) { visit '/search/C179003030-ORNL_DAAC/details' }
+
+    it 'restores the dataset details view' do
+      expect(page).to have_visible_dataset_details
+      expect(dataset_details).to have_text('15 Minute Stream Flow')
     end
   end
 end

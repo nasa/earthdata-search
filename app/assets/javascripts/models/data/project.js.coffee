@@ -4,6 +4,7 @@
 ns = @edsc.models.data
 
 ns.Project = do (ko,
+                 extend = $.extend,
                  QueryModel = ns.query.DatasetQuery,
                  DatasetsModel = ns.Datasets
                  Dataset = ns.Dataset) ->
@@ -65,8 +66,8 @@ ns.Project = do (ko,
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
 
       @serialized = ko.computed
-        read: @_readSerialized
-        write: @_writeSerialized
+        read: @_toQuery
+        write: @_fromQuery
         owner: this
 
     _computeAllReadyToDownload: ->
@@ -108,7 +109,7 @@ ns.Project = do (ko,
       @_datasetIds.push(id)
 
       # Force results to start being calculated
-      dataset.granulesModel.results()
+      dataset.granulesModel.results() if dataset.has_granules
 
       null
 
@@ -145,10 +146,26 @@ ns.Project = do (ko,
       datasetQuery: @query.serialize()
       datasets: (ds.serialize() for ds in datasets)
 
-    _readSerialized: ->
-      @query.serialize()
+    _toQuery: ->
+      result = $.extend({}, @query.serialize())
+      if !result.ds? && @_datasetIds().length > 0
+        result.ds = @_datasetIds().join('!')
+      sg = @searchGranulesDataset()?.id
+      result.sg = sg if sg?
+      result
 
-    _writeSerialized: (value) ->
+    _fromQuery: (value) ->
       @query.fromJson(value)
+
+      ds = value.ds
+      if ds
+        if ds != @_datasetIds().join('!')
+          ds = ds.split('!')
+          DatasetsModel.forIds ds, @query, (datasets) =>
+            for dataset in datasets
+              @addDataset(dataset)
+              @searchGranulesDataset(dataset) if dataset.id == value.sg
+      else
+        @datasets([])
 
   exports = Project

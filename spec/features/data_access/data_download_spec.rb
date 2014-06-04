@@ -14,22 +14,13 @@ describe "Data download page", reset: false do
   non_orderable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   before(:all) do
-    visit "/search"
-
+    load_page :search, overlay: false
     login
-  end
-
-  after(:all) do
-    reset_user
-    visit "/search"
   end
 
   context "when datasets have been selected for direct download" do
     before :all do
-      add_dataset_to_project(downloadable_dataset_id, downloadable_dataset_title)
-      add_dataset_to_project(non_downloadable_dataset_id, non_downloadable_dataset_title)
-
-      dataset_results.click_link "View Project"
+      load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
       click_link "Retrieve project data"
 
       # Download the first
@@ -37,10 +28,6 @@ describe "Data download page", reset: false do
       click_on 'Continue'
       # Confirm address
       click_on 'Submit'
-    end
-
-    after :all do
-      visit "/search"
     end
 
     it "displays information on using direct download" do
@@ -89,9 +76,7 @@ describe "Data download page", reset: false do
 
   context "when no datasets have been selected for direct download" do
     before :all do
-      add_dataset_to_project(orderable_dataset_id, orderable_dataset_title)
-
-      dataset_results.click_link "View Project"
+      load_page :search, project: [orderable_dataset_id], view: :project
       click_link "Retrieve project data"
 
       choose 'Ftp_Pull'
@@ -103,10 +88,6 @@ describe "Data download page", reset: false do
       click_on 'Submit'
     end
 
-    after :all do
-      visit '/search'
-    end
-
     it "displays no information on direct downloads" do
       expect(page).to have_no_content('The following datasets are available for immediate download')
     end
@@ -114,10 +95,7 @@ describe "Data download page", reset: false do
 
   context "when datasets have been selected for asynchronous access" do
     before :all do
-      add_dataset_to_project(orderable_dataset_id, orderable_dataset_title)
-      add_dataset_to_project(non_orderable_dataset_id, non_orderable_dataset_title)
-
-      dataset_results.click_link "View Project"
+      load_page :search, project: [orderable_dataset_id, non_orderable_dataset_id], view: :project
       click_link "Retrieve project data"
 
       choose 'Ftp_Pull'
@@ -129,10 +107,6 @@ describe "Data download page", reset: false do
       click_on 'Continue'
       # Confirm address
       click_on 'Submit'
-    end
-
-    after :all do
-      visit "/search"
     end
 
     it "displays information on obtaining data asynchronously" do
@@ -153,17 +127,11 @@ describe "Data download page", reset: false do
 
   context "when no datasets have been selected for asynchronous access" do
     before :all do
-      add_dataset_to_project(downloadable_dataset_id, downloadable_dataset_title)
-
-      dataset_results.click_link "View Project"
+      load_page :search, project: [downloadable_dataset_id], view: :project
       click_link "Retrieve project data"
 
       choose 'Download'
       click_on 'Submit'
-    end
-
-    after :all do
-      visit '/search'
     end
 
     it "displays no information on direct downloads" do

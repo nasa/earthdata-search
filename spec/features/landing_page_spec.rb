@@ -6,7 +6,7 @@ require 'spec_helper'
 describe 'Site landing page' do
 
   before do
-    visit "/"
+    load_page :root
   end
 
   it "displays a simplified search interface" do
@@ -49,12 +49,12 @@ describe 'Site landing page' do
   end
 
   it 'reveals the full search interface when the user loads  "/search" directly' do
-    visit "/search"
+    load_page :search
     expect(page).to have_link('Clear Filters')
   end
 
   it 'goes back to the landing page when the user clicks the site logo from the search page' do
-    visit "/search"
+    load_page :search
     expect(page).to have_link('Clear Filters')
     click_link 'Earthdata Search'
     expect(page).to have_no_link('Clear Filters')

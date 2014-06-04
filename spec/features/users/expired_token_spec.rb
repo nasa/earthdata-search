@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Expired user token", reset: false do
   before :all do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
 
     within ".banner" do |variable|
       click_link "close"

@@ -10,7 +10,7 @@ describe "Granule list", reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
   end
 
   context "for all datasets with granules" do

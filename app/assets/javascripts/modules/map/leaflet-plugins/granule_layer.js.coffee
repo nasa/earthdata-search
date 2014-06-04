@@ -68,7 +68,7 @@ ns.GranuleLayer = do (L
       @_backTiles = {}
       tilesToLoad = @_tilesToLoad
       L.TileLayer.prototype._reset.call(this, e)
-      @fire('load') if tilesToLoad > 0
+      @fire('load') if @_tilesToLoad > 0
 
     _getBackTile: (tilePoint) ->
       key = "#{tilePoint.x}:#{tilePoint.y}"

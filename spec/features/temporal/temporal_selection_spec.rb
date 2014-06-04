@@ -5,7 +5,7 @@ require "spec_helper"
 
 describe "Temporal" do
   before :each do
-    visit "/search"
+    load_page :search
   end
 
   after :each do

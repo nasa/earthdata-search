@@ -224,7 +224,6 @@ ns.query = do (ko,
 
   class DatasetQuery extends Query
     constructor: (parentQuery) ->
-      super(parentQuery)
       @focusedTemporal = ko.observable(null)
       @focusedInterval = ko.observable(null)
       @grid = new GridCondition()
@@ -237,6 +236,7 @@ ns.query = do (ko,
       @facets = @queryComponent(new FacetParam(), ko.observableArray())
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
+      super(parentQuery)
 
     clearFilters: =>
       @focusedTemporal(null)
@@ -263,7 +263,6 @@ ns.query = do (ko,
 
   class GranuleQuery extends Query
     constructor: (datasetId, parentQuery) ->
-      super(parentQuery)
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
       @granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
       @dayNightFlagOptions = [{name: "Anytime", value: null},
@@ -287,6 +286,7 @@ ns.query = do (ko,
       @excludedGranuleIds = @queryComponent(new DelimitedParam('exclude[echo_granule_id]'), '')
 
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
+      super(parentQuery)
 
     fromJson: (query) =>
       granule_option = 'granule_ur'

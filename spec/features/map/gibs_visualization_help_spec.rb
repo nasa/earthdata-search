@@ -10,7 +10,7 @@ describe "Dataset GIBS help", reset: true do
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
 
   before :each do
-    visit "/search"
+    load_page :search
     fill_in "keywords", with: gibs_dataset_id
     expect(page).to have_content('MOD04_L2')
   end

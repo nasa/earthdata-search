@@ -8,12 +8,8 @@ describe 'Duplicate Service Options', reset: false do
   non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   before :all do
-    visit '/search'
+    load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
     login
-    add_dataset_to_project(downloadable_dataset_id, downloadable_dataset_title)
-    add_dataset_to_project(non_downloadable_dataset_id, non_downloadable_dataset_title)
-
-    dataset_results.click_link "View Project"
     click_link "Retrieve project data"
   end
 

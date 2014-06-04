@@ -15,12 +15,6 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
 
       @allDatasetsVisible = ko.computed(@_computeAllDatasetsVisible, this, deferEvaluation: true)
 
-    showProject: =>
-      @visible(true)
-
-    hideProject: =>
-      @visible(false)
-
     loginAndDownloadDataset: (dataset) =>
       @user.loggedIn =>
         @showDataQualitySummaryAndDownload [dataset], =>

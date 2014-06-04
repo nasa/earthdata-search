@@ -39,6 +39,8 @@ do ($=jQuery
           $content.animate(endOffset, duration: 200, complete: -> updateLandingPage(isLandingPage))
     else
       endOffset = $('.landing-toolbar-container').offset()
+      endOffset.top += 8
+      endOffset.left += 10
       $content.animate(endOffset,
         complete: ->
           $('.landing-visible').fadeOut()

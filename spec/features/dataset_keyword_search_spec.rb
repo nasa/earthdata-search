@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Dataset keyword searches", reset: false do
   before(:all) do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
   end
 
   # TODO: This should be in an after(:each) block, but it is too slow

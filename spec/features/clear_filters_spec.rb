@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe "'Clear Filters' button" do
-  before do
-    visit '/search'
+describe "'Clear Filters' button", reset: false do
+  before :all do
+    load_page :search
   end
 
   it "clears keywords" do
@@ -31,6 +31,7 @@ describe "'Clear Filters' button" do
       script = "var temporal = edsc.models.page.current.query.temporal.applied;
                 temporal.start.date(new Date('1978-12-01T00:00:00Z'));
                 temporal.stop.date(new Date('1979-12-01T00:00:00Z'));
+                temporal.isRecurring(false);
                 null;"
       page.execute_script(script)
 
@@ -42,6 +43,7 @@ describe "'Clear Filters' button" do
       click_link "Temporal"
       expect(page.find("#dataset-temporal-range-start")).to have_no_text("1978-12-01 00:00:00")
       expect(page.find("#dataset-temporal-range-stop")).to have_no_text("1979-12-01 00:00:00")
+      page.find('body > footer').click # Click away from timeline
     end
 
     it "recurring" do
@@ -61,10 +63,12 @@ describe "'Clear Filters' button" do
       expect(page.find("#dataset-temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")
       expect(page.find("#dataset-temporal-recurring-stop")).to have_no_text("1975-12-31 00:00:00")
       expect(page.find(".temporal-recurring-year-range-value")).to have_text("1960 - #{Time.new.year}")
+      page.find('body > footer').click # Click away from timeline
     end
   end
 
   it "clears facets" do
+    click_on 'Browse Datasets'
     find(".facets-item", text: "EOSDIS").click
     within(:css, '.selected-facets-panel') do
       expect(page).to have_content("EOSDIS")

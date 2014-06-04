@@ -9,7 +9,7 @@ require "spec_helper"
 
 describe "Map interface", reset: false do
   before do
-    visit "/search"
+    load_page :search, overlay: false
   end
 
   let (:switcher_selector) { '#map .projection-switcher' }

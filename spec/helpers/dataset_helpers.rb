@@ -2,9 +2,10 @@ module Helpers
   module DatasetHelpers
     def use_dataset(id, text)
       before :all do
-        fill_in "keywords", with: id
-        expect(first_dataset_result).to have_content(text)
         wait_for_xhr
+        fill_in "keywords", with: id
+        wait_for_xhr
+        expect(first_dataset_result).to have_content(text)
       end
 
       after :all do
@@ -14,6 +15,7 @@ module Helpers
     end
 
     def view_granule_results(from='dataset-results')
+      wait_for_xhr
       expect(page).to have_visible_overlay(from)
       page.execute_script("$('##{from} .panel-list-item:first-child').click()")
       #item.click # This causes intermittent failures based on timing
@@ -27,6 +29,7 @@ module Helpers
     end
 
     def leave_granule_results(to='dataset-results')
+      wait_for_xhr
       expect(page).to have_visible_granule_list
       page.execute_script("$('#granule-list a.master-overlay-back').click()")
       #find('#granule-list').click_link('Back to Datasets')

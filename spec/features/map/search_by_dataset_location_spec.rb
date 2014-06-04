@@ -8,7 +8,7 @@ describe "Spatial search by dataset location" do
   let(:location_link_text) { "Search using this dataset's location" }
 
   before do
-    visit "/search"
+    load_page :search
   end
 
   context "for datasets with point spatial" do

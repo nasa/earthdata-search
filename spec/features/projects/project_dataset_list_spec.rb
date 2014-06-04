@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Project dataset list", reset: false do
   before(:all) do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
   end
 
   before(:each) do

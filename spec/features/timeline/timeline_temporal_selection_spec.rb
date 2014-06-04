@@ -20,7 +20,7 @@ describe "Timeline temporal selection", reset: false do
   stop_drag_date = DateTime.new(1985, 1, 1, 0, 0, 0, '+0')
 
   before :all do
-    visit '/search'
+    load_page :search
     add_dataset_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
     add_dataset_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 

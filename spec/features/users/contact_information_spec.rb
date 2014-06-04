@@ -5,8 +5,7 @@ require 'spec_helper'
 
 describe 'Contact Information', reset: false do
   before :all do
-    Capybara.reset_sessions!
-    visit '/search'
+    load_page :search, overlay: false
     login
 
     click_link 'Manage user account'

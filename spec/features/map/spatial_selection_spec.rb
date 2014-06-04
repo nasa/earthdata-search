@@ -3,14 +3,9 @@
 
 require "spec_helper"
 
-describe "Spatial" do
-  before do
-    visit "/search"
-
-    # Close the overlay
-    within ".master-overlay-main #dataset-results" do
-      click_link "close"
-    end
+describe "Spatial tool", reset: false do
+  before :all do
+    load_page :search
   end
 
   let(:spatial_dropdown) do
@@ -21,7 +16,7 @@ describe "Spatial" do
   let(:rectangle_button) { page.find('#map .leaflet-draw-draw-rectangle') }
   let(:polygon_button)   { page.find('#map .leaflet-draw-draw-polygon') }
 
-  context "tool selection" do
+  context "selection" do
     context "when no tool is currently selected" do
       context "choosing the point selection tool from the site toolbar" do
         before(:each) { choose_tool_from_site_toolbar('Point') }
@@ -63,7 +58,6 @@ describe "Spatial" do
       end
     end
 
-
     context "choosing a tool when a point is already selected" do
       before(:each) do
         create_point
@@ -100,10 +94,17 @@ describe "Spatial" do
       end
     end
   end
+end
+
+describe "Spatial" do
+  before :each do
+    load_page :search
+  end
 
   context "point selection" do
     it "filters datasets using the selected point" do
       create_point(0, 0)
+      wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
@@ -111,7 +112,9 @@ describe "Spatial" do
     context "changing the point selection" do
       before(:each) do
         create_point(0, 0)
+        wait_for_xhr
         create_point(-75, 40)
+        wait_for_xhr
       end
 
       it "updates the dataset filters using the new point selection" do
@@ -122,7 +125,9 @@ describe "Spatial" do
     context "removing the point selection" do
       before(:each) do
         create_point(0, 0)
+        wait_for_xhr
         clear_spatial
+        wait_for_xhr
       end
 
       it "removes the spatial point dataset filter" do
@@ -134,6 +139,7 @@ describe "Spatial" do
   context "bounding box selection" do
     it "filters datasets using the selected bounding box" do
       create_bounding_box(0, 0, 10, 10)
+      wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
@@ -141,7 +147,9 @@ describe "Spatial" do
     context "changing the bounding box selection" do
       before(:each) do
         create_bounding_box(0, 0, 10, 10)
+        wait_for_xhr
         create_bounding_box(-75, 40, -74, 41)
+        wait_for_xhr
       end
 
       it "updates the dataset filters using the new bounding box selection" do
@@ -152,7 +160,9 @@ describe "Spatial" do
     context "removing the bounding box selection" do
       before(:each) do
         create_bounding_box(0, 0, 10, 10)
+        wait_for_xhr
         clear_spatial
+        wait_for_xhr
       end
 
       it "removes the spatial bounding box dataset filter" do
@@ -163,6 +173,7 @@ describe "Spatial" do
     it "filters datasets using north polar bounding boxes in the north polar projection" do
       click_link "North Polar Stereographic"
       create_arctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
+      wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
@@ -170,6 +181,7 @@ describe "Spatial" do
     it "filters datasets using south polar bounding boxes in the south polar projection" do
       click_link "South Polar Stereographic"
       create_antarctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
+      wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
@@ -178,19 +190,23 @@ describe "Spatial" do
   context "polygon selection" do
     it "filters datasets using the selected polygon" do
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
+      wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
     it "displays errors for invalid polygons" do
       create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
+      wait_for_xhr
       expect(page).to have_content("Polygon boundaries must not cross themselves")
     end
 
     context "changing the polygon selection" do
       before(:each) do
         create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
+        wait_for_xhr
         create_polygon([-74, 41], [-75, 41], [-75, -40], [-74, 40])
+        wait_for_xhr
       end
 
       it "updates the dataset filters using the new bounding box selection" do
@@ -201,7 +217,9 @@ describe "Spatial" do
     context "removing the bounding box selection" do
       before(:each) do
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, -10])
+        wait_for_xhr
         clear_spatial
+        wait_for_xhr
       end
 
       it "removes the spatial bounding box dataset filter" do

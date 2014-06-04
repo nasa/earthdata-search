@@ -15,7 +15,7 @@ describe "Timeline zooming", reset: false do
   start = present - 31.days
 
   before :all do
-    visit '/search'
+    load_page :search
 
     add_dataset_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 

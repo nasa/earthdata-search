@@ -9,7 +9,7 @@ require "spec_helper"
 describe 'Project help', reset: false do
 
   before :all do
-    visit '/search'
+    load_page :search
   end
 
   context 'viewing dataset results with no items in the project' do

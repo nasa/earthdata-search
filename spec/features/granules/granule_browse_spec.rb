@@ -8,7 +8,7 @@ describe "Granule browse display", reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
     # scrolling in these specs doesn't work unless the window is resized
     page.driver.resize_window(1000, 1000)
   end
