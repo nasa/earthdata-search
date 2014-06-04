@@ -6,11 +6,22 @@ data = @edsc.models.data
 ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.GranulesList) ->
 
   class DatasetsList
-    constructor: (@query, @datasets) ->
-      @focused = ko.observable(null)
-      @selected = ko.observable({})
+    constructor: (@query, @datasets, @project) ->
+      @_hasFocus = ko.observable(false)
+      @_focusedList = null
+      @focused = ko.computed
+        read: @_readFocused
+        write: @_writeFocused
+        owner: this
+
+      @_hasSelected = ko.observable(false)
+      @selected = ko.computed
+        read: @_readSelected
+        write: @_writeSelected
+        owner: this
+
       @fixOverlayHeight = ko.computed =>
-        $('.master-overlay').masterOverlay('contentHeightChanged') if @selected().detailsLoaded?()
+        $('.master-overlay').masterOverlay('contentHeightChanged') if @selected()?.detailsLoaded?()
 
       @serialized = ko.computed
         read: @_toQuery
@@ -33,7 +44,6 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
       return false unless dataset.has_granules
       return false if @focused()?.dataset.id == dataset.id
 
-      @focused()?.dispose()
       @focused(new GranulesList(dataset))
 
     unfocusDataset: =>
@@ -41,29 +51,36 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
         @focused().dispose()
         setTimeout((=> @focused(null)), 400)
 
+    _readFocused: ->
+      current = @_focusedList
+      dataset = @project.focus()
+      if !@_hasFocus() || !dataset?
+        current?.dispose()
+        @_focusedList = null
+      else if current?.dataset != dataset
+        current?.dispose()
+        @_focusedList = new GranulesList(dataset)
+      @_focusedList
+
+    _writeFocused: (focus) ->
+      @_hasFocus(focus?)
+      @_focusedList?.dispose()
+      @_focusedList = focus
+      @project.focus(focus?.dataset) unless @_hasSelected()
+
+    _readSelected: ->
+      @project.focus() if @_hasSelected()
+
+    _writeSelected: (selected) ->
+      @_hasSelected(selected?)
+      @project.focus(selected)
+
     _toQuery: ->
-      result = {}
-      focused = @focused()?.dataset.id ? @_pendingFocus
-      selected = @selected()?.id ? @_pendingSelect
-      result.focused = focused if focused?
-      result.selected = selected if selected?
-      result
+      focused: @_hasFocus()
+      selected: @_hasSelected()
 
     _fromQuery: (value) ->
-      @_pendingFocus = value.focused
-      @_pendingSelect = value.selected
-      if @_pendingFocus? || @_pendingSelect?
-        ids = [@_pendingFocus, @_pendingSelect]
-        ids = [ids[0]] if ids[0] == ids[1]
-        ids = (id for id in ids when id?)
-        DatasetsModel.forIds ids, @query, (datasets) =>
-          for dataset in datasets
-            @focusDataset(dataset) if @_pendingFocus == dataset.id
-            @showDatasetDetails(dataset) if @_pendingSelect == dataset.id
-          @_pendingFocus = null
-          @_pendingSelect = null
-
-      @unfocusDataset() unless value.focused?
-
+      @_hasFocus(value.focused)
+      @_hasSelected(value.selected)
 
   exports = DatasetsList

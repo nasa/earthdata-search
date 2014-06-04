@@ -36,7 +36,7 @@ module Helpers
 
         params['temporal'] = temporal(*options[:temporal]) if options[:temporal]
 
-        params['ds'] = options[:project].join('!') if options[:project]
+        params['p'] = options[:project].join('!') if options[:project]
 
         query_from_params(params)
       end

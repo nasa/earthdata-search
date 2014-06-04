@@ -13,7 +13,7 @@
     <!-- /ko -->
   </header>
   <!-- /ko -->
-  <!-- ko if: $root.ui.datasetsList.selected().detailsLoaded -->
+  <!-- ko if: $root.ui.datasetsList.selected() && $root.ui.datasetsList.selected().detailsLoaded -->
   <!-- ko with: $root.ui.datasetsList.selected().details -->
   <ul id="dataset-details-nav" class="nav nav-tabs">
     <li class="active"><a href="#dataset-information" data-toggle="tab">Information</a></li>

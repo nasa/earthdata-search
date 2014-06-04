@@ -77,15 +77,13 @@ ns.Dataset = do (ko
 
       @granuleDownloadsUrl = @computed
         read: =>
-          params = @query.params()
-          paramStr = toParam(extend(@_granuleParams(params), online_only: true, page_size: 2000))
+          paramStr = toParam(extend(@granuleQuery.params(), online_only: true, page_size: 2000))
           "/granules/download.html?#{paramStr}"
         deferEvaluation: true
 
       @granuleScriptUrl = @computed
         read: =>
-          params = @query.params()
-          paramStr = toParam(@_granuleParams(params))
+          paramStr = toParam(@granuleQuery.params())
           "/data/download.sh?#{paramStr}"
         deferEvaluation: true
 
@@ -114,10 +112,8 @@ ns.Dataset = do (ko
 
     granuleFiltersApplied: ->
       # granuleQuery.params() will have echo_collection_id and page_size by default
-      params = @granuleQuery.ownParams()
-      ignored_params = ['page_size', 'page_num', 'sort_key', 'echo_collection_id']
-      for own key, value of params
-        return true if ignored_params.indexOf(key) == -1
+      params = @granuleQuery.serialize()
+      return true for own key, value of params
       return false
 
     _computeDetails: ->

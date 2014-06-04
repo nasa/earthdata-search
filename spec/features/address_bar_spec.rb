@@ -167,12 +167,12 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the project in the address bar' do
-      expect(page).to have_query_string('ds=C179001887-SEDAC!C179002914-ORNL_DAAC')
+      expect(page).to have_query_string('p=C179001887-SEDAC!C179002914-ORNL_DAAC')
     end
   end
 
   context 'when loading a url containing project datasets' do
-    before(:all) { visit '/search/project?ds=C179001887-SEDAC!C179002914-ORNL_DAAC' }
+    before(:all) { visit '/search/project?p=C179001887-SEDAC!C179002914-ORNL_DAAC' }
 
     it 'restores the project' do
       expect(page).to have_visible_project_overview

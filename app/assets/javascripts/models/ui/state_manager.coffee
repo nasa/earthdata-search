@@ -27,7 +27,13 @@
       result
 
     load: (params) ->
-      @page.project.serialized(params)
+      datasetsList = @page.ui.datasetsList
+      project = @page.project
+
+      project.serialized(params)
+      datasetsList._pendingParams = params.f
+      datasetsList._pendingParams = params["p#{params.n}"] if params.n?
+
       unless @loaded
         @loaded = true
         ko.computed(@_persistStateInUrl, this).extend(throttle: config.xhrRateLimitMs)
@@ -89,9 +95,6 @@
       root += '/project' if state.children.indexOf('project-overview') != -1
       return root if state.current == 'project-overview'
 
-      {selected, focused} = @page.ui.datasetsList.serialized()
-
-      root += "/#{selected ? focused}"
       root += "/granules" if state.children.indexOf('granule-list') != -1
       return root if state.current == 'granule-list'
       return "#{root}/details" if state.current == 'dataset-details'
@@ -129,15 +132,14 @@
         state.current = 'project-overview'
         component = components.shift()
 
-      if component?.indexOf('C') == 0
-        id = component
-        if components.indexOf('granules') != -1
-          children.push('granule-list')
-          datasetsList.focused = id
-          state.current = 'granule-list'
-        if components.indexOf('details') != -1
-          datasetsList.selected = id
-          state.current = 'dataset-details'
+      components.unshift(component)
+      if components.indexOf('granules') != -1
+        children.push('granule-list')
+        datasetsList.focused = true
+        state.current = 'granule-list'
+      if components.indexOf('details') != -1
+        datasetsList.selected = true
+        state.current = 'dataset-details'
 
       children.push('dataset-details')
       state.children = children

@@ -43,7 +43,7 @@ ns.SearchPage = do (ko
 
       @ui =
         spatialType: new SpatialTypeModel(@query)
-        datasetsList: new DatasetsListModel(@query, @datasets)
+        datasetsList: new DatasetsListModel(@query, @datasets, @project)
         projectList: new ProjectListModel(@project, @user, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
 
