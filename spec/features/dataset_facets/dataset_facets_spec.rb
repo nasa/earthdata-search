@@ -79,6 +79,21 @@ describe "Dataset Facets", reset: false do
     end
   end
 
+  context 'when closing the facet list' do
+    it "displays links to re-open the facet list" do
+      expect(page).to have_no_link('Browse Datasets')
+      page.find('#master-overlay-parent .master-overlay-hide-parent').click
+      expect(page).to have_link('Browse Datasets')
+    end
+
+    context 're-opening the facet list' do
+      it 'hides the link to show facets' do
+        click_link 'Browse Datasets'
+        expect(page).to have_no_link('Browse Datasets')
+      end
+    end
+  end
+
   context "selecting facets" do
     after :each do
       reset_search

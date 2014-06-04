@@ -12,8 +12,7 @@
     constructor: (@page) ->
       first = true
       @overlayState = ko.observable(null)
-      @overlayState.subscribe(@_onOverlayStateChange, this)
-      @path = ko.computed(read: @_readPath, write: @_writePath, owner: this)
+      @path = ko.computed(read: @_readPath, write: @_writePath, deferEvaluation: true, owner: this)
       @historyChanged = false
       @loaded = false
 
@@ -35,11 +34,11 @@
 
     loadFromUrl: =>
       unless @page.ui.isLandingPage() # Avoid problem where switching to /search overwrites uncommited search conditions
-        @path(window.location.pathname)
-        @load(deparam(window.location.search.substring(1)))
+        [path, params] = urlUtil.cleanPath().split('?')
+        @path(path)
+        @load(deparam(params ? ''))
 
     _onReady: =>
-      @loadFromUrl()
       $overlay = $('.master-overlay')
       $overlay.masterOverlay()
       @overlay = $overlay.data('master-overlay')
@@ -47,10 +46,13 @@
       $overlay.on 'edsc.olstatechange', => @overlayState(@overlay.state())
       ko.computed => @overlay.state(@overlayState())
 
-    _onOverlayStateChange: (state) ->
-      @page.ui.projectList.visible(state.current == 'project-overview')
-      @_toggleWithTimeout('facets', @page.datasetFacets.isRelevant, state.visible && state.parent)
-      @_toggleWithTimeout('datasets', @page.datasets.isRelevant, state.visible && state.current == 'dataset-results')
+    _onPathChange: (path) ->
+      parts = path.split('/')
+      last = null
+      last = parts.pop() while !last && parts.length > 0
+      @page.ui.projectList.visible(last == 'project')
+      @_toggleWithTimeout('facets', @page.datasetFacets.isRelevant, last == 'search')
+      @_toggleWithTimeout('datasets', @page.datasets.isRelevant, last == 'datasets' || last == 'search')
 
     # The following two methods read a path from and write a path to the master overlay state, respectively
     #
@@ -70,10 +72,13 @@
     _readPath: ->
       state = @overlayState()
       path = @_pathForState(state)
+      @_onPathChange(path)
       path
 
     _pathForState: (state) ->
-      return '/' if !state? || @page.ui.isLandingPage()
+      return urlUtil.cleanPath().split('?')[0] if !state? || !@page.ui.isLandingPage()?
+
+      return '/' if @page.ui.isLandingPage()
 
       root = '/search'
 
@@ -141,10 +146,12 @@
       @overlayState(state)
 
     _toggleWithTimeout: (key, observable, bool) ->
+      current = observable.peek()
+      return if current == bool
       @_timeouts ?= {}
       clearTimeout(@_timeouts[key])
-      if bool
-        observable(true)
+      if bool || !current?
+        observable(bool)
       else
         @_timeouts[key] = setTimeout((-> observable(false)), config.defaultAnimationDurationMs)
 

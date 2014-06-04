@@ -38,3 +38,4 @@ this.edsc.util.url = do(window,
   exports =
     pushPath: pushPath
     saveState: saveState
+    cleanPath: cleanPath
