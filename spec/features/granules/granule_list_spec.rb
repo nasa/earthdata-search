@@ -126,7 +126,7 @@ describe "Granule list", reset: false do
       it "adds the granule id to the exclude granule filter" do
         granule_list.click_link 'Filter granules'
 
-        expect(page).to have_field("exclude_granule_id", with: "G1001380013-LPDAAC_ECS")
+        expect(page).to have_content("G1001380013-LPDAAC_ECS")
       end
     end
 

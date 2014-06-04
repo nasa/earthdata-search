@@ -108,15 +108,57 @@ ns.Granules = do (ko,
         newItems
 
     _shouldLoad: (url) ->
+      return true unless @_prevUrl?
+      return false if @_prevUrl == url
+
+      urlWithoutExclude = @_parseExcluded(url, true)
+      prevUrlWithoutExclude = @_parseExcluded(@_prevUrl)
+
+      return true if urlWithoutExclude.length < prevUrlWithoutExclude.length
+
+      if prevUrlWithoutExclude.url == urlWithoutExclude.url
+        @_prevUrl = url
+        return false
+
       true
+
+    _parseExcluded: (url, doRemove = false) ->
+      if url?
+        path = url.split('?')[0]
+        params = url.split('?')[1].split('&')
+
+        exclude = []
+        for p in params
+          if p.indexOf('exclude') != -1
+            exclude.push(p)
+            if doRemove
+              granuleId = p.split('=')[1]
+              results = @results()
+              for g in results
+                if g? && g.id == granuleId
+                  i = results.indexOf(g)
+                  results.splice(i, 1)
+
+              @results(results)
+              @hits(@originalHits - exclude?.length)
+
+        for e in exclude
+          i = params.indexOf(e)
+          params.splice(i, 1)
+
+        urlWithoutExclude = path + '?' + params.join('&')
+
+        {url: urlWithoutExclude, length: exclude?.length}
+
 
     _computeSearchResponse: (current, callback, needsLoad=true) ->
       if @query?.isValid()
         results = []
         params = @params()
         params.page_num = @page = 1
+        url = "#{@path}?#{$.param(params)}"
 
-        if needsLoad
+        if needsLoad && @_shouldLoad(url)
           if params.temporal == 'no-data'
             @results([])
             @hits(0)

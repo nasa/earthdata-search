@@ -232,60 +232,34 @@ describe "Granule search filters", reset: false do
   end
 
   context "when excluding by granule id" do
-    context "with granule id text field" do
-      before :each do
-        fill_in "exclude_granule_id", with: "G205470481-LPDAAC_ECS"
-        click_button "granule-filters-submit"
-      end
-
-      after :each do
-        first_project_dataset.click_link "Show granule filters"
-        click_button "granule-filters-clear"
-        expect(page).to reset_granules_to(before_granule_count)
-      end
-
-      it "excludes a granule" do
-        expect(page).to filter_granules_from(before_granule_count)
-      end
-
-      it "clicking the clear button clears the exclude granule id field" do
-        expect(page).to filter_granules_from(before_granule_count)
-        first_project_dataset.click_link "Show granule filters"
-        click_button "granule-filters-clear"
-        expect(page).to reset_granules_to(before_granule_count)
-
-        expect(page).to have_field("exclude_granule_id", with: "")
-        click_button "granule-filters-submit"
-      end
+    before :all do
+      first_project_dataset.click
     end
 
-    context "with granule id textarea" do
-      before :each do
-        click_link "Exclude Multiple"
-        fill_in "exclude_granule_id_field", with: "G205470481-LPDAAC_ECS\nG205470480-LPDAAC_ECS"
-        click_button "granule-filters-submit"
-      end
+    before :each do
+      first_granule_list_item.click
+      first_granule_list_item.click_link "Exclude this granule"
+    end
 
-      after :each do
-        first_project_dataset.click_link "Show granule filters"
-        click_button "granule-filters-clear"
-        expect(page).to reset_granules_to(before_granule_count)
-      end
+    after :each do
+      click_button "granule-filters-clear"
+    end
 
-      it "excludes multiple granules" do
-        expect(page).to filter_granules_from(before_granule_count)
-      end
+    after :all do
+      granule_list.click_link "Back to Datasets"
+      first_project_dataset.click_link "Show granule filters"
+    end
 
-      it "clicking the clear button clears exclude granule id textarea" do
-        expect(page).to filter_granules_from(before_granule_count)
+    it "displays a list of excluded granule ids" do
+      expect(page).to have_content("G1001380013-LPDAAC_ECS")
+    end
 
-        first_project_dataset.click_link "Show granule filters"
-        click_button "granule-filters-clear"
-        expect(page).to reset_granules_to(before_granule_count)
+    it "re-includes a granule when selected the granule id" do
+      click_link "Include this granule"
 
-        expect(page).to have_field("exclude_granule_id_field", with: "")
-        click_button "granule-filters-submit"
-      end
+      expect(page).to have_no_content("G1001380013-LPDAAC_ECS")
+      expect(granule_list).to have_content("SC:AST_L1A.003:2131388327")
+      expect(page).to reset_granules_to(before_granule_count)
     end
   end
 

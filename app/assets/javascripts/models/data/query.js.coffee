@@ -284,6 +284,7 @@ ns.query = do (ko,
       @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
       @granuleIds = @queryComponent(new DelimitedParam(@granuleIdsSelectedOptionValue), '')
       @excludedGranuleIds = @queryComponent(new DelimitedParam('exclude[echo_granule_id]'), '')
+      @excludedGranules = ko.computed => @excludedGranuleIds().split('\n')
 
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       super(parentQuery)

@@ -95,6 +95,7 @@ ns.XhrModel = do (ko
           results = @_toResults(data, current, params)
 
           @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length ? 0))
+          @originalHits = @hits()
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
           callback?(results)

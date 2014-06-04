@@ -1,7 +1,7 @@
       <section id="granule-list" data-bind="visible: ui.datasetsList.focused()" tabIndex="2" data-master-overlay-title="Granules">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
-          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.datasetsList.unfocusDataset">
+          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: function() {ui.projectList.hideFilters(); ui.datasetsList.unfocusDataset(); }">
             <i class="edsc-icon-arrow-left"></i> Back to Datasets
           </a>
         </nav>
