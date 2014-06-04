@@ -68,7 +68,7 @@ describe "Data download page", reset: false do
       it "downloads a shell script which performs the user's query" do
         within_window(page.driver.browser.get_window_handles.last) do
           expect(page).to have_content('#!/bin/sh')
-          expect(page).to have_content('echo_collection_id%5B%5D=C179003030-ORNL_DAAC')
+          expect(page).to have_content('echo_collection_id=C179003030-ORNL_DAAC')
         end
       end
     end

@@ -77,7 +77,7 @@ ns.Dataset = do (ko
 
       @granuleDownloadsUrl = @computed
         read: =>
-          paramStr = toParam(extend(@granuleQuery.params(), online_only: true, page_size: 2000))
+          paramStr = toParam(extend({}, @granuleQuery.params(), online_only: true, page_size: 2000))
           "/granules/download.html?#{paramStr}"
         deferEvaluation: true
 
