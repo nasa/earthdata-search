@@ -107,6 +107,9 @@ ns.Granules = do (ko,
       else
         newItems
 
+    _shouldLoad: (url) ->
+      true
+
     _computeSearchResponse: (current, callback, needsLoad=true) ->
       if @query?.isValid()
         results = []

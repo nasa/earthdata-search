@@ -54,6 +54,7 @@ ns.DatasetFacets = do (ko, XhrModel=ns.XhrModel) ->
   class DatasetFacetsModel extends XhrModel
     constructor: (query) ->
       super('/dataset_facets.json', query)
+      @isRelevant(false)
       @appliedFacets = ko.computed(@_computeResults, this, deferEvaluation: true)
 
     _computeResults: ->

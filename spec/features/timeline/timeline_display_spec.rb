@@ -8,7 +8,11 @@ describe "Timeline display", reset: false do
   extend Helpers::DatasetHelpers
 
   before :all do
-    visit '/search'
+    load_page :search
+  end
+
+  after :each do
+    wait_for_xhr
   end
 
   context 'in the dataset results list' do
@@ -19,6 +23,7 @@ describe "Timeline display", reset: false do
 
   context 'in the project list' do
     before :all do
+      wait_for_xhr
       # No granules
       add_dataset_to_project('C179001887-SEDAC', '2000 Pilot Environmental Sustainability Index (ESI)')
 

@@ -6,15 +6,7 @@ describe "Granule search filters", reset: false do
   before(:all) do
     page.driver.resize_window(2000, 3000) # Avoid having to scroll to click
 
-    visit "/search"
-    fill_in "keywords", with: "ASTER L1A"
-    expect(page).to have_content('ASTER L1A')
-
-    first_dataset_result.click_link "Add dataset to the current project"
-
-    dataset_results.click_link "View Project"
-
-    expect(page).to have_content('Granules')
+    load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project
 
     first_project_dataset.click_link "Show granule filters"
 
@@ -24,12 +16,6 @@ describe "Granule search filters", reset: false do
       before_granule_count = number_granules.to_s.split(" ")[0].to_i
     end
   end
-
-  after(:all) do
-    reset_overlay
-    reset_project
-  end
-
 
   before :each do
     wait_for_xhr

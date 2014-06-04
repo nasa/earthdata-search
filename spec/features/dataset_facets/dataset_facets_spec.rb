@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Dataset Facets", reset: false do
   before :all do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search, facets: true
   end
 
   context "facet listing" do
@@ -76,6 +76,21 @@ describe "Dataset Facets", reset: false do
 
       find(".facet-title", text: "Campaigns").click
       expect(page).to have_css("#collapse0.facets-list-hide")
+    end
+  end
+
+  context 'when closing the facet list' do
+    it "displays links to re-open the facet list" do
+      expect(page).to have_no_link('Browse Datasets')
+      page.find('#master-overlay-parent .master-overlay-hide-parent').click
+      expect(page).to have_link('Browse Datasets')
+    end
+
+    context 're-opening the facet list' do
+      it 'hides the link to show facets' do
+        click_link 'Browse Datasets'
+        expect(page).to have_no_link('Browse Datasets')
+      end
     end
   end
 

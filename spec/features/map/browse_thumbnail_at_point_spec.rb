@@ -8,7 +8,7 @@
 #describe "Browse thumbnails", reset: false do
 #  before :all do
 #    Capybara.reset_sessions!
-#    visit "/search"
+#    load_page :search
 #  end
 #
 #  context "when viewing the tooltip for a dataset whose granules has browse" do

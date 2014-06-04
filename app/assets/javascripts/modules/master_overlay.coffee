@@ -13,8 +13,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
     hide: -> @toggle(false)
 
-    toggle: (show = @root.hasClass('is-hidden')) ->
+    toggle: (show = @root.hasClass('is-hidden'), event=true) ->
       @root.toggleClass('is-hidden', !show)
+      @_triggerStateChange() if event
 
     showParent: -> @toggleParent(true)
 
@@ -24,18 +25,32 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
     hideSecondary: -> @toggleSecondary(false)
 
-    toggleParent: (show = @root.hasClass(@scope('is-parent-hidden'))) ->
+    hideLevel: (level) ->
+      fn = =>
+        @children().eq(level).hide()
+        @_triggerStateChange()
+      @_levelTimeout = window.setTimeout(fn, config.defaultAnimationDurationMs)
+
+    showNext: ->
+      clearTimeout(@_levelTimeout)
+      @current().next().show()
+
+    toggleParent: (show = @root.hasClass(@scope('is-parent-hidden')), event=true) ->
       @root.toggleClass(@scope('is-parent-hidden'), !show)
       @contentHeightChanged()
+      @_triggerStateChange() if event
 
-    toggleSecondary: (show = @root.hasClass(@scope('is-secondary-hidden'))) ->
+    toggleSecondary: (show = @root.hasClass(@scope('is-secondary-hidden')), event=true) ->
       @root.toggleClass(@scope('is-secondary-hidden'), !show)
       @contentHeightChanged()
+      @root.trigger('edsc.hidden')
+      @_triggerStateChange() if event
+
+    _triggerStateChange: ->
+      @root.trigger('edsc.olstatechange')
 
     forward: (source) ->
       @level(Math.min(@level() + 1, @children().length))
-      if source?
-        @current().find(@scope(".breadcrumb")).text("Back to #{source}")
 
     back: ->
       @level(Math.max(@level() - 1, 0))
@@ -46,18 +61,48 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     current: ->
       @children().eq(@level())
 
-    level: (value=null) ->
+    _setBreadcrumbs: ->
+      prev = @children().eq(Math.max(@level() - 1, 0))
+      title = prev.data(@scope('title'))
+      if title?
+        @current().find(@scope(".breadcrumb")).text("Back to #{title}")
+
+    level: (value=null, event=true) ->
       if value?
         # setter
         value = parseInt(value, 10)
         currentLevel = @level()
         if currentLevel != value
+          @hideLevel(currentLevel) if @current().hasClass(@scope('hide-self')) && currentLevel > value
           @_content().attr('data-level', value)
           @current().trigger('edsc.navigate')
+        @_setBreadcrumbs()
         @contentHeightChanged()
+        @_triggerStateChange() if event
       else
         # getter
         parseInt(@_content().attr('data-level'), 10)
+
+    state: (arg) ->
+      if arg?
+        @toggle(arg.visible, false)
+        @toggleParent(arg.parent, false)
+        @toggleSecondary(arg.secondary, false)
+        children = arg.children
+        for child in @_content().children()
+          $child = $(child)
+          id = $child.attr('id')
+          $child.toggle(children.indexOf(id) != -1)
+        @level(children.indexOf(arg.current), false)
+      else
+        children = ($(child).attr('id') for child in @children())
+        {
+          visible: !@root.hasClass('is-hidden')
+          parent: !@root.hasClass(@scope('is-parent-hidden'))
+          secondary: !@root.hasClass(@scope('is-secondary-hidden'))
+          children: children
+          current: children[@level()]
+        }
 
     _content: ->
       @root.find(@scope('.main-content'))
@@ -70,7 +115,8 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       # PQ: I still don't quite understand why we need to set the padding here as opposed to
       # using CSS.  It seems like box-sizing: border-box should allow us to use CSS-based padding
       # and have the height work, but it doesn't.
-      setTimeout((=>
+      clearTimeout(@_timeout) if @_timeout
+      @_timeout = setTimeout((=>
         main = $('.main-content')
         windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
         height = windowHeight - main.position().top - $('body > footer').outerHeight()
@@ -87,19 +133,8 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
   $document = $(document)
 
-  # Hide the project list after the back animation completes
-  timeout = null
-  $document.on 'edsc.navigate', '#dataset-results', ->
-    window.setTimeout(page.current.ui.projectList.hideProject, config.defaultAnimationDurationMs)
-
-  $document.on 'edsc.navigate', '#project-overview', ->
-    window.clearTimeout(timeout)
-
   plugin.create('masterOverlay', MasterOverlay)
 
   $(document).ajaxComplete (event, xhr, settings) ->
     if settings.url.indexOf('/granules.json') != -1 || settings.url.indexOf('/data_quality_summary.json') != -1
       $('.master-overlay').masterOverlay('contentHeightChanged')
-
-  $document.ready ->
-    $('.master-overlay').masterOverlay()

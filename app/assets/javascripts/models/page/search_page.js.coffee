@@ -1,5 +1,3 @@
-#= require util/url
-#= require util/deparam
 #= require models/data/grid
 #= require models/data/query
 #= require models/data/datasets
@@ -12,6 +10,7 @@
 #= require models/ui/datasets_list
 #= require models/ui/project_list
 #= require models/ui/granule_timeline
+#= require models/ui/state_manager
 
 models = @edsc.models
 data = models.data
@@ -20,10 +19,6 @@ ui = models.ui
 ns = models.page
 
 ns.SearchPage = do (ko
-                    window
-                    config = @edsc.config
-                    urlUtil = @edsc.util.url
-                    deparam = @edsc.util.deparam
                     setCurrent = ns.setCurrent
                     QueryModel = data.query.DatasetQuery
                     DatasetsModel = data.Datasets
@@ -34,7 +29,8 @@ ns.SearchPage = do (ko
                     DatasetsListModel = ui.DatasetsList
                     ProjectListModel = ui.ProjectList
                     GranuleTimelineModel = ui.GranuleTimeline
-                    PreferencesModel = data.Preferences) ->
+                    PreferencesModel = data.Preferences
+                    StateManager = ui.StateManager) ->
 
   class SearchPage
     constructor: ->
@@ -55,6 +51,10 @@ ns.SearchPage = do (ko
 
       @spatialError = ko.computed(@_computeSpatialError)
 
+      @datasets.isRelevant(false) # Avoid load until the URL says it's ok
+
+      new StateManager(this).monitor()
+
     clearFilters: =>
       @query.clearFilters()
       @ui.spatialType.selectNone()
@@ -71,33 +71,11 @@ ns.SearchPage = do (ko
         return error if error.indexOf('ORA-') != -1
       null
 
-    serialize: ->
-      @project.serialized()
-
-    load: (params) ->
-      @project.serialized(params)
-
   current = new SearchPage()
   setCurrent(current)
 
-  loadFromUrl = ->
-    unless current.ui.isLandingPage() # Avoid problem where switching to /search overwrites uncommited search conditions
-      current.load(deparam(window.location.search.substring(1)))
-
-  loadFromUrl()
-
-  $(window).on 'statechange anchorchange', loadFromUrl
-
-  historyChanged = false
-  history = ko.computed
-    read: ->
-      historyChanged = true if urlUtil.saveState(@serialize(), !historyChanged)
-
-    owner: current
-
-  history.extend(throttle: config.xhrRateLimitMs)
-
   $(document).ready ->
     current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.ui.projectList)
+    $('.master-overlay').masterOverlay()
 
   exports = SearchPage

@@ -17,8 +17,10 @@ ns.XhrModel = do (ko
       @isError = ko.observable(false)
 
       @isLoaded = ko.observable(false)
+      @stale = true
       @loadTime = ko.observable(null)
       @currentRequest = null
+      @isRelevant = ko.observable(true)
 
       @hits = ko.observable(0)
       @hasNextPage = ko.observable(true)
@@ -44,6 +46,14 @@ ns.XhrModel = do (ko
       if @query?
         params = @params()
         params.page_num = @page = 1
+        unless @isRelevant()
+          if !@isLoaded.peek()
+            @stale = true
+          @isLoaded(false)
+          return
+        if !@stale && !@isLoaded.peek()
+          @isLoaded(true)
+          return
         @_load(params, current, callback)
 
     _loadAndSet: (params, current, callback) ->
@@ -51,23 +61,29 @@ ns.XhrModel = do (ko
         callback?(results)
         @results(results)
 
+    _shouldLoad: (url) ->
+      @_prevUrl != url || @isError.peek()
+
     _load: (params, current, callback) =>
+      url = "#{@path}?#{$.param(params)}"
+      return unless @_shouldLoad(url)
+      @_prevUrl = url
+
       @abort()
       @isLoading(true)
       @isError(false)
 
       requestId = @completedRequestId + 1
-      url = "#{@path}?#{$.param(params)}"
       console.log("Request (#{requestId}): #{url}")
       start = new Date()
 
       @currentRequest = xhr = $.ajax
         dataType: 'json'
-        url: @path
-        data: params
+        url: url
         retry: => @_load(params, current, callback)
         success: (data, status, xhr) =>
           #console.profile(@path)
+          @stale = false
 
           @currentRequest = null
           @isLoaded(true)

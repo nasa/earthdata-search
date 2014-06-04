@@ -90,12 +90,51 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
+  config.after :all do |example_from_block_arg|
+    example = config.respond_to?(:expose_current_running_example_as) ? example_from_block_arg : self.example
+
+    if Capybara.page.respond_to?(:save_page) && Capybara.page.current_url
+      # Attempt to detect before :all block failures
+      examples = self.class.descendant_filtered_examples
+      exceptions = self.class.descendant_filtered_examples.map(&:exception)
+      if !exceptions.any?(&:nil?) && exceptions.uniq.size == 1
+        # Failure only code goes here
+        if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
+          puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
+        end
+        paths = Capybara::Screenshot.screenshot_and_save_page
+        puts "     Screenshot: #{paths[:image]}"
+        puts "     HTML page: #{paths[:html]}"
+      end
+    end
+  end
+
+  count = 0
+  index = 0
+  file_time = 0
+  timings = {}
+
+  config.before :suite do
+    count = self.class.children.size
+  end
+
   config.before :all do
+    file_time = Time.now
     Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
   end
 
   config.after :all do
     Capybara.default_wait_time = wait_time
+    timings[self.class.display_name] = Time.now - file_time
+    index += 1
+    puts " (Suite #{index} of #{count})"
+  end
+
+  config.after :suite do
+    puts
+    puts "Slowest specs"
+    puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3fs - #{k}" % v}.join("\n"))
+    puts
   end
 
   config.after :each do
@@ -145,4 +184,5 @@ RSpec.configure do |config|
   config.include Helpers::DatasetHelpers
   config.include Helpers::DefaultTags
   config.include Helpers::TemporalHelpers
+  config.include Helpers::UrlHelpers
 end

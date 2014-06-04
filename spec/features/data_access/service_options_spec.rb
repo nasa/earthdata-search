@@ -5,20 +5,14 @@ describe 'Service Options', reset: false do
   downloadable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
 
   before :all do
-    visit '/search'
+    load_page :search, overlay: false
     login
   end
 
   context 'for datasets with granule results' do
     before :all do
-      add_dataset_to_project(downloadable_dataset_id, downloadable_dataset_title)
-
-      dataset_results.click_link "View Project"
+      load_page :search, project: [downloadable_dataset_id], view: :project
       click_link "Retrieve project data"
-    end
-
-    after :all do
-      visit '/search'
     end
 
     context "when setting options for a dataset with order options" do
@@ -46,16 +40,8 @@ describe 'Service Options', reset: false do
 
   context 'for datasets without granule results' do
     before :all do
-      add_dataset_to_project(downloadable_dataset_id, downloadable_dataset_title)
-
-      set_temporal(DateTime.new(2014, 2, 10, 12, 30, 0, '+0'))
-
-      dataset_results.click_link "View Project"
+      load_page :search, project: [downloadable_dataset_id], view: :project, temporal: [DateTime.new(2014, 2, 10, 12, 30, 0, '+0')]
       click_link "Retrieve project data"
-    end
-
-    after :all do
-      visit '/search'
     end
 
     it 'displays no service options' do

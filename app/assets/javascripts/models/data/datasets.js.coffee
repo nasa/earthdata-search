@@ -9,6 +9,19 @@ ns.Datasets = do (ko
                   ) ->
 
   class DatasetsModel extends XhrModel
+    @forIds: (ids, query, callback) ->
+      datasets = (Dataset.findOrCreate({id: id}, query) for id in ids)
+      needsLoad = (dataset.id for dataset in datasets when !dataset.links?)
+
+      if needsLoad.length > 0
+        new DatasetsModel(query).search {echo_collection_id: needsLoad}, (results) =>
+          Dataset.findOrCreate(result, query).dispose() for result in results
+          callback(datasets)
+      else
+        callback(datasets)
+      null
+
+
     constructor: (query) ->
       #super('http://localhost:3002/datasets')
       super('/datasets.json', query)

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Datasets overlay', :reset => false do
   before(:all) do
     Capybara.reset_sessions!
-    visit "/search"
+    load_page :search
   end
 
   after(:each) do

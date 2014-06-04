@@ -1,8 +1,20 @@
 module VCR
+  class EDSCLoggerStream
+    def puts(message)
+      if message.start_with?('[faraday] Identified request type (recordable)')
+        $stderr.puts message.gsub('Identified request type (recordable)', 'Performing real request')
+      end
+    rescue => e
+      $stderr.puts "Logger error: #{e.inspect}"
+    end
+  end
+
   module EDSCConfigurer
     def self.configure(c, options={})
       c.cassette_library_dir = 'fixtures/cassettes'
       c.hook_into :faraday
+
+      c.debug_logger = EDSCLoggerStream.new
 
       c.cassette_serializers[:null] = VCR::NullSerializer.new
       c.cassette_persisters[:edsc] = VCR::SplitPersister.new(c.cassette_serializers[:null],

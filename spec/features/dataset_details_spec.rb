@@ -2,17 +2,8 @@
 require 'spec_helper'
 
 describe 'Dataset details', reset: false do
-  before :all do
-    Capybara.reset_sessions!
-    visit '/search'
-  end
-
-  after :all do
-    reset_overlay
-    reset_search
-  end
-
   it 'displays the dataset details' do
+    load_page :search
     fill_in 'keywords', with: 'AST_L1AE'
     expect(page).to have_content('ASTER Expedited L1A')
     first_dataset_result.click_link('View details')
@@ -27,19 +18,13 @@ describe 'Dataset details', reset: false do
       expect(page).to have_content('Temporal Extent: 1999-12-18T00:00:00Z to 2014-12-18T00:00:00Z')
       expect(page).to have_content('Science Keywords: EARTH SCIENCE >> SPECTRAL/ENGINEERING >> INFRARED WAVELENGTHS')
     end
-
-    reset_overlay
-    reset_search
   end
 
   context "when selecting a dataset with point spatial" do
     before :all do
+      load_page :search
       expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
       first_dataset_result.click_link('View details')
-    end
-
-    after :all do
-      reset_overlay
     end
 
     it "displays the dataset's spatial bounds on the map" do
@@ -59,14 +44,10 @@ describe 'Dataset details', reset: false do
 
   context "when selecting a dataset with bounding box spatial" do
     before :all do
+      load_page :search
       expect(page).to have_content('2000 Pilot Environmental Sustainability Index (ESI)')
       second_dataset_result.click_link('View details')
     end
-
-    after :all do
-      reset_overlay
-    end
-
 
     it "displays the dataset's spatial bounds on the map" do
       # Test that a path exists
@@ -76,14 +57,10 @@ describe 'Dataset details', reset: false do
 
   context "when selecting a dataset with polygon spatial" do
     before :all do
+      load_page :search
       fill_in 'keywords', with: 'NSIDC-0022'
       expect(page).to have_content('AVHRR Polar 1 Km Level 1B Data Set')
       first_dataset_result.click_link('View details')
-    end
-
-    after :all do
-      reset_overlay
-      reset_search
     end
 
     it "displays the dataset's spatial bounds on the map" do
@@ -93,14 +70,10 @@ describe 'Dataset details', reset: false do
 
   context "when selecting a dataset with line spatial" do
     before :all do
+      load_page :search
       fill_in 'keywords', with: 'NSIDC-0239'
       expect(page).to have_content('SMEX02 Atmospheric Aerosol Optical Properties Data')
       first_dataset_result.click_link('View details')
-    end
-
-    after :all do
-      reset_overlay
-      reset_search
     end
 
     it "displays the dataset's spatial bounds on the map" do

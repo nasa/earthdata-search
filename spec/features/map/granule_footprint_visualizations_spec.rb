@@ -11,7 +11,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
   extend Helpers::DatasetHelpers
 
   before :all do
-    visit "/search"
+    load_page :search
   end
 
   context "for point datasets" do

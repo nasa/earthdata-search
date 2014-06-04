@@ -8,7 +8,7 @@ require 'spec_helper'
 
 describe 'Site Preferences', reset: true do
   before :each do
-    visit '/'
+    load_page :root
   end
 
   context "when user is logged in" do
@@ -25,7 +25,7 @@ describe 'Site Preferences', reset: true do
       expect(page).to have_no_css '.tour'
       wait_for_xhr
 
-      visit '/'
+      load_page :root
       expect(page).to have_no_css '.tour'
     end
 
@@ -45,7 +45,7 @@ describe 'Site Preferences', reset: true do
       expect(page).to have_no_css '.tour'
       wait_for_xhr
 
-      visit '/'
+      load_page :root
       expect(page).to have_no_css '.tour'
     end
 
