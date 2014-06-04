@@ -131,7 +131,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the facet condition in the address bar' do
-      expect(page).to have_query_string('campaign%5B%5D=EOSDIS')
+      expect(page).to have_query_string('campaign[]=EOSDIS')
     end
 
     context 'clearing filters' do
@@ -144,7 +144,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a facet condition' do
-    before(:all) { visit '/search?campaign%5B%5D=EOSDIS' }
+    before(:all) { visit '/search?campaign[]=EOSDIS' }
 
     it 'displays the selected facet condition' do
       within(:css, '.selected-facets-panel') do
@@ -167,12 +167,12 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the project in the address bar' do
-      expect(page).to have_query_string('p=C179001887-SEDAC!C179002914-ORNL_DAAC')
+      expect(page).to have_query_string('p=!C179001887-SEDAC!C179002914-ORNL_DAAC')
     end
   end
 
   context 'when loading a url containing project datasets' do
-    before(:all) { visit '/search/project?p=C179001887-SEDAC!C179002914-ORNL_DAAC' }
+    before(:all) { visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC' }
 
     it 'restores the project' do
       expect(page).to have_visible_project_overview
@@ -188,12 +188,12 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the selected dataset in the address bar' do
-      expect(page).to have_path('/search/C179003030-ORNL_DAAC/granules')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC')
     end
   end
 
   context "when loading a url containing a dataset's granules" do
-    before(:all) { visit '/search/C179003030-ORNL_DAAC/granules' }
+    before(:all) { visit '/search/granules?p=C179003030-ORNL_DAAC' }
 
     it 'restores the dataset granules view' do
       expect(page).to have_visible_granule_list
@@ -208,16 +208,69 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the selected dataset in the address bar' do
-      expect(page).to have_path('/search/C179003030-ORNL_DAAC/details')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC')
     end
   end
 
   context "when loading a url containing a dataset's details" do
-    before(:all) { visit '/search/C179003030-ORNL_DAAC/details' }
+    before(:all) { visit '/search/details?p=C179003030-ORNL_DAAC' }
 
     it 'restores the dataset details view' do
       expect(page).to have_visible_dataset_details
       expect(dataset_details).to have_text('15 Minute Stream Flow')
+    end
+  end
+
+  context "setting granule query conditions within the project" do
+    before(:all) do
+      visit '/search/project?p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
+      first_project_dataset.click_link "Show granule filters"
+      check "Find only granules that have browse images."
+      second_project_dataset.click_link "Show granule filters"
+      select 'Day only', from: "day-night-select"
+      second_project_dataset.click_link "Hide granule filters"
+      first_project_dataset.click_link "View details"
+      wait_for_xhr
+      expect(page).to have_visible_dataset_details
+    end
+
+    it "saves the query conditions in the URL" do
+      expect(page).to have_path('/search/project/details')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&p1[browse_only]=true&p2[day_night_flag]=DAY')
+    end
+
+    it "does not duplicate the query conditions for the focused dataset" do
+      expect(page.current_url).not_to include('p0[browse_only]')
+    end
+  end
+
+  context "setting granule query conditions when the focused dataset is not the project" do
+    before(:all) do
+      visit '/search/granules?p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
+      click_link "Filter granules"
+      check "Find only granules that have browse images."
+      wait_for_xhr
+    end
+
+    it "saves the query conditions in the URL" do
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&p0[browse_only]=true')
+    end
+
+    it "includes query conditions for the focused dataset" do
+      expect(page.current_url).to include('p0[browse_only]')
+    end
+  end
+
+  context "loading a URL with saved query conditions" do
+    before :all do
+      visit '/search/project?p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&p1[browse_only]=true&p2[day_night_flag]=DAY'
+    end
+
+    it "restores the granule query conditions" do
+      first_project_dataset.click_link "Show granule filters"
+      expect(page).to have_checked_field 'Find only granules that have browse images.'
+      second_project_dataset.click_link "Show granule filters"
+      expect(page).to have_select 'day-night-select', selected: 'Day only'
     end
   end
 end

@@ -79,6 +79,7 @@
       state = @overlayState()
       path = @_pathForState(state)
       @_onPathChange(path)
+
       path
 
     _pathForState: (state) ->

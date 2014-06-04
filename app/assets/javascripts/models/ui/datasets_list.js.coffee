@@ -35,9 +35,7 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
         @datasets.loadNextPage(@query.params())
 
     showDatasetDetails: (dataset, event=null) =>
-      @selected(dataset)
-      # load the details
-      @selected().details()
+      @selected(dataset) unless @selected() == dataset
 
     focusDataset: (dataset, event=null) =>
       return true if $(event?.target).closest('a').length > 0
@@ -69,11 +67,14 @@ ns.DatasetsList = do ($=jQuery, DatasetsModel=data.Datasets, GranulesList=ns.Gra
       @project.focus(focus?.dataset) unless @_hasSelected()
 
     _readSelected: ->
-      @project.focus() if @_hasSelected()
+      if @_hasSelected()
+        selected = @project.focus()
+        selected?.details()
+        selected
 
     _writeSelected: (selected) ->
+      @project.focus(selected) unless @project.focus.peek() == selected
       @_hasSelected(selected?)
-      @project.focus(selected)
 
     _toQuery: ->
       focused: @_hasFocus()

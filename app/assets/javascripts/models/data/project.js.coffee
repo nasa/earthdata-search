@@ -158,7 +158,7 @@ ns.Project = do (ko,
         start = 0 if @focus() && !@hasDataset(@focus())
         for dataset, i in datasets[start...]
           query = dataset?.granuleQuery.serialize()
-          result["p#{i}"] = query if query
+          result["p#{i + start}"] = query if query
       result
 
     _fromQuery: (value) ->
