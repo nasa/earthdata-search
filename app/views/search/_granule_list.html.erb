@@ -1,7 +1,7 @@
       <section id="granule-list" data-bind="visible: ui.datasetsList.focused()" tabIndex="2" data-master-overlay-title="Granules">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
-          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.datasetsList.unfocusDataset">
+          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: function() {ui.projectList.hideFilters(); ui.datasetsList.unfocusDataset(); }">
             <i class="edsc-icon-arrow-left"></i> Back to Datasets
           </a>
         </nav>
@@ -62,7 +62,7 @@
                   <img class="panel-list-thumbnail" data-bind="attr: {src: edsc_browse_url(65)}" alt="Browse Image">
                 </a>
               <!-- /ko -->
-              <a class="todo panel-list-remove panel-list-when-selected" href="#" title="remove"><i class="fa fa-times"></i></a>
+              <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><i class="fa fa-times"></i></a>
 
               <h3 data-bind="text: title"></h3>
               <span data-bind="text: getTemporal()"></span>
