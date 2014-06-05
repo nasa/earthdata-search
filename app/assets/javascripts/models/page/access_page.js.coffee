@@ -13,7 +13,8 @@ ns = @edsc.models.page
 
 ns.AccessPage = do (ko,
                     setCurrent = ns.setCurrent
-                    accessData = @edscPageData
+                    deparam = @edsc.util.deparam
+                    pageData = @edscPageData
                     QueryModel = data.query.DatasetQuery
                     ProjectModel = data.Project
                     UserModel = data.User
@@ -41,9 +42,13 @@ ns.AccessPage = do (ko,
         # TODO: Why is this needed on this page?  There is no project list here.
         projectList: projectList
         accountForm: accountForm
-        serviceOptionsList: new ServiceOptionsListModel(accountForm, projectList)
+        serviceOptionsList: new ServiceOptionsListModel(accountForm, @project)
 
-      @project.fromJson(accessData)
+      if pageData
+        @project.fromJson(pageData)
+      else
+        @project.serialized(deparam(window.location.search[1...]))
+
 
   setCurrent(new AccessPage())
 

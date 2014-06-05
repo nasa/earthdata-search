@@ -58,14 +58,10 @@ ns.Dataset = do (ko
       Object.defineProperty this, 'granulesModel',
         get: -> @_granulesModel ?= @disposable(new Granules(@granuleQuery, @query))
 
-      @granuleAccessOptions = @asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
-
       @details = @asyncComputed({}, 100, @_computeDetails, this)
       @detailsLoaded = ko.observable(false)
 
       @visible = ko.observable(false)
-
-      @serviceOptions = @disposable(new ServiceOptionsModel(@granuleAccessOptions))
 
       @fromJson(jsonData)
 
@@ -91,24 +87,7 @@ ns.Dataset = do (ko
 
     thumbnail: ->
       granule = @browseable_granule
-      if granule?
-        "#{scalerUrl}/#{granule}?h=85&w=85"
-      else
-        null
-
-    _loadGranuleAccessOptions: ->
-      params = @_granuleParams(@query.params())
-
-      ajax
-        dataType: 'json'
-        url: '/data/options'
-        data: params
-        retry: => @_loadGranuleAccessOptions()
-        success: (data, status, xhr) =>
-          @granuleAccessOptions(data)
-
-    _granuleParams: (params) ->
-      extend({}, params, 'echo_collection_id[]': @id, @granuleQuery.params())
+      "#{scalerUrl}/#{granule}?h=85&w=85" if granule?
 
     granuleFiltersApplied: ->
       # granuleQuery.params() will have echo_collection_id and page_size by default
@@ -130,36 +109,10 @@ ns.Dataset = do (ko
           @details(details)
           @detailsLoaded(true)
 
-    serialize: ->
-      result = {id: @id, dataset_id: @dataset_id, has_granules: @has_granules}
-      if @has_granules
-        result.query = @granuleQuery.serialize()
-        result.params = $.param(@granuleQuery.params())
-        if @granuleAccessOptions.isSetup()
-          result.granuleAccessOptions = @granuleAccessOptions()
-      result.serviceOptions = @serviceOptions.serialize()
-      result
-
     fromJson: (jsonObj) ->
-      jsonObj = extend({}, jsonObj)
-
-      @granuleQuery.fromJson(jsonObj.query) if jsonObj.query?
-      @granuleAccessOptions(jsonObj.granuleAccessOptions) if jsonObj.granuleAccessOptions?
-      @serviceOptions.fromJson(jsonObj.serviceOptions) if jsonObj.serviceOptions?
-
-      delete jsonObj.query
-      delete jsonObj.granuleAccessOptions
-      delete jsonObj.serviceOptions
-
       @json = jsonObj
-
-      @thumbnail ?= ko.observable(null)
-      @archive_center ?= ko.observable(null)
 
       this[key] = value for own key, value of jsonObj
 
       @hasAtomData(jsonObj.links?)
-      if @gibs
-        @gibs = ko.observable(@gibs)
-      else
-        @gibs = ko.observable(null)
+      @gibs = ko.observable(@gibs ? null)

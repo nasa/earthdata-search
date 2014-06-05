@@ -12,8 +12,7 @@ gem 'term-ansicolor'
 gem 'toastr-rails'
 gem 'unicorn'
 
-# Rubygems version is incompatible with Rails 4
-gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'bc9c14fa3768db1b73f221895c57e1233120bac1'
+gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'a89da600f389c53c88362ce5133d8d3945776464'
 
 group :test do
   gem 'database_cleaner'

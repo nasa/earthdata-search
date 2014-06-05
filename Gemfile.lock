@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: https://github.com/namick/obfuscate_id.git
-  revision: bc9c14fa3768db1b73f221895c57e1233120bac1
-  ref: bc9c14fa3768db1b73f221895c57e1233120bac1
+  revision: a89da600f389c53c88362ce5133d8d3945776464
+  ref: a89da600f389c53c88362ce5133d8d3945776464
   specs:
     obfuscate_id (0.0.4)
       rails (>= 3.2.15)
@@ -48,6 +48,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
+    atomic (1.1.16)
     bourbon (3.2.1)
       sass (~> 3.2)
       thor

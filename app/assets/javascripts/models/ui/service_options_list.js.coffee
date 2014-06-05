@@ -2,17 +2,17 @@ ns = @edsc.models.ui
 
 ns.ServiceOptionsList = do (ko, $=jQuery) ->
   class ServiceOptionsList
-    constructor: (@accountForm, @projectList) ->
+    constructor: (@accountForm, @project) ->
       @activeIndex = ko.observable(0)
       @showGranules = ko.observable(false)
       @needsContactInfo = ko.computed =>
-        for dataset in @projectList.project.datasets()
+        for dataset in @project.accessDatasets()
           for m in dataset.serviceOptions.accessMethod()
             method = m.method()
             return true if method? && method != 'Download'
         false
       @isLastOption = ko.computed =>
-        datasets = @projectList.project.datasets()
+        datasets = @project.accessDatasets()
         @activeIndex() == datasets.length - 1 && !@needsContactInfo()
 
     showNext: =>
@@ -25,11 +25,11 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
       $('.access-submit').prop('disabled', true)
       if @accountForm.isEditingAccount()
         @accountForm.saveAccountEdit =>
-          @projectList.downloadDatasets(@projectList.project.getDatasets())
+          @downloadProject()
         # re-enable button if saveAccountEdit fails
         $('.access-submit').prop('disabled', false)
       else
-        @projectList.downloadDatasets(@projectList.project.getDatasets())
+        @downloadProject()
 
     showGranuleList: =>
       @showGranules(true)
@@ -40,8 +40,15 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
     scrolled: (data, event) =>
       elem = event.target
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
-        dataset = @projectList.project.datasets()[@activeIndex()]
+        dataset = @project.accessDatasets()[@activeIndex()].dataset
         dataset.granulesModel.loadNextPage()
+
+    downloadProject: ->
+      $project = $('#data-access-project')
+
+      $project.val(JSON.stringify(@project.serialize()))
+
+      $('#data-access').submit()
 
 
   exports = ServiceOptionsList

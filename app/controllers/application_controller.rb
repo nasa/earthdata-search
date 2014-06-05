@@ -27,4 +27,10 @@ class ApplicationController < ActionController::Base
     session[:user_id] = response["token_info"]["user_guid"] if response["token_info"]
     session[:user_id]
   end
+
+  def current_user
+    user_id = get_user_id
+    @current_user ||= User.find_or_create_by(echo_id: user_id) if user_id.present?
+    @current_user
+  end
 end

@@ -18,12 +18,13 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     loginAndDownloadDataset: (dataset) =>
       @user.loggedIn =>
         @showDataQualitySummaryAndDownload [dataset], =>
-          @downloadDatasets([dataset])
+          @project.focus(dataset)
+          @configureProject()
 
     loginAndDownloadProject: =>
       @user.loggedIn =>
         @showDataQualitySummaryAndDownload @project.getDatasets(), =>
-          @downloadDatasets(@project.getDatasets())
+          @configureProject()
 
     showDataQualitySummaryAndDownload: (datasets, action) =>
       accepted = true
@@ -78,12 +79,8 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     cancelDataQualitySummaryModal: =>
       @dataQualitySummaryModal(false)
 
-    downloadDatasets: (datasets) =>
-      $project = $('#data-access-project')
-
-      $project.val(JSON.stringify(@project.serialize(datasets)))
-
-      $('#data-access').submit()
+    configureProject: ->
+      window.location.href = '/data/configure?' + $.param(@project.serialized())
 
     toggleDataset: (dataset) =>
       project = @project
@@ -96,7 +93,7 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
 
     _computeDatasetsToDownload: ->
       datasets = []
-      for dataset in @project.datasets()
+      for dataset in @project.accessDatasets()
         for m in dataset.serviceOptions.accessMethod()
           datasets.push(dataset) if m.type == 'download'
 
@@ -104,15 +101,15 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
 
     _computeSubmittedOrders: ->
       orders = []
-      for dataset in @project.datasets()
+      for dataset in @project.accessDatasets()
         for m in dataset.serviceOptions.accessMethod() when m.type == 'order'
-          orders.push(url: "https://reverb.echo.nasa.gov/reverb/orders/#{m.orderId}", dataset_id: dataset.dataset_id)
+          orders.push(url: "https://reverb.echo.nasa.gov/reverb/orders/#{m.orderId}", dataset_id: dataset.dataset.dataset_id)
       orders
 
     _computeDatasetOnly: ->
       datasets = []
-      for dataset in @project.datasets()
-        datasets.push(dataset) if dataset.granuleAccessOptions().hits == 0
+      for dataset in @project.accessDatasets()
+        datasets.push(dataset) if dataset.serviceOptions.accessMethod().length == 0
       datasets
 
     datasetHasDQS: (dataset) =>
