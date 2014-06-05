@@ -234,32 +234,46 @@ describe "Granule search filters", reset: false do
   context "when excluding by granule id" do
     before :all do
       first_project_dataset.click
-    end
-
-    before :each do
       first_granule_list_item.click
       first_granule_list_item.click_link "Exclude this granule"
     end
 
-    after :each do
-      click_button "granule-filters-clear"
-    end
-
     after :all do
+      click_button "granule-filters-clear"
       granule_list.click_link "Back to Datasets"
       first_project_dataset.click_link "Show granule filters"
+      wait_for_xhr
     end
 
-    it "displays a list of excluded granule ids" do
-      expect(page).to have_content("G1001380013-LPDAAC_ECS")
+    it "displays an indication that granules have been excluded" do
+      expect(page).to have_content("1 granule has been removed from your results")
     end
 
-    it "re-includes a granule when selected the granule id" do
-      click_link "Include this granule"
+    it "removes the granule from the granule list" do
+      expect(page).to have_css('#granule-list .panel-list-item', count: 19)
+    end
 
-      expect(page).to have_no_content("G1001380013-LPDAAC_ECS")
-      expect(granule_list).to have_content("SC:AST_L1A.003:2131388327")
-      expect(page).to reset_granules_to(before_granule_count)
+    it "updates the page's hits count" do
+      expect(granule_list).to have_content("Showing 19 of #{before_granule_count.to_i - 1} matching granules")
+    end
+
+    context "when the user clicks the link to clear removed granules" do
+      before :all do
+        click_link "Add it back"
+      end
+
+      after :all do
+        first_granule_list_item.click
+        first_granule_list_item.click_link "Exclude this granule"
+      end
+
+      it "includes the excluded granules in the list" do
+        expect(page).to have_css('#granule-list .panel-list-item', count: 20)
+      end
+
+      it "updates the granule hits count" do
+        expect(granule_list).to have_content("Showing 20 of #{before_granule_count} matching granules")
+      end
     end
   end
 

@@ -32,8 +32,14 @@ ns.XhrModel = do (ko
 
     loadNextPage: (params=@params(), callback=null) =>
       if @hasNextPage() and !@isLoading()
-        params.page_num = ++@page
-        @_loadAndSet params, @results(), callback
+        results = @results()
+        # Double the page size with every fetch
+        if results.length > 0
+          params.page_num = 2
+          params.page_size = results.length if params.page_size? && results.length > 0
+        else
+          params.page_num = 1
+        @_loadAndSet params, results, callback
 
     params: ->
       @query.params()
@@ -95,7 +101,6 @@ ns.XhrModel = do (ko
           results = @_toResults(data, current, params)
 
           @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length ? 0))
-          @originalHits = @hits()
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
           callback?(results)

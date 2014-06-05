@@ -1,5 +1,17 @@
 <!-- ko with: project.searchGranulesDataset() -->
 <div class="master-overlay-content" data-master-overlay-pad="50">
+  <!-- ko if: granuleQuery.excludedGranules().length == 1 -->
+  <p class="message message-warning">
+    1 granule has been removed from your results.
+    <a data-bind="click: $root.ui.datasetsList.focused().clearExclusions" href="#">Add it back</a>
+  </p>
+  <!-- /ko -->
+  <!-- ko if: granuleQuery.excludedGranules().length > 1 -->
+  <p class="message message-warning">
+    <span data-bind="text: granuleQuery.excludedGranules().length"></span> granules have been removed from your results.
+    <a data-bind="click: $root.ui.datasetsList.focused().clearExclusions" href="#">Add them back</a>
+  </p>
+  <!-- /ko -->
   <dl>
     <dt>Granule ID</dt>
     <dd class="granule-id-search search-single">
@@ -27,18 +39,6 @@
         </p>
         <textarea data-bind="value: granuleQuery.granuleIds" id="granule_id_field" name="Text1" cols="60" rows="5" ></textarea>
       </section>
-    </dd>
-    <dt>Excluded Granule IDs</dt>
-    <dd>
-      <p class="instructions">Click <i class="fa fa-times-circle"></i> to include a granule back into your search.</p>
-      <div data-bind="if: granuleQuery.excludedGranuleIds().length > 0" class="excluded-granules">
-      <!-- ko foreach: granuleQuery.excludedGranules -->
-        <p>
-          <span data-bind="text: $data"></span>
-          <a data-bind="click: $root.ui.datasetsList.focused().includeGranule" href="#" title="Include this granule"><i class="fa fa-times-circle"></i></a>
-        </p>
-      <!-- /ko -->
-      </div>
     </dd>
     <dt>Temporal</dt>
     <dd>

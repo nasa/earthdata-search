@@ -108,57 +108,33 @@ ns.Granules = do (ko,
         newItems
 
     _shouldLoad: (url) ->
-      return true unless @_prevUrl?
-      return false if @_prevUrl == url
-
-      urlWithoutExclude = @_parseExcluded(url, true)
-      prevUrlWithoutExclude = @_parseExcluded(@_prevUrl)
-
-      return true if urlWithoutExclude.length < prevUrlWithoutExclude.length
-
-      if prevUrlWithoutExclude.url == urlWithoutExclude.url
-        @_prevUrl = url
-        return false
-
       true
 
-    _parseExcluded: (url, doRemove = false) ->
-      if url?
-        path = url.split('?')[0]
-        params = url.split('?')[1].split('&')
+    _exclude: (params) ->
+      @_prevExcludedStr ?= ''
+      excluded = params.exclude?.echo_granule_id
+      excludedStr = excluded?.join(',')
 
-        exclude = []
-        for p in params
-          if p.indexOf('exclude') != -1
-            exclude.push(p)
-            if doRemove
-              granuleId = p.split('=')[1]
-              results = @results()
-              for g in results
-                if g? && g.id == granuleId
-                  i = results.indexOf(g)
-                  results.splice(i, 1)
+      needsLoad = !excludedStr || excludedStr.indexOf(@_prevExcludedStr) != 0
 
-              @results(results)
-              @hits(@originalHits - exclude?.length)
+      if needsLoad
+        @_originalHits = null
+      else
+        results = (result for result in @results.peek() when excluded.indexOf(result.id) == -1)
+        @_originalHits ?= @hits.peek()
+        @hits(@_originalHits - excluded.length)
+        @results(results)
 
-        for e in exclude
-          i = params.indexOf(e)
-          params.splice(i, 1)
-
-        urlWithoutExclude = path + '?' + params.join('&')
-
-        {url: urlWithoutExclude, length: exclude?.length}
-
+      @_prevExcludedStr = excludedStr
+      needsLoad
 
     _computeSearchResponse: (current, callback, needsLoad=true) ->
       if @query?.isValid()
         results = []
         params = @params()
         params.page_num = @page = 1
-        url = "#{@path}?#{$.param(params)}"
 
-        if needsLoad && @_shouldLoad(url)
+        if needsLoad && @_exclude(params)
           if params.temporal == 'no-data'
             @results([])
             @hits(0)

@@ -109,6 +109,9 @@ describe "Granule list", reset: false do
     end
 
     context "clicking the remove granule button" do
+      use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+      hook_granule_results
+
       before :all do
         first_granule_list_item.click
         first_granule_list_item.click_link "Exclude this granule"
@@ -119,15 +122,6 @@ describe "Granule list", reset: false do
         granule_list.click_link('Hide granule filters')
       end
 
-      it "removes the granule from the granule list" do
-        expect(granule_list).to have_no_content("SC:AST_L1A.003:2131388327")
-      end
-
-      it "adds the granule id to the exclude granule filter" do
-        granule_list.click_link 'Filter granules'
-
-        expect(page).to have_content("G1001380013-LPDAAC_ECS")
-      end
     end
 
   end
