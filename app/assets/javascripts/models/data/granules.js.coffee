@@ -110,13 +110,32 @@ ns.Granules = do (ko,
     _shouldLoad: (url) ->
       true
 
+    _exclude: (params) ->
+      @_prevExcludedStr ?= ''
+      excluded = params.exclude?.echo_granule_id
+      excludedStr = excluded?.join(',')
+
+      current = @results.peek()
+      needsLoad = !excludedStr || !current || current.length == 0 || excludedStr.indexOf(@_prevExcludedStr) != 0
+
+      if needsLoad
+        @_originalHits = null
+      else
+        results = (result for result in current when excluded.indexOf(result.id) == -1)
+        @_originalHits ?= @hits.peek()
+        @hits(@_originalHits - excluded.length)
+        @results(results)
+
+      @_prevExcludedStr = excludedStr
+      needsLoad
+
     _computeSearchResponse: (current, callback, needsLoad=true) ->
       if @query?.isValid()
         results = []
         params = @params()
         params.page_num = @page = 1
 
-        if needsLoad
+        if needsLoad && @_exclude(params)
           if params.temporal == 'no-data'
             @results([])
             @hits(0)

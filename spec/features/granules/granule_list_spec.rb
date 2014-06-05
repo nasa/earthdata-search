@@ -107,6 +107,23 @@ describe "Granule list", reset: false do
         expect(page).to have_content("Data Quality Summaries")
       end
     end
+
+    context "clicking the remove granule button" do
+      use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+      hook_granule_results
+
+      before :all do
+        first_granule_list_item.click
+        first_granule_list_item.click_link "Exclude this granule"
+      end
+
+      after :all do
+        click_button "granule-filters-clear"
+        granule_list.click_link('Hide granule filters')
+      end
+
+    end
+
   end
 
   context "for datasets with many granule results" do

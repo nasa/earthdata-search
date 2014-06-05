@@ -150,7 +150,7 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
     hideFilters: =>
       @_destroyGranulePickers()
       $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
-      @project.clearSearchGranules()
+      @project.searchGranulesDataset(null)
 
     _destroyGranulePickers: ->
       $('.granule-temporal-filter .temporal').datetimepicker('destroy')

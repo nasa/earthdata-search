@@ -14,6 +14,7 @@ ns.GranulesList = do ($=jQuery)->
       @_map = map.map
       @_map.on 'edsc.focusgranule', @_onFocusGranule
       @_map.on 'edsc.stickygranule', @_onStickyGranule
+      @_map.on 'edsc.excludestickygranule', @_onRemoveStickyGranule
       $granuleList = $('#granule-list')
       $granuleList.on 'keydown', @_onKeyDown
 
@@ -37,6 +38,7 @@ ns.GranulesList = do ($=jQuery)->
 
       @_map.off 'edsc.focusgranule', @_onFocusGranule
       @_map.off 'edsc.stickygranule', @_onStickyGranule
+      @_map.off 'edsc.excludestickygranule', @_onRemoveStickyGranule
       @dataset.visible(@_wasVisible)
       @dataset.dispose()
       @stickied(null)
@@ -103,5 +105,16 @@ ns.GranulesList = do ($=jQuery)->
       return true if $(e?.target).closest('a').length > 0
       granule = null if @isStickied(granule)
       @_map.fire 'edsc.stickygranule', granule: granule
+
+    removeGranule: (granule, e) =>
+      @granules.query.excludedGranules.push(granule.id)
+      @_map.fire('edsc.focusgranule', granule: null)
+      @_map.fire('edsc.stickygranule', granule: null)
+
+    _onRemoveStickyGranule: (e) =>
+      @removeGranule(@stickied(), e)
+
+    clearExclusions: =>
+      @granules.query.excludedGranules([])
 
   exports = GranulesList

@@ -170,9 +170,6 @@ ns.Project = do (ko,
     isSearchingGranules: (dataset) =>
       @searchGranulesDataset() == dataset
 
-    clearSearchGranules: =>
-      @searchGranulesDataset(null)
-
     fromJson: (jsonObj) ->
       datasets = null
       if jsonObj.datasets?

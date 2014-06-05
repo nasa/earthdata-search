@@ -71,6 +71,10 @@
   height: 100%;
   transition-property: right, left;
   transition-duration: 0.3s;
+
+  .message {
+    margin-top: 1em;
+  }
 }
 
 .master-overlay-main-content {

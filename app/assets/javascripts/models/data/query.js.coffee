@@ -163,6 +163,26 @@ ns.query = do (ko,
     writeTo: (query) ->
       query[@name()] = @value().split(@delimiter)
 
+  class ExclusionParam extends QueryParam
+    constructor: (name, @_type) ->
+      super(name)
+
+    writeTo: (query) ->
+      query[@name()] ||= {}
+      query[@name()][@_type] = @value()
+
+    canReadFrom: (query) ->
+      query[@name()]?[@_type]?
+
+    readFrom: (query) ->
+      @value(query[@name()][@_type])
+
+    write: (query) ->
+      if @canReadFrom(query)
+        @readFrom(query)
+      else
+        @value([])
+
   class Range
     constructor: ->
       @min = ko.observable()
@@ -283,6 +303,7 @@ ns.query = do (ko,
       @onlineOnly = @queryComponent(new BooleanParam('online_only'), false)
       @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
       @granuleIds = @queryComponent(new DelimitedParam(@granuleIdsSelectedOptionValue), '')
+      @excludedGranules = @queryComponent(new ExclusionParam('exclude', 'echo_granule_id'), ko.observableArray())
 
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       super(parentQuery)
