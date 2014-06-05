@@ -16,7 +16,7 @@ this.edsc.util.url = do(window,
   savedPath = null
 
   saveState = (path, state, push = false) ->
-    paramStr = param(state)
+    paramStr = param(state).replace(/%5B/g, '[').replace(/%5D/g, ']')
     paramStr = '?' + paramStr if paramStr.length > 0
     path = path + paramStr
 

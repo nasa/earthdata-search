@@ -5,6 +5,7 @@ ns = @edsc.models.data
 
 ns.Project = do (ko,
                  extend = $.extend,
+                 param = $.param,
                  QueryModel = ns.query.DatasetQuery,
                  DatasetsModel = ns.Datasets
                  Dataset = ns.Dataset) ->
@@ -62,6 +63,7 @@ ns.Project = do (ko,
 
       @id = ko.observable(null)
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
+      @focus = ko.observable(null)
       @searchGranulesDataset = ko.observable(null)
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
 
@@ -145,23 +147,34 @@ ns.Project = do (ko,
 
     _toQuery: ->
       result = $.extend({}, @query.serialize())
-      if !result.ds? && @_datasetIds().length > 0
-        result.ds = @_datasetIds().join('!')
-      sg = @searchGranulesDataset()?.id
-      result.sg = sg if sg?
+      datasets = [@focus()].concat(@datasets())
+      ids = (ds?.id ? '' for ds in datasets)
+      if datasets.length > 1 || datasets[0]
+        result.p = ids.join('!')
+        start = 1
+        start = 0 if @focus() && !@hasDataset(@focus())
+        for dataset, i in datasets[start...]
+          query = dataset?.granuleQuery.serialize()
+          result["p#{i + start}"] = query if query
       result
 
     _fromQuery: (value) ->
       @query.fromJson(value)
 
-      ds = value.ds
-      if ds
-        if ds != @_datasetIds().join('!')
-          ds = ds.split('!')
-          DatasetsModel.forIds ds, @query, (datasets) =>
-            for dataset in datasets
-              @addDataset(dataset)
-              @searchGranulesDataset(dataset) if dataset.id == value.sg
+      datasetIdStr = value.p
+      if datasetIdStr
+        if datasetIdStr != @_datasetIds().join('!')
+          datasetIds = datasetIdStr.split('!')
+          focused = !!datasetIds[0]
+          datasetIds.shift() unless focused
+          DatasetsModel.forIds datasetIds, @query, (datasets) =>
+            for dataset, i in datasets
+              query = value["p#{i}"]
+              dataset.granuleQuery.fromJson(query) if query?
+              if i == 0 && focused
+                @focus(dataset)
+              else
+                @addDataset(dataset)
       else
         @datasets([])
 

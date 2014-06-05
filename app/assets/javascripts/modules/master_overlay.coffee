@@ -43,7 +43,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     toggleSecondary: (show = @root.hasClass(@scope('is-secondary-hidden')), event=true) ->
       @root.toggleClass(@scope('is-secondary-hidden'), !show)
       @contentHeightChanged()
-      @root.trigger('edsc.hidden')
       @_triggerStateChange() if event
 
     _triggerStateChange: ->
@@ -75,7 +74,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         if currentLevel != value
           @hideLevel(currentLevel) if @current().hasClass(@scope('hide-self')) && currentLevel > value
           @_content().attr('data-level', value)
-          @current().trigger('edsc.navigate')
         @_setBreadcrumbs()
         @contentHeightChanged()
         @_triggerStateChange() if event

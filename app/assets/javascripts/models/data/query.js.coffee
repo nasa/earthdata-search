@@ -294,7 +294,7 @@ ns.query = do (ko,
       @temporal = new Temporal()
       @cloudCover = new Range()
 
-      @queryComponent(new QueryParam('echo_collection_id'), datasetId)
+      @queryComponent(new QueryParam('echo_collection_id'), datasetId, ephemeral: true)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition)
       @sortKey = @queryComponent(new QueryParam('sort_key'), ['-start_date'], ephemeral: true)
 

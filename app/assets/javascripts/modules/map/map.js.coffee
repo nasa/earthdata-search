@@ -46,15 +46,12 @@ ns.Map = do (window,
       @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 
-      $('#dataset-results, #project-overview, #granule-list').on('edsc.navigate', @_hideDatasetSpatial)
-
     # Removes the map from the page
     destroy: ->
       @map.remove()
       @time.dispose()
       @_datasetSubscription.dispose()
       @_granuleVisualizationSubscription.dispose()
-      $('#dataset-results, #project-overview, #granule-list').off('edsc.navigate', @_hideDatasetSpatial)
 
     focusDataset: (dataset) ->
       @map.focusedDataset = dataset
@@ -180,6 +177,8 @@ ns.Map = do (window,
 
     _showDatasetSpatial: (dataset) =>
       @_hideDatasetSpatial()
+
+      return unless dataset?
 
       layer = new L.FeatureGroup()
 

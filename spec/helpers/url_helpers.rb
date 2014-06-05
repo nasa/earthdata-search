@@ -8,8 +8,8 @@ module Helpers
         url = url.to_s
         url = '' if url == 'root'
         url = '/' + url unless url.start_with?('/')
-        # Debugging
         result = [path_from_options(url, options), params_from_options(options)].map(&:presence).compact.join('?')
+        # Debugging
         #puts "Page: #{result}"
         result
       end
@@ -22,7 +22,7 @@ module Helpers
           url = '/search/map' if options[:overlay] == false
           url = '/search/project' if options[:view] == :project
           url = '/search' if options[:facets]
-          url = "/search/#{options[:focus]}/granules" if options[:focus]
+          url = "/search/granules" if options[:focus]
         end
         url
       end
@@ -36,7 +36,8 @@ module Helpers
 
         params['temporal'] = temporal(*options[:temporal]) if options[:temporal]
 
-        params['ds'] = options[:project].join('!') if options[:project]
+        p = ([options[:focus]] + Array.wrap(options[:project])).join('!')
+        params['p'] = p if p.present?
 
         query_from_params(params)
       end

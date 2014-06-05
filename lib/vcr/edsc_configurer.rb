@@ -10,6 +10,17 @@ module VCR
   end
 
   module EDSCConfigurer
+    def self.compare_uris(r1, r2)
+      return true if r1.uri == r2.uri
+      p1, q1 = r1.uri.split('?')
+      p2, q2 = r2.uri.split('?')
+
+      return false unless p1 == p2 && q1 && q2 && q1.size == q2.size
+
+      # Compare parsed query strings so irrelevant parameter order doesn't affect matches
+      Rack::Utils.parse_nested_query(q1) == Rack::Utils.parse_nested_query(q2)
+    end
+
     def self.configure(c, options={})
       c.cassette_library_dir = 'fixtures/cassettes'
       c.hook_into :faraday
@@ -22,7 +33,9 @@ module VCR
                                                              c.cassette_persisters[:file_system])
       c.default_cassette_options = { persist_with: :edsc, serialize_with: :null }
 
-      opts = {match_requests_on: [:method, :uri, :body]}.merge(options)
+      VCR.request_matchers.register(:parsed_uri) { |r1, r2| compare_uris(r1, r2) }
+
+      opts = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
       default_record_mode = options[:record] || :new_episodes
 
       lock = Mutex.new
