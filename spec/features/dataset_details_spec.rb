@@ -33,6 +33,7 @@ describe 'Dataset details', reset: false do
 
     context "and returning to the datasets list" do
       before :all do
+        wait_for_xhr
         click_link "Back to Datasets"
       end
 
