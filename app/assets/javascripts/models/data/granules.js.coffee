@@ -115,12 +115,13 @@ ns.Granules = do (ko,
       excluded = params.exclude?.echo_granule_id
       excludedStr = excluded?.join(',')
 
-      needsLoad = !excludedStr || excludedStr.indexOf(@_prevExcludedStr) != 0
+      current = @results.peek()
+      needsLoad = !excludedStr || !current || current.length == 0 || excludedStr.indexOf(@_prevExcludedStr) != 0
 
       if needsLoad
         @_originalHits = null
       else
-        results = (result for result in @results.peek() when excluded.indexOf(result.id) == -1)
+        results = (result for result in current when excluded.indexOf(result.id) == -1)
         @_originalHits ?= @hits.peek()
         @hits(@_originalHits - excluded.length)
         @results(results)
