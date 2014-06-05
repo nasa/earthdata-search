@@ -80,7 +80,7 @@ ns.Project = do (ko,
 
     serialize: ->
       id: @dataset.id
-      params: param(@dataset.query.params())
+      params: param(@dataset.granuleQuery.params())
       serviceOptions: @serviceOptions.serialize()
 
   class Project

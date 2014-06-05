@@ -45,6 +45,7 @@ ns.AccessPage = do (ko,
         serviceOptionsList: new ServiceOptionsListModel(accountForm, @project)
 
       if pageData
+        console.log pageData
         @project.fromJson(pageData)
       else
         @project.serialized(deparam(window.location.search[1...]))

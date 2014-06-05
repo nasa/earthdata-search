@@ -103,8 +103,8 @@ module Helpers
 
     def reset_access_page
       script = "edsc.page.ui.serviceOptionsList.activeIndex(0);
-                edsc.page.project.datasets()[0].serviceOptions.accessMethod.removeAll();
-                edsc.page.project.datasets()[0].serviceOptions.addAccessMethod();"
+                edsc.page.project.accessDatasets()[0].serviceOptions.accessMethod.removeAll();
+                edsc.page.project.accessDatasets()[0].serviceOptions.addAccessMethod();"
       page.execute_script script
     end
 

@@ -9,6 +9,8 @@ describe "Granule search filters", reset: false do
     load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project
 
     first_project_dataset.click_link "Show granule filters"
+    first_project_dataset.click "Show granule filters"
+    click_on 'Back to Datasets'
 
     before_granule_count = 0
     synchronize do
