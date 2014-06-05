@@ -43,6 +43,16 @@ describe "Add to project", reset: false do
         reset_project
       end
 
+      # EDSC-146: As a user, I want to see how long my granule searches take,
+      #           so that I may understand the performance of the system
+      it "searches for granules, displaying a granule count and search time" do
+        within '#dataset-results-list > :first-child' do
+          expect(page).to have_text("Granules")
+          granules_info = find('.dataset-granules-info')
+          expect(granules_info.text).to match(/\d Granules in \d+\.\d+s/)
+        end
+      end
+
       it 'adds the dataset to the current project' do
         expect(project_dataset_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
       end

@@ -84,7 +84,7 @@ ns.Project = do (ko,
       serviceOptions: @serviceOptions.serialize()
 
   class Project
-    constructor: (@query) ->
+    constructor: (@query, @loadGranulesOnAdd=true) ->
       @_datasetIds = ko.observableArray()
       @_datasetsById = {}
 
@@ -146,7 +146,7 @@ ns.Project = do (ko,
     isEmpty: () ->
       @_datasetIds.isEmpty()
 
-    addDataset: (dataset) =>
+    addDataset: (dataset) ->
       id = dataset.id
 
       @_datasetsById[id] ?= new ProjectDataset(dataset)
@@ -154,8 +154,7 @@ ns.Project = do (ko,
       @_datasetIds.push(id)
 
       # Force results to start being calculated
-      #dataset.granulesModel.results() if dataset.has_granules
-
+      dataset.granulesModel.results() if @loadGranulesOnAdd && dataset.has_granules
       null
 
     removeDataset: (dataset) =>

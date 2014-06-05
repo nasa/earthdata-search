@@ -28,7 +28,7 @@ ns.AccessPage = do (ko,
   class AccessPage
     constructor: ->
       @query = new QueryModel()
-      @project = new ProjectModel(@query)
+      @project = new ProjectModel(@query, false)
       @bindingsLoaded = ko.observable(false)
       @user = new UserModel()
       @account = new AccountModel(@user)
@@ -45,7 +45,6 @@ ns.AccessPage = do (ko,
         serviceOptionsList: new ServiceOptionsListModel(accountForm, @project)
 
       if pageData
-        console.log pageData
         @project.fromJson(pageData)
       else
         @project.serialized(deparam(window.location.search[1...]))
