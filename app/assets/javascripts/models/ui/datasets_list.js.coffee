@@ -37,6 +37,10 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
     showDatasetDetails: (dataset, event=null) =>
       @selected(dataset) unless @selected() == dataset
 
+    hideDatasetDetails: (event=null) =>
+      if @selected()?
+        @_unselectTimeout = setTimeout((=> @selected(null)), config.defaultAnimationDurationMs)
+
     focusDataset: (dataset, event=null) =>
       return true if $(event?.target).closest('a').length > 0
       return false unless dataset.has_granules
@@ -70,12 +74,14 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
 
     _readSelected: ->
       if @_hasSelected()
+        clearTimeout(@_unselectTimeout)
         selected = @project.focus()
         selected?.details()
         selected
 
     _writeSelected: (selected) ->
-      @project.focus(selected) unless @project.focus.peek() == selected
+      clearTimeout(@_unselectTimeout)
+      @project.focus(selected) if @project.focus.peek() != selected && selected || !@_hasFocus()
       @_hasSelected(selected?)
 
     _toQuery: ->

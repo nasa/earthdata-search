@@ -181,6 +181,8 @@ ns.Map = do (window,
     _showDatasetSpatial: (dataset) =>
       @_hideDatasetSpatial()
 
+      return unless dataset?
+
       layer = new L.FeatureGroup()
 
       @_showLine(layer, @_parseSpatial(s))      for s in dataset.lines    if dataset.lines?
