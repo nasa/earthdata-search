@@ -1,7 +1,7 @@
 <section id="dataset-details">
   <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
   <nav class="master-overlay-nav">
-    <a href="#" class="master-overlay-back">
+    <a href="#" class="master-overlay-back" data-bind="click: ui.datasetsList.hideDatasetDetails">
       <i class="fa fa-arrow-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Datasets</span>
     </a>
   </nav>
@@ -13,7 +13,7 @@
     <!-- /ko -->
   </header>
   <!-- /ko -->
-  <!-- ko if: $root.ui.datasetsList.selected().detailsLoaded -->
+  <!-- ko if: $root.ui.datasetsList.selected() && $root.ui.datasetsList.selected().detailsLoaded -->
   <!-- ko with: $root.ui.datasetsList.selected().details -->
   <ul id="dataset-details-nav" class="nav nav-tabs">
     <li class="active"><a href="#dataset-information" data-toggle="tab">Information</a></li>
