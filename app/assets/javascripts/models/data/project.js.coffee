@@ -100,6 +100,7 @@ ns.Project = do (ko,
         read: @_toQuery
         write: @_fromQuery
         owner: this
+        deferEvaluation: true
 
     _computeAllReadyToDownload: ->
       return false for ds in @accessDatasets() when !ds.serviceOptions.readyToDownload()
@@ -190,6 +191,7 @@ ns.Project = do (ko,
         @_datasetsById[id]
 
     _toQuery: ->
+      return @_pending if @_pending?
       result = $.extend({}, @query.serialize())
       datasets = [@focus()].concat(@datasets())
       ids = (ds?.id ? '' for ds in datasets)
@@ -211,7 +213,9 @@ ns.Project = do (ko,
           datasetIds = datasetIdStr.split('!')
           focused = !!datasetIds[0]
           datasetIds.shift() unless focused
+          @_pending = value
           DatasetsModel.forIds datasetIds, @query, (datasets) =>
+            @_pending = null
             pending = @_pendingAccess ? {}
             for dataset, i in datasets
               query = value["p#{i}"]
