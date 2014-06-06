@@ -17,7 +17,7 @@ describe "Dataset Facets", reset: false do
     end
 
     it "shows the first Campaign facet" do
-      expect(page).to have_content("Campaigns AQUA")
+      expect(page).to have_content("Campaigns 2013_AN_NASA")
     end
 
     it "shows the first Platforms facet" do
@@ -61,7 +61,7 @@ describe "Dataset Facets", reset: false do
     end
 
     it "shows the first Detailed Variable Keyword facet" do
-      expect(page).to have_content("Detailed Variable Keyword AEROSOL BACKSCATTER CROSS SECTION PROFILE")
+      expect(page).to have_content("Detailed Variable Keyword AEROSOL ABSORPTION OPTICAL DEPTH")
     end
 
     it "shows the first Processing Level facet" do

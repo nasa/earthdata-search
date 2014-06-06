@@ -38,7 +38,7 @@ describe "Site tour", reset: true do
       create_bounding_box(0, 0, 10, 10)
 
       expect(page).to have_popover('Dataset Results')
-      second_dataset_result.click
+      first_dataset_result.click
 
       expect(page).to have_popover('Matching Granules')
       second_granule_list_item.click
@@ -53,7 +53,7 @@ describe "Site tour", reset: true do
       granule_list.click_on 'Back to Datasets'
 
       expect(page).to have_popover('Comparing Multiple Datasets')
-      second_dataset_result.find('.add-to-project').click
+      first_dataset_result.find('.add-to-project').click
 
       expect(page).to have_popover('Projects')
       click_on 'View Project'
