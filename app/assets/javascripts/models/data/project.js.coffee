@@ -6,8 +6,11 @@ ns = @edsc.models.data
 ns.Project = do (ko,
                  extend = $.extend,
                  param = $.param,
+                 deparam = @edsc.util.deparam
+                 ajax = $.ajax
                  QueryModel = ns.query.DatasetQuery,
                  DatasetsModel = ns.Datasets
+                 ServiceOptionsModel = ns.ServiceOptions
                  Dataset = ns.Dataset) ->
 
   # Maintains a finite pool of values to be distributed on demand.  Calling
@@ -52,19 +55,45 @@ ns.Project = do (ko,
       @dataset.reference()
       @meta.color ?= colorPool.next()
 
+      @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
+      @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
+
     dispose: ->
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
       @dataset.dispose()
+      @serviceOptions.dispose()
+      @granuleAccessOptions.dispose()
+
+    _loadGranuleAccessOptions: ->
+      console.log "Loading granule access options for #{@dataset.id}"
+      ajax
+        dataType: 'json'
+        url: '/data/options'
+        data: @dataset.granuleQuery.params()
+        retry: => @_loadGranuleAccessOptions()
+        success: (data, status, xhr) =>
+          console.log "Finished loading access options for #{@dataset.id}"
+          @granuleAccessOptions(data)
+
+    fromJson: (jsonObj) ->
+      @serviceOptions.fromJson(jsonObj.serviceOptions)
+
+    serialize: ->
+      id: @dataset.id
+      params: param(@dataset.granuleQuery.params())
+      serviceOptions: @serviceOptions.serialize()
 
   class Project
-    constructor: (@query) ->
+    constructor: (@query, @loadGranulesOnAdd=true) ->
       @_datasetIds = ko.observableArray()
       @_datasetsById = {}
 
       @id = ko.observable(null)
       @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
-      @focus = ko.observable(null)
+      @focusedProjectDataset = ko.observable(null)
+      @focus = ko.computed(read: @_readFocus, write: @_writeFocus, owner: this)
       @searchGranulesDataset = ko.observable(null)
+      @accessDatasets = ko.computed(read: @_computeAccessDatasets, owner: this, deferEvaluation: true)
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
 
       @serialized = ko.computed
@@ -73,10 +102,24 @@ ns.Project = do (ko,
         owner: this
 
     _computeAllReadyToDownload: ->
-      result = true
-      for ds in @datasets()
-        result = false if !ds.serviceOptions.readyToDownload()
-      result
+      return false for ds in @accessDatasets() when !ds.serviceOptions.readyToDownload()
+      true
+
+    _computeAccessDatasets: ->
+      focused = @focusedProjectDataset()
+      if focused
+        [focused]
+      else
+        @_datasetsById[id] for id in @_datasetIds()
+
+    _readFocus: -> @focusedProjectDataset()?.dataset
+    _writeFocus: (dataset) ->
+      observable = @focusedProjectDataset
+      current = observable()
+      unless current?.dataset == dataset
+        current?.dispose()
+        projectDataset = new ProjectDataset(dataset) if dataset?
+        observable(projectDataset)
 
     getDatasets: ->
       @_datasetsById[id]?.dataset for id in @_datasetIds()
@@ -103,7 +146,7 @@ ns.Project = do (ko,
     isEmpty: () ->
       @_datasetIds.isEmpty()
 
-    addDataset: (dataset) =>
+    addDataset: (dataset) ->
       id = dataset.id
 
       @_datasetsById[id] ?= new ProjectDataset(dataset)
@@ -111,8 +154,7 @@ ns.Project = do (ko,
       @_datasetIds.push(id)
 
       # Force results to start being calculated
-      dataset.granulesModel.results() if dataset.has_granules
-
+      dataset.granulesModel.results() if @loadGranulesOnAdd && dataset.has_granules
       null
 
     removeDataset: (dataset) =>
@@ -129,21 +171,23 @@ ns.Project = do (ko,
       @searchGranulesDataset() == dataset
 
     fromJson: (jsonObj) ->
-      query = @query
-
-      query.fromJson(jsonObj.datasetQuery)
-
-      @datasets(Dataset.findOrCreate(dataset, query) for dataset in jsonObj.datasets)
-
-      new DatasetsModel(@query).search {echo_collection_id: @_datasetIds()}, (results) =>
-        for result in results
-          dataset = @_datasetsById[result.id]
-          if dataset?
-            dataset.dataset.fromJson(result.json)
+      datasets = null
+      if jsonObj.datasets?
+        datasets = {}
+        datasets[ds.id] = ds for ds in jsonObj.datasets
+      @_pendingAccess = datasets
+      @serialized(deparam(jsonObj.query))
 
     serialize: (datasets=@datasets) ->
-      datasetQuery: @query.serialize()
-      datasets: (ds.serialize() for ds in datasets)
+      datasets = (ds.serialize() for ds in @accessDatasets())
+      {query: param(@serialized()), datasets: datasets}
+
+    getProjectDataset: (id) ->
+      focus = @focusedProjectDataset()
+      if focus?.dataset.id == id
+        focus
+      else
+        @_datasetsById[id]
 
     _toQuery: ->
       result = $.extend({}, @query.serialize())
@@ -168,6 +212,7 @@ ns.Project = do (ko,
           focused = !!datasetIds[0]
           datasetIds.shift() unless focused
           DatasetsModel.forIds datasetIds, @query, (datasets) =>
+            pending = @_pendingAccess ? {}
             for dataset, i in datasets
               query = value["p#{i}"]
               dataset.granuleQuery.fromJson(query) if query?
@@ -175,6 +220,8 @@ ns.Project = do (ko,
                 @focus(dataset)
               else
                 @addDataset(dataset)
+              @getProjectDataset(dataset.id).fromJson(pending[dataset.id]) if pending[dataset.id]
+            @_pendingAccess = null
       else
         @datasets([])
 
