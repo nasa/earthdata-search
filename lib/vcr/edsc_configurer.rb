@@ -65,9 +65,11 @@ module VCR
           elsif request.uri.include? '/echo_catalog/granules/timeline'
             cassette = 'timeline'
           elsif request.uri.include? '/catalog-rest/'
-            cassette = 'catalog-rest'
+            parts = request.uri.split(/\/catalog-rest\/(?:echo_catalog\/)?/)[1]
+            cassette = parts.split(/\.|\/|\?/).first
           elsif request.uri.include? '/echo-rest/'
-            cassette = 'echo-rest'
+            parts = request.uri.split('/echo-rest/')[1]
+            cassette = parts.split(/\.|\/|\?/).first
           end
 
           opts[:record] = record
