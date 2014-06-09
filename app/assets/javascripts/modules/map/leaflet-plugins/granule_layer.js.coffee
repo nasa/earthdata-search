@@ -338,10 +338,6 @@ ns.GranuleLayer = do (L
       @_resultsSubscription.dispose()
       @_results = null
 
-      if @_restoreBounds
-        map.fitBounds(@_restoreBounds)
-        @_restoreBounds = null
-
     url: ->
       super() if @_hasGibs
 
@@ -399,18 +395,11 @@ ns.GranuleLayer = do (L
       @layer?.stickyId = granule?.id # Ugly hack for testing
 
       @_granuleStickyLayer?.onRemove(@_map)
-      @_granuleStickyLayer = null
-
-      if !granule? && @_restoreBounds?
-        @_map.fitBounds(@_restoreBounds)
-        @_restoreBounds = null
-
       @_granuleStickyLayer = @_stickyLayer(granule, true)
       if @_granuleStickyLayer?
         @_granuleStickyLayer.onAdd(@_map)
 
         if @layer.options.endpoint == 'geo' && @_granuleFocusLayer?
-          @_restoreBounds ?= @_map.getBounds()
           bounds = @_granuleFocusLayer.getBounds()
           # Avoid zooming and panning tiny amounts
           unless @_map.getBounds().contains(bounds)
@@ -419,7 +408,6 @@ ns.GranuleLayer = do (L
       @_loadResults(@_results)
 
     _buildLayerWithOptions: (newOptions) ->
-      @_restoreBounds = null
       # GranuleCanvasLayer needs to handle time
       newOptions = L.extend({}, newOptions)
       delete newOptions.time

@@ -124,16 +124,16 @@ ns.GranulesList = do ($=jQuery)->
       @_map.fire 'edsc.stickygranule', granule: granule
 
     removeGranule: (granule, e) =>
-      @_map.fire('edsc.focusgranule', granule: null) if granule == @focused()
+      granules = @granules.results()
+      index = granules.indexOf(granule)
+      newGranule = granules[index + 1]
+      newGranule = granules[index - 1] unless newGranule?
 
+      if granule == @focused()
+        @_map.fire('edsc.focusgranule', granule: newGranule)
       if granule == @stickied()
-        granules = @granules.results()
-        index = granules.indexOf(granule)
-        newSticky = granules[index + 1]
-        newSticky = granules[index - 1] unless newSticky?
-        @_map.fire('edsc.stickygranule', scroll: false, granule: newSticky ? null)
-        @granules.exclude(granule)
-
+        @_map.fire('edsc.stickygranule', scroll: false, granule: newGranule ? null)
+      @granules.exclude(granule)
 
     _onRemoveStickyGranule: (e) =>
       @removeGranule(@stickied(), e)
