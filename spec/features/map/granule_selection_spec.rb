@@ -224,10 +224,6 @@ describe "Granule selection", reset: false do
       it "removes the granule from the list" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 19)
       end
-
-      it "removes the granule from the map" do
-        expect(page).to have_selector('#map path', count: 1) # Just the spatial constraint
-      end
     end
   end
 

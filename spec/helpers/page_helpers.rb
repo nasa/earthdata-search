@@ -94,6 +94,7 @@ module Helpers
                 when :up then 38
                 when :right then 39
                 when :down then 40
+                when :delete then 46
                 else key.to_i
                 end
 
