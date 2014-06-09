@@ -226,6 +226,7 @@
       $tip.find('[data-role=next]').show().toggleClass('disabled', index == queue.length - 1)
 
   showCurrent = ->
+    console.log queue.length, queue[index]
     if queue[index].wait
       wait(showCurrentImmediate)
     else if queue[index].waitOnAnimate
@@ -250,8 +251,9 @@
   add = (key, options={}) ->
     unless tourRunning
       options = $.extend({}, defaultHelpOptions, tourOptions[key], options, key: key)
-      queue.push(options) unless options.once && shown[key]
-      showCurrent()
+      unless options.once && shown[key]
+        queue.push(options)
+        showCurrent()
 
   current = ->
     if tourRunning then nil else queue[index]
