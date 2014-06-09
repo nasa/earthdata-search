@@ -133,6 +133,9 @@ ns.GranulesList = do ($=jQuery)->
         newSticky = granules[index - 1] unless newSticky?
         @_map.fire('edsc.stickygranule', scroll: false, granule: newSticky ? null)
 
+        granules.splice(index, 1)
+        @granules.results(granules)
+
       @granules.query.excludedGranules.push(granule.id)
 
     _onRemoveStickyGranule: (e) =>
