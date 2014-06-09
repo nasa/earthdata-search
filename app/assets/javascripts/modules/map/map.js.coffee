@@ -46,12 +46,27 @@ ns.Map = do (window,
       @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 
+      @_setupStatePersistence()
+
     # Removes the map from the page
     destroy: ->
       @map.remove()
       @time.dispose()
       @_datasetSubscription.dispose()
       @_granuleVisualizationSubscription.dispose()
+
+    _setupStatePersistence: ->
+      @serialized = state = ko.observable(null)
+      map = @map
+      map.on 'moveend', ->
+        {lat, lng} = map.getCenter()
+        zoom = map.getZoom()
+        state([lat, lng, zoom].join('!'))
+
+      state.subscribe (newValue) ->
+        if newValue? && newValue.length > 0
+          [lat, lng, zoom] = newValue.split('!')
+          map.setView(L.latLng(lat, lng), parseInt(zoom, 10))
 
     focusDataset: (dataset) ->
       @map.focusedDataset = dataset
@@ -209,11 +224,6 @@ ns.Map = do (window,
       if @_datasetSpatialLayer
         @map.removeLayer(@_datasetSpatialLayer)
         @_datasetSpatialLayer = null
-
-  $(document).ready ->
-    projection = 'geo'
-    map = new Map(document.getElementById('map'), projection)
-    page.map = map
 
     # Debugging spherical polygons
     #L.sphericalPolygon([

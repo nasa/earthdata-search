@@ -12,6 +12,7 @@
     constructor: (@page) ->
       first = true
       @overlayState = ko.observable(null)
+      @isDomLoaded = ko.observable(false)
       @path = ko.computed(read: @_readPath, write: @_writePath, deferEvaluation: true, owner: this)
       @historyChanged = false
       @loaded = false
@@ -24,15 +25,17 @@
     serialize: ->
       result = {}
       result = extend(result, @page.project.serialized())
+      if @isDomLoaded()
+        serialMap = $('#map').data('map').serialized()
+        result.m = serialMap if serialMap?
       result
 
     load: (params) ->
       datasetsList = @page.ui.datasetsList
       project = @page.project
 
+      @_mapParams = params.m
       project.serialized(params)
-      datasetsList._pendingParams = params.f
-      datasetsList._pendingParams = params["p#{params.n}"] if params.n?
 
       unless @loaded
         @loaded = true
@@ -46,11 +49,14 @@
 
     _onReady: =>
       $overlay = $('.master-overlay')
-      $overlay.masterOverlay()
       @overlay = $overlay.data('master-overlay')
       @overlayState(@overlay.state()) unless @overlayState()?
       $overlay.on 'edsc.olstatechange', => @overlayState(@overlay.state())
       ko.computed => @overlay.state(@overlayState())
+
+      $('#map').data('map').serialized(@_mapParams) if @_mapParams
+      @isDomLoaded(true)
+      @_mapParams = null
 
     _onPathChange: (path) ->
       parts = path.split('/')
