@@ -5,21 +5,11 @@
 # spec.
 module Snappybara
   module DSL
-    def using_session(name, &block)
-      Capybara.using_session(name, &block)
-    end
-
-    def using_wait_time(seconds, &block)
-      Capybara.using_wait_time(seconds, &block)
-    end
-
-    def page
-      Capybara.current_session
-    end
-
-    Capybara::Session::DSL_METHODS.each do |method|
+    Capybara::DSL.instance_methods.each do |method|
+      # The Capybara module gets extended with Capybara::DSL, so we can simply
+      # delegate method calls to that module
       define_method method do |*args, &block|
-        page.send method, *args, &block
+        Capybara.send method, *args, &block
       end
     end
   end
@@ -31,8 +21,19 @@ RSpec.configure do |config|
     mod[1] = Snappybara::DSL if mod[1] == Capybara::DSL
   end
 
-  config.before :each do |parent|
+  # (From lib/capybara/rspec.rb)
+  # A work-around to support accessing the current example that works in both
+  # RSpec 2 and RSpec 3.
+  fetch_current_example = RSpec.respond_to?(:current_example) ?
+    proc { RSpec.current_example } : proc { |context| context.example }
+
+  # Combines the work done in before and after hooks in lib/capybara/rspec.rb.
+  # When we encounter a spec that uses Capybara, we reset the sessions if
+  # the spec has a "reset" tag or the spec defines a different driver than
+  # the current session.
+  config.before do |parent|
     if self.class.include?(Snappybara::DSL)
+      example = fetch_current_example.call(self)
       driver = Capybara.default_driver
       driver = Capybara.javascript_driver if example.metadata[:js]
       driver = example.metadata[:driver] if example.metadata[:driver]
@@ -44,6 +45,7 @@ RSpec.configure do |config|
     end
   end
 
+  # Reset sessions between each top-level describe
   config.after(:all) do
     Capybara.reset_sessions!
   end
