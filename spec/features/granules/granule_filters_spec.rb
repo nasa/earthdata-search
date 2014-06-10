@@ -177,12 +177,14 @@ describe "Granule search filters", reset: false do
 
     context "with single granule id field" do
       it "selecting Granule ID filters granules" do
+        choose "Search by Granule UR"
         fill_in "granule_id", with: "%2006227720%"
         click_button "granule-filters-submit"
         expect(page).to filter_granules_from(before_granule_count)
       end
 
       it "clicking the clear button clears granule id field" do
+        choose "Search by Granule UR"
         fill_in "granule_id", with: "%2006227720%"
         click_button "granule-filters-submit"
         expect(page).to filter_granules_from(before_granule_count)

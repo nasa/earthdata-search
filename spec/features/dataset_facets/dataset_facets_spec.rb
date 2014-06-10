@@ -190,11 +190,13 @@ describe "Dataset Facets", reset: false do
       within(:css, ".platforms") do
         find(".facets-item", text: "AIRCRAFT").click
       end
+      wait_for_xhr
       expect(page).to have_css("#collapse0.facets-list-show")
 
       within(:css, ".selected-facets-panel") do
         find(".facets-item", text: "AIRCRAFT").click
       end
+      wait_for_xhr
       expect(page).to have_no_css(".selected-facets-panel.facets")
       expect(page).to have_css("#collapse0.facets-list-show")
       find(".facet-title", text: "Campaigns").click
