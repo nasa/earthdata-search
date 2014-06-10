@@ -9,6 +9,8 @@ module VCR
     end
 
     def [](name)
+      return @storage[name.to_s] if @storage[name.to_s].present?
+
       persisted_requests = @persister[file_name(name, 'requests')]
       persisted_responses = @persister[file_name(name, 'responses')]
 
@@ -31,10 +33,11 @@ module VCR
         end
       end
 
-      @source_serializer.serialize(obj)
+      @storage[name] = @source_serializer.serialize(obj)
     end
 
     def []=(name, content)
+      @storage.delete(name.to_s)
       obj = @source_serializer.deserialize(content)
 
       requests = {'http_interactions' => []}
