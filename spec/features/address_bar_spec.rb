@@ -273,4 +273,38 @@ describe 'Address bar', reset: false do
       expect(page).to have_select 'day-night-select', selected: 'Day only'
     end
   end
+
+  context "when panning and zooming the map" do
+    before(:all) do
+      visit '/search/map'
+      page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
+      wait_for_xhr
+    end
+
+    it "saves the map state in the query conditions" do
+      expect(page).to have_query_string('m=12!-34!5')
+    end
+  end
+
+  context "when loading a url with a saved map state" do
+    before(:all) do
+      visit '/search/map?m=12!-34!5'
+    end
+
+    it "restores the map pan state from the query conditions" do
+      synchronize do
+        lat = page.evaluate_script("$('#map').data('map').map.getCenter().lat")
+        lng = page.evaluate_script("$('#map').data('map').map.getCenter().lng")
+        expect(lat).to eql(12)
+        expect(lng).to eql(-34)
+      end
+    end
+
+    it "restores the map zoom state from the query conditions" do
+      synchronize do
+        zoom = page.evaluate_script("$('#map').data('map').map.getZoom()")
+        expect(zoom).to eql(5)
+      end
+    end
+  end
 end

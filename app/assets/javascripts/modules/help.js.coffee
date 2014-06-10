@@ -245,13 +245,12 @@
     e.preventDefault()
     startTour()
 
-
-
   add = (key, options={}) ->
     unless tourRunning
       options = $.extend({}, defaultHelpOptions, tourOptions[key], options, key: key)
-      queue.push(options) unless options.once && shown[key]
-      showCurrent()
+      unless options.once && shown[key]
+        queue.push(options)
+        showCurrent()
 
   current = ->
     if tourRunning then nil else queue[index]

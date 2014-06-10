@@ -5,13 +5,12 @@ class DataAccessController < ApplicationController
   respond_to :json
 
   def configure
-    @project = JSON.parse(params[:project])
   end
 
   def retrieve
-    @project = JSON.parse(params[:project])
+    project = JSON.parse(params[:project])
 
-    @project['datasets'].each do |dataset|
+    project['datasets'].each do |dataset|
       params = Rack::Utils.parse_query(dataset['params'])
       params.merge!(page_size: 2000, page_num: 1)
 
@@ -31,6 +30,26 @@ class DataAccessController < ApplicationController
         end
       end
     end
+
+    user = current_user
+    if user
+      retrieval = Retrieval.new
+      retrieval.user = user
+      retrieval.jsondata = project
+      retrieval.save!
+
+      #redirect_to "/data/retrieve/#{retrieval.to_param}"
+      redirect_to action: 'retrieval', id: retrieval.to_param
+    else
+      render file: 'public/401.html', status: :unauthorized
+    end
+  end
+
+  def retrieval
+    @retrieval = Retrieval.find(params[:id].to_i)
+    user = current_user
+    render file: "#{Rails.root}/public/401.html", status: :unauthorized unless user
+    render file: "#{Rails.root}/public/403.html", status: :forbidden unless user == @retrieval.user
   end
 
   def data_download

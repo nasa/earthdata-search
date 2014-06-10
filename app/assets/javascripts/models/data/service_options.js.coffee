@@ -44,9 +44,9 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
       methods = @accessMethod.peek()
       for method in methods
         method.availableMethods = availableMethods
-      @addAccessMethod() if methods.length == 0
+      @addAccessMethod() if methods.length == 0 && availableMethods.length > 0
       @canAddAccessMethod(availableMethods.length > 1 ||
-        (availableMethods.length == 1 && availableMethods[0].type == 'download'))
+        (availableMethods.length == 1 && availableMethods[0].type != 'download'))
 
     _computeIsReadyToDownload: ->
       return false unless @isLoaded()

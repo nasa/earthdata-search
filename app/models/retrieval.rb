@@ -1,6 +1,6 @@
-require 'json'
+class Retrieval < ActiveRecord::Base
+  belongs_to :user
 
-class Project < ActiveRecord::Base
   obfuscate_id spin: 53465485
 
   store :jsondata, coder: JSON

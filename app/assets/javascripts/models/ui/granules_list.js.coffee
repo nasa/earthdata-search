@@ -10,13 +10,15 @@ ns.GranulesList = do ($=jQuery)->
       @dataset.visible(true)
 
       @granules = @dataset.granulesModel
-      map = $('#map').data('map')
+      $map = $('#map')
+      map = $map.data('map')
       @_map = map.map
       @_map.on 'edsc.focusgranule', @_onFocusGranule
       @_map.on 'edsc.stickygranule', @_onStickyGranule
       @_map.on 'edsc.excludestickygranule', @_onRemoveStickyGranule
       $granuleList = $('#granule-list')
       $granuleList.on 'keydown', @_onKeyDown
+      $map.on 'keydown', @_onKeyDown
 
       @_hasFocus = false
       $granuleList.on 'blur', (e) =>
@@ -68,23 +70,38 @@ ns.GranulesList = do ($=jQuery)->
         else if selectedOffset < topBound
           offset = topBound + 50
 
-        list.scrollTo(selected, {duration: edsc.config.defaultAnimationDurationMs, offsetTop: offset}) if offset?
+        unless e.scroll == false # Treat undefined as true
+          list.scrollTo(selected, {duration: edsc.config.defaultAnimationDurationMs, offsetTop: offset}) if offset?
 
     _onKeyDown: (e) =>
       stickied = @stickied()
       key = e.keyCode
-      up = 38
-      down = 40
-      if stickied && (key == up || key == down)
+      removalKeys = [
+        8,  # Backspace
+        46, # Delete
+        88  # x -> Best option, really, since "Delete" will trigger the back button when blurred
+      ]
+
+      isUp = key == 38
+      isDown = key == 40
+      isRemoval = removalKeys.indexOf(key) != -1
+
+      e.preventDefault() if isUp || isDown || isRemoval
+
+      if stickied
         granules = @granules.results()
         index = granules.indexOf(stickied)
+        return if index == -1
 
-        if index > 0 && key == up
-          @_map.fire 'edsc.stickygranule', granule: granules[index-1]
-        if index < granules.length-1 && key == down
-          @_map.fire 'edsc.stickygranule', granule: granules[index+1]
+        if isUp || isDown
+          return if (isUp && index == 0) || (isDown && index == granules.length - 1)
+          granule = granules[index - 1] if isUp
+          granule = granules[index + 1] if isDown
+          @_map.fire 'edsc.stickygranule', granule: granule
+          e.stopPropagation()
 
-        e.preventDefault()
+        if isRemoval
+          @removeGranule(granules[index])
 
     finishLoad: =>
       @loadingBrowse(false)
@@ -107,9 +124,16 @@ ns.GranulesList = do ($=jQuery)->
       @_map.fire 'edsc.stickygranule', granule: granule
 
     removeGranule: (granule, e) =>
-      @granules.query.excludedGranules.push(granule.id)
-      @_map.fire('edsc.focusgranule', granule: null)
-      @_map.fire('edsc.stickygranule', granule: null)
+      granules = @granules.results()
+      index = granules.indexOf(granule)
+      newGranule = granules[index + 1]
+      newGranule = granules[index - 1] unless newGranule?
+
+      if granule == @focused()
+        @_map.fire('edsc.focusgranule', granule: newGranule)
+      if granule == @stickied()
+        @_map.fire('edsc.stickygranule', scroll: false, granule: newGranule ? null)
+      @granules.exclude(granule)
 
     _onRemoveStickyGranule: (e) =>
       @removeGranule(@stickied(), e)

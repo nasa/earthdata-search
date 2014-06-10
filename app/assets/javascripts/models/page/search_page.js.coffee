@@ -31,6 +31,12 @@ ns.SearchPage = do (ko
                     GranuleTimelineModel = ui.GranuleTimeline
                     PreferencesModel = data.Preferences
                     StateManager = ui.StateManager) ->
+  current = null
+
+  $(document).ready ->
+    current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
+    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.ui.projectList)
+    $('.master-overlay').masterOverlay()
 
   class SearchPage
     constructor: ->
@@ -73,9 +79,5 @@ ns.SearchPage = do (ko
 
   current = new SearchPage()
   setCurrent(current)
-
-  $(document).ready ->
-    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.ui.projectList)
-    $('.master-overlay').masterOverlay()
 
   exports = SearchPage

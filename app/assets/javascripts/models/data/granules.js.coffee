@@ -6,6 +6,7 @@ models = @edsc.models
 
 ns.Granules = do (ko,
                   getJSON=jQuery.getJSON,
+                  param = jQuery.param
                   XhrModel=ns.XhrModel,
                   scalerUrl = @edsc.config.browseScalerUrl
                   extend=$.extend,
@@ -110,32 +111,15 @@ ns.Granules = do (ko,
     _shouldLoad: (url) ->
       true
 
-    _exclude: (params) ->
-      @_prevExcludedStr ?= ''
-      excluded = params.exclude?.echo_granule_id
-      excludedStr = excluded?.join(',')
-
-      current = @results.peek()
-      needsLoad = !excludedStr || !current || current.length == 0 || excludedStr.indexOf(@_prevExcludedStr) != 0
-
-      if needsLoad
-        @_originalHits = null
-      else
-        results = (result for result in current when excluded.indexOf(result.id) == -1)
-        @_originalHits ?= @hits.peek()
-        @hits(@_originalHits - excluded.length)
-        @results(results)
-
-      @_prevExcludedStr = excludedStr
-      needsLoad
-
     _computeSearchResponse: (current, callback, needsLoad=true) ->
       if @query?.isValid()
         results = []
         params = @params()
+        query = param(params)
         params.page_num = @page = 1
 
-        if needsLoad && @_exclude(params)
+        if needsLoad && @_prevQuery != query
+          @_prevQuery = query
           if params.temporal == 'no-data'
             @results([])
             @hits(0)
@@ -145,6 +129,19 @@ ns.Granules = do (ko,
           @_resultsComputed = true
           @isLoaded(false)
           @_load(params, current, callback)
+
+    exclude: (granule) ->
+      results = @results()
+      index = results.indexOf(granule)
+
+      results.splice(index, 1)
+      @results(results)
+      @hits(@hits() - 1)
+
+      currentQuery = param(@params())
+      @query.excludedGranules.push(granule.id)
+      # Avoid reloading if no other changes are pending
+      @_prevQuery = param(@params()) if @_prevQuery == currentQuery
 
     params: =>
       parentParams = @parentQuery.globalParams()

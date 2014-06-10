@@ -55,7 +55,7 @@ describe 'Create new account', reset: false do
 
   context 'when creating a new account' do
     user = default_user.clone
-    user[:username] = 'edsctest2'
+    user[:username] = 'edsc'
 
     before :all do
       create_account user

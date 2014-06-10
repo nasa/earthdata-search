@@ -141,11 +141,12 @@ describe "Granule selection", reset: false do
 
   context "clicking on a granule on the map" do
     before :all do
-      map_mouseclick
+      wait_for_xhr
+      map_mouseclick(5, 5)
     end
 
     after :all do
-      map_mouseclick
+      map_mouseclick(5, 5)
     end
 
     it "highlights the selected granule in the granule list" do
@@ -180,11 +181,12 @@ describe "Granule selection", reset: false do
 
     context "and clicking on it again" do
       before :all do
-        map_mouseclick
+        wait_for_xhr
+        map_mouseclick(5, 5)
       end
 
       after :all do
-        map_mouseclick
+        map_mouseclick(5, 5)
       end
 
       it "removes added highlights and overlays from the granule result list" do
@@ -215,14 +217,12 @@ describe "Granule selection", reset: false do
         granule_list.click_link 'Filter granules'
         click_button "granule-filters-clear"
         granule_list.click_link('Hide granule filters')
+        wait_for_xhr
+        map_mouseclick(5, 5)
       end
 
       it "removes the granule from the list" do
-        expect(granule_list).to have_no_content("LANCEMODIS:287196720")
-      end
-
-      it "removes the granule from the map" do
-        expect(page).to have_selector('#map path', count: 1) # Just the spatial constraint
+        expect(page).to have_css('#granule-list .panel-list-item', count: 19)
       end
     end
   end

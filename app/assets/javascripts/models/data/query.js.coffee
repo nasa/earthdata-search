@@ -237,7 +237,7 @@ ns.query = do (ko,
         extend(true, params, component.params())
       params
 
-    serialize: -> @_writeComponents(@_serialized)
+    serialize: -> @_writeComponents(@_serialized, {})
     _computeParams: => @_writeComponents(@_components)
     _computeGlobalParams: => @_writeComponents(@_propagated)
     _computeOwnParams: => @_writeComponents(@_components, {})
