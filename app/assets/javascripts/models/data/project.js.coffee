@@ -95,6 +95,7 @@ ns.Project = do (ko,
       @searchGranulesDataset = ko.observable(null)
       @accessDatasets = ko.computed(read: @_computeAccessDatasets, owner: this, deferEvaluation: true)
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
+      @visibleDatasets = ko.computed(read: @_computeVisibleDatasets, owner: this, deferEvaluation: true)
 
       @serialized = ko.computed
         read: @_toQuery
@@ -132,10 +133,17 @@ ns.Project = do (ko,
       for ds, i in datasets
         id = ds.id
         datasetIds.push(id)
-        datasetsById[id] = new ProjectDataset(ds)
+        datasetsById[id] = @_datasetsById[id] ? new ProjectDataset(ds)
       @_datasetsById = datasetsById
       @_datasetIds(datasetIds)
       null
+
+    _computeVisibleDatasets: ->
+      datasets = (dataset for dataset in @datasets() when dataset.visible())
+      focus = @focus()
+      if focus && focus.visible() && datasets.indexOf(focus) == -1
+        datasets.push(focus)
+      datasets
 
     # This seems like a UI concern, but really it's something that spans several
     # views and something we may eventually want to persist with the project or

@@ -10,7 +10,6 @@ ns.Map = do (window,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              MouseEventsLayer = ns.MouseEventsLayer,
-             Dataset = @edsc.models.data.Dataset,
              page = @edsc.page) ->
 
   # Fix leaflet default image path
@@ -43,7 +42,7 @@ ns.Map = do (window,
 
       @time = ko.computed(@_computeTime, this)
       @_datasetSubscription = page.ui.datasetsList.selected.subscribe(@_showDatasetSpatial)
-      @_granuleVisualizationSubscription = Dataset.visible.subscribe (datasets) ->
+      @_granuleVisualizationSubscription = page.project.visibleDatasets.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 
       @_setupStatePersistence()
