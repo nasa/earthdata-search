@@ -140,9 +140,14 @@ ns.Project = do (ko,
 
     _computeVisibleDatasets: ->
       datasets = (dataset for dataset in @datasets() when dataset.visible())
+
       focus = @focus()
       if focus && focus.visible() && datasets.indexOf(focus) == -1
         datasets.push(focus)
+
+      # Other visible datasets not controlled by the project
+      for dataset in Dataset.visible()
+        datasets.push(dataset) if datasets.indexOf(dataset) == -1
       datasets
 
     # This seems like a UI concern, but really it's something that spans several
@@ -210,7 +215,8 @@ ns.Project = do (ko,
         start = 0 if @focus() && !@hasDataset(@focus())
         for dataset, i in datasets[start...]
           query = dataset?.granuleQuery.serialize()
-          result["p#{i + start}"] = query if query
+          query.v = '' if i != 0 && dataset.visible()
+          result["p#{i + start}"] = query
       result
 
     _fromQuery: (value) ->
@@ -226,9 +232,12 @@ ns.Project = do (ko,
           DatasetsModel.forIds datasetIds, @query, (datasets) =>
             @_pending(null)
             pending = @_pendingAccess ? {}
+            offset = 0
+            offset = 1 unless focused
             for dataset, i in datasets
-              query = value["p#{i}"]
+              query = value["p#{i + offset}"]
               dataset.granuleQuery.fromJson(query) if query?
+              dataset.visible(true) if query?.v?
               if i == 0 && focused
                 @focus(dataset)
               else

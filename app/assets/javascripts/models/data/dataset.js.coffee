@@ -41,6 +41,9 @@ ns.Dataset = do (ko
           return dataset.reference()
       register(new Dataset(jsonData, query, randomKey))
 
+    @visible: ko.computed
+      read: -> dataset for dataset in datasets() when dataset.visible()
+
     constructor: (jsonData, @query, inKey) ->
       throw "Datasets should not be constructed directly" unless inKey == randomKey
 
