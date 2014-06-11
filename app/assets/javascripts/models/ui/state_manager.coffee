@@ -23,8 +23,10 @@
       $(window).on 'edsc.pagechange', @loadFromUrl
 
     serialize: ->
+      page = @page
+      ui = page.ui
       result = {}
-      result = extend(result, @page.project.serialized())
+      result = extend(result, page.project.serialized(), ui.datasetsList.serialized())
 
       if @isDomLoaded()
         serialMap = @page.map.serialized()
@@ -37,20 +39,21 @@
       result
 
     load: (params) ->
-      datasetsList = @page.ui.datasetsList
-      project = @page.project
+      page = @page
+      ui = page.ui
 
-      if @page.map
-        @page.map.serialized(params.m)
+      if page.map
+        page.map.serialized(params.m)
       else
         @_mapParams = params.m
 
-      if @page.ui.granuleTimeline
-        @page.ui.granuleTimeline?.serialized(params.tl)
+      if ui.granuleTimeline
+        ui.granuleTimeline?.serialized(params.tl)
       else
         @_timelineParams = params.tl
 
-      project.serialized(params)
+      ui.datasetsList.serialized(params)
+      page.project.serialized(params)
 
       unless @loaded
         @loaded = true
@@ -137,8 +140,6 @@
         children: null
         current: 'dataset-results'
 
-      datasetsList = {}
-
       components = path[1...].split('/')
 
       children = ['dataset-results']
@@ -155,19 +156,21 @@
         state.current = 'project-overview'
         component = components.shift()
 
+      focused = false
+      selected = false
       components.unshift(component)
       if components.indexOf('granules') != -1
         children.push('granule-list')
-        datasetsList.focused = true
+        focused = true
         state.current = 'granule-list'
       if components.indexOf('details') != -1
-        datasetsList.selected = true
+        selected = true
         state.current = 'dataset-details'
 
       children.push('dataset-details')
       state.children = children
 
-      @page.ui.datasetsList.serialized(datasetsList)
+      @page.ui.datasetsList.state(focused, selected)
       @overlayState(state)
 
     _toggleWithTimeout: (key, observable, bool) ->

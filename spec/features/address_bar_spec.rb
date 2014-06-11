@@ -373,4 +373,29 @@ describe 'Address bar', reset: false do
       expect(page).to have_focused_time_span(start_1987, start_1988)
     end
   end
+
+  context "when selecting a granule", pq: true do
+    before(:all) do
+      visit '/search/granules?p=C179003030-ORNL_DAAC'
+      second_granule_list_item.click
+    end
+
+    it "saves the selected granule in the URL" do
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC')
+    end
+  end
+
+  context "when loading a URL with a selected granule", pq: true do
+    before(:all) do
+      visit '/search/granules?p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC'
+    end
+
+    it "restores the granule selection in the granules list" do
+      expect(page).to have_css('.panel-list-list li:nth-child(2).panel-list-selected')
+    end
+
+    it "restores the granule selection on the map" do
+      expect(page.find('#map')).to have_text('1988-02-01T00:00:00Z')
+    end
+  end
 end

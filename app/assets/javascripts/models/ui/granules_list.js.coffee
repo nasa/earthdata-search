@@ -34,6 +34,11 @@ ns.GranulesList = do ($=jQuery)->
       @stickied = ko.observable(null)
       @loadingBrowse = ko.observable(false)
 
+      @serialized = ko.computed(read: @_readSerialized, write: @_writeSerialized, owner: this, deferEvaluation: true)
+
+      @_pendingSticky = ko.observable(null)
+      @_setStickyComputed = ko.computed(read: @_setSticky, owner: this)
+
     dispose: ->
       map = $('#map').data('map')
       map.focusDataset(null)
@@ -43,12 +48,35 @@ ns.GranulesList = do ($=jQuery)->
       @_map.off 'edsc.excludestickygranule', @_onRemoveStickyGranule
       @dataset.visible(@_wasVisible)
       @dataset.dispose()
+      @_setStickyComputed.dispose()
       @stickied(null)
 
     scrolled: (data, event) =>
       elem = event.target
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
         @granules.loadNextPage()
+
+    _setSticky: ->
+      if @stickied()
+        @_pendingSticky(null)
+        return
+
+      id = @_pendingSticky()
+      return unless id
+
+      for granule in @granules.results()
+        if granule.id == id
+          @_pendingSticky(null)
+          # Set timeout to ensure the list renders before we try scrolling to it
+          setTimeout((=> @_map.fire 'edsc.stickygranule', granule: granule), 0)
+          return
+
+    _readSerialized: ->
+      @_pendingSticky() ? @stickied()?.id
+
+    _writeSerialized: (serialized) ->
+      @stickied(null)
+      @_pendingSticky(serialized)
 
     _onFocusGranule: (e) =>
       @focused(e.granule)

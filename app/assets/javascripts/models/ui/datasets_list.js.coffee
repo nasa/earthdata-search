@@ -7,6 +7,7 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
 
   class DatasetsList
     constructor: (@query, @datasets, @project) ->
+      @pendingSerialized = ko.observable(null)
       @_hasFocus = ko.observable(false)
       @_focusedList = null
       @focused = ko.computed
@@ -24,8 +25,8 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
         $('.master-overlay').masterOverlay('contentHeightChanged') if @selected()?.detailsLoaded?()
 
       @serialized = ko.computed
-        read: @_toQuery
-        write: @_fromQuery
+        read: @_readSerialized
+        write: @_writeSerialized
         owner: this
         deferEvaluation: true
 
@@ -62,6 +63,8 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
         current?.dispose()
         clearTimeout(@_unfocusTimeout)
         @_focusedList = new GranulesList(dataset)
+        @_focusedList.serialized(@pendingSerialized.peek())
+        @pendingSerialized(null)
       @_focusedList
 
     _writeFocused: (focus) ->
@@ -84,12 +87,21 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
       @project.focus(selected) if @project.focus.peek() != selected && selected || !@_hasFocus()
       @_hasSelected(selected?)
 
-    _toQuery: ->
-      focused: @_hasFocus()
-      selected: @_hasSelected()
+    _readSerialized: ->
+      result = {}
+      value = @pendingSerialized() ? @focused()?.serialized()
+      result.g = value if value?
+      result
 
-    _fromQuery: (value) ->
-      @_hasFocus(value.focused)
-      @_hasSelected(value.selected)
+    _writeSerialized: (params) ->
+      id = params.g
+      if @focused()
+        @focused().serialized(id)
+      else
+        @pendingSerialized(id)
+
+    state: (focused, selected) ->
+      @_hasFocus(focused)
+      @_hasSelected(selected)
 
   exports = DatasetsList
