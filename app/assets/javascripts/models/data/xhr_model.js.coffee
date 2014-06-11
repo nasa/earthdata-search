@@ -71,7 +71,8 @@ ns.XhrModel = do (ko
       @_prevUrl != url || @isError.peek()
 
     _load: (params, current, callback) =>
-      url = "#{@path}?#{$.param(params)}"
+      query = $.param(params)
+      url = "#{@path}?#{query}"
       return unless @_shouldLoad(url)
       @_prevUrl = url
 
@@ -83,9 +84,17 @@ ns.XhrModel = do (ko
       console.log("Request (#{requestId}): #{url}")
       start = new Date()
 
+      method = @method ? 'get'
+      data = null
+      if method == 'post'
+        url = @path
+        data = params
+
       @currentRequest = xhr = $.ajax
+        method: method
         dataType: 'json'
         url: url
+        data: data
         retry: => @_load(params, current, callback)
         success: (data, status, xhr) =>
           #console.profile(@path)

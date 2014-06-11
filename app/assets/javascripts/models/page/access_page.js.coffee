@@ -13,7 +13,7 @@ ns = @edsc.models.page
 
 ns.AccessPage = do (ko,
                     setCurrent = ns.setCurrent
-                    deparam = @edsc.util.deparam
+                    urlUtil = @edsc.util.url
                     pageData = @edscPageData
                     QueryModel = data.query.DatasetQuery
                     ProjectModel = data.Project
@@ -47,7 +47,7 @@ ns.AccessPage = do (ko,
       if pageData
         @project.fromJson(pageData)
       else
-        @project.serialized(deparam(window.location.search[1...]))
+        @project.serialized(urlUtil.currentParams())
 
 
   setCurrent(new AccessPage())

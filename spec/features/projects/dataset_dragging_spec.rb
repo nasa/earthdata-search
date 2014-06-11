@@ -42,7 +42,7 @@ describe "Project dataset dragging", reset: false do
     end
 
     it "persists the new order in the URL parameters" do
-      expect(page).to have_query_string("p=!#{second_dataset_id}!#{first_dataset_id}&p1[v]=&p2[v]=")
+      expect(page).to have_query_string("p=!#{second_dataset_id}!#{first_dataset_id}&pg[1][v]=t&pg[2][v]=t")
     end
 
     it "keeps dataset color assignments the same" do
@@ -73,7 +73,7 @@ describe "Project dataset dragging", reset: false do
     end
 
     it "maintains the dataset order in the URL parameters" do
-      expect(page).to have_query_string("p=!#{first_dataset_id}!#{second_dataset_id}&p1[v]=&p2[v]=")
+      expect(page).to have_query_string("p=!#{first_dataset_id}!#{second_dataset_id}&pg[1][v]=t&pg[2][v]=t")
     end
 
     it "keeps dataset color assignments the same" do

@@ -210,13 +210,15 @@ ns.Project = do (ko,
       datasets = [@focus()].concat(@datasets())
       ids = (ds?.id ? '' for ds in datasets)
       if datasets.length > 1 || datasets[0]
+        queries = [{}]
         result.p = ids.join('!')
         start = 1
         start = 0 if @focus() && !@hasDataset(@focus())
         for dataset, i in datasets[start...]
-          query = dataset?.granuleQuery.serialize()
-          query.v = '' if (i + start) != 0 && dataset.visible()
-          result["p#{i + start}"] = query
+          query = dataset.granuleQuery.serialize()
+          query.v = 't' if (i + start) != 0 && dataset.visible()
+          queries[i + start] = query
+        result.pg = queries if queries.length > 0
       result
 
     _fromQuery: (value) ->
@@ -229,15 +231,19 @@ ns.Project = do (ko,
           focused = !!datasetIds[0]
           datasetIds.shift() unless focused
           @_pending(value)
+          value.pg ?= []
+          value.pg[0] ?= {}
           DatasetsModel.forIds datasetIds, @query, (datasets) =>
             @_pending(null)
             pending = @_pendingAccess ? {}
             offset = 0
             offset = 1 unless focused
+            queries = value["pg"] ? []
             for dataset, i in datasets
-              query = value["p#{i + offset}"]
-              dataset.granuleQuery.fromJson(query) if query?
-              dataset.visible(true) if query?.v?
+              query = queries[i + offset]
+              if query?
+                dataset.granuleQuery.fromJson(query)
+                dataset.visible(true) if query.v == 't'
               if i == 0 && focused
                 @focus(dataset)
               else

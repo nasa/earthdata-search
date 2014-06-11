@@ -12,6 +12,7 @@ ns.GranuleTimeline = do (ko
   # intervals: 'year', 'month', 'day', 'hour', 'minute'
   class GranuleTimelineData extends XhrModel
     constructor: (@dataset, @range, @color) ->
+      @method = 'post'
       super("/granules/timeline.json", this)
       @prevParams = {}
       @params = ko.computed(@_computeParams)

@@ -1,12 +1,10 @@
 #= require util/url
-#= require util/deparam
 
 @edsc.models.ui.StateManager = do (window
                                    document
                                    extend = $.extend
                                    config = @edsc.config
-                                   urlUtil = @edsc.util.url
-                                   deparam = @edsc.util.deparam) ->
+                                   urlUtil = @edsc.util.url) ->
 
   class StateManager
     constructor: (@page) ->
@@ -44,15 +42,16 @@
 
       if page.map
         page.map.serialized(params.m)
+        ui.datasetsList.serialized(params)
       else
         @_mapParams = params.m
+        @_dsListParams = {g: params.g}
 
       if ui.granuleTimeline
         ui.granuleTimeline?.serialized(params.tl)
       else
         @_timelineParams = params.tl
 
-      ui.datasetsList.serialized(params)
       page.project.serialized(params)
 
       unless @loaded
@@ -61,9 +60,9 @@
 
     loadFromUrl: =>
       unless @page.ui.isLandingPage() # Avoid problem where switching to /search overwrites uncommited search conditions
-        [path, params] = urlUtil.cleanPath().split('?')
+        [path, query] = urlUtil.cleanPath().split('?')
         @path(path)
-        @load(deparam(params ? ''))
+        @load(urlUtil.currentParams())
 
     _onReady: =>
       $overlay = $('.master-overlay')
@@ -74,6 +73,7 @@
 
       @page.map.serialized(@_mapParams)
       @page.ui.granuleTimeline.serialized(@_timelineParams)
+      @page.ui.datasetsList.serialized(@_dsListParams)
 
       @isDomLoaded(true)
 

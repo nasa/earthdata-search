@@ -88,6 +88,7 @@ ns.Granules = do (ko,
 
   class GranulesModel extends XhrModel
     constructor: (query, @parentQuery) ->
+      @method = 'post'
       super('/granules.json', query)
       @temporal = query.temporal
       @_resultsComputed = false
