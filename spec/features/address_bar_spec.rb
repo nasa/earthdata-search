@@ -4,6 +4,10 @@ require 'spec_helper'
 
 describe 'Address bar', reset: false do
 
+  before :all do
+    page.driver.resize_window(1280, 1024)
+  end
+
   def query_string
     URI.parse(current_url).query
   end
@@ -312,7 +316,6 @@ describe 'Address bar', reset: false do
 
   context "when panning the timeline" do
     before(:all) do
-      page.driver.resize_window(1280, 1024)
       visit '/search/granules?p=C179003030-ORNL_DAAC'
       wait_for_xhr
       pan_to_time(present - 20.years)
@@ -326,7 +329,6 @@ describe 'Address bar', reset: false do
 
   context "when selecting a timeline date" do
     before(:all) do
-      page.driver.resize_window(1280, 1024)
       visit '/search/granules?p=C179003030-ORNL_DAAC'
       wait_for_xhr
       click_timeline_date('Nov', '1987')
@@ -340,7 +342,6 @@ describe 'Address bar', reset: false do
 
   context "when zooming the timeline" do
     before(:all) do
-      page.driver.resize_window(1280, 1024)
       visit '/search/granules?p=C179003030-ORNL_DAAC'
       wait_for_xhr
       find('.timeline-zoom-out').click
@@ -354,7 +355,6 @@ describe 'Address bar', reset: false do
 
   context "when loading a URL with a saved timeline state" do
     before(:all) do
-      page.driver.resize_window(1280, 1024)
       visit '/search/granules?p=C179003030-ORNL_DAAC&tl=604713600!5!536457600!567993600'
       wait_for_xhr
     end
