@@ -374,14 +374,14 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context "when selecting a granule", pq: true do
+  context "when selecting a granule" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC'
       second_granule_list_item.click
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1!-96.6!7')
     end
   end
 
