@@ -25,16 +25,31 @@
     serialize: ->
       result = {}
       result = extend(result, @page.project.serialized())
+
       if @isDomLoaded()
-        serialMap = $('#map').data('map').serialized()
-        result.m = serialMap if serialMap?
+        serialMap = @page.map.serialized()
+        serialTimeline = @page.ui.granuleTimeline.serialized()
+      else
+        serialMap = @_mapParams
+        serialTimeline = @_timelineParams
+      result.m = serialMap if serialMap
+      result.tl = serialTimeline if serialTimeline
       result
 
     load: (params) ->
       datasetsList = @page.ui.datasetsList
       project = @page.project
 
-      @_mapParams = params.m
+      if @page.map
+        @page.map.serialized(params.m)
+      else
+        @_mapParams = params.m
+
+      if @page.ui.granuleTimeline
+        @page.ui.granuleTimeline?.serialized(params.tl)
+      else
+        @_timelineParams = params.tl
+
       project.serialized(params)
 
       unless @loaded
@@ -54,9 +69,10 @@
       $overlay.on 'edsc.olstatechange', => @overlayState(@overlay.state())
       ko.computed => @overlay.state(@overlayState())
 
-      $('#map').data('map').serialized(@_mapParams) if @_mapParams
+      @page.map.serialized(@_mapParams)
+      @page.ui.granuleTimeline.serialized(@_timelineParams)
+
       @isDomLoaded(true)
-      @_mapParams = null
 
     _onPathChange: (path) ->
       parts = path.split('/')

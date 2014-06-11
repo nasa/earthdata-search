@@ -307,4 +307,70 @@ describe 'Address bar', reset: false do
       end
     end
   end
+
+  present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
+
+  context "when panning the timeline" do
+    before(:all) do
+      page.driver.resize_window(1280, 1024)
+      visit '/search/granules?p=C179003030-ORNL_DAAC'
+      wait_for_xhr
+      pan_to_time(present - 20.years)
+      wait_for_xhr
+    end
+
+    it 'saves the timeline pan state in the URL' do
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&tl=746668800!4!!')
+    end
+  end
+
+  context "when selecting a timeline date" do
+    before(:all) do
+      page.driver.resize_window(1280, 1024)
+      visit '/search/granules?p=C179003030-ORNL_DAAC'
+      wait_for_xhr
+      click_timeline_date('Nov', '1987')
+      wait_for_xhr
+    end
+
+    it 'saves the timeline date selection in the URL' do
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&tl=557625600!4!562723200!565315200')
+    end
+  end
+
+  context "when zooming the timeline" do
+    before(:all) do
+      page.driver.resize_window(1280, 1024)
+      visit '/search/granules?p=C179003030-ORNL_DAAC'
+      wait_for_xhr
+      find('.timeline-zoom-out').click
+      wait_for_xhr
+    end
+
+    it 'saves the timeline zoom level' do
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&tl=557625600!5!!')
+    end
+  end
+
+  context "when loading a URL with a saved timeline state" do
+    before(:all) do
+      page.driver.resize_window(1280, 1024)
+      visit '/search/granules?p=C179003030-ORNL_DAAC&tl=604713600!5!536457600!567993600'
+      wait_for_xhr
+    end
+
+    it "restores the timeline pan state" do
+      expect(page).to have_timeline_range(present - 30.years, present - 20.years)
+    end
+
+    it "restores the timeline zoom state" do
+      expect(page).to have_selector('.timeline-tools h1', text: 'YEAR')
+    end
+
+    it "restores the selected timeline date" do
+      start_1987 = DateTime.new(1987, 1, 1, 0, 0, 0, '+0')
+      start_1988 = DateTime.new(1988, 1, 1, 0, 0, 0, '+0')
+      expect(page).to have_focused_time_span(start_1987, start_1988)
+    end
+  end
 end
