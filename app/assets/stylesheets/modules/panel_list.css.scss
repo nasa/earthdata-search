@@ -15,7 +15,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   margin-top: 0;
 }
 
-.panel-list-item {
+.panel-list-item, .panel-list-list > .sortable-placeholder {
   color: #fff;
   background-color: #292929;
   border-left: 10px solid #424242;
@@ -39,12 +39,28 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   }
 }
 
-.empty-button {
-  visibility: hidden;
+// Drag handles instead of borders
+.panel-list-item[draggable=true] {
+  border-left: 0;
 }
 
-.panel-list-item-with-thumb {
-  padding-left: $panel-list-thumbnail-size + 4px;
+.panel-list-drag-handle {
+  float: left;
+  border: 2px solid #424242;
+  border-top: 0;
+  border-bottom: 0;
+  cursor: move;
+  height: $panel-list-item-height + 12px;
+  width: 8px;
+  margin: -6px 12px -6px -8px;
+}
+
+.panel-list-list > .sortable-placeholder {
+  border: 3px dashed #424242;
+}
+
+.empty-button {
+  visibility: hidden;
 }
 
 .panel-list-focused {
@@ -57,7 +73,6 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   display: block;
   float: left;
   position:relative;
-  margin-left: -($panel-list-thumbnail-size - 4px);
   margin-right: .5em;
 }
 
@@ -138,10 +153,6 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   .panel-list-when-selected {
     visibility: visible;
   }
-}
-
-.panel-list-selected.panel-list-item-with-thumb {
-  padding-left: $panel-list-thumbnail-size;
 }
 
 .panel-list-when-selected {

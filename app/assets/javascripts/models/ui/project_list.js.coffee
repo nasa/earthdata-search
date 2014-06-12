@@ -1,6 +1,44 @@
 ns = @edsc.models.ui
 
-ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
+ns.ProjectList = do (ko, window, document, doPost=jQuery.post, $ = jQuery) ->
+
+  sortable = (root) ->
+    $root = $(root)
+    $placeholder = $("<li class=\"sortable-placeholder\"/>")
+
+    index = null
+    $dragging = null
+
+    $root.on 'dragstart.sortable', '> *', (e) ->
+      dt = e.originalEvent.dataTransfer;
+      dt.effectAllowed = 'move';
+      dt.setData('Text', 'dummy');
+      $dragging = $(this)
+      index = $dragging.index();
+
+    $root.on 'dragend.sortable', '> *', (e) ->
+      $dragging.show()
+      $placeholder.detach()
+      startIndex = index
+      endIndex = $dragging.index()
+      if startIndex != endIndex
+        $root.trigger('sortupdate', startIndex: startIndex, endIndex: endIndex)
+      $dragging = null
+
+    $root.on 'drop.sortable', '> *', (e) ->
+      e.stopPropagation()
+      $placeholder.after($dragging)
+      false
+
+    $root.on 'dragover.sortable dragenter.sortable', '> *', (e) ->
+      e.preventDefault()
+      e.originalEvent.dataTransfer.dropEffect = 'move';
+      $dragging.hide().appendTo($root) # appendTo to ensure top margins are ok
+      if $placeholder.index() < $(this).index()
+        $(this).after($placeholder)
+      else
+        $(this).before($placeholder)
+      false
 
   class ProjectList
     constructor: (@project, @user, @datasetResults) ->
@@ -14,6 +52,16 @@ ns.ProjectList = do (ko, window, doPost=jQuery.post, $ = jQuery) ->
       @dataQualitySummaryCallback = null
 
       @allDatasetsVisible = ko.computed(@_computeAllDatasetsVisible, this, deferEvaluation: true)
+
+      $(document).ready(@_onReady)
+
+    _onReady: =>
+      sortable('#project-datasets-list')
+      $('#project-datasets-list').on 'sortupdate', (e, {item, startIndex, endIndex}) =>
+        datasets = @project.datasets().concat()
+        [dataset] = datasets.splice(startIndex, 1)
+        datasets.splice(endIndex, 0, dataset)
+        @project.datasets(datasets)
 
     loginAndDownloadDataset: (dataset) =>
       @user.loggedIn =>

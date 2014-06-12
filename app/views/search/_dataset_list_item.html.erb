@@ -1,5 +1,8 @@
             <li data-bind="click: $root.ui.datasetsList.focusDataset, css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}"
-                class="panel-list-item panel-list-item-with-thumb">
+                class="panel-list-item"<%=raw ' draggable="true"' if is_project %>>
+              <% if is_project %>
+              <div class="panel-list-drag-handle"></div>
+              <% end %>
               <div class="panel-list-thumbnail-container">
               <!-- ko if: thumbnail() -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">

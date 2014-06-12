@@ -1,22 +1,13 @@
 require "spec_helper"
 
-describe "Project dataset list", reset: false do
-  before(:all) do
-    Capybara.reset_sessions!
-    load_page :search
-  end
+describe "Project dataset list", reset: true do
 
   before(:each) do
+    load_page :search
     first_dataset_result.click_link "Add dataset to the current project"
     nth_dataset_result(10).click_link "Add dataset to the current project"
 
     dataset_results.click_link "View Project"
-  end
-
-  after(:each) do
-    reset_overlay
-    reset_project
-    reset_visible_datasets
   end
 
   it "displays datasets that have been added to the project" do

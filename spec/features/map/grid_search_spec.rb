@@ -10,6 +10,10 @@ describe "Grid coordinate search", reset: false do
     load_page :search
   end
 
+  after :all do
+    wait_for_xhr
+  end
+
   context 'before selecting the grid spatial type' do
     it 'shows no grid input fields' do
       expect(page).to have_no_field('Grid Coordinates')
@@ -42,7 +46,11 @@ describe "Grid coordinate search", reset: false do
         end
 
         context 'clearing the selected name' do
-          before(:all) { select 'Coordinate System...', from: 'Grid Coordinates' }
+          before(:all) do
+            select 'Coordinate System...', from: 'Grid Coordinates'
+            wait_for_xhr
+          end
+
           after(:all) do
             choose_tool_from_site_toolbar('Grid')
             select 'WRS-1 (Landsat 1-3)', from: 'Grid Coordinates'

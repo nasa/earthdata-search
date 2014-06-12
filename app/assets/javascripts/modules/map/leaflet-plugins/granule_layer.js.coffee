@@ -324,6 +324,7 @@ ns.GranuleLayer = do (L
     onAdd: (map) ->
       super(map)
 
+      @layer._container.setAttribute('id', "granule-vis-#{@dataset.id}")
       @_handle(map, 'on', 'edsc.focusdataset')
       @setFocus(map.focusedDataset?.id == @dataset.id)
 
