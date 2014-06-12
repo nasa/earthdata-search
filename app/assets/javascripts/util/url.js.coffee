@@ -154,6 +154,10 @@ this.edsc.util.url = do(window,
     paramStr = '?' + paramStr if paramStr.length > 0
     path = path + paramStr
 
+    if path.length > 200
+      # assign a guid
+      null
+
     if cleanPath() != path
       savedPath = path
       if push
@@ -169,11 +173,15 @@ this.edsc.util.url = do(window,
     if cleanPath() != savedPath
       $(window).trigger('edsc.pagechange')
 
+  currentQuery = ->
+    cleanPath().split('?')[1] ? ''
+
   currentParams = ->
-    inflate(deparam(cleanPath().split('?')[1] ? ''))
+    inflate(deparam(currentQuery()))
 
   exports =
     pushPath: pushPath
     saveState: saveState
     cleanPath: cleanPath
     currentParams: currentParams
+    currentQuery: currentQuery

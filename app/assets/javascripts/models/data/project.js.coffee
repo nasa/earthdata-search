@@ -8,6 +8,7 @@ ns.Project = do (ko,
                  param = $.param,
                  deparam = @edsc.util.deparam
                  ajax = $.ajax
+                 urlUtil = @edsc.util.url
                  QueryModel = ns.query.DatasetQuery,
                  DatasetsModel = ns.Datasets
                  ServiceOptionsModel = ns.ServiceOptions
@@ -195,7 +196,7 @@ ns.Project = do (ko,
 
     serialize: (datasets=@datasets) ->
       datasets = (ds.serialize() for ds in @accessDatasets())
-      {query: param(@serialized()), datasets: datasets}
+      {query: param(@serialized()), datasets: datasets, source: urlUtil.currentQuery()}
 
     getProjectDataset: (id) ->
       focus = @focusedProjectDataset()

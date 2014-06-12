@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.ProjectList = do (ko, window, document, doPost=jQuery.post, $ = jQuery) ->
+ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery.post, $ = jQuery) ->
 
   sortable = (root) ->
     $root = $(root)
@@ -128,7 +128,7 @@ ns.ProjectList = do (ko, window, document, doPost=jQuery.post, $ = jQuery) ->
       @dataQualitySummaryModal(false)
 
     configureProject: ->
-      window.location.href = '/data/configure?' + $.param(@project.serialized())
+      window.location.href = '/data/configure?' + urlUtil.currentQuery()
 
     toggleDataset: (dataset) =>
       project = @project
