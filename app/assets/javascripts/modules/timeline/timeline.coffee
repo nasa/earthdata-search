@@ -1,4 +1,4 @@
-do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@edsc.util.string, dateUtil=@edsc.util.date) ->
+do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@edsc.util.string, dateUtil=@edsc.util.date) ->
   # Height for the top area, where arrows are drawn for date selection
   TOP_HEIGHT = 19
 
@@ -180,13 +180,15 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     constructor: (root, namespace, options={}) ->
       super(root, namespace, options)
 
+      @_datasets = []
+
       @root.append(@_createDisplay())
 
       @_data = {}
 
-      @zoom = 4
+      @_zoom = 4
       @end = config.present()
-      @start = @end - ZOOM_LEVELS[@zoom]
+      @start = @end - ZOOM_LEVELS[@_zoom]
       @originPx = 0
 
       @_loadedRange = []
@@ -213,9 +215,9 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
     range: ->
       # Query and draw bounds that are 3x wider than needed, centered on the visible range.
       # This prevents an in-progress drag from needing to redraw or re-query
-      {start, end, zoom} = this
+      {start, end} = this
       span = end - start
-      [start - span, end + span, RESOLUTIONS[zoom - 2]]
+      [start - span, end + span, RESOLUTIONS[@_zoom - 2]]
 
     startTime: ->
       @start
@@ -253,7 +255,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
           break
       return if index == -1
 
-      zoom = @zoom
+      zoom = @_zoom
 
       [start, end, resolution, intervals, color] = @_data[id] ? [@start - 1 , @end + 1, RESOLUTIONS[zoom - 2], [], null]
 
@@ -322,23 +324,37 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       Math.floor((p - originPx) * scale + start)
 
     zoomIn: ->
-     @_zoom(-1)
+     @_deltaZoom(-1)
 
     zoomOut: ->
-     @_zoom(1)
+     @_deltaZoom(1)
 
-    _zoom: (levels, center_t=(@end + @start) / 2) ->
-      @zoom = Math.min(Math.max(@zoom + levels, 2), ZOOM_LEVELS.length - 1)
+    zoom: (arg) ->
+      if arg?
+        @_deltaZoom(arg - @_zoom)
+        null
+      else
+        @_zoom
 
-      @root.toggleClass(@scope('max-zoom'), @zoom == ZOOM_LEVELS.length - 1)
-      @root.toggleClass(@scope('min-zoom'), @zoom == 2)
+    center: (arg) ->
+      if arg?
+        @panToTime(arg + (@end - @start) / 2)
+        null
+      else
+        Math.round((@end + @start) / 2)
+
+    _deltaZoom: (levels, center_t=@center()) ->
+      @_zoom = Math.min(Math.max(@_zoom + levels, 2), ZOOM_LEVELS.length - 1)
+
+      @root.toggleClass(@scope('max-zoom'), @_zoom == ZOOM_LEVELS.length - 1)
+      @root.toggleClass(@scope('min-zoom'), @_zoom == 2)
 
       # We want to zoom in a way that keeps the center_t at the same pixel so you
       # can double-click or scoll-wheel to zoom and your mouse stays over the same time
 
       x = @timeToPosition(center_t)
 
-      timeSpan = ZOOM_LEVELS[@zoom]
+      timeSpan = ZOOM_LEVELS[@_zoom]
 
       scale = timeSpan / @width
 
@@ -350,7 +366,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @focus()
       @_updateTimeline()
       @_drawTemporalBounds()
-      #console.log 'zoom', @zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
+      #console.log 'zoom', @_zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
     focus: (t0, t1) ->
       if  Math.abs(t0 - @_focus) < 1000
@@ -363,7 +379,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       @_empty(overlay)
 
       if t0?
-        root.trigger(@scopedEventName('focusset'), [t0, t1, RESOLUTIONS[@zoom - 1]])
+        root.trigger(@scopedEventName('focusset'), [t0, t1, RESOLUTIONS[@_zoom - 1]])
         startPt = @timeToPosition(t0)
         stopPt = @timeToPosition(t1)
 
@@ -390,7 +406,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       right = 39
       down = 40
       if focus && (key == left || key == right)
-        zoom = @zoom - 1
+        zoom = @_zoom - 1
 
         focusEnd = @_roundTime(focus, zoom, 1)
 
@@ -522,7 +538,7 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
         deltaY = e.wheelDeltaY
         if Math.abs(deltaY) > Math.abs(deltaX)
           levels = if deltaY > 0 then -1 else 1
-          @_zoom(levels, time)
+          @_deltaZoom(levels, time)
           rateLimit()
         else if deltaX != 0
           @_pan(deltaX)
@@ -624,7 +640,8 @@ do (document, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@e
       null
 
     _updateTimeline: ->
-      {axis, timeline, start, end, root, zoom} = this
+      {axis, timeline, start, end, root} = this
+      zoom = @_zoom
 
       @_empty(axis)
 

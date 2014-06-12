@@ -7,6 +7,7 @@ ns.GranuleTimeline = do (ko
                          KnockoutModel = @edsc.models.KnockoutModel
                          XhrModel = @edsc.models.data.XhrModel
                          extend = $.extend
+                         config = @edsc.config
                          ) ->
   # intervals: 'year', 'month', 'day', 'hour', 'minute'
   class GranuleTimelineData extends XhrModel
@@ -62,6 +63,10 @@ ns.GranuleTimeline = do (ko
     constructor: (@datasetsList, @projectList) ->
       @_datasetsToTimelines = {}
 
+      @_constructed = ko.observable(false)
+      @_pending = null
+
+      @serialized = ko.computed(read: @_readSerialized, write: @_writeSerialized, owner: this, deferEvaluation: true)
       @range = ko.observable(null)
 
       $timeline = $('#timeline')
@@ -81,6 +86,42 @@ ns.GranuleTimeline = do (ko
 
       @range(null)
       @datasets = ko.computed(@_computeDatasets)
+
+    _readSerialized: ->
+      return @_pending unless @_constructed()
+      return null if @datasets()? && @datasets().length == 0
+
+      @range() # Read and discard this to register as an observer
+      query = @datasetsList.query
+      timeline = $('#timeline').data('timeline')
+
+      center = Math.round(timeline.center() / 1000)
+      zoom = timeline.zoom()
+      if query.focusedTemporal()
+        [start, end] = query.focusedTemporal()
+        start = Math.round(start / 1000)
+        end = Math.round(end / 1000)
+
+      # Don't bother serializing if the timeline hasn't moved from the default
+      return null if !start && !end && (timeline.end == config.present() || timeline.end == @_lastDate)
+
+      [center, zoom, start, end].join('!')
+
+    _writeSerialized: (newValue) ->
+      timeline = $('#timeline').data('timeline')
+      if timeline?
+        if newValue
+          query = @datasetsList.query
+          [center, zoom, start, end] = newValue.split('!')
+          timeline.center(parseInt(center, 10) * 1000)
+          timeline.zoom(parseInt(zoom, 10))
+          temporal = []
+          temporal = [new Date(parseInt(start, 10) * 1000), new Date(parseInt(end, 10) * 1000)] if start && end
+          timeline.focus(temporal...)
+        @_constructed(true)
+        @_pending = null
+      else
+        @_pending = newValue
 
     clear: ->
       $('#timeline').timeline('focus')
@@ -104,6 +145,7 @@ ns.GranuleTimeline = do (ko
       if !$timeline.data('timeline')?
         if result.length > 0
           $timeline.timeline()
+          @serialized(@_pending)
         else
           return
 
@@ -120,6 +162,7 @@ ns.GranuleTimeline = do (ko
           lastDate = Math.max(lastDate, new Date(dataset.time_end).getTime())
       [start, end] = @range.peek()
       if listChanged && lastDate > Number.MIN_VALUE && lastDate < start
+        @_lastDate = lastDate
         $timeline.timeline('panToTime', lastDate)
 
       project = @projectList.project
