@@ -60,9 +60,11 @@
 
     loadFromUrl: =>
       unless @page.ui.isLandingPage() # Avoid problem where switching to /search overwrites uncommited search conditions
-        [path, query] = urlUtil.cleanPath().split('?')
-        @path(path)
-        @load(urlUtil.currentParams())
+        clean = urlUtil.cleanPath()
+        if clean
+          [path, query] = clean.split('?')
+          @path(path)
+          @load(urlUtil.currentParams())
 
     _onReady: =>
       $overlay = $('.master-overlay')
@@ -71,9 +73,9 @@
       $overlay.on 'edsc.olstatechange', => @overlayState(@overlay.state())
       ko.computed => @overlay.state(@overlayState())
 
-      @page.map.serialized(@_mapParams)
-      @page.ui.granuleTimeline.serialized(@_timelineParams)
-      @page.ui.datasetsList.serialized(@_dsListParams)
+      @page.map.serialized(@_mapParams) if @_mapParams
+      @page.ui.granuleTimeline.serialized(@_timelineParams) if @_timelineParams
+      @page.ui.datasetsList.serialized(@_dsListParams) if @_dsListParams?
 
       @isDomLoaded(true)
 
@@ -108,7 +110,7 @@
       path
 
     _pathForState: (state) ->
-      return urlUtil.cleanPath().split('?')[0] if !state? || !@page.ui.isLandingPage()?
+      return urlUtil.cleanPath()?.split('?')[0] ? '/' if !state? || !@page.ui.isLandingPage()?
 
       return '/' if @page.ui.isLandingPage()
 

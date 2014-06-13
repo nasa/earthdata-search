@@ -4,6 +4,7 @@ this.edsc.util.url = do(window,
                         extend = jQuery.extend,
                         param = jQuery.param
                         deparam = @edsc.util.deparam
+                        config = @edsc.config
                         ) ->
 
   class ParamNameCompressor
@@ -138,28 +139,75 @@ this.edsc.util.url = do(window,
     compressors[i].inflate(params) for i in [compressors.length-1..0]
     params
 
-  cleanPath = ->
+  realPath = ->
     # Remove everything up to the third slash
     History.getState().cleanUrl.replace(/^[^\/]*\/\/[^\/]*/, '')
 
-  pushPath = (path, title=document.title, data=null) ->
-    # Replace everything before the first ?
-    path = cleanPath().replace(/^[^\?]*/, path)
-    History.pushState(data, title, path)
-
   savedPath = null
+  savedId = null
+
+  fetchId = (id) ->
+    return if savedId == id
+    console.log "Fetching project #{id}"
+    savedId = id
+    $.ajax
+      method: 'get'
+      dataType: 'text'
+      url: "/projects/#{id}"
+      success: (data) ->
+        savedPath = data
+        console.log "Fetched project #{id}"
+        console.log "Path: #{data}"
+        $(window).trigger('edsc.pagechange')
+
+  shortenPath = (path, state) ->
+    id = savedId ? ''
+    savedPath = path
+    console.log "Saving project #{id}"
+    console.log "Path: #{path}"
+    $.ajax
+      method: 'post'
+      dataType: 'text'
+      url: "/projects?id=#{id}"
+      data: path
+      success: (data) ->
+        console.log "Saved project #{id}"
+        console.log "Path: #{path}"
+        savedId = data
+        History.pushState(state, document.title, "/#{path.split('?')[0]}?projectId=#{savedId}")
+
+  cleanPath = ->
+    path = realPath()
+    if path.indexOf("projectId=") != -1
+      id = path.split('projectId=')[1]
+      if savedPath? && savedId == id
+        result = savedPath
+      else
+        fetchId(id)
+    else
+      result = path
+    result
+
+  pushPath = (path, title=document.title, data=null) ->
+    clean = cleanPath()
+    if clean?
+      # Replace everything before the first ?
+      path = cleanPath().replace(/^[^\?]*/, path)
+      History.pushState(data, title, path)
 
   saveState = (path, state, push = false) ->
     paramStr = param(compress(state)).replace(/%5B/g, '[').replace(/%5D/g, ']')
     paramStr = '?' + paramStr if paramStr.length > 0
+
     path = path + paramStr
-
-    if path.length > 200
+    if path != savedPath && path.length > config.urlLimit
       # assign a guid
-      null
+      shortenPath(path, state)
+      return
 
-    if cleanPath() != path
+    if cleanPath() && cleanPath() != path
       savedPath = path
+      savedId = null
       if push
         History.pushState(state, document.title, path)
       else
@@ -174,7 +222,7 @@ this.edsc.util.url = do(window,
       $(window).trigger('edsc.pagechange')
 
   currentQuery = ->
-    cleanPath().split('?')[1] ? ''
+    cleanPath()?.split('?')[1] ? ''
 
   currentParams = ->
     inflate(deparam(currentQuery()))

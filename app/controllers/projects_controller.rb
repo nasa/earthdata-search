@@ -1,10 +1,21 @@
 class ProjectsController < ApplicationController
-  def create
-    @project = JSON.parse(params[:jsondata])
+  def show
+    project = Project.find(params[:id])
+    render :text => project.path
+
+  rescue ActiveRecord::RecordNotFound => e
+    render :text => '/'
   end
 
-  def update
-    # Parse, then stringify in view to protect against malicious requests
-    @project = JSON.parse(params[:project])
+  def create
+    id = params[:id].presence
+    begin
+      project = Project.find(params[:id]) if id
+    rescue ActiveRecord::RecordNotFound => e
+    end
+    project = Project.new unless project
+    project.path = request.body.read
+    project.save!
+    render :text => project.to_param
   end
 end

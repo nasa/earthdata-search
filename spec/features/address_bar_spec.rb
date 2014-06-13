@@ -385,7 +385,7 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context "when loading a URL with a selected granule", pq: true do
+  context "when loading a URL with a selected granule" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC'
     end
@@ -398,4 +398,64 @@ describe 'Address bar', reset: false do
       expect(page.find('#map')).to have_text('1988-02-01T00:00:00Z')
     end
   end
+
+  context "Long URLs", pq: true do
+    let(:long_path) { '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC' }
+    let(:longer_path) { long_path + '!C179003030-ORNL_DAAC' }
+    let(:query_re) { /^projectId=(\d+)$/ }
+
+    def query
+      URI.parse(page.current_url).query
+    end
+
+    def project_id
+      query[query_re, 1].to_i
+    end
+
+    context "when the site URL grows beyond the allowable limit" do
+      # Each to avoid database cleanup problems
+      before(:each) do
+        visit long_path
+        wait_for_xhr
+        first_dataset_result.click_link('Add dataset to the current project')
+        wait_for_xhr
+      end
+
+      it "stores the URL remotely and provides a shortened URL" do
+        expect(query).to match(query_re)
+        expect(Project.find(project_id).path).to eql(longer_path)
+      end
+
+      context "further updating the page state" do
+        before_project_id = nil
+
+        before(:each) do
+          before_project_id = project_id
+          fill_in "keywords", with: 'AST'
+          wait_for_xhr
+        end
+
+        it "keeps the URL the same but updates the remote store" do
+          expect(Project.find(project_id).path).to eql(longer_path + '&q=AST')
+          expect(before_project_id).to eql(project_id)
+        end
+      end
+    end
+
+    context "loading a shortened URL" do
+      before(:each) do
+        project = Project.new
+        project.path = longer_path
+        project.save!
+
+        visit "/search/datasets?projectId=#{project.to_param}"
+        wait_for_xhr
+      end
+
+      it "restores the persisted long path" do
+        expect(page).to have_text('You have 5 datasets in your project.')
+      end
+    end
+  end
+
 end
