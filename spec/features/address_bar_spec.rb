@@ -399,8 +399,8 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context "Long URLs", pq: true do
-    let(:long_path) { '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC' }
+  context "Long URLs" do
+    let(:long_path) { '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC' }
     let(:longer_path) { long_path + '!C179003030-ORNL_DAAC' }
     let(:query_re) { /^projectId=(\d+)$/ }
 
@@ -453,7 +453,7 @@ describe 'Address bar', reset: false do
       end
 
       it "restores the persisted long path" do
-        expect(page).to have_text('You have 5 datasets in your project.')
+        expect(page).to have_text('You have 6 datasets in your project.')
       end
     end
   end
