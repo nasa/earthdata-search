@@ -23,7 +23,9 @@ module Echo
     def self.get_granules(options={}, token=nil)
       options = options.dup
       format = options.delete(:format) || 'json'
-      get("/catalog-rest/echo_catalog/granules.#{format}", options_to_granule_query(options), token_header(token))
+      body = options_to_granule_query(options)
+      headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
+      post("/catalog-rest/echo_catalog/granules.#{format}", body.to_query, headers)
     end
 
     def self.get_facets(options={}, token=nil)
@@ -33,6 +35,10 @@ module Echo
 
     def self.get_timeline(options={}, token=nil)
       get('/catalog-rest/echo_catalog/granules/timeline.json', options, token_header(token))
+      # TODO: Use the code below instead of the line above once ECHO NCR 11014642 is done.
+      #       Don't forget to re-generate fixtures
+      #headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
+      #post('/catalog-rest/echo_catalog/granules/timeline.json', options.to_query, headers)
     end
 
     def self.get_provider_holdings
