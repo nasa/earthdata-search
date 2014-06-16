@@ -19,7 +19,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the keyword condition in the address bar' do
-      expect(page).to have_query_string('free_text=C1000000019-LANCEMODIS')
+      expect(page).to have_query_string('q=C1000000019-LANCEMODIS')
     end
 
     context 'clearing filters' do
@@ -32,7 +32,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/datasets?free_text=C1000000019-LANCEMODIS' }
+    before(:all) { visit '/search/datasets?q=C1000000019-LANCEMODIS' }
 
     it 'loads the condition into the keywords field' do
       expect(page).to have_field('keywords', with: 'C1000000019-LANCEMODIS')
@@ -58,7 +58,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the temporal condition in the address bar' do
-      expect(page).to have_query_string('temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365')
+      expect(page).to have_query_string('qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365')
     end
 
     context 'clearing filters' do
@@ -74,7 +74,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/datasets?temporal=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
+    before(:all) { visit '/search/datasets?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
 
     it 'loads the condition into the temporal fields' do
       click_link "Temporal"
@@ -103,7 +103,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the spatial condition in the address bar' do
-      expect(page).to have_query_string('bounding_box=0%2C0%2C10%2C10')
+      expect(page).to have_query_string('sb=0%2C0%2C10%2C10')
     end
 
     context 'clearing filters' do
@@ -116,7 +116,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a spatial condition' do
-    before(:all) { visit '/search/datasets?bounding_box=0%2C0%2C10%2C10' }
+    before(:all) { visit '/search/datasets?sb=0%2C0%2C10%2C10' }
 
     it 'draws the condition on the map' do
       expect(page).to have_selector('#map path', count: 1)
@@ -135,7 +135,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the facet condition in the address bar' do
-      expect(page).to have_query_string('campaign[]=EOSDIS')
+      expect(page).to have_query_string('fc=EOSDIS')
     end
 
     context 'clearing filters' do
@@ -148,7 +148,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a facet condition' do
-    before(:all) { visit '/search?campaign[]=EOSDIS' }
+    before(:all) { visit '/search?fc=EOSDIS' }
 
     it 'displays the selected facet condition' do
       within(:css, '.selected-facets-panel') do
@@ -240,11 +240,11 @@ describe 'Address bar', reset: false do
 
     it "saves the query conditions in the URL" do
       expect(page).to have_path('/search/project/details')
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&p1[browse_only]=true&p2[day_night_flag]=DAY')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY')
     end
 
     it "does not duplicate the query conditions for the focused dataset" do
-      expect(page.current_url).not_to include('p0[browse_only]')
+      expect(page.current_url).not_to include('pg[0][bo]')
     end
   end
 
@@ -257,17 +257,17 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the query conditions in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&p0[browse_only]=true')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[0][bo]=true')
     end
 
     it "includes query conditions for the focused dataset" do
-      expect(page.current_url).to include('p0[browse_only]')
+      expect(page.current_url).to include('pg[0][bo]')
     end
   end
 
   context "loading a URL with saved query conditions" do
     before :all do
-      visit '/search/project?p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&p1[browse_only]=true&p2[day_night_flag]=DAY'
+      visit '/search/project?p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
     end
 
     it "restores the granule query conditions" do
@@ -385,7 +385,7 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context "when loading a URL with a selected granule", pq: true do
+  context "when loading a URL with a selected granule" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC'
     end
@@ -398,4 +398,64 @@ describe 'Address bar', reset: false do
       expect(page.find('#map')).to have_text('1988-02-01T00:00:00Z')
     end
   end
+
+  context "Long URLs" do
+    let(:long_path) { '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC' }
+    let(:longer_path) { long_path + '!C179003030-ORNL_DAAC' }
+    let(:query_re) { /^projectId=(\d+)$/ }
+
+    def query
+      URI.parse(page.current_url).query
+    end
+
+    def project_id
+      query[query_re, 1].to_i
+    end
+
+    context "when the site URL grows beyond the allowable limit" do
+      # Each to avoid database cleanup problems
+      before(:each) do
+        visit long_path
+        wait_for_xhr
+        first_dataset_result.click_link('Add dataset to the current project')
+        wait_for_xhr
+      end
+
+      it "stores the URL remotely and provides a shortened URL" do
+        expect(query).to match(query_re)
+        expect(Project.find(project_id).path).to eql(longer_path)
+      end
+
+      context "further updating the page state" do
+        before_project_id = nil
+
+        before(:each) do
+          before_project_id = project_id
+          fill_in "keywords", with: 'AST'
+          wait_for_xhr
+        end
+
+        it "keeps the URL the same but updates the remote store" do
+          expect(Project.find(project_id).path).to eql(longer_path + '&q=AST')
+          expect(before_project_id).to eql(project_id)
+        end
+      end
+    end
+
+    context "loading a shortened URL" do
+      before(:each) do
+        project = Project.new
+        project.path = longer_path
+        project.save!
+
+        visit "/search/datasets?projectId=#{project.to_param}"
+        wait_for_xhr
+      end
+
+      it "restores the persisted long path" do
+        expect(page).to have_text('You have 6 datasets in your project.')
+      end
+    end
+  end
+
 end

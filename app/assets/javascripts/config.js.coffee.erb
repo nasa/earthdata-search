@@ -11,6 +11,7 @@
 
   # Test config
   exports =
+    urlLimit: 120
     defaultAnimationDurationMs: 0
     xhrRateLimitMs: 100
     maxPolygonSize: 50
@@ -24,6 +25,7 @@
 
   # Development config
   exports =
+    urlLimit: 200
     defaultAnimationDurationMs: 300
     xhrRateLimitMs: 500
     maxPolygonSize: 50
@@ -37,6 +39,7 @@
   <% else %>
   # Production config
   exports =
+    urlLimit: 2000
     defaultAnimationDurationMs: 300
     xhrRateLimitMs: 500
     maxPolygonSize: 50

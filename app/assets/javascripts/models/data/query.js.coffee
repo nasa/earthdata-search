@@ -8,6 +8,7 @@ ns.query = do (ko,
                GridCondition=@edsc.models.data.GridCondition
                KnockoutModel=@edsc.models.KnockoutModel
                Temporal=@edsc.models.ui.Temporal
+               deparam=@edsc.util.deparam
                extend=$.extend) ->
 
   ko.extenders.queryable = (target, paramObj) ->
@@ -122,11 +123,13 @@ ns.query = do (ko,
       ['campaign', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'science_keywords', 'processing_level']
 
     writeTo: (query) ->
+      facetParams = {}
       for facet in @value()
         name = facet.param
-        query[name] ?= []
-        query[name].push(facet.term)
-      query
+        facetParams[name] ?= []
+        facetParams[name].push(facet.term)
+      queryStr = param(facetParams)
+      extend(true, query, deparam(queryStr))
 
     canReadFrom: (query) ->
       true

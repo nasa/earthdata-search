@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Echo::Client do
   let(:connection) { Object.new }
+  let(:req) { double(headers: {}) }
 
   context 'HTTP connection' do
     it 'is reused within a single thread' do
@@ -80,7 +81,7 @@ describe Echo::Client do
 
     it 'returns data in the requested format' do
       granule_echo10_url = "#{granule_search_base}.echo10"
-      expect(connection).to receive(:get).with(granule_echo10_url, {}).and_return(:response)
+      expect(connection).to receive(:post).with(granule_echo10_url, nil).and_return(:response)
 
       response = Echo::Client.get_granules(format: 'echo10')
       expect(response.faraday_response).to eq(:response)
@@ -88,21 +89,23 @@ describe Echo::Client do
 
     it 'returns data in json format by default' do
       granule_json_url = "#{granule_search_base}.json"
-      expect(connection).to receive(:get).with(granule_json_url, {}).and_return(:response)
+      expect(connection).to receive(:post).with(granule_json_url, nil).and_return(:response)
 
       response = Echo::Client.get_granules()
       expect(response.faraday_response).to eq(:response)
     end
 
     it 'filters granules by a supplied ECHO collection id' do
-      expect(connection).to receive(:get).with(granule_search_url, echo_collection_id: ['1234']).and_return(:response)
+      expect(req).to receive(:body=).with('echo_collection_id%5B%5D=1234')
+      expect(connection).to receive(:post).with(granule_search_url, nil).and_yield(req).and_return(:response)
 
       response = Echo::Client.get_granules(echo_collection_id: ['1234'])
       expect(response.faraday_response).to eq(:response)
     end
 
     it 'filters granules by browse only flag' do
-      expect(connection).to receive(:get).with(granule_search_url, browse_only: 'true').and_return(:response)
+      expect(req).to receive(:body=).with('browse_only=true')
+      expect(connection).to receive(:post).with(granule_search_url, nil).and_yield(req).and_return(:response)
 
       response = Echo::Client.get_granules(browse_only: 'true')
       expect(response.faraday_response).to eq(:response)

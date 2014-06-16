@@ -34,7 +34,7 @@ module Helpers
           params[type.to_s] = spatial(options[type]) if options[type]
         end
 
-        params['temporal'] = temporal(*options[:temporal]) if options[:temporal]
+        params['qt'] = temporal(*options[:temporal]) if options[:temporal]
 
         p = ([options[:focus]] + Array.wrap(options[:project])).join('!')
         params['p'] = p if p.present?
