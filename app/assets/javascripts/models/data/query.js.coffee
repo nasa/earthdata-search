@@ -279,11 +279,6 @@ ns.query = do (ko,
       constraint = dataset.spatial_constraint()
       constraint? && (!spatial || spatial == constraint)
 
-  class DataQualitySummaryQuery extends Query
-    constructor: (datasetId, parentQuery) ->
-      super(parentQuery)
-      @queryComponent(new QueryParam('catalog_item_id'), datasetId)
-
   class GranuleQuery extends Query
     constructor: (datasetId, parentQuery) ->
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
@@ -332,4 +327,3 @@ ns.query = do (ko,
   exports =
     DatasetQuery: DatasetQuery
     GranuleQuery: GranuleQuery
-    DataQualitySummaryQuery: DataQualitySummaryQuery

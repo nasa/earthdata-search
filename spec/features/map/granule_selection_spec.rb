@@ -142,11 +142,11 @@ describe "Granule selection", reset: false do
   context "clicking on a granule on the map" do
     before :all do
       wait_for_xhr
-      map_mouseclick(5, 5)
+      map_mouseclick(10, 10)
     end
 
     after :all do
-      map_mouseclick(5, 5)
+      map_mouseclick(10, 10)
     end
 
     it "highlights the selected granule in the granule list" do
@@ -182,11 +182,11 @@ describe "Granule selection", reset: false do
     context "and clicking on it again" do
       before :all do
         wait_for_xhr
-        map_mouseclick(5, 5)
+        map_mouseclick(10, 10)
       end
 
       after :all do
-        map_mouseclick(5, 5)
+        map_mouseclick(10, 10)
       end
 
       it "removes added highlights and overlays from the granule result list" do

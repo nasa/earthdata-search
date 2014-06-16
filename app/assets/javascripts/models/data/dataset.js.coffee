@@ -1,6 +1,5 @@
 #= require models/data/granules
 #= require models/data/service_options
-#= require models/data/data_quality_summaries
 
 ns = @edsc.models.data
 
@@ -9,9 +8,7 @@ ns.Dataset = do (ko
                  scalerUrl = @edsc.config.browseScalerUrl
                  Granules=ns.Granules
                  GranuleQuery = ns.query.GranuleQuery
-                 DataQualitySummaryQuery = ns.query.DataQualitySummaryQuery
                  ServiceOptionsModel = ns.ServiceOptions
-                 DataQualitySummaryModel = ns.DataQualitySummary
                  toParam=jQuery.param
                  extend=jQuery.extend
                  ajax = jQuery.ajax
@@ -82,8 +79,6 @@ ns.Dataset = do (ko
           paramStr = toParam(@granuleQuery.params())
           "/data/download.sh?#{paramStr}"
         deferEvaluation: true
-
-      @dqsModel = @disposable(new DataQualitySummaryModel(new DataQualitySummaryQuery(jsonData.id)))
 
     thumbnail: ->
       granule = @browseable_granule

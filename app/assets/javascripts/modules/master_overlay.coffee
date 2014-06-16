@@ -134,5 +134,5 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
   plugin.create('masterOverlay', MasterOverlay)
 
   $(document).ajaxComplete (event, xhr, settings) ->
-    if settings.url.indexOf('/granules.json') != -1 || settings.url.indexOf('/data_quality_summary.json') != -1
+    if settings.url.indexOf('/granules.json') != -1
       $('.master-overlay').masterOverlay('contentHeightChanged')

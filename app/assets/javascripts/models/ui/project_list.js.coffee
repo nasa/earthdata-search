@@ -48,9 +48,6 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
       @datasetOnly = ko.computed(@_computeDatasetOnly, this, deferEvaluation: true)
       @submittedOrders = ko.computed(@_computeSubmittedOrders, this, deferEvaluation: true)
 
-      @dataQualitySummaryModal = ko.observable(false)
-      @dataQualitySummaryCallback = null
-
       @allDatasetsVisible = ko.computed(@_computeAllDatasetsVisible, this, deferEvaluation: true)
 
       $(document).ready(@_onReady)
@@ -65,67 +62,12 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
 
     loginAndDownloadDataset: (dataset) =>
       @user.loggedIn =>
-        @showDataQualitySummaryAndDownload [dataset], =>
-          @project.focus(dataset)
-          @configureProject()
+        @project.focus(dataset)
+        @configureProject()
 
     loginAndDownloadProject: =>
       @user.loggedIn =>
-        @showDataQualitySummaryAndDownload @project.getDatasets(), =>
-          @configureProject()
-
-    showDataQualitySummaryAndDownload: (datasets, action) =>
-      accepted = true
-      for dataset in datasets
-        results = dataset.dqsModel.results()
-        if results?
-          for result in results
-            if result.id && !result.accepted()
-              accepted = false
-
-      if accepted
-        action()
-      else
-        @dataQualitySummaryCallback = =>
-          @dataQualitySummaryCallback = null
-          action()
-
-        @_loadDataQualitySummaryModel(datasets)
-
-    showDataQualitySummary: (datasets) =>
-      @_loadDataQualitySummaryModel(datasets)
-
-    _loadDataQualitySummaryModel: (datasets) =>
-      summaries = []
-      for dataset in datasets
-        summary = {}
-        if dataset.dqsModel.results()?
-          for s in dataset.dqsModel.results()
-            summary["dataset"] = dataset
-            summary["summary"] = s
-            summaries.push summary if summary["summary"].id
-
-      @dataQualitySummaryModal(summaries)
-
-    acceptDataQualitySummary: =>
-      summaries = @dataQualitySummaryModal()
-      dqs_ids = []
-      for dqs in summaries
-        dqs_ids.push dqs.summary.id
-
-      data =
-        dqs_ids: dqs_ids
-
-      xhr = doPost '/accept_data_quality_summaries', data, (response) =>
-        for dqs in summaries
-          for s in dqs.dataset.dqsModel.results()
-            s.accepted(true)
-          @dataQualitySummaryModal(false)
-
-        @dataQualitySummaryCallback?()
-
-    cancelDataQualitySummaryModal: =>
-      @dataQualitySummaryModal(false)
+        @configureProject()
 
     configureProject: ->
       window.location.href = '/data/configure?' + urlUtil.currentQuery()
@@ -135,8 +77,6 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
       if project.hasDataset(dataset)
         project.removeDataset(dataset)
       else
-        # Force dataset to load DQS information
-        @datasetHasDQS(dataset)
         project.addDataset(dataset)
 
     _computeDatasetsToDownload: ->
@@ -159,28 +99,6 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
       for dataset in @project.accessDatasets()
         datasets.push(dataset) if dataset.serviceOptions.accessMethod().length == 0
       datasets
-
-    datasetHasDQS: (dataset) =>
-      result = true if dataset.dqsModel.results()?.length > 0
-
-    datasetsHaveDQS: =>
-      result = false
-      result ||= @datasetHasDQS(dataset) for dataset in @project.datasets()
-      result
-
-    dqsAccepted: (dataset) =>
-      if dataset.dqsModel.results()?.length > 0
-        # Resize the list after DQS warning is displayed
-        $('.master-overlay').masterOverlay('contentHeightChanged')
-
-        for dqs in dataset.dqsModel.results()
-          return false unless dqs.accepted()
-      true
-
-    allDQSAccepted: =>
-      result = true
-      result &&= @dqsAccepted(dataset) for dataset in @project.datasets()
-      result
 
     showFilters: (dataset) =>
       if @project.searchGranulesDataset(dataset)
