@@ -81,6 +81,12 @@ class DataAccessController < ApplicationController
     catalog_response = Echo::Client.get_granules(granule_params, token)
 
     if catalog_response.success?
+      dataset = Array.wrap(request.query_parameters[:echo_collection_id]).first
+      if dataset
+        dqs = Echo::Client.get_data_quality_summary(dataset, token)
+      end
+
+
       granules = catalog_response.body['feed']['entry']
 
       result = {}
@@ -99,6 +105,7 @@ class DataAccessController < ApplicationController
 
         result = {
           hits: hits,
+          dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
           methods: get_downloadable_access_methods(granules, hits) + get_order_access_methods(granules, hits)

@@ -21,8 +21,6 @@ do ($=jQuery) ->
     new XhrSpinner('/datasets/', '#dataset-details .loading'), # dataset details
     new XhrSpinner('/granules.json', '#granule-list .panel-list-load-more'), # granule list
     new XhrSpinner('/timeline.json', '.timeline-tools'), # timeline
-    new XhrSpinner('/data_quality_summary.json', '#project-list .panel-list-meta'), # loading dqs
-    new XhrSpinner('/accept_data_quality_summaries', '#dqs-modal .loading', '#dqs-modal .modal-button'), # accepting dqs
     new XhrSpinner('/login', '#login-modal .loading', '#login-modal .modal-button'), # login
     new XhrSpinner('/data/options', '.data-access-next'), # data access retrieval
     new XhrSpinner('/update_contact_info', '.access-submit') # updating contact info before submitting an access request

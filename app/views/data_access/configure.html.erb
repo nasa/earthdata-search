@@ -66,6 +66,12 @@
             </div>
             <!-- /ko -->
           </div>
+          <div class="access-item-data-quality" data-bind="if: granuleAccessOptions().dqs && granuleAccessOptions().dqs.length > 0">
+            <h4>Quality Information</h4>
+            <!-- ko foreach: granuleAccessOptions().dqs -->
+            <p data-bind="html: data_quality_summary_definition.summary"></p>
+            <!-- /ko -->
+          </div>
 
           <div class="access-item-options">
             <h4>Service Options</h4>

@@ -47,8 +47,11 @@ ns.AccessPage = do (ko,
       if pageData
         @project.fromJson(pageData)
       else
-        @project.serialized(urlUtil.currentParams())
+        @_loadFromUrl()
+        $(window).on 'edsc.pagechange', @_loadFromUrl
 
+    _loadFromUrl: =>
+      @project.serialized(urlUtil.currentParams())
 
   setCurrent(new AccessPage())
 

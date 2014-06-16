@@ -29,10 +29,6 @@ describe "Granule list", reset: false do
       expect(granule_list).to have_link('Filter granules')
     end
 
-    it "displays relevant data quality summaries" do
-      expect(granule_list).to have_link('read and accept')
-    end
-
     context "clicking on the dataset details button" do
       before :all do
         granule_list.click_link('View details')
@@ -91,20 +87,6 @@ describe "Granule list", reset: false do
         it "shows the filters in an applied state" do
           expect(granule_list).to have_selector('.button-highlighted[title="Hide granule filters"]')
         end
-      end
-    end
-
-    context "clicking on a data quality summary" do
-      before :all do
-        granule_list.click_link('read and accept')
-      end
-
-      after :all do
-        find('div.modal').click_link('close')
-      end
-
-      it "shows the data quality summary" do
-        expect(page).to have_content("Data Quality Summaries")
       end
     end
 

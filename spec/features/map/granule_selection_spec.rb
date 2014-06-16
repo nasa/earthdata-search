@@ -30,7 +30,7 @@ describe "Granule selection", reset: false do
       var bottom = top + list.height() - 150;
       var selected = $('.panel-list-selected').offset().top;
 
-      if (selected > top && selected < bottom) {
+      if (selected + 5 > top && selected - 5 < bottom) {
         return true;
       } else {
         return false;

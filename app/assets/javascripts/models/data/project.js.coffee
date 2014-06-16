@@ -196,7 +196,7 @@ ns.Project = do (ko,
 
     serialize: (datasets=@datasets) ->
       datasets = (ds.serialize() for ds in @accessDatasets())
-      {query: param(@serialized()), datasets: datasets, source: urlUtil.currentQuery()}
+      {query: param(@serialized()), datasets: datasets, source: urlUtil.realQuery()}
 
     getProjectDataset: (id) ->
       focus = @focusedProjectDataset()
