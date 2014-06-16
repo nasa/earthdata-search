@@ -21,11 +21,6 @@ ns.Dataset = do (ko
   register = (dataset) ->
     dataset.reference()
     datasets.push(dataset)
-    subscription = dataset.refCount.subscribe (count) ->
-      if count <= 0
-        datasets.remove(dataset)
-        subscription.dispose()
-
     dataset
 
   class Dataset extends KnockoutModel
@@ -104,6 +99,14 @@ ns.Dataset = do (ko
           @details(details)
           @detailsLoaded(true)
 
+    hasGranuleConfig: ->
+      @granuleQueryLoaded() && Object.keys(@granuleQuery.serialize()).length > 0
+
+    shouldDispose: ->
+      result = !@hasGranuleConfig()
+      datasets.remove(this) if result
+      result
+
     fromJson: (jsonObj) ->
       @json = jsonObj
 
@@ -111,3 +114,5 @@ ns.Dataset = do (ko
 
       @hasAtomData(jsonObj.links?)
       @gibs = ko.observable(@gibs ? null)
+
+  exports = Dataset

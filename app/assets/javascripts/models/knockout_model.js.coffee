@@ -10,19 +10,20 @@ ns.KnockoutModel = do (ko) ->
       refs(val)
       this
 
+    shouldDispose: ->
+      true
+
     dispose: ->
       val = 0
       refs = @refCount
       if refs?
         val = refs.peek() - 1
         refs(val)
-      if val <= 0
+      if val <= 0 && @shouldDispose()
         @_disposables ?= []
         for disposable in @_disposables
           disposable?.dispose?()
         @_disposables = []
-
-        @isDisposed = true
 
     disposable: (obj) ->
       @_disposables ?= []
