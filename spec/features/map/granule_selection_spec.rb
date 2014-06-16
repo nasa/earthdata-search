@@ -30,7 +30,7 @@ describe "Granule selection", reset: false do
       var bottom = top + list.height() - 150;
       var selected = $('.panel-list-selected').offset().top;
 
-      if (selected > top && selected < bottom) {
+      if (selected + 5 > top && selected - 5 < bottom) {
         return true;
       } else {
         return false;
@@ -142,11 +142,11 @@ describe "Granule selection", reset: false do
   context "clicking on a granule on the map" do
     before :all do
       wait_for_xhr
-      map_mouseclick(10, 10)
+      map_mouseclick(5, 5)
     end
 
     after :all do
-      map_mouseclick(10, 10)
+      map_mouseclick(5, 5)
     end
 
     it "highlights the selected granule in the granule list" do
@@ -182,11 +182,11 @@ describe "Granule selection", reset: false do
     context "and clicking on it again" do
       before :all do
         wait_for_xhr
-        map_mouseclick(10, 10)
+        map_mouseclick(5, 5)
       end
 
       after :all do
-        map_mouseclick(10, 10)
+        map_mouseclick(5, 5)
       end
 
       it "removes added highlights and overlays from the granule result list" do
