@@ -257,13 +257,3 @@ describe "query", ->
       @query.params(params)
       @query.clearFilters()
       expect(param(@query.params())).toEqual(param(defaults))
-
-  describe "DataQualitySummaryQuery", ->
-    beforeEach ->
-      @ds_id = 'my_item_id'
-      @query = new ns.DataQualitySummaryQuery(@ds_id)
-
-    it 'serializes catalog item ids', ->
-      params = {catalog_item_id: @ds_id}
-      @query.params(params)
-      expect(param(@query.params())).toEqual(param(params))
