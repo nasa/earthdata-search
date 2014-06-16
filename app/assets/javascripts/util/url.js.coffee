@@ -143,6 +143,9 @@ this.edsc.util.url = do(window,
     # Remove everything up to the third slash
     History.getState().cleanUrl.replace(/^[^\/]*\/\/[^\/]*/, '')
 
+  realQuery = ->
+    realPath().split('?')[1] ? ''
+
   savedPath = null
   savedId = null
 
@@ -230,6 +233,7 @@ this.edsc.util.url = do(window,
   exports =
     pushPath: pushPath
     saveState: saveState
+    realQuery: realQuery
     cleanPath: cleanPath
     currentParams: currentParams
     currentQuery: currentQuery

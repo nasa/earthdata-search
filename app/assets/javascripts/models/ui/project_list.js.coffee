@@ -70,7 +70,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
         @configureProject()
 
     configureProject: ->
-      window.location.href = '/data/configure?' + urlUtil.currentQuery()
+      window.location.href = '/data/configure?' + urlUtil.realQuery()
 
     toggleDataset: (dataset) =>
       project = @project
