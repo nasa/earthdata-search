@@ -13,7 +13,8 @@ module Echo
     CATALOG_URL = ENV['ECHO_ENDPOINT'] || "https://api.echo.nasa.gov"
 
     def self.get_datasets(options={}, token=nil)
-      get('/catalog-rest/echo_catalog/datasets.json', options_to_dataset_query(options), token_header(token))
+      format = options.delete(:format) || 'json'
+      get("/catalog-rest/echo_catalog/datasets.#{format}", options_to_dataset_query(options), token_header(token))
     end
 
     def self.get_dataset(id, options={}, token=nil)

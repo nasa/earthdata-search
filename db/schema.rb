@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140616171712) do
+ActiveRecord::Schema.define(version: 20140617170220) do
 
   create_table "dataset_extras", force: true do |t|
     t.string   "echo_id"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20140616171712) do
     t.boolean  "has_granules"
     t.string   "browseable_granule"
     t.string   "granule"
+    t.text     "searchable_attributes"
+    t.text     "orbit"
   end
 
   create_table "orders", force: true do |t|

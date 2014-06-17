@@ -1,4 +1,8 @@
 class DatasetExtra < ActiveRecord::Base
+  store :searchable_attributes, coder: JSON
+  store :orbit, coder: JSON
+
+
   def self.load
     response = Echo::Client.get_provider_holdings
     results = response.body
@@ -39,6 +43,51 @@ class DatasetExtra < ActiveRecord::Base
 
       puts "#{processed_count} / #{hits}"
     end
+  end
+
+  def self.load_echo10
+    params = {page_num: 0, page_size: 500}
+    processed_count = 0
+
+    begin
+      params[:page_num] += 1
+      response = Echo::Client.get_datasets(params.merge(format: 'echo10'))
+      datasets = Array.wrap(response.body['results']['result'])
+      hits = response.headers['echo-hits'].to_i
+
+      datasets.each do |dataset|
+        extra = DatasetExtra.find_or_create_by(echo_id: dataset['echo_dataset_id'])
+        dataset = dataset['Collection']
+
+        # Additional attribute definitions
+        attribute_defs = dataset['AdditionalAttributes'] || {}
+        attributes = Array.wrap(attribute_defs['AdditionalAttribute']).reject {|a| a['Value']}
+        if attributes.present?
+          attributes = attributes.map do |attr|
+            attr.map { |k, v| {k.underscore => v} }.reduce(&:merge)
+          end
+          extra.searchable_attributes = {attributes: attributes}
+        else
+          extra.searchable_attributes = {attributes: []}
+        end
+
+        # Orbit parameters
+        spatial = dataset['Spatial'] || {}
+        orbit = spatial['OrbitParameters']
+        if orbit
+          orbit = orbit.map { |k, v| {k.underscore => v} }.reduce(&:merge)
+          extra.orbit = orbit
+        else
+          extra.orbit = {}
+        end
+
+        extra.save
+
+        processed_count += 1
+      end
+    end while processed_count < hits && datasets.size > 0
+
+    nil
   end
 
   def self.load_option_defs
@@ -90,11 +139,17 @@ class DatasetExtra < ActiveRecord::Base
     decorate_browseable_granule(dataset)
     decorate_granule_information(dataset)
     decorate_gibs_layers(dataset)
+    decorate_echo10_attributes(dataset)
 
     dataset
   end
 
   private
+
+  def decorate_echo10_attributes(dataset)
+    dataset[:searchable_attributes] = self.searchable_attributes['attributes']
+    dataset[:orbit] = self.orbit if self.orbit.present?
+  end
 
   def decorate_browseable_granule(dataset)
     dataset[:browseable_granule] = self.browseable_granule
@@ -105,18 +160,6 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def decorate_gibs_layers(dataset)
-    if Rails.env.development? && dataset[:id] == 'C90757596-LAADS'
-      # DELETE ME BEFORE GOING TO PRODUCTION
-      # Fake GIBS visualization for demonstrating compositing
-      dataset[:gibs] = {
-        name: 'Corrected Reflectance (True Color)',
-        source: 'Terra / MODIS',
-        product: 'MODIS_Terra_CorrectedReflectance_TrueColor',
-        resolution: '250m',
-        format: 'jpeg'
-      }
-    end
-
     if dataset[:id] == 'C1000000016-LANCEMODIS'
       dataset[:gibs] = {
         product: 'MODIS_Terra_Snow_Cover',
