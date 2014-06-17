@@ -39,13 +39,18 @@ module Helpers
         p = ([options[:focus]] + Array.wrap(options[:project])).join('!')
         params['p'] = p if p.present?
 
-        query_from_params(params)
-      end
+        Array.wrap(options[:queries]).each_with_index do |q, i|
+          obj = {}
+          if q && q[:browse_only]
+            obj['bo'] = 'true'
+          end
+          if obj.keys.present?
+            params['pg'] ||= {}
+            params['pg'][i] = obj
+          end
+        end
 
-      def query_from_params(params)
-        uri = Addressable::URI.new
-        uri.query_values = params
-        uri.query
+        params.to_param
       end
 
       def temporal(start, stop=nil, range=nil)
