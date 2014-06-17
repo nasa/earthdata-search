@@ -144,6 +144,9 @@ ns.Granules = do (ko,
       # Avoid reloading if no other changes are pending
       @_prevQuery = param(@params()) if @_prevQuery == currentQuery
 
+    undoExclude: =>
+      @query.excludedGranules.pop()
+
     params: =>
       parentParams = @parentQuery.globalParams()
       params = extend({}, parentParams, @query.params())
