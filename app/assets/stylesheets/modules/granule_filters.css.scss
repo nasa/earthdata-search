@@ -83,9 +83,16 @@
   padding: 0;
 }
 
-.panel-list .undo {
-  // position: relative;
-  // top: -50px;
+.master-overlay-info .undo {
+  margin: -2.5em 0 0 1em;
+  padding: .1em 1em;
+  position: absolute;
   text-align: center;
+  color: #fff;
   background: #f39c12;
+  font-size: .9em;
+
+  a {
+    text-decoration: underline;
+  }
 }

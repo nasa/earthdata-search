@@ -44,11 +44,11 @@
             Search Time: <span data-bind="text: granules.loadTime">0.000</span>s
           </p>
           <!-- /ko -->
+          <!-- ko if: granules.excludedGranulesList().length > 0 -->
+          <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
+          <!-- /ko -->
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
-          <p class="undo" data-bind="if: granules.excludedGranulesList().length > 0">
-            Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a>
-          </p>
           <ul class="panel-list-list" data-bind="foreach: granules.results()">
 
             <li class="panel-list-item" data-bind="css: {'panel-list-item-with-thumb': browse_flag === 'true', 'panel-list-focused': $parent.focused() === $data, 'panel-list-selected': $parent.isStickied($data)}, event: { mouseenter: $parent.onGranuleMouseover, mouseleave: $parent.onGranuleMouseout, click: $parent.toggleStickyFocus}">
