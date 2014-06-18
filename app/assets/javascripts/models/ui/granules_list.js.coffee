@@ -161,26 +161,10 @@ ns.GranulesList = do ($=jQuery)->
         @_map.fire('edsc.focusgranule', granule: newGranule)
       if granule == @stickied()
         @_map.fire('edsc.stickygranule', scroll: false, granule: newGranule ? null)
-      @granules.excludedGranulesList.push({index: index, granule: granule})
       @granules.exclude(granule)
 
     undoExcludeGranule: =>
-      newGranule = @granules.excludedGranulesList.pop()
-      index = newGranule.index
-      granule = newGranule.granule
-
-      granules = @granules.results()
-
-      if index == 0
-        granules.unshift(granule)
-        newList = granules
-      else
-        beforeValues = granules.splice(0, index)
-        afterValues = granules.splice(index-1)
-        newList = beforeValues.concat(granule, afterValues)
-
-      @granules.results(newList)
-      @granules.undoExclude()
+      granule = @granules.undoExclude()
 
       if @focused()
         @_map.fire('edsc.focusgranule', granule: granule)

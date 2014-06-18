@@ -111,7 +111,7 @@ describe "Granule list", reset: false do
         expect(page).to have_content("Granule excluded. Undo")
       end
 
-      context "clicking the undo button" do
+      context "and clicking the undo button" do
         before :all do
           click_link "Undo"
         end
@@ -120,7 +120,7 @@ describe "Granule list", reset: false do
           first_granule_list_item.click_link "Exclude this granule"
         end
 
-        it "adds the excluded granule back into the list" do
+        it "shows the excluded granule in the granule list" do
           expect(page).to have_content('SC:AST_L1A.003:2132587502')
           expect(page).to have_css('#granule-list .panel-list-item', count: 20)
         end
@@ -130,7 +130,7 @@ describe "Granule list", reset: false do
         end
       end
 
-      context "changing granule query" do
+      context "and changing granule query" do
         before :all do
           click_link "Filter granules"
           check "Find only granules that have browse images."
@@ -139,12 +139,13 @@ describe "Granule list", reset: false do
         after :all do
           uncheck "Find only granules that have browse images."
           click_link "Add it back"
+          wait_for_xhr
           click_link 'Hide granule filters'
           first_granule_list_item.click
           first_granule_list_item.click_link "Exclude this granule"
         end
 
-        it "removes undo button" do
+        it "removes the undo button" do
           expect(page).to have_no_content("Granule excluded. Undo")
         end
       end
