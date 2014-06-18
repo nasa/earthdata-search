@@ -38,6 +38,7 @@ ns.GranulesList = do ($=jQuery)->
 
       @_pendingSticky = ko.observable(null)
       @_setStickyComputed = ko.computed(read: @_setSticky, owner: this)
+      @excludedGranulesList = ko.observableArray()
 
     dispose: ->
       map = $('#map').data('map')
@@ -161,7 +162,32 @@ ns.GranulesList = do ($=jQuery)->
         @_map.fire('edsc.focusgranule', granule: newGranule)
       if granule == @stickied()
         @_map.fire('edsc.stickygranule', scroll: false, granule: newGranule ? null)
+      @excludedGranulesList.push({index: index, granule: granule})
       @granules.exclude(granule)
+
+    undoExcludeGranule: =>
+      # TODO Clear this list if anything happens to the granule query
+      newGranule = @excludedGranulesList.pop()
+      index = newGranule.index
+      granule = newGranule.granule
+
+      granules = @granules.results()
+
+      if index == 0
+        granules.unshift(granule)
+        newList = granules
+      else
+        beforeValues = granules.splice(0, index)
+        afterValues = granules.splice(index-1)
+        newList = beforeValues.concat(granule, afterValues)
+
+      @granules.results(newList)
+      @granules.undoExclude()
+
+      if @focused()
+        @_map.fire('edsc.focusgranule', granule: granule)
+      if @stickied()
+        @_map.fire('edsc.stickygranule', scroll: false, granule: granule ? null)
 
     _onRemoveStickyGranule: (e) =>
       @removeGranule(@stickied(), e)

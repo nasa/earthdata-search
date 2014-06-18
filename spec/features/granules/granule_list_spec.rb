@@ -113,13 +113,16 @@ describe "Granule list", reset: false do
         end
 
         after :all do
-          first_granule_list_item.click
           first_granule_list_item.click_link "Exclude this granule"
         end
 
         it "adds the excluded granule back into the list" do
-            expect(page).to have_content('SC:AST_L1A.003:2132587502')
-            expect(page).to have_css('#granule-list .panel-list-item', count: 20)
+          expect(page).to have_content('SC:AST_L1A.003:2132587502')
+          expect(page).to have_css('#granule-list .panel-list-item', count: 20)
+        end
+
+        it "selects the previously excluded granule" do
+          expect(page).to have_css('.panel-list-list li:nth-child(1).panel-list-selected')
         end
       end
 
