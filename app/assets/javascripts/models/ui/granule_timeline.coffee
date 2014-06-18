@@ -6,6 +6,7 @@ ns = @edsc.models.ui
 ns.GranuleTimeline = do (ko
                          KnockoutModel = @edsc.models.KnockoutModel
                          XhrModel = @edsc.models.data.XhrModel
+                         GranulesModel = @edsc.models.data.Granules
                          extend = $.extend
                          config = @edsc.config
                          ) ->
@@ -33,6 +34,9 @@ ns.GranuleTimeline = do (ko
       delete params.page_size
       delete params.sort_key
       params
+
+    _queryFor: (params) ->
+      GranulesModel.prototype._queryFor(params)
 
     _computeSearchResponse: (current, callback) =>
       return unless @dataset.granulesModel.query.isValid()

@@ -50,7 +50,7 @@ ns.Dataset = do (ko
       Object.defineProperty this, 'granuleQuery',
         get: ->
           @granuleQueryLoaded(true)
-          @_granuleQuery ?= @disposable(new GranuleQuery(jsonData.id, @query))
+          @_granuleQuery ?= @disposable(new GranuleQuery(@id, @query, @searchable_attributes))
 
       Object.defineProperty this, 'granulesModel',
         get: -> @_granulesModel ?= @disposable(new Granules(@granuleQuery, @query))
@@ -107,7 +107,12 @@ ns.Dataset = do (ko
     fromJson: (jsonObj) ->
       @json = jsonObj
 
+      attributes = jsonObj.searchable_attributes
+      if attributes && @granuleQueryLoaded()
+        @granuleQuery.attributes.definitions(attributes)
+
       this[key] = value for own key, value of jsonObj
+
 
       @hasAtomData(jsonObj.links?)
       @gibs = ko.observable(@gibs ? null)

@@ -159,10 +159,9 @@ class DatasetExtra < ActiveRecord::Base
           description.start_with?("The #{name} attribute for this granule")
 
         attr.delete('description')
-      elsif description && description.end_with?('ON or OFF')
-        attr['description'] = description.gsub(' - ON or OFF', '')
-        attr['options'] = ['ON', 'OFF']
       end
+
+      attr['data_type'] = 'STRING' if attr['data_type'].include?('STRING')
 
       renames = {
         'data_type' => 'type',
@@ -179,28 +178,31 @@ class DatasetExtra < ActiveRecord::Base
       type_to_name = {
         'INT' => 'Integer',
         'FLOAT' => 'Float',
-        'DATETIME' => 'Date / Time',
-        'DATETIME_STRING' => 'Date / Time',
+        'DATETIME' => 'Date/Time',
+        'DATETIME_STRING' => 'Date/Time',
         'TIME_STRING' => 'Time',
+        'TIME' => 'Time',
         'DATE' => 'Date',
         'STRING' => 'String value'
       }
 
-      attr['help'] = attr['name'] + ' ('
-      if attr['unit']
-        attr['help'] += attr['unit'].capitalize if attr['unit']
-      else
-        attr['help'] += type_to_name[attr['type']] || attr['type']
-      end
-      if attr['begin'] && attr['end']
-        attr['help'] += " from #{attr['begin']} to #{attr['end']}"
-      elsif attr['begin']
-        attr['help'] += ", minimum: #{attr['begin']}"
-      elsif attr['end']
-        attr['help'] += ", maximum: #{attr['begin']}"
-      end
-      attr['help'] += ')'
+      help = type_to_name[attr['type']] || attr['type']
+      help += " #{attr['unit'].downcase}" if attr['unit']
 
+      if attr['begin'] && attr['end']
+        help += " from #{attr['begin']} to #{attr['end']}"
+      elsif attr['begin']
+        help += ", minimum: #{attr['begin']}"
+      elsif attr['end']
+        help += ", maximum: #{attr['begin']}"
+      end
+      help += ", ranges allowed" unless attr['type'] == 'STRING'
+      attr['help'] = help
+
+      if ['INT', 'FLOAT'].include?(attr['type'])
+        attr['begin'] = attr['begin'].to_f if attr['begin']
+        attr['end'] = attr['end'].to_f if attr['end']
+      end
 
       attr
     end
