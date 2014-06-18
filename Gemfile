@@ -11,6 +11,7 @@ gem 'multi_xml'
 gem 'term-ansicolor'
 gem 'toastr-rails'
 gem 'unicorn'
+gem 'whenever', :require => false
 
 gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'a89da600f389c53c88362ce5133d8d3945776464'
 

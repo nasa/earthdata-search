@@ -1,4 +1,7 @@
 class DatasetExtra < ActiveRecord::Base
+  validates_presence_of :echo_id
+  validates_uniqueness_of :echo_id
+
   store :searchable_attributes, coder: JSON
   store :orbit, coder: JSON
 
@@ -37,7 +40,7 @@ class DatasetExtra < ActiveRecord::Base
         puts "Provider has granules but no granules found: #{result['echo_collection_id']}" unless extra.granule
       end
 
-      extra.save
+      extra.save if extra.changed?
 
       processed_count += 1
 
@@ -81,7 +84,7 @@ class DatasetExtra < ActiveRecord::Base
           extra.orbit = {}
         end
 
-        extra.save
+        extra.save if extra.changed?
 
         processed_count += 1
       end
@@ -144,10 +147,70 @@ class DatasetExtra < ActiveRecord::Base
     dataset
   end
 
+  def clean_attributes
+    @clean_attrs ||= Array.wrap((searchable_attributes || {})['attributes']).map do |attr|
+      attr = attr.dup
+      # Delete useless garbage
+      name = attr['name']
+      description = attr['description']
+      if description == 'None' ||
+          description == name ||
+          description.start_with?("The #{name} for this collection") ||
+          description.start_with?("The #{name} attribute for this granule")
+
+        attr.delete('description')
+      elsif description && description.end_with?('ON or OFF')
+        attr['description'] = description.gsub(' - ON or OFF', '')
+        attr['options'] = ['ON', 'OFF']
+      end
+
+      renames = {
+        'data_type' => 'type',
+        'parameter_units_of_measure' => 'unit',
+        'parameter_range_begin' => 'begin',
+        'parameter_range_end' => 'end'
+      }
+
+      renames.each do |from, to|
+        value = attr.delete(from)
+        attr[to] = value if value
+      end
+
+      type_to_name = {
+        'INT' => 'Integer',
+        'FLOAT' => 'Float',
+        'DATETIME' => 'Date / Time',
+        'DATETIME_STRING' => 'Date / Time',
+        'TIME_STRING' => 'Time',
+        'DATE' => 'Date',
+        'STRING' => 'String value'
+      }
+
+      attr['help'] = attr['name'] + ' ('
+      if attr['unit']
+        attr['help'] += attr['unit'].capitalize if attr['unit']
+      else
+        attr['help'] += type_to_name[attr['type']] || attr['type']
+      end
+      if attr['begin'] && attr['end']
+        attr['help'] += " from #{attr['begin']} to #{attr['end']}"
+      elsif attr['begin']
+        attr['help'] += ", minimum: #{attr['begin']}"
+      elsif attr['end']
+        attr['help'] += ", maximum: #{attr['begin']}"
+      end
+      attr['help'] += ')'
+
+
+      attr
+    end
+    @clean_attrs.presence
+  end
+
   private
 
   def decorate_echo10_attributes(dataset)
-    dataset[:searchable_attributes] = self.searchable_attributes['attributes']
+    dataset[:searchable_attributes] = self.clean_attributes
     dataset[:orbit] = self.orbit if self.orbit.present?
   end
 

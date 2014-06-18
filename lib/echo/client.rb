@@ -223,7 +223,7 @@ module Echo
         conn.response :errors, :content_type => /\bjson$/
         conn.response :json, :content_type => /\bjson$/
         conn.response :echo10_granules, :content_type => "application/echo10+xml"
-        conn.response :echo10_datasets, :content_type => "application/echo10+xml"
+        #conn.response :echo10_datasets, :content_type => "application/echo10+xml"
         conn.response :events, :content_type => /\bxml$/
         conn.response :xml, :content_type => /\bxml$/
 
