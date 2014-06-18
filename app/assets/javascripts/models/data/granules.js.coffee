@@ -100,6 +100,8 @@ ns.Granules = do (ko,
           @results.readImmediate()
         focusedTemporal = newFocus
 
+      @excludedGranulesList = ko.observableArray()
+
     _toResults: (data, current, params) ->
       entries = data.feed.entry
       newItems = (new Granule(entry) for entry in entries)
@@ -120,6 +122,7 @@ ns.Granules = do (ko,
         params.page_num = @page = 1
 
         if needsLoad && @_prevQuery != query
+          @excludedGranulesList([])
           @_prevQuery = query
           if params.temporal == 'no-data'
             @results([])

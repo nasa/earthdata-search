@@ -107,6 +107,10 @@ describe "Granule list", reset: false do
         expect(page).to have_css('#granule-list .panel-list-item', count: 19)
       end
 
+      it "shows undo button to re-add the granule" do
+        expect(page).to have_content("Granule excluded. Undo")
+      end
+
       context "clicking the undo button" do
         before :all do
           click_link "Undo"
@@ -123,6 +127,25 @@ describe "Granule list", reset: false do
 
         it "selects the previously excluded granule" do
           expect(page).to have_css('.panel-list-list li:nth-child(1).panel-list-selected')
+        end
+      end
+
+      context "changing granule query" do
+        before :all do
+          click_link "Filter granules"
+          check "Find only granules that have browse images."
+        end
+
+        after :all do
+          uncheck "Find only granules that have browse images."
+          click_link "Add it back"
+          click_link 'Hide granule filters'
+          first_granule_list_item.click
+          first_granule_list_item.click_link "Exclude this granule"
+        end
+
+        it "removes undo button" do
+          expect(page).to have_no_content("Granule excluded. Undo")
         end
       end
 

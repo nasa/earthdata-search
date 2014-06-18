@@ -46,7 +46,7 @@
           <!-- /ko -->
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
-          <p class="undo" data-bind="if: excludedGranulesList().length > 0">
+          <p class="undo" data-bind="if: granules.excludedGranulesList().length > 0">
             Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a>
           </p>
           <ul class="panel-list-list" data-bind="foreach: granules.results()">
