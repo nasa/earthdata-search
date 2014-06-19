@@ -35,6 +35,7 @@
       title: "Welcome to Earthdata Search"
       content: 'Enter your search terms or click <strong>Next</strong> to take an introductory tour.'
       element: '.landing-dialog'
+      placement: 'right'
       showNext: true
       cleanup: (nextFn, closeFn) ->
         $(window).off 'statechange anchorchange', closeFn
