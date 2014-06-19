@@ -39,7 +39,7 @@
     _fromQuery: (def, conditions) ->
       for condition in conditions when condition.name == def.name
         {minValue, maxValue, value} = condition
-        return [minValue, maxValue].join(' - ') if minValue? || maxValue?
+        return [minValue, maxValue].join(' - ').trim() if minValue? || maxValue?
         return value
       null
 
@@ -81,7 +81,7 @@
             return validation.error if validation.error
             result[prop] = validation.value
           return "Values must be greater than #{def.begin}" if def.begin && result[prop] < def.begin
-          return "Values must be less than #{def.begin}" if def.end && result[prop] < def.end
+          return "Values must be less than #{def.end}" if def.end && result[prop] > def.end
 
       if result.minValue && result.maxValue && result.minValue > result.maxValue
         return "Range minimum must be less than maximum"
@@ -105,12 +105,11 @@
       {value: value, error: error}
 
     _validateTIME: (valueStr) ->
-      result = @_validateDATETIME(valueStr, 'time')
-      result.value = result.value.split('T')[1] if result.value?
-      result
+      error = "Invalid time: #{valueStr}" unless valueStr.match(/^\d{2}:\d{2}:\d{2}/)
+      {value: valueStr, error: error}
 
-    _validateDATE: (value) ->
-      result = @_validateDATETIME(valueStr, 'time')
+    _validateDATE: (valueStr) ->
+      result = @_validateDATETIME(valueStr, 'date')
       result.value = result.value.split('T')[0] if result.value?
       result
 
