@@ -93,7 +93,7 @@ describe "GranuleAttributes", ->
       expect(getToQueryValue('-2 - -1')).toEqual(name: 'attr0', type: 'int', minValue: -2, maxValue: -1)
 
     it "normalizes dates to ISO format", ->
-      expect(getToQueryValue('2014-07-01 12:00:00', 'DATETIME')).toEqual(name: 'attr0', type: 'datetime', value: '2014-07-01T16:00:00.000Z')
+      expect(getToQueryValue('2014-07-01 12:00:00+0', 'DATETIME')).toEqual(name: 'attr0', type: 'datetime', value: '2014-07-01T12:00:00.000Z')
 
   describe '#_fromQuery', ->
     getFromQueryValue = (conditions, type="INT") ->
