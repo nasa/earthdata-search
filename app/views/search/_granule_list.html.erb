@@ -39,9 +39,13 @@
             (<a href="#" data-bind="click: $root.ui.granuleTimeline.clear">Show All</a>)
             <!-- /ko -->
           </p>
+
           <p data-bind="if: granules.loadTime() !== null" class="panel-list-meta">
             Search Time: <span data-bind="text: granules.loadTime">0.000</span>s
           </p>
+          <!-- /ko -->
+          <!-- ko if: granules.excludedGranulesList().length > 0 -->
+          <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
           <!-- /ko -->
         </div>
         <div class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">

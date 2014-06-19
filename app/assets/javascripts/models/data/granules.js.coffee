@@ -100,6 +100,8 @@ ns.Granules = do (ko,
           @results.readImmediate()
         focusedTemporal = newFocus
 
+      @excludedGranulesList = ko.observableArray()
+
     _toResults: (data, current, params) ->
       entries = data.feed.entry
       newItems = (new Granule(entry) for entry in entries)
@@ -120,6 +122,7 @@ ns.Granules = do (ko,
         params.page_num = @page = 1
 
         if needsLoad && @_prevQuery != query
+          @excludedGranulesList([])
           @_prevQuery = query
           if params.temporal == 'no-data'
             @results([])
@@ -140,9 +143,35 @@ ns.Granules = do (ko,
       @hits(@hits() - 1)
 
       currentQuery = param(@params())
+      @excludedGranulesList.push({index: index, granule: granule})
       @query.excludedGranules.push(granule.id)
       # Avoid reloading if no other changes are pending
       @_prevQuery = param(@params()) if @_prevQuery == currentQuery
+
+    undoExclude: =>
+      newGranule = @excludedGranulesList.pop()
+      index = newGranule.index
+      granule = newGranule.granule
+
+      granules = @results()
+
+      if index == 0
+        granules.unshift(granule)
+        newList = granules
+      else
+        beforeValues = granules.splice(0, index)
+        afterValues = granules.splice(index-1)
+        newList = beforeValues.concat(granule, afterValues)
+
+      @results(newList)
+
+      @hits(@hits() + 1)
+      currentQuery = param(@params())
+      @query.excludedGranules.pop()
+      # Avoid reloading if no other changes are pending
+      @_prevQuery = param(@params()) if @_prevQuery == currentQuery
+
+      granule
 
     params: =>
       parentParams = @parentQuery.globalParams()
