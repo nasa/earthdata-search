@@ -2,11 +2,8 @@
 @edsc.models.data.GranuleAttributes = do (ko) ->
   class GranuleAttributes
     constructor: (definitions) ->
-      for definition in definitions
-        definition.value = ko.observable(null)
-
       @_definitions = ko.observable([])
-      @definitions(definitions)
+      @definitions(definitions) if definitions
       @queryCondition = ko.computed(read: @_readQueryCondition, write: @_writeQueryCondition, owner: this)
 
     definitions: (definitions) ->
@@ -23,7 +20,7 @@
     _readQueryCondition: ->
       result = null
       definitions = @_definitions()
-      for def in definitions
+      for def in definitions ? []
         value = @_toQuery(def)
         if value?
           result ?= []
@@ -31,6 +28,7 @@
       result
 
     _writeQueryCondition: (condition) ->
+      return unless @_definitions()
       condition = [] unless condition
 
       definitions = @_definitions()

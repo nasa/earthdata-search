@@ -179,22 +179,20 @@ class DatasetExtra < ActiveRecord::Base
         'INT' => 'Integer',
         'FLOAT' => 'Float',
         'DATETIME' => 'Date/Time',
-        'DATETIME_STRING' => 'Date/Time',
-        'TIME_STRING' => 'Time',
         'TIME' => 'Time',
         'DATE' => 'Date',
         'STRING' => 'String value'
       }
 
       help = type_to_name[attr['type']] || attr['type']
-      help += " #{attr['unit'].downcase}" if attr['unit']
+      help += " #{attr['unit']}" if attr['unit']
 
       if attr['begin'] && attr['end']
         help += " from #{attr['begin']} to #{attr['end']}"
       elsif attr['begin']
         help += ", minimum: #{attr['begin']}"
       elsif attr['end']
-        help += ", maximum: #{attr['begin']}"
+        help += ", maximum: #{attr['end']}"
       end
       help += ", ranges allowed" unless attr['type'] == 'STRING'
       attr['help'] = help
