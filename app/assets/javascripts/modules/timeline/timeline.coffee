@@ -526,22 +526,41 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         allowWheel = false
         setTimeout((-> allowWheel = true), 300)
 
-      L.DomEvent.on svg, 'mousewheel', (e) =>
-        return unless allowWheel
-
+      getTime = (e) =>
         draggable = @root.find(@scope('.draggable'))[0]
         origin = @_getTransformX(draggable)
 
         x = e.clientX - svg.clientLeft - origin
         time = @positionToTime(x)
-        deltaX = e.wheelDeltaX
-        deltaY = e.wheelDeltaY
+
+      doScroll = (deltaX, deltaY, e) =>
+        time = getTime(e)
         if Math.abs(deltaY) > Math.abs(deltaX)
           levels = if deltaY > 0 then -1 else 1
           @_deltaZoom(levels, time)
           rateLimit()
         else if deltaX != 0
           @_pan(deltaX)
+
+      # Safari
+      L.DomEvent.on svg, 'mousewheel', (e) =>
+        return unless allowWheel
+
+        deltaX = e.wheelDeltaX
+        deltaY = e.wheelDeltaY
+        doScroll(deltaX, deltaY, e)
+
+        e.preventDefault()
+
+      # Chrome/Firefox
+      L.DomEvent.on svg, 'wheel', (e) =>
+        return unless allowWheel
+        return if e.type == "mousewheel"
+
+        # 'wheel' deltas are opposite from 'mousewheel'
+        deltaX = -e.deltaX
+        deltaY = -e.deltaY
+        doScroll(deltaX, deltaY, e)
 
         e.preventDefault()
 
