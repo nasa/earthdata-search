@@ -25,3 +25,4 @@ build_output
 /vagrant/.vagrant
 
 /config/database.yml
+.jhw-cache

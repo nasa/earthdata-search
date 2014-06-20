@@ -1,4 +1,5 @@
 #= require models/data/grid
+#= require models/data/granule_attributes
 #= require models/ui/temporal
 
 ns = @edsc.models.data
@@ -6,6 +7,7 @@ ns = @edsc.models.data
 ns.query = do (ko,
                param = $.param
                GridCondition=@edsc.models.data.GridCondition
+               GranuleAttributes=@edsc.models.data.GranuleAttributes
                KnockoutModel=@edsc.models.KnockoutModel
                Temporal=@edsc.models.ui.Temporal
                deparam=@edsc.util.deparam
@@ -280,7 +282,7 @@ ns.query = do (ko,
       constraint? && (!spatial || spatial == constraint)
 
   class GranuleQuery extends Query
-    constructor: (datasetId, parentQuery) ->
+    constructor: (datasetId, parentQuery, attributes) ->
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
       @granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
       @dayNightFlagOptions = [{name: "Anytime", value: null},
@@ -288,6 +290,7 @@ ns.query = do (ko,
                               {name: "Night only", value: "NIGHT"},
                               {name: "Both day and night", value: "BOTH"}]
       @isValid = @computed(read: @_computeIsValid, deferEvaluation: true)
+      @attributes = new GranuleAttributes(attributes)
 
       @temporal = new Temporal()
       @cloudCover = new Range()
@@ -302,6 +305,7 @@ ns.query = do (ko,
       @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
       @granuleIds = @queryComponent(new DelimitedParam(@granuleIdsSelectedOptionValue), '')
       @excludedGranules = @queryComponent(new ExclusionParam('exclude', 'echo_granule_id'), ko.observableArray())
+      @attributeFilters = @queryComponent(new QueryParam('attribute'), @attributes.queryCondition)
 
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       super(parentQuery)
@@ -313,7 +317,8 @@ ns.query = do (ko,
       super(query)
 
     _computeIsValid: =>
-      (@validateCloudCoverValue(@cloudCover.min()) &&
+      (@attributes.isValid() &&
+       @validateCloudCoverValue(@cloudCover.min()) &&
        @validateCloudCoverValue(@cloudCover.max()) &&
        @validateCloudCoverRange(@cloudCover.min(), @cloudCover.max()))
 

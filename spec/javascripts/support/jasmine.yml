@@ -25,6 +25,7 @@ src_files:
   - assets/models/knockout_model.js.coffee
   - assets/models/data/grid.coffee
   - assets/models/data/query.js.coffee
+  - assets/models/data/granule_attributes.coffee
 
 # stylesheets
 #

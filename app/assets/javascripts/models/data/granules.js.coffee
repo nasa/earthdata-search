@@ -114,6 +114,10 @@ ns.Granules = do (ko,
     _shouldLoad: (url) ->
       true
 
+    _queryFor: (params) ->
+      # Hack around problem with ECHO accepting explicitly indexed attributes
+      super(params).replace(/attribute%5B\d+%5D/g, 'attribute%5B%5D')
+
     _computeSearchResponse: (current, callback, needsLoad=true) ->
       if @query?.isValid()
         results = []

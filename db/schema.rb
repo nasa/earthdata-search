@@ -11,17 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140616171712) do
+ActiveRecord::Schema.define(version: 20140618143644) do
 
   create_table "dataset_extras", force: true do |t|
-    t.string   "echo_id"
+    t.string   "echo_id",                 null: false
     t.boolean  "has_browseable_granules"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "has_granules"
     t.string   "browseable_granule"
     t.string   "granule"
+    t.text     "searchable_attributes"
+    t.text     "orbit"
   end
+
+  add_index "dataset_extras", ["echo_id"], name: "index_dataset_extras_on_echo_id", unique: true
 
   create_table "orders", force: true do |t|
     t.string   "order_id"

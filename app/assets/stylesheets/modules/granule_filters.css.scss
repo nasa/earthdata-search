@@ -83,6 +83,28 @@
   padding: 0;
 }
 
+.granule-filter-attribute {
+  margin-bottom: 1em;
+
+  input[placeholder] {
+    width: 30em;
+  }
+
+  label {
+    padding-right: 1em;
+  }
+}
+
+.granule-filter-attribute-label {
+  font-weight: bold;
+  display:block;
+}
+
+.granule-filter-attribute-help {
+  font-size: .9em;
+  font-style: italic;
+}
+
 .master-overlay-info .undo {
   margin: -2.5em 0 0 1em;
   padding: .1em 1em;

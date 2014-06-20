@@ -70,8 +70,11 @@ ns.XhrModel = do (ko
     _shouldLoad: (url) ->
       @_prevUrl != url || @isError.peek()
 
+    _queryFor: (params) ->
+      $.param(params)
+
     _load: (params, current, callback) =>
-      query = $.param(params)
+      query = @_queryFor(params)
       url = "#{@path}?#{query}"
       return unless @_shouldLoad(url)
       @_prevUrl = url
@@ -88,7 +91,7 @@ ns.XhrModel = do (ko
       data = null
       if method == 'post'
         url = @path
-        data = params
+        data = query
 
       @currentRequest = xhr = $.ajax
         method: method
