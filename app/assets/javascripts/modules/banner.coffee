@@ -121,7 +121,7 @@
       showBanner(
         'unsupportedbrowser',
         'Your browser is not yet supported',
-        'The Earthdata Search Alpha Preview is designed to work best in Chrome and Safari browsers.')
+        'The Earthdata Search Alpha Preview is designed to work best in Chrome, Safari, and Firefox browsers.')
   # END DELETE
 
   exports = showBanner
