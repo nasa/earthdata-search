@@ -329,4 +329,35 @@ describe "Granule search filters", reset: false do
     end
   end
 
+  it "shows dataset additional attributes" do
+    expect(page).to have_text('Dataset-Specific Attributes')
+    expect(page).to have_field('ASTERMapProjection')
+  end
+
+  context "when searching by additional attributes" do
+    before(:all) do
+      fill_in('LowerLeftQuadCloudCoverage', with: '50 - 100')
+      fill_in('DAR_ID', with: '')
+      wait_for_xhr
+    end
+
+    it "filters granules using the additional attribute values" do
+      expect(page).to filter_granules_from(before_granule_count)
+    end
+
+    context "when clearing the attribute search" do
+      before(:all) do
+        click_button "granule-filters-clear"
+        wait_for_xhr
+      end
+
+      it "clears the attribute search field" do
+        expect(page).to have_field('LowerRightQuadCloudCoverage', with: '')
+      end
+
+      it "resets the granule search" do
+        expect(page).to reset_granules_to(before_granule_count)
+      end
+    end
+  end
 end
