@@ -54,6 +54,7 @@ ns.SearchPage = do (ko
         isLandingPage: ko.observable(null) # Used by modules/landing
 
       @bindingsLoaded = ko.observable(false)
+      @labs = ko.observable(false)
 
       @spatialError = ko.computed(@_computeSpatialError)
 

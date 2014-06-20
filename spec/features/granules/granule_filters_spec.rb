@@ -6,7 +6,8 @@ describe "Granule search filters", reset: false do
   before(:all) do
     page.driver.resize_window(2000, 3000) # Avoid having to scroll to click
 
-    load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project
+    # Labs parameter enables additional attribute searching
+    load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
 
     first_project_dataset.click_link "Show granule filters"
 

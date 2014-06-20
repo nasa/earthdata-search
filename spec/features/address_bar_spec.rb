@@ -458,4 +458,39 @@ describe 'Address bar', reset: false do
     end
   end
 
+
+  context 'when the labs parameter is set to true' do
+    context 'the granule filters panel' do
+      before(:all) do
+        visit "/search/granules?labs=true&p=C14758250-LPDAAC_ECS"
+        click_on 'Filter granules'
+      end
+
+      it 'shows a section for additional attribute search' do
+        expect(page).to have_text('Dataset-Specific Attributes')
+      end
+
+      it 'shows additional attribute search fields' do
+        expect(page).to have_field('ASTERMapProjection')
+      end
+    end
+  end
+
+  context 'when the labs parameter not set' do
+    context 'the granule filters panel' do
+      before(:all) do
+        visit "/search/granules?p=C14758250-LPDAAC_ECS"
+        click_on 'Filter granules'
+      end
+
+      it 'shows no section for additional attribute search' do
+        expect(page).to have_no_text('Dataset-Specific Attributes')
+      end
+
+      it 'shows no additional attribute search fields' do
+        expect(page).to have_no_field('ASTERMapProjection')
+      end
+    end
+  end
+
 end
