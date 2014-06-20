@@ -50,6 +50,8 @@ module Helpers
           end
         end
 
+        params['labs'] = options[:labs] if options[:labs]
+
         params.to_param
       end
 

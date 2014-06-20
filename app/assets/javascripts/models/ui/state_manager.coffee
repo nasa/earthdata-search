@@ -24,6 +24,8 @@
       page = @page
       ui = page.ui
       result = {}
+      result.labs = page.labs() if page.labs()
+
       result = extend(result, page.project.serialized(), ui.datasetsList.serialized())
 
       if @isDomLoaded()
@@ -52,6 +54,7 @@
       else
         @_timelineParams = params.tl
 
+      page.labs(params.labs)
       page.project.serialized(params)
 
       unless @loaded
