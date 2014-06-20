@@ -15,7 +15,7 @@ ns.Datasets = do (ko
 
       if needsLoad.length > 0
         new DatasetsModel(query).search {echo_collection_id: needsLoad}, (results) =>
-          Dataset.findOrCreate(result, query).dispose() for result in results
+          result.dispose() for result in results
           callback(datasets)
       else
         callback(datasets)

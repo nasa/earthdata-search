@@ -249,6 +249,7 @@ ns.Project = do (ko,
                 @focus(dataset)
               else
                 @addDataset(dataset)
+              dataset.dispose() # forIds ends up incrementing reference count
               @getProjectDataset(dataset.id).fromJson(pending[dataset.id]) if pending[dataset.id]
             @_pendingAccess = null
       else
