@@ -113,10 +113,11 @@
 
   # DELETE BEFORE 1.0 RELEASE
   $(document).ready ->
-    isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-    isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+    isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
+    isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor)
+    isFirefox = /Firefox/.test(navigator.userAgent)
 
-    if !isChrome && !isSafari
+    if !isChrome && !isSafari && !isFirefox
       showBanner(
         'unsupportedbrowser',
         'Your browser is not yet supported',
