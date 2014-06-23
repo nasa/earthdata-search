@@ -49,6 +49,21 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
 
       @focused(new GranulesList(dataset))
 
+    canQueryDatasetSpatial: (dataset) =>
+      spatial = @query.spatial()
+      constraint = dataset.spatial_constraint()
+      constraint? && (!spatial || spatial == constraint)
+
+    toggleQueryDatasetSpatial: (dataset) =>
+      constraint = dataset.spatial_constraint()
+      spatial = @query.spatial()
+      if constraint == spatial
+        constraint = ""
+      else if dataset.points?
+        $('#map').data('map').map.setView(dataset.points[0].split(/\s+/))
+      @query.spatial(constraint)
+      false
+
     unfocusDataset: =>
       if @focused()?
         @_unfocusTimeout = setTimeout((=> @focused(null)), config.defaultAnimationDurationMs)

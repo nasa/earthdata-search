@@ -12,6 +12,24 @@ ns.Map = do (window,
              MouseEventsLayer = ns.MouseEventsLayer,
              page = @edsc.page) ->
 
+  originalSetView = L.Map.prototype.setView
+
+  L.Map.include
+    setView: (center, zoom) ->
+      @setOffsetCenter(@getOffsetCenter(center, zoom), zoom)
+
+    getOffsetCenter: (center, zoom) ->
+      center ?= @getCenter()
+      zoom ?= @getZoom()
+      center = L.latLng(center)
+      centerPoint = @project(center, zoom)
+      newCenter = centerPoint.subtract([@getSize().x / 4, 0])
+      @unproject(newCenter, zoom)
+
+    setOffsetCenter: (center, zoom) ->
+      originalSetView.call(this, center, zoom)
+
+
   # Fix leaflet default image path
   L.Icon.Default.imagePath = '/images/leaflet-0.7'
 
@@ -29,6 +47,7 @@ ns.Map = do (window,
       $(el).data('map', this)
       @layers = []
       map = @map = new L.Map(el, zoomControl: false, attributionControl: false)
+
       map.loadingLayers = 0
 
       @_buildLayerSwitcher()
@@ -65,7 +84,7 @@ ns.Map = do (window,
       state.subscribe (newValue) ->
         if newValue? && newValue.length > 0
           [lat, lng, zoom] = newValue.split('!')
-          map.setView(L.latLng(lat, lng), parseInt(zoom, 10))
+          map.setOffsetCenter(L.latLng(lat, lng), parseInt(zoom, 10))
 
     focusDataset: (dataset) ->
       @map.focusedDataset = dataset
