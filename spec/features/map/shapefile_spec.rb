@@ -83,7 +83,7 @@ describe "Shapefile search", reset: false, wait: 30 do
     end
 
     it "displays a help message explaining the point reduction" do
-      expect(page).to have_popover('Shape File Too Large')
+      expect(page).to have_popover('Shape file has too many points')
     end
   end
 

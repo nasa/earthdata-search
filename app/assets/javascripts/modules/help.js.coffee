@@ -6,9 +6,9 @@
       content: "The file you uploaded contains multiple shapes. Click on the shape you wish to
                 use as your search constraint."
     shapefile_reduction:
-      title: "Shape File Too Large"
-      content: "The shape you selected is too large to use for search. We've automatically reduced
-                it to have an appropriate number of points.  You may edit the polygon to correct any problems
+      title: "Shape file has too many points"
+      content: "The shape you selected is too complex to use for search. We've automatically reduced
+                it to have an acceptable number of points.  You may edit the polygon to correct any problems
                 by clicking on this button. <em>To avoid problems, please use areas with no
                 more than #{config.maxPolygonSize} points.</em>"
     gibs_accuracy:
@@ -223,8 +223,8 @@
       $tip.find('[data-role=prev]').hide()
       $tip.find('[data-role=next]').toggle(queue[index].showNext)
     else
-      $tip.find('[data-role=prev]').show().toggleClass('disabled', index == 0)
-      $tip.find('[data-role=next]').show().toggleClass('disabled', index == queue.length - 1)
+      $tip.find('[data-role=prev]').toggle(index != 0)
+      $tip.find('[data-role=next]').toggle(index != queue.length - 1)
 
   showCurrent = ->
     if queue[index].wait
