@@ -12,23 +12,26 @@ ns.Map = do (window,
              MouseEventsLayer = ns.MouseEventsLayer,
              page = @edsc.page) ->
 
-  originalSetView = L.Map.prototype.setView
-
   L.Map.include
-    setView: (center, zoom) ->
-      @setOffsetCenter(@getOffsetCenter(center, zoom), zoom)
+    fitBounds: (bounds, options={}) ->
+      bounds = bounds.getBounds?() ? L.latLngBounds(bounds)
 
-    getOffsetCenter: (center, zoom) ->
-      center ?= @getCenter()
-      zoom ?= @getZoom()
-      center = L.latLng(center)
-      centerPoint = @project(center, zoom)
-      newCenter = centerPoint.subtract([@getSize().x / 4, 0])
-      @unproject(newCenter, zoom)
+      paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0])
+      paddingBR = L.point(options.paddingBottomRight || options.padding || [0, 0])
 
-    setOffsetCenter: (center, zoom) ->
-      originalSetView.call(this, center, zoom)
+      leftPad = L.point([$('.master-overlay-main').offset().left + $('.master-overlay-main').width(), 0])
 
+      zoom = @getBoundsZoom(bounds, false, paddingTL.add(paddingBR))
+      paddingOffset = paddingBR.subtract(paddingTL).divideBy(2)
+
+      swPoint = this.project(bounds.getSouthWest(), zoom).subtract(leftPad)
+      nePoint = this.project(bounds.getNorthEast(), zoom)
+
+      center = this.unproject(swPoint.add(nePoint).divideBy(2).add(paddingOffset), zoom)
+
+      zoom = Math.min(options.maxZoom ? Infinity, zoom)
+
+      @setView(center, zoom, options)
 
   # Fix leaflet default image path
   L.Icon.Default.imagePath = '/images/leaflet-0.7'
@@ -84,7 +87,7 @@ ns.Map = do (window,
       state.subscribe (newValue) ->
         if newValue? && newValue.length > 0
           [lat, lng, zoom] = newValue.split('!')
-          map.setOffsetCenter(L.latLng(lat, lng), parseInt(zoom, 10))
+          map.setView(L.latLng(lat, lng), parseInt(zoom, 10))
 
     focusDataset: (dataset) ->
       @map.focusedDataset = dataset

@@ -60,7 +60,8 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
       if constraint == spatial
         constraint = ""
       else if dataset.points?
-        $('#map').data('map').map.setView(dataset.points[0].split(/\s+/))
+        point = dataset.points[0].split(/\s+/)
+        $('#map').data('map').map.fitBounds([point, point])
       @query.spatial(constraint)
       false
 
