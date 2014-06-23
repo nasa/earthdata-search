@@ -219,7 +219,6 @@
     queue[index].advanceHook?(next, close)
     queue[index].closeHook?(close)
 
-    console.log tourRunning, index, queue
     if tourRunning
       $tip.find('[data-role=prev]').hide()
       $tip.find('[data-role=next]').toggle(queue[index].showNext)
