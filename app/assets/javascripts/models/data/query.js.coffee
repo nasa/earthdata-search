@@ -269,18 +269,6 @@ ns.query = do (ko,
       @placename("")
       super()
 
-    toggleQueryDatasetSpatial: (dataset) =>
-      constraint = dataset.spatial_constraint()
-      spatial = @spatial()
-      constraint = "" if constraint == spatial
-      @spatial(constraint)
-      false
-
-    canQueryDatasetSpatial: (dataset) =>
-      spatial = @spatial()
-      constraint = dataset.spatial_constraint()
-      constraint? && (!spatial || spatial == constraint)
-
   class GranuleQuery extends Query
     constructor: (datasetId, parentQuery, attributes) ->
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")

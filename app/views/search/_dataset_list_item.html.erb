@@ -18,9 +18,9 @@
               </div>
               <h3 data-bind="text: dataset_id"></h3>
               <div class="panel-list-item-actions">
-                <!-- ko if: $root.query.canQueryDatasetSpatial($data) -->
+                <!-- ko if: $root.ui.datasetsList.canQueryDatasetSpatial($data) -->
                 <a href="#" class="button icon-button" title="Search using this dataset's location"
-                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.query.toggleQueryDatasetSpatial">
+                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.ui.datasetsList.toggleQueryDatasetSpatial">
                   <i class="edsc-icon-location"></i>
                 </a>
                 <!-- /ko -->
