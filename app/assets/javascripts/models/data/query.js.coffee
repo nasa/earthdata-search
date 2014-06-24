@@ -277,6 +277,10 @@ ns.query = do (ko,
                               {name: "Day only", value: "DAY"},
                               {name: "Night only", value: "NIGHT"},
                               {name: "Both day and night", value: "BOTH"}]
+      @sortOptions = [{name: "Start Date Desc", value: ["-start_date"]},
+                      {name: "Start Date", value: ["start_date"]},
+                      {name: "End Date Desc", value: ["-end_date"]},
+                      {name: "End Date", value: ["end_date"]}]
       @isValid = @computed(read: @_computeIsValid, deferEvaluation: true)
       @attributes = new GranuleAttributes(attributes)
 

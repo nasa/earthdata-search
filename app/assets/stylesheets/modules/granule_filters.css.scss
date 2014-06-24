@@ -105,8 +105,15 @@
   font-style: italic;
 }
 
-.master-overlay-info .undo {
+.master-overlay-info .granule-sort {
   margin: -2.5em 0 0 1em;
+  padding: .1em 1em;
+  position: absolute;
+  font-size: .9em;
+}
+
+.master-overlay-info .undo {
+  margin: -2.5em 0 0 15em;
   padding: .1em 1em;
   position: absolute;
   text-align: center;
