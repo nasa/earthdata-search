@@ -368,42 +368,38 @@ describe "Granule search filters", reset: false do
     end
 
     after :all do
-      select 'Start Date Desc', from: "granule-sort"
+      select 'Start Date, Newest first', from: "granule-sort"
       wait_for_xhr
       granule_list.click_link "Back to Datasets"
       first_project_dataset.click_link "Show granule filters"
     end
 
-    context "by start date" do
-      it "sorts granules ascending" do
-        select 'Start Date', from: "granule-sort"
-        wait_for_xhr
-        expect(granule_list).to have_content "2000-03-04"
-        expect(granule_list).to have_no_content "2014-06-12"
-      end
-
-      it "sorts granules descending" do
-        select 'Start Date Desc', from: "granule-sort"
-        wait_for_xhr
-        expect(granule_list).to have_no_content "2000-03-04"
-        expect(granule_list).to have_content "2014-06-12"
-      end
+    it "allows sorting by start date ascending" do
+      select 'Start Date, Oldest first', from: "granule-sort"
+      wait_for_xhr
+      expect(granule_list).to have_content "2000-03-04"
+      expect(granule_list).to have_no_content "2014-06-12"
     end
 
-    context "by end date" do
-      it "sorts granules ascending"do
-        select 'End Date', from: "granule-sort"
-        wait_for_xhr
-        expect(granule_list).to have_content "2000-03-04"
-        expect(granule_list).to have_no_content "2014-06-22"
-      end
+    it "allows sorting by start date descending" do
+      select 'Start Date, Newest first', from: "granule-sort"
+      wait_for_xhr
+      expect(granule_list).to have_no_content "2000-03-04"
+      expect(granule_list).to have_content "2014-06-12"
+    end
 
-      it "sorts granules descending"do
-        select 'End Date Desc', from: "granule-sort"
-        wait_for_xhr
-        expect(granule_list).to have_no_content "2000-03-04"
-        expect(granule_list).to have_content "2014-06-22"
-      end
+    it "allows sorting by end date ascending"do
+      select 'End Date, Oldest first', from: "granule-sort"
+      wait_for_xhr
+      expect(granule_list).to have_content "2000-03-04"
+      expect(granule_list).to have_no_content "2014-06-22"
+    end
+
+    it "allows sorting by end date descending"do
+      select 'End Date, Newest first', from: "granule-sort"
+      wait_for_xhr
+      expect(granule_list).to have_no_content "2000-03-04"
+      expect(granule_list).to have_content "2014-06-22"
     end
 
   end
