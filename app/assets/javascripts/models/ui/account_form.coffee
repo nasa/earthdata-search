@@ -4,7 +4,6 @@ ns.AccountForm = do (ko, $=jQuery) ->
   class AccountForm
     constructor: (@account, @isServiceForm) ->
       @_userRequestedEdit = ko.observable(false)
-      @_incompleteForm = ko.observable(false)
       @isEditingAccount = ko.computed(@_computeIsEditingAccount, this)
 
     needsAccount: =>
