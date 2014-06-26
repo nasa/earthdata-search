@@ -53,6 +53,9 @@ module VCR
           elsif request.uri.include?('fail%25+hard') || request.uri.include?('fail+hard')
             cassette = 'expired-token'
             record = :none
+          elsif request.uri.include?('69BEF8E4-7C1A-59C3-7C46-18D788AC64B4')
+            cassette = "missing-preferences"
+            record = :none
           elsif (request.method == :delete ||
                  (request.uri.include?('/orders.json') && request.method == :get) ||
                  request.uri.include?('/echo-rest/calendar_events') ||

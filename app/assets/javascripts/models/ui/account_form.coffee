@@ -4,6 +4,7 @@ ns.AccountForm = do (ko, $=jQuery) ->
   class AccountForm
     constructor: (@account, @isServiceForm) ->
       @_userRequestedEdit = ko.observable(false)
+      @_incompleteForm = ko.observable(false)
       @isEditingAccount = ko.computed(@_computeIsEditingAccount, this)
 
     needsAccount: =>
@@ -12,11 +13,12 @@ ns.AccountForm = do (ko, $=jQuery) ->
     hasCompleteAccount: =>
       account = @account
       {address, phone} = account
-      complete = account.firstName() && account.lastName() && account.email()
+      complete = account.firstName() && account.lastName() && account.email() && account.preferencesLoaded()
       if @isServiceForm
         complete &&= address.street1() && address.city() && address.country() && phone.number()
         if address.country() == 'United States'
           complete &&= address.zip() && address.state()
+      @_incompleteForm(complete)
       complete
 
     editAccount: =>
@@ -41,6 +43,6 @@ ns.AccountForm = do (ko, $=jQuery) ->
         @account.updateContactInformation(callback)
 
     _computeIsEditingAccount: ->
-      !@isServiceForm || @_userRequestedEdit() || !@hasCompleteAccount()
+      !@isServiceForm || @_userRequestedEdit() || @_incompleteForm() || !@hasCompleteAccount()
 
   exports = AccountForm
