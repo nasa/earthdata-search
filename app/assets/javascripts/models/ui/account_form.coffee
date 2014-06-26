@@ -13,12 +13,11 @@ ns.AccountForm = do (ko, $=jQuery) ->
     hasCompleteAccount: =>
       account = @account
       {address, phone} = account
-      complete = account.firstName() && account.lastName() && account.email() && account.preferencesLoaded()
+      complete = account.firstName() && account.lastName() && account.email()
       if @isServiceForm
         complete &&= address.street1() && address.city() && address.country() && phone.number()
         if address.country() == 'United States'
           complete &&= address.zip() && address.state()
-      @_incompleteForm(complete)
       complete
 
     editAccount: =>
@@ -43,6 +42,6 @@ ns.AccountForm = do (ko, $=jQuery) ->
         @account.updateContactInformation(callback)
 
     _computeIsEditingAccount: ->
-      !@isServiceForm || @_userRequestedEdit() || @_incompleteForm() || !@hasCompleteAccount()
+      !@isServiceForm || @_userRequestedEdit() || !@account.preferencesLoaded() || !@hasCompleteAccount()
 
   exports = AccountForm

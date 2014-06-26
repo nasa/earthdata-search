@@ -101,7 +101,9 @@ ns.Account = do (ko
     _from_user: =>
       xhr = getJSON "/users/get_preferences", (data) =>
         @_preferencesFromJson(data)
+        @preferencesLoaded(true)
       xhr.fail (response, type, reason) =>
+        @preferencesLoaded(false)
         if response.status == 404
           @errors([])
         else
@@ -118,6 +120,7 @@ ns.Account = do (ko
           @message("Successfully updated contact information")
           callback?()
         xhr.fail (response, type, reason) =>
+          @preferencesLoaded(false)
           server_error = false
           try
             errors = JSON.parse(response.responseText)?.errors
@@ -135,7 +138,6 @@ ns.Account = do (ko
           catch
             server_error = true
           @errors(["Contact information could not be updated, please try again later"]) if server_error
-          @preferencesLoaded(false)
 
     _preferencesFromJson: (json) =>
       prefs = json.preferences
