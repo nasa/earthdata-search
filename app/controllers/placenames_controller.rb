@@ -20,9 +20,15 @@ class PlacenamesController < ApplicationController
         preposition = ""
       end
 
-      if placename == current || placename[/^C\d/] || placename.include?('_')
+      if placename == current ||
+          placename[/^C\d/] ||
+          placename.include?('_') ||
+          placename.downcase.start_with?('landsat') ||
+          placename.downcase.start_with?('modis')
         # Completion has already been performed and placename hasn't changed or
         # the search is for an explicit collection id (avoids many requests in CI)
+        # or the search is for landsat or modis which have a few insignificant results
+        # that the user is unlikely to be interested in
         result = []
       else
         result = PlacesClient.get_place_completions(placename).map do |completion|
