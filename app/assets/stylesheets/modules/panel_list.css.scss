@@ -161,8 +161,9 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list a.panel-list-remove {
   float: right;
-  color: #000;
-  font-size: 1.5em;
+  color: #fff;
+  color: rgba(255,255,255, 0.2);
+  @include transition(color 0.3s ease-in-out);
 
   &:hover {
     color: #e74c3c;
