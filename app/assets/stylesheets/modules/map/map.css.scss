@@ -237,18 +237,18 @@ p.map-popup-info {
   margin-left: -20em !important;
 
   i.fa-stack-2x {
-    opacity: 0;
-    color: #e74c3c;
-    @include transition(opacity 0.4s ease-in-out);
+    color: rgba(255,255,255, 0.2);
+    @include transition(color 0.4s ease-in-out);
   }
 
   a {
-    display: block;
+    padding: 0 0 0 10px;
     color: #fff;
     text-shadow: none;
 
     &:hover i.fa-stack-2x {
       opacity: .9;
+      color: rgba(231, 76, 60, 0.9);
     }
   }
 

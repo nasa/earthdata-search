@@ -476,9 +476,9 @@ ns.GranuleLayer = do (L
       temporal = granule.getTemporal()
       icon = L.divIcon
         className: 'granule-spatial-label',
-        html: '<a class="panel-list-remove" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></a>' +
-              '<span class="granule-spatial-label-temporal">' + temporal +
-              '</span>'
+        html: '<span class="granule-spatial-label-temporal">' + temporal +
+              '</span>' +
+              '<a class="panel-list-remove" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></a>'
 
       marker = L.marker([0, 0], clickable: false, icon: icon)
 
