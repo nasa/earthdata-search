@@ -21,7 +21,7 @@ describe 'Site Preferences', reset: true do
     end
 
     it "sets site preferences when closing the tour" do
-      click_button 'Close'
+      click_button 'End Tour'
       expect(page).to have_no_css '.tour'
       wait_for_xhr
 
@@ -30,7 +30,7 @@ describe 'Site Preferences', reset: true do
     end
 
     it "shows Take a Tour link after closing the tour" do
-      click_button 'Close'
+      click_button 'End Tour'
       expect(page).to have_content 'Take a Tour'
     end
   end
@@ -41,7 +41,7 @@ describe 'Site Preferences', reset: true do
     end
 
     it "sets site preferences when closing the tour" do
-      click_button 'Close'
+      click_button 'End Tour'
       expect(page).to have_no_css '.tour'
       wait_for_xhr
 
@@ -50,7 +50,7 @@ describe 'Site Preferences', reset: true do
     end
 
     it "shows Take a Tour link after closing the tour" do
-      click_button 'Close'
+      click_button 'End Tour'
       expect(page).to have_content 'Take a Tour'
     end
   end
