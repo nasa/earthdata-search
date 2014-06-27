@@ -56,6 +56,7 @@ module VCR
           elsif (request.method == :delete ||
                  (request.uri.include?('/orders.json') && request.method == :get) ||
                  request.uri.include?('/echo-rest/calendar_events') ||
+                 request.uri.include?('69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences.json') ||
                  (request.uri.include?('/datasets.json') && request.uri.include?('trigger500')))
             cassette = 'hand-edited'
             record = :none

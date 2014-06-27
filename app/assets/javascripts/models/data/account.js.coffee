@@ -91,6 +91,7 @@ ns.Account = do (ko
 
       @errors = ko.observable("")
       @message = ko.observable("")
+      @preferencesLoaded = ko.observable(false)
 
       if @user.name()?.length > 0
         @_from_user()
@@ -100,8 +101,13 @@ ns.Account = do (ko
     _from_user: =>
       xhr = getJSON "/users/get_preferences", (data) =>
         @_preferencesFromJson(data)
+        @preferencesLoaded(true)
       xhr.fail (response, type, reason) =>
-        @errors(["Contact information could not be loaded, please try again later"])
+        @preferencesLoaded(false)
+        if response.status == 404
+          @errors([])
+        else
+          @errors(["Contact information could not be loaded, please try again later"])
 
     updateContactInformation: (callback) =>
       @message('')
@@ -110,9 +116,11 @@ ns.Account = do (ko
       if @errors()?.length == 0
         xhr = doPost '/users/update_contact_info', @_buildPreferences(), (response) =>
           @_preferencesFromJson(response)
+          @preferencesLoaded(true)
           @message("Successfully updated contact information")
           callback?()
         xhr.fail (response, type, reason) =>
+          @preferencesLoaded(false)
           server_error = false
           try
             errors = JSON.parse(response.responseText)?.errors

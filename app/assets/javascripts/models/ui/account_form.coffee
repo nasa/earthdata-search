@@ -41,6 +41,6 @@ ns.AccountForm = do (ko, $=jQuery) ->
         @account.updateContactInformation(callback)
 
     _computeIsEditingAccount: ->
-      !@isServiceForm || @_userRequestedEdit() || !@hasCompleteAccount()
+      !@isServiceForm || @_userRequestedEdit() || !@account.preferencesLoaded() || !@hasCompleteAccount()
 
   exports = AccountForm
