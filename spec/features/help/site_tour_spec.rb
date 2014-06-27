@@ -9,13 +9,13 @@ describe "Site tour", reset: true do
 
   context "on the landing page" do
     before :each do
+      Capybara.reset_sessions!
       visit "/" # Load the root url with no extra params
       wait_for_xhr
     end
 
     after :each do
       wait_for_xhr
-      Capybara.reset_sessions!
     end
 
     # Single spec for the tour which tests every stop.  Normally I'd like this to be separate tests per stop, but
@@ -46,8 +46,14 @@ describe "Site tour", reset: true do
       expect(page).to have_popover('Map View')
       click_on 'Next'
 
-      expect(page).to have_popover('Granule Timeline')
+      expect(page).to have_popover('Granule Timeline (Part 1)')
       find('.timeline-zoom-in').click
+
+      expect(page).to have_popover('Granule Timeline (Part 2)')
+      click_timeline_date('24', 'Aug')
+
+      expect(page).to have_popover('Granule Timeline (Part 3)')
+      drag_temporal(DateTime.new(2014, 8, 23, 0, 0, 0, '+0'), DateTime.new(2014, 8, 25, 0, 0, 0, '+0'))
 
       expect(page).to have_popover('Back to Datasets')
       granule_list.click_on 'Back to Datasets'
@@ -61,13 +67,23 @@ describe "Site tour", reset: true do
       expect(page).to have_popover('Project (cont.)')
     end
 
-    context 'clicking on the tour\'s "Close" button' do
+    context 'clicking on the tour\'s "End Tour" button' do
       before :each do
-        click_on 'Close'
+        click_on 'End Tour'
       end
 
-      it 'closes the tour' do
-        expect(page).to have_no_popover
+      it 'shows a popover indicating that the tour ended with information on how to restart it' do
+        expect(page).to have_popover('Tour Ended')
+      end
+
+      context 'and closing the tour ended dialog' do
+        before :each do
+          click_on 'Close'
+        end
+
+        it 'shows no further popovers' do
+          expect(page).to have_no_popover
+        end
       end
     end
 

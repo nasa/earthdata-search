@@ -716,6 +716,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         rightX = Math.max(left.x, right.x)
         temporal.start.date(new Date(@positionToTime(leftX)))
         temporal.stop.date(new Date(@positionToTime(rightX)))
+        @root.trigger(@scopedEventName('temporalchange'))
         null
 
       left.on 'commit', update, this
