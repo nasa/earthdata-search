@@ -108,7 +108,7 @@ ns.GranuleLayer = do (L
         interiors = dividePolygon(polygon[0]).interiors
         @_addIntersections(result, interiors, tileBounds, 'poly', 'geodetic')
 
-      @_addIntersections(result, granule.getRectangles(), tileBounds, 'poly', 'geodetic')
+      @_addIntersections(result, granule.getRectangles(), tileBounds, 'poly', 'cartesian')
       @_addIntersections(result, granule.getLines(), tileBounds, 'line', 'geodetic')
 
       for point in granule.getPoints() ? [] when tileBounds.contains(point)
