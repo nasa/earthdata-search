@@ -124,7 +124,6 @@
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        console.log 'off focusset'
         $('#timeline').off 'timeline.focusset', closeFn
       advanceHook: (nextFn, closeFn) ->
         $('#timeline').one 'timeline.focusset', nextFn
@@ -281,7 +280,6 @@
   add = (key, options={}) ->
     unless tourRunning
       options = $.extend({}, defaultHelpOptions, tourOptions[key], options, key: key)
-      console.log options
       unless options.once && shown[key]
         queue.push(options)
         showCurrent()
