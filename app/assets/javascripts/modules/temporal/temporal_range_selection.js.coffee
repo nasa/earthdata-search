@@ -87,6 +87,8 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     root.find('.temporal-range-picker').datetimepicker
       format: 'Y-m-d H:i:s',
       allowBlank: true,
+      closeOnDateSelect: true,
+      lazyInit: true,
       className: prefix + '-datetimepicker',
       yearStart: '1960',
       yearEnd: current_year,
@@ -119,6 +121,8 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     root.find('.temporal-recurring-picker').datetimepicker
       format: 'm-d H:i:s',
       allowBlank: true,
+      closeOnDateSelect: true,
+      lazyInit: true,
       className: prefix + '-datetimepicker recurring-datetimepicker',
       yearStart: 2007,
       yearEnd: 2007,
