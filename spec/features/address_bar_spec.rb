@@ -82,7 +82,7 @@ describe 'Address bar', reset: false do
         expect(page).to have_checked_field('Recurring?')
         expect(page).to have_field('Start', with: '12-01 00:00:00')
         expect(page).to have_field('End', with: '12-31 00:00:00')
-        expect(page).to have_text('Date Range: 1970 - 1975')
+        expect(page).to have_text('Range: 1970 - 1975')
       end
     end
 
