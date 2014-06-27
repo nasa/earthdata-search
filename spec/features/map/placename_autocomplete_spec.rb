@@ -21,11 +21,13 @@ describe "Place name autocomplete" do
 
   it "displays nothing when the query string is very short" do
     fill_in "keywords", with: "te"
+    wait_for_xhr
     expect(page).to have_no_css('.tt-suggestion')
   end
 
   it "displays nothing when the query string has no placename matches" do
     fill_in "keywords", with: "asdfasdfasdfqwer"
+    wait_for_xhr
     expect(page).to have_no_css('.tt-suggestion')
   end
 
@@ -60,6 +62,26 @@ describe "Place name autocomplete" do
       fill_in "keywords", with: "modis"
       expect(page).to have_field('keywords', with: 'modis')
       expect(page).to have_spatial_constraint('')
+    end
+  end
+
+  context "search for common dataset terms" do
+    it 'returns no placenames matching "landsat"' do
+      fill_in "keywords", with: "landsat"
+      wait_for_xhr
+      expect(page).to have_no_css('.tt-suggestion')
+    end
+
+    it 'filters common terms in a case-insensitive way' do
+      fill_in "keywords", with: "Landsat"
+      wait_for_xhr
+      expect(page).to have_no_css('.tt-suggestion')
+    end
+
+    it 'returns no placenames matching "modis"' do
+      fill_in "keywords", with: "modis"
+      wait_for_xhr
+      expect(page).to have_no_css('.tt-suggestion')
     end
   end
 end
