@@ -1,3 +1,4 @@
+//= require modules/map/spatial_mixin
 //= require modules/map/coordinate
 //= require modules/map/arc
 //= require modules/map/geoutil

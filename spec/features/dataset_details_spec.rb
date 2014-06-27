@@ -28,7 +28,7 @@ describe 'Dataset details', reset: false do
     end
 
     it "displays the dataset's spatial bounds on the map" do
-      expect(page).to have_css('#map .leaflet-marker-icon')
+      expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
     end
 
     context "and returning to the datasets list" do
@@ -38,7 +38,7 @@ describe 'Dataset details', reset: false do
       end
 
       it "removes the dataset's spatial bounds from the map" do
-        expect(page).to have_no_css('#map .leaflet-marker-icon')
+        expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
       end
     end
   end
@@ -46,13 +46,18 @@ describe 'Dataset details', reset: false do
   context "when selecting a dataset with bounding box spatial" do
     before :all do
       load_page :search
-      expect(page).to have_content('2000 Pilot Environmental Sustainability Index (ESI)')
-      second_dataset_result.click_link('View details')
+      fill_in 'keywords', with: 'C179003553-ORNL_DAAC'
+      wait_for_xhr
+      first_dataset_result.click_link('View details')
     end
 
     it "displays the dataset's spatial bounds on the map" do
-      # Test that a path exists
       expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
+    end
+
+    it "splits the spatial bounds across the antimeridian as necessary" do
+      # Draws two paths because it is split
+      expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path', count: 2)
     end
   end
 

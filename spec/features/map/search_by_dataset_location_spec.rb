@@ -19,6 +19,7 @@ describe "Spatial search by dataset location" do
     context "when choosing to view the dataset's location" do
       before do
         click_link location_link_text
+        wait_for_xhr
       end
 
       it "places a point spatial constraint on the map" do

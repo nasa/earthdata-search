@@ -450,28 +450,17 @@ ns.GranuleLayer = do (L
       @layer?.setResults(@_reorderedResults(results))
 
     _granuleLayer: (granule, options) ->
-      layer = L.featureGroup()
-      layer.addLayer(L.circleMarker(point, options)) for point in granule.getPoints() ? []
-      layer.addLayer(L.sphericalPolygon(poly, options)) for poly in granule.getPolygons() ? []
-      layer.addLayer(L.polyline(line, options)) for line in granule.getLines() ? []
-
-      for rect in granule.getRectangles() ? []
-        # granule.getRectanges() returns a path, so it's really a polygon
-        shape = L.polygon(rect, options)
-        shape._interpolationFn = 'cartesian'
-        layer.addLayer(shape)
-      layer
+      granule.buildLayer(options)
 
     _focusLayer: (granule) ->
       return null unless granule?
 
-      @_granuleLayer(granule, clickable: false, color: @color, fillColor: @color, opacity: 1)
-
+      granule.buildLayer(clickable: false, color: @color, fillColor: @color, opacity: 1)
 
     _stickyLayer: (granule) ->
       return null unless granule?
 
-      layer = @_granuleLayer(granule, fillOpacity: 0, clickable: false, color: @color, fillColor: @color, opacity: 1)
+      layer = granule.buildLayer(fillOpacity: 0, clickable: false, color: @color, fillColor: @color, opacity: 1)
 
       temporal = granule.getTemporal()
       icon = L.divIcon
