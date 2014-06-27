@@ -12,12 +12,11 @@ ns.Temporal = do (ko,
     constructor: (@defaultYear, @isRecurring) ->
       @date = ko.observable(null)
 
-      @_year = @defaultYear
+      @_year = ko.observable(@defaultYear)
       @year = @computed
         read: =>
           date = @date()
-          @_year = date?.getUTCFullYear() ? @defaultYear
-          @_year
+          date?.getUTCFullYear() ? @_year()
         write: (year) =>
           year ?= @defaultYear
           date = @date.peek()
@@ -25,7 +24,7 @@ ns.Temporal = do (ko,
             date = new Date(date.getTime())
             date.setUTCFullYear(year)
             @date(date)
-          @_year = year
+          @_year(year)
 
       @humanDateString = @computed
         read: =>
@@ -34,7 +33,6 @@ ns.Temporal = do (ko,
             dateStr = dateStr.substring(5) if @isRecurring()
             dateStr
           else
-            #throw 'ugh' if @tag
             ""
         write: (dateStr) =>
           if dateStr?.length > 0
@@ -88,6 +86,7 @@ ns.Temporal = do (ko,
             date = new Date(val)
           else
             date = null
+            @year(@defaultYear)
           @date(date)
 
   class TemporalCondition extends KnockoutModel
@@ -101,7 +100,8 @@ ns.Temporal = do (ko,
       @isSet = @computed(@_computeIsSet, this, deferEvaluation: true)
 
       @years = @computed(@_computeYears())
-      @yearsString = @computed => @years().join(' - ')
+      @yearsString = @computed =>
+        @years().join(' - ')
 
     fromJson: (jsonObj) ->
       @queryCondition(jsonObj)
@@ -180,29 +180,16 @@ ns.Temporal = do (ko,
         result.join(',')
 
       write: (value) =>
-        unless value?
-          @start.date(null)
-          @stop.date(null)
-          return
-
-        [start, stop, startDay, stopDay]  = value.split(',')
-        throw @tag unless stop?
-
-        @isRecurring(startDay?)
-        @start.queryDateString(start) if start && start.length > 0
-        @stop.queryDateString(stop) if stop && stop.length > 0
+        if value?
+          [start, stop, startDay, stopDay]  = value.split(',')
+          @isRecurring(startDay?)
+        @start.queryDateString(start)
+        @stop.queryDateString(stop)
 
   class Temporal extends KnockoutModel
     constructor: ->
       @applied = applied = @disposable(new TemporalCondition())
       @pending = pending = @disposable(new TemporalCondition())
-
-      @applied.tag = 'applied'
-      @pending.tag = 'pending'
-      @applied.start.tag = 'applied start'
-      @applied.stop.tag = 'applied stop'
-      @pending.start.tag = 'pending start'
-      @pending.stop.tag = 'pending stop'
 
       # Clear temporal when switching types
       pending.isRecurring.subscribe @disposable(=> pending.clear())

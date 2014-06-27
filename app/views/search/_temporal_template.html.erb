@@ -37,7 +37,7 @@
     <input data-bind="checked: isRecurring" type="checkbox" id="<%= prefix %>-show-recurring"> <label for="<%= prefix %>-show-recurring">Recurring?</label>
   </div>
   <div data-bind="visible: isRecurring()" class="range-slider">
-    <label for="<%= prefix %>-temporal-slider">Date Range:</label> <span data-bind="text: yearsString" class="temporal-recurring-year-range-value"></span><br />
+    <label for="<%= prefix %>-temporal-slider">Year Range:</label> <span data-bind="text: yearsString" class="temporal-recurring-year-range-value"></span><br />
     <input id="<%= prefix %>-temporal-slider" class="temporal-recurring-year-range" type="text">
   </div>
 
