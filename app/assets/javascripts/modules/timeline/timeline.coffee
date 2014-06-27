@@ -712,10 +712,13 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       right = new TemporalFencepost(overlay, x1)
 
       update = ->
+        console.log 'here'
         leftX = Math.min(left.x, right.x)
         rightX = Math.max(left.x, right.x)
         temporal.start.date(new Date(@positionToTime(leftX)))
         temporal.stop.date(new Date(@positionToTime(rightX)))
+        console.log 'trigger'
+        @root.trigger(@scopedEventName('temporalchange'))
         null
 
       left.on 'commit', update, this

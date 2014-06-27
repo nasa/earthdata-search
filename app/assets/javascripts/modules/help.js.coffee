@@ -30,6 +30,13 @@
                 '
       placement: 'left'
       element: '#map-center'
+    tour_end:
+      title: 'Tour Ended'
+      element: '#main-toolbar h1 a'
+      placement: 'bottom'
+      content: 'Your tour has ended.  At any point you may restart it by visiting the home page and clicking
+                on the "Take a Tour" link.'
+
 
   tour = [{
       title: "Welcome to Earthdata Search"
@@ -98,7 +105,7 @@
       showNext: true
       element: '#map-center'
     }, {
-      title: 'Granule Timeline'
+      title: 'Granule Timeline (Part 1)'
       content: 'Below the map there is a timeline view showing when this dataset has data. You can pan
                 and zoom this view to change the period of time and granularity of data it displays. Zoom
                 into a particular day by scrolling over that day. Try panning and zooming the timeline now.'
@@ -109,8 +116,28 @@
         $('#timeline').off 'timeline.rangechange', closeFn
       advanceHook: (nextFn, closeFn) ->
         $('#timeline').one 'timeline.rangechange', nextFn
-    # TODO: Temporal extents here when available
-    # TODO: Temporal focus on a single day when available
+    }, {
+      title: 'Granule Timeline (Part 2)'
+      content: 'You can click on a date on the timeline to focus on granules for that time span.  Note that this
+                does not alter your download list.  Left and right arrow keys will take you to the previous and
+                next time span.  Try clicking a date now.'
+      element: '#timeline'
+      placement: 'top'
+      cleanup: (nextFn, closeFn) ->
+        console.log 'off focusset'
+        $('#timeline').off 'timeline.focusset', closeFn
+      advanceHook: (nextFn, closeFn) ->
+        $('#timeline').one 'timeline.focusset', nextFn
+    }, {
+      title: 'Granule Timeline (Part 3)'
+      content: 'You may also restrict your search results to a temporal range by clicking and dragging across
+                the top of the timeline.  Drag a temporal filter.'
+      element: '#timeline'
+      placement: 'top'
+      cleanup: (nextFn, closeFn) ->
+        $('#timeline').off 'timeline.temporalchange', closeFn
+      advanceHook: (nextFn, closeFn) ->
+        $('#timeline').one 'timeline.temporalchange', nextFn
     }, {
       title: 'Back to Datasets'
       content: 'Let\'s go back to our dataset results'
@@ -220,9 +247,11 @@
     queue[index].closeHook?(close)
 
     if tourRunning
+      $tip.find('[data-role=end]').text('End Tour')
       $tip.find('[data-role=prev]').hide()
       $tip.find('[data-role=next]').toggle(queue[index].showNext)
     else
+      $tip.find('[data-role=end]').text('Close')
       $tip.find('[data-role=prev]').toggle(index != 0)
       $tip.find('[data-role=next]').toggle(index != queue.length - 1)
 
@@ -240,7 +269,10 @@
     if tourRunning
       preferences.showTour(false)
       preferences.save()
-    close()
+      close()
+      add('tour_end')
+    else
+      close()
 
   $(document).on 'click', '.show-tour', (e) ->
     e.preventDefault()
@@ -249,6 +281,7 @@
   add = (key, options={}) ->
     unless tourRunning
       options = $.extend({}, defaultHelpOptions, tourOptions[key], options, key: key)
+      console.log options
       unless options.once && shown[key]
         queue.push(options)
         showCurrent()
