@@ -64,6 +64,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
+      wait_for_xhr
     end
 
     context "visualizing a dataset's granules" do
@@ -158,6 +159,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
+      wait_for_xhr
     end
 
     context "visualizing a dataset's granules" do

@@ -94,6 +94,7 @@ describe "Granule list", reset: false do
       before :all do
         first_granule_list_item.click
         first_granule_list_item.click_link "Exclude this granule"
+        wait_for_xhr
       end
 
       after :all do
@@ -134,6 +135,7 @@ describe "Granule list", reset: false do
         before :all do
           click_link "Filter granules"
           check "Find only granules that have browse images."
+          wait_for_xhr
         end
 
         after :all do
@@ -143,6 +145,7 @@ describe "Granule list", reset: false do
           click_link 'Hide granule filters'
           first_granule_list_item.click
           first_granule_list_item.click_link "Exclude this granule"
+          wait_for_xhr
         end
 
         it "removes the undo button" do
