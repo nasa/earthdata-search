@@ -24,7 +24,7 @@
         <div class="toolbar-secondary">
           <% if Rails.configuration.feedback_url.present? %>
             <a href="javascript:void(0)" onclick="feedback.showForm(); return false" class="feedback toolbar-button" title="Leave feedback">
-              <i class="fa fa-comment"></i>
+              <i class="fa fa-bullhorn"></i>
             </a>
           <% end %>
           <%= yield :toolbar_secondary %>
