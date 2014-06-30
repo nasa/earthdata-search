@@ -9,7 +9,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
 
     serialize: ->
       method = @method()
-      result = {method: method, model: @model}
+      result = {method: method, model: @model, rawModel: @rawModel}
       for available in @availableMethods
         if available.name == method
           result.type = available.type
