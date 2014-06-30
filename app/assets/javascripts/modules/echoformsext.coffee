@@ -27,6 +27,11 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
           @_setValuesToXyBox($checkbox.is(':checked'))
 
         result.children('.echoforms-children').prepend(@subsetOption)
+
+      # NSIDCs forms set the projection dropdown to be irrelevant despite it being used,
+      # I think as a hack for Reverb / WIST's Jaz panel.
+      @controls[0].relevantExpr = null
+      @controls[0].relevant(true)
       result
 
     loadFromModel: ->
