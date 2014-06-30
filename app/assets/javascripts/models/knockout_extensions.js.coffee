@@ -107,15 +107,20 @@ do (ko, $=jQuery) ->
             method = available
             break
         if available?.form?
-          $el.echoforms(form: available.form)
+          form = available.form
+          model = options.rawModel
+          if model?
+            form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
+          $el.echoforms(form: form)
           syncModel = ->
             isValid = $(this).echoforms('isValid')
             options.isValid(isValid)
             if isValid
-              modelString = $(this).echoforms('serialize')
-              options.model = modelString
+              options.model = $(this).echoforms('serialize')
+              options.rawModel = $(this).echoforms('serialize', prune: false)
             else
               options.model = null
+              options.rawModel = null
             null
           $el.on 'echoforms:modelchange', syncModel
           syncModel.call($el)

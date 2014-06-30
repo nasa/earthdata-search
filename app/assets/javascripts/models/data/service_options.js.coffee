@@ -20,6 +20,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
     fromJson: (jsonObj) ->
       @method(jsonObj.method)
       @model = jsonObj.model
+      @rawModel = jsonObj.rawModel
       @type = jsonObj.type
       @orderId = jsonObj.order_id
       this
@@ -44,7 +45,10 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
       methods = @accessMethod.peek()
       for method in methods
         method.availableMethods = availableMethods
-      @addAccessMethod() if methods.length == 0 && availableMethods.length > 0
+      if options.defaults
+        @fromJson(options.defaults)
+      else
+        @addAccessMethod() if methods.length == 0 && availableMethods.length > 0
       @canAddAccessMethod(availableMethods.length > 1 ||
         (availableMethods.length == 1 && availableMethods[0].type != 'download'))
 
@@ -68,7 +72,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
     fromJson: (jsonObj) ->
       @accessMethod.removeAll()
       for json in jsonObj.accessMethod
-        method = new ServiceOptions(null)
+        method = new ServiceOptions(null, @granuleAccessOptions().methods)
         method.fromJson(json)
         @accessMethod.push(method)
       this
