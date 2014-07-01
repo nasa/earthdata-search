@@ -81,12 +81,6 @@ RSpec.configure do |config|
   Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
   wait_time = Capybara.default_wait_time
 
-  DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras', 'orders']}
-
-  config.before :each do
-    DatabaseCleaner.start
-  end
-
   config.after :all do |example_from_block_arg|
     example = config.respond_to?(:expose_current_running_example_as) ? example_from_block_arg : self.example
 
@@ -134,11 +128,12 @@ RSpec.configure do |config|
     puts
   end
 
-  config.after :each do
+  DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras', 'orders']}
+
+  def clean_database
     tries = 0
     begin
       tries += 1
-      Capybara.current_session.server.responsive? if self.class.include?(Snappybara::DSL)
       DatabaseCleaner.clean
     rescue => e
       $stderr.puts "Database cleaner clean failed: #{e}"
@@ -150,6 +145,21 @@ RSpec.configure do |config|
         $stderr.puts "Database cleaner clean failed after #{tries} tries: #{e}"
       end
     end
+  end
+
+  config.before :each do
+    if !self.class.include?(Snappybara::DSL) || example.metadata[:reset]
+      clean_database
+      DatabaseCleaner.start
+    end
+  end
+
+  config.before :all do
+    DatabaseCleaner.start
+  end
+
+  config.after :all do
+    clean_database
   end
 
   config.after :each do
