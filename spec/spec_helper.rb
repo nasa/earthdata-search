@@ -138,6 +138,7 @@ RSpec.configure do |config|
     tries = 0
     begin
       tries += 1
+      Capybara.current_session.server.responsive? if self.class.include?(Snappybara::DSL)
       DatabaseCleaner.clean
     rescue => e
       $stderr.puts "Database cleaner clean failed: #{e}"
@@ -149,6 +150,9 @@ RSpec.configure do |config|
         $stderr.puts "Database cleaner clean failed after #{tries} tries: #{e}"
       end
     end
+  end
+
+  config.after :each do
     if example.exception != nil
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
