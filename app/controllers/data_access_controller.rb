@@ -86,8 +86,9 @@ class DataAccessController < ApplicationController
         dqs = Echo::Client.get_data_quality_summary(dataset, token)
       end
 
-      access_config = AccessConfiguration.find_by(user: current_user, dataset_id: dataset)
-      defaults = access_config.service_options if access_config
+      #access_config = AccessConfiguration.find_by(user: current_user, dataset_id: dataset)
+      #defaults = access_config.service_options if access_config
+      defaults = null
 
       granules = catalog_response.body['feed']['entry']
 
