@@ -34,6 +34,7 @@ class UsersController < ApplicationController
 
   def new
   end
+
   def contact_info
   end
 
