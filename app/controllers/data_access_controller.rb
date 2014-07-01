@@ -88,7 +88,7 @@ class DataAccessController < ApplicationController
 
       #access_config = AccessConfiguration.find_by(user: current_user, dataset_id: dataset)
       #defaults = access_config.service_options if access_config
-      defaults = null
+      defaults = nil
 
       granules = catalog_response.body['feed']['entry']
 
