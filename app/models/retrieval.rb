@@ -2,7 +2,7 @@ class Retrieval < ActiveRecord::Base
   belongs_to :user
   store :jsondata, coder: JSON
 
-  after_save :update_access_configurations
+  #after_save :update_access_configurations
 
   obfuscate_id spin: 53465485
 
