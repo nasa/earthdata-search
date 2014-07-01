@@ -107,6 +107,7 @@ module Helpers
                 edsc.page.project.accessDatasets()[0].serviceOptions.accessMethod.removeAll();
                 edsc.page.project.accessDatasets()[0].serviceOptions.addAccessMethod();"
       page.execute_script script
+      wait_for_xhr
     end
 
     private
