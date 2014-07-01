@@ -15,12 +15,15 @@ describe "Data download page", reset: false do
 
   before(:all) do
     load_page :search, overlay: false
+    wait_for_xhr
     login
+    wait_for_xhr
   end
 
   context "when datasets have been selected for direct download" do
     before :all do
       load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
+      wait_for_xhr
       click_link "Retrieve project data"
 
       # Download the first
@@ -78,6 +81,7 @@ describe "Data download page", reset: false do
   context "when no datasets have been selected for direct download" do
     before :all do
       load_page :search, project: [orderable_dataset_id], view: :project
+      wait_for_xhr
       click_link "Retrieve project data"
 
       choose 'Ftp_Pull'
@@ -99,6 +103,7 @@ describe "Data download page", reset: false do
   context "when datasets have been selected for asynchronous access" do
     before :all do
       load_page :search, project: [orderable_dataset_id, non_orderable_dataset_id], view: :project
+      wait_for_xhr
       click_link "Retrieve project data"
 
       choose 'Ftp_Pull'
@@ -133,6 +138,7 @@ describe "Data download page", reset: false do
   context "when no datasets have been selected for asynchronous access" do
     before :all do
       load_page :search, project: [downloadable_dataset_id], view: :project
+      wait_for_xhr
       click_link "Retrieve project data"
 
       choose 'Download'
