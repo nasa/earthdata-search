@@ -69,6 +69,7 @@ describe 'Duplicate Service Options', reset: false do
 
   context "when submitting with multiple access options" do
     before :all do
+      DatabaseCleaner.start
       click_button 'Add access method'
       within '.access-item-selection:first-child' do
         choose 'Download'
@@ -81,6 +82,8 @@ describe 'Duplicate Service Options', reset: false do
     end
 
     after :all do
+      wait_for_xhr
+      DatabaseCleaner.clean
       click_link 'Back to Data Access Options'
     end
 

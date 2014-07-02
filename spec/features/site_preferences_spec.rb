@@ -8,6 +8,15 @@ require 'spec_helper'
 
 describe 'Site Preferences', reset: true do
   before :each do
+    DatabaseCleaner.start
+  end
+
+  after :each do
+    wait_for_xhr
+    DatabaseCleaner.clean
+  end
+
+  before :each do
     load_page :root
   end
 

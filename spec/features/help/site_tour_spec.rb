@@ -6,15 +6,19 @@ require "spec_helper"
 
 # Resetting here because the tour introduces very complex page state that's not easy to back out of
 describe "Site tour", reset: true do
+  before :each do
+    DatabaseCleaner.start
+  end
+
+  after :each do
+    wait_for_xhr
+    DatabaseCleaner.clean
+  end
 
   context "on the landing page" do
     before :each do
       Capybara.reset_sessions!
       visit "/" # Load the root url with no extra params
-      wait_for_xhr
-    end
-
-    after :each do
       wait_for_xhr
     end
 

@@ -130,41 +130,6 @@ RSpec.configure do |config|
 
   DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras']}
 
-  config.before :each do
-    DatabaseCleaner.start
-  end
-
-  config.after :each do
-    tries = 0
-    begin
-      tries += 1
-
-      puts "Before AccessConfigurations: #{AccessConfiguration.count}" if AccessConfiguration.count > 0
-      puts "Before Orders: #{Order.count}" if Order.count > 0
-      puts "Before Projects: #{Project.count}" if Project.count > 0
-      puts "Before Retrievals: #{Retrieval.count}" if Retrieval.count > 0
-      puts "Before Users: #{User.count}" if User.count > 0
-
-      DatabaseCleaner.clean
-
-      puts "After AccessConfigurations: #{AccessConfiguration.count}" if AccessConfiguration.count > 0
-      puts "After Orders: #{Order.count}" if Order.count > 0
-      puts "After Projects: #{Project.count}" if Project.count > 0
-      puts "After Retrievals: #{Retrieval.count}" if Retrieval.count > 0
-      puts "After Users: #{User.count}" if User.count > 0
-
-    rescue => e
-      $stderr.puts "Database cleaner clean failed: #{e}"
-      if tries < 3
-        sleep 1
-        $stderr.puts "Retrying database clean"
-        retry
-      else
-        $stderr.puts "Database cleaner clean failed after #{tries} tries: #{e}"
-      end
-    end
-  end
-
   config.after :each do
     if example.exception != nil
       # Failure only code goes here
