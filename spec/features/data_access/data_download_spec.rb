@@ -27,7 +27,6 @@ describe "Data download page", reset: false do
       choose 'Download'
       click_on 'Continue'
       # Confirm address
-      wait_for_xhr
       click_on 'Submit'
     end
 
@@ -84,11 +83,9 @@ describe "Data download page", reset: false do
       select 'FTP Pull', from: 'Offered Media Delivery Types'
       select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
       click_on 'Continue'
-      wait_for_xhr
 
       # Confirm address
       click_on 'Submit'
-      wait_for_xhr
     end
 
     it "displays no information on direct downloads" do
@@ -108,10 +105,8 @@ describe "Data download page", reset: false do
 
       # No actions available on the second, continue
       click_on 'Continue'
-      wait_for_xhr
       # Confirm address
       click_on 'Submit'
-      wait_for_xhr
     end
 
     it "displays information on obtaining data asynchronously" do
