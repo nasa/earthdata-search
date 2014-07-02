@@ -78,8 +78,6 @@ describe 'Duplicate Service Options', reset: false do
         choose 'Download'
       end
       click_button 'Continue'
-      wait_for_xhr
-
       click_button 'Submit'
       wait_for_xhr
     end
