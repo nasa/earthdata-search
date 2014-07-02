@@ -86,6 +86,8 @@ class DataAccessController < ApplicationController
         dqs = Echo::Client.get_data_quality_summary(dataset, token)
       end
 
+      access_config = AccessConfiguration.find_by(user: current_user, dataset_id: dataset)
+      defaults = access_config.service_options if access_config
 
       granules = catalog_response.body['feed']['entry']
 
@@ -108,12 +110,14 @@ class DataAccessController < ApplicationController
           dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
-          methods: get_downloadable_access_methods(granules, hits) + get_order_access_methods(granules, hits)
+          methods: get_downloadable_access_methods(granules, hits) + get_order_access_methods(granules, hits),
+          defaults: defaults
         }
       else
         result = {
           hits: 0,
-          methods: []
+          methods: [],
+          defaults: defaults
         }
       end
 

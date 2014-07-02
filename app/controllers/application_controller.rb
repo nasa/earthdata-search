@@ -28,9 +28,16 @@ class ApplicationController < ActionController::Base
     session[:user_id]
   end
 
+  @@user_lock = Mutex.new
   def current_user
-    user_id = get_user_id
-    @current_user ||= User.find_or_create_by(echo_id: user_id) if user_id.present?
+    if @current_user.nil?
+      user_id = get_user_id
+      if user_id.present?
+        @@user_lock.synchronize do
+          @current_user = User.find_or_create_by(echo_id: user_id)
+        end
+      end
+    end
     @current_user
   end
 end
