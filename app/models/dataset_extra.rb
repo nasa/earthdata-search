@@ -1,4 +1,20 @@
 class DatasetExtra < ActiveRecord::Base
+  GIBS_CONFIGURATIONS = {
+    'C1000000016-LANCEMODIS' => {
+      product: 'MODIS_Terra_Snow_Cover',
+      format: 'png',
+      resolution: '500m'
+    },
+    'C1000000019-LANCEMODIS' => {
+      product: 'MODIS_Terra_Aerosol',
+      maxNativeZoom: 5,
+      format: 'png',
+      resolution: '2km',
+      arctic: false,
+      antarctic: false
+    }
+  }
+
   validates_presence_of :echo_id
   validates_uniqueness_of :echo_id
 
@@ -136,6 +152,10 @@ class DatasetExtra < ActiveRecord::Base
     end
   end
 
+  def self.featured_ids
+    GIBS_CONFIGURATIONS.keys
+  end
+
   def decorate(dataset)
     dataset = dataset.dup.with_indifferent_access
 
@@ -223,21 +243,7 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def decorate_gibs_layers(dataset)
-    if dataset[:id] == 'C1000000016-LANCEMODIS'
-      dataset[:gibs] = {
-        product: 'MODIS_Terra_Snow_Cover',
-        format: 'png',
-        resolution: '500m'
-      }
-    elsif dataset[:id] == 'C1000000019-LANCEMODIS'
-      dataset[:gibs] = {
-        product: 'MODIS_Terra_Aerosol',
-        maxNativeZoom: 5,
-        format: 'png',
-        resolution: '2km',
-        arctic: false,
-        antarctic: false
-      }
-    end
+    gibs_config = GIBS_CONFIGURATIONS[dataset[:id]]
+    dataset[:gibs] = gibs_config unless gibs_config.nil?
   end
 end
