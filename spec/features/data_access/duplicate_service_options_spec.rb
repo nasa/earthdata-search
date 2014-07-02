@@ -56,7 +56,6 @@ describe 'Duplicate Service Options', reset: false do
     before :all do
       choose 'Download'
       click_button 'Continue'
-      wait_for_xhr
     end
 
     after :all do
@@ -79,12 +78,10 @@ describe 'Duplicate Service Options', reset: false do
       end
       click_button 'Continue'
       click_button 'Submit'
-      wait_for_xhr
     end
 
     after :all do
       click_link 'Back to Data Access Options'
-      wait_for_xhr
     end
 
     it "displays download links twice" do
