@@ -4,6 +4,9 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+# Un-comment to truncate the test log to only the most recent execution
+#File.truncate(Rails.root.join("log/test.log"), 0)
+
 require 'capybara-screenshot/rspec'
 
 if ENV['driver'] == 'poltergeist'
