@@ -28,7 +28,7 @@ describe "Project dataset list", reset: true do
   context "when clicking on a dataset's \"View details\" link" do
     it "shows the dataset's details" do
       first_project_dataset.click_link 'View details'
-      expect(page).to have_visible_dataset_details
+      expect(page).to have_visible_details
       dataset_details.click_link "Back to Datasets"
       expect(page).to have_visible_project_overview
     end

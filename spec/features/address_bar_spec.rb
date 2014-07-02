@@ -220,7 +220,7 @@ describe 'Address bar', reset: false do
     before(:all) { visit '/search/details?p=C179003030-ORNL_DAAC' }
 
     it 'restores the dataset details view' do
-      expect(page).to have_visible_dataset_details
+      expect(page).to have_visible_details
       expect(dataset_details).to have_text('15 Minute Stream Flow')
     end
   end
@@ -235,7 +235,7 @@ describe 'Address bar', reset: false do
       second_project_dataset.click_link "Hide granule filters"
       first_project_dataset.click_link "View details"
       wait_for_xhr
-      expect(page).to have_visible_dataset_details
+      expect(page).to have_visible_details
     end
 
     it "saves the query conditions in the URL" do

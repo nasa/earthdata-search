@@ -1,8 +1,28 @@
-@edsc.models.data.Granule = do (extend = $.extend, scalerUrl = @edsc.config.browseScalerUrl) ->
+@edsc.models.data.Granule = do (ko
+                                KnockoutModel = @edsc.models.KnockoutModel
+                                extend = $.extend
+                                scalerUrl = @edsc.config.browseScalerUrl
+                                ajax = jQuery.ajax
+                                ) ->
 
-  class Granule
+  class Granule extends KnockoutModel
     constructor: (jsonData) ->
       extend(this, jsonData)
+      @details = @asyncComputed({}, 100, @_computeDetails, this)
+      @detailsLoaded = ko.observable(false)
+
+    _computeDetails: ->
+      id = @id
+      path = "/granules/#{id}.json"
+      console.log("Request #{path}", this)
+      ajax
+        dataType: 'json'
+        url: path
+        retry: => @_computeDetails()
+        success: (data) =>
+          details = data['granule']
+          @details(details)
+          @detailsLoaded(true)
 
     edsc_browse_url: (w, h) ->
       w ?= 170

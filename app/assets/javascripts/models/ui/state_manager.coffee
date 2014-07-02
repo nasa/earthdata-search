@@ -128,9 +128,9 @@
 
       root += "/granules" if state.children.indexOf('granule-list') != -1
       return root if state.current == 'granule-list'
-      return "#{root}/details" if state.current == 'dataset-details'
+      return "#{root}/details" if state.current == 'details'# || state.current == 'granule-details'
 
-      console.error 'Unrecognized overlay state: #{JSON.stringify(state)}'
+      console.error "Unrecognized overlay state: #{JSON.stringify(state)}"
       root
 
     _writePath: (path) ->
@@ -170,9 +170,9 @@
         state.current = 'granule-list'
       if components.indexOf('details') != -1
         selected = true
-        state.current = 'dataset-details'
+        state.current = 'details'
 
-      children.push('dataset-details')
+      children.push('details')
       state.children = children
 
       @page.ui.datasetsList.state(focused, selected)

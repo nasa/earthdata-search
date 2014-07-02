@@ -38,6 +38,10 @@ ns.GranulesList = do ($=jQuery)->
 
       @_pendingSticky = ko.observable(null)
       @_setStickyComputed = ko.computed(read: @_setSticky, owner: this)
+      @selected = ko.observable(null)
+
+      @fixOverlayHeight = ko.computed =>
+        $('.master-overlay').masterOverlay('contentHeightChanged') if @selected()?.detailsLoaded?()
 
     dispose: ->
       map = $('#map').data('map')
@@ -177,5 +181,12 @@ ns.GranulesList = do ($=jQuery)->
     clearExclusions: =>
       @granules.excludedGranulesList([])
       @granules.query.excludedGranules([])
+
+    showGranuleDetails: (granule, event=null) =>
+      @selected(granule) unless @selected() == granule
+
+    hideGranuleDetails: (event=null) =>
+      if @selected()
+        @_unselectTimeout = setTimeout((=> @selected(null)), config.defaultAnimationDurationMs)
 
   exports = GranulesList

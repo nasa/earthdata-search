@@ -56,6 +56,11 @@
           <ul class="panel-list-list" data-bind="foreach: granules.results()">
 
             <li class="panel-list-item" data-bind="css: {'panel-list-item-with-thumb': browse_flag === 'true', 'panel-list-focused': $parent.focused() === $data, 'panel-list-selected': $parent.isStickied($data)}, event: { mouseenter: $parent.onGranuleMouseover, mouseleave: $parent.onGranuleMouseout, click: $parent.toggleStickyFocus}">
+              <div class="panel-list-item-actions">
+                <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View details">
+                  <i class="edsc-icon-info"></i>
+                </a>
+              </div>
 
               <!-- ko if: browse_flag === 'true' -->
                 <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">

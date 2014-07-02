@@ -42,7 +42,7 @@ module Helpers
     end
 
     def dataset_details
-      page.find('#dataset-details')
+      page.find('#details')
     end
 
     def project_overview
