@@ -23,17 +23,17 @@ describe "Dataset GIBS visualizations", reset: false do
 
   context "when viewing a GIBS-enabled dataset in the results list" do
     it "indicates that the dataset has GIBS visualizations" do
-      expect(first_dataset_result).to have_css('.badge-gibs')
+      expect(first_featured_dataset).to have_css('.badge-gibs')
     end
   end
 
   context "when visualizing a GIBS-enabled dataset" do
     before :all do
-      first_dataset_result.click_link "View dataset"
+      first_featured_dataset.click_link "View dataset"
     end
 
     after :all do
-      first_dataset_result.click_link "Hide dataset"
+      first_featured_dataset.click_link "Hide dataset"
     end
 
     it "displays composite GIBS imagery corresponding to the first 20 granule results on an HTML canvas" do
@@ -45,9 +45,9 @@ describe "Dataset GIBS visualizations", reset: false do
 
   context "when turning off visualizations for a GIBS-enabled dataset" do
     before :all do
-      first_dataset_result.click_link "View dataset"
+      first_featured_dataset.click_link "View dataset"
       page.should have_css(gibs_tile_layer)
-      first_dataset_result.click_link "Hide dataset"
+      first_featured_dataset.click_link "Hide dataset"
     end
 
     it "removes the dataset's GIBS tiles from the map" do

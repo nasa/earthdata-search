@@ -17,7 +17,9 @@ module Helpers
     def view_granule_results(from='dataset-results')
       wait_for_xhr
       expect(page).to have_visible_overlay(from)
-      page.execute_script("$('##{from} .panel-list-item:first-child').click()")
+      root = from
+      root = 'dataset-results-list' if root == 'dataset-results'
+      page.execute_script("$('##{root} .panel-list-item:first-child').click()")
       #item.click # This causes intermittent failures based on timing
       wait_for_xhr
       wait_for_visualization_load

@@ -163,6 +163,7 @@ class DatasetExtra < ActiveRecord::Base
     decorate_granule_information(dataset)
     decorate_gibs_layers(dataset)
     decorate_echo10_attributes(dataset)
+    decorate_featured(dataset)
 
     dataset
   end
@@ -245,5 +246,9 @@ class DatasetExtra < ActiveRecord::Base
   def decorate_gibs_layers(dataset)
     gibs_config = GIBS_CONFIGURATIONS[dataset[:id]]
     dataset[:gibs] = gibs_config unless gibs_config.nil?
+  end
+
+  def decorate_featured(dataset)
+    dataset[:featured] = self.class.featured_ids.include?(dataset[:id])
   end
 end
