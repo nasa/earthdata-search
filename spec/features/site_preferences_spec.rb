@@ -7,13 +7,9 @@
 require 'spec_helper'
 
 describe 'Site Preferences', reset: true do
-  before :each do
-    DatabaseCleaner.start
-  end
-
   after :each do
     wait_for_xhr
-    DatabaseCleaner.clean
+    User.destroy_all if page.server.responsive?
   end
 
   before :each do

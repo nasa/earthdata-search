@@ -6,14 +6,13 @@ describe "Access Option Defaults", reset: true do
   dataset_id = 'C179003030-ORNL_DAAC'
 
   before :each do
-    DatabaseCleaner.start
     load_page :search, overlay: false
     login
   end
 
   after :each do
     wait_for_xhr
-    DatabaseCleaner.clean
+    AccessConfiguration.destroy_all if page.server.responsive?
   end
 
   context "accessing a dataset for the first time" do

@@ -14,14 +14,13 @@ describe "Data download page", reset: false do
   non_orderable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   before(:all) do
-    DatabaseCleaner.start
     load_page :search, overlay: false
     login
   end
 
   after(:all) do
     wait_for_xhr
-    DatabaseCleaner.clean
+    AccessConfiguration.destroy_all if page.server.responsive?
   end
 
   context "when datasets have been selected for direct download" do

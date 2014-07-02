@@ -6,13 +6,9 @@ require "spec_helper"
 
 # Resetting here because the tour introduces very complex page state that's not easy to back out of
 describe "Site tour", reset: true do
-  before :each do
-    DatabaseCleaner.start
-  end
-
   after :each do
     wait_for_xhr
-    DatabaseCleaner.clean
+    User.destroy_all if page.server.responsive?
   end
 
   context "on the landing page" do
