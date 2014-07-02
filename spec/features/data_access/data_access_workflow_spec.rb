@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Data Access workflow", reset: false do
+describe "Data Access workflow", reset: false, wait: 30 do
   downloadable_dataset_id = 'C179003030-ORNL_DAAC'
   downloadable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
 
