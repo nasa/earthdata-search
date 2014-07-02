@@ -23,8 +23,12 @@ ns.Datasets = do (ko
 
 
     constructor: (query) ->
-      #super('http://localhost:3002/datasets')
       super('/datasets.json', query)
+
+      # The index where featured datasets stop and un-featured begin
+      @_featuredSplitIndex = @computed(read: @_computeFeaturedSplitIndex, deferEvaluation: true, owner: this)
+      @featured = @computed(read: @_computeFeatured, deferEvaluation: true, owner: this)
+      @unfeatured = @computed(read: @_computeUnfeatured, deferEvaluation: true, owner: this)
 
     _toResults: (data, current, params) ->
       query = @query
@@ -39,5 +43,17 @@ ns.Datasets = do (ko
 
     toggleVisibleDataset: (dataset) =>
       dataset.visible(!dataset.visible())
+
+    _computeFeaturedSplitIndex: ->
+      results = @results()
+      for ds, i in results
+        return i unless ds.featured
+      results.length
+
+    _computeFeatured: ->
+      @results().slice(0, @_featuredSplitIndex())
+
+    _computeUnfeatured: ->
+      @results().slice(@_featuredSplitIndex())
 
   exports = DatasetsModel

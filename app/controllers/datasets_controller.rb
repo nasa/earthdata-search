@@ -4,7 +4,10 @@ class DatasetsController < ApplicationController
   def index
     catalog_response = Echo::Client.get_datasets(request.query_parameters, token)
 
+
     if catalog_response.success?
+      add_featured_datasets!(request.query_parameters, token, catalog_response.body)
+
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
 
       catalog_response.headers.each do |key, value|
@@ -59,5 +62,31 @@ class DatasetsController < ApplicationController
     items = facets[key]
     items.sort_by! {|facet| facet['term']}
     {name: name, param: param, values: items}
+  end
+
+  def add_featured_datasets!(base_query, token, base_results)
+    featured = []
+
+    featured_ids = DatasetExtra.featured_ids
+
+    # Only fetch if the user is requesting the first page
+    if base_query['page_num'] == "1" && base_query['echo_collection_id'].nil?
+      begin
+        featured_query = request.query_parameters.merge('echo_collection_id' => featured_ids)
+        featured_response = Echo::Client.get_datasets(featured_query, token)
+        featured = featured_response.body['feed']['entry'] if featured_response.success?
+      rescue => e
+        # This shouldn't happen, but on the off-chance it does, retrieving featured datasets shouldn't
+        # be allowed to make the whole request fail
+        Rails.logger.error("Error getting featured datasets: #{e}\n#{e.backtrace.join("\n")}")
+      end
+    end
+
+    if featured.present?
+      base_results['feed']['entry'].delete_if { |ds| featured_ids.include?(ds['id']) }
+      base_results['feed']['entry'].unshift(*featured)
+    end
+
+    base_results
   end
 end

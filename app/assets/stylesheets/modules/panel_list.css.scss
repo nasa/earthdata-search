@@ -2,8 +2,6 @@ $panel-list-item-height: 85px;
 $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list {
-  clear: both;
-
   .button {
     @include light-button;
     font-size: 1.2em;
@@ -168,4 +166,10 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   &:hover {
     color: #e74c3c;
   }
+}
+
+.panel-list-title {
+  font-size: 1.1em;
+  padding: 0 .5em .2em;
+  color: #c9c9c9
 }

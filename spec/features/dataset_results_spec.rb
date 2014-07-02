@@ -13,14 +13,19 @@ describe "Dataset results", reset: false do
   end
 
   it "displays the first 20 datasets when first visiting the page" do
-    expect(page).to have_css('#dataset-results .panel-list-item', count: 20)
+    expect(page).to have_css('#dataset-results-list .panel-list-item', count: 20)
   end
 
   it "loads more results when the user scrolls to the bottom of the current list" do
-    expect(page).to have_css('#dataset-results .panel-list-item', count: 20)
+    expect(page).to have_css('#dataset-results-list .panel-list-item', count: 20)
     page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 10000"
     wait_for_xhr
-    expect(page).to have_css('#dataset-results .panel-list-item', count: 40)
+
+    # Featured datasets throws this off.  Normally it would be 40 (double the currently
+    # loaded datasets.  Because of featured datasets, there are 22 currently loaded
+    # datasets, so it requests the next 22, making for 44 total.  Since 2 are in the
+    # featured list, that means there are 42 in the non-featured list.
+    expect(page).to have_css('#dataset-results-list .panel-list-item', count: 42)
 
     # Reset
     load_page :search
@@ -31,7 +36,7 @@ describe "Dataset results", reset: false do
     wait_for_xhr
     page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 10000"
     wait_for_xhr
-    expect(page).to have_css('#dataset-results .panel-list-item', count: 35)
+    expect(page).to have_css('#dataset-results-list .panel-list-item', count: 35)
     expect(page).to have_no_content('Loading datasets...')
     page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 0"
   end

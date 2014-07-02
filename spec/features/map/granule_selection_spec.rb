@@ -25,7 +25,7 @@ describe "Granule selection", reset: false do
 
   is_granule_panel_visible_script = """
     (function() {
-      var list = $('.master-overlay-content.panel-list');
+      var list = $('#granule-list .master-overlay-content.panel-list');
       var top = list.offset().top;
       var bottom = top + list.height() - 150;
       var selected = $('.panel-list-selected').offset().top;
