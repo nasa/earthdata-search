@@ -7,7 +7,9 @@ describe "User missing ordering preferences", reset: false do
   context "when configuring a data access request" do
     before :all do
       load_page :search, project: [dataset_id], view: :project
+      wait_for_xhr
       click_link "Retrieve project data"
+      wait_for_xhr
 
       fill_in 'Username', with: 'edscbasic'
       fill_in 'Password', with: 'EDSCtest!1'

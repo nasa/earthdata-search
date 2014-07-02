@@ -18,6 +18,7 @@ describe "Access Option Defaults", reset: true do
   context "accessing a dataset for the first time" do
     before :each do
       load_page 'data/configure', project: [dataset_id]
+      wait_for_xhr
     end
 
     it "presents default options" do
@@ -29,6 +30,7 @@ describe "Access Option Defaults", reset: true do
   context "accessing a dataset for a second time" do
     before :each do
       load_page 'data/configure', project: [dataset_id]
+      wait_for_xhr
 
       choose 'Download'
       click_on 'Add access method'
@@ -45,6 +47,7 @@ describe "Access Option Defaults", reset: true do
       expect(page).to have_link('Track Status')
 
       load_page 'data/configure', project: [dataset_id]
+      wait_for_xhr
     end
 
     it "restores options from the second retrieval" do
@@ -66,6 +69,7 @@ describe "Access Option Defaults", reset: true do
   context "accessing a dataset for the third time" do
     before :each do
       load_page 'data/configure', project: [dataset_id]
+      wait_for_xhr
 
       choose 'Download'
       click_on 'Add access method'
@@ -82,6 +86,7 @@ describe "Access Option Defaults", reset: true do
       expect(page).to have_link('Track Status')
 
       load_page 'data/configure', project: [dataset_id]
+      wait_for_xhr
 
       within '.access-item-selection:nth-child(3)' do
         click_on 'Remove access method'
@@ -92,6 +97,7 @@ describe "Access Option Defaults", reset: true do
       expect(page).to have_no_link('Track Status')
 
       load_page 'data/configure', project: [dataset_id]
+      wait_for_xhr
     end
 
     it "restores options from the second retrieval" do
