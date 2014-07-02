@@ -7,6 +7,11 @@
 require 'spec_helper'
 
 describe 'Site Preferences', reset: true do
+  after :each do
+    wait_for_xhr
+    User.destroy_all if page.server.responsive?
+  end
+
   before :each do
     load_page :root
   end

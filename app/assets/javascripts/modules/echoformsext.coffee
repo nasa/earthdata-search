@@ -28,20 +28,28 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
 
         result.children('.echoforms-children').prepend(@subsetOption)
 
-      # NSIDCs forms set this to irrelevant despite it being used, I think as a hack for Reverb / WIST's Jaz panel.
+      # NSIDCs forms set the projection dropdown to be irrelevant despite it being used,
+      # I think as a hack for Reverb / WIST's Jaz panel.
       @controls[0].relevantExpr = null
       @controls[0].relevant(true)
-
       result
 
-    _setValuesToXyBox: (readonly=true) ->
+    loadFromModel: ->
+      $checkbox = @el.find('input[type="checkbox"]')
+      if $checkbox.is(':checked')
+        @_setValuesToXyBox(true, false)
+      else
+        super()
+
+    _setValuesToXyBox: (readonly=true, events=true) ->
       values = @_xyBoxValuesFromQuery()
       controls = @controls
 
       for value, i in values
         control = controls[i]
         control.readonlyExpr = null
-        control.inputs().val(value).change()
+        control.inputs().val(value)
+        control.inputs().change() if events
         control.readonly(readonly)
 
 
@@ -95,21 +103,6 @@ do (L, $=jQuery, projectPath=@edsc.map.L.interpolation.projectPath, Proj=@edsc.m
         Math.round(bounds.max.y),
         Math.round(bounds.max.x)
       ]
-
-    addedToDom: ->
-      @_addedToDom = true
-      @initializeJazPanel();
-
-    validate: ->
-      super()
-      @initializeJazPanel()
-
-    initializeJazPanel: ->
-      return unless !@_jazInitialized && @_addedToDom && @el.is(':visible')
-
-      @jazInput.jazspatialfield(map: @jazMap) if google?.maps?
-
-      @_jazInitialized = true
 
   $.echoforms.control(XYBoxSubsetter)
 

@@ -11,6 +11,7 @@ describe 'Duplicate Service Options', reset: false do
     load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
     login
     click_link "Retrieve project data"
+    wait_for_xhr
   end
 
   context "when setting options for downloadable dataset" do
@@ -81,6 +82,8 @@ describe 'Duplicate Service Options', reset: false do
     end
 
     after :all do
+      wait_for_xhr
+      AccessConfiguration.destroy_all if page.server.responsive?
       click_link 'Back to Data Access Options'
     end
 

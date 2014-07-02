@@ -7,8 +7,13 @@ describe Echo::Client do
   context 'HTTP connection' do
     it 'is reused within a single thread' do
       expect(Echo::Client).to receive(:build_connection).once.and_return(connection)
-      Echo::Client.connection
-      Echo::Client.connection
+
+      # This needs thread isolation to prevent other specs from initializing the connection
+      thread = Thread.new {
+        Echo::Client.connection
+        Echo::Client.connection
+      }
+      thread.join(2)
     end
 
     it 'is not shared across threads' do

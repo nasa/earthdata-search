@@ -12,7 +12,9 @@ describe 'Service Options', reset: false do
   context 'for datasets with granule results' do
     before :all do
       load_page :search, project: [downloadable_dataset_id], view: :project
+      wait_for_xhr
       click_link "Retrieve project data"
+      wait_for_xhr
     end
 
     context "when setting options for a dataset with order options" do
@@ -41,7 +43,9 @@ describe 'Service Options', reset: false do
   context 'for datasets without granule results' do
     before :all do
       load_page :search, project: [downloadable_dataset_id], view: :project, temporal: [DateTime.new(2014, 2, 10, 12, 30, 0, '+0')]
+      wait_for_xhr
       click_link "Retrieve project data"
+      wait_for_xhr
     end
 
     it 'displays no service options' do
