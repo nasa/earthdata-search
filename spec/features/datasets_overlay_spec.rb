@@ -13,12 +13,12 @@ describe 'Datasets overlay', :reset => false do
 
   it "shows dataset details when clicking on a dataset" do
     expect(page).to have_visible_dataset_results
-    expect(page).to_not have_visible_details
+    expect(page).to_not have_visible_dataset_details
 
     first_dataset_result.click_link "View details"
 
     expect(page).to_not have_visible_dataset_results
-    expect(page).to have_visible_details
+    expect(page).to have_visible_dataset_details
   end
 
   context "after returning to the dataset list from the project view" do
@@ -31,7 +31,7 @@ describe 'Datasets overlay', :reset => false do
 
     it "shows dataset details when clicking on a dataset" do
       first_dataset_result.click_link "View details"
-      expect(page).to have_visible_details
+      expect(page).to have_visible_dataset_details
     end
   end
 end

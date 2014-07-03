@@ -39,7 +39,7 @@ describe "Granule list", reset: false do
       end
 
       it "displays the dataset details" do
-        expect(page).to have_visible_details
+        expect(page).to have_visible_dataset_details
         expect(page).to have_content('lpdaac@eos.nasa.gov')
       end
 

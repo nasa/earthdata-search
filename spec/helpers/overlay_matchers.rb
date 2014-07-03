@@ -1,5 +1,5 @@
 module OverlayUtil
-  OVERLAY_IDS = ['project-overview', 'dataset-results', 'details', 'master-overlay-parent', 'granule-search', 'granule-list']
+  OVERLAY_IDS = ['project-overview', 'dataset-results', 'dataset-details', 'granule-details', 'master-overlay-parent', 'granule-search', 'granule-list']
 
   def self.has_visible_overlay_content?(page, id)
     datasets_overlay_visible?(page) && current_overlay_id(page).include?(id)

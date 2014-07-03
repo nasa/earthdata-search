@@ -99,7 +99,8 @@
     #   /search/datasets - The search page with browse datasets closed
     #   /search/project - The project page
     #   /search(/project)?/:id/granules - The granule results page for the given dataset id
-    #   /search(/project)?/:id(/granules)?/details - The dataset details page for the given dataset id
+    #   /search(/project)?/:id(/granules)?/dataset-details - The dataset details page for the given dataset id
+    #   /search(/project)?/:id(/granules)?/granule-details - The granules details page for the given granule id
     #
     # Note this is not perfect serialization of the overlay state.  In particular, hiding the overlay and reloading
     # from a bookmark will not save information on the state of the hidden overlay.  This is fixable, but doesn't
@@ -128,7 +129,8 @@
 
       root += "/granules" if state.children.indexOf('granule-list') != -1
       return root if state.current == 'granule-list'
-      return "#{root}/details" if state.current == 'details'# || state.current == 'granule-details'
+      return "#{root}/dataset-details" if state.current == 'dataset-details'
+      return "#{root}/granule-details" if state.current == 'granule-details'
 
       console.error "Unrecognized overlay state: #{JSON.stringify(state)}"
       root
@@ -161,21 +163,32 @@
         state.current = 'project-overview'
         component = components.shift()
 
-      focused = false
-      selected = false
+      datasetFocused = false
+      datasetSelected = false
+      granuleFocused = false
+      granuleSelected = false
       components.unshift(component)
       if components.indexOf('granules') != -1
         children.push('granule-list')
-        focused = true
+        datasetFocused = true
+        granuleFocused = true
         state.current = 'granule-list'
-      if components.indexOf('details') != -1
-        selected = true
-        state.current = 'details'
+      if components.indexOf('granule-details') != -1
+        granuleSelected = true
+        state.current = 'granule-details'
+      children.push('granule-details')
+      if components.indexOf('dataset-details') != -1
+        datasetSelected = true
+        state.current = 'dataset-details'
+        children.pop() # granule-details
+      children.push('dataset-details')
 
-      children.push('details')
       state.children = children
 
-      @page.ui.datasetsList.state(focused, selected)
+      @page.ui.datasetsList.state(datasetFocused, datasetSelected)
+      if granuleFocused
+        # FIXME This doesn't work well. This call has to wait until datasetsList.focused() is set.
+        setTimeout((=> @page.ui.datasetsList.focused().state(granuleSelected)), 1000)
       @overlayState(state)
 
     _toggleWithTimeout: (key, observable, bool) ->

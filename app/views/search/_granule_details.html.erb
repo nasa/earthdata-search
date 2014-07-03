@@ -1,6 +1,6 @@
 <!-- ko if: $root.ui.datasetsList.focused() -->
 <!-- ko if: $root.ui.datasetsList.focused().selected() -->
-
+<section id="granule-details">
   <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
   <nav class="master-overlay-nav">
     <a href="#" class="master-overlay-back" data-bind="click: ui.datasetsList.hideGranuleDetails">
@@ -27,61 +27,8 @@
   <div class="tab-content">
     <div class="tab-pane active" id="granule-information">
 
-      <dl class="master-overlay-content">
-        <pre data-bind="text: $data.xml"></pre>
-        <!-- <dt>Dataset:</dt>
-        <dd data-bind="text: $data.dataset_id"></dd>
-        <dt>Download Page:</dt>
-        <dd data-bind="foreach: $data.online_access_urls">
-          <p><a data-bind="attr: {href: URL}, text: edsc.util.string.capitalize(URLDescription)" target="_blank"></a></p>
-        </dd>
-        <dt>Size:</dt>
-        <dd data-bind="text: $data.size_mb"></dd>
-        <dt>Day / Night:</dt>
-        <dd data-bind="text: $data.day_night_flag"></dd>
-        <dt>Inserted:</dt>
-        <dd data-bind="text: $data.insert_time"></dd>
-        <dt>Updated:</dt>
-        <dd data-bind="text: $data.last_update"></dd>
-        <dt>Production Date:</dt>
-        <dd data-bind="text: $data.production_date"></dd>
-        <dt>Temporal:</dt>
-        <dd data-bind="with: $data.temporal">
-          <p data-bind="text: $data"></p>
-        </dd>
-        <dt>Spatial:</dt>
-        <dd data-bind="foreach: $data.spatial">
-          <p data-bind="text: $data"></p>
-        </dd>
-        <dt>Orbit Calculated Spatial Domains:</dt>
-        <dd data-bind="text: $data.orbit_calculated_spatial_domains"></dd>
-        <dt>Measured Parameters:</dt>
-        <dd data-bind="foreach: $data.measured_parameters">
-          <p data-bind="text: $data"></p>
-        </dd>
-        <dt>Platforms:</dt>
-        <dd data-bind="text: $data.platforms"></dd>
-        <dt>Campaigns:</dt>
-        <dd data-bind="foreach: $data.campaigns">
-          <p data-bind="text: $data.Campaign.ShortName"></p>
-        </dd>
-        <dt>Input Granules:</dt>
-        <dd data-bind="text: $data.input_granules"></dd>
-        <dt>Price:</dt>
-        <dd data-bind="text: $data.price"></dd>
-        <dt>Online Resources:</dt>
-        <dd data-bind="foreach: $data.online_resources">
-          <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
-        </dd>
-        <dt>Orderable:</dt>
-        <dd data-bind="text: $data.orderable"></dd>
-        <dt>Data Format:</dt>
-        <dd data-bind="text: $data.data_format"></dd>
-        <dt>Visible:</dt>
-        <dd data-bind="text: $data.visible"></dd>
-        <dt>Additional Attributes:</dt>
-        <dd data-bind="text: $data.additional_attributes"></dd> -->
-      </dl>
+      <div data-bind="text: $data.xml" class="master-overlay-content details-content"></div>
+
     </div>
 
     <div class="tab-pane" id="granule-metadata">
@@ -99,6 +46,6 @@
 
   <!-- /ko -->
   <!-- /ko -->
-
+</section>
 <!-- /ko -->
 <!-- /ko -->

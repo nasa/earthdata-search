@@ -7,7 +7,8 @@ describe 'Dataset details', reset: false do
     fill_in 'keywords', with: 'AST_L1AE'
     expect(page).to have_content('ASTER Expedited L1A')
     first_dataset_result.click_link('View details')
-    within('#details') do
+    wait_for_xhr
+    within('#dataset-details') do
       expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
       expect(page).to have_content('Archive Center: LPDAAC')
       expect(page).to have_content('Processing Center: EDC')

@@ -307,3 +307,7 @@ $parent-width: $parent-split * 0.2;
     left: $main-width;
   }
 }
+
+.details-content {
+  white-space: pre;
+}

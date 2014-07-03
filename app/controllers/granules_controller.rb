@@ -21,7 +21,7 @@ class GranulesController < ApplicationController
     if response.success?
       respond_with(GranuleDetailsPresenter.new(response.body.first, params[:id]), status: response.status)
     else
-      response_with(response.body, status: response.status)
+      respond_with(response.body, status: response.status)
     end
   end
 
