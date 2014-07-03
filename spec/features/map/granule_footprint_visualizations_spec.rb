@@ -21,6 +21,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       hook_granule_results
 
       it "draws a single point on the map representing all of the dataset's granules" do
+        wait_for_xhr
         expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
 
@@ -71,6 +72,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       hook_granule_results
 
       it "draws polygons on the map for granule spatial areas" do
+        wait_for_xhr
         expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
 
@@ -116,6 +118,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       hook_granule_results
 
       it "draws lines on the map for granule spatial areas" do
+        wait_for_xhr
         expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
 
@@ -166,6 +169,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       hook_granule_results
 
       it "draws polygons on the map for granule spatial areas" do
+        wait_for_xhr
         expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
 

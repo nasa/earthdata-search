@@ -4,6 +4,9 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+# Un-comment to truncate the test log to only the most recent execution
+#File.truncate(Rails.root.join("log/test.log"), 0)
+
 require 'capybara-screenshot/rspec'
 
 if ENV['driver'] == 'poltergeist'
@@ -81,15 +84,6 @@ RSpec.configure do |config|
   Capybara.default_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 10).to_i
   wait_time = Capybara.default_wait_time
 
-  config.before :each do
-    if Capybara.current_driver == :rack_test
-      DatabaseCleaner.strategy = :transaction
-    else
-      DatabaseCleaner.strategy = :truncation, {:except => ['dataset_extras', 'orders']}
-    end
-    DatabaseCleaner.start
-  end
-
   config.after :all do |example_from_block_arg|
     example = config.respond_to?(:expose_current_running_example_as) ? example_from_block_arg : self.example
 
@@ -135,23 +129,14 @@ RSpec.configure do |config|
     puts "Slowest specs"
     puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3fs - #{k}" % v}.join("\n"))
     puts
+
+    models_to_preserve = [DatasetExtra, ActiveRecord::SchemaMigration]
+    ActiveRecord::Base.descendants.each do |model|
+      model.destroy_all unless models_to_preserve.include?(model)
+    end
   end
 
   config.after :each do
-    tries = 0
-    begin
-      tries += 1
-      DatabaseCleaner.clean
-    rescue => e
-      $stderr.puts "Database cleaner clean failed: #{e}"
-      if tries < 3
-        sleep 1
-        $stderr.puts "Retrying database clean"
-        retry
-      else
-        $stderr.puts "Database cleaner clean failed after #{tries} tries: #{e}"
-      end
-    end
     if example.exception != nil
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)

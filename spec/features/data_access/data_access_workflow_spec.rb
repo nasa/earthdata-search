@@ -10,7 +10,9 @@ describe "Data Access workflow", reset: false do
   context "when the user is not logged in" do
     before(:each) do
       load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
+      wait_for_xhr
       click_link "Retrieve project data"
+      wait_for_xhr
     end
 
     after :each do
@@ -39,6 +41,7 @@ describe "Data Access workflow", reset: false do
       load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
       login
       click_link "Retrieve project data"
+      wait_for_xhr
     end
 
     after :all do

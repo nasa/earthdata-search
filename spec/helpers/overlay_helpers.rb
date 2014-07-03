@@ -29,16 +29,28 @@ module Helpers
       page.find('#dataset-results')
     end
 
+    def unfeatured_dataset_results
+      page.find('#dataset-results-list')
+    end
+
+    def featured_dataset_results
+      page.find('#dataset-featured-list')
+    end
+
+    def first_featured_dataset
+      nth_panel(featured_dataset_results, 1)
+    end
+
     def first_dataset_result
-      nth_panel(dataset_results, 1)
+      nth_panel(unfeatured_dataset_results, 1)
     end
 
     def second_dataset_result
-      nth_panel(dataset_results, 2)
+      nth_panel(unfeatured_dataset_results, 2)
     end
 
     def nth_dataset_result(n)
-      nth_panel(dataset_results, n)
+      nth_panel(unfeatured_dataset_results, n)
     end
 
     def dataset_details

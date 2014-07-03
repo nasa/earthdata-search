@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140618143644) do
+ActiveRecord::Schema.define(version: 20140630155955) do
+
+  create_table "access_configurations", force: true do |t|
+    t.integer  "user_id"
+    t.string   "dataset_id"
+    t.text     "service_options"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "access_configurations", ["user_id"], name: "index_access_configurations_on_user_id"
 
   create_table "dataset_extras", force: true do |t|
     t.string   "echo_id",                 null: false
@@ -38,6 +48,7 @@ ActiveRecord::Schema.define(version: 20140618143644) do
     t.text     "path"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "retrievals", force: true do |t|
@@ -46,6 +57,8 @@ ActiveRecord::Schema.define(version: 20140618143644) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "retrievals", ["user_id"], name: "index_retrievals_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "echo_id"

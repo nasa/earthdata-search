@@ -6,15 +6,15 @@ require "spec_helper"
 
 # Resetting here because the tour introduces very complex page state that's not easy to back out of
 describe "Site tour", reset: true do
+  after :each do
+    wait_for_xhr
+    User.destroy_all if page.server.responsive?
+  end
 
   context "on the landing page" do
     before :each do
       Capybara.reset_sessions!
       visit "/" # Load the root url with no extra params
-      wait_for_xhr
-    end
-
-    after :each do
       wait_for_xhr
     end
 
@@ -38,7 +38,7 @@ describe "Site tour", reset: true do
       create_bounding_box(0, 0, 10, 10)
 
       expect(page).to have_popover('Dataset Results')
-      first_dataset_result.click
+      first_featured_dataset.click
 
       expect(page).to have_popover('Matching Granules')
       second_granule_list_item.click
@@ -59,7 +59,7 @@ describe "Site tour", reset: true do
       granule_list.click_on 'Back to Datasets'
 
       expect(page).to have_popover('Comparing Multiple Datasets')
-      first_dataset_result.find('.add-to-project').click
+      first_featured_dataset.find('.add-to-project').click
 
       expect(page).to have_popover('Projects')
       click_on 'View Project'

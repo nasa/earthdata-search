@@ -18,10 +18,15 @@ describe "Data download page", reset: false do
     login
   end
 
+  after(:all) do
+    wait_for_xhr
+    AccessConfiguration.destroy_all if page.server.responsive?
+  end
+
   context "when datasets have been selected for direct download" do
     before :all do
-      load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
-      click_link "Retrieve project data"
+      load_page 'data/configure', project: [downloadable_dataset_id, non_downloadable_dataset_id]
+      wait_for_xhr
 
       # Download the first
       choose 'Download'
@@ -76,8 +81,8 @@ describe "Data download page", reset: false do
 
   context "when no datasets have been selected for direct download" do
     before :all do
-      load_page :search, project: [orderable_dataset_id], view: :project
-      click_link "Retrieve project data"
+      load_page 'data/configure', project: [orderable_dataset_id]
+      wait_for_xhr
 
       choose 'Ftp_Pull'
       select 'FTP Pull', from: 'Offered Media Delivery Types'
@@ -95,8 +100,8 @@ describe "Data download page", reset: false do
 
   context "when datasets have been selected for asynchronous access" do
     before :all do
-      load_page :search, project: [orderable_dataset_id, non_orderable_dataset_id], view: :project
-      click_link "Retrieve project data"
+      load_page 'data/configure', project: [orderable_dataset_id, non_orderable_dataset_id]
+      wait_for_xhr
 
       choose 'Ftp_Pull'
       select 'FTP Pull', from: 'Offered Media Delivery Types'
@@ -127,8 +132,8 @@ describe "Data download page", reset: false do
 
   context "when no datasets have been selected for asynchronous access" do
     before :all do
-      load_page :search, project: [downloadable_dataset_id], view: :project
-      click_link "Retrieve project data"
+      load_page 'data/configure', project: [downloadable_dataset_id]
+      wait_for_xhr
 
       choose 'Download'
       click_on 'Submit'
