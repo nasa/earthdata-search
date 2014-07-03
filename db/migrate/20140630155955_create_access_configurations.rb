@@ -8,7 +8,12 @@ class CreateAccessConfigurations < ActiveRecord::Migration
       t.timestamps
     end
 
-    remove_column :projects, :username, :string
+    begin
+      # This migration isn't important and postgres complains that it doesn't have the column
+      remove_column :projects, :username, :string
+    rescue => e
+    end
+
     add_column :projects, :user_id, :integer, index: true
 
     add_index :retrievals, :user_id
