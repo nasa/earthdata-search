@@ -227,6 +227,7 @@ ns.Project = do (ko,
 
       datasetIdStr = value.p
       if datasetIdStr
+        granuleUrStr = value.sgd
         if datasetIdStr != @_datasetIds().join('!')
           datasetIds = datasetIdStr.split('!')
           focused = !!datasetIds[0]
@@ -244,6 +245,7 @@ ns.Project = do (ko,
               query = queries[i + offset]
               if query?
                 dataset.granuleQuery.fromJson(query)
+                dataset.granuleQuery.granuleIds(granuleUrStr) if granuleUrStr?
                 dataset.visible(true) if query.v == 't'
               if i == 0 && focused
                 @focus(dataset)

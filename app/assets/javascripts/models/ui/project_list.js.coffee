@@ -65,12 +65,18 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
         @project.focus(dataset)
         @configureProject()
 
+    loginAndDownloadGranule: (dataset, granule) =>
+      @user.loggedIn =>
+        @project.focus(dataset)
+        @configureProject(granule.title)
+
     loginAndDownloadProject: =>
       @user.loggedIn =>
         @configureProject()
 
-    configureProject: ->
-      window.location.href = '/data/configure?' + urlUtil.realQuery()
+    configureProject: (singleGranuleUR=null) ->
+      singleGranuleParam = if singleGranuleUR? then "&sgd=#{singleGranuleUR}" else ""
+      window.location.href = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam
 
     toggleDataset: (dataset) =>
       project = @project

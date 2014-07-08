@@ -50,7 +50,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the download button" do
       before :all do
-        granule_list.click_link('Retrieve data')
+        granule_list.find('.master-overlay-global-actions').click_link('Retrieve data')
       end
 
       after :all do
