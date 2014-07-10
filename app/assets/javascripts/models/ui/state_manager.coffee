@@ -185,10 +185,13 @@
 
       state.children = children
 
-      @page.ui.datasetsList.state(datasetFocused, datasetSelected)
+      dsList = @page.ui.datasetsList
+      dsList.state(datasetFocused, datasetSelected)
       if granuleFocused
-        # FIXME This doesn't work well. This call has to wait until datasetsList.focused() is set.
-        setTimeout((=> @page.ui.datasetsList.focused().state(granuleSelected)), 1000)
+        subscription = dsList.focused.subscribe (value) ->
+          if value?
+            dsList.focused().state(granuleSelected)
+            subscription.dispose()
       @overlayState(state)
 
     _toggleWithTimeout: (key, observable, bool) ->
