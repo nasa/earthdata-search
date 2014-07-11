@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.GranulesList = do ($=jQuery)->
+ns.GranulesList = do ($=jQuery, config = @edsc.config)->
 
   class GranulesList
     constructor: (@dataset) ->
