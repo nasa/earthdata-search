@@ -4,7 +4,7 @@
 ns = @edsc.models.data
 
 ns.Dataset = do (ko
-                 KnockoutModel = @edsc.models.KnockoutModel
+                 DetailsModel = @edsc.models.DetailsModel
                  scalerUrl = @edsc.config.browseScalerUrl
                  Granules=ns.Granules
                  GranuleQuery = ns.query.GranuleQuery
@@ -23,7 +23,7 @@ ns.Dataset = do (ko
     datasets.push(dataset)
     dataset
 
-  class Dataset extends KnockoutModel
+  class Dataset extends DetailsModel
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
       for dataset in datasets()
@@ -50,7 +50,7 @@ ns.Dataset = do (ko
       Object.defineProperty this, 'granulesModel',
         get: -> @_granulesModel ?= @disposable(new Granules(@granuleQuery, @query))
 
-      @details = @asyncComputed({}, 100, @_computeDetails, this)
+      @details = @asyncComputed({}, 100, @_computeDatasetDetails, this)
       @detailsLoaded = ko.observable(false)
 
       @visible = ko.observable(false)
@@ -84,20 +84,6 @@ ns.Dataset = do (ko
       params = @granuleQuery.serialize()
       return true for own key, value of params
       return false
-
-    _computeDetails: ->
-      id = @id
-      path = "/datasets/#{id}.json"
-      console.log("Request: #{path}", this)
-      ajax
-        dataType: 'json'
-        url: path
-        retry: => @_computeDetails()
-        success: (data) =>
-          details = data['dataset']
-          details.summaryData = this
-          @details(details)
-          @detailsLoaded(true)
 
     hasGranuleConfig: ->
       @granuleQueryLoaded() && Object.keys(@granuleQuery.serialize()).length > 0
