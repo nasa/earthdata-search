@@ -19,6 +19,7 @@ do ($=jQuery) ->
     new XhrSpinner(/\bdatasets.json\b.+\bpage_num=([2-9]\d*|\d{2,})\b/, '.master-overlay-main .panel-list-load-more'), # datasets list scrolling
     new XhrSpinner('/dataset_facets.json', '.master-overlay-parent .panel-list-meta'), # facets
     new XhrSpinner('/datasets/', '#dataset-details .loading'), # dataset details
+    new XhrSpinner('/granules/', '#granule-details .loading'), # granule details
     new XhrSpinner('/granules.json', '#granule-list .panel-list-load-more'), # granule list
     new XhrSpinner('/timeline.json', '.timeline-tools'), # timeline
     new XhrSpinner('/login', '#login-modal .loading', '#login-modal .modal-button'), # login

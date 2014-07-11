@@ -238,15 +238,15 @@ describe 'Address bar', reset: false do
   end
 
   context "when loading a url containing a granule's details" do
-    # before :all do
-    #   visit '/search/granules/granule-details?p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC'
-    #   wait_for_xhr
-    # end
-    #
-    # it "restores the granule details view" do
-    #   expect(page).to have_visible_granule_details
-    #   expect(dataset_details).to have_text('FIFE_STRM_15M.80611715.s15')
-    # end
+    before :all do
+      visit '/search/granules/granule-details?p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC'
+      wait_for_xhr
+    end
+
+    it "restores the granule details view" do
+      expect(page).to have_visible_granule_details
+      expect(granule_details).to have_text('FIFE_STRM_15M.80611715.s15')
+    end
   end
 
   context "setting granule query conditions within the project" do

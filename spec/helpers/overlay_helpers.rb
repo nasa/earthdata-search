@@ -57,6 +57,10 @@ module Helpers
       page.find('#dataset-details')
     end
 
+    def granule_details
+      page.find('#granule-details')
+    end
+
     def project_overview
       page.find('#project-overview')
     end

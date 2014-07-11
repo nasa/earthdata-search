@@ -18,14 +18,7 @@ module Echo
         env[:body] = granule_xmls.map do |granule_xml|
           granule = Granule.new
           granule.browse_urls = parse_browse_urls(granule_xml)
-          xml = granule_xml.to_xml(:root => 'Granule', :skip_instruct => true, :indent => 2)
-          xml.gsub!("<Granule>\n", '') # Remove top level element
-          xml.gsub!(/<(\w+)>/, '\1: ') # Remove '<>' from around opening brackets and add ': '
-          xml.gsub!(/<\/\w+>/, '') # Remove all closing brackets
-          xml.gsub!(/^\s*$\n/, '') # Remove empty lines
-          xml.gsub!(/^\s*<\w+\s+\w+="\w+"(|\/)>$\n/, '') # Remove empty elements with attributes
-
-          granule.xml = xml
+          granule.xml = granule_xml
           granule
         end
 
