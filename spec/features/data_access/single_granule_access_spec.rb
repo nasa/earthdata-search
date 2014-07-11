@@ -48,7 +48,7 @@ describe 'Single Granule Data Access', reset: false do
     end
 
     it 'only configures one granule' do
-      expect(page).to have_content "1 Granules"
+      expect(page).to have_content "1 Granule"
     end
 
     it 'limits the data access to only the selected granule' do
