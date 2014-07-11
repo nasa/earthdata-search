@@ -16,7 +16,7 @@ class GranulesController < ApplicationController
   end
 
   def show
-    response = Echo::Client.get_granule(params[:id], token)
+    response = Echo::Client.get_granule(params[:id], {}, token)
 
     if response.success?
       respond_with(GranuleDetailsPresenter.new(response.body.first, params[:id]), status: response.status)
