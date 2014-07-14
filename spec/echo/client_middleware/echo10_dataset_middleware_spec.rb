@@ -157,7 +157,93 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "atom_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.atom",
           "echo10_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.echo10",
           "iso19115_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.iso19115",
-          "smap_iso_url" => nil
+          "smap_iso_url" => nil,
+          "xml" => {
+            "ShortName"=>"AST_L1AE",
+            "VersionId"=>"3",
+            "LongName"=>"ASTER Expedited L1A Reconstructed Unprocessed Instrument Data",
+            "DataSetId"=>"ASTER Expedited L1A Reconstructed Unprocessed Instrument Data",
+            "Description"=>"Expedited ASTER level-1A data are reconstructed, unprocessed instrument digital counts with radiometric and geometric coefficients included.",
+            "ArchiveCenter"=>"LPDAAC",
+            "ProcessingCenter"=>"EDC",
+            "Temporal"=>{
+              "RangeDateTime"=>{
+                "BeginningDateTime"=>"1984-12-25T00:00:00.000Z",
+                "EndingDateTime"=>"1994-12-25T00:00:00.000Z"
+              }
+            },
+            "Contacts"=>{
+              "Contact"=>{
+                "Role"=>"DATA CENTER CONTACT",
+                "OrganizationAddresses"=>{
+                  "Address"=>{
+                    "StreetAddress"=>"ORNL DAAC User Services Office, P.O. Box 2008, MS 6407, Oak Ridge National Laboratory",
+                    "City"=>"Oak Ridge",
+                    "StateProvince"=>"Tennessee",
+                    "PostalCode"=>"37831-6407",
+                    "Country"=>"USA"
+                  }
+                },
+                "OrganizationPhones"=>{
+                  "Phone"=>[
+                    {"Number"=>"(865) 241-3952", "Type"=>"Direct Line"},
+                    {"Number"=>"(865) 574-4665", "Type"=>"Fax"}]
+                },
+                "OrganizationEmails"=>{
+                  "Email"=>"ornldaac@ornl.gov"
+                },
+                "ContactPersons"=>{
+                  "ContactPerson"=>{
+                    "FirstName"=>"PLEASE CONTACT",
+                    "LastName"=>"ORNL DAAC User Services"
+                  }
+                }
+              }
+            },
+            "ScienceKeywords"=>{
+              "ScienceKeyword"=>[
+                {"CategoryKeyword"=>"EARTH SCIENCE",
+                  "TopicKeyword"=>"HYDROSPHERE",
+                  "TermKeyword"=>"SURFACE WATER"
+                },
+                {"CategoryKeyword"=>"EARTH SCIENCE",
+                  "TopicKeyword"=>"HYDROSPHERE",
+                  "TermKeyword"=>"SURFACEWATER"
+                }
+              ]
+            },
+            "OnlineAccessURLs"=>{
+              "OnlineAccessURL"=>{
+                "URL"=>"http://www.eample.com", "URLDescription"=>""
+              }
+            },
+            "OnlineResources"=>{
+              "OnlineResource"=>{
+                "URL"=>"http://www.eample.com",
+                "URLDescription"=>""
+              }
+            },
+            "AssociatedDIFs"=>{
+              "DIF"=>{
+                "EntryId"=>"DIF_ID"
+              }
+            },
+            "BrowseImages"=>"",
+            "Spatial"=>[
+              {
+                "SpatialCoverageType"=>"Horizontal",
+                "HorizontalSpatialDomain"=>{
+                  "Geometry"=>{
+                    "CoordinateSystem"=>"CARTESIAN",
+                    "Point"=>[
+                      {"PointLongitude"=>"-96.6", "PointLatitude"=>"39.1"}
+                    ]
+                  }
+                },
+                "GranuleSpatialRepresentation"=>"CARTESIAN"
+              }
+            ]
+          }
         }
       }
     end

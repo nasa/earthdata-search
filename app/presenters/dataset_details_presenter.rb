@@ -1,7 +1,39 @@
-class DatasetDetailsPresenter
+class DatasetDetailsPresenter < DetailsPresenter
   def initialize(dataset, collection_id=nil)
     @dataset = dataset
     @dataset.id = collection_id
+
+    if dataset.xml
+      dataset_xml = dataset.xml
+      @dataset.dataset_id = dataset_xml['DataSetId']
+      @dataset.description = dataset_xml['Description']
+      @dataset.short_name = dataset_xml['ShortName']
+      @dataset.version_id = dataset_xml['VersionId']
+      @dataset.archive_center = dataset_xml['ArchiveCenter']
+      @dataset.processing_center = dataset_xml['ProcessingCenter']
+      @dataset.processing_level_id = dataset_xml['ProcessingLevelId']
+      @dataset.orderable = dataset_xml['Orderable']
+      @dataset.visible = dataset_xml['Visible']
+      @dataset.temporal = dataset_xml['Temporal']
+      @dataset.contacts = Array.wrap(dataset_xml['Contacts']['Contact'])
+      @dataset.science_keywords = Array.wrap(dataset_xml['ScienceKeywords']['ScienceKeyword']) if dataset_xml['ScienceKeywords']
+      if dataset_xml['OnlineAccessURLs']
+        @dataset.online_access_urls = Array.wrap(dataset_xml['OnlineAccessURLs']['OnlineAccessURL'])
+      else
+        @dataset.online_access_urls = []
+      end
+      if dataset_xml['OnlineResources']
+        @dataset.online_resources = Array.wrap(dataset_xml['OnlineResources']['OnlineResource'])
+      else
+        @dataset.online_resources = []
+      end
+      @dataset.associated_difs = []
+      @dataset.associated_difs = dataset_xml['AssociatedDIFs']['DIF']['EntryId'] if dataset_xml['AssociatedDIFs'] && dataset_xml['AssociatedDIFs']['DIF']
+      @dataset.spatial = Array.wrap(dataset_xml['Spatial'])
+      @dataset.browse_images = []
+      @dataset.browse_images = dataset_xml['AssociatedBrowseImageUrls']['ProviderBrowseUrl'] if dataset_xml['AssociatedBrowseImageUrls']
+    end
+
     @dataset.spatial = spatial(dataset.spatial)
     @dataset.science_keywords = science_keywords(dataset.science_keywords)
     @dataset.contacts = contacts(dataset.contacts)
@@ -19,14 +51,6 @@ class DatasetDetailsPresenter
   def associated_difs(dif_id)
     url = "http://gcmd.gsfc.nasa.gov/getdif.htm?#{dif_id}"
     {url: url, id: dif_id}
-  end
-
-  def temporal(hash)
-    if hash && hash['RangeDateTime']
-      "#{hash['RangeDateTime']['BeginningDateTime']} to #{hash['RangeDateTime']['EndingDateTime']}"
-    else
-      'Not available'
-    end
   end
 
   def contacts(hash)
@@ -65,78 +89,5 @@ class DatasetDetailsPresenter
     else
       ['Not available']
     end
-  end
-
-  def spatial(hash)
-    if hash
-      spatial_list = hash.map do |h|
-        spatial = []
-
-        if h['HorizontalSpatialDomain']
-          geometry = h['HorizontalSpatialDomain']['Geometry']
-          if geometry['Point']
-            points = Array.wrap(geometry['Point'])
-
-            points.each do |point|
-              latitude = point['PointLatitude']
-              longitude = point['PointLongitude']
-              spatial << "Point: (#{degrees(latitude)}, #{degrees(longitude)})"
-            end
-
-          elsif geometry['BoundingRectangle']
-            boxes = Array.wrap(geometry['BoundingRectangle'])
-
-            boxes.each do |box|
-              north = box['NorthBoundingCoordinate']
-              south = box['SouthBoundingCoordinate']
-              east = box['EastBoundingCoordinate']
-              west = box['WestBoundingCoordinate']
-              spatial = "Bounding Rectangle: (#{degrees(north)}, #{degrees(west)}, #{degrees(south)}, #{degrees(east)})"
-            end
-          elsif geometry['GPolygon']
-            polygons = Array.wrap(geometry['GPolygon'])
-
-            polygons.each do |polygon|
-              s = "Polygon: ("
-              polygon['Boundary'].each do |point|
-                point[1].each_with_index do |p, i|
-                  latitude = p['PointLatitude']
-                  longitude = p['PointLongitude']
-                  s += "(#{degrees(latitude)}, #{degrees(longitude)})"
-                  s += ", " if i+1 < point[1].size
-                end
-              end
-              s += ")"
-              spatial << s
-            end
-
-          elsif geometry['Line']
-            lines = Array.wrap(geometry['Line'])
-
-            lines.each do |line|
-              latitude1 = line['Point'][0]['PointLatitude']
-              longitude1 = line['Point'][0]['PointLongitude']
-              latitude2 = line['Point'][1]['PointLatitude']
-              longitude2 = line['Point'][1]['PointLongitude']
-              spatial << "Line: ((#{degrees(latitude1)}, #{degrees(longitude1)}), (#{degrees(latitude2)}, #{degrees(longitude2)}))"
-            end
-          else
-            spatial = ['Not available']
-          end
-        else
-          spatial = ['Not available']
-        end
-
-        spatial
-      end
-    else
-      spatial_list = ['Not available']
-    end
-
-    spatial_list.flatten
-  end
-
-  def degrees(text)
-    "#{text}\xC2\xB0"
   end
 end

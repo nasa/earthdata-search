@@ -31,7 +31,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the dataset details button" do
       before :all do
-        granule_list.click_link('View details')
+        granule_list.find('.master-overlay-global-actions').click_link('View details')
       end
 
       after :all do

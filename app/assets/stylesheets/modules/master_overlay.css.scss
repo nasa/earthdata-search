@@ -194,7 +194,7 @@
 
 // Scrollable content area
 .master-overlay-content {
-  padding: 0 1em;
+  padding: 0 1em 1em 1em;
   height: 80%;
   overflow-y: scroll;
 }
@@ -306,4 +306,8 @@ $parent-width: $parent-split * 0.2;
   .master-overlay-secondary {
     left: $main-width;
   }
+}
+
+.details-content {
+  white-space: pre;
 }

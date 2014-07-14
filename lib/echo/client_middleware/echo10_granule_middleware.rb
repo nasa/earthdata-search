@@ -1,3 +1,4 @@
+require "rexml/document"
 require 'faraday_middleware/response_middleware'
 
 module Echo
@@ -7,17 +8,17 @@ module Echo
         body = env[:body]
 
         if body['Granule']
-          granule_xmls = Array.wrap(body)
+          granule_xmls = Array.wrap(body['Granule'])
         elsif body['results']
           granule_xmls = Array.wrap(body['results']['result'])
         else
           granule_xmls = []
         end
 
-        env[:body] = granule_xmls.map do |xml|
-          granule_xml = xml['Granule']
+        env[:body] = granule_xmls.map do |granule_xml|
           granule = Granule.new
           granule.browse_urls = parse_browse_urls(granule_xml)
+          granule.xml = granule_xml
           granule
         end
 

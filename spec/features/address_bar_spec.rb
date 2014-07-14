@@ -217,11 +217,35 @@ describe 'Address bar', reset: false do
   end
 
   context "when loading a url containing a dataset's details" do
-    before(:all) { visit '/search/details?p=C179003030-ORNL_DAAC' }
+    before(:all) { visit '/search/dataset-details?p=C179003030-ORNL_DAAC' }
 
     it 'restores the dataset details view' do
       expect(page).to have_visible_dataset_details
       expect(dataset_details).to have_text('15 Minute Stream Flow')
+    end
+  end
+
+  context "when viewing a granule's details" do
+    before :all do
+      visit '/search/datasets'
+      first_dataset_result.click
+      first_granule_list_item.click_link 'View details'
+    end
+
+    it 'saves the selected granule in the address bar' do
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1!-97.725!7')
+    end
+  end
+
+  context "when loading a url containing a granule's details" do
+    before :all do
+      visit '/search/granules/granule-details?p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC'
+      wait_for_xhr
+    end
+
+    it "restores the granule details view" do
+      expect(page).to have_visible_granule_details
+      expect(granule_details).to have_text('FIFE_STRM_15M.80611715.s15')
     end
   end
 
@@ -239,7 +263,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the query conditions in the URL" do
-      expect(page).to have_path('/search/project/details')
+      expect(page).to have_path('/search/project/dataset-details')
       expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY')
     end
 
@@ -400,7 +424,7 @@ describe 'Address bar', reset: false do
   end
 
   context "Long URLs" do
-    let(:long_path) { '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC' }
+    let(:long_path) { '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC!C179002048-SEDAC' }
     let(:longer_path) { long_path + '!C179003030-ORNL_DAAC' }
     let(:query_re) { /^projectId=(\d+)$/ }
 
@@ -453,7 +477,7 @@ describe 'Address bar', reset: false do
       end
 
       it "restores the persisted long path" do
-        expect(page).to have_text('You have 6 datasets in your project.')
+        expect(page).to have_text('You have 7 datasets in your project.')
       end
     end
   end

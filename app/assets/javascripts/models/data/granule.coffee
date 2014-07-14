@@ -1,8 +1,15 @@
-@edsc.models.data.Granule = do (extend = $.extend, scalerUrl = @edsc.config.browseScalerUrl) ->
+@edsc.models.data.Granule = do (ko
+                                DetailsModel = @edsc.models.DetailsModel
+                                extend = $.extend
+                                scalerUrl = @edsc.config.browseScalerUrl
+                                ajax = jQuery.ajax
+                                ) ->
 
-  class Granule
+  class Granule extends DetailsModel
     constructor: (jsonData) ->
       extend(this, jsonData)
+      @details = @asyncComputed({}, 100, @_computeGranuleDetails, this)
+      @detailsLoaded = ko.observable(false)
 
     edsc_browse_url: (w, h) ->
       w ?= 170

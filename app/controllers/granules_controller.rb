@@ -15,6 +15,16 @@ class GranulesController < ApplicationController
     end
   end
 
+  def show
+    response = Echo::Client.get_granule(params[:id], {}, token)
+
+    if response.success?
+      respond_with(GranuleDetailsPresenter.new(response.body.first, params[:id]), status: response.status)
+    else
+      respond_with(response.body, status: response.status)
+    end
+  end
+
   def timeline
     catalog_response = Echo::Client.get_timeline(request.request_parameters, token)
     render json: catalog_response.body, status: catalog_response.status

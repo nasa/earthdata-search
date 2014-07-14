@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.GranulesList = do ($=jQuery)->
+ns.GranulesList = do ($=jQuery, config = @edsc.config)->
 
   class GranulesList
     constructor: (@dataset) ->
@@ -20,13 +20,13 @@ ns.GranulesList = do ($=jQuery)->
       $granuleList.on 'keydown', @_onKeyDown
       $map.on 'keydown', @_onKeyDown
 
-      @_hasFocus = false
+      @_hasFocus = ko.observable(false)
       $granuleList.on 'blur', (e) =>
-        @_hasFocus = false
+        @_hasFocus(false)
       $granuleList.on 'focus.panel-list-item', (e) =>
         # We want click behavior when we have focus, but not when the focus came from the
         # click's mousedown.  Ugh.
-        setTimeout((=> @_hasFocus = true), 500)
+        setTimeout((=> @_hasFocus(true)), 500)
 
       map.focusDataset(@dataset)
 
@@ -38,6 +38,12 @@ ns.GranulesList = do ($=jQuery)->
 
       @_pendingSticky = ko.observable(null)
       @_setStickyComputed = ko.computed(read: @_setSticky, owner: this)
+
+      @_hasSelected = ko.observable(false)
+      @selected = ko.observable(null)
+
+      @fixOverlayHeight = ko.computed =>
+        $('.master-overlay').masterOverlay('contentHeightChanged') if @selected()?.detailsLoaded?()
 
     dispose: ->
       map = $('#map').data('map')
@@ -69,6 +75,9 @@ ns.GranulesList = do ($=jQuery)->
           @_pendingSticky(null)
           # Set timeout to ensure the list renders before we try scrolling to it
           setTimeout((=> @_map.fire 'edsc.stickygranule', granule: granule), 0)
+          if @_hasSelected()
+            @selected(granule)
+            @selected().details()
           return
 
     _readSerialized: ->
@@ -146,7 +155,7 @@ ns.GranulesList = do ($=jQuery)->
       granule == @stickied()
 
     toggleStickyFocus: (granule, e) =>
-      return if @isStickied(granule) && !@_hasFocus
+      return if @isStickied(granule) && !@_hasFocus()
       return true if $(e?.target).closest('a').length > 0
       granule = null if @isStickied(granule)
       @_map.fire 'edsc.stickygranule', granule: granule
@@ -177,5 +186,16 @@ ns.GranulesList = do ($=jQuery)->
     clearExclusions: =>
       @granules.excludedGranulesList([])
       @granules.query.excludedGranules([])
+
+    showGranuleDetails: (granule, event=null) =>
+      @_map.fire 'edsc.stickygranule', granule: granule
+      @selected(granule) unless @selected() == granule
+
+    hideGranuleDetails: (event=null) =>
+      if @selected()
+        @_unselectTimeout = setTimeout((=> @selected(null)), config.defaultAnimationDurationMs)
+
+    state: (selected) ->
+      @_hasSelected(selected)
 
   exports = GranulesList

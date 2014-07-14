@@ -29,6 +29,10 @@ module Echo
       post("/catalog-rest/echo_catalog/granules.#{format}", body.to_query, headers)
     end
 
+    def self.get_granule(id, options={}, token=nil)
+      get("/catalog-rest/echo_catalog/granules/#{id}.echo10", {}, token_header(token))
+    end
+
     def self.get_facets(options={}, token=nil)
       # TODO: Remove true after spatial is fixed for facet searches in catalog rest
       get("/catalog-rest/search_facet.json", options_to_facet_query(options), token_header(token))
