@@ -60,6 +60,9 @@
                 <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View details">
                   <i class="edsc-icon-info"></i>
                 </a>
+                <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.dataset)">
+                  <i class="edsc-icon-download"></i>
+                </a>
               </div>
 
               <!-- ko if: browse_flag === 'true' -->

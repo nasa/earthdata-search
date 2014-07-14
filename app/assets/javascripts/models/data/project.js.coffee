@@ -67,10 +67,15 @@ ns.Project = do (ko,
 
     _loadGranuleAccessOptions: ->
       console.log "Loading granule access options for #{@dataset.id}"
+      singleGranuleId = @dataset.granuleQuery.singleGranuleId()
+      if singleGranuleId
+        params = extend(@dataset.granuleQuery.params(), {echo_granule_id: singleGranuleId})
+      else
+        params = @dataset.granuleQuery.params()
       ajax
         dataType: 'json'
         url: '/data/options'
-        data: @dataset.granuleQuery.params()
+        data: params
         retry: => @_loadGranuleAccessOptions()
         success: (data, status, xhr) =>
           console.log "Finished loading access options for #{@dataset.id}"
@@ -227,6 +232,7 @@ ns.Project = do (ko,
 
       datasetIdStr = value.p
       if datasetIdStr
+        singleGranuleId = value.sgd
         if datasetIdStr != @_datasetIds().join('!')
           datasetIds = datasetIdStr.split('!')
           focused = !!datasetIds[0]
@@ -244,6 +250,7 @@ ns.Project = do (ko,
               query = queries[i + offset]
               if query?
                 dataset.granuleQuery.fromJson(query)
+                dataset.granuleQuery.singleGranuleId(singleGranuleId) if singleGranuleId?
                 dataset.visible(true) if query.v == 't'
               if i == 0 && focused
                 @focus(dataset)
