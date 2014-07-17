@@ -91,6 +91,10 @@ ns.Project = do (ko,
 
   class Project
     constructor: (@query, @loadGranulesOnAdd=true) ->
+      @projectName = ko.observable(null)
+      @savedProjectName = ko.observable(null)
+      @saveProject = ko.observable(false)
+
       @_datasetIds = ko.observableArray()
       @_datasetsById = {}
 
@@ -261,5 +265,8 @@ ns.Project = do (ko,
             @_pendingAccess = null
       else
         @datasets([])
+
+    saveProjectName: =>
+      @saveProject(true)
 
   exports = Project

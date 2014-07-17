@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   def show
     project = Project.find(params[:id])
-    render :text => project.path
+    render :json => project.to_json
 
   rescue ActiveRecord::RecordNotFound => e
     render :text => '/'
@@ -14,7 +14,9 @@ class ProjectsController < ApplicationController
     rescue ActiveRecord::RecordNotFound => e
     end
     project = Project.new unless project
-    project.path = request.body.read
+    project.path = params[:path]
+    project.name = params[:project_name]
+    project.user_id = current_user.id
     project.save!
     render :text => project.to_param
   end

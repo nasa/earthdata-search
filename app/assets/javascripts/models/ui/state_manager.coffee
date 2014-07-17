@@ -15,6 +15,13 @@
       @historyChanged = false
       @loaded = false
 
+      @page.project.saveProject.subscribe (saveProject) =>
+        if saveProject
+          urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.project.projectName())
+          @page.project.savedProjectName(@page.project.projectName())
+          @page.project.saveProject(false)
+
+
     monitor: ->
       @loadFromUrl()
       $(document).ready(@_onReady)
@@ -68,6 +75,8 @@
           [path, query] = clean.split('?')
           @path(path)
           @load(urlUtil.currentParams())
+          @page.project.savedProjectName(urlUtil.getProjectName())
+          @page.project.projectName(urlUtil.getProjectName())
 
     _onReady: =>
       $overlay = $('.master-overlay')
@@ -205,6 +214,6 @@
         @_timeouts[key] = setTimeout((-> observable(false)), config.defaultAnimationDurationMs)
 
     _persistStateInUrl: ->
-      @historyChanged = true if urlUtil.saveState(@path(), @serialize(), !@historyChanged)
+      @historyChanged = true if urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.project.projectName())
 
   exports = StateManager

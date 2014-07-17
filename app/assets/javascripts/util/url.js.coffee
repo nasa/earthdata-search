@@ -148,6 +148,10 @@ this.edsc.util.url = do(window,
 
   savedPath = null
   savedId = null
+  savedName = null
+
+  getProjectName = ->
+    savedName
 
   fetchId = (id) ->
     return if savedId == id
@@ -155,24 +159,28 @@ this.edsc.util.url = do(window,
     savedId = id
     $.ajax
       method: 'get'
-      dataType: 'text'
+      dataType: 'json'
       url: "/projects/#{id}"
       success: (data) ->
-        savedPath = data
+        savedPath = data.path
+        savedName = data.name
         console.log "Fetched project #{id}"
-        console.log "Path: #{data}"
+        console.log "Path: #{data.path}"
+        console.log "Project Name: #{data.name}"
         $(window).trigger('edsc.pagechange')
 
-  shortenPath = (path, state) ->
+  shortenPath = (path, state, projectName = null) ->
     id = savedId ? ''
     savedPath = path
     console.log "Saving project #{id}"
     console.log "Path: #{path}"
+    console.log "Project Name: #{projectName}"
+    data = {path: path, project_name: projectName}
     $.ajax
       method: 'post'
       dataType: 'text'
       url: "/projects?id=#{id}"
-      data: path
+      data: data
       success: (data) ->
         console.log "Saved project #{id}"
         console.log "Path: #{path}"
@@ -198,14 +206,14 @@ this.edsc.util.url = do(window,
       path = cleanPath().replace(/^[^\?]*/, path)
       History.pushState(data, title, path)
 
-  saveState = (path, state, push = false) ->
+  saveState = (path, state, push = false, projectName = null) ->
     paramStr = param(compress(state)).replace(/%5B/g, '[').replace(/%5D/g, ']')
     paramStr = '?' + paramStr if paramStr.length > 0
 
     path = path + paramStr
-    if path != savedPath && path.length > config.urlLimit
+    if projectName || (path != savedPath && path.length > config.urlLimit)
       # assign a guid
-      shortenPath(path, state)
+      shortenPath(path, state, projectName)
       return
 
     if cleanPath() && cleanPath() != path
@@ -231,6 +239,7 @@ this.edsc.util.url = do(window,
     inflate(deparam(currentQuery()))
 
   exports =
+    getProjectName: getProjectName
     pushPath: pushPath
     saveState: saveState
     realQuery: realQuery

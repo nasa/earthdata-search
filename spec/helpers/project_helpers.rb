@@ -19,5 +19,10 @@ module Helpers
     def project_dataset_ids
       page.evaluate_script('edsc.models.page.current.project.datasets().map(function(ds){return ds.dataset_id;})')
     end
+
+    def click_save_project_name
+      page.execute_script('$(".save-project-name-button").click()')
+      wait_for_xhr
+    end
   end
 end
