@@ -1,9 +1,26 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :urs_user, except: [:logout]
+
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
 
+  def redirect_from_urs
+    last_point = session[:last_point]
+    session[:last_point] = nil
+    last_point || root_url
+  end
+
   protected
+
+  def urs_user
+    puts 'cookies  ' + cookies['expires'].inspect
+    puts Time.now.to_i * 1000
+    puts cookies['expires'].to_i
+    OauthToken.refresh_token(cookies['refresh_token']) if cookies['expires'].to_i > 0 && (Time.now.to_i * 1000) > cookies['expires'].to_i
+    @urs_user = session[:urs_user]
+    session[:urs_user] = nil
+  end
 
   def handle_timeout
     Rails.logger.error 'Request timed out'
@@ -13,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def token
-    cookies['token']
+    cookies['access_token']
   end
 
   def get_user_id
