@@ -1,10 +1,7 @@
-<!-- ko ifnot: user.isLoggedIn -->
-<a href="#" class="button user-info sign-in" data-bind="click: user.initiateLogin" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
-<!-- /ko -->
 <!-- ko if: user.isLoggedIn -->
 <!-- ko if: $root.showWorkspace -->
 <div data-bind="if: workspaceName" id="workspace-name" class="dropdown save-dropdown workspace-name">
-  <a class="toolbar-button" data-bind="text: workspaceName"></a>
+  <span class="toolbar-text" data-bind="text: workspaceName"></span>
 </div>
 <div class="dropdown save-dropdown">
   <a href="javascript:void(0)" data-toggle="dropdown" class="save toolbar-button" title="Save your session">
@@ -14,7 +11,7 @@
   <ul class="dropdown-menu dropdown-menu-right dropdown-form">
     <li>
       <input data-bind="value: workspaceName" id="workspace-name" class="workspace-name" type="text" placeholder="Name your workspace" />
-      <button class="save-workspace-name" type="button">Save</button>
+      <button class="save-workspace-name" type="button" onclick="$(window).trigger('edsc.save_workspace')">Save</button>
     </li>
     <!-- <li>
       View Saved Projects
@@ -22,6 +19,19 @@
   </ul>
 </div>
 <!-- /ko -->
+<!-- /ko -->
+
+<% if Rails.configuration.feedback_url.present? %>
+  <a href="javascript:void(0)" onclick="feedback.showForm(); return false" class="feedback toolbar-button" title="Leave feedback">
+    <i class="fa fa-bullhorn"></i>
+  </a>
+<% end %>
+
+<!-- ko ifnot: user.isLoggedIn -->
+<a href="#" class="button user-info sign-in" data-bind="click: user.initiateLogin" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
+<!-- /ko -->
+<!-- ko if: user.isLoggedIn -->
+
 <div class="dropdown user-info">
   <a href="#" data-toggle="dropdown" class="toolbar-button" title="Manage user account">
     <%# Gravatar support #>

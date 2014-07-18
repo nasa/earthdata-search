@@ -15,8 +15,8 @@
       @historyChanged = false
       @loaded = false
 
-      @page.workspaceName.subscribe (name) =>
-          urlUtil.saveState(@path(), @serialize(), !@historyChanged, name)
+      $(window).on 'edsc.save_workspace', =>
+          urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceName())
 
 
     monitor: ->

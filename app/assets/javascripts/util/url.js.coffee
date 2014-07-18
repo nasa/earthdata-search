@@ -186,13 +186,7 @@ this.edsc.util.url = do(window,
         console.log "Path: #{path}"
         savedId = data
         History.pushState(state, document.title, "/#{path.split('?')[0]}?projectId=#{savedId}")
-        if workspaceName?
-          save = $('.save-icon')
-          check = $('.save-success')
-          save.hide()
-          check.show()
-          setTimeout((-> check.fadeOut()), config.defaultAnimationDurationMs)
-          setTimeout((-> save.show()), config.defaultAnimationDurationMs + 400)
+        $(document).trigger('edsc.saved') if workspaceName?
 
   cleanPath = ->
     path = realPath()
