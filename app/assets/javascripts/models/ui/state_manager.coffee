@@ -15,17 +15,8 @@
       @historyChanged = false
       @loaded = false
 
-      @page.project.saveProject.subscribe (saveProject) =>
-        if saveProject
-          urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.project.projectName())
-          @page.project.savedProjectName(@page.project.projectName())
-          @page.project.saveProject(false)
-          save = $('.save-icon')
-          check = $('.save-success')
-          save.hide()
-          check.show()
-          setTimeout((-> check.fadeOut()), config.defaultAnimationDurationMs)
-          setTimeout((-> save.show()), config.defaultAnimationDurationMs + 400)
+      @page.workspaceName.subscribe (name) =>
+          urlUtil.saveState(@path(), @serialize(), !@historyChanged, name)
 
 
     monitor: ->
@@ -81,8 +72,7 @@
           [path, query] = clean.split('?')
           @path(path)
           @load(urlUtil.currentParams())
-          @page.project.savedProjectName(urlUtil.getProjectName())
-          @page.project.projectName(urlUtil.getProjectName())
+          @page.workspaceName(urlUtil.getProjectName())
 
     _onReady: =>
       $overlay = $('.master-overlay')
@@ -220,6 +210,6 @@
         @_timeouts[key] = setTimeout((-> observable(false)), config.defaultAnimationDurationMs)
 
     _persistStateInUrl: ->
-      @historyChanged = true if urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.project.projectName())
+      @historyChanged = true if urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceName())
 
   exports = StateManager

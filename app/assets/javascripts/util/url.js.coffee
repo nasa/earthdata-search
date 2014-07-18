@@ -169,13 +169,13 @@ this.edsc.util.url = do(window,
         console.log "Project Name: #{data.name}"
         $(window).trigger('edsc.pagechange')
 
-  shortenPath = (path, state, projectName = null) ->
+  shortenPath = (path, state, workspaceName = null) ->
     id = savedId ? ''
     savedPath = path
     console.log "Saving project #{id}"
     console.log "Path: #{path}"
-    console.log "Project Name: #{projectName}"
-    data = {path: path, project_name: projectName}
+    console.log "Workspace Name: #{workspaceName}"
+    data = {path: path, workspace_name: workspaceName}
     $.ajax
       method: 'post'
       dataType: 'text'
@@ -186,6 +186,13 @@ this.edsc.util.url = do(window,
         console.log "Path: #{path}"
         savedId = data
         History.pushState(state, document.title, "/#{path.split('?')[0]}?projectId=#{savedId}")
+        if workspaceName?
+          save = $('.save-icon')
+          check = $('.save-success')
+          save.hide()
+          check.show()
+          setTimeout((-> check.fadeOut()), config.defaultAnimationDurationMs)
+          setTimeout((-> save.show()), config.defaultAnimationDurationMs + 400)
 
   cleanPath = ->
     path = realPath()
@@ -206,14 +213,14 @@ this.edsc.util.url = do(window,
       path = cleanPath().replace(/^[^\?]*/, path)
       History.pushState(data, title, path)
 
-  saveState = (path, state, push = false, projectName = null) ->
+  saveState = (path, state, push = false, workspaceName = null) ->
     paramStr = param(compress(state)).replace(/%5B/g, '[').replace(/%5D/g, ']')
     paramStr = '?' + paramStr if paramStr.length > 0
 
     path = path + paramStr
-    if projectName || (path != savedPath && path.length > config.urlLimit)
+    if workspaceName || (path != savedPath && path.length > config.urlLimit)
       # assign a guid
-      shortenPath(path, state, projectName)
+      shortenPath(path, state, workspaceName)
       return
 
     if cleanPath() && cleanPath() != path

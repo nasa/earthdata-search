@@ -19,7 +19,7 @@ describe 'Saving Projects', reset: false do
       first_dataset_result.click_link "Add dataset to the current project"
       nth_dataset_result(2).click_link "Add dataset to the current project"
       click_link "Save your session"
-      fill_in "save-project-name", with: "Test Project\t" #press tab to exit the input field
+      fill_in "workspace-name", with: "Test Project\t" #press tab to exit the input field
       click_save_project_name
     end
 

@@ -2,9 +2,9 @@
 <a href="#" class="button user-info sign-in" data-bind="click: user.initiateLogin" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
 <!-- /ko -->
 <!-- ko if: user.isLoggedIn -->
-<!-- ko if: $root.project -->
-<div data-bind="if: project.savedProjectName" id="project-name" class="dropdown save-dropdown project-name">
-  <a class="toolbar-button" data-bind="text: project.savedProjectName"></a>
+<!-- ko if: $root.showWorkspace -->
+<div data-bind="if: workspaceName" id="workspace-name" class="dropdown save-dropdown workspace-name">
+  <a class="toolbar-button" data-bind="text: workspaceName"></a>
 </div>
 <div class="dropdown save-dropdown">
   <a href="javascript:void(0)" data-toggle="dropdown" class="save toolbar-button" title="Save your session">
@@ -13,8 +13,8 @@
   </a>
   <ul class="dropdown-menu dropdown-menu-right dropdown-form">
     <li>
-      <input data-bind="value: project.projectName" id="save-project-name" class="save-project-name" type="text" placeholder="Name your project" />
-      <button data-bind="click: project.saveProjectName" class="save-project-name-button" type="button">Save</button>
+      <input data-bind="value: workspaceName" id="workspace-name" class="workspace-name" type="text" placeholder="Name your workspace" />
+      <button class="save-workspace-name" type="button">Save</button>
     </li>
     <!-- <li>
       View Saved Projects

@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
     end
     project = Project.new unless project
     project.path = params[:path]
-    project.name = params[:project_name]
+    project.name = params[:workspace_name] if params[:workspace_name]
     project.user_id = current_user.id if current_user
     project.save!
     render :text => project.to_param
