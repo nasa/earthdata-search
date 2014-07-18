@@ -20,6 +20,12 @@
           urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.project.projectName())
           @page.project.savedProjectName(@page.project.projectName())
           @page.project.saveProject(false)
+          save = $('.save-icon')
+          check = $('.save-success')
+          save.hide()
+          check.show()
+          setTimeout((-> check.fadeOut()), config.defaultAnimationDurationMs)
+          setTimeout((-> save.show()), config.defaultAnimationDurationMs + 400)
 
 
     monitor: ->
