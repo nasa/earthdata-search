@@ -33,21 +33,23 @@ class DatasetsController < ApplicationController
 
 
     if response.success?
+      # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
+      query = request.query_string.gsub('%5B', '[').gsub('%5D', ']').split('&').map {|kv| kv.split('=')}.group_by(&:first)
       facets = response.body.with_indifferent_access
 
-      results = [facet_response(facets, 'Campaigns', 'campaign_sn', 'campaign[]'),
-                 facet_response(facets, 'Platforms', 'platform_sn', 'platform[]'),
-                 facet_response(facets, 'Instruments', 'instrument_sn', 'instrument[]'),
-                 facet_response(facets, 'Sensors', 'sensor_sn', 'sensor[]'),
-                 facet_response(facets, '2D Coordinate Name', 'twod_coord_name', 'two_d_coordinate_system_name[]'),
-                 facet_response(facets, 'Category Keyword', 'category_keyword', 'science_keywords[0][category][]'),
-                 facet_response(facets, 'Topic Keyword', 'topic_keyword', 'science_keywords[0][topic][]'),
-                 facet_response(facets, 'Term Keyword', 'term_keyword', 'science_keywords[0][term][]'),
-                 facet_response(facets, 'Variable Level 1 Keyword', 'variable_level_1_keyword', 'science_keywords[0][variable_level_1][]'),
-                 facet_response(facets, 'Variable Level 2 Keyword', 'variable_level_2_keyword', 'science_keywords[0][variable_level_2][]'),
-                 facet_response(facets, 'Variable Level 3 Keyword', 'variable_level_3_keyword', 'science_keywords[0][variable_level_3][]'),
-                 facet_response(facets, 'Detailed Variable Keyword', 'detailed_variable_keyword', 'science_keywords[0][detailed_variable][]'),
-                 facet_response(facets, 'Processing Level', 'processing_level', 'processing_level[]')
+      results = [facet_response(query, facets, 'Campaigns', 'campaign_sn', 'campaign[]'),
+                 facet_response(query, facets, 'Platforms', 'platform_sn', 'platform[]'),
+                 facet_response(query, facets, 'Instruments', 'instrument_sn', 'instrument[]'),
+                 facet_response(query, facets, 'Sensors', 'sensor_sn', 'sensor[]'),
+                 facet_response(query, facets, '2D Coordinate Name', 'twod_coord_name', 'two_d_coordinate_system_name[]'),
+                 facet_response(query, facets, 'Category Keyword', 'category_keyword', 'science_keywords[0][category][]'),
+                 facet_response(query, facets, 'Topic Keyword', 'topic_keyword', 'science_keywords[0][topic][]'),
+                 facet_response(query, facets, 'Term Keyword', 'term_keyword', 'science_keywords[0][term][]'),
+                 facet_response(query, facets, 'Variable Level 1 Keyword', 'variable_level_1_keyword', 'science_keywords[0][variable_level_1][]'),
+                 facet_response(query, facets, 'Variable Level 2 Keyword', 'variable_level_2_keyword', 'science_keywords[0][variable_level_2][]'),
+                 facet_response(query, facets, 'Variable Level 3 Keyword', 'variable_level_3_keyword', 'science_keywords[0][variable_level_3][]'),
+                 facet_response(query, facets, 'Detailed Variable Keyword', 'detailed_variable_keyword', 'science_keywords[0][detailed_variable][]'),
+                 facet_response(query, facets, 'Processing Level', 'processing_level', 'processing_level[]')
                 ]
 
       respond_with(results, status: response.status)
@@ -58,8 +60,19 @@ class DatasetsController < ApplicationController
 
   private
 
-  def facet_response(facets, name, key, param)
+  def facet_response(query, facets, name, key, param)
     items = facets[key]
+
+    applied = []
+    Array.wrap(query[param]).each do |param_term|
+      term = param_term.last
+      unless items.any? {|item| item['term'] == term}
+        applied << {'term' => term, 'count' => 0}
+      end
+    end
+
+    items += applied
+
     items.sort_by! {|facet| facet['term']}
     {name: name, param: param, values: items}
   end
