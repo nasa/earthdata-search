@@ -212,10 +212,11 @@ this.edsc.util.url = do(window,
     paramStr = '?' + paramStr if paramStr.length > 0
 
     path = path + paramStr
-    if workspaceName || (path != savedPath && path.length > config.urlLimit)
-      # assign a guid
-      shortenPath(path, state, workspaceName)
-      return
+    if workspaceName || path.length > config.urlLimit
+      if path != savedPath || (workspaceName && savedName != workspaceName)
+        # assign a guid
+        shortenPath(path, state, workspaceName)
+        return
 
     if cleanPath() && cleanPath() != path
       savedPath = path
