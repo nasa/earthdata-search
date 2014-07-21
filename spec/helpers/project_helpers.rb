@@ -21,7 +21,7 @@ module Helpers
     end
 
     def click_save_project_name
-      page.execute_script('$(".save-project-name").click()')
+      page.execute_script('$(".save-workspace-name").click()')
       wait_for_xhr
     end
   end

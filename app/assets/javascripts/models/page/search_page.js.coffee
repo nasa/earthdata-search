@@ -62,6 +62,7 @@ ns.SearchPage = do (ko
 
       @showWorkspace = true
       @workspaceName = ko.observable(null)
+      @workspaceNameField = ko.observable(null)
 
       new StateManager(this).monitor()
 
