@@ -17,6 +17,7 @@
       $(window).on 'edsc.save_workspace', =>
           urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceNameField())
           @page.workspaceName(@page.workspaceNameField())
+          $('.save-dropdown').removeClass('open')
 
 
     monitor: ->

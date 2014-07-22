@@ -1,17 +1,25 @@
 <!-- ko if: user.isLoggedIn -->
 <!-- ko if: $root.showWorkspace -->
-<div data-bind="if: workspaceName" id="workspace-name" class="dropdown save-dropdown workspace-name">
-  <span class="toolbar-text" data-bind="text: workspaceName"></span>
-</div>
 <div class="dropdown save-dropdown">
-  <a href="javascript:void(0)" data-toggle="dropdown" class="save toolbar-button" title="Save your session">
-    <i class="fa fa-check-circle save-success"></i>
-    <i class="fa fa-floppy-o save-icon"></i>
-  </a>
+  <!-- ko if: workspaceName -->
+    <a href="javascript:void(0)" data-toggle="dropdown" class="save workspace-name-button" title="Rename your session">
+      <div class="workspace-name">
+        <i class="fa fa-check-circle save-success"></i>
+        <span class="toolbar-text" data-bind="text: workspaceName"></span>
+      </div>
+    </a>
+  <!-- /ko -->
+  <!-- ko ifnot: workspaceName -->
+    <a href="javascript:void(0)" data-toggle="dropdown" class="save toolbar-button" title="Save your session">
+      <i class="fa fa-floppy-o save-icon"></i>
+    </a>
+  <!-- /ko -->
   <ul class="dropdown-menu dropdown-menu-right dropdown-form">
     <li>
-      <input data-bind="value: workspaceNameField" id="workspace-name" class="workspace-name" type="text" placeholder="Name your workspace" />
-      <button class="save-workspace-name" type="button" onclick="$(window).trigger('edsc.save_workspace')">Save</button>
+      <form onsubmit="$(window).trigger('edsc.save_workspace')" action="javascript:void(0);">
+        <input data-bind="value: workspaceNameField" id="workspace-name" class="workspace-name" type="text" placeholder="Name your workspace" />
+        <button class="save-workspace-name" type="submit">Save</button>
+      </form>
     </li>
     <!-- <li>
       View Saved Projects

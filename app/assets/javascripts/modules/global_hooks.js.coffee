@@ -10,9 +10,6 @@ do ($ = jQuery, config = @edsc.config) ->
 
   # flash the green save icon
   $(document).on 'edsc.saved', ->
-    save = $('.save-icon')
     check = $('.save-success')
-    save.hide()
     check.show()
     setTimeout((-> check.fadeOut()), config.defaultAnimationDurationMs)
-    setTimeout((-> save.show()), config.defaultAnimationDurationMs + 400)
