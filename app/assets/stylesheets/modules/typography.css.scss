@@ -106,3 +106,10 @@ span.instructions {
   font-size: .9em;
   color: #999;
 }
+
+.truncate {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
