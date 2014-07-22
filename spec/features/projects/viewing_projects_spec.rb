@@ -12,7 +12,7 @@ describe "Viewing Projects", reset: false do
       # and create the user in the database
       click_on 'End Tour'
       wait_for_xhr
-      
+
       user = User.first
 
       project = Project.new
@@ -25,7 +25,7 @@ describe "Viewing Projects", reset: false do
     end
 
     it "shows a list of saved projects" do
-      expect(page).to have_content "Test Project"
+      expect(page).to have_content "Test Project 2 datasets"
     end
 
     context "when clicking on a project" do
