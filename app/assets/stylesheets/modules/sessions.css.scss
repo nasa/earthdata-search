@@ -1,0 +1,36 @@
+.sessions {
+  height: 100%;
+  color: $overlay-heading-font-color;
+  padding-bottom: 70px;
+
+  h1 {
+    border-bottom: 1px solid #333;
+    padding: 0 0 .2em 0;
+  }
+
+  a {
+    color: #fff;
+  }
+
+  a:hover {
+    color: #aaa;
+  }
+
+  > header {
+    margin: 1em auto;
+    padding: 0;
+    max-width: 500px;
+  }
+
+  > section, > .sessions-content {
+    margin: 1em auto;
+    padding: 1em 0;
+    max-width: 500px;
+  }
+}
+
+
+.sessions-nav {
+  padding: 1em;
+  border-bottom: 1px solid #333;
+}
