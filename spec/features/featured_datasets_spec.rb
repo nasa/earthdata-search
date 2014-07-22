@@ -12,7 +12,7 @@ describe "Featured datasets", reset: false do
     end
 
     it "shows a section heading for featured datasets" do
-      expect(dataset_results).to have_content('Featured Datasets')
+      expect(dataset_results).to have_content('Recent and Featured')
     end
 
     it "shows a section heading for other datasets" do
@@ -40,7 +40,7 @@ describe "Featured datasets", reset: false do
     end
 
     it "shows a section heading for featured datasets" do
-      expect(dataset_results).to have_content('Featured Datasets')
+      expect(dataset_results).to have_content('Recent and Featured')
     end
 
     it "shows a section heading for other datasets" do
@@ -65,11 +65,47 @@ describe "Featured datasets", reset: false do
     end
 
     it "shows no section heading for featured datasets" do
-      expect(dataset_results).to have_no_content('Featured Datasets')
+      expect(dataset_results).to have_no_content('Recent and Featured')
     end
 
     it "shows no section heading for other datasets" do
       expect(dataset_results).to have_no_content('More Datasets')
+    end
+  end
+
+  context "when a guest user has recently visited datasets" do
+    before :all do
+      login
+      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC', 'C179002914-ORNL_DAAC']
+      wait_for_xhr
+      load_page :search
+    end
+
+    after :all do
+      Capybara.reset_sessions!
+      load_page :search
+    end
+
+    it "shows the two most recently visited datasets among the featured datasets" do
+      expect(featured_dataset_results).to have_css('.panel-list-item', count: 4)
+    end
+  end
+
+  context "when a logged-in user has recently visited datasets" do
+    before :all do
+      login
+      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC', 'C179002914-ORNL_DAAC']
+      wait_for_xhr
+      load_page :search
+    end
+
+    after :all do
+      Capybara.reset_sessions!
+      load_page :search
+    end
+
+    it "shows the two most recently visited datasets among the featured datasets" do
+      expect(featured_dataset_results).to have_css('.panel-list-item', count: 4)
     end
   end
 end

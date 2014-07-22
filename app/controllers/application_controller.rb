@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  RECENT_DATASET_COUNT = 2
+
   def handle_timeout
     Rails.logger.error 'Request timed out'
     if request.xhr?
@@ -40,4 +42,21 @@ class ApplicationController < ActionController::Base
     end
     @current_user
   end
+
+  @@recent_lock = Mutex.new
+  def use_dataset(id)
+    return unless id.present?
+
+    if current_user.present?
+      id = id.first if id.is_a? Array
+      @@recent_lock.synchronize do
+        RecentDataset.find_or_create_by(user: current_user, echo_id: id).touch
+      end
+    else
+      recent = session[:recent_datasets] || []
+      recent.unshift(id)
+      session[:recent_datasets] = recent.uniq.take(RECENT_DATASET_COUNT + DatasetExtra.featured_ids.size)
+    end
+  end
+
 end
