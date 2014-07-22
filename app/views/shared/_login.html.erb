@@ -2,18 +2,7 @@
 <a href="#" class="button user-info sign-in" data-bind="click: user.initiateLogin" data-target="#login-modal"><i class="fa fa-lock"></i> Sign In</a>
 <!-- /ko -->
 <!-- ko if: user.isLoggedIn -->
-<%#
-<div class="dropdown save-dropdown">
-  <a href="javascript:void(0)" data-toggle="dropdown" class="save toolbar-button" title="Save your session">
-    <i class="fa fa-check-circle save-success"></i> <i class="fa fa-floppy-o"></i>
-  </a>
-  <ul class="dropdown-menu dropdown-menu-right dropdown-form">
-    <li>
-      <input class="save-project-name" type="text" placeholder="Name your project"> <input type="button" value="Save">
-    </li>
-  </ul>
-</div>
-%>
+
 <div class="dropdown user-info">
   <a href="#" data-toggle="dropdown" class="toolbar-button" title="Manage user account">
     <%# Gravatar support #>

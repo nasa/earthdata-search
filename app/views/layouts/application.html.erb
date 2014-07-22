@@ -22,11 +22,6 @@
       <h1><a class="ir" href="<%= root_path %>" title="Earthdata Search Alpha">Earthdata Search</a></h1>
       <div class="toolbar-content">
         <div class="toolbar-secondary">
-          <% if Rails.configuration.feedback_url.present? %>
-            <a href="javascript:void(0)" onclick="feedback.showForm(); return false" class="feedback toolbar-button" title="Leave feedback">
-              <i class="fa fa-bullhorn"></i>
-            </a>
-          <% end %>
           <%= yield :toolbar_secondary %>
         </div>
         <%= yield :toolbar %>

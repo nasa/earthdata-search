@@ -2,6 +2,7 @@
   <%= javascript_include_tag "account" %>
 <% end %>
 <% content_for :toolbar_secondary do %>
+  <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>
 

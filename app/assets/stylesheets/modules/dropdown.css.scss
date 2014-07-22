@@ -155,14 +155,37 @@ input.day-of-year-input {
     }
   }
 
-  /*
-  i.save-success {
-    font-size: .6em;
+  span.toolbar-text {
+    display: block;
     float: left;
-    padding: 8px 10px 0 0;
-    color: #2ecc71;
+    color: rgba(255,255,255,.4);
   }
 
+  i.save-success {
+    display: none;
+    float: left;
+    padding: 5px;
+  }
+
+  .workspace-name-button {
+    padding: 20px;
+    display: block;
+    float: left;
+    color: rgba(255,255,255,.4);
+    @include transition(all 0.2s ease-in-out);
+    outline: none;
+    text-decoration: none;
+
+    &:hover {
+      background: #263646;
+      color: rgba(255,255,255,1);
+      .fa-caret-down {
+        color: rgba(255,255,255,1);
+      }
+    }
+  }
+
+  /*
   img {
     padding: 2px;
     background: #263646;

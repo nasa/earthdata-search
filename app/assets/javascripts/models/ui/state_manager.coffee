@@ -8,12 +8,17 @@
 
   class StateManager
     constructor: (@page) ->
-      first = true
       @overlayState = ko.observable(null)
       @isDomLoaded = ko.observable(false)
       @path = ko.computed(read: @_readPath, write: @_writePath, deferEvaluation: true, owner: this)
       @historyChanged = false
       @loaded = false
+
+      $(window).on 'edsc.save_workspace', =>
+          urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceNameField())
+          @page.workspaceName(@page.workspaceNameField())
+          $('.save-dropdown').removeClass('open')
+
 
     monitor: ->
       @loadFromUrl()
@@ -68,6 +73,8 @@
           [path, query] = clean.split('?')
           @path(path)
           @load(urlUtil.currentParams())
+          @page.workspaceName(urlUtil.getProjectName())
+          @page.workspaceNameField(urlUtil.getProjectName())
 
     _onReady: =>
       $overlay = $('.master-overlay')
@@ -205,6 +212,6 @@
         @_timeouts[key] = setTimeout((-> observable(false)), config.defaultAnimationDurationMs)
 
     _persistStateInUrl: ->
-      @historyChanged = true if urlUtil.saveState(@path(), @serialize(), !@historyChanged)
+      @historyChanged = true if urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceNameField.peek())
 
   exports = StateManager
