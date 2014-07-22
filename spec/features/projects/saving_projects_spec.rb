@@ -32,6 +32,23 @@ describe 'Saving Projects', reset: false do
       expect(page).to have_content('Test Project')
     end
 
+    context "when renaming the project" do
+      before :all do
+        click_link "Test Project"
+        fill_in "workspace-name", with: "Test Project 2\t"
+        click_save_project_name
+      end
+
+      it "keeps the same short url" do
+        expect(query).to match(query_re)
+        expect(Project.find(project_id).path).to eql(path)
+      end
+
+      it "shows the new project name" do
+        expect(page).to have_content('Test Project 2')
+      end
+    end
+
     context "when loading the named project" do
       before :each do
         project = Project.new

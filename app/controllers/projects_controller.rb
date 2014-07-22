@@ -1,4 +1,13 @@
 class ProjectsController < ApplicationController
+  def index
+    if current_user
+      user_id = current_user.id
+      @projects = Project.where(user_id: user_id)
+    else
+      redirect_to root_url
+    end
+  end
+
   def show
     project = Project.find(params[:id])
     render :json => project.to_json
