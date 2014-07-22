@@ -60,7 +60,6 @@ ns.SearchPage = do (ko
 
       @datasets.isRelevant(false) # Avoid load until the URL says it's ok
 
-      @showWorkspace = true
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
 
