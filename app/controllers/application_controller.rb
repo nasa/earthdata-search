@@ -46,6 +46,7 @@ class ApplicationController < ActionController::Base
   @@recent_lock = Mutex.new
   def use_dataset(id)
     return unless id.present?
+    return if Rails.env.test? && cookies['persist'] != 'true'
 
     if current_user.present?
       id = id.first if id.is_a? Array
