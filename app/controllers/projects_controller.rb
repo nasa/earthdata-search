@@ -32,12 +32,6 @@ class ProjectsController < ApplicationController
 
   def remove
     project = Project.find(params[:project_id])
-    project.destroy
-    user_id = current_user.id
-    @projects = Project.where(user_id: user_id)
-
-    respond_to do |format|
-      format.js
-    end
+    render json: project.destroy, status: :ok
   end
 end

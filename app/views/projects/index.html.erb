@@ -15,6 +15,43 @@
     <h1>Saved Projects</h1>
   </header>
   <div class="data-access-content">
-    <%= render partial: "project_list" %>
+    <% if @projects.size == 0 %>
+      <p>No saved projects</p>
+    <% else %>
+      <table class="data-retrievals">
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Contents</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @projects.each do |project| %>
+          <tr class="<%= cycle("odd", "even") -%>">
+            <td>
+              <a href="<%= project.url %>"><%= project.name %></a>
+            </td>
+            <td>
+              <%= project.number_datasets %> datasets
+            </td>
+            <td>
+              <%= time_ago_in_words(project.created_at, include_seconds: true).capitalize %> ago
+            </td>
+            <td>
+              <a href="<%= project.url %>" title="open"><i class="fa fa-folder-open"></i></a>
+              <a href="" title="share"><i class="fa fa-share-square-o"></i></a>
+              <a href="/projects/remove?project_id=<%= project.to_param %>" title="remove"
+                 data-remote="true"
+                 data-method="post"
+                 data-confirm="Are you sure you want to remove this project?  This action cannot be undone."
+                 rel="nofollow"><i class="fa fa-times-circle"></i></a>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>
