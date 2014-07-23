@@ -1,4 +1,4 @@
-@edsc.util.xhr = do (window, document, $=jQuery) ->
+@edsc.util.xhr = do (window, document, csrfToken=@edsc.config.csrfToken, $=jQuery) ->
   callbacks = []
 
   timeouts = 0
@@ -41,6 +41,7 @@
   xhrPool = []
   $(document)
     .ajaxSend (event, xhr, settings) ->
+      xhr.setRequestHeader('X-CSRF-Token', csrfToken)
       xhrPool.push(xhr)
     .ajaxComplete (event, xhr) ->
       xhrs++

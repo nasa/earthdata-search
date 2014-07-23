@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  RECENT_DATASET_COUNT = 2
+
   def handle_timeout
     Rails.logger.error 'Request timed out'
     if request.xhr?
@@ -17,11 +19,11 @@ class ApplicationController < ActionController::Base
   end
 
   def get_user_id
+    # Dont make a call to ECHO if user is not logged in
+    return session[:user_id] = nil unless token.present?
+
     # Dont make a call to ECHO if we already know the user id
     return session[:user_id] if session[:user_id]
-
-    # Dont make a call to ECHO if user is not logged in
-    return nil unless token.present?
 
     response = Echo::Client.get_token_info(token).body
     session[:user_id] = response["token_info"]["user_guid"] if response["token_info"]
@@ -40,4 +42,22 @@ class ApplicationController < ActionController::Base
     end
     @current_user
   end
+
+  @@recent_lock = Mutex.new
+  def use_dataset(id)
+    return unless id.present?
+    return if Rails.env.test? && cookies['persist'] != 'true'
+
+    id = id.first if id.is_a? Array
+    if current_user.present?
+      @@recent_lock.synchronize do
+        RecentDataset.find_or_create_by(user: current_user, echo_id: id).touch
+      end
+    else
+      recent = session[:recent_datasets] || []
+      recent.unshift(id)
+      session[:recent_datasets] = recent.uniq.take(RECENT_DATASET_COUNT + DatasetExtra.featured_ids.size)
+    end
+  end
+
 end

@@ -4,6 +4,8 @@ class GranulesController < ApplicationController
   def create
     catalog_response = Echo::Client.get_granules(request.request_parameters, token)
 
+    use_dataset(params[:echo_collection_id])
+
     if catalog_response.success?
       catalog_response.headers.each do |key, value|
         response.headers[key] = value if key.start_with?('echo-')

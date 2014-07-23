@@ -21,6 +21,8 @@ class DatasetsController < ApplicationController
   def show
     response = Echo::Client.get_dataset(params[:id], token)
 
+    use_dataset(params[:id])
+
     if response.success?
       respond_with(DatasetDetailsPresenter.new(response.body.first, params[:id]), status: response.status)
     else
@@ -30,7 +32,6 @@ class DatasetsController < ApplicationController
 
   def facets
     response = Echo::Client.get_facets(request.query_parameters, token)
-
 
     if response.success?
       # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
@@ -82,6 +83,14 @@ class DatasetsController < ApplicationController
 
     featured_ids = DatasetExtra.featured_ids
 
+    if current_user.present?
+      recents = current_user.recent_datasets.where('echo_id not in (?)', featured_ids).limit(RECENT_DATASET_COUNT)
+      featured_ids += recents.map(&:echo_id)
+    else
+      featured_and_recent = (featured_ids + Array.wrap(session[:recent_datasets])).uniq
+      featured_ids = featured_and_recent.take(featured_ids.size + RECENT_DATASET_COUNT)
+    end
+
     # Only fetch if the user is requesting the first page
     if base_query['page_num'] == "1" && base_query['echo_collection_id'].nil?
       begin
@@ -96,6 +105,7 @@ class DatasetsController < ApplicationController
     end
 
     if featured.present?
+      featured.each { |ds| ds[:featured] = true }
       base_results['feed']['entry'].delete_if { |ds| featured_ids.include?(ds['id']) }
       base_results['feed']['entry'].unshift(*featured)
     end

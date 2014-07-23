@@ -5,7 +5,8 @@ class UsersController < ApplicationController
 
     response = Echo::Client.get_token(token['username'], token['password'], token['client_id'], token['user_ip_address'])
 
-    session[:token] = response.body["token"] if response.body["token"]
+    cookies['token'] = response.body["token"] if response.body["token"]
+    cookies['name'] = response.body["username"] if response.body["username"]
 
     render json: response.body, status: response.status
   end
@@ -21,10 +22,9 @@ class UsersController < ApplicationController
   end
 
   def logout
-    session[:token] = nil
-    session[:user_id] = nil
     cookies["token"] = nil
     cookies["name"] = nil
+    session[:recent_datasets] = []
 
     respond_to do |format|
       format.html { redirect_to root_url }
