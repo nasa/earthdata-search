@@ -175,6 +175,7 @@ input.day-of-year-input {
     @include transition(all 0.2s ease-in-out);
     outline: none;
     text-decoration: none;
+    text-align: right;
 
     &:hover {
       background: #263646;
