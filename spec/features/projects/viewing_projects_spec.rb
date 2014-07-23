@@ -14,7 +14,7 @@ describe "Viewing Projects", reset: false do
       click_on 'End Tour'
       wait_for_xhr
 
-      user = User.order("updated_at desc").first
+      user = User.first
 
       project = Project.new
       project.path = path
