@@ -5,6 +5,7 @@ describe "Viewing Projects", reset: false do
     path = '/search/datasets?p=!C179003030-ORNL_DAAC!C179001887-SEDAC'
 
     before :all do
+      Capybara.reset_sessions!
       visit '/'
       login
 
@@ -13,7 +14,7 @@ describe "Viewing Projects", reset: false do
       click_on 'End Tour'
       wait_for_xhr
 
-      user = User.first
+      user = User.order("updated_at desc").first
 
       project = Project.new
       project.path = path
