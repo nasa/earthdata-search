@@ -122,6 +122,11 @@ RSpec.configure do |config|
     timings[self.class.display_name] = Time.now - file_time
     index += 1
     puts " (Suite #{index} of #{count})"
+
+    models_to_preserve = [DatasetExtra, ActiveRecord::SchemaMigration]
+    ActiveRecord::Base.descendants.each do |model|
+      model.destroy_all unless models_to_preserve.include?(model)
+    end
   end
 
   config.after :suite do
@@ -129,11 +134,6 @@ RSpec.configure do |config|
     puts "Slowest specs"
     puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3fs - #{k}" % v}.join("\n"))
     puts
-
-    models_to_preserve = [DatasetExtra, ActiveRecord::SchemaMigration]
-    ActiveRecord::Base.descendants.each do |model|
-      model.destroy_all unless models_to_preserve.include?(model)
-    end
   end
 
   config.after :each do
