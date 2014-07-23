@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   def logout
     cookies["token"] = nil
     cookies["name"] = nil
+    session[:recent_datasets] = []
 
     respond_to do |format|
       format.html { redirect_to root_url }

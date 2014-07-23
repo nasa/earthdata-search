@@ -19,11 +19,11 @@ class ApplicationController < ActionController::Base
   end
 
   def get_user_id
+    # Dont make a call to ECHO if user is not logged in
+    return session[:user_id] = nil unless token.present?
+
     # Dont make a call to ECHO if we already know the user id
     return session[:user_id] if session[:user_id]
-
-    # Dont make a call to ECHO if user is not logged in
-    return nil unless token.present?
 
     response = Echo::Client.get_token_info(token).body
     session[:user_id] = response["token_info"]["user_guid"] if response["token_info"]
@@ -48,8 +48,8 @@ class ApplicationController < ActionController::Base
     return unless id.present?
     return if Rails.env.test? && cookies['persist'] != 'true'
 
+    id = id.first if id.is_a? Array
     if current_user.present?
-      id = id.first if id.is_a? Array
       @@recent_lock.synchronize do
         RecentDataset.find_or_create_by(user: current_user, echo_id: id).touch
       end
