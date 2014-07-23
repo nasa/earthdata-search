@@ -29,4 +29,15 @@ class ProjectsController < ApplicationController
     project.save!
     render :text => project.to_param
   end
+
+  def remove
+    project = Project.find(params[:project_id])
+    project.destroy
+    user_id = current_user.id
+    @projects = Project.where(user_id: user_id)
+
+    respond_to do |format|
+      format.js
+    end
+  end
 end
