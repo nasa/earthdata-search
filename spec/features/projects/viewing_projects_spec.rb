@@ -5,6 +5,7 @@ describe "Viewing Projects", reset: false do
     path = '/search/datasets?p=!C179003030-ORNL_DAAC!C179001887-SEDAC'
 
     before :all do
+      Capybara.reset_sessions!
       visit '/'
       login
 

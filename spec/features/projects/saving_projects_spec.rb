@@ -14,6 +14,7 @@ describe 'Saving Projects', reset: false do
     let(:query_re) { /^projectId=(\d+)$/ }
 
     before :all do
+      Capybara.reset_sessions!
       load_page :search
       login
       first_dataset_result.click_link "Add dataset to the current project"
