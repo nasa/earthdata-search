@@ -107,6 +107,7 @@ p.map-popup-info {
 
 .map-popup-pane-x {
   overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .browse-thumbnail {

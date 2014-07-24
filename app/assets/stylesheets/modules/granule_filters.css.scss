@@ -60,6 +60,7 @@
   .excluded-granules {
     max-height: 5em;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
 }
