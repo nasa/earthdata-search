@@ -29,4 +29,9 @@ class ProjectsController < ApplicationController
     project.save!
     render :text => project.to_param
   end
+
+  def remove
+    project = Project.find(params[:project_id])
+    render json: project.destroy, status: :ok
+  end
 end

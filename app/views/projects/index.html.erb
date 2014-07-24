@@ -42,7 +42,11 @@
             <td>
               <a href="<%= project.url %>" title="open"><i class="fa fa-folder-open"></i></a>
               <a href="" title="share"><i class="fa fa-share-square-o"></i></a>
-              <a href="" title="remove"><i class="fa fa-times-circle"></i></a>
+              <a href="/projects/remove?project_id=<%= project.to_param %>" title="remove"
+                 data-remote="true"
+                 data-method="post"
+                 data-confirm="Are you sure you want to remove this project?  This action cannot be undone."
+                 rel="nofollow"><i class="fa fa-times-circle"></i></a>
             </td>
           </tr>
           <% end %>

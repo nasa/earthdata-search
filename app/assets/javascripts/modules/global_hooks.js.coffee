@@ -7,6 +7,8 @@ do ($ = jQuery, config = @edsc.config) ->
   # Remove buttons in tables remove their rows
   $(document).on 'click', 'tr a[title=remove]', ->
     $(this).closest('tr').remove()
+    if location.href.indexOf('projects') != -1
+      $('.data-access-content').html('<p>No saved projects</p>')
 
   # flash the green save icon
   $(document).on 'edsc.saved', ->
