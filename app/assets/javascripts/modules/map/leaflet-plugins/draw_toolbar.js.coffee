@@ -77,6 +77,13 @@ L.DrawToolbar = do (L, Proj = LExt.Proj) ->
     L.setOptions(L.Edit.SimpleShape.prototype.options.resizeIcon, iconSize: touchSize)
     L.setOptions(L.Draw.Polyline.prototype.options.icon, iconSize: touchSize)
 
+    # L.Draw uses hard-coded values for toolbars which are incorrect on touch devices
+    originalShowActionsToolbar = L.Toolbar.prototype._showActionsToolbar
+    L.Toolbar.prototype._showActionsToolbar = ->
+      originalShowActionsToolbar.call(this)
+      buttonIndex = @_activeMode.buttonIndex
+      @_actionsContainer.style.top = (30 * buttonIndex + 3) + 'px'
+
   # Extends L.Draw.Rectangle to allow drawing polar rectangles
   DrawPolarRectangle = L.Draw.Rectangle.extend
     initialize: (map, options, @proj, proj_name) ->
