@@ -38,6 +38,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       # generally hosing the workspace
       unless map?
         setTimeout(@_constructWithDom, 0)
+        return
 
       @_map = map.map
       @_map.on 'edsc.focusgranule', @_onFocusGranule
