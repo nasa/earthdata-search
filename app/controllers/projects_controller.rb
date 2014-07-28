@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
         new_project.path = project.path
         new_project.user_id = current_user.id if current_user
         new_project.save!
-        render json: {path: new_project.path, id: new_project.to_param}
+        render json: {path: new_project.path, new_id: new_project.to_param}
       else
         project.name = nil
         # project does not belong to the current user, reload the page in JS

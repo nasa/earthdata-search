@@ -162,13 +162,12 @@ this.edsc.util.url = do(window,
       dataType: 'json'
       url: "/projects/#{id}"
       success: (data) ->
-        if data.id?
-          savedId = data.id
+        if data.new_id?
+          savedId = data.new_id
           History.pushState('', '', "/#{data.path.split('?')[0]}?projectId=#{savedId}");
 
         if data.user_id? && data.user_id == -1
           History.pushState('', '', data.path)
-
 
         savedPath = data.path
         savedName = data.name
