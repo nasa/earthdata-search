@@ -12,3 +12,4 @@
 //= require modules/login
 //= require modules/granule_filters
 //= require modules/timeline/index
+//= require modules/projects
