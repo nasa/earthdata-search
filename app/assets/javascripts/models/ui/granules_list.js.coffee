@@ -10,26 +10,8 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @dataset.visible(true)
 
       @granules = @dataset.granulesModel
-      $map = $('#map')
-      map = $map.data('map')
-      @_map = map.map
-      @_map.on 'edsc.focusgranule', @_onFocusGranule
-      @_map.on 'edsc.stickygranule', @_onStickyGranule
-      @_map.on 'edsc.excludestickygranule', @_onRemoveStickyGranule
-      $granuleList = $('#granule-list')
-      $granuleList.on 'keydown', @_onKeyDown
-      $map.on 'keydown', @_onKeyDown
 
       @_hasFocus = ko.observable(false)
-      $granuleList.on 'blur', (e) =>
-        @_hasFocus(false)
-      $granuleList.on 'focus.panel-list-item', (e) =>
-        # We want click behavior when we have focus, but not when the focus came from the
-        # click's mousedown.  Ugh.
-        setTimeout((=> @_hasFocus(true)), 500)
-
-      map.focusDataset(@dataset)
-
       @focused = ko.observable(null)
       @stickied = ko.observable(null)
       @loadingBrowse = ko.observable(false)
@@ -45,6 +27,37 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @fixOverlayHeight = ko.computed =>
         $('.master-overlay').masterOverlay('contentHeightChanged') if @selected()?.detailsLoaded?()
 
+      @_constructWithDom()
+
+    _constructWithDom: =>
+      $map = $('#map')
+      map = $map.data('map')
+
+      # Fix timing issue with construction where
+      # this list can be created before the map
+      # generally hosing the workspace
+      unless map?
+        setTimeout(@_constructWithDom, 0)
+
+      @_map = map.map
+      @_map.on 'edsc.focusgranule', @_onFocusGranule
+      @_map.on 'edsc.stickygranule', @_onStickyGranule
+      @_map.on 'edsc.excludestickygranule', @_onRemoveStickyGranule
+
+      $granuleList = $('#granule-list')
+      $granuleList.on 'keydown', @_onKeyDown
+      $map.on 'keydown', @_onKeyDown
+
+      $granuleList.on 'blur', (e) =>
+        @_hasFocus(false)
+      $granuleList.on 'focus.panel-list-item', (e) =>
+        # We want click behavior when we have focus, but not when the focus came from the
+        # click's mousedown.  Ugh.
+        setTimeout((=> @_hasFocus(true)), 500)
+
+      @_setupSwipeEvents($granuleList)
+      map.focusDataset(@dataset)
+
     dispose: ->
       map = $('#map').data('map')
       map.focusDataset(null)
@@ -56,6 +69,46 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @dataset.dispose()
       @_setStickyComputed.dispose()
       @stickied(null)
+
+    _setupSwipeEvents: ($granuleList) ->
+      x0 = 0
+      y0 = 0
+      self = this
+      $granuleList.on 'touchstart', '.panel-list-item', (e) ->
+        original = e.originalEvent
+        return unless original.touches?.length == 1
+        touch = original.touches[0]
+
+        e.preventDefault()
+        x0 = touch.clientX
+        y0 = touch.clientY
+
+      $granuleList.on 'touchmove', '.panel-list-item', (e) ->
+        original = e.originalEvent
+        return unless original.touches?.length == 1
+        touch = original.touches[0]
+
+        dx = x0 - touch.clientX
+        if dx > Math.abs(touch.clientY - y0)
+          e.preventDefault()
+          this.style.transform = "translateX(#{-dx}px)"
+
+      $granuleList.on 'touchend', '.panel-list-item', (e) ->
+        original = e.originalEvent
+        return unless original.touches?.length == 0 && original.changedTouches?.length == 1
+        touch = original.changedTouches[0]
+
+        dx = x0 - touch.clientX
+        if dx > Math.abs(touch.clientY - y0)
+          x0 = 0
+          y0 = 0
+          if 3 * dx > this.clientWidth
+            this.style.transform = 'translateX(-1000px)'
+            granule = ko.dataFor(this)
+            setTimeout((-> self.removeGranule(granule)), config.defaultAnimationDurationMs)
+          else
+            this.style.transform = ''
+          e.preventDefault()
 
     scrolled: (data, event) =>
       elem = event.target
