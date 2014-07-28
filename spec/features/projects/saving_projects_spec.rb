@@ -7,13 +7,8 @@ describe 'Saving Projects', reset: false do
 
     before :all do
       Capybara.reset_sessions!
-      load_page '/'
-      login
-      # End the tour to set site preferences
-      # and create the user in the database
-      click_on 'End Tour'
-      wait_for_xhr
       load_page :search
+      login
 
       first_dataset_result.click_link "Add dataset to the current project"
       nth_dataset_result(2).click_link "Add dataset to the current project"

@@ -7,11 +7,6 @@ describe "Viewing Projects", reset: false do
       visit '/'
       login
 
-      # End the tour to set site preferences
-      # and create the user in the database
-      click_on 'End Tour'
-      wait_for_xhr
-
       create_project
 
       visit '/projects'

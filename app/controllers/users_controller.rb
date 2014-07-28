@@ -5,8 +5,11 @@ class UsersController < ApplicationController
 
     response = Echo::Client.get_token(token['username'], token['password'], token['client_id'], token['user_ip_address'])
 
-    cookies['token'] = response.body["token"] if response.body["token"]
-    cookies['name'] = response.body["username"] if response.body["username"]
+    cookies['token'] = response.body["token"]["id"] if response.body["token"]
+    cookies['name'] = response.body["token"]["username"] if response.body["token"]
+
+    # Create a user in the database if one doesn't already exist
+    current_user
 
     render json: response.body, status: response.status
   end

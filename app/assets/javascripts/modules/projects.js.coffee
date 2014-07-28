@@ -8,16 +8,14 @@ do ($=jQuery) ->
 
     template = "<div class='popover share-popover'>
                   <div class='arrow'></div>
-                  <h3 class='popover-title'>Share Project</h3>
+                  <div class='popover-title'>Share Project</div>
                   <div class='popover-content'></div>
                   <div class='popover-navigation'>
-
                     <button class='button-small button-outline' data-role='end'>Close</button>
                   </div>
                 </div>"
 
     options = {
-                content: "Shared stuff!"
                 placement: "top"
                 template: template
                 html: true
@@ -30,3 +28,4 @@ do ($=jQuery) ->
 
   $(document).on 'click', '.share-popover [data-role=end]', ->
     $(this).closest(".share-popover").siblings('.share-project').popover('destroy')
+    $('.share-project').attr('title', 'Share Project')

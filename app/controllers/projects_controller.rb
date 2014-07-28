@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
       render :json => project.to_json
     else
       # if path is too long, create new project
-      if project.path.size > 120
+      if project.path.size > Rails.configuration.url_limit
         new_project = Project.new
         new_project.path = project.path
         new_project.user_id = current_user.id if current_user
