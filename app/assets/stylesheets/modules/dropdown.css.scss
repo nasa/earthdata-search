@@ -161,10 +161,11 @@ input.day-of-year-input {
     color: rgba(255,255,255,.4);
   }
 
-  i.save-success {
+  i.save-success, i.after-save {
     display: none;
     float: left;
     padding: 5px;
+    color: #2ecc71;
   }
 
   .workspace-name-button {
