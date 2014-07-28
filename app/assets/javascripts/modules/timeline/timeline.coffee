@@ -90,11 +90,12 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
     parseFloat(re.exec(transform)?[1] ? defaultValue)
 
   TimelineDraggable = L.Draggable.extend
-    initialize: (element, dragStartTarget) ->
+    initialize: (element, @animate=false) ->
       @on 'dragstart predrag drag dragend', ((e) -> L.Util.extend(e, @state())), this
+      @on 'dragstart', @_onDragStart, this
 
       L.DomUtil.setPosition(element, L.point(0, 0), true)
-      L.Draggable.prototype.initialize.call(this, element, dragStartTarget)
+      L.Draggable.prototype.initialize.call(this, element, null)
 
       @enable()
 
@@ -102,9 +103,48 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       offset = getTransformX(@_element)
       {dx: @_newPos.x - @_startPos.x, start: @_startPoint.x - offset, end: @_startPoint.x + @_newPos.x - offset}
 
+    _onDragStart: ->
+      @_positions = []
+      @_times = []
+
     _updatePosition: ->
       @fire('predrag')
+
+      time = +new Date()
+      @_positions.push(@_newPos.x)
+      @_times.push(time)
+
+      if time - @_times[0] > 200
+        @_positions.shift()
+        @_times.shift()
+
       @fire('drag')
+
+    _onUp: (e) ->
+      if @animate && @_positions.length > 0
+        dx = @_newPos.x - @_positions[0]
+        dt = +new Date() - @_times[0]
+        v = dx/dt
+        @_animateFling(e.target || e.srcElement, v, .01, +new Date())
+      else
+        L.Draggable.prototype._onUp.call(this, e)
+
+    _animateFling: (target, v, a, t) ->
+      now = +new Date()
+      dt = now - t
+      dv = a*dt
+      if v < 0
+        v += dv
+      else
+        v -= dv
+
+      if dv < Math.abs(v)
+        @_newPos.x += v * dt
+        @fire('drag')
+        L.Util.requestAnimFrame =>
+          @_animateFling(target, v, a, now)
+      else
+        L.Draggable.prototype._onUp.call(this, target: target)
 
   TimelineDraggable.prototype.addEventListener = TimelineDraggable.prototype.on
 
@@ -566,7 +606,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
     _setupDragBehavior: (svg) ->
       self = this
-      draggable = new TimelineDraggable(svg)
+      draggable = new TimelineDraggable(svg, L.Browser.touch)
       draggable.on 'drag', ({dx}) =>
         @_pan(dx, false)
       draggable.on 'dragend', ({dx}) =>
