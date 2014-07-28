@@ -80,7 +80,6 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
         return unless original.touches?.length == 1
         touch = original.touches[0]
 
-        e.preventDefault()
         x0 = touch.clientX
         y0 = touch.clientY
 
@@ -92,7 +91,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
         dx = x0 - touch.clientX
         if dx > Math.abs(touch.clientY - y0)
           e.preventDefault()
-          this.style.transform = "translateX(#{-dx}px)"
+          $(this).css(transform: "translateX(#{-dx}px)")
 
       $granuleList.on 'touchend', '.panel-list-item', (e) ->
         original = e.originalEvent
@@ -104,12 +103,11 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
           x0 = 0
           y0 = 0
           if 3 * dx > this.clientWidth
-            this.style.transform = 'translateX(-1000px)'
+            $(this).css(transform: "translateX(-1000px)")
             granule = ko.dataFor(this)
             setTimeout((-> self.removeGranule(granule)), config.defaultAnimationDurationMs)
           else
-            this.style.transform = ''
-          e.preventDefault()
+            $(this).css(transform: "")
 
     scrolled: (data, event) =>
       elem = event.target
@@ -198,11 +196,11 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @loadingBrowse(false)
 
     onGranuleMouseover: (granule) =>
-      if granule != @focused()
+      if config.allowTouch && !L.browser.touch && granule != @focused()
         @_map.fire 'edsc.focusgranule', granule: granule
 
     onGranuleMouseout: (granule) =>
-      if granule == @focused()
+      if config.allowTouch && !L.browser.touch && granule == @focused()
         @_map.fire 'edsc.focusgranule', granule: null
 
     isStickied: (granule) =>
