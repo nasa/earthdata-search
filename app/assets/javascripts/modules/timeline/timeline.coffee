@@ -90,7 +90,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
     parseFloat(re.exec(transform)?[1] ? defaultValue)
 
   TimelineDraggable = L.Draggable.extend
-    initialize: (element, @animate=false) ->
+    initialize: (element, @animate=config.defaultAnimationDurationMs > 0) ->
       @on 'dragstart predrag drag dragend', ((e) -> L.Util.extend(e, @state())), this
       @on 'dragstart', @_onDragStart, this
 
@@ -617,7 +617,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
     _setupDragBehavior: (svg) ->
       self = this
-      draggable = new TimelineDraggable(svg, L.Browser.touch)
+      draggable = new TimelineDraggable(svg)
       draggable.on 'drag', ({dx}) =>
         @_pan(dx, false)
       draggable.on 'dragend', ({dx}) =>
