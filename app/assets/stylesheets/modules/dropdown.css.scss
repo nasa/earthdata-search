@@ -40,6 +40,10 @@
   }
 }
 
+.dropdown-backdrop {
+  display: none;
+}
+
 .dropdown-menu {
   @include linear-gradient($button-dark-bottom-gradient, $dropdown-highlight);
 

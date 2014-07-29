@@ -378,6 +378,7 @@ ns.GranuleLayer = do (L
       return unless $(e.originalEvent.target).closest('a').length == 0
       granule = @layer?.granuleAt(e.layerPoint)
       granule = null if @_stickied == granule
+      @_map.fire('edsc.focusgranule', granule: granule)
       @_map.fire('edsc.stickygranule', granule: granule)
 
     _onEdscFocusgranule: (e) =>

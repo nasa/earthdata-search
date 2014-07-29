@@ -90,11 +90,12 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
     parseFloat(re.exec(transform)?[1] ? defaultValue)
 
   TimelineDraggable = L.Draggable.extend
-    initialize: (element, dragStartTarget) ->
+    initialize: (element, @animate=config.defaultAnimationDurationMs > 0) ->
       @on 'dragstart predrag drag dragend', ((e) -> L.Util.extend(e, @state())), this
+      @on 'dragstart', @_onDragStart, this
 
       L.DomUtil.setPosition(element, L.point(0, 0), true)
-      L.Draggable.prototype.initialize.call(this, element, dragStartTarget)
+      L.Draggable.prototype.initialize.call(this, element, null)
 
       @enable()
 
@@ -102,9 +103,48 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       offset = getTransformX(@_element)
       {dx: @_newPos.x - @_startPos.x, start: @_startPoint.x - offset, end: @_startPoint.x + @_newPos.x - offset}
 
+    _onDragStart: ->
+      @_positions = []
+      @_times = []
+
     _updatePosition: ->
       @fire('predrag')
+
+      time = +new Date()
+      @_positions.push(@_newPos.x)
+      @_times.push(time)
+
+      if time - @_times[0] > 200
+        @_positions.shift()
+        @_times.shift()
+
       @fire('drag')
+
+    _onUp: (e) ->
+      if @animate && @_positions?.length > 0
+        dx = @_newPos.x - @_positions[0]
+        dt = +new Date() - @_times[0]
+        v = dx/dt
+        @_animateFling(e.target || e.srcElement, v, .01, +new Date())
+      else
+        L.Draggable.prototype._onUp.call(this, e)
+
+    _animateFling: (target, v, a, t) ->
+      now = +new Date()
+      dt = now - t
+      dv = a*dt
+      if v < 0
+        v += dv
+      else
+        v -= dv
+
+      if dv < Math.abs(v)
+        @_newPos.x += v * dt
+        @fire('drag')
+        L.Util.requestAnimFrame =>
+          @_animateFling(target, v, a, now)
+      else
+        L.Draggable.prototype._onUp.call(this, target: target)
 
   TimelineDraggable.prototype.addEventListener = TimelineDraggable.prototype.on
 
@@ -533,8 +573,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         x = e.clientX - svg.clientLeft - origin
         time = @positionToTime(x)
 
-      doScroll = (deltaX, deltaY, e) =>
-        time = getTime(e)
+      doScroll = (deltaX, deltaY, time) =>
+        return unless allowWheel
         if Math.abs(deltaY) > Math.abs(deltaX)
           levels = if deltaY > 0 then -1 else 1
           @_deltaZoom(levels, time)
@@ -543,26 +583,37 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
           @_pan(deltaX)
 
       # Safari
-      L.DomEvent.on svg, 'mousewheel', (e) =>
-        return unless allowWheel
-
+      L.DomEvent.on svg, 'mousewheel', (e) ->
         deltaX = e.wheelDeltaX
         deltaY = e.wheelDeltaY
-        doScroll(deltaX, deltaY, e)
+        doScroll(deltaX, deltaY, getTime(e))
 
         e.preventDefault()
 
       # Chrome/Firefox
-      L.DomEvent.on svg, 'wheel', (e) =>
-        return unless allowWheel
+      L.DomEvent.on svg, 'wheel', (e) ->
         return if e.type == "mousewheel"
 
         # 'wheel' deltas are opposite from 'mousewheel'
         deltaX = -e.deltaX
         deltaY = -e.deltaY
-        doScroll(deltaX, deltaY, e)
+        doScroll(deltaX, deltaY, getTime(e))
 
         e.preventDefault()
+
+      touchSeparation = 0
+      touchCenter = 0
+      L.DomEvent.on svg, 'touchstart', (e) ->
+        return unless e.touches && e.touches.length == 2
+        center = (e.touches[0].clientX + e.touches[1].clientX) / 2
+        time = getTime(clientX: center)
+        touchSeparation = Math.abs(e.touches[0].clientX - e.touches[1].clientX)
+        e.preventDefault()
+
+      L.DomEvent.on svg, 'touchmove', (e) ->
+        return unless e.touches && e.touches.length == 2
+        deltaY = Math.abs(e.touches[0].clientX - e.touches[1].clientX) - touchSeparation
+        doScroll(0, -deltaY, touchCenter)
 
     _setupDragBehavior: (svg) ->
       self = this

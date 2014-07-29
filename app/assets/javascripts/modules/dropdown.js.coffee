@@ -9,5 +9,5 @@ do ($=jQuery) ->
   # $(document).on 'click', '.dropdown-button', (event) ->
   #   $('.dropdown.open').not($(this).closest('.dropdown')).removeClass('open')
 
-	$(document).on 'click', 'div.temporal-filter, input.temporal-start, input.temporal-stop, div.xdsoft_datetimepicker, input.workspace-name', (event) ->
-		event.stopPropagation()
+  $(document).on 'click', 'div.temporal-filter, input.temporal-start, input.temporal-stop, div.xdsoft_datetimepicker, input.workspace-name', (event) ->
+    event.stopPropagation()
