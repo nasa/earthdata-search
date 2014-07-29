@@ -12,7 +12,7 @@
   # Test config
   exports =
     allowTouch: false
-    urlLimit: 130
+    urlLimit: <%= Rails.configuration.url_limit %>
     defaultAnimationDurationMs: 0
     xhrRateLimitMs: 100
     maxPolygonSize: 50
@@ -27,7 +27,7 @@
   # Development config
   exports =
     allowTouch: true
-    urlLimit: 200
+    urlLimit: <%= Rails.configuration.url_limit %>
     defaultAnimationDurationMs: 300
     xhrRateLimitMs: 500
     maxPolygonSize: 50
@@ -42,7 +42,7 @@
   # Production config
   exports =
     allowTouch: true
-    urlLimit: 2000
+    urlLimit: <%= Rails.configuration.url_limit %>
     defaultAnimationDurationMs: 300
     xhrRateLimitMs: 500
     maxPolygonSize: 50

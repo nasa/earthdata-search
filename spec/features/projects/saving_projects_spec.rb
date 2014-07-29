@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe 'Saving Projects', reset: false do
   context 'when adding a name to a project' do
-    def query
-      URI.parse(page.current_url).query
-    end
-
-    def project_id
-      query[query_re, 1].to_i
-    end
-
     let(:path) { '/search/datasets?p=!C179003030-ORNL_DAAC!C179001887-SEDAC' }
     let(:query_re) { /^projectId=(\d+)$/ }
 
@@ -17,6 +9,7 @@ describe 'Saving Projects', reset: false do
       Capybara.reset_sessions!
       load_page :search
       login
+
       first_dataset_result.click_link "Add dataset to the current project"
       nth_dataset_result(2).click_link "Add dataset to the current project"
       click_link "Save your project"
@@ -55,6 +48,7 @@ describe 'Saving Projects', reset: false do
         project = Project.new
         project.path = path
         project.name = "Test Project"
+        project.user_id = User.first.id
         project.save!
 
         visit "/search/datasets?projectId=#{project.to_param}"
