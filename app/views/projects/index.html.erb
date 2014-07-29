@@ -31,7 +31,7 @@
           <% @projects.each do |project| %>
           <tr class="<%= cycle("odd", "even") -%>">
             <td>
-              <strong><a href="<%= project.url %>"><%= project.name %></a></strong>
+              <strong><a href="<%= project.url %>" class="project-url"><%= project.name %></a></strong>
             </td>
             <td>
               <%= project.number_datasets %> datasets
@@ -40,8 +40,8 @@
               <%= time_ago_in_words(project.created_at, include_seconds: true).capitalize %> ago
             </td>
             <td>
-              <a href="" title="share"><i class="fa fa-share-square-o"></i></a>
-              <a href="/projects/remove?project_id=<%= project.to_param %>" title="remove"
+              <a href="javascript:void(0)" title="Share Project" class="share-project"><i class="fa fa-share-square-o"></i></a>
+              <a href="/projects/remove?project_id=<%= project.to_param %>" title="Remove Project"
                  data-remote="true"
                  data-method="post"
                  data-confirm="Are you sure you want to remove this project?  This action cannot be undone."
