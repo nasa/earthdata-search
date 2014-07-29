@@ -196,11 +196,11 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @loadingBrowse(false)
 
     onGranuleMouseover: (granule) =>
-      if config.allowTouch && !L.browser.touch && granule != @focused()
+      if (!config.allowTouch || !L.Browser.touch) && granule != @focused()
         @_map.fire 'edsc.focusgranule', granule: granule
 
     onGranuleMouseout: (granule) =>
-      if config.allowTouch && !L.browser.touch && granule == @focused()
+      if (!config.allowTouch || !L.Browser.touch) && granule == @focused()
         @_map.fire 'edsc.focusgranule', granule: null
 
     isStickied: (granule) =>
