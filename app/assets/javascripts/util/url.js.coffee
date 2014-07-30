@@ -148,6 +148,10 @@ this.edsc.util.url = do(window,
 
   savedPath = null
   savedId = null
+  savedName = null
+
+  getProjectName = ->
+    savedName
 
   fetchId = (id) ->
     return if savedId == id
@@ -155,29 +159,41 @@ this.edsc.util.url = do(window,
     savedId = id
     $.ajax
       method: 'get'
-      dataType: 'text'
+      dataType: 'json'
       url: "/projects/#{id}"
       success: (data) ->
-        savedPath = data
+        if data.new_id?
+          savedId = data.new_id
+          History.pushState('', '', "/#{data.path.split('?')[0]}?projectId=#{savedId}");
+
+        if data.user_id? && data.user_id == -1
+          History.pushState('', '', data.path)
+
+        savedPath = data.path
+        savedName = data.name
         console.log "Fetched project #{id}"
-        console.log "Path: #{data}"
+        console.log "Path: #{data.path}"
+        console.log "Project Name: #{data.name}"
         $(window).trigger('edsc.pagechange')
 
-  shortenPath = (path, state) ->
+  shortenPath = (path, state, workspaceName = null) ->
     id = savedId ? ''
     savedPath = path
     console.log "Saving project #{id}"
     console.log "Path: #{path}"
+    console.log "Workspace Name: #{workspaceName}"
+    data = {path: path, workspace_name: workspaceName}
     $.ajax
       method: 'post'
       dataType: 'text'
       url: "/projects?id=#{id}"
-      data: path
+      data: data
       success: (data) ->
         console.log "Saved project #{id}"
         console.log "Path: #{path}"
         savedId = data
         History.pushState(state, document.title, "/#{path.split('?')[0]}?projectId=#{savedId}")
+        $(document).trigger('edsc.saved') if workspaceName?
 
   cleanPath = ->
     path = realPath()
@@ -198,15 +214,16 @@ this.edsc.util.url = do(window,
       path = cleanPath().replace(/^[^\?]*/, path)
       History.pushState(data, title, path)
 
-  saveState = (path, state, push = false) ->
+  saveState = (path, state, push = false, workspaceName = null) ->
     paramStr = param(compress(state)).replace(/%5B/g, '[').replace(/%5D/g, ']')
     paramStr = '?' + paramStr if paramStr.length > 0
 
     path = path + paramStr
-    if path != savedPath && path.length > config.urlLimit
-      # assign a guid
-      shortenPath(path, state)
-      return
+    if workspaceName || path.length > config.urlLimit
+      if path != savedPath || (workspaceName && savedName != workspaceName)
+        # assign a guid
+        shortenPath(path, state, workspaceName)
+        return
 
     if cleanPath() && cleanPath() != path
       savedPath = path
@@ -231,6 +248,7 @@ this.edsc.util.url = do(window,
     inflate(deparam(currentQuery()))
 
   exports =
+    getProjectName: getProjectName
     pushPath: pushPath
     saveState: saveState
     realQuery: realQuery

@@ -11,6 +11,7 @@
 //= require config
 //= require util/index
 //= require modules/global_hooks
+//= require modules/projects
 //= require models/index
 //= require models/page/account_page
 //= require bootstrap/bootstrap

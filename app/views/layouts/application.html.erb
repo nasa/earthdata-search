@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title><%= Rails.configuration.env_name %> Earthdata Search</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=1280,user-scalable=no">
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
@@ -22,11 +22,6 @@
       <h1><a class="ir" href="<%= root_path %>" title="Earthdata Search Alpha">Earthdata Search</a></h1>
       <div class="toolbar-content">
         <div class="toolbar-secondary">
-          <% if Rails.configuration.feedback_url.present? %>
-            <a href="javascript:void(0)" onclick="feedback.showForm(); return false" class="feedback toolbar-button" title="Leave feedback">
-              <i class="fa fa-bullhorn"></i>
-            </a>
-          <% end %>
           <%= yield :toolbar_secondary %>
         </div>
         <%= yield :toolbar %>

@@ -20,7 +20,7 @@
     }
 
     &.with-options {
-      margin: .4em 1em .4em 1em;
+      margin: .4em 1em 1.5em 1em;
 
       h2 {
         display: inline-block;
@@ -197,6 +197,7 @@
   padding: 0 1em 1em 1em;
   height: 80%;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .master-overlay-close {

@@ -201,6 +201,7 @@
     if queue[index]?
       queue[index].cleanup?(next, close)
       $(queue[index].element).popover('destroy')
+      $('.popover-advance').removeClass('popover-advance')
 
   close = ->
     hideCurrent()

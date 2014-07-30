@@ -107,6 +107,7 @@ p.map-popup-info {
 
 .map-popup-pane-x {
   overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .browse-thumbnail {
@@ -322,4 +323,16 @@ p.map-popup-info {
   display:block;
   text-align:right;
   padding-top:.2em;
+}
+
+
+// Overrides to make L.Draw cancel / undo buttons align correctly on touch
+// devices
+.leaflet-touch .leaflet-right .leaflet-draw-actions {
+  right: 34px;
+}
+
+.leaflet-touch .leaflet-draw-actions a {
+  height: 30px;
+  line-height: 30px;
 }

@@ -22,6 +22,7 @@ class UsersController < ApplicationController
     cookies["refresh_token"] = nil
     cookies["name"] = nil
     cookies["expires"] = nil
+    session[:recent_datasets] = []
 
     respond_to do |format|
       format.html { redirect_to root_url }

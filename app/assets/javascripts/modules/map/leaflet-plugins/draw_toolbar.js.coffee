@@ -2,6 +2,88 @@ LExt = window.edsc.map.L
 
 L.DrawToolbar = do (L, Proj = LExt.Proj) ->
 
+  touchEventToMapEvent = (map, e) ->
+    if e.touches?.length == 1
+      touch = e.touches[0]
+      containerPoint = map.mouseEventToContainerPoint(touch)
+      layerPoint = map.mouseEventToLayerPoint(touch)
+      latlng = map.layerPointToLatLng(layerPoint)
+      {latlng: latlng, layerPoint: layerPoint, containerPoint: containerPoint, originalEvent: e}
+    else
+      null
+
+  SimpleShapePrototype = L.Draw.SimpleShape.prototype
+  RectanglePrototype = L.Draw.Rectangle.prototype
+  PolylinePrototype = L.Draw.Polyline.prototype
+
+  RectanglePrototype.addHooks = ->
+    SimpleShapePrototype.addHooks.call(this)
+    if @_map
+      L.DomEvent.on(@_map._container, 'touchstart', @_onTouchStart, this)
+      L.DomEvent.on(@_map._container, 'touchmove', @_onTouchMove, this)
+      L.DomEvent.on(@_map._container, 'touchend', @_onTouchEnd, this)
+
+  RectanglePrototype.removeHooks = ->
+    SimpleShapePrototype.removeHooks.call(this)
+    if @_map
+      L.DomEvent.off(@_map._container, 'touchstart', @_onTouchStart, this)
+      L.DomEvent.off(@_map._container, 'touchmove', @_onTouchMove, this)
+      L.DomEvent.off(@_map._container, 'touchend', @_onTouchEnd, this)
+
+  RectanglePrototype._onTouchStart = (e) ->
+    mapEvent = touchEventToMapEvent(@_map, e)
+    @_onMouseDown(mapEvent) if mapEvent
+
+  RectanglePrototype._onTouchMove = (e) ->
+    mapEvent = touchEventToMapEvent(@_map, e)
+    @_onMouseMove(mapEvent) if mapEvent
+
+  RectanglePrototype._onTouchEnd = (e) ->
+    if e.touches?.length == 0
+      @_onMouseUp()
+
+  polylineAddHooks = PolylinePrototype.addHooks
+  polylineRemoveHooks = PolylinePrototype.removeHooks
+
+  PolylinePrototype.addHooks = ->
+    polylineAddHooks.call(this)
+
+    # Make the click target icon very big.  L.Draw works by moving
+    # this icon underneath the cursor on mousedown, causing it to
+    # be the click target.  Moving it under the cursor on touchdown
+    # will not cause it to be the click target, though, so this
+    # guarantees that it's always under the cursor
+    L.extend @_mouseMarker._icon.style,
+      marginLeft: '-5000px'
+      marginTop: '-5000px'
+      width: '10000px'
+      height: '10000px'
+      backgroundColor: '#f00'
+    L.DomEvent.on(@_map._container, 'touchstart', @_onTouchStart, this)
+
+  PolylinePrototype.removeHooks = ->
+    polylineRemoveHooks.call(this)
+    L.DomEvent.off(@_map._container, 'touchstart', @_onTouchStart, this)
+
+  PolylinePrototype._onTouchStart = (e) ->
+    mapEvent = touchEventToMapEvent(@_map, e)
+    @_onMouseMove(mapEvent) if mapEvent
+
+  if L.Browser.touch
+    # Make touch targets bigger when drawing and editing shapes
+    touchSize = new L.Point(30, 30)
+    L.setOptions(L.Edit.Poly.prototype.options.icon, iconSize: touchSize)
+    L.setOptions(L.Edit.SimpleShape.prototype.options.moveIcon, iconSize: touchSize)
+    L.setOptions(L.Edit.SimpleShape.prototype.options.resizeIcon, iconSize: touchSize)
+    L.setOptions(L.Draw.Polyline.prototype.options.icon, iconSize: touchSize)
+
+    # L.Draw uses hard-coded values for toolbars which are incorrect on touch devices
+    originalShowActionsToolbar = L.Toolbar.prototype._showActionsToolbar
+    L.Toolbar.prototype._showActionsToolbar = ->
+      originalShowActionsToolbar.call(this)
+      buttonIndex = @_activeMode.buttonIndex
+      @_actionsContainer.style.top = (30 * buttonIndex + 3) + 'px'
+
   # Extends L.Draw.Rectangle to allow drawing polar rectangles
   DrawPolarRectangle = L.Draw.Rectangle.extend
     initialize: (map, options, @proj, proj_name) ->

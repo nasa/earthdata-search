@@ -203,4 +203,23 @@ describe "Dataset Facets", reset: false do
       expect(page).to have_css("#collapse0.facets-list-hide")
     end
   end
+
+  context "when applied facets and search terms filter the datasets list to no results" do
+    before(:all) do
+      find(".facets-item", text: "EOSDIS").click
+      fill_in :keywords, with: "somestringthatmatchesnodatasets"
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+    end
+
+    it "continues to display applied facets with counts of 0" do
+      within '.selected-facets-panel' do
+        expect(page).to have_content("EOSDIS")
+      end
+      expect(page).to have_content("EOSDIS (0)")
+    end
+  end
 end

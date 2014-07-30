@@ -60,6 +60,7 @@
   .excluded-granules {
     max-height: 5em;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
 }
@@ -113,7 +114,7 @@
 }
 
 .master-overlay-info .undo {
-  margin: -2.5em 0 0 15em;
+  margin: -2.5em 0 0 17em;
   padding: .1em 1em;
   position: absolute;
   text-align: center;

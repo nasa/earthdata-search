@@ -40,6 +40,10 @@
   }
 }
 
+.dropdown-backdrop {
+  display: none;
+}
+
 .dropdown-menu {
   @include linear-gradient($button-dark-bottom-gradient, $dropdown-highlight);
 
@@ -155,14 +159,39 @@ input.day-of-year-input {
     }
   }
 
-  /*
-  i.save-success {
-    font-size: .6em;
+  span.toolbar-text {
+    display: block;
     float: left;
-    padding: 8px 10px 0 0;
+    color: rgba(255,255,255,.4);
+  }
+
+  i.save-success, i.after-save {
+    display: none;
+    float: left;
+    padding: 5px;
     color: #2ecc71;
   }
 
+  .workspace-name-button {
+    padding: 20px;
+    display: block;
+    float: left;
+    color: rgba(255,255,255,.4);
+    @include transition(all 0.2s ease-in-out);
+    outline: none;
+    text-decoration: none;
+    text-align: right;
+
+    &:hover {
+      background: #263646;
+      color: rgba(255,255,255,1);
+      .fa-caret-down {
+        color: rgba(255,255,255,1);
+      }
+    }
+  }
+
+  /*
   img {
     padding: 2px;
     background: #263646;

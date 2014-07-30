@@ -19,5 +19,28 @@ module Helpers
     def project_dataset_ids
       page.evaluate_script('edsc.models.page.current.project.datasets().map(function(ds){return ds.dataset_id;})')
     end
+
+    def click_save_project_name
+      page.execute_script('$(".save-workspace-name").click()')
+      wait_for_xhr
+    end
+
+    def query
+      URI.parse(page.current_url).query
+    end
+
+    def project_id
+      query[query_re, 1].to_i
+    end
+
+    def create_project
+      path = '/search/datasets?p=!C179003030-ORNL_DAAC!C179001887-SEDAC'
+      user = User.first
+      project = Project.new
+      project.path = path
+      project.name = "Test Project"
+      project.user_id = user.id
+      project.save!
+    end
   end
 end

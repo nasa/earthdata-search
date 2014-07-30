@@ -8,6 +8,8 @@
 <% end %>
 
 <% content_for :toolbar_secondary do %>
+  <%= render partial: 'workspace_name' %>
+  <%= render partial: 'shared/feedback' %>
   <%= render partial: 'shared/login' %>
 <% end %>
 
@@ -90,7 +92,7 @@
         <div class="master-overlay-content" data-bind="event: {scroll: ui.datasetsList.scrolled}">
           <!-- ko if: datasets.isRelevant -->
           <!-- ko if: datasets.featured().length > 0 -->
-          <h3 class="panel-list-title">Featured Datasets</h3>
+          <h3 class="panel-list-title">Recent and Featured</h3>
           <div class="panel-list">
             <ul id="dataset-featured-list"
                 class="panel-list-list knockout-template"

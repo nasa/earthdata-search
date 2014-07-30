@@ -8,6 +8,8 @@ ns.SpatialSelection = do (window,
                           Proj = ns.L.Proj,
                           currentPage = @edsc.models.page.current) ->
 
+  L.drawLocal.draw.handlers.simpleshape.tooltip.end = "Release to finish drawing"
+
   L.drawLocal.draw.toolbar.buttons.polygon = "Search by spatial polygon"
   L.drawLocal.draw.toolbar.buttons.rectangle = "Search by spatial rectangle"
   L.drawLocal.draw.toolbar.buttons.marker = "Search by spatial point"

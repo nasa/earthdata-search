@@ -8,3 +8,21 @@
 	  }
 	}
 }
+
+@media (max-width: 1349px) {
+	.truncate {
+		max-width: 60px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+@media (min-width: 1350px) and (max-width: 1440px) {
+	.truncate {
+		max-width: 130px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
