@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
 
   def urs_user
     puts 'cookies  ' + cookies['expires'].inspect
-    puts Time.now.to_i * 1000
-    puts cookies['expires'].to_i
+    puts "current time: #{Time.now.to_i * 1000}"
+    puts "expires time: #{cookies['expires'].to_i}"
     OauthToken.refresh_token(cookies['refresh_token']) if cookies['expires'].to_i > 0 && (Time.now.to_i * 1000) > cookies['expires'].to_i
     @urs_user = session[:urs_user]
     session[:urs_user] = nil

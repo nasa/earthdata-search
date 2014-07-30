@@ -51,7 +51,7 @@ module Echo
     end
 
     def self.get_token_info(token)
-      get("/echo-rest/tokens/#{token}/token_info.json", {}, token_header(token))
+      get("/echo-rest/tokens/#{token}:#{}:#{ Rails.application.secrets.urs_client_id}/token_info.json", {}, token_header(token))
     end
 
     def self.get_data_quality_summary(catalog_item_id, token=nil)
@@ -187,7 +187,7 @@ module Echo
     private
 
     def self.token_header(token)
-      token.present? ? {'Echo-Token' => token} : {}
+      token.present? ? {'Echo-Token' => "#{token}:#{ Rails.application.secrets.urs_client_id}"} : {}
     end
 
     def self.request(method, url, params, body, headers)
