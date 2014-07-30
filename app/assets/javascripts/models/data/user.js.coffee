@@ -23,7 +23,7 @@ ns.User = do (ko
       @needsUsername = ko.observable(false)
       @needsPassword = ko.observable(false)
       @loginCallback = null
-      @_loadStateFromCookie()
+      # @_loadStateFromCookie()
 
       # I dont think this will reload the user on ajax requests
       @loadURS() if window.urs_user?
@@ -37,12 +37,12 @@ ns.User = do (ko
         @name(data.username)
         @access_token(data.access_token)
         @refresh_token(data.refresh_token)
-        @expires(Date.now() + (parseInt(data.expires_in) * 1000 ))
+        @expires(data.expires)
 
-        cookieUtil.setCookie("access_token", @access_token())
-        cookieUtil.setCookie("refresh_token", @refresh_token())
-        cookieUtil.setCookie("name", @name())
-        cookieUtil.setCookie("expires", @expires())
+        # cookieUtil.setCookie("access_token", @access_token())
+        # cookieUtil.setCookie("refresh_token", @refresh_token())
+        # cookieUtil.setCookie("name", @name())
+        # cookieUtil.setCookie("expires", @expires())
       else
         console.log('No URS user data')
 
@@ -55,10 +55,10 @@ ns.User = do (ko
         @expires(null)
 
     _loadStateFromCookie: =>
-      @access_token(cookieUtil.readCookie("access_token"))
-      @refresh_token(cookieUtil.readCookie("refresh_token"))
-      @name(cookieUtil.readCookie("name"))
-      @expires(cookieUtil.readCookie("expires"))
+      # @access_token(cookieUtil.readCookie("access_token"))
+      # @refresh_token(cookieUtil.readCookie("refresh_token"))
+      # @name(cookieUtil.readCookie("name"))
+      # @expires(cookieUtil.readCookie("expires"))
 
     loggedIn: (action) ->
       if @isLoggedIn()

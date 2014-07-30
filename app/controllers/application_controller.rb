@@ -16,12 +16,11 @@ class ApplicationController < ActionController::Base
   RECENT_DATASET_COUNT = 2
 
   def urs_user
-    puts 'cookies  ' + cookies['expires'].inspect
     puts "current time: #{Time.now.to_i * 1000}"
-    puts "expires time: #{cookies['expires'].to_i}"
-    OauthToken.refresh_token(cookies['refresh_token']) if cookies['expires'].to_i > 0 && (Time.now.to_i * 1000) > cookies['expires'].to_i
+    puts "expires time: #{session[:expires].to_i}"
+    OauthToken.refresh_token(session[:refresh_token]) if session[:expires].to_i > 0 && (Time.now.to_i * 1000) > session[:expires].to_i
     @urs_user = session[:urs_user]
-    session[:urs_user] = nil
+    # session[:urs_user] = nil
   end
 
   def handle_timeout
@@ -32,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   def token
-    cookies['access_token']
+    session[:access_token]
   end
 
   def get_user_id

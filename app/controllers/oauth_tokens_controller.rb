@@ -4,6 +4,10 @@ class OauthTokensController < ApplicationController
       auth_code = params[:code]
       token = OauthToken.get_oauth_tokens(auth_code)
       session[:urs_user] = token
+      session[:access_token] = token["access_token"]
+      session[:refresh_token] = token["refresh_token"]
+      session[:expires] = token['expires']
+      session[:name] = token["username"]
       puts token.inspect
     else
       puts params.inspect

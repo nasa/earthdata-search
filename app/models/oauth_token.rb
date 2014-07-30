@@ -16,6 +16,7 @@ class OauthToken
 
     json = JSON.parse(response.body)
     json['username'] = json['endpoint'].sub('/api/users/', '')
+    json['expires'] = (Time.now + json['expires_in']).to_i * 1000
     json
   end
 

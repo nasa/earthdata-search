@@ -15,13 +15,12 @@ class UsersController < ApplicationController
   # end
 
   def logout
+    session[:urs_user] = nil
     session[:access_token] = nil
     session[:refresh_token] = nil
     session[:user_id] = nil
-    cookies["access_token"] = nil
-    cookies["refresh_token"] = nil
-    cookies["name"] = nil
-    cookies["expires"] = nil
+    session[:name] = nil
+    session[:expires] = nil
     session[:recent_datasets] = []
 
     respond_to do |format|
@@ -36,23 +35,23 @@ class UsersController < ApplicationController
   def contact_info
   end
 
-  def create
-    user = params[:user].with_indifferent_access
-    # Address needs to be converted to addresses
-    address = user.delete("address")
-
-    user[:addresses] = [address]
-
-    if user[:password] != user[:password_confirmation]
-      render json: {errors: "Password must match confirmation"}, status: 422
-      return
-    else
-      user.delete("password_confirmation")
-    end
-
-    response = Echo::Client.create_user({user: user})
-    render json: response.body, status: response.status
-  end
+  # def create
+  #   user = params[:user].with_indifferent_access
+  #   # Address needs to be converted to addresses
+  #   address = user.delete("address")
+  #
+  #   user[:addresses] = [address]
+  #
+  #   if user[:password] != user[:password_confirmation]
+  #     render json: {errors: "Password must match confirmation"}, status: 422
+  #     return
+  #   else
+  #     user.delete("password_confirmation")
+  #   end
+  #
+  #   response = Echo::Client.create_user({user: user})
+  #   render json: response.body, status: response.status
+  # end
 
   def get_preferences
     response = Echo::Client.get_preferences(get_user_id, token)
