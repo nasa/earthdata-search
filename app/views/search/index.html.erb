@@ -1,7 +1,6 @@
 <% content_for :javascript do %>
   <script>
     window.edscprefs = <%=raw @preferences.to_json %>;
-    window.urs_user = <%= raw @urs_user.to_json %>;
   </script>
 
   <%= javascript_include_tag "search" %>

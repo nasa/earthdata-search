@@ -38,9 +38,11 @@ class OauthToken
     json = JSON.parse(response.body)
     puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     puts response.inspect
+    puts json.inspect
     if json
       json['username'] = json['endpoint'].sub('/api/users/', '')
-      session[:urs_user] = json
+      json['expires'] = (Time.now + json['expires_in']).to_i * 1000
+      json
     end
   end
 

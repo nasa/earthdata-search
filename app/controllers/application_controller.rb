@@ -18,7 +18,17 @@ class ApplicationController < ActionController::Base
   def urs_user
     puts "current time: #{Time.now.to_i * 1000}"
     puts "expires time: #{session[:expires].to_i}"
-    OauthToken.refresh_token(session[:refresh_token]) if session[:expires].to_i > 0 && (Time.now.to_i * 1000) > session[:expires].to_i
+    json = OauthToken.refresh_token(session[:refresh_token]) if session[:expires].to_i > 0 && (Time.now.to_i * 1000) > session[:expires].to_i
+
+    if json
+      session[:urs_user] = json
+
+      session[:access_token] = json["access_token"]
+      session[:refresh_token] = json["refresh_token"]
+      session[:expires] = json['expires']
+      session[:name] = json["username"]
+    end
+
     @urs_user = session[:urs_user]
     # session[:urs_user] = nil
   end
@@ -41,8 +51,8 @@ class ApplicationController < ActionController::Base
     # Dont make a call to ECHO if we already know the user id
     return session[:user_id] if session[:user_id]
 
-    response = Echo::Client.get_token_info(token).body
-    session[:user_id] = response["token_info"]["user_guid"] if response["token_info"]
+    response = Echo::Client.get_current_user(token).body
+    session[:user_id] = response["user"]["id"] if response["user"]
     session[:user_id]
   end
 

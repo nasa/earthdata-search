@@ -50,9 +50,9 @@ module Echo
       get("/catalog-rest/echo_catalog/provider_holdings.json")
     end
 
-    def self.get_token_info(token)
-      get("/echo-rest/tokens/#{token}:#{}:#{ Rails.application.secrets.urs_client_id}/token_info.json", {}, token_header(token))
-    end
+    # def self.get_token_info(token)
+    #   get("/echo-rest/tokens/#{token}/token_info.json", {}, token_header(token))
+    # end
 
     def self.get_data_quality_summary(catalog_item_id, token=nil)
       response = get("/echo-rest/data_quality_summary_definitions.json", {'catalog_item_id' => catalog_item_id}, token_header(token))
@@ -64,34 +64,34 @@ module Echo
       # NCR 11014478 will allow this to be only one call to echo-rest
     end
 
-    def self.get_token(username, password, client_id, ip)
-      token = {
-        token:
-        {
-          username: username,
-          password: password,
-          client_id: client_id,
-          user_ip_address: ip
-        }
-      }
-      Echo::Response.new(post("/echo-rest/tokens.json", token.to_json))
-    end
+    # def self.get_token(username, password, client_id, ip)
+    #   token = {
+    #     token:
+    #     {
+    #       username: username,
+    #       password: password,
+    #       client_id: client_id,
+    #       user_ip_address: ip
+    #     }
+    #   }
+    #   Echo::Response.new(post("/echo-rest/tokens.json", token.to_json))
+    #
 
-    def self.token_expires_soon(token)
-      get("/echo-rest/tokens/#{token}/expires_soon.json")
-    end
+    # def self.token_expires_soon(token)
+    #   get("/echo-rest/tokens/#{token}/expires_soon.json")
+    # end
 
-    def self.create_user(user)
-      post('/echo-rest/users.json', user.to_json)
-    end
+    # def self.create_user(user)
+    #   post('/echo-rest/users.json', user.to_json)
+    # end
 
-    def self.username_recall(params)
-      post('/echo-rest/users/username_recall.json', params.to_json)
-    end
-
-    def self.password_reset(params)
-      post('/echo-rest/users/password_reset.json', params.to_json)
-    end
+    # def self.username_recall(params)
+    #   post('/echo-rest/users/username_recall.json', params.to_json)
+    # end
+    #
+    # def self.password_reset(params)
+    #   post('/echo-rest/users/password_reset.json', params.to_json)
+    # end
 
     def self.get_contact_info(user_id, token)
       get("/echo-rest/users/#{user_id}.json", {}, token_header(token))
@@ -109,9 +109,13 @@ module Echo
       put("/echo-rest/users/#{user_id}/preferences.json", params.to_json, token_header(token))
     end
 
-    def self.get_user(user_id, token)
-      get("/echo-rest/users/#{user_id}", {}, token_header(token))
+    def self.get_current_user(token)
+      get("/echo-rest/users/current.json", {}, token_header(token))
     end
+
+    # def self.get_user(user_id, token)
+    #   get("/echo-rest/users/#{user_id}", {}, token_header(token))
+    # end
 
     def self.get_availability_events
       get('/echo-rest/calendar_events', severity: 'ALERT')
