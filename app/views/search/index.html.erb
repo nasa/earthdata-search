@@ -89,7 +89,6 @@
           </p>
         </div>
         <div class="master-overlay-content" data-bind="event: {scroll: ui.datasetsList.scrolled}">
-          <!-- ko if: datasets.isRelevant -->
           <!-- ko if: datasets.featured().length > 0 -->
           <h3 class="panel-list-title">Recent and Featured</h3>
           <div class="panel-list">
@@ -112,7 +111,6 @@
               Loading datasets...
             </p>
           </div>
-          <!-- /ko -->
         </div>
       </section>
       <section id="project-overview" class="master-overlay-hide-self">

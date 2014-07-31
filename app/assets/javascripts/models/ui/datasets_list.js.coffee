@@ -32,7 +32,7 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
 
     scrolled: (data, event) =>
       elem = event.target
-      if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
+      if @datasets.isRelevant() && (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
         @datasets.loadNextPage(@query.params())
 
     showDatasetDetails: (dataset, event=null) =>
