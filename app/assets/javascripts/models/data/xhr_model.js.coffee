@@ -63,6 +63,9 @@ ns.XhrModel = do (ko
         if !@stale && !@isLoaded.peek()
           @isLoaded(true)
           return
+        if @stale
+          @results([])
+          @hits(0)
         @_load(params, current, callback)
 
     _loadAndSet: (params, current, callback) ->
