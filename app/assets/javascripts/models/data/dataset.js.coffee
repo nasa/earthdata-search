@@ -28,7 +28,7 @@ ns.Dataset = do (ko
       id = jsonData.id
       for dataset in datasets()
         if dataset.id == id
-          if jsonData.links? && !dataset.links?
+          if jsonData.archive_center? && !dataset.hasAtomData()
             dataset.fromJson(jsonData)
           return dataset.reference()
       register(new Dataset(jsonData, query, randomKey))
@@ -103,7 +103,7 @@ ns.Dataset = do (ko
       this[key] = value for own key, value of jsonObj
 
 
-      @hasAtomData(jsonObj.links?)
+      @hasAtomData(jsonObj.archive_center?)
       @gibs = ko.observable(@gibs ? null)
 
   exports = Dataset

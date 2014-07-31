@@ -11,7 +11,7 @@ ns.Datasets = do (ko
   class DatasetsModel extends XhrModel
     @forIds: (ids, query, callback) ->
       datasets = (Dataset.findOrCreate({id: id}, query) for id in ids)
-      needsLoad = (dataset.id for dataset in datasets when !dataset.links?)
+      needsLoad = (dataset.id for dataset in datasets when !dataset.hasAtomData())
 
       if needsLoad.length > 0
         new DatasetsModel(query).search {echo_collection_id: needsLoad}, (results) =>
@@ -29,6 +29,11 @@ ns.Datasets = do (ko
       @_featuredSplitIndex = @computed(read: @_computeFeaturedSplitIndex, deferEvaluation: true, owner: this)
       @featured = @computed(read: @_computeFeatured, deferEvaluation: true, owner: this)
       @unfeatured = @computed(read: @_computeUnfeatured, deferEvaluation: true, owner: this)
+
+    _decorateNextPage: (params, results) ->
+      @page++
+      params.page_size = 20
+      params.page_num = @page
 
     _toResults: (data, current, params) ->
       query = @query

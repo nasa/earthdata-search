@@ -30,15 +30,18 @@ ns.XhrModel = do (ko
       params.page_num = @page = 1
       @_loadAndSet params, [], callback
 
-    loadNextPage: (params=@params(), callback=null) =>
-      if @hasNextPage() and !@isLoading()
-        results = @results()
+    _decorateNextPage: (params, results) ->
         # Double the page size with every fetch
         if results.length > 0
           params.page_num = 2
           params.page_size = results.length if params.page_size? && results.length > 0
         else
           params.page_num = 1
+
+    loadNextPage: (params=@params(), callback=null) =>
+      if @hasNextPage() and !@isLoading()
+        results = @results()
+        @_decorateNextPage(params, results)
         @_loadAndSet params, results, callback
 
     params: ->

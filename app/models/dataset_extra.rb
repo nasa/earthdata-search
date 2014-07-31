@@ -164,6 +164,8 @@ class DatasetExtra < ActiveRecord::Base
     decorate_gibs_layers(dataset)
     decorate_echo10_attributes(dataset)
 
+    dataset[:links] = Array.wrap(dataset[:links]) # Ensure links attribute is present
+
     dataset
   end
 
