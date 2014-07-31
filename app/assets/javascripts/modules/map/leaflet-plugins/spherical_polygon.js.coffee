@@ -246,7 +246,8 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
       @redraw()
 
     setStyle: (style) ->
-      @setOptions(style)
+      if @options.previousOptions
+        @options.previousOptions = @_options
       @_interiors.setStyle(L.extend({}, style, stroke: false))
       @_boundaries.setStyle(L.extend({}, style, fill: false))
 
