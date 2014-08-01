@@ -21,6 +21,10 @@ module VCR
       Rack::Utils.parse_nested_query(q1) == Rack::Utils.parse_nested_query(q2)
     end
 
+    def self.register_token(name, token)
+      @persister.tokens[name] = token
+    end
+
     def self.configure(c, options={})
       c.cassette_library_dir = 'fixtures/cassettes'
       c.hook_into :faraday
@@ -28,7 +32,7 @@ module VCR
       c.debug_logger = EDSCLoggerStream.new
 
       c.cassette_serializers[:null] = VCR::NullSerializer.new
-      c.cassette_persisters[:edsc] = VCR::SplitPersister.new(c.cassette_serializers[:null],
+      @persister = c.cassette_persisters[:edsc] = VCR::SplitPersister.new(c.cassette_serializers[:null],
                                                              c.cassette_serializers[:yaml],
                                                              c.cassette_persisters[:file_system])
       c.default_cassette_options = { persist_with: :edsc, serialize_with: :null }
