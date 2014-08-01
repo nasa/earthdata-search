@@ -55,7 +55,7 @@ class DataAccessController < ApplicationController
   def data_download
     @ip = request.remote_ip
     # TODO: These could be dangerous
-    @user_id = cookies['name']
+    @user_id = session[:name]
     @query = request.env['QUERY_STRING']
   end
 

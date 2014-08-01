@@ -1,11 +1,42 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :urs_user, except: [:logout, :refresh_token]
+
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
+
+  def redirect_from_urs
+    last_point = session[:last_point]
+    session[:last_point] = nil
+    last_point || root_url
+  end
 
   protected
 
   RECENT_DATASET_COUNT = 2
+
+  def urs_user
+    puts "current time: #{Time.now.to_i}"
+    puts "expires time: #{session[:expires].to_i}"
+    if session[:expires].to_i > 0 && Time.now.to_i > session[:expires].to_i
+      json = OauthToken.refresh_token(session[:refresh_token])
+      if json
+        3.times do
+          puts '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+          puts ''
+        end
+        session[:urs_user] = json
+
+        session[:access_token] = json["access_token"]
+        session[:refresh_token] = json["refresh_token"]
+        session[:expires] = json['expires']
+        session[:name] = json["username"]
+      end
+    end
+
+    @urs_user = session[:urs_user]
+    # session[:urs_user] = nil
+  end
 
   def handle_timeout
     Rails.logger.error 'Request timed out'
@@ -15,7 +46,7 @@ class ApplicationController < ActionController::Base
   end
 
   def token
-    cookies['token']
+    session[:access_token]
   end
 
   def get_user_id
@@ -25,8 +56,8 @@ class ApplicationController < ActionController::Base
     # Dont make a call to ECHO if we already know the user id
     return session[:user_id] if session[:user_id]
 
-    response = Echo::Client.get_token_info(token).body
-    session[:user_id] = response["token_info"]["user_guid"] if response["token_info"]
+    response = Echo::Client.get_current_user(token).body
+    session[:user_id] = response["user"]["id"] if response["user"]
     session[:user_id]
   end
 

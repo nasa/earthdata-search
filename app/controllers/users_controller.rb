@@ -1,32 +1,26 @@
 class UsersController < ApplicationController
   def login
-    token = params['token']
-    token['user_ip_address'] = request.remote_ip
-
-    response = Echo::Client.get_token(token['username'], token['password'], token['client_id'], token['user_ip_address'])
-
-    cookies['token'] = response.body["token"]["id"] if response.body["token"]
-    cookies['name'] = response.body["token"]["username"] if response.body["token"]
-
-    # Create a user in the database if one doesn't already exist
-    current_user
-
-    render json: response.body, status: response.status
+    session[:last_point] = request.referrer
+    redirect_to "#{ Rails.application.secrets.urs_root }oauth/authorize?client_id=#{ Rails.application.secrets.urs_client_id }&redirect_uri=#{ Rails.application.secrets.urs_callback_url }&response_type=code"
   end
 
-  def username_recall
-    response = Echo::Client.username_recall(params.slice(:email))
-    render json: response.body, status: response.status
-  end
-
-  def password_reset
-    response = Echo::Client.password_reset(params.slice(:username, :email))
-    render json: response.body, status: response.status
-  end
+  # def username_recall
+  #   response = Echo::Client.username_recall(params.slice(:email))
+  #   render json: response.body, status: response.status
+  # end
+  #
+  # def password_reset
+  #   response = Echo::Client.password_reset(params.slice(:username, :email))
+  #   render json: response.body, status: response.status
+  # end
 
   def logout
-    cookies["token"] = nil
-    cookies["name"] = nil
+    session[:urs_user] = nil
+    session[:access_token] = nil
+    session[:refresh_token] = nil
+    session[:user_id] = nil
+    session[:name] = nil
+    session[:expires] = nil
     session[:recent_datasets] = []
 
     respond_to do |format|
@@ -41,23 +35,23 @@ class UsersController < ApplicationController
   def contact_info
   end
 
-  def create
-    user = params[:user].with_indifferent_access
-    # Address needs to be converted to addresses
-    address = user.delete("address")
-
-    user[:addresses] = [address]
-
-    if user[:password] != user[:password_confirmation]
-      render json: {errors: "Password must match confirmation"}, status: 422
-      return
-    else
-      user.delete("password_confirmation")
-    end
-
-    response = Echo::Client.create_user({user: user})
-    render json: response.body, status: response.status
-  end
+  # def create
+  #   user = params[:user].with_indifferent_access
+  #   # Address needs to be converted to addresses
+  #   address = user.delete("address")
+  #
+  #   user[:addresses] = [address]
+  #
+  #   if user[:password] != user[:password_confirmation]
+  #     render json: {errors: "Password must match confirmation"}, status: 422
+  #     return
+  #   else
+  #     user.delete("password_confirmation")
+  #   end
+  #
+  #   response = Echo::Client.create_user({user: user})
+  #   render json: response.body, status: response.status
+  # end
 
   def get_preferences
     response = Echo::Client.get_preferences(get_user_id, token)
