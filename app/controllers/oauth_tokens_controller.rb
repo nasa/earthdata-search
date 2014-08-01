@@ -27,6 +27,8 @@ class OauthTokensController < ApplicationController
         puts '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
         puts ''
       end
+
+      clear_session
       session[:urs_user] = json
 
       session[:access_token] = json["access_token"]

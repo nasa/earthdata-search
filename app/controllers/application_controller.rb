@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
   RECENT_DATASET_COUNT = 2
 
   def urs_user
+
+    # puts "!!!!!"
+    # puts session[:expires].inspect
+    # puts session.inspect
     puts "current time: #{Time.now.to_i}"
     puts "expires time: #{session[:expires].to_i}"
     if session[:expires].to_i > 0 && Time.now.to_i > session[:expires].to_i
@@ -25,6 +29,7 @@ class ApplicationController < ActionController::Base
           puts '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
           puts ''
         end
+        clear_session
         session[:urs_user] = json
 
         session[:access_token] = json["access_token"]
@@ -89,6 +94,16 @@ class ApplicationController < ActionController::Base
       recent.unshift(id)
       session[:recent_datasets] = recent.uniq.take(RECENT_DATASET_COUNT + DatasetExtra.featured_ids.size)
     end
+  end
+
+  def clear_session
+    session[:urs_user] = nil
+    session[:access_token] = nil
+    session[:refresh_token] = nil
+    session[:endpoint] = nil
+    session[:expires_in] = nil
+    session[:expires] = nil
+    session[:username] = nil
   end
 
 end
