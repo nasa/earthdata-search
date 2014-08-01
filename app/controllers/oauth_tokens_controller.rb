@@ -1,6 +1,8 @@
 class OauthTokensController < ApplicationController
   def urs_callback
     if params[:code]
+      puts "CODE"
+      puts params[:code].inspect
       auth_code = params[:code]
       token = OauthToken.get_oauth_tokens(auth_code)
       session[:urs_user] = token
@@ -15,5 +17,26 @@ class OauthTokensController < ApplicationController
     end
 
     redirect_to redirect_from_urs
+  end
+
+  def refresh_token
+    json = OauthToken.refresh_token(session[:refresh_token])
+
+    if json
+      5.times do
+        puts '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+        puts ''
+      end
+      session[:urs_user] = json
+
+      session[:access_token] = json["access_token"]
+      session[:refresh_token] = json["refresh_token"]
+      session[:expires] = json['expires']
+      session[:name] = json["username"]
+
+      render json: {username: json['username'], expires: json['expires']}
+    else
+      render json: nil
+    end
   end
 end

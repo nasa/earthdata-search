@@ -2,14 +2,14 @@ class SearchController < ApplicationController
 
   def index
     @preferences = preferences
-    if request.referrer == nil && token && !token.empty?
-      response = Echo::Client.token_expires_soon(token)
-      if !response.success? || response.body["token_expires_soon"]["expires_soon"] == true
-        # TODO This should look at session[:expires] instead of Echo
-        # session[:access_token] = nil
-        # session[:name] = nil
-      end
-    end
+    # if request.referrer == nil && token && !token.empty?
+    #   response = Echo::Client.token_expires_soon(token)
+    #   if !response.success? || response.body["token_expires_soon"]["expires_soon"] == true
+    #     # TODO This should look at session[:expires] instead of Echo
+    #     # session[:access_token] = nil
+    #     # session[:name] = nil
+    #   end
+    # end
   end
 
   private

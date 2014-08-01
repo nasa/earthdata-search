@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :urs_user, except: [:logout]
+  before_filter :urs_user, except: [:logout, :refresh_token]
 
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
 
@@ -16,17 +16,22 @@ class ApplicationController < ActionController::Base
   RECENT_DATASET_COUNT = 2
 
   def urs_user
-    puts "current time: #{Time.now.to_i * 1000}"
+    puts "current time: #{Time.now.to_i}"
     puts "expires time: #{session[:expires].to_i}"
-    json = OauthToken.refresh_token(session[:refresh_token]) if session[:expires].to_i > 0 && (Time.now.to_i * 1000) > session[:expires].to_i
+    if session[:expires].to_i > 0 && Time.now.to_i > session[:expires].to_i
+      json = OauthToken.refresh_token(session[:refresh_token])
+      if json
+        3.times do
+          puts '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+          puts ''
+        end
+        session[:urs_user] = json
 
-    if json
-      session[:urs_user] = json
-
-      session[:access_token] = json["access_token"]
-      session[:refresh_token] = json["refresh_token"]
-      session[:expires] = json['expires']
-      session[:name] = json["username"]
+        session[:access_token] = json["access_token"]
+        session[:refresh_token] = json["refresh_token"]
+        session[:expires] = json['expires']
+        session[:name] = json["username"]
+      end
     end
 
     @urs_user = session[:urs_user]

@@ -8,8 +8,8 @@ ns.User = do (ko
 
   class User
     constructor: ->
-      @access_token = ko.observable(null)
-      @refresh_token = ko.observable(null)
+      # @access_token = ko.observable(null)
+      # @refresh_token = ko.observable(null)
       @expires = ko.observable(null)
       @name = ko.observable(null)
       # @username = ko.observable("")
@@ -18,14 +18,13 @@ ns.User = do (ko
       @errors = ko.observable("")
       @message = ko.observable("")
       @isLoggedIn = ko.computed =>
-        @access_token()?.length > 0 && @name()?.length > 0
+        @expires() > 0 && @name()?.length > 0
       @needsLogin = ko.observable(false)
       @needsUsername = ko.observable(false)
       @needsPassword = ko.observable(false)
       @loginCallback = null
       # @_loadStateFromCookie()
 
-      # I dont think this will reload the user on ajax requests
       @loadURS() if window.urs_user?
 
     loadURS: =>
@@ -35,8 +34,8 @@ ns.User = do (ko
       if data?
         console.log('URS User: ' + JSON.stringify(data))
         @name(data.username)
-        @access_token(data.access_token)
-        @refresh_token(data.refresh_token)
+        # @access_token(data.access_token)
+        # @refresh_token(data.refresh_token)
         @expires(data.expires)
 
         # cookieUtil.setCookie("access_token", @access_token())
@@ -49,8 +48,8 @@ ns.User = do (ko
 
     logout: =>
       xhr = getJSON "/logout", (data, status, xhr) =>
-        @access_token(null)
-        @refresh_token(null)
+        # @access_token(null)
+        # @refresh_token(null)
         @name(null)
         @expires(null)
 
@@ -78,6 +77,25 @@ ns.User = do (ko
       # @errors("")
       # @message("")
       # @needsLogin(true)
+
+    checkToken: (action) =>
+      console.log 'Check token stuff here!'
+      time = new Date().getTime() / 1000
+
+      console.log 'current: ' + time
+      console.log 'expires: ' + @expires()
+      if time > @expires()
+        console.log 'Refreshing URS Token'
+        xhr = getJSON "refresh_token", (data, status, xhr) =>
+          console.log('URS User: ' + JSON.stringify(data))
+          if data?
+            @name(data.username)
+            # @access_token(data.access_token)
+            # @refresh_token(data.refresh_token)
+            @expires(data.expires)
+          action()
+      else
+        action()
 
     # cancelLogin: =>
     #   @clearLogin()
