@@ -4,7 +4,8 @@ describe "Viewing Projects", reset: false do
   context "when viewing list of saved projects" do
     before :all do
       Capybara.reset_sessions!
-      visit '/'
+      load_page :search
+
       login
 
       create_project

@@ -27,10 +27,10 @@ ns.AccessPage = do (ko,
 
   class AccessPage
     constructor: ->
+      @user = new UserModel()
       @query = new QueryModel()
       @project = new ProjectModel(@query, false)
       @bindingsLoaded = ko.observable(false)
-      @user = new UserModel()
       @account = new AccountModel(@user)
 
       projectList = new ProjectListModel(@project, @user)
@@ -44,11 +44,13 @@ ns.AccessPage = do (ko,
         accountForm: accountForm
         serviceOptionsList: new ServiceOptionsListModel(accountForm, @project)
 
-      if pageData
-        @project.fromJson(pageData)
-      else
-        @_loadFromUrl()
-        $(window).on 'edsc.pagechange', @_loadFromUrl
+      setTimeout((=>
+        if pageData
+          console.log 'pageData: ' + pageData
+          @project.fromJson(pageData)
+        else
+          @_loadFromUrl()
+          $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
 
     _loadFromUrl: =>
       @project.serialized(urlUtil.currentParams())

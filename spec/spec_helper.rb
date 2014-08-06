@@ -110,6 +110,12 @@ RSpec.configure do |config|
   timings = {}
 
   config.before :suite do
+    #register tokens for usernames
+    json = Rails.application.secrets.urs_tokens['edsc']
+    VCR::EDSCConfigurer.register_token('edsc', json['access_token'] + ':' + Rails.application.secrets.urs_client_id)
+  end
+
+  config.before :suite do
     count = self.class.children.size
   end
 

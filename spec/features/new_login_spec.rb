@@ -2,21 +2,36 @@ require 'spec_helper'
 
 describe 'junk' do
   it "should work" do
-    #
-    json = JSON.parse('{"access_token":"45958d693b04fd075d65bff6f755535d497ef29a070e31061b9f4eea2292b255","token_type":"Bearer","expires_in":3600,"refresh_token":"1d771457e10ab3695d3ee10b1e2cf1b0d1476a346ec94a16398ef1041c58b8fe","endpoint":"/api/users/macrouch","username":"macrouch","expires":1406914709}')
+    # do real URS login
 
-    page.set_rack_session(:username => 'macrouch')
-    page.set_rack_session(:expires => '1406914709')
-    page.set_rack_session(:expires_in => '3600')
-    page.set_rack_session(:endpoint => '/api/users/macrouch')
-    page.set_rack_session(:expires => '1406914709')
-    page.set_rack_session(:access_token => '45958d693b04fd075d65bff6f755535d497ef29a070e31061b9f4eea2292b255')
-    page.set_rack_session(:refresh_token => '1d771457e10ab3695d3ee10b1e2cf1b0d1476a346ec94a16398ef1041c58b8fe')
-    page.set_rack_session(:urs_user => json)
+    # insert real token info into persister
+    # username='edsc'
+    # json = Rails.application.secrets.urs_tokens[username]
 
-    visit '/search'
+    # if expires is in the past
+    #   json = {fake data}
+    # JSON.parse("{'access_token':'#{Rails.application.secrets.access_token}','token_type':'Bearer','expires_in':3600,'refresh_token':'#{Rails.application.secrets.refresh_token}','endpoint':'#{Rails.application.secrets.endpoint}','username':'#{Rails.application.secrets.username}','expires':'#{Time.now + 3600}'}")
 
-    expect(page).to have_no_content('URS')
-    expect(page).to have_content('15 Minute')
+    # page.set_rack_session(:username => json['username'])
+    # page.set_rack_session(:expires => json['expires'])
+    # page.set_rack_session(:expires_in => json['expires_in'])
+    # page.set_rack_session(:endpoint => json['endpoint'])
+    # page.set_rack_session(:access_token => json['access_token'])
+    # page.set_rack_session(:refresh_token => json['refresh_token'])
+    # page.set_rack_session(:urs_user => json)
+
+    # VCR::EDSCConfigurer.register_token(username, json['access_token'] + ':' + Rails.application.secrets.urs_client_id)
+
+  #   visit '/'
+  #   click_link 'URS Sign In'
+  #   fill_in "Username", with: 'edsc'
+  #   fill_in "Password", with: 'EDSCtest!1'
+  #   click_button 'Log in'
+  #   Capybara.screenshot_and_open_image
+  #   click_button 'Authorize'
+  #   Capybara.screenshot_and_open_image
+  #
+  #   # expect(page).to have_no_content('URS')
+  #   expect(page).to have_content('EOSDIS User Registration System')
   end
 end

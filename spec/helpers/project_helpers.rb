@@ -41,6 +41,7 @@ module Helpers
       project.name = "Test Project"
       project.user_id = user.id
       project.save!
+      project
     end
   end
 end

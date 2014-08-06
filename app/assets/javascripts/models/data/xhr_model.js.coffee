@@ -124,17 +124,17 @@ ns.XhrModel = do (ko
             @loadTime(((new Date() - start) / 1000).toFixed(1))
             callback?(results)
 
-        complete: =>
-          @completedRequestId = requestId
-          @currentRequest = null
-          @isLoading(false)
-          #console.profileEnd(@path)
+          complete: =>
+            @completedRequestId = requestId
+            @currentRequest = null
+            @isLoading(false)
+            #console.profileEnd(@path)
 
-        error: (response, type, reason) =>
-          @isError(true)
-          console.log("Fail (#{requestId}) [#{reason}]: #{url}")
-          @_onFailure(response)
-      null
+          error: (response, type, reason) =>
+            @isError(true)
+            console.log("Fail (#{requestId}) [#{reason}]: #{url}")
+            @_onFailure(response)
+        null
 
     _onFailure: (response) ->
       if response.status == 403

@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe "Featured datasets", reset: false do
   before :all do
+    Capybara.reset_sessions!
     load_page :search
   end
 
@@ -76,8 +77,9 @@ describe "Featured datasets", reset: false do
   context "when a guest user has recently visited datasets" do
     before :all do
       page.execute_script('document.cookie = "persist=true; path=/;"')
-      login
-      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC', 'C179002914-ORNL_DAAC']
+      # login
+      #TODO This only records one recent dataset because the session variable gets overwritten in application_controller:use_dataset
+      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
       wait_for_xhr
       load_page :search
     end
@@ -96,7 +98,7 @@ describe "Featured datasets", reset: false do
     before :all do
       page.execute_script('document.cookie = "persist=true; path=/;"')
       login
-      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC', 'C179002914-ORNL_DAAC']
+      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
       wait_for_xhr
       load_page :search
     end

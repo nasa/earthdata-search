@@ -113,9 +113,9 @@ module Echo
       get("/echo-rest/users/current.json", {}, token_header(token))
     end
 
-    # def self.get_user(user_id, token)
-    #   get("/echo-rest/users/#{user_id}", {}, token_header(token))
-    # end
+    def self.get_user(user_id, token)
+      get("/echo-rest/users/#{user_id}", {}, token_header(token))
+    end
 
     def self.get_availability_events
       get('/echo-rest/calendar_events', severity: 'ALERT')

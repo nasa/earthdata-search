@@ -16,19 +16,9 @@ class ApplicationController < ActionController::Base
   RECENT_DATASET_COUNT = 2
 
   def urs_user
-
-    # puts "!!!!!"
-    # puts session[:expires].inspect
-    # puts session.inspect
-    puts "current time: #{Time.now.to_i}"
-    puts "expires time: #{session[:expires].to_i}"
     if session[:expires].to_i > 0 && Time.now.to_i > session[:expires].to_i
       json = OauthToken.refresh_token(session[:refresh_token])
       if json
-        3.times do
-          puts '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-          puts ''
-        end
         clear_session
         session[:urs_user] = json
 
@@ -40,7 +30,6 @@ class ApplicationController < ActionController::Base
     end
 
     @urs_user = session[:urs_user]
-    # session[:urs_user] = nil
   end
 
   def handle_timeout
@@ -90,9 +79,15 @@ class ApplicationController < ActionController::Base
         RecentDataset.find_or_create_by(user: current_user, echo_id: id).touch
       end
     else
+      puts "session[:recent_datasets] #{session[:recent_datasets]}"
+      puts
+
       recent = session[:recent_datasets] || []
       recent.unshift(id)
-      session[:recent_datasets] = recent.uniq.take(RECENT_DATASET_COUNT + DatasetExtra.featured_ids.size)
+      session[:recent_datasets] = recent.uniq.take(RECENT_DATASET_COUNT)
+
+      puts "session[:recent_datasets] #{session[:recent_datasets]}"
+      puts
     end
   end
 

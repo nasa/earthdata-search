@@ -21,9 +21,10 @@
 
 
     monitor: ->
-      @loadFromUrl()
-      $(document).ready(@_onReady)
-      $(window).on 'edsc.pagechange', @loadFromUrl
+      setTimeout((=>
+        @loadFromUrl()
+        $(document).ready(@_onReady)
+        $(window).on 'edsc.pagechange', @loadFromUrl), 0)
 
     serialize: ->
       page = @page

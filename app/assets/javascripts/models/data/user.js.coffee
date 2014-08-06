@@ -81,18 +81,20 @@ ns.User = do (ko
     checkToken: (action) =>
       console.log 'Check token stuff here!'
       time = new Date().getTime() / 1000
-
-      console.log 'current: ' + time
-      console.log 'expires: ' + @expires()
-      if time > @expires()
-        console.log 'Refreshing URS Token'
-        xhr = getJSON "refresh_token", (data, status, xhr) =>
-          console.log('URS User: ' + JSON.stringify(data))
-          if data?
-            @name(data.username)
-            # @access_token(data.access_token)
-            # @refresh_token(data.refresh_token)
-            @expires(data.expires)
+      if @name()? && @expires()?
+        console.log 'current: ' + time
+        console.log 'expires: ' + @expires()
+        if time > @expires()
+          console.log 'Refreshing URS Token'
+          xhr = getJSON "refresh_token", (data, status, xhr) =>
+            console.log('URS User: ' + JSON.stringify(data))
+            if data?
+              @name(data.username)
+              # @access_token(data.access_token)
+              # @refresh_token(data.refresh_token)
+              @expires(data.expires)
+            action()
+        else
           action()
       else
         action()

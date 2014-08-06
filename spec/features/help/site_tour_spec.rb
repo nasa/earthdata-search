@@ -27,6 +27,7 @@ describe "Site tour", reset: true do
       expect(page).to have_popover('Keyword Search')
       fill_in 'keywords', with: 'snow cover nrt'
       click_on 'Browse All Data'
+      Capybara.screenshot_and_open_image
 
       expect(page).to have_popover('Browse Datasets')
       find_link('Platforms').click

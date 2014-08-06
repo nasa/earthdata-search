@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   def login
     session[:last_point] = request.referrer
+    session[:last_point] = params[:next_point] if params[:next_point]
+
     redirect_to "#{ Rails.application.secrets.urs_root }oauth/authorize?client_id=#{ Rails.application.secrets.urs_client_id }&redirect_uri=#{ Rails.application.secrets.urs_callback_url }&response_type=code"
   end
 
@@ -27,6 +29,10 @@ class UsersController < ApplicationController
       format.html { redirect_to root_url }
       format.json { render json: nil, status: :ok }
     end
+  end
+
+  def refresh_token
+    OauthToken.refresh_token(session[:refresh_token])
   end
 
   def new
