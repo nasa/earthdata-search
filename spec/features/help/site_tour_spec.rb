@@ -27,7 +27,9 @@ describe "Site tour", reset: true do
       expect(page).to have_popover('Keyword Search')
       fill_in 'keywords', with: 'snow cover nrt'
       click_on 'Browse All Data'
-      Capybara.screenshot_and_open_image
+      # FIXME This is failing. A screenshot here seems like it doesn't press this button,
+      # but the failed test screenshot shows an empty page after the button is pressed but
+      # before the data loads
 
       expect(page).to have_popover('Browse Datasets')
       find_link('Platforms').click

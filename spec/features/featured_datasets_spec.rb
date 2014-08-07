@@ -78,7 +78,7 @@ describe "Featured datasets", reset: false do
     before :all do
       page.execute_script('document.cookie = "persist=true; path=/;"')
       # login
-      #TODO This only records one recent dataset because the session variable gets overwritten in application_controller:use_dataset
+      # FIXME This only records one recent dataset because the session variable gets overwritten in application_controller:use_dataset
       load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
       wait_for_xhr
       load_page :search
