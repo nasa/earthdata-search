@@ -277,7 +277,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       null
 
     loadstart: (id, start, end, resolution) ->
-      match = @svg.getElementsByClassName(id)
+      match = document.getElementsByClassName(id)
       if match.length > 0
         match[0].setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
         @_empty(match[0])
@@ -299,7 +299,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
       [start, end, resolution, intervals, color] = @_data[id] ? [@start - 1 , @end + 1, RESOLUTIONS[zoom - 2], [], null]
 
-      match = @svg.getElementsByClassName(id)
+      match = document.getElementsByClassName(id)
       el = null
       if match.length > 0
         el = match[0]
@@ -329,7 +329,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
       @tlDatasets.appendChild(el)
       children = @tlDatasets.childNodes
-      loading = @tlDatasets.getElementsByClassName(@scope('loading'))
+      loading = document.getElementsByClassName(@scope('loading'))
 
       null
 
