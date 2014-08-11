@@ -85,7 +85,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
   getTransformX = (el, defaultValue=0) ->
     return defaultValue unless el
-    re = /^[^\d\-]*(-?[\d\.]+),/
+    re = /^[^\d\-]*(-?[\d\.]+)/
     transform = el.getAttribute('transform') ? el.parentNode.getAttribute('transform')
     parseFloat(re.exec(transform)?[1] ? defaultValue)
 
