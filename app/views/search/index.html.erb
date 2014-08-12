@@ -281,7 +281,7 @@
   </div>
 </div>
 
-<div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid.selected()">
+<div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid.selected(), css: { 'knockout-template': !bindingsLoaded }">
   <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
   <label for="map-grid-system">
     <i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates

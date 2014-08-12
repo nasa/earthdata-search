@@ -240,6 +240,7 @@ this.edsc.util.url = do(window,
   $(window).on 'statechange anchorchange', ->
     if cleanPath() != savedPath
       $(window).trigger('edsc.pagechange')
+      savedPath = cleanPath()
 
   currentQuery = ->
     cleanPath()?.split('?')[1] ? ''

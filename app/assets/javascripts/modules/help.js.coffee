@@ -240,6 +240,7 @@
     unless queue[index].advanceHook
       $(queue[index].target ? $el).addClass('popover-advance')
 
+    console.log "Popover: #{queue[index].element} -> #{$el.length}"
     $tip = $el.data('bs.popover').$tip
     $tip.toggleClass('is-popover-single', queue.length == 1)
 
@@ -259,7 +260,7 @@
     if queue[index].wait
       wait(showCurrentImmediate)
     else if queue[index].waitOnAnimate
-      setTimeout(showCurrentImmediate, 500)
+      setTimeout((-> wait(showCurrentImmediate)), config.defaultAnimationDurationMs + 200)
     else
       showCurrentImmediate()
 

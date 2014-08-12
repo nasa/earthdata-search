@@ -70,8 +70,7 @@ class ApplicationController < ActionController::Base
 
   @@recent_lock = Mutex.new
   def use_dataset(id)
-    return unless id.present?
-    return if Rails.env.test? && cookies['persist'] != 'true'
+    return false if id.blank? || (Rails.env.test? && cookies['persist'] != 'true')
 
     id = id.first if id.is_a? Array
     if current_user.present?
@@ -91,6 +90,7 @@ class ApplicationController < ActionController::Base
       # puts "session[:recent_datasets] #{session[:recent_datasets]}"
       # puts
     end
+    true
   end
 
   def clear_session

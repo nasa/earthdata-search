@@ -1,23 +1,21 @@
 @edsc.util.xhr = do (window, document, csrfToken=@edsc.config.csrfToken, $=jQuery) ->
   callbacks = []
 
-  timeouts = 0
   xhrs = 0
   timeoutPool = []
   realSetTimeout = window.setTimeout
   realClearTimeout = window.clearTimeout
 
   hasPending = ->
-    [xhrPool.length > 0 || timeoutPool.length > 0, xhrs, timeouts]
+    xhrPool.length > 0 || timeoutPool.length > 0
 
   runCallbacks = ->
-    unless hasPending()[0]
-      callbacks.pop()() while callbacks.length > 0
+    while !hasPending() && callbacks.length > 0
+      callbacks.pop()()
 
   window.setTimeout = (f, args...) ->
     id = null
     onTimeout = ->
-      timeouts++
       try
         if typeof f == "string"
           eval(f)
@@ -42,20 +40,17 @@
   $(document)
     .ajaxSend (event, xhr, settings) ->
       xhr.setRequestHeader('X-CSRF-Token', csrfToken)
-      xhrPool.push(xhr)
+      xhr.id = xhrs++
+      xhrPool.push(xhr.id)
     .ajaxComplete (event, xhr) ->
-      xhrs++
-      index = xhrPool.indexOf(xhr)
+      index = xhrPool.indexOf(xhr.id)
       xhrPool.splice(index, 1) if (index > -1)
       runCallbacks()
 
   wait = (callback) ->
-    setTimeout((->
-      if hasPending()[0]
-        callbacks.push(callback)
-      else
-        callback()), 0)
-
+    execWhenReady = ->
+      callbacks.push(callback)
+    setTimeout(execWhenReady, 0)
 
   exports =
     hasPending: hasPending

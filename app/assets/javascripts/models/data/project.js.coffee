@@ -127,7 +127,9 @@ ns.Project = do (ko,
       current = observable()
       unless current?.dataset == dataset
         current?.dispose()
-        projectDataset = new ProjectDataset(dataset) if dataset?
+        if dataset?
+          projectDataset = new ProjectDataset(dataset)
+          dataset.makeRecent()
         observable(projectDataset)
 
     getDatasets: ->

@@ -11,7 +11,7 @@ module Helpers
         #  page.evaluate_script('window.edsc.util.xhr.hasPending()')
         #end
 
-        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')[0]).to be_false
+        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
       end
     end
 

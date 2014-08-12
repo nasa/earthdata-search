@@ -93,6 +93,16 @@ ns.Dataset = do (ko
       datasets.remove(this) if result
       result
 
+    makeRecent: ->
+      id = @id
+      if id? && !@featured
+        ajax
+          dataType: 'json'
+          url: "/datasets/#{id}/use.json"
+          method: 'post'
+          success: (data) ->
+            @featured = data
+
     fromJson: (jsonObj) ->
       @json = jsonObj
 

@@ -77,9 +77,14 @@ describe "Featured datasets", reset: false do
   context "when a guest user has recently visited datasets" do
     before :all do
       page.execute_script('document.cookie = "persist=true; path=/;"')
-      # login
-      # FIXME This only records one recent dataset because the session variable gets overwritten in application_controller:use_dataset
-      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
+      within '#dataset-results-list > :nth-child(3)' do
+        click_link "Add dataset to the current project"
+      end
+      wait_for_xhr
+      load_page :search
+      within '#dataset-results-list > :nth-child(2)' do
+        click_link "Add dataset to the current project"
+      end
       wait_for_xhr
       load_page :search
     end
@@ -98,7 +103,14 @@ describe "Featured datasets", reset: false do
     before :all do
       page.execute_script('document.cookie = "persist=true; path=/;"')
       login
-      load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC']
+      load_page :search
+      within '#dataset-results-list > :nth-child(3)' do
+        click_link "Add dataset to the current project"
+      end
+      wait_for_xhr
+      within '#dataset-results-list > :nth-child(2)' do
+        click_link "Add dataset to the current project"
+      end
       wait_for_xhr
       load_page :search
     end

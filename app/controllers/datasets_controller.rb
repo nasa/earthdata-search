@@ -30,6 +30,11 @@ class DatasetsController < ApplicationController
     end
   end
 
+  def use
+    result = use_dataset(params[:id])
+    render :json => result, status: :ok
+  end
+
   def facets
     response = Echo::Client.get_facets(request.query_parameters, token)
 
@@ -78,9 +83,7 @@ class DatasetsController < ApplicationController
     {name: name, param: param, values: items}
   end
 
-  def add_featured_datasets!(base_query, token, base_results)
-    featured = []
-
+  def get_featured_ids
     featured_ids = DatasetExtra.featured_ids
 
     if current_user.present?
@@ -90,6 +93,12 @@ class DatasetsController < ApplicationController
       featured_and_recent = (featured_ids + Array.wrap(session[:recent_datasets])).uniq
       featured_ids = featured_and_recent.take(featured_ids.size + RECENT_DATASET_COUNT)
     end
+  end
+
+  def add_featured_datasets!(base_query, token, base_results)
+    featured = []
+
+    featured_ids = get_featured_ids
 
     # Only fetch if the user is requesting the first page
     if base_query['page_num'] == "1" && base_query['echo_collection_id'].nil?
@@ -104,7 +113,13 @@ class DatasetsController < ApplicationController
       end
     end
 
-    if featured.present?
+    if base_query['echo_collection_id'].present?
+      base_results['feed']['entry'].each do |ds|
+        if featured_ids.include?(ds['id'])
+          ds[:featured] = true
+        end
+      end
+    elsif featured.present?
       featured.each { |ds| ds[:featured] = true }
       base_results['feed']['entry'].delete_if { |ds| featured_ids.include?(ds['id']) }
       base_results['feed']['entry'].unshift(*featured)

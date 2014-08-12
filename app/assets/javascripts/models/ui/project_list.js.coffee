@@ -88,6 +88,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
       if project.hasDataset(dataset)
         project.removeDataset(dataset)
       else
+        dataset.makeRecent()
         project.addDataset(dataset)
 
     _computeDatasetsToDownload: ->
