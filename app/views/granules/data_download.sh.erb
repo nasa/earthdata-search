@@ -1,0 +1,35 @@
+#!/bin/sh
+
+urls='<%=raw @urls %>'
+
+fail_with_error() {
+    echo $1 1>&2
+    exit 1
+}
+
+if command -v curl >/dev/null 2>&1
+then
+    fetch_url() {
+        echo $(echo "$@" | sed 's/\("[^"]*"\)/-O \1/g') | xargs curl
+    }
+
+elif command -v wget >/dev/null 2>&1
+then
+    fetch_url() {
+        echo $(echo "$@" | sed 's/"\([^"]*\)"/\1/g') | xargs wget
+    }
+else
+    fail_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
+fi
+
+fetch_results() {
+    mkdir -p echo-download
+    cd echo-download
+    for url in $urls
+    do
+      fetch_url $url
+    done
+    cd ..
+}
+
+fetch_results

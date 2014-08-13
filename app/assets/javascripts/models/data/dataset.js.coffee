@@ -72,7 +72,7 @@ ns.Dataset = do (ko
       @granuleScriptUrl = @computed
         read: =>
           paramStr = toParam(@granuleQuery.params())
-          "/data/download.sh?#{paramStr}"
+          "/granules/data_download.sh?#{paramStr}"
         deferEvaluation: true
 
     thumbnail: ->

@@ -67,4 +67,12 @@ class GranulesController < ApplicationController
     @urls = GranuleUrlStreamer.new(request.query_parameters, token)
     render stream: true, layout: false
   end
+
+  def data_download
+    urls = []
+    GranuleUrlStreamer.new(request.query_parameters, token).each do |url|
+      urls << url
+    end
+    @urls = '"' + urls.join('" "') + '"'
+  end
 end

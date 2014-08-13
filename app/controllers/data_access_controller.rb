@@ -52,12 +52,6 @@ class DataAccessController < ApplicationController
     render file: "#{Rails.root}/public/403.html", status: :forbidden unless user == @retrieval.user
   end
 
-  def data_download
-    @ip = request.remote_ip
-    @user_id = session[:name]
-    @query = request.env['QUERY_STRING']
-  end
-
   def status
     if token.present?
       order_response = Echo::Client.get_orders(token)
