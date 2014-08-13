@@ -21,8 +21,6 @@ class OauthToken
   end
 
   def self.refresh_token(refresh_token)
-    puts refresh_token.inspect
-
     uri = URI.parse("#{ Rails.application.secrets.urs_root }oauth/token?grant_type=refresh_token&refresh_token=#{ refresh_token }")
 
     http = Net::HTTP.new(uri.host, uri.port)
@@ -36,9 +34,6 @@ class OauthToken
     response = http.request(request)
 
     json = JSON.parse(response.body)
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts response.inspect
-    puts json.inspect
     if json['access_token']
       json['username'] = json['endpoint'].sub('/api/users/', '')
       json['expires'] = (Time.now + json['expires_in']).to_i

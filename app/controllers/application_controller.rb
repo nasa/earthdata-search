@@ -78,17 +78,12 @@ class ApplicationController < ActionController::Base
         RecentDataset.find_or_create_by(user: current_user, echo_id: id).touch
       end
     else
-      # puts "session[:recent_datasets] #{session[:recent_datasets]}"
-      # puts
       # FIXME This does not work for guests loading directly to a project with more then 1
       # dataset, the session gets session does not carry over between the multiple calls to
       # datasets_controller:show
       recent = session[:recent_datasets] || []
       recent.unshift(id)
       session[:recent_datasets] = recent.uniq.take(RECENT_DATASET_COUNT)
-
-      # puts "session[:recent_datasets] #{session[:recent_datasets]}"
-      # puts
     end
     true
   end

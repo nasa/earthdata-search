@@ -240,7 +240,7 @@
     unless queue[index].advanceHook
       $(queue[index].target ? $el).addClass('popover-advance')
 
-    console.log "Popover: #{queue[index].element} -> #{$el.length}"
+    # console.log "Popover: #{queue[index].element} -> #{$el.length}"
     $tip = $el.data('bs.popover').$tip
     $tip.toggleClass('is-popover-single', queue.length == 1)
 

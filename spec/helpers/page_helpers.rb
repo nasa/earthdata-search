@@ -64,19 +64,10 @@ module Helpers
     end
 
     def login(username='edsc', password='EDSCtest!1')
-      # click_link 'Sign In'
-      # fill_in 'Username', with: username
-      # fill_in 'Password', with: password
-      # click_button 'Sign In'
-      # wait_for_xhr
-
-      puts page.current_url.inspect
       path = URI.parse(page.current_url).path
       query = URI.parse(page.current_url).query
-      puts path.inspect
-      puts query.inspect
       json = Rails.application.secrets.urs_tokens[username]
-      puts "JSON #{json.inspect}"
+
       page.set_rack_session(:username => json['username'])
       page.set_rack_session(:expires => json['expires'])
       page.set_rack_session(:expires_in => json['expires_in'])

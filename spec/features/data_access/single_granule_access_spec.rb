@@ -9,7 +9,6 @@ describe 'Single Granule Data Access', reset: false do
       wait_for_xhr
       first_project_dataset.click
       first_granule_list_item.click_link "Retrieve data"
-      # wait_for_xhr
     end
 
     after :each do
@@ -19,13 +18,6 @@ describe 'Single Granule Data Access', reset: false do
     it 'forces the user to login before showing data access page' do
       expect(page).to have_content('EOSDIS User Registration System')
     end
-
-    # it 'does not show data access page with unsuccessful login' do
-    #   fill_in 'Username', with: 'test'
-    #   click_button 'Sign In'
-    #
-    #   expect(page).to have_content "Password can't be blank"
-    # end
   end
 
   context 'when the user is logged in' do

@@ -55,12 +55,10 @@ describe "Granule list", reset: false do
 
       after :all do
         page.execute_script('window.history.back()')
-        # find('div.modal').click_link('close')
       end
 
       it "triggers the download workflow" do
         expect(page).to have_content('EOSDIS User Registration System')
-        # expect(page).to have_selector('div.modal')
       end
     end
 
