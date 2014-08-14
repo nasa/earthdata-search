@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     session[:last_point] = request.referrer
     session[:last_point] = params[:next_point] if params[:next_point]
 
-    redirect_to "#{ Rails.application.secrets.urs_root }oauth/authorize?client_id=#{ Rails.application.secrets.urs_client_id }&redirect_uri=#{ Rails.application.secrets.urs_callback_url }&response_type=code"
+    redirect_to "#{ ENV['urs_root'] }oauth/authorize?client_id=#{ENV['urs_client_id'] }&redirect_uri=#{ENV['urs_callback_url'] }&response_type=code"
   end
 
   def logout

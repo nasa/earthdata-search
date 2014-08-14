@@ -26,4 +26,4 @@ build_output
 
 /config/database.yml
 .jhw-cache
-/config/secrets.yml
+/config/application.yml

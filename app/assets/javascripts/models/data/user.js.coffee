@@ -53,7 +53,6 @@ ns.User = do (ko
         if time > @expires()
           console.log 'Refreshing URS Token'
           xhr = getJSON "refresh_token", (data, status, xhr) =>
-            console.log('URS User: ' + JSON.stringify(data))
             if data?
               @name(data.username)
               @expires(data.expires)

@@ -158,7 +158,7 @@ module Echo
     private
 
     def self.token_header(token)
-      token.present? ? {'Echo-Token' => "#{token}:#{ Rails.application.secrets.urs_client_id}"} : {}
+      token.present? ? {'Echo-Token' => "#{token}:#{ ENV['urs_client_id']}"} : {}
     end
 
     def self.request(method, url, params, body, headers)

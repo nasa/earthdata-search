@@ -66,7 +66,7 @@ module Helpers
     def login(username='edsc', password='EDSCtest!1')
       path = URI.parse(page.current_url).path
       query = URI.parse(page.current_url).query
-      json = Rails.application.secrets.urs_tokens[username]
+      json = JSON.parse(ENV['urs_tokens'])[username]
 
       page.set_rack_session(:username => json['username'])
       page.set_rack_session(:expires => json['expires'])

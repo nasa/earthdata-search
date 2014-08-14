@@ -80,6 +80,7 @@ end
 gem 'jquery-rails'
 gem 'bourbon'
 gem 'knockoutjs-rails'
+gem 'figaro'
 
 # Eventually we'll need these, but there's version conflict when installing
 #gem 'crossroadsjs-rails'

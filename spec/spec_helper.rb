@@ -111,8 +111,8 @@ RSpec.configure do |config|
 
   config.before :suite do
     #register tokens for usernames
-    json = Rails.application.secrets.urs_tokens['edsc']
-    VCR::EDSCConfigurer.register_token('edsc', json['access_token'] + ':' + Rails.application.secrets.urs_client_id)
+    json = JSON.parse(ENV['urs_tokens'])['edsc']
+    VCR::EDSCConfigurer.register_token('edsc', json['access_token'] + ':' + ENV['urs_client_id'])
   end
 
   config.before :suite do
