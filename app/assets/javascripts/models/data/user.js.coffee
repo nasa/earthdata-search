@@ -45,17 +45,11 @@ ns.User = do (ko
         @needsLogin(true)
 
     initiateLogin: (url) =>
-      console.log("URL: " + url)
-      old_url = window.location.href
-      console.log("Old URL: " + old_url)
       window.location.href = url
 
     checkToken: (action) =>
-      console.log 'Check token stuff here!'
       time = new Date().getTime() / 1000
       if @name()? && @expires()?
-        console.log 'current: ' + time
-        console.log 'expires: ' + @expires()
         if time > @expires()
           console.log 'Refreshing URS Token'
           xhr = getJSON "refresh_token", (data, status, xhr) =>
