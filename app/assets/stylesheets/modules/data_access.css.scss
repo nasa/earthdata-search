@@ -338,3 +338,16 @@
     font-style: italic;
   }
 }
+
+.access-subset-map {
+  width: 360px;
+  height: 180px;
+  @include retina-image(plate_carree_earth, 360px 180px, png, null, '@2x', true);
+  position: relative;
+
+  > .access-mbr {
+    position: absolute;
+    background-color: rgba(238, 153, 0, .5);
+    border: 2px solid rgb(238, 153, 0);
+  }
+}

@@ -104,8 +104,9 @@ class OpendapConfiguration
     max_lat = 90.0
     min_lng = -180.0
     max_lng = 180.0
-    if options['subsetToSpatial']
-      # TODO: EDSC-166
+    mbr = options['spatial']
+    if mbr.present?
+      min_lat, min_lng, max_lat, max_lng = *mbr
     end
 
     params = []
@@ -119,17 +120,17 @@ class OpendapConfiguration
         name = dim[:name]
         size = dim[:size]
         min = 0
-        max = size
+        max = size - 1
 
         if name == @latitude_dim_name
-          min = ((90 + min_lat) * (size / 180.0)).floor
-          max = ((90 + max_lat) * (size / 180.0)).ceil
+          min = [((90 + min_lat) * (size / 180.0)).floor, min].max
+          max = [((90 + max_lat) * (size / 180.0)).ceil, max].min
         elsif name == @longitude_dim_name
-          min = ((180 + min_lng) * (size / 360.0)).floor
-          max = ((180 + max_lng) * (size / 360.0)).ceil
+          min = [((180 + min_lng) * (size / 360.0)).floor, min].max
+          max = [((180 + max_lng) * (size / 360.0)).ceil, max].min
         end
 
-        constrained = true unless min == 0 && max == size
+        constrained = true unless min == 0 && max == size - 1
         constraint_str += "[#{min}:#{max}]"
       end
 
