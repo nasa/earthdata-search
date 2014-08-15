@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if command -v curl >/dev/null 2>&1
+then
+    fetch_urls() {
+        while read -r line; do curl -Og $line; done;
+    }
+
+elif command -v wget >/dev/null 2>&1
+then
+    fetch_urls() {
+        while read -r line; do wget $line; done;
+    }
+else
+    fail_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
+fi
+
+fetch_urls <<'EDSCEOF'
+<% @urls.each do |url| %><%=raw url%>
+<% end %>EDSCEOF

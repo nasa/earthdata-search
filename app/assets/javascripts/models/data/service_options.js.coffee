@@ -1,11 +1,52 @@
 ns = @edsc.models.data
 
-ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
+ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend = $.extend) ->
+
+  class SubsetOptions
+    constructor: (@config) ->
+      @parameters = for parameter in @config.parameters
+        extend({selected: ko.observable(true)}, parameter)
+
+      @formats = @config.formats
+
+      @formatName = ko.observable(@formats[0].name)
+      @format = ko.computed =>
+        name = @formatName()
+        for format in @formats
+          return format if format.name == name
+        null
+
+      @subsetToSpatial = ko.observable(true)
+
+    serialize: ->
+      result = {format: @formatName()}
+      if @format()?.canSubset
+        result.subsetToSpatial = @subsetToSpatial()
+        result.parameters = (p.id for p in @parameters when p.selected())
+      result
+
+    fromJson: (jsonObj) ->
+      this
 
   class ServiceOptions
     constructor: (method, @availableMethods) ->
       @method = ko.observable(method)
       @isValid = ko.observable(true)
+
+      @subsetOptions = ko.observable(null)
+
+      @options = ko.computed =>
+        m = @method()
+        result = null
+        if @availableMethods
+          for available in @availableMethods when available.name == m
+            result = available
+            break
+        if result?.subset
+          @subsetOptions(new SubsetOptions(result))
+        else
+          @subsetOptions(null)
+        result
 
     serialize: ->
       method = @method()
@@ -15,6 +56,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
           result.type = available.type
           result.id = available.id
           break
+      result.subset = @subsetOptions()?.serialize()
       result
 
     fromJson: (jsonObj) ->
@@ -23,6 +65,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel) ->
       @rawModel = jsonObj.rawModel
       @type = jsonObj.type
       @orderId = jsonObj.order_id
+      @subsetOptions()?.fromJson(jsonObj.subset) if jsonObj.subset
       this
 
   class ServiceOptionsModel extends KnockoutModel
