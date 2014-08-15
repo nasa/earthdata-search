@@ -8,23 +8,18 @@ class OauthTokensController < ApplicationController
       session[:refresh_token] = token["refresh_token"]
       session[:expires] = token['expires']
       session[:name] = token["username"]
+
+      # useful when needing to replace the application.yml tokens
+      # puts "Token: #{token.inspect}"
     end
 
     redirect_to redirect_from_urs
   end
 
   def refresh_token
-    json = OauthToken.refresh_token(session[:refresh_token])
+    json = refresh_urs_token
 
     if json
-      clear_session
-      session[:urs_user] = json
-
-      session[:access_token] = json["access_token"]
-      session[:refresh_token] = json["refresh_token"]
-      session[:expires] = json['expires']
-      session[:name] = json["username"]
-
       render json: {username: json['username'], expires: json['expires']}
     else
       render json: nil

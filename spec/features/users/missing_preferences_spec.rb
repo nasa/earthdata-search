@@ -9,7 +9,7 @@ describe "User missing ordering preferences", reset: false do
       load_page :search, project: [dataset_id], view: :project
       wait_for_xhr
 
-      login 'edscbasic', 'EDSCtest!1'
+      login 'edscbasic'
 
       click_link "Retrieve project data"
 

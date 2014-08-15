@@ -63,22 +63,27 @@ module Helpers
       visit '/logout'
     end
 
-    def login(username='edsc', password='EDSCtest!1')
+    def login(key='edsc')
       path = URI.parse(page.current_url).path
       query = URI.parse(page.current_url).query
-      json = JSON.parse(ENV['urs_tokens'])[username]
 
-      page.set_rack_session(:username => json['username'])
-      page.set_rack_session(:expires => json['expires'])
-      page.set_rack_session(:expires_in => json['expires_in'])
-      page.set_rack_session(:endpoint => json['endpoint'])
-      page.set_rack_session(:access_token => json['access_token'])
-      page.set_rack_session(:refresh_token => json['refresh_token'])
-      page.set_rack_session(:urs_user => json)
+      be_logged_in_as(key)
 
       url = query.nil? ? path : path + '?' + query
       visit url
       wait_for_xhr
+    end
+
+    def be_logged_in_as(key)
+      json = JSON.parse(ENV['urs_tokens'])[key]
+
+      page.set_rack_session(username: json['username'])
+      page.set_rack_session(expires: json['expires'])
+      page.set_rack_session(expires_in: json['expires_in'])
+      page.set_rack_session(endpoint: json['endpoint'])
+      page.set_rack_session(access_token: json['access_token'])
+      page.set_rack_session(refresh_token: json['refresh_token'])
+      page.set_rack_session(urs_user: json)
     end
 
     def have_popover(title=nil)

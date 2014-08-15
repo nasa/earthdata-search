@@ -17,19 +17,26 @@ class ApplicationController < ActionController::Base
 
   def urs_user
     if session[:expires].to_i > 0 && Time.now.to_i > session[:expires].to_i
-      json = OauthToken.refresh_token(session[:refresh_token])
-      if json
-        clear_session
-        session[:urs_user] = json
-
-        session[:access_token] = json["access_token"]
-        session[:refresh_token] = json["refresh_token"]
-        session[:expires] = json['expires']
-        session[:name] = json["username"]
-      end
+      json = refresh_urs_token
     end
 
     @urs_user = session[:urs_user]
+  end
+
+  def refresh_urs_token
+    json = OauthToken.refresh_token(session[:refresh_token])
+
+    if json
+      clear_session
+      session[:urs_user] = json
+
+      session[:access_token] = json["access_token"]
+      session[:refresh_token] = json["refresh_token"]
+      session[:expires] = json['expires']
+      session[:name] = json["username"]
+    end
+
+    json
   end
 
   def handle_timeout
