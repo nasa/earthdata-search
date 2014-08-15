@@ -48,7 +48,7 @@ module VCR
           opts = opts.dup
           record = default_record_mode
 
-          cassette = 'global'
+          cassette = 'services'
           uri = request.uri
           if uri.start_with? 'http://api.geonames.org'
             cassette = 'geonames'
@@ -78,8 +78,6 @@ module VCR
           end
 
           opts[:record] = record
-
-          Rails.logger.info("#{request.uri} [#{cassette}] -> #{opts.inspect}")
 
           VCR.use_cassette(cassette, opts, &request)
         end

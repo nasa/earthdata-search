@@ -1,6 +1,6 @@
 <% content_for :javascript do %>
   <script>
-    this.edscPageData = <%= raw @retrieval.jsondata.to_json %>;
+    this.edscPageData = <%= raw @retrieval.jsondata.merge(id: @retrieval.to_param).to_json %>;
   </script>
   <%= javascript_include_tag "data_access" %>
 <% end %>
@@ -29,10 +29,10 @@
     </p>
     <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetsToDownload">
       <li class="data-access-dataset">
-        <p class="data-access-dataset-name" data-bind="text: dataset.dataset_id"></p>
+        <p class="data-access-dataset-name" data-bind="text: title"></p>
         <div class="data-access-dataset-actions">
-          <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: dataset.granuleDownloadsUrl}">View Download Links</a>
-          <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: dataset.granuleScriptUrl}">Download Access Script</a>
+          <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadPageUrl}">View Download Links</a>
+          <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadScriptUrl}">Download Access Script</a>
         </div>
       </li>
     </ul>
