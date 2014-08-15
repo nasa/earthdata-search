@@ -47,7 +47,6 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
       $project = $('#data-access-project')
 
       $project.val(JSON.stringify(@project.serialize()))
-
       $('#data-access').submit()
 
 

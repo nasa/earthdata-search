@@ -74,7 +74,7 @@ describe 'Duplicate Service Options', reset: false do
       within '.access-item-selection:first-child' do
         choose 'Download'
       end
-      within '.access-item-selection:nth-child(3)' do
+      within '.access-item-selection:nth-child(4)' do
         choose 'Download'
       end
       click_button 'Continue'

@@ -87,9 +87,17 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
 
     _computeDatasetsToDownload: ->
       datasets = []
-      for dataset in @project.accessDatasets()
-        for m in dataset.serviceOptions.accessMethod()
-          datasets.push(dataset) if m.type == 'download'
+      id = @project.id()
+      return datasets unless id?
+      for projectDataset in @project.accessDatasets()
+        dataset = projectDataset.dataset
+        datasetId = dataset.id
+        title = dataset.dataset_id
+        for m in projectDataset.serviceOptions.accessMethod() when m.type == 'download'
+          datasets.push
+            title: title
+            downloadPageUrl: "/granules/download.html?project=#{id}&dataset=#{datasetId}"
+            downloadScriptUrl: "/granules/download.sh?project=#{id}&dataset=#{datasetId}"
 
       datasets
 

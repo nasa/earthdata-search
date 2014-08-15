@@ -52,13 +52,6 @@ class DataAccessController < ApplicationController
     render file: "#{Rails.root}/public/403.html", status: :forbidden unless user == @retrieval.user
   end
 
-  def data_download
-    @ip = request.remote_ip
-    # TODO: These could be dangerous
-    @user_id = cookies['name']
-    @query = request.env['QUERY_STRING']
-  end
-
   def status
     if token.present?
       order_response = Echo::Client.get_orders(token)
@@ -110,7 +103,7 @@ class DataAccessController < ApplicationController
           dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
-          methods: get_downloadable_access_methods(granules, hits) + get_order_access_methods(granules, hits),
+          methods: get_downloadable_access_methods(dataset, granules, hits) + get_order_access_methods(dataset, granules, hits),
           defaults: defaults
         }
       else
@@ -133,21 +126,27 @@ class DataAccessController < ApplicationController
 
   private
 
-  def get_downloadable_access_methods(granules, hits)
+  def get_downloadable_access_methods(dataset_id, granules, hits)
     result = []
     downloadable = granules.select {|granule| granule['online_access_flag'] == 'true'}
     if downloadable.size > 0
-      result << {
+      opendap_config = OpendapConfiguration.find(dataset_id)
+
+      method = {
         name: 'Download',
         type: 'download',
+        subset: opendap_config.formats.present?,
+        parameters: opendap_config.parameters,
+        formats: opendap_config.formats,
         all: downloadable.size == granules.size,
         count: (hits.to_f * downloadable.size / granules.size).round
       }
+      result << method
     end
     result
   end
 
-  def get_order_access_methods(granules, hits)
+  def get_order_access_methods(dataset_id, granules, hits)
     granule_ids = granules.map {|granule| granule['id']}
     order_info = Echo::Client.get_order_information(granule_ids, token).body
 

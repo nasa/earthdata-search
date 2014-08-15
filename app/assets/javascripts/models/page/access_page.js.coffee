@@ -45,6 +45,7 @@ ns.AccessPage = do (ko,
         serviceOptionsList: new ServiceOptionsListModel(accountForm, @project)
 
       if pageData
+        @project.id(pageData.id)
         @project.fromJson(pageData)
       else
         @_loadFromUrl()

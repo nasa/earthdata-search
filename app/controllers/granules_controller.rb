@@ -33,12 +33,14 @@ class GranulesController < ApplicationController
   end
 
   class GranuleUrlStreamer
-    def initialize(params, token)
+    def initialize(params, token, url_mapper)
       @params = params
       @token = token
+      @url_mapper = url_mapper
     end
 
     def each
+      yielded_info = false
       at_end = false
       page = 1
       until at_end
@@ -49,10 +51,15 @@ class GranulesController < ApplicationController
           granules = catalog_response.body['feed']['entry']
 
           granules.each do |granule|
-            Array.wrap(granule['links']).each do |link|
-              if link['rel'].include?('/data') || link['rel'] == 'enclosure'
-                yield link['href']
+            unless yielded_info
+              @url_mapper.info_urls_for(granule).each do |url|
+                yield url
               end
+              yielded_info = true
+            end
+
+            @url_mapper.urls_for(granule).each do |url|
+              yield url
             end
           end
 
@@ -66,7 +73,25 @@ class GranulesController < ApplicationController
   end
 
   def download
-    @urls = GranuleUrlStreamer.new(request.query_parameters, token)
+    retrieval = Retrieval.find(request[:project])
+    dataset_id = request[:dataset]
+    user = current_user
+    unless user == retrieval.user
+      render file: "#{Rails.root}/public/403.html", status: :forbidden
+      return
+    end
+
+    project = retrieval.jsondata
+    dataset = Array.wrap(project['datasets']).find {|ds| ds['id'] == dataset_id}
+
+    query = Rack::Utils.parse_nested_query(dataset['params'])
+
+    method = dataset['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
+
+    url_mapper = OpendapConfiguration.find(dataset_id)
+    url_mapper.apply_subsetting(method['subset'])
+
+    @urls = GranuleUrlStreamer.new(query.merge('page_size' => 2000), token, url_mapper)
     render stream: true, layout: false
   end
 end
