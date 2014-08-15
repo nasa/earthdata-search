@@ -103,7 +103,7 @@ class DataAccessController < ApplicationController
           dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
-          methods: get_downloadable_access_methods(dataset, granules, hits) + get_order_access_methods(dataset, granules, hits),
+          methods: get_downloadable_access_methods(dataset, granules, granule_params, hits) + get_order_access_methods(dataset, granules, hits),
           defaults: defaults
         }
       else
@@ -126,17 +126,28 @@ class DataAccessController < ApplicationController
 
   private
 
-  def get_downloadable_access_methods(dataset_id, granules, hits)
+  def get_downloadable_access_methods(dataset_id, granules, granule_params, hits)
     result = []
     downloadable = granules.select {|granule| granule['online_access_flag'] == 'true'}
     if downloadable.size > 0
       opendap_config = OpendapConfiguration.find(dataset_id)
+
+      spatial = granule_params['bounding_box'] || granule_params['polygon'] || granule_params['point'] || granule_params['line']
+
+      mbr = nil
+      if spatial.present?
+        latlngs = spatial.split(',').map(&:to_f).each_slice(2)
+        lngs = latlngs.map(&:first)
+        lats = latlngs.map(&:last)
+        mbr = [lats.min, lngs.min, lats.max, lngs.max]
+      end
 
       method = {
         name: 'Download',
         type: 'download',
         subset: opendap_config.formats.present?,
         parameters: opendap_config.parameters,
+        spatial: mbr,
         formats: opendap_config.formats,
         all: downloadable.size == granules.size,
         count: (hits.to_f * downloadable.size / granules.size).round

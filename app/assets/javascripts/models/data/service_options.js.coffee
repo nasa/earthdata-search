@@ -21,7 +21,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
     serialize: ->
       result = {format: @formatName()}
       if @format()?.canSubset
-        result.subsetToSpatial = @subsetToSpatial()
+        result.spatial = @config.spatial if @subsetToSpatial()
         result.parameters = (p.id for p in @parameters when p.selected())
       result
 

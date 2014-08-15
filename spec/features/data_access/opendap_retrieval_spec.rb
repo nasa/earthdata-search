@@ -62,6 +62,10 @@ describe 'OPeNDAP Retrieval', reset: false do
         expect(page).to have_checked_field("Subset to my spatial search area's bounding box")
       end
 
+      it 'shows a map displaying the spatial subsetting area' do
+        expect(page).to have_css('.access-subset-map > .access-mbr[style="top: 86px; left: 178px; height: 6px; width: 6px; "]')
+      end
+
       it 'shows parameter subsetting options' do
         expect(page).to have_text('Parameters')
       end
@@ -130,8 +134,12 @@ describe 'OPeNDAP Retrieval', reset: false do
       end
     end
 
-    # EDSC-166
-    #it 'applies spatial subsetting'
+    it 'applies spatial subsetting' do
+      within_window('Earthdata Search - Downloads') do
+        expect(page).to have_css('a[href*="AbsorbingAerosolOpticalThicknessMW[0:4][360:368][720:728]"]')
+        expect(page).to have_css('a[href$="lon[720:728],lat[360:368],nWavelDiagnostic"]')
+      end
+    end
   end
 
   context 'downloading an OPeNDAP dataset in its original format' do
