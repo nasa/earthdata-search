@@ -101,25 +101,28 @@
                     <!-- /ko -->
                   </div>
                   <!-- ko if: subsetOptions().format().canSubset -->
-                  <div class="access-subset-options-section">
-                    <h5>Spatial subsetting</h5>
-                    <label>
-                      <input data-bind="checked: subsetOptions().subsetToSpatial" type="checkbox" />
-                      <span>Subset to my spatial search area's bounding box</span>
-                    </label>
-                  </div>
-                  <div class="access-subset-options-section">
-                    <h5>Parameters</h5>
-                    <!-- ko foreach: subsetOptions().parameters -->
-                      <div class="access-parameter">
+                    <!-- ko if: subsetOptions().config.spatial -->
+                      <div class="access-subset-options-section">
+                        <h5>Spatial subsetting</h5>
                         <label>
-                          <input data-bind="checked: selected" type="checkbox" />
-                          <span data-bind="text: id"></span>
+                          <input data-bind="checked: subsetOptions().subsetToSpatial" type="checkbox" />
+                          <span>Subset to my spatial search area's bounding box</span>
                         </label>
-                        <span class="description" data-bind="text: title"></span>
+                        <div class="access-subset-map" data-bind="mapdisplay: subsetOptions().config.spatial"></div>
                       </div>
                     <!-- /ko -->
-                  </div>
+                    <div class="access-subset-options-section">
+                      <h5>Parameters</h5>
+                      <!-- ko foreach: subsetOptions().parameters -->
+                        <div class="access-parameter">
+                          <label>
+                            <input data-bind="checked: selected" type="checkbox" />
+                            <span data-bind="text: id"></span>
+                          </label>
+                          <span class="description" data-bind="text: title"></span>
+                        </div>
+                      <!-- /ko -->
+                    </div>
                   <!-- /ko -->
                 </div>
                 <!-- /ko -->
