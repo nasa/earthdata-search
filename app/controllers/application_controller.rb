@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   protected
 
   RECENT_DATASET_COUNT = 2
+  URS_LOGIN_PATH = "#{ ENV['urs_root'] }oauth/authorize?client_id=#{ENV['urs_client_id'] }&redirect_uri=#{ENV['urs_callback_url'] }&response_type=code"
 
   def urs_user
     if session[:expires].to_i > 0 && Time.now.to_i > session[:expires].to_i
@@ -103,6 +104,14 @@ class ApplicationController < ActionController::Base
     session[:expires_in] = nil
     session[:expires] = nil
     session[:username] = nil
+  end
+
+  def is_logged_in
+    unless get_user_id
+      session[:last_point] = request.fullpath
+
+      redirect_to URS_LOGIN_PATH
+    end
   end
 
 end

@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
+  before_filter :is_logged_in, only: [:contact_info]
+
   def login
     session[:last_point] = request.referrer
     session[:last_point] = params[:next_point] if params[:next_point]
 
-    redirect_to "#{ ENV['urs_root'] }oauth/authorize?client_id=#{ENV['urs_client_id'] }&redirect_uri=#{ENV['urs_callback_url'] }&response_type=code"
+    redirect_to URS_LOGIN_PATH
   end
 
   def logout
@@ -23,9 +25,6 @@ class UsersController < ApplicationController
 
   def refresh_token
     OauthToken.refresh_token(session[:refresh_token])
-  end
-
-  def new
   end
 
   def contact_info

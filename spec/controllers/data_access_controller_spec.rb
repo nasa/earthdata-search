@@ -2,6 +2,10 @@ require "spec_helper"
 
 describe DataAccessController do
   describe "GET options" do
+    before :all do
+      DataAccessController.skip_before_filter :is_logged_in
+    end
+
     let(:hits) { 0 }
     let(:downloadable) { 0 }
     let(:orderable) { 0 }
