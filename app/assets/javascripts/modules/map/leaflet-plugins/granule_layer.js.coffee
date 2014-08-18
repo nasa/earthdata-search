@@ -156,6 +156,7 @@ ns.GranuleLayer = do (L
       true
 
     getTileUrl: (tilePoint, granule) ->
+      return null unless @multiOptions
       date = granule.time_start?.substring(0, 10)
       matched = false
       for optionSet in @multiOptions when @_matches(granule, optionSet.match)
