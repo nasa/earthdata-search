@@ -6,15 +6,11 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
   gibsParams =
     blue_marble:
       name: 'Blue Marble'
-      product: 'blue_marble'
-      product_arctic: 'blue_marble_arctic'
-      product_antarctic: 'blue_marble_antarctic'
-      product_geo: 'blue_marble'
-      product: 'blue_marble'
+      product: 'BlueMarble_ShadedRelief_Bathymetry'
       resolution: '500m'
       format: 'jpeg'
-      arctic: false
-      antarctic: false
+#      arctic: false
+#      antarctic: false
     MODIS_Terra_CorrectedReflectance_TrueColor:
       name: 'Corrected Reflectance (True Color)'
       source: 'Terra / MODIS'
