@@ -117,25 +117,7 @@ describe "Map interface", reset: false do
       end
 
       expect('#map').to have_tiles_for_product('land_water_map')
-      expect('#map').to_not have_tiles_for_product('blue_marble')
-    end
-
-    it "hides layers that are not valid for the current projection" do
-      expect('#map').to have_tiles_for_product('blue_marble')
-
-      click_link north_text
-
-      page.find_link('Layers').trigger(:mouseover)
-      expect(page).to have_field("Corrected Reflectance (True Color)")
-      expect('#map').to have_tiles_for_product('MODIS_Terra_CorrectedReflectance_TrueColor')
-      expect(page).to_not have_field("Blue Marble")
-      expect('#map').to_not have_tiles_for_product('blue_marble')
-
-      click_link geo_text
-
-      expect('#map').to have_tiles_for_product('MODIS_Terra_CorrectedReflectance_TrueColor')
-      expect(page).to have_field("Blue Marble")
-      expect('#map').to_not have_tiles_for_product('blue_marble')
+      expect('#map').to_not have_tiles_for_product('BlueMarble_ShadedRelief_Bathymetry')
     end
 
     it "draws overlay layers on top of the base layer" do
@@ -145,7 +127,7 @@ describe "Map interface", reset: false do
         check 'Coastlines'
       end
 
-      expect('#map').to have_tiles_for_product('blue_marble')
+      expect('#map').to have_tiles_for_product('BlueMarble_ShadedRelief_Bathymetry')
       expect('#map').to have_tiles_for_product('gpw-v3-coastlines')
     end
   end
