@@ -82,12 +82,20 @@ ns.Map = do (window,
       map.on 'moveend', ->
         {lat, lng} = map.getCenter()
         zoom = map.getZoom()
-        state([lat, lng, zoom].join('!'))
+        proj = Math.abs(['arctic', 'geo', 'antarctic'].indexOf(@projection))
+        state([lat, lng, zoom, proj].join('!'))
 
-      state.subscribe (newValue) ->
+      state.subscribe (newValue) =>
         if newValue? && newValue.length > 0
-          [lat, lng, zoom] = newValue.split('!')
-          map.setView(L.latLng(lat, lng), parseInt(zoom, 10))
+          [lat, lng, zoom, proj] = newValue.split('!')
+          @setProjection(['arctic', 'geo', 'antarctic'][proj ? 1])
+          mapCenter = map.getCenter()
+          mapZoom = map.getZoom()
+          center = L.latLng(lat, lng)
+          zoom = parseInt(zoom, 10)
+          # Avoid moving the map if the new center is very close to the old, preventing glitches from rounding errors
+          if zoom != mapZoom || map.latLngToLayerPoint(mapCenter).distanceTo(map.latLngToLayerPoint(center)) > 10
+            map.setView(L.latLng(lat, lng), parseInt(zoom, 10))
 
     focusDataset: (dataset) ->
       @map.focusedDataset = dataset
