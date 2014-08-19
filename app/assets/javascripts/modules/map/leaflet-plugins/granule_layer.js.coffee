@@ -433,7 +433,7 @@ ns.GranuleLayer = do (L
         if @layer.options.endpoint == 'geo' && @_granuleFocusLayer?
           bounds = @_granuleFocusLayer.getBounds()
           # Avoid zooming and panning tiny amounts
-          unless @_map.getBounds().contains(bounds)
+          if bounds && !@_map.getBounds().contains(bounds)
             @_map.fitBounds(bounds.pad(0.2))
 
       @_loadResults(@_results)
@@ -502,7 +502,7 @@ ns.GranuleLayer = do (L
       marker = L.marker([0, 0], clickable: false, icon: icon)
 
       firstShape = layer.getLayers()[0]
-      firstShape = firstShape._interiors if firstShape._interiors?
+      firstShape = firstShape._interiors if firstShape?._interiors?
 
       firstShape?.on 'add', (e) ->
         map = @_map
