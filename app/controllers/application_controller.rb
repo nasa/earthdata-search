@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
       json = refresh_urs_token
     end
 
-    @urs_user = session[:urs_user]
+    @urs_user = {username: session[:username], expires: session[:expires]}
   end
 
   def refresh_urs_token
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
       session[:access_token] = json["access_token"]
       session[:refresh_token] = json["refresh_token"]
       session[:expires] = json['expires']
-      session[:name] = json["username"]
+      session[:username] = json["username"]
     end
 
     json

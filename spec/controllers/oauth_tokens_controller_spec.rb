@@ -6,7 +6,7 @@ describe OauthTokensController, type: :controller do
       session[:access_token] = 'old_access_token'
       session[:refresh_token] = 'old_refresh_token'
       session[:expires] = '1'
-      session[:name] = 'edsc'
+      session[:username] = 'edsc'
 
       expected = {'username' => 'edsc', 'expires' => Time.now.to_i + 3600}
       return_json = {'username' => 'edsc', 'expires' => Time.now.to_i + 3600, 'access_token' => 'new_access_token', 'refresh_token' => 'new_refresh_token'}

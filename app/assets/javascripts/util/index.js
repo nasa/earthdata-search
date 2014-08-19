@@ -5,4 +5,3 @@
 //= require util/url
 //= require util/xhr
 //= require util/plugin
-//= require util/cookies

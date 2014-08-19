@@ -46,7 +46,6 @@ ns.AccessPage = do (ko,
 
       setTimeout((=>
         if pageData
-          console.log 'pageData: ' + pageData
           @project.id(pageData.id)
           @project.fromJson(pageData)
         else
