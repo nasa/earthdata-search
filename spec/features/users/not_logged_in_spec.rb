@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe 'User not logged in', reset: false do
+  before :each do
+    Capybara.reset_sessions!
+    load_page :root
+    logout
+  end
+
   context 'when a user views the data configure page without being logged in' do
     before :each do
       load_page 'data/configure', project: ['C179003030-ORNL_DAAC']
