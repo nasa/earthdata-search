@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     session[:access_token] = nil
     session[:refresh_token] = nil
     session[:user_id] = nil
-    session[:name] = nil
+    session[:username] = nil
     session[:expires] = nil
     session[:recent_datasets] = []
 

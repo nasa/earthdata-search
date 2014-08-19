@@ -7,7 +7,7 @@ class OauthTokensController < ApplicationController
       session[:access_token] = token["access_token"]
       session[:refresh_token] = token["refresh_token"]
       session[:expires] = token['expires']
-      session[:name] = token["username"]
+      session[:username] = token["username"]
 
       # useful when needing to replace the application.yml tokens
       # puts "Token: #{token.inspect}"
