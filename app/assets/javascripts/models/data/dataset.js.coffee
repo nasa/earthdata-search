@@ -114,6 +114,6 @@ ns.Dataset = do (ko
 
 
       @hasAtomData(jsonObj.archive_center?)
-      @gibs = ko.observable(@gibs ? null)
+      @gibs = ko.observable(jsonObj.gibs ? @gibs?())
 
   exports = Dataset

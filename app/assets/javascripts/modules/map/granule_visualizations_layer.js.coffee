@@ -31,7 +31,7 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.exte
       for dataset in datasets
         id = dataset.id
         options = dataset.gibs()
-        if options?.format == 'jpeg'
+        if options?[0].format == 'jpeg'
           z = Math.min(baseZ++, 9)
         else
           z = Math.min(overlayZ++, 19)
@@ -40,9 +40,8 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.exte
           layer = datasetIdsToLayers[id]
         else
           color = project.colorForDataset(dataset)
-          options = extend({color: color}, options) if color
           # Note: our algorithms rely on sort order being [-start_date]
-          layer = new GranuleLayer(dataset, options)
+          layer = new GranuleLayer(dataset, color, options)
           map.addLayer(layer)
 
         layer.setZIndex(z)

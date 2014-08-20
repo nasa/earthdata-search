@@ -7,10 +7,6 @@ ns.GibsTileLayer = do (L,
                        config = @edsc.config
                        ) ->
 
-  # TODO: Add blue marble north / south
-  # http://map1.vis.earthdata.nasa.gov/wmts-bluemarble-antarctic/blue_marble_antarctic/default/EPSG3031_BlueMarble/0/0/0.jpg
-  # http://map1.vis.earthdata.nasa.gov/wmts-bluemarble-arctic/blue_marble_arctic/default/EPSG3413_BlueMarble/0/0/0.jpg
-
   parent = ProjectionSwitchingLayer.prototype
 
   yesterday = new Date(config.present())
@@ -50,15 +46,6 @@ ns.GibsTileLayer = do (L,
 
       time = options['time']
       options['timeparam'] = if time? then "TIME=#{time}&" else ""
-
-      if options['endpoint'] == 'arctic' && options['product_arctic']
-        options['product'] = options['product_arctic']
-
-      if options['endpoint'] == 'antarctic' && options['product_antarctic']
-        options['product'] = options['product_antarctic']
-
-      if options['endpoint'] == 'geo' && options['product_geo']
-        options['product'] = options['product_geo']
 
       options
 

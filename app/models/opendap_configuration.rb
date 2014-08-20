@@ -22,7 +22,7 @@ class OpendapConfiguration
     parameters = []
     dimension_parameters = []
     Array.wrap(parsed_attribute_arrays).each do |array|
-      parameter = {id: array['name']}
+      parameter = {id: array['name'], title: ''}
       title = nil
       units = nil
       lat_dim_size = nil
@@ -147,7 +147,7 @@ class OpendapConfiguration
 
   def info_urls_for(granule)
     if @can_subset
-      [@template.expand(granule.merge({od_ext: '.info'}))]
+      [@template.expand(decorate(granule).merge({od_ext: '.info'}))]
     else
       []
     end
@@ -155,7 +155,7 @@ class OpendapConfiguration
 
   def urls_for(granule)
     if @can_subset
-      [@template.expand(granule.merge(@template_params))]
+      [@template.expand(decorate(granule).merge(@template_params))]
     else
       links = Array.wrap(granule['links'])
       download_links = links.find_all do |link|
@@ -163,5 +163,18 @@ class OpendapConfiguration
       end
       download_links.map { |link| link['href'] }
     end
+  end
+
+  private
+
+  def decorate(granule)
+    extra = {}
+    start = granule['time_start']
+    if start
+      doy = Date.parse(granule['time_start'].slice(0, 10)).yday.to_s.rjust(3, '0')
+      month = granule['time_start'].slice(5, 2)
+      extra = {od_doy: doy, od_month: month}
+    end
+    extra.merge(granule)
   end
 end

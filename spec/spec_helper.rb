@@ -4,6 +4,8 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+require 'headless'
+
 # Un-comment to truncate the test log to only the most recent execution
 #File.truncate(Rails.root.join("log/test.log"), 0)
 
@@ -117,6 +119,7 @@ RSpec.configure do |config|
 
   config.before :suite do
     count = self.class.children.size
+    Headless.new(:destroy_on_exit => false).start
   end
 
   config.before :all do
