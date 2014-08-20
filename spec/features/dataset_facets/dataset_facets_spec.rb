@@ -108,6 +108,7 @@ describe "Dataset Facets", reset: false do
     it "shows the user which facets have been applied to the query" do
       # select a campaign
       find(".facets-item", text: "EOSDIS").click
+      wait_for_xhr
       within(:css, '.selected-facets-panel') do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
@@ -116,6 +117,7 @@ describe "Dataset Facets", reset: false do
 
       # select an instrument
       find(".facets-item", text: "FIELD INVESTIGATION").click
+      wait_for_xhr
       within(:css, '.selected-facets-panel') do
         expect(page).to have_content("FIELD INVESTIGATION")
         expect(page).to have_css(".facets-item.selected")
@@ -124,6 +126,7 @@ describe "Dataset Facets", reset: false do
 
       # select a second campaign
       find(".facets-item", text: "LBA").click
+      wait_for_xhr
       within(:css, '.selected-facets-panel') do
         expect(page).to have_content("EOSDIS and LBA")
         expect(page).to have_css(".facets-item.selected")
