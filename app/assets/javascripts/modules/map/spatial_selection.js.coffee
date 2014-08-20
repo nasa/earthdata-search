@@ -185,11 +185,10 @@ ns.SpatialSelection = do (window,
       if newValue?
         if @_layer?
           toastr.error(newValue, "Spatial Query Error")
-          @_layer.setStyle(@_errorOptions)
+          @_layer.setStyle?(@_errorOptions)
       else
         if @_layer?
-          console.warn("No setStyle method available", @_layer) unless @_layer.setStyle?
-          @_layer.setStyle(@_colorOptions)
+          @_layer.setStyle?(@_colorOptions)
 
 
     _renderSpatial: (type, shape) ->
