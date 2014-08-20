@@ -70,7 +70,13 @@ describe "Data access status page", reset: false do
 
   context "when the current user has no recent data retrievals" do
     before :all do
+      load_page :search, overlay: false
+      login 'edscbasic'
       visit '/data/status'
+    end
+
+    after :all do
+      Capybara.reset_sessions!
     end
 
     it "indicates that there are no recent retrievals" do

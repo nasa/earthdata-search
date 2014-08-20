@@ -113,6 +113,12 @@ RSpec.configure do |config|
     #register tokens for usernames
     json = JSON.parse(ENV['urs_tokens'])['edsc']
     VCR::EDSCConfigurer.register_token('edsc', json['access_token'] + ':' + ENV['urs_client_id'])
+
+    json = JSON.parse(ENV['urs_tokens'])['edscbasic']
+    VCR::EDSCConfigurer.register_token('edscbasic', json['access_token'] + ':' + ENV['urs_client_id'])
+
+    json = JSON.parse(ENV['urs_tokens'])['expired_token']
+    VCR::EDSCConfigurer.register_token('expired_token', json['access_token'] + ':' + ENV['urs_client_id'])
   end
 
   config.before :suite do
