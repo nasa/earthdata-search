@@ -63,7 +63,10 @@ ns.Map = do (window,
       @setProjection(projection)
 
       @time = ko.computed(@_computeTime, this)
+      @_showDatasetSpatial(page.ui.datasetsList.selected())
       @_datasetSubscription = page.ui.datasetsList.selected.subscribe(@_showDatasetSpatial)
+
+      map.fire('edsc.visibledatasetschange', datasets: page.project.visibleDatasets())
       @_granuleVisualizationSubscription = page.project.visibleDatasets.subscribe (datasets) ->
         map.fire('edsc.visibledatasetschange', datasets: datasets)
 

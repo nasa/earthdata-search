@@ -58,6 +58,7 @@ ns.SpatialSelection = do (window,
       @_querySubscription = spatialModel.subscribe(@_onSpatialChange)
       @_spatialErrorSubscription = currentPage.spatialError.subscribe(@_onSpatialErrorChange)
       @_onSpatialChange(spatialModel())
+      @_onSpatialErrorChange(currentPage.spatialError())
 
       map.on 'draw:drawstart', @_onDrawStart
       map.on 'draw:drawstop', @_onDrawStop
