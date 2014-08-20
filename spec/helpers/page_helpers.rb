@@ -75,7 +75,7 @@ module Helpers
     end
 
     def be_logged_in_as(key)
-      json = JSON.parse(ENV['urs_tokens'])[key]
+      json = urs_tokens[key]
 
       page.set_rack_session(username: json['username'])
       page.set_rack_session(expires: json['expires'])

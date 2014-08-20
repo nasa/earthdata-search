@@ -111,8 +111,8 @@ RSpec.configure do |config|
 
   config.before :suite do
     #register tokens for usernames
-    json = JSON.parse(ENV['urs_tokens'])['edsc']
-    VCR::EDSCConfigurer.register_token('edsc', json['access_token'] + ':' + ENV['urs_client_id'])
+    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['edsc']
+    VCR::EDSCConfigurer.register_token('edsc', token['access_token'] + ':' + ENV['urs_client_id'])
   end
 
   config.before :suite do
@@ -168,6 +168,7 @@ RSpec.configure do |config|
 
   config.extend SharedBrowserSession
 
+  config.include Helpers::SecretsHelpers
   config.include Helpers::TimelineHelpers
   config.include Helpers::OverlayHelpers
   config.include Helpers::SpatialHelpers
