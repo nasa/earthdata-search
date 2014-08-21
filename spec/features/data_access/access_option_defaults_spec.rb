@@ -44,7 +44,7 @@ describe "Access Option Defaults", reset: true do
 
       click_on 'Continue'
       click_on 'Submit'
-      expect(page).to have_link('Track Status')
+      expect(page).to have_content('Not Validated')
 
       load_page 'data/configure', project: [dataset_id]
       wait_for_xhr
@@ -83,7 +83,7 @@ describe "Access Option Defaults", reset: true do
 
       click_on 'Continue'
       click_on 'Submit'
-      expect(page).to have_link('Track Status')
+      expect(page).to have_content('Not Validated')
 
       load_page 'data/configure', project: [dataset_id]
       wait_for_xhr
@@ -94,7 +94,7 @@ describe "Access Option Defaults", reset: true do
 
       click_on 'Submit'
       expect(page).to have_link('View Download Links')
-      expect(page).to have_no_link('Track Status')
+      expect(page).to have_no_link('Not Validated')
 
       load_page 'data/configure', project: [dataset_id]
       wait_for_xhr

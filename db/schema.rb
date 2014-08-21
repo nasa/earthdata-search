@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722173512) do
+ActiveRecord::Schema.define(version: 20140821191632) do
 
   create_table "access_configurations", force: true do |t|
     t.integer  "user_id"
@@ -36,13 +36,6 @@ ActiveRecord::Schema.define(version: 20140722173512) do
   end
 
   add_index "dataset_extras", ["echo_id"], name: "index_dataset_extras_on_echo_id", unique: true
-
-  create_table "orders", force: true do |t|
-    t.string   "order_id"
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "projects", force: true do |t|
     t.text     "path"

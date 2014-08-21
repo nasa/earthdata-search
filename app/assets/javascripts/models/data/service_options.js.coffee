@@ -65,6 +65,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
       @rawModel = jsonObj.rawModel
       @type = jsonObj.type
       @orderId = jsonObj.order_id
+      @orderStatus = jsonObj.order_status
       @subsetOptions()?.fromJson(jsonObj.subset) if jsonObj.subset
       this
 
@@ -74,7 +75,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
       @isLoaded = @computed
         read: =>
           opts = @granuleAccessOptions()
-          methods = opts.methods
+          @_methods = methods = opts.methods
           result = methods?
           @_onAccessOptionsLoad(opts) if result
           result
@@ -115,7 +116,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
     fromJson: (jsonObj) ->
       @accessMethod.removeAll()
       for json in jsonObj.accessMethod
-        method = new ServiceOptions(null, @granuleAccessOptions().methods)
+        method = new ServiceOptions(null, @_methods)
         method.fromJson(json)
         @accessMethod.push(method)
       this
