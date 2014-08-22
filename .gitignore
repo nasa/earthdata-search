@@ -6,6 +6,7 @@
 
 .DS_Store
 build_output
+test_results
 
 # Ignore bundler config
 /.bundle

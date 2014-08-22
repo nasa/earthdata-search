@@ -33,6 +33,7 @@ describe "Site tour", reset: true do
 
       expect(page).to have_popover('Browse Datasets')
       find(".facets-item", text: "Terra").click
+      wait_for_xhr
 
       expect(page).to have_popover('Spatial Search')
       create_bounding_box(0, 0, 10, 10)
