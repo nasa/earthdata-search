@@ -108,6 +108,8 @@ class DatasetsController < ApplicationController
       featured.each { |ds| ds[:featured] = true }
       base_results['feed']['entry'].delete_if { |ds| featured_ids.include?(ds['id']) }
       base_results['feed']['entry'].unshift(*featured)
+    elsif base_query['echo_collection_id'].present?
+      base_results['feed']['entry'].each { |ds| ds[:featured] = featured_ids.include?(ds['id']) }
     end
 
     base_results

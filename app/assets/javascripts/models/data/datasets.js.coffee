@@ -52,7 +52,7 @@ ns.Datasets = do (ko
     _computeFeaturedSplitIndex: ->
       results = @results()
       for ds, i in results
-        return i unless ds.featured
+        return i if !ds.hasAtomData() || !ds.featured
       results.length
 
     _computeFeatured: ->

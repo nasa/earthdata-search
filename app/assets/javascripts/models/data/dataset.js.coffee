@@ -12,6 +12,7 @@ ns.Dataset = do (ko
                  toParam=jQuery.param
                  extend=jQuery.extend
                  ajax = jQuery.ajax
+                 dateUtil = @edsc.util.date
                  ) ->
 
   datasets = ko.observableArray()
@@ -53,6 +54,9 @@ ns.Dataset = do (ko
       @details = @asyncComputed({}, 100, @_computeDatasetDetails, this)
       @detailsLoaded = ko.observable(false)
 
+      @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
+      @granuleDescription = @computed(@_computeGranuleDescription, this, deferEvaluation: true)
+
       @visible = ko.observable(false)
 
       @fromJson(jsonData)
@@ -74,6 +78,23 @@ ns.Dataset = do (ko
           paramStr = toParam(@granuleQuery.params())
           "/data/download.sh?#{paramStr}"
         deferEvaluation: true
+
+    _computeTimeRange: ->
+      if @hasAtomData()
+        result = dateUtil.timeSpanToIsoDate(@time_start, @time_end)
+      (result || "Unknown")
+
+    _computeGranuleDescription: ->
+      result = null
+      return result unless @hasAtomData()
+      if @has_granules
+        if @granuleQueryLoaded() && @granulesModel.isLoaded()
+          hits = @granulesModel.hits()
+          result = "#{hits} Granule"
+          result += 's' if hits != 1
+      else
+        result = 'Dataset only'
+      result
 
     thumbnail: ->
       granule = @browseable_granule
@@ -101,7 +122,6 @@ ns.Dataset = do (ko
         @granuleQuery.attributes.definitions(attributes)
 
       this[key] = value for own key, value of jsonObj
-
 
       @hasAtomData(jsonObj.archive_center?)
       @gibs = ko.observable(jsonObj.gibs ? @gibs?())

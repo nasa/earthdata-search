@@ -25,7 +25,24 @@
   timeSpanToHuman = (t0, t1) ->
     "#{dateToHuman(t0)} to #{dateToHuman(t1)}"
 
+  timeSpanToIsoDate = (t0, t1) ->
+    str0 = t0?.split('T')[0]
+    str1 = t1?.split('T')[0]
+
+    if str0 && str1
+      if str0 == str1
+        str0
+      else
+        "#{str0} to #{str1}"
+    else if str0
+      "#{str0} ongoing"
+    else if str1
+      "Up to #{str1}"
+    else
+      null
+
   exports =
     isoUtcDateString: isoUtcDateString,
     isoUtcDateTimeString: isoUtcDateTimeString
     timeSpanToHuman: timeSpanToHuman
+    timeSpanToIsoDate: timeSpanToIsoDate
