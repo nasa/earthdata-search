@@ -88,7 +88,9 @@ describe 'Duplicate Service Options', reset: false do
     end
 
     it "displays download links twice" do
-      expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)', count: 2
+      within '.data-access-downloads' do
+        expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)', count: 2
+      end
     end
   end
 end
