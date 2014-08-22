@@ -44,6 +44,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
     constructor: (@project, @user, @datasetResults) ->
       @visible = ko.observable(false)
 
+      @datasetLinks = ko.computed(@_computeDatasetLinks, this, deferEvaluation: true)
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
       @datasetOnly = ko.computed(@_computeDatasetOnly, this, deferEvaluation: true)
       @submittedOrders = ko.computed(@_computeSubmittedOrders, this, deferEvaluation: true)
@@ -84,6 +85,22 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
         project.removeDataset(dataset)
       else
         project.addDataset(dataset)
+
+    _computeDatasetLinks: ->
+      datasets = []
+      for projectDataset in @project.accessDatasets()
+        dataset = projectDataset.dataset
+        title = dataset.dataset_id
+        links = []
+        for link in dataset.links ? [] when link.rel.indexOf('metadata#') != -1
+          links.push
+            title: link.title ? link.href
+            href: link.href
+        if links.length > 0
+          datasets.push
+            dataset_id: title
+            links: links
+      datasets
 
     _computeDatasetsToDownload: ->
       datasets = []

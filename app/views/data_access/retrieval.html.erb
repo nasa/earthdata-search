@@ -76,6 +76,17 @@
       </li>
     </ul>
   </section>
+  <section class="data-access-content data-access-resources" data-bind="visible: ui.projectList.datasetLinks().length > 0">
+    <h2>Additional Resources and Documentation</h2>
+    <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetLinks">
+      <li class="data-access-dataset">
+        <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
+        <ul class="data-access-dataset-actions" data-bind="foreach: links">
+          <li><a class="link" data-bind="attr: {href: href}, text: title"></a></li>
+        </ul>
+      </li>
+    </ul>
+  </section>
   <section class="data-access-next">
     <h2>Next Steps</h2>
     <ul>
