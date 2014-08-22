@@ -6,6 +6,17 @@
   realSetTimeout = window.setTimeout
   realClearTimeout = window.clearTimeout
 
+  tokenExpires = null
+
+  setTokenExpires = ->
+    if window.urs_user?
+      data = window.urs_user
+      tokenExpires = data.expires
+    else
+      tokenExpires = null
+
+  setTokenExpires()
+
   hasPending = ->
     xhrPool.length > 0 || timeoutPool.length > 0
 
@@ -52,6 +63,43 @@
       callbacks.push(callback)
     setTimeout(execWhenReady, 0)
 
+  deferredXHR = (method, args...) ->
+    deferred = $.Deferred()
+
+    #check if the token is expired
+    time = new Date().getTime() / 1000
+    if tokenExpires? && time > tokenExpires - 300
+      console.log 'Refreshing URS token'
+      $.ajax
+        url: '/refresh_token'
+        method: 'get'
+        dataType: 'json'
+        success: (data, status, xhr) ->
+          if data?
+            tokenExpires = (new Date().getTime() / 1000) + data.expires_in
+
+          deferred = doXHR(deferred, method, args...)
+        error: (response, type, reason) ->
+          xhr.fail(-> deferred.reject())
+    else
+      deferred = doXHR(deferred, method, args...)
+
+    deferred
+
+  doXHR = (deferred, method, args...) ->
+    if deferred.state() == 'pending'
+      xhr = $[method](args...)
+      xhr.done(-> deferred.resolve())
+      xhr.fail(-> deferred.reject())
+      deferred.fail ->
+        xhr.abort()
+
+    deferred
+
+
   exports =
     hasPending: hasPending
     wait: wait
+    ajax: (args...) -> deferredXHR('ajax', args...)
+    post: (args...) -> deferredXHR('post', args...)
+    getJSON: (args...) -> deferredXHR('getJSON', args...)

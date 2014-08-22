@@ -23,10 +23,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def refresh_token
-    OauthToken.refresh_token(session[:refresh_token])
-  end
-
   def contact_info
   end
 

@@ -11,7 +11,7 @@ ns.Dataset = do (ko
                  ServiceOptionsModel = ns.ServiceOptions
                  toParam=jQuery.param
                  extend=jQuery.extend
-                 ajax = jQuery.ajax
+                 ajax = @edsc.util.xhr.ajax
                  ) ->
 
   datasets = ko.observableArray()

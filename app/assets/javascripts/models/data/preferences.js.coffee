@@ -3,8 +3,8 @@ ns = @edsc.models.data
 
 ns.Preferences = do (ko
                      window
-                     getJSON = jQuery.getJSON
-                     doPost = jQuery.post
+                     getJSON = @edsc.util.xhr.getJSON
+                     doPost = @edsc.util.xhr.post
                      ) ->
 
   class Preferences

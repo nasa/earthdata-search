@@ -54,7 +54,7 @@ module VCR
             cassette = 'geonames'
           elsif uri.start_with? 'http://ogre.adc4gis.com'
             cassette = 'ogre'
-          elsif request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('old_access_token')
+          elsif request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')
             cassette = 'expired-token'
             record = :none
           elsif (request.method == :delete ||

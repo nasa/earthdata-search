@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   URS_LOGIN_PATH = "#{ ENV['urs_root'] }oauth/authorize?client_id=#{ENV['urs_client_id'] }&redirect_uri=#{ENV['urs_callback_url'] }&response_type=code"
 
   def urs_user
-    if session[:expires].to_i > 0 && Time.now.to_i > session[:expires].to_i
+    if session[:expires].to_i > 0 && Time.now.to_i > session[:expires].to_i - 60
       json = refresh_urs_token
     end
 
@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
 
       session[:access_token] = json["access_token"]
       session[:refresh_token] = json["refresh_token"]
+      session[:expires_in] = json['expires_in']
       session[:expires] = json['expires']
       session[:username] = json["username"]
     end

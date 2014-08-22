@@ -2,7 +2,7 @@ ns = @edsc.models
 
 ns.DetailsModel = do (ko
                       KnockoutModel = @edsc.models.KnockoutModel
-                      ajax = jQuery.ajax
+                      ajax = @edsc.util.xhr.ajax
                       ) ->
   class DetailsModel extends KnockoutModel
 

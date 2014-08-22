@@ -3,8 +3,7 @@
 ns = @edsc.models.data
 
 ns.Account = do (ko
-                doPost=jQuery.post
-                getJSON=jQuery.getJSON
+                ajax=@edsc.util.xhr.ajax
                 UserModel=ns.User) ->
 
   class Address
@@ -93,51 +92,60 @@ ns.Account = do (ko
       @message = ko.observable("")
       @preferencesLoaded = ko.observable(false)
 
-      if @user.name()?.length > 0
+      if @user.isLoggedIn()
         @_from_user()
       else
         @user = new UserModel()
 
     _from_user: =>
-      xhr = getJSON "/users/get_preferences", (data) =>
-        @_preferencesFromJson(data)
-        @preferencesLoaded(true)
-      xhr.fail (response, type, reason) =>
-        @preferencesLoaded(false)
-        if response.status == 404
-          @errors([])
-        else
-          @errors(["Contact information could not be loaded, please try again later"])
+      xhr = ajax
+        url: "/users/get_preferences"
+        dataType: 'json'
+        method: 'get'
+        success: (data) =>
+          @_preferencesFromJson(data)
+          @preferencesLoaded(true)
+        fail: (response, type, reason) =>
+          @preferencesLoaded(false)
+          if response.status == 404
+            @errors([])
+          else
+            @errors(["Contact information could not be loaded, please try again later"])
 
     updateContactInformation: (callback) =>
       @message('')
       @_validateContactInfoForm()
 
       if @errors()?.length == 0
-        xhr = doPost '/users/update_contact_info', @_buildPreferences(), (response) =>
-          @_preferencesFromJson(response)
-          @preferencesLoaded(true)
-          @message("Successfully updated contact information")
-          callback?()
-        xhr.fail (response, type, reason) =>
-          @preferencesLoaded(false)
-          server_error = false
-          try
-            errors = JSON.parse(response.responseText)?.errors
+        xhr = ajax
+          url: '/users/update_contact_info'
+          data: @_buildPreferences()
+          dataType: 'json'
+          method: 'post'
+          success: (response) =>
+            @_preferencesFromJson(response)
+            @preferencesLoaded(true)
+            @message("Successfully updated contact information")
+            callback?()
+          fail: (response, type, reason) =>
+            @preferencesLoaded(false)
+            server_error = false
+            try
+              errors = JSON.parse(response.responseText)?.errors
 
-            for error in errors
-              if error.indexOf('Username') >= 0
-                @usernameError(true)
-              if error.indexOf('Password') >= 0
-                @passwordError(true)
-              if error.indexOf('Email') >= 0
-                @emailError(true)
-              # TODO: list other account fields here
+              for error in errors
+                if error.indexOf('Username') >= 0
+                  @usernameError(true)
+                if error.indexOf('Password') >= 0
+                  @passwordError(true)
+                if error.indexOf('Email') >= 0
+                  @emailError(true)
+                # TODO: list other account fields here
 
-            @errors(errors)
-          catch
-            server_error = true
-          @errors(["Contact information could not be updated, please try again later"]) if server_error
+              @errors(errors)
+            catch
+              server_error = true
+            @errors(["Contact information could not be updated, please try again later"]) if server_error
 
     _preferencesFromJson: (json) =>
       prefs = json.preferences
@@ -195,12 +203,18 @@ ns.Account = do (ko
       @_validateNewAccountForm()
 
       if @errors()?.length == 0
-        xhr = doPost '/users', @_buildUserData(), (response) =>
-          @user.username(@username())
-          @user.password(@password())
-          @user.login()
-          @clearAccountForm()
-        xhr.fail(@_onCreateFail)
+        xhr = ajax
+          method: 'post'
+          url: '/users'
+          data: @_buildUserData()
+          dataType: 'json'
+          success: (response) =>
+            @user.username(@username())
+            @user.password(@password())
+            @user.login()
+            @clearAccountForm()
+          fail: ->
+            @_onCreateFail
 
     _onCreateFail: (response, type, reason) =>
       server_error = false

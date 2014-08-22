@@ -42,6 +42,8 @@ describe "Expired user token", reset: true do
       load_page :root
       wait_for_xhr
 
+      sleep 1
+
       fill_in 'keywords', with: 'AST_L1AE'
       click_link 'Browse All Data'
       wait_for_xhr
