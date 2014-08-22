@@ -28,6 +28,7 @@ group :test do
   gem 'rspec_junit_formatter'
   gem 'fuubar'
   gem "rack_session_access"
+  gem 'headless'
 end
 
 group :development do
@@ -60,6 +61,7 @@ group :development, :test do
 
   gem 'therubyracer', :require => 'v8'
   gem 'libv8', '~> 3.11.8.3'
+
 end
 
 group :assets, :development, :test do

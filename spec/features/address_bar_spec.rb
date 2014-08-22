@@ -236,7 +236,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the selected granule in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1!-97.725!7')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1!-97.725!7!1')
     end
   end
 
@@ -314,13 +314,13 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the map state in the query conditions" do
-      expect(page).to have_query_string('m=12!-34!5')
+      expect(page).to have_query_string('m=12!-34!5!1')
     end
   end
 
   context "when loading a url with a saved map state" do
     before(:all) do
-      visit '/search/map?m=12!-34!5'
+      visit '/search/map?m=12!-34!5!1'
     end
 
     it "restores the map pan state from the query conditions" do
@@ -409,7 +409,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1!-97.725!7')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1!-97.725!7!1')
     end
   end
 

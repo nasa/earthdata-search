@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "Expired user token", reset: true do
 
-  return_json = JSON.parse(ENV['urs_tokens'])['edsc']
+  let(:return_json) {urs_tokens['edsc']}
+
 
   before :each do
     Capybara.reset_sessions!

@@ -4,6 +4,8 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+require 'headless'
+
 # Un-comment to truncate the test log to only the most recent execution
 #File.truncate(Rails.root.join("log/test.log"), 0)
 
@@ -111,18 +113,19 @@ RSpec.configure do |config|
 
   config.before :suite do
     #register tokens for usernames
-    json = JSON.parse(ENV['urs_tokens'])['edsc']
-    VCR::EDSCConfigurer.register_token('edsc', json['access_token'] + ':' + ENV['urs_client_id'])
+    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['edsc']
+    VCR::EDSCConfigurer.register_token('edsc', token['access_token'] + ':' + ENV['urs_client_id'])
 
-    json = JSON.parse(ENV['urs_tokens'])['edscbasic']
-    VCR::EDSCConfigurer.register_token('edscbasic', json['access_token'] + ':' + ENV['urs_client_id'])
+    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['edscbasic']
+    VCR::EDSCConfigurer.register_token('edscbasic', token['access_token'] + ':' + ENV['urs_client_id'])
 
-    json = JSON.parse(ENV['urs_tokens'])['expired_token']
-    VCR::EDSCConfigurer.register_token('expired_token', json['access_token'] + ':' + ENV['urs_client_id'])
+    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['expired_token']
+    VCR::EDSCConfigurer.register_token('expired_token', token['access_token'] + ':' + ENV['urs_client_id'])
   end
 
   config.before :suite do
     count = self.class.children.size
+    Headless.new(:destroy_on_exit => false).start
   end
 
   config.before :all do
@@ -174,6 +177,7 @@ RSpec.configure do |config|
 
   config.extend SharedBrowserSession
 
+  config.include Helpers::SecretsHelpers
   config.include Helpers::TimelineHelpers
   config.include Helpers::OverlayHelpers
   config.include Helpers::SpatialHelpers

@@ -42,6 +42,10 @@ ns.GranuleLayer = do (L
     options:
       async: true
 
+    initialize: (url, options, @multiOptions) ->
+      L.TileLayer.prototype.initialize.call(this, url, options)
+      @originalOptions = @options
+
     setResults: (results) ->
       @_results = results
       @redraw()
@@ -134,8 +138,33 @@ ns.GranuleLayer = do (L
 
       result
 
-    getTileUrl: (tilePoint, date) ->
-      L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if @_url?
+    _matches: (granule, matcher) ->
+      operators = ['>=', '<=']
+      for own prop, value of matcher
+        granuleValue = granule[prop]
+        return false if value && !granuleValue
+        op = null
+        for operator in operators
+          if value.indexOf(operator) == 0
+            op = operator
+            value = value.substring(operator.length)
+            break
+
+        return false if op == '>=' && granuleValue < value
+        return false if op == '<=' && granuleValue > value
+        return false if !op && value != granuleValue
+      true
+
+    getTileUrl: (tilePoint, granule) ->
+      return null unless @multiOptions
+      date = granule.time_start?.substring(0, 10)
+      matched = false
+      for optionSet in @multiOptions when @_matches(granule, optionSet.match)
+        matched = true
+        @options = L.extend({}, @originalOptions, optionSet)
+        break
+
+      L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if matched
 
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
@@ -158,7 +187,7 @@ ns.GranuleLayer = do (L
         overlaps = @_granulePathsOverlappingTile(granule, bounds)
 
         if overlaps.length > 0
-          url = @getTileUrl(tilePoint, granule.time_start?.substring(0, 10))
+          url = @getTileUrl(tilePoint, granule)
           for path in overlaps
             path.index = i
             path.url = url
@@ -315,11 +344,11 @@ ns.GranuleLayer = do (L
       @_tileOnLoad.call(tile)
 
   class GranuleLayer extends GibsTileLayer
-    constructor: (@dataset, options) ->
+    constructor: (@dataset, color, @multiOptions) ->
       @granules = @dataset.granulesModel
-      @_hasGibs = options?.product?
-      @color = options?.color ? '#25c85b';
-      super(options)
+      @_hasGibs = @multiOptions?.length > 0
+      @color = color ? '#25c85b';
+      super({})
 
     onAdd: (map) ->
       super(map)
@@ -404,7 +433,7 @@ ns.GranuleLayer = do (L
         if @layer.options.endpoint == 'geo' && @_granuleFocusLayer?
           bounds = @_granuleFocusLayer.getBounds()
           # Avoid zooming and panning tiny amounts
-          unless @_map.getBounds().contains(bounds)
+          if bounds && !@_map.getBounds().contains(bounds)
             @_map.fitBounds(bounds.pad(0.2))
 
       @_loadResults(@_results)
@@ -419,7 +448,7 @@ ns.GranuleLayer = do (L
       # Make sure help is displayed after the master overlay is updated for positioning reasons
       setTimeout((-> help.add('gibs_accuracy')), 0) if url?
 
-      layer = new GranuleCanvasLayer(url, L.extend(@_toTileLayerOptions(newOptions), color: @color))
+      layer = new GranuleCanvasLayer(url, L.extend(@_toTileLayerOptions(newOptions), color: @color), @multiOptions)
 
       # For tests to figure out if things are still loading
       map = @_map
@@ -473,7 +502,7 @@ ns.GranuleLayer = do (L
       marker = L.marker([0, 0], clickable: false, icon: icon)
 
       firstShape = layer.getLayers()[0]
-      firstShape = firstShape._interiors if firstShape._interiors?
+      firstShape = firstShape._interiors if firstShape?._interiors?
 
       firstShape?.on 'add', (e) ->
         map = @_map

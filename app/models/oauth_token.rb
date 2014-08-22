@@ -1,4 +1,6 @@
 require 'uri'
+require 'net/http'
+require 'net/https'
 
 class OauthToken
   def self.get_oauth_tokens(auth_code)
