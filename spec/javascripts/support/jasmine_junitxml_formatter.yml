@@ -1,2 +1,2 @@
 
-junit_xml_path: build_output
+junit_xml_path: test_results
