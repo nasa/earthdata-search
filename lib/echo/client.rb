@@ -125,8 +125,8 @@ module Echo
       get("/echo-rest/option_definitions/#{id}.json")
     end
 
-    def self.get_orders(token)
-      get('/echo-rest/orders.json', {}, token_header(token))
+    def self.get_orders(params, token)
+      get('/echo-rest/orders.json', params, token_header(token))
     end
 
     def self.delete_order(order_id, token)

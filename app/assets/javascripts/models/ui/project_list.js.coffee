@@ -105,7 +105,12 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
       orders = []
       for dataset in @project.accessDatasets()
         for m in dataset.serviceOptions.accessMethod() when m.type == 'order'
-          orders.push(url: "https://reverb.echo.nasa.gov/reverb/orders/#{m.orderId}", dataset_id: dataset.dataset.dataset_id)
+          canCancel = ['QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
+          orders.push
+            dataset_id: dataset.dataset.dataset_id
+            order_id: m.orderId
+            order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
+            cancel_link: "/data/remove?order_id=#{m.orderId}" if canCancel
       orders
 
     _computeDatasetOnly: ->

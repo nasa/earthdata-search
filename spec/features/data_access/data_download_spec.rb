@@ -119,8 +119,12 @@ describe "Data download page", reset: false do
       expect(page).to have_content(orderable_dataset_title)
     end
 
-    it "displays a link to track their status" do
-      expect(page).to have_link('Track Status')
+    it "indicates current order status" do
+      expect(page).to have_text('Not Validated')
+    end
+
+    it "provides a link to cancel the order" do
+      expect(page).to have_link("Cancel")
     end
 
     it "displays no tracking links for datasets that were not chosen for asychronous access" do

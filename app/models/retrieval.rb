@@ -1,4 +1,5 @@
 class Retrieval < ActiveRecord::Base
+  include ActionView::Helpers::TextHelper
   belongs_to :user
   store :jsondata, coder: JSON
 
@@ -6,7 +7,37 @@ class Retrieval < ActiveRecord::Base
 
   obfuscate_id spin: 53465485
 
+  def description
+    @description ||= jsondata['description']
+    unless @description
+      datasets = jsondata['datasets']
+      dataset = datasets.first
+      @description = get_dataset_id(dataset['id']) if dataset
+
+      if @description
+        if datasets.size > 1
+          @description += " and #{pluralize(datasets.size - 1, 'other dataset')}"
+        end
+      else
+        @description = pluralize(datasets.size, 'dataset')
+      end
+      jsondata['description'] = @description
+      save!
+    end
+    @description
+  end
+
   private
+
+  def get_dataset_id(id)
+    result = nil
+    response = Echo::Client.get_datasets(echo_collection_id: [id])
+    if response.success?
+      entry = response.body['feed']['entry'].first
+      result = entry['title'] if entry
+    end
+    result
+  end
 
   def update_access_configurations
     Array.wrap(self.jsondata['datasets']).each do |dataset|

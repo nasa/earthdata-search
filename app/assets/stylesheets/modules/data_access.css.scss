@@ -295,20 +295,25 @@
     padding: .5em 0 .5em .5em;
     text-align: left;
   }
+}
 
-  .order-state {
-    background: #34495e;
-    padding: .3em .6em;
-    border-radius: 2px;
-    color: #fff;
+.data-retrieval-time-ago {
+  white-space: nowrap;
+}
 
-    &.processing, &.validated, &.quoted {
-      background: #27ae60;
-    }
+.order-state {
+  background: #34495e;
+  padding: .3em .6em;
+  border-radius: 2px;
+  color: #fff;
+  text-transform: capitalize;
 
-    &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
-      background: #e74c3c;
-    }
+  &.processing, &.validated, &.quoted {
+    background: #27ae60;
+  }
+
+  &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
+    background: #e74c3c;
   }
 }
 
