@@ -1,6 +1,7 @@
 ns = @edsc.models.data
 
 ns.User = do (ko
+              xhrUtil=@edsc.util.xhr
               getJSON=@edsc.util.xhr.getJSON
               ) ->
 
@@ -18,6 +19,8 @@ ns.User = do (ko
       data = window.urs_user
 
       @isLoggedIn(true) if data? && data.expires?
+
+      xhrUtil.setTokenExpires()
 
     logout: =>
       xhr = getJSON "/logout", (data, status, xhr) =>
