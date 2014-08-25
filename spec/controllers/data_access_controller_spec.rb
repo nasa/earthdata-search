@@ -6,6 +6,10 @@ describe DataAccessController do
       DataAccessController.skip_before_filter :is_logged_in
     end
 
+    after :all do
+      DataAccessController.before_filter :is_logged_in
+    end
+
     let(:hits) { 0 }
     let(:downloadable) { 0 }
     let(:orderable) { 0 }
