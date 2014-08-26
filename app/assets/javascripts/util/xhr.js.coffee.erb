@@ -8,13 +8,6 @@
 
   tokenExpires = null
 
-  getTokenExpires = ->
-    if window.urs_user?
-      data = window.urs_user
-      tokenExpires = (new Date().getTime() / 1000) + data.expires_in
-    else
-      tokenExpires = null
-
   hasPending = ->
     xhrPool.length > 0 || timeoutPool.length > 0
 
@@ -93,12 +86,20 @@
   isTokenExpired = ->
     getTokenExpires() unless tokenExpires?
     time = new Date().getTime() / 1000
-    tokenExpires? && time > tokenExpires - 300
+    tokenExpires? && time > tokenExpires - 3590
+
+  getTokenExpires = ->
+    if window.urs_user?
+      data = window.urs_user
+      tokenExpires = (new Date().getTime() / 1000) + data.expires_in
+    else
+      tokenExpires = null
 
   exports =
     hasPending: hasPending
     wait: wait
     isTokenExpired: isTokenExpired
+    getTokenExpires: getTokenExpires
     ajax: (args...) -> deferredXHR('ajax', args...)
     post: (args...) -> deferredXHR('post', args...)
     getJSON: (args...) -> deferredXHR('getJSON', args...)
