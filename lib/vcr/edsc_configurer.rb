@@ -39,13 +39,13 @@ module VCR
 
       VCR.request_matchers.register(:parsed_uri) { |r1, r2| compare_uris(r1, r2) }
 
-      opts = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
+      options = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
       default_record_mode = options[:record] || :new_episodes
 
       lock = Mutex.new
       c.around_http_request do |request|
         lock.synchronize do
-          opts = opts.dup
+          opts = options.deep_dup
           record = default_record_mode
 
           cassette = 'services'
@@ -81,8 +81,6 @@ module VCR
               uri.include?('preferences.json') ||
               uri.include?('orders.json')
             opts[:match_requests_on] << :headers
-          else
-            opts[:match_requests_on].delete(:headers)
           end
 
           opts[:record] = record

@@ -38,7 +38,7 @@ describe "Expired user token", reset: true do
     before :each do
       #login without loading a page first
       be_logged_in_as 'expired_token'
-      page.set_rack_session(expires: Time.now.to_i + 1)
+      page.set_rack_session(expires_in: 1)
 
       load_page :root
       wait_for_xhr

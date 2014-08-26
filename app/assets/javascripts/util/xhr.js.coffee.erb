@@ -8,10 +8,10 @@
 
   tokenExpires = null
 
-  setTokenExpires = ->
+  getTokenExpires = ->
     if window.urs_user?
       data = window.urs_user
-      tokenExpires = data.expires
+      tokenExpires = (new Date().getTime() / 1000) + data.expires_in
     else
       tokenExpires = null
 
@@ -64,7 +64,7 @@
   deferredXHR = (method, args...) ->
     deferred = $.Deferred()
 
-    if checkToken()
+    if isTokenExpired()
       console.log 'Refreshing URS token'
       $.ajax
         url: '/refresh_token'
@@ -74,11 +74,11 @@
           if data?
             tokenExpires = (new Date().getTime() / 1000) + data.expires_in
 
-          deferred = doXHR(deferred, method, args...)
+          doXHR(deferred, method, args...)
         error: (response, type, reason) ->
           xhr.fail(-> deferred.reject())
     else
-      deferred = doXHR(deferred, method, args...)
+      doXHR(deferred, method, args...)
 
     deferred
 
@@ -90,17 +90,15 @@
       deferred.fail ->
         xhr.abort()
 
-    deferred
-
-  checkToken = ->
+  isTokenExpired = ->
+    getTokenExpires() unless tokenExpires?
     time = new Date().getTime() / 1000
     tokenExpires? && time > tokenExpires - 300
 
   exports =
     hasPending: hasPending
     wait: wait
-    checkToken: checkToken
-    setTokenExpires: setTokenExpires
+    isTokenExpired: isTokenExpired
     ajax: (args...) -> deferredXHR('ajax', args...)
     post: (args...) -> deferredXHR('post', args...)
     getJSON: (args...) -> deferredXHR('getJSON', args...)

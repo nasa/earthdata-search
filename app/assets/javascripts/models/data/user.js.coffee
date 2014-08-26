@@ -7,7 +7,6 @@ ns.User = do (ko
 
   class User
     constructor: ->
-      @name = ko.observable(null)
       @isLoggedIn = ko.observable(false)
       @loginCallback = null
 
@@ -18,9 +17,7 @@ ns.User = do (ko
     loadURS: =>
       data = window.urs_user
 
-      @isLoggedIn(true) if data? && data.expires?
-
-      xhrUtil.setTokenExpires()
+      @isLoggedIn(true) if data? && data.expires_in?
 
     logout: =>
       xhr = getJSON "/logout", (data, status, xhr) =>

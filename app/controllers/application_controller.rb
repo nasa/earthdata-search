@@ -21,7 +21,8 @@ class ApplicationController < ActionController::Base
       json = refresh_urs_token
     end
 
-    @urs_user = {username: session[:username], expires: session[:expires]}
+    expires_in = session[:expires].to_i - Time.now.to_i
+    @urs_user = {expires_in: expires_in}
   end
 
   def refresh_urs_token

@@ -7,7 +7,7 @@ describe 'xhr util', ->
       xhr.setTokenExpires()
 
     it 'does not request a token refresh', ->
-      expect(xhr.checkToken()).toBe(false)
+      expect(xhr.isTokenExpired()).toBe(false)
 
   describe 'Expired Tokens', ->
     beforeEach ->
@@ -15,4 +15,4 @@ describe 'xhr util', ->
       xhr.setTokenExpires()
 
     it 'requests a token refresh', ->
-      expect(xhr.checkToken()).toBe(true)
+      expect(xhr.isTokenExpired()).toBe(true)

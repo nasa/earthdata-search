@@ -20,7 +20,7 @@ class OauthTokensController < ApplicationController
     json = refresh_urs_token
 
     if json
-      render json: {username: json['username'], expires_in: json['expires_in']}
+      render json: {expires_in: json['expires_in']}
     else
       render json: nil
     end

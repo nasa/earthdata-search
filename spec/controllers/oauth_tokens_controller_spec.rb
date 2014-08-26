@@ -8,7 +8,7 @@ describe OauthTokensController, type: :controller do
       session[:expires] = '1'
       session[:username] = 'edsc'
 
-      expected = {'username' => 'edsc', 'expires_in' => 3600}
+      expected = {'expires_in' => 3600}
       return_json = {'username' => 'edsc', 'expires_in' => 3600, 'expires' => Time.now.to_i + 3600, 'access_token' => 'new_access_token', 'refresh_token' => 'new_refresh_token'}
 
       allow(OauthToken).to receive(:refresh_token).and_return(return_json)
