@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery.post, $ = jQuery) ->
+ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery.post, $ = jQuery, wait=@edsc.util.xhr.wait) ->
 
   sortable = (root) ->
     $root = $(root)
@@ -76,8 +76,27 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
         @configureProject()
 
     configureProject: (singleGranuleId=null) ->
-      singleGranuleParam = if singleGranuleId? then "&sgd=#{singleGranuleId}" else ""
-      window.location.href = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam
+        @_sortOutTemporalMalarkey (optionStr) ->
+          singleGranuleParam = if singleGranuleId? then "&sgd=#{encodeURIComponent(singleGranuleId)}" else ""
+          window.location.href = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr
+
+    _sortOutTemporalMalarkey: (callback) ->
+      querystr = urlUtil.currentQuery()
+      query = @project.query
+      console.log querystr
+      focused = query.focusedTemporal()
+      # If the query has a timeline selection
+      if focused
+        focusedStr = '&' + encodeURIComponent([focused[0].toISOString(), focused[1].toISOString()].join(','))
+        # If the query has a temporal component
+        if querystr.match(/[\?\&\[]qt\]?=/)
+          # TODO prompt
+          callback('')
+          console.log 'prompt'
+        else
+          callback(focusedStr)
+      else
+        callback('')
 
     toggleDataset: (dataset) =>
       project = @project
