@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     end
 
     expires_in = session[:expires].to_i - Time.now.to_i
-    @urs_user = {expires_in: expires_in}
+    @token_expires = {expires_in: expires_in}
   end
 
   def refresh_urs_token

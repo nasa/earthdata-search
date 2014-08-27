@@ -38,11 +38,14 @@ describe "Expired user token", reset: true do
     before :each do
       #login without loading a page first
       be_logged_in_as 'expired_token'
-      page.set_rack_session(expires_in: 1)
+      page.set_rack_session(expires: Time.now.to_i + 500)
+      page.set_rack_session(expires_in: 500)
 
       load_page :root
       wait_for_xhr
 
+      script = "window.tokenExpires = {'expires_in': 1};"
+      page.execute_script script
       sleep 1
 
       fill_in 'keywords', with: 'AST_L1AE'
@@ -52,6 +55,8 @@ describe "Expired user token", reset: true do
 
     it 'refreshes the token' do
       expect(page).to have_content('ASTER Expedited L1A')
+      expect(page).to have_content('Instruments ASTER (1)')
+      expect(page.get_rack_session_key('expires_in')).to eql(3600)
       expect(page.get_rack_session_key('urs_user')).to eql(return_json)
     end
   end

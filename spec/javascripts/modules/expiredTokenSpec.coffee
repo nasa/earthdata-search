@@ -3,10 +3,10 @@ describe 'xhr util', ->
 
   describe 'Valid Token', ->
     beforeEach ->
-      window.urs_user = {"expires_in":9999999999}
+      window.tokenExpires = {"expires_in":9999999999}
 
     afterEach ->
-      window.urs_user = null
+      window.tokenExpires = null
       xhr.getTokenExpires()
 
     it 'does not request a token refresh', ->
@@ -14,10 +14,10 @@ describe 'xhr util', ->
 
   describe 'Expired Tokens', ->
     beforeEach ->
-      window.urs_user = {"expires_in":1}
+      window.tokenExpires = {"expires_in":1}
 
     afterEach ->
-      window.urs_user = null
+      window.tokenExpires = null
       xhr.getTokenExpires()
 
     it 'requests a token refresh', ->

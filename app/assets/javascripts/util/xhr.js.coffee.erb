@@ -65,7 +65,7 @@
         dataType: 'json'
         success: (data, status, xhr) ->
           if data?
-            tokenExpires = (new Date().getTime() / 1000) + data.expires_in
+            window.tokenExpires.expires_in = (new Date().getTime() / 1000) + data.expires_in
 
           doXHR(deferred, method, args...)
         error: (response, type, reason) ->
@@ -84,16 +84,16 @@
         xhr.abort()
 
   isTokenExpired = ->
-    getTokenExpires() unless tokenExpires?
+    expires = getTokenExpires()
     time = new Date().getTime() / 1000
-    tokenExpires? && time > tokenExpires - 3590
+    expires? && time > expires - 300
 
   getTokenExpires = ->
-    if window.urs_user?
-      data = window.urs_user
-      tokenExpires = (new Date().getTime() / 1000) + data.expires_in
+    if window.tokenExpires?
+      data = window.tokenExpires
+      (new Date().getTime() / 1000) + data.expires_in
     else
-      tokenExpires = null
+      null
 
   exports =
     hasPending: hasPending

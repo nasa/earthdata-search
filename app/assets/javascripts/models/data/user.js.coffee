@@ -10,12 +10,12 @@ ns.User = do (ko
       @isLoggedIn = ko.observable(false)
       @loginCallback = null
 
-      @loadURS() if window.urs_user?
+      @loadTokenExpires() if window.tokenExpires?
 
       @refreshingToken = false
 
-    loadURS: =>
-      data = window.urs_user
+    loadTokenExpires: =>
+      data = window.tokenExpires
 
       @isLoggedIn(true) if data? && data.expires_in?
 
