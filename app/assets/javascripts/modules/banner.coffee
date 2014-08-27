@@ -1,4 +1,9 @@
-@edsc.banner = do (date = @edsc.util.date, $=jQuery, preferences = @edsc.page.preferences) ->
+@edsc.banner = do (
+                date = @edsc.util.date
+                $=jQuery
+                preferences = @edsc.page.preferences
+                getJSON = @edsc.util.xhr.getJSON
+              ) ->
   banners = []
   $banner = null
 
@@ -81,7 +86,7 @@
 
   $(document).on 'searchready', ->
     preferences.onload ->
-      $.getJSON '/events', (data, status, xhr) ->
+      getJSON '/events', (data, status, xhr) ->
         allEvents = data
         if data.length > 0
           $('.toolbar-secondary').prepend('<a href="#" class="banner-show-events" title="Show Outage Notices"><i class="fa fa-warning"></i></a>')

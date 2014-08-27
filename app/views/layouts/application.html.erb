@@ -13,7 +13,7 @@
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <script>
-      window.urs_user = <%= raw @urs_user.to_json %>;
+      window.tokenExpiresIn = <%= logged_in? ? script_session_expires_in : 'null' %>;
     </script>
     <%= yield :javascript %>
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>

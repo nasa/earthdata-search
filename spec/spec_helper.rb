@@ -115,6 +115,12 @@ RSpec.configure do |config|
     #register tokens for usernames
     token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['edsc']
     VCR::EDSCConfigurer.register_token('edsc', token['access_token'] + ':' + ENV['urs_client_id'])
+
+    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['edscbasic']
+    VCR::EDSCConfigurer.register_token('edscbasic', token['access_token'] + ':' + ENV['urs_client_id'])
+
+    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['expired_token']
+    VCR::EDSCConfigurer.register_token('expired_token', token['access_token'] + ':' + ENV['urs_client_id'])
   end
 
   config.before :suite do

@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery.post, $ = jQuery) ->
+ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc.util.xhr, $ = jQuery) ->
 
   sortable = (root) ->
     $root = $(root)
@@ -41,7 +41,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
       false
 
   class ProjectList
-    constructor: (@project, @user, @datasetResults) ->
+    constructor: (@project, @datasetResults) ->
       @visible = ko.observable(false)
 
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
@@ -74,7 +74,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
     configureProject: (singleGranuleId=null) ->
       singleGranuleParam = if singleGranuleId? then "&sgd=#{singleGranuleId}" else ""
       path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam
-      if @user.isLoggedIn()
+      if window.tokenExpiresIn?
         window.location.href = path
       else
         window.location.href = "/login?next_point=#{encodeURIComponent(path)}"

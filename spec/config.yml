@@ -1,9 +1,5 @@
 token_defaults: &token_defaults
-  token_type: 'Bearer'
-  endpoint: '/api/users/edsc'
-  username: 'edsc'
   expires_in: 3600
-  expires: 9999999999
 
 urs_tokens:
   edsc:
@@ -14,10 +10,8 @@ urs_tokens:
     <<: *token_defaults
     access_token: <%= (ENV['test_urs_expired_access_token'] || 'expired-access').inspect %>
     refresh_token: <%= (ENV['test_urs_expired_refresh_token'] || 'expired-refresh').inspect %>
-    expires: 1
+    expires_in: 1
   edscbasic:
     <<: *token_defaults
     access_token: <%= (ENV['test_urs_edscbasic_access_token'] || 'edscbasic-access').inspect %>
     refresh_token: <%= (ENV['test_urs_edscbasic_refresh_token'] || 'edscbasic-refresh').inspect %>
-    endpoint: "/api/users/edscbasic"
-    username: "edscbasic"

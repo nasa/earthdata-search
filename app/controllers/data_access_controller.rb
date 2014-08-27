@@ -4,6 +4,8 @@ class DataAccessController < ApplicationController
   include ActionView::Helpers::TextHelper
   respond_to :json
 
+  before_filter :require_login
+
   def configure
   end
 

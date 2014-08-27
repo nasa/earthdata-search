@@ -2,7 +2,7 @@
                                 DetailsModel = @edsc.models.DetailsModel
                                 extend = $.extend
                                 scalerUrl = @edsc.config.browseScalerUrl
-                                ajax = jQuery.ajax
+                                ajax = @edsc.util.xhr.ajax
                                 ) ->
 
   class Granule extends DetailsModel

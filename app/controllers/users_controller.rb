@@ -1,31 +1,20 @@
 class UsersController < ApplicationController
+  before_filter :require_login, only: [:contact_info]
+
   def login
     session[:last_point] = request.referrer
     session[:last_point] = params[:next_point] if params[:next_point]
 
-    redirect_to "#{ ENV['urs_root'] }oauth/authorize?client_id=#{ENV['urs_client_id'] }&redirect_uri=#{ENV['urs_callback_url'] }&response_type=code"
+    redirect_to URS_LOGIN_PATH
   end
 
   def logout
-    session[:urs_user] = nil
-    session[:access_token] = nil
-    session[:refresh_token] = nil
-    session[:user_id] = nil
-    session[:username] = nil
-    session[:expires] = nil
-    session[:recent_datasets] = []
+    clear_session
 
     respond_to do |format|
       format.html { redirect_to root_url }
       format.json { render json: nil, status: :ok }
     end
-  end
-
-  def refresh_token
-    OauthToken.refresh_token(session[:refresh_token])
-  end
-
-  def new
   end
 
   def contact_info

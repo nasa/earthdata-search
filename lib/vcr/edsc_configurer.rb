@@ -39,13 +39,13 @@ module VCR
 
       VCR.request_matchers.register(:parsed_uri) { |r1, r2| compare_uris(r1, r2) }
 
-      opts = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
+      options = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
       default_record_mode = options[:record] || :new_episodes
 
       lock = Mutex.new
       c.around_http_request do |request|
         lock.synchronize do
-          opts = opts.dup
+          opts = options.deep_dup
           record = default_record_mode
 
           cassette = 'services'
@@ -54,7 +54,7 @@ module VCR
             cassette = 'geonames'
           elsif uri.start_with? 'http://ogre.adc4gis.com'
             cassette = 'ogre'
-          elsif request.uri.include?('fail%25+hard') || request.uri.include?('fail+hard')
+          elsif request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')
             cassette = 'expired-token'
             record = :none
           elsif (request.method == :delete ||
@@ -75,6 +75,12 @@ module VCR
           elsif request.uri.include? '/echo-rest/'
             parts = request.uri.split('/echo-rest/')[1]
             cassette = parts.split(/\.|\/|\?/).first
+          end
+
+          if uri.include?('users/current.json') ||
+              uri.include?('preferences.json') ||
+              uri.include?('orders.json')
+            opts[:match_requests_on] << :headers
           end
 
           opts[:record] = record

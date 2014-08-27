@@ -19,6 +19,7 @@ src_files:
   - assets/util/deparam.js
   - assets/util/string.js.coffee
   - assets/util/date.js.coffee
+  - assets/util/xhr.js.coffee
   - assets/modules/map/coordinate.js.coffee
   - assets/modules/map/arc.js.coffee
   - assets/modules/map/geoutil.js.coffee
@@ -26,7 +27,6 @@ src_files:
   - assets/models/data/grid.coffee
   - assets/models/data/query.js.coffee
   - assets/models/data/granule_attributes.coffee
-  - assets/models/data/user.js.coffee
 
 # stylesheets
 #

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Expired user token", reset: true do
 
   let(:return_json) {urs_tokens['edsc']}
+  let(:access_token) {return_json['access_token']}
 
 
   before :each do
@@ -12,13 +13,9 @@ describe "Expired user token", reset: true do
   end
 
   after :each do
-    page.set_rack_session(username: nil)
-    page.set_rack_session(expires: nil)
     page.set_rack_session(expires_in: nil)
-    page.set_rack_session(endpoint: nil)
     page.set_rack_session(access_token: nil)
     page.set_rack_session(refresh_token: nil)
-    page.set_rack_session(urs_user: nil)
   end
 
   context 'when loading the page with an expired token' do
@@ -30,7 +27,7 @@ describe "Expired user token", reset: true do
     end
 
     it "refreshes the token" do
-      expect(page.get_rack_session_key('urs_user')).to eql(return_json)
+      expect(page.get_rack_session_key('access_token')).to eql(access_token)
     end
   end
 
@@ -38,10 +35,13 @@ describe "Expired user token", reset: true do
     before :each do
       #login without loading a page first
       be_logged_in_as 'expired_token'
-      page.set_rack_session(expires: Time.now.to_i + 1)
+      page.set_rack_session(expires_in: 500)
 
       load_page :root
       wait_for_xhr
+
+      script = "window.tokenExpiresIn = -1;"
+      page.execute_script script
 
       fill_in 'keywords', with: 'AST_L1AE'
       click_link 'Browse All Data'
@@ -50,7 +50,9 @@ describe "Expired user token", reset: true do
 
     it 'refreshes the token' do
       expect(page).to have_content('ASTER Expedited L1A')
-      expect(page.get_rack_session_key('urs_user')).to eql(return_json)
+      expect(page).to have_content('Instruments ASTER (1)')
+      expect(page.get_rack_session_key('expires_in')).to eql(3600)
+      expect(page.get_rack_session_key('access_token')).to eql(access_token)
     end
   end
 end

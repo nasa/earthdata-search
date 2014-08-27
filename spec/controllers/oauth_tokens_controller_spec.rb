@@ -5,11 +5,10 @@ describe OauthTokensController, type: :controller do
     it 'updates the session with a new token' do
       session[:access_token] = 'old_access_token'
       session[:refresh_token] = 'old_refresh_token'
-      session[:expires] = '1'
-      session[:username] = 'edsc'
+      session[:expires_in] = '1'
 
-      expected = {'username' => 'edsc', 'expires' => Time.now.to_i + 3600}
-      return_json = {'username' => 'edsc', 'expires' => Time.now.to_i + 3600, 'access_token' => 'new_access_token', 'refresh_token' => 'new_refresh_token'}
+      expected = {'tokenExpiresIn' => 3300000}
+      return_json = {'expires_in' => 3600, 'access_token' => 'new_access_token', 'refresh_token' => 'new_refresh_token'}
 
       allow(OauthToken).to receive(:refresh_token).and_return(return_json)
 

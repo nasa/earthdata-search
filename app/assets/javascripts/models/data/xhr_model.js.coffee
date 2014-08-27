@@ -3,7 +3,7 @@ ns = @edsc.models.data
 ns.XhrModel = do (ko
                   KnockoutModel=@edsc.models.KnockoutModel
                   config=@edsc.config
-                  ajax=jQuery.ajax
+                  ajax=@edsc.util.xhr.ajax
                   toParam=$.param) ->
 
 
@@ -48,8 +48,8 @@ ns.XhrModel = do (ko
       @query.params()
 
     abort: ->
-      if @currentRequest? && @currentRequest.readystate != 4
-        @currentRequest.abort()
+      if @currentRequest? && @currentRequest.state() == 'pending'
+        @currentRequest.reject()
 
     _computeSearchResponse: (current, callback) ->
       if @query?
@@ -99,47 +99,45 @@ ns.XhrModel = do (ko
         url = @path
         data = query
 
-      edsc.page.user.checkToken =>
-        @currentRequest = xhr = $.ajax
-          method: method
-          dataType: 'json'
-          url: url
-          data: data
-          retry: => @_load(params, current, callback)
-          success: (data, status, xhr) =>
-            #console.profile(@path)
-            @stale = false
+      @currentRequest = xhr = ajax
+        method: method
+        dataType: 'json'
+        url: url
+        data: data
+        retry: => @_load(params, current, callback)
+        success: (data, status, xhr) =>
+          #console.profile(@path)
+          @stale = false
 
-            @currentRequest = null
-            @isLoaded(true)
-            @error(null)
-            @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
-            @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
-            #console.log("Response: #{@path}", requestId, params, data)
-            console.log("Complete (#{requestId}): #{url}")
-            results = @_toResults(data, current, params)
+          @currentRequest = null
+          @isLoaded(true)
+          @error(null)
+          @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
+          @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
+          #console.log("Response: #{@path}", requestId, params, data)
+          console.log("Complete (#{requestId}): #{url}")
+          results = @_toResults(data, current, params)
 
-            @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length ? 0))
+          @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length ? 0))
 
-            @loadTime(((new Date() - start) / 1000).toFixed(1))
-            callback?(results)
+          @loadTime(((new Date() - start) / 1000).toFixed(1))
+          callback?(results)
 
-          complete: =>
-            @completedRequestId = requestId
-            @currentRequest = null
-            @isLoading(false)
-            #console.profileEnd(@path)
+        complete: =>
+          @completedRequestId = requestId
+          @currentRequest = null
+          @isLoading(false)
+          #console.profileEnd(@path)
 
-          error: (response, type, reason) =>
-            @isError(true)
-            console.log("Fail (#{requestId}) [#{reason}]: #{url}")
-            @_onFailure(response)
+        error: (response, type, reason) =>
+          @isError(true)
+          console.log("Fail (#{requestId}) [#{reason}]: #{url}")
+          @_onFailure(response)
         null
 
     _onFailure: (response) ->
       if response.status == 403
         # TODO: don't reference page logout the user
-        edsc.page.user.logout()
         edsc.banner(null, 'Session has ended', 'Please sign in')
 
       errors = response.responseJSON?.errors

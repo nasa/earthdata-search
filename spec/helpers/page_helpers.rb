@@ -43,24 +43,12 @@ module Helpers
       wait_for_xhr
     end
 
-    # Logout the user
-    def reset_user
-      page.execute_script("window.edsc.models.page.current.user.logout()")
-      wait_for_xhr
-    end
-
     def logout
-      reset_user
+      visit '/logout'
     end
 
     def click_contact_information
       page.execute_script("$('.dropdown-menu .dropdown-link-contact-info').click()")
-    end
-
-    def click_logout
-      # Do this in Javascript because of capybara clickfailed bug
-      # page.execute_script("$('.dropdown-menu .dropdown-link-logout').click()")
-      visit '/logout'
     end
 
     def login(key='edsc')
@@ -77,13 +65,9 @@ module Helpers
     def be_logged_in_as(key)
       json = urs_tokens[key]
 
-      page.set_rack_session(username: json['username'])
-      page.set_rack_session(expires: json['expires'])
       page.set_rack_session(expires_in: json['expires_in'])
-      page.set_rack_session(endpoint: json['endpoint'])
       page.set_rack_session(access_token: json['access_token'])
       page.set_rack_session(refresh_token: json['refresh_token'])
-      page.set_rack_session(urs_user: json)
     end
 
     def have_popover(title=nil)

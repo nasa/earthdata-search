@@ -1,7 +1,7 @@
-<!-- ko ifnot: user.isLoggedIn -->
+<!-- ko if: window.tokenExpiresIn === null -->
 <a href="/login" class="button user-info sign-in"><i class="fa fa-lock"></i> URS Sign In</a>
 <!-- /ko -->
-<!-- ko if: user.isLoggedIn -->
+<!-- ko if: window.tokenExpiresIn !== null -->
 
 <div class="dropdown user-info">
   <a href="#" data-toggle="dropdown" class="toolbar-button" title="Manage user account">

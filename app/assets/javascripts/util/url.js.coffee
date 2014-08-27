@@ -1,10 +1,13 @@
-this.edsc.util.url = do(window,
-                        document,
-                        History,
-                        extend = jQuery.extend,
+#= require util/xhr
+
+this.edsc.util.url = do(window
+                        document
+                        History
+                        extend = jQuery.extend
                         param = jQuery.param
                         deparam = @edsc.util.deparam
                         config = @edsc.config
+                        ajax = @edsc.util.xhr.ajax
                         ) ->
 
   class ParamNameCompressor
@@ -157,7 +160,7 @@ this.edsc.util.url = do(window,
     return if savedId == id
     console.log "Fetching project #{id}"
     savedId = id
-    $.ajax
+    ajax
       method: 'get'
       dataType: 'json'
       url: "/projects/#{id}"
@@ -183,7 +186,7 @@ this.edsc.util.url = do(window,
     console.log "Path: #{path}"
     console.log "Workspace Name: #{workspaceName}"
     data = {path: path, workspace_name: workspaceName}
-    $.ajax
+    ajax
       method: 'post'
       dataType: 'text'
       url: "/projects?id=#{id}"
