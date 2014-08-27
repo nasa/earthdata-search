@@ -43,6 +43,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
   class ProjectList
     constructor: (@project, @user, @datasetResults) ->
       @visible = ko.observable(false)
+      @needsTemporalChoice = ko.observable(false)
 
       @datasetLinks = ko.computed(@_computeDatasetLinks, this, deferEvaluation: true)
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
@@ -83,20 +84,27 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
     _sortOutTemporalMalarkey: (callback) ->
       querystr = urlUtil.currentQuery()
       query = @project.query
-      console.log querystr
       focused = query.focusedTemporal()
       # If the query has a timeline selection
       if focused
-        focusedStr = '&' + encodeURIComponent([focused[0].toISOString(), focused[1].toISOString()].join(','))
+        focusedStr = '&ot=' + encodeURIComponent([focused[0].toISOString(), focused[1].toISOString()].join(','))
         # If the query has a temporal component
         if querystr.match(/[\?\&\[]qt\]?=/)
-          # TODO prompt
-          callback('')
-          console.log 'prompt'
+          @needsTemporalChoice(callback: callback, focusedStr: focusedStr)
         else
           callback(focusedStr)
       else
         callback('')
+
+    chooseTemporal: =>
+      {callback} = @needsTemporalChoice()
+      @needsTemporalChoice(false)
+      callback('')
+
+    chooseOverride: =>
+      {callback, focusedStr} = @needsTemporalChoice()
+      @needsTemporalChoice(false)
+      callback(focusedStr)
 
     toggleDataset: (dataset) =>
       project = @project

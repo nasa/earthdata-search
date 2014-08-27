@@ -198,7 +198,7 @@ this.edsc.util.url = do(window,
   cleanPath = ->
     path = realPath()
     if path.indexOf("projectId=") != -1
-      id = path.split('projectId=')[1]
+      id = path.split('projectId=')[1].split('&')[0]
       if savedPath? && savedId == id
         result = savedPath
       else
