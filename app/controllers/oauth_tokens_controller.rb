@@ -3,14 +3,10 @@ class OauthTokensController < ApplicationController
     if params[:code]
       auth_code = params[:code]
       token = OauthToken.get_oauth_tokens(auth_code)
-      session[:urs_user] = token
-      session[:access_token] = token["access_token"]
-      session[:refresh_token] = token["refresh_token"]
-      session[:expires] = token['expires']
-      session[:username] = token["username"]
 
+      store_oauth_token(token)
       # useful when needing to replace the application.yml tokens
-      # puts "Token: #{token.inspect}"
+      #Rails.logger.info "Token: #{token.inspect}"
     end
 
     redirect_to redirect_from_urs
@@ -20,7 +16,7 @@ class OauthTokensController < ApplicationController
     json = refresh_urs_token
 
     if json
-      render json: {expires_in: json['expires_in']}
+      render json: {tokenExpiresIn: script_session_expires_in}
     else
       render json: nil
     end

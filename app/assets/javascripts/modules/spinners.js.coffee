@@ -22,7 +22,6 @@ do ($=jQuery) ->
     new XhrSpinner('/granules/', '#granule-details .loading'), # granule details
     new XhrSpinner('/granules.json', '#granule-list .panel-list-load-more'), # granule list
     new XhrSpinner('/timeline.json', '.timeline-tools'), # timeline
-    new XhrSpinner('/login', '#login-modal .loading', '#login-modal .modal-button'), # login
     new XhrSpinner('/data/options', '.data-access-next'), # data access retrieval
     new XhrSpinner('/update_contact_info', '.access-submit') # updating contact info before submitting an access request
   ]

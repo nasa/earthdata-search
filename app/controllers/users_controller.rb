@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :is_logged_in, only: [:contact_info]
+  before_filter :require_login, only: [:contact_info]
 
   def login
     session[:last_point] = request.referrer
@@ -9,13 +9,7 @@ class UsersController < ApplicationController
   end
 
   def logout
-    session[:urs_user] = nil
-    session[:access_token] = nil
-    session[:refresh_token] = nil
-    session[:user_id] = nil
-    session[:username] = nil
-    session[:expires] = nil
-    session[:recent_datasets] = []
+    clear_session
 
     respond_to do |format|
       format.html { redirect_to root_url }

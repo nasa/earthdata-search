@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'User not logged in', reset: false do
   before :each do
     Capybara.reset_sessions!
-    load_page :root
     logout
   end
 

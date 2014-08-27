@@ -16,10 +16,11 @@ class OauthToken
 
     response = http.request(request)
 
-    json = JSON.parse(response.body)
-    json['username'] = json['endpoint'].sub('/api/users/', '')
-    json['expires'] = (Time.now + json['expires_in']).to_i
-    json
+    if response.kind_of? Net::HTTPSuccess
+      JSON.parse(response.body)
+    else
+      nil
+    end
   end
 
   def self.refresh_token(refresh_token)
@@ -35,13 +36,10 @@ class OauthToken
 
     response = http.request(request)
 
-    json = JSON.parse(response.body)
-    if json['access_token']
-      json['username'] = json['endpoint'].sub('/api/users/', '')
-      json['expires'] = (Time.now + json['expires_in']).to_i
-      json
+    if response.kind_of? Net::HTTPSuccess
+      JSON.parse(response.body)
     else
-      false
+      nil
     end
   end
 

@@ -8,7 +8,7 @@ ns.Preferences = do (ko
                      ) ->
 
   class Preferences
-    constructor: (@user) ->
+    constructor: () ->
       # Default Preferences
       @showTour = ko.observable(true)
       @dismissedEvents = ko.observableArray([])

@@ -6,8 +6,6 @@
   realSetTimeout = window.setTimeout
   realClearTimeout = window.clearTimeout
 
-  tokenExpires = null
-
   hasPending = ->
     xhrPool.length > 0 || timeoutPool.length > 0
 
@@ -65,7 +63,7 @@
         dataType: 'json'
         success: (data, status, xhr) ->
           if data?
-            window.tokenExpires.expires_in = (new Date().getTime() / 1000) + data.expires_in
+            window.tokenExpiresIn = data.tokenExpiresIn
 
           doXHR(deferred, method, args...)
         error: (response, type, reason) ->
@@ -85,13 +83,12 @@
 
   isTokenExpired = ->
     expires = getTokenExpires()
-    time = new Date().getTime() / 1000
-    expires? && time > expires - 300
+    expires? && new Date() > expires
 
   getTokenExpires = ->
-    if window.tokenExpires?
-      data = window.tokenExpires
-      (new Date().getTime() / 1000) + data.expires_in
+    expiresIn = window.tokenExpiresIn
+    if expiresIn?
+      (+new Date()) + expiresIn
     else
       null
 

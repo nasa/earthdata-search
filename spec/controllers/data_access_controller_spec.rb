@@ -2,14 +2,6 @@ require "spec_helper"
 
 describe DataAccessController do
   describe "GET options" do
-    before :all do
-      DataAccessController.skip_before_filter :is_logged_in
-    end
-
-    after :all do
-      DataAccessController.before_filter :is_logged_in
-    end
-
     let(:hits) { 0 }
     let(:downloadable) { 0 }
     let(:orderable) { 0 }
@@ -33,7 +25,6 @@ describe DataAccessController do
         end
       end
 
-      request.cookies['token'] = '1234'
       granules_response = MockResponse.atom(granules, {'echo-hits' => hits.to_s})
       expect(Echo::Client).to receive('get_granules').and_return(granules_response)
 
@@ -60,6 +51,11 @@ describe DataAccessController do
           end
         end
       end
+
+      session[:urs_user] = {present: true}
+      session[:user_id] = 'myid'
+      session[:access_token] = 'some token'
+      session[:expires_in] = 99999999
 
       get :options, format: 'json'
 

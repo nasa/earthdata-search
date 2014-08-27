@@ -1,10 +1,6 @@
-#= require models/data/user
-
 ns = @edsc.models.data
 
-ns.Account = do (ko
-                ajax=@edsc.util.xhr.ajax
-                UserModel=ns.User) ->
+ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
 
   class Address
     constructor: ->
@@ -58,7 +54,7 @@ ns.Account = do (ko
         phone_number_type: @type
 
   class Account
-    constructor: (@user) ->
+    constructor: ->
       @email = ko.observable("")
       @emailError = ko.observable(false)
       @firstName = ko.observable("")
@@ -86,10 +82,8 @@ ns.Account = do (ko
       @message = ko.observable("")
       @preferencesLoaded = ko.observable(false)
 
-      if @user.isLoggedIn()
+      if window.tokenExpiresIn?
         @_from_user()
-      else
-        @user = new UserModel()
 
     _from_user: =>
       xhr = ajax

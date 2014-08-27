@@ -1,4 +1,4 @@
-<!-- ko if: user.isLoggedIn -->
+<!-- ko if: window.tokenExpiresIn !== null -->
 <div class="dropdown save-dropdown">
   <!-- ko if: workspaceName -->
     <a href="javascript:void(0)" data-toggle="dropdown" class="save workspace-name-button" title="Rename your project">
