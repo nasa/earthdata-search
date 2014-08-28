@@ -73,12 +73,22 @@
       ga('send', 'pageview');
     </script>
     <% end %>
-    <%= javascript_include_tag Rails.configuration.tophat_url if Rails.configuration.tophat_url.present? %>
+    <%= javascript_include_tag Rails.configuration.tophat_url, async: true, defer: true if Rails.configuration.tophat_url.present? %>
 
     <% if Rails.configuration.feedback_url.present? %>
-      <%= javascript_include_tag Rails.configuration.feedback_url if Rails.configuration.feedback_url.present? %>
+      <%= javascript_include_tag Rails.configuration.feedback_url, id: 'feedback-tag', async: true, defer: true if Rails.configuration.feedback_url.present? %>
       <script type="text/javascript">
-        feedback.init({showIcon: false});
+        (function() {
+          var initFeedback = function() {
+            window.feedback.init({showIcon: false});
+          }
+          if (window.feedback) {
+            initFeedback();
+          }
+          else {
+            document.getElementById('feedback-tag').onload = initFeedback;
+          }
+        })();
       </script>
     <% end %>
 </body>

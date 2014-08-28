@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc.util.xhr, $ = jQuery) ->
+ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc.util.xhr, $ = jQuery, wait=@edsc.util.xhr.wait) ->
 
   sortable = (root) ->
     $root = $(root)
@@ -43,7 +43,9 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
   class ProjectList
     constructor: (@project, @datasetResults) ->
       @visible = ko.observable(false)
+      @needsTemporalChoice = ko.observable(false)
 
+      @datasetLinks = ko.computed(@_computeDatasetLinks, this, deferEvaluation: true)
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
       @datasetOnly = ko.computed(@_computeDatasetOnly, this, deferEvaluation: true)
       @submittedOrders = ko.computed(@_computeSubmittedOrders, this, deferEvaluation: true)
@@ -72,12 +74,38 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
       @configureProject()
 
     configureProject: (singleGranuleId=null) ->
-      singleGranuleParam = if singleGranuleId? then "&sgd=#{singleGranuleId}" else ""
-      path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam
-      if window.tokenExpiresIn?
-        window.location.href = path
+      @_sortOutTemporalMalarkey (optionStr) ->
+        singleGranuleParam = if singleGranuleId? then "&sgd=#{encodeURIComponent(singleGranuleId)}" else ""
+        path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr
+        if window.tokenExpiresIn?
+          window.location.href = path
+        else
+          window.location.href = "/login?next_point=#{encodeURIComponent(path)}"
+
+    _sortOutTemporalMalarkey: (callback) ->
+      querystr = urlUtil.currentQuery()
+      query = @project.query
+      focused = query.focusedTemporal()
+      # If the query has a timeline selection
+      if focused
+        focusedStr = '&ot=' + encodeURIComponent([focused[0].toISOString(), focused[1].toISOString()].join(','))
+        # If the query has a temporal component
+        if querystr.match(/[\?\&\[]qt\]?=/)
+          @needsTemporalChoice(callback: callback, focusedStr: focusedStr)
+        else
+          callback(focusedStr)
       else
-        window.location.href = "/login?next_point=#{encodeURIComponent(path)}"
+        callback('')
+
+    chooseTemporal: =>
+      {callback} = @needsTemporalChoice()
+      @needsTemporalChoice(false)
+      callback('')
+
+    chooseOverride: =>
+      {callback, focusedStr} = @needsTemporalChoice()
+      @needsTemporalChoice(false)
+      callback(focusedStr)
 
     toggleDataset: (dataset) =>
       project = @project
@@ -86,6 +114,22 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
       else
         dataset.makeRecent()
         project.addDataset(dataset)
+
+    _computeDatasetLinks: ->
+      datasets = []
+      for projectDataset in @project.accessDatasets()
+        dataset = projectDataset.dataset
+        title = dataset.dataset_id
+        links = []
+        for link in dataset.links ? [] when link.rel.indexOf('metadata#') != -1
+          links.push
+            title: link.title ? link.href
+            href: link.href
+        if links.length > 0
+          datasets.push
+            dataset_id: title
+            links: links
+      datasets
 
     _computeDatasetsToDownload: ->
       datasets = []
@@ -107,7 +151,12 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
       orders = []
       for dataset in @project.accessDatasets()
         for m in dataset.serviceOptions.accessMethod() when m.type == 'order'
-          orders.push(url: "https://reverb.echo.nasa.gov/reverb/orders/#{m.orderId}", dataset_id: dataset.dataset.dataset_id)
+          canCancel = ['QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
+          orders.push
+            dataset_id: dataset.dataset.dataset_id
+            order_id: m.orderId
+            order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
+            cancel_link: "/data/remove?order_id=#{m.orderId}" if canCancel
       orders
 
     _computeDatasetOnly: ->

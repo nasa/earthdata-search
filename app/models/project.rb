@@ -1,6 +1,7 @@
 require 'json'
 
 class Project < ActiveRecord::Base
+  belongs_to :user
   obfuscate_id spin: 53465485
 
   def url

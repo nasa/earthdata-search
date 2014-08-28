@@ -10,8 +10,13 @@ class DataAccessController < ApplicationController
   end
 
   def retrieve
-    project = JSON.parse(params[:project])
+    user = current_user
+    unless user
+      render file: 'public/401.html', status: :unauthorized
+      return
+    end
 
+    project = JSON.parse(params[:project])
     project['datasets'].each do |dataset|
       params = Rack::Utils.parse_query(dataset['params'])
       params.merge!(page_size: 2000, page_num: 1)
@@ -26,47 +31,66 @@ class DataAccessController < ApplicationController
                                                      get_user_id,
                                                      token)
           method[:order_id] = order_response[:order_id]
-          order = Order.find_or_create_by(order_id: order_response[:order_id])
-          order.description = "#{dataset['dataset_id']} (#{pluralize order_response[:count], 'granule'})"
-          order.save!
         end
       end
     end
 
-    user = current_user
-    if user
-      retrieval = Retrieval.new
-      retrieval.user = user
-      retrieval.jsondata = project
-      retrieval.save!
+    retrieval = Retrieval.new
+    retrieval.user = user
+    retrieval.jsondata = project
+    retrieval.save!
 
-      #redirect_to "/data/retrieve/#{retrieval.to_param}"
-      redirect_to action: 'retrieval', id: retrieval.to_param
-    else
-      render file: 'public/401.html', status: :unauthorized
-    end
+    redirect_to action: 'retrieval', id: retrieval.to_param
   end
 
   def retrieval
     @retrieval = Retrieval.find(params[:id].to_i)
+
+    orders = @retrieval.jsondata['datasets'].map do |dataset|
+      dataset['serviceOptions']['accessMethod'].select { |m| m['type'] == 'order' }
+    end.flatten.compact
+
+    if orders.size > 0
+      order_ids = orders.map {|o| o['order_id']}
+      order_response = Echo::Client.get_orders({id: order_ids}, token)
+      if order_response.success?
+        echo_orders = order_response.body.map {|o| o['order']}.index_by {|o| o['id']}
+
+        orders.each do |order|
+          echo_order = echo_orders[order['order_id']]
+          if echo_order
+            order['order_status'] = echo_order['state']
+          end
+        end
+      end
+    end
+
     user = current_user
     render file: "#{Rails.root}/public/401.html", status: :unauthorized unless user
     render file: "#{Rails.root}/public/403.html", status: :forbidden unless user == @retrieval.user
   end
 
   def status
-    if token.present?
-      order_response = Echo::Client.get_orders(token)
-      @orders = order_response.body
-      @orders.sort_by! {|o| o['order']['created_at']}.reverse!
+    if current_user
+      @retrievals = current_user.retrievals
     else
-      @orders = []
+      render file: "#{Rails.root}/public/401.html"
     end
   end
 
   def remove
-    order_response = Echo::Client.delete_order(params[:order_id], token)
-    render json: order_response.body, status: order_response.status
+    if params[:order_id]
+      order_response = Echo::Client.delete_order(params[:order_id], token)
+      render json: order_response.body, status: order_response.status
+    elsif params[:retrieval_id]
+      retrieval = Retrieval.find(params[:retrieval_id])
+      user = current_user
+      render file: "#{Rails.root}/public/401.html", status: :unauthorized unless user
+      render file: "#{Rails.root}/public/403.html", status: :forbidden unless user == retrieval.user
+
+      retrieval.destroy
+      redirect_to action: :status, status: :found
+    end
   end
 
   # This rolls up getting information on data access into an API that approximates

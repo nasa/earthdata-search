@@ -26,7 +26,7 @@ class GranulesController < ApplicationController
   end
 
   def timeline
-    catalog_response = Echo::Client.get_timeline(request.request_parameters, token)
+    catalog_response = Echo::Client.post_timeline(request.request_parameters, token)
     render json: catalog_response.body, status: catalog_response.status
   end
 

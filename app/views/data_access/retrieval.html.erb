@@ -57,10 +57,33 @@
     </p>
     <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.submittedOrders">
       <li class="data-access-dataset">
-        <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
+        <p>
+          <span class="data-access-dataset-name" data-bind="text: dataset_id"></span>
+          <!-- ko if: order_status -->
+          <span class="order-state" data-bind="css: order_status, text: order_status"></span>
+          <!-- /ko -->
+        </p>
         <div class="data-access-dataset-actions">
-          <a class="button text-button" href="/data/status" target="_blank">Track Status</a>
+          <!-- ko if: cancel_link -->
+            <a data-bind="attr: {href: cancel_link}"
+               class="button text-button"
+               data-remote="true"
+               data-method="post"
+               data-confirm="Are you sure you want to remove this order?  This action cannot be undone."
+               rel="nofollow">Cancel</a>
+            <!-- /ko -->
         </div>
+      </li>
+    </ul>
+  </section>
+  <section class="data-access-content data-access-resources" data-bind="visible: ui.projectList.datasetLinks().length > 0">
+    <h2>Additional Resources and Documentation</h2>
+    <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetLinks">
+      <li class="data-access-dataset">
+        <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
+        <ul class="data-access-dataset-actions" data-bind="foreach: links">
+          <li><a class="link" data-bind="attr: {href: href}, text: title"></a></li>
+        </ul>
       </li>
     </ul>
   </section>

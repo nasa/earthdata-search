@@ -5,7 +5,7 @@ do ($ = jQuery, config = @edsc.config) ->
     $dest.animate(color: '#00ffff').animate(color: 'inherit')
 
   # Remove buttons in tables remove their rows
-  $(document).on 'click', 'tr a[title=remove]', ->
+  $(document).on 'click', 'tr a[title="remove"]', ->
     $(this).closest('tr').remove()
 
   $(document).on 'click', 'tr a[title="Remove Project"]', ->

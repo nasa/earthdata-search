@@ -13,6 +13,9 @@ describe "Data download page", reset: false do
   non_orderable_dataset_id = 'C179001887-SEDAC'
   non_orderable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
+  no_resource_dataset_id = 'C2821-NSIDCV0'
+  no_resource_dataset_title = 'AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations'
+
   before(:all) do
     load_page :search, overlay: false
     login
@@ -21,6 +24,56 @@ describe "Data download page", reset: false do
   after(:all) do
     wait_for_xhr
     AccessConfiguration.destroy_all if page.server.responsive?
+  end
+
+  context "when some accessed datasets have additional resource or documentation links" do
+    before :all do
+      load_page 'data/configure', project: [downloadable_dataset_id, no_resource_dataset_id]
+
+      choose 'Download'
+      click_on 'Continue'
+      choose 'Download'
+      click_on 'Submit'
+    end
+
+    it "displays a section for additional resources and documentation" do
+      expect(page).to have_content("Additional Resources and Documentation")
+    end
+
+    it "displays links for datasets with additional resources and documentation" do
+      expect(page).to have_link("USGS 15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED INFORMATION)")
+    end
+
+    it "displays titles for datasets with additional resources and documentation" do
+      within('.data-access-resources') do
+        expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
+      end
+    end
+
+    it "displays no information for datasets without additional resources and documentation" do
+      expect(page).to have_content("AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations")
+      within('.data-access-resources') do
+        expect(page).to have_no_content("AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations")
+      end
+    end
+  end
+
+  context "when no accessed datasets have additional resource or documentation links" do
+    before :all do
+      load_page 'data/configure', project: [no_resource_dataset_id]
+
+      choose 'Download'
+      click_on 'Submit'
+    end
+
+    it "displays no section for additional resources and documentation" do
+      expect(page).to have_no_content("Additional Resources and Documentation")
+    end
+
+    it "displays no information for datasets without additional resources and documentation" do
+      expect(page).to have_content("AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations")
+      expect(page).to have_no_selector('.data-access-resources')
+    end
   end
 
   context "when datasets have been selected for direct download" do
@@ -119,8 +172,12 @@ describe "Data download page", reset: false do
       expect(page).to have_content(orderable_dataset_title)
     end
 
-    it "displays a link to track their status" do
-      expect(page).to have_link('Track Status')
+    it "indicates current order status" do
+      expect(page).to have_text('Not Validated')
+    end
+
+    it "provides a link to cancel the order" do
+      expect(page).to have_link("Cancel")
     end
 
     it "displays no tracking links for datasets that were not chosen for asychronous access" do

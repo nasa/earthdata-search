@@ -376,6 +376,26 @@
 </div>
 
 <% content_for :header do %>
+<div id="choose-temporal-modal" data-bind="showModal: ui.projectList.needsTemporalChoice" class="modal" role="dialog" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="myModalLabel">What temporal selection would you like to use?</h3>
+      </div>
+      <div class="modal-body">
+        Would you like to filter your download by the focused time span (blue lines)
+        or your selected temporal constraint (orange lines)?
+        <div class="choice choice-1"><%= image_tag "blue-bars-circle.png" %></div>
+        <div class="choice choice-2"><%= image_tag "orange-bars-circle.png" %></div>
+      </div>
+      <div class="modal-footer">
+        <div class="choice choice-1"><button data-bind="click: ui.projectList.chooseOverride">Use Focused Time Span</button></div>
+        <div class="choice choice-2"><button data-bind="click: ui.projectList.chooseTemporal">Use Temporal Constraint</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <form id="data-access" method="POST" action="/data/configure" style="display:none;">
   <div>
     <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
