@@ -32,10 +32,10 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
   MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-  MIN_X = -1000000
-  MIN_Y = -1000000
-  MAX_X = 1000000
-  MAX_Y = 1000000
+  MIN_X = -100000
+  MIN_Y = -1000
+  MAX_X = 100000
+  MAX_Y = 1000
 
   formatTime = (date) -> string.padLeft(date.getUTCHours(), '0', 2) + ':' + string.padLeft(date.getUTCMinutes(), '0', 2)
   formatDay = (date) -> string.padLeft(date.getUTCDate(), '0', 2)
@@ -245,6 +245,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         @_hasFocus = false
         @_forceRedraw()
       @root.on 'focusin.timeline', (e) =>
+        hovered = document.querySelector("#{@scope('.date-label')}:hover")
+        @_onLabelClick(currentTarget: hovered) if hovered?
         @root.addClass('hasfocus')
         @_forceRedraw()
         # We want click behavior when we have focus, but not when the focus came from the
@@ -314,8 +316,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         @_translate(el, 0, DATASET_HEIGHT * index) if index > 0
 
       for [startTime, endTime, _] in intervals
-        startPos = @timeToPosition((startTime | 0) * 1000)
-        endPos = @timeToPosition((endTime | 0) * 1000)
+        startPos = @timeToPosition(startTime * 1000)
+        endPos = @timeToPosition(endTime * 1000)
         attrs =
           x: startPos
           y: 5
@@ -414,7 +416,6 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @focus()
       @_updateTimeline()
       @_drawTemporalBounds()
-      #console.log 'zoom', @_zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
     focus: (t0, t1) ->
       if  Math.abs(t0 - @_focus) < 1000
@@ -431,7 +432,6 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         startPt = @timeToPosition(t0)
         stopPt = @timeToPosition(t1)
 
-        console.log "FocusSet (#{new Date(t0).toISOString().substring(0, 10)}, #{new Date(t1).toISOString().substring(0, 10)})"
         left = @_buildRect(class: @scope('unfocused'), x1: startPt)
         overlay.appendChild(left)
 
@@ -461,7 +461,6 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
         if key == left
           t0 = @_roundTime(focus, zoom, -1)
-          console.log "roundTime: #{focus}, #{zoom}, #{-1} -> #{t0}"
           t1 = focus
           dx = @timeSpanToPx(focusEnd - focus)
         else
@@ -797,14 +796,14 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
     _buildRect: (attrs) ->
       attrs = $.extend({x: MIN_X, x1: MAX_X, y: MIN_Y, y1: MAX_Y}, attrs)
-      attrs['width'] ?= attrs.x1 - attrs.x
-      attrs['height'] ?= attrs.y1 - attrs.y
+      attrs['width'] ?= (attrs.x1 - attrs.x) | 0
+      attrs['height'] ?= (attrs.y1 - attrs.y) | 0
       delete attrs.x1
       delete attrs.y1
       @_buildSvgElement 'rect', attrs
 
     _roundTime: (time, zoom, increment=0) ->
-      time = (Math.round(time / 1000) | 0)* 1000
+      time = Math.round(time / 1000) * 1000
       date = new Date(time)
       components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
       components = components.slice(0, Math.max(components.length - zoom, 1))
