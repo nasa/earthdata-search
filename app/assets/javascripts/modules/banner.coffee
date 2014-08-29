@@ -111,17 +111,4 @@
 
       showBanner(url, title, error, className: 'banner-error', immediate: true, html: true, retry: retry)
 
-  # DELETE BEFORE 1.0 RELEASE
-  $(document).ready ->
-    isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
-    isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor)
-    isFirefox = /Firefox/.test(navigator.userAgent)
-
-    if !isChrome && !isSafari && !isFirefox
-      showBanner(
-        'unsupportedbrowser',
-        'Your browser is not yet supported',
-        'The Earthdata Search Alpha Preview is designed to work best in Chrome, Safari, and Firefox browsers.')
-  # END DELETE
-
   exports = showBanner
