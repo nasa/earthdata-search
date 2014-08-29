@@ -1,33 +1,15 @@
 class UsersController < ApplicationController
+  before_filter :require_login, only: [:contact_info]
+
   def login
-    token = params['token']
-    token['user_ip_address'] = request.remote_ip
+    session[:last_point] = request.referrer
+    session[:last_point] = params[:next_point] if params[:next_point]
 
-    response = Echo::Client.get_token(token['username'], token['password'], token['client_id'], token['user_ip_address'])
-
-    cookies['token'] = response.body["token"]["id"] if response.body["token"]
-    cookies['name'] = response.body["token"]["username"] if response.body["token"]
-
-    # Create a user in the database if one doesn't already exist
-    current_user
-
-    render json: response.body, status: response.status
-  end
-
-  def username_recall
-    response = Echo::Client.username_recall(params.slice(:email))
-    render json: response.body, status: response.status
-  end
-
-  def password_reset
-    response = Echo::Client.password_reset(params.slice(:username, :email))
-    render json: response.body, status: response.status
+    redirect_to URS_LOGIN_PATH
   end
 
   def logout
-    cookies["token"] = nil
-    cookies["name"] = nil
-    session[:recent_datasets] = []
+    clear_session
 
     respond_to do |format|
       format.html { redirect_to root_url }
@@ -35,28 +17,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def new
-  end
-
   def contact_info
-  end
-
-  def create
-    user = params[:user].with_indifferent_access
-    # Address needs to be converted to addresses
-    address = user.delete("address")
-
-    user[:addresses] = [address]
-
-    if user[:password] != user[:password_confirmation]
-      render json: {errors: "Password must match confirmation"}, status: 422
-      return
-    else
-      user.delete("password_confirmation")
-    end
-
-    response = Echo::Client.create_user({user: user})
-    render json: response.body, status: response.status
   end
 
   def get_preferences

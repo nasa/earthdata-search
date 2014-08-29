@@ -12,6 +12,9 @@
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
+    <script>
+      window.tokenExpiresIn = <%= logged_in? ? script_session_expires_in : 'null' %>;
+    </script>
     <%= yield :javascript %>
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
 </head>

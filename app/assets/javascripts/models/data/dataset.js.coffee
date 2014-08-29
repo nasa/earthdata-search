@@ -11,7 +11,7 @@ ns.Dataset = do (ko
                  ServiceOptionsModel = ns.ServiceOptions
                  toParam=jQuery.param
                  extend=jQuery.extend
-                 ajax = jQuery.ajax
+                 ajax = @edsc.util.xhr.ajax
                  ) ->
 
   datasets = ko.observableArray()
@@ -92,6 +92,16 @@ ns.Dataset = do (ko
       result = !@hasGranuleConfig()
       datasets.remove(this) if result
       result
+
+    makeRecent: ->
+      id = @id
+      if id? && !@featured
+        ajax
+          dataType: 'json'
+          url: "/datasets/#{id}/use.json"
+          method: 'post'
+          success: (data) ->
+            @featured = data
 
     fromJson: (jsonObj) ->
       @json = jsonObj

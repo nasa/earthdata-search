@@ -5,7 +5,7 @@ describe "Sharing Projects", reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    visit '/'
+    load_page :search
     login
   end
 

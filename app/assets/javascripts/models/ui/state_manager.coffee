@@ -4,7 +4,8 @@
                                    document
                                    extend = $.extend
                                    config = @edsc.config
-                                   urlUtil = @edsc.util.url) ->
+                                   urlUtil = @edsc.util.url
+                                   xhrUtil = @edsc.util.xhr) ->
 
   class StateManager
     constructor: (@page) ->
@@ -21,9 +22,10 @@
 
 
     monitor: ->
-      @loadFromUrl()
-      $(document).ready(@_onReady)
-      $(window).on 'edsc.pagechange', @loadFromUrl
+      setTimeout((=>
+        @loadFromUrl()
+        $(document).ready(@_onReady)
+        $(window).on 'edsc.pagechange', @loadFromUrl), 0)
 
     serialize: ->
       page = @page
@@ -67,14 +69,16 @@
         ko.computed(@_persistStateInUrl, this).extend(throttle: config.xhrRateLimitMs)
 
     loadFromUrl: =>
-      unless @page.ui.isLandingPage() # Avoid problem where switching to /search overwrites uncommited search conditions
-        clean = urlUtil.cleanPath()
-        if clean
-          [path, query] = clean.split('?')
-          @path(path)
-          @load(urlUtil.currentParams())
-          @page.workspaceName(urlUtil.getProjectName())
-          @page.workspaceNameField(urlUtil.getProjectName())
+      xhrUtil.wait(@loadFromUrlImmediate)
+
+    loadFromUrlImmediate: =>
+      clean = urlUtil.cleanPath()
+      if clean
+        [path, query] = clean.split('?')
+        @path(path)
+        @page.workspaceName(urlUtil.getProjectName())
+        @page.workspaceNameField(urlUtil.getProjectName())
+        @load(urlUtil.currentParams())
 
     _onReady: =>
       $overlay = $('.master-overlay')
@@ -203,9 +207,9 @@
 
     _toggleWithTimeout: (key, observable, bool) ->
       current = observable.peek()
-      return if current == bool
       @_timeouts ?= {}
       clearTimeout(@_timeouts[key])
+      return if current == bool
       if bool || !current?
         observable(bool)
       else

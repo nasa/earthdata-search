@@ -3,11 +3,7 @@
 <% end %>
 <% content_for :toolbar_secondary do %>
   <%= render partial: 'shared/feedback' %>
-<!-- ko with: account -->
-  <!-- ko if: user.isLoggedIn -->
-    <%= render partial: 'shared/login' %>
-  <!-- /ko -->
-<!-- /ko -->
+  <%= render partial: 'shared/login' %>
 <% end %>
 
 <div class="accounts">

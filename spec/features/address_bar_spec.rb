@@ -15,6 +15,7 @@ describe 'Address bar', reset: false do
   context 'when searching by keywords' do
     before(:all) do
       visit '/search/map'
+      wait_for_xhr
       fill_in "keywords", with: 'C1000000019-LANCEMODIS'
     end
 
@@ -46,6 +47,7 @@ describe 'Address bar', reset: false do
   context 'when searching by temporal' do
     before(:all) do
       visit '/search/map'
+      wait_for_xhr
       click_link "Temporal"
       js_check_recurring "dataset"
       fill_in "Start", with: "12-01 00:00:00"
@@ -99,6 +101,7 @@ describe 'Address bar', reset: false do
   context 'when searching by spatial' do
     before(:all) do
       visit '/search/map'
+      wait_for_xhr
       create_bounding_box(0, 0, 10, 10)
     end
 
@@ -305,6 +308,7 @@ describe 'Address bar', reset: false do
   context "when panning and zooming the map" do
     before(:all) do
       visit '/search/map'
+      wait_for_xhr
       page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
       wait_for_xhr
     end

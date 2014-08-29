@@ -64,7 +64,7 @@ do ($=jQuery
 
     updateLandingPageState()
 
-    $(window).on 'statechange anchorchange', updateLandingPageState
+    $(window).on 'edsc.pagechange', updateLandingPageState
 
     preferences.onload ->
       if preferences.showTour()

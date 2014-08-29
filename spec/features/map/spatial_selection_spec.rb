@@ -203,7 +203,7 @@ describe "Spatial" do
 
     context "changing the polygon selection" do
       before(:each) do
-        create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
+        create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
         create_polygon([-74, 41], [-75, 41], [-75, -40], [-74, 40])
         wait_for_xhr

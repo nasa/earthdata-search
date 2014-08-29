@@ -1,6 +1,5 @@
 #= require models/data/query
 #= require models/data/project
-#= require models/data/user
 #= require models/data/account
 #= require models/ui/temporal
 #= require models/ui/project_list
@@ -17,7 +16,6 @@ ns.AccessPage = do (ko,
                     pageData = @edscPageData
                     QueryModel = data.query.DatasetQuery
                     ProjectModel = data.Project
-                    UserModel = data.User
                     AccountModel = data.Account
                     AccountFormModel = ui.AccountForm
                     TemporalModel = ui.Temporal
@@ -30,10 +28,9 @@ ns.AccessPage = do (ko,
       @query = new QueryModel()
       @project = new ProjectModel(@query, false)
       @bindingsLoaded = ko.observable(false)
-      @user = new UserModel()
-      @account = new AccountModel(@user)
+      @account = new AccountModel()
 
-      projectList = new ProjectListModel(@project, @user)
+      projectList = new ProjectListModel(@project)
       accountForm = new AccountFormModel(@account, true)
 
       @ui =
@@ -44,12 +41,13 @@ ns.AccessPage = do (ko,
         accountForm: accountForm
         serviceOptionsList: new ServiceOptionsListModel(accountForm, @project)
 
-      if pageData
-        @project.id(pageData.id)
-        @project.fromJson(pageData)
-      else
-        @_loadFromUrl()
-        $(window).on 'edsc.pagechange', @_loadFromUrl
+      setTimeout((=>
+        if pageData
+          @project.id(pageData.id)
+          @project.fromJson(pageData)
+        else
+          @_loadFromUrl()
+          $(window).on 'edsc.pagechange', @_loadFromUrl), 0)
 
     _loadFromUrl: =>
       @project.serialized(urlUtil.currentParams())

@@ -12,7 +12,6 @@ describe "Data Access workflow", reset: false do
       load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
       wait_for_xhr
       click_link "Retrieve project data"
-      wait_for_xhr
     end
 
     after :each do
@@ -20,19 +19,7 @@ describe "Data Access workflow", reset: false do
     end
 
     it "forces the user to login before showing data access page" do
-      fill_in 'Username', with: 'edsc'
-      fill_in 'Password', with: 'EDSCtest!1'
-      click_button 'Sign In'
-      wait_for_xhr
-
-      expect(page).to have_content "Data Access"
-    end
-
-    it "does not show data access page with unsuccessful login" do
-      fill_in 'Username', with: 'test'
-      click_button 'Sign In'
-
-      expect(page).to have_content "Password can't be blank"
+      expect(page).to have_content('EOSDIS User Registration System')
     end
   end
 

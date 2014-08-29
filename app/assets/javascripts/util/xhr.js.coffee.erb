@@ -1,23 +1,21 @@
 @edsc.util.xhr = do (window, document, csrfToken=@edsc.config.csrfToken, $=jQuery) ->
   callbacks = []
 
-  timeouts = 0
   xhrs = 0
   timeoutPool = []
   realSetTimeout = window.setTimeout
   realClearTimeout = window.clearTimeout
 
   hasPending = ->
-    [xhrPool.length > 0 || timeoutPool.length > 0, xhrs, timeouts]
+    xhrPool.length > 0 || timeoutPool.length > 0
 
   runCallbacks = ->
-    unless hasPending()[0]
-      callbacks.pop()() while callbacks.length > 0
+    while !hasPending() && callbacks.length > 0
+      callbacks.pop()()
 
   window.setTimeout = (f, args...) ->
     id = null
     onTimeout = ->
-      timeouts++
       try
         if typeof f == "string"
           eval(f)
@@ -42,21 +40,63 @@
   $(document)
     .ajaxSend (event, xhr, settings) ->
       xhr.setRequestHeader('X-CSRF-Token', csrfToken)
-      xhrPool.push(xhr)
+      xhr.id = xhrs++
+      xhrPool.push(xhr.id)
     .ajaxComplete (event, xhr) ->
-      xhrs++
-      index = xhrPool.indexOf(xhr)
+      index = xhrPool.indexOf(xhr.id)
       xhrPool.splice(index, 1) if (index > -1)
       runCallbacks()
 
   wait = (callback) ->
-    setTimeout((->
-      if hasPending()[0]
-        callbacks.push(callback)
-      else
-        callback()), 0)
+    execWhenReady = ->
+      callbacks.push(callback)
+    setTimeout(execWhenReady, 0)
 
+  deferredXHR = (method, args...) ->
+    deferred = $.Deferred()
+
+    if isTokenExpired()
+      console.log 'Refreshing URS token'
+      $.ajax
+        url: '/refresh_token'
+        method: 'get'
+        dataType: 'json'
+        success: (data, status, xhr) ->
+          if data?
+            window.tokenExpiresIn = data.tokenExpiresIn
+
+          doXHR(deferred, method, args...)
+        error: (response, type, reason) ->
+          xhr.fail(-> deferred.reject())
+    else
+      doXHR(deferred, method, args...)
+
+    deferred
+
+  doXHR = (deferred, method, args...) ->
+    if deferred.state() == 'pending'
+      xhr = $[method](args...)
+      xhr.done(-> deferred.resolve())
+      xhr.fail(-> deferred.reject())
+      deferred.fail ->
+        xhr.abort()
+
+  isTokenExpired = ->
+    expires = getTokenExpires()
+    expires? && new Date() > expires
+
+  getTokenExpires = ->
+    expiresIn = window.tokenExpiresIn
+    if expiresIn?
+      (+new Date()) + expiresIn
+    else
+      null
 
   exports =
     hasPending: hasPending
     wait: wait
+    isTokenExpired: isTokenExpired
+    getTokenExpires: getTokenExpires
+    ajax: (args...) -> deferredXHR('ajax', args...)
+    post: (args...) -> deferredXHR('post', args...)
+    getJSON: (args...) -> deferredXHR('getJSON', args...)
