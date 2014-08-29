@@ -32,12 +32,6 @@ group :test do
 end
 
 group :development do
-  # Puppet / vagrant deployments using Capistrano
-  gem 'puppet'
-  gem 'librarian-puppet'
-  gem 'rvm-capistrano'
-  gem 'capistrano'
-
   gem 'quiet_assets'
 
   # For dumping additional metadata stored in DatasetExtras and similar
