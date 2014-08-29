@@ -54,18 +54,16 @@ module VCR
             cassette = 'geonames'
           elsif uri.start_with? 'http://ogre.adc4gis.com'
             cassette = 'ogre'
-          elsif request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')
-            cassette = 'expired-token'
-            record = :none
           elsif (request.method == :delete ||
                  (request.uri.include?('/orders.json') && request.method == :get) ||
                  request.uri.include?('/echo-rest/calendar_events') ||
+                 uri.include?('users/current.json') ||
+                 uri.include?('/echo-rest/users.json') ||
+                 request.uri.include?('4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json') ||
                  request.uri.include?('69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences.json') ||
+                 (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
                  (request.uri.include?('/datasets.json') && request.uri.include?('trigger500')))
             cassette = 'hand-edited'
-            record = :none
-          elsif request.uri.include? '/echo-rest/users.json'
-            cassette = 'echo-rest-users'
             record = :none
           elsif request.uri.include? '/echo_catalog/granules/timeline'
             cassette = 'timeline'
