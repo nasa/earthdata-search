@@ -241,8 +241,12 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @root.on 'keydown.timeline', @_onKeydown
 
       @root.on 'focusout.timeline', (e) =>
+        @root.removeClass('hasfocus')
         @_hasFocus = false
+        @_forceRedraw()
       @root.on 'focusin.timeline', (e) =>
+        @root.addClass('hasfocus')
+        @_forceRedraw()
         # We want click behavior when we have focus, but not when the focus came from the
         # click's mousedown.  Ugh.
         setTimeout((=> @_hasFocus = true), 500)
@@ -277,7 +281,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       null
 
     loadstart: (id, start, end, resolution) ->
-      match = document.getElementsByClassName(id)
+      match = @root[0].getElementsByClassName(id)
       if match.length > 0
         match[0].setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
         @_empty(match[0])
@@ -299,7 +303,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
       [start, end, resolution, intervals, color] = @_data[id] ? [@start - 1 , @end + 1, RESOLUTIONS[zoom - 2], [], null]
 
-      match = document.getElementsByClassName(id)
+      match = @root[0].getElementsByClassName(id)
       el = null
       if match.length > 0
         el = match[0]
@@ -310,8 +314,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         @_translate(el, 0, DATASET_HEIGHT * index) if index > 0
 
       for [startTime, endTime, _] in intervals
-        startPos = @timeToPosition(startTime * 1000)
-        endPos = @timeToPosition(endTime * 1000)
+        startPos = @timeToPosition((startTime | 0) * 1000)
+        endPos = @timeToPosition((endTime | 0) * 1000)
         attrs =
           x: startPos
           y: 5
@@ -328,10 +332,14 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       el.setAttribute('class', "#{id} #{@scope('data')}")
 
       @tlDatasets.appendChild(el)
-      children = @tlDatasets.childNodes
-      loading = document.getElementsByClassName(@scope('loading'))
 
       null
+
+    _forceRedraw: ->
+      rect = @_buildRect(stroke: 'none')
+      svg = @svg
+      svg.appendChild(rect)
+      setTimeout -> svg.removeChild(rect)
 
     refresh: ->
       @datasets(@_datasets)
@@ -423,6 +431,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         startPt = @timeToPosition(t0)
         stopPt = @timeToPosition(t1)
 
+        console.log "FocusSet (#{new Date(t0).toISOString().substring(0, 10)}, #{new Date(t1).toISOString().substring(0, 10)})"
         left = @_buildRect(class: @scope('unfocused'), x1: startPt)
         overlay.appendChild(left)
 
@@ -452,6 +461,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
         if key == left
           t0 = @_roundTime(focus, zoom, -1)
+          console.log "roundTime: #{focus}, #{zoom}, #{-1} -> #{t0}"
           t1 = focus
           dx = @timeSpanToPx(focusEnd - focus)
         else
@@ -461,6 +471,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
         if @_canFocusTimespan(t0, t1)
           @_pan(dx)
+          console.log 'this focus'
           @focus(t0, t1)
 
     _canFocusTimespan: (start, stop) ->
@@ -793,7 +804,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @_buildSvgElement 'rect', attrs
 
     _roundTime: (time, zoom, increment=0) ->
-      time = Math.round(time / 1000) * 1000
+      time = (Math.round(time / 1000) | 0)* 1000
       date = new Date(time)
       components = (date["getUTC#{c}"]() for c in ['FullYear', 'Month', 'Date', 'Hours', 'Minutes'])
       components = components.slice(0, Math.max(components.length - zoom, 1))
