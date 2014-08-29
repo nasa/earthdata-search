@@ -13,6 +13,17 @@ ns.query = do (ko,
                deparam=@edsc.util.deparam
                extend=$.extend) ->
 
+  # This is a little gross, but we're allowing an override of temporal
+  # query values on the configure page only to disambiguate the user's
+  # intent when they set a temporal constraint and a timeline focus.
+  # We need to do it here to avoid inordinate pauses waiting for URL
+  # updates, project saving, etc, when clicking the "download all button."
+  if window.location.pathname == '/data/configure'
+    href = window.location.href
+    overrideTemporalParam = href.match(/[?&]ot=([^&$]+)/)
+    if overrideTemporalParam?
+      overrideTemporal = decodeURIComponent(overrideTemporalParam[1])
+
   ko.extenders.queryable = (target, paramObj) ->
     paramObj.value = target
     target.params = ko.computed(null, paramObj, paramObj)
@@ -240,6 +251,9 @@ ns.query = do (ko,
       params = extend({}, inheritedParams)
       for component in components
         extend(true, params, component.params())
+
+      # Perform the temporal override if appropriate
+      params.temporal = overrideTemporal if overrideTemporal
       params
 
     serialize: -> @_writeComponents(@_serialized, {})

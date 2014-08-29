@@ -6,6 +6,7 @@
 
 .DS_Store
 build_output
+test_results
 
 # Ignore bundler config
 /.bundle
@@ -26,3 +27,5 @@ build_output
 
 /config/database.yml
 .jhw-cache
+/config/secrets.yml
+/config/application.yml

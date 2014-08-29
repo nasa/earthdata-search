@@ -38,12 +38,11 @@ module Echo
       get("/catalog-rest/search_facet.json", options_to_facet_query(options), token_header(token))
     end
 
-    def self.get_timeline(options={}, token=nil)
-      get('/catalog-rest/echo_catalog/granules/timeline.json', options, token_header(token))
-      # TODO: Use the code below instead of the line above once ECHO NCR 11014642 is done.
-      #       Don't forget to re-generate fixtures
-      #headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      #post('/catalog-rest/echo_catalog/granules/timeline.json', options.to_query, headers)
+    def self.post_timeline(options={}, token=nil)
+      # Implementation of to_query which doesn't sort keys.  Avoids completely destroying current fixtures.
+      query = options.map {|k, v| v.to_query(k)} * '&'
+      headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
+      post('/catalog-rest/echo_catalog/granules/timeline.json', query, headers)
     end
 
     def self.get_provider_holdings
@@ -125,8 +124,8 @@ module Echo
       get("/echo-rest/option_definitions/#{id}.json")
     end
 
-    def self.get_orders(token)
-      get('/echo-rest/orders.json', {}, token_header(token))
+    def self.get_orders(params, token)
+      get('/echo-rest/orders.json', params, token_header(token))
     end
 
     def self.delete_order(order_id, token)

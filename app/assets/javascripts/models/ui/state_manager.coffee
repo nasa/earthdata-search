@@ -211,7 +211,24 @@
       else
         @_timeouts[key] = setTimeout((-> observable(false)), config.defaultAnimationDurationMs)
 
+    _isValid: (path, serialized) ->
+      # Perform validations to ensure that invalid or incomplete states (often caused by script errors)
+      # don't get saved in the URL, destroying the user's project bookmark
+
+      if path.indexOf('/granule-details') != -1 && !serialized.g
+        # If the user is on the granule details page, but there is no selected selected granule
+        false
+      if path.indexOf('/granules') != -1 && (!serialized.p || serialized.p.indexOf('!') == 0)
+        # If the user is viewing granules, but there is no selected dataset
+        false
+      else
+        true
+
     _persistStateInUrl: ->
-      @historyChanged = true if urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceNameField.peek())
+      path = @path()
+      serialized = @serialize()
+      if @_isValid(path, serialized)
+        changed = urlUtil.saveState(path, serialized, !@historyChanged, @page.workspaceNameField.peek())
+        @historyChanged = true if changed
 
   exports = StateManager

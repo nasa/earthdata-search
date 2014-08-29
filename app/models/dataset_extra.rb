@@ -1,20 +1,4 @@
 class DatasetExtra < ActiveRecord::Base
-  GIBS_CONFIGURATIONS = {
-    'C1000000016-LANCEMODIS' => {
-      product: 'MODIS_Terra_Snow_Cover',
-      format: 'png',
-      resolution: '500m'
-    },
-    'C1000000019-LANCEMODIS' => {
-      product: 'MODIS_Terra_Aerosol',
-      maxNativeZoom: 5,
-      format: 'png',
-      resolution: '2km',
-      arctic: false,
-      antarctic: false
-    }
-  }
-
   validates_presence_of :echo_id
   validates_uniqueness_of :echo_id
 
@@ -153,7 +137,7 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def self.featured_ids
-    GIBS_CONFIGURATIONS.keys
+    ['C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS']
   end
 
   def decorate(dataset)
@@ -245,7 +229,8 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def decorate_gibs_layers(dataset)
-    gibs_config = GIBS_CONFIGURATIONS[dataset[:id]]
+    key = [dataset['data_center'], dataset['short_name']].join('___')
+    gibs_config = Rails.configuration.gibs[key]
     dataset[:gibs] = gibs_config unless gibs_config.nil?
   end
 

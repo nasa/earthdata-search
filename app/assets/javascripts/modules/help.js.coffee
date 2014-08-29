@@ -259,7 +259,7 @@
     if queue[index].wait
       wait(showCurrentImmediate)
     else if queue[index].waitOnAnimate
-      setTimeout(showCurrentImmediate, 500)
+      setTimeout((-> wait(showCurrentImmediate)), config.defaultAnimationDurationMs + 200)
     else
       showCurrentImmediate()
 

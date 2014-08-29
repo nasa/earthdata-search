@@ -74,7 +74,7 @@ describe 'Duplicate Service Options', reset: false do
       within '.access-item-selection:first-child' do
         choose 'Download'
       end
-      within '.access-item-selection:nth-child(3)' do
+      within '.access-item-selection:nth-child(4)' do
         choose 'Download'
       end
       click_button 'Continue'
@@ -88,7 +88,9 @@ describe 'Duplicate Service Options', reset: false do
     end
 
     it "displays download links twice" do
-      expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)', count: 2
+      within '.data-access-downloads' do
+        expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)', count: 2
+      end
     end
   end
 end

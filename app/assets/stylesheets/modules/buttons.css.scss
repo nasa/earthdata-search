@@ -155,3 +155,23 @@ button:disabled {
   right: 20px;
   bottom: 20px;
 }
+
+.choice {
+  width: 50%;
+  text-align: center;
+}
+
+.modal-body .choice {
+  padding: .5em 0;
+}
+
+.choice-1 {
+  float: left;
+}
+.choice-2 {
+  float: right;
+}
+
+.modal-footer {
+  clear: both;
+}

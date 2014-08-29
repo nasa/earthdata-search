@@ -220,6 +220,11 @@
 
 .access-item-selection {
   padding: .5em 0;
+  border-top: 1px solid #ccc;
+
+  &:first-child {
+    border-top: 0px;
+  }
 }
 
 .summary-label {
@@ -269,7 +274,6 @@
 
 .access-form {
   padding: 0 1em;
-  border-bottom: 1px solid #ccc;
 
   > .echoforms-control-ui {
     padding-top: 0;
@@ -291,19 +295,64 @@
     padding: .5em 0 .5em .5em;
     text-align: left;
   }
+}
 
-  .order-state {
-    background: #34495e;
-    padding: .3em .6em;
-    border-radius: 2px;
-    color: #fff;
+.data-retrieval-time-ago {
+  white-space: nowrap;
+}
 
-    &.processing, &.validated, &.quoted {
-      background: #27ae60;
-    }
+.order-state {
+  background: #34495e;
+  padding: .3em .6em;
+  border-radius: 2px;
+  color: #fff;
+  text-transform: capitalize;
 
-    &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
-      background: #e74c3c;
-    }
+  &.processing, &.validated, &.quoted {
+    background: #27ae60;
+  }
+
+  &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
+    background: #e74c3c;
+  }
+}
+
+.access-subset-options {
+  padding: 1em;
+
+  h5 {
+    font-size: 1em;
+    margin: .1em -1em;
+  }
+
+  .radio-label {
+    padding-right: 1em;
+  }
+}
+
+.access-subset-options-section {
+  padding: .5em 0;
+}
+
+.access-parameter {
+  padding: .2em 0;
+
+  > .description {
+    font-size: .8em;
+    display: block;
+    font-style: italic;
+  }
+}
+
+.access-subset-map {
+  width: 360px;
+  height: 180px;
+  @include retina-image(plate_carree_earth, 360px 180px, png, null, '@2x', true);
+  position: relative;
+
+  > .access-mbr {
+    position: absolute;
+    background-color: rgba(238, 153, 0, .5);
+    border: 2px solid rgb(238, 153, 0);
   }
 }
