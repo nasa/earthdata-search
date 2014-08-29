@@ -3,7 +3,6 @@
 #= require models/data/datasets
 #= require models/data/dataset_facets
 #= require models/data/project
-#= require models/data/user
 #= require models/data/preferences
 #= require models/ui/spatial_type
 #= require models/ui/temporal
@@ -24,7 +23,6 @@ ns.SearchPage = do (ko
                     DatasetsModel = data.Datasets
                     DatasetFacetsModel = data.DatasetFacets
                     ProjectModel = data.Project
-                    UserModel = data.User
                     SpatialTypeModel = ui.SpatialType
                     DatasetsListModel = ui.DatasetsList
                     ProjectListModel = ui.ProjectList
@@ -41,16 +39,15 @@ ns.SearchPage = do (ko
   class SearchPage
     constructor: ->
       @query = new QueryModel()
-      @user = new UserModel()
       @datasets = new DatasetsModel(@query)
       @datasetFacets = new DatasetFacetsModel(@query)
       @project = new ProjectModel(@query)
-      @preferences = new PreferencesModel(@user)
+      @preferences = new PreferencesModel()
 
       @ui =
         spatialType: new SpatialTypeModel(@query)
         datasetsList: new DatasetsListModel(@query, @datasets, @project)
-        projectList: new ProjectListModel(@project, @user, @datasets)
+        projectList: new ProjectListModel(@project, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
 
       @bindingsLoaded = ko.observable(false)

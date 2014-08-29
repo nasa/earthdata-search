@@ -1,6 +1,6 @@
 ns = @edsc.models.ui
 
-ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery.post, $ = jQuery, wait=@edsc.util.xhr.wait) ->
+ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc.util.xhr, $ = jQuery, wait=@edsc.util.xhr.wait) ->
 
   sortable = (root) ->
     $root = $(root)
@@ -41,7 +41,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
       false
 
   class ProjectList
-    constructor: (@project, @user, @datasetResults) ->
+    constructor: (@project, @datasetResults) ->
       @visible = ko.observable(false)
       @needsTemporalChoice = ko.observable(false)
 
@@ -63,23 +63,24 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
         @project.datasets(datasets)
 
     loginAndDownloadDataset: (dataset) =>
-      @user.loggedIn =>
-        @project.focus(dataset)
-        @configureProject()
+      @project.focus(dataset)
+      @configureProject()
 
     loginAndDownloadGranule: (dataset, granule) =>
-      @user.loggedIn =>
-        @project.focus(dataset)
-        @configureProject(granule.id)
+      @project.focus(dataset)
+      @configureProject(granule.id)
 
     loginAndDownloadProject: =>
-      @user.loggedIn =>
-        @configureProject()
+      @configureProject()
 
     configureProject: (singleGranuleId=null) ->
-        @_sortOutTemporalMalarkey (optionStr) ->
-          singleGranuleParam = if singleGranuleId? then "&sgd=#{encodeURIComponent(singleGranuleId)}" else ""
-          window.location.href = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr
+      @_sortOutTemporalMalarkey (optionStr) ->
+        singleGranuleParam = if singleGranuleId? then "&sgd=#{encodeURIComponent(singleGranuleId)}" else ""
+        path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr
+        if window.tokenExpiresIn?
+          window.location.href = path
+        else
+          window.location.href = "/login?next_point=#{encodeURIComponent(path)}"
 
     _sortOutTemporalMalarkey: (callback) ->
       querystr = urlUtil.currentQuery()
@@ -111,6 +112,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, doPost=jQuery
       if project.hasDataset(dataset)
         project.removeDataset(dataset)
       else
+        dataset.makeRecent()
         project.addDataset(dataset)
 
     _computeDatasetLinks: ->

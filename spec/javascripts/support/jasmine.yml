@@ -19,6 +19,7 @@ src_files:
   - assets/util/deparam.js
   - assets/util/string.js.coffee
   - assets/util/date.js.coffee
+  - assets/util/xhr.js.coffee
   - assets/modules/map/coordinate.js.coffee
   - assets/modules/map/arc.js.coffee
   - assets/modules/map/geoutil.js.coffee

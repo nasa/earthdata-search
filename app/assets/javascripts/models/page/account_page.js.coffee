@@ -9,13 +9,11 @@ ns.CreateAccountPage = do (ko
                           setCurrent = ns.setCurrent
                           AccountModel = data.Account
                           AccountFormModel = ui.AccountForm
-                          UserModel = data.User
                           ) ->
 
   class AccountPage
     constructor: ->
-      @user = new UserModel()
-      @account = new AccountModel(@user)
+      @account = new AccountModel()
       @bindingsLoaded = ko.observable(false)
 
       @ui =

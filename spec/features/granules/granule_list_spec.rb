@@ -54,11 +54,11 @@ describe "Granule list", reset: false do
       end
 
       after :all do
-        find('div.modal').click_link('close')
+        page.execute_script('window.history.back()')
       end
 
       it "triggers the download workflow" do
-        expect(page).to have_selector('div.modal')
+        expect(page).to have_content('EOSDIS User Registration System')
       end
     end
 
@@ -152,9 +152,7 @@ describe "Granule list", reset: false do
           expect(page).to have_no_content("Granule excluded. Undo")
         end
       end
-
     end
-
   end
 
   context "for datasets with many granule results" do

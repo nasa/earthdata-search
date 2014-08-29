@@ -3,7 +3,7 @@ ns = @edsc.models.data
 ns.XhrModel = do (ko
                   KnockoutModel=@edsc.models.KnockoutModel
                   config=@edsc.config
-                  ajax=jQuery.ajax
+                  ajax=@edsc.util.xhr.ajax
                   toParam=$.param) ->
 
 
@@ -48,8 +48,8 @@ ns.XhrModel = do (ko
       @query.params()
 
     abort: ->
-      if @currentRequest? && @currentRequest.readystate != 4
-        @currentRequest.abort()
+      if @currentRequest? && @currentRequest.state() == 'pending'
+        @currentRequest.reject()
 
     _computeSearchResponse: (current, callback) ->
       if @query?
@@ -99,7 +99,7 @@ ns.XhrModel = do (ko
         url = @path
         data = query
 
-      @currentRequest = xhr = $.ajax
+      @currentRequest = xhr = ajax
         method: method
         dataType: 'json'
         url: url
@@ -133,12 +133,11 @@ ns.XhrModel = do (ko
           @isError(true)
           console.log("Fail (#{requestId}) [#{reason}]: #{url}")
           @_onFailure(response)
-      null
+        null
 
     _onFailure: (response) ->
       if response.status == 403
         # TODO: don't reference page logout the user
-        edsc.page.user.logout()
         edsc.banner(null, 'Session has ended', 'Please sign in')
 
       errors = response.responseJSON?.errors

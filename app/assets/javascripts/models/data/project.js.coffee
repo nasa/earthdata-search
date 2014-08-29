@@ -7,7 +7,7 @@ ns.Project = do (ko,
                  extend = $.extend,
                  param = $.param,
                  deparam = @edsc.util.deparam
-                 ajax = $.ajax
+                 ajax = @edsc.util.xhr.ajax
                  urlUtil = @edsc.util.url
                  QueryModel = ns.query.DatasetQuery,
                  DatasetsModel = ns.Datasets
@@ -127,7 +127,9 @@ ns.Project = do (ko,
       current = observable()
       unless current?.dataset == dataset
         current?.dispose()
-        projectDataset = new ProjectDataset(dataset) if dataset?
+        if dataset?
+          projectDataset = new ProjectDataset(dataset)
+          dataset.makeRecent()
         observable(projectDataset)
 
     getDatasets: ->

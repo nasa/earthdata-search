@@ -1,11 +1,6 @@
-#= require models/data/user
-
 ns = @edsc.models.data
 
-ns.Account = do (ko
-                doPost=jQuery.post
-                getJSON=jQuery.getJSON
-                UserModel=ns.User) ->
+ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
 
   class Address
     constructor: ->
@@ -59,15 +54,9 @@ ns.Account = do (ko
         phone_number_type: @type
 
   class Account
-    constructor: (@user) ->
-      @username = ko.observable("")
-      @usernameError = ko.observable(false)
-      @password = ko.observable("")
-      @passwordError = ko.observable(false)
+    constructor: ->
       @email = ko.observable("")
       @emailError = ko.observable(false)
-      @passwordConfirmation = ko.observable("")
-      @passwordConfirmationError = ko.observable(false)
       @firstName = ko.observable("")
       @firstNameError = ko.observable(false)
       @lastName = ko.observable("")
@@ -93,51 +82,54 @@ ns.Account = do (ko
       @message = ko.observable("")
       @preferencesLoaded = ko.observable(false)
 
-      if @user.name()?.length > 0
+      if window.tokenExpiresIn?
         @_from_user()
-      else
-        @user = new UserModel()
 
     _from_user: =>
-      xhr = getJSON "/users/get_preferences", (data) =>
-        @_preferencesFromJson(data)
-        @preferencesLoaded(true)
-      xhr.fail (response, type, reason) =>
-        @preferencesLoaded(false)
-        if response.status == 404
-          @errors([])
-        else
-          @errors(["Contact information could not be loaded, please try again later"])
+      xhr = ajax
+        url: "/users/get_preferences"
+        dataType: 'json'
+        method: 'get'
+        success: (data) =>
+          @_preferencesFromJson(data)
+          @preferencesLoaded(true)
+        fail: (response, type, reason) =>
+          @preferencesLoaded(false)
+          if response.status == 404
+            @errors([])
+          else
+            @errors(["Contact information could not be loaded, please try again later"])
 
     updateContactInformation: (callback) =>
       @message('')
       @_validateContactInfoForm()
 
       if @errors()?.length == 0
-        xhr = doPost '/users/update_contact_info', @_buildPreferences(), (response) =>
-          @_preferencesFromJson(response)
-          @preferencesLoaded(true)
-          @message("Successfully updated contact information")
-          callback?()
-        xhr.fail (response, type, reason) =>
-          @preferencesLoaded(false)
-          server_error = false
-          try
-            errors = JSON.parse(response.responseText)?.errors
+        xhr = ajax
+          url: '/users/update_contact_info'
+          data: @_buildPreferences()
+          dataType: 'json'
+          method: 'post'
+          success: (response) =>
+            @_preferencesFromJson(response)
+            @preferencesLoaded(true)
+            @message("Successfully updated contact information")
+            callback?()
+          fail: (response, type, reason) =>
+            @preferencesLoaded(false)
+            server_error = false
+            try
+              errors = JSON.parse(response.responseText)?.errors
 
-            for error in errors
-              if error.indexOf('Username') >= 0
-                @usernameError(true)
-              if error.indexOf('Password') >= 0
-                @passwordError(true)
-              if error.indexOf('Email') >= 0
-                @emailError(true)
-              # TODO: list other account fields here
+              for error in errors
+                if error.indexOf('Email') >= 0
+                  @emailError(true)
+                # TODO: list other account fields here
 
-            @errors(errors)
-          catch
-            server_error = true
-          @errors(["Contact information could not be updated, please try again later"]) if server_error
+              @errors(errors)
+            catch
+              server_error = true
+            @errors(["Contact information could not be updated, please try again later"]) if server_error
 
     _preferencesFromJson: (json) =>
       prefs = json.preferences
@@ -179,55 +171,10 @@ ns.Account = do (ko
       data =
         preferences: prefs
 
-    createAccount: =>
-      # Fix chrome autocomplete issues
-      @username(document.getElementById('username')?.value) unless @username()?.length > 0
-      @password(document.getElementById('password')?.value) unless @password()?.length > 0
-      @email(document.getElementById('email')?.value) unless @email()?.length > 0
-      @firstName(document.getElementById('first_name')?.value) unless @firstName()?.length > 0
-      @lastName(document.getElementById('last_name')?.value) unless @lastName()?.length > 0
-      @organizationName(document.getElementById('organization_name')?.value) unless @organizationName()?.length > 0
-      @domain(document.getElementById('user_domain')?.value) unless @domain()?.length > 0
-      @userType(document.getElementById('user_type')?.value) unless @userType()?.length > 0
-      @primaryStudyArea(document.getElementById('primary_study_area')?.value) unless @primaryStudyArea()?.length > 0
-      @address.country(document.getElementById('country')?.value) unless @address.country()?.length > 0
-
-      @_validateNewAccountForm()
-
-      if @errors()?.length == 0
-        xhr = doPost '/users', @_buildUserData(), (response) =>
-          @user.username(@username())
-          @user.password(@password())
-          @user.login()
-          @clearAccountForm()
-        xhr.fail(@_onCreateFail)
-
-    _onCreateFail: (response, type, reason) =>
-      server_error = false
-      console.log response.responseText
-      try
-        errors = JSON.parse(response.responseText)?.errors
-
-        for error in errors
-          if error.indexOf('Username') >= 0
-            @usernameError(true)
-          if error.indexOf('Password') >= 0
-            @passwordError(true)
-          if error.indexOf('Email') >= 0
-            @emailError(true)
-
-        @errors(errors)
-      catch
-        server_error = true
-      @errors("An error occurred when creating account.  Please retry later.") if server_error
-
     _buildUserData: =>
       user =
-        username: @username()
         first_name: @firstName()
         last_name: @lastName()
-        password: @password() if @password()?.length > 0
-        password_confirmation: @passwordConfirmation() if @passwordConfirmation()?.length > 0
         email: @email()
         user_domain: @domain()
         organization_name: @organizationName()
@@ -263,59 +210,6 @@ ns.Account = do (ko
 
       @errors(errors)
 
-    _validateNewAccountForm: =>
-      @_resetErrors()
-      errors = []
-      unless @username()?.length > 0
-        errors.push "Please provide username"
-        @usernameError(true)
-
-      unless @password()?.length > 0
-        errors.push "Please provide password"
-        @passwordError(true)
-
-      unless @firstName()?.length > 0
-        errors.push "Please provide first name"
-        @firstNameError(true)
-
-      unless @lastName()?.length > 0
-        errors.push "Please provide last name"
-        @lastNameError(true)
-
-      unless @email()?.length > 0
-        errors.push "Please provide email"
-        @emailError(true)
-
-      unless @domain()?.length > 0
-        errors.push "Please select domain"
-        @domainError(true)
-
-      unless @organizationName()?.length > 0
-        errors.push "Please provide organization name"
-        @organizationNameError(true)
-
-      unless @userType()?.length > 0
-        errors.push "Please select type of user"
-        @userTypeError(true)
-
-      unless @primaryStudyArea()?.length > 0
-        errors.push "Please select primary study area"
-        @primaryStudyAreaError(true)
-
-      unless @address.country()?.length > 0
-        errors.push "Please select country"
-        @address.countryError(true)
-
-      if errors?.length > 1
-        errors = ["Please fill in all required fields, highlighted below"]
-
-      unless @password() == @passwordConfirmation()
-        errors.push "Password must match confirmation"
-        @passwordError(true)
-        @passwordConfirmationError(true)
-
-      @errors(errors)
-
     clearAccountForm: =>
       @errors("")
       @_resetErrors()
@@ -323,9 +217,6 @@ ns.Account = do (ko
 
     _resetFields: =>
       @email("")
-      @username("")
-      @password("")
-      @passwordConfirmation("")
       @firstName("")
       @lastName("")
       @organizationName("")
@@ -336,9 +227,6 @@ ns.Account = do (ko
 
     _resetErrors: =>
       @emailError(false)
-      @usernameError(false)
-      @passwordError(false)
-      @passwordConfirmationError(false)
       @firstNameError(false)
       @lastNameError(false)
       @organizationNameError(false)

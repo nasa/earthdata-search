@@ -21,6 +21,10 @@ module VCR
       Rack::Utils.parse_nested_query(q1) == Rack::Utils.parse_nested_query(q2)
     end
 
+    def self.register_token(name, token)
+      @persister.tokens[name] = token
+    end
+
     def self.configure(c, options={})
       c.cassette_library_dir = 'fixtures/cassettes'
       c.hook_into :faraday
@@ -28,20 +32,20 @@ module VCR
       c.debug_logger = EDSCLoggerStream.new
 
       c.cassette_serializers[:null] = VCR::NullSerializer.new
-      c.cassette_persisters[:edsc] = VCR::SplitPersister.new(c.cassette_serializers[:null],
+      @persister = c.cassette_persisters[:edsc] = VCR::SplitPersister.new(c.cassette_serializers[:null],
                                                              c.cassette_serializers[:yaml],
                                                              c.cassette_persisters[:file_system])
       c.default_cassette_options = { persist_with: :edsc, serialize_with: :null }
 
       VCR.request_matchers.register(:parsed_uri) { |r1, r2| compare_uris(r1, r2) }
 
-      opts = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
+      options = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
       default_record_mode = options[:record] || :new_episodes
 
       lock = Mutex.new
       c.around_http_request do |request|
         lock.synchronize do
-          opts = opts.dup
+          opts = options.deep_dup
           record = default_record_mode
 
           cassette = 'services'
@@ -50,18 +54,16 @@ module VCR
             cassette = 'geonames'
           elsif uri.start_with? 'http://ogre.adc4gis.com'
             cassette = 'ogre'
-          elsif request.uri.include?('fail%25+hard') || request.uri.include?('fail+hard')
-            cassette = 'expired-token'
-            record = :none
           elsif (request.method == :delete ||
                  (request.uri.include?('/orders.json') && request.method == :get) ||
                  request.uri.include?('/echo-rest/calendar_events') ||
+                 uri.include?('users/current.json') ||
+                 uri.include?('/echo-rest/users.json') ||
+                 request.uri.include?('4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json') ||
                  request.uri.include?('69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences.json') ||
+                 (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
                  (request.uri.include?('/datasets.json') && request.uri.include?('trigger500')))
             cassette = 'hand-edited'
-            record = :none
-          elsif request.uri.include? '/echo-rest/users.json'
-            cassette = 'echo-rest-users'
             record = :none
           elsif request.uri.include? '/echo_catalog/granules/timeline'
             cassette = 'timeline'
@@ -71,6 +73,12 @@ module VCR
           elsif request.uri.include? '/echo-rest/'
             parts = request.uri.split('/echo-rest/')[1]
             cassette = parts.split(/\.|\/|\?/).first
+          end
+
+          if uri.include?('users/current.json') ||
+              uri.include?('preferences.json') ||
+              uri.include?('orders.json')
+            opts[:match_requests_on] << :headers
           end
 
           opts[:record] = record

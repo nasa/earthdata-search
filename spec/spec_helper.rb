@@ -10,6 +10,7 @@ require 'headless'
 #File.truncate(Rails.root.join("log/test.log"), 0)
 
 require 'capybara-screenshot/rspec'
+require 'rack_session_access/capybara'
 
 if ENV['driver'] == 'poltergeist'
   require 'capybara/poltergeist'
@@ -111,6 +112,18 @@ RSpec.configure do |config|
   timings = {}
 
   config.before :suite do
+    #register tokens for usernames
+    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['edsc']
+    VCR::EDSCConfigurer.register_token('edsc', token['access_token'] + ':' + ENV['urs_client_id'])
+
+    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['edscbasic']
+    VCR::EDSCConfigurer.register_token('edscbasic', token['access_token'] + ':' + ENV['urs_client_id'])
+
+    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['expired_token']
+    VCR::EDSCConfigurer.register_token('expired_token', token['access_token'] + ':' + ENV['urs_client_id'])
+  end
+
+  config.before :suite do
     count = self.class.children.size
     Headless.new(:destroy_on_exit => false).start
   end
@@ -143,7 +156,7 @@ RSpec.configure do |config|
     if example.exception != nil
       # Failure only code goes here
       if defined?(page) && page && page.driver && defined?(page.driver.console_messages)
-        puts "Console messages:" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
+        puts "Console messages:\n" + page.driver.console_messages.map {|m| m[:message]}.join("\n")
       end
     end
   end
@@ -164,6 +177,7 @@ RSpec.configure do |config|
 
   config.extend SharedBrowserSession
 
+  config.include Helpers::SecretsHelpers
   config.include Helpers::TimelineHelpers
   config.include Helpers::OverlayHelpers
   config.include Helpers::SpatialHelpers

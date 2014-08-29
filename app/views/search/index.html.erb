@@ -281,7 +281,7 @@
   </div>
 </div>
 
-<div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid.selected()">
+<div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid.selected(), css: { 'knockout-template': !bindingsLoaded }">
   <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
   <label for="map-grid-system">
     <i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates
@@ -392,79 +392,6 @@
         <div class="choice choice-1"><button data-bind="click: ui.projectList.chooseOverride">Use Focused Time Span</button></div>
         <div class="choice choice-2"><button data-bind="click: ui.projectList.chooseTemporal">Use Temporal Constraint</button></div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div id="login-modal" data-bind="showModal: user.needsLogin" class="modal" role="dialog" aria-labelledby="EDSC Login" data-keyboard="false" data-backdrop="static">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <a href="#" title="close" data-bind="click: user.cancelLogin" aria-hidden="true" class="pull-right close"><i class="fa fa-times-circle"></i></a>
-        <h3 class="modal-title" id="myModalLabel">
-          <!-- ko if: !user.needsUsername() && !user.needsPassword()-->
-          Sign In to Earthdata Search Client
-          <!-- /ko -->
-          <!-- ko if: user.needsUsername() -->
-          Recover Your Username
-          <!-- /ko -->
-          <!-- ko if: user.needsPassword() -->
-          Recover Your Password
-          <!-- /ko -->
-        </h3>
-      </div>
-      <form data-bind="submit: user.processLogin">
-        <div class="modal-body">
-          <!-- ko if: user.message() -->
-          <span class="info-alert" data-bind="text: user.message()"></span>
-          <!-- /ko -->
-          <!-- ko if: user.errors() -->
-          <span class="error" data-bind="text: user.errors()"></span>
-          <!-- /ko -->
-          <!-- ko if: !user.needsUsername() -->
-          <p>
-            <label for="username">Username</label>
-            <input type="text" id="username" data-bind="value: user.username" />
-          </p>
-          <!-- /ko -->
-          <!-- ko if: user.needsUsername() || user.needsPassword()-->
-          <p>
-            <label for="email">Email</label>
-            <input type="text" id="email" data-bind="value: user.email" />
-          </p>
-          <!-- /ko -->
-          <!-- ko if: !user.needsUsername() && !user.needsPassword()-->
-          <p>
-            <label for="password">Password</label>
-            <input type="password" id="password" data-bind="value: user.password" />
-          </p>
-          <!-- /ko -->
-          <div class="login-modal-help">
-            <!-- ko if: user.needsUsername() || user.needsPassword()-->
-            <p>
-              <a href="#" data-bind="click: user.beginLogin">Sign In</a>
-            </p>
-            <!-- /ko -->
-            <p>
-              Forgot your
-              <a href="#" data-bind="click: user.beginUsernameRecovery">username</a> or
-              <a href="#" data-bind="click: user.beginPasswordRecovery">password</a>?
-            </p>
-            <p>
-              Need an <%= link_to "EOSDIS user account", new_user_path %>?
-            </p>
-            <p>
-              Need help? <a href="mailto:support@earthdata.nasa.gov">Contact URS Support.</a>
-            </p>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="loading"></div>
-          <button type="submit" class="modal-button">
-            <i class="fa fa-lock"></i>
-            <span data-bind="text: (user.needsUsername() || user.needsPassword()) ? 'Recover' : 'Sign In'">Sign In</span></button>
-        </div>
-      </form>
     </div>
   </div>
 </div>

@@ -70,6 +70,7 @@ module Helpers
 
     def load_page(url, options={})
       visit QueryBuilder.new.add_to(url, options)
+      wait_for_xhr
     end
   end
 end

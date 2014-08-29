@@ -27,7 +27,7 @@ group :test do
   gem 'capybara-screenshot'
   gem 'rspec_junit_formatter'
   gem 'fuubar'
-
+  gem "rack_session_access"
   gem 'headless'
 end
 
@@ -82,6 +82,7 @@ end
 gem 'jquery-rails'
 gem 'bourbon'
 gem 'knockoutjs-rails'
+gem 'figaro'
 
 # Eventually we'll need these, but there's version conflict when installing
 #gem 'crossroadsjs-rails'

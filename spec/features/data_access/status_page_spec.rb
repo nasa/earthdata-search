@@ -1,14 +1,13 @@
 require "spec_helper"
 
 describe "Data access status page", reset: false do
-  before :all do
-    Retrieval.destroy_all
-    load_page :search, overlay: false
-    login
-  end
-
   context "when the current user has recent data retrievals" do
     before :all do
+      Capybara.reset_sessions!
+      Retrieval.destroy_all
+      load_page :search, overlay: false
+      login
+
       user = User.find_or_create_by(echo_id: '4C0390AF-BEE1-32C0-4606-66CAFDD4131D')
 
       retrievals = [
@@ -96,6 +95,9 @@ describe "Data access status page", reset: false do
 
   context "when the current user has no recent data retrievals" do
     before :all do
+      Capybara.reset_sessions!
+      load_page :search, overlay: false
+      login 'edscbasic'
       visit '/data/status'
     end
 

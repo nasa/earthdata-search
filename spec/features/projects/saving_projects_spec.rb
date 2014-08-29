@@ -45,11 +45,7 @@ describe 'Saving Projects', reset: false do
 
     context "when loading the named project" do
       before :each do
-        project = Project.new
-        project.path = path
-        project.name = "Test Project"
-        project.user_id = User.first.id
-        project.save!
+        project = create_project
 
         visit "/search/datasets?projectId=#{project.to_param}"
         wait_for_xhr
