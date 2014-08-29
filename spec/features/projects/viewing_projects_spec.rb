@@ -33,6 +33,7 @@ describe "Viewing Projects", reset: false do
     context "when clicking on the remove button" do
       before :all do
         click_link 'Remove Project'
+        wait_for_xhr
       end
 
       after :all do
