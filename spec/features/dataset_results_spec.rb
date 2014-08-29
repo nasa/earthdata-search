@@ -58,6 +58,14 @@ describe "Dataset results", reset: false do
     expect(search_time_element.text).to match(/Search Time: \d+\.\d+s/)
   end
 
+  it "shows the temporal extent of datasets whose data collection ended in the past" do
+    expect(page).to have_content("1984-12-25 to 1988-03-04")
+  end
+
+  it "indicates if a dataset's data collection is ongoing" do
+    expect(page).to have_content("1978-01-01 ongoing")
+  end
+
   context 'when clicking the "View dataset" button' do
     before(:all) do
       first_dataset_result.click_link "View dataset"

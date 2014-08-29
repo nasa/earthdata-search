@@ -131,6 +131,17 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   text-shadow: 1px 1px 1px #222;
 }
 
+.panel-list-comparison-details {
+  font-size: .9em;
+  padding: 4px 8px;
+}
+
+.panel-list-granule-description {
+  border-left: 1px solid #888;
+  padding-left: 4px;
+  margin-left: 4px;
+}
+
 .panel-list-item-actions {
   position: absolute;
   padding: 1em;

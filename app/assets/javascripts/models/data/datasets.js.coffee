@@ -53,7 +53,7 @@ ns.Datasets = do (ko
       results = @results()
       return 0 if results.length > 0 && !results[0].hasAtomData()
       for ds, i in results
-        return i unless ds.featured
+        return i if !ds.hasAtomData() || !ds.featured
       results.length
 
     _computeFeatured: ->

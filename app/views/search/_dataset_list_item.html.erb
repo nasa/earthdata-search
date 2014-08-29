@@ -63,19 +63,21 @@
                 </a>
               </div>
               <p class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForDataset($data)}"<% end %>>
+
                 <span data-bind="text: short_name"></span>
                 <!-- ko if: version_id != 'Undefined' -->
                 v<span data-bind="text: version_id"></span>
                 <!-- /ko -->
                 - <span data-bind="text: archive_center"></span>
               </p>
-              <p class="dataset-granules-info" data-bind="if: granuleQueryLoaded() && granulesModel.isLoaded() && has_granules">
-                <span data-bind="text: $root.pluralize(granulesModel.hits(), 'Granule', 'Granules')"></span>
-                <span data-bind="if: granulesModel.loadTime() !== null" class="panel-list-muted">
+
+              <p class="dataset-granules-info panel-list-comparison-details">
+                <span data-bind="text: timeRange"></span>
+                <!-- ko if: granuleDescription -->
+                <span class="panel-list-granule-description" data-bind="text: granuleDescription"></span>
+                <!-- /ko -->
+                <span data-bind="if: granulesModel.loadTime()" class="panel-list-muted">
                   in <span data-bind="text: granulesModel.loadTime">0.000</span>s
                 </span>
-              </p>
-              <p data-bind="ifnot: has_granules">
-                Dataset only
               </p>
             </li>
