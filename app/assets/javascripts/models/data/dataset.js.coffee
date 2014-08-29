@@ -88,7 +88,7 @@ ns.Dataset = do (ko
       result = null
       return result unless @hasAtomData()
       if @has_granules
-        if @granuleQueryLoaded() && @granulesModel.isLoaded()
+        if @granulesModel.isLoaded()
           hits = @granulesModel.hits()
           result = "#{hits} Granule"
           result += 's' if hits != 1
