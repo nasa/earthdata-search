@@ -64,7 +64,7 @@ ns.GranuleLayer = do (L
 
     _createTile: ->
       tile = L.DomUtil.create('canvas', 'leaflet-tile')
-      tile.width = tile.height = @options.tileSize
+      tile.width = tile.height = @_getTileSize()
       tile.onselectstart = tile.onmousemove = L.Util.falseFn
       tile
 
@@ -170,7 +170,7 @@ ns.GranuleLayer = do (L
       return unless @_results? && @_results.length > 0
 
       layerPointToLatLng = @_map.layerPointToLatLng.bind(@_map)
-      tileSize = @options.tileSize
+      tileSize = @_getTileSize()
       nwPoint = @_getTilePos(tilePoint)
       nePoint = nwPoint.add([tileSize, 0])
       sePoint = nwPoint.add([tileSize, tileSize])
@@ -264,14 +264,14 @@ ns.GranuleLayer = do (L
       else
         callback(null)
 
-    _drawClippedImage: (ctx, boundary, paths, nwPoint, image) ->
+    _drawClippedImage: (ctx, boundary, paths, nwPoint, image, size) ->
       if image?
         ctx.save()
         ctx.beginPath()
         addPath(ctx, path) for path in paths
         ctx.clip()
         ctx.globalCompositeOperation = 'destination-over'
-        ctx.drawImage(image, nwPoint.x, nwPoint.y)
+        ctx.drawImage(image, nwPoint.x, nwPoint.y, size, size)
         ctx.restore()
 
       for path in paths
@@ -310,12 +310,13 @@ ns.GranuleLayer = do (L
       queue = []
       index = 0
 
+      size = canvas.width
       self = this
       for {url, urlPaths}, i in pathsByUrl
         do (i, urlPaths, url) ->
           self._loadImage url, (image) ->
             queue[i] = ->
-              self._drawClippedImage(ctx, boundary, urlPaths, nwPoint, image)
+              self._drawClippedImage(ctx, boundary, urlPaths, nwPoint, image, size)
 
             while queue[index]?
               queue[index]()
