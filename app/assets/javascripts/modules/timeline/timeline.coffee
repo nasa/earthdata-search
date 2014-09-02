@@ -32,10 +32,10 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
   MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-  MIN_X = -1000000
-  MIN_Y = -1000000
-  MAX_X = 1000000
-  MAX_Y = 1000000
+  MIN_X = -100000
+  MIN_Y = -1000
+  MAX_X = 100000
+  MAX_Y = 1000
 
   formatTime = (date) -> string.padLeft(date.getUTCHours(), '0', 2) + ':' + string.padLeft(date.getUTCMinutes(), '0', 2)
   formatDay = (date) -> string.padLeft(date.getUTCDate(), '0', 2)
@@ -85,7 +85,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
   getTransformX = (el, defaultValue=0) ->
     return defaultValue unless el
-    re = /^[^\d\-]*(-?[\d\.]+),/
+    re = /^[^\d\-]*(-?[\d\.]+)/
     transform = el.getAttribute('transform') ? el.parentNode.getAttribute('transform')
     parseFloat(re.exec(transform)?[1] ? defaultValue)
 
@@ -240,9 +240,15 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @root.on 'mouseout.timeline', @scope('.date-label'), @_onLabelMouseout
       @root.on 'keydown.timeline', @_onKeydown
 
-      @root.on 'blur.timeline', (e) =>
+      @root.on 'focusout.timeline', (e) =>
+        @root.removeClass('hasfocus')
         @_hasFocus = false
-      @root.on 'focus.timeline', (e) =>
+        @_forceRedraw()
+      @root.on 'focusin.timeline', (e) =>
+        hovered = document.querySelector("#{@scope('.date-label')}:hover")
+        @_onLabelClick(currentTarget: hovered) if hovered?
+        @root.addClass('hasfocus')
+        @_forceRedraw()
         # We want click behavior when we have focus, but not when the focus came from the
         # click's mousedown.  Ugh.
         setTimeout((=> @_hasFocus = true), 500)
@@ -277,7 +283,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       null
 
     loadstart: (id, start, end, resolution) ->
-      match = @svg.getElementsByClassName(id)
+      match = @root[0].getElementsByClassName(id)
       if match.length > 0
         match[0].setAttribute('class', "#{match[0].getAttribute('class')} #{@scope('loading')}")
         @_empty(match[0])
@@ -299,7 +305,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
       [start, end, resolution, intervals, color] = @_data[id] ? [@start - 1 , @end + 1, RESOLUTIONS[zoom - 2], [], null]
 
-      match = @svg.getElementsByClassName(id)
+      match = @root[0].getElementsByClassName(id)
       el = null
       if match.length > 0
         el = match[0]
@@ -328,10 +334,14 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       el.setAttribute('class', "#{id} #{@scope('data')}")
 
       @tlDatasets.appendChild(el)
-      children = @tlDatasets.childNodes
-      loading = @tlDatasets.getElementsByClassName(@scope('loading'))
 
       null
+
+    _forceRedraw: ->
+      rect = @_buildRect(stroke: 'none')
+      svg = @svg
+      svg.appendChild(rect)
+      setTimeout -> svg.removeChild(rect)
 
     refresh: ->
       @datasets(@_datasets)
@@ -406,7 +416,6 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @focus()
       @_updateTimeline()
       @_drawTemporalBounds()
-      #console.log 'zoom', @_zoom, x, new Date(@start).toISOString(), new Date(@end).toISOString(), new Date(center_t).toISOString()
 
     focus: (t0, t1) ->
       if  Math.abs(t0 - @_focus) < 1000
@@ -461,6 +470,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
         if @_canFocusTimespan(t0, t1)
           @_pan(dx)
+          console.log 'this focus'
           @focus(t0, t1)
 
     _canFocusTimespan: (start, stop) ->
@@ -786,8 +796,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
     _buildRect: (attrs) ->
       attrs = $.extend({x: MIN_X, x1: MAX_X, y: MIN_Y, y1: MAX_Y}, attrs)
-      attrs['width'] ?= attrs.x1 - attrs.x
-      attrs['height'] ?= attrs.y1 - attrs.y
+      attrs['width'] ?= (attrs.x1 - attrs.x) | 0
+      attrs['height'] ?= (attrs.y1 - attrs.y) | 0
       delete attrs.x1
       delete attrs.y1
       @_buildSvgElement 'rect', attrs

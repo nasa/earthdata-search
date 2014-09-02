@@ -124,7 +124,7 @@ RSpec::Matchers.define :have_focused_time_span do |start, stop|
     expected_start_px = page.evaluate_script "$('#timeline').timeline('timeToPosition', #{expected_start_time});"
     expected_end_px = page.evaluate_script "$('#timeline').timeline('timeToPosition', #{expected_end_time});"
 
-    expect(page).to have_selector("rect[width^=\"#{(expected_start_px + 1000000).to_i}\"]")
+    expect(page).to have_selector("rect[width^=\"#{(expected_start_px + 100000).to_i}\"]")
     expect(page).to have_selector("rect[x^=\"#{expected_end_px.to_i}\"]")
   end
 end

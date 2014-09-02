@@ -11,9 +11,10 @@
     padding: 0;
   }
 
-  &:focus {
-    outline: none;
-  }
+}
+
+.timeline.hasfocus {
+  outline: none;
 }
 
 .timeline-tools {
@@ -144,7 +145,9 @@
   cursor: pointer;
 
   &:hover {
-    fill: #2a2a2a;
+    rect {
+      fill: #2a2a2a;
+    }
 
     text {
       fill: #3498db;
@@ -163,6 +166,6 @@
   stroke: desaturate(#3498db, 50%);
 }
 
-.timeline:focus .timeline-unfocused {
+.timeline.hasfocus .timeline-unfocused {
   stroke: #3498db;
 }
