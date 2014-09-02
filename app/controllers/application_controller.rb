@@ -116,16 +116,18 @@ class ApplicationController < ActionController::Base
   SCRIPT_EXPIRATION_OFFSET_S = 300
 
   def logged_in?
-    session[:access_token].present?
+    session[:access_token].present? &&
+    session[:refresh_token].present? &&
+    session[:expires_in].present?
   end
   helper_method :logged_in?
 
   def server_session_expires_in
-    session[:expires_in] - SERVER_EXPIRATION_OFFSET_S
+    logged_in? ? session[:expires_in] - SERVER_EXPIRATION_OFFSET_S : 0
   end
 
   def script_session_expires_in
-    1000 * (session[:expires_in] - SCRIPT_EXPIRATION_OFFSET_S).to_i
+    logged_in? ? 1000 * (session[:expires_in] - SCRIPT_EXPIRATION_OFFSET_S).to_i : 0
   end
   helper_method :script_session_expires_in
 
