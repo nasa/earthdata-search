@@ -64,6 +64,8 @@
         success: (data, status, xhr) ->
           if data?
             window.tokenExpiresIn = data.tokenExpiresIn
+          else
+            window.location.href = '/login'
 
           doXHR(deferred, method, args...)
         error: (response, type, reason) ->

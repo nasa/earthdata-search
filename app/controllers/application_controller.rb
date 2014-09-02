@@ -25,6 +25,14 @@ class ApplicationController < ActionController::Base
   def refresh_urs_token
     json = OauthToken.refresh_token(session[:refresh_token])
     store_oauth_token(json)
+
+    if json.nil? && request.format == "text/html"
+      session[:last_point] = request.fullpath
+
+      redirect_to URS_LOGIN_PATH
+    end
+
+    json
   end
 
   def handle_timeout
