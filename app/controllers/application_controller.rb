@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     json = OauthToken.refresh_token(session[:refresh_token])
     store_oauth_token(json)
 
-    if json.nil? && request.format == "text/html"
+    if json.nil? && !request.xhr?
       session[:last_point] = request.fullpath
 
       redirect_to URS_LOGIN_PATH

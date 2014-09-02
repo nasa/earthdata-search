@@ -5,6 +5,7 @@
   timeoutPool = []
   realSetTimeout = window.setTimeout
   realClearTimeout = window.clearTimeout
+  isRefreshing = false
 
   hasPending = ->
     xhrPool.length > 0 || timeoutPool.length > 0
@@ -56,20 +57,23 @@
     deferred = $.Deferred()
 
     if isTokenExpired()
-      console.log 'Refreshing URS token'
-      $.ajax
-        url: '/refresh_token'
-        method: 'get'
-        dataType: 'json'
-        success: (data, status, xhr) ->
-          if data?
-            window.tokenExpiresIn = data.tokenExpiresIn
-          else
-            window.location.href = '/login'
+      unless isRefreshing
+        console.log 'Refreshing URS token'
+        isRefreshing = true
+        $.ajax
+          url: '/refresh_token'
+          method: 'get'
+          dataType: 'json'
+          success: (data, status, xhr) ->
+            if data?
+              window.tokenExpiresIn = data.tokenExpiresIn
 
-          doXHR(deferred, method, args...)
-        error: (response, type, reason) ->
-          xhr.fail(-> deferred.reject())
+            isRefreshing = false
+            doXHR(deferred, method, args...)
+          error: (response, type, reason) ->
+            window.location.href = '/login'
+      else
+        wait(-> doXHR(deferred, method, args...))
     else
       doXHR(deferred, method, args...)
 
