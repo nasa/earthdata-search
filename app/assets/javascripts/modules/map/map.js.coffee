@@ -126,7 +126,7 @@ ns.Map = do (window,
 
     _buildLayerSwitcher: ->
       baseMaps = @_baseMaps = @_createLayerMap('blue_marble', 'MODIS_Terra_CorrectedReflectance_TrueColor', 'land_water_map')
-      overlayMaps = @_overlayMaps = @_createLayerMap('administrative_boundaries', 'coastlines')
+      overlayMaps = @_overlayMaps = @_createLayerMap('borders', 'coastlines', 'labels')
 
       # Show the first layer
       for own k, layer of baseMaps

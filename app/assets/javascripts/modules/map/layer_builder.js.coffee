@@ -1,7 +1,8 @@
 ns = @edsc.map
 
-ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
-                      SedacTileLayer = ns.L.SedacTileLayer) ->
+ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer) ->
+
+  osmAttribution = '<span class="map-attribution">* &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</span>'
 
   gibsParams =
     blue_marble:
@@ -11,39 +12,33 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer,
       format: 'jpeg'
     MODIS_Terra_CorrectedReflectance_TrueColor:
       name: 'Corrected Reflectance (True Color)'
-      source: 'Terra / MODIS'
       product: 'MODIS_Terra_CorrectedReflectance_TrueColor'
       resolution: '250m'
       format: 'jpeg'
       syncTime: true
     land_water_map:
-      name: 'Land / Water Map'
-      source: 'OpenStreetMap / Coastlines'
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      name: 'Land / Water Map *'
       product: 'land_water_map'
       resolution: '250m'
       format: 'png'
-
-  sedacParams =
-    administrative_boundaries:
-      name: 'Administrative Boundaries'
-      source: 'SEDAC / L1 Admin Boundaries'
-      wmsParams:
-        layers: 'cartographic:esri-administrative-boundaries_level-1'
-        format: 'image/png'
-        transparent: true
     coastlines:
-      name: 'Coastlines'
-      source: 'SEDAC / Coastlines v3'
-      wmsParams:
-        layers: 'gpw-v3-coastlines'
-        format: 'image/png'
-        transparent: true
+      name: 'Coastlines *'
+      product: 'Coastlines'
+      resolution: '250m'
+      format: 'png'
+    borders:
+      name: 'Borders and Roads *'
+      product: 'Reference_Features'
+      resolution: '250m'
+      format: 'png'
+    labels:
+      name: 'Place Labels *' + osmAttribution
+      product: 'Reference_Labels'
+      resolution: '250m'
+      format: 'png'
 
   layerForProduct = (id) ->
     return new GibsTileLayer(gibsParams[id]) if gibsParams[id]?
-    return new SedacTileLayer(sedacParams[id]) if sedacParams[id]?
-
     console.error("Unable to find product: #{id}")
 
   exports =
