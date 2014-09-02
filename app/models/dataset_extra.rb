@@ -146,6 +146,7 @@ class DatasetExtra < ActiveRecord::Base
     decorate_browseable_granule(dataset)
     decorate_granule_information(dataset)
     decorate_gibs_layers(dataset)
+    decorate_opendap_layers(dataset)
     decorate_echo10_attributes(dataset)
 
     dataset[:links] = Array.wrap(dataset[:links]) # Ensure links attribute is present
@@ -232,6 +233,10 @@ class DatasetExtra < ActiveRecord::Base
     key = [dataset['data_center'], dataset['short_name']].join('___')
     gibs_config = Rails.configuration.gibs[key]
     dataset[:gibs] = gibs_config unless gibs_config.nil?
+  end
+
+  def decorate_opendap_layers(dataset)
+    dataset[:opendap] = Rails.configuration.services['opendap'][dataset['id']].present?
   end
 
 end

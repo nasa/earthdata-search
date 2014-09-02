@@ -44,6 +44,12 @@ describe "Dataset results", reset: false do
     expect(page).to have_no_text("No image available")
   end
 
+  it "displays a badge for OPeNDAP-enabled datasets" do
+    fill_in "keywords", with: "C181553784-GSFCS4PA"
+    wait_for_xhr
+    expect(page).to have_css('.badge-opendap')
+  end
+
   it "displays a placeholder for datasets which have no thumbnail URLs" do
     fill_in "keywords", with: 'C179003030-ORNL_DAAC'
     wait_for_xhr
