@@ -13,6 +13,9 @@ do ($ = jQuery, config = @edsc.config) ->
     if $('tbody tr').length == 0
       $('.data-access-content').html('<p>No saved projects</p>')
 
+  $(document).on 'click', 'a[href="#"]', (e) ->
+    e.preventDefault()
+
   # flash the green save icon
   $(document).on 'edsc.saved', ->
     check = $('.save-success')
