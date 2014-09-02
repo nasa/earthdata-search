@@ -245,8 +245,9 @@ ns.GranuleLayer = do (L
     _loadImage: (url, callback, retries=0) ->
       if url?
         image = new Image()
-        image.onload = (e) ->
+        image.onload = ->
           callback(this)
+          document.body.removeChild(image)
 
         image.onerror = (e) =>
           if retries < MAX_RETRIES
@@ -254,14 +255,19 @@ ns.GranuleLayer = do (L
           else
             console.error("Failed to load tile after #{MAX_RETRIES} tries: #{url}")
             callback(null)
+
+        # IE seems to like to get smart and occasionally not load images when they're
+        # not in the DOM
+        image.setAttribute('style', 'display: none;');
+        document.body.appendChild(image)
         image.src = url
       else
         callback(null)
 
     _drawClippedImage: (ctx, boundary, paths, nwPoint, image) ->
       if image?
-        ctx.beginPath()
         ctx.save()
+        ctx.beginPath()
         addPath(ctx, path) for path in paths
         ctx.clip()
         ctx.globalCompositeOperation = 'destination-over'
