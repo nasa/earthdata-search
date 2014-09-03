@@ -69,6 +69,7 @@
           success: (data, status, xhr) ->
             if data?
               window.tokenExpiresIn = data.tokenExpiresIn
+              window.tokenLoadTime = +new Date();
 
             isRefreshing = false
             doXHR(deferred, method, args...)
@@ -95,8 +96,9 @@
 
   getTokenExpires = ->
     expiresIn = window.tokenExpiresIn
+    tokenLoadTime = window.tokenLoadTime
     if expiresIn?
-      (+new Date()) + expiresIn
+      tokenLoadTime + expiresIn
     else
       null
 

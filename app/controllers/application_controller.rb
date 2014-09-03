@@ -92,6 +92,7 @@ class ApplicationController < ActionController::Base
 
   def clear_session
     store_oauth_token()
+    session[:logged_in_at] = nil
     session[:recent_datasets] = []
   end
 
@@ -100,6 +101,15 @@ class ApplicationController < ActionController::Base
     session[:access_token] = json["access_token"]
     session[:refresh_token] = json["refresh_token"]
     session[:expires_in] = json["expires_in"]
+    session[:logged_in_at] = Time.now.to_i
+  end
+
+  def logged_in_at
+    session[:logged_in_at].nil? ? 0 : session[:logged_in_at]
+  end
+
+  def expires_in
+    (logged_in_at + session[:expires_in]) - Time.now.to_i
   end
 
   def require_login
@@ -118,16 +128,17 @@ class ApplicationController < ActionController::Base
   def logged_in?
     session[:access_token].present? &&
     session[:refresh_token].present? &&
-    session[:expires_in].present?
+    session[:expires_in].present? &&
+    session[:logged_in_at]
   end
   helper_method :logged_in?
 
   def server_session_expires_in
-    logged_in? ? session[:expires_in] - SERVER_EXPIRATION_OFFSET_S : 0
+    logged_in? ? (expires_in - SERVER_EXPIRATION_OFFSET_S).to_i : 0
   end
 
   def script_session_expires_in
-    logged_in? ? 1000 * (session[:expires_in] - SCRIPT_EXPIRATION_OFFSET_S).to_i : 0
+    logged_in? ? 1000 * (expires_in - SCRIPT_EXPIRATION_OFFSET_S).to_i : 0
   end
   helper_method :script_session_expires_in
 

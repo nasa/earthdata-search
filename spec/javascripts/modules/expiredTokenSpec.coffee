@@ -3,7 +3,8 @@ describe 'xhr util', ->
 
   describe 'Valid Token', ->
     beforeEach ->
-      window.tokenExpiresIn = 9999999999;
+      window.tokenExpiresIn = 9999999999
+      window.tokenLoadTime = +new Date()
 
     afterEach ->
       window.tokenExpiresIn = null
@@ -15,6 +16,7 @@ describe 'xhr util', ->
   describe 'Expired Tokens', ->
     beforeEach ->
       window.tokenExpiresIn = -1
+      window.tokenLoadTime = +new Date()
 
     afterEach ->
       window.tokenExpiresIn = null
