@@ -18,7 +18,7 @@ class OauthTokensController < ApplicationController
     if json
       render json: {tokenExpiresIn: script_session_expires_in}
     else
-      render json: nil
+      render json: nil, status: 401
     end
   end
 end
