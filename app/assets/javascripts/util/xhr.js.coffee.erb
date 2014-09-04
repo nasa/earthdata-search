@@ -86,7 +86,16 @@
     if deferred.state() == 'pending'
       xhr = $[method](args...)
       xhr.done(-> deferred.resolve())
-      xhr.fail(-> deferred.reject())
+      xhr.fail((response, type, reason) ->
+        if response.status == 401
+          path = window.location.href
+          $.ajax
+            url: '/logout'
+            method: 'get'
+            dataType: 'json'
+            success: ->
+              window.location.reload()
+        deferred.reject())
       deferred.fail ->
         xhr.abort()
 

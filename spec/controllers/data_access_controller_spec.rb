@@ -55,7 +55,9 @@ describe DataAccessController do
       session[:urs_user] = {present: true}
       session[:user_id] = 'myid'
       session[:access_token] = 'some token'
+      session[:refresh_token] = 'some refresh token'
       session[:expires_in] = 99999999
+      session[:logged_in_at] = Time.now.to_i
 
       get :options, format: 'json'
 

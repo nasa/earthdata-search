@@ -92,7 +92,6 @@ class ApplicationController < ActionController::Base
 
   def clear_session
     store_oauth_token()
-    session[:logged_in_at] = nil
     session[:recent_datasets] = []
   end
 
@@ -101,7 +100,7 @@ class ApplicationController < ActionController::Base
     session[:access_token] = json["access_token"]
     session[:refresh_token] = json["refresh_token"]
     session[:expires_in] = json["expires_in"]
-    session[:logged_in_at] = Time.now.to_i
+    session[:logged_in_at] = json.empty? ? nil : Time.now.to_i
   end
 
   def logged_in_at
@@ -126,10 +125,13 @@ class ApplicationController < ActionController::Base
   SCRIPT_EXPIRATION_OFFSET_S = 300
 
   def logged_in?
-    session[:access_token].present? &&
-    session[:refresh_token].present? &&
-    session[:expires_in].present? &&
-    session[:logged_in_at]
+    logged_in = session[:access_token].present? &&
+          session[:refresh_token].present? &&
+          session[:expires_in].present? &&
+          session[:logged_in_at]
+
+    store_oauth_token() unless logged_in
+    logged_in
   end
   helper_method :logged_in?
 
