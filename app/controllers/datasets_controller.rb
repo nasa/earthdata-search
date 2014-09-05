@@ -2,7 +2,7 @@ class DatasetsController < ApplicationController
   respond_to :json
 
   def index
-    catalog_response = Echo::Client.get_datasets(request.query_parameters, token)
+    catalog_response = echo_client.get_datasets(request.query_parameters, token)
 
 
     if catalog_response.success?
@@ -11,7 +11,7 @@ class DatasetsController < ApplicationController
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
 
       catalog_response.headers.each do |key, value|
-        response.headers[key] = value if key.start_with?('echo-')
+        response.headers[key] = value if key.start_with?('echo-') || key.start_with?('cmr-')
       end
     end
 
@@ -19,7 +19,7 @@ class DatasetsController < ApplicationController
   end
 
   def show
-    response = Echo::Client.get_dataset(params[:id], token)
+    response = echo_client.get_dataset(params[:id], token)
 
     use_dataset(params[:id])
 
@@ -36,27 +36,56 @@ class DatasetsController < ApplicationController
   end
 
   def facets
-    response = Echo::Client.get_facets(request.query_parameters, token)
+    response = echo_client.get_facets(request.query_parameters, token)
 
     if response.success?
       # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
       query = request.query_string.gsub('%5B', '[').gsub('%5D', ']').split('&').map {|kv| kv.split('=')}.group_by(&:first)
-      facets = response.body.with_indifferent_access
 
-      results = [facet_response(query, facets, 'Campaigns', 'campaign_sn', 'campaign[]'),
-                 facet_response(query, facets, 'Platforms', 'platform_sn', 'platform[]'),
-                 facet_response(query, facets, 'Instruments', 'instrument_sn', 'instrument[]'),
-                 facet_response(query, facets, 'Sensors', 'sensor_sn', 'sensor[]'),
-                 facet_response(query, facets, '2D Coordinate Name', 'twod_coord_name', 'two_d_coordinate_system_name[]'),
-                 facet_response(query, facets, 'Category Keyword', 'category_keyword', 'science_keywords[0][category][]'),
-                 facet_response(query, facets, 'Topic Keyword', 'topic_keyword', 'science_keywords[0][topic][]'),
-                 facet_response(query, facets, 'Term Keyword', 'term_keyword', 'science_keywords[0][term][]'),
-                 facet_response(query, facets, 'Variable Level 1 Keyword', 'variable_level_1_keyword', 'science_keywords[0][variable_level_1][]'),
-                 facet_response(query, facets, 'Variable Level 2 Keyword', 'variable_level_2_keyword', 'science_keywords[0][variable_level_2][]'),
-                 facet_response(query, facets, 'Variable Level 3 Keyword', 'variable_level_3_keyword', 'science_keywords[0][variable_level_3][]'),
-                 facet_response(query, facets, 'Detailed Variable Keyword', 'detailed_variable_keyword', 'science_keywords[0][detailed_variable][]'),
-                 facet_response(query, facets, 'Processing Level', 'processing_level', 'processing_level[]')
-                ]
+      if response.body['feed']
+        # CMR Facets
+        facets = Array.wrap(response.body['feed']['facets'])
+
+        fields_to_params = {
+          'two_d_coordinate_system_name' => ['2D Coordinate Name', 'two_d_coordinate_system_name[]'],
+          'category' => ['Category Keyword', 'science_keywords[0][category][]'],
+          'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
+          'term' => ['Term Keyword', 'science_keywords[0][term][]'],
+          'variable_level_1' => ['Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'],
+          'variable_level_2' => ['Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'],
+          'variable_level_3' => ['Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'],
+          'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
+        }
+
+        results = facets.map do |facet|
+          items = facet['value-counts'].map do |term, count|
+            {'term' => term, 'count' => count}
+          end
+          field = facet['field']
+          params = fields_to_params[field]
+          unless params
+            params = [field.humanize.capitalize, field + '[]']
+          end
+          facet_response(query, items, params.first, params.last)
+        end
+      else
+        facets = response.body.with_indifferent_access
+        # ECHO Facets
+        results = [facet_response(query, facets['campaign_sn'], 'Campaigns', 'campaign[]'),
+                   facet_response(query, facets['platform_sn'], 'Platforms', 'platform[]'),
+                   facet_response(query, facets['instrument_sn'], 'Instruments', 'instrument[]'),
+                   facet_response(query, facets['sensor_sn'], 'Sensors', 'sensor[]'),
+                   facet_response(query, facets['twod_coord_name'], '2D Coordinate Name', 'two_d_coordinate_system_name[]'),
+                   facet_response(query, facets['category_keyword'], 'Category Keyword', 'science_keywords[0][category][]'),
+                   facet_response(query, facets['topic_keyword'], 'Topic Keyword', 'science_keywords[0][topic][]'),
+                   facet_response(query, facets['term_keyword'], 'Term Keyword', 'science_keywords[0][term][]'),
+                   facet_response(query, facets['variable_level_1_keyword'], 'Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'),
+                   facet_response(query, facets['variable_level_2_keyword'], 'Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'),
+                   facet_response(query, facets['variable_level_3_keyword'], 'Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'),
+                   facet_response(query, facets['detailed_variable_keyword'], 'Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]'),
+                   facet_response(query, facets['processing_level'], 'Processing Level', 'processing_level[]')
+                  ]
+      end
 
       respond_with(results, status: response.status)
     else
@@ -66,9 +95,7 @@ class DatasetsController < ApplicationController
 
   private
 
-  def facet_response(query, facets, name, key, param)
-    items = facets[key]
-
+  def facet_response(query, items, name, param)
     applied = []
     Array.wrap(query[param]).each do |param_term|
       term = param_term.last
@@ -104,7 +131,7 @@ class DatasetsController < ApplicationController
     if base_query['page_num'] == "1" && base_query['echo_collection_id'].nil?
       begin
         featured_query = request.query_parameters.merge('echo_collection_id' => featured_ids)
-        featured_response = Echo::Client.get_datasets(featured_query, token)
+        featured_response = echo_client.get_datasets(featured_query, token)
         featured = featured_response.body['feed']['entry'] if featured_response.success?
       rescue => e
         # This shouldn't happen, but on the off-chance it does, retrieving featured datasets shouldn't

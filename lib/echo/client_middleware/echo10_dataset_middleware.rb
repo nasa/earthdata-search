@@ -4,9 +4,8 @@ module Echo
   module ClientMiddleware
     class Echo10DatasetMiddleware < FaradayMiddleware::ResponseMiddleware
       def process_response(env)
-        body = env[:body]
-
-        env[:body] = Array.wrap(env[:body]['Collection']).map do |dataset_xml|
+        body = Array.wrap(env[:body]['Collection'])
+        env[:body] = body.map do |dataset_xml|
           dataset = Dataset.new
           dataset.xml = dataset_xml
           dataset
@@ -17,7 +16,7 @@ module Echo
 
       def parse_response?(env)
         body = env[:body]
-        body.is_a?(Hash) && body['Collection']
+        body.is_a?(Hash) && body['Collection'] || body.is_a?(Array) && body.first == 'Collection'
       end
     end
   end

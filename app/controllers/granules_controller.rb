@@ -2,11 +2,11 @@ class GranulesController < ApplicationController
   respond_to :json
 
   def create
-    catalog_response = Echo::Client.get_granules(request.request_parameters, token)
+    catalog_response = echo_client.get_granules(request.request_parameters, token)
 
     if catalog_response.success?
       catalog_response.headers.each do |key, value|
-        response.headers[key] = value if key.start_with?('echo-')
+        response.headers[key] = value if key.start_with?('echo-') || key.start_with?('cmr-')
       end
 
       render json: catalog_response.body, status: catalog_response.status
@@ -16,7 +16,7 @@ class GranulesController < ApplicationController
   end
 
   def show
-    response = Echo::Client.get_granule(params[:id], {}, token)
+    response = echo_client.get_granule(params[:id], {}, token)
 
     if response.success?
       respond_with(GranuleDetailsPresenter.new(response.body.first, params[:id]), status: response.status)
@@ -26,15 +26,16 @@ class GranulesController < ApplicationController
   end
 
   def timeline
-    catalog_response = Echo::Client.post_timeline(request.request_parameters, token)
+    catalog_response = echo_client.post_timeline(request.request_parameters, token)
     render json: catalog_response.body, status: catalog_response.status
   end
 
   class GranuleUrlStreamer
-    def initialize(params, token, url_mapper)
+    def initialize(params, token, url_mapper, echo_client)
       @params = params
       @token = token
       @url_mapper = url_mapper
+      @echo_client = echo_client
     end
 
     def each
@@ -42,7 +43,7 @@ class GranulesController < ApplicationController
       at_end = false
       page = 1
       until at_end
-        catalog_response = Echo::Client.get_granules(@params.merge(page_num: page), @token)
+        catalog_response = @echo_client.get_granules(@params.merge(page_num: page), @token)
         at_end = catalog_response.headers['Echo-Cursor-At-End'] == 'true'
 
         if catalog_response.success?
@@ -89,7 +90,7 @@ class GranulesController < ApplicationController
     url_mapper = OpendapConfiguration.find(dataset_id)
     url_mapper.apply_subsetting(method['subset'])
 
-    @urls = GranuleUrlStreamer.new(query.merge('page_size' => 2000), token, url_mapper)
+    @urls = GranuleUrlStreamer.new(query.merge('page_size' => 2000), token, url_mapper, echo_client)
     render stream: true, layout: false
   end
 end

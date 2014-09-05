@@ -1,8 +1,6 @@
 module Echo
   module QueryTransformations
-    extend ActiveSupport::Concern
 
-    module ClassMethods
       def options_to_item_query(options={}, remove_spatial=false)
         query = options.dup.symbolize_keys
 
@@ -97,6 +95,5 @@ module Echo
           query[:options][:sensor][:and] = true
         end
       end
-    end
   end
 end

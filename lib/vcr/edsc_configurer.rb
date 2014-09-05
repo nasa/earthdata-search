@@ -56,7 +56,7 @@ module VCR
             cassette = 'ogre'
           elsif (request.method == :delete ||
                  (request.uri.include?('/orders.json') && request.method == :get) ||
-                 request.uri.include?('/echo-rest/calendar_events') ||
+                 (request.uri.include?('/echo-rest/calendar_events') && !request.uri.include?('testbed')) ||
                  uri.include?('users/current.json') ||
                  uri.include?('/echo-rest/users.json') ||
                  request.uri.include?('4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json') ||

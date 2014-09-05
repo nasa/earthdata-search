@@ -29,7 +29,7 @@ ns.Dataset = do (ko
       id = jsonData.id
       for dataset in datasets()
         if dataset.id == id
-          if jsonData.archive_center? && !dataset.hasAtomData()
+          if jsonData.short_name? && !dataset.hasAtomData()
             dataset.fromJson(jsonData)
           return dataset.reference()
       register(new Dataset(jsonData, query, randomKey))
@@ -90,6 +90,9 @@ ns.Dataset = do (ko
       if @has_granules
         if @granulesModel.isLoaded()
           hits = @granulesModel.hits()
+        else
+          hits = @granule_count
+        if hits?
           result = "#{hits} Granule"
           result += 's' if hits != 1
       else
@@ -133,7 +136,7 @@ ns.Dataset = do (ko
 
       this[key] = value for own key, value of jsonObj
 
-      @hasAtomData(jsonObj.archive_center?)
+      @hasAtomData(jsonObj.short_name?)
       @gibs = ko.observable(jsonObj.gibs ? @gibs?())
 
   exports = Dataset

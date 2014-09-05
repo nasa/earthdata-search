@@ -2,9 +2,13 @@ class OauthTokensController < ApplicationController
   def urs_callback
     if params[:code]
       auth_code = params[:code]
-      token = OauthToken.get_oauth_tokens(auth_code)
+      response = echo_client.get_oauth_tokens(auth_code)
 
-      store_oauth_token(token)
+      if response.success?
+        store_oauth_token(response.body)
+      else
+        Rails.logger.error("Oauth error: #{response.body}")
+      end
       # useful when needing to replace the application.yml tokens
       #Rails.logger.info "Token: #{token.inspect}"
     end
