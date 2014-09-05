@@ -5,7 +5,8 @@ do ($=jQuery
     preferences = @edsc.page.preferences) ->
 
   updateLandingPageState = ->
-    uiModel.isLandingPage(History.getState().cleanUrl.indexOf('/search') == -1)
+    re = /[^\/]\/search/
+    uiModel.isLandingPage(!History.getState().cleanUrl.match(re)?)
 
   hasLeftLandingPage = false
   updateLandingPage = (isLandingPage) ->
