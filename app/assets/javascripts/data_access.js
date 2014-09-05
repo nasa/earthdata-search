@@ -16,4 +16,5 @@
 //= require modules/spinners
 //= require models/index
 //= require models/page/access_page
+//= require modules/banner
 //= require bootstrap/bootstrap
