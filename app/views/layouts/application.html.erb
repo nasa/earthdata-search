@@ -75,7 +75,7 @@
       ga('send', 'pageview');
     </script>
     <% end %>
-    <#%= javascript_include_tag Rails.configuration.tophat_url, async: true, defer: true if Rails.configuration.tophat_url.present? %>
+    <%= javascript_include_tag Rails.configuration.tophat_url, async: true, defer: true if Rails.configuration.tophat_url.present? %>
 
     <% if Rails.configuration.feedback_url.present? %>
       <%= javascript_include_tag Rails.configuration.feedback_url, id: 'feedback-tag', async: true, defer: true if Rails.configuration.feedback_url.present? %>
