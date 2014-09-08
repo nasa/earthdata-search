@@ -45,7 +45,7 @@ unless Rails.env.production?
                            '-hidden'
                           ]
       dw.ignore_selectors = /(^(.*:-webkit-|.panel([^-]|-[^l])|@|#|(\.|#)(#{ignored_class_prefixes.join('|')})([\W_]|$))|.*(#{dynamic_selectors.join('|')})).*/
-      dw.pages = Dir.glob('doc/ui/**/*.html')
+      dw.pages = Dir.glob('doc/ui/portfolio/*.html')
     end
   end
 end
