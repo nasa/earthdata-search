@@ -371,11 +371,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
     positionToTime: (p) ->
       {originPx, start, scale} = this
-      Math.round((p - originPx) * scale + start)
-
-    positionToTimeRight: (p) ->
-      {originPx, start, scale} = this
-      Math.round((p - originPx) * Math.floor(scale) + start)
+      Math.floor((p - originPx) * scale + start)
 
     zoomIn: ->
      @_deltaZoom(-1)
@@ -465,15 +461,16 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
         if key == left
           t0 = @_roundTime(focus, zoom, -1)
-          t1 = focus - 1
+          t1 = focus
           dx = @timeSpanToPx(focusEnd - focus)
         else
           t0 = focusEnd
-          t1 = @_roundTime(focus, zoom, 2) - 1
+          t1 = @_roundTime(focus, zoom, 2)
           dx = -@timeSpanToPx(t1 - t0)
 
         if @_canFocusTimespan(t0, t1)
           @_pan(dx)
+          console.log 'this focus'
           @focus(t0, t1)
 
     _canFocusTimespan: (start, stop) ->
@@ -488,7 +485,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       x0 = @_getTransformX(group)
       x1 = @_getTransformX(next, x0)
 
-      [@positionToTime(x0), @positionToTimeRight(x1)]
+      [@positionToTime(x0), @positionToTime(x1)]
 
     _onLabelClick: (e) =>
       label = e.currentTarget
@@ -779,7 +776,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         leftX = Math.min(left.x, right.x)
         rightX = Math.max(left.x, right.x)
         temporal.start.date(new Date(@positionToTime(leftX)))
-        temporal.stop.date(new Date(@positionToTimeRight(rightX)))
+        temporal.stop.date(new Date(@positionToTime(rightX)))
         @root.trigger(@scopedEventName('temporalchange'))
         null
 
