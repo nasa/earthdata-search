@@ -12,8 +12,9 @@ describe 'Invalid user token', reset: false do
 
       load_page :root
 
-      fill_in 'keywords', with: 'C179001889-SEDAC'
+      fill_in 'keywords', with: 'C179002986-ORNL_DAAC'
       click_link 'Browse All Data'
+      wait_for_xhr
     end
 
     it 'logs out the user' do
