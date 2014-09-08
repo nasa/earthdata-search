@@ -98,12 +98,6 @@
   }
 }
 
-.master-overlay-main-right {
-  width: 50%;
-  left: 40%;
-  float: left;
-}
-
 .master-overlay-parent, .master-overlay-main, .master-overlay-main-content {
   z-index: 60;
   position: absolute;
@@ -261,7 +255,7 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 }
 
 .is-master-overlay-secondary-hidden {
-  .master-overlay-secondary { right: -60%; left: 100%; }
+  .master-overlay-secondary { right: -60%; left: 100% !important; }
 }
 
 .master-overlay-main-content {
@@ -274,7 +268,7 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 .is-hidden {
   .master-overlay-parent { left:-60%; }
   .master-overlay-main   { left: -40%; }
-  .master-overlay-secondary { right: -60%; left: 100%; }
+  .master-overlay-secondary { right: -60%; left: 100% !important; }
 }
 
 .master-overlay-help p {
@@ -305,6 +299,10 @@ $parent-width: $parent-split * 0.2;
   }
 
   .master-overlay-secondary {
+    left: $main-width + $parent-width;
+  }
+
+  .is-master-overlay-parent-hidden .master-overlay-secondary {
     left: $main-width;
   }
 }
