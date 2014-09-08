@@ -98,12 +98,6 @@
   }
 }
 
-.master-overlay-main-right {
-  width: 50%;
-  left: 40%;
-  float: left;
-}
-
 .master-overlay-parent, .master-overlay-main, .master-overlay-main-content {
   z-index: 60;
   position: absolute;
@@ -305,6 +299,10 @@ $parent-width: $parent-split * 0.2;
   }
 
   .master-overlay-secondary {
+    left: $main-width + $parent-width;
+  }
+
+  .is-master-overlay-parent-hidden .master-overlay-secondary {
     left: $main-width;
   }
 }
