@@ -84,7 +84,7 @@ describe "Timeline date selection", reset: false do
     end
 
     it "shows only granules within that time span" do
-      expect(granule_list).to have_text('Showing 13 of 13 matching granules')
+      expect(granule_list).to have_text('Showing 12 of 12 matching granules')
     end
 
 
@@ -203,7 +203,7 @@ describe "Timeline date selection", reset: false do
 
       it "maintains the selected time span" do
         wait_for_xhr
-        expect(granule_list).to have_text('Showing 13 of 13 matching granules')
+        expect(granule_list).to have_text('Showing 12 of 12 matching granules')
       end
     end
 
