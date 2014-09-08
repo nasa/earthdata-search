@@ -10,7 +10,9 @@ describe OauthTokensController, type: :controller do
       expected = {'tokenExpiresIn' => 3300000}
       return_json = {'expires_in' => 3600, 'access_token' => 'new_access_token', 'refresh_token' => 'new_refresh_token'}
 
-      allow(OauthToken).to receive(:refresh_token).and_return(return_json)
+      mock_client = Object.new
+      expect(Echo::Client).to receive('client_for_environment').and_return(mock_client)
+      allow(mock_client).to receive(:refresh_token).and_return(OpenStruct.new('success?' => true, 'body' => return_json))
 
       get :refresh_token
       expect(JSON.parse(response.body)).to eql(expected)

@@ -24,12 +24,12 @@ class DataAccessController < ApplicationController
       access_methods = dataset['serviceOptions']['accessMethod']
       access_methods.each do |method|
         if method['type'] == 'order'
-          order_response = Echo::Client.create_order(params,
-                                                     method['id'],
-                                                     method['method'],
-                                                     method['model'],
-                                                     get_user_id,
-                                                     token)
+          order_response = echo_client.create_order(params,
+                                                    method['id'],
+                                                    method['method'],
+                                                    method['model'],
+                                                    get_user_id,
+                                                    token)
           method[:order_id] = order_response[:order_id]
         end
       end
@@ -52,7 +52,7 @@ class DataAccessController < ApplicationController
 
     if orders.size > 0
       order_ids = orders.map {|o| o['order_id']}
-      order_response = Echo::Client.get_orders({id: order_ids}, token)
+      order_response = echo_client.get_orders({id: order_ids}, token)
       if order_response.success?
         echo_orders = order_response.body.map {|o| o['order']}.index_by {|o| o['id']}
 
@@ -80,7 +80,7 @@ class DataAccessController < ApplicationController
 
   def remove
     if params[:order_id]
-      order_response = Echo::Client.delete_order(params[:order_id], token)
+      order_response = echo_client.delete_order(params[:order_id], token)
       render json: order_response.body, status: order_response.status
     elsif params[:retrieval_id]
       retrieval = Retrieval.find(params[:retrieval_id])
@@ -97,12 +97,12 @@ class DataAccessController < ApplicationController
   # what we'd like ECHO / CMR to support.
   def options
     granule_params = request.query_parameters.merge(page_size: 150, page_num: 1)
-    catalog_response = Echo::Client.get_granules(granule_params, token)
+    catalog_response = echo_client.get_granules(granule_params, token)
 
     if catalog_response.success?
       dataset = Array.wrap(request.query_parameters[:echo_collection_id]).first
       if dataset
-        dqs = Echo::Client.get_data_quality_summary(dataset, token)
+        dqs = echo_client.get_data_quality_summary(dataset, token)
       end
 
       access_config = AccessConfiguration.find_by(user: current_user, dataset_id: dataset)
@@ -113,7 +113,11 @@ class DataAccessController < ApplicationController
       result = {}
       if granules.size > 0
 
-        hits = catalog_response.headers['echo-hits'].to_i
+        if catalog_response.headers['echo-hits']
+          hits = catalog_response.headers['echo-hits'].to_i
+        else
+          hits = catalog_response.headers['cmr-hits'].to_i
+        end
 
         sizeMB = granules.reduce(0) {|size, granule| size + granule['granule_size'].to_f}
         size = (1024 * 1024 * sizeMB / granules.size) * hits
@@ -141,7 +145,7 @@ class DataAccessController < ApplicationController
       end
 
       catalog_response.headers.each do |key, value|
-        response.headers[key] = value if key.start_with?('echo-')
+        response.headers[key] = value if key.start_with?('echo-') || key.start_with?('cmr-')
       end
 
       respond_with(result, status: catalog_response.status)
@@ -185,7 +189,7 @@ class DataAccessController < ApplicationController
 
   def get_order_access_methods(dataset_id, granules, hits)
     granule_ids = granules.map {|granule| granule['id']}
-    order_info = Echo::Client.get_order_information(granule_ids, token).body
+    order_info = echo_client.get_order_information(granule_ids, token).body
 
     defs = {}
     Array.wrap(order_info).each do |info|
@@ -207,7 +211,7 @@ class DataAccessController < ApplicationController
     defs.map do |option_id, config|
       config[:id] = option_id
       config[:type] = 'order'
-      config[:form] = Echo::Client.get_option_definition(option_id).body['option_definition']['form']
+      config[:form] = echo_client.get_option_definition(option_id).body['option_definition']['form']
       config[:all] = config[:count] == granules.size
       config[:count] = (hits.to_f * config[:count] / granules.size).round
       config

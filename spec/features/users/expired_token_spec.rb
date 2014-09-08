@@ -14,7 +14,7 @@ describe "Expired user token", reset: true do
     before :each do
       Capybara.reset_sessions!
 
-      allow(OauthToken).to receive(:refresh_token).and_return(return_json)
+      Echo::Client.any_instance.stub(:refresh_token).and_return(OpenStruct.new(body: return_json))
     end
 
     context 'when loading the page with an expired token' do
@@ -62,7 +62,7 @@ describe "Expired user token", reset: true do
     before :each do
       Capybara.reset_sessions!
 
-      allow(OauthToken).to receive(:refresh_token).and_return(return_json)
+      Echo::Client.any_instance.stub(:refresh_token).and_return(OpenStruct.new(body: return_json))
     end
 
     context 'when loading the page with an expired token' do
