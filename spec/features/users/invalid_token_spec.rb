@@ -14,7 +14,6 @@ describe 'Invalid user token', reset: false do
 
       fill_in 'keywords', with: 'C179001889-SEDAC'
       click_link 'Browse All Data'
-      wait_for_xhr
     end
 
     it 'logs out the user' do
