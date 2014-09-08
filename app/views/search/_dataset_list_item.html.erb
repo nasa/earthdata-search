@@ -62,15 +62,16 @@
                   <i class="edsc-icon-minus"></i>
                 </a>
               </div>
-              <p class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForDataset($data)}"<% end %>>
-
-                <span data-bind="text: short_name"></span>
-                <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
-                v<span data-bind="text: version_id"></span>
-                <!-- /ko -->
-                <!-- ko if: $data.archive_center -->
-                - <span data-bind="text: archive_center"></span>
-                <!-- /ko -->
+              <p>
+                <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForDataset($data)}"<% end %>>
+                  <span data-bind="text: short_name"></span>
+                  <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
+                  v<span data-bind="text: version_id"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $data.archive_center -->
+                  - <span data-bind="text: archive_center"></span>
+                  <!-- /ko -->
+                </span>
               </p>
 
               <p class="dataset-granules-info panel-list-comparison-details">
