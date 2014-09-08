@@ -44,7 +44,7 @@ describe "Temporal constraint disambiguation", reset: true do
       before(:each) { find('.master-overlay-global-actions').click_on "Retrieve data" }
 
       it 'takes the user to the access configuration page for the granules on the selected date' do
-        expect(page).to have_content("13 Granules")
+        expect(page).to have_content("12 Granules")
       end
     end
   end
@@ -75,7 +75,7 @@ describe "Temporal constraint disambiguation", reset: true do
         before(:each) { click_on "Use Focused Time Span" }
 
         it 'takes the user to the access configuration page for the granules on the selected date' do
-          expect(page).to have_content("13 Granules")
+          expect(page).to have_content("12 Granules")
         end
       end
     end
