@@ -89,7 +89,6 @@
       xhr.done(-> deferred.resolve())
       xhr.fail((response, type, reason) ->
         if response.status == 401
-          path = window.location.href
           $.ajax
             url: '/logout'
             method: 'get'
