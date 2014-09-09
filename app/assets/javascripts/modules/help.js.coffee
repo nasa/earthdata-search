@@ -282,6 +282,8 @@
   add = (key, options={}) ->
     unless tourRunning
       options = $.extend({}, defaultHelpOptions, tourOptions[key], options, key: key)
+      for item in queue
+        return if item.key == key
       unless options.once && shown[key]
         queue.push(options)
         showCurrent()
