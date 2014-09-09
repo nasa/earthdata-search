@@ -21,3 +21,6 @@ do ($ = jQuery, config = @edsc.config) ->
     check = $('.save-success')
     check.show()
     setTimeout((-> check.fadeOut()), config.defaultAnimationDurationMs)
+
+  $(document).ready ->
+    $(document.body).tooltip({ selector: '[data-tooltip="true"]', placement: 'auto left' });

@@ -109,21 +109,41 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   line-height: 1.5;
 }
 
-.badge {
+.panel-list-badges {
   position: absolute;
   top: 0;
+  left: 0;
+  .tooltip {
+    width: 240px;
+  }
+
+  .tooltip.right .tooltip-arrow {
+    border-right-color: #263c50;
+  }
+
+  .tooltip-inner {
+    max-width: 240px;
+    background-color: #263c50;
+  }
+
+}
+
+.badge {
   display: block;
+  float: left;
+  border-radius: 2px;
+  margin: 2px 0 0 2px;
   background-repeat: no-repeat;
-  width: 100px;
-  height: 100px;
+  width: 22px;
+  height: 22px;
 }
 
 .badge-gibs {
-  @include retina-image(gibs, 50px 50px, png, null, '@2x', true);
+  @include retina-image(gibs, 22px 22px, png, null, '@2x', true);
 }
 
 .badge-opendap {
-  @include retina-image(opendap, 50px 50px, png, null, '@2x', true);
+  @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
 }
 
 .panel-list-muted {
