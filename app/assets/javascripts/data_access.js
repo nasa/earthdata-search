@@ -8,6 +8,7 @@
 //= require history.js-1.8.6/jquery.history.js
 //= require dropzone-3.8.3
 //= require echoforms/wgxpath.install.patched
+//= require echoforms/jstree.min
 //= require echoforms/jquery.echoforms.min
 //= require namespaces
 //= require config
