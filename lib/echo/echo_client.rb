@@ -57,7 +57,11 @@ module Echo
     end
 
     def get_preferences(user_id, token)
-      get("/echo-rest/users/#{user_id}/preferences.json", {}, token_header(token))
+      response = get("/echo-rest/users/#{user_id}/preferences.json", {}, token_header(token))
+      if response.status == 404
+        response = update_preferences(user_id, {preferences: {}}, token)
+      end
+      response
     end
 
     def update_preferences(user_id, params, token)
