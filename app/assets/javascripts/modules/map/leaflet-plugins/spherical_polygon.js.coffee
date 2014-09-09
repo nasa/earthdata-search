@@ -256,6 +256,13 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
 
   L.sphericalPolygon = (latlngs, options) -> new L.SphericalPolygon(latlngs, options)
 
+  # Monkey-patch _removeLayer.  The original doesn't handle event propagation
+  # from FeatureGroups, and SphericalPolygons are FeatureGroups
+  originalRemove = L.EditToolbar.Delete.prototype._removeLayer
+  L.EditToolbar.Delete.prototype._removeLayer = (e) ->
+    e.layer = e.target if e.target?._boundaries
+    originalRemove.call(this, e)
+
   L.Draw.Polygon = L.Draw.Polygon.extend
     Poly: L.SphericalPolygon
 
