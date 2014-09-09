@@ -6,6 +6,7 @@
       content: "The file you uploaded contains multiple shapes. Click on the shape you wish to
                 use as your search constraint."
     shapefile_reduction:
+      once: true
       title: "Shape file has too many points"
       content: "The shape you selected is too complex to use for search. We've automatically reduced
                 it to have an acceptable number of points.  You may edit the polygon to correct any problems
