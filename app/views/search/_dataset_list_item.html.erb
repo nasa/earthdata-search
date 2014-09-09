@@ -4,16 +4,21 @@
               <div class="panel-list-drag-handle"></div>
               <% end %>
               <div class="panel-list-thumbnail-container">
+                <div class="panel-list-badges">
+                  <!-- ko if: gibs() -->
+                  <a href="#" class="badge badge-gibs" data-tooltip="true" title="Supports advanced map visualizations using the GIBS tile service"></a>
+                  <!-- /ko -->
+                  <!-- ko if: opendap() -->
+                  <a href="#" class="badge badge-opendap" data-tooltip="true" title="Supports spatial and parameter subsetting using OPeNDAP"></a>
+                  <!-- /ko -->
+                </div>
               <!-- ko if: thumbnail() -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
               <!-- /ko -->
               <!-- ko ifnot: thumbnail() -->
               <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
-                <i class="fa fa-picture-o"></i><br />No image available
+                <i class="fa fa-globe"></i><br />No image available
               </div>
-              <!-- /ko -->
-              <!-- ko if: gibs() -->
-              <span class="badge badge-gibs"></span>
               <!-- /ko -->
               </div>
               <h3 data-bind="text: dataset_id"></h3>
