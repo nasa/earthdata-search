@@ -1,4 +1,12 @@
 module VCR
+  class Logger
+    def request_summary(request, request_matchers)
+      attributes = [request.method, request.uri]
+      attributes << request.body.to_s.inspect if request_matchers.include?(:body)
+      attributes << request.headers.inspect if request_matchers.include?(:headers)
+      "[#{attributes.join(" ")}]"
+    end
+  end
   class EDSCLoggerStream
     def puts(message)
       if message.start_with?('[faraday] Identified request type (recordable)')
