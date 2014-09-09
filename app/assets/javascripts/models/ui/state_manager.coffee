@@ -14,6 +14,7 @@
       @path = ko.computed(read: @_readPath, write: @_writePath, deferEvaluation: true, owner: this)
       @historyChanged = false
       @loaded = false
+      @echo_env = null
 
       $(window).on 'edsc.save_workspace', =>
           urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceNameField())
@@ -32,6 +33,7 @@
       ui = page.ui
       result = {}
       result.labs = page.labs() if page.labs()
+      result.echo_env = @echo_env if @echo_env
 
       result = extend(result, page.project.serialized(), ui.datasetsList.serialized())
 
@@ -62,6 +64,7 @@
         @_timelineParams = params.tl
 
       page.labs(params.labs)
+      @echo_env = params.echo_env
       page.project.serialized(params)
 
       unless @loaded

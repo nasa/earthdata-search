@@ -5,6 +5,7 @@
   timeoutPool = []
   realSetTimeout = window.setTimeout
   realClearTimeout = window.clearTimeout
+  isRefreshing = false
 
   hasPending = ->
     xhrPool.length > 0 || timeoutPool.length > 0
@@ -26,7 +27,9 @@
         timeoutPool.splice(index, 1) if index > -1
         runCallbacks()
 
-    id = realSetTimeout(onTimeout, args...)
+    # ie9 needs the following line instead of the original:
+    #   id = realSetTimeout(onTimeout, args...)
+    id = realSetTimeout.apply(window, [onTimeout].concat(args))
     timeoutPool.push(id)
     id
 
@@ -40,6 +43,7 @@
   $(document)
     .ajaxSend (event, xhr, settings) ->
       xhr.setRequestHeader('X-CSRF-Token', csrfToken)
+      xhr.setRequestHeader('edsc-echo-env', window.echoEnv)
       xhr.id = xhrs++
       xhrPool.push(xhr.id)
     .ajaxComplete (event, xhr) ->
@@ -56,18 +60,24 @@
     deferred = $.Deferred()
 
     if isTokenExpired()
-      console.log 'Refreshing URS token'
-      $.ajax
-        url: '/refresh_token'
-        method: 'get'
-        dataType: 'json'
-        success: (data, status, xhr) ->
-          if data?
-            window.tokenExpiresIn = data.tokenExpiresIn
+      unless isRefreshing
+        console.log 'Refreshing URS token'
+        isRefreshing = true
+        $.ajax
+          url: '/refresh_token'
+          method: 'get'
+          dataType: 'json'
+          success: (data, status, xhr) ->
+            if data?
+              window.tokenExpiresIn = data.tokenExpiresIn
+              window.tokenLoadTime = +new Date();
 
-          doXHR(deferred, method, args...)
-        error: (response, type, reason) ->
-          xhr.fail(-> deferred.reject())
+            isRefreshing = false
+            doXHR(deferred, method, args...)
+          error: (response, type, reason) ->
+            window.location.href = '/login'
+      else
+        wait(-> doXHR(deferred, method, args...))
     else
       doXHR(deferred, method, args...)
 
@@ -77,7 +87,15 @@
     if deferred.state() == 'pending'
       xhr = $[method](args...)
       xhr.done(-> deferred.resolve())
-      xhr.fail(-> deferred.reject())
+      xhr.fail((response, type, reason) ->
+        if response.status == 401
+          $.ajax
+            url: '/logout'
+            method: 'get'
+            dataType: 'json'
+            success: ->
+              window.location.reload()
+        deferred.reject())
       deferred.fail ->
         xhr.abort()
 
@@ -87,8 +105,9 @@
 
   getTokenExpires = ->
     expiresIn = window.tokenExpiresIn
+    tokenLoadTime = window.tokenLoadTime
     if expiresIn?
-      (+new Date()) + expiresIn
+      tokenLoadTime + expiresIn
     else
       null
 

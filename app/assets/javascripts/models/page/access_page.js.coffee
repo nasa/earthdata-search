@@ -1,6 +1,7 @@
 #= require models/data/query
 #= require models/data/project
 #= require models/data/account
+#= require models/data/preferences
 #= require models/ui/temporal
 #= require models/ui/project_list
 #= require models/ui/service_options_list
@@ -17,6 +18,7 @@ ns.AccessPage = do (ko,
                     QueryModel = data.query.DatasetQuery
                     ProjectModel = data.Project
                     AccountModel = data.Account
+                    PreferencesModel = data.Preferences
                     AccountFormModel = ui.AccountForm
                     TemporalModel = ui.Temporal
                     ProjectListModel = ui.ProjectList
@@ -29,6 +31,7 @@ ns.AccessPage = do (ko,
       @project = new ProjectModel(@query, false)
       @bindingsLoaded = ko.observable(false)
       @account = new AccountModel()
+      @preferences = new PreferencesModel()
 
       projectList = new ProjectListModel(@project)
       accountForm = new AccountFormModel(@account, true)

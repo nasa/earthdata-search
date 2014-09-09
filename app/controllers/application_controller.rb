@@ -14,7 +14,19 @@ class ApplicationController < ActionController::Base
   protected
 
   RECENT_DATASET_COUNT = 2
-  URS_LOGIN_PATH = "#{ ENV['urs_root'] }oauth/authorize?client_id=#{ENV['urs_client_id'] }&redirect_uri=#{ENV['urs_callback_url'] }&response_type=code"
+
+  def echo_client
+    if @echo_client.nil?
+      service_configs = Rails.configuration.services
+      @echo_client = Echo::Client.client_for_environment(echo_env, Rails.configuration.services)
+    end
+    @echo_client
+  end
+
+  def echo_env
+    @echo_env ||= request.headers['edsc-echo-env'] || request.query_parameters.delete('echo_env') || Rails.configuration.echo_env || 'ops'
+  end
+  helper_method :echo_env
 
   def refresh_urs_if_needed
     if logged_in? && server_session_expires_in < 0
@@ -23,8 +35,16 @@ class ApplicationController < ActionController::Base
   end
 
   def refresh_urs_token
-    json = OauthToken.refresh_token(session[:refresh_token])
+    json = echo_client.refresh_token(session[:refresh_token]).body
     store_oauth_token(json)
+
+    if json.nil? && !request.xhr?
+      session[:last_point] = request.fullpath
+
+      redirect_to echo_client.urs_login_path
+    end
+
+    json
   end
 
   def handle_timeout
@@ -44,7 +64,7 @@ class ApplicationController < ActionController::Base
     # Dont make a call to ECHO if we already know the user id
     return session[:user_id] if session[:user_id]
 
-    response = Echo::Client.get_current_user(token).body
+    response = echo_client.get_current_user(token).body
     session[:user_id] = response["user"]["id"] if response["user"]
     session[:user_id]
   end
@@ -92,13 +112,22 @@ class ApplicationController < ActionController::Base
     session[:access_token] = json["access_token"]
     session[:refresh_token] = json["refresh_token"]
     session[:expires_in] = json["expires_in"]
+    session[:logged_in_at] = json.empty? ? nil : Time.now.to_i
+  end
+
+  def logged_in_at
+    session[:logged_in_at].nil? ? 0 : session[:logged_in_at]
+  end
+
+  def expires_in
+    (logged_in_at + session[:expires_in]) - Time.now.to_i
   end
 
   def require_login
     unless get_user_id
       session[:last_point] = request.fullpath
 
-      redirect_to URS_LOGIN_PATH
+      redirect_to echo_client.urs_login_path
     end
   end
 
@@ -108,16 +137,22 @@ class ApplicationController < ActionController::Base
   SCRIPT_EXPIRATION_OFFSET_S = 300
 
   def logged_in?
-    session[:access_token].present?
+    logged_in = session[:access_token].present? &&
+          session[:refresh_token].present? &&
+          session[:expires_in].present? &&
+          session[:logged_in_at]
+
+    store_oauth_token() unless logged_in
+    logged_in
   end
   helper_method :logged_in?
 
   def server_session_expires_in
-    session[:expires_in] - SERVER_EXPIRATION_OFFSET_S
+    logged_in? ? (expires_in - SERVER_EXPIRATION_OFFSET_S).to_i : 0
   end
 
   def script_session_expires_in
-    1000 * (session[:expires_in] - SCRIPT_EXPIRATION_OFFSET_S).to_i
+    logged_in? ? 1000 * (expires_in - SCRIPT_EXPIRATION_OFFSET_S).to_i : 0
   end
   helper_method :script_session_expires_in
 

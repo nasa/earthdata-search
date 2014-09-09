@@ -26,7 +26,9 @@ describe DataAccessController do
       end
 
       granules_response = MockResponse.atom(granules, {'echo-hits' => hits.to_s})
-      expect(Echo::Client).to receive('get_granules').and_return(granules_response)
+      mock_client = Object.new
+      expect(Echo::Client).to receive('client_for_environment').and_return(mock_client)
+      expect(mock_client).to receive('get_granules').and_return(granules_response)
 
       if hits > 0
         order_info_response = []
@@ -41,13 +43,13 @@ describe DataAccessController do
         end
 
         order_info_response = MockResponse.new(order_infos)
-        expect(Echo::Client).to receive('get_order_information').and_return(order_info_response)
+        expect(mock_client).to receive('get_order_information').and_return(order_info_response)
 
         if orderable > 0
           order_refs.each do |ref|
             id = ref['id']
             option_def_response = MockResponse.new('option_definition' => {'form' => order_forms[id]})
-            expect(Echo::Client).to receive('get_option_definition').with(id).and_return(option_def_response)
+            expect(mock_client).to receive('get_option_definition').with(id).and_return(option_def_response)
           end
         end
       end
@@ -55,7 +57,9 @@ describe DataAccessController do
       session[:urs_user] = {present: true}
       session[:user_id] = 'myid'
       session[:access_token] = 'some token'
+      session[:refresh_token] = 'some refresh token'
       session[:expires_in] = 99999999
+      session[:logged_in_at] = Time.now.to_i
 
       get :options, format: 'json'
 

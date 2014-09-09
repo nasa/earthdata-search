@@ -105,8 +105,9 @@ describe "Map interface", reset: false do
       expect(page).to have_field("Blue Marble")
       expect(page).to have_field("Corrected Reflectance (True Color)")
       expect(page).to have_field("Land / Water Map")
-      expect(page).to have_field("Administrative Boundaries")
+      expect(page).to have_field("Borders and Roads")
       expect(page).to have_field("Coastlines")
+      expect(page).to have_field("Place Labels")
     end
 
     it "allows switching base layers" do
@@ -128,7 +129,7 @@ describe "Map interface", reset: false do
       end
 
       expect('#map').to have_tiles_for_product('BlueMarble_ShadedRelief_Bathymetry')
-      expect('#map').to have_tiles_for_product('gpw-v3-coastlines')
+      expect('#map').to have_tiles_for_product('Coastlines')
     end
   end
 end

@@ -1,6 +1,6 @@
 // Environment-specific styles.  These are almost always a bad idea.  Document what you're doing.
 
-.env-test {
+.env-test:not(.offline-page) {
   // Set the page width to a fixed value.  The default width is too narrow and pushes the toolbar buttons
   // down, causing some specs to fail because of capybara-webkit issues with element stacking
   width: 1280px;

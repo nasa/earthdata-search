@@ -18,7 +18,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   background-color: #292929;
   border-left: 10px solid #424242;
   margin: 5px 5px 6px 5px;
-  height: $panel-list-thumbnail-size + 20px;
+  min-height: $panel-list-thumbnail-size + 20px;
   padding: 10px 10px 10px 14px;
   font-size: .8em;
   position: relative;
@@ -35,6 +35,10 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   h3 {
     overflow: hidden;
   }
+}
+
+.panel-list-item > p {
+  margin-left: $panel-list-thumbnail-size;
 }
 
 // Drag handles instead of borders

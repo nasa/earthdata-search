@@ -6,7 +6,6 @@
 //= require modules/map/leaflet-plugins/interpolation
 //= require modules/map/leaflet-plugins/projection_switching_layer
 //= require modules/map/leaflet-plugins/gibs_tile_layer
-//= require modules/map/leaflet-plugins/sedac_tile_layer
 //= require modules/map/leaflet-plugins/projection_switcher
 //= require modules/map/leaflet-plugins/draw_errors
 //= require modules/map/leaflet-plugins/spherical_polygon

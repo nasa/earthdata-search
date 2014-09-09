@@ -112,13 +112,28 @@ ns.XhrModel = do (ko
           @currentRequest = null
           @isLoaded(true)
           @error(null)
-          @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
-          @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
+
           #console.log("Response: #{@path}", requestId, params, data)
           console.log("Complete (#{requestId}): #{url}")
           results = @_toResults(data, current, params)
 
-          @hits(Math.max(parseInt(xhr.getResponseHeader('echo-hits') ? '0', 10), results?.length ? 0))
+          fetched = results?.length ? 0
+          hits = 0
+          if xhr.getResponseHeader('echo-hits')?
+            hits = parseInt(xhr.getResponseHeader('echo-hits'), 10)
+            @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
+            @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
+
+          else if xhr.getResponseHeader('cmr-hits')
+            hits = parseInt(xhr.getResponseHeader('cmr-hits'), 10)
+            if data.page_size && data.page_num
+              @hasNextPage(data.page_size * data.page_num < hits)
+            else
+              @hasNextPage(fetched < hits)
+            @hitsEstimated(false)
+
+          @hits(Math.max(hits, fetched))
+
 
           @loadTime(((new Date() - start) / 1000).toFixed(1))
           callback?(results)

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     session[:last_point] = request.referrer
     session[:last_point] = params[:next_point] if params[:next_point]
 
-    redirect_to URS_LOGIN_PATH
+    redirect_to echo_client.urs_login_path
   end
 
   def logout
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def get_preferences
-    response = Echo::Client.get_preferences(get_user_id, token)
+    response = echo_client.get_preferences(get_user_id, token)
     render json: response.body, status: response.status
   end
 
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     preferences = {preferences: params.delete('preferences')}
     user_id = get_user_id
 
-    response = Echo::Client.update_preferences(user_id, preferences, token)
+    response = echo_client.update_preferences(user_id, preferences, token)
     render json: response.body, status: response.status
   end
 

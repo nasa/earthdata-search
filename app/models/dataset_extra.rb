@@ -7,7 +7,9 @@ class DatasetExtra < ActiveRecord::Base
 
 
   def self.load
-    response = Echo::Client.get_provider_holdings
+    echo_client = Echo::Client.client_for_environment(env, Rails.configuration.services)
+
+    response = echo_client.get_provider_holdings
     results = response.body
     hits = response.headers['echo-dataset-hits'].to_i
 
@@ -22,7 +24,7 @@ class DatasetExtra < ActiveRecord::Base
 
       if extra.has_granules
         if extra.has_browseable_granules.nil? || (extra.has_browseable_granules && extra.browseable_granule.nil?)
-          browseable = Echo::Client.get_granules(format: 'json',
+          browseable = echo_client.get_granules(format: 'json',
                                                  echo_collection_id: [id],
                                                  page_size: 1, browse_only: true).body['feed']['entry']
           extra.has_browseable_granules = browseable.size > 0
@@ -31,7 +33,7 @@ class DatasetExtra < ActiveRecord::Base
           end
         end
         if extra.granule.nil?
-          granules = Echo::Client.get_granules(format: 'json',
+          granules = echo_client.get_granules(format: 'json',
                                                echo_collection_id: [id],
                                                page_size: 1).body['feed']['entry']
 
@@ -49,14 +51,20 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def self.load_echo10
+    echo_client = Echo::Client.client_for_environment(env, Rails.configuration.services)
+
     params = {page_num: 0, page_size: 500}
     processed_count = 0
 
     begin
       params[:page_num] += 1
-      response = Echo::Client.get_datasets(params.merge(format: 'echo10'))
+      response = echo_client.get_datasets(params.merge(format: 'echo10'))
       datasets = Array.wrap(response.body['results']['result'])
-      hits = response.headers['echo-hits'].to_i
+      if catalog_response.headers['echo-hits']
+        hits = response.headers['echo-hits'].to_i
+      else
+        hits = catalog_response.headers['cmr-hits'].to_i
+      end
 
       datasets.each do |dataset|
         extra = DatasetExtra.find_or_create_by(echo_id: dataset['echo_dataset_id'])
@@ -94,22 +102,29 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def self.load_option_defs
+    echo_client = Echo::Client.client_for_environment(env, Rails.configuration.services)
+
     params = {page_num: 0, page_size: 20}
     processed_count = 0
 
     begin
       params[:page_num] += 1
-      response = Echo::Client.get_datasets(params)
+      response = echo_client.get_datasets(params)
       datasets = response.body
-      hits = response.headers['echo-hits'].to_i
+
+      if catalog_response.headers['echo-hits']
+        hits = response.headers['echo-hits'].to_i
+      else
+        hits = catalog_response.headers['cmr-hits'].to_i
+      end
 
       datasets['feed']['entry'].each do |dataset|
         # Skip datasets that we've seen before which have no browseable granules.  Saves tons of time
-        granules = Echo::Client.get_granules(format: 'json', echo_collection_id: [dataset['id']], page_size: 1).body
+        granules = echo_client.get_granules(format: 'json', echo_collection_id: [dataset['id']], page_size: 1).body
 
         granule = granules['feed']['entry'].first
         if granule
-          order_info = Echo::Client.get_order_information([granule['id']], nil).body
+          order_info = echo_client.get_order_information([granule['id']], nil).body
           refs = Array.wrap(order_info).first['order_information']['option_definition_refs']
           if refs
             opts = refs.map {|r| [r['id'], r['name']]}
@@ -226,7 +241,7 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def decorate_granule_information(dataset)
-    dataset[:has_granules] = self.has_granules
+    dataset[:has_granules] = self.has_granules unless dataset.key?(:has_granules)
   end
 
   def decorate_gibs_layers(dataset)
