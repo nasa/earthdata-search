@@ -22,7 +22,9 @@ describe "Dataset GIBS help", reset: true do
 
     it "displays information on the source and accuracy of GIBS browse" do
       expect(page).to have_popover('Approximate Granule Imagery')
-      expect(page).to have_link('GIBS')
+      within('.popover') do
+        expect(page).to have_link('GIBS')
+      end
     end
   end
 
@@ -41,7 +43,6 @@ describe "Dataset GIBS help", reset: true do
 
     it "does not display GIBS accuracy information a second time" do
       expect(page).to have_no_popover('Approximate Granule Imagery')
-      expect(page).to have_no_link('GIBS')
     end
   end
 end
