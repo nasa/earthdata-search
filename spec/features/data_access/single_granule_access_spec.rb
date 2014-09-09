@@ -5,9 +5,8 @@ describe 'Single Granule Data Access', reset: false do
 
   context 'when the user is not logged in' do
     before(:each) do
-      load_page :search, project: [downloadable_dataset_id], view: :project
+      load_page :search, focus: downloadable_dataset_id
       wait_for_xhr
-      first_project_dataset.click
       first_granule_list_item.click_link "Retrieve data"
     end
 
@@ -22,10 +21,9 @@ describe 'Single Granule Data Access', reset: false do
 
   context 'when the user is logged in' do
     before :all do
-      load_page :search, project: [downloadable_dataset_id], view: :project
+      load_page :search, focus: downloadable_dataset_id
       login
       wait_for_xhr
-      first_project_dataset.click
       first_granule_list_item.click_link "Retrieve data"
       wait_for_xhr
     end
