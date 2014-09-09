@@ -115,7 +115,43 @@
 
 .data-access-retrieve {
   > header, > section, > .data-access-content {
-    border-bottom: 1px solid #888;
+  }
+}
+
+.data-access-container {
+  padding: 1.5em;
+  margin: 0 auto;
+  background-color: #f3f3f3;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  max-width: 1000px;
+  color: #424242;
+
+  a:link, a:visited {
+    color: inherit;
+  }
+
+  a.button {
+    color: #fff;
+  }
+
+  h2 {
+    border-bottom: 1px solid #bbb;
+  }
+}
+
+section.data-access-next {
+  padding: 1.5em;
+  margin: 0 auto;
+  margin-top: 0;
+  background-color: #27ae60;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-top: 5px solid #249b56;
+  max-width: 1000px;
+  color: #f3f3f3;
+  a {
+    color: #f3f3f3;
   }
 }
 
