@@ -3,9 +3,23 @@ require 'addressable/template'
 class OpendapConfiguration
 
   def self.find(dataset_id)
+    Rails.logger.info("Finding opendap config")
     opendap_config = Rails.configuration.services['opendap'][dataset_id]
     return OpendapConfiguration.new() unless opendap_config.present?
-    ddx = Faraday.get(opendap_config['ddx_url']).body
+
+    # FIXME: Temporary workaround for EI-2273.  Using domain names triggers
+    #        slow firewall behavior in SIT and UAT
+    ddx_uri = URI(opendap_config['ddx_url'])
+    ip = `dig +short #{ddx_uri.host} | tail -n1`
+    if ip && ip[/(\d+\.){3}\d+/]
+      ddx_uri.host = ip.strip
+    else
+      Rails.logger.error "Could not find IP for #{ddx_uri.host}, got #{ip}"
+    end
+    ddx_url = ddx_uri.to_s
+    Rails.logger.info "Retrieving OPeNDAP configuration: #{opendap_config['ddx_url']} -> #{ddx_url}"
+
+    ddx = Faraday.get(ddx_url).body
 
     parsed = MultiXml.parse(ddx)
 
