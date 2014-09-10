@@ -5,9 +5,12 @@ class DatasetExtra < ActiveRecord::Base
   store :searchable_attributes, coder: JSON
   store :orbit, coder: JSON
 
+  def self.build_echo_client(env=(ENV['ECHO_ENV'] || 'ops'))
+    Echo::Client.client_for_environment(env, Rails.configuration.services)
+  end
 
   def self.load
-    echo_client = Echo::Client.client_for_environment(env, Rails.configuration.services)
+    echo_client = build_echo_client
 
     response = echo_client.get_provider_holdings
     results = response.body
@@ -51,90 +54,85 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def self.load_echo10
-    echo_client = Echo::Client.client_for_environment(env, Rails.configuration.services)
+    each_dataset(build_echo_client, format: 'echo10') do |dataset|
+      extra = DatasetExtra.find_or_create_by(echo_id: dataset['echo_dataset_id'])
+      dataset = dataset['Collection']
 
-    params = {page_num: 0, page_size: 500}
-    processed_count = 0
-
-    begin
-      params[:page_num] += 1
-      response = echo_client.get_datasets(params.merge(format: 'echo10'))
-      datasets = Array.wrap(response.body['results']['result'])
-      if catalog_response.headers['echo-hits']
-        hits = response.headers['echo-hits'].to_i
+      # Additional attribute definitions
+      attribute_defs = dataset['AdditionalAttributes'] || {}
+      attributes = Array.wrap(attribute_defs['AdditionalAttribute']).reject {|a| a['Value']}
+      if attributes.present?
+        attributes = attributes.map do |attr|
+          attr.map { |k, v| {k.underscore => v} }.reduce(&:merge)
+        end
+        extra.searchable_attributes = {attributes: attributes}
       else
-        hits = catalog_response.headers['cmr-hits'].to_i
+        extra.searchable_attributes = {attributes: []}
       end
 
-      datasets.each do |dataset|
-        extra = DatasetExtra.find_or_create_by(echo_id: dataset['echo_dataset_id'])
-        dataset = dataset['Collection']
-
-        # Additional attribute definitions
-        attribute_defs = dataset['AdditionalAttributes'] || {}
-        attributes = Array.wrap(attribute_defs['AdditionalAttribute']).reject {|a| a['Value']}
-        if attributes.present?
-          attributes = attributes.map do |attr|
-            attr.map { |k, v| {k.underscore => v} }.reduce(&:merge)
-          end
-          extra.searchable_attributes = {attributes: attributes}
-        else
-          extra.searchable_attributes = {attributes: []}
-        end
-
-        # Orbit parameters
-        spatial = dataset['Spatial'] || {}
-        orbit = spatial['OrbitParameters']
-        if orbit
-          orbit = orbit.map { |k, v| {k.underscore => v} }.reduce(&:merge)
-          extra.orbit = orbit
-        else
-          extra.orbit = {}
-        end
-
-        extra.save if extra.changed?
-
-        processed_count += 1
+      # Orbit parameters
+      spatial = dataset['Spatial'] || {}
+      orbit = spatial['OrbitParameters']
+      if orbit
+        orbit = orbit.map { |k, v| {k.underscore => v} }.reduce(&:merge)
+        extra.orbit = orbit
+      else
+        extra.orbit = {}
       end
-    end while processed_count < hits && datasets.size > 0
+
+      extra.save if extra.changed?
+    end
 
     nil
   end
 
   def self.load_option_defs
-    echo_client = Echo::Client.client_for_environment(env, Rails.configuration.services)
+    echo_client = build_echo_client
 
-    params = {page_num: 0, page_size: 20}
+    each_dataset(echo_client) do |dataset|
+      # Skip datasets that we've seen before which have no browseable granules.  Saves tons of time
+      granules = echo_client.get_granules(format: 'json', echo_collection_id: [dataset['id']], page_size: 1).body
+
+      granule = granules['feed']['entry'].first
+      if granule
+        order_info = echo_client.get_order_information([granule['id']], nil).body
+        refs = Array.wrap(order_info).first['order_information']['option_definition_refs']
+        if refs
+          opts = refs.map {|r| [r['id'], r['name']]}
+          puts "#{dataset['id'].inspect} => #{opts.inspect},"
+        end
+      end
+    end
+
+    nil
+  end
+
+  def self.each_dataset(echo_client, extra_params={})
+    params = {page_num: 0, page_size: 2000}
     processed_count = 0
 
     begin
       params[:page_num] += 1
-      response = echo_client.get_datasets(params)
-      datasets = response.body
-
-      if catalog_response.headers['echo-hits']
-        hits = response.headers['echo-hits'].to_i
+      response = echo_client.get_datasets(params.merge(extra_params))
+      body = response.body
+      if body['results']
+        # ECHO10
+        datasets = Array.wrap(body['results']['result'])
       else
-        hits = catalog_response.headers['cmr-hits'].to_i
+        # Atom
+        datasets = body['feed']['entry']
       end
 
-      datasets['feed']['entry'].each do |dataset|
-        # Skip datasets that we've seen before which have no browseable granules.  Saves tons of time
-        granules = echo_client.get_granules(format: 'json', echo_collection_id: [dataset['id']], page_size: 1).body
+      if response.headers['echo-hits']
+        hits = response.headers['echo-hits'].to_i
+      else
+        hits = response.headers['cmr-hits'].to_i
+      end
 
-        granule = granules['feed']['entry'].first
-        if granule
-          order_info = echo_client.get_order_information([granule['id']], nil).body
-          refs = Array.wrap(order_info).first['order_information']['option_definition_refs']
-          if refs
-            opts = refs.map {|r| [r['id'], r['name']]}
-            puts "#{dataset['id'].inspect} => #{opts.inspect},"
-          end
-        end
-
+      datasets.each do |dataset|
+        yield dataset
         processed_count += 1
-
-        #puts "#{processed_count} / #{hits}"
+        puts "#{processed_count} / #{hits} Datasets Processed"
       end
     end while processed_count < hits && datasets.size > 0
 
