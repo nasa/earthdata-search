@@ -19,7 +19,7 @@ module Echo
     end
 
     def get_granule(id, options={}, token=nil)
-      get("/search/granules/#{id}.echo10", {}, token_header(token))
+      get("/search/concepts/#{id}.echo10", {}, token_header(token))
     end
 
     def get_facets(options={}, token=nil)

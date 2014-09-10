@@ -26,8 +26,8 @@ module Echo
       end
 
       def parse_response?(env)
-        status = env[:response].status
-        env[:url].path.include?('granules') && status >= 200 && status < 300
+        body = env[:body]
+        body.is_a?(Hash) && body['Granule']
       end
 
       private
