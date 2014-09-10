@@ -440,7 +440,7 @@ ns.GranuleLayer = do (L
         if @layer.options.endpoint == 'geo' && @_granuleFocusLayer?
           bounds = @_granuleFocusLayer.getBounds()
           # Avoid zooming and panning tiny amounts
-          if bounds && !@_map.getBounds().contains(bounds)
+          if bounds?.isValid() && !@_map.getBounds().contains(bounds)
             @_map.fitBounds(bounds.pad(0.2))
 
       @_loadResults(@_results)
