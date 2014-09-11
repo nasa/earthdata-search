@@ -35,6 +35,11 @@ describe "Data Access workflow", reset: false do
       Capybara.reset_sessions!
     end
 
+    it "displays a link to return to search results" do
+      expect(page).to have_link("Back to Search Session")
+      expect(page).to have_css("a[href^=\"/search/project?p=!#{downloadable_dataset_id}\"]")
+    end
+
     context "when displaying options for the first of multiple datasets" do
       after :all do
         reset_access_page

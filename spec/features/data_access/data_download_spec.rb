@@ -88,6 +88,11 @@ describe "Data download page", reset: false do
       click_on 'Submit'
     end
 
+    it "displays a link to return to search results" do
+      expect(page).to have_link("Back to Data Access Options")
+      expect(page).to have_css("a[href^=\"/data/configure?p=%21#{downloadable_dataset_id}\"]")
+    end
+
     it "displays information on using direct download" do
       expect(page).to have_content('The following datasets are available for immediate download')
       expect(page).to have_content(downloadable_dataset_title)
@@ -165,6 +170,11 @@ describe "Data download page", reset: false do
       click_on 'Continue'
       # Confirm address
       click_on 'Submit'
+    end
+
+    it "displays a link to return to search results" do
+      expect(page).to have_link("Back to Data Access Options")
+      expect(page).to have_css("a[href^=\"/data/configure?p=%21#{downloadable_dataset_id}\"]")
     end
 
     it "displays information on obtaining data asynchronously" do

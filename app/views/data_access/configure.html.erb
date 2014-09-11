@@ -9,7 +9,9 @@
 
 <div class="data-access">
   <nav class="data-access-nav">
-    <a href="javascript:history.back()"><i class="edsc-icon-arrow-left"></i> Back to Search Session</a>
+    <a href="<%= request.query_parameters['back'] || '/search/datasets' %>?<%= request.query_string %>">
+      <i class="edsc-icon-arrow-left"></i> Back to Search Session
+    </a>
   </nav>
   <header>
     <h1>Data Access</h1>

@@ -76,7 +76,8 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
     configureProject: (singleGranuleId=null) ->
       @_sortOutTemporalMalarkey (optionStr) ->
         singleGranuleParam = if singleGranuleId? then "&sgd=#{encodeURIComponent(singleGranuleId)}" else ""
-        path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr
+        backParam = "&back=#{encodeURIComponent(urlUtil.cleanPath().split('?')[0])}"
+        path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr + backParam
         if window.tokenExpiresIn?
           window.location.href = path
         else
