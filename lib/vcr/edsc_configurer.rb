@@ -29,6 +29,10 @@ module VCR
       Rack::Utils.parse_nested_query(q1) == Rack::Utils.parse_nested_query(q2)
     end
 
+    def self.compare_tokens(r1, r2)
+      r1.headers['Echo-Token'] == r2.headers['Echo-Token']
+    end
+
     def self.register_token(name, token)
       @persister.tokens[name] = token
     end
@@ -46,6 +50,7 @@ module VCR
       c.default_cassette_options = { persist_with: :edsc, serialize_with: :null }
 
       VCR.request_matchers.register(:parsed_uri) { |r1, r2| compare_uris(r1, r2) }
+      VCR.request_matchers.register(:token) { |r1, r2| compare_tokens(r1, r2) }
 
       options = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
       default_record_mode = options[:record] || :new_episodes
@@ -88,7 +93,7 @@ module VCR
               uri.include?('preferences.json') ||
               uri.include?('orders.json') ||
               uri.include?('C179002986-ORNL')
-            opts[:match_requests_on] << :headers
+            opts[:match_requests_on] << :token
           end
 
           opts[:record] = record

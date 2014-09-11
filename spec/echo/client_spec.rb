@@ -4,10 +4,12 @@ describe Echo::Client do
   let(:connection) { Object.new }
   let(:req) { double(headers: {}) }
   let(:echo_client) { Echo::EchoClient.new('http://example.com', '1234') }
+  let(:extended_client) { Class.new(Echo::BaseClient) { def request; super; end } }
+
+  before { allow(echo_client).to receive(:connection).and_return(connection) }
 
   context 'dataset search' do
     let(:dataset_search_url) { "/catalog-rest/echo_catalog/datasets.json" }
-    before { allow(echo_client).to receive(:connection).and_return(connection) }
 
     context 'using free text' do
       it 'performs searches using partial matches' do
@@ -42,7 +44,6 @@ describe Echo::Client do
 
   context 'dataset details' do
     let(:dataset_url) { "/catalog-rest/echo_catalog/datasets/C14758250-LPDAAC_ECS.echo10" }
-    before { allow(echo_client).to receive(:connection).and_return(connection) }
 
     it 'with valid dataset ID' do
       expect(connection).to receive(:get).with(dataset_url, {}).and_return(:response)
@@ -55,7 +56,6 @@ describe Echo::Client do
   context 'granule search' do
     let(:granule_search_url) { "/catalog-rest/echo_catalog/granules.json" }
     let(:granule_search_base) { "/catalog-rest/echo_catalog/granules" }
-    before { allow(echo_client).to receive(:connection).and_return(connection) }
 
     it 'returns data in the requested format' do
       granule_echo10_url = "#{granule_search_base}.echo10"
@@ -92,7 +92,6 @@ describe Echo::Client do
 
   context 'dataset facets' do
     let(:dataset_facets_url) { "/catalog-rest/search_facet.json" }
-    before { allow(echo_client).to receive(:connection).and_return(connection) }
 
     it 'returns dataset facets in json format' do
       expect(connection).to receive(:get).with(dataset_facets_url, {}).and_return(:response)
@@ -106,6 +105,48 @@ describe Echo::Client do
 
       response = echo_client.get_facets(campaign: ["AQUA"])
       expect(response.faraday_response).to eq(:response)
+    end
+  end
+
+  context 'headers' do
+    let(:basic_client) do
+      # New class with a public request method
+      Class.new(Echo::BaseClient) do
+        def request(*args)
+          super(*args)
+        end
+      end.new(nil, nil)
+    end
+
+    let(:dummy_url) { '/dummy' }
+    before { allow(basic_client).to receive(:connection).and_return(connection) }
+
+    it 'defaults Content-Type to application/json for POST requests' do
+      expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
+
+      basic_client.request(:post, dummy_url, nil, nil, {})
+      expect(req.headers['Content-Type']).to eq('application/json')
+    end
+
+    it 'does not default Content-Type for GET requests' do
+      expect(connection).to receive(:get).with(dummy_url, nil).and_yield(req)
+
+      basic_client.request(:get, dummy_url, nil, nil, {})
+      expect(req.headers['Content-Type']).to be_nil
+    end
+
+    it 'sets a client id compatible with catalog-rest requests' do
+      expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
+
+      basic_client.request(:post, dummy_url, nil, nil, {})
+      expect(req.headers['Client-Id']).to eq('EDSC')
+    end
+
+    it 'sets a client id compatible with echo-rest requests' do
+      expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
+
+      basic_client.request(:post, dummy_url, nil, nil, {})
+      expect(req.headers['Echo-ClientId']).to eq('EDSC')
     end
   end
 
