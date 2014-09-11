@@ -443,7 +443,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         overlay.appendChild(right)
       else
         root.trigger(@scopedEventName('focusremove'))
-
+      @_forceRedraw()
       null
 
     panToTime: (time) ->
@@ -491,6 +491,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       [@positionToTime(x0), @positionToTime(x1) - 1]
 
     _onLabelClick: (e) =>
+      return if @_dragging
       label = e.currentTarget
       [start, stop] = @_timespanForLabel(label)
       if @_canFocusTimespan(start, stop)
@@ -632,8 +633,10 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       self = this
       draggable = new TimelineDraggable(svg)
       draggable.on 'drag', ({dx}) =>
+        @_dragging = true if Math.abs(dx) > 5
         @_pan(dx, false)
       draggable.on 'dragend', ({dx}) =>
+        @_dragging = false
         @_pan(dx)
 
     _pan: (dx, commit=true) ->
