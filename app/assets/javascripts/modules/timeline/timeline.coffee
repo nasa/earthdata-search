@@ -338,10 +338,14 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       null
 
     _forceRedraw: ->
-      rect = @_buildRect(stroke: 'none')
+      rect = @_buildRect(stroke: 'none', fill: 'none')
       svg = @svg
       svg.appendChild(rect)
-      setTimeout -> svg.removeChild(rect)
+      callback =  -> svg.removeChild(rect)
+      if window.requestAnimationFrame
+        window.requestAnimationFrame(callback)
+      else
+        setTimeout(callback)
 
     refresh: ->
       @datasets(@_datasets)
@@ -646,6 +650,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
       draggables = @root.find([@scope('.draggable'), @scope('.selection'), @scope('.display-top'), @scope('.focus')].join(', '))
       draggables.attr('transform', "translate(#{-@originPx + OFFSET_X},0)")
+      @_forceRedraw()
 
       @_finishPan() if commit
 
