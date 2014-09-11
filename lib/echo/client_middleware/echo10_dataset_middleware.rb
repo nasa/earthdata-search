@@ -16,7 +16,7 @@ module Echo
 
       def parse_response?(env)
         body = env[:body]
-        body.is_a?(Hash) && body['Collection'] || body.is_a?(Array) && body.first == 'Collection'
+        body.is_a?(Hash) && body['Collection']
       end
     end
   end

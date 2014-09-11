@@ -116,17 +116,16 @@ describe Echo::ClientMiddleware::Echo10GranuleMiddleware do
   end
 
 
-  it 'does not operate on non-granule URLs' do
+  it 'operates on CMR URLS' do
     response = Object.new
-    expect(response).to receive(:status).and_return(200)
-    env = { url: URI('http://example.com/catalog-rest/echo_catalog/datasets.json'), response: response, body: {'Granule' => {}}}
+    env = { url: URI('http://example.com/concepts/1234.echo10'), response: response, body: {'Granule' => {}}}
+    expect(middleware.parse_response?(env)).to be_true
+  end
+
+  it 'does not operate on requests with no granule body' do
+    response = Object.new
+    env = { url: URI('http://example.com/catalog-rest/echo_catalog/granules.json'), response: response, body: {'Collection' => {}}}
     expect(middleware.parse_response?(env)).to be_false
   end
 
-  it 'does not operate on error status codes' do
-    response = Object.new
-    expect(response).to receive(:status).and_return(404)
-    env = { url: URI('http://example.com/catalog-rest/echo_catalog/granules.json'), response: response, body: {'Granule' => {}}}
-    expect(middleware.parse_response?(env)).to be_false
-  end
 end
