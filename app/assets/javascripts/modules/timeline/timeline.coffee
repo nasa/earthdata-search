@@ -786,6 +786,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
       left.on 'commit', update, this
       right.on 'commit', update, this
+      left.on 'update', @_forceRedraw, this
+      right.on 'update', @_forceRedraw, this
 
       for index in indexes
         new TemporalSelection overlay, left, right,
