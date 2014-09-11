@@ -118,7 +118,7 @@ describe Echo::ClientMiddleware::Echo10GranuleMiddleware do
 
   it 'operates on CMR URLS' do
     response = Object.new
-    env = { url: URI('http://example.com/concepts/granules/1234.echo10'), response: response, body: {'Granule' => {}}}
+    env = { url: URI('http://example.com/concepts/1234.echo10'), response: response, body: {'Granule' => {}}}
     expect(middleware.parse_response?(env)).to be_true
   end
 
