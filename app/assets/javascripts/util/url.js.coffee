@@ -215,6 +215,7 @@ this.edsc.util.url = do(window
         fetchId(id, param(params))
     else
       result = path
+    result = result.replace(/^\/#/, '/') if result? # IE 9 bug with URL hashes
     result
 
   pushPath = (path, title=document.title, data=null) ->
