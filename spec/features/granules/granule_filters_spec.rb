@@ -243,7 +243,9 @@ describe "Granule search filters", reset: false do
 
     after :all do
       click_button "granule-filters-clear"
+      wait_for_xhr
       granule_list.click_link "Back to Datasets"
+      wait_for_xhr
       first_project_dataset.click_link "Show granule filters"
       wait_for_xhr
     end
@@ -263,11 +265,13 @@ describe "Granule search filters", reset: false do
     context "when the user clicks the link to clear removed granules" do
       before :all do
         click_link "Add it back"
+        wait_for_xhr
       end
 
       after :all do
         first_granule_list_item.click
         first_granule_list_item.click_link "Exclude this granule"
+        wait_for_xhr
       end
 
       it "includes the excluded granules in the list" do
@@ -338,6 +342,7 @@ describe "Granule search filters", reset: false do
   context "when searching by additional attributes" do
     before(:all) do
       fill_in('LowerLeftQuadCloudCoverage', with: '50 - 100')
+      wait_for_xhr
       fill_in('DAR_ID', with: '')
       wait_for_xhr
     end
