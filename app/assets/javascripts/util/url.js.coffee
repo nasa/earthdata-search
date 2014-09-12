@@ -207,7 +207,7 @@ this.edsc.util.url = do(window
     path = realPath()
     if path.indexOf("projectId=") != -1
       params = deparam(path.split('?')[1])
-      id = params.projectId
+      id = params.projectId + ''
       delete params.projectId
       if savedPath? && savedId == id
         result = savedPath
