@@ -364,7 +364,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the timeline date selection in the URL' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&tl=557625600!4!562723200!565315200')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&tl=557625600!4!562723200!565315199')
     end
   end
 
