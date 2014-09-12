@@ -1,4 +1,4 @@
-do ($ = jQuery, config = @edsc.config) ->
+do (document, window, $ = jQuery, config = @edsc.config) ->
 
   $(document).on 'click', 'a[data-pulse]', ->
     $dest = $($(this).attr('data-pulse'))
@@ -24,3 +24,6 @@ do ($ = jQuery, config = @edsc.config) ->
 
   $(document).ready ->
     $(document.body).tooltip({ selector: '[data-tooltip="true"]', placement: 'auto left' });
+
+  $(document).on 'click', 'a.sign-in', ->
+    this.setAttribute('href',  "/login?next_point=#{encodeURIComponent(window.location.href)}")
