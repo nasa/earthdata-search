@@ -156,7 +156,7 @@ this.edsc.util.url = do(window
   getProjectName = ->
     savedName
 
-  fetchId = (id) ->
+  fetchId = (id, params) ->
     return if savedId == id
     console.log "Fetching project #{id}"
     savedId = id
@@ -165,6 +165,11 @@ this.edsc.util.url = do(window
       dataType: 'json'
       url: "/projects/#{id}"
       success: (data) ->
+        if params.length > 0
+          prefix = '&'
+          prefix = '?' if data.path.indexOf('?') == -1
+          data.path += prefix + params
+
         if data.new_id?
           savedId = data.new_id
           History.pushState('', '', "/#{data.path.split('?')[0]}?projectId=#{savedId}");
@@ -201,11 +206,13 @@ this.edsc.util.url = do(window
   cleanPath = ->
     path = realPath()
     if path.indexOf("projectId=") != -1
-      id = path.split('projectId=')[1].split('&')[0]
+      params = deparam(path.split('?')[1])
+      id = params.projectId
+      delete params.projectId
       if savedPath? && savedId == id
         result = savedPath
       else
-        fetchId(id)
+        fetchId(id, param(params))
     else
       result = path
     result

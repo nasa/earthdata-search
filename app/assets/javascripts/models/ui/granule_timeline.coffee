@@ -104,8 +104,8 @@ ns.GranuleTimeline = do (ko
       zoom = timeline.zoom()
       if query.focusedTemporal()
         [start, end] = query.focusedTemporal()
-        start = Math.round(start / 1000)
-        end = Math.round(end / 1000)
+        start = Math.floor(start / 1000)
+        end = Math.floor(end / 1000)
 
       # Don't bother serializing if the timeline hasn't moved from the default
       return null if !start && !end && (timeline.end == config.present() || timeline.end == @_lastDate)
