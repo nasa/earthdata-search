@@ -158,6 +158,7 @@ describe "Shapefile search", reset: false, wait: 30 do
 
       after :all do
         upload_shapefile('doc/example-data/shapefiles/simple.geojson')
+        wait_for_xhr
         choose_tool_from_map_toolbar('Point')
       end
 

@@ -7,6 +7,19 @@ describe "Data Access workflow", reset: false do
   non_downloadable_dataset_id = 'C179001887-SEDAC'
   non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
+  context "when a malicious user attempts an XSS attack using the data access back link" do
+    before(:each) do
+      load_page :root
+      login
+      visit "/data/configure?p=!#{downloadable_dataset_id}&back=javascript:alert(%27ohai%27)//"
+    end
+
+    it "uses a safe back link" do
+      expect(page).to have_link("Back to Search Session")
+      expect(page).to have_css("a[href^=\"/search/datasets?p=!#{downloadable_dataset_id}\"]")
+    end
+  end
+
   context "when the user is not logged in" do
     before(:each) do
       load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
