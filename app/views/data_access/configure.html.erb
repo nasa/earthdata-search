@@ -9,7 +9,7 @@
 
 <div class="data-access">
   <nav class="data-access-nav">
-    <a href="<%= request.query_parameters['back'] || '/search/datasets' %>?<%= request.query_string %>">
+    <a href="<%= @back_path %>?<%= request.query_string %>">
       <i class="edsc-icon-arrow-left"></i> Back to Search Session
     </a>
   </nav>

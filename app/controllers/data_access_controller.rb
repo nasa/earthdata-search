@@ -7,6 +7,10 @@ class DataAccessController < ApplicationController
   before_filter :require_login
 
   def configure
+    @back_path = request.query_parameters['back']
+    if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
+      @back_path = '/search/datasets'
+    end
   end
 
   def retrieve
