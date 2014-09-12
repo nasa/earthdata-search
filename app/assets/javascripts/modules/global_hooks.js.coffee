@@ -22,5 +22,11 @@ do ($ = jQuery, config = @edsc.config) ->
     check.show()
     setTimeout((-> check.fadeOut()), config.defaultAnimationDurationMs)
 
+  $(document).on 'focusin.focushack', '*[tabIndex]', ->
+    $(this).addClass('has-focus')
+
+  $(document).on 'focusout.focushack', '*[tabIndex]', ->
+    $(this).removeClass('has-focus')
+
   $(document).ready ->
     $(document.body).tooltip({ selector: '[data-tooltip="true"]', placement: 'auto left' });

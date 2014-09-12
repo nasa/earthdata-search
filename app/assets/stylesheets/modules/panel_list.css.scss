@@ -180,7 +180,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   bottom: 0;
 }
 
-#granule-list:focus {
+#granule-list:focus, #granule-list.has-focus {
   .panel-list-selected {
     border-left-color: #2980b9;
   }
