@@ -4,6 +4,8 @@ class Project < ActiveRecord::Base
   belongs_to :user
   obfuscate_id spin: 53465485
 
+  default_scope { order('updated_at DESC') }
+
   def url
     "#{self.path.split('?')[0]}?projectId=#{self.to_param}"
   end

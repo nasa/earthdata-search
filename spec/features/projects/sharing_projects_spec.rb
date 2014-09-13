@@ -14,7 +14,7 @@ describe "Sharing Projects", reset: false do
       create_project
       logout
 
-      project_id = Project.last.to_param
+      project_id = Project.first.to_param
       visit "/search/datasets?projectId=#{project_id}"
       wait_for_xhr
     end
@@ -47,10 +47,10 @@ describe "Sharing Projects", reset: false do
 
       logout
 
-      project_id = Project.last.to_param
+      project_id = Project.first.to_param
       visit "/search/datasets?projectId=#{project_id}"
       wait_for_xhr
-      new_project_id = Project.last.to_param
+      new_project_id = Project.first.to_param
     end
 
     it "shows the contents of the project" do
