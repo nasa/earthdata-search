@@ -49,9 +49,9 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       $granuleList.on 'keydown', @_onKeyDown
       $map.on 'keydown', @_onKeyDown
 
-      $granuleList.on 'blur', (e) =>
+      $granuleList.on 'focusout', (e) =>
         @_hasFocus(false)
-      $granuleList.on 'focus.panel-list-item', (e) =>
+      $granuleList.on 'focusin', (e) =>
         # We want click behavior when we have focus, but not when the focus came from the
         # click's mousedown.  Ugh.
         setTimeout((=> @_hasFocus(true)), 500)
@@ -125,6 +125,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       for granule in @granules.results()
         if granule.id == id
           @_pendingSticky(null)
+
           # Set timeout to ensure the list renders before we try scrolling to it
           setTimeout((=> @_map.fire 'edsc.stickygranule', granule: granule), 0)
           if @_hasSelected()
@@ -136,8 +137,9 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @_pendingSticky() ? @stickied()?.id
 
     _writeSerialized: (serialized) ->
-      @stickied(null)
-      @_pendingSticky(serialized)
+      if serialized != (@_pendingSticky.peek() ? @stickied.peek()?.id)
+        @stickied(null)
+        @_pendingSticky(serialized)
 
     _onFocusGranule: (e) =>
       @focused(e.granule)
@@ -207,9 +209,13 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       granule == @stickied()
 
     toggleStickyFocus: (granule, e) =>
-      return if @isStickied(granule) && !@_hasFocus()
+      isStickied = @isStickied(granule)
+
+      return if isStickied && !@_hasFocus()
       return true if $(e?.target).closest('a').length > 0
-      granule = null if @isStickied(granule)
+      granule = null if isStickied
+      # IE9 needs this for timing reasons despite it being set by knockout
+      $(e.target).closest('.panel-list-item').toggleClass('panel-list-selected', !isStickied)
       @_map.fire 'edsc.stickygranule', granule: granule
 
     removeGranule: (granule, e) =>

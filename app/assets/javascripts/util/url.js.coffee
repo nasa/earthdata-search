@@ -144,7 +144,7 @@ this.edsc.util.url = do(window
 
   realPath = ->
     # Remove everything up to the third slash
-    History.getState().cleanUrl.replace(/^[^\/]*\/\/[^\/]*/, '')
+    History.getState().cleanUrl.replace(/^[^\/]*\/\/[^\/]*/, '').replace(/%5B/g, '[').replace(/%5D/g, ']')
 
   realQuery = ->
     realPath().split('?')[1] ? ''
@@ -215,6 +215,7 @@ this.edsc.util.url = do(window
         fetchId(id, param(params))
     else
       result = path
+    result = result.replace(/^\/#/, '/') if result? # IE 9 bug with URL hashes
     result
 
   pushPath = (path, title=document.title, data=null) ->
@@ -228,6 +229,7 @@ this.edsc.util.url = do(window
     paramStr = param(compress(state)).replace(/%5B/g, '[').replace(/%5D/g, ']')
     paramStr = '?' + paramStr if paramStr.length > 0
 
+    path = path.replace(/^\/#/, '/') # IE 9 bug with URL hashes
     path = path + paramStr
     if workspaceName || path.length > config.urlLimit
       if path != savedPath || (workspaceName && savedName != workspaceName)
