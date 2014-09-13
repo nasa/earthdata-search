@@ -34,7 +34,7 @@
               <strong><a href="<%= project.url %>" class="project-url"><%= project.name %></a></strong>
             </td>
             <td>
-              <%= project.number_datasets %> datasets
+              <%= pluralize(project.number_datasets, 'dataset') %>
             </td>
             <td>
               <%= time_ago_in_words(project.created_at, include_seconds: true).capitalize %> ago

@@ -11,9 +11,8 @@ class Project < ActiveRecord::Base
   end
 
   def number_datasets
-    project_query = self.path.split('p=!')[1]
-    dataset_list = project_query.split('&')[0]
-    dataset_ids = dataset_list.split('!')
+    dataset_list = self.path[/[?&]p=([\w!-]+)/, 1]
+    dataset_ids = dataset_list.split('!').map(&:presence).compact.uniq
     dataset_ids.size
   rescue
     0
