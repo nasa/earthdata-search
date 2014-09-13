@@ -14,6 +14,10 @@ describe "Data Access workflow", reset: false do
       visit "/data/configure?p=!#{downloadable_dataset_id}&back=javascript:alert(%27ohai%27)//"
     end
 
+    after :each do
+      Capybara.reset_sessions!
+    end
+
     it "uses a safe back link" do
       expect(page).to have_link("Back to Search Session")
       expect(page).to have_css("a[href^=\"/search/datasets?p=!#{downloadable_dataset_id}\"]")
