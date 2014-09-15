@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
   helper_method :echo_env
 
   def enable_cmr?
+    @enable_cmr = session[:enable_cmr] unless session[:enable_cmr].nil?
     @enable_cmr ||= session[:enable_cmr] || request.headers['edsc-use-cmr'] || request.query_parameters.delete('use_cmr') || Rails.configuration.enable_cmr || false
   end
   helper_method :enable_cmr?
