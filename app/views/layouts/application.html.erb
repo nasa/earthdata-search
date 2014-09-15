@@ -16,6 +16,7 @@
       window.tokenExpiresIn = <%= logged_in? ? script_session_expires_in : 'null' %>;
       window.tokenLoadTime = +new Date();
       window.echoEnv = "<%= echo_env %>";
+      window.enableCmr = "<%= enable_cmr? %>";
     </script>
     <%= yield :javascript %>
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
