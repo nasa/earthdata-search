@@ -19,6 +19,7 @@
   <ul id="dataset-details-nav" class="nav nav-tabs">
     <li class="active"><a href="#dataset-information" data-toggle="tab">Information</a></li>
     <li><a href="#dataset-metadata" data-toggle="tab">Metadata</a></li>
+    <li><a href="#dataset-api" data-toggle="tab">API Endpoints</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="dataset-information">
@@ -83,8 +84,16 @@
         <dd data-bind="if: $data.smap_iso_url"><a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a></dd>
       </dl>
     </div>
+    <div class="tab-pane" id="dataset-api">
+      <dl class="master-overlay-content">
+        <dt>API Endpoints:</dt>
+        <dd></dd>
+        <dd><a data-bind="if: $parent.hasGranules, attr: { href: $root.ui.datasetsList.selected().echoGranulesUrl }">ECHO Granules</a></dd>
+      </dl>
+    </div>
   </div>
   <!-- /ko -->
+
   <!-- /ko -->
 </section>
 <!-- /ko -->

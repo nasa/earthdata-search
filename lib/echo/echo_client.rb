@@ -6,7 +6,9 @@ module Echo
     end
 
     def get_dataset(id, options={}, token=nil)
-      get("/catalog-rest/echo_catalog/datasets/#{id}.echo10", {}, token_header(token))
+      response = get("/catalog-rest/echo_catalog/datasets/#{id}.echo10", {}, token_header(token))
+      response.granule_url = @root + "/catalog-rest/echo_catalog/granules"
+      response
     end
 
     def get_granules(options={}, token=nil)

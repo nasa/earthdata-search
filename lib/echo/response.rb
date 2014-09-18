@@ -30,5 +30,13 @@ module Echo
       @response.status
     end
 
+    def granule_url=(url)
+      if body.class == Array
+        body.first.granule_url = url
+      else
+        body[:granule_url] = url
+      end
+    end
+
   end
 end
