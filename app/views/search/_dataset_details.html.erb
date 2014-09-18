@@ -87,8 +87,9 @@
     <div class="tab-pane" id="dataset-api">
       <dl class="master-overlay-content">
         <dt>API Endpoints:</dt>
-        <dd></dd>
-        <dd><a data-bind="if: $parent.hasGranules, attr: { href: $root.ui.datasetsList.selected().echoGranulesUrl }">ECHO Granules</a></dd>
+        <!-- ko if: $root.ui.datasetsList.selected().has_granules -->
+        <dd><a data-bind="attr: { href: $root.ui.datasetsList.selected().echoGranulesUrl }">ECHO Granules</a></dd>
+        <!-- /ko -->
       </dl>
     </div>
   </div>
