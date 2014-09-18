@@ -249,7 +249,10 @@ class DatasetExtra < ActiveRecord::Base
   end
 
   def decorate_opendap_layers(dataset)
-    dataset[:opendap] = Rails.configuration.services['opendap'][dataset['id']].present?
+    dataset[:opendap] = false
+    if Rails.configuration.services['opendap'][dataset['id']].present?
+      dataset[:opendap] = Rails.configuration.services['opendap'][dataset['id']]['granule_url_template'].split('{').first
+    end
   end
 
 end

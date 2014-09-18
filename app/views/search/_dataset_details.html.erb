@@ -87,8 +87,18 @@
     <div class="tab-pane" id="dataset-api">
       <dl class="master-overlay-content">
         <dt>API Endpoints:</dt>
-        <!-- ko if: $root.ui.datasetsList.selected().has_granules -->
-        <dd><a data-bind="attr: { href: $root.ui.datasetsList.selected().echoGranulesUrl }">ECHO Granules</a></dd>
+        <!-- ko with: $root.ui.datasetsList.selected() -->
+        <!-- ko if: has_granules -->
+        <dd><a data-bind="attr: { href: echoGranulesUrl }">ECHO Granules</a></dd>
+        <!-- /ko -->
+        <!-- ko if: gibs() -->
+        <!-- ko foreach: gibs() -->
+        <dd><a data-bind="attr: { href: 'http://map1.vis.earthdata.nasa.gov/{Projection}/' + $data.product + '/default/{Time}/{TileMatrixSet}/{ZoomLevel}/{TileRow}/{TileCol}.png' }">GIBS</a></dd>
+        <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: opendap() -->
+        <dd><a data-bind="attr: { href: opendap() }">OPeNDAP</a></dd>
+        <!-- /ko -->
         <!-- /ko -->
       </dl>
     </div>
