@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Dataset API Endpoints', reset: false do
-  context 'A dataset with granules' do
+  context 'when viewing the dataset details for a dataset with granules' do
     before :all do
       load_page :search
       click_link "Temporal"
@@ -21,7 +21,7 @@ describe 'Dataset API Endpoints', reset: false do
     end
   end
 
-  context 'A dataset with GIBS' do
+  context 'when viewing the dataset details for a dataset with GIBS' do
     before :all do
       load_page :search
       fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
@@ -31,12 +31,12 @@ describe 'Dataset API Endpoints', reset: false do
       click_link 'API Endpoints'
     end
 
-    it 'provides a link to the GIBS endpoint' do
-      expect(page).to have_css('a[href="http://map1.vis.earthdata.nasa.gov/{Projection}/MODIS_Terra_Aerosol/default/{Time}/{TileMatrixSet}/{ZoomLevel}/{TileRow}/{TileCol}.png"]')
+    it 'provides the path to the GIBS endpoint' do
+      expect(page).to have_content("GIBS: http://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Terra_Aerosol/default/{Time}/EPSG4326_2km/{ZoomLevel}/{TileRow}/{TileCol}.png")
     end
   end
 
-  context 'A dataset with OPeNDAP' do
+  context 'when viewing the dataset details for a dataset with OPeNDAP' do
     before :all do
       load_page :search
       fill_in 'keywords', with: 'C183451157-GSFCS4PA'
@@ -51,7 +51,7 @@ describe 'Dataset API Endpoints', reset: false do
     end
   end
 
-  context 'A dataset without granules, GIBS, or OPeNDAP' do
+  context 'when viewing the dataset details for a dataset without granules, GIBS, or OPeNDAP' do
     before :all do
       load_page :search
       fill_in 'keywords', with: 'C179001887-SEDAC'

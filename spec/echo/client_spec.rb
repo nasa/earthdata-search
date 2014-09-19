@@ -44,12 +44,13 @@ describe Echo::Client do
 
   context 'dataset details' do
     let(:dataset_url) { "/catalog-rest/echo_catalog/datasets/C14758250-LPDAAC_ECS.echo10" }
+    let(:resp) { Faraday::Response.new }
 
     it 'with valid dataset ID' do
-      expect(connection).to receive(:get).with(dataset_url, {}).and_return(:response)
+      expect(connection).to receive(:get).with(dataset_url, {}).and_return(resp)
 
       response = echo_client.get_dataset('C14758250-LPDAAC_ECS')
-      expect(response.faraday_response).to eq(:response)
+      expect(response.faraday_response).to eq(resp)
     end
   end
 

@@ -93,7 +93,10 @@
         <!-- /ko -->
         <!-- ko if: gibs() -->
         <!-- ko foreach: gibs() -->
-        <dd><a data-bind="attr: { href: 'http://map1.vis.earthdata.nasa.gov/{Projection}/' + $data.product + '/default/{Time}/{TileMatrixSet}/{ZoomLevel}/{TileRow}/{TileCol}.png' }">GIBS</a></dd>
+        <dd>
+          <p class="gibs-endpoint" data-bind="text: 'GIBS: http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'"></p>
+          <a href="https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-GenericXYZTileAccess">GIBS Documentation</a>
+        </dd>
         <!-- /ko -->
         <!-- /ko -->
         <!-- ko if: opendap() -->
