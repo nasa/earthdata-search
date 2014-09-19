@@ -1,5 +1,5 @@
 <!-- ko if: $root.ui.datasetsList.selected() -->
-<section id="dataset-details">
+<section id="dataset-details" class="details">
   <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
   <nav class="master-overlay-nav">
     <a href="#" class="master-overlay-back" data-bind="click: ui.datasetsList.hideDatasetDetails">
@@ -59,9 +59,9 @@
           <p data-bind="text: $data"></p>
         </dd>
         <dt>Online Resources:</dt>
-        <dd data-bind="foreach: $data.online_resources">
-          <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
-        </dd>
+        <!-- ko foreach: $data.online_resources -->
+        <dd><a data-bind="attr: {href: URL}, text: Description" target="_blank"></a></li></dd>
+        <!-- /ko -->
         <dt>Browse Products:</dt>
         <dd data-bind="foreach: $data.browse_images">
           <a data-bind="attr: {href: URL}" target="_blank">
@@ -86,20 +86,22 @@
     </div>
     <div class="tab-pane" id="dataset-api">
       <dl class="master-overlay-content">
-        <dt>API Endpoints:</dt>
         <!-- ko with: $root.ui.datasetsList.selected() -->
         <!-- ko if: has_granules -->
-        <dd><a data-bind="attr: { href: echoGranulesUrl }">ECHO Granules</a></dd>
+        <dt>ECHO</dt>
+        <dd><a data-bind="attr: { href: echoGranulesUrl }">Granules</a></dd>
         <!-- /ko -->
         <!-- ko if: gibs() -->
+        <dt>GIBS</dt>
         <!-- ko foreach: gibs() -->
         <dd>
-          <p class="gibs-endpoint" data-bind="text: 'GIBS: http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'"></p>
-          <a href="https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-GenericXYZTileAccess">GIBS Documentation</a>
+          <p class="gibs-endpoint" data-bind="text: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'"></p>
         </dd>
         <!-- /ko -->
+        <dd><a href="https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-GenericXYZTileAccess">GIBS Documentation</a></dd>
         <!-- /ko -->
         <!-- ko if: opendap() -->
+        <dt>OPeNDAP</dt>
         <dd><a data-bind="attr: { href: opendap() }">OPeNDAP</a></dd>
         <!-- /ko -->
         <!-- /ko -->

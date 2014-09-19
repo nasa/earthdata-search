@@ -23,7 +23,11 @@ class DatasetDetailsPresenter < DetailsPresenter
         @dataset.online_access_urls = []
       end
       if dataset_xml['OnlineResources']
-        @dataset.online_resources = Array.wrap(dataset_xml['OnlineResources']['OnlineResource'])
+        online_resources = Array.wrap(dataset_xml['OnlineResources']['OnlineResource'])
+        online_resources.each do |resource|
+          resource['Description'] = resource['URL'] unless resource['Description'] && resource['Description'].size > 0
+        end
+        @dataset.online_resources = online_resources
       else
         @dataset.online_resources = []
       end

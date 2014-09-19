@@ -7,7 +7,7 @@ module Echo
 
     def get_dataset(id, options={}, token=nil)
       response = get("/catalog-rest/echo_catalog/datasets/#{id}.echo10", {}, token_header(token))
-      response.body[0].granule_url = @root + "/catalog-rest/echo_catalog/granules" if response.status == 200
+      response.body[0].granule_url = @root + "/catalog-rest/echo_catalog/granules" if response.body.is_a?(Array) && response.body.first.respond_to?(:granule_url)
       response
     end
 

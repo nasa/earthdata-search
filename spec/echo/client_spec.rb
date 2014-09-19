@@ -45,12 +45,24 @@ describe Echo::Client do
   context 'dataset details' do
     let(:dataset_url) { "/catalog-rest/echo_catalog/datasets/C14758250-LPDAAC_ECS.echo10" }
     let(:resp) { Faraday::Response.new }
+    let(:body) { Object.new }
+    let(:granule_url) { "http://example.com/catalog-rest/echo_catalog/granules" }
 
     it 'with valid dataset ID' do
       expect(connection).to receive(:get).with(dataset_url, {}).and_return(resp)
 
       response = echo_client.get_dataset('C14758250-LPDAAC_ECS')
       expect(response.faraday_response).to eq(resp)
+    end
+
+    it "sets the granule_url" do
+      expect(connection).to receive(:get).with(dataset_url, {}).and_return(resp)
+      expect(resp).to receive(:body).and_return([body]).at_least(:once)
+      expect(body).to receive(:granule_url=).with(granule_url)
+      expect(body).to receive(:granule_url).and_return(granule_url)
+
+      response = echo_client.get_dataset('C14758250-LPDAAC_ECS')
+      expect(response.body[0].granule_url).to_not be_nil
     end
   end
 

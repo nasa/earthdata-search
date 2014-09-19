@@ -32,5 +32,12 @@
 }
 
 .gibs-endpoint {
-  word-wrap: break-word;
+  white-space: nowrap
+}
+
+.details .tab-content {
+  a {
+    text-decoration: underline;
+    white-space: nowrap;
+  }
 }
