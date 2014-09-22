@@ -30,3 +30,14 @@
   border-bottom: 1px solid #000;
   clear: both;
 }
+
+.gibs-endpoint {
+  white-space: nowrap
+}
+
+.details .tab-content {
+  a {
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+}

@@ -7,7 +7,9 @@ module Echo
     end
 
     def get_dataset(id, options={}, token=nil)
-      get("/search/concepts/#{id}.echo10", {}, token_header(token))
+      response = get("/search/concepts/#{id}.echo10", {}, token_header(token))
+      response.body[0].granule_url = @root + "/search/concepts.json" if response.body.is_a?(Array) && response.body.first.respond_to?(:granule_url)
+      response
     end
 
     def get_granules(options={}, token=nil)

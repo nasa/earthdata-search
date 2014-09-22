@@ -29,6 +29,5 @@ module Echo
     def status
       @response.status
     end
-
   end
 end

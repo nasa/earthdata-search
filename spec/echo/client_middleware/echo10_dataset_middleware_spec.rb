@@ -71,14 +71,14 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
             },
             'OnlineAccessURLs' => {
               'OnlineAccessURL' => {
-                'URL' => 'http://www.eample.com',
+                'URL' => 'http://www.example.com',
                 'URLDescription' => ''
               }
             },
             'OnlineResources' => {
               'OnlineResource' => {
-                'URL' => 'http://www.eample.com',
-                'URLDescription' => ''
+                'URL' => 'http://www.example.com',
+                'Description' => ''
               }
             },
             'AssociatedDIFs' => {
@@ -136,14 +136,14 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           ],
           "online_access_urls" => [
             {
-              "URL" => "http://www.eample.com",
+              "URL" => "http://www.example.com",
               "URLDescription" => ""
             }
           ],
           "online_resources" => [
             {
-              "URL" => "http://www.eample.com",
-              "URLDescription" => ""
+              "URL" => "http://www.example.com",
+              "Description" => "http://www.example.com"
             }
           ],
           "associated_difs" => {
@@ -214,13 +214,14 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
             },
             "OnlineAccessURLs"=>{
               "OnlineAccessURL"=>{
-                "URL"=>"http://www.eample.com", "URLDescription"=>""
+                "URL"=>"http://www.example.com",
+                "URLDescription"=>""
               }
             },
             "OnlineResources"=>{
               "OnlineResource"=>{
-                "URL"=>"http://www.eample.com",
-                "URLDescription"=>""
+                "URL"=>"http://www.example.com",
+                "Description"=>"http://www.example.com"
               }
             },
             "AssociatedDIFs"=>{

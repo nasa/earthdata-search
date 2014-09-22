@@ -79,6 +79,12 @@ ns.Dataset = do (ko
           "/data/download.sh?#{paramStr}"
         deferEvaluation: true
 
+      @echoGranulesUrl = @computed
+        read: =>
+          paramStr = toParam(@granuleQuery.params())
+          "#{@details().granule_url}?#{paramStr}"
+        deferEvaluation: true
+
     _computeTimeRange: ->
       if @hasAtomData()
         result = dateUtil.timeSpanToIsoDate(@time_start, @time_end)

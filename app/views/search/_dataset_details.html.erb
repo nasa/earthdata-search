@@ -1,5 +1,5 @@
 <!-- ko if: $root.ui.datasetsList.selected() -->
-<section id="dataset-details">
+<section id="dataset-details" class="details">
   <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
   <nav class="master-overlay-nav">
     <a href="#" class="master-overlay-back" data-bind="click: ui.datasetsList.hideDatasetDetails">
@@ -19,6 +19,7 @@
   <ul id="dataset-details-nav" class="nav nav-tabs">
     <li class="active"><a href="#dataset-information" data-toggle="tab">Information</a></li>
     <li><a href="#dataset-metadata" data-toggle="tab">Metadata</a></li>
+    <li><a href="#dataset-api" data-toggle="tab">API Endpoints</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="dataset-information">
@@ -58,9 +59,9 @@
           <p data-bind="text: $data"></p>
         </dd>
         <dt>Online Resources:</dt>
-        <dd data-bind="foreach: $data.online_resources">
-          <a data-bind="attr: {href: URL}, text: URL" target="_blank"></a>
-        </dd>
+        <!-- ko foreach: $data.online_resources -->
+        <dd><a data-bind="attr: {href: URL}, text: Description" target="_blank"></a></li></dd>
+        <!-- /ko -->
         <dt>Browse Products:</dt>
         <dd data-bind="foreach: $data.browse_images">
           <a data-bind="attr: {href: URL}" target="_blank">
@@ -83,8 +84,32 @@
         <dd data-bind="if: $data.smap_iso_url"><a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a></dd>
       </dl>
     </div>
+    <div class="tab-pane" id="dataset-api">
+      <dl class="master-overlay-content">
+        <!-- ko with: $root.ui.datasetsList.selected() -->
+        <!-- ko if: has_granules -->
+        <dt>ECHO</dt>
+        <dd><a data-bind="attr: { href: echoGranulesUrl }" target="_blank">Granules</a></dd>
+        <!-- /ko -->
+        <!-- ko if: gibs() -->
+        <dt>GIBS</dt>
+        <!-- ko foreach: gibs() -->
+        <dd>
+          <p class="gibs-endpoint" data-bind="text: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'"></p>
+        </dd>
+        <!-- /ko -->
+        <dd><a href="https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-GenericXYZTileAccess" target="_blank">GIBS Documentation</a></dd>
+        <!-- /ko -->
+        <!-- ko if: opendap() -->
+        <dt>OPeNDAP</dt>
+        <dd><a data-bind="attr: { href: opendap() }" target="_blank">OPeNDAP</a></dd>
+        <!-- /ko -->
+        <!-- /ko -->
+      </dl>
+    </div>
   </div>
   <!-- /ko -->
+
   <!-- /ko -->
 </section>
 <!-- /ko -->
