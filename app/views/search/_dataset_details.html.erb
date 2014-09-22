@@ -89,7 +89,7 @@
         <!-- ko with: $root.ui.datasetsList.selected() -->
         <!-- ko if: has_granules -->
         <dt>ECHO</dt>
-        <dd><a data-bind="attr: { href: echoGranulesUrl }">Granules</a></dd>
+        <dd><a data-bind="attr: { href: echoGranulesUrl }" target="_blank">Granules</a></dd>
         <!-- /ko -->
         <!-- ko if: gibs() -->
         <dt>GIBS</dt>
@@ -98,11 +98,11 @@
           <p class="gibs-endpoint" data-bind="text: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'"></p>
         </dd>
         <!-- /ko -->
-        <dd><a href="https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-GenericXYZTileAccess">GIBS Documentation</a></dd>
+        <dd><a href="https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-GenericXYZTileAccess" target="_blank">GIBS Documentation</a></dd>
         <!-- /ko -->
         <!-- ko if: opendap() -->
         <dt>OPeNDAP</dt>
-        <dd><a data-bind="attr: { href: opendap() }">OPeNDAP</a></dd>
+        <dd><a data-bind="attr: { href: opendap() }" target="_blank">OPeNDAP</a></dd>
         <!-- /ko -->
         <!-- /ko -->
       </dl>
