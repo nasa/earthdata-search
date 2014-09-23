@@ -2,6 +2,7 @@ class DatasetsController < ApplicationController
   respond_to :json
 
   def index
+    filter_opendap?
     catalog_response = echo_client.get_datasets(request.query_parameters, token)
 
 
@@ -36,6 +37,7 @@ class DatasetsController < ApplicationController
   end
 
   def facets
+    filter_opendap?
     response = echo_client.get_facets(request.query_parameters, token)
 
     if response.success?
@@ -155,5 +157,11 @@ class DatasetsController < ApplicationController
     end
 
     base_results
+  end
+
+  def filter_opendap?
+    if request.query_parameters.delete('opendap')
+      request.query_parameters['echo_collection_id'] = Rails.configuration.services['opendap'].keys
+    end
   end
 end

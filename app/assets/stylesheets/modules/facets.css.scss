@@ -9,6 +9,15 @@ $master-overlay-parent-bg-color: transparentize(#111, .1);
   }
 }
 
+.filters-item {
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.filters-item label, .filters-item input {
+  cursor: pointer;
+}
+
 dd.facets {
   margin: 0 0 0 10px;
   font-size: 0.8em;

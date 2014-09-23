@@ -199,6 +199,14 @@ ns.query = do (ko,
       else
         @value([])
 
+  # Parameters that we only care about it they are 'true'
+  class OnlyOnParam extends QueryParam
+    writeTo: (query) ->
+      if @value()
+        query[@name()] = @value()
+      else
+        query
+
   class Range
     constructor: ->
       @min = ko.observable()
@@ -275,6 +283,7 @@ ns.query = do (ko,
       @facets = @queryComponent(new FacetParam(), ko.observableArray())
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
+      @opendap = @queryComponent(new OnlyOnParam('opendap'))
       super(parentQuery)
 
     clearFilters: =>
