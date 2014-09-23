@@ -5,7 +5,7 @@ class DatasetExtra < ActiveRecord::Base
   store :searchable_attributes, coder: JSON
   store :orbit, coder: JSON
 
-  def self.build_echo_client(env=(@echo_env || 'ops'))
+  def self.build_echo_client(env=(@echo_env || Rails.configuration.echo_env))
     Echo::Client.client_for_environment(env, Rails.configuration.services, @enable_cmr)
   end
 
