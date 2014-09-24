@@ -118,9 +118,11 @@ class DatasetExtra < ActiveRecord::Base
       if body['results']
         # ECHO10
         datasets = Array.wrap(body['results']['result'])
-      else
+      elsif body['feed']
         # Atom
         datasets = body['feed']['entry']
+      else
+        datasets = []
       end
 
       if response.headers['echo-hits']
