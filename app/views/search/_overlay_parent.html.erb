@@ -15,6 +15,10 @@
       </div>
       <div class="panel-body filters">
         <p class="filters-item">
+          <input data-bind="checked: query.gibs" id="filter-gibs" type="checkbox">
+          <label for="filter-gibs">GIBS Imagery</label>
+        </p>
+        <p class="filters-item">
           <input data-bind="checked: query.opendap" id="filter-opendap" type="checkbox">
           <label for="filter-opendap">OPeNDAP Access</label>
         </p>

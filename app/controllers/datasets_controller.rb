@@ -4,7 +4,6 @@ class DatasetsController < ApplicationController
   def index
     catalog_response = echo_client.get_datasets(dataset_params_for_request(request), token)
 
-
     if catalog_response.success?
       add_featured_datasets!(dataset_params_for_request(request), token, catalog_response.body)
 
@@ -161,6 +160,15 @@ class DatasetsController < ApplicationController
     use_opendap = request.query_parameters['opendap'] == 'true'
     params = request.query_parameters.except('opendap') # If we set the param to false, this will still work
     params = params.merge('echo_collection_id' => Rails.configuration.services['opendap'].keys) if use_opendap
+
+    gibs_keys = Rails.configuration.gibs.keys
+    providers = gibs_keys.map{|key| key.split('___').first}
+    short_names = gibs_keys.map{|key| key.split('___').last}
+
+    use_gibs = request.query_parameters['gibs'] == 'true'
+    params = params.except('gibs')
+    params = params.merge('provider' => providers) if use_gibs
+    params = params.merge('short_name' => short_names) if use_gibs
     params
   end
 end
