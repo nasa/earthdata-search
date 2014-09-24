@@ -8,7 +8,7 @@ describe 'Dataset OPeNDAP Filtering', reset: false do
 
   context 'when selecting the OPeNDAP filter' do
     before :all do
-      check 'OPeNDAP Subsetting'
+      check 'OPeNDAP Access'
       wait_for_xhr
     end
 
@@ -18,7 +18,7 @@ describe 'Dataset OPeNDAP Filtering', reset: false do
 
     context 'when un-selecting the OPeNDAP filter' do
       before :all do
-        uncheck 'OPeNDAP Subsetting'
+        uncheck 'OPeNDAP Access'
         wait_for_xhr
       end
 

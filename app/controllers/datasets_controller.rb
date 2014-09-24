@@ -2,12 +2,11 @@ class DatasetsController < ApplicationController
   respond_to :json
 
   def index
-    filter_opendap?
-    catalog_response = echo_client.get_datasets(request.query_parameters, token)
+    catalog_response = echo_client.get_datasets(dataset_params_for_request(request), token)
 
 
     if catalog_response.success?
-      add_featured_datasets!(request.query_parameters, token, catalog_response.body)
+      add_featured_datasets!(dataset_params_for_request(request), token, catalog_response.body)
 
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
 
@@ -37,8 +36,7 @@ class DatasetsController < ApplicationController
   end
 
   def facets
-    filter_opendap?
-    response = echo_client.get_facets(request.query_parameters, token)
+    response = echo_client.get_facets(dataset_params_for_request(request), token)
 
     if response.success?
       # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
@@ -132,7 +130,7 @@ class DatasetsController < ApplicationController
     # Only fetch if the user is requesting the first page
     if base_query['page_num'] == "1" && base_query['echo_collection_id'].nil?
       begin
-        featured_query = request.query_parameters.merge('echo_collection_id' => featured_ids)
+        featured_query = dataset_params_for_request(request).merge('echo_collection_id' => featured_ids)
         featured_response = echo_client.get_datasets(featured_query, token)
         featured = featured_response.body['feed']['entry'] if featured_response.success?
       rescue => e
@@ -159,9 +157,10 @@ class DatasetsController < ApplicationController
     base_results
   end
 
-  def filter_opendap?
-    if request.query_parameters.delete('opendap')
-      request.query_parameters['echo_collection_id'] = Rails.configuration.services['opendap'].keys
-    end
+  def dataset_params_for_request(request)
+    use_opendap = request.query_parameters['opendap'] == 'true'
+    params = request.query_parameters.except('opendap') # If we set the param to false, this will still work
+    params = params.merge('echo_collection_id' => Rails.configuration.services['opendap'].keys) if use_opendap
+    params
   end
 end
