@@ -9,13 +9,18 @@ $master-overlay-parent-bg-color: transparentize(#111, .1);
   }
 }
 
-.filters-item {
-  font-size: 0.8em;
-  cursor: pointer;
+.features-facet {
+  line-height: 22px;
 }
 
-.filters-item label, .filters-item input {
-  cursor: pointer;
+.opendap-facet {
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+  float: left;
+  margin-right: .5em;
+  border-radius: 2px;
+  @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
 }
 
 dd.facets {

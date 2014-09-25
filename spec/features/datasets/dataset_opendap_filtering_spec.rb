@@ -8,7 +8,8 @@ describe 'Dataset OPeNDAP Filtering', reset: false do
 
   context 'when selecting the OPeNDAP filter' do
     before :all do
-      check 'OPeNDAP Access'
+      click_link 'Features'
+      find('.facets-item', text: 'OPeNDAP Access').click
       wait_for_xhr
     end
 
@@ -18,7 +19,7 @@ describe 'Dataset OPeNDAP Filtering', reset: false do
 
     context 'when un-selecting the OPeNDAP filter' do
       before :all do
-        uncheck 'OPeNDAP Access'
+        find('.applied-facets .facets-item', text: 'OPeNDAP Access').click
         wait_for_xhr
       end
 
