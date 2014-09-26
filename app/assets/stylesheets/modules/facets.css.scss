@@ -13,14 +13,21 @@ $master-overlay-parent-bg-color: transparentize(#111, .1);
   line-height: 22px;
 }
 
-.opendap-facet {
+.features-badge {
   background-repeat: no-repeat;
   width: 22px;
   height: 22px;
   float: left;
   margin-right: .5em;
   border-radius: 2px;
+}
+
+.opendap-facet {
   @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
+}
+
+.gibs-facet {
+  @include retina-image(gibs, 22px 22px, png, null, '@2x', true);
 }
 
 dd.facets {

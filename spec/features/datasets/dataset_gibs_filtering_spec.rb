@@ -8,7 +8,7 @@ describe 'Dataset GIBS Filtering', reset: false do
 
   context 'when selecting the GIBS filter' do
     before :all do
-      check 'GIBS Imagery'
+      find('.facets-item', text: 'GIBS Imagery').click
       wait_for_xhr
     end
 
@@ -18,7 +18,7 @@ describe 'Dataset GIBS Filtering', reset: false do
 
     context 'when un-selecting the GIBS filter' do
       before :all do
-        uncheck 'GIBS Imagery'
+          find('.applied-facets .facets-item', text: 'GIBS Imagery').click
         wait_for_xhr
       end
 

@@ -56,7 +56,7 @@ class DatasetsController < ApplicationController
           'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
         }
 
-        features = [{'field' => 'features', 'value-counts' => [['OPeNDAP Access', 0]]}]
+        features = [{'field' => 'features', 'value-counts' => [['OPeNDAP Access', 0], ['GIBS Imagery', 0]]}]
         facets.unshift(features).flatten!
 
         results = facets.map do |facet|
@@ -73,7 +73,7 @@ class DatasetsController < ApplicationController
       else
         facets = response.body.with_indifferent_access
         # ECHO Facets
-        results = [facet_response(query, [{'term' => 'OPeNDAP Access'}], 'Features', 'features[]'),
+        results = [facet_response(query, [{'term' => 'OPeNDAP Access'}, {'term' => 'GIBS Imagery'}], 'Features', 'features[]'),
                    facet_response(query, facets['campaign_sn'], 'Campaigns', 'campaign[]'),
                    facet_response(query, facets['platform_sn'], 'Platforms', 'platform[]'),
                    facet_response(query, facets['instrument_sn'], 'Instruments', 'instrument[]'),
@@ -171,8 +171,7 @@ class DatasetsController < ApplicationController
     providers = gibs_keys.map{|key| key.split('___').first}
     short_names = gibs_keys.map{|key| key.split('___').last}
 
-    use_gibs = request.query_parameters['gibs'] == 'true'
-    params = params.except('gibs')
+    use_gibs = features && features.include?('GIBS Imagery')
     params = params.merge('provider' => providers) if use_gibs
     params = params.merge('short_name' => short_names) if use_gibs
     params
