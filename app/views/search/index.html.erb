@@ -123,8 +123,8 @@
         <header class="with-options">
           <h2>Project Datasets</h2>
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button icon-button" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject, visible: !project.isEmpty()">
-              <i class="edsc-icon-download"></i>
+            <a href="#" class="button retrieve" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject, visible: !project.isEmpty()">
+              <i class="edsc-icon-download"></i> Retrieve Project Data
             </a>
 
             <a href="#" title="View all datasets" data-bind="visible: !$root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button" >

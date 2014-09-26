@@ -15,20 +15,20 @@
     color: $overlay-heading-font-color;
 
     h2 {
-      font-size: 1.1em;
+      font-size: 1.4em;
       margin: 0;
+      font-weight: 200;
     }
 
     &.with-options {
-      margin: .4em 1em 1.5em 1em;
+      margin: .4em 1em .5em 1em;
 
       h2 {
-        display: inline-block;
-        padding: 10px 0 0 0;
+        padding: 10px 0 10px 0;
       }
 
       .actions {
-        float: right;
+        margin-top: .5em;
       }
     }
   }
@@ -167,14 +167,26 @@
 }
 
 .master-overlay-global-actions {
-  padding: .5em;
-  text-align: right;
+  padding: 0;
   border: 1px solid transparent;
   border-radius: 3px;
 
   .button {
     @include light-button;
     padding: 6px 6px;
+  }
+
+  .retrieve {
+    background: #27ae60;
+    color: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    &:hover {
+      background: #219853;
+      border-color: #219853;
+      color: #fff;
+    }
   }
 }
 
@@ -188,7 +200,7 @@
 
 // Scrollable content area
 .master-overlay-content {
-  padding: 0 1em 1em 1em;
+  padding: .5em 1em 1em 1em;
   height: 80%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
