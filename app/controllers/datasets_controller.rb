@@ -56,7 +56,7 @@ class DatasetsController < ApplicationController
           'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
         }
 
-        features = [{'field' => 'features', 'value-counts' => [['OPeNDAP Access', 0], ['GIBS Imagery', 0]]}]
+        features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0]]}]
         facets.unshift(features).flatten!
 
         results = facets.map do |facet|
@@ -73,7 +73,7 @@ class DatasetsController < ApplicationController
       else
         facets = response.body.with_indifferent_access
         # ECHO Facets
-        results = [facet_response(query, [{'term' => 'OPeNDAP Access'}, {'term' => 'GIBS Imagery'}], 'Features', 'features[]'),
+        results = [facet_response(query, [{'term' => 'Subsetting Services'}, {'term' => 'Map Imagery'}], 'Features', 'features[]'),
                    facet_response(query, facets['campaign_sn'], 'Campaigns', 'campaign[]'),
                    facet_response(query, facets['platform_sn'], 'Platforms', 'platform[]'),
                    facet_response(query, facets['instrument_sn'], 'Instruments', 'instrument[]'),
@@ -163,7 +163,7 @@ class DatasetsController < ApplicationController
 
   def dataset_params_for_request(request)
     features = request.query_parameters['features']
-    use_opendap = features && features.include?('OPeNDAP Access')
+    use_opendap = features && features.include?('Subsetting Services')
     params = request.query_parameters.except('features')
     params = params.merge('echo_collection_id' => Rails.configuration.services['opendap'].keys) if use_opendap
 
@@ -171,7 +171,7 @@ class DatasetsController < ApplicationController
     providers = gibs_keys.map{|key| key.split('___').first}
     short_names = gibs_keys.map{|key| key.split('___').last}
 
-    use_gibs = features && features.include?('GIBS Imagery')
+    use_gibs = features && features.include?('Map Imagery')
     params = params.merge('provider' => providers) if use_gibs
     params = params.merge('short_name' => short_names) if use_gibs
     params

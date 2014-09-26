@@ -9,22 +9,22 @@ describe 'Dataset OPeNDAP Filtering', reset: false do
   context 'when selecting the OPeNDAP filter' do
     before :all do
       click_link 'Features'
-      find('.facets-item', text: 'OPeNDAP Access').click
+      find('.facets-item', text: 'Subsetting Services').click
       wait_for_xhr
     end
 
     it 'shows only OPeNDAP enabled datasets' do
-      expect(page).to have_css('.badge-opendap', count: 20)
+      expect(page).to have_css('.badge-opendap', count: 22)
     end
 
     context 'when un-selecting the OPeNDAP filter' do
       before :all do
-        find('.applied-facets .facets-item', text: 'OPeNDAP Access').click
+        find('.applied-facets .facets-item', text: 'Subsetting Services').click
         wait_for_xhr
       end
 
       it 'shows all datasets' do
-        expect(page).to have_no_css('.badge-opendap')
+        expect(page).to have_css('.badge-opendap', count: 1)
       end
 
       it 'shows recent and featured datasets' do

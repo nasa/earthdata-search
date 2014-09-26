@@ -8,22 +8,22 @@ describe 'Dataset GIBS Filtering', reset: false do
 
   context 'when selecting the GIBS filter' do
     before :all do
-      find('.facets-item', text: 'GIBS Imagery').click
+      find('.facets-item', text: 'Map Imagery').click
       wait_for_xhr
     end
 
     it 'shows only GIBS enabled datasets' do
-      expect(page).to have_css('.badge-gibs', count: 22)
+      expect(page).to have_css('.badge-gibs', count: 24)
     end
 
     context 'when un-selecting the GIBS filter' do
       before :all do
-          find('.applied-facets .facets-item', text: 'GIBS Imagery').click
+          find('.applied-facets .facets-item', text: 'Map Imagery').click
         wait_for_xhr
       end
 
       it 'shows all datasets' do
-        expect(page).to have_css('.badge-gibs', count: 2)
+        expect(page).to have_css('.badge-gibs', count: 3)
       end
 
       it 'shows recent and featured datasets' do

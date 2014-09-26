@@ -18,16 +18,16 @@
         <dl class="applied-facets">
           <!-- ko foreach: datasetFacets.appliedFacets -->
               <dt data-bind="text: name" class="facet-title"></dt>
-                <dd class="facets">
+                <dd data-bind="css: {'features-facet': name == 'Features', 'facets': name != 'Features'}">
                   <!-- ko foreach: selectedValues -->
-                    <span data-bind="click: $root.datasetFacets.removeFacet, css: {'features-facet': $parent.name == 'Features'}" class="facets-item selected">
+                    <span data-bind="click: $root.datasetFacets.removeFacet" class="facets-item selected">
                       <span data-bind="text: term" ></span>
                       <i class="fa fa-times"></i>
-                      <!-- ko if: term == 'OPeNDAP Access' -->
-                      <span class="features-badge opendap-facet"></span>
+                      <!-- ko if: term == 'Subsetting Services' -->
+                      <span class="badge badge-opendap"></span>
                       <!-- /ko -->
-                      <!-- ko if: term == 'GIBS Imagery' -->
-                      <span class="features-badge gibs-facet"></span>
+                      <!-- ko if: term == 'Map Imagery' -->
+                      <span class="badge badge-gibs"></span>
                       <!-- /ko -->
                     </span>
                     <span data-bind="if: $parent.selectedValues().indexOf($data) < $parent.selectedValues().length - 1"> and </span>
@@ -56,11 +56,11 @@
             <!-- ko ifnot: $parent.name == 'Features' -->
             (<span data-bind="text: count"></span>)
             <!-- /ko -->
-            <!-- ko if: term == 'OPeNDAP Access' -->
-            <span class="features-badge opendap-facet"></span>
+            <!-- ko if: term == 'Subsetting Services' -->
+            <span class="badge badge-opendap"></span>
             <!-- /ko -->
-            <!-- ko if: term == 'GIBS Imagery' -->
-            <span class="features-badge gibs-facet"></span>
+            <!-- ko if: term == 'Map Imagery' -->
+            <span class="badge badge-gibs"></span>
             <!-- /ko -->
             <i class="fa fa-times"></i>
           </p>

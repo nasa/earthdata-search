@@ -138,6 +138,10 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   height: 22px;
 }
 
+.facets .badge {
+  margin: 0 .5em 0 0;
+}
+
 .badge-gibs {
   @include retina-image(gibs, 22px 22px, png, null, '@2x', true);
 }
