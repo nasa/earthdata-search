@@ -14,14 +14,6 @@ $master-overlay-parent-bg-color: transparentize(#111, .1);
   margin: 0;
 }
 
-.opendap-facet {
-  @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
-}
-
-.gibs-facet {
-  @include retina-image(gibs, 22px 22px, png, null, '@2x', true);
-}
-
 dd.facets {
   margin: 0 0 0 10px;
   font-size: 0.8em;
