@@ -56,6 +56,9 @@ class DatasetsController < ApplicationController
           'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
         }
 
+        features = [{'field' => 'features', 'value-counts' => [['OPeNDAP Access', 0]]}]
+        facets.unshift(features).flatten!
+
         results = facets.map do |facet|
           items = facet['value-counts'].map do |term, count|
             {'term' => term, 'count' => count}
@@ -70,7 +73,8 @@ class DatasetsController < ApplicationController
       else
         facets = response.body.with_indifferent_access
         # ECHO Facets
-        results = [facet_response(query, facets['campaign_sn'], 'Campaigns', 'campaign[]'),
+        results = [facet_response(query, [{'term' => 'OPeNDAP Access'}], 'Features', 'features[]'),
+                   facet_response(query, facets['campaign_sn'], 'Campaigns', 'campaign[]'),
                    facet_response(query, facets['platform_sn'], 'Platforms', 'platform[]'),
                    facet_response(query, facets['instrument_sn'], 'Instruments', 'instrument[]'),
                    facet_response(query, facets['sensor_sn'], 'Sensors', 'sensor[]'),
@@ -98,6 +102,7 @@ class DatasetsController < ApplicationController
     applied = []
     Array.wrap(query[param]).each do |param_term|
       term = param_term.last
+      term.gsub!('+', ' ')
       unless items.any? {|item| item['term'] == term}
         applied << {'term' => term, 'count' => 0}
       end
@@ -157,8 +162,9 @@ class DatasetsController < ApplicationController
   end
 
   def dataset_params_for_request(request)
-    use_opendap = request.query_parameters['opendap'] == 'true'
-    params = request.query_parameters.except('opendap') # If we set the param to false, this will still work
+    features = request.query_parameters['features']
+    use_opendap = features && features.include?('OPeNDAP Access')
+    params = request.query_parameters.except('features')
     params = params.merge('echo_collection_id' => Rails.configuration.services['opendap'].keys) if use_opendap
 
     gibs_keys = Rails.configuration.gibs.keys

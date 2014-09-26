@@ -133,7 +133,7 @@ ns.query = do (ko,
 
   class FacetParam extends QueryParam
     names: ->
-      ['campaign', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'science_keywords', 'processing_level']
+      ['features', 'campaign', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'science_keywords', 'processing_level']
 
     writeTo: (query) ->
       facetParams = {}
@@ -198,14 +198,6 @@ ns.query = do (ko,
         @readFrom(query)
       else
         @value([])
-
-  # Parameters that we only care about it they are 'true'
-  class OnlyOnParam extends QueryParam
-    writeTo: (query) ->
-      if @value()
-        query[@name()] = @value()
-      else
-        query
 
   class Range
     constructor: ->
@@ -283,8 +275,6 @@ ns.query = do (ko,
       @facets = @queryComponent(new FacetParam(), ko.observableArray())
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
-      @gibs = @queryComponent(new OnlyOnParam('gibs'))
-      @opendap = @queryComponent(new OnlyOnParam('opendap'))
       super(parentQuery)
 
     clearFilters: =>

@@ -7,23 +7,6 @@
     </p>
   </header>
   <div class="master-overlay-content panel-group">
-    <div class="panel panel-default filters-panel">
-      <div class="panel-heading">
-        <h3 class="panel-title facet-title">
-          Filters
-        </h3>
-      </div>
-      <div class="panel-body filters">
-        <p class="filters-item">
-          <input data-bind="checked: query.gibs" id="filter-gibs" type="checkbox">
-          <label for="filter-gibs">GIBS Imagery</label>
-        </p>
-        <p class="filters-item">
-          <input data-bind="checked: query.opendap" id="filter-opendap" type="checkbox">
-          <label for="filter-opendap">OPeNDAP Access</label>
-        </p>
-      </div>
-    </div>
     <!-- ko if: query.facets() && query.facets().length > 0 -->
     <div class="panel panel-default selected-facets-panel">
       <div class="panel-heading">
@@ -37,9 +20,12 @@
               <dt data-bind="text: name" class="facet-title"></dt>
                 <dd class="facets">
                   <!-- ko foreach: selectedValues -->
-                  <span data-bind="click: $root.datasetFacets.removeFacet" class="facets-item selected">
+                    <span data-bind="click: $root.datasetFacets.removeFacet, css: {'features-facet': $parent.name == 'Features'}" class="facets-item selected">
                       <span data-bind="text: term" ></span>
                       <i class="fa fa-times"></i>
+                      <!-- ko if: term == 'OPeNDAP Access' -->
+                      <span class="opendap-facet"></span>
+                      <!-- /ko -->
                     </span>
                     <span data-bind="if: $parent.selectedValues().indexOf($data) < $parent.selectedValues().length - 1"> and </span>
                   <!-- /ko -->
@@ -59,12 +45,17 @@
           <a data-bind="text: name, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
         </h3>
       </div>
-      <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed()}">
+      <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed(), 'features-facet': name == 'Features'}">
         <div class="panel-body facets">
           <!-- ko foreach: values -->
           <p class="facets-item" data-bind="click: $root.datasetFacets.toggleFacet, css: {selected: isSelected}">
             <span data-bind="text: term"></span>
+            <!-- ko ifnot: $parent.name == 'Features' -->
             (<span data-bind="text: count"></span>)
+            <!-- /ko -->
+            <!-- ko if: term == 'OPeNDAP Access' -->
+            <span class="opendap-facet"></span>
+            <!-- /ko -->
             <i class="fa fa-times"></i>
           </p>
           <!-- /ko -->

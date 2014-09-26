@@ -69,13 +69,13 @@ describe "Dataset Facets", reset: false do
     end
 
     it "collapses and expands facet lists by type" do
-      expect(page).to have_css("#collapse0.facets-list-hide")
+      expect(page).to have_css("#collapse1.facets-list-hide")
 
       find(".facet-title", text: "Campaigns").click
-      expect(page).to have_css("#collapse0.facets-list-show")
+      expect(page).to have_css("#collapse1.facets-list-show")
 
       find(".facet-title", text: "Campaigns").click
-      expect(page).to have_css("#collapse0.facets-list-hide")
+      expect(page).to have_css("#collapse1.facets-list-hide")
     end
   end
 
@@ -186,24 +186,24 @@ describe "Dataset Facets", reset: false do
     end
 
     it "keeps facet lists collapsed after selecting and removing a facet" do
-      expect(page).to have_css("#collapse0.facets-list-hide")
+      expect(page).to have_css("#collapse1.facets-list-hide")
       find(".facet-title", text: "Campaigns").click
-      expect(page).to have_css("#collapse0.facets-list-show")
+      expect(page).to have_css("#collapse1.facets-list-show")
 
       within(:css, ".platforms") do
         find(".facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
-      expect(page).to have_css("#collapse0.facets-list-show")
+      expect(page).to have_css("#collapse1.facets-list-show")
 
       within(:css, ".selected-facets-panel") do
         find(".facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
       expect(page).to have_no_css(".selected-facets-panel.facets")
-      expect(page).to have_css("#collapse0.facets-list-show")
+      expect(page).to have_css("#collapse1.facets-list-show")
       find(".facet-title", text: "Campaigns").click
-      expect(page).to have_css("#collapse0.facets-list-hide")
+      expect(page).to have_css("#collapse1.facets-list-hide")
     end
   end
 
