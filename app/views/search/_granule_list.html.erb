@@ -11,11 +11,11 @@
           <h2 data-bind="text: dataset.title"></h2>
           <!-- ko with: dataset -->
           <div class="master-overlay-global-actions actions">
+            <a href="#" class="button retrieve" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
+              <i class="edsc-icon-download"></i> Retrieve Data
+            </a>
             <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.datasetsList.showDatasetDetails" title="View details">
               <i class="edsc-icon-info"></i>
-            </a>
-            <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
-              <i class="edsc-icon-download"></i>
             </a>
             <!-- ko if: has_granules -->
             <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Filter granules">
