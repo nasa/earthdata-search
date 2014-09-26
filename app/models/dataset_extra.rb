@@ -5,7 +5,7 @@ class DatasetExtra < ActiveRecord::Base
   store :searchable_attributes, coder: JSON
   store :orbit, coder: JSON
 
-  def self.build_echo_client(env=(@echo_env || 'ops'))
+  def self.build_echo_client(env=(@echo_env || Rails.configuration.echo_env))
     Echo::Client.client_for_environment(env, Rails.configuration.services, @enable_cmr)
   end
 
@@ -118,9 +118,11 @@ class DatasetExtra < ActiveRecord::Base
       if body['results']
         # ECHO10
         datasets = Array.wrap(body['results']['result'])
-      else
+      elsif body['feed']
         # Atom
         datasets = body['feed']['entry']
+      else
+        datasets = []
       end
 
       if response.headers['echo-hits']
