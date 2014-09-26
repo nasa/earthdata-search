@@ -18,11 +18,17 @@
         <dl class="applied-facets">
           <!-- ko foreach: datasetFacets.appliedFacets -->
               <dt data-bind="text: name" class="facet-title"></dt>
-                <dd class="facets">
+                <dd data-bind="css: {'features-facet': name == 'Features', 'facets': name != 'Features'}">
                   <!-- ko foreach: selectedValues -->
-                  <span data-bind="click: $root.datasetFacets.removeFacet" class="facets-item selected">
+                    <span data-bind="click: $root.datasetFacets.removeFacet" class="facets-item selected">
                       <span data-bind="text: term" ></span>
                       <i class="fa fa-times"></i>
+                      <!-- ko if: term == 'Subsetting Services' -->
+                      <span class="badge badge-opendap"></span>
+                      <!-- /ko -->
+                      <!-- ko if: term == 'Map Imagery' -->
+                      <span class="badge badge-gibs"></span>
+                      <!-- /ko -->
                     </span>
                     <span data-bind="if: $parent.selectedValues().indexOf($data) < $parent.selectedValues().length - 1"> and </span>
                   <!-- /ko -->
@@ -42,12 +48,20 @@
           <a data-bind="text: name, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
         </h3>
       </div>
-      <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed()}">
+      <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed(), 'features-facet': name == 'Features'}">
         <div class="panel-body facets">
           <!-- ko foreach: values -->
           <p class="facets-item" data-bind="click: $root.datasetFacets.toggleFacet, css: {selected: isSelected}">
             <span data-bind="text: term"></span>
+            <!-- ko ifnot: $parent.name == 'Features' -->
             (<span data-bind="text: count"></span>)
+            <!-- /ko -->
+            <!-- ko if: term == 'Subsetting Services' -->
+            <span class="badge badge-opendap"></span>
+            <!-- /ko -->
+            <!-- ko if: term == 'Map Imagery' -->
+            <span class="badge badge-gibs"></span>
+            <!-- /ko -->
             <i class="fa fa-times"></i>
           </p>
           <!-- /ko -->

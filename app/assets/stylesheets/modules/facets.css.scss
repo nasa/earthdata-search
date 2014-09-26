@@ -9,6 +9,11 @@ $master-overlay-parent-bg-color: transparentize(#111, .1);
   }
 }
 
+.features-facet {
+  line-height: 22px;
+  margin: 0;
+}
+
 dd.facets {
   margin: 0 0 0 10px;
   font-size: 0.8em;

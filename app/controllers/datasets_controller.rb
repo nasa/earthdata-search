@@ -2,11 +2,10 @@ class DatasetsController < ApplicationController
   respond_to :json
 
   def index
-    catalog_response = echo_client.get_datasets(request.query_parameters, token)
-
+    catalog_response = echo_client.get_datasets(dataset_params_for_request(request), token)
 
     if catalog_response.success?
-      add_featured_datasets!(request.query_parameters, token, catalog_response.body)
+      add_featured_datasets!(dataset_params_for_request(request), token, catalog_response.body)
 
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
 
@@ -36,7 +35,7 @@ class DatasetsController < ApplicationController
   end
 
   def facets
-    response = echo_client.get_facets(request.query_parameters, token)
+    response = echo_client.get_facets(dataset_params_for_request(request), token)
 
     if response.success?
       # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
@@ -57,6 +56,9 @@ class DatasetsController < ApplicationController
           'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
         }
 
+        features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0]]}]
+        facets.unshift(features).flatten!
+
         results = facets.map do |facet|
           items = facet['value-counts'].map do |term, count|
             {'term' => term, 'count' => count}
@@ -71,7 +73,8 @@ class DatasetsController < ApplicationController
       else
         facets = response.body.with_indifferent_access
         # ECHO Facets
-        results = [facet_response(query, facets['campaign_sn'], 'Campaigns', 'campaign[]'),
+        results = [facet_response(query, [{'term' => 'Subsetting Services'}, {'term' => 'Map Imagery'}], 'Features', 'features[]'),
+                   facet_response(query, facets['campaign_sn'], 'Campaigns', 'campaign[]'),
                    facet_response(query, facets['platform_sn'], 'Platforms', 'platform[]'),
                    facet_response(query, facets['instrument_sn'], 'Instruments', 'instrument[]'),
                    facet_response(query, facets['sensor_sn'], 'Sensors', 'sensor[]'),
@@ -99,6 +102,7 @@ class DatasetsController < ApplicationController
     applied = []
     Array.wrap(query[param]).each do |param_term|
       term = param_term.last
+      term.gsub!('+', ' ')
       unless items.any? {|item| item['term'] == term}
         applied << {'term' => term, 'count' => 0}
       end
@@ -130,7 +134,7 @@ class DatasetsController < ApplicationController
     # Only fetch if the user is requesting the first page
     if base_query['page_num'] == "1" && base_query['echo_collection_id'].nil?
       begin
-        featured_query = request.query_parameters.merge('echo_collection_id' => featured_ids)
+        featured_query = dataset_params_for_request(request).merge('echo_collection_id' => featured_ids)
         featured_response = echo_client.get_datasets(featured_query, token)
         featured = featured_response.body['feed']['entry'] if featured_response.success?
       rescue => e
@@ -155,5 +159,21 @@ class DatasetsController < ApplicationController
     end
 
     base_results
+  end
+
+  def dataset_params_for_request(request)
+    features = request.query_parameters['features']
+    use_opendap = features && features.include?('Subsetting Services')
+    params = request.query_parameters.except('features')
+    params = params.merge('echo_collection_id' => Rails.configuration.services['opendap'].keys) if use_opendap
+
+    gibs_keys = Rails.configuration.gibs.keys
+    providers = gibs_keys.map{|key| key.split('___').first}
+    short_names = gibs_keys.map{|key| key.split('___').last}
+
+    use_gibs = features && features.include?('Map Imagery')
+    params = params.merge('provider' => providers) if use_gibs
+    params = params.merge('short_name' => short_names) if use_gibs
+    params
   end
 end
