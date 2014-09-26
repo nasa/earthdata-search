@@ -89,7 +89,8 @@
         <!-- ko with: $root.ui.datasetsList.selected() -->
         <!-- ko if: has_granules -->
         <dt>ECHO</dt>
-        <dd><a data-bind="attr: { href: echoGranulesUrl }" target="_blank">Granules</a></dd>
+        <dd><a data-bind="attr: { href: echoGranulesUrl }, text: echoGranulesUrl" target="_blank">Granules</a></dd>
+        <dd><a href="https://api.echo.nasa.gov/catalog-rest/catalog-docs/index.html" target="_blank">ECHO Documentation</a></dd>
         <!-- /ko -->
         <!-- ko if: gibs() -->
         <dt>GIBS</dt>
@@ -102,7 +103,8 @@
         <!-- /ko -->
         <!-- ko if: opendap() -->
         <dt>OPeNDAP</dt>
-        <dd><a data-bind="attr: { href: opendap() }" target="_blank">OPeNDAP</a></dd>
+        <dd><a data-bind="attr: { href: opendap() }, text: opendap" target="_blank">OPeNDAP</a></dd>
+        <dd><a href="http://acdisc.gsfc.nasa.gov/opendap/docs/" target="_blank">OPeNDAP Documentation</a></dd>
         <!-- /ko -->
         <!-- /ko -->
       </dl>
