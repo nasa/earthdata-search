@@ -56,7 +56,7 @@ class DatasetsController < ApplicationController
           'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
         }
 
-        features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0]]}]
+        features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
         facets.unshift(features).flatten!
 
         results = facets.map do |facet|
@@ -73,7 +73,7 @@ class DatasetsController < ApplicationController
       else
         facets = response.body.with_indifferent_access
         # ECHO Facets
-        results = [facet_response(query, [{'term' => 'Subsetting Services'}, {'term' => 'Map Imagery'}], 'Features', 'features[]'),
+        results = [facet_response(query, [{'term' => 'Subsetting Services'}, {'term' => 'Map Imagery'}, {'term' => 'Near Real Time'}], 'Features', 'features[]'),
                    facet_response(query, facets['campaign_sn'], 'Campaigns', 'campaign[]'),
                    facet_response(query, facets['platform_sn'], 'Platforms', 'platform[]'),
                    facet_response(query, facets['instrument_sn'], 'Instruments', 'instrument[]'),
@@ -174,6 +174,10 @@ class DatasetsController < ApplicationController
     use_gibs = features && features.include?('Map Imagery')
     params = params.merge('provider' => providers) if use_gibs
     params = params.merge('short_name' => short_names) if use_gibs
+
+    nrt = features && features.include?('Near Real Time')
+    params = params.merge('collection_data_type' => 'NEAR_REAL_TIME') if nrt
+
     params
   end
 end

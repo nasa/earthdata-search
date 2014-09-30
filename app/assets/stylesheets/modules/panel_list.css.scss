@@ -150,6 +150,10 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
 }
 
+.badge-nrt {
+  @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
+}
+
 .panel-list-muted {
   font-size: .9em;
   padding: 0;
