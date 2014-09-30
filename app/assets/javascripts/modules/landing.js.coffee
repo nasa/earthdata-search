@@ -48,6 +48,23 @@ do ($=jQuery
           $('.landing-hidden').fadeIn(complete: -> updateLandingPage(isLandingPage))
         duration: 200)
 
+  updateSplashPage = (showSplash) ->
+    if showSplash
+      $('#timeline').timeline('hide')
+      $('.splash-visible').show()
+    else
+      $('.splash-visible').hide()
+
+  updateSplashPageAnimated = (showSplash) ->
+    if showSplash
+      $('#timeline').timeline('hide')
+      $('.splash-visible').fadeIn()
+    else
+      $('.splash-visible').fadeOut()
+      if preferences.showTour()
+        # Let the DOM finish any refresh operations before showing the tour
+        setTimeout((-> help.startTour() if uiModel.isLandingPage()), 0)
+
   $(document).ready ->
     isFirstUpdate = true
 
@@ -59,6 +76,9 @@ do ($=jQuery
       else
         updateLandingPageAnimated(isLandingPage)
 
+    preferences.showSplash.subscribe (showSplash) ->
+      updateSplashPageAnimated(showSplash)
+
     $(window).on 'resize', ->
       if $('body').hasClass('is-landing')
         $('.landing-toolbar-content').offset($('.landing-dialog-toolbar').offset())
@@ -68,7 +88,9 @@ do ($=jQuery
     $(window).on 'edsc.pagechange', updateLandingPageState
 
     preferences.onload ->
-      if preferences.showTour()
+      showSplash = preferences.showSplash()
+      updateSplashPage(showSplash)
+      if !showSplash && preferences.showTour()
         # Let the DOM finish any refresh operations before showing the tour
         setTimeout((-> help.startTour() if uiModel.isLandingPage()), 0)
 
