@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><%= Rails.configuration.env_name %> Earthdata Search</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=1280,user-scalable=no">
+    <link rel="shortcut icon" href="/favicon.ico?v=1.1">
+    <%= csrf_meta_tag %>
+    <%= stylesheet_link_tag    "modules/splash", :media => "all" %>
+</head>
+<body>
+  <!-- <div class="splash-page"> -->
+    <div class="wrap">
+      <%= image_tag "nasa.png" %>
+      <h1>New Environments Available!</h1>
+      <p>Earthdata Search is now available in testing and operational environments. Please select the one which best describes your needs.</p>
+      <p class="btn-ctr">
+        <span>I would like to see the latest development efforts in a possibly unstable version.</span>
+        <a class="button" title="Use the SIT environment" href="https://search.sit.earthdata.nasa.gov/">Use SIT Environment</a>
+      </p>
+      <p class="btn-ctr">
+        <span>I need to test upcoming features using realistic data.</span>
+        <a class="button" title="Use the UAT environment" href="https://search.uat.earthdata.nasa.gov/">Use UAT Environment</a>
+      </p>
+      <p class="btn-ctr">
+        <span>I need to work with real science data and do not want my saved data to be lost.</span>
+        <a class="button" title="Use the OPS environment" href="https://search.earthdata.nasa.gov/">Use OPS Environment</a>
+      </p>
+      <div class="earth">
+        <div class="orbit"></div>
+      </div>
+    </div>
+  <!-- </div> -->
+</body>
+</html>
