@@ -144,6 +144,18 @@ describe "Spatial" do
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
+    it "displays errors for invalid north/south bounding boxes" do
+      create_bounding_box(0, 0, 0, 10)
+      wait_for_xhr
+      expect(page).to have_content("Bounding box north and south values must be different")
+    end
+
+    it "displays errors for invalid east/west bounding boxes" do
+      create_bounding_box(0, 10, 10, 10)
+      wait_for_xhr
+      expect(page).to have_content("Bounding box east and west values must be different")
+    end
+
     context "changing the bounding box selection" do
       before(:each) do
         create_bounding_box(0, 0, 10, 10)
