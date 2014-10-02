@@ -4,16 +4,13 @@ class SearchController < ApplicationController
 
   def index
     @preferences = preferences
-    env_name = Rails.configuration.env_name
-    if env_name == '[SIT]' || env_name == '[UAT]'
-      referrer = request.referrer
+    if Rails.env.sit? || Rails.env.uat?
       show_splash = @preferences.nil? ? true : @preferences['show_splash'] != 'false'
 
       if show_splash
-        if referrer == 'https://search.sit.earthdata.nasa.gov/' ||
-            referrer == 'https://search.uat.earthdata.nasa.gov/'
+        if request.referrer.start_with?('https://search.sit.earthdata.nasa.gov/', 'https://search.uat.earthdata.nasa.gov/')
           @preferences['show_splash'] = 'false'
-          session[:site_preferences] = @preferences
+          save_preference(@preferences)
         else
           render 'splash', layout: false
         end
@@ -31,6 +28,18 @@ class SearchController < ApplicationController
       user && user.site_preferences
     else
       session[:site_preferences]
+    end
+  end
+
+  def save_preferences(new_preferences)
+    user_id = get_user_id
+
+    if user_id
+      user = User.where(echo_id: user_id).first
+      user.site_preferences = new_preferences
+      user.save
+    else
+      session[:site_preferences] = new_preferences
     end
   end
 end
