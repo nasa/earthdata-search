@@ -13,7 +13,7 @@ describe 'Dataset GIBS Filtering', reset: false do
     end
 
     it 'shows only GIBS enabled datasets' do
-      expect(page).to have_css('.badge-gibs', count: 24)
+      expect(page).to have_css('.badge-gibs', count: 23)
     end
 
     context 'when un-selecting the GIBS filter' do
@@ -23,7 +23,7 @@ describe 'Dataset GIBS Filtering', reset: false do
       end
 
       it 'shows all datasets' do
-        expect(page).to have_css('.badge-gibs', count: 3)
+        expect(page).to have_css('.badge-gibs', count: 2)
       end
 
       it 'shows recent and featured datasets' do
