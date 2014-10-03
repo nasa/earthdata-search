@@ -48,6 +48,9 @@ describe "Shapefile search", reset: false, wait: 30 do
   context "when uploading a shapefile containing a single feature" do
     before :all do
       upload_shapefile('doc/example-data/shapefiles/simple.geojson')
+      # TODO This sleep is here because specs for centering and zooming
+      # would not give consistent results without the sleep
+      sleep 0.2
     end
 
     after :all do
@@ -63,6 +66,20 @@ describe "Shapefile search", reset: false, wait: 30 do
     it "displays no help message prompting the user to select a feature" do
       expect(page).to have_css('.leaflet-overlay-pane path')
       expect(page).to have_no_popover('Choose a Search Constraint')
+    end
+
+    it "centers the map over the spatial constraint" do
+      script = "$('#map').data('map').map.getCenter().toString()"
+      result = page.evaluate_script script
+
+      expect(result).to eq("LatLng(0.5, 100.61426)")
+    end
+
+    it "zooms the map to the spatial constraint" do
+      script = "$('#map').data('map').map.getZoom()"
+      result = page.evaluate_script script
+
+      expect(result).to eq(7)
     end
   end
 
