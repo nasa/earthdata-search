@@ -29,6 +29,20 @@ describe "Spatial search by dataset location" do
       it "highlights the dataset's location link" do
         expect(page).to have_css('.button-active .edsc-icon-location')
       end
+
+      it "centers the map over the selected granule" do
+        script = "$('#map').data('map').map.getCenter().toString()"
+        result = page.evaluate_script script
+
+        expect(result).to eq("LatLng(39.1, -97.9623)")
+      end
+
+      it "zooms the map to the selected granule" do
+        script = "$('#map').data('map').map.getZoom()"
+        result = page.evaluate_script script
+
+        expect(result).to eq(7)
+      end
     end
 
     context "when removing a dataset's location link" do

@@ -79,6 +79,20 @@ describe "Granule selection", reset: false do
       end
     end
 
+    it "centers the map over the selected granule" do
+      script = "$('#map').data('map').map.getCenter().toString()"
+      result = page.evaluate_script script
+
+      expect(result).to eq("LatLng(0, 0)")
+    end
+
+    it "zooms the map to the selected granule" do
+      script = "$('#map').data('map').map.getZoom()"
+      result = page.evaluate_script script
+
+      expect(result).to eq(2)
+    end
+
     context "pressing the up button" do
       before :all do
         keypress('#granule-list', :up)
@@ -93,6 +107,20 @@ describe "Granule selection", reset: false do
 
       it "scrolls to the selected granule" do
         expect(page.evaluate_script(is_granule_panel_visible_script)).to be_true
+      end
+
+      it "centers the map over the selected granule" do
+        script = "$('#map').data('map').map.getCenter().toString()"
+        result = page.evaluate_script script
+
+        expect(result).to eq("LatLng(0, 0)")
+      end
+
+      it "zooms the map to the selected granule" do
+        script = "$('#map').data('map').map.getZoom()"
+        result = page.evaluate_script script
+
+        expect(result).to eq(2)
       end
     end
 

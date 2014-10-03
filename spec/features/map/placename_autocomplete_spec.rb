@@ -4,6 +4,7 @@ require "spec_helper"
 
 describe "Place name autocomplete" do
   texas_constraint = 'bounding_box:-106.6456527709961,25.8371639251709:-93.5080337524414,36.50070571899414'
+  map_bounds = "31.166015625!-99.615234375!5!1"
 
   before do
     load_page :search, overlay: false
@@ -50,6 +51,20 @@ describe "Place name autocomplete" do
       find('.tt-suggestion p', text: 'Texas, United States').click
       expect(page).to have_field('keywords', with: 'modis over Texas, United States')
       wait_for_xhr
+    end
+
+    it 'centers the map over the suggested spatial area' do
+      script = "$('#map').data('map').map.getCenter().toString()"
+      result = page.evaluate_script script
+
+      expect(result).to eq("LatLng(31.16893, -99.61981)")
+    end
+
+    it 'zooms the map to the suggested spatial area' do
+      script = "$('#map').data('map').map.getZoom()"
+      result = page.evaluate_script script
+
+      expect(result).to eq(5)
     end
 
     it "removes the placename from the search box if the user alters the spatial constraint" do
