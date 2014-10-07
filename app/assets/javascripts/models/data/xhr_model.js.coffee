@@ -74,7 +74,7 @@ ns.XhrModel = do (ko
         @results(results)
 
     _shouldLoad: (url) ->
-      @_prevUrl != url || @isError.peek()
+      @_prevUrl != url || @isError.peek() || @stale
 
     _queryFor: (params) ->
       $.param(params)

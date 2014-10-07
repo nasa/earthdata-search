@@ -27,8 +27,9 @@ ns.Dataset = do (ko
   class Dataset extends DetailsModel
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
+      featured = jsonData.featured
       for dataset in datasets()
-        if dataset.id == id
+        if dataset.id == id && (dataset.featured? && dataset.featured == featured)
           if jsonData.short_name? && !dataset.hasAtomData()
             dataset.fromJson(jsonData)
           return dataset.reference()
