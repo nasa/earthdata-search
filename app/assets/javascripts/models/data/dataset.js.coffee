@@ -29,8 +29,8 @@ ns.Dataset = do (ko
       id = jsonData.id
       featured = jsonData.featured
       for dataset in datasets()
-        if dataset.id == id && (dataset.featured? && dataset.featured == featured)
-          if jsonData.short_name? && !dataset.hasAtomData()
+        if dataset.id == id
+          if (jsonData.short_name? && !dataset.hasAtomData()) || dataset.featured != featured
             dataset.fromJson(jsonData)
           return dataset.reference()
       register(new Dataset(jsonData, query, randomKey))
