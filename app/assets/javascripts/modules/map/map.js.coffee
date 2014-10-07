@@ -10,11 +10,12 @@ ns.Map = do (window,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              MouseEventsLayer = ns.MouseEventsLayer,
-             page = @edsc.page) ->
+             page = @edsc.page
+             config = @edsc.config) ->
 
   L.Map.include
     fitBounds: (bounds, options={}) ->
-      options.animate = false if config.animateMap
+      options.animate = config.animateMap
       bounds = bounds.getBounds?() ? L.latLngBounds(bounds)
 
       paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0])
