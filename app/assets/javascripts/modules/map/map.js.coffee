@@ -14,7 +14,7 @@ ns.Map = do (window,
 
   L.Map.include
     fitBounds: (bounds, options={}) ->
-      <%= 'options.animate = false' if Rails.env.test? %>
+      options.animate = false if config.animateMap
       bounds = bounds.getBounds?() ? L.latLngBounds(bounds)
 
       paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0])
