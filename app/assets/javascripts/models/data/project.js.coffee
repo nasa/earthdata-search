@@ -243,17 +243,17 @@ ns.Project = do (ko,
           value.pg ?= []
           value.pg[0] ?= {}
 
-          # if focused dataset id is duplicated in params
-          focusedDatasetIsDup = false
+          # if focused dataset id is duplicated in params, copy query
           if focused
             for id, i in datasetIds
-              focusedDatasetIsDup = true if i > 0 && id == datasetIds[0]
+              if i > 0 && id == datasetIds[0]
+                value.pg[0] = value.pg[i]
 
           DatasetsModel.forIds datasetIds, @query, (datasets) =>
             @_pending(null)
             pending = @_pendingAccess ? {}
             offset = 0
-            offset = 1 if focusedDatasetIsDup # don't process focused dataset if it shows up again in params
+            offset = 1 unless focused
             queries = value["pg"] ? []
             for dataset, i in datasets
               query = queries[i + offset]
