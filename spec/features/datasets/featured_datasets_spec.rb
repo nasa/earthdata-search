@@ -123,5 +123,44 @@ describe "Featured datasets", reset: false do
     it "shows the two most recently visited datasets among the featured datasets" do
       expect(featured_dataset_results).to have_css('.panel-list-item', count: 4)
     end
+
+    # EDSC-512
+    context "and filters have been applied which filter all featured datasets" do
+      before :all do
+        fill_in "keywords", with: "AST_L1AE"
+        wait_for_xhr
+      end
+
+      it "shows no featured datasets" do
+        expect(page).to have_no_content('MOD04_L2')
+        expect(page).to have_no_content('MOD10_L2')
+      end
+
+      context "when filtering the first dataset's granules" do
+        before :all do
+          first_dataset_result.click
+          wait_for_xhr
+          create_point(0, 0)
+          wait_for_xhr
+        end
+
+        it "shows the updated granule list" do
+          expect(page).to have_content('Showing 0 of 0 matching granules')
+        end
+
+        context "when clearing filters and returning to the datasets list" do
+          before :all do
+            page.execute_script('$(".clear-filters").click()')
+            wait_for_xhr
+            click_link 'Back to Datasets'
+            wait_for_xhr
+          end
+
+          it "shows recent and featured datasets" do
+            expect(featured_dataset_results).to have_css('.panel-list-item', count: 4)
+          end
+        end
+      end
+    end
   end
 end
