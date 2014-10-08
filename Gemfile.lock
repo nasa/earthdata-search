@@ -16,6 +16,16 @@ GIT
       rails (>= 3.2.15)
       scatter_swap (~> 0.0.3)
 
+PATH
+  remote: ../metadata-editor-prototype
+  specs:
+    cmep (0.0.1)
+      bootstrap-sass (~> 3.2.0)
+      jquery-rails (~> 3.1.0)
+      nokogiri (~> 1.6.3.1)
+      rails (~> 4.1.1)
+      sass-rails (>= 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -48,6 +58,8 @@ GEM
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
     atomic (1.1.16)
+    bootstrap-sass (3.2.0.2)
+      sass (~> 3.2)
     bourbon (3.2.1)
       sass (~> 3.2)
       thor
@@ -134,7 +146,7 @@ GEM
     multi_json (1.10.0)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
-    nokogiri (1.6.2.1)
+    nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     pg (0.17.1)
     phantomjs (1.9.7.0)
@@ -257,6 +269,7 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   capybara-webkit!
+  cmep!
   coffee-rails (~> 4.0.0)
   coffee-script
   colored
