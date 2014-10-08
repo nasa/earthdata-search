@@ -36,6 +36,15 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
       currentPage.query.placename(placename)
       currentSpatial = spatial
 
+      points = spatial.split(':')
+      if points[0] == 'point'
+        p1 = points[1].split(',').reverse()
+        p2 = p1
+      else if points[0] == 'bounding_box'
+        p1 = points[1].split(',').reverse()
+        p2 = points[2].split(',').reverse()
+      $('#map').data('map').map.fitBounds([p1,p2])
+
     $('.autocomplete-placenames').on 'keyup', ->
       newValue = $(this).typeahead('val')
       query = currentPage.query
