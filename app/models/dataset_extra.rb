@@ -163,7 +163,6 @@ class DatasetExtra < ActiveRecord::Base
     decorate_gibs_layers(dataset)
     decorate_opendap_layers(dataset)
     decorate_echo10_attributes(dataset)
-    decorate_nrt(dataset)
 
     dataset[:links] = Array.wrap(dataset[:links]) # Ensure links attribute is present
 
@@ -257,11 +256,6 @@ class DatasetExtra < ActiveRecord::Base
     if opendap_config.present?
       dataset[:opendap] = opendap_config['granule_url_template'].split('{').first
     end
-  end
-
-  def decorate_nrt(dataset)
-    dataset[:nrt] = false
-    dataset[:nrt] = dataset[:collection_data_type] == 'NEAR_REAL_TIME'
   end
 
 end
