@@ -4,13 +4,14 @@ class SearchController < ApplicationController
 
   def index
     @preferences = preferences
+    @preferences ||= {}
     if Rails.env.sit? || Rails.env.uat?
-      show_splash = @preferences.nil? ? true : @preferences['show_splash'] != 'false'
+      show_splash = @preferences['show_splash'] != 'false'
 
       if show_splash
         if request.referrer.present? && request.referrer.start_with?('https://search.sit.earthdata.nasa.gov/', 'https://search.uat.earthdata.nasa.gov/')
           @preferences['show_splash'] = 'false'
-          save_preference(@preferences)
+          save_preferences(@preferences)
         else
           render 'splash', layout: false
         end
