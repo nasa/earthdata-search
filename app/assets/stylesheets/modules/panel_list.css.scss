@@ -151,7 +151,18 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 }
 
 .badge-nrt {
-  @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
+  border-radius: 2px;
+  background-color: #2ECC71;
+  color: #fff;
+  text-shadow: .5px .5px .5px darken(#2ECC71, 20%);
+  font-size: 9px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 22px;
+  &:before {
+    content: "NRT";
+  }
+  // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
 }
 
 .panel-list-muted {
