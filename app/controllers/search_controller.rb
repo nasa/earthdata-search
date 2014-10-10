@@ -8,7 +8,7 @@ class SearchController < ApplicationController
       show_splash = @preferences.nil? ? true : @preferences['show_splash'] != 'false'
 
       if show_splash
-        if request.referrer.start_with?('https://search.sit.earthdata.nasa.gov/', 'https://search.uat.earthdata.nasa.gov/')
+        if request.referrer.present? && request.referrer.start_with?('https://search.sit.earthdata.nasa.gov/', 'https://search.uat.earthdata.nasa.gov/')
           @preferences['show_splash'] = 'false'
           save_preference(@preferences)
         else
