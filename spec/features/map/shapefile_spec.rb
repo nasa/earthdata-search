@@ -50,7 +50,7 @@ describe "Shapefile search", reset: false, wait: 30 do
       upload_shapefile('doc/example-data/shapefiles/simple.geojson')
       # TODO This sleep is here because specs for centering and zooming
       # would not give consistent results without the sleep
-      sleep 0.2
+      sleep 1
     end
 
     after :all do
