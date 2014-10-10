@@ -242,6 +242,13 @@ ns.Project = do (ko,
           @_pending(value)
           value.pg ?= []
           value.pg[0] ?= {}
+
+          # if focused dataset id is duplicated in params, copy query
+          if focused
+            for id, i in datasetIds
+              if i > 0 && id == datasetIds[0]
+                value.pg[0] = value.pg[i]
+
           DatasetsModel.forIds datasetIds, @query, (datasets) =>
             @_pending(null)
             pending = @_pendingAccess ? {}
