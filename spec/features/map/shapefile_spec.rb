@@ -50,7 +50,7 @@ describe "Shapefile search", reset: false, wait: 30 do
       upload_shapefile('doc/example-data/shapefiles/simple.geojson')
       # TODO This sleep is here because specs for centering and zooming
       # would not give consistent results without the sleep
-      sleep 0.2
+      sleep 1
     end
 
     after :all do
@@ -72,7 +72,10 @@ describe "Shapefile search", reset: false, wait: 30 do
       script = "$('#map').data('map').map.getCenter().toString()"
       result = page.evaluate_script script
 
-      expect(result).to eq("LatLng(0.5, 100.61426)")
+      lat = result.split('(')[1].split(',')[0].to_f
+      lng = result.split(', ')[1].split(')')[0].to_f
+      expect(lat).to be_within(0.05).of(0.5)
+      expect(lng).to be_within(0.05).of(100.6)
     end
 
     it "zooms the map to the spatial constraint" do
