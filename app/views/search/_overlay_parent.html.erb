@@ -29,6 +29,9 @@
                       <!-- ko if: term == 'Map Imagery' -->
                       <span class="badge badge-gibs"></span>
                       <!-- /ko -->
+                      <!-- ko if: term == 'Near Real Time' -->
+                      <span class="badge badge-nrt"></span>
+                      <!-- /ko -->
                     </span>
                     <span data-bind="if: $parent.selectedValues().indexOf($data) < $parent.selectedValues().length - 1"> and </span>
                   <!-- /ko -->
@@ -61,6 +64,9 @@
             <!-- /ko -->
             <!-- ko if: term == 'Map Imagery' -->
             <span class="badge badge-gibs"></span>
+            <!-- /ko -->
+            <!-- ko if: term == 'Near Real Time' -->
+            <span class="badge badge-nrt"></span>
             <!-- /ko -->
             <i class="fa fa-times"></i>
           </p>

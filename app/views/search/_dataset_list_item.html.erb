@@ -11,6 +11,9 @@
                   <!-- ko if: opendap() -->
                   <a href="#" class="badge badge-opendap" data-tooltip="true" title="Supports spatial and parameter subsetting using OPeNDAP"></a>
                   <!-- /ko -->
+                  <!-- ko if: nrt -->
+                  <a href="#" class="badge badge-nrt" data-tooltip="true" title="Near Real Time (NRT) Data"></a>
+                  <!-- /ko -->
                 </div>
               <!-- ko if: thumbnail() -->
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
