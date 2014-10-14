@@ -13,7 +13,7 @@ describe 'Dataset NRT Filtering', reset: false do
     end
 
     it 'shows only NRT datasets' do
-      expect(page).to have_css('.badge-nrt', count: 24)
+      expect(dataset_results).to have_css('.badge-nrt', count: 22)
     end
 
     context 'when un-selecting the NRT filter' do
@@ -23,11 +23,11 @@ describe 'Dataset NRT Filtering', reset: false do
       end
 
       it 'shows all datasets' do
-        expect(page).to have_css('.badge-nrt', count: 3)
+        expect(dataset_results).to have_css('.badge-nrt', count: 2)
       end
 
       it 'shows recent and featured datasets' do
-        expect(page).to have_content('Recent and Featured')
+        expect(dataset_results).to have_content('Recent and Featured')
       end
     end
   end
