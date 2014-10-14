@@ -2,6 +2,11 @@
 
 require "spec_helper"
 
+def choose_suggestion(text)
+  script = "$('.tt-suggestion p:contains(\"#{text}\")').click()"
+  page.execute_script script
+end
+
 describe "Place name autocomplete" do
   texas_constraint = 'bounding_box:-106.6456527709961,25.8371639251709:-93.5080337524414,36.50070571899414'
   map_bounds = "31.166015625!-99.615234375!5!1"
@@ -34,7 +39,8 @@ describe "Place name autocomplete" do
 
   it "adds a spatial constraint when the user accepts a suggestion" do
     fill_in "keywords", with: "modis over texas"
-    find('.tt-suggestion p', text: 'Texas, United States').click
+    wait_for_xhr
+    choose_suggestion 'Texas, United States'
     expect(page).to have_field('keywords', with: 'modis over Texas, United States')
     expect(page).to have_spatial_constraint(texas_constraint)
   end
@@ -48,7 +54,7 @@ describe "Place name autocomplete" do
     before :each do
       fill_in "keywords", with: "modis over texas"
       wait_for_xhr
-      find('.tt-suggestion p', text: 'Texas, United States').click
+      choose_suggestion 'Texas, United States'
       expect(page).to have_field('keywords', with: 'modis over Texas, United States')
       wait_for_xhr
     end
