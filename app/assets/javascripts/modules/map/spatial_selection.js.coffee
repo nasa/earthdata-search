@@ -205,6 +205,9 @@ ns.SpatialSelection = do (window,
       @_drawnItems.addLayer(marker)
 
     _renderRectangle: (shape) ->
+      # southwest longitude should not be greater than northeast
+      shape[1].lng += 360 if shape[0].lng > shape[1].lng
+
       bounds = new L.LatLngBounds(shape...)
       options = L.extend({}, L.Draw.Rectangle.prototype.options.shapeOptions, @_colorOptions)
       rect = @_layer = new L.Rectangle(bounds, options)

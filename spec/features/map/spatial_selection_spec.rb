@@ -182,6 +182,37 @@ describe "Spatial" do
       end
     end
 
+    context "loading a bounding box selection over the antimeridian" do
+      before :each do
+        visit '/search?m=-29.25!-199.40625!0!1&sb=160%2C20%2C-170%2C40'
+        wait_for_xhr
+      end
+
+      it "shows the bounding box crossing the antimeridian" do
+        script = """
+          (function() {
+            var layers = $('#map').data('map').map._layers, key, layer, latlngs, result;
+            for (key in layers) {
+              if (layers[key].type == 'rectangle') {
+                layer = layers[key];
+                break;
+              }
+            }
+            if (!layer) {
+              result = false;
+            }
+            else {
+              latlngs = layer.getLatLngs();
+              result = latlngs[0].lng + ',' + latlngs[2].lng;
+            }
+            return result;
+          })();
+          """
+          result = page.evaluate_script(script)
+          expect(result).to eq("160,190")
+      end
+    end
+
     it "filters datasets using north polar bounding boxes in the north polar projection" do
       click_link "North Polar Stereographic"
       create_arctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
