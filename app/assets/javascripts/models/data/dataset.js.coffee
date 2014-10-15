@@ -146,7 +146,6 @@ ns.Dataset = do (ko
       @hasAtomData(jsonObj.short_name?)
       @gibs = ko.observable(jsonObj.gibs ? @gibs?())
       @opendap = ko.observable(jsonObj.opendap ? @opendap?())
-      data_type = jsonObj.collection_data_type
-      @nrt = data_type? ? data_type == "NEAR_REAL_TIME" : false
+      @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
 
   exports = Dataset
