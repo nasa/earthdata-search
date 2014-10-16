@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009161446) do
+ActiveRecord::Schema.define(version: 20141016162046) do
 
   create_table "access_configurations", force: true do |t|
     t.integer  "user_id"
@@ -31,6 +31,19 @@ ActiveRecord::Schema.define(version: 20141009161446) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "validation_errors"
+  end
+
+  create_table "cmep_short_long_valids", force: true do |t|
+    t.string   "field"
+    t.string   "short_name"
+    t.string   "long_name"
+    t.string   "cat0"
+    t.string   "cat1"
+    t.string   "cat2"
+    t.string   "cat3"
+    t.string   "cat4"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "dataset_extras", force: true do |t|
