@@ -16,8 +16,9 @@ GIT
       rails (>= 3.2.15)
       scatter_swap (~> 0.0.3)
 
-PATH
-  remote: ../metadata-editor-prototype
+GIT
+  remote: https://pquinn@git.earthdata.nasa.gov/scm/cmep/cmr-metadata-editor-prototype.git
+  revision: e0c246c749d3393ebbfdf9ac3e8920854b57a8c1
   specs:
     cmep (0.0.1)
       bootstrap-sass (~> 3.2.0)
