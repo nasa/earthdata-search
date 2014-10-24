@@ -118,6 +118,7 @@ class ApplicationController < ActionController::Base
 
   def clear_session
     store_oauth_token()
+    session[:user_id] = nil
     session[:recent_datasets] = []
   end
 

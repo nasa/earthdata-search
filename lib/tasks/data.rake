@@ -27,7 +27,8 @@ namespace :data do
       original_file = 'db/seeds.rb'
       new_file = original_file + '.new'
       File.open(new_file, 'w') do |f|
-        lines = ["load_extra = DatasetExtra.maximum('updated_at').to_i < #{DatasetExtra.maximum('updated_at').to_i}",
+        lines = ["Cmep::Engine.load_seed",
+                 "load_extra = DatasetExtra.maximum('updated_at').to_i < #{DatasetExtra.maximum('updated_at').to_i}",
                  "!load_extra && puts('DatasetExtra seeds are already up-to-date')",
                  "load_extra && puts('Loading DatasetExtra seeds')",
                  "load_extra && DatasetExtra.destroy_all",
