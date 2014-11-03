@@ -221,8 +221,6 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     sqlite3 (1.3.9)
-    term-ansicolor (1.3.0)
-      tins (~> 1.0)
     therubyracer (0.11.4)
       libv8 (~> 3.11.8.12)
       ref
@@ -234,7 +232,6 @@ GEM
     thread_safe (0.3.3)
       atomic
     tilt (1.4.1)
-    tins (1.3.0)
     toastr-rails (1.0.3)
       railties (>= 3.1.0)
     treetop (1.4.15)
@@ -296,7 +293,6 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   seed_dump
   sqlite3
-  term-ansicolor
   therubyracer
   thin
   toastr-rails
