@@ -43,6 +43,8 @@ ns.Map = do (window,
   # setting up GIBS layers, supported projections, etc.
   # Code outside of the edsc.map module should interact with this class only
   class Map
+    MAPBASES = ["Blue Marble", "Corrected Reflectance (True Color)", "Land / Water Map *"]
+    OVERLAYS = ["Borders and Roads *", "Coastlines *", 'Place Labels *<span class="map-attribution">* &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</span>']
     # Creates a map attached to the given element with the given projection
     # Valid projections are:
     #   'geo' (EPSG:4326, WGS 84 / Plate Carree)
@@ -63,6 +65,8 @@ ns.Map = do (window,
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
       @setProjection(projection)
+      @setBaseMap("Blue Marble")
+      @setOverlays([])
 
       @time = ko.computed(@_computeTime, this)
       @_showDatasetSpatial(page.ui.datasetsList.selected())
@@ -84,16 +88,41 @@ ns.Map = do (window,
     _setupStatePersistence: ->
       @serialized = state = ko.observable(null)
       map = @map
-      map.on 'moveend', ->
+      map.on 'moveend baselayerchange overlayadd overlayremove', (data) ->
+        base = Math.abs(MAPBASES.indexOf(@_baseMap))
+        overlays = for layer in @_overlays
+          OVERLAYS.indexOf(layer)
+        overlays ?= []
+        if data.type == 'baselayerchange'
+          base = Math.abs(MAPBASES.indexOf(data.name))
+        if data.type == 'overlayadd'
+          index = OVERLAYS.indexOf(data.name)
+          overlays.push(index) if index > -1
+        if data.type == 'overlayremove'
+          index = OVERLAYS.indexOf(data.name)
+          overlays.splice(overlays.indexOf(index), 1)
+
         {lat, lng} = map.getCenter()
         zoom = map.getZoom()
         proj = Math.abs(['arctic', 'geo', 'antarctic'].indexOf(@projection))
-        state([lat, lng, zoom, proj].join('!'))
+        state([lat, lng, zoom, proj, base, overlays.join(',')].join('!'))
 
       state.subscribe (newValue) =>
         if newValue? && newValue.length > 0
-          [lat, lng, zoom, proj] = newValue.split('!')
+          [lat, lng, zoom, proj, base, overlays] = newValue.split('!')
+          # don't break old projects/urls
+          base = '0' if !base? || base == ''
+          overlays ?= ""
+
           @setProjection(['arctic', 'geo', 'antarctic'][proj ? 1])
+          @setBaseMap(MAPBASES[parseInt(base) ? 0])
+          # get overlay names from indexes
+          overlayNames = []
+          for index in overlays.split(',')
+            # This returns [undefined] if overlays==""
+            i = parseInt(index)
+            overlayNames.push(OVERLAYS[i]) if i > -1
+          @setOverlays(overlayNames)
           mapCenter = map.getCenter()
           mapZoom = map.getZoom()
           center = L.latLng(lat, lng)
@@ -222,6 +251,38 @@ ns.Map = do (window,
 
       map.fire('projectionchange', projection: name, map: map)
       map.setView(L.latLng(opts.center), opts.zoom, reset: true)
+      @_rebuildLayers()
+
+    setBaseMap: (name) ->
+      map = @map
+      return if map._baseMap == name
+
+      baseLayers = @_baseMaps
+      for base in baseLayers
+        if map.hasLayer(baseLayers[base])
+          map.removeLayer(baseLayers[base])
+
+      map.addLayer(baseLayers[name])
+      map._baseMap = name
+      @_rebuildLayers()
+
+    setOverlays: (overlays) ->
+      # remove any undefined from overlays
+      for overlay, i in overlays
+        if overlay == undefined
+          overlays.splice(i, 1)
+
+      # apply overlays
+      map = @map
+      overlayLayers = @_overlayMaps
+      for layer in overlayLayers
+        if map.hasLayer(overlayLayers[layer])
+          map.removeLayer(overlayLayers[layer])
+
+      for name in overlays
+        map.addLayer(overlayLayers[name])
+
+      map._overlays = overlays
       @_rebuildLayers()
 
     _showDatasetSpatial: (dataset) =>

@@ -236,7 +236,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the selected granule in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1!-97.725!7!1')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1!-97.725!7!1!0!')
     end
   end
 
@@ -314,7 +314,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the map state in the query conditions" do
-      expect(page).to have_query_string('m=12!-34!5!1')
+      expect(page).to have_query_string('m=12!-34!5!1!0!')
     end
   end
 
@@ -409,7 +409,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1!-97.725!7!1')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1!-97.725!7!1!0!')
     end
   end
 
@@ -517,6 +517,62 @@ describe 'Address bar', reset: false do
 
       it 'shows no additional attribute search fields' do
         expect(page).to have_no_field('ASTERMapProjection')
+      end
+    end
+  end
+
+  context 'when changing the base layer' do
+    before :all do
+      visit '/search'
+      wait_for_xhr
+      page.find_link('Layers').trigger(:mouseover)
+      within '#map' do
+        choose 'Land / Water Map'
+      end
+      wait_for_xhr
+    end
+
+    it 'saves the base layer in the url' do
+      expect(page).to have_query_string('m=0!0!2!1!2!')
+    end
+
+    context 'when refreshing the page' do
+      before :all do
+        visit '/search?m=0!0!2!1!2!'
+        wait_for_xhr
+      end
+
+      it 'remembers the base layer' do
+        expect('#map').to have_tiles_for_product('land_water_map')
+      end
+    end
+  end
+
+  context 'when changing the map overlays' do
+    before :all do
+      visit '/search'
+      wait_for_xhr
+      page.find_link('Layers').trigger(:mouseover)
+      within '#map' do
+        check 'Borders and Roads'
+        check 'Place Labels'
+      end
+      wait_for_xhr
+    end
+
+    it 'saves the applied overlays in the url' do
+      expect(page).to have_query_string('m=0!0!2!1!0!0%2C2')
+    end
+
+    context 'when refreshing the page' do
+      before :all do
+        visit '/search?m=0!0!2!1!0!0%2C2'
+        wait_for_xhr
+      end
+
+      it 'remembers the applied overlays' do
+        expect('#map').to have_tiles_for_product('Reference_Features')
+        expect('#map').to have_tiles_for_product('Reference_Labels')
       end
     end
   end
