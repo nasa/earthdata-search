@@ -8,7 +8,6 @@ gem 'rails', '~> 4.1.1'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'multi_xml'
-gem 'term-ansicolor'
 gem 'toastr-rails'
 gem 'unicorn'
 gem 'whenever', :require => false

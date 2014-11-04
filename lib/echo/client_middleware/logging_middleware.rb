@@ -2,7 +2,6 @@ module Echo
   module ClientMiddleware
     class LoggingMiddleware < Faraday::Response::Middleware
       extend Forwardable
-      include Term::ANSIColor
 
       def initialize(app, logger=nil)
         super(app)
@@ -30,6 +29,24 @@ module Echo
         end
         info(yellow("#{method} #{url}"))
         Echo::Util.time(@logger, response_message) { super(env) }
+      end
+
+      private
+
+      def green(text)
+        color("0;32", text)
+      end
+
+      def red(text)
+        color("0;31", text)
+      end
+
+      def yellow(text)
+        color("0;33", text)
+      end
+
+      def color(code, text)
+        "\e[#{code}m#{text}\e[0m"
       end
     end
   end
