@@ -30,3 +30,5 @@ test_results
 /config/application.yml
 
 /doc/ui/portfolio
+
+/vendor/cmep

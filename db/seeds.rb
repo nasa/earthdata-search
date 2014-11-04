@@ -1,4 +1,4 @@
-Cmep::Engine.load_seed
+Cmep::Engine.load_seed if defined?(Cmep)
 load_extra = DatasetExtra.maximum('updated_at').to_i < 1410364487
 !load_extra && puts('DatasetExtra seeds are already up-to-date')
 load_extra && puts('Loading DatasetExtra seeds')
