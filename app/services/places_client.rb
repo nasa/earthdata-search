@@ -4,8 +4,8 @@ class PlacesClient
                               :logging => Echo::ClientMiddleware::LoggingMiddleware)
 
 
-  PLACES_URL='http://api.geonames.org/'
-  USER_ID = 'edsc'
+  PLACES_URL = ENV['places_url']
+  USER_ID = ENV['places_user_id']
 
   def self.get_place_completions(placename)
     params = {
