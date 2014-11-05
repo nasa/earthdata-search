@@ -162,7 +162,9 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
           offset = topBound + 50
 
         unless e.scroll == false # Treat undefined as true
-          list.scrollTo(selected, {duration: edsc.config.defaultAnimationDurationMs, offsetTop: offset}) if offset?
+          if offset?
+            scroll = $(selected).offset().top + $(list).scrollTop() - parseInt(offset)
+            $(list).animate({scrollTop : scroll }, edsc.config.defaultAnimationDurationMs, 'swing')
 
     _onKeyDown: (e) =>
       stickied = @stickied()
