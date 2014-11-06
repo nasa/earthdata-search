@@ -3,7 +3,7 @@ class OgreClient
   Faraday.register_middleware(:response,
                                 :logging => Echo::ClientMiddleware::LoggingMiddleware)
 
-  OGRE_URL="http://ogre.adc4gis.com"
+  OGRE_URL = ENV['ogre_url']
 
   def self.convert_shapefile(options)
     post('/convert', options)

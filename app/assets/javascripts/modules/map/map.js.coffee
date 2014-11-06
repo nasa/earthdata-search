@@ -35,6 +35,28 @@ ns.Map = do (window,
 
       @setView(center, zoom, options)
 
+    setZoom: (zoom, options) ->
+      if !@_loaded
+        @_zoom = @_limitZoom(zoom)
+        return this
+
+      # if overlay is visible, adjust center
+      overlayWidth = $('.master-overlay-parent').width() + $('.master-overlay-main').width() # parent and main visible
+      if $('.master-overlay.is-master-overlay-parent-hidden').length > 0 #only main visible
+        overlayWidth -= $('.master-overlay-parent').width()
+      if $('.master-overlay.is-hidden').length > 0 # parent and main hidden
+        overlayWidth = 0
+      overlayWidth /= 2
+
+      currentZoom = @getZoom()
+      if currentZoom > zoom
+        targetPoint = @project(@getCenter(), zoom).subtract([overlayWidth / 2, 0])
+      else
+        targetPoint = @project(@getCenter(), zoom).add([overlayWidth, 0])
+      targetLatLng = @unproject(targetPoint, zoom)
+
+      @setView(targetLatLng, zoom, {zoom: options})
+
   # Fix leaflet default image path
   L.Icon.Default.imagePath = '/images/leaflet-0.7'
 
