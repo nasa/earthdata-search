@@ -1,62 +1,69 @@
-Earthdata Search Client
-=======================
+# [Earthdata Search](https://search.earthdata.nasa.gov)
 
-Description
------------
-Initial README commit.
+Visit Earthdata Search at
+[https://search.earthdata.nasa.gov](https://search.earthdata.nasa.gov)
 
-Z Indexes
----------
+## About
+Earthdata Search is a web application developed by [NASA](http://nasa.gov) [EOSDIS](https://earthdata.nasa.gov)
+to enable data discovery, search, comparison, visualization, and access across EOSDIS' Earth Science data holdings.
+It builds upon several public-facing services provided by EOSDIS, including
+the [Common Metadata Repository (CMR)](https://cmr.earthdata.nasa.gov/search/) for data discovery and access,
+EOSDIS [User Registration System (URS)](https://urs.earthdata.nasa.gov) authentication,
+the [Global Imagery Browse Services (GIBS)](https://earthdata.nasa.gov/gibs) for visualization,
+and a number of OPeNDAP services hosted by data providers.
 
-The following are the z-index ranges used by the application.  For normal elements, use the lowest z-index
-in the appropriate category.  For popover layers, such as help, use the highest z-index.
+## License
 
-### -1 Below the map
+TODO
 
--1 may be used in the rare circumstance that something needs to appear below the map
+## Third-Party Licenses
 
-### 0 to 49 - The map
+See public/licenses.txt
 
-0 Contains the base layer as selected from the layer switching control
+## Installation
 
-1 through 9 contain additional opaque layers added by visualized datasets
+### Prerequisites
 
-10 Contains any overlay layers as selected from the layer switching control
+* Ruby 2.1.2
+* Bundler (`gem install bundler`)
+* [Pow](http://pow.cx/) is recommended for local testing with URS
+* A Ruby manager such as [RVM](http://rvm.io/) or [rbenv](https://github.com/sstephenson/rbenv) is strongly recommended.
+* (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
+* (For placename completion) a [GeoNames](http://www.geonames.org) account
 
-11 through 19 contain additional overlay layers added by visualized datasets
+### URS Configuration
 
-20 contains controls
+If you would like to set up URS login, you will need to perform the following steps:
 
-21 through 49 are reserved for future use
+Register an account on [the URS home page](https://urs.earthdata.nasa.gov/profile)
 
-### 50 to 59 - The top of the map
+Create an application in the URS console.  Its callback URL should be `http://<domain>/urs_callback`.  If you are using Pow, this will be something
+like `http://earthdata-search.dev/urs_callback`
 
-50 to 59 may be used by components which need to appear above the map but below any overlays
+Click the "Feedback" icon on the URS page and request that your new application be placed in the ECHO application group
+(required for ECHO/CMR to recognize your tokens).
 
-### 60 to 69 - Overlays
+Modify line 37 of `config/services.yml` to contain your URS application's client ID
 
-60 through 69 are for components that obscure the map and its controls, such as the master overlay
+### Application configuration
 
-### 70 to 79 - Toolbars
+If using Pow, create a symlink to your application directory, for instance `ln -s $(pwd) ~/.pow/earthdata-search`
+(making your app available at `http://earthdata-search.dev`).  If you set up URS, ensure that the domain matches
+the callback URL specified in URS.
 
-70 through 79 are reserved for toolbar components
+Run `cp config/application.yml.example config/application.yml`
 
-### 80 to 89 - Landing page
+Open `config/application.yml` and edit configuration values as described in that file to set up URS, shapefile support,
+and placename completion as appropriate.
 
-80 contains the base of the landing page
+### Initial setup
 
-81 through 89 contain components drawn on top of the landing page
+Run
+    bundle install
+    rake db:migrate
+    rake db:seed
 
-### 90 to 99 - Pop-over widgets
+### Running
 
-90 through 99 contain widgets such as dropdowns or popovers which generally want to appear over everything
-
-### 200 to 299 - Absolute-in-relative
-
-200 through 299 are flags to indicate that a z-index deals with an absolutely positioned element within a
-relatively positioned container.  These z-indexes only apply within the relatively-positioned container, so
-developers may use them for any purpose specific to that container.
-
-### 1000 - Top hat and footer
-
-1000 is reserved for use by the top hat and footer, which appear over everything at all times
+If you set up Pow, simply visit `http://earthdata-search.dev`,
+otherwise run `rails s` in the project directory and visit `http://localhost:3000`.
