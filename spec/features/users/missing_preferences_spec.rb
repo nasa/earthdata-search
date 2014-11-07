@@ -24,4 +24,21 @@ describe "User missing ordering preferences", reset: false do
     end
   end
 
+  context "when accessing downloadable data" do
+    before :all do
+      load_page :search, project: [dataset_id], view: :project
+      wait_for_xhr
+
+      login 'edscbasic'
+
+      click_link "Retrieve project data"
+
+      choose 'Download'
+      click_button 'Submit'
+    end
+
+    it "shows the data retrieval page" do
+      expect(page).to have_link("USGS 15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED INFORMATION)")
+    end
+  end
 end

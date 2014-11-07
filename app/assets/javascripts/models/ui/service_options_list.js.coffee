@@ -23,7 +23,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
 
     submitRequest: =>
       $('.access-submit').prop('disabled', true)
-      if @accountForm.isEditingAccount()
+      if @needsContactInfo() && @accountForm.isEditingAccount()
         @accountForm.saveAccountEdit =>
           @downloadProject()
         # re-enable button if saveAccountEdit fails
