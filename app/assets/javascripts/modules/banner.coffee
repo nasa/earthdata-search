@@ -27,7 +27,7 @@
       $banner.data('banner.persist', options.persist)
       $('body').after($banner)
       # Do this in a timeout so the element has time to be placed in the DOM and animations can happen
-      setTimeout((-> $banner?.removeClass('banner-hidden')), 0)
+      setTimeout((-> $banner.removeClass('banner-hidden')), 0)
       $banner.on 'click', '.banner-close', onClickClose
 
   showBanner = (args...) ->
@@ -103,7 +103,7 @@
 
 
   $(document).ajaxError (event, xhr, settings) ->
-    if xhr.status? && (xhr.status >= 500 || xhr.status == 408 || xhr.status == 0)
+    if xhr.status? && (xhr.status >= 500 || xhr.status == 408 || xhr.status == 0) && xhr.statusText != 'abort'
       url = settings.url.split('?')[0]
       title = "An unexpected error occurred"
       resource = url.match(/([^\/\.]+)(?:\.[^\/]*)?$/)?[1]
