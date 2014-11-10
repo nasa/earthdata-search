@@ -38,6 +38,10 @@ describe "Timeline zooming", reset: false do
       expect(page).to have_content('DAY')
     end
 
+    it "displays interval labels with month and year" do
+      expect(page).to have_content('01 SEP 2013')
+    end
+
     it "fetches new data" do
       synchronize do
         loaded_resolution = page.evaluate_script("$('#timeline').timeline('debug__loadedRange')[2]")
@@ -51,6 +55,10 @@ describe "Timeline zooming", reset: false do
 
       it "disables the zoom-in button" do
         expect(page).to have_selector('.timeline-min-zoom')
+      end
+
+      it "displays interval labels with day month and year" do
+        expect(page).to have_content('21:00 29 AUG 2013')
       end
     end
   end

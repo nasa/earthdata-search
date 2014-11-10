@@ -45,8 +45,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
   LABELS = [
     ((date) -> [formatTime(date), formatDate(date)]),
-    ((date) -> [formatTime(date), formatDate(date)]),
-    ((date) -> [formatDay(date), formatMonth(date)]),
+    ((date) -> [formatTime(date), formatDay(date) + ' ' +formatMonth(date) + ' ' + formatYear(date)]),
+    ((date) -> [formatDay(date), formatMonth(date) + ' ' + formatYear(date)]),
     ((date) -> [formatMonth(date), formatYear(date)]),
     ((date) -> [formatYear(date)]),
     ((date) -> [formatYear(date)]),
