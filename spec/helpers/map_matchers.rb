@@ -61,3 +61,17 @@ RSpec::Matchers.define :have_spatial_constraint do |expected|
     "expected page to have spatial constraint #{expected}, got #{MapUtil.spatial(page)}"
   end
 end
+
+RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng|
+  match do |page|
+    synchronize do
+      query = URI.parse(page.current_url).query
+      lat = query.split('!')[0].split('=')[1].to_f
+      lng = query.split('!')[1].to_f
+      delta = 0.5
+
+      expect(lat).to be_within(delta).of(expected_lat)
+      expect(lng).to be_within(delta).of(expected_lng)
+    end
+  end
+end
