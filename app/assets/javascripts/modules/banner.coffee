@@ -103,7 +103,7 @@
 
 
   $(document).ajaxError (event, xhr, settings) ->
-    if xhr.status? && (xhr.status >= 500 || xhr.status == 408 || xhr.status == 0)
+    if xhr.status? && (xhr.status >= 500 || xhr.status == 408 || xhr.status == 0) && xhr.statusText != 'abort'
       url = settings.url.split('?')[0]
       title = "An unexpected error occurred"
       resource = url.match(/([^\/\.]+)(?:\.[^\/]*)?$/)?[1]
