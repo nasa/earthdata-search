@@ -62,20 +62,26 @@ RSpec::Matchers.define :have_spatial_constraint do |expected|
   end
 end
 
-RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng|
+RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected_zoom|
+
+  def map_params(page)
+    query = URI.parse(page.current_url).query
+    param_str = query[/(?:&|^)m=([\d.!]+)/, 1]
+    param_str.split('!').map(&:to_f) if param_str.present?
+  end
+
   match do |page|
     synchronize do
-      query = URI.parse(page.current_url).query
-      lat = query.split('!')[0].split('=')[1].to_f
-      lng = query.split('!')[1].to_f
+      lat, lng, zoom = map_params(page)
       delta = 0.5
 
       expect(lat).to be_within(delta).of(expected_lat)
       expect(lng).to be_within(delta).of(expected_lng)
+      expect(zoom).to eq(expected_zoom)
     end
   end
 
   failure_message_for_should do |page|
-    "expected page to have map query of m=#{expected_lat}!#{expected_lng}, got #{URI.parse(page.current_url).query.inspect}"
+    "expected page to have map query of 'm=#{expected_lat}!#{expected_lng}!#{expected_zoom}...', got '#{URI.parse(page.current_url).query.inspect}'"
   end
 end
