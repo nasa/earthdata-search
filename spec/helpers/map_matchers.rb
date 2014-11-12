@@ -74,4 +74,8 @@ RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng|
       expect(lng).to be_within(delta).of(expected_lng)
     end
   end
+
+  failure_message_for_should do |page|
+    "expected page to have map query of m=#{expected_lat}!#{expected_lng}, got #{URI.parse(page.current_url).query.inspect}"
+  end
 end
