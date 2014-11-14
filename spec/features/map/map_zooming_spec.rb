@@ -35,11 +35,11 @@ describe 'Map Zooming', reset: false do
       after :all do
         find('.leaflet-control-zoom-out').click
         wait_for_xhr
-        expect(page).to have_query_string('m=0!0!2!1!0!')
+        expect(page).to have_map_center(0, 0, 2)
       end
 
       it 'zooms to the center of the visible map' do
-        expect(page).to have_query_string('m=0!30.234375!3!1!0!')
+        expect(page).to have_map_center(0, 30, 3)
       end
     end
 
@@ -57,11 +57,11 @@ describe 'Map Zooming', reset: false do
         find('.leaflet-control-zoom-out').click
         find('.master-overlay-show').click
         wait_for_xhr
-        expect(page).to have_query_string('m=0!0!2!1!0!')
+        expect(page).to have_map_center(0, 0, 2)
       end
 
       it 'zooms to the center of the visible map' do
-        expect(page).to have_query_string('m=0!0!3!1!0!')
+        expect(page).to have_map_center(0, 0, 3)
       end
     end
   end
