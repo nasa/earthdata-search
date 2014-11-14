@@ -27,7 +27,7 @@ describe "Spatial search by dataset location" do
       end
 
       it "highlights the dataset's location link" do
-        expect(page).to have_css('.button-active .fa fa-map-marker')
+        expect(page).to have_css('.button-active .fa-map-marker')
       end
 
       it "centers the map over the selected granule" do
