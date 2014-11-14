@@ -27,7 +27,7 @@ describe "Spatial search by dataset location" do
       end
 
       it "highlights the dataset's location link" do
-        expect(page).to have_css('.button-active .edsc-icon-location')
+        expect(page).to have_css('.button-active .fa fa-map-marker')
       end
 
       it "centers the map over the selected granule" do
@@ -57,7 +57,7 @@ describe "Spatial search by dataset location" do
       end
 
       it "removes highlights from the dataset's location link" do
-        expect(page).to have_no_css('.button-active .edsc-icon-location')
+        expect(page).to have_no_css('.button-active .fa fa-map-marker')
       end
     end
   end

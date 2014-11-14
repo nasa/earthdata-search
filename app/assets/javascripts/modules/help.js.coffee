@@ -155,11 +155,11 @@
       element: '#view-project'
     }, {
       title: 'Project (cont.)'
-      content: 'From the project list, you may visualize multiple datasets using the <i class="edsc-icon-eye"></i>
+      content: 'From the project list, you may visualize multiple datasets using the <i class="fa fa-eye"></i>
                 button, view their granule results by clicking on them, set advanced filters using the
-                <i class="edsc-icon-compose"></i> button or compare datasets on the timeline.
+                <i class="fa fa-edit"></i> button or compare datasets on the timeline.
                 When you are satisfied with the data you have selected, you
-                may access the underlying data by clicking on the <i class="edsc-icon-download"></i>
+                may access the underlying data by clicking on the <i class="fa fa-download"></i>
                 button. For this tour, though, we will stop here. Feel free to keep exploring, or
                 <a href="/">start a new search</a> on your own.'
       element: '.master-overlay-main'
