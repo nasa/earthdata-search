@@ -2,7 +2,7 @@ class GranulesController < ApplicationController
   respond_to :json
 
   def create
-    catalog_response = echo_client.get_granules(request.request_parameters, token)
+    catalog_response = echo_client.get_granules(granule_params_for_request(request), token)
 
     if catalog_response.success?
       catalog_response.headers.each do |key, value|
@@ -26,7 +26,7 @@ class GranulesController < ApplicationController
   end
 
   def timeline
-    catalog_response = echo_client.post_timeline(request.request_parameters, token)
+    catalog_response = echo_client.post_timeline(granule_params_for_request(request), token)
     render json: catalog_response.body, status: catalog_response.status
   end
 
@@ -92,5 +92,24 @@ class GranulesController < ApplicationController
 
     @urls = GranuleUrlStreamer.new(query.merge('page_size' => 2000), token, url_mapper, echo_client)
     render stream: true, layout: false
+  end
+
+  private
+
+  def granule_params_for_request(request)
+    echo_params = request.request_parameters
+    return echo_params unless enable_cmr?
+    params = echo_params.dup
+
+    # CMR specific params
+    if params["cloud_cover"]
+      min = params["cloud_cover"]["min"] || ''
+      max = params["cloud_cover"]["max"] || ''
+      params["cloud_cover"] = min + ',' + max
+
+      params.delete('cloud_cover') if min.empty? && max.empty?
+    end
+
+    params
   end
 end

@@ -9,7 +9,7 @@ module Echo
     def initialize(service_config, urs_client_id, use_cmr)
       @config = service_config
       clients = []
-      clients << CmrClient.new(@config['cmr_root'], urs_client_id) if @config['enable_cmr'] || use_cmr == 'true'
+      clients << CmrClient.new(@config['cmr_root'], urs_client_id) if @config['enable_cmr'] || use_cmr
       clients << EchoClient.new(@config['echo_root'], urs_client_id)
       clients << UrsClient.new(@config['urs_root'], urs_client_id)
       @clients = clients

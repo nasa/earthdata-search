@@ -53,7 +53,11 @@ module Echo
       # to each whitespace-delimited word, allowing for partial matches of each word.
       # "some string" becomes "some% string%"
       def catalog_wildcard(value)
-        value.strip.gsub(/\s+/, '% ') + '%'
+        if self.class == Echo::CmrClient
+          value.strip.gsub(/\s+/, '* ') + '*'
+        else
+          value.strip.gsub(/\s+/, '% ') + '%'
+        end
       end
 
       # Return a copy of value with all catalog-rest wildcards escaped.  If value is an Enumerable,

@@ -28,9 +28,13 @@ module Echo
       get_datasets(options.merge(include_facets: true, page_size: 1), token)
     end
 
-    # CMR-379, scheduled for sprint 13
-    #def post_timeline(options={}, token=nil)
-    #  get_granules(options.merge(include_timeline: true, page_size: 1), token)
-    #end
+    #TODO change to POST after CMR-1082 is deployed
+    def post_timeline(options={}, token=nil)
+      options = options.dup
+      options['concept_id'] = options.delete("echo_collection_id")
+      format = options.delete(:format) || 'json'
+      query = options_to_granule_query(options)
+      get("/search/granules/timeline.#{format}", query, token_header(token))
+    end
   end
 end

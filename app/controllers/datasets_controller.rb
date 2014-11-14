@@ -178,6 +178,15 @@ class DatasetsController < ApplicationController
     nrt = features && features.include?('Near Real Time')
     params = params.merge('collection_data_type' => 'NEAR_REAL_TIME') if nrt
 
+    ### CMR specific params
+    if enable_cmr?
+      if params["two_d_coordinate_system"]
+        old = params.delete("two_d_coordinate_system")
+        params["two_d_coordinate_system_name"] = old["name"]
+      end
+    end
+    ###
+
     params
   end
 end
