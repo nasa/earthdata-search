@@ -301,6 +301,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       return unless dataset?
 
       [_, _, _, intervals, color] = @_data[id]
+      color = color ? '#25c85b'
       intervals = @_data[id][3]
 
       ds_start = if dataset.time_start then new Date(dataset.time_start) else new Date(0)
