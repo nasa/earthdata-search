@@ -39,7 +39,7 @@ describe "Timeline zooming", reset: false do
     end
 
     it "displays interval labels with month and year" do
-      expect(page).to have_content('01 SEP 2013')
+      expect(page).to have_content('01 Sep 2013')
     end
 
     it "fetches new data" do
@@ -58,7 +58,7 @@ describe "Timeline zooming", reset: false do
       end
 
       it "displays interval labels with day month and year" do
-        expect(page).to have_content('21:00 29 AUG 2013')
+        expect(page).to have_content('00:00 30 Aug 2013')
       end
     end
   end

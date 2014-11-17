@@ -13,7 +13,10 @@ module Helpers
       if subtext.nil?
         page.find('.timeline-date-label text', text: text).click
       else
-        page.find('.timeline-date-label', text: text + subtext).find('text', text: text).click
+      #   page.find('.timeline-date-label', text: text + subtext).find('text', text: text).click
+      # end
+        # Click the second timeline element with matching text
+        page.all('.timeline-date-label text', text: text)[1].click
       end
       wait_for_xhr
     end
