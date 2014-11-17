@@ -840,20 +840,22 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       while time >= start
         date = new Date(time)
         prev = @_roundTime(time, zoom, -1)
-        interval = @_buildIntervalDisplay(@timeToPosition(prev), @timeToPosition(time), LABELS[zoom](date)...)
+        next = @_roundTime(time, zoom, 1)
+        interval = @_buildIntervalDisplay(@timeToPosition(time), @timeToPosition(next), LABELS[zoom](date)...)
         axis.appendChild(interval)
         time = prev
 
     _buildIntervalDisplay: (x0, x1, text, subText) ->
       g = @_buildSvgElement('g', class: @scope('date-label'))
-      @_translate(g, x1, 0)
+      @_translate(g, x0, 0)
+      width = x1 - x0
 
       if x1?
         # Something to click on
         bg = @_buildSvgElement 'rect',
           x: 0
           y: 0
-          width: x1 - x0
+          width: width
           height: MAX_Y - MIN_Y
         g.appendChild(bg)
 
@@ -864,7 +866,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       lineClass += ' ' + @scope('interval-start') if subText
       line = @_buildSvgElement('line', class: lineClass, x1: 0, y1: MIN_Y, x2: 0, y2: MAX_Y)
 
-      circle = @_buildSvgElement('circle', class: @scope('tick-crossing'), r: 6, cx: x1 - x0)
+      circle = @_buildSvgElement('circle', class: @scope('tick-crossing'), r: 6, cx: width)
 
       g.appendChild(line)
       g.appendChild(circle)
