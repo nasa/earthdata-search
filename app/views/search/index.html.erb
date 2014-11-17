@@ -44,9 +44,9 @@
     <ul class="dropdown-menu spatial-selection">
       <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
       <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
-      <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="edsc-icon-fw edsc-icon-location"></i> Point</a></li>
-      <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile"><i class="edsc-icon-fw edsc-icon-file"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
-      <li><a href="#" class="dropdown-link select-grid" data-bind="click: selectGrid"><i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates</a></li>
+      <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint"><i class="fa fa-map-marker"></i> Point</a></li>
+      <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
+      <li><a href="#" class="dropdown-link select-grid" data-bind="click: selectGrid"><i class="edsc-icon-globe-grid"></i> Grid Coordinates</a></li>
     </ul>
   </div>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}"><i class="fa fa-eraser"></i> Clear Filters</a>
@@ -117,21 +117,21 @@
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
           <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.projectList.hideFilters">
-            <i class="edsc-icon-arrow-left"></i> Back to Dataset Search
+            <i class="fa fa-arrow-circle-o-left"></i> Back to Dataset Search
           </a>
         </nav>
         <header class="with-options">
           <h2>Project Datasets</h2>
           <div class="master-overlay-global-actions actions">
             <a href="#" class="button retrieve" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject, visible: !project.isEmpty()">
-              <i class="edsc-icon-download"></i> Retrieve Project Data
+              <i class="fa fa-download"></i> Retrieve Project Data
             </a>
 
             <a href="#" title="View all datasets" data-bind="visible: !$root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button" >
-              <i class="edsc-icon-eye"></i>
+              <i class="fa fa-eye"></i>
             </a>
             <a href="#" title="Hide all datasets" data-bind="visible: $root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button button-active" >
-              <i class="edsc-icon-eye"></i>
+              <i class="fa fa-eye"></i>
             </a>
           </div>
         </header>
@@ -146,12 +146,12 @@
               Use this space to collect datasets of interest as you adjust your search parameters.
             </p>
             <p>
-              To add a dataset to your project, click the <i class="edsc-icon-plus"></i> icon on the desired dataset.
+              To add a dataset to your project, click the <i class="fa fa-plus"></i> icon on the desired dataset.
               Once collected, you can use the tools available in this view to compare datasets on the map or on a timeline
               and choose granules you want from each.
             </p>
             <p>
-              When you are satisfied with your selections, click the <i class="edsc-icon-download"></i> button to
+              When you are satisfied with your selections, click the <i class="fa fa-download"></i> button to
               access your data.
             </p>
           </div>
@@ -167,7 +167,7 @@
       <section id="granule-search" >
           <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
-          <i class="edsc-icon-compose"></i> Granule Filters
+          <i class="fa fa-edit"></i> Granule Filters
         </nav>
         <!-- ko if: project.searchGranulesDataset() -->
         <header>
@@ -284,7 +284,7 @@
 <div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid.selected(), css: { 'knockout-template': !bindingsLoaded }">
   <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
   <label for="map-grid-system">
-    <i class="edsc-icon-fw edsc-icon-globe"></i> Grid Coordinates
+    <i class="edsc-icon-globe-grid"></i> Grid Coordinates
   </label>
   <select id="map-grid-system" name="map-grid-system" data-bind="value: selected, options: available, optionsText: 'label', optionsCaption: 'Coordinate System...'">
   </select>
