@@ -26,6 +26,7 @@
   <!-- ko with: selected().details() -->
   <div class="tab-content">
     <div class="tab-pane active" id="granule-information">
+      <%= render partial: 'shared/metadata_feedback' %>
 
       <div data-bind="text: $data.xml" class="master-overlay-content details-content"></div>
 

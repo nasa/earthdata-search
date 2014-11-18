@@ -23,6 +23,7 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="dataset-information">
+      <%= render partial: 'shared/metadata_feedback' %>
       <dl class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
         <dt>Download Page:</dt>
         <dd data-bind="foreach: $data.online_access_urls">

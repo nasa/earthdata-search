@@ -35,6 +35,13 @@
   white-space: nowrap
 }
 
+.details .button {
+  @include light-button;
+  font-size: 1.2em;
+  padding: 7px 10px;
+  float: right;
+}
+
 .details .tab-content {
   a {
     text-decoration: underline;
