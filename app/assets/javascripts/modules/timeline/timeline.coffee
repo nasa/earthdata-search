@@ -292,6 +292,34 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @_loadedRange = [start, end, resolution]
       @_data[id] = [start, end, resolution, intervals, color]
       @_drawData(id)
+      @_drawIndicators(id)
+
+    _drawIndicators: (id) =>
+      dataset = null
+      for dataset in @_datasets
+        break if dataset.id == id
+      return unless dataset?
+
+      [_, _, _, intervals, color] = @_data[id]
+      color = color ? '#25c85b'
+      intervals = @_data[id][3]
+
+      ds_start = if dataset.time_start then new Date(dataset.time_start) else new Date(0)
+      ds_end = if dataset.time_end then new Date(dataset.time_end) else new Date()
+
+      before_start =
+        ds_end < @start ||
+        intervals.length > 0 && intervals[intervals.length - 1][1] * 1000 < @start
+
+      after_end =
+        ds_start > @end ||
+        intervals.length > 0 && intervals[0][0] * 1000 > @end
+
+      before_color = if before_start then color else 'transparent'
+      after_color = if after_end then color else 'transparent'
+      document.getElementById("arrow-left-#{id}").setAttribute('style', "fill: #{before_color}")
+      document.getElementById("arrow-right-#{id}").setAttribute('style', "fill: #{after_color}")
+      null
 
     _drawData: (id) ->
       index = -1
@@ -334,6 +362,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       el.setAttribute('class', "#{id} #{@scope('data')}")
 
       @tlDatasets.appendChild(el)
+
+      @_drawIndicators(id)
 
       null
 
@@ -705,22 +735,37 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
       timeline
 
+    _buildIndicatorArrow: (id, transform) ->
+      g = @_buildSvgElement('g',
+        class: @scope('indicator'),
+        id: id,
+        transform: transform)
+      g.appendChild(@_buildSvgElement('path', d: 'M 0 -5 L 6 1 L 8 -1 L 4 -5 L 8 -9 L 6 -11 z'))
+      g.appendChild(@_buildSvgElement('path', d: 'M 5 -5 L 11 1 L 13 -1 L 9 -5 L 13 -9 L 11 -11 z'))
+      g
+
     _updateDatasetNames: ->
       datasets = @_datasets
       overlay = @olDatasets
       @_empty(overlay)
       y = 0
 
+      textGroup = @_buildSvgElement('g')
+
       for dataset in datasets
-        txt = @_buildSvgElement('text', y: y)
+        overlay.appendChild(@_buildIndicatorArrow("arrow-left-#{dataset.id}", "translate(0, #{y})"))
+        overlay.appendChild(@_buildIndicatorArrow("arrow-right-#{dataset.id}", "translate(#{@width - 10}, #{y - 10}) rotate(180)"))
+
+        txt = @_buildSvgElement('text', x: 15, y: y)
         txt.textContent = dataset.title
-        overlay.appendChild(txt)
+        textGroup.appendChild(txt)
         y += DATASET_HEIGHT
 
+      overlay.appendChild(textGroup)
 
       fn = =>
-        bbox = overlay.getBBox()
-        rect = @_buildSvgElement('rect', x: 0, y: -DATASET_FONT_HEIGHT - DATASET_PADDING, width: bbox.width - bbox.x, height: y, class: @scope('shadow'))
+        bbox = textGroup.getBBox()
+        rect = @_buildSvgElement('rect', x: bbox.x, y: -DATASET_FONT_HEIGHT - DATASET_PADDING, width: bbox.width, height: y, class: @scope('shadow'))
         overlay.insertBefore(rect, overlay.firstChild) if overlay.firstChild
       setTimeout(fn, 0)
 
@@ -746,6 +791,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       range = @range()
 
       @_drawIntervals(range[0], range[1], zoom - 1)
+
       for own k, _ of @_data
         @_drawData(k)
 
