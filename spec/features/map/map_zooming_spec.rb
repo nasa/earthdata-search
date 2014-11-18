@@ -48,6 +48,7 @@ describe 'Map Zooming', reset: false do
         within '.master-overlay-main' do
           find('.master-overlay-close').click
         end
+        expect(page).to have_css(".master-overlay.is-hidden")
 
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
@@ -56,6 +57,7 @@ describe 'Map Zooming', reset: false do
       after :all do
         find('.leaflet-control-zoom-out').click
         find('.master-overlay-show').click
+        expect(page).to have_no_css(".master-overlay.is-hidden")
         wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
