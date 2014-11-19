@@ -187,13 +187,15 @@
 
 <div id="map" class="map" style="height:100%">
   <div id="map-center"></div>
-  <!-- ko if: ui.datasetsList.focused() && ui.datasetsList.focused().stickied() && ui.datasetsList.focused().stickied().browse_flag === 'true' -->
+  <!-- ko if: ui.datasetsList.focused() -->
   <!-- ko with: ui.datasetsList.focused() -->
+  <!-- ko if: stickied() && (stickied().browse_flag === 'true' || stickied().browse_flag === true) -->
   <div class="granule-browse" data-bind="css: {busy: loadingBrowse()}">
     <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
       <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad}" alt="Browse preview" title="View full image">
     </a>
   </div>
+  <!-- /ko -->
   <!-- /ko -->
   <!-- /ko -->
   <%#
@@ -235,10 +237,10 @@
             <span data-bind="text: time_start"></span>
             <span data-bind="text: time_end"></span>
           </p>
-          <!-- ko if: browse_flag === "true" -->
+          <!-- ko if: browse_flag === "true" || browse_flag === true -->
           <img class="browse-thumbnail" data-bind="attr: {src: edsc_browse_url(), title: title}">
           <!-- /ko -->
-          <!-- ko if: browse_flag !== "true" -->
+          <!-- ko if: browse_flag !== "true" && browse_flag !== true -->
           <div class="browse-thumbnail browse-thumbnail-none">
             No browse imagery
           </div>
