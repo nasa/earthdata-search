@@ -42,12 +42,16 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
   formatMonth = (date) -> MONTHS[date.getUTCMonth()]
   formatDate = (date) -> formatMonth(date) + ' ' + formatDay(date)
   formatYear = (date) -> date.getUTCFullYear()
+  addContext = (dateStr, contextMatch, contextFn) ->
+    result = [dateStr]
+    result.push(contextFn()) if dateStr == contextMatch
+    result
 
   LABELS = [
-    ((date) -> [formatTime(date), formatDate(date)]),
-    ((date) -> [formatTime(date), formatDate(date)]),
-    ((date) -> [formatDay(date), formatMonth(date)]),
-    ((date) -> [formatMonth(date), formatYear(date)]),
+    ((date) -> addContext(formatTime(date), '00:00', -> formatDate(date))),
+    ((date) -> addContext(formatTime(date), '00:00', -> formatDay(date) + ' ' +formatMonth(date) + ' ' + formatYear(date))),
+    ((date) -> addContext(formatDay(date), '01', -> formatMonth(date) + ' ' + formatYear(date))),
+    ((date) -> addContext(formatMonth(date), 'Jan', -> formatYear(date))),
     ((date) -> [formatYear(date)]),
     ((date) -> [formatYear(date)]),
     ((date) -> [formatYear(date)])
@@ -513,7 +517,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       false
 
     _timespanForLabel: (group) ->
-      next = group.nextSibling
+      next = group.previousSibling
 
       x0 = @_getTransformX(group)
       x1 = @_getTransformX(next, x0)
@@ -877,34 +881,38 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       start = @_roundTime(start, zoom)
       end = @_roundTime(end, zoom)
 
-      time = start
+      time = end
 
-      while time <= end
+      while time >= start
         date = new Date(time)
+        prev = @_roundTime(time, zoom, -1)
         next = @_roundTime(time, zoom, 1)
         interval = @_buildIntervalDisplay(@timeToPosition(time), @timeToPosition(next), LABELS[zoom](date)...)
         axis.appendChild(interval)
-        time = next
+        time = prev
 
     _buildIntervalDisplay: (x0, x1, text, subText) ->
       g = @_buildSvgElement('g', class: @scope('date-label'))
       @_translate(g, x0, 0)
+      width = x1 - x0
 
       if x1?
         # Something to click on
         bg = @_buildSvgElement 'rect',
           x: 0
           y: 0
-          width: x1 - x0
+          width: width
           height: MAX_Y - MIN_Y
         g.appendChild(bg)
 
       label = @_buildSvgElement('text', x: 5, y: 20, class: "#{@scope('axis-label')} #{@scope('axis-super-label')}")
       label.textContent = text
 
-      line = @_buildSvgElement('line', class: @scope('tick'), x1: 0, y1: MIN_Y, x2: 0, y2: MAX_Y)
+      lineClass = @scope('tick')
+      lineClass += ' ' + @scope('interval-start') if subText
+      line = @_buildSvgElement('line', class: lineClass, x1: 0, y1: MIN_Y, x2: 0, y2: MAX_Y)
 
-      circle = @_buildSvgElement('circle', class: @scope('tick-crossing'), r: 6)
+      circle = @_buildSvgElement('circle', class: @scope('tick-crossing'), r: 6, cx: width)
 
       g.appendChild(line)
       g.appendChild(circle)
