@@ -162,7 +162,7 @@ class DataAccessController < ApplicationController
 
   def get_downloadable_access_methods(dataset_id, granules, granule_params, hits)
     result = []
-    downloadable = granules.select {|granule| granule['online_access_flag'] == 'true'}
+    downloadable = granules.select {|granule| granule['online_access_flag'] == 'true' || granule['online_access_flag'] == true}
     if downloadable.size > 0
       opendap_config = OpendapConfiguration.find(dataset_id)
 

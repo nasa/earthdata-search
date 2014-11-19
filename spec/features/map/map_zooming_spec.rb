@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'Map Zooming', reset: false do
   before :all do
+    page.driver.resize_window(1680, 1050) # Default capybara window size
     Capybara.reset_sessions!
     visit '/search'
   end
