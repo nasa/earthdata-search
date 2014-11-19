@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'Map Zooming', reset: false do
   before :all do
+    page.driver.resize_window(1680, 1050) # Default capybara window size
     Capybara.reset_sessions!
     visit '/search'
   end
@@ -25,46 +26,46 @@ describe 'Map Zooming', reset: false do
   #   end
   # end
 
-  #context 'when zooming with the zoom buttons' do
-  #  context 'and the overlay is visible' do
-  #    before :all do
-  #      find('.leaflet-control-zoom-in').click
-  #      wait_for_xhr
-  #    end
+  context 'when zooming with the zoom buttons' do
+    context 'and the overlay is visible' do
+      before :all do
+        find('.leaflet-control-zoom-in').click
+        wait_for_xhr
+      end
 
-  #    after :all do
-  #      find('.leaflet-control-zoom-out').click
-  #      wait_for_xhr
-  #      expect(page).to have_map_center(0, 0, 2)
-  #    end
+      after :all do
+        find('.leaflet-control-zoom-out').click
+        wait_for_xhr
+        expect(page).to have_map_center(0, 0, 2)
+      end
 
-  #    it 'zooms to the center of the visible map' do
-  #      expect(page).to have_map_center(0, 30, 3)
-  #    end
-  #  end
+      it 'zooms to the center of the visible map' do
+        expect(page).to have_map_center(0, 30, 3)
+      end
+    end
 
-  #  context 'and the overlay is hidden' do
-  #    before :all do
-  #      within '.master-overlay-main' do
-  #        find('.master-overlay-close').click
-  #      end
-  #      expect(page).to have_css(".master-overlay.is-hidden")
+    context 'and the overlay is hidden' do
+      before :all do
+        within '.master-overlay-main' do
+          find('.master-overlay-close').click
+        end
+        expect(page).to have_css(".master-overlay.is-hidden")
 
-  #      find('.leaflet-control-zoom-in').click
-  #      wait_for_xhr
-  #    end
+        find('.leaflet-control-zoom-in').click
+        wait_for_xhr
+      end
 
-  #    after :all do
-  #      find('.leaflet-control-zoom-out').click
-  #      find('.master-overlay-show').click
-  #      expect(page).to have_no_css(".master-overlay.is-hidden")
-  #      wait_for_xhr
-  #      expect(page).to have_map_center(0, 0, 2)
-  #    end
+      after :all do
+        find('.leaflet-control-zoom-out').click
+        find('.master-overlay-show').click
+        expect(page).to have_no_css(".master-overlay.is-hidden")
+        wait_for_xhr
+        expect(page).to have_map_center(0, 0, 2)
+      end
 
-  #    it 'zooms to the center of the visible map' do
-  #      expect(page).to have_map_center(0, 0, 3)
-  #    end
-  #  end
-  #end
+      it 'zooms to the center of the visible map' do
+        expect(page).to have_map_center(0, 0, 3)
+      end
+    end
+  end
 end
