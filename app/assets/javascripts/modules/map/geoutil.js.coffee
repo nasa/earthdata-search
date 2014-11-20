@@ -158,8 +158,29 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
       0
 
   # Calculates the area within the given latlngs
-  area = (latlngs) ->
-    return 0 if latlngs.length < 3
+  area = (origLatlngs) ->
+    return 0 if origLatlngs.length < 3
+
+    # This algorithm is an approximation to area.  For some polygons, particularly large and narrow
+    # ones, it will produce incorrect results causing us to think they have clockwise points when
+    # their points are counterclockwise.
+    # The algorithm to deal with this exactly is complex and slow (see PDF below).  For our purposes,
+    # we want to eliminate cases that may cause real problems.  Below, we add the midpoint for long
+    # arcs to our list of latlngs.  Doing so means we'll see fewer problems but we'll be doing
+    # more calculations.
+    # If polygons still cause problems, interpolate more :)
+    # Example of a problematic polygon before interpolation:
+    # http://edsc.dev/search/datasets?polygon=-38.53125%2C37.125%2C-60.75%2C56.109375%2C1.6875%2C0.28125%2C-38.53125%2C37.125&m=15.5390625!10.8984375!2!1!0!
+    # Example of a problematic polygon after interpolation:
+    # http://edsc.dev/search/datasets?polygon=-38.53125%2C37.125%2C-60.75%2C56.109375%2C-11.390625%2C-4.5%2C-38.53125%2C37.125&m=15.5390625!10.8984375!2!1!0!
+    latlngs = []
+    len = origLatlngs.length
+    for i in [0...len]
+      latlngA = origLatlngs[i]
+      latlngB = origLatlngs[(i + 1) % len]
+      latlngs.push(latlngA)
+      if Math.abs(latlngA.lat - latlngB.lat) > 20 || Math.abs(latlngA.lng - latlngB.lng) > 20
+        latlngs.push(gcInterpolate(latlngA, latlngB))
 
     # http://trs-new.jpl.nasa.gov/dspace/bitstream/2014/40409/3/JPL%20Pub%2007-3%20%20w%20Errata.pdf
     # Page 7
