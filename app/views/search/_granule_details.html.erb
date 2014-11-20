@@ -26,7 +26,11 @@
   <!-- ko with: selected().details() -->
   <div class="tab-content">
     <div class="tab-pane active" id="granule-information">
-      <%= render partial: 'shared/metadata_feedback' %>
+      <% if Rails.configuration.feedback_url.present? %>
+        <a href="javascript:void(0)" data-bind="click: $root.ui.datasetsList.focused().showFeedback" class="feedback button" title="Leave metadata feedback">
+          <i class="fa fa-bullhorn"></i>
+        </a>
+      <% end %>
 
       <div data-bind="text: $data.xml" class="master-overlay-content details-content"></div>
 

@@ -120,4 +120,8 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
       @_hasFocus(focused)
       @_hasSelected(selected)
 
+    showFeedback: (dataset) ->
+      feedback.showForm({subject: "[METADATA][#{dataset.id}]"})
+      false
+
   exports = DatasetsList

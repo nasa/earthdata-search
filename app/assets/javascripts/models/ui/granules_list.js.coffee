@@ -258,4 +258,8 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
     state: (selected) ->
       @_hasSelected(selected)
 
+    showFeedback: (granule) ->
+      feedback.showForm({subject: "[METADATA][#{granule.id}]"})
+      false
+
   exports = GranulesList
