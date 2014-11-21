@@ -35,10 +35,8 @@
   white-space: nowrap
 }
 
-.details .button {
+.details .feedback-button {
   @include light-button;
-  font-size: 1.2em;
-  padding: 7px 10px;
   float: right;
 }
 

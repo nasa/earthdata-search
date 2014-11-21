@@ -24,7 +24,8 @@
   <div class="tab-content">
     <div class="tab-pane active" id="dataset-information">
       <% if Rails.configuration.feedback_url.present? %>
-        <a href="javascript:void(0)" data-bind="click: $root.ui.datasetsList.showFeedback" class="feedback button" title="Leave metadata feedback">
+        <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Dataset Details', $root.ui.datasetsList.selected().id)" class="button feedback-button" title="Leave metadata feedback">
+          Report a metadata problem
           <i class="fa fa-bullhorn"></i>
         </a>
       <% end %>

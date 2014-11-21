@@ -25,6 +25,12 @@
               <i class="fa fa-edit"></i>
             </a>
             <!-- /ko -->
+            <% if Rails.configuration.feedback_url.present? %>
+              <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Granule Results', $data.id)" class="button feedback-button" title="Leave metadata feedback">
+                Report a metadata problem
+                <i class="fa fa-bullhorn"></i>
+              </a>
+            <% end %>
           </div>
           <!-- /ko -->
         </header>

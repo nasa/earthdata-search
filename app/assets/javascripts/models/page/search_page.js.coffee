@@ -10,6 +10,7 @@
 #= require models/ui/project_list
 #= require models/ui/granule_timeline
 #= require models/ui/state_manager
+#= require models/ui/feedback
 
 models = @edsc.models
 data = models.data
@@ -28,6 +29,7 @@ ns.SearchPage = do (ko
                     ProjectListModel = ui.ProjectList
                     GranuleTimelineModel = ui.GranuleTimeline
                     PreferencesModel = data.Preferences
+                    FeedbackModel = ui.Feedback
                     StateManager = ui.StateManager) ->
   current = null
 
@@ -49,6 +51,7 @@ ns.SearchPage = do (ko
         datasetsList: new DatasetsListModel(@query, @datasets, @project)
         projectList: new ProjectListModel(@project, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
+        feedback: new FeedbackModel()
 
       @bindingsLoaded = ko.observable(false)
       @labs = ko.observable(false)

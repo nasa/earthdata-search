@@ -2,6 +2,12 @@
   <header>
     <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
     <h2>Browse Datasets</h2>
+    <% if Rails.configuration.feedback_url.present? %>
+      <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Facets', null)" class="button feedback-button" title="Leave metadata feedback">
+        Report a metadata problem
+        <i class="fa fa-bullhorn"></i>
+      </a>
+    <% end %>
     <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
       Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
     </p>

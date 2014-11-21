@@ -70,6 +70,12 @@
         </nav>
         <header>
           <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
+          <% if Rails.configuration.feedback_url.present? %>
+            <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Dataset Results', null)" class="button feedback-button" title="Leave metadata feedback">
+              Report a metadata problem
+              <i class="fa fa-bullhorn"></i>
+            </a>
+          <% end %>
         </header>
         <div class="master-overlay-info">
           <p data-bind="visible: project.isEmpty()" class="button-details">

@@ -1,5 +1,6 @@
 #= require models/data/account
 #= require models/ui/account_form
+#= require models/ui/feedback
 
 data = @edsc.models.data
 ui = @edsc.models.ui
@@ -9,6 +10,7 @@ ns.CreateAccountPage = do (ko
                           setCurrent = ns.setCurrent
                           AccountModel = data.Account
                           AccountFormModel = ui.AccountForm
+                          FeedbackModel = ui.Feedback
                           ) ->
 
   class AccountPage
@@ -19,6 +21,7 @@ ns.CreateAccountPage = do (ko
       @ui =
         isLandingPage: false
         accountForm: new AccountFormModel(@account, false)
+        feedback: new FeedbackModel()
 
   setCurrent(new AccountPage())
 
