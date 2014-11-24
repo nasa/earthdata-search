@@ -31,13 +31,12 @@
   clear: both;
 }
 
-.gibs-endpoint {
-  white-space: nowrap
+.details .nav-tabs {
+  margin-top: 0;
 }
 
-.details .feedback-button {
-  @include light-button;
-  float: right;
+.gibs-endpoint {
+  white-space: nowrap
 }
 
 .details .tab-content {

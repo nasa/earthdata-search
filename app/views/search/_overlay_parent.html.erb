@@ -2,16 +2,19 @@
   <header>
     <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
     <h2>Browse Datasets</h2>
-    <% if Rails.configuration.feedback_url.present? %>
-      <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Facets', null)" class="button feedback-button" title="Leave metadata feedback">
-        Report a metadata problem
-        <i class="fa fa-bullhorn"></i>
-      </a>
-    <% end %>
-    <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
-      Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
     </p>
   </header>
+  <div class="master-overlay-info">
+    <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
+      Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
+      <% if Rails.configuration.feedback_url.present? %>
+      <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Dataset Facets', null)" class="button feedback-button">
+        <i class="fa fa-exclamation-circle"></i>
+        Report a metadata problem
+      </a>
+      <% end %>
+    </p>
+  </div>
   <div class="master-overlay-content panel-group">
     <!-- ko if: query.facets() && query.facets().length > 0 -->
     <div class="panel panel-default selected-facets-panel">

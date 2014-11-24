@@ -25,12 +25,6 @@
               <i class="fa fa-edit"></i>
             </a>
             <!-- /ko -->
-            <% if Rails.configuration.feedback_url.present? %>
-              <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Granule Results', $data.id)" class="button feedback-button" title="Leave metadata feedback">
-                Report a metadata problem
-                <i class="fa fa-bullhorn"></i>
-              </a>
-            <% end %>
           </div>
           <!-- /ko -->
         </header>
@@ -48,6 +42,12 @@
 
           <p data-bind="if: granules.loadTime() !== null" class="panel-list-meta">
             Search Time: <span data-bind="text: granules.loadTime">0.000</span>s
+            <% if Rails.configuration.feedback_url.present? %>
+              <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Granule Results', $data.id)" class="button feedback-button" title="Leave metadata feedback">
+                <i class="fa fa-exclamation-circle"></i>
+                Report a metadata problem
+              </a>
+            <% end %>
           </p>
 
           <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules.query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules.query.sortKey"></select></p>

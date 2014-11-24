@@ -124,7 +124,7 @@
   color: $overlay-heading-font-color;
 
   p {
-    margin: 1em;
+    margin: 1em 1em 0;
   }
 
   p.button-details {
@@ -321,4 +321,23 @@ $parent-width: $parent-split * 0.2;
 
 .details-content {
   white-space: pre;
+}
+
+.master-overlay-info .panel-list-meta, .panel-list-meta {
+  text-align:right;
+  padding: 0 1.25em;
+  margin: 1em 0 0;
+  font-size: .8em;
+  color: #666;
+  line-height: 1.5;
+}
+
+.master-overlay-parent .panel-list-meta {
+  margin-top: 0;
+}
+
+.master-overlay-parent .feedback-button {
+  display: block;
+  text-align: center;
+  margin: 0 !important;
 }
