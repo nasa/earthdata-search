@@ -80,7 +80,9 @@ describe "Place name autocomplete" do
     end
 
     it "removes the spatial constraint if the user removes the placename from the search box" do
+      fill_in "keywords", with: ""
       fill_in "keywords", with: "modis"
+      wait_for_xhr
       expect(page).to have_field('keywords', with: 'modis')
       expect(page).to have_spatial_constraint('')
     end
