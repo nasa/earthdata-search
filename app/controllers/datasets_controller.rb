@@ -99,6 +99,7 @@ class DatasetsController < ApplicationController
   private
 
   def facet_response(query, items, name, param)
+    items = items[0...50]
     applied = []
     Array.wrap(query[param]).each do |param_term|
       term = param_term.last
