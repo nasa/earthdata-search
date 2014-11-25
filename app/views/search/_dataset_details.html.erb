@@ -13,6 +13,16 @@
     <h2 data-bind="text: $root.ui.datasetsList.selected().dataset_id"></h2>
     <!-- /ko -->
   </header>
+  <div class="master-overlay-info">
+    <p class="panel-list-meta">
+    <% if Rails.configuration.feedback_url.present? %>
+      <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Dataset Details', $root.ui.datasetsList.selected().id)" class="button feedback-button" title="Leave metadata feedback">
+        <i class="fa fa-exclamation-circle"></i>
+        Report a metadata problem
+      </a>
+    <% end %>
+    </p>
+  </div>
   <!-- /ko -->
   <!-- ko if: $root.ui.datasetsList.selected() && $root.ui.datasetsList.selected().detailsLoaded -->
   <!-- ko with: $root.ui.datasetsList.selected().details -->

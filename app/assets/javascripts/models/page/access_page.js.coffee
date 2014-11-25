@@ -6,6 +6,7 @@
 #= require models/ui/project_list
 #= require models/ui/service_options_list
 #= require models/ui/account_form
+#= require models/ui/feedback
 
 data = @edsc.models.data
 ui = @edsc.models.ui
@@ -23,6 +24,7 @@ ns.AccessPage = do (ko,
                     TemporalModel = ui.Temporal
                     ProjectListModel = ui.ProjectList
                     ServiceOptionsListModel = ui.ServiceOptionsList
+                    FeedbackModel = ui.Feedback
                     ) ->
 
   class AccessPage
@@ -43,6 +45,7 @@ ns.AccessPage = do (ko,
         projectList: projectList
         accountForm: accountForm
         serviceOptionsList: new ServiceOptionsListModel(accountForm, @project)
+        feedback: new FeedbackModel()
 
       setTimeout((=>
         if pageData

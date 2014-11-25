@@ -86,6 +86,12 @@
           </p>
           <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
             Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
+            <% if Rails.configuration.feedback_url.present? %>
+            <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Dataset Results', null)" class="button feedback-button">
+              <i class="fa fa-exclamation-circle"></i>
+              Report a metadata problem
+            </a>
+            <% end %>
           </p>
         </div>
         <div class="master-overlay-content" data-bind="event: {scroll: ui.datasetsList.scrolled}">

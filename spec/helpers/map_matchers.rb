@@ -65,9 +65,14 @@ end
 RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected_zoom|
 
   def map_params(page)
-    query = URI.parse(page.current_url).query
-    param_str = query[/(?:&|^)m=([\d.!]+)/, 1]
-    param_str.split('!').map(&:to_f) if param_str.present?
+    #query = URI.parse(page.current_url).query
+    #param_str = query[/(?:&|^)m=([\d.!]+)/, 1]
+    #param_str.split('!').map(&:to_f) if param_str.present?
+    page.evaluate_script("(function() {
+       var map = $('#map').data('map').map;
+       var center = map.getCenter();
+       return [center.lat, center.lng, map.getZoom()];
+    })();")
   end
 
   match do |page|

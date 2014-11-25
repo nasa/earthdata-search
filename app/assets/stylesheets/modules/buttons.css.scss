@@ -175,3 +175,18 @@ button:disabled {
 .modal-footer {
   clear: both;
 }
+
+.master-overlay-info a.feedback-button, a.feedback-button {
+  float: none;
+  background: darken(#c0392b, 10%);
+  color: #fff !important;
+  font-weight: normal;
+  text-shadow: none;
+  padding: .2em .6em;
+  margin-left: .5em;
+  text-decoration: none !important;
+
+  &:hover {
+    background: #c0392b;
+  }
+}
