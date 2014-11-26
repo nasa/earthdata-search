@@ -99,6 +99,9 @@ module Echo
     end
 
     def create_order(granule_query, option_id, option_name, option_model, user_id, token)
+      # Some submissions fail if we don't strip whitespace between tags (MYD29P1N)
+      option_model = option_model.gsub(/>\s+</,"><").strip()
+
       # For testing without submitting a boatload of orders
       #return {order_id: 1234, count: 2000}
       catalog_response = get_granules(granule_query, token)
