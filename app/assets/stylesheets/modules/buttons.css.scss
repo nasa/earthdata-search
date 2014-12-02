@@ -176,9 +176,12 @@ button:disabled {
   clear: both;
 }
 
+$feedback-button-color: #315781;
+$feedback-button-hover-color: lighten($feedback-button-color, 10%);
+
 .master-overlay-info a.feedback-button, a.feedback-button {
   float: none;
-  background: darken(#c0392b, 10%);
+  background: $feedback-button-color;
   color: #fff !important;
   font-weight: normal;
   text-shadow: none;
@@ -187,6 +190,6 @@ button:disabled {
   text-decoration: none !important;
 
   &:hover {
-    background: #c0392b;
+    background: $feedback-button-hover-color;
   }
 }
