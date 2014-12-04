@@ -36,11 +36,19 @@ class ApplicationController < ActionController::Base
   end
   helper_method :enable_cmr?
 
+  def set_archive_center
+    @archive_center = session[:archive_center] unless session[:archive_center].nil?
+    @archive_center ||= request.query_parameters.delete('ac') || nil
+  end
+  helper_method :set_archive_center
+
   def set_env_session
     session[:echo_env] = nil
     session[:enable_cmr] = nil
+    session[:archive_center] = nil
     session[:echo_env] = echo_env
     session[:enable_cmr] = enable_cmr?
+    session[:archive_center] = set_archive_center
   end
 
   def refresh_urs_if_needed
