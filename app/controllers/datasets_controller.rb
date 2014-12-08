@@ -185,14 +185,6 @@ class DatasetsController < ApplicationController
         old = params.delete("two_d_coordinate_system")
         params["two_d_coordinate_system_name"] = old["name"]
       end
-
-      unless set_archive_center.nil?
-        params["archive_center"] = set_archive_center
-      end
-    else
-      unless set_archive_center.nil?
-        params["provider"] = set_archive_center
-      end
     end
     ###
 

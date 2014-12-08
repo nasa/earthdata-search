@@ -16,7 +16,6 @@
       @loaded = false
       @echo_env = null
       @enable_cmr = false
-      @archive_center = null
 
       $(window).on 'edsc.save_workspace', =>
           urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceNameField())
@@ -37,7 +36,6 @@
       result.labs = page.labs() if page.labs()
       result.echo_env = @echo_env if @echo_env
       result.use_cmr = @enable_cmr if @enable_cmr
-      result.ac = @archive_center if @archive_center
 
       result = extend(result, page.project.serialized(), ui.datasetsList.serialized())
 
@@ -70,7 +68,6 @@
       page.labs(params.labs)
       @echo_env = params.echo_env
       @enable_cmr = params.use_cmr
-      @archive_center = params.ac
       page.project.serialized(params)
 
       unless @loaded
