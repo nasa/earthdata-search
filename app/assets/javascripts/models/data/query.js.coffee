@@ -133,7 +133,7 @@ ns.query = do (ko,
 
   class FacetParam extends QueryParam
     names: ->
-      ['features', 'campaign', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'science_keywords', 'processing_level']
+      ['features', 'campaign', 'archive_center', 'project', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'science_keywords', 'processing_level']
 
     writeTo: (query) ->
       facetParams = {}

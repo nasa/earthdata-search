@@ -106,6 +106,8 @@ this.edsc.util.url = do(window
 
     new ArrayJoiner('features', 'ff')
     new ArrayJoiner('campaign', 'fc')
+    new ArrayJoiner('archive_center', 'ac')
+    new ArrayJoiner('project', 'fpj')
     new ArrayJoiner('platform', 'fp')
     new ArrayJoiner('instrument', 'fi')
     new ArrayJoiner('sensor', 'fs')
