@@ -147,5 +147,23 @@ ns.Dataset = do (ko
       @gibs = ko.observable(jsonObj.gibs ? @gibs?())
       @opendap = ko.observable(jsonObj.opendap ? @opendap?())
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
+      @modaps = ko.observable(jsonObj.modaps ? @modaps?())
+      @_applyParamsToModapsWcs()
+
+    _applyParamsToModapsWcs: =>
+      modaps = @modaps()
+      url = modaps.get_coverage if modaps?
+      if url?
+        spatial = @query.spatial()
+        spatial = spatial.replace('bounding_box:', '')
+        spatial = spatial.replace(':',',')
+        url = url.replace('(spatial)', spatial)
+
+        temporal = @query.temporal.applied.start.queryDateString()
+        temporal = new Date().toISOString() unless temporal?
+        url = url.replace('(temporal)', temporal)
+        modaps.get_coverage = url
+
+      @modaps(modaps)
 
   exports = Dataset

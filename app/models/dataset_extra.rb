@@ -163,6 +163,7 @@ class DatasetExtra < ActiveRecord::Base
     decorate_gibs_layers(dataset)
     decorate_opendap_layers(dataset)
     decorate_echo10_attributes(dataset)
+    decorate_modaps_layers(dataset)
 
     dataset[:links] = Array.wrap(dataset[:links]) # Ensure links attribute is present
 
@@ -255,6 +256,19 @@ class DatasetExtra < ActiveRecord::Base
     opendap_config = Rails.configuration.services['opendap'][dataset['id']]
     if opendap_config.present?
       dataset[:opendap] = opendap_config['granule_url_template'].split('{').first
+    end
+  end
+
+  def decorate_modaps_layers(dataset)
+    dataset[:modaps] = false
+    modaps_config = Rails.configuration.services['modaps'][dataset['id']]
+    if modaps_config.present?
+      dataset[:modaps] = Hash.new
+      dataset[:modaps][:get_capabilities] =  "http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/#{dataset[:short_name]}/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities"
+      # TODO: "coverage=250m Surface Reflectance Band 1:Day" doesn't work for all datasets
+      # Also, I'm not sure about the other params needed for DescribeCoverage and GetCoverage
+      dataset[:modaps][:describe_coverage] =  "http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/#{dataset[:short_name]}/describeCoverage?service=WCS&version=1.0.0&request=DescribeCoverage&coverage=250m Surface Reflectance Band 1:Day"
+      dataset[:modaps][:get_coverage] =  "http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/#{dataset[:short_name]}/getCoverage?service=WCS&version=1.0.0&request=GetCoverage&coverage=250m Surface Reflectance Band 1:Day&bbox=(spatial)&time=(temporal)&format=geotiff&response_crs=EPSG:4326&resx=0.01&resy=0.01"
     end
   end
 
