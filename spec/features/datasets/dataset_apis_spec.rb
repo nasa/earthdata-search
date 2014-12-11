@@ -51,6 +51,21 @@ describe 'Dataset API Endpoints', reset: false do
     end
   end
 
+  context 'when viewing the dataset details for a dataset with MODAPS WCS' do
+    before :all do
+      load_page :search
+      fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
+      wait_for_xhr
+      click_link "View details"
+      wait_for_xhr
+      click_link 'API Endpoints'
+    end
+
+    it 'provides the path to the MODAPS WCS endpoint' do
+      expect(dataset_details).to have_content("GetCapabilities: http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/MOD04_L2/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities")
+    end
+  end
+
   context 'when viewing the dataset details for a dataset without granules, GIBS, or OPeNDAP' do
     before :all do
       load_page :search
@@ -71,6 +86,10 @@ describe 'Dataset API Endpoints', reset: false do
 
     it 'does not provide a link to the OPeNDAP endpoint' do
       expect(dataset_details).to have_no_content 'OPeNDAP'
+    end
+
+    it 'does not provide a link to the MODAPS WCS endpoint' do
+      expect(dataset_details).to have_no_content 'MODAPS Web Coverage Service (WCS)'
     end
   end
 end

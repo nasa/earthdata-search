@@ -147,5 +147,6 @@ ns.Dataset = do (ko
       @gibs = ko.observable(jsonObj.gibs ? @gibs?())
       @opendap = ko.observable(jsonObj.opendap ? @opendap?())
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
+      @modaps = ko.observable(jsonObj.modaps ? @modaps?())
 
   exports = Dataset

@@ -163,6 +163,7 @@ class DatasetExtra < ActiveRecord::Base
     decorate_gibs_layers(dataset)
     decorate_opendap_layers(dataset)
     decorate_echo10_attributes(dataset)
+    decorate_modaps_layers(dataset)
 
     dataset[:links] = Array.wrap(dataset[:links]) # Ensure links attribute is present
 
@@ -255,6 +256,15 @@ class DatasetExtra < ActiveRecord::Base
     opendap_config = Rails.configuration.services['opendap'][dataset['id']]
     if opendap_config.present?
       dataset[:opendap] = opendap_config['granule_url_template'].split('{').first
+    end
+  end
+
+  def decorate_modaps_layers(dataset)
+    dataset[:modaps] = false
+    modaps_config = Rails.configuration.services['modaps'][dataset['id']]
+    if modaps_config.present?
+      dataset[:modaps] = Hash.new
+      dataset[:modaps][:get_capabilities] =  "http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/#{dataset[:short_name]}/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities"
     end
   end
 
