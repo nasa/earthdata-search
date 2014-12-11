@@ -40,6 +40,10 @@
             <!-- /ko -->
           </p>
 
+          <!-- ko if: granules.excludedGranulesList().length > 0 -->
+          <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
+          <!-- /ko -->
+
           <p data-bind="if: granules.loadTime() !== null" class="panel-list-meta">
             Search Time: <span data-bind="text: granules.loadTime">0.000</span>s
             <% if Rails.configuration.feedback_url.present? %>
@@ -52,9 +56,6 @@
 
           <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules.query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules.query.sortKey"></select></p>
 
-          <!-- /ko -->
-          <!-- ko if: granules.excludedGranulesList().length > 0 -->
-          <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
           <!-- /ko -->
 
         </div>
