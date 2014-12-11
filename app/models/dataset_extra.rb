@@ -268,7 +268,7 @@ class DatasetExtra < ActiveRecord::Base
       # TODO: "coverage=250m Surface Reflectance Band 1:Day" doesn't work for all datasets
       # Also, I'm not sure about the other params needed for DescribeCoverage and GetCoverage
       dataset[:modaps][:describe_coverage] =  "http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/#{dataset[:short_name]}/describeCoverage?service=WCS&version=1.0.0&request=DescribeCoverage&coverage=250m Surface Reflectance Band 1:Day"
-      dataset[:modaps][:get_coverage] =  "http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/#{dataset[:short_name]}/getCoverage?service=WCS&version=1.0.0&request=GetCoverage&coverage=250m Surface Reflectance Band 1:Day&bbox=(spatial)&time=(temporal)&format=geotiff&response_crs=EPSG:4326&resx=0.01&resy=0.01"
+      dataset[:modaps][:get_coverage_template] =  "http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/#{dataset[:short_name]}/getCoverage?service=WCS&version=1.0.0&request=GetCoverage&coverage=250m Surface Reflectance Band 1:Day&bbox=(spatial)&time=(temporal)&format=geotiff&response_crs=EPSG:4326&resx=0.01&resy=0.01"
     end
   end
 
