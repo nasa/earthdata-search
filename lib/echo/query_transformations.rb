@@ -6,7 +6,6 @@ module Echo
 
         load_freetext_query(query)
         and_query(query)
-        convert_archive_center(query)
 
         query
       end
@@ -98,14 +97,6 @@ module Echo
           query[:options] ||= Hash.new
           query[:options][:sensor] = Hash.new
           query[:options][:sensor][:and] = true
-        end
-      end
-
-      # For ECHO queries, convert archive_center[]= to provider=
-      def convert_archive_center(query)
-        if self.class == Echo::EchoClient
-          ac = query.delete(:archive_center)
-          query[:provider] = ac.join unless ac.nil?
         end
       end
   end
