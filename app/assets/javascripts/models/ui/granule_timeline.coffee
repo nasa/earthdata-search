@@ -60,7 +60,7 @@ ns.GranuleTimeline = do (ko
       @_load(params, current, callback) if changed
 
     _toResults: (data, current, params) ->
-      intervals = data[0].intervals ? []
+      intervals = data[0]?.intervals ? []
       $('#timeline').timeline('data', @dataset.id, @range()..., intervals, @color)
       intervals
 
