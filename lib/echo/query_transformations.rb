@@ -65,7 +65,11 @@ module Echo
       def catalog_escape(value)
         if value.is_a? String
           # Escape % and _ with a single \.  No idea why it takes 4 slashes before \1 to output a single slash
-          value.gsub(/(%|_)/, '\\\\\1')
+          if self.class == Echo::CmrClient
+            value.gsub(/(%)/, '\\\\\1') # don't escape _ in CMR
+          else
+            value.gsub(/(%|_)/, '\\\\\1')
+          end
         elsif value.is_a? Hash
           Hash[value.map {|k, v| [k, catalog_escape(v)]}]
         elsif value.is_a? Enumerable
