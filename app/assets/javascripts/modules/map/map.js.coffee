@@ -84,6 +84,7 @@ ns.Map = do (window,
       map.addLayer(new MouseEventsLayer())
 
       map.addControl(L.control.zoom(position: 'topright'))
+      map.addControl(L.control.scale(position: 'bottomright'))
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
       @setProjection(projection)
