@@ -170,7 +170,7 @@ ns.GranuleLayer = do (L
         this._url = config.gibsSitUrl || this._originalUrl;
         date = granule.time_start
       else
-        this._url = this._originalUrl;
+        this._url = this._originalUrl || this._url;
 
       L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if matched
 
