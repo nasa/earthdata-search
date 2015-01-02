@@ -22,9 +22,9 @@ ns.GibsTileLayer = do (L,
       tileSize: 512
       extra: ''
 
-    arcticOptions: L.extend({}, parent.arcticOptions, projection: 'EPSG3413', endpoint: 'arctic')
-    antarcticOptions: L.extend({}, parent.antarcticOptions, projection: 'EPSG3031', endpoint: 'antarctic')
-    geoOptions: L.extend({}, parent.geoOptions, projection: 'EPSG4326', endpoint: 'geo')
+    arcticOptions: L.extend({}, parent.arcticOptions, projection: 'EPSG3413', lprojection: 'epsg3413', endpoint: 'arctic')
+    antarcticOptions: L.extend({}, parent.antarcticOptions, projection: 'EPSG3031', lprojection: 'epsg3031', endpoint: 'antarctic')
+    geoOptions: L.extend({}, parent.geoOptions, projection: 'EPSG4326', lprojection: 'epsg4326', endpoint: 'geo')
 
     onAdd: (map) ->
       @options.time = dateUtil.isoUtcDateString(map.time ? yesterday) if @options.syncTime
