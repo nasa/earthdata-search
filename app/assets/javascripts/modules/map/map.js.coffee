@@ -10,6 +10,7 @@ ns.Map = do (window,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              MouseEventsLayer = ns.MouseEventsLayer,
+             Legend = @edsc.Legend,
              page = @edsc.page
              config = @edsc.config) ->
 
@@ -60,6 +61,14 @@ ns.Map = do (window,
   # Fix leaflet default image path
   L.Icon.Default.imagePath = '/images/leaflet-0.7'
 
+  LegendControl = L.Control.extend
+    setData: (name, data) ->
+      @legend.setData(name, data)
+
+    onAdd: (map) ->
+      @legend = new Legend()
+      @legend.container
+
   # Constructs and performs basic operations on maps
   # This class wraps the details of setting up the map used by the application,
   # setting up GIBS layers, supported projections, etc.
@@ -84,9 +93,30 @@ ns.Map = do (window,
       map.addLayer(new MouseEventsLayer())
 
       map.addControl(L.control.zoom(position: 'topright'))
-      map.addControl(L.control.scale(position: 'bottomright'))
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
+
+      legendControl = new LegendControl(position: 'bottomright')
+      map.addControl(legendControl)
+
+      legendControl.setData('Some Layer Name',
+        scale:
+          colors: [
+            "660077ff", "b70f8dff", "000064ff", "0000aaff",
+            "0000ffff", "0088eeff", "005000ff", "008800ff",
+            "00dc00ff", "ffff00ff", "f0be40ff", "bb8800ff",
+            "7a5a03ff", "6e0000ff", "aa0000ff", "ff0000ff"
+          ],
+          labels: [
+            "-0.05", "0.00", "0.05", "0.10",
+            "0.15", "0.20", "0.25", "0.30",
+            "0.35", "0.40", "0.45", "0.50",
+            "0.55", "0.60", "0.65", "0.70"
+          ]
+      )
+
+      map.addControl(L.control.scale(position: 'bottomright'))
+
       @setProjection(projection)
       @setBaseMap("Blue Marble")
       @setOverlays([])
