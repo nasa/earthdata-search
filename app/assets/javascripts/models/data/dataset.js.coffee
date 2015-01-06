@@ -142,13 +142,18 @@ ns.Dataset = do (ko
       if attributes && @granuleQueryLoaded()
         @granuleQuery.attributes.definitions(attributes)
 
-      this[key] = value for own key, value of jsonObj
-
       @hasAtomData(jsonObj.short_name?)
-      @gibs = ko.observable(jsonObj.gibs ? @gibs?())
-      @opendap = ko.observable(jsonObj.opendap ? @opendap?())
+      @_setObservable('gibs', jsonObj)
+      @_setObservable('opendap', jsonObj)
+      @_setObservable('modaps', jsonObj)
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
-      @modaps = ko.observable(jsonObj.modaps ? @modaps?())
       @granuleCount(jsonObj.granule_count)
+
+      for own key, value of jsonObj
+        this[key] = value unless ko.isObservable(this[key])
+
+    _setObservable: (prop, jsonObj) =>
+      this[prop] ?= ko.observable(undefined)
+      this[prop](jsonObj[prop] ? this[prop]())
 
   exports = Dataset
