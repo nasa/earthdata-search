@@ -3,7 +3,8 @@ require 'spec_helper'
 describe 'Dataset API Endpoints', reset: false do
   context 'when viewing the dataset details for a dataset with granules' do
     before :all do
-      load_page :search
+      visit '/search?use_cmr=true'
+      wait_for_xhr
       click_link "Temporal"
       fill_in "Start", with: "1985-12-01 00:00:00"
       close_datetimepicker
@@ -16,8 +17,8 @@ describe 'Dataset API Endpoints', reset: false do
       click_link 'API Endpoints'
     end
 
-    it 'provides a link to the ECHO API for the datasets granules' do
-      expect(dataset_details).to have_css('a[href="https://api.echo.nasa.gov/catalog-rest/echo_catalog/granules?temporal=1985-12-01T00%3A00%3A00.000Z%2C&echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20"]')
+    it 'provides a link to the CMR API for the datasets granules' do
+      expect(dataset_details).to have_css('a[href="https://cmr.earthdata.nasa.gov/search/concepts.json?temporal=1985-12-01T00%3A00%3A00.000Z%2C&echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20"]')
     end
   end
 
@@ -76,8 +77,8 @@ describe 'Dataset API Endpoints', reset: false do
       click_link 'API Endpoints'
     end
 
-    it 'does not provide a link to the ECHO API for granules' do
-      expect(dataset_details).to have_no_content 'ECHO Granules'
+    it 'does not provide a link to the CMR API for granules' do
+      expect(dataset_details).to have_no_content 'CMR Granules'
     end
 
     it 'does not provide a link to the GIBS endpoint' do
