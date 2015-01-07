@@ -11,7 +11,8 @@ ns.Map = do (window,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              MouseEventsLayer = ns.MouseEventsLayer,
              Legend = @edsc.Legend,
-             page = @edsc.page
+             page = @edsc.page,
+             ajax = @edsc.util.xhr.ajax
              config = @edsc.config) ->
 
   L.Map.include
@@ -96,24 +97,8 @@ ns.Map = do (window,
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
 
-      legendControl = new LegendControl(position: 'bottomright')
-      map.addControl(legendControl)
-
-      legendControl.setData('Some Layer Name',
-        scale:
-          colors: [
-            "660077ff", "b70f8dff", "000064ff", "0000aaff",
-            "0000ffff", "0088eeff", "005000ff", "008800ff",
-            "00dc00ff", "ffff00ff", "f0be40ff", "bb8800ff",
-            "7a5a03ff", "6e0000ff", "aa0000ff", "ff0000ff"
-          ],
-          labels: [
-            "-0.05", "0.00", "0.05", "0.10",
-            "0.15", "0.20", "0.25", "0.30",
-            "0.35", "0.40", "0.45", "0.50",
-            "0.55", "0.60", "0.65", "0.70"
-          ]
-      )
+      @legendControl = new LegendControl(position: 'bottomright')
+      map.addControl(@legendControl)
 
       map.addControl(L.control.scale(position: 'bottomright'))
 
@@ -185,8 +170,24 @@ ns.Map = do (window,
             map.setView(L.latLng(lat, lng), parseInt(zoom, 10))
 
     focusDataset: (dataset) ->
+      @_addLegend(dataset)
       @map.focusedDataset = dataset
       @map.fire 'edsc.focusdataset', dataset: dataset
+
+    _addLegend: (dataset) ->
+      name = dataset?.gibs()?[0].product ? null
+      if dataset? && name?
+        # get json from server
+        path = "/colormaps/#{name}.json"
+        console.log("Request #{path}")
+        ajax
+          dataType: 'json'
+          url: path
+          retry: => @_addLegend(dataset)
+          success: (data) =>
+            @legendControl.setData(name, data)
+      else
+        @legendControl.setData(name, {})
 
     _computeTime: ->
       time = null
