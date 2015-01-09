@@ -4,10 +4,12 @@ describe 'Dataset API Endpoints', reset: false do
   context 'when viewing the dataset details for a dataset with granules' do
     before :all do
       visit '/search?use_cmr=true'
+      wait_for_xhr
       click_link "Temporal"
       fill_in "Start", with: "1985-12-01 00:00:00"
       close_datetimepicker
       js_click_apply ".temporal-dropdown"
+      wait_for_xhr
 
       fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
       wait_for_xhr
