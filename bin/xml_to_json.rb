@@ -1,20 +1,16 @@
 #!/usr/bin/env ruby
 
 require 'nokogiri'
+require 'open-uri'
 require 'json'
 
 def str_to_hex(str)
   str.to_i.to_s(16).rjust(2, "0")
 end
 
-def process_file(file, output_dir)
-  # input_file = File.join(input_dir, file)
-  input_file = file
-
-  xml_file = File.open(input_file)
-  id = File.basename(input_file, File.extname(input_file))
+def process_file(id, url, output_dir)
+  xml_file = open(url).read
   xml = Nokogiri::XML(xml_file)
-  xml_file.close
 
   scale_colors = []
   scale_labels = []
@@ -86,23 +82,31 @@ end
 
 
 # Main script
-if ARGV.length != 2
-  puts "Usage: #{File.basename(__FILE__)} <input_dir> <output_dir>\n\nInvalid number of arguments"
+if ARGV.length != 1
+  puts "Usage: #{File.basename(__FILE__)} <output_dir>\n\nInvalid number of arguments"
 else
-  input_dir = ARGV[0]
-  output_dir = ARGV[1]
+  output_dir = ARGV[0]
 
   file_count = 0
   error_count = 0
 
-  Dir.glob("#{input_dir}**/*").each do |file|
-    next if File.directory?(file)
-    begin
-      file_count += 1
-      process_file(file, output_dir)
-    rescue Exception => e
-      puts "Error: #{e.message}"
-      error_count += 1
+  capabilities_str = open("http://map1a.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi/?SERVICE=WMTS&REQUEST=GetCapabilities").read
+  # This xmlns was breaking xpath queries
+  capabilities_file = Nokogiri::XML(capabilities_str.sub('xmlns="http://www.opengis.net/wmts/1.0"', ''))
+
+  layers = capabilities_file.xpath("/Capabilities/Contents/Layer")
+  layers.each do |layer|
+    id = layer.xpath("./ows:Identifier").first.content.to_s
+    url = layer.xpath("./ows:Metadata/@xlink:href").to_s
+
+    unless id.empty? || url.empty?
+      begin
+        file_count += 1
+        process_file(id, url, output_dir)
+      rescue Exception => e
+        puts "Error: #{e.backtrace}"
+        error_count += 1
+      end
     end
   end
 

@@ -96,13 +96,6 @@ class DatasetsController < ApplicationController
     end
   end
 
-  def colormap
-    id = "#{params[:id]}.json"
-    json_file = File.join(Rails.root, 'lib', 'colormaps', 'output', id)
-    data = File.read(json_file)
-    render json: data
-  end
-
   private
 
   def facet_response(query, items, name, param)
