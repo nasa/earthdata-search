@@ -139,6 +139,7 @@ ns.GranuleLayer = do (L
       result
 
     _matches: (granule, matcher) ->
+      return true if matcher.sit && config.gibsSitUrl
       operators = ['>=', '<=']
       for own prop, value of matcher
         granuleValue = granule[prop]
@@ -163,6 +164,13 @@ ns.GranuleLayer = do (L
         matched = true
         @options = L.extend({}, @originalOptions, optionSet)
         break
+
+      if @options.granule
+        this._originalUrl = this._originalUrl || this._url;
+        this._url = config.gibsSitUrl || this._originalUrl;
+        date = granule.time_start
+      else
+        this._url = this._originalUrl || this._url;
 
       L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if matched
 

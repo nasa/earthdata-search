@@ -30,7 +30,7 @@ ns.Dataset = do (ko
       featured = jsonData.featured
       for dataset in datasets()
         if dataset.id == id
-          if (jsonData.short_name? && !dataset.hasAtomData()) || dataset.featured != featured
+          if (jsonData.short_name? && !dataset.hasAtomData()) || dataset.featured != featured || jsonData.granule_count != dataset.granule_count
             dataset.fromJson(jsonData)
           return dataset.reference()
       register(new Dataset(jsonData, query, randomKey))
@@ -40,6 +40,7 @@ ns.Dataset = do (ko
 
     constructor: (jsonData, @query, inKey) ->
       throw "Datasets should not be constructed directly" unless inKey == randomKey
+      @granuleCount = ko.observable(0)
 
       @hasAtomData = ko.observable(false)
 
@@ -98,7 +99,7 @@ ns.Dataset = do (ko
         if @granulesModel.isLoaded()
           hits = @granulesModel.hits()
         else
-          hits = @granule_count
+          hits = @granuleCount()
         if hits?
           result = "#{hits} Granule"
           result += 's' if hits != 1
@@ -141,12 +142,18 @@ ns.Dataset = do (ko
       if attributes && @granuleQueryLoaded()
         @granuleQuery.attributes.definitions(attributes)
 
-      this[key] = value for own key, value of jsonObj
-
       @hasAtomData(jsonObj.short_name?)
-      @gibs = ko.observable(jsonObj.gibs ? @gibs?())
-      @opendap = ko.observable(jsonObj.opendap ? @opendap?())
+      @_setObservable('gibs', jsonObj)
+      @_setObservable('opendap', jsonObj)
+      @_setObservable('modaps', jsonObj)
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
-      @modaps = ko.observable(jsonObj.modaps ? @modaps?())
+      @granuleCount(jsonObj.granule_count)
+
+      for own key, value of jsonObj
+        this[key] = value unless ko.isObservable(this[key])
+
+    _setObservable: (prop, jsonObj) =>
+      this[prop] ?= ko.observable(undefined)
+      this[prop](jsonObj[prop] ? this[prop]())
 
   exports = Dataset
