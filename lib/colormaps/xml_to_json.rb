@@ -1,6 +1,4 @@
 module Colormaps
-  # class Colormap
-  # class XML_TO_JSON
     # This method takes a XML formatted GIBS colormap and converts it to JSON format
     # https://github.com/nasa-gibs/worldview/blob/12ac2e188048c1d32a858f68b2eaac85852462d6/bin/wv-options-colormap
     # id: ID found in XML colormap. Used to name JSON file. (MODIS_Terra_Snow_Cover)
