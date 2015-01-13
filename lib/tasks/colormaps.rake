@@ -11,7 +11,7 @@ namespace :colormaps do
   task :load do
     puts "Loading GIBS colormap data..."
     output_dir = "#{Rails.root}/public/colormaps"
-    Dir.mkdir(output_dir)
+    FileUtils::mkdir_p(output_dir)
     gibs_url = "http://map1a.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi/?SERVICE=WMTS&REQUEST=GetCapabilities"
 
     file_count = 0
@@ -48,7 +48,7 @@ namespace :colormaps do
             a = 255
             a = 0 if entry.attribute("transparent") && entry.attribute("transparent") == "true"
             color = "#{str_to_hex(r)}#{str_to_hex(g)}#{str_to_hex(b)}#{str_to_hex(a)}"
-            label = entry.attribute("label")
+            label = entry.attribute("label").value
             if a == 0
               special_colors << color
               special_labels << label
