@@ -19,6 +19,7 @@ test_results
 /tmp
 
 /public/assets
+/public/colormaps
 
 # Deployment temp files
 /.librarian

@@ -15,7 +15,7 @@ Rake::Task[:test].enhance(['doc:ui']) do
 end
 
 namespace :ci do
-  task :prepare do
+  task :prepare => 'colormaps:load' do
     FileUtils.mkdir_p 'build_output'
     FileUtils.mkdir_p 'test_results'
     FileUtils.mkdir_p 'tmp/capybara'

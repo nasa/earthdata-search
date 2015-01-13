@@ -1,0 +1,34 @@
+.legend {
+  text-shadow: 1px 1px 1px #fff;
+}
+
+.legend-bar {
+  display: block;
+  height: 1.5em;
+  width: 20em;
+}
+
+.legend-name {
+  display: none;
+}
+
+.legend-labels {
+  text-align: center;
+}
+
+.legend-label-min {
+  float: left;
+}
+
+.legend-label-max {
+  float: right;
+}
+
+.legend-focus-color {
+  width: 1.3em;
+  height: 1.3em;
+  vertical-align: middle;
+  border: 1px solid #000;
+  background: #f00;
+  display: inline-block;
+}

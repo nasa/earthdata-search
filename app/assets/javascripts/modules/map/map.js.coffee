@@ -10,7 +10,9 @@ ns.Map = do (window,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              MouseEventsLayer = ns.MouseEventsLayer,
-             page = @edsc.page
+             Legend = @edsc.Legend,
+             page = @edsc.page,
+             ajax = @edsc.util.xhr.ajax
              config = @edsc.config) ->
 
   L.Map.include
@@ -60,6 +62,14 @@ ns.Map = do (window,
   # Fix leaflet default image path
   L.Icon.Default.imagePath = '/images/leaflet-0.7'
 
+  LegendControl = L.Control.extend
+    setData: (name, data) ->
+      @legend.setData(name, data)
+
+    onAdd: (map) ->
+      @legend = new Legend()
+      @legend.container
+
   # Constructs and performs basic operations on maps
   # This class wraps the details of setting up the map used by the application,
   # setting up GIBS layers, supported projections, etc.
@@ -84,9 +94,14 @@ ns.Map = do (window,
       map.addLayer(new MouseEventsLayer())
 
       map.addControl(L.control.zoom(position: 'topright'))
-      map.addControl(L.control.scale(position: 'bottomright'))
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
+
+      @legendControl = new LegendControl(position: 'bottomright')
+      map.addControl(@legendControl)
+
+      map.addControl(L.control.scale(position: 'bottomright'))
+
       @setProjection(projection)
       @setBaseMap("Blue Marble")
       @setOverlays([])
@@ -155,8 +170,24 @@ ns.Map = do (window,
             map.setView(L.latLng(lat, lng), parseInt(zoom, 10))
 
     focusDataset: (dataset) ->
+      @_addLegend(dataset)
       @map.focusedDataset = dataset
       @map.fire 'edsc.focusdataset', dataset: dataset
+
+    _addLegend: (dataset) ->
+      name = dataset?.gibs()?[0].product ? null
+      if dataset? && name?
+        # get json from server
+        path = "/colormaps/#{name}.json"
+        console.log("Request #{path}")
+        ajax
+          dataType: 'json'
+          url: path
+          retry: => @_addLegend(dataset)
+          success: (data) =>
+            @legendControl.setData(name, data)
+      else
+        @legendControl.setData(name, {})
 
     _computeTime: ->
       time = null
