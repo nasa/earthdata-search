@@ -26,7 +26,7 @@ namespace :colormaps do
 
       unless id.empty? || url.empty?
         file_count += 1
-        result = Colormaps.process_file(id, url, output_dir)
+        result = Colormaps.xml_to_json(id, url, output_dir)
         error_count += 1 unless result
       end
     end

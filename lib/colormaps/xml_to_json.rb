@@ -4,7 +4,7 @@ module Colormaps
     # id: ID found in XML colormap. Used to name JSON file. (MODIS_Terra_Snow_Cover)
     # url: GIBS URL for XML colormap. (http://map1.vis.earthdata.nasa.gov/colormaps/MODIS_Terra_Snow_Cover.xml)
     # output_dir: output directory of the JSON file. (public/colormaps)
-    def self.process_file(id, url, output_dir)
+    def self.xml_to_json(id, url, output_dir)
       begin
         xml_file = open(url).read
         xml = Nokogiri::XML(xml_file)
