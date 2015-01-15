@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Dataset Colormaps', reset: false do
   gibs_dataset_id = 'C1000000016-LANCEMODIS'
   non_gibs_dataset_id = 'C179003030-ORNL_DAAC'
+  gibs_granules_dataset_id = 'C187016591-LPDAAC_ECS'
 
   before :all do
     load_page :search
@@ -22,7 +23,7 @@ describe 'Dataset Colormaps', reset: false do
       reset_search
     end
 
-    it "shows the gibs colormap" do
+    it "shows the GIBS colormap" do
       expect(page).to have_css(".legend.leaflet-control")
     end
 
@@ -58,5 +59,23 @@ describe 'Dataset Colormaps', reset: false do
 
   end
 
+  context "when viewing the GIBS-granule test dataset" do
+    before :all do
+      # load_page :search
+      fill_in 'keywords', with: gibs_granules_dataset_id
+      wait_for_xhr
+      expect(page).to have_content("MOD11_L2")
+      first_dataset_result.click
+      wait_for_xhr
+    end
 
+    it "shows the GIBS colormap" do
+      expect(page).to have_css(".legend.leaflet-control")
+    end
+
+    after :all do
+      click_link 'Back to Datasets'
+      reset_search
+    end
+  end
 end
