@@ -175,8 +175,15 @@ ns.Map = do (window,
       @map.fire 'edsc.focusdataset', dataset: dataset
 
     _addLegend: (dataset) ->
-      name = dataset?.gibs()?[0].product ? null
-      if dataset? && name?
+      @legendControl.setData(null, {})
+      gibs = dataset?.gibs() ? []
+      name = null
+      for config in gibs
+        unless config.match?.sit
+          name = config.product
+          break
+
+      if name?
         # get json from server
         path = "/colormaps/#{name}.json"
         console.log("Request #{path}")
@@ -186,8 +193,7 @@ ns.Map = do (window,
           retry: => @_addLegend(dataset)
           success: (data) =>
             @legendControl.setData(name, data)
-      else
-        @legendControl.setData(name, {})
+        null
 
     _computeTime: ->
       time = null
