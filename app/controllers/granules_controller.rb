@@ -6,7 +6,7 @@ class GranulesController < ApplicationController
 
     if catalog_response.success?
       catalog_response.headers.each do |key, value|
-        response.headers[key] = value if key.start_with?('echo-') || key.start_with?('cmr-')
+        response.headers[key] = value if key.start_with?('cmr-')
       end
 
       render json: catalog_response.body, status: catalog_response.status
@@ -42,12 +42,14 @@ class GranulesController < ApplicationController
       yielded_info = false
       at_end = false
       page = 1
+      page_size = @params["page_size"]
       until at_end
         catalog_response = @echo_client.get_granules(@params.merge(page_num: page), @token)
-        at_end = catalog_response.headers['Echo-Cursor-At-End'] == 'true'
+        hits = catalog_response.headers['CMR-Hits'].to_i
 
         if catalog_response.success?
           granules = catalog_response.body['feed']['entry']
+          at_end = page_size * page >= hits
 
           granules.each do |granule|
             unless yielded_info
@@ -97,11 +99,8 @@ class GranulesController < ApplicationController
   private
 
   def granule_params_for_request(request)
-    echo_params = request.request_parameters
-    return echo_params unless enable_cmr?
-    params = echo_params.dup
+    params = request.request_parameters.dup
 
-    # CMR specific params
     if params["cloud_cover"]
       min = params["cloud_cover"]["min"] || ''
       max = params["cloud_cover"]["max"] || ''

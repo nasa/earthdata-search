@@ -6,7 +6,7 @@ class DatasetExtra < ActiveRecord::Base
   store :orbit, coder: JSON
 
   def self.build_echo_client(env=(@echo_env || Rails.configuration.echo_env))
-    Echo::Client.client_for_environment(env, Rails.configuration.services, @enable_cmr)
+    Echo::Client.client_for_environment(env, Rails.configuration.services)
   end
 
   def self.load
@@ -125,11 +125,7 @@ class DatasetExtra < ActiveRecord::Base
         datasets = []
       end
 
-      if response.headers['echo-hits']
-        hits = response.headers['echo-hits'].to_i
-      else
-        hits = response.headers['cmr-hits'].to_i
-      end
+      hits = response.headers['cmr-hits'].to_i
 
       datasets.each do |dataset|
         yield dataset

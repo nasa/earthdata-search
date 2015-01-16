@@ -390,7 +390,7 @@ describe "Granule search filters", reset: false do
       select 'Start Date, Newest first', from: "granule-sort"
       wait_for_xhr
       expect(granule_list).to have_no_content "2000-03-04"
-      expect(granule_list).to have_content "2014-06-12"
+      expect(granule_list).to have_content "2015-01-06"
     end
 
     it "allows sorting by end date ascending"do
@@ -404,7 +404,7 @@ describe "Granule search filters", reset: false do
       select 'End Date, Newest first', from: "granule-sort"
       wait_for_xhr
       expect(granule_list).to have_no_content "2000-03-04"
-      expect(granule_list).to have_content "2014-06-22"
+      expect(granule_list).to have_content "2015-01-06"
     end
 
   end

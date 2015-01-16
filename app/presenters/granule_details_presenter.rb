@@ -3,7 +3,7 @@ class GranuleDetailsPresenter < DetailsPresenter
     @granule = granule
     @granule.id = granule_id
 
-    metadata_url = "https://api.echo.nasa.gov/catalog-rest/echo_catalog/granules/#{@granule.id}"
+    metadata_url = "https://cmr.earthdata.nasa.gov/search/concepts/#{@granule.id}"
     @granule.native_url = "#{metadata_url}"
     @granule.atom_url = "#{metadata_url}.atom"
     @granule.echo10_url = "#{metadata_url}.echo10"

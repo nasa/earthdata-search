@@ -49,7 +49,7 @@ describe "Expired user token", reset: true do
 
       it 'refreshes the token' do
         expect(page).to have_content('ASTER Expedited L1A')
-        expect(page).to have_content('Instruments ASTER (1)')
+        expect(page).to have_content('Instrument ASTER (1)')
         expect(page.get_rack_session_key('expires_in')).to eql(3600)
         expect(page.get_rack_session_key('access_token')).to eql(access_token)
       end

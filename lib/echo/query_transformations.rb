@@ -53,11 +53,7 @@ module Echo
       # to each whitespace-delimited word, allowing for partial matches of each word.
       # "some string" becomes "some% string%"
       def catalog_wildcard(value)
-        if self.class == Echo::CmrClient
-          value.strip.gsub(/\s+/, '* ') + '*'
-        else
-          value.strip.gsub(/\s+/, '% ') + '%'
-        end
+        value.strip.gsub(/\s+/, '* ') + '*'
       end
 
       # Return a copy of value with all catalog-rest wildcards escaped.  If value is an Enumerable,
@@ -65,11 +61,7 @@ module Echo
       def catalog_escape(value)
         if value.is_a? String
           # Escape % and _ with a single \.  No idea why it takes 4 slashes before \1 to output a single slash
-          if self.class == Echo::CmrClient
-            value.gsub(/(%)/, '\\\\\1') # don't escape _ in CMR
-          else
-            value.gsub(/(%|_)/, '\\\\\1')
-          end
+          value.gsub(/(%)/, '\\\\\1') # don't escape _ in CMR
         elsif value.is_a? Hash
           Hash[value.map {|k, v| [k, catalog_escape(v)]}]
         elsif value.is_a? Enumerable

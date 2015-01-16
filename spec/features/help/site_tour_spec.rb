@@ -29,7 +29,7 @@ describe "Site tour", reset: true do
       click_on 'Browse All Data'
 
       expect(page).to have_popover('Browse Datasets')
-      find_link('Platforms').click
+      find_link('Platform').click
 
       expect(page).to have_popover('Browse Datasets')
       find(".facets-item", text: "Terra").click
@@ -54,7 +54,7 @@ describe "Site tour", reset: true do
       click_timeline_date('24', 'Aug')
 
       expect(page).to have_popover('Granule Timeline (Part 3)')
-      drag_temporal(DateTime.new(2014, 8, 23, 0, 0, 0, '+0'), DateTime.new(2014, 8, 25, 0, 0, 0, '+0'))
+      drag_temporal(DateTime.new(2014, 8, 23, 0, 0, 0, '+0'), DateTime.new(2015, 8, 25, 0, 0, 0, '+0'))
 
       expect(page).to have_popover('Back to Datasets')
       granule_list.click_on 'Back to Datasets'

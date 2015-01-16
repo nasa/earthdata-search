@@ -1,41 +1,5 @@
 module Echo
   class EchoClient < BaseClient
-    def get_datasets(options={}, token=nil)
-      format = options.delete(:format) || 'json'
-      get("/catalog-rest/echo_catalog/datasets.#{format}", options_to_dataset_query(options), token_header(token))
-    end
-
-    def get_dataset(id, options={}, token=nil)
-      response = get("/catalog-rest/echo_catalog/datasets/#{id}.echo10", {}, token_header(token))
-      response.body[0].granule_url = @root + "/catalog-rest/echo_catalog/granules" if response.body.is_a?(Array) && response.body.first.respond_to?(:granule_url)
-      response
-    end
-
-    def get_granules(options={}, token=nil)
-      options = options.dup
-      format = options.delete(:format) || 'json'
-      body = options_to_granule_query(options)
-      headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      post("/catalog-rest/echo_catalog/granules.#{format}", body.to_query, headers)
-    end
-
-    def get_granule(id, options={}, token=nil)
-      get("/catalog-rest/echo_catalog/granules/#{id}.echo10", {}, token_header(token))
-    end
-
-    def get_facets(options={}, token=nil)
-      # TODO: Remove true after spatial is fixed for facet searches in catalog rest
-      get("/catalog-rest/search_facet.json", options_to_facet_query(options), token_header(token))
-    end
-
-    def post_timeline(options={}, token=nil)
-      # Implementation of to_query which doesn't sort keys.  Avoids completely destroying current fixtures.
-      options = options_to_granule_query(options)
-      query = options.map {|k, v| v.to_query(k)} * '&'
-      headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      post('/catalog-rest/echo_catalog/granules/timeline.json', query, headers)
-    end
-
     def get_provider_holdings
       get("/catalog-rest/echo_catalog/provider_holdings.json")
     end
@@ -98,13 +62,13 @@ module Echo
       delete("/echo-rest/orders/#{order_id}", {}, token_header(token))
     end
 
-    def create_order(granule_query, option_id, option_name, option_model, user_id, token)
+    def create_order(granule_query, option_id, option_name, option_model, user_id, token, cmr_client)
       # Some submissions fail if we don't strip whitespace between tags (MYD29P1N)
       option_model = option_model.gsub(/>\s+</,"><").strip()
 
       # For testing without submitting a boatload of orders
       #return {order_id: 1234, count: 2000}
-      catalog_response = get_granules(granule_query, token)
+      catalog_response = cmr_client.get_granules(granule_query, token)
       granules = catalog_response.body['feed']['entry']
 
       order_response = post("/echo-rest/orders.json", {order: {}}.to_json, token_header(token))

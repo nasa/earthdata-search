@@ -10,7 +10,7 @@ class DatasetsController < ApplicationController
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
 
       catalog_response.headers.each do |key, value|
-        response.headers[key] = value if key.start_with?('echo-') || key.start_with?('cmr-')
+        response.headers[key] = value if key.start_with?('cmr-')
       end
     end
 
@@ -41,53 +41,33 @@ class DatasetsController < ApplicationController
       # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
       query = request.query_string.gsub('%5B', '[').gsub('%5D', ']').split('&').map {|kv| kv.split('=')}.group_by(&:first)
 
-      if response.body['feed']
-        # CMR Facets
-        facets = Array.wrap(response.body['feed']['facets'])
+      # CMR Facets
+      facets = Array.wrap(response.body['feed']['facets'])
 
-        fields_to_params = {
-          'two_d_coordinate_system_name' => ['2D Coordinate Name', 'two_d_coordinate_system_name[]'],
-          'category' => ['Category Keyword', 'science_keywords[0][category][]'],
-          'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
-          'term' => ['Term Keyword', 'science_keywords[0][term][]'],
-          'variable_level_1' => ['Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'],
-          'variable_level_2' => ['Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'],
-          'variable_level_3' => ['Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'],
-          'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
-        }
+      fields_to_params = {
+        'two_d_coordinate_system_name' => ['2D Coordinate Name', 'two_d_coordinate_system_name[]'],
+        'category' => ['Category Keyword', 'science_keywords[0][category][]'],
+        'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
+        'term' => ['Term Keyword', 'science_keywords[0][term][]'],
+        'variable_level_1' => ['Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'],
+        'variable_level_2' => ['Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'],
+        'variable_level_3' => ['Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'],
+        'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
+      }
 
-        features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
-        facets.unshift(features).flatten!
+      features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
+      facets.unshift(features).flatten!
 
-        results = facets.map do |facet|
-          items = facet['value-counts'].map do |term, count|
-            {'term' => term, 'count' => count}
-          end
-          field = facet['field']
-          params = fields_to_params[field]
-          unless params
-            params = [field.humanize.capitalize, field + '[]']
-          end
-          facet_response(query, items, params.first, params.last)
+      results = facets.map do |facet|
+        items = facet['value-counts'].map do |term, count|
+          {'term' => term, 'count' => count}
         end
-      else
-        facets = response.body.with_indifferent_access
-        # ECHO Facets
-        results = [facet_response(query, [{'term' => 'Subsetting Services'}, {'term' => 'Map Imagery'}, {'term' => 'Near Real Time'}], 'Features', 'features[]'),
-                   facet_response(query, facets['campaign_sn'], 'Campaigns', 'campaign[]'),
-                   facet_response(query, facets['platform_sn'], 'Platforms', 'platform[]'),
-                   facet_response(query, facets['instrument_sn'], 'Instruments', 'instrument[]'),
-                   facet_response(query, facets['sensor_sn'], 'Sensors', 'sensor[]'),
-                   facet_response(query, facets['twod_coord_name'], '2D Coordinate Name', 'two_d_coordinate_system_name[]'),
-                   facet_response(query, facets['category_keyword'], 'Category Keyword', 'science_keywords[0][category][]'),
-                   facet_response(query, facets['topic_keyword'], 'Topic Keyword', 'science_keywords[0][topic][]'),
-                   facet_response(query, facets['term_keyword'], 'Term Keyword', 'science_keywords[0][term][]'),
-                   facet_response(query, facets['variable_level_1_keyword'], 'Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'),
-                   facet_response(query, facets['variable_level_2_keyword'], 'Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'),
-                   facet_response(query, facets['variable_level_3_keyword'], 'Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'),
-                   facet_response(query, facets['detailed_variable_keyword'], 'Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]'),
-                   facet_response(query, facets['processing_level'], 'Processing Level', 'processing_level[]')
-                  ]
+        field = facet['field']
+        params = fields_to_params[field]
+        unless params
+          params = [field.humanize.capitalize, field + '[]']
+        end
+        facet_response(query, items, params.first, params.last)
       end
 
       respond_with(results, status: response.status)
@@ -179,14 +159,10 @@ class DatasetsController < ApplicationController
     nrt = features && features.include?('Near Real Time')
     params = params.merge('collection_data_type' => 'NEAR_REAL_TIME') if nrt
 
-    ### CMR specific params
-    if enable_cmr?
-      if params["two_d_coordinate_system"]
-        old = params.delete("two_d_coordinate_system")
-        params["two_d_coordinate_system_name"] = old["name"]
-      end
+    if params["two_d_coordinate_system"]
+      old = params.delete("two_d_coordinate_system")
+      params["two_d_coordinate_system_name"] = old["name"]
     end
-    ###
 
     params
   end

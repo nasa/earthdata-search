@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   def echo_client
     if @echo_client.nil?
       service_configs = Rails.configuration.services
-      @echo_client = Echo::Client.client_for_environment(echo_env, Rails.configuration.services, enable_cmr?)
+      @echo_client = Echo::Client.client_for_environment(echo_env, Rails.configuration.services)
     end
     @echo_client
   end
@@ -29,18 +29,9 @@ class ApplicationController < ActionController::Base
   end
   helper_method :echo_env
 
-  def enable_cmr?
-    use_cmr = session[:enable_cmr] unless session[:enable_cmr].nil?
-    use_cmr ||= session[:enable_cmr] || request.headers['edsc-use-cmr'] || request.query_parameters.delete('use_cmr') || Rails.configuration.enable_cmr || false
-    @enable_cmr = (use_cmr == true || use_cmr == 'true')
-  end
-  helper_method :enable_cmr?
-
   def set_env_session
     session[:echo_env] = nil
-    session[:enable_cmr] = nil
     session[:echo_env] = echo_env
-    session[:enable_cmr] = enable_cmr?
   end
 
   def refresh_urs_if_needed

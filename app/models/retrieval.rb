@@ -31,7 +31,7 @@ class Retrieval < ActiveRecord::Base
 
   def get_dataset_id(id)
     result = nil
-    client = Echo::Client.client_for_environment(@echo_env || 'ops', Rails.configuration.services, @enable_cmr)
+    client = Echo::Client.client_for_environment(@echo_env || 'ops', Rails.configuration.services)
     response = client.get_datasets(echo_collection_id: [id])
     if response.success?
       entry = response.body['feed']['entry'].first

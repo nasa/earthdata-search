@@ -64,9 +64,9 @@
     }, {
       title: "Browse Datasets"
       content: 'In addition to searching for keywords, you can narrow your search through this list of
-                terms. Click <strong>Platforms</strong> to expand the list of platforms'
+                terms. Click <strong>Platform</strong> to expand the list of platforms'
       wait: true
-      element: '.facet-title a:contains(Platforms)'
+      element: '.facet-title a:contains(Platform)'
     }, {
       title: "Browse Datasets"
       content: 'Now click <strong>Terra</strong> to select the Terra satellite'

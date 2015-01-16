@@ -135,10 +135,11 @@ describe 'Address bar', reset: false do
     before(:all) do
       visit '/search'
       find(".facets-item", text: "EOSDIS").click
+      wait_for_xhr
     end
 
     it 'saves the facet condition in the address bar' do
-      expect(page).to have_query_string('fc=EOSDIS')
+      expect(page).to have_query_string('fpj=EOSDIS')
     end
 
     context 'clearing filters' do
@@ -151,7 +152,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a facet condition' do
-    before(:all) { visit '/search?fc=EOSDIS' }
+    before(:all) { visit '/search?fpj=EOSDIS' }
 
     it 'displays the selected facet condition' do
       within(:css, '.selected-facets-panel') do
@@ -236,7 +237,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the selected granule in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1!-97.725!7!1!0!')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!')
     end
   end
 
@@ -409,7 +410,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1!-97.725!7!1!0!')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-97.72!7!1!0!')
     end
   end
 

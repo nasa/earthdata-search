@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Dataset API Endpoints', reset: false do
   context 'when viewing the dataset details for a dataset with granules' do
     before :all do
-      visit '/search?use_cmr=true'
+      visit '/search'
       wait_for_xhr
       click_link "Temporal"
       fill_in "Start", with: "1985-12-01 00:00:00"

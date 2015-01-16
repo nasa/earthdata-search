@@ -75,12 +75,7 @@ ns.SearchPage = do (ko
 
     _computeSpatialError: =>
       error = @datasets.error()
-      if error?
-        return "Polygon boundaries must not cross themselves" if error.indexOf('ORA-13349') != -1
-        return "Polygon is too large" if error.indexOf('ORA-13367') != -1
-        return "Bounding box east and west values must be different" if error.indexOf('West should not equal east') != -1
-        return "Bounding box north and south values must be different" if error.indexOf('North should be greater than south') != -1
-        return error if error.indexOf('ORA-') != -1
+      return error if error?
       null
 
   current = new SearchPage()

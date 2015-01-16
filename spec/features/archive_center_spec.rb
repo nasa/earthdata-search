@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Archive Center Query Param', reset: false do
   before :all do
-    visit '/search?use_cmr=true&ac=ORNL_DAAC'
+    visit '/search?ac=ORNL_DAAC'
   end
 
   it "returns datasets from the provided archive center" do

@@ -138,21 +138,17 @@ describe "Featured datasets", reset: false do
 
       context "when filtering the first dataset's granules" do
         before :all do
-          first_dataset_result.click
-          wait_for_xhr
           create_point(0, 0)
           wait_for_xhr
         end
 
         it "shows the updated granule list" do
-          expect(page).to have_content('Showing 0 of 0 matching granules')
+          expect(page).to have_content('0 Granules')
         end
 
         context "when clearing filters and returning to the datasets list" do
           before :all do
             page.execute_script('$(".clear-filters").click()')
-            wait_for_xhr
-            click_link 'Back to Datasets'
             wait_for_xhr
           end
 
