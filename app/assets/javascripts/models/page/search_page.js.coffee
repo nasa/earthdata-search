@@ -75,7 +75,12 @@ ns.SearchPage = do (ko
 
     _computeSpatialError: =>
       error = @datasets.error()
-      return error if error?
+      if error?
+        for e in error
+          console.log "error:" + e
+          return e if e? && (e.indexOf('polygon') != -1 ||
+                              e.indexOf('box') != -1 ||
+                              e.indexOf('point') != -1)
       null
 
   current = new SearchPage()

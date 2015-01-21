@@ -60,7 +60,7 @@ class DatasetsController < ApplicationController
 
       results = facets.map do |facet|
         items = facet['value-counts'].map do |term, count|
-          {'term' => term, 'count' => count}
+          {'term' => term.strip, 'count' => count}
         end
         field = facet['field']
         params = fields_to_params[field]

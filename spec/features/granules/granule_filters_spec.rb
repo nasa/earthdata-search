@@ -9,6 +9,11 @@ describe "Granule search filters", reset: false do
     # Labs parameter enables additional attribute searching
     load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
 
+    temporal_start_date = DateTime.new(1999, 12, 1, 0, 0, 0, '+0')
+    temporal_stop_date = DateTime.new(2015, 1, 1, 0, 0, 0, '+0')
+    set_temporal(temporal_start_date, temporal_stop_date)
+    wait_for_xhr
+
     first_project_dataset.click_link "Show granule filters"
 
     before_granule_count = 0
@@ -390,7 +395,7 @@ describe "Granule search filters", reset: false do
       select 'Start Date, Newest first', from: "granule-sort"
       wait_for_xhr
       expect(granule_list).to have_no_content "2000-03-04"
-      expect(granule_list).to have_content "2015-01-06"
+      expect(granule_list).to have_content "2014-12-31"
     end
 
     it "allows sorting by end date ascending"do
@@ -404,7 +409,7 @@ describe "Granule search filters", reset: false do
       select 'End Date, Newest first', from: "granule-sort"
       wait_for_xhr
       expect(granule_list).to have_no_content "2000-03-04"
-      expect(granule_list).to have_content "2015-01-06"
+      expect(granule_list).to have_content "2014-12-31"
     end
 
   end
