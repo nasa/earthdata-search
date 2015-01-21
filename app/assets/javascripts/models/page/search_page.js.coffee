@@ -77,7 +77,6 @@ ns.SearchPage = do (ko
       error = @datasets.error()
       if error?
         for e in error
-          console.log "error:" + e
           return e if e? && (e.indexOf('polygon') != -1 ||
                               e.indexOf('box') != -1 ||
                               e.indexOf('point') != -1)
