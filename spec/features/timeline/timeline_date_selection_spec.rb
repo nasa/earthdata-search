@@ -21,8 +21,6 @@ describe "Timeline date selection", reset: false do
   temporal_stop_date = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
 
   before :all do
-    # Give the window a fixed size
-    page.driver.resize_window(1280, 1024)
     load_page :search, focus: 'C179003030-ORNL_DAAC'
 
     wait_for_xhr

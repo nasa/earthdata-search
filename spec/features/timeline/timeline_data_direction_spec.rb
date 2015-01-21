@@ -2,8 +2,6 @@ require "spec_helper"
 
 describe "Timeline data direction", reset: false do
   before :all do
-    # Give the window a fixed size
-    page.driver.resize_window(1280, 1024)
     load_page :search, focus: 'C179003030-ORNL_DAAC'
 
     wait_for_xhr

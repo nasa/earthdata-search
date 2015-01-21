@@ -3,11 +3,6 @@
 require 'spec_helper'
 
 describe 'Address bar', reset: false do
-
-  before :all do
-    page.driver.resize_window(1280, 1024)
-  end
-
   def query_string
     URI.parse(current_url).query
   end
@@ -232,12 +227,15 @@ describe 'Address bar', reset: false do
   context "when viewing a granule's details" do
     before :all do
       visit '/search/datasets'
+      wait_for_xhr
       first_dataset_result.click
+      wait_for_xhr
       first_granule_list_item.click_link 'View details'
+      wait_for_xhr
     end
 
     it 'saves the selected granule in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC')
     end
   end
 
@@ -406,11 +404,13 @@ describe 'Address bar', reset: false do
   context "when selecting a granule" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC'
+      wait_for_xhr
       second_granule_list_item.click
+      wait_for_xhr
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-97.72!7!1!0!')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC')
     end
   end
 

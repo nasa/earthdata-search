@@ -7,6 +7,10 @@ describe 'Map Zooming', reset: false do
     visit '/search'
   end
 
+  after :all do
+    page.driver.resize_window(1280, 1024)
+  end
+
   # context 'when zooming with the mouse scroll wheel' do
   #   before :all do
   #     # zoom in with mouse

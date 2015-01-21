@@ -3,8 +3,6 @@ require "spec_helper"
 describe "Dataset results", reset: false do
   before :all do
     load_page :search
-    # scrolling in these specs doesn't work unless the window is resized
-    page.driver.resize_window(1280, 1024)
   end
 
   after :each do

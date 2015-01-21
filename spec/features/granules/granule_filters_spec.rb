@@ -23,6 +23,10 @@ describe "Granule search filters", reset: false do
     end
   end
 
+  after :all do
+    page.driver.resize_window(1280, 1024)
+  end
+
   before :each do
     wait_for_xhr
   end
