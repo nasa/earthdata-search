@@ -79,7 +79,6 @@ describe "Data Access workflow", reset: false do
 
       context "when viewing granule list" do
         before :all do
-          page.driver.resize_window(1280, 1024)
           click_link 'Expand List'
           wait_for_xhr
         end

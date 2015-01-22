@@ -118,7 +118,7 @@ describe "Spatial" do
       end
 
       it "updates the dataset filters using the new point selection" do
-        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 1.0")
+        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
       end
     end
 
@@ -144,18 +144,6 @@ describe "Spatial" do
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
-    it "displays errors for invalid north/south bounding boxes" do
-      create_bounding_box(0, 0, 0, 10)
-      wait_for_xhr
-      expect(page).to have_content("Bounding box north and south values must be different")
-    end
-
-    it "displays errors for invalid east/west bounding boxes" do
-      create_bounding_box(0, 10, 10, 10)
-      wait_for_xhr
-      expect(page).to have_content("Bounding box east and west values must be different")
-    end
-
     context "changing the bounding box selection" do
       before(:each) do
         create_bounding_box(0, 0, 10, 10)
@@ -165,7 +153,7 @@ describe "Spatial" do
       end
 
       it "updates the dataset filters using the new bounding box selection" do
-        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 1.0")
+        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
       end
     end
 
@@ -241,7 +229,7 @@ describe "Spatial" do
     it "displays errors for invalid polygons" do
       create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
       wait_for_xhr
-      expect(page).to have_content("Polygon boundaries must not cross themselves")
+      expect(page).to have_content("The polygon boundary intersected itself at the following points:")
     end
 
     context "changing the polygon selection" do
@@ -253,7 +241,7 @@ describe "Spatial" do
       end
 
       it "updates the dataset filters using the new bounding box selection" do
-        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 1.0")
+        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
       end
     end
 

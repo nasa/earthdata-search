@@ -11,12 +11,13 @@ describe 'Dataset details', reset: false do
     within('#dataset-details') do
       expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
       expect(page).to have_content('Archive Center: LPDAAC')
-      expect(page).to have_content('Processing Center: EDC')
+      expect(page).to have_content('Processing Center: LPDAAC')
       expect(page).to have_content('Short Name: AST_L1AE')
       expect(page).to have_content('Version: 3')
-      expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (phone) 605-594-6963 (fax) edc@eos.nasa.gov')
+      expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (phone) 605-594-6963 (fax) lpdaac@usgs.gov')
       expect(page).to have_content('Spatial Extent: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
-      expect(page).to have_content('Temporal Extent: 1999-12-18T00:00:00Z to 2014-12-18T00:00:00Z')
+      expect(page).to have_content('Temporal Extent:
+      1999-12-18T00:00:00Z to 2020-12-18T00:00:00Z')
       expect(page).to have_content('Science Keywords: EARTH SCIENCE >> SPECTRAL/ENGINEERING >> INFRARED WAVELENGTHS')
     end
   end
@@ -47,7 +48,7 @@ describe 'Dataset details', reset: false do
   context "when selecting a dataset with bounding box spatial" do
     before :all do
       load_page :search
-      fill_in 'keywords', with: 'C179003553-ORNL_DAAC'
+      fill_in 'keywords', with: 'C179002945-ORNL_DAAC'
       wait_for_xhr
       first_dataset_result.click_link('View details')
     end

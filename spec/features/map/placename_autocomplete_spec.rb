@@ -8,7 +8,7 @@ def choose_suggestion(text)
 end
 
 describe "Place name autocomplete" do
-  texas_constraint = 'bounding_box:-106.6456527709961,25.8371639251709:-93.5080337524414,36.50070571899414'
+  texas_constraint = 'bounding_box:-106.645646,25.837163999999998:-93.508039,36.500704'
   map_bounds = "31.166015625!-99.615234375!5!1"
 
   before do

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Dataset Granule Count", reset: false do
   before :all do
     Capybara.reset_sessions!
-    visit '/search?use_cmr=true&q=C16893867-LPDAAC'
+    visit '/search?q=C16893867-LPDAAC'
     wait_for_xhr
   end
 

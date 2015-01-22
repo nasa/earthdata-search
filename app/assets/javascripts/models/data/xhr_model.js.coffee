@@ -119,12 +119,7 @@ ns.XhrModel = do (ko
 
           fetched = results?.length ? 0
           hits = 0
-          if xhr.getResponseHeader('echo-hits')?
-            hits = parseInt(xhr.getResponseHeader('echo-hits'), 10)
-            @hasNextPage(xhr.getResponseHeader('echo-cursor-at-end') == 'false')
-            @hitsEstimated(xhr.getResponseHeader('echo-hits-estimated') == 'true')
-
-          else if xhr.getResponseHeader('cmr-hits')
+          if xhr.getResponseHeader('cmr-hits')
             hits = parseInt(xhr.getResponseHeader('cmr-hits'), 10)
             if data.page_size && data.page_num
               @hasNextPage(data.page_size * data.page_num < hits)
@@ -156,6 +151,6 @@ ns.XhrModel = do (ko
         edsc.banner(null, 'Session has ended', 'Please sign in')
 
       errors = response.responseJSON?.errors
-      @error(errors?.error)
+      @error(errors) if errors?
 
   exports = XhrModel

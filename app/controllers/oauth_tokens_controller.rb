@@ -10,7 +10,7 @@ class OauthTokensController < ApplicationController
         Rails.logger.error("Oauth error: #{response.body}")
       end
       # useful when needing to replace the application.yml tokens
-      #Rails.logger.info "Token: #{token.inspect}"
+      # Rails.logger.info "Token: #{response.body.inspect}"
     end
 
     redirect_to redirect_from_urs

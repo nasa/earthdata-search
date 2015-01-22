@@ -30,7 +30,7 @@ module Echo
       faraday_response = connection.send(method, url, params) do |req|
         req.headers['Content-Type'] = 'application/json' unless method == :get
         req.headers['Client-Id'] = CLIENT_ID
-        req.headers['Echo-ClientId'] = CLIENT_ID
+        req.headers['Echo-ClientId'] = CLIENT_ID unless self.class == CmrClient
         headers.each do |header, value|
           req.headers[header] = value
         end

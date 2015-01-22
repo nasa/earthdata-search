@@ -36,6 +36,7 @@ describe "Add to project", reset: false do
       before(:all) do
         within '#dataset-results-list > :first-child' do
           click_link "Add dataset to the current project"
+          wait_for_xhr
         end
       end
 

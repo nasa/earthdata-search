@@ -22,7 +22,7 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
         owner: this
 
       @fixOverlayHeight = ko.computed =>
-        $('.master-overlay').masterOverlay('contentHeightChanged') if @selected()?.detailsLoaded?()
+        $('.master-overlay')?.masterOverlay('contentHeightChanged') if @selected()?.detailsLoaded?()
 
       @serialized = ko.computed
         read: @_readSerialized

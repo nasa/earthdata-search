@@ -7,8 +7,6 @@ describe "Temporal constraint disambiguation", reset: true do
   temporal_stop_date = DateTime.new(1989, 1, 1, 0, 0, 0, '+0')
 
   before :each do
-    # Give the window a fixed size
-    page.driver.resize_window(1280, 1024)
     load_page :search, focus: 'C179003030-ORNL_DAAC'
     login
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Single Granule Data Access', reset: false do
-  downloadable_dataset_id = 'C183451156-GSFCS4PA'
+  downloadable_dataset_id = 'C179002914-ORNL_DAAC'
 
   context 'when the user is not logged in' do
     before(:each) do
@@ -38,7 +38,7 @@ describe 'Single Granule Data Access', reset: false do
 
     it 'limits the data access to only the selected granule' do
       click_link 'Expand List'
-      expect(page).to have_content 'AIRS3STM.005:AIRS.2014.05.01.L3.RetStd_IR031.v5.0.14.0.G14153132853.hdf'
+      expect(page).to have_content 'FIFE_RAIN_30M.72981621.r30'
     end
   end
 

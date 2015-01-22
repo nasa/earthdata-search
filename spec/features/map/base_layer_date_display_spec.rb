@@ -11,8 +11,6 @@ describe "Base layer date display", reset: false do
   stop_date = DateTime.new(2014, 2, 20, 16, 30, 0, '+0')
 
   before :all do
-    # Give the window a fixed size
-    page.driver.resize_window(1280, 1024)
     load_page :search, focus: 'C179003030-ORNL_DAAC'
   end
 

@@ -33,7 +33,8 @@ class DataAccessController < ApplicationController
                                                     method['method'],
                                                     method['model'],
                                                     get_user_id,
-                                                    token)
+                                                    token,
+                                                    echo_client)
           method[:order_id] = order_response[:order_id]
         end
       end
@@ -116,12 +117,8 @@ class DataAccessController < ApplicationController
 
       result = {}
       if granules.size > 0
+        hits = catalog_response.headers['cmr-hits'].to_i
 
-        if catalog_response.headers['echo-hits']
-          hits = catalog_response.headers['echo-hits'].to_i
-        else
-          hits = catalog_response.headers['cmr-hits'].to_i
-        end
 
         sizeMB = granules.reduce(0) {|size, granule| size + granule['granule_size'].to_f}
         size = (1024 * 1024 * sizeMB / granules.size) * hits
@@ -149,7 +146,7 @@ class DataAccessController < ApplicationController
       end
 
       catalog_response.headers.each do |key, value|
-        response.headers[key] = value if key.start_with?('echo-') || key.start_with?('cmr-')
+        response.headers[key] = value if key.start_with?('cmr-')
       end
 
       respond_with(result, status: catalog_response.status)

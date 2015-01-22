@@ -11,6 +11,7 @@ describe "Displaying system errors", reset: false do
   context 'when a system error occurs' do
     before :all do
       fill_in 'keywords', with: 'trigger500'
+      wait_for_xhr
     end
 
     it "displays an error message containing the type of request that caused the error" do

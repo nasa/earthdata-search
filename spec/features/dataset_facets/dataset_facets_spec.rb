@@ -16,20 +16,20 @@ describe "Dataset Facets", reset: false do
       expect(search_time_element.text).to match(/Search Time: \d+\.\d+s/)
     end
 
-    it "shows the first Campaign facet" do
-      expect(page).to have_content("Campaigns 2013_AN_NASA")
+    it "shows the first Project facet" do
+      expect(page).to have_content("Project 2009_AN_NASA")
     end
 
     it "shows the first Platforms facet" do
-      expect(page).to have_content("Platforms AIRCRAFT")
+      expect(page).to have_content("Platform AIRCRAFT")
     end
 
     it "shows the first Instruments facet" do
-      expect(page).to have_content("Instruments AIRS")
+      expect(page).to have_content("Instrument AIRS")
     end
 
     it "shows the first Sensors facet" do
-      expect(page).to have_content("Sensors AA")
+      expect(page).to have_content("Sensor AA")
     end
 
     it "shows the first 2D Coordinate Name facet" do
@@ -53,7 +53,7 @@ describe "Dataset Facets", reset: false do
     end
 
     it "shows the first Variable Level 2 Keyword facet" do
-      expect(page).to have_content("Variable Level 2 Keyword BIODIVERSITY FUNCTIONS")
+      expect(page).to have_content("Variable Level 2 Keyword ALBATROSSES/PETRELS AND ALLIES")
     end
 
     it "shows the first Variable Level 3 Keyword facet" do
@@ -61,21 +61,21 @@ describe "Dataset Facets", reset: false do
     end
 
     it "shows the first Detailed Variable Keyword facet" do
-      expect(page).to have_content("Detailed Variable Keyword AEROSOL ABSORPTION OPTICAL DEPTH")
+      expect(page).to have_content("Detailed Variable Keyword 2.0 * TB(19V) - TB(21V)")
     end
 
     it "shows the first Processing Level facet" do
-      expect(page).to have_content("Processing Level 0")
+      expect(page).to have_content("Processing level 0")
     end
 
     it "collapses and expands facet lists by type" do
-      expect(page).to have_css("#collapse1.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-hide")
 
-      find(".facet-title", text: "Campaigns").click
-      expect(page).to have_css("#collapse1.facets-list-show")
+      find(".facet-title", text: "Project").click
+      expect(page).to have_css("#collapse2.facets-list-show")
 
-      find(".facet-title", text: "Campaigns").click
-      expect(page).to have_css("#collapse1.facets-list-hide")
+      find(".facet-title", text: "Project").click
+      expect(page).to have_css("#collapse2.facets-list-hide")
     end
   end
 
@@ -106,7 +106,7 @@ describe "Dataset Facets", reset: false do
     end
 
     it "shows the user which facets have been applied to the query" do
-      # select a campaign
+      # select a project
       find(".facets-item", text: "EOSDIS").click
       wait_for_xhr
       within(:css, '.selected-facets-panel') do
@@ -159,7 +159,7 @@ describe "Dataset Facets", reset: false do
     it "hides empty facet lists" do
       expect(page).to have_css(".panel.processing-level .panel-heading")
 
-      find(".campaigns .facets-item", text: "AQUA").click
+      find(".project .facets-item", text: "AQUA").click
 
       expect(page).to have_no_css(".panel.processing-level .panel-heading")
     end
@@ -168,14 +168,14 @@ describe "Dataset Facets", reset: false do
       expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
       expect(page).to have_no_content("AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005")
 
-      find(".campaigns .facets-item", text: "AQUA").click
+      find(".project .facets-item", text: "AQUA").click
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
       expect(page).to have_content("AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005")
     end
 
     it "updates facet lists" do
-      within(:css, ".campaigns") do
+      within(:css, ".project") do
         expect(page).to have_content("AQUA")
         expect(page).to have_content("AURA")
 
@@ -186,24 +186,24 @@ describe "Dataset Facets", reset: false do
     end
 
     it "keeps facet lists collapsed after selecting and removing a facet" do
-      expect(page).to have_css("#collapse1.facets-list-hide")
-      find(".facet-title", text: "Campaigns").click
-      expect(page).to have_css("#collapse1.facets-list-show")
+      expect(page).to have_css("#collapse2.facets-list-hide")
+      find(".facet-title", text: "Project").click
+      expect(page).to have_css("#collapse2.facets-list-show")
 
-      within(:css, ".platforms") do
+      within(:css, ".platform") do
         find(".facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
-      expect(page).to have_css("#collapse1.facets-list-show")
+      expect(page).to have_css("#collapse2.facets-list-show")
 
       within(:css, ".selected-facets-panel") do
         find(".facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
       expect(page).to have_no_css(".selected-facets-panel.facets")
-      expect(page).to have_css("#collapse1.facets-list-show")
-      find(".facet-title", text: "Campaigns").click
-      expect(page).to have_css("#collapse1.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-show")
+      find(".facet-title", text: "Project").click
+      expect(page).to have_css("#collapse2.facets-list-hide")
     end
   end
 

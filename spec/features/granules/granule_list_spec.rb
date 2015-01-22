@@ -14,7 +14,7 @@ describe "Granule list", reset: false do
   end
 
   context "for all datasets with granules" do
-    use_dataset 'C14758250-LPDAAC_ECS', 'ASTER L1A'
+    use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
     hook_granule_results
 
     it "provides a button to get dataset details" do
@@ -40,7 +40,7 @@ describe "Granule list", reset: false do
 
       it "displays the dataset details" do
         expect(page).to have_visible_dataset_details
-        expect(page).to have_content('lpdaac@eos.nasa.gov')
+        expect(page).to have_content('ornldaac@ornl.gov')
       end
 
       it "displays back navigation with the appropriate text" do
@@ -104,7 +104,7 @@ describe "Granule list", reset: false do
       end
 
       it "removes the selected granule from the list" do
-        expect(page).to have_no_content('SC:AST_L1A.003:2132587502')
+        expect(page).to have_no_content('FIFE_STRM_15M.80611715.s15')
         expect(page).to have_css('#granule-list .panel-list-item', count: 19)
       end
 
@@ -122,7 +122,7 @@ describe "Granule list", reset: false do
         end
 
         it "shows the excluded granule in the granule list" do
-          expect(page).to have_content('SC:AST_L1A.003:2132587502')
+          expect(page).to have_content('FIFE_STRM_15M.80611715.s15')
           expect(page).to have_css('#granule-list .panel-list-item', count: 20)
         end
 
@@ -156,7 +156,7 @@ describe "Granule list", reset: false do
   end
 
   context "for datasets with many granule results" do
-    use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+    use_dataset 'C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)'
 
     context "clicking on a dataset result" do
       hook_granule_results(:each)
@@ -164,7 +164,7 @@ describe "Granule list", reset: false do
       it "displays the first granule results in a list that pages by 20" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 20)
         page.execute_script "$('#granule-list .master-overlay-content')[0].scrollTop = 10000"
-        expect(page).to have_css('#granule-list .panel-list-item', count: 39)
+        expect(page).to have_css('#granule-list .panel-list-item', count: 40)
         expect(page).to have_no_content('Loading granules...')
       end
     end
