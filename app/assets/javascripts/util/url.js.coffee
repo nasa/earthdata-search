@@ -1,4 +1,5 @@
 #= require util/xhr
+#= require util/metrics
 
 this.edsc.util.url = do(window
                         document
@@ -8,6 +9,7 @@ this.edsc.util.url = do(window
                         deparam = @edsc.util.deparam
                         config = @edsc.config
                         ajax = @edsc.util.xhr.ajax
+                        metrics = @edsc.util.metrics
                         ) ->
 
   class ParamNameCompressor
@@ -228,6 +230,7 @@ this.edsc.util.url = do(window
       History.pushState(data, title, path)
 
   saveState = (path, state, push = false, workspaceName = null) ->
+    metrics.createPageView(path, state)
     paramStr = param(compress(state)).replace(/%5B/g, '[').replace(/%5D/g, ']')
     paramStr = '?' + paramStr if paramStr.length > 0
 
