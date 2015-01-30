@@ -43,23 +43,16 @@ this.edsc.util.metrics = do ->
       ga('set', 'dimension5', d5)
 
       # Dimension 6, Search facets
+      facet_names = ['features', 'archive_center', 'project', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'processing_level_id']
       facets = []
-      facets.push("Features/#{state.features.join('Features/')}") if state.features?
-      facets.push("Archive Center/#{state.archive_center.join('Archive Center/')}") if state.archive_center?
-      facets.push("Project/#{state.project.join('Project/')}") if state.project?
-      facets.push("Platform/#{state.platform.join('Platform/')}") if state.platform?
-      facets.push("Instrument/#{state.instrument.join('Instrument/')}") if state.instrument?
-      facets.push("Sensor/#{state.sensor.join('Sensor/')}") if state.sensor?
-      facets.push("2D Coordinate Name/#{state.two_d_coordinate_system_name.join('2D Coordinate Name/')}") if state.two_d_coordinate_system_name?
-      facets.push("Processing Level/#{state.sensor.join('Processing Level/')}") if state.sensor?
+      for name in facet_names when state[name]?
+        facets.push("#{name}/#{value}") for value in state[name]
+
       if state.science_keywords?
-        facets.push("Category Keyword/#{state.science_keywords[0].category.join('Category Keyword/')}") if state.science_keywords[0].category?
-        facets.push("Topic Keyword/#{state.science_keywords[0].topic.join('Topic Keyword/')}") if state.science_keywords[0].topic?
-        facets.push("Term Keyword/#{state.science_keywords[0].term.join('Term Keyword/')}") if state.science_keywords[0].term?
-        facets.push("Variable Level 1 Keyword/#{state.variable_level_1.join('Variable Level 1 Keyword/')}") if state.variable_level_1?
-        facets.push("Variable Level 2 Keyword/#{state.variable_level_2.join('Variable Level 2 Keyword/')}") if state.variable_level_2?
-        facets.push("Variable Level 3 Keyword/#{state.variable_level_3.join('Variable Level 3 Keyword/')}") if state.variable_level_3?
-        facets.push("Detailed Variable Keyword/#{state.detailed_variable.join('Detailed Variable Keyword/')}") if state.detailed_variable?
+        keyword_names = ['category', 'topic', 'term', 'variable_level_1', 'variable_level_2', 'variable_level_3', 'detailed_variable']
+        for name in keyword_names when state.science_keywords[0][name]?
+          facets.push("#{name}/#{value}") for value in state.science_keywords[0][name]
+
       ga('set', 'dimension6', if facets.length > 0 then facets.join(' ') + ' ' else null)
 
 
