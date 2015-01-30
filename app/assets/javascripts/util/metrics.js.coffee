@@ -7,9 +7,6 @@ this.edsc.util.metrics = do ->
 
   createPageView: (path, state) ->
     if ga?
-      console.log "Path: #{path}"
-      console.log "State: #{JSON.stringify(state)}"
-
       # set custom dimensions to track other stuff
       # Dimension 1, keyword search
       ga('set', 'dimension1', if state.free_text? then state.free_text.toLowerCase() else null)

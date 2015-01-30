@@ -230,9 +230,15 @@ this.edsc.util.url = do(window
       History.pushState(data, title, path)
 
   saveState = (path, state, push = false, workspaceName = null) ->
-    metrics.createPageView(path, state)
     paramStr = param(compress(state)).replace(/%5B/g, '[').replace(/%5D/g, ']')
     paramStr = '?' + paramStr if paramStr.length > 0
+
+    regex = /[?&]m=[^&]*|[?&]tl=[^&]*/
+    tempNewParams = paramStr.replace(regex, '')
+    tempOldParams = "#{realQuery()}".replace(regex, '')
+    tempOldParams = '?' + tempOldParams if tempNewParams[0] == '?'
+    unless tempOldParams == tempNewParams
+      metrics.createPageView(path, state)
 
     path = path.replace(/^\/#/, '/') # IE 9 bug with URL hashes
     path = path + paramStr
