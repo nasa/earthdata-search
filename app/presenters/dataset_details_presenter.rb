@@ -19,8 +19,6 @@ class DatasetDetailsPresenter < DetailsPresenter
       @dataset.science_keywords = Array.wrap(dataset_xml['ScienceKeywords']['ScienceKeyword']) if dataset_xml['ScienceKeywords']
       if dataset_xml['OnlineAccessURLs']
         @dataset.online_access_urls = Array.wrap(dataset_xml['OnlineAccessURLs']['OnlineAccessURL'])
-      else
-        @dataset.online_access_urls = []
       end
       if dataset_xml['OnlineResources']
         online_resources = Array.wrap(dataset_xml['OnlineResources']['OnlineResource'])
@@ -50,6 +48,12 @@ class DatasetDetailsPresenter < DetailsPresenter
     @dataset.echo10_url = "#{metadata_url}.echo10"
     @dataset.iso19115_url = "#{metadata_url}.iso19115"
     @dataset.smap_iso_url = nil #"#{metadata_url}.smap_iso"
+
+    # Set description to URL if URLDescription doesn't exist
+    @dataset.online_access_urls = [] if @dataset.online_access_urls.nil?
+    @dataset.online_access_urls.each do |url|
+      url['description'] = url['URLDescription'].nil? ? url['URL'] : url['URLDescription'].capitalize
+    end
   end
 
   def associated_difs(dif_id)
