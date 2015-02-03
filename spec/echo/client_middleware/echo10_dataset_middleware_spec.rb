@@ -137,7 +137,8 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "online_access_urls" => [
             {
               "URL" => "http://www.example.com",
-              "URLDescription" => ""
+              "URLDescription" => "",
+              "description" => ""
             }
           ],
           "online_resources" => [
@@ -215,7 +216,8 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
             "OnlineAccessURLs"=>{
               "OnlineAccessURL"=>{
                 "URL"=>"http://www.example.com",
-                "URLDescription"=>""
+                "URLDescription"=>"",
+                "description"=>""
               }
             },
             "OnlineResources"=>{

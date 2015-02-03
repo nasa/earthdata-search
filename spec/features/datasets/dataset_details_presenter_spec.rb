@@ -62,4 +62,11 @@ describe DatasetDetailsPresenter do
     @dataset.contacts.should eq([{:name=>"PLEASE CONTACT ORNL DAAC User Services", :phones=>["(865) 241-3952 (Direct Line)", "(865) 574-4665 (Fax)"], :email=>"ornldaac@ornl.gov"}])
   end
 
+  it "uses the Online Access URL as description if no description exists" do
+    online_access_urls = [{"URL"=>"http://www.example.com"}]
+    @dataset.online_access_urls = online_access_urls
+    presenter = DatasetDetailsPresenter.new(@dataset)
+    expect(@dataset.online_access_urls).to eq([{"URL"=>"http://www.example.com", "description"=>"http://www.example.com"}])
+  end
+
 end
