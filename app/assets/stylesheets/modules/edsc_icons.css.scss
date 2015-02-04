@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'edsc';
-	src:url('edsc.eot?tgmgm2');
-	src:url('edsc.eot?#iefixtgmgm2') format('embedded-opentype'),
-		url('edsc.woff?tgmgm2') format('woff'),
-		url('edsc.ttf?tgmgm2') format('truetype'),
-		url('edsc.svg?tgmgm2#edsc') format('svg');
+	src:font-url('edsc.eot?tgmgm2');
+	src:font-url('edsc.eot?#iefixtgmgm2') format('embedded-opentype'),
+		font-url('edsc.woff?tgmgm2') format('woff'),
+		font-url('edsc.ttf?tgmgm2') format('truetype'),
+		font-url('edsc.svg?tgmgm2#edsc') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
