@@ -1,4 +1,4 @@
-do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@edsc.util.string, dateUtil=@edsc.util.date) ->
+do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, string=@edsc.util.string, dateUtil=@edsc.util.date, metrics=@edsc.util.metrics) ->
   # Height for the top area, where arrows are drawn for date selection
   TOP_HEIGHT = 19
 
@@ -412,10 +412,12 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       Math.floor((p - originPx) * scale + start)
 
     zoomIn: ->
-     @_deltaZoom(-1)
+      metrics.createTimelineEvent('Button Zoom')
+      @_deltaZoom(-1)
 
     zoomOut: ->
-     @_deltaZoom(1)
+      metrics.createTimelineEvent('Button Zoom')
+      @_deltaZoom(1)
 
     zoom: (arg) ->
       if arg?
@@ -493,6 +495,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       right = 39
       down = 40
       if focus && (key == left || key == right)
+        metrics.createTimelineEvent('Left/Right Arrow')
         zoom = @_zoom - 1
 
         focusEnd = @_roundTime(focus, zoom, 1)
@@ -526,6 +529,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
     _onLabelClick: (e) =>
       return if @_dragging
+      metrics.createTimelineEvent('Click Label')
       label = e.currentTarget
       [start, stop] = @_timespanForLabel(label)
       if @_canFocusTimespan(start, stop)
@@ -605,7 +609,9 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         [left, right] = @_createSelectionRegion(overlay, end, end, @globalTemporal, [0...@_datasets.length])
 
       draggable.on 'drag', (e) -> right._onUpdate(e)
-      draggable.on 'dragend', (e) -> right._onEnd(e)
+      draggable.on 'dragend', (e) ->
+        metrics.createTimelineEvent('Created Temporal')
+        right._onEnd(e)
 
     _setupScrollBehavior: (svg) ->
       allowWheel = true
@@ -625,9 +631,11 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         return unless allowWheel
         if Math.abs(deltaY) > Math.abs(deltaX)
           levels = if deltaY > 0 then -1 else 1
+          metrics.createTimelineEvent('Scroll Zoom')
           @_deltaZoom(levels, time)
           rateLimit()
         else if deltaX != 0
+          metrics.createTimelineEvent('Scroll Pan')
           @_pan(deltaX)
 
       # Safari
@@ -670,6 +678,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         @_dragging = true if Math.abs(dx) > 5
         @_pan(dx, false)
       draggable.on 'dragend', ({dx}) =>
+        metrics.createTimelineEvent('Dragging Pan')
         @_dragging = false
         @_pan(dx)
 

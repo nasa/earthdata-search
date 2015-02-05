@@ -63,3 +63,6 @@ this.edsc.util.metrics = do ->
     if ga?
       title = e.currentTarget.title
       ga('send', 'event', 'button', 'click', title) if title?
+
+  createTimelineEvent: (label) ->
+    ga('send', 'event', 'button', 'click', "Timeline #{label}") if ga?
