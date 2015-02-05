@@ -207,7 +207,7 @@ describe 'Address bar', reset: false do
   context "when viewing a dataset's details" do
     before(:all) do
       visit '/search/datasets'
-      first_dataset_result.click_link('View details')
+      first_dataset_result.click_link('View dataset details')
     end
 
     it 'saves the selected dataset in the address bar' do
@@ -230,7 +230,7 @@ describe 'Address bar', reset: false do
       wait_for_xhr
       first_dataset_result.click
       wait_for_xhr
-      first_granule_list_item.click_link 'View details'
+      first_granule_list_item.click_link 'View granule details'
       wait_for_xhr
     end
 
@@ -259,7 +259,7 @@ describe 'Address bar', reset: false do
       second_project_dataset.click_link "Show granule filters"
       select 'Day only', from: "day-night-select"
       second_project_dataset.click_link "Hide granule filters"
-      first_project_dataset.click_link "View details"
+      first_project_dataset.click_link "View dataset details"
       wait_for_xhr
       expect(page).to have_visible_dataset_details
     end

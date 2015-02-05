@@ -1,4 +1,9 @@
-do (document, window, $ = jQuery, config = @edsc.config) ->
+do (document
+    window
+    $ = jQuery
+    config = @edsc.config
+    metrics = @edsc.util.metrics
+    ) ->
 
   $(document).on 'click', 'a[data-pulse]', ->
     $dest = $($(this).attr('data-pulse'))
@@ -12,6 +17,9 @@ do (document, window, $ = jQuery, config = @edsc.config) ->
     $(this).closest('tr').remove()
     if $('tbody tr').length == 0
       $('.data-access-content').html('<p>No saved projects</p>')
+
+  $(document).on 'click', 'a, button', (e) ->
+    metrics.createEvent(e)
 
   $(document).on 'click', 'a[href="#"]', (e) ->
     e.preventDefault()

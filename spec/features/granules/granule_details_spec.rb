@@ -12,7 +12,7 @@ describe 'Granule details', reset: false do
     fill_in 'granule_id', with: 'FIFE_STRM_15M.80611715.s15'
     click_button 'Apply'
     wait_for_xhr
-    first_granule_list_item.click_link('View details')
+    first_granule_list_item.click_link('View granule details')
     wait_for_xhr
     within('#granule-details') do
       expect(page).to have_content('GranuleUR: FIFE_STRM_15M.80611715.s15

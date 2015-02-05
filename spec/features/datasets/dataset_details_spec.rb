@@ -6,7 +6,7 @@ describe 'Dataset details', reset: false do
     load_page :search
     fill_in 'keywords', with: 'AST_L1AE'
     expect(page).to have_content('ASTER Expedited L1A')
-    first_dataset_result.click_link('View details')
+    first_dataset_result.click_link('View dataset details')
     wait_for_xhr
     within('#dataset-details') do
       expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
@@ -26,7 +26,7 @@ describe 'Dataset details', reset: false do
     before :all do
       load_page :search
       expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
-      first_dataset_result.click_link('View details')
+      first_dataset_result.click_link('View dataset details')
     end
 
     it "displays the dataset's spatial bounds on the map" do
@@ -50,7 +50,7 @@ describe 'Dataset details', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C179002945-ORNL_DAAC'
       wait_for_xhr
-      first_dataset_result.click_link('View details')
+      first_dataset_result.click_link('View dataset details')
     end
 
     it "displays the dataset's spatial bounds on the map" do
@@ -68,7 +68,7 @@ describe 'Dataset details', reset: false do
       load_page :search
       fill_in 'keywords', with: 'NSIDC-0022'
       expect(page).to have_content('AVHRR Polar 1 Km Level 1B Data Set')
-      first_dataset_result.click_link('View details')
+      first_dataset_result.click_link('View dataset details')
     end
 
     it "displays the dataset's spatial bounds on the map" do
@@ -81,7 +81,7 @@ describe 'Dataset details', reset: false do
       load_page :search
       fill_in 'keywords', with: 'NSIDC-0239'
       expect(page).to have_content('SMEX02 Atmospheric Aerosol Optical Properties Data')
-      first_dataset_result.click_link('View details')
+      first_dataset_result.click_link('View dataset details')
     end
 
     it "displays the dataset's spatial bounds on the map" do
