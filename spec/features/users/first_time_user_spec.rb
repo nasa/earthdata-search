@@ -14,7 +14,6 @@ describe 'First time user' do
     end
 
     it 'saves the preferences and shows the landing page' do
-      Capybara.screenshot_and_open_image
       expect(User.count).to eq(1)
       expect(page).to have_content('Browse Datasets')
     end
