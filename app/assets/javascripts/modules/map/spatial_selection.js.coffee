@@ -6,7 +6,8 @@ ns.SpatialSelection = do (window,
                           L,
                           ShapefileLayer = ns.L.ShapefileLayer,
                           Proj = ns.L.Proj,
-                          currentPage = @edsc.models.page.current) ->
+                          currentPage = @edsc.models.page.current,
+                          metrics = @edsc.util.metrics) ->
 
   L.drawLocal.draw.handlers.simpleshape.tooltip.end = "Release to finish drawing"
 
@@ -131,6 +132,7 @@ ns.SpatialSelection = do (window,
       event.initMouseEvent("click", true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null)
       link?.dispatchEvent(event)
 
+      metrics.createMapEvent("Spatial: #{name}") unless name == 'Spatial'
       currentPage.ui.spatialType.name(name)
 
     _onDrawStart: (e) =>
