@@ -5,7 +5,7 @@ class SearchController < ApplicationController
   def index
     @preferences = preferences
     @preferences ||= {}
-    if Rails.env.sit? || Rails.env.uat?
+    if Rails.env.sit? || Rails.env.uat? || test_splash_page
       show_splash = @preferences['show_splash'] != 'false'
 
       if show_splash
@@ -36,11 +36,16 @@ class SearchController < ApplicationController
     user_id = get_user_id
 
     if user_id
-      user = User.where(echo_id: user_id).first
+      user = User.where(echo_id: user_id).first_or_create
       user.site_preferences = new_preferences
       user.save
     else
       session[:site_preferences] = new_preferences
     end
+  end
+
+  # Allows specs to stub method to force splash screen
+  def test_splash_page
+    false
   end
 end
