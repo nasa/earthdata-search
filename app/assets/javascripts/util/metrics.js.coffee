@@ -68,5 +68,4 @@ this.edsc.util.metrics = do ->
     ga('send', 'event', 'button', 'click', "Timeline #{label}") if ga?
 
   createMapEvent: (label) ->
-    if ga?
-      ga('send', 'event', 'button', 'click', "Map #{label}")
+    ga('send', 'event', 'button', 'click', "Map #{label}") if ga?
