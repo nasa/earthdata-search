@@ -9,7 +9,6 @@ ns.GranuleLayer = do (L
                       arrayUtil = @edsc.util.array
                       help = @edsc.help
                       config = @edsc.config
-                      metrics = @edsc.util.metrics
                       ) ->
 
   MAX_RETRIES = 1 # Maximum number of times to attempt to reload an image
@@ -423,7 +422,6 @@ ns.GranuleLayer = do (L
       return unless $(e.originalEvent.target).closest('a').length == 0
       granule = @layer?.granuleAt(e.layerPoint)
       granule = null if @_stickied == granule
-      metrics.createMapEvent('Selected Granule')
       @_map.fire('edsc.focusgranule', granule: granule)
       @_map.fire('edsc.stickygranule', granule: granule)
 

@@ -41,3 +41,48 @@ do (document
 
   $(document).on 'click', 'a.sign-in', ->
     this.setAttribute('href',  "/login?next_point=#{encodeURIComponent(window.location.href)}")
+
+  $(document).ready ->
+
+    $('#map').data('map').map.on 'projectionchange', (e) ->
+      metrics.createMapEvent("Set Projection: #{e.projection}")
+
+    $('#map').data('map').map.on 'basemapchange', (e) ->
+      metrics.createMapEvent("Set Base Map: #{e.name}")
+
+    $('#map').data('map').map.on 'overlayschange', (e) ->
+      overlays = e.overlays
+      names = []
+      for name in overlays
+        names.push(name.split('*')[0])
+      metrics.createMapEvent("Set Overlays: #{names.join(', ')}")
+
+    $('#map').data('map').map.on 'spatialtoolchange', (e) ->
+      metrics.createMapEvent("Spatial: #{e.name}")
+
+    $('#map').data('map').map.on 'edsc.stickygranule', (e) ->
+      metrics.createMapEvent("Selected Granule")
+
+    $('#map').data('map').map.on 'shapefile:start', (e) ->
+      metrics.createMapEvent("Added Shapefile")
+
+    $('#timeline').on 'buttonzoom', (e) ->
+      metrics.createTimelineEvent("Button Zoom")
+
+    $('#timeline').on 'arrowpan', (e) ->
+      metrics.createTimelineEvent("Left/Right Arrow Pan")
+
+    $('#timeline').on 'clicklabel', (e) ->
+      metrics.createTimelineEvent("Click Label")
+
+    $('#timeline').on 'createdtemporal', (e) ->
+      metrics.createTimelineEvent("Created Temporal")
+
+    $('#timeline').on 'scrollzoom', (e) ->
+      metrics.createTimelineEvent("Scroll Zoom")
+
+    $('#timeline').on 'scrollpan', (e) ->
+      metrics.createTimelineEvent("Scroll Pan")
+
+    $('#timeline').on 'draggingpan', (e) ->
+      metrics.createTimelineEvent("Dragging Pan")

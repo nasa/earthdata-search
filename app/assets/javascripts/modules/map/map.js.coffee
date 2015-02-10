@@ -13,8 +13,7 @@ ns.Map = do (window,
              Legend = @edsc.Legend,
              page = @edsc.page,
              ajax = @edsc.util.xhr.ajax
-             config = @edsc.config
-             metrics = @edsc.util.metrics) ->
+             config = @edsc.config) ->
 
   L.Map.include
     fitBounds: (bounds, options={}) ->
@@ -302,8 +301,6 @@ ns.Map = do (window,
       map = @map
       return if @projection == name
 
-      metrics.createMapEvent("Set Projection: #{name}")
-
       $(map._container).removeClass("projection-#{@projection}")
       $(map._container).addClass("projection-#{name}")
 
@@ -325,7 +322,7 @@ ns.Map = do (window,
         if map.hasLayer(baseLayers[base])
           map.removeLayer(baseLayers[base])
 
-      metrics.createMapEvent("Set Base Map: #{name}")
+      map.fire('basemapchange', name: name)
       map.addLayer(baseLayers[name])
       map._baseMap = name
       @_rebuildLayers()
@@ -343,12 +340,10 @@ ns.Map = do (window,
         if map.hasLayer(overlayLayers[layer])
           map.removeLayer(overlayLayers[layer])
 
-      namesForMetrics = []
       for name in overlays
-        namesForMetrics.push(name.split('*')[0])
         map.addLayer(overlayLayers[name])
 
-      metrics.createMapEvent("Set Overlays: #{namesForMetrics.join(', ')}") if namesForMetrics.length > 0
+      map.fire('overlayschange', overlays: overlays)
 
       map._overlays = overlays
       @_rebuildLayers()

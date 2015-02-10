@@ -1,6 +1,6 @@
 ns = @edsc.map.L
 
-ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help, metrics=@edsc.util.metrics) ->
+ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
 
   MAX_POLYGON_SIZE = config.maxPolygonSize
 
@@ -97,7 +97,6 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help, metri
       @_file = null
 
     _geoJsonResponse: (file, response) =>
-      metrics.createMapEvent('Added Shapefile')
       @activate(false) unless @isActive()
       @hideHelp()
       @remove()
