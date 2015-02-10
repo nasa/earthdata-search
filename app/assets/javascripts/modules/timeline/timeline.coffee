@@ -412,10 +412,12 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       Math.floor((p - originPx) * scale + start)
 
     zoomIn: ->
-     @_deltaZoom(-1)
+      @root.trigger('buttonzoom')
+      @_deltaZoom(-1)
 
     zoomOut: ->
-     @_deltaZoom(1)
+      @root.trigger('buttonzoom')
+      @_deltaZoom(1)
 
     zoom: (arg) ->
       if arg?
@@ -493,6 +495,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       right = 39
       down = 40
       if focus && (key == left || key == right)
+        @root.trigger('arrowpan')
         zoom = @_zoom - 1
 
         focusEnd = @_roundTime(focus, zoom, 1)
@@ -526,6 +529,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
     _onLabelClick: (e) =>
       return if @_dragging
+      @root.trigger('clicklabel')
       label = e.currentTarget
       [start, stop] = @_timespanForLabel(label)
       if @_canFocusTimespan(start, stop)
@@ -588,6 +592,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
     _setupTemporalSelection: (el) ->
       self = this
+      root = @root
 
       $(el).on 'click', =>
         for dataset in @_datasets
@@ -605,7 +610,9 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         [left, right] = @_createSelectionRegion(overlay, end, end, @globalTemporal, [0...@_datasets.length])
 
       draggable.on 'drag', (e) -> right._onUpdate(e)
-      draggable.on 'dragend', (e) -> right._onEnd(e)
+      draggable.on 'dragend', (e) ->
+        root.trigger('createdtemporal')
+        right._onEnd(e)
 
     _setupScrollBehavior: (svg) ->
       allowWheel = true
@@ -625,9 +632,11 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         return unless allowWheel
         if Math.abs(deltaY) > Math.abs(deltaX)
           levels = if deltaY > 0 then -1 else 1
+          @root.trigger('scrollzoom')
           @_deltaZoom(levels, time)
           rateLimit()
         else if deltaX != 0
+          @root.trigger('scrollpan')
           @_pan(deltaX)
 
       # Safari
@@ -670,6 +679,7 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         @_dragging = true if Math.abs(dx) > 5
         @_pan(dx, false)
       draggable.on 'dragend', ({dx}) =>
+        @root.trigger('draggingpan')
         @_dragging = false
         @_pan(dx)
 

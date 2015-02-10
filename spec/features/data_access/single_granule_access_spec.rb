@@ -7,7 +7,7 @@ describe 'Single Granule Data Access', reset: false do
     before(:each) do
       load_page :search, focus: downloadable_dataset_id
       wait_for_xhr
-      first_granule_list_item.click_link "Retrieve data"
+      first_granule_list_item.click_link "Retrieve single granule data"
     end
 
     after :each do
@@ -24,7 +24,7 @@ describe 'Single Granule Data Access', reset: false do
       load_page :search, focus: downloadable_dataset_id
       login
       wait_for_xhr
-      first_granule_list_item.click_link "Retrieve data"
+      first_granule_list_item.click_link "Retrieve single granule data"
       wait_for_xhr
     end
 
@@ -53,7 +53,7 @@ describe 'Single Granule Data Access', reset: false do
       fill_in "workspace-name", with: "Single Granule Project\t" #press tab to exit the input field
       click_save_project_name
       wait_for_xhr
-      first_granule_list_item.click_link "Retrieve data"
+      first_granule_list_item.click_link "Retrieve single granule data"
       wait_for_xhr
     end
 

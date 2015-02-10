@@ -11,10 +11,10 @@
           <h2 data-bind="text: dataset.title"></h2>
           <!-- ko with: dataset -->
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button retrieve" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
-              <i class="fa fa-download"></i> Retrieve Data
+            <a href="#" class="button retrieve" title="Retrieve dataset data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
+              <i class="fa fa-download"></i> Retrieve Dataset Data
             </a>
-            <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.datasetsList.showDatasetDetails" title="View details">
+            <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.datasetsList.showDatasetDetails" title="View dataset details">
               <i class="fa fa-info-circle"></i>
             </a>
             <!-- ko if: has_granules -->
@@ -64,10 +64,10 @@
 
             <li class="panel-list-item" data-bind="css: {'panel-list-item-with-thumb': browse_flag === 'true' || browse_flag === true, 'panel-list-focused': $parent.focused() === $data, 'panel-list-selected': $parent.isStickied($data)}, event: { mouseenter: $parent.onGranuleMouseover, mouseleave: $parent.onGranuleMouseout, click: $parent.toggleStickyFocus}">
               <div class="panel-list-item-actions">
-                <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View details">
+                <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
                   <i class="fa fa-info-circle"></i>
                 </a>
-                <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.dataset)">
+                <a href="#" class="button icon-button" title="Retrieve single granule data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.dataset)">
                   <i class="fa fa-download"></i>
                 </a>
               </div>

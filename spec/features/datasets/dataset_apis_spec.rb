@@ -13,7 +13,7 @@ describe 'Dataset API Endpoints', reset: false do
 
       fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
       wait_for_xhr
-      click_link "View details"
+      click_link "View dataset details"
       wait_for_xhr
       click_link 'API Endpoints'
     end
@@ -28,7 +28,7 @@ describe 'Dataset API Endpoints', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
       wait_for_xhr
-      click_link "View details"
+      click_link "View dataset details"
       wait_for_xhr
       click_link 'API Endpoints'
     end
@@ -43,7 +43,7 @@ describe 'Dataset API Endpoints', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C183451157-GSFCS4PA'
       wait_for_xhr
-      click_link "View details"
+      click_link "View dataset details"
       wait_for_xhr
       click_link 'API Endpoints'
     end
@@ -58,7 +58,7 @@ describe 'Dataset API Endpoints', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
       wait_for_xhr
-      click_link "View details"
+      click_link "View dataset details"
       wait_for_xhr
       click_link 'API Endpoints'
     end
@@ -73,7 +73,7 @@ describe 'Dataset API Endpoints', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C179001887-SEDAC'
       wait_for_xhr
-      click_link "View details"
+      click_link "View dataset details"
       wait_for_xhr
       click_link 'API Endpoints'
     end

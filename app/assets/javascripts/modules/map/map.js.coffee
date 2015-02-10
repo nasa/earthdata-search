@@ -322,6 +322,7 @@ ns.Map = do (window,
         if map.hasLayer(baseLayers[base])
           map.removeLayer(baseLayers[base])
 
+      map.fire('basemapchange', name: name)
       map.addLayer(baseLayers[name])
       map._baseMap = name
       @_rebuildLayers()
@@ -341,6 +342,8 @@ ns.Map = do (window,
 
       for name in overlays
         map.addLayer(overlayLayers[name])
+
+      map.fire('overlayschange', overlays: overlays)
 
       map._overlays = overlays
       @_rebuildLayers()

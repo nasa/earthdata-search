@@ -4,7 +4,7 @@ describe 'Dataset metadata' do
   before do
     load_page :search
     fill_in 'keywords', with: 'AST_L1AE'
-    find('li', text: 'ASTER Expedited L1A').click_link "View details"
+    find('li', text: 'ASTER Expedited L1A').click_link "View dataset details"
     wait_for_xhr
     click_link 'Metadata'
   end

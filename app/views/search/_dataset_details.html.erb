@@ -27,9 +27,9 @@
   <!-- ko if: $root.ui.datasetsList.selected() && $root.ui.datasetsList.selected().detailsLoaded -->
   <!-- ko with: $root.ui.datasetsList.selected().details -->
   <ul id="dataset-details-nav" class="nav nav-tabs">
-    <li class="active"><a href="#dataset-information" data-toggle="tab">Information</a></li>
-    <li><a href="#dataset-metadata" data-toggle="tab">Metadata</a></li>
-    <li><a href="#dataset-api" data-toggle="tab">API Endpoints</a></li>
+    <li class="active" title="Dataset information"><a href="#dataset-information" data-toggle="tab">Information</a></li>
+    <li><a href="#dataset-metadata" data-toggle="tab" title="Dataset metadata">Metadata</a></li>
+    <li><a href="#dataset-api" data-toggle="tab" title="API endpoint details">API Endpoints</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="dataset-information">

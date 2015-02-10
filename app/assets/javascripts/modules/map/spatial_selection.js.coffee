@@ -131,6 +131,7 @@ ns.SpatialSelection = do (window,
       event.initMouseEvent("click", true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null)
       link?.dispatchEvent(event)
 
+      @map.fire('spatialtoolchange', name: name) unless name == 'Spatial'
       currentPage.ui.spatialType.name(name)
 
     _onDrawStart: (e) =>

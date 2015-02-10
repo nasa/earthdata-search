@@ -58,3 +58,14 @@ this.edsc.util.metrics = do ->
 
       # Send the page view
       ga('send', 'pageview', path)
+
+  createEvent: (e) ->
+    if ga?
+      title = e.currentTarget.title
+      ga('send', 'event', 'button', 'click', title) if title?
+
+  createTimelineEvent: (label) ->
+    ga('send', 'event', 'button', 'click', "Timeline #{label}") if ga?
+
+  createMapEvent: (label) ->
+    ga('send', 'event', 'button', 'click', "Map #{label}") if ga?
