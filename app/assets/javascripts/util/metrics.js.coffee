@@ -69,3 +69,6 @@ this.edsc.util.metrics = do ->
 
   createMapEvent: (label) ->
     ga('send', 'event', 'button', 'click', "Map #{label}") if ga?
+
+  createTiming: (path, time) ->
+    ga('send', 'timing', 'ajax', path, time) if ga?

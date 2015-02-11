@@ -42,6 +42,12 @@ do (document
   $(document).on 'click', 'a.sign-in', ->
     this.setAttribute('href',  "/login?next_point=#{encodeURIComponent(window.location.href)}")
 
+  $(document).on 'pageview', (e, path, state) ->
+    metrics.createPageView(path, state)
+
+  $(document).on 'timingevent', (e, path, timing) ->
+    metrics.createTiming(path, timing)
+
   $(document).ready ->
     map = $('#map').data('map')?.map
     if map?
