@@ -1,8 +1,3 @@
-# Info for tracking query times, EDSC-595, https://developers.google.com/analytics/devguides/collection/analyticsjs/user-timings
-# Info for tracking button/link clicks, EDSC-596, https://developers.google.com/analytics/devguides/collection/analyticsjs/events , possibly use this for tracking data access options, EDSC-599
-
-
-
 this.edsc.util.metrics = do ->
 
   createPageView: (path, state) ->
