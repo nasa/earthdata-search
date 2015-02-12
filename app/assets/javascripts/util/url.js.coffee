@@ -1,5 +1,4 @@
 #= require util/xhr
-#= require util/metrics
 
 this.edsc.util.url = do(window
                         document
@@ -9,7 +8,6 @@ this.edsc.util.url = do(window
                         deparam = @edsc.util.deparam
                         config = @edsc.config
                         ajax = @edsc.util.xhr.ajax
-                        metrics = @edsc.util.metrics
                         ) ->
 
   class ParamNameCompressor
@@ -238,7 +236,7 @@ this.edsc.util.url = do(window
     tempOldParams = "?#{realQuery()}".replace(regex, '$1')
     tempNewParams = '?' if tempNewParams.length == 0 && tempOldParams == '?'
     if realPath().split('?')[0] != path || tempOldParams != tempNewParams
-      metrics.createPageView(path, state)
+      $(document).trigger('pageview', [path, state])
 
     path = path.replace(/^\/#/, '/') # IE 9 bug with URL hashes
     path = path + paramStr

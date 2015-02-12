@@ -129,8 +129,9 @@ ns.XhrModel = do (ko
 
           @hits(Math.max(hits, fetched))
 
-
-          @loadTime(((new Date() - start) / 1000).toFixed(1))
+          timing = ((new Date() - start) / 1000).toFixed(1)
+          @loadTime(timing)
+          $(document).trigger('timingevent', [url.split('?')[0], timing*1000] )
           callback?(results)
 
         complete: =>
