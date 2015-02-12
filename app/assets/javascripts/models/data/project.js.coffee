@@ -4,6 +4,8 @@
 ns = @edsc.models.data
 
 ns.Project = do (ko,
+                 document,
+                 $ = jQuery,
                  extend = $.extend,
                  param = $.param,
                  deparam = @edsc.util.deparam
@@ -67,6 +69,7 @@ ns.Project = do (ko,
 
     _loadGranuleAccessOptions: ->
       console.log "Loading granule access options for #{@dataset.id}"
+      $(document).trigger('dataaccessevent', [@dataset.id])
       singleGranuleId = @dataset.granuleQuery.singleGranuleId()
       if singleGranuleId
         params = extend(@dataset.granuleQuery.params(), {echo_granule_id: singleGranuleId})
@@ -85,9 +88,12 @@ ns.Project = do (ko,
       @serviceOptions.fromJson(jsonObj.serviceOptions)
 
     serialize: ->
+      options = @serviceOptions.serialize()
+      $(document).trigger('dataaccessevent', [@dataset.id, options])
+
       id: @dataset.id
       params: param(@dataset.granuleQuery.params())
-      serviceOptions: @serviceOptions.serialize()
+      serviceOptions: options
 
   class Project
     constructor: (@query, @loadGranulesOnAdd=true) ->
