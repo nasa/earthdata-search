@@ -18,4 +18,5 @@
 //= require models/index
 //= require models/page/access_page
 //= require modules/banner
+//= require modules/global_hooks
 //= require bootstrap/bootstrap

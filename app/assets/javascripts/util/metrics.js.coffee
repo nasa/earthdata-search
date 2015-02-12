@@ -54,6 +54,23 @@ this.edsc.util.metrics = do ->
       # Send the page view
       ga('send', 'pageview', path)
 
+  createDataAccessEvent: (dataset, options) ->
+    if ga?
+      # Dimension 7, Dataset Accessed
+      ga('set', 'dimension7', dataset)
+
+      if options? # If options exist, it is completing data access
+        # Dimension 8, Access Options (Download, FTP_Pull, etc.)
+        for accessMethod in options.accessMethod
+          ga('set', 'dimension8', accessMethod.method)
+          ga('send', 'event', 'Data Access', 'Completion', 'Data Access Completion', 1)
+      else
+        ga('send', 'event', 'Data Access', 'Initiation', 'Data Access Initiation', 1)
+
+      # Ensure dimensions don't get set for any other tracking
+      ga('set', 'dimension7', null)
+      ga('set', 'dimension8', null)
+
   createEvent: (e) ->
     if ga?
       title = e.currentTarget.title

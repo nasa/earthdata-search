@@ -48,6 +48,9 @@ do (document
   $(document).on 'timingevent', (e, path, timing) ->
     metrics.createTiming(path, timing)
 
+  $(document).on 'dataaccessevent', (e, dataset, options=null) ->
+    metrics.createDataAccessEvent(dataset, options)
+
   $(document).ready ->
     map = $('#map').data('map')?.map
     if map?
