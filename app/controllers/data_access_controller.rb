@@ -21,29 +21,13 @@ class DataAccessController < ApplicationController
     end
 
     project = JSON.parse(params[:project])
-    project['datasets'].each do |dataset|
-      params = Rack::Utils.parse_query(dataset['params'])
-      params.merge!(page_size: 2000, page_num: 1)
-
-      access_methods = dataset['serviceOptions']['accessMethod']
-      access_methods.each do |method|
-        if method['type'] == 'order'
-          order_response = echo_client.create_order(params,
-                                                    method['id'],
-                                                    method['method'],
-                                                    method['model'],
-                                                    get_user_id,
-                                                    token,
-                                                    echo_client)
-          method[:order_id] = order_response[:order_id]
-        end
-      end
-    end
 
     retrieval = Retrieval.new
     retrieval.user = user
     retrieval.jsondata = project
     retrieval.save!
+
+    Retrieval.delay.process(retrieval.id, token, echo_env)
 
     redirect_to action: 'retrieval', id: retrieval.to_param
   end

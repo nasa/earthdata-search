@@ -27,6 +27,36 @@ class Retrieval < ActiveRecord::Base
     @description
   end
 
+  # Delayed Jobs calls this method to excute an order creation
+  def self.process(id, token, env)
+    retrieval = Retrieval.find_by_id(id)
+    project = retrieval.jsondata
+    user_id = retrieval.user.echo_id
+    client = Echo::Client.client_for_environment(env, Rails.configuration.services)
+
+    project['datasets'].each do |dataset|
+      params = Rack::Utils.parse_query(dataset['params'])
+      params.merge!(page_size: 2000, page_num: 1)
+
+      access_methods = dataset['serviceOptions']['accessMethod']
+      access_methods.each do |method|
+        if method['type'] == 'order'
+          order_response = client.create_order(params,
+                                                method['id'],
+                                                method['method'],
+                                                method['model'],
+                                                user_id,
+                                                token,
+                                                client)
+          method[:order_id] = order_response[:order_id]
+        end
+      end
+    end
+
+    retrieval.jsondata = project
+    retrieval.save!
+  end
+
   private
 
   def get_dataset_id(id)

@@ -92,6 +92,11 @@ GEM
     deadweight (0.2.2)
       css_parser (~> 1.2.6)
       nokogiri
+    delayed_job (4.0.6)
+      activesupport (>= 3.0, < 5.0)
+    delayed_job_active_record (4.0.3)
+      activerecord (>= 3.0, < 5.0)
+      delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -270,8 +275,10 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   coffee-script
   colored
+  daemons
   database_cleaner
   deadweight
+  delayed_job_active_record
   execcsslint
   factory_girl
   factory_girl_rails
