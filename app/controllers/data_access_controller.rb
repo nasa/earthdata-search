@@ -49,6 +49,9 @@ class DataAccessController < ApplicationController
           echo_order = echo_orders[order['order_id']]
           if echo_order
             order['order_status'] = echo_order['state']
+          else
+            # echo order_id doesn't exist yet
+            order['order_status'] = 'processing'
           end
         end
       end
