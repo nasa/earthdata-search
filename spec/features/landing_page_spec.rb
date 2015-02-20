@@ -59,4 +59,14 @@ describe 'Site landing page' do
     click_link 'Earthdata Search'
     expect(page).to have_no_link('Clear Filters')
   end
+
+  it 'displays the current NASA official' do
+    load_page :root
+    expect(page).to have_text('Andrew Mitchell')
+  end
+
+  it 'does not display the previous NASA official' do
+    load_page :root
+    expect(page).to have_no_text('Kevin Murphy')
+  end
 end
