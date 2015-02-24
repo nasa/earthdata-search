@@ -29,6 +29,7 @@ class Retrieval < ActiveRecord::Base
 
   # Delayed Jobs calls this method to excute an order creation
   def self.process(id, token, env)
+    VCR::EDSCConfigurer.register_token('edsc', token + ':' + ENV['urs_client_id']) if Rails.env.test?
     retrieval = Retrieval.find_by_id(id)
     project = retrieval.jsondata
     user_id = retrieval.user.echo_id

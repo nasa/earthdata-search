@@ -6,8 +6,12 @@ namespace :background_jobs do
       puts 'delayed_job process already running'
     else
       puts 'Starting delayed_job process'
-      `RAILS_ENV=production bin/delayed_job start` # production
-      # `bin/delayed_job start` # development
+      `#{File.join(Rails.root, 'bin/delayed_job')} start`
     end
+  end
+
+  desc "Stop currently running delayed_job process"
+  task :stop do
+    `#{File.join(Rails.root, 'bin/delayed_job')} stop`
   end
 end
