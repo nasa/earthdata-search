@@ -83,7 +83,7 @@ class DatasetsController < ApplicationController
     applied = []
     Array.wrap(query[param]).each do |param_term|
       term = param_term.last
-      term.gsub!('+', ' ')
+      term = URI.unescape(term.gsub('+', ' '))
       unless items.any? {|item| item['term'] == term}
         applied << {'term' => term, 'count' => 0}
       end

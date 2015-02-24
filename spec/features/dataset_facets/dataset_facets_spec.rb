@@ -225,4 +225,24 @@ describe "Dataset Facets", reset: false do
       expect(page).to have_content("EOSDIS (0)")
     end
   end
+
+  # EDSC-622 - We had been displaying duplicate entries with special characters escaped
+  context "when applying facets containing special characters" do
+    before(:all) do
+      find(".facets-item", text: "ANIMALS/VERTEBRATES").click
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+    end
+
+    it "does not display a duplicate entry with special characters escaped" do
+      expect(page).to have_no_content("ANIMALS%2FVERTEBRATES")
+    end
+
+    it "does displays the selected entry" do
+      expect(page).to have_content("ANIMALS/VERTEBRATES")
+    end
+  end
 end
