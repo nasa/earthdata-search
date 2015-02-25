@@ -41,8 +41,8 @@ class DataAccessController < ApplicationController
 
     if orders.size > 0
       order_ids = orders.map {|o| o['order_id']}
-      order_response = echo_client.get_orders({id: order_ids}, token)
-      if order_response.success?
+      order_response = order_ids.compact.size > 0 ? echo_client.get_orders({id: order_ids}, token) : nil
+      if order_response && order_response.success?
         echo_orders = order_response.body.map {|o| o['order']}.index_by {|o| o['id']}
 
         orders.each do |order|
@@ -53,6 +53,12 @@ class DataAccessController < ApplicationController
             # echo order_id doesn't exist yet
             order['order_status'] = 'creating'
           end
+        end
+      end
+      # if no order numbers exist yet
+      if order_response.nil?
+        orders.each do |order|
+          order['order_status'] = 'creating'
         end
       end
     end
