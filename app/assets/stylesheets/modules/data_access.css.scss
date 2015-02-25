@@ -344,7 +344,7 @@ section.data-access-next {
   color: #fff;
   text-transform: capitalize;
 
-  &.processing, &.validated, &.quoted {
+  &.processing, &.validated, &.quoted, &.creating {
     background: #27ae60;
   }
 

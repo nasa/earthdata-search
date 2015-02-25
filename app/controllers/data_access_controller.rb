@@ -21,29 +21,13 @@ class DataAccessController < ApplicationController
     end
 
     project = JSON.parse(params[:project])
-    project['datasets'].each do |dataset|
-      params = Rack::Utils.parse_query(dataset['params'])
-      params.merge!(page_size: 2000, page_num: 1)
-
-      access_methods = dataset['serviceOptions']['accessMethod']
-      access_methods.each do |method|
-        if method['type'] == 'order'
-          order_response = echo_client.create_order(params,
-                                                    method['id'],
-                                                    method['method'],
-                                                    method['model'],
-                                                    get_user_id,
-                                                    token,
-                                                    echo_client)
-          method[:order_id] = order_response[:order_id]
-        end
-      end
-    end
 
     retrieval = Retrieval.new
     retrieval.user = user
     retrieval.jsondata = project
     retrieval.save!
+
+    Retrieval.delay.process(retrieval.id, token, echo_env)
 
     redirect_to action: 'retrieval', id: retrieval.to_param
   end
@@ -57,15 +41,24 @@ class DataAccessController < ApplicationController
 
     if orders.size > 0
       order_ids = orders.map {|o| o['order_id']}
-      order_response = echo_client.get_orders({id: order_ids}, token)
-      if order_response.success?
+      order_response = order_ids.compact.size > 0 ? echo_client.get_orders({id: order_ids}, token) : nil
+      if order_response && order_response.success?
         echo_orders = order_response.body.map {|o| o['order']}.index_by {|o| o['id']}
 
         orders.each do |order|
           echo_order = echo_orders[order['order_id']]
           if echo_order
             order['order_status'] = echo_order['state']
+          else
+            # echo order_id doesn't exist yet
+            order['order_status'] = 'creating'
           end
+        end
+      end
+      # if no order numbers exist yet
+      if order_response.nil?
+        orders.each do |order|
+          order['order_status'] = 'creating'
         end
       end
     end

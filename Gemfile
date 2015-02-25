@@ -82,6 +82,9 @@ gem 'bourbon'
 gem 'knockoutjs-rails'
 gem 'figaro'
 
+gem 'delayed_job_active_record'
+gem 'daemons'
+
 # Eventually we'll need these, but there's version conflict when installing
 #gem 'crossroadsjs-rails'
 #gem 'jssignals-rails'
