@@ -11,3 +11,7 @@ do ($=jQuery) ->
 
   $(document).on 'click', 'div.temporal-filter, input.temporal-start, input.temporal-stop, div.xdsoft_datetimepicker, input.workspace-name', (event) ->
     event.stopPropagation()
+
+  # Don't close the temporal dropdown when clicking the datepicker
+  $(document).on 'click', 'div.datepicker, span.month, th.next, th.prev, th.switch, span.year', (event) ->
+    event.stopPropagation()

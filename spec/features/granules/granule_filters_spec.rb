@@ -302,10 +302,10 @@ describe "Granule search filters", reset: false do
     end
 
     it "selecting temporal range filters granules" do
-      fill_in "Start", with: "2013-12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "2013-12-31 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "2013-12-01 00:00:00\t"
+      # close_datetimepicker
+      fill_in "End", with: "2013-12-31 00:00:00\t"
+      # close_datetimepicker
       js_click_apply ".master-overlay-content"
       click_button "granule-filters-submit"
       expect(page).to filter_granules_from(before_granule_count)
@@ -325,10 +325,10 @@ describe "Granule search filters", reset: false do
     end
 
     it "clicking the clear button clears temporal fields" do
-      fill_in "Start", with: "2013-12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "2013-12-31 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "2013-12-01 00:00:00\t"
+      # close_datetimepicker
+      fill_in "End", with: "2013-12-31 00:00:00\t"
+      # close_datetimepicker
       js_click_apply ".master-overlay-content"
       click_button "granule-filters-submit"
       expect(page).to filter_granules_from(before_granule_count)
