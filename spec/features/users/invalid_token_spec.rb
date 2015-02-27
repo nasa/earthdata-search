@@ -11,13 +11,13 @@ describe 'Invalid user token', reset: false do
       page.set_rack_session(access_token: 'invalid')
 
       load_page :search
-      expect(page).to have_no_content 'URS Sign In'
+      expect(page).to have_no_content 'Earthdata Login'
 
       fill_in 'keywords', with: 'C179002986-ORNL_DAAC'
     end
 
     it 'logs out the user' do
-      expect(page).to have_content 'URS Sign In'
+      expect(page).to have_content 'Earthdata Login'
     end
 
     it 'displays search results' do
