@@ -83,9 +83,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       validateTemporalInputs(root)
       $input.trigger('change')
 
-    # TODO: clear button in the dropdown needs to trigger clear button for the datepicker
     # TODO set the end time to 23:59:59 if the user doesn't enter a time
-    # TODO recurring temporal
     root.find('.temporal-range-picker').datepicker
       format: "yyyy-mm-dd"
       startDate: "1960-01-01"
@@ -202,6 +200,8 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
 
   $(document).on 'click', '.temporal-filter .temporal-clear', ->
     validateTemporalInputs($(this).closest('.temporal-filter'))
+    # Clear datepicker selection
+    $('.temporal-range-picker').datepicker('update', '')
 
   # safe global stuff
   $(document).on 'click', '.xdsoft_today_button, button.xdsoft_prev, button.xdsoft_next', ->
