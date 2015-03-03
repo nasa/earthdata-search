@@ -25,6 +25,14 @@
               <i class="fa fa-edit"></i>
             </a>
             <!-- /ko -->
+            <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add dataset to the current project"
+               data-bind="visible: !$root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
+              <i class="fa fa-plus"></i>
+            </a>
+            <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove dataset from the current project"
+               data-bind="visible: $root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
+              <i class="fa fa-minus"></i>
+            </a>
           </div>
           <!-- /ko -->
         </header>
