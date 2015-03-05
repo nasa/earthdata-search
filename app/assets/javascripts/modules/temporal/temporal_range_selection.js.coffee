@@ -201,7 +201,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
   $(document).on 'click', '.temporal-filter .temporal-clear', ->
     validateTemporalInputs($(this).closest('.temporal-filter'))
     # Clear datepicker selection
-    $('.temporal-range-picker').datepicker('update', '')
+    $('.temporal-range-picker').datepicker('update')
 
   # safe global stuff
   $(document).on 'click', '.xdsoft_today_button, button.xdsoft_prev, button.xdsoft_next', ->
