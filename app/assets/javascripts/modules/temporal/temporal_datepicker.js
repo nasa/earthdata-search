@@ -6,12 +6,13 @@
       if (date instanceof Date)
         return date;
 
-      return new Date(date);
+      return new Date(date + "Z");
     },
     formatDate: function(date, format, language){
       if (!date)
         return '';
-      return date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
+
+      return date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '');
     }
   });
 }).call(this);

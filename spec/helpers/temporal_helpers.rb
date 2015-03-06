@@ -38,7 +38,7 @@ module Helpers
     end
 
     def close_datetimepicker
-      page.find(".xdsoft_time.xdsoft_current").click
+      page.find(".xdsoft_date.xdsoft_current").click
     end
 
     def js_click_temporal
