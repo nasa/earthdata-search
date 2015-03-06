@@ -55,7 +55,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the temporal condition in the address bar' do
-      expect(page).to have_query_string('qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365')
+      expect(page).to have_query_string('qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T23%3A59%3A59.000Z%2C335%2C365')
     end
 
     context 'clearing filters' do
