@@ -65,19 +65,6 @@ ul.dropdown-menu {
   width: 180px;
 }
 
-.xdsoft_datetimepicker, .xdsoft_timepicker {
-  z-index:1001;
-}
-
-.xdsoft_label.xdsoft_month {
-  margin-left: 1px;
-}
-
-// Hide jquery.datetimepicker's year field
-.recurring-datetimepicker .xdsoft_year {
-  display: none;
-}
-
 input.day-of-year-input {
   width: 100px;
 }

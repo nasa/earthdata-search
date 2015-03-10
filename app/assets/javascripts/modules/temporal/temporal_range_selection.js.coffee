@@ -29,36 +29,38 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
           error.text("Start must be no later than End")
 
 
-  setMinMaxOptions = (root, datetimepicker, $input, temporal_type) ->
-    min_date = false
-    max_date = false
-    format = if temporal_type == "range" then 'Y-m-d' else 'm-d'
+  # setMinMaxOptions = (root, datetimepicker, $input, temporal_type) ->
+  #   min_date = false
+  #   max_date = false
+  #   format = if temporal_type == "range" then 'Y-m-d' else 'm-d'
+  #
+  #   start_val = root.find('input.temporal-' + temporal_type + '-start').val()
+  #   stop_val = root.find('input.temporal-' + temporal_type + '-stop').val()
+  #
+  #   if $input.hasClass('temporal-' + temporal_type + '-start') and stop_val
+  #     max_date = stop_val.split(' ')[0]
+  #   else if $input.hasClass('temporal-' + temporal_type + '-stop') and start_val
+  #     min_date = start_val.split(' ')[0]
+  #
+  #   datetimepicker.setOptions({
+  #     minDate: min_date,
+  #     maxDate: max_date,
+  #     startDate: today,
+  #     formatDate: format
+  #   })
 
-    start_val = root.find('input.temporal-' + temporal_type + '-start').val()
-    stop_val = root.find('input.temporal-' + temporal_type + '-stop').val()
+  # updateMonthButtons = (month_label) ->
+  #   prev_button = month_label.siblings('button.xdsoft_prev')
+  #   next_button = month_label.siblings('button.xdsoft_next')
+  #   prev_button.show()
+  #   next_button.show()
+  #   month = month_label.find('span').text()
+  #   if month == "January"
+  #     prev_button.hide()
+  #   else if month == "December"
+  #     next_button.hide()
 
-    if $input.hasClass('temporal-' + temporal_type + '-start') and stop_val
-      max_date = stop_val.split(' ')[0]
-    else if $input.hasClass('temporal-' + temporal_type + '-stop') and start_val
-      min_date = start_val.split(' ')[0]
-
-    datetimepicker.setOptions({
-      minDate: min_date,
-      maxDate: max_date,
-      startDate: today,
-      formatDate: format
-    })
-
-  updateMonthButtons = (month_label) ->
-    prev_button = month_label.siblings('button.xdsoft_prev')
-    next_button = month_label.siblings('button.xdsoft_next')
-    prev_button.show()
-    next_button.show()
-    month = month_label.find('span').text()
-    if month == "January"
-      prev_button.hide()
-    else if month == "December"
-      next_button.hide()
+  originalSetDate = null
 
   $.fn.temporalSelectors = (options) ->
     root = this
@@ -84,39 +86,55 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       autoclose: true
       todayHighlight: true
       forceParse: false
+      keyboardNavigation: false
+
+    root.find('.temporal-recurring-picker').datepicker
+      format: "mm-dd"
+      startDate: "1960-01-01"
+      endDate: "1960-12-31"
+      startView: 1
+      todayBtn: "linked"
+      clearBtn: true
+      autoclose: true
+      todayHighlight: true
+      forceParse: false
+      keyboardNavigation: false
 
     # Set end time to 23:59:59
-    DatePickerProto = Object.getPrototypeOf($('.temporal-range-picker').data('datepicker'))
-    originalSetDate = DatePickerProto._setDate
-    DatePickerProto._setDate = (date, which) ->
-      updatedDate = date
-      if $(this.element).hasClass('temporal-range-stop')
-        updatedDate.setSeconds(date.getSeconds() + 86399) # 23:59:59
-      originalSetDate.call(this, updatedDate, which)
+    DatePickerProto = Object.getPrototypeOf($('.temporal').data('datepicker'))
+    unless originalSetDate?
+      originalSetDate = DatePickerProto._setDate
+      DatePickerProto._setDate = (date, which) ->
+        updatedDate = date
+        if $(this.element).hasClass('temporal-range-stop')
+          updatedDate.setSeconds(date.getSeconds() + 86399) # 23:59:59
+        originalSetDate.call(this, updatedDate, which)
 
-    root.find('.temporal-recurring-picker').datetimepicker
-      format: 'm-d H:i:s',
-      allowBlank: true,
-      closeOnDateSelect: true,
-      lazyInit: true,
-      className: prefix + '-datetimepicker recurring-datetimepicker',
-      yearStart: 2007,
-      yearEnd: 2007,
-      startDate: today,
-      onShow: (dp,$input) ->
-        updateMonthButtons($(this).find('.xdsoft_month'))
-        setMinMaxOptions(root, this, $input, 'recurring')
-      onChangeDateTime: onChangeDateTime
-      onChangeMonth: (dp,$input) ->
-        updateMonthButtons($(this).find('.xdsoft_month'))
-      onGenerate: (time, input) ->
-        time.setHours(0)
-        time.setMinutes(0)
-        time.setSeconds(0)
-        if input.hasClass('temporal-recurring-stop')
-          time.setHours(23)
-          time.setMinutes(59)
-          time.setSeconds(59)
+    # TODO hide year selection from recurring pickers
+
+    # root.find('.temporal-recurring-picker').datetimepicker
+    #   format: 'm-d H:i:s',
+    #   allowBlank: true,
+    #   closeOnDateSelect: true,
+    #   lazyInit: true,
+    #   className: prefix + '-datetimepicker recurring-datetimepicker',
+    #   yearStart: 2007,
+    #   yearEnd: 2007,
+    #   startDate: today,
+    #   onShow: (dp,$input) ->
+    #     updateMonthButtons($(this).find('.xdsoft_month'))
+    #     setMinMaxOptions(root, this, $input, 'recurring')
+    #   onChangeDateTime: onChangeDateTime
+    #   onChangeMonth: (dp,$input) ->
+    #     updateMonthButtons($(this).find('.xdsoft_month'))
+    #   onGenerate: (time, input) ->
+    #     time.setHours(0)
+    #     time.setMinutes(0)
+    #     time.setSeconds(0)
+    #     if input.hasClass('temporal-recurring-stop')
+    #       time.setHours(23)
+    #       time.setMinutes(59)
+    #       time.setSeconds(59)
 
     root.find('.temporal-recurring-year-range').slider({
       min: 1960,

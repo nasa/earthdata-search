@@ -1,0 +1,65 @@
+require 'spec_helper'
+
+describe 'Date picker', reset: false do
+  before :all do
+    Capybara.reset_sessions!
+    load_page :search
+  end
+
+  context "when selecting a start date" do
+    before :all do
+      click_link 'Temporal'
+      # give the end input focus
+      fill_in "Start", with: ""
+      find('span.year', text: "2010").click
+      find('span.month', text: "Jan").click
+      find('td.day', text: "15").click
+      js_click_apply ".temporal-dropdown"
+    end
+
+    after :all do
+      reset_search
+    end
+
+    it "fills in 00:00:00 for the start time" do
+      expect(page).to have_content("Start 2010-01-15 00:00:00")
+    end
+  end
+
+  context "when selecting an end date" do
+    before :all do
+      click_link 'Temporal'
+      # give the end input focus
+      fill_in "End", with: ""
+      find('span.year', text: "2010").click
+      find('span.month', text: "Jan").click
+      find('td.day', text: "15").click
+      js_click_apply ".temporal-dropdown"
+    end
+
+    after :all do
+      reset_search
+    end
+
+    it "fills in 23:59:59 for the end time" do
+      expect(page).to have_content("Stop 2010-01-15 23:59:59")
+    end
+  end
+
+  context "when typing an end date" do
+    before :all do
+      click_link 'Temporal'
+      fill_in "End", with: "2010-01-15 12:13:14\t"
+      js_click_apply ".temporal-dropdown"
+    end
+
+    after :all do
+      reset_search
+    end
+
+    it "does not alter the end time" do
+      expect(page).to have_content("Stop 2010-01-15 12:13:14")
+    end
+  end
+
+end

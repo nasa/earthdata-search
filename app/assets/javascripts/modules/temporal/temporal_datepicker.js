@@ -12,7 +12,10 @@
       if (!date)
         return '';
 
-      return date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '');
+      if (format == "yyyy-mm-dd")
+        return date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '');
+      else
+        return date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '').substring(5);
     }
   });
 }).call(this);

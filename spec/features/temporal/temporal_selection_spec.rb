@@ -83,10 +83,8 @@ describe "Temporal" do
     it "allows the user to search by recurring date time range" do
       click_link "Temporal"
       js_check_recurring "dataset"
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "12-31 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-01 00:00:00\t"
+      fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
@@ -94,17 +92,15 @@ describe "Temporal" do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
       expect(page).to have_content("Start 12-01 00:00:00")
-      expect(page).to have_content("Stop 12-31 23:59:59")
+      expect(page).to have_content("Stop 12-31 00:00:00")
       expect(page).to have_content("Range 1970 - 1975")
     end
 
     it "allows the user to clear the recurring date time search" do
       click_link "Temporal"
       js_check_recurring "dataset"
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "12-31 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-01 00:00:00\t"
+      fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
@@ -112,7 +108,7 @@ describe "Temporal" do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
       expect(page).to have_content("Start 12-01 00:00:00")
-      expect(page).to have_content("Stop 12-31 23:59:59")
+      expect(page).to have_content("Stop 12-31 00:00:00")
       expect(page).to have_content("Range 1970 - 1975")
 
       js_click_temporal
@@ -122,17 +118,15 @@ describe "Temporal" do
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_no_content("Amazon River Basin Precipitation, 1972-1992")
       expect(page).to have_no_content("Start 12-01 00:00:00")
-      expect(page).to have_no_content("Stop 12-31 23:59:59")
+      expect(page).to have_no_content("Stop 12-31 00:00:00")
       expect(page).to have_no_content("Range 1970 - 1975")
     end
 
     it "validates incorrect user input" do
       click_link "Temporal"
       js_check_recurring "dataset"
-      fill_in "Start", with: "12-10 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "12-01 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-10 00:00:00\t"
+      fill_in "End", with: "12-01 00:00:00\t"
 
       expect(page).to have_content("Start must be no later than End")
     end
@@ -140,8 +134,7 @@ describe "Temporal" do
     it "validates both start and end are present" do
       click_link "Temporal"
       js_check_recurring "dataset"
-      fill_in "Start", with: "12-10 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-10 00:00:00\t"
 
       expect(page).to have_content("Start and End dates must both be selected")
     end

@@ -311,10 +311,8 @@ describe "Granule search filters", reset: false do
 
     it "selecting temporal recurring filters granules" do
       js_check_recurring 'granule'
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "12-31 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-01 00:00:00\t"
+      fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.project.searchGranulesDataset().granulesModel.temporal.pending.years([2005, 2010])"
       page.execute_script(script)
       js_click_apply ".master-overlay-content"
