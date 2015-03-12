@@ -7,58 +7,40 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
   validateTemporalInputs = (root) ->
     start = root.find(".temporal-start:visible")
     end = root.find(".temporal-stop:visible")
-    start_val = start.val()
-    end_val = end.val()
+    startVal = start.val()
+    # FIXME Forcing startVal with this line lets the test pass (datepicker_spec.rb:9)
+    # startVal = "2010-01-15T00:00:00Z"
+    endVal = end.val()
+    startDate = if startVal.length > 0 then new Date(startVal) else false
+    endDate = if endVal.length > 0 then new Date(endVal) else false
 
-    if start and end
-      error = root.find(".tab-pane:visible .temporal-error")
+    error = root.find(".tab-pane:visible .temporal-error")
+    error.hide()
+    # console.log "startVal #{startVal} #{startDate.toString()}"
+    # console.log "endVal   #{endVal}   #{endDate.toString()}"
+
+    if startDate.toString() == 'Invalid Date' or endDate.toString() == 'Invalid Date'
+      error.show()
+      error.text("Invalid date")
+    else
+      error.hide()
+
+    if !error.is(':visible') and start and end
       error.show()
 
       if start.hasClass("temporal-recurring-start")
         # Recurring start and stop must both be selected
-        if start_val == "" ^ end_val == ""
+        if startVal == "" ^ endVal == ""
           error.text("Start and End dates must both be selected")
-        else if start_val > end_val
+        else if startVal > endVal
           error.text("Start must be no later than End")
         else
           error.hide()
       else
-        if start_val == "" or end_val == "" or start_val <= end_val
+        if startVal == "" or endVal == "" or startVal <= endVal
           error.hide()
         else
           error.text("Start must be no later than End")
-
-
-  # setMinMaxOptions = (root, datetimepicker, $input, temporal_type) ->
-  #   min_date = false
-  #   max_date = false
-  #   format = if temporal_type == "range" then 'Y-m-d' else 'm-d'
-  #
-  #   start_val = root.find('input.temporal-' + temporal_type + '-start').val()
-  #   stop_val = root.find('input.temporal-' + temporal_type + '-stop').val()
-  #
-  #   if $input.hasClass('temporal-' + temporal_type + '-start') and stop_val
-  #     max_date = stop_val.split(' ')[0]
-  #   else if $input.hasClass('temporal-' + temporal_type + '-stop') and start_val
-  #     min_date = start_val.split(' ')[0]
-  #
-  #   datetimepicker.setOptions({
-  #     minDate: min_date,
-  #     maxDate: max_date,
-  #     startDate: today,
-  #     formatDate: format
-  #   })
-
-  # updateMonthButtons = (month_label) ->
-  #   prev_button = month_label.siblings('button.xdsoft_prev')
-  #   next_button = month_label.siblings('button.xdsoft_next')
-  #   prev_button.show()
-  #   next_button.show()
-  #   month = month_label.find('span').text()
-  #   if month == "January"
-  #     prev_button.hide()
-  #   else if month == "December"
-  #     next_button.hide()
 
   originalSetDate = null
 
@@ -73,7 +55,6 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     root.data('temporal-selectors', true)
 
     onChangeDateTime = (dp, $input) ->
-      validateTemporalInputs(root)
       $input.trigger('change')
 
     root.find('.temporal-range-picker').datepicker

@@ -47,19 +47,35 @@ describe 'Date picker', reset: false do
   end
 
   context "when typing an end date" do
-    before :all do
-      click_link 'Temporal'
-      fill_in "End", with: "2010-01-15 12:13:14\t"
-      js_click_apply ".temporal-dropdown"
+    context "when typing a valid date" do
+      before :all do
+        click_link "Temporal"
+        fill_in "End", with: "2010-01-15 12:13:14\t"
+        js_click_apply ".temporal-dropdown"
+      end
+
+      after :all do
+        reset_search
+      end
+
+      it "does not alter the end time" do
+        expect(page).to have_content("Stop 2010-01-15 12:13:14")
+      end
     end
 
-    after :all do
-      reset_search
-    end
+    context "when typing an invalid date" do
+      before :all do
+        click_link "Temporal"
+        fill_in "Start", with: "gibberish\t"
+      end
 
-    it "does not alter the end time" do
-      expect(page).to have_content("Stop 2010-01-15 12:13:14")
+      after :all do
+        reset_search
+      end
+
+      it "displays an error" do
+        expect(page).to have_content("Invalid date")
+      end
     end
   end
-
 end

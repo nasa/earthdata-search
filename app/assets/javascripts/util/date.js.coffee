@@ -5,7 +5,8 @@
     date.toISOString().split('T')[0]
 
   isoUtcDateTimeString = (date) ->
-    date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
+    if date.toString() != 'Invalid Date'
+      date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
 
   dateToHuman = (date) ->
     if date?

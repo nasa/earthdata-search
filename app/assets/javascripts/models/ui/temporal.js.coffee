@@ -77,7 +77,7 @@ ns.Temporal = do (ko,
 
       @queryDateString = @computed
         read: =>
-          if @date()
+          if @date() && @date().toString() != 'Invalid Date'
             @date().toISOString()
           else
             null
