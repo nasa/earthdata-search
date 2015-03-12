@@ -5,8 +5,7 @@
     date.toISOString().split('T')[0]
 
   isoUtcDateTimeString = (date) ->
-    if date.toString() != 'Invalid Date'
-      date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
+    date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
 
   parseIsoUtcString = (str) ->
     if !str || str.length == 0

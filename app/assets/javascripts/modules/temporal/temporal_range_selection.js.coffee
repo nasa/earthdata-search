@@ -9,6 +9,11 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     end = root.find(".temporal-stop:visible")
     startVal = start.val()
     endVal = end.val()
+    if start.hasClass('temporal-recurring-picker')
+      # if the input is for recurring, add a year to create a valid date
+      startVal = "2000-#{startVal}" if startVal.length > 0
+      endVal = "2000-#{endVal}" if endVal.length > 0
+    console.log "startVal #{startVal}"
     startDate = edsc_date.parseIsoUtcString(startVal)
     endDate = edsc_date.parseIsoUtcString(endVal)
 
@@ -151,9 +156,9 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
         if updateTemporalRecurring()
           $(this).parents('.dropdown').removeClass('open')
 
-    root.find('.temporal').on 'paste keyup change focusout', (e) ->
+    root.find('.temporal').on 'paste change focusout', (e) ->
       validateTemporalInputs(root)
-      e.stopPropagation()
+      event.stopPropagation()
 
   $(document).on 'click', '.clear-filters.button', ->
     validateTemporalInputs($('.dataset-temporal-filter'))

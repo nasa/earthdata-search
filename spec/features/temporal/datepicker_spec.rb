@@ -70,6 +70,8 @@ describe 'Date picker', reset: false do
       end
 
       after :all do
+        js_click_clear
+        click_link 'Temporal'
         reset_search
       end
 
