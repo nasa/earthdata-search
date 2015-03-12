@@ -8,18 +8,14 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     start = root.find(".temporal-start:visible")
     end = root.find(".temporal-stop:visible")
     startVal = start.val()
-    # FIXME Forcing startVal with this line lets the test pass (datepicker_spec.rb:9)
-    # startVal = "2010-01-15T00:00:00Z"
     endVal = end.val()
-    startDate = if startVal.length > 0 then new Date(startVal) else false
-    endDate = if endVal.length > 0 then new Date(endVal) else false
+    startDate = edsc_date.parseIsoUtcString(startVal)
+    endDate = edsc_date.parseIsoUtcString(endVal)
 
     error = root.find(".tab-pane:visible .temporal-error")
     error.hide()
-    # console.log "startVal #{startVal} #{startDate.toString()}"
-    # console.log "endVal   #{endVal}   #{endDate.toString()}"
 
-    if startDate.toString() == 'Invalid Date' or endDate.toString() == 'Invalid Date'
+    if startDate?.toString() == 'Invalid Date' or endDate?.toString() == 'Invalid Date'
       error.show()
       error.text("Invalid date")
     else
@@ -155,9 +151,9 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
         if updateTemporalRecurring()
           $(this).parents('.dropdown').removeClass('open')
 
-    root.find('.temporal').on 'change paste keyup', ->
+    root.find('.temporal').on 'paste keyup change focusout', (e) ->
       validateTemporalInputs(root)
-      event.stopPropagation()
+      e.stopPropagation()
 
   $(document).on 'click', '.clear-filters.button', ->
     validateTemporalInputs($('.dataset-temporal-filter'))
