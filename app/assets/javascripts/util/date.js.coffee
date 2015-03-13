@@ -5,7 +5,9 @@
     date.toISOString().split('T')[0]
 
   isoUtcDateTimeString = (date) ->
-    date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
+    # FIXME commenting out this line keeps the invalid date error shown (and invalid date in the input), but puts an error in the console.
+    # if date.toString() != 'Invalid Date'
+      date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
 
   parseIsoUtcString = (str) ->
     if !str || str.length == 0

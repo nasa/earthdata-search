@@ -13,7 +13,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       # if the input is for recurring, add a year to create a valid date
       startVal = "2000-#{startVal}" if startVal.length > 0
       endVal = "2000-#{endVal}" if endVal.length > 0
-    console.log "startVal #{startVal}"
+
     startDate = edsc_date.parseIsoUtcString(startVal)
     endDate = edsc_date.parseIsoUtcString(endVal)
 
@@ -88,35 +88,23 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       originalSetDate = DatePickerProto._setDate
       DatePickerProto._setDate = (date, which) ->
         updatedDate = date
-        if $(this.element).hasClass('temporal-range-stop')
+        if this.element.hasClass('temporal-range-stop')
           updatedDate.setSeconds(date.getSeconds() + 86399) # 23:59:59
-        originalSetDate.call(this, updatedDate, which)
+          originalSetDate.call(this, updatedDate, which)
 
-    # TODO hide year selection from recurring pickers
+      originalFill = DatePickerProto.fill
+      DatePickerProto.fill = ->
+        originalFill.call(this)
+        if this.element.hasClass('temporal-recurring-picker')
+          # This works for days view (you only see the month, not year and month)
+          field = this.picker.find('.datepicker-days thead .datepicker-switch')
+          existingText = field.text()
+          field.text(existingText.replace(/\d{4}\s*$/, ''))
+          # This hides the year on the months view, but only after you select a month the first time.
+          # If you select a date then open the picker again, the year will be hidden on the months view
+          this.picker.find('.datepicker-months thead .datepicker-switch').text('')
 
-    # root.find('.temporal-recurring-picker').datetimepicker
-    #   format: 'm-d H:i:s',
-    #   allowBlank: true,
-    #   closeOnDateSelect: true,
-    #   lazyInit: true,
-    #   className: prefix + '-datetimepicker recurring-datetimepicker',
-    #   yearStart: 2007,
-    #   yearEnd: 2007,
-    #   startDate: today,
-    #   onShow: (dp,$input) ->
-    #     updateMonthButtons($(this).find('.xdsoft_month'))
-    #     setMinMaxOptions(root, this, $input, 'recurring')
-    #   onChangeDateTime: onChangeDateTime
-    #   onChangeMonth: (dp,$input) ->
-    #     updateMonthButtons($(this).find('.xdsoft_month'))
-    #   onGenerate: (time, input) ->
-    #     time.setHours(0)
-    #     time.setMinutes(0)
-    #     time.setSeconds(0)
-    #     if input.hasClass('temporal-recurring-stop')
-    #       time.setHours(23)
-    #       time.setMinutes(59)
-    #       time.setSeconds(59)
+
 
     root.find('.temporal-recurring-year-range').slider({
       min: 1960,
