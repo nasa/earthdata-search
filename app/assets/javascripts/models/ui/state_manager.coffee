@@ -101,7 +101,7 @@
       last = null
       last = parts.pop() while !last && parts.length > 0
       @page.ui.projectList.visible(last == 'project')
-      @_toggleWithTimeout('facets', @page.datasetFacets.isRelevant, last == 'search')
+      @_toggleWithTimeout('facets', @page.datasets.facets.isRelevant, last == 'search')
       @_toggleWithTimeout('datasets', @page.datasets.isRelevant, last == 'datasets' || last == 'search')
 
     # The following two methods read a path from and write a path to the master overlay state, respectively

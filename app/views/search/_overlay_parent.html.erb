@@ -5,8 +5,7 @@
     </p>
   </header>
   <div class="master-overlay-info">
-    <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
-      Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
+    <p data-bind="if: datasets.facets.results().length > 0" class="panel-list-meta">
       <% if Rails.configuration.feedback_url.present? %>
       <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Dataset Facets', null)" class="button feedback-button">
         <i class="fa fa-exclamation-circle"></i>
@@ -25,11 +24,11 @@
       </div>
       <div class="panel-body facets">
         <dl class="applied-facets">
-          <!-- ko foreach: datasetFacets.appliedFacets -->
+          <!-- ko foreach: datasets.facets.appliedFacets -->
               <dt data-bind="text: name" class="facet-title"></dt>
                 <dd data-bind="css: {'features-facet': name == 'Features', 'facets': name != 'Features'}">
                   <!-- ko foreach: selectedValues -->
-                    <span data-bind="click: $root.datasetFacets.removeFacet" class="facets-item selected">
+                    <span data-bind="click: $root.datasets.facets.removeFacet" class="facets-item selected">
                       <span data-bind="text: term" ></span>
                       <i class="fa fa-times"></i>
                       <!-- ko if: term == 'Subsetting Services' -->
@@ -50,8 +49,8 @@
       </div>
     </div>
     <!-- /ko -->
-    <!-- ko if: datasetFacets.isRelevant() -->
-    <!-- ko foreach: datasetFacets.results -->
+    <!-- ko if: datasets.facets.isRelevant() -->
+    <!-- ko foreach: datasets.facets.results -->
     <!-- ko if: values().length > 0 -->
     <div data-bind="css: class_name" class="panel panel-default">
       <div class="panel-heading">
@@ -63,7 +62,7 @@
       <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed(), 'features-facet': name == 'Features'}">
         <div class="panel-body facets">
           <!-- ko foreach: values -->
-          <p class="facets-item" data-bind="click: $root.datasetFacets.toggleFacet, css: {selected: isSelected}">
+          <p class="facets-item" data-bind="click: $root.datasets.facets.toggleFacet, css: {selected: isSelected}">
             <span data-bind="text: term"></span>
             <!-- ko ifnot: $parent.name == 'Features' -->
             (<span data-bind="text: count"></span>)

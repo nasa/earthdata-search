@@ -2,7 +2,7 @@
 
 ns = @edsc.models.data
 
-ns.DatasetFacets = do (ko, XhrModel=ns.XhrModel) ->
+ns.DatasetFacets = do (ko) ->
 
   class Facet
     constructor: (@parent, item) ->
@@ -51,16 +51,18 @@ ns.DatasetFacets = do (ko, XhrModel=ns.XhrModel) ->
     toggleList: =>
       @opened(!@opened())
 
-  class DatasetFacetsModel extends XhrModel
+  class DatasetFacetsModel
     constructor: (query) ->
-      super('/dataset_facets.json', query)
-      @isRelevant(false)
-      @appliedFacets = ko.computed(@_computeResults, this, deferEvaluation: true)
+      @query = query
+      @isRelevant = ko.observable(false);
+      @appliedFacets = ko.computed(@_computeAppliedFacets, this, deferEvaluation: true)
+      @results = ko.observable([])
 
-    _computeResults: ->
+    _computeAppliedFacets: ->
       result for result in @results() when result.selectedValues().length > 0
 
-    _toResults: (data, current, params) ->
+    update: (data) ->
+      current = @results.peek()
       for item in data
         found = ko.utils.arrayFirst current, (result) ->
           result.name == item.name
@@ -71,6 +73,7 @@ ns.DatasetFacets = do (ko, XhrModel=ns.XhrModel) ->
         else
           current.push(new FacetsListModel(@query, item))
 
+      @results(current)
       current
 
     removeFacet: (facet) =>

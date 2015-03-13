@@ -6,6 +6,7 @@ class DatasetsController < ApplicationController
 
     if catalog_response.success?
       add_featured_datasets!(dataset_params_for_request(request), token, catalog_response.body)
+      catalog_response.body['feed']['facets'] = facet_results(request, catalog_response)
 
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
 
@@ -38,45 +39,47 @@ class DatasetsController < ApplicationController
     response = echo_client.get_facets(dataset_params_for_request(request), token)
 
     if response.success?
-      # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
-      query = request.query_string.gsub('%5B', '[').gsub('%5D', ']').split('&').map {|kv| kv.split('=')}.group_by(&:first)
-
-      # CMR Facets
-      facets = Array.wrap(response.body['feed']['facets'])
-
-      fields_to_params = {
-        'two_d_coordinate_system_name' => ['2D Coordinate Name', 'two_d_coordinate_system_name[]'],
-        'category' => ['Category Keyword', 'science_keywords[0][category][]'],
-        'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
-        'term' => ['Term Keyword', 'science_keywords[0][term][]'],
-        'variable_level_1' => ['Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'],
-        'variable_level_2' => ['Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'],
-        'variable_level_3' => ['Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'],
-        'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
-      }
-
-      features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
-      facets.unshift(features).flatten!
-
-      results = facets.map do |facet|
-        items = facet['value-counts'].map do |term, count|
-          {'term' => term.strip, 'count' => count}
-        end
-        field = facet['field']
-        params = fields_to_params[field]
-        unless params
-          params = [field.humanize.capitalize, field + '[]']
-        end
-        facet_response(query, items, params.first, params.last)
-      end
-
-      respond_with(results, status: response.status)
+      respond_with(facet_results(request, response), status: response.status)
     else
       respond_with(response.body, status: response.status)
     end
   end
 
   private
+
+  def facet_results(request, response)
+    # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
+    query = request.query_string.gsub('%5B', '[').gsub('%5D', ']').split('&').map {|kv| kv.split('=')}.group_by(&:first)
+
+    # CMR Facets
+    facets = Array.wrap(response.body['feed']['facets'])
+
+    fields_to_params = {
+      'two_d_coordinate_system_name' => ['2D Coordinate Name', 'two_d_coordinate_system_name[]'],
+      'category' => ['Category Keyword', 'science_keywords[0][category][]'],
+      'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
+      'term' => ['Term Keyword', 'science_keywords[0][term][]'],
+      'variable_level_1' => ['Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'],
+      'variable_level_2' => ['Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'],
+      'variable_level_3' => ['Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'],
+      'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
+    }
+
+    features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
+    facets.unshift(features).flatten!
+
+    results = facets.map do |facet|
+      items = facet['value-counts'].map do |term, count|
+        {'term' => term.strip, 'count' => count}
+      end
+      field = facet['field']
+      params = fields_to_params[field]
+      unless params
+        params = [field.humanize.capitalize, field + '[]']
+      end
+      facet_response(query, items, params.first, params.last)
+    end
+  end
 
   def facet_response(query, items, name, param)
     items = items[0...50]
