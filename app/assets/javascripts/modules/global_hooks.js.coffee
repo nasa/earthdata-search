@@ -62,10 +62,9 @@ do (document
 
       map.on 'overlayschange', (e) ->
         overlays = e.overlays
-        names = []
-        for name in overlays
-          names.push(name.split('*')[0])
-        metrics.createMapEvent("Set Overlays: #{names.join(', ')}")
+        names = (name.split('*')[0] for name in overlays)
+        if names.length > 0
+          metrics.createMapEvent("Set Overlays: #{names.join(', ')}")
 
       map.on 'spatialtoolchange', (e) ->
         metrics.createMapEvent("Spatial: #{e.name}")
@@ -92,8 +91,12 @@ do (document
     timeline.on 'scrollzoom', (e) ->
       metrics.createTimelineEvent("Scroll Zoom")
 
+    panTimeout = null
     timeline.on 'scrollpan', (e) ->
-      metrics.createTimelineEvent("Scroll Pan")
+      # Rate limit sending the scroll event to avoid trackpad momentum firing tons of events
+      clearTimeout(panTimeout)
+      sendPan = -> metrics.createTimelineEvent("Scroll Pan")
+      panTimeout = setTimeout(sendPan, 200)
 
     timeline.on 'draggingpan', (e) ->
       metrics.createTimelineEvent("Dragging Pan")
