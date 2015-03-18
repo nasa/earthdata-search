@@ -30,7 +30,7 @@ describe "Dataset results", reset: false do
     wait_for_xhr
     page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 10000"
     wait_for_xhr
-    expect(page).to have_css('#dataset-results-list .panel-list-item', count: 34)
+    expect(page).to have_css('#dataset-results-list .panel-list-item', count: 36)
     expect(page).to have_no_content('Loading datasets...')
     page.execute_script "$('#dataset-results .master-overlay-content')[0].scrollTop = 0"
   end

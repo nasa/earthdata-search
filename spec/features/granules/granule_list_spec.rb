@@ -187,7 +187,7 @@ describe "Granule list", reset: false do
   end
 
   context "for datasets without granules" do
-    use_dataset 'C179002048-SEDAC', '2008 Natural Resource Management Index (NRMI)'
+    use_dataset 'C179002107-SEDAC', 'Anthropogenic Biomes of the World, Version 1'
 
     context "clicking on a dataset result" do
       before :all do
