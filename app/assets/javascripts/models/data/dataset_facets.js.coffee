@@ -54,7 +54,7 @@ ns.DatasetFacets = do (ko) ->
   class DatasetFacetsModel
     constructor: (query) ->
       @query = query
-      @isRelevant = ko.observable(false);
+      @isRelevant = ko.observable(false)
       @appliedFacets = ko.computed(@_computeAppliedFacets, this, deferEvaluation: true)
       @results = ko.observable([])
 
