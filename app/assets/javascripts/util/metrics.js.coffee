@@ -87,11 +87,8 @@ this.edsc.util.metrics = do ->
 
   createMapEdit: (preBounds, postBounds, type) ->
     if ga? && preBounds?.length == postBounds?.length
-      distance = []
+      distanceSum = 0
       for p0, i in preBounds
         p1 = postBounds[i]
-        distance.push(p0.distanceTo(p1))
-
-      distanceSum = Math.round(distance.reduce (t, v) -> t + v)
-
-      ga('send', 'event', 'Spatial Edit', type, '', distanceSum)
+        distanceSum += p0.distanceTo(p1)
+      ga('send', 'event', 'Spatial Edit', type, '', Math.round(distanceSum))
