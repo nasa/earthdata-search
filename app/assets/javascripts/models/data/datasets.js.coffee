@@ -1,11 +1,14 @@
 #= require models/data/xhr_model
 #= require models/data/dataset
+#= require models/data/dataset_facets
 
 ns = @edsc.models.data
 
 ns.Datasets = do (ko
+                  extend=$.extend
                   XhrModel=ns.XhrModel
                   Dataset=ns.Dataset
+                  DatasetFacetsModel = ns.DatasetFacets
                   ) ->
 
   class DatasetsModel extends XhrModel
@@ -25,13 +28,20 @@ ns.Datasets = do (ko
     constructor: (query) ->
       super('/datasets.json', query)
 
+      @facets = new DatasetFacetsModel(query)
+
       # The index where featured datasets stop and un-featured begin
       @_featuredSplitIndex = @computed(read: @_computeFeaturedSplitIndex, deferEvaluation: true, owner: this)
       @featured = @computed(read: @_computeFeatured, deferEvaluation: true, owner: this)
       @unfeatured = @computed(read: @_computeUnfeatured, deferEvaluation: true, owner: this)
 
+    params: ->
+      extend({include_facets: true}, super())
+
     _decorateNextPage: (params, results) ->
       @page++
+      if @page > 1
+        delete params.include_facets
       params.page_size = 20
       params.page_num = @page
 
@@ -44,6 +54,7 @@ ns.Datasets = do (ko
         current.concat(newItems)
       else
         dataset.dispose() for dataset in current
+        @facets.update(data.feed.facets || [])
         newItems
 
     toggleVisibleDataset: (dataset) =>

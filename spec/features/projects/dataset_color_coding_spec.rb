@@ -23,7 +23,7 @@ describe "Project dataset color coding", reset: false do
   context 'in the project view' do
     before :all do
       first_dataset_result.click_link "Add dataset to the current project"
-      nth_dataset_result(10).click_link "Add dataset to the current project"
+      nth_dataset_result(9).click_link "Add dataset to the current project"
       dataset_results.click_link "View Project"
     end
 

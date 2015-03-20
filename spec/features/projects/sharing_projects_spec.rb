@@ -37,7 +37,7 @@ describe "Sharing Projects", reset: false do
     new_project_id = nil
 
     before :all do
-      path = '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC!C179002048-SEDAC!C179002147-SEDAC!C1000000000-SEDAC'
+      path = '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC!C179002107-SEDAC!C179002147-SEDAC!C1000000000-SEDAC'
       user = User.first
       project = Project.new
       project.path = path

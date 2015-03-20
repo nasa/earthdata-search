@@ -1,7 +1,6 @@
 #= require models/data/grid
 #= require models/data/query
 #= require models/data/datasets
-#= require models/data/dataset_facets
 #= require models/data/project
 #= require models/data/preferences
 #= require models/ui/spatial_type
@@ -22,7 +21,6 @@ ns.SearchPage = do (ko
                     setCurrent = ns.setCurrent
                     QueryModel = data.query.DatasetQuery
                     DatasetsModel = data.Datasets
-                    DatasetFacetsModel = data.DatasetFacets
                     ProjectModel = data.Project
                     SpatialTypeModel = ui.SpatialType
                     DatasetsListModel = ui.DatasetsList
@@ -42,7 +40,6 @@ ns.SearchPage = do (ko
     constructor: ->
       @query = new QueryModel()
       @datasets = new DatasetsModel(@query)
-      @datasetFacets = new DatasetFacetsModel(@query)
       @project = new ProjectModel(@query)
       @preferences = new PreferencesModel()
 
