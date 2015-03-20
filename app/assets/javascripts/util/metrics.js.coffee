@@ -95,5 +95,5 @@ this.edsc.util.metrics = do ->
       distanceSum = Math.round(distance.reduce (t, v) -> t + v)
 
       ga('set', 'metric1', distanceSum)
-      ga('send', 'event', 'Spatial Edit', type)
+      ga('send', 'event', 'Spatial Edit', type, '', distanceSum)
       ga('set', 'metric1', null)
