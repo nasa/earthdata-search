@@ -150,6 +150,8 @@ ns.SpatialSelection = do (window,
         @_drawnItems.addLayer(@_layer)
 
     _onEditStart: (e) =>
+      @_preEditBounds = @_boundsToPoints(@_layer)
+
       @_layer?._path?.setAttribute?('pointer-events', 'all')
 
     _onEditEnd: (e) =>
@@ -159,8 +161,19 @@ ns.SpatialSelection = do (window,
       @_addLayer(e.target, e.layer, e.layerType)
 
     _onDrawEdited: (e) =>
+      map = @map
+      postEditBounds = @_boundsToPoints(@_layer)
+      map.fire('spatialedit', preBounds: @_preEditBounds, postBounds: postEditBounds, spatial: @_layer.type)
+
       currentPage.ui.spatialType.selectNone()
       @_addLayer(e.target)
+
+    _boundsToPoints: (layer) ->
+      if layer.type == 'marker'
+        bounds = [layer.getLatLng()]
+      else
+        bounds = layer.getLatLngs()
+      points = (@map.latLngToLayerPoint(latLng) for latLng in bounds)
 
     _addLayer: (map, layer=@_layer, type=@_layer.type) ->
       @_oldLayer = null

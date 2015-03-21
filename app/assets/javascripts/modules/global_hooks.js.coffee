@@ -75,6 +75,9 @@ do (document
       map.on 'shapefile:start', (e) ->
         metrics.createMapEvent("Added Shapefile")
 
+      map.on 'spatialedit', (e) ->
+        metrics.createMapEdit(e.preBounds, e.postBounds, e.spatial)
+
     timeline = $('#timeline')
     timeline.on 'buttonzoom', (e) ->
       metrics.createTimelineEvent("Button Zoom")
