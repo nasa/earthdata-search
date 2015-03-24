@@ -31,6 +31,7 @@ class PlacenamesController < ApplicationController
         # that the user is unlikely to be interested in
         result = []
       else
+        placename.gsub!("place:", "")
         result = PlacesClient.get_place_completions(placename).map do |completion|
           name = [completion['toponymName'], completion['adminName1'], completion['countryName']].map(&:presence).uniq.compact.join(', ')
           bbox = completion['bbox']
@@ -40,8 +41,8 @@ class PlacenamesController < ApplicationController
             spatial = "point:#{completion['lng']},#{completion['lat']}"
           end
           {
-            placename: preposition + name,
-            value: prefix + name,
+            placename: preposition + "place:" + name,
+            value: prefix + "place:" + name,
             spatial: spatial
           }
         end
