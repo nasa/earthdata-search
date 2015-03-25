@@ -11,6 +11,7 @@ ns.Temporal = do (ko,
   class TemporalDate extends KnockoutModel
     constructor: (@defaultYear, @isRecurring) ->
       @date = ko.observable(null)
+      @_invalidDateString = ko.observable(null)
 
       @_year = ko.observable(@defaultYear)
       @year = @computed
@@ -33,13 +34,20 @@ ns.Temporal = do (ko,
             dateStr = dateStr.substring(5) if @isRecurring()
             dateStr
           else
-            ""
+            @_invalidDateString() ? ""
         write: (dateStr) =>
           if dateStr?.length > 0
             dateStr = "#{@year()}-#{dateStr}" if @isRecurring()
-            @date(new Date(dateStr.replace(' ', 'T') + 'Z'))
+            date = dateUtil.parseIsoUtcString(dateStr)
+            if isNaN(date.getTime())
+              @date(null)
+              @_invalidDateString(dateStr)
+            else
+              @date(date)
+              @_invalidDateString(null)
           else
             @date(null)
+            @_invalidDateString(null)
 
       @dayOfYearString = @computed
         read: =>
