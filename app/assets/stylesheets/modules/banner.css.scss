@@ -57,7 +57,7 @@ a.banner-show-events {
   &:link, &:visited {
     display: block;
     float: left;
-    margin: 1.1em;
+    margin: 1.1em 1.1em 1.1em 0;
     color: #f39c12;
     @include transition(color 0.2s ease-in-out);
     text-shadow: 0 0 20px #2980b9;

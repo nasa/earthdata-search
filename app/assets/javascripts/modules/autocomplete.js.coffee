@@ -15,7 +15,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
     engine.initialize()
 
     uiOpts =
-      hint: true
+      hint: false
       highlight: true
       minLength: 1
     dsOpts =

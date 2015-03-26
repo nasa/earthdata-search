@@ -9,13 +9,6 @@ describe "Dataset Facets", reset: false do
   end
 
   context "facet listing" do
-    # EDSC-145: As a user, I want to see how long my dataset searches take, so that
-    #           I may understand the performance of the system
-    it "shows how much time the facet search took" do
-      search_time_element = find('#master-overlay-parent .panel-list-meta')
-      expect(search_time_element.text).to match(/Search Time: \d+\.\d+s/)
-    end
-
     it "shows the first Project facet" do
       expect(page).to have_content("Project 2009_AN_NASA")
     end
@@ -115,7 +108,7 @@ describe "Dataset Facets", reset: false do
       end
       expect(page).to have_css("p.facets-item.selected")
 
-      # select an instrument
+      # select a platform
       find(".facets-item", text: "FIELD INVESTIGATION").click
       wait_for_xhr
       within(:css, '.selected-facets-panel') do
@@ -124,11 +117,11 @@ describe "Dataset Facets", reset: false do
       end
       expect(page).to have_css("p.facets-item.selected")
 
-      # select a second campaign
-      find(".facets-item", text: "LBA").click
+      # select a second project
+      find(".facets-item", text: "ESIP").click
       wait_for_xhr
       within(:css, '.selected-facets-panel') do
-        expect(page).to have_content("EOSDIS and LBA")
+        expect(page).to have_content("EOSDIS and ESIP")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("p.facets-item.selected")

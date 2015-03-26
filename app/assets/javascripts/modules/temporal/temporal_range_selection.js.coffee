@@ -90,7 +90,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
         updatedDate = date
         if this.element.hasClass('temporal-range-stop')
           updatedDate.setSeconds(date.getSeconds() + 86399) # 23:59:59
-          originalSetDate.call(this, updatedDate, which)
+        originalSetDate.call(this, updatedDate, which)
 
       originalFill = DatePickerProto.fill
       DatePickerProto.fill = ->

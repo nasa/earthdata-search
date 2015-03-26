@@ -191,6 +191,9 @@ ns.Temporal = do (ko,
         if value?
           [start, stop, startDay, stopDay]  = value.split(',')
           @isRecurring(startDay?)
+        else
+          @start.humanDateString(null)
+          @stop.humanDateString(null)
         @start.queryDateString(start)
         @stop.queryDateString(stop)
 

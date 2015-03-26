@@ -18,7 +18,7 @@ describe 'Dataset API Endpoints', reset: false do
     end
 
     it 'provides a link to the CMR API for the datasets granules' do
-      expect(dataset_details).to have_css('a[href="https://cmr.earthdata.nasa.gov/search/concepts.json?temporal=1985-12-01T00%3A00%3A00.000Z%2C&echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20"]')
+      expect(dataset_details).to have_css('a[href="https://cmr.earthdata.nasa.gov/search/granules.json?temporal=1985-12-01T00%3A00%3A00.000Z%2C&echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20"]')
     end
   end
 

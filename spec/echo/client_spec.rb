@@ -47,7 +47,7 @@ describe Echo::Client do
     let(:dataset_url) { "/search/concepts/C14758250-LPDAAC_ECS.echo10" }
     let(:resp) { Faraday::Response.new }
     let(:body) { Object.new }
-    let(:granule_url) { "http://example.com/search/concepts.json" }
+    let(:granule_url) { "http://example.com/search/granules.json" }
 
     it 'with valid dataset ID' do
       expect(connection).to receive(:get).with(dataset_url, {}).and_return(resp)
