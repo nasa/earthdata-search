@@ -99,6 +99,9 @@ describe 'Date picker', reset: false do
 
       after :all do
         reset_search
+        click_link 'Temporal'
+        js_uncheck_recurring 'dataset'
+        js_click_apply ".temporal-dropdown"
       end
 
       it "fills in 23:59:59 for the end time" do
