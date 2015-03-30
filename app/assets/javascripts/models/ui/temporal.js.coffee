@@ -41,6 +41,7 @@ ns.Temporal = do (ko,
             date = dateUtil.parseIsoUtcString(dateStr)
             if isNaN(date.getTime())
               @date(null)
+              dateStr = dateStr.substring(5) if @isRecurring()
               @_invalidDateString(dateStr)
             else
               @date(date)

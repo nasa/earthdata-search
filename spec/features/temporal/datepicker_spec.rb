@@ -63,22 +63,26 @@ describe 'Date picker', reset: false do
           expect(page).to have_content("Stop 2010-01-15 12:13:14")
         end
       end
+    end
 
-      context "when typing an invalid date" do
-        before :all do
-          click_link "Temporal"
-          fill_in "Start", with: "gibberish\t"
-        end
+    context "when typing an invalid date" do
+      before :all do
+        click_link "Temporal"
+        fill_in "Start", with: "gibberish\t"
+      end
 
-        after :all do
-          js_click_clear
-          click_link 'Temporal'
-          reset_search
-        end
+      after :all do
+        js_click_clear
+        click_link 'Temporal'
+        reset_search
+      end
 
-        it "displays an error" do
-          expect(page).to have_content("Invalid date")
-        end
+      it "displays an error" do
+        expect(page).to have_content("Invalid date")
+      end
+
+      it "leaves the invalid date in the text field" do
+        expect(page).to have_field('Start', exact: 'gibberish')
       end
     end
   end
@@ -106,6 +110,30 @@ describe 'Date picker', reset: false do
 
       it "fills in 23:59:59 for the end time" do
         expect(page).to have_content("Stop 01-20 23:59:59")
+      end
+    end
+
+    context "when typing an invalid date" do
+      before :all do
+        click_link "Temporal"
+        fill_in "Start", with: "gibberish\t"
+      end
+
+      after :all do
+        js_click_clear
+        click_link 'Temporal'
+        reset_search
+        click_link 'Temporal'
+        js_uncheck_recurring 'dataset'
+        js_click_apply ".temporal-dropdown"
+      end
+
+      it "displays an error" do
+        expect(page).to have_content("Invalid date")
+      end
+
+      it "leaves the invalid date in the text field" do
+        expect(page).to have_field('Start', exact: 'gibberish')
       end
     end
   end
