@@ -90,7 +90,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       originalSetDate = DatePickerProto._setDate
       DatePickerProto._setDate = (date, which) ->
         updatedDate = date
-        if this.element.hasClass('temporal-range-stop')
+        if this.element.hasClass('temporal-stop')
           updatedDate.setSeconds(date.getSeconds() + 86399) # 23:59:59
         originalSetDate.call(this, updatedDate, which)
 
@@ -98,15 +98,9 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       DatePickerProto.fill = ->
         originalFill.call(this)
         if this.element.hasClass('temporal-recurring-picker')
-          # This works for days view (you only see the month, not year and month)
           field = this.picker.find('.datepicker-days thead .datepicker-switch')
           existingText = field.text()
           field.text(existingText.replace(/\d{4}\s*$/, ''))
-          # This hides the year on the months view, but only after you select a month the first time.
-          # If you select a date then open the picker again, the year will be hidden on the months view
-          this.picker.find('.datepicker-months thead .datepicker-switch').text('')
-
-
 
     root.find('.temporal-recurring-year-range').slider({
       min: 1960,
