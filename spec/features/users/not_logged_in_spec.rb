@@ -12,7 +12,7 @@ describe 'User not logged in', reset: false do
     end
 
     it "sends them to log in first" do
-      expect(page).to have_content "EOSDIS User Registration System"
+      expect(page).to have_content "EOSDIS Earthdata Login"
     end
   end
 
@@ -22,7 +22,7 @@ describe 'User not logged in', reset: false do
     end
 
     it "sends them to log in first" do
-      expect(page).to have_content "EOSDIS User Registration System"
+      expect(page).to have_content "EOSDIS Earthdata Login"
     end
   end
 
@@ -32,7 +32,7 @@ describe 'User not logged in', reset: false do
     end
 
     it "sends them to log in first" do
-      expect(page).to have_content "EOSDIS User Registration System"
+      expect(page).to have_content "EOSDIS Earthdata Login"
     end
   end
 

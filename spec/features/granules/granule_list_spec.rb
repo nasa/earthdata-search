@@ -58,7 +58,7 @@ describe "Granule list", reset: false do
       end
 
       it "triggers the download workflow" do
-        expect(page).to have_content('EOSDIS User Registration System')
+        expect(page).to have_content('EOSDIS Earthdata Login')
       end
     end
 

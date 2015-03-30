@@ -75,7 +75,7 @@ describe "Expired user token", reset: true do
       end
 
       it "sends the user to login" do
-        expect(page).to have_content "EOSDIS User Registration System"
+        expect(page).to have_content "EOSDIS Earthdata Login"
       end
     end
 
@@ -98,7 +98,7 @@ describe "Expired user token", reset: true do
       end
 
       it 'refreshes the token' do
-        expect(page).to have_content "EOSDIS User Registration System"
+        expect(page).to have_content "EOSDIS Earthdata Login"
       end
     end
   end
