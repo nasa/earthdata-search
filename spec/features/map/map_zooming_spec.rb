@@ -88,6 +88,7 @@ describe 'Map Zooming', reset: false do
         click_on 'Clear Filters'
         script = "$('#map').data('map').map.setView([0, 0], 2);"
         page.execute_script(script)
+        expect(page).to have_map_center(0, 0, 2)
       end
 
       it "centers the map over the spatial area" do
@@ -106,6 +107,7 @@ describe 'Map Zooming', reset: false do
       after :all do
         script = "$('#map').data('map').map.setView([0, 0], 2);"
         page.execute_script(script)
+        expect(page).to have_map_center(0, 0, 2)
       end
 
       it "centers the map at (0,0)" do
