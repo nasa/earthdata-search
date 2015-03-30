@@ -114,6 +114,15 @@ input.day-of-year-input {
   }
 }
 
+.datepicker-temporal-recurring .datepicker-months {
+  th {
+    display: none;
+  }
+  td {
+    width: 205px;
+  }
+}
+
 .toolbar {
   .fa {
     padding: 0;
