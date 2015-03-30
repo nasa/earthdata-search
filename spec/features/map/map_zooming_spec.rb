@@ -72,4 +72,47 @@ describe 'Map Zooming', reset: false do
       end
     end
   end
+
+  context 'when using the zoom home button' do
+    context 'with spatial bounds' do
+      before :all do
+        script = "$('#map').data('map').map.fitBounds([{lat: -40, lng:0}, {lat: -20, lng: 0}]);"
+        page.execute_script(script)
+
+        create_bounding_box(0, 0, 20, 20)
+
+        find('.leaflet-control-zoom-home').click
+      end
+
+      after :all do
+        click_on 'Clear Filters'
+        script = "$('#map').data('map').map.setView([0, 0], 2);"
+        page.execute_script(script)
+        expect(page).to have_map_center(0, 0, 2)
+      end
+
+      it "centers the map over the spatial area" do
+        expect(page).to have_map_center(10, -5, 4)
+      end
+    end
+
+    context 'without spatial bounds' do
+      before :all do
+        script = "$('#map').data('map').map.fitBounds([{lat: -40, lng:-10}, {lat: -20, lng: -10}]);"
+        page.execute_script(script)
+
+        find('.leaflet-control-zoom-home').click
+      end
+
+      after :all do
+        script = "$('#map').data('map').map.setView([0, 0], 2);"
+        page.execute_script(script)
+        expect(page).to have_map_center(0, 0, 2)
+      end
+
+      it "centers the map at (0,0)" do
+        expect(page).to have_map_center(0, 0, 2)
+      end
+    end
+  end
 end
