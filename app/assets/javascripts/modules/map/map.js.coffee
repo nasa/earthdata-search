@@ -10,6 +10,7 @@ ns.Map = do (window,
              SpatialSelection = ns.SpatialSelection,
              GranuleVisualizationsLayer = ns.GranuleVisualizationsLayer,
              MouseEventsLayer = ns.MouseEventsLayer,
+             ZoomHome = ns.L.ZoomHome,
              Legend = @edsc.Legend,
              page = @edsc.page,
              ajax = @edsc.util.xhr.ajax
@@ -93,7 +94,7 @@ ns.Map = do (window,
       map.addLayer(new GranuleVisualizationsLayer())
       map.addLayer(new MouseEventsLayer())
 
-      map.addControl(L.control.zoom(position: 'topright'))
+      map.addControl(new ZoomHome())
       map.addControl(new ProjectionSwitcher())
       map.addControl(new SpatialSelection())
 

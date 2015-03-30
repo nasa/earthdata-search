@@ -15,7 +15,7 @@ describe 'Single Granule Data Access', reset: false do
     end
 
     it 'forces the user to login before showing data access page' do
-      expect(page).to have_content('EOSDIS User Registration System')
+      expect(page).to have_content('EOSDIS Earthdata Login')
     end
   end
 
