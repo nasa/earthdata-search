@@ -1,13 +1,5 @@
 (function() {
   $.extend($.fn.datepicker.DPGlobal,{
-    parseDate: function(date, format, language){
-      if (!date)
-        return undefined;
-      if (date instanceof Date)
-        return date;
-
-      return new Date(date + "Z");
-    },
     formatDate: function(date, format, language){
       if (!date)
         return '';

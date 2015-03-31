@@ -10,8 +10,7 @@ describe 'Date picker', reset: false do
     context "when selecting a start date" do
       before :all do
         click_link 'Temporal'
-        # give the end input focus
-        fill_in "Start", with: ""
+        find('.temporal-range-start').click
         find('span.year', text: "2010").click
         find('span.month', text: "Jan").click
         find('td.day', text: "15").click
@@ -30,8 +29,7 @@ describe 'Date picker', reset: false do
     context "when selecting an end date" do
       before :all do
         click_link 'Temporal'
-        # give the end input focus
-        fill_in "End", with: ""
+        find('.temporal-range-stop').click
         find('span.year', text: "2010").click
         find('span.month', text: "Jan").click
         find('td.day', text: "15").click
@@ -92,10 +90,10 @@ describe 'Date picker', reset: false do
       before :all do
         click_link 'Temporal'
         js_check_recurring 'dataset'
-        fill_in "Start", with: ""
+        find('.temporal-recurring-start').click
         find('span.month', text: "Jan").click
         find('td.day', text: "15").click
-        fill_in "End", with: ""
+        find('.temporal-recurring-stop').click
         find('span.month', text: "Jan").click
         find('td.day', text: "20").click
         js_click_apply ".temporal-dropdown"
@@ -116,6 +114,7 @@ describe 'Date picker', reset: false do
     context "when typing an invalid date" do
       before :all do
         click_link "Temporal"
+        js_check_recurring 'dataset'
         fill_in "Start", with: "gibberish\t"
       end
 
@@ -134,6 +133,19 @@ describe 'Date picker', reset: false do
 
       it "leaves the invalid date in the text field" do
         expect(page).to have_field('Start', exact: 'gibberish')
+      end
+
+      context "and then selecting a valid date" do
+        before :all do
+          find('.temporal-recurring-start').click
+          find('span.month', text: "Jan").click
+          find('td.day', text: "15").click
+        end
+
+        it "displays the selected date" do
+          expect(page).to have_field('Start', exact: '01-15 00:00:00')
+          expect(page).to have_no_content('Invalid date')
+        end
       end
     end
   end

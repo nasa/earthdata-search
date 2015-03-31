@@ -72,8 +72,8 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
 
     root.find('.temporal-recurring-picker').datepicker(
       format: "mm-dd"
-      startDate: "1960-01-01"
-      endDate: "1960-12-31"
+      startDate: "01-01"
+      endDate: "12-31"
       startView: 1
       todayBtn: "linked"
       clearBtn: true
