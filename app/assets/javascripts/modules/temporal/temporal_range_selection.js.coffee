@@ -171,3 +171,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       modelPath: "query.temporal.pending",
       prefix: 'dataset'
     })
+
+    $('.temporal').keydown (e) ->
+      if e.keyCode >= 48 || e.keyCode == 32
+        $(this).data('datepicker').hide()
