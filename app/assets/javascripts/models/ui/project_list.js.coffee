@@ -168,7 +168,6 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
 
     showFilters: (dataset) =>
       if @project.searchGranulesDataset(dataset)
-        @_destroyGranulePickers()
         $('.granule-temporal-filter').temporalSelectors({
           uiModel: dataset.granulesModel.temporal,
           modelPath: "(project.searchGranulesDataset() ? project.searchGranulesDataset().granulesModel.temporal.pending : null)",
@@ -180,12 +179,8 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
       @hideFilters()
 
     hideFilters: =>
-      @_destroyGranulePickers()
       $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
       @project.searchGranulesDataset(null)
-
-    _destroyGranulePickers: ->
-      $('.granule-temporal-filter .temporal').datetimepicker('destroy')
 
     toggleViewAllDatasets: =>
       visible = !@allDatasetsVisible()

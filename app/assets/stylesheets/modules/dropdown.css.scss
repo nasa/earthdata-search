@@ -44,7 +44,7 @@
   display: none;
 }
 
-.dropdown-menu {
+ul.dropdown-menu {
   @include linear-gradient($button-dark-bottom-gradient, $dropdown-highlight);
 
   a.dropdown-link:hover {
@@ -63,19 +63,6 @@
 .save-project-name {
   display: inline-block;
   width: 180px;
-}
-
-.xdsoft_datetimepicker, .xdsoft_timepicker {
-  z-index:1001;
-}
-
-.xdsoft_label.xdsoft_month {
-  margin-left: 1px;
-}
-
-// Hide jquery.datetimepicker's year field
-.recurring-datetimepicker .xdsoft_year {
-  display: none;
 }
 
 input.day-of-year-input {
@@ -124,6 +111,15 @@ input.day-of-year-input {
   }
 
   .slider.slider-horizontal .slider-track {
+  }
+}
+
+.datepicker-temporal-recurring .datepicker-months {
+  th {
+    display: none;
+  }
+  td {
+    width: 205px;
   }
 }
 

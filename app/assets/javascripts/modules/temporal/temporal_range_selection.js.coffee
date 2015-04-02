@@ -7,67 +7,43 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
   validateTemporalInputs = (root) ->
     start = root.find(".temporal-start:visible")
     end = root.find(".temporal-stop:visible")
-    start_val = start.val()
-    end_val = end.val()
+    startVal = start.val()
+    endVal = end.val()
+    if start.hasClass('temporal-recurring-picker')
+      # if the input is for recurring, add a year to create a valid date
+      startVal = "2000-#{startVal}" if startVal.length > 0
+      endVal = "2000-#{endVal}" if endVal.length > 0
 
-    if start and end
-      error = root.find(".tab-pane:visible .temporal-error")
+    startDate = edsc_date.parseIsoUtcString(startVal)
+    endDate = edsc_date.parseIsoUtcString(endVal)
+
+    error = root.find(".tab-pane:visible .temporal-error")
+    error.hide()
+
+    if startDate?.toString() == 'Invalid Date' or endDate?.toString() == 'Invalid Date'
+      error.show()
+      error.text("Invalid date")
+    else
+      error.hide()
+
+    if !error.is(':visible') and start and end
       error.show()
 
       if start.hasClass("temporal-recurring-start")
         # Recurring start and stop must both be selected
-        if start_val == "" ^ end_val == ""
+        if startVal == "" ^ endVal == ""
           error.text("Start and End dates must both be selected")
-        else if start_val > end_val
+        else if startVal > endVal
           error.text("Start must be no later than End")
         else
           error.hide()
       else
-        if start_val == "" or end_val == "" or start_val <= end_val
+        if startVal == "" or endVal == "" or startVal <= endVal
           error.hide()
         else
           error.text("Start must be no later than End")
 
-
-  setMinMaxOptions = (root, datetimepicker, $input, temporal_type) ->
-    min_date = false
-    max_date = false
-    format = if temporal_type == "range" then 'Y-m-d' else 'm-d'
-
-    start_val = root.find('input.temporal-' + temporal_type + '-start').val()
-    stop_val = root.find('input.temporal-' + temporal_type + '-stop').val()
-
-    if $input.hasClass('temporal-' + temporal_type + '-start') and stop_val
-      max_date = stop_val.split(' ')[0]
-    else if $input.hasClass('temporal-' + temporal_type + '-stop') and start_val
-      min_date = start_val.split(' ')[0]
-
-    datetimepicker.setOptions({
-      minDate: min_date,
-      maxDate: max_date,
-      startDate: today,
-      formatDate: format
-    })
-
-  updateMonthButtons = (month_label) ->
-    prev_button = month_label.siblings('button.xdsoft_prev')
-    next_button = month_label.siblings('button.xdsoft_next')
-    prev_button.show()
-    next_button.show()
-    month = month_label.find('span').text()
-    if month == "January"
-      prev_button.hide()
-    else if month == "December"
-      next_button.hide()
-
-  parseOrdinal = (value) ->
-    match = /(\d{4})-(\d{3})/.exec(value)
-    return null  unless match # Date is in the wrong format
-    year = parseInt(match[1], 10)
-    day = parseInt(match[2], 10)
-    date = new Date(Date.UTC(year, 0, day))
-    return null  unless date.getUTCFullYear() is year # Date is higher than the number of days in the year
-    edsc_date.isoUtcDateTimeString(date)
+  originalSetDate = null
 
   $.fn.temporalSelectors = (options) ->
     root = this
@@ -80,63 +56,51 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     root.data('temporal-selectors', true)
 
     onChangeDateTime = (dp, $input) ->
-      validateTemporalInputs(root)
       $input.trigger('change')
 
+    root.find('.temporal-range-picker').datepicker
+      format: "yyyy-mm-dd"
+      startDate: "1960-01-01"
+      endDate: new Date()
+      startView: 2
+      todayBtn: "linked"
+      clearBtn: true
+      autoclose: true
+      todayHighlight: true
+      forceParse: false
+      keyboardNavigation: false
 
-    root.find('.temporal-range-picker').datetimepicker
-      format: 'Y-m-d H:i:s',
-      allowBlank: true,
-      closeOnDateSelect: true,
-      lazyInit: true,
-      className: prefix + '-datetimepicker',
-      yearStart: '1960',
-      yearEnd: current_year,
-      startDate: today,
-      onShow: (dp,$input) ->
-        setMinMaxOptions(root, this, $input, 'range')
-      onChangeDateTime: onChangeDateTime
-      onGenerate: (time, input) ->
-        time.setHours(0)
-        time.setMinutes(0)
-        time.setSeconds(0)
-        picker = this
-        if picker.find('.day-of-year-picker')?.length == 0
-          which = if input.is('.temporal-start') then 'start' else 'stop'
-          day_of_year_div = $("<div class='day-of-year-picker' data-bind='if: #{uiModelPath}'>
-            <label for='day-of-year-#{which}-input'>Day of Year:</label>
-            <input id='day-of-year-#{which}-input' data-bind='value: #{uiModelPath}.#{which}.dayOfYearString()' class='day-of-year-input' type='text' placeholder='YYYY-DDD' >
-            <button class='button text-button day-of-year-submit' data-input='" + input.attr("id") + "'>Set</button>
-            </div>")
-          day_of_year_div.appendTo(picker)
-          day_of_year_div.find('.day-of-year-submit').on 'click', ->
-            value = $(this).prev().val()
-            date = parseOrdinal(value)
-            if date
-              $("#" + $(this).attr("data-input") + ":visible").val(date).trigger('change')
-              $(this).parents('.xdsoft_datetimepicker').hide()
-              validateTemporalInputs(root)
-          ko.applyBindings(page, day_of_year_div[0])
+    root.find('.temporal-recurring-picker').datepicker(
+      format: "mm-dd"
+      startDate: "01-01"
+      endDate: "12-31"
+      startView: 1
+      todayBtn: "linked"
+      clearBtn: true
+      autoclose: true
+      todayHighlight: true
+      forceParse: false
+      keyboardNavigation: false
+      ).on 'show', ->
+        $(this).data('datepicker').picker.addClass('datepicker-temporal-recurring')
 
-    root.find('.temporal-recurring-picker').datetimepicker
-      format: 'm-d H:i:s',
-      allowBlank: true,
-      closeOnDateSelect: true,
-      lazyInit: true,
-      className: prefix + '-datetimepicker recurring-datetimepicker',
-      yearStart: 2007,
-      yearEnd: 2007,
-      startDate: today,
-      onShow: (dp,$input) ->
-        updateMonthButtons($(this).find('.xdsoft_month'))
-        setMinMaxOptions(root, this, $input, 'recurring')
-      onChangeDateTime: onChangeDateTime
-      onChangeMonth: (dp,$input) ->
-        updateMonthButtons($(this).find('.xdsoft_month'))
-      onGenerate: (time, input) ->
-        time.setHours(0)
-        time.setMinutes(0)
-        time.setSeconds(0)
+    # Set end time to 23:59:59
+    DatePickerProto = Object.getPrototypeOf($('.temporal').data('datepicker'))
+    unless originalSetDate?
+      originalSetDate = DatePickerProto._setDate
+      DatePickerProto._setDate = (date, which) ->
+        updatedDate = date
+        if this.element.hasClass('temporal-stop')
+          updatedDate.setSeconds(date.getSeconds() + 86399) # 23:59:59
+        originalSetDate.call(this, updatedDate, which)
+
+      originalFill = DatePickerProto.fill
+      DatePickerProto.fill = ->
+        originalFill.call(this)
+        if this.element.hasClass('temporal-recurring-picker')
+          field = this.picker.find('.datepicker-days thead .datepicker-switch')
+          existingText = field.text()
+          field.text(existingText.replace(/\d{4}\s*$/, ''))
 
     root.find('.temporal-recurring-year-range').slider({
       min: 1960,
@@ -176,9 +140,8 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
         if updateTemporalRecurring()
           $(this).parents('.dropdown').removeClass('open')
 
-    root.find('.temporal').on 'change paste keyup', ->
+    root.find('.temporal').on 'paste change focusout', (e) ->
       validateTemporalInputs(root)
-      event.stopPropagation()
 
   $(document).on 'click', '.clear-filters.button', ->
     validateTemporalInputs($('.dataset-temporal-filter'))
@@ -188,19 +151,19 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
 
   $(document).on 'click', '.temporal-filter .temporal-clear', ->
     validateTemporalInputs($(this).closest('.temporal-filter'))
-
-  # safe global stuff
-  $(document).on 'click', '.xdsoft_today_button, button.xdsoft_prev, button.xdsoft_next', ->
-    updateMonthButtons($(this).siblings('.xdsoft_month'))
-
-  $(document).on 'click', 'input.day-of-year-input', ->
-    # What does this even do?
-    $(this).focus()
-
+    # Clear datepicker selection
+    $('.temporal-range-start').datepicker('update')
+    $('.temporal-range-stop').datepicker('update')
 
   $(document).ready ->
+    $(".temporal-dropdown-button").on 'click', ->
+      $(this).parents('.dropdown').toggleClass('open')
     $('.dataset-temporal-filter').temporalSelectors({
       uiModel: temporalModel,
       modelPath: "query.temporal.pending",
       prefix: 'dataset'
     })
+
+    $('.temporal').keydown (e) ->
+      if e.keyCode >= 48 || e.keyCode == 32
+        $(this).data('datepicker').hide()

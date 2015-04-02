@@ -45,10 +45,8 @@ describe 'Address bar', reset: false do
       wait_for_xhr
       click_link "Temporal"
       js_check_recurring "dataset"
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "12-31 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-01 00:00:00\t"
+      fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"

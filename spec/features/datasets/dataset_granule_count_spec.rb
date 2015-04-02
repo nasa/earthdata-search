@@ -14,8 +14,7 @@ describe "Dataset Granule Count", reset: false do
   context 'when applying search constraint' do
     before :all do
       click_link "Temporal"
-      fill_in "Start", with: "2014-12-01 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "2014-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
       wait_for_xhr
     end

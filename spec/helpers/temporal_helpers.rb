@@ -37,10 +37,6 @@ module Helpers
       wait_for_xhr
     end
 
-    def close_datetimepicker
-      page.find(".xdsoft_time.xdsoft_current").click
-    end
-
     def js_click_temporal
       script = "$('.temporal-dropdown-button').click()"
       page.execute_script script

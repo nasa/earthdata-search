@@ -7,6 +7,19 @@
   isoUtcDateTimeString = (date) ->
     date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
 
+  parseIsoUtcString = (str) ->
+    if !str || str.length == 0
+      null
+    else if !str.match(/^\d{4}(?:\D\d{1,2}){0,5}Z?$/)
+      new Date(NaN)
+    else
+      components = str.split(/\D/g)
+      components.pop() if components[components.length - 1].length == 0
+      parsed = (parseInt(c, 10) for c in components)
+      parsed.push(1) if parsed.length == 1 # Just a year provided
+      parsed[1]--
+      new Date(Date.UTC.apply(Date, parsed))
+
   dateToHuman = (date) ->
     if date?
       str = new Date(date).toString()
@@ -42,7 +55,8 @@
       null
 
   exports =
-    isoUtcDateString: isoUtcDateString,
+    isoUtcDateString: isoUtcDateString
     isoUtcDateTimeString: isoUtcDateTimeString
+    parseIsoUtcString: parseIsoUtcString
     timeSpanToHuman: timeSpanToHuman
     timeSpanToIsoDate: timeSpanToIsoDate

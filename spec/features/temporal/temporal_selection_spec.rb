@@ -15,8 +15,7 @@ describe "Temporal" do
   context "range selection" do
     it "allows the user to search from a start date time to the present" do
       click_link "Temporal"
-      fill_in "Start", with: "2013-12-01 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "2013-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -26,8 +25,7 @@ describe "Temporal" do
 
     it "allows the user to search up to the end date time" do
       click_link "Temporal"
-      fill_in "End", with: "1970-12-01 00:00:00"
-      close_datetimepicker
+      fill_in "End", with: "1970-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -37,10 +35,8 @@ describe "Temporal" do
 
     it "allows the user to search from a start date time to an end date time" do
       click_link "Temporal"
-      fill_in "Start", with: "1975-12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "1975-12-01 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "1975-12-01 00:00:00\t"
+      fill_in "End", with: "1975-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -52,10 +48,8 @@ describe "Temporal" do
 
     it "allows the user to clear the date time range" do
       click_link "Temporal"
-      fill_in "Start", with: "1978-12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "1979-12-01 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "1978-12-01 00:00:00\t"
+      fill_in "End", with: "1979-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -77,42 +71,20 @@ describe "Temporal" do
 
     it "validates incorrect user input" do
       click_link "Temporal"
-      fill_in "Start", with: "1979-12-10 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "1979-12-01 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "1979-12-10 00:00:00\t"
+      fill_in "End", with: "1979-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
       expect(page).to have_content("Start must be no later than End")
     end
-
-    it "allows the user to search by day-of-year input" do
-      click_link "Temporal"
-      fill_in "Start", with: "2014-01-01 00:00:00" # clicking doesn't work the first time
-      fill_in "Day of Year:", with: "1978-335"
-      click_button "Set"
-      fill_in "End", with: "2014-01-01 00:00:00"
-      fill_in "Day of Year:", with: "1979-335"
-      click_button "Set"
-      js_click_apply ".temporal-dropdown"
-
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_content("Start 1978-12-01 00:00:00")
-      expect(page).to have_content("Stop 1979-12-01 00:00:00")
-    end
-
   end
 
   context "recurring range selection" do
     it "allows the user to search by recurring date time range" do
       click_link "Temporal"
       js_check_recurring "dataset"
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "12-31 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-01 00:00:00\t"
+      fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
@@ -127,10 +99,8 @@ describe "Temporal" do
     it "allows the user to clear the recurring date time search" do
       click_link "Temporal"
       js_check_recurring "dataset"
-      fill_in "Start", with: "12-01 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "12-31 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-01 00:00:00\t"
+      fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
@@ -155,10 +125,8 @@ describe "Temporal" do
     it "validates incorrect user input" do
       click_link "Temporal"
       js_check_recurring "dataset"
-      fill_in "Start", with: "12-10 00:00:00"
-      close_datetimepicker
-      fill_in "End", with: "12-01 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-10 00:00:00\t"
+      fill_in "End", with: "12-01 00:00:00\t"
 
       expect(page).to have_content("Start must be no later than End")
     end
@@ -166,8 +134,7 @@ describe "Temporal" do
     it "validates both start and end are present" do
       click_link "Temporal"
       js_check_recurring "dataset"
-      fill_in "Start", with: "12-10 00:00:00"
-      close_datetimepicker
+      fill_in "Start", with: "12-10 00:00:00\t"
 
       expect(page).to have_content("Start and End dates must both be selected")
     end
