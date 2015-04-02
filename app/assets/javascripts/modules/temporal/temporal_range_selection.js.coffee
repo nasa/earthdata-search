@@ -142,7 +142,6 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
 
     root.find('.temporal').on 'paste change focusout', (e) ->
       validateTemporalInputs(root)
-      event.stopPropagation()
 
   $(document).on 'click', '.clear-filters.button', ->
     validateTemporalInputs($('.dataset-temporal-filter'))
@@ -156,16 +155,9 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
     $('.temporal-range-start').datepicker('update')
     $('.temporal-range-stop').datepicker('update')
 
-  # safe global stuff
-  $(document).on 'click', '.xdsoft_today_button, button.xdsoft_prev, button.xdsoft_next', ->
-    updateMonthButtons($(this).siblings('.xdsoft_month'))
-
-  $(document).on 'click', 'input.day-of-year-input', ->
-    # What does this even do?
-    $(this).focus()
-
-
   $(document).ready ->
+    $(".temporal-dropdown-button").on 'click', ->
+      $(this).parents('.dropdown').toggleClass('open')
     $('.dataset-temporal-filter').temporalSelectors({
       uiModel: temporalModel,
       modelPath: "query.temporal.pending",
