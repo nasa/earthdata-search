@@ -27,6 +27,11 @@ describe "'Clear Filters' button", reset: false do
   end
 
   context "clears temporal" do
+    after :each do
+      # close temporal dropdown
+      click_link "Temporal"
+    end
+
     it "range" do
       script = "var temporal = edsc.models.page.current.query.temporal.applied;
                 temporal.start.date(new Date('1978-12-01T00:00:00Z'));
