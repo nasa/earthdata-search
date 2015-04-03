@@ -14,16 +14,14 @@ class PlacenamesController < ApplicationController
         placename = match.to_s
         keywords = query.gsub(placename, '')
         keywords, preposition = keywords.split(/( (?:in|over|around|near|above|at|inside) ?)/, 2)
-        preposition = '' if preposition.nil?
       else
         keywords, preposition, placename = query.split(/( (?:in|over|around|near|above|at|inside) )/, 2)
       end
       prefix = ""
 
-      prefix = keywords + preposition unless placename.nil?
+      prefix = "#{keywords} " unless placename.nil?
       if placename.nil?
         placename = query
-        preposition = ""
       end
 
       if placename == current ||
@@ -47,7 +45,7 @@ class PlacenamesController < ApplicationController
             spatial = "point:#{completion['lng']},#{completion['lat']}"
           end
           {
-            placename: preposition + "place:\"#{name}\"",
+            placename: "place:\"#{name}\"",
             value: prefix + "place:\"#{name}\"",
             spatial: spatial
           }

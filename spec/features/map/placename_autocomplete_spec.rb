@@ -46,7 +46,7 @@ describe "Place name autocomplete" do
     fill_in "keywords", with: "modis over texas"
     wait_for_xhr
     choose_suggestion 'Texas, United States'
-    expect(page).to have_field('keywords', with: 'modis over place:"Texas, United States"')
+    expect(page).to have_field('keywords', with: 'modis place:"Texas, United States"')
     expect(page).to have_spatial_constraint(texas_constraint)
   end
 
@@ -68,7 +68,7 @@ describe "Place name autocomplete" do
       fill_in "keywords", with: "modis over texas"
       wait_for_xhr
       choose_suggestion 'Texas, United States'
-      expect(page).to have_field('keywords', with: 'modis over place:"Texas, United States"')
+      expect(page).to have_field('keywords', with: 'modis place:"Texas, United States"')
       wait_for_xhr
     end
 
