@@ -17,12 +17,17 @@ describe "Place name autocomplete" do
 
   it "displays suggestions when the user provides types a few letters" do
     fill_in "keywords", with: "texas"
-    expect(page).to have_content('Texas, United States')
+    expect(page).to have_content('place:"Texas, United States"')
   end
 
   it "displays suggestions when the user has typed an appropriate preposition into the search box" do
     fill_in "keywords", with: "modis over texas"
-    expect(page).to have_content('Texas, United States')
+    expect(page).to have_content('place:"Texas, United States"')
+  end
+
+  it "displays suggestions when the user has typed 'place:' into the search box" do
+    fill_in "keywords", with: "place:\"texas"
+    expect(page).to have_content('place:"Texas, United States"')
   end
 
   it "displays nothing when the query string is very short" do
@@ -41,7 +46,15 @@ describe "Place name autocomplete" do
     fill_in "keywords", with: "modis over texas"
     wait_for_xhr
     choose_suggestion 'Texas, United States'
-    expect(page).to have_field('keywords', with: 'modis over Texas, United States')
+    expect(page).to have_field('keywords', with: 'modis over place:"Texas, United States"')
+    expect(page).to have_spatial_constraint(texas_constraint)
+  end
+
+  it "when using place:'...', adds a spatial constraint when the user accepts a suggestion" do
+    fill_in "keywords", with: "place:\"texas"
+    wait_for_xhr
+    choose_suggestion 'Texas, United States'
+    expect(page).to have_field('keywords', with: 'place:"Texas, United States"')
     expect(page).to have_spatial_constraint(texas_constraint)
   end
 
@@ -55,7 +68,7 @@ describe "Place name autocomplete" do
       fill_in "keywords", with: "modis over texas"
       wait_for_xhr
       choose_suggestion 'Texas, United States'
-      expect(page).to have_field('keywords', with: 'modis over Texas, United States')
+      expect(page).to have_field('keywords', with: 'modis over place:"Texas, United States"')
       wait_for_xhr
     end
 
