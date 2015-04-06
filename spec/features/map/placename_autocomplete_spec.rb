@@ -63,6 +63,12 @@ describe "Place name autocomplete" do
     expect(page).to have_spatial_constraint('')
   end
 
+  it "adds a spatial constraint when the user uses place: but does not select a suggestion" do
+    fill_in "keywords", with: "place:\"Texas, United States\""
+    wait_for_xhr
+    expect(page).to have_spatial_constraint(texas_constraint)
+  end
+
   context "when the user has accepted a suggestion" do
     before :each do
       fill_in "keywords", with: "modis over texas"

@@ -8,7 +8,13 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
     engine = new Bloodhound
       name: 'placenames'
       local: []
-      remote: '/placenames?q=%QUERY'
+      remote:
+        url: '/placenames?q=%QUERY'
+        ajax: complete: (jqXHR,status) ->
+          if status == "success"
+            results = jqXHR.responseJSON
+            if results[0]?.use_placename == true
+              $placenameInputs.trigger 'typeahead:selected', results[0]
       datumTokenizer: -> Bloodhound.tokenizers.whitespace(d.val)
       queryTokenizer: Bloodhound.tokenizers.whitespace
 

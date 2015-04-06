@@ -44,10 +44,12 @@ class PlacenamesController < ApplicationController
           else
             spatial = "point:#{completion['lng']},#{completion['lat']}"
           end
+          use_placename = "\"#{name}\"" == placename
           {
             placename: "place:\"#{name}\"",
             value: prefix + "place:\"#{name}\"",
-            spatial: spatial
+            spatial: spatial,
+            use_placename: use_placename
           }
         end
       end
