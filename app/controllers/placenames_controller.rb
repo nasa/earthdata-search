@@ -10,9 +10,10 @@ class PlacenamesController < ApplicationController
     if query.nil? || query.size < 3
       result = []
     else
-      if match = /place:(["'])(?:(?=(\\?))\2.)*?\1/.match(query)
-        placename = match.to_s
-        keywords = query.gsub(placename, '')
+      query_parts = query.split('place:')
+      if query_parts.size > 1
+        placename = query_parts[1].scan(/"[^"]+"|\S+/)[0]
+        keywords = query.gsub("place:#{placename}", '').squish
         keywords, preposition = keywords.split(/( (?:in|over|around|near|above|at|inside) ?)/, 2)
       else
         keywords, preposition, placename = query.split(/( (?:in|over|around|near|above|at|inside) )/, 2)
@@ -47,7 +48,7 @@ class PlacenamesController < ApplicationController
           use_placename = "\"#{name}\"" == placename
           {
             placename: "place:\"#{name}\"",
-            value: prefix + "place:\"#{name}\"",
+            value: (prefix + "place:\"#{name}\"").strip,
             spatial: spatial,
             use_placename: use_placename
           }

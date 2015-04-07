@@ -30,6 +30,11 @@ describe "Place name autocomplete" do
     expect(page).to have_content('place:"Texas, United States"')
   end
 
+  it "displays suggestions when the user has typed 'place:' and a keyword into the search box" do
+    fill_in "keywords", with: "modis place:texas"
+    expect(page).to have_content('place:"Texas, United States"')
+  end
+
   it "displays nothing when the query string is very short" do
     fill_in "keywords", with: "te"
     wait_for_xhr
