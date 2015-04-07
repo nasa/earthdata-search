@@ -10,11 +10,9 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
       local: []
       remote:
         url: '/placenames?q=%QUERY'
-        ajax: complete: (jqXHR,status) ->
-          if status == "success"
-            results = jqXHR.responseJSON
-            if results[0]?.use_placename == true && currentPage.query.spatial() != results[0].spatial
-              $placenameInputs.trigger 'typeahead:selected', results[0]
+        ajax: success: (data) ->
+          if data[0]?.use_placename == true && currentPage.query.spatial() != data[0].spatial
+            $placenameInputs.trigger 'typeahead:selected', data[0]
       datumTokenizer: -> Bloodhound.tokenizers.whitespace(d.val)
       queryTokenizer: Bloodhound.tokenizers.whitespace
 
@@ -84,10 +82,11 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
     currentPage.query.keywords.subscribe readKeywords
     currentPage.query.spatial.subscribe readSpatial
 
-    $placenameInputs.on 'keypress', (e) ->
-      if e.which == 13
+    $placenameInputs.on 'blur', (e) ->
+      query = this.value
+      if !$(e.relatedTarget).hasClass('clear-filters') && query.length > 0 && query.indexOf('place:') != -1
         ajax
           dataType: 'json'
-          url: "/placenames?q=#{this.value}"
+          url: "/placenames?q=#{query}"
           success: (data) =>
-            $placenameInputs.trigger 'typeahead:selected', data[0]
+            $placenameInputs.trigger 'typeahead:selected', data[0] if data[0]?
