@@ -35,6 +35,14 @@ describe "Place name autocomplete" do
     expect(page).to have_content('place:"Texas, United States"')
   end
 
+  it "applys the first placename spatial when pressing enter after a 'place:' keyword search" do
+    fill_in "keywords", with: "modis place:texas"
+    script = "var e = jQuery.Event('keypress');e.which = 13;$('#keywords').trigger(e);"
+    page.execute_script script
+    expect(page).to have_field('keywords', with: 'modis place:"Texas, United States"')
+    expect(page).to have_spatial_constraint(texas_constraint)
+  end
+
   it "displays nothing when the query string is very short" do
     fill_in "keywords", with: "te"
     wait_for_xhr

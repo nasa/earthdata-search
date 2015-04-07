@@ -1,6 +1,6 @@
 //= require typeahead-0.10.2/typeahead.bundle
 
-do ($=jQuery, currentPage = window.edsc.models.page.current) ->
+do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax) ->
 
   $(document).ready ->
     $placenameInputs = $('.autocomplete-placenames')
@@ -83,3 +83,11 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
 
     currentPage.query.keywords.subscribe readKeywords
     currentPage.query.spatial.subscribe readSpatial
+
+    $placenameInputs.on 'keypress', (e) ->
+      if e.which == 13
+        ajax
+          dataType: 'json'
+          url: "/placenames?q=#{this.value}"
+          success: (data) =>
+            $placenameInputs.trigger 'typeahead:selected', data[0]
