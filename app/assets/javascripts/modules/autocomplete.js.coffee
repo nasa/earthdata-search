@@ -13,7 +13,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
         ajax: complete: (jqXHR,status) ->
           if status == "success"
             results = jqXHR.responseJSON
-            if results[0]?.use_placename == true
+            if results[0]?.use_placename == true && currentPage.query.spatial() != results[0].spatial
               $placenameInputs.trigger 'typeahead:selected', results[0]
       datumTokenizer: -> Bloodhound.tokenizers.whitespace(d.val)
       queryTokenizer: Bloodhound.tokenizers.whitespace
