@@ -10,14 +10,19 @@ class PlacenamesController < ApplicationController
     if query.nil? || query.size < 3
       result = []
     else
-      keywords, preposition, placename = query.split(/( (?:in|over|around|near|above|at|inside) )/, 2)
-
+      query_parts = query.split('place:')
+      if query_parts.size > 1
+        placename = query_parts[1].scan(/"[^"]+"|\S+/)[0]
+        keywords = query.gsub("place:#{placename}", '').squish
+        keywords, preposition = keywords.split(/( (?:in|over|around|near|above|at|inside) ?)/, 2)
+      else
+        keywords, preposition, placename = query.split(/( (?:in|over|around|near|above|at|inside) )/, 2)
+      end
       prefix = ""
 
-      prefix = keywords + preposition unless placename.nil?
+      prefix = "#{keywords} " unless placename.nil?
       if placename.nil?
         placename = query
-        preposition = ""
       end
 
       if placename == current ||
@@ -31,6 +36,7 @@ class PlacenamesController < ApplicationController
         # that the user is unlikely to be interested in
         result = []
       else
+        placename.gsub!("place:", "")
         result = PlacesClient.get_place_completions(placename).map do |completion|
           name = [completion['toponymName'], completion['adminName1'], completion['countryName']].map(&:presence).uniq.compact.join(', ')
           bbox = completion['bbox']
@@ -39,10 +45,12 @@ class PlacenamesController < ApplicationController
           else
             spatial = "point:#{completion['lng']},#{completion['lat']}"
           end
+          use_placename = "\"#{name}\"" == placename
           {
-            placename: preposition + name,
-            value: prefix + name,
-            spatial: spatial
+            placename: "place:\"#{name}\"",
+            value: (prefix + "place:\"#{name}\"").strip,
+            spatial: spatial,
+            use_placename: use_placename
           }
         end
       end

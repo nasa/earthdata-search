@@ -1,6 +1,6 @@
 //= require typeahead-0.10.2/typeahead.bundle
 
-do ($=jQuery, currentPage = window.edsc.models.page.current) ->
+do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax) ->
 
   $(document).ready ->
     $placenameInputs = $('.autocomplete-placenames')
@@ -8,7 +8,11 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
     engine = new Bloodhound
       name: 'placenames'
       local: []
-      remote: '/placenames?q=%QUERY'
+      remote:
+        url: '/placenames?q=%QUERY'
+        ajax: success: (data) ->
+          if data[0]?.use_placename == true && currentPage.query.spatial() != data[0].spatial
+            $placenameInputs.trigger 'typeahead:selected', data[0]
       datumTokenizer: -> Bloodhound.tokenizers.whitespace(d.val)
       queryTokenizer: Bloodhound.tokenizers.whitespace
 
@@ -67,7 +71,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
       for input in $('.autocomplete-placenames')
         if input.value.indexOf(currentPlacename) != -1 && currentSpatial != null && newValue != currentSpatial
           currentKeywords = currentPage.query.keywords.peek()
-          currentPage.query.keywords(currentKeywords.replace(currentPlacename, ''))
+          currentPage.query.keywords(currentKeywords.replace(currentPlacename, '').trim())
           currentPage.query.placename('')
         else if currentSpatial == null
           currentSpatial = newValue
@@ -77,3 +81,12 @@ do ($=jQuery, currentPage = window.edsc.models.page.current) ->
 
     currentPage.query.keywords.subscribe readKeywords
     currentPage.query.spatial.subscribe readSpatial
+
+    $placenameInputs.on 'blur', (e) ->
+      query = this.value
+      if !$(e.relatedTarget).hasClass('clear-filters') && query.length > 0 && query.indexOf('place:') != -1
+        ajax
+          dataType: 'json'
+          url: "/placenames?q=#{query}"
+          success: (data) =>
+            $placenameInputs.trigger 'typeahead:selected', data[0] if data[0]?
