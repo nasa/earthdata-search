@@ -160,7 +160,7 @@ class OpendapConfiguration
     else
       links = Array.wrap(granule['links'])
       download_links = links.find_all do |link|
-        link['rel'].include?('/data') || link['rel'] == 'enclosure'
+        (link['rel'].include?('/data') || link['rel'] == 'enclosure') && !link['inherited']
       end
       download_links.map { |link| link['href'] }
     end
