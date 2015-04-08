@@ -34,6 +34,7 @@ class DataAccessController < ApplicationController
 
   def retrieval
     @retrieval = Retrieval.find(params[:id].to_i)
+    Rails.logger.info(@retrieval.to_json)
 
     orders = @retrieval.jsondata['datasets'].map do |dataset|
       dataset['serviceOptions']['accessMethod'].select { |m| m['type'] == 'order' }

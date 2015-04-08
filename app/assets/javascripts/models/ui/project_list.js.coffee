@@ -138,6 +138,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
       return datasets unless id?
       for projectDataset in @project.accessDatasets()
         dataset = projectDataset.dataset
+        has_browse = dataset.browseable_granule?
         datasetId = dataset.id
         title = dataset.dataset_id
         for m in projectDataset.serviceOptions.accessMethod() when m.type == 'download'
@@ -145,19 +146,25 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
             title: title
             downloadPageUrl: "/granules/download.html?project=#{id}&dataset=#{datasetId}"
             downloadScriptUrl: "/granules/download.sh?project=#{id}&dataset=#{datasetId}"
+            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&dataset=#{datasetId}"
 
       datasets
 
     _computeSubmittedOrders: ->
       orders = []
-      for dataset in @project.accessDatasets()
-        for m in dataset.serviceOptions.accessMethod() when m.type == 'order'
+      id = @project.id()
+      for projectDataset in @project.accessDatasets()
+        dataset = projectDataset.dataset
+        datasetId = dataset.id
+        has_browse = dataset.browseable_granule?
+        for m in projectDataset.serviceOptions.accessMethod() when m.type == 'order'
           canCancel = ['QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
           orders.push
-            dataset_id: dataset.dataset.dataset_id
+            dataset_id: dataset.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
             cancel_link: "/data/remove?order_id=#{m.orderId}" if canCancel
+            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&dataset=#{datasetId}"
       orders
 
     _computeDatasetOnly: ->

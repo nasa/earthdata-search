@@ -16,6 +16,14 @@ describe "Data download page", reset: false do
   no_resource_dataset_id = 'C2821-NSIDCV0'
   no_resource_dataset_title = 'AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations'
 
+  no_granules_dataset_id = 'C179002107-SEDAC'
+  no_granules_dataset_title = 'Anthropogenic Biomes of the World, Version 1'
+
+  browseable_dataset_id = 'C115003857-NSIDC_ECS'
+  browseable_dataset_title = 'MODIS/Aqua Sea Ice Extent Daily L3 Global 1km EASE-Grid Night V005'
+  browseable_dataset_params = {project: [browseable_dataset_id],
+                               temporal: ['2015-01-01T00:00:00Z', '2015-01-01T00:00:01Z']}
+
   before(:all) do
     load_page :search, overlay: false
     login
@@ -76,6 +84,98 @@ describe "Data download page", reset: false do
     end
   end
 
+  context "selecting the direct download option for granules with browse imagery" do
+    before :all do
+      load_page 'data/configure', browseable_dataset_params
+      wait_for_xhr
+
+      choose 'Download'
+      click_on 'Submit'
+      wait_for_xhr
+    end
+
+    it "displays a link to view browse images" do
+      expect(page).to have_link('View Browse Image Links')
+    end
+
+    context 'clicking on a "View Browse Image Links" button' do
+      before :all do
+        click_link "View Browse Image Links"
+      end
+
+      it "displays links to browse images" do
+        within_last_window do
+          expect(page).to have_link('ftp://n5eil01u.ecs.nsidc.org/DP0/BRWS/Browse.001/2015.01.02/BROWSE.MYD29P1N.A2015001.h10v25.005.2015002203748.1.jpg')
+        end
+      end
+    end
+  end
+
+  context "selecting the direct download option for granules without browse imagery" do
+    before :all do
+      load_page 'data/configure', project: [downloadable_dataset_id]
+      wait_for_xhr
+
+      choose 'Download'
+      click_on 'Submit'
+      wait_for_xhr
+    end
+
+    it "does not display a link to view browse images" do
+      expect(page).to have_no_link('View Browse Image Links')
+    end
+  end
+
+  context "selecting the direct download option for datasets without granules" do
+    before :all do
+      load_page 'data/configure', project: [no_granules_dataset_id]
+      wait_for_xhr
+
+      choose 'Download'
+      click_on 'Submit'
+      wait_for_xhr
+    end
+
+    it "does not display a link to view browse images" do
+      expect(page).to have_no_link('View Browse Image Links')
+    end
+  end
+
+  context "selecting an asynchronous access option for granules with browse imagery" do
+    before :all do
+      load_page 'data/configure', browseable_dataset_params
+      wait_for_xhr
+
+      choose 'M*D29P1N Order Option'
+      click_on 'Continue'
+
+      # Confirm address
+      click_on 'Submit'
+    end
+
+    it "displays a link to view browse images" do
+      expect(page).to have_link('View Browse Image Links')
+    end
+
+    context 'clicking on a "View Browse Image Links" button' do
+      before :all do
+        click_link "View Browse Image Links"
+      end
+
+      it "displays links to browse images" do
+        within_last_window do
+          expect(page).to have_link('ftp://n5eil01u.ecs.nsidc.org/DP0/BRWS/Browse.001/2015.01.02/BROWSE.MYD29P1N.A2015001.h10v25.005.2015002203748.1.jpg')
+        end
+      end
+    end
+  end
+
+  context "selecting an asychronous access option for granules without browse imagery" do
+    it "does not display a link to view browse images" do
+      expect(page).to have_no_link('View Browse Image Links')
+    end
+  end
+
   context "when datasets have been selected for direct download" do
     before :all do
       load_page 'data/configure', project: [downloadable_dataset_id, non_downloadable_dataset_id]
@@ -117,13 +217,13 @@ describe "Data download page", reset: false do
       end
 
       it "displays a page containing direct download hyperlinks for the dataset's granules in a new window" do
-        within_window('Earthdata Search - Downloads') do
+        within_last_window do
           expect(page).to have_link("http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1984/43601715.s15")
         end
       end
 
       it "does not display inherited dataset-level download links" do
-        within_window('Earthdata Search - Downloads') do
+        within_last_window do
           expect(page).to have_no_link("http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1")
         end
       end
@@ -135,7 +235,7 @@ describe "Data download page", reset: false do
       end
 
       it "downloads a shell script which performs the user's query" do
-        within_window(page.driver.browser.get_window_handles.last) do
+        within_last_window do
           expect(page).to have_content('#!/bin/sh')
           expect(page).to have_content('http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80611715.s15')
         end

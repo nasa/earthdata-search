@@ -31,11 +31,12 @@ class GranulesController < ApplicationController
   end
 
   class GranuleUrlStreamer
-    def initialize(params, token, url_mapper, echo_client)
+    def initialize(params, token, url_mapper, echo_client, url_type=:download)
       @params = params
       @token = token
       @url_mapper = url_mapper
       @echo_client = echo_client
+      @url_type = url_type
     end
 
     def each
@@ -59,7 +60,7 @@ class GranulesController < ApplicationController
               yielded_info = true
             end
 
-            @url_mapper.urls_for(granule).each do |url|
+            @url_mapper.send("#{@url_type}_urls_for", granule).each do |url|
               yield url
             end
           end
@@ -87,12 +88,17 @@ class GranulesController < ApplicationController
 
     query = Rack::Utils.parse_nested_query(dataset['params'])
 
-    method = dataset['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
+    url_type = :download
+    url_type = :browse if request[:browse] == true || request[:browse] == 'true'
 
     url_mapper = OpendapConfiguration.find(dataset_id)
-    url_mapper.apply_subsetting(method['subset'])
 
-    @urls = GranuleUrlStreamer.new(query.merge('page_size' => 2000), token, url_mapper, echo_client)
+    if url_type == :download
+      method = dataset['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
+      url_mapper.apply_subsetting(method['subset'])
+    end
+
+    @urls = GranuleUrlStreamer.new(query.merge('page_size' => 2000), token, url_mapper, echo_client, url_type)
     render stream: true, layout: false
   end
 
