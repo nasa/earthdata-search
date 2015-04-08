@@ -111,9 +111,9 @@ describe "Data download page", reset: false do
       expect(page).to have_content('Data download page')
     end
 
-    context "upon clicking on a direct download link" do
+    context 'upon clicking a "View Download Links" button' do
       before :all do
-        click_link "View Download Link"
+        click_link "View Download Links"
       end
 
       it "displays a page containing direct download hyperlinks for the dataset's granules in a new window" do
@@ -121,9 +121,15 @@ describe "Data download page", reset: false do
           expect(page).to have_link("http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1984/43601715.s15")
         end
       end
+
+      it "does not display inherited dataset-level download links" do
+        within_window('Earthdata Search - Downloads') do
+          expect(page).to have_no_link("http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1")
+        end
+      end
     end
 
-    context "upon clicking on a direct download link" do
+    context 'upon clicking a "Download Access Script" button' do
       before :all do
         click_link "Download Access Script"
       end
