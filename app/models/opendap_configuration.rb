@@ -3,7 +3,6 @@ require 'addressable/template'
 class OpendapConfiguration
 
   def self.find(dataset_id)
-    Rails.logger.info("Finding opendap config")
     opendap_config = Rails.configuration.services['opendap'][dataset_id]
     return OpendapConfiguration.new() unless opendap_config.present?
 
@@ -154,19 +153,28 @@ class OpendapConfiguration
     end
   end
 
-  def urls_for(granule)
+  def download_urls_for(granule)
     if @can_subset
       [@template.expand(decorate(granule).merge(@template_params))]
     else
-      links = Array.wrap(granule['links'])
-      download_links = links.find_all do |link|
-        (link['rel'].include?('/data') || link['rel'] == 'enclosure') && !link['inherited']
-      end
-      download_links.map { |link| link['href'] }
+      links_for(granule, 'enclosure', /\/data/)
     end
   end
 
+  def browse_urls_for(granule)
+    links_for(granule, /\/browse/)
+  end
+
   private
+
+  def links_for(granule, *rels)
+    links = Array.wrap(granule['links'])
+    regexp_rels, string_rels = rels.partition {|rel| rel.is_a?(Regexp)}
+    links = links.find_all do |link|
+      !link['inherited'] && (string_rels.include?(link) || regexp_rels.any? {|rel| link['rel'][rel]})
+    end
+    links.map { |link| link['href'] }
+  end
 
   def decorate(granule)
     extra = {}

@@ -37,6 +37,12 @@ module Helpers
       end
     end
 
+    def within_last_window
+      within_window(page.driver.browser.get_window_handles.last) do
+        yield
+      end
+    end
+
     # Resets the query filters and waits for all the resulting xhr requests to finish.
     def reset_search(wait=true)
       page.execute_script('edsc.page.clearFilters()')
