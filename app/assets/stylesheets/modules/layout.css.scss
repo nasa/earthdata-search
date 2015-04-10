@@ -109,6 +109,14 @@ body > footer {
   a:link, a:visited {
     color: #92bfec;
   }
+
+  .accessibility {
+    float: right;
+
+    a {
+      color: white;
+    }
+  }
 }
 
 .panel-list-meta.busy {
