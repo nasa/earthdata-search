@@ -109,6 +109,15 @@ body > footer {
   a:link, a:visited {
     color: #92bfec;
   }
+
+  .accessibility {
+    float: right;
+
+    a {
+      text-decoration: underline;
+      color: white;
+    }
+  }
 }
 
 .panel-list-meta.busy {
