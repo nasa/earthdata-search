@@ -79,8 +79,10 @@ module Colormaps
         return true
 
       rescue Exception => e
-        puts "Error: #{e.message}"
-        return false
+        # GIBS-876: GIBS serves up two URLs that are 404.  We need to cope with these.
+        error_type = e.message == '404 Not Found' ? 'Warning' : 'Error'
+        puts "#{error_type} [#{url}]: #{e.message}"
+        return error_type == 'Warning'
       end
     end
 
