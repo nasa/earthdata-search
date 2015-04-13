@@ -159,6 +159,7 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "echo10_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.echo10",
           "iso19115_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.iso19115",
           "smap_iso_url" => nil,
+          "dif_url" => "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/.dif",
           "xml" => {
             "ShortName"=>"AST_L1AE",
             "VersionId"=>"3",
