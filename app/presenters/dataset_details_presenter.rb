@@ -47,6 +47,7 @@ class DatasetDetailsPresenter < DetailsPresenter
     @dataset.atom_url = "#{metadata_url}.atom"
     @dataset.echo10_url = "#{metadata_url}.echo10"
     @dataset.iso19115_url = "#{metadata_url}.iso19115"
+    @dataset.dif_url = "#{metadata_url}.dif"
     @dataset.smap_iso_url = nil #"#{metadata_url}.smap_iso"
 
     # Set description to URL if URLDescription doesn't exist
