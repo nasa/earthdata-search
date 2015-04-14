@@ -17,9 +17,9 @@ describe 'Granule metadata' do
   end
 
   it 'provides metadata in multiple formats' do
-    page.should have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC"]')
-    page.should have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.atom"]')
-    page.should have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.echo10"]')
-    page.should have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.iso19115"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.atom"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.echo10"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.iso19115"]')
   end
 end

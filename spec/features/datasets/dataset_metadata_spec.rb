@@ -10,9 +10,10 @@ describe 'Dataset metadata' do
   end
 
   it 'provides metadata in multiple formats' do
-    page.should have_selector('a[href="https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/C179460405-LPDAAC_ECS"]')
-    page.should have_selector('a[href="https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/C179460405-LPDAAC_ECS.atom"]')
-    page.should have_selector('a[href="https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/C179460405-LPDAAC_ECS.echo10"]')
-    page.should have_selector('a[href="https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/C179460405-LPDAAC_ECS.iso19115"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.atom"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.echo10"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.iso19115"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.dif"]')
   end
 end
