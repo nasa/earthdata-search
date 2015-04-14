@@ -42,7 +42,7 @@ class DatasetDetailsPresenter < DetailsPresenter
     @dataset.temporal = temporal(dataset.temporal)
     @dataset.associated_difs = associated_difs(dataset.associated_difs)
 
-    metadata_url = "https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets/#{@dataset.id}"
+    metadata_url = "https://cmr.earthdata.nasa.gov/search/concepts/#{@dataset.id}"
     @dataset.native_url = "#{metadata_url}"
     @dataset.atom_url = "#{metadata_url}.atom"
     @dataset.echo10_url = "#{metadata_url}.echo10"
