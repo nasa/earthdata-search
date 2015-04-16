@@ -18,7 +18,7 @@ ns.LayerBuilder = do (GibsTileLayer = ns.L.GibsTileLayer) ->
       syncTime: true
     land_water_map:
       name: 'Land / Water Map *'
-      product: 'land_water_map'
+      product: 'OSM_Land_Water_Map'
       resolution: '250m'
       format: 'png'
     coastlines:
