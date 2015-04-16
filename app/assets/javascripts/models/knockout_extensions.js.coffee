@@ -99,6 +99,7 @@ do (ko, $=jQuery) ->
         $el.off('echoforms:modelchange')
 
       options = ko.unwrap(valueAccessor())
+
       methodName = options.method()
       if methodName?
         method = null
@@ -109,7 +110,7 @@ do (ko, $=jQuery) ->
         if available?.form?
           form = available.form
           model = options.rawModel
-          if model?
+          if model? && !options.isReadFromDefaults
             form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
           $el.echoforms(form: form)
           syncModel = ->
@@ -126,6 +127,7 @@ do (ko, $=jQuery) ->
           syncModel.call($el)
         else
           options.isValid(true)
+        options.isReadFromDefaults = true
       null
 
   ko.bindingHandlers.mapdisplay =
