@@ -542,7 +542,7 @@ describe 'Address bar', reset: false do
       end
 
       it 'remembers the base layer' do
-        expect('#map').to have_tiles_for_product('land_water_map')
+        expect('#map').to have_tiles_for_product('OSM_Land_Water_Map')
       end
     end
   end
