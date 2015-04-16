@@ -117,7 +117,7 @@ describe "Map interface", reset: false do
         choose 'Land / Water Map'
       end
 
-      expect('#map').to have_tiles_for_product('land_water_map')
+      expect('#map').to have_tiles_for_product('OSM_Land_Water_Map')
       expect('#map').to_not have_tiles_for_product('BlueMarble_ShadedRelief_Bathymetry')
     end
 
