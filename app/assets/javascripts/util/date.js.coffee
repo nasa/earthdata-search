@@ -22,10 +22,8 @@
 
   dateToHuman = (date) ->
     if date?
-      str = new Date(date).toString()
-      match = str.match(/\(([^\)]+)\)/)
-      return str unless match?
-      tz = match[1]
+      str = new Date(date).toUTCString()
+      tz = str.substring(str.length-3)
       # Remove leading word (day of week)
       str = str.replace(/^\S+\s/, '')
       # Remove everything after the minutes

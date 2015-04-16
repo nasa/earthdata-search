@@ -242,6 +242,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @root.on 'click.timeline', @scope('.date-label'), @_onLabelClick
       @root.on 'mouseover.timeline', @scope('.date-label'), @_onLabelMouseover
       @root.on 'mouseout.timeline', @scope('.date-label'), @_onLabelMouseout
+      @root.on 'mouseover.timeline', @scope('.data'), @_onDataMouseover
+      @root.on 'mouseout.timeline', @scope('.data'), @_onDataMouseout
       @root.on 'keydown.timeline', @_onKeydown
 
       @root.on 'focusout.timeline', (e) =>
@@ -370,6 +372,26 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @_drawIndicators(id)
 
       null
+
+    _onDataMouseover: (e) =>
+      data = e.target
+      id = data.parentNode.className.baseVal.split(' ')[0]
+      intervals = @_data[id][3]
+      nodes = $(e.currentTarget.childNodes)
+      interval = intervals[nodes.index(data)]
+      start = interval[0] * 1000
+      stop = interval[1] * 1000
+      dataTop = data.getScreenCTM().f
+      timelineTop = $('.timeline').offset().top
+
+      tooltip = $('.timeline-tooltip')
+      tooltip.show()
+      tooltip.find('.inner').text(dateUtil.timeSpanToHuman(start, stop))
+      tooltip.css("left", (e.screenX - tooltip.width()/2) + "px")
+      tooltip.css("top", (dataTop - timelineTop  + 15) + "px")
+
+    _onDataMouseout: (e) =>
+      $('.timeline-tooltip').hide()
 
     _forceRedraw: ->
       rect = @_buildRect(stroke: 'none', fill: 'none')
@@ -538,23 +560,12 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
     _onLabelMouseover: (e) =>
       label = e.currentTarget
       [start, stop] = @_timespanForLabel(label)
-
-      matrix = label.getScreenCTM()
-
-      tooltip = $('.timeline-tooltip')
-      tooltip.show()
-      tooltip.find('.inner').text(dateUtil.timeSpanToHuman(start, stop))
-      width = @timeToPosition(stop) - @timeToPosition(start)
-      tooltip.css("left", (matrix.e - tooltip.width()/2 + width/3) + "px")
-      tooltip.css("top", (@root.height()) + "px");
-
       unless @_canFocusTimespan(start, stop)
         label.setAttribute('class', "#{@scope('date-label')} #{@scope('nofocus')}")
 
     _onLabelMouseout: (e) =>
       label = e.currentTarget
       label.setAttribute('class', @scope('date-label'))
-      $('.timeline-tooltip').hide()
 
     _contains: (start0, end0, start1, end1) ->
       start0 < start1 < end0 && start0 < end1 < end0

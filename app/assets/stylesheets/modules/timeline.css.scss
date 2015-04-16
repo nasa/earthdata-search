@@ -179,9 +179,9 @@
 
 .timeline-tooltip {
   position: absolute;
-  margin: 10px 20px;
   padding: 5px 0;
   font-size: 12px;
+  z-index: 20;
 }
 
 .timeline-tooltip .inner {
