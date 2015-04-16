@@ -171,6 +171,19 @@ describe "Data download page", reset: false do
   end
 
   context "selecting an asychronous access option for granules without browse imagery" do
+    before :all do
+      load_page 'data/configure', project: [orderable_dataset_id]
+      wait_for_xhr
+
+      choose 'Ftp_Pull'
+      select 'FTP Pull', from: 'Offered Media Delivery Types'
+      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      click_on 'Continue'
+
+      # Confirm address
+      click_on 'Submit'
+    end
+
     it "does not display a link to view browse images" do
       expect(page).to have_no_link('View Browse Image Links')
     end
