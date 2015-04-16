@@ -538,12 +538,23 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
     _onLabelMouseover: (e) =>
       label = e.currentTarget
       [start, stop] = @_timespanForLabel(label)
+
+      matrix = label.getScreenCTM()
+
+      tooltip = $('.timeline-tooltip')
+      tooltip.show()
+      tooltip.find('.inner').text(dateUtil.timeSpanToHuman(start, stop))
+      width = @timeToPosition(stop) - @timeToPosition(start)
+      tooltip.css("left", (matrix.e - tooltip.width()/2 + width/3) + "px")
+      tooltip.css("top", (@root.height()) + "px");
+
       unless @_canFocusTimespan(start, stop)
         label.setAttribute('class', "#{@scope('date-label')} #{@scope('nofocus')}")
 
     _onLabelMouseout: (e) =>
       label = e.currentTarget
       label.setAttribute('class', @scope('date-label'))
+      $('.timeline-tooltip').hide()
 
     _contains: (start0, end0, start1, end1) ->
       start0 < start1 < end0 && start0 < end1 < end0

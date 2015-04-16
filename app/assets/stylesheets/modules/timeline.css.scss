@@ -176,3 +176,29 @@
 .timeline-indicator {
   fill: transparent;
 }
+
+.timeline-tooltip {
+  position: absolute;
+  margin: 10px 20px;
+  padding: 5px 0;
+  font-size: 12px;
+}
+
+.timeline-tooltip .inner {
+  background: black;
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+.timeline-tooltip.bottom {
+  margin-top: 3px;
+  padding: 5px 0;
+}
+
+.timeline-tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 0 5px 5px;
+  border-bottom-color: #000000;
+}
