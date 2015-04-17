@@ -22,6 +22,21 @@
 
   dateToHuman = (date) ->
     if date?
+      str = new Date(date).toString()
+      match = str.match(/\(([^\)]+)\)/)
+      return str unless match?
+      tz = match[1]
+      # Remove leading word (day of week)
+      str = str.replace(/^\S+\s/, '')
+      # Remove everything after the minutes
+      str = str.replace(/:[^:]*$/, '')
+      # Tack on the time zone code
+      "#{str} #{tz}"
+    else
+      'Unknown'
+
+  dateToHumanUTC = (date) ->
+    if date?
       str = new Date(date).toUTCString()
       tz = str.substring(str.length-3)
       # Remove leading word (day of week)
@@ -35,6 +50,9 @@
 
   timeSpanToHuman = (t0, t1) ->
     "#{dateToHuman(t0)} to #{dateToHuman(t1)}"
+
+  timeSpanToHumanUTC = (t0, t1) ->
+    "#{dateToHumanUTC(t0)} to #{dateToHumanUTC(t1)}"
 
   timeSpanToIsoDate = (t0, t1) ->
     str0 = t0?.split('T')[0]
@@ -57,4 +75,5 @@
     isoUtcDateTimeString: isoUtcDateTimeString
     parseIsoUtcString: parseIsoUtcString
     timeSpanToHuman: timeSpanToHuman
+    timeSpanToHumanUTC: timeSpanToHumanUTC
     timeSpanToIsoDate: timeSpanToIsoDate

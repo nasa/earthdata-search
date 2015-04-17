@@ -374,21 +374,28 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       null
 
     _onDataMouseover: (e) =>
+      tooltip = $('.timeline-tooltip')
       data = e.target
+
       id = data.parentNode.className.baseVal.split(' ')[0]
       intervals = @_data[id][3]
       nodes = $(e.currentTarget.childNodes)
       interval = intervals[nodes.index(data)]
       start = interval[0] * 1000
       stop = interval[1] * 1000
-      dataTop = data.getScreenCTM().f
-      timelineTop = $('.timeline').offset().top
+      tooltip.find('.inner').text(dateUtil.timeSpanToHumanUTC(start, stop))
 
-      tooltip = $('.timeline-tooltip')
+      matrix = data.getScreenCTM()
+      leftEdge = matrix.e + data.x.baseVal.value
+      rightEdge = leftEdge + data.width.baseVal.value
+      leftEdge = 0 if leftEdge < 0
+      rightEdge = window.innerWidth if rightEdge > window.innerWidth
+      tooltip.css("left", ((leftEdge + rightEdge)/2 - tooltip.width()/2) + "px")
+      dataTop = matrix.f
+      timelineTop = $('.timeline').offset().top
+      tooltip.css("top", (dataTop - timelineTop  - 33) + "px")
+
       tooltip.show()
-      tooltip.find('.inner').text(dateUtil.timeSpanToHuman(start, stop))
-      tooltip.css("left", (e.screenX - tooltip.width()/2) + "px")
-      tooltip.css("top", (dataTop - timelineTop  + 15) + "px")
 
     _onDataMouseout: (e) =>
       $('.timeline-tooltip').hide()
