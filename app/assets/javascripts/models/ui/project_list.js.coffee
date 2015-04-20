@@ -1,6 +1,13 @@
 ns = @edsc.models.ui
 
-ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc.util.xhr, $ = jQuery, wait=@edsc.util.xhr.wait) ->
+ns.ProjectList = do (ko
+                    window
+                    document
+                    urlUtil=@edsc.util.url
+                    xhrUtil=@edsc.util.xhr
+                    dateUtil=@edsc.util.date
+                    $ = jQuery
+                    wait=@edsc.util.xhr.wait) ->
 
   sortable = (root) ->
     $root = $(root)
@@ -89,7 +96,7 @@ ns.ProjectList = do (ko, window, document, urlUtil=@edsc.util.url, xhrUtil=@edsc
       focused = query.focusedTemporal()
       # If the query has a timeline selection
       if focused
-        focusedStr = '&ot=' + encodeURIComponent([focused[0].toISOString(), focused[1].toISOString()].join(','))
+        focusedStr = '&ot=' + encodeURIComponent([dateUtil.toISOString(focused[0]), dateUtil.toISOString(focused[1])].join(','))
         # If the query has a temporal component
         if querystr.match(/[\?\&\[]qt\]?=/)
           @needsTemporalChoice(callback: callback, focusedStr: focusedStr)

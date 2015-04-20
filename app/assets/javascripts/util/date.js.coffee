@@ -2,10 +2,10 @@
 
   # Returns an ISO-formatted date string (YYYY-MM-DD) containing the UTC value of the given date
   isoUtcDateString = (date) ->
-    date.toISOString().split('T')[0]
+    @toISOString(date).split('T')[0]
 
   isoUtcDateTimeString = (date) ->
-    date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
+    @toISOString(date).replace('T', ' ').replace(/\.\d{3}Z/, '')
 
   parseIsoUtcString = (str) ->
     if !str || str.length == 0
@@ -67,6 +67,11 @@
     else
       null
 
+  toISOString = (date) ->
+    date = new Date(date) unless date instanceof Date
+    date.toISOString().replace('.-', '.')
+
+
   exports =
     isoUtcDateString: isoUtcDateString
     isoUtcDateTimeString: isoUtcDateTimeString
@@ -74,3 +79,4 @@
     timeSpanToHuman: timeSpanToHuman
     dateToHumanUTC: dateToHumanUTC
     timeSpanToIsoDate: timeSpanToIsoDate
+    toISOString: toISOString

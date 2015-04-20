@@ -9,7 +9,8 @@ ns.Granules = do (ko,
                   param = jQuery.param
                   XhrModel=ns.XhrModel,
                   Granule = ns.Granule,
-                  extend=$.extend) ->
+                  extend=$.extend
+                  dateUtil=@edsc.util.date) ->
 
   class GranulesModel extends XhrModel
     constructor: (query, @parentQuery) ->
@@ -116,7 +117,7 @@ ns.Granules = do (ko,
         focusedTemporal = condition.intersect(focusedTemporal...)
 
         if focusedTemporal?
-          params.temporal = (t.toISOString() for t in focusedTemporal).join(',')
+          params.temporal = (dateUtil.toISOString(t) for t in focusedTemporal).join(',')
         else
           params.temporal = 'no-data'
       params
