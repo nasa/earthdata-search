@@ -51,9 +51,6 @@
   timeSpanToHuman = (t0, t1) ->
     "#{dateToHuman(t0)} to #{dateToHuman(t1)}"
 
-  timeSpanToHumanUTC = (t0, t1) ->
-    "#{dateToHumanUTC(t0)} to #{dateToHumanUTC(t1)}"
-
   timeSpanToIsoDate = (t0, t1) ->
     str0 = t0?.split('T')[0]
     str1 = t1?.split('T')[0]
@@ -75,5 +72,5 @@
     isoUtcDateTimeString: isoUtcDateTimeString
     parseIsoUtcString: parseIsoUtcString
     timeSpanToHuman: timeSpanToHuman
-    timeSpanToHumanUTC: timeSpanToHumanUTC
+    dateToHumanUTC: dateToHumanUTC
     timeSpanToIsoDate: timeSpanToIsoDate
