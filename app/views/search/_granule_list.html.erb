@@ -87,7 +87,7 @@
               <!-- /ko -->
               <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>
 
-              <h3 data-bind="text: title"></h3>
+              <h3 data-bind="text: displayName()"></h3>
               <span data-bind="text: getTemporal()"></span>
             </li>
           </ul>
