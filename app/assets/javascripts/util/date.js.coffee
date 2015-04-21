@@ -67,10 +67,12 @@
     else
       null
 
+  # In tests, this command "new Date(-1815440446757.339).toISOString();" was
+  # resulting in an ISO date string that looked like "1912-06-21T22:59:13.-757Z"
+  # This method makes sure that doesn't happen
   toISOString = (date) ->
     date = new Date(date) unless date instanceof Date
     date.toISOString().replace('.-', '.')
-
 
   exports =
     isoUtcDateString: isoUtcDateString
