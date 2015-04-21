@@ -39,4 +39,10 @@
     equals: (other) ->
       other.id == @id
 
+    displayName: ->
+      if this.producer_granule_id?
+        this.producer_granule_id
+      else
+        this.title
+
   exports = Granule
