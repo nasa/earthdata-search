@@ -50,6 +50,7 @@ describe 'Address bar', reset: false do
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
+      wait_for_xhr
     end
 
     it 'saves the temporal condition in the address bar' do
