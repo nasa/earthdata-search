@@ -1,5 +1,5 @@
 
-@edsc.models.data.GranuleAttributes = do (ko) ->
+@edsc.models.data.GranuleAttributes = do (ko, dateUtil = @edsc.util.date) ->
   class GranuleAttributes
     constructor: (definitions) ->
       @_definitions = ko.observable([])
@@ -100,7 +100,7 @@
 
     _validateDATETIME: (valueStr, type="date/time") ->
       time = Date.parse(valueStr)
-      value = new Date(time).toISOString() unless isNaN(time)
+      value = dateUtil.toISOString(time) unless isNaN(time)
       error = "Invalid #{type}: #{valueStr}" if isNaN(time)
       {value: value, error: error}
 

@@ -242,6 +242,8 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @root.on 'click.timeline', @scope('.date-label'), @_onLabelClick
       @root.on 'mouseover.timeline', @scope('.date-label'), @_onLabelMouseover
       @root.on 'mouseout.timeline', @scope('.date-label'), @_onLabelMouseout
+      @root.on 'mouseover.timeline', @scope('.data'), @_onDataMouseover
+      @root.on 'mouseout.timeline', @scope('.data'), @_onDataMouseout
       @root.on 'keydown.timeline', @_onKeydown
 
       @root.on 'focusout.timeline', (e) =>
@@ -370,6 +372,48 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @_drawIndicators(id)
 
       null
+
+    _onDataMouseover: (e) =>
+      tooltip = $('.timeline-tooltip')
+      data = e.target
+
+      id = data.parentNode.className.baseVal.split(' ')[0]
+      resolution = @_data[id][2]
+      intervals = @_data[id][3]
+      nodes = $(e.currentTarget.childNodes)
+      interval = intervals[nodes.index(data)]
+      start = interval[0] * 1000
+      stop = interval[1] * 1000
+      tooltip.find('.inner').text("#{@_dateWithResolution(start, resolution)} to #{@_dateWithResolution(stop, resolution)}")
+
+      matrix = data.getScreenCTM()
+      leftEdge = matrix.e + data.x.baseVal.value
+      rightEdge = leftEdge + data.width.baseVal.value
+      leftEdge = 0 if leftEdge < 0
+      rightEdge = window.innerWidth if rightEdge > window.innerWidth
+      tooltip.css("left", ((leftEdge + rightEdge)/2 - tooltip.width()/2) + "px")
+      dataTop = matrix.f
+      timelineTop = $('.timeline').offset().top
+      tooltip.css("top", (dataTop - timelineTop  - 33) + "px")
+
+      tooltip.show()
+
+    _onDataMouseout: (e) =>
+      $('.timeline-tooltip').hide()
+
+    _dateWithResolution: (date, resolution) ->
+      str = dateUtil.dateToHumanUTC(date).split(' ')
+      # str is ['03', 'Aug', '1987', '00:00', 'GMT']
+      index = RESOLUTIONS.indexOf(resolution)
+      if index > 1
+        str[3] = ''
+        str[4] = ''
+      if index > 2
+        str[0] = ''
+      if index > 3
+        str[1] = ''
+
+      str.join(' ')
 
     _forceRedraw: ->
       rect = @_buildRect(stroke: 'none', fill: 'none')

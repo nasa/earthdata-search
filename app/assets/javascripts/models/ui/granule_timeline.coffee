@@ -9,6 +9,7 @@ ns.GranuleTimeline = do (ko
                          GranulesModel = @edsc.models.data.Granules
                          extend = $.extend
                          config = @edsc.config
+                         dateUtil = @edsc.util.date
                          ) ->
   # intervals: 'year', 'month', 'day', 'hour', 'minute'
   class GranuleTimelineData extends XhrModel
@@ -24,8 +25,8 @@ ns.GranuleTimeline = do (ko
     _computeParams: =>
       [start, end, interval] = @range()
       timelineParams =
-        start_date: new Date(start).toISOString()
-        end_date: new Date(end).toISOString()
+        start_date: dateUtil.toISOString(start)
+        end_date: dateUtil.toISOString(end)
         interval: interval
 
       params = extend({}, @dataset.granulesModel.params(), timelineParams)

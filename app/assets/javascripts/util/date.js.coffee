@@ -2,10 +2,10 @@
 
   # Returns an ISO-formatted date string (YYYY-MM-DD) containing the UTC value of the given date
   isoUtcDateString = (date) ->
-    date.toISOString().split('T')[0]
+    @toISOString(date).split('T')[0]
 
   isoUtcDateTimeString = (date) ->
-    date.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '')
+    @toISOString(date).replace('T', ' ').replace(/\.\d{3}Z/, '')
 
   parseIsoUtcString = (str) ->
     if !str || str.length == 0
@@ -35,6 +35,19 @@
     else
       'Unknown'
 
+  dateToHumanUTC = (date) ->
+    if date?
+      str = new Date(date).toUTCString()
+      tz = str.substring(str.length-3)
+      # Remove leading word (day of week)
+      str = str.replace(/^\S+\s/, '')
+      # Remove everything after the minutes
+      str = str.replace(/:[^:]*$/, '')
+      # Tack on the time zone code
+      "#{str} #{tz}"
+    else
+      'Unknown'
+
   timeSpanToHuman = (t0, t1) ->
     "#{dateToHuman(t0)} to #{dateToHuman(t1)}"
 
@@ -54,9 +67,18 @@
     else
       null
 
+  # In tests, this command "new Date(-1815440446757.339).toISOString();" was
+  # resulting in an ISO date string that looked like "1912-06-21T22:59:13.-757Z"
+  # This method makes sure that doesn't happen
+  toISOString = (date) ->
+    date = new Date(date) unless date instanceof Date
+    date.toISOString().replace('.-', '.')
+
   exports =
     isoUtcDateString: isoUtcDateString
     isoUtcDateTimeString: isoUtcDateTimeString
     parseIsoUtcString: parseIsoUtcString
     timeSpanToHuman: timeSpanToHuman
+    dateToHumanUTC: dateToHumanUTC
     timeSpanToIsoDate: timeSpanToIsoDate
+    toISOString: toISOString
