@@ -185,11 +185,13 @@ class DataAccessController < ApplicationController
   def get_order_access_methods(dataset_id, granules, hits)
     granule_ids = granules.map {|granule| granule['id']}
     order_info = echo_client.get_order_information(granule_ids, token).body
+    orderable_count = 0 #order_info['order_information']['orderable']
 
     defs = {}
     Array.wrap(order_info).each do |info|
       info = info['order_information']
       granule_id = info['catalog_item_ref']['id']
+      orderable_count += 1 if info['orderable']
 
       Array.wrap(info['option_definition_refs']).each do |ref|
         option_id = ref['id']
@@ -203,7 +205,7 @@ class DataAccessController < ApplicationController
       end
     end
 
-    defs.map do |option_id, config|
+    defs = defs.map do |option_id, config|
       config[:id] = option_id
       config[:type] = 'order'
       config[:form] = echo_client.get_option_definition(option_id).body['option_definition']['form']
@@ -211,5 +213,19 @@ class DataAccessController < ApplicationController
       config[:count] = (hits.to_f * config[:count] / granules.size).round
       config
     end
+
+    # If no order options exist, still place an order
+    if defs.size == 0 && orderable_count > 0
+      config = {}
+      config[:id] = nil
+      config[:name] = 'Order'
+      config[:type] = 'order'
+      config[:form] = nil
+      config[:all] = orderable_count == granules.size
+      config[:count] = (hits.to_f * orderable_count / granules.size).round
+      defs = [config]
+    end
+
+    defs
   end
 end
