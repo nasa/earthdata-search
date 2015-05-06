@@ -128,7 +128,7 @@ class DataAccessController < ApplicationController
           dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
-          methods: get_downloadable_access_methods(dataset, granules, granule_params, hits) + get_order_access_methods(dataset, granules, hits),
+          methods: get_downloadable_access_methods(dataset, granules, granule_params, hits) + get_order_access_methods(dataset, granules, hits) + get_service_access_methods(dataset, granules, hits),
           defaults: defaults
         }
       else
@@ -227,5 +227,26 @@ class DataAccessController < ApplicationController
     end
 
     defs
+  end
+
+  def get_service_access_methods(dataset_id, granules, hits)
+    service_order_info = echo_client.get_service_order_information(dataset_id, token).body
+
+    service_order_info.map do |info|
+      option_id = info['service_option_assignment']['service_option_definition_id']
+
+      option_def = echo_client.get_service_option_definition(option_id).body['service_option_definition']
+      form = option_def['form']
+      name = option_def['name']
+
+      config = {}
+      config[:id] = option_id
+      config[:type] = 'service'
+      config[:form] = form
+      config[:name] = name
+      config[:count] = granules.size
+      config[:all] = true
+      config
+    end
   end
 end

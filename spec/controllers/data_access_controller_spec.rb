@@ -5,9 +5,12 @@ describe DataAccessController do
     let(:hits) { 0 }
     let(:downloadable) { 0 }
     let(:orderable) { 0 }
+    let(:serviceable) { 0 }
     let(:size) { nil }
     let(:order_refs) { [{'id' => 'opt_1', 'name' => 'Order Option 1'}, {'id' => 'opt_2', 'name' => 'Order Option 2'}] }
     let(:order_forms) { {'opt_1' => '<first_form/>', 'opt_2' => '<second_form/>'} }
+    let(:service_ref) { {'id' => 'opt_1'} }
+    let(:service_form) { {'opt_1' => {'form' => '<service_form/>', 'name' => 'Service Option 1', 'name' => 'Service Option 1'}} }
 
     let(:body) do
       granule_count = [hits, 150].min
@@ -51,6 +54,27 @@ describe DataAccessController do
             option_def_response = MockResponse.new('option_definition' => {'form' => order_forms[id]})
             expect(mock_client).to receive('get_option_definition').with(id).and_return(option_def_response)
           end
+        end
+
+        service_infos = []
+        serviceable.times do |index|
+          service_infos << {
+                              "service_option_assignment" => {
+                                "catalog_item_id" => "item_id",
+                                "id" => "assignment_id",
+                                "service_entry_id" => "entry_id",
+                                "service_option_definition_id" => "opt_1"
+                              }
+                            }
+        end
+
+        service_info_response = MockResponse.new(service_infos)
+        expect(mock_client).to receive('get_service_order_information').and_return(service_info_response)
+
+        if serviceable > 0
+          id = service_ref['id']
+          service_option_def_response = MockResponse.new('service_option_definition' => {'form' => service_form[id]['form'], 'name' => service_form[id]['name']})
+          expect(mock_client).to receive('get_service_option_definition').with(id).and_return(service_option_def_response)
         end
       end
 
@@ -239,6 +263,28 @@ describe DataAccessController do
         end
       end
 
+      context 'whose dataset is serviceable' do
+        let(:serviceable) { 1 }
+
+        it 'returns a response containing a service access method' do
+          expect(access_methods.size).to eql(1)
+          expect(access_methods.first['name']).to eql('Service Option 1')
+        end
+
+        it 'retrieves and returns the corresponding form for each option' do
+          expect(access_methods.size).to eql(1)
+          expect(access_methods.first['form']).to eql('<service_form/>')
+        end
+      end
+
+      context 'whose dataset is not serviceable' do
+        let(:serviceable) { 0 }
+
+        it 'does not return and service access methods' do
+          expect(access_methods.size).to eql(0)
+        end
+      end
+
       context 'whose granules are downloadable and have order options' do
         let(:hits) { 10 }
         let(:downloadable) { 10 }
@@ -249,6 +295,21 @@ describe DataAccessController do
           expect(access_methods.first['name']).to eql('Download')
           expect(access_methods.second['name']).to eql('Order Option 1')
           expect(access_methods.last['name']).to eql('Order Option 2')
+        end
+      end
+
+      context 'whose granules are downloadable and have order options and have a serviceable dataset' do
+        let(:hits) { 10 }
+        let(:downloadable) { 10 }
+        let(:orderable) { 10 }
+        let(:serviceable) { 1 }
+
+        it 'returns a response containing a download access method followed by access methods for each option' do
+          expect(access_methods.size).to eql(4)
+          expect(access_methods.first['name']).to eql('Download')
+          expect(access_methods.second['name']).to eql('Order Option 1')
+          expect(access_methods.third['name']).to eql('Order Option 2')
+          expect(access_methods.last['name']).to eql('Service Option 1')
         end
       end
 
