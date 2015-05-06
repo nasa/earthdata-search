@@ -232,8 +232,8 @@ class DataAccessController < ApplicationController
   def get_service_access_methods(dataset_id, granules, hits)
     service_order_info = echo_client.get_service_order_information(dataset_id, token).body
 
-    if service_order_info.size > 0
-      option_id = service_order_info[0]['service_option_assignment']['service_option_definition_id']
+    service_order_info.map do |info|
+      option_id = info['service_option_assignment']['service_option_definition_id']
 
       option_def = echo_client.get_service_option_definition(option_id).body['service_option_definition']
       form = option_def['form']
@@ -246,9 +246,7 @@ class DataAccessController < ApplicationController
       config[:name] = name
       config[:count] = granules.size
       config[:all] = true
-      [config]
-    else
-      []
+      config
     end
   end
 end
