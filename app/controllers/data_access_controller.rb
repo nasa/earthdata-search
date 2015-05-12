@@ -235,7 +235,7 @@ class DataAccessController < ApplicationController
     service_order_info.map do |info|
       option_id = info['service_option_assignment']['service_option_definition_id']
 
-      option_def = echo_client.get_service_option_definition(option_id).body['service_option_definition']
+      option_def = echo_client.get_service_option_definition(option_id, token).body['service_option_definition']
       form = option_def['form']
       name = option_def['name']
 
