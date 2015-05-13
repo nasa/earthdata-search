@@ -208,7 +208,7 @@ class DataAccessController < ApplicationController
     defs = defs.map do |option_id, config|
       config[:id] = option_id
       config[:type] = 'order'
-      config[:form] = echo_client.get_option_definition(option_id).body['option_definition']['form']
+      config[:form] = echo_client.get_option_definition(option_id, token).body['option_definition']['form']
       config[:all] = config[:count] == granules.size
       config[:count] = (hits.to_f * config[:count] / granules.size).round
       config
