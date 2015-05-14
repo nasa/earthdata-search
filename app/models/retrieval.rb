@@ -50,6 +50,9 @@ class Retrieval < ActiveRecord::Base
                                                 token,
                                                 client)
           method[:order_id] = order_response[:order_id]
+        elsif method['type'] == 'service'
+          service_response = ESIClient.submit_esi_request(dataset['id'], params, method, client, token).body
+          method[:order_id] = MultiXml.parse(service_response)['agentResponse']['order']['orderId']
         end
       end
     end
