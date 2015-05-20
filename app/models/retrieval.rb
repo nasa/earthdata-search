@@ -51,7 +51,16 @@ class Retrieval < ActiveRecord::Base
                                                 client)
           method[:order_id] = order_response[:order_id]
         elsif method['type'] == 'service'
-          service_response = ESIClient.submit_esi_request(dataset['id'], params, method, client, token).body
+          base = case Rails.configuration.echo_env
+          when 'ops' then 'https://search.earthdata.nasa.gov'
+          when 'uat' then 'https://search.uat.earthdata.nasa.gov'
+          when 'sit' then 'https://search.sit.earthdata.nasa.gov'
+          end
+          base = 'http://edsc.dev' if Rails.env == 'development'
+          request_url = "#{base}/data/retrieve/#{retrieval.to_param}"
+
+          service_response = ESIClient.submit_esi_request(dataset['id'], params, method, request_url, client, token).body
+          method[:dataset_id] = dataset['id']
           method[:order_id] = MultiXml.parse(service_response)['agentResponse']['order']['orderId']
         end
       end

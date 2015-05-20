@@ -40,6 +40,10 @@ class DataAccessController < ApplicationController
       dataset['serviceOptions']['accessMethod'].select { |m| m['type'] == 'order' }
     end.flatten.compact
 
+    service_orders = @retrieval.jsondata['datasets'].map do |dataset|
+      dataset['serviceOptions']['accessMethod'].select { |m| m['type'] == 'service' }
+    end.flatten.compact
+
     if orders.size > 0
       order_ids = orders.map {|o| o['order_id']}
       order_response = order_ids.compact.size > 0 ? echo_client.get_orders({id: order_ids}, token) : nil
@@ -61,6 +65,23 @@ class DataAccessController < ApplicationController
         orders.each do |order|
           order['order_status'] = 'creating'
         end
+      end
+    end
+
+    if service_orders.size > 0
+      service_orders.each do |s|
+        header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
+        response = ESIClient.get_esi_request(s['dataset_id'], s['order_id'], echo_client, token, header_value).body
+        response_json = MultiXml.parse(response)
+
+        status = response_json['agentResponse']['requestStatus']
+        s['order_status'] = status['status']
+        s['service_options'] = {}
+        s['service_options']['number_processed'] = status['numberProcessed']
+        s['service_options']['total_number'] = status['totalNumber']
+        urls = []
+        urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
+        s['service_options']['download_urls'] = urls
       end
     end
 

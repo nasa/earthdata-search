@@ -91,6 +91,10 @@ module VCR
           elsif request.uri.include? '/echo-rest/'
             parts = request.uri.split('/echo-rest/')[1]
             cassette = parts.split(/\.|\/|\?/).first
+          elsif request.uri.include? 'nsidc.org/ops/egi/request'
+            opts[:match_requests_on] = [:method, :parsed_uri, :headers]
+            cassette = "hand-edited"
+            record = :none
           end
 
           if uri.include?('users/current.json') ||

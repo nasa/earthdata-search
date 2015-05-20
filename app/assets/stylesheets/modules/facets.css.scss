@@ -37,6 +37,10 @@ dl.applied-facets {
 
 .facets-list-hide {
   height: 0px;
+
+  .panel-body.facets {
+    display: none;
+  }
 }
 
 .facets-list-show {
