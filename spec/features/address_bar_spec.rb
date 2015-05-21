@@ -128,6 +128,7 @@ describe 'Address bar', reset: false do
   context 'when searching by facets' do
     before(:all) do
       visit '/search'
+      find("h3.facet-title", text: 'Project').click
       find(".facets-item", text: "EOSDIS").click
       wait_for_xhr
     end
