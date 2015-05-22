@@ -92,6 +92,10 @@ class DataAccessController < ApplicationController
     user = current_user
     render file: "#{Rails.root}/public/401.html", status: :unauthorized unless user
     render file: "#{Rails.root}/public/403.html", status: :forbidden unless user == @retrieval.user
+    respond_to do |format|
+      format.html
+      format.json { render json: @retrieval.jsondata.merge(id: @retrieval.to_param).to_json }
+    end
   end
 
   def status

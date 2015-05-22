@@ -7,7 +7,8 @@ ns.ProjectList = do (ko
                     xhrUtil=@edsc.util.xhr
                     dateUtil=@edsc.util.date
                     $ = jQuery
-                    wait=@edsc.util.xhr.wait) ->
+                    wait=@edsc.util.xhr.wait
+                    ajax = @edsc.util.xhr.ajax) ->
 
   sortable = (root) ->
     $root = $(root)
@@ -183,6 +184,18 @@ ns.ProjectList = do (ko
         datasetId = dataset.id
         has_browse = dataset.browseable_granule?
         for m in projectDataset.serviceOptions.accessMethod() when m.type == 'service'
+          if m.orderStatus == 'processing' || m.orderStatus == 'submitting'
+            console.log "Loading project data for #{id}"
+            url = window.location.href + '.json'
+            setTimeout((=> ajax
+              dataType: 'json'
+              url: url
+              retry: => @_computeSubmittedServiceOrders()
+              success: (data, status, xhr) =>
+                console.log "Finished loading project data for #{id}"
+                @project.fromJson(data))
+            , 5000)
+
           serviceOrders.push
             dataset_id: dataset.dataset_id
             order_id: m.orderId

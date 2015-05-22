@@ -37,6 +37,11 @@ describe 'Services Access', reset: false do
         it 'displays a progress bar while the service is processing' do
           expect(page).to have_content('Progress: 0 of 1 items processed (0.00%)')
           expect(page).to have_css('div.progress-bar')
+
+          # after waiting the progress bar moves
+          sleep 10
+          expect(page).to have_content('Complete')
+          expect(page).to have_no_css('div.progress-bar')
         end
 
         context 'when returning to the retrieval page after a service is complete' do
