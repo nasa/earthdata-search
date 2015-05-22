@@ -27,7 +27,7 @@ class DataAccessController < ApplicationController
     retrieval.jsondata = project
     retrieval.save!
 
-    Retrieval.delay.process(retrieval.id, token, echo_env)
+    Retrieval.delay.process(retrieval.id, token, echo_env, request.base_url)
 
     redirect_to action: 'retrieval', id: retrieval.to_param
   end
@@ -70,18 +70,22 @@ class DataAccessController < ApplicationController
 
     if service_orders.size > 0
       service_orders.each do |s|
-        header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
-        response = ESIClient.get_esi_request(s['dataset_id'], s['order_id'], echo_client, token, header_value).body
-        response_json = MultiXml.parse(response)
-
-        status = response_json['agentResponse']['requestStatus']
-        s['order_status'] = status['status']
+        s['order_status'] = 'submitting'
         s['service_options'] = {}
-        s['service_options']['number_processed'] = status['numberProcessed']
-        s['service_options']['total_number'] = status['totalNumber']
-        urls = []
-        urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
-        s['service_options']['download_urls'] = urls
+
+        if s['dataset_id']
+          header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
+          response = ESIClient.get_esi_request(s['dataset_id'], s['order_id'], echo_client, token, header_value).body
+          response_json = MultiXml.parse(response)
+
+          status = response_json['agentResponse']['requestStatus']
+          s['order_status'] = status['status']
+          s['service_options']['number_processed'] = status['numberProcessed']
+          s['service_options']['total_number'] = status['totalNumber']
+          urls = []
+          urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
+          s['service_options']['download_urls'] = urls
+        end
       end
     end
 
