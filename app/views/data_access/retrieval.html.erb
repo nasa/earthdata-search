@@ -83,6 +83,49 @@
         </li>
       </ul>
     </section>
+    <section class="data-access-content data-access-services" data-bind="visible: ui.projectList.submittedServiceOrders().length > 0">
+      <h2>The following datasets are being processed</h2>
+      <p>
+        When the data becomes available, an email containing download links will be sent to the address you provided.
+      </p>
+      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.submittedServiceOrders">
+        <li class="data-access-dataset">
+          <p>
+            <span class="data-access-dataset-name" data-bind="text: dataset_id"></span>
+            <!-- ko if: order_status -->
+            <span class="order-state" data-bind="css: order_status, text: order_status"></span>
+            <!-- /ko -->
+          </p>
+          <div class="data-access-dataset-actions">
+            <!-- ko if: order_status == 'complete' -->
+            <p>Your request is complete and can be downloaded using the following urls:</p>
+            <div>
+              <ul class="data-access-services-links" data-bind="foreach: download_urls">
+                <li><a class="link" data-bind="attr: {href: $data}, text: $data"></a></li>
+              </ul>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: order_status != 'complete' -->
+            <div>
+              <p>
+                Progress: <span data-bind="text: number_processed"></span> of <span data-bind="text: total_number"></span> items processed (<span data-bind="text: (number_processed / total_number * 100).toFixed(2)"></span>%)
+              </p>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-bind="attr { 'aria-valuenow': (number_processed / total_number * 100).toFixed(0) }, style: { width: (number_processed / total_number * 100).toFixed(0) + '%' }">
+                </div>
+              </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: downloadBrowseUrl -->
+            <!-- TODO should be a bit of top margin here -->
+            <div class="data-access-services-buttons">
+              <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadBrowseUrl}">View Browse Image Links</a>
+            </div>
+            <!-- /ko -->
+          </div>
+        </li>
+      </ul>
+    </section>
     <section class="data-access-content data-access-resources" data-bind="visible: ui.projectList.datasetLinks().length > 0">
       <h2>Additional Resources and Documentation</h2>
       <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetLinks">

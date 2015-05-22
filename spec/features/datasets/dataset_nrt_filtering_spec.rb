@@ -4,6 +4,7 @@ describe 'Dataset NRT Filtering', reset: false do
   before :all do
     Capybara.reset_sessions!
     load_page :search, facets: true
+    find("h3.facet-title", text: 'Features').click
   end
 
   context 'when selecting the NRT filter' do
