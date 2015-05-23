@@ -85,6 +85,8 @@ gem 'figaro'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
+gem 'nokogiri'
+
 # Eventually we'll need these, but there's version conflict when installing
 #gem 'crossroadsjs-rails'
 #gem 'jssignals-rails'

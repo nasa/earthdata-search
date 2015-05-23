@@ -27,7 +27,7 @@ class DataAccessController < ApplicationController
     retrieval.jsondata = project
     retrieval.save!
 
-    Retrieval.delay.process(retrieval.id, token, echo_env)
+    Retrieval.delay.process(retrieval.id, token, echo_env, request.base_url)
 
     redirect_to action: 'retrieval', id: retrieval.to_param
   end
@@ -38,6 +38,10 @@ class DataAccessController < ApplicationController
 
     orders = @retrieval.jsondata['datasets'].map do |dataset|
       dataset['serviceOptions']['accessMethod'].select { |m| m['type'] == 'order' }
+    end.flatten.compact
+
+    service_orders = @retrieval.jsondata['datasets'].map do |dataset|
+      dataset['serviceOptions']['accessMethod'].select { |m| m['type'] == 'service' }
     end.flatten.compact
 
     if orders.size > 0
@@ -64,9 +68,34 @@ class DataAccessController < ApplicationController
       end
     end
 
+    if service_orders.size > 0
+      service_orders.each do |s|
+        s['order_status'] = 'submitting'
+        s['service_options'] = {}
+
+        if s['dataset_id']
+          header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
+          response = ESIClient.get_esi_request(s['dataset_id'], s['order_id'], echo_client, token, header_value).body
+          response_json = MultiXml.parse(response)
+
+          status = response_json['agentResponse']['requestStatus']
+          s['order_status'] = status['status']
+          s['service_options']['number_processed'] = status['numberProcessed']
+          s['service_options']['total_number'] = status['totalNumber']
+          urls = []
+          urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
+          s['service_options']['download_urls'] = urls
+        end
+      end
+    end
+
     user = current_user
     render file: "#{Rails.root}/public/401.html", status: :unauthorized unless user
     render file: "#{Rails.root}/public/403.html", status: :forbidden unless user == @retrieval.user
+    respond_to do |format|
+      format.html
+      format.json { render json: @retrieval.jsondata.merge(id: @retrieval.to_param).to_json }
+    end
   end
 
   def status
@@ -128,7 +157,7 @@ class DataAccessController < ApplicationController
           dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
-          methods: get_downloadable_access_methods(dataset, granules, granule_params, hits) + get_order_access_methods(dataset, granules, hits),
+          methods: get_downloadable_access_methods(dataset, granules, granule_params, hits) + get_order_access_methods(dataset, granules, hits) + get_service_access_methods(dataset, granules, hits),
           defaults: defaults
         }
       else
@@ -208,7 +237,7 @@ class DataAccessController < ApplicationController
     defs = defs.map do |option_id, config|
       config[:id] = option_id
       config[:type] = 'order'
-      config[:form] = echo_client.get_option_definition(option_id).body['option_definition']['form']
+      config[:form] = echo_client.get_option_definition(option_id, token).body['option_definition']['form']
       config[:all] = config[:count] == granules.size
       config[:count] = (hits.to_f * config[:count] / granules.size).round
       config
@@ -227,5 +256,26 @@ class DataAccessController < ApplicationController
     end
 
     defs
+  end
+
+  def get_service_access_methods(dataset_id, granules, hits)
+    service_order_info = echo_client.get_service_order_information(dataset_id, token).body
+
+    service_order_info.map do |info|
+      option_id = info['service_option_assignment']['service_option_definition_id']
+
+      option_def = echo_client.get_service_option_definition(option_id, token).body['service_option_definition']
+      form = option_def['form']
+      name = option_def['name']
+
+      config = {}
+      config[:id] = option_id
+      config[:type] = 'service'
+      config[:form] = form
+      config[:name] = name
+      config[:count] = granules.size
+      config[:all] = true
+      config
+    end
   end
 end

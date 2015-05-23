@@ -74,6 +74,7 @@ describe "'Clear Filters' button", reset: false do
 
   it "clears facets" do
     click_on 'Browse Datasets'
+    find("h3.facet-title", text: 'Project').click
     find(".facets-item", text: "EOSDIS").click
     within(:css, '.selected-facets-panel') do
       expect(page).to have_content("EOSDIS")

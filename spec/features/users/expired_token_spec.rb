@@ -44,6 +44,7 @@ describe "Expired user token", reset: true do
 
         fill_in 'keywords', with: 'AST_L1AE'
         click_link 'Browse All Data'
+        find("h3.facet-title", text: 'Instrument').click
         wait_for_xhr
       end
 

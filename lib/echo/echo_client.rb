@@ -50,8 +50,20 @@ module Echo
       get('/echo-rest/order_information.json', {catalog_item_id: item_ids}, token_header(token))
     end
 
-    def get_option_definition(id)
+    def get_option_definition(id, token)
       get("/echo-rest/option_definitions/#{id}.json")
+    end
+
+    def get_service_order_information(id, token)
+      get("/echo-rest/service_option_assignments.json", {catalog_item_id: id}, token_header(token))
+    end
+
+    def get_service_option_definition(id, token)
+      get("/echo-rest/service_option_definitions/#{id}.json", token_header(token))
+    end
+
+    def get_service_entry(id, token)
+      get("/echo-rest/service_entries/#{id}.json", token_header(token))
     end
 
     def get_orders(params, token)

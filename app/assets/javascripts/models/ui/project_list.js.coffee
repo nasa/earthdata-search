@@ -7,7 +7,8 @@ ns.ProjectList = do (ko
                     xhrUtil=@edsc.util.xhr
                     dateUtil=@edsc.util.date
                     $ = jQuery
-                    wait=@edsc.util.xhr.wait) ->
+                    wait=@edsc.util.xhr.wait
+                    ajax = @edsc.util.xhr.ajax) ->
 
   sortable = (root) ->
     $root = $(root)
@@ -56,6 +57,7 @@ ns.ProjectList = do (ko
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
       @datasetOnly = ko.computed(@_computeDatasetOnly, this, deferEvaluation: true)
       @submittedOrders = ko.computed(@_computeSubmittedOrders, this, deferEvaluation: true)
+      @submittedServiceOrders = ko.computed(@_computeSubmittedServiceOrders, this, deferEvaluation: true)
 
       @allDatasetsVisible = ko.computed(@_computeAllDatasetsVisible, this, deferEvaluation: true)
 
@@ -173,6 +175,36 @@ ns.ProjectList = do (ko
             cancel_link: "/data/remove?order_id=#{m.orderId}" if canCancel
             downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&dataset=#{datasetId}"
       orders
+
+    _computeSubmittedServiceOrders: ->
+      serviceOrders = []
+      id = @project.id()
+      for projectDataset in @project.accessDatasets()
+        dataset = projectDataset.dataset
+        datasetId = dataset.id
+        has_browse = dataset.browseable_granule?
+        for m in projectDataset.serviceOptions.accessMethod() when m.type == 'service'
+          if m.orderStatus == 'processing' || m.orderStatus == 'submitting'
+            console.log "Loading project data for #{id}"
+            url = window.location.href + '.json'
+            setTimeout((=> ajax
+              dataType: 'json'
+              url: url
+              retry: => @_computeSubmittedServiceOrders()
+              success: (data, status, xhr) =>
+                console.log "Finished loading project data for #{id}"
+                @project.fromJson(data))
+            , 5000)
+
+          serviceOrders.push
+            dataset_id: dataset.dataset_id
+            order_id: m.orderId
+            order_status: m.orderStatus
+            download_urls: m.serviceOptions.download_urls
+            number_processed: m.serviceOptions.number_processed
+            total_number: m.serviceOptions.total_number
+            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&dataset=#{datasetId}"
+      serviceOrders
 
     _computeDatasetOnly: ->
       datasets = []

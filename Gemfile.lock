@@ -293,6 +293,7 @@ DEPENDENCIES
   knockoutjs-rails
   libv8 (~> 3.11.8.3)
   multi_xml
+  nokogiri
   obfuscate_id!
   pg
   poltergeist

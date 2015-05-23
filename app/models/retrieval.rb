@@ -28,7 +28,7 @@ class Retrieval < ActiveRecord::Base
   end
 
   # Delayed Jobs calls this method to excute an order creation
-  def self.process(id, token, env)
+  def self.process(id, token, env, base_url)
     VCR::EDSCConfigurer.register_token('edsc', token + ':' + ENV['urs_client_id']) if Rails.env.test?
     retrieval = Retrieval.find_by_id(id)
     project = retrieval.jsondata
@@ -50,6 +50,12 @@ class Retrieval < ActiveRecord::Base
                                                 token,
                                                 client)
           method[:order_id] = order_response[:order_id]
+        elsif method['type'] == 'service'
+          request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
+
+          service_response = ESIClient.submit_esi_request(dataset['id'], params, method, request_url, client, token).body
+          method[:dataset_id] = dataset['id']
+          method[:order_id] = MultiXml.parse(service_response)['agentResponse']['order']['orderId']
         end
       end
     end
