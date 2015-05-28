@@ -81,4 +81,12 @@ class DetailsPresenter
     "#{text}\xC2\xB0"
   end
 
+  private
+
+  def client_id(env)
+    services = Rails.configuration.services
+    config = services['earthdata'][env]
+    services['urs'][Rails.env.to_s][config['urs_root']]
+  end
+
 end
