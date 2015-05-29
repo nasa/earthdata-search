@@ -24,7 +24,7 @@ class DatasetsController < ApplicationController
     use_dataset(params[:id])
 
     if response.success?
-      respond_with(DatasetDetailsPresenter.new(response.body.first, params[:id]), status: response.status)
+      respond_with(DatasetDetailsPresenter.new(response.body.first, params[:id], token, echo_env), status: response.status)
     else
       respond_with(response.body, status: response.status)
     end

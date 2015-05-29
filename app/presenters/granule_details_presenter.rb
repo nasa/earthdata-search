@@ -1,13 +1,14 @@
 class GranuleDetailsPresenter < DetailsPresenter
-  def initialize(granule, granule_id=nil)
+  def initialize(granule, granule_id=nil, token=nil, env='ops')
     @granule = granule
     @granule.id = granule_id
 
     metadata_url = "https://cmr.earthdata.nasa.gov/search/concepts/#{@granule.id}"
-    @granule.native_url = "#{metadata_url}"
-    @granule.atom_url = "#{metadata_url}.atom"
-    @granule.echo10_url = "#{metadata_url}.echo10"
-    @granule.iso19115_url = "#{metadata_url}.iso19115"
+    url_token = "?token=#{token}:#{client_id(env)}" if token
+    @granule.native_url = "#{metadata_url}#{url_token}"
+    @granule.atom_url = "#{metadata_url}.atom#{url_token}"
+    @granule.echo10_url = "#{metadata_url}.echo10#{url_token}"
+    @granule.iso19115_url = "#{metadata_url}.iso19115#{url_token}"
 
     xml = @granule.xml.to_xml(:root => 'Granule', :skip_instruct => true, :indent => 2)
     xml.gsub!("<Granule>\n", '') # Remove top level element

@@ -1,5 +1,5 @@
 class DatasetDetailsPresenter < DetailsPresenter
-  def initialize(dataset, collection_id=nil)
+  def initialize(dataset, collection_id=nil, token=nil, env='ops')
     @dataset = dataset
     @dataset.id = collection_id
 
@@ -43,11 +43,12 @@ class DatasetDetailsPresenter < DetailsPresenter
     @dataset.associated_difs = associated_difs(dataset.associated_difs)
 
     metadata_url = "https://cmr.earthdata.nasa.gov/search/concepts/#{@dataset.id}"
-    @dataset.native_url = "#{metadata_url}"
-    @dataset.atom_url = "#{metadata_url}.atom"
-    @dataset.echo10_url = "#{metadata_url}.echo10"
-    @dataset.iso19115_url = "#{metadata_url}.iso19115"
-    @dataset.dif_url = "#{metadata_url}.dif"
+    url_token = "?token=#{token}:#{client_id(env)}" if token
+    @dataset.native_url = "#{metadata_url}#{url_token}"
+    @dataset.atom_url = "#{metadata_url}.atom#{url_token}"
+    @dataset.echo10_url = "#{metadata_url}.echo10#{url_token}"
+    @dataset.iso19115_url = "#{metadata_url}.iso19115#{url_token}"
+    @dataset.dif_url = "#{metadata_url}.dif#{url_token}"
     @dataset.smap_iso_url = nil #"#{metadata_url}.smap_iso"
 
     # Set description to URL if URLDescription doesn't exist
