@@ -33,6 +33,7 @@ describe 'Map Zooming', reset: false do
   context 'when zooming with the zoom buttons' do
     context 'and the overlay is visible' do
       before :all do
+        find('.projection-switcher-geo').click
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
       end
