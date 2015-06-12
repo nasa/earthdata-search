@@ -39,6 +39,11 @@
     realClearTimeout(id)
     return
 
+  <% if Rails.env.test? %>
+    window.requestAnimationFrame = (f) -> window.setTimeout(f, 0)
+    window.cancelAnimationFrame = (id) -> window.clearTimeout(id)
+  <% end %>
+
   xhrPool = []
   $(document)
     .ajaxSend (event, xhr, settings) ->
