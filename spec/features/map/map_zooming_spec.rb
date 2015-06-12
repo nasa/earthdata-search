@@ -60,8 +60,11 @@ describe 'Map Zooming', reset: false do
       end
 
       after :all do
-        find('.leaflet-control-zoom-out').click
-        find('.master-overlay-show').click
+        synchronize do
+          # Synchronize because animations can cause occlusion if execution is very fast
+          find('.leaflet-control-zoom-out').click
+          find('.master-overlay-show').click
+        end
         expect(page).to have_no_css(".master-overlay.is-hidden")
         wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
