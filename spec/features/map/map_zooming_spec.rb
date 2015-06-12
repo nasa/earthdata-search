@@ -114,5 +114,24 @@ describe 'Map Zooming', reset: false do
         expect(page).to have_map_center(0, 0, 2)
       end
     end
+
+    context "on polar view" do
+      after :all do
+        find('.projection-switcher-geo').click
+        script = "$('#map').data('map').map.setView([0, 0], 2);"
+        page.execute_script(script)
+        expect(page).to have_map_center(0, 0, 2)
+      end
+
+      it "centers the map at (90, 0) for north polar view" do
+        find('.projection-switcher-arctic').click
+        expect(page).to have_map_center(90, 0, 0)
+      end
+
+      it "centers the map at (-90, 0) for south polar view" do
+        find('.projection-switcher-antarctic').click
+        expect(page).to have_map_center(-90, 0, 0)
+      end
+    end
   end
 end
