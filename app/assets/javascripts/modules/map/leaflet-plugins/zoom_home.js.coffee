@@ -33,6 +33,11 @@ ns.ZoomHome = do (L, currentPage = window.edsc.models.page.current) ->
           bounds.extend(point.split(',').reverse())
         @_map.fitBounds(bounds)
       else
-        @_map.setView([0, 0], 2)
+        if @_map.projection == 'geo'
+          @_map.setView([0, 0], 2)
+        else if @_map.projection == 'arctic'
+          @_map.setView([90, 0], 0)
+        else
+          @_map.setView([-90, 0], 0)
 
   exports = ZoomHome
