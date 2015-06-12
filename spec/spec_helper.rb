@@ -126,12 +126,12 @@ RSpec.configure do |config|
   config.before :suite do
     count = self.class.children.size
     Headless.new(:destroy_on_exit => false).start
-    Capybara.current_session.driver.resize_window(1280, 1024)
   end
 
   config.before :all do
     file_time = Time.now
     Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
+    Capybara.current_session.driver.resize_window(1280, 1024)
   end
 
   config.after :all do
