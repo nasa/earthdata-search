@@ -12,9 +12,4 @@ module MapUtil
       return map.getZoom();
       })();")
   end
-
-  def self.get_transform_offset(page)
-    puts "------- #{page.find(".leaflet-map-pane")[:style]}"
-    page.find(".leaflet-map-pane")[:style]
-  end
 end

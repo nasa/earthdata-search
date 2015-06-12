@@ -39,6 +39,8 @@ ns.Map = do (window,
       @setView(center, zoom, options)
 
     setZoom: (zoom, options) ->
+      zoom = @_limitZoom(zoom)
+
       if !@_loaded
         @_zoom = @_limitZoom(zoom)
         return this
@@ -52,16 +54,11 @@ ns.Map = do (window,
       overlayWidth /= 2
 
       currentZoom = @getZoom()
+      return this if currentZoom == zoom
       if currentZoom > zoom
-        if @getMinZoom() <= zoom
-          targetPoint = @project(@getCenter(), zoom).subtract([overlayWidth / 2, 0])
-        else
-          targetPoint = @project(@getCenter(), zoom)
+        targetPoint = @project(@getCenter(), zoom).subtract([overlayWidth / 2, 0])
       else
-        if zoom <= @getMaxZoom()
-          targetPoint = @project(@getCenter(), zoom).add([overlayWidth, 0])
-        else
-          targetPoint = @project(@getCenter(), zoom)
+        targetPoint = @project(@getCenter(), zoom).add([overlayWidth, 0])
       targetLatLng = @unproject(targetPoint, zoom)
 
       @setView(targetLatLng, zoom, {zoom: options})
