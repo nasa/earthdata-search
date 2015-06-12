@@ -15,6 +15,13 @@ module Helpers
       end
     end
 
+    def wait_for_zoom_animation(zoom_to)
+      script = "(function() {var map = $('#map').data('map').map; return map.getZoom();})();"
+      synchronize(30) do
+        expect(page.evaluate_script(script).to_i).to eql(zoom_to)
+      end
+    end
+
     def synchronize(seconds=Capybara.default_wait_time)
       start_time = Time.now
 

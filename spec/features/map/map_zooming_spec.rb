@@ -48,6 +48,26 @@ describe 'Map Zooming', reset: false do
       end
     end
 
+    context "and the minimum zoom level has been reached" do
+      before :all do
+        MapUtil.set_zoom(page, 0)
+      end
+
+      after :all do
+        find('.leaflet-control-zoom-home').click
+        wait_for_zoom_animation(2)
+      end
+
+      it 'should keep map center when zoom out is clicked again' do
+        zoom = MapUtil.get_zoom(page)
+
+        find('.leaflet-control-zoom-out').click
+        wait_for_zoom_animation(zoom)
+
+        expect(zoom).to eql(MapUtil.get_zoom(page))
+      end
+    end
+
     context 'and the overlay is hidden' do
       before :all do
         within '.master-overlay-main' do
