@@ -39,6 +39,8 @@ ns.Map = do (window,
       @setView(center, zoom, options)
 
     setZoom: (zoom, options) ->
+      zoom = @_limitZoom(zoom)
+
       if !@_loaded
         @_zoom = @_limitZoom(zoom)
         return this
@@ -52,6 +54,7 @@ ns.Map = do (window,
       overlayWidth /= 2
 
       currentZoom = @getZoom()
+      return this if currentZoom == zoom
       if currentZoom > zoom
         targetPoint = @project(@getCenter(), zoom).subtract([overlayWidth / 2, 0])
       else
