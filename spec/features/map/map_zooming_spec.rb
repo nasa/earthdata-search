@@ -138,20 +138,10 @@ describe 'Map Zooming', reset: false do
     end
   end
 
-  context 'at the minimum zoom level' do
-    before :all do
-      MapUtil.set_zoom(page, 0)
-    end
-
-    after :all do
-      find('.leaflet-control-zoom-home').click
-      wait_for_zoom_animation(2)
-    end
-
-    context 'clicking zoom out' do
+  context 'on geo view' do
+    context 'at the minimum zoom level' do
       before :all do
-        find('.leaflet-control-zoom-out').click
-        wait_for_zoom_animation(0)
+        MapUtil.set_zoom(page, 0)
       end
 
       after :all do
@@ -159,43 +149,84 @@ describe 'Map Zooming', reset: false do
         wait_for_zoom_animation(2)
       end
 
-      it 'maintains the map center' do
-        expect(page).to have_map_center(0, -121, 0)
+      context 'clicking zoom out' do
+        before :all do
+          find('.leaflet-control-zoom-out').click
+          wait_for_zoom_animation(0)
+        end
+
+        after :all do
+          find('.leaflet-control-zoom-home').click
+          wait_for_zoom_animation(2)
+        end
+
+        it 'maintains the map center' do
+          expect(page).to have_map_center(0, -121, 0)
+        end
+
+        it 'does not zoom out any further' do
+          expect(MapUtil.get_zoom(page)).to eql(0)
+        end
+      end
+    end
+
+    context 'at the maximum zoom level' do
+      before :all do
+        MapUtil.set_zoom(page, 7)
       end
 
-      it 'does not zoom out any further' do
-        expect(MapUtil.get_zoom(page)).to eql(0)
+      after :all do
+        find('.leaflet-control-zoom-home').click
+        wait_for_zoom_animation(2)
+      end
+
+      context 'clicking zoom out' do
+        before :all do
+          find('.leaflet-control-zoom-in').click
+          wait_for_zoom_animation(7)
+        end
+
+        after :all do
+          find('.leaflet-control-zoom-home').click
+          wait_for_zoom_animation(2)
+        end
+
+        it 'maintains the map center' do
+          expect(page).to have_map_center(0, 2, 7)
+        end
+
+        it 'does not zoom in any further' do
+          expect(MapUtil.get_zoom(page)).to eql(7)
+        end
       end
     end
   end
 
-  context 'at the maximum zoom level' do
-    before :all do
-      MapUtil.set_zoom(page, 7)
-    end
 
-    after :all do
-      find('.leaflet-control-zoom-home').click
-      wait_for_zoom_animation(2)
-    end
 
-    context 'clicking zoom out' do
+  context 'on polar view (e.g. EPSG3031 - South Polar Stereographic)' do
+    context 'at the maximum zoom level' do
       before :all do
-        find('.leaflet-control-zoom-in').click
-        wait_for_zoom_animation(7)
+        find('.projection-switcher-arctic').click
+        MapUtil.set_zoom(page, 4)
       end
 
       after :all do
-        find('.leaflet-control-zoom-home').click
-        wait_for_zoom_animation(2)
+        find('.projection-switcher-geo').click
       end
 
-      it 'maintains the map center' do
-        expect(page).to have_map_center(0, 2, 7)
-      end
+      context 'clicking zoom in' do
+        before :all do
+          find('.leaflet-control-zoom-in').click
+        end
 
-      it 'does not zoom in any further' do
-        expect(MapUtil.get_zoom(page)).to eql(7)
+        it 'does not zoom in any further' do
+          expect(MapUtil.get_zoom(page)).to eql(4)
+        end
+
+        it 'maintains the map center' do
+          expect(page).to have_map_center(88, 45, 4)
+        end
       end
     end
   end
