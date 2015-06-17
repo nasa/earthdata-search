@@ -276,7 +276,7 @@ ns.Map = do (window,
       arctic:
         crs: ProjExt.epsg3413
         minZoom: 0
-        maxZoom: 5
+        maxZoom: 4
         zoom: 0
         continuousWorld: true
         noWrap: true
@@ -285,7 +285,7 @@ ns.Map = do (window,
       antarctic:
         crs: ProjExt.epsg3031
         minZoom: 0
-        maxZoom: 5
+        maxZoom: 4
         zoom: 0
         continuousWorld: true
         noWrap: true
