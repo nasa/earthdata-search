@@ -1,47 +1,63 @@
 // Override default Bootstrap tab CSS
-.nav-tabs {
-  border-color: #000;
-  margin: 15px 15px 0 15px;
+//.nav-tabs {
+//  border-color: #000;
+//  margin: 15px 15px 0 15px;
+//
+//  a {
+//    background: none;
+//    color: #999;
+//  }
+//
+//  li.active a, li.active:hover a {
+//    background: #333;
+//    border-color: #000;
+//    border-bottom-color: #333;
+//    color: #fff;
+//  }
+//
+//  li:hover a {
+//    background: #222;
+//    border-color: #222;
+//  }
+//}
 
-  a {
-    background: none;
-    color: #999;
-  }
+//.tab-content {
+//  margin: 0 15px 12px 15px;
+//  padding: 10px;
+//  background: #333;
+//  border-left: 1px solid #000;
+//  border-right: 1px solid #000;
+//  border-bottom: 1px solid #000;
+//  clear: both;
+//}
 
-  li.active a, li.active:hover a {
-    background: #333;
-    border-color: #000;
-    border-bottom-color: #333;
-    color: #fff;
-  }
-
-  li:hover a {
-    background: #222;
-    border-color: #222;
-  }
-}
-
-.tab-content {
-  margin: 0 15px 12px 15px;
-  padding: 10px;
-  background: #333;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
-  clear: both;
-}
-
-.details .nav-tabs {
-  margin-top: 0;
-}
+//.details .nav-tabs {
+//  margin-top: 0;
+//}
 
 .gibs-endpoint {
   white-space: nowrap
 }
 
-.details .tab-content {
+.details /*.tab-content*/ {
   a {
     text-decoration: underline;
     white-space: nowrap;
   }
+}
+
+.version-label {
+  display: inline-block;
+  vertical-align: middle;
+  background: #7f33a0;
+  border-radius: 4px;
+  font-size: xx-small;
+  font-weight: normal;
+  padding: 1px 5px 0px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
+.two-columns {
+  @include column-count(2);
 }

@@ -1,0 +1,53 @@
+#ns = @edsc.map
+#
+#ns.ImageMap = do (window, document, ko, L, page = @edsc.page) ->
+#
+#  class ImageMap
+##    constructor:
+#
+#
+#
+#    loadImageMap: ->
+#      @map = L.map('image-map', minZoom: 0, maxZoom: 1, center: [0, 0], zoom: 0, crs: L.CRS.Simple, zoomControl: false, attributionControl: false)
+#      # Disable drag and zoom handlers.
+#      @map.dragging.disable()
+#      @map.touchZoom.disable()
+#      @map.doubleClickZoom.disable()
+#      @map.scrollWheelZoom.disable()
+#      # Disable tap handler, if present.
+#      @map.tap.disable() if (map.tap)
+#
+#      w = 300
+#      h = 149
+#      url = window.location.origin + '<%= image_path('image-map.png') %>'
+#      southWest = @map.unproject([0, h], @map.getMaxZoom() - 1)
+#      northEast = @map.unproject([w, 0], @map.getMaxZoom() - 1)
+#      bounds = new (L.LatLngBounds)(southWest, northEast)
+#      L.imageOverlay(url, bounds).addTo @map
+#      @map.setMaxBounds bounds
+#
+#  exports = ImageMap
+
+@edsc.map.loadImageMap = (dataset) ->
+  map = L.map('image-map',
+    minZoom: 0, maxZoom: 1, center: [0, 0], zoom: 0, crs: L.CRS.Simple, zoomControl: false, attributionControl: false)
+
+  # Disable drag and zoom handlers.
+  map.dragging.disable()
+  map.touchZoom.disable()
+  map.doubleClickZoom.disable()
+  map.scrollWheelZoom.disable()
+  # Disable tap handler, if present.
+  map.tap.disable() if (map.tap)
+
+  w = 290
+  h = 144
+  url = window.location.origin + '<%= image_path('image-map.png') %>'
+  southWest = map.unproject([0, h], map.getMaxZoom() - 1)
+  northEast = map.unproject([w, 0], map.getMaxZoom() - 1)
+  bounds = new L.LatLngBounds(southWest, northEast)
+  L.imageOverlay(url, bounds).addTo map
+  map.setMaxBounds bounds
+
+#  layer = ???.buildLayer(color: "#ff7800", weight: 1)
+#  layer.addTo(@map)
