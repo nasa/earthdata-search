@@ -58,6 +58,12 @@
   margin-left: 5px;
 }
 
-.two-columns {
-  @include column-count(2);
+.navy-label {
+  display: inline-block;
+  vertical-align: middle;
+  background: #293646;
+  border-radius: 4px;
+  font-size: xx-small;
+  font-weight: bolder;
+  padding: 1px 5px 0;
 }

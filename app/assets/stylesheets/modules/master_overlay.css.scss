@@ -88,9 +88,13 @@
     position: relative;
   }
 
-  dl {
+  dt {
     margin: 0;
     font-size: .8em;
+  }
+
+  dd {
+    -webkit-margin-start: 0px;
   }
 
   .tab-content {
@@ -123,9 +127,6 @@
   margin: 0;
   color: $overlay-heading-font-color;
 
-  p {
-    margin: 1em 1em 0;
-  }
 
   p.button-details {
     span {
@@ -340,4 +341,44 @@ $parent-width: $parent-split * 0.2;
   display: block;
   text-align: center;
   margin: 0 !important;
+}
+
+.row {
+  width: 100%;
+}
+
+.row:after, .row:before {
+  display: table;
+  content: " ";
+  clear: both;
+}
+
+.col-md-6, .col-sm-12 {
+  position: relative;
+  min-height: 1px;
+}
+
+.image-map {
+  background: transparent;
+  width: 270px;
+  height: 134px;
+  border: none;
+}
+
+.col-md-6 {
+  margin-top: 10px;
+  width: 50%;
+  float: left;
+
+  dd {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #FFFFFF;
+  }
+}
+
+.second-col {
+  dt, dd {
+    padding-left: 25px;
+  }
 }
