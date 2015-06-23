@@ -75,8 +75,43 @@
             </dd>
           </div>
         </div>
-        <div class="row"><div class="long-paragraph" data-bind="text: $data.description"></div></div>
 
+        <div class="row">
+          <div class="col-sm-12 long-paragraph collapsed" data-bind="text: $data.description"></div>
+          <div class="description-toggle col-sm-12 text-center">
+            <i class="fa fa-chevron-down fa-sm"></i>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="first-col col-md-6 col-sm-12">
+            <dt>Processing Center</dt>
+            <dd data-bind="text: $data.processing_center"></dd>
+            <dt>Archive Center:</dt>
+            <dd data-bind="text: $data.archive_center"></dd>
+            <dt>Short Name:</dt>
+            <dd data-bind="text: $data.short_name"></dd>
+          </div>
+          <div class="second-col col-md-6 col-sm-12">
+            <dt>Contacts:</dt>
+            <dd data-bind="foreach: $data.contacts">
+              <p data-bind="text: name"></p>
+              <p data-bind="foreach: phones">
+                <span data-bind="text: $data"></span><br />
+              </p>
+              <p data-bind="text: email"></p>
+            </dd>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <dt>Science Keywords:</dt>
+            <dd data-bind="foreach: $data.science_keywords">
+              <p data-bind="text: $data"></p>
+            </dd>
+          </div>
+        </div>
       </div>
     </div>
   </div>

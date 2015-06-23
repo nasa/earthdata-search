@@ -70,7 +70,28 @@
 
 .long-paragraph {
   font-size: .8em;
-  height: 150px;
+  height: 142px;
   overflow: hidden;
   margin-top: 12px;
+}
+
+.expanded {
+  height: auto;
+}
+.text-center {
+  text-align: center;
+}
+
+.fa-sm {
+  font-size: 0.6em;
+}
+
+.description-toggle:hover {
+  background-color: #1f1f1f;
+}
+
+.description-toggle {
+  border-radius: 5px;
+  background-color: transparent;
+  background-color: #171717;
 }

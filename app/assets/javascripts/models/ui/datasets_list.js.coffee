@@ -3,7 +3,7 @@
 ns = @edsc.models.ui
 data = @edsc.models.data
 
-ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datasets, GranulesList=ns.GranulesList) ->
+ns.DatasetsList = do ($=jQuery, document, config = @edsc.config, DatasetsModel=data.Datasets, GranulesList=ns.GranulesList) ->
 
   class DatasetsList
     constructor: (@query, @datasets, @project) ->
@@ -119,5 +119,14 @@ ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datase
     state: (focused, selected) ->
       @_hasFocus(focused)
       @_hasSelected(selected)
+
+    $(document).on 'click', '.description-toggle', (e) =>
+      e.preventDefault()
+      $('.long-paragraph').toggleClass('expanded')
+      $('.description-toggle').find('i').toggleClass('fa-chevron-down')
+      $('.description-toggle').find('i').toggleClass('fa-chevron-up')
+
+    $(document).on 'mouseenter', '.description-toggle', (e) =>
+      $('.description-toggle').addClass('.active')
 
   exports = DatasetsList
