@@ -19,6 +19,9 @@
 
   .col-sm-12 {
     width: 100%;
+    dt {
+      margin-bottom: 10px;
+    }
   }
 
   .second-col {
@@ -43,7 +46,6 @@
     .second-col {
       dt, dd {
         padding-left: 40px;
-
       }
     }
 

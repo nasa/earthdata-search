@@ -101,26 +101,33 @@
               </p>
               <p data-bind="text: email"></p>
             </dd>
+            <!--ko foreach: $data.online_access_urls-->
+            <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data.URL}" target="_blank">Download Page</a></dt>
+            <!--/ko -->
           </div>
         </div>
 
         <div class="row">
           <div class="col-sm-12">
             <dt>Science Keywords:</dt>
+            <!--ko if: $data.science_keywords[0] == 'Not available' -->
+            <dd>Not Available</dd>
+            <!--/ko-->
+            <!--ko if: $data.science_keywords != 'Not available' -->
             <dd data-bind="foreach: $data.science_keywords">
               <div class="arrow-tag-group">
                 <ul>
-                  <!--ko if $data[0] != undefined-->
+                  <!--ko if: $data[0] != undefined-->
                   <li>
                     <div data-bind="text: $data[0]"></div>
                   </li>
                   <!--/ko-->
-                  <!--ko if $data[1] != undefined-->
+                  <!--ko if: $data[1] != undefined-->
                   <li>
                     <div data-bind="text: $data[1]"></div>
                   </li>
                   <!--/ko-->
-                  <!--ko if $data[2] != undefined-->
+                  <!--ko if: $data[2] != undefined-->
                   <li>
                     <div data-bind="text: $data[2]"></div>
                   </li>
@@ -128,6 +135,7 @@
                 </ul>
               </div>
             </dd>
+            <!--/ko-->
           </div>
         </div>
       </div>

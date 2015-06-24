@@ -97,7 +97,7 @@
       div:before {
         content: "";
         border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent;
+        border-bottom: 9px solid transparent;
         border-left: 10px solid #3B4856;
         position: absolute; left: 0; top: 0;
         background-color: #3B4856;
@@ -135,4 +135,8 @@
       border-left: 10px solid #4F5D6B;
     }
   }
+}
+
+.col-sm-12 dt {
+  margin-bottom: 3px;
 }
