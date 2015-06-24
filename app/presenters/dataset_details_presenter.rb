@@ -95,7 +95,7 @@ class DatasetDetailsPresenter < DetailsPresenter
 
   def science_keywords(keywords)
     if keywords
-      keywords.map{ |k| [k['CategoryKeyword'], k['TopicKeyword'], k['TermKeyword']] }.uniq
+      keywords.map{ |k| [k['CategoryKeyword'].split.map(&:capitalize!).join(' '), k['TopicKeyword'].split.map(&:capitalize!).join(' '), k['TermKeyword'].split.map(&:capitalize!).join(' ')] }.uniq
     else
       ['Not available']
     end
