@@ -33,13 +33,16 @@
 
 .long-paragraph {
   font-size: .8em;
-  height: 142px;
+  min-height: 20px;
+  height: auto;
+  max-height: 142px;
   overflow: hidden;
   margin-top: 12px;
 }
 
 .expanded {
   height: auto;
+  max-height: 3000px;
 }
 .text-center {
   text-align: center;
