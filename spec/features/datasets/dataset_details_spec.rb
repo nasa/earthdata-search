@@ -19,7 +19,7 @@ describe 'Dataset details', reset: false do
       expect(page).to have_content('Metadata Formats: Native | ATOM | ECHO10 | ISO19115 | DIF')
       expect(page).to have_content('Temporal Extent: 1999-12-18 to 2020-12-18')
       expect(page).to have_content('API Endpoints: CMR')
-      expect(page).to have_content('Science Keywords: arth Science Spectral/engineering Infrared Wavelengths Earth Science Spectral/engineering Visible Wavelengths')
+      expect(page).to have_content('Science Keywords: Earth Science Spectral/engineering Infrared Wavelengths Earth Science Spectral/engineering Visible Wavelengths')
     end
   end
 
