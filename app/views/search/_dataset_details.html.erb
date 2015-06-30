@@ -31,18 +31,18 @@
             <div id="image-map" class="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
           </div>
           <div class="second-col col-md-6 col-sm-12">
-              <dt>Spatial Coordinates</dt>
+              <dt>Spatial Coordinates:</dt>
               <dd>
                 <p><span data-bind="text: $data.spatial[0]"></span>
                   <span data-bind="text: $data.spatial.length > 1 ? ' ...' : ''"></span></p>
               </dd>
-              <dt>Temporal Extent</dt>
+              <dt>Temporal Extent:</dt>
               <dd data-bind="text: $data.temporal"></dd>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 col-sm-12">
-            <dt>Metadata Formats</dt>
+            <dt>Metadata Formats:</dt>
             <dd><a data-bind="attr: { href: $data.native_url }">Native</a>
               | <a data-bind="attr: { href: $data.atom_url }">ATOM</a>
               | <a data-bind="attr: { href: $data.echo10_url }">ECHO10</a>
@@ -53,7 +53,7 @@
               | <a data-bind="attr: { href: $data.dif_url }">DIF</a></dd>
           </div>
           <div class="second-col col-md-6 col-sm-12">
-            <dt>API Endpoints</dt>
+            <dt>API Endpoints:</dt>
             <dd>
             <!-- ko with: $root.ui.datasetsList.selected() -->
               <!-- ko if: has_granules -->
@@ -85,7 +85,7 @@
 
         <div class="row">
           <div class="first-col col-md-6 col-sm-12">
-            <dt>Processing Center</dt>
+            <dt>Processing Center:</dt>
             <dd data-bind="text: $data.processing_center"></dd>
             <dt>Archive Center:</dt>
             <dd data-bind="text: $data.archive_center"></dd>

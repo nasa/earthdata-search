@@ -44,7 +44,7 @@ describe DatasetDetailsPresenter do
     keywords = [{"CategoryKeyword"=>"EARTH SCIENCE", "TopicKeyword"=>"BIOSPHERE", "TermKeyword"=>"VEGETATION", "VariableLevel1Keyword"=>{"Value"=>"FORESTS"}}, {"CategoryKeyword"=>"EARTH SCIENCE", "TopicKeyword"=>"BIOSPHERE", "TermKeyword"=>"ECOLOGICAL DYNAMICS", "VariableLevel1Keyword"=>{"Value"=>"ECOSYSTEM FUNCTIONS"}}]
     @dataset.science_keywords = keywords
     presenter = DatasetDetailsPresenter.new(@dataset)
-    @dataset.science_keywords.should eq(["EARTH SCIENCE >> BIOSPHERE >> VEGETATION","EARTH SCIENCE >> BIOSPHERE >> ECOLOGICAL DYNAMICS"])
+    @dataset.science_keywords.should eq([["Earth Science", "Biosphere", "Vegetation"], ["Earth Science", "Biosphere", "Ecological Dynamics"]])
 
   end
 

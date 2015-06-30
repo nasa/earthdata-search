@@ -14,7 +14,6 @@ describe 'Dataset API Endpoints', reset: false do
       wait_for_xhr
       click_link "View dataset details"
       wait_for_xhr
-      click_link 'API Endpoints'
     end
 
     it 'provides a link to the CMR API for the datasets granules' do
@@ -29,11 +28,10 @@ describe 'Dataset API Endpoints', reset: false do
       wait_for_xhr
       click_link "View dataset details"
       wait_for_xhr
-      click_link 'API Endpoints'
     end
 
     it 'provides the path to the GIBS endpoint' do
-      expect(dataset_details).to have_content("http://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Terra_Aerosol/default/{Time}/EPSG4326_2km/{ZoomLevel}/{TileRow}/{TileCol}.png")
+      expect(dataset_details).to have_css('a[href="http://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Terra_Aerosol/default/{Time}/EPSG4326_2km/{ZoomLevel}/{TileRow}/{TileCol}.png"]')
     end
   end
 
@@ -44,7 +42,6 @@ describe 'Dataset API Endpoints', reset: false do
       wait_for_xhr
       click_link "View dataset details"
       wait_for_xhr
-      click_link 'API Endpoints'
     end
 
     it 'provides a link to the OPeNDAP endpoint' do
@@ -59,11 +56,10 @@ describe 'Dataset API Endpoints', reset: false do
       wait_for_xhr
       click_link "View dataset details"
       wait_for_xhr
-      click_link 'API Endpoints'
     end
 
     it 'provides the path to the MODAPS WCS endpoint' do
-      expect(dataset_details).to have_content("GetCapabilities: http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/MOD04_L2/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities")
+      expect(dataset_details).to have_css('a[href="http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/MOD04_L2/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities"]')
     end
   end
 
@@ -74,11 +70,10 @@ describe 'Dataset API Endpoints', reset: false do
       wait_for_xhr
       click_link "View dataset details"
       wait_for_xhr
-      click_link 'API Endpoints'
     end
 
     it 'does not provide a link to the CMR API for granules' do
-      expect(dataset_details).to have_no_content 'CMR Granules'
+      expect(dataset_details).to have_no_content 'CMR'
     end
 
     it 'does not provide a link to the GIBS endpoint' do
@@ -90,7 +85,7 @@ describe 'Dataset API Endpoints', reset: false do
     end
 
     it 'does not provide a link to the MODAPS WCS endpoint' do
-      expect(dataset_details).to have_no_content 'MODAPS Web Coverage Service (WCS)'
+      expect(dataset_details).to have_no_content 'MODAPS WCS'
     end
   end
 end
