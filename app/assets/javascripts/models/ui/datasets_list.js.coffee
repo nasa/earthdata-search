@@ -126,7 +126,4 @@ ns.DatasetsList = do ($=jQuery, document, config = @edsc.config, DatasetsModel=d
       $('.description-toggle').find('i').toggleClass('fa-chevron-down')
       $('.description-toggle').find('i').toggleClass('fa-chevron-up')
 
-    $(document).on 'mouseenter', '.description-toggle', (e) =>
-      $('.description-toggle').addClass('.active')
-
   exports = DatasetsList

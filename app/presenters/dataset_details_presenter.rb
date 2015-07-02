@@ -97,7 +97,7 @@ class DatasetDetailsPresenter < DetailsPresenter
     if keywords
       keywords.map{ |k| [k['CategoryKeyword'].split.map(&:capitalize!).join(' '), k['TopicKeyword'].split.map(&:capitalize!).join(' '), k['TermKeyword'].split.map(&:capitalize!).join(' ')] }.uniq
     else
-      ['Not available']
+      []
     end
   end
 end

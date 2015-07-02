@@ -2,8 +2,7 @@ class DetailsPresenter
 
   def temporal(hash)
     if hash && hash['RangeDateTime']
-      "#{hash['RangeDateTime']['BeginningDateTime'][/(.*)T.*/, 1]} to #{hash['RangeDateTime']['EndingDateTime'].nil? ? Time.now.strftime('%Y-%m-%d') : hash['RangeDateTime']['EndingDateTime'][/(.*)T.*/, 1]}"
-      # "#{hash['RangeDateTime']['BeginningDateTime']} to #{hash['RangeDateTime']['EndingDateTime'].nil? ? 'Present' : hash['RangeDateTime']['EndingDateTime']}"
+      "#{hash['RangeDateTime']['BeginningDateTime']} to #{hash['RangeDateTime']['EndingDateTime']}"
     else
       'Not available'
     end

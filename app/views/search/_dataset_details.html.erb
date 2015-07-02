@@ -37,7 +37,7 @@
                   <span data-bind="text: $data.spatial.length > 1 ? ' ...' : ''"></span></p>
               </dd>
               <dt>Temporal Extent:</dt>
-              <dd data-bind="text: $data.temporal"></dd>
+              <dd data-bind="text: $root.ui.datasetsList.selected().timeRange"></dd>
           </div>
         </div>
         <div class="row">
@@ -57,19 +57,19 @@
             <dd>
             <!-- ko with: $root.ui.datasetsList.selected() -->
               <!-- ko if: has_granules -->
-                <a class="navy-label" data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a>
+                <a class="endpoint-label" data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a>
               <!-- /ko -->
 
               <!-- ko foreach: gibs() -->
-                <a class="navy-label" data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a>
+                <a class="endpoint-label" data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a>
               <!-- /ko -->
 
               <!-- ko if: opendap() -->
-                <a class="navy-label" data-bind="attr: {href: opendap()}" target="_blank">OPeNDAP</a>
+                <a class="endpoint-label" data-bind="attr: {href: opendap()}" target="_blank">OPeNDAP</a>
               <!-- /ko -->
 
               <!-- ko if: modaps() -->
-              <a class="navy-label" data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a>
+              <a class="endpoint-label" data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a>
               <!-- /ko -->
             <!-- /ko -->
             </dd>
@@ -78,8 +78,8 @@
 
         <div class="row">
           <div class="col-sm-12 long-paragraph collapsed" data-bind="text: $data.description"></div>
-          <div class="description-toggle col-sm-12 text-center">
-            <i class="fa fa-chevron-down fa-sm"></i>
+          <div class="description-toggle col-sm-12">
+            <i class="fa fa-chevron-down"></i>
           </div>
         </div>
 
@@ -110,27 +110,15 @@
         <div class="row">
           <div class="col-sm-12">
             <dt>Science Keywords:</dt>
-            <!--ko if: $data.science_keywords[0] == 'Not available' -->
+            <!--ko if: $data.science_keywords.length == 0 -->
             <dd>Not Available</dd>
             <!--/ko-->
-            <!--ko if: $data.science_keywords != 'Not available' -->
+            <!--ko if: $data.science_keywords.length > 0 -->
             <dd data-bind="foreach: $data.science_keywords">
               <div class="arrow-tag-group">
-                <ul>
-                  <!--ko if: $data[0] != undefined-->
-                  <li>
-                    <div data-bind="text: $data[0]"></div>
-                  </li>
-                  <!--/ko-->
-                  <!--ko if: $data[1] != undefined-->
-                  <li>
-                    <div data-bind="text: $data[1]"></div>
-                  </li>
-                  <!--/ko-->
-                  <!--ko if: $data[2] != undefined-->
-                  <li>
-                    <div data-bind="text: $data[2]"></div>
-                  </li>
+                <ul class="arrow-tag-group-list">
+                  <!--ko foreach: $data-->
+                  <li class="arrow-tag-group-item" data-bind="text: $data"></li>
                   <!--/ko-->
                 </ul>
               </div>

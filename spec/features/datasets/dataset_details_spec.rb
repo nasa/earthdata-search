@@ -17,9 +17,9 @@ describe 'Dataset details', reset: false do
       expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (phone) 605-594-6963 (fax) lpdaac@usgs.gov')
       expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
       expect(page).to have_content('Metadata Formats: Native | ATOM | ECHO10 | ISO19115 | DIF')
-      expect(page).to have_content('Temporal Extent: 1999-12-18 to 2020-12-18')
+      expect(page).to have_content('Temporal Extent: 1999-12-18 ongoing')
       expect(page).to have_content('API Endpoints: CMR')
-      expect(page).to have_content('Science Keywords: Earth Science Spectral/engineering Infrared Wavelengths Earth Science Spectral/engineering Visible Wavelengths')
+      expect(page).to have_content('Science Keywords: Earth ScienceSpectral/engineeringInfrared Wavelengths Earth ScienceSpectral/engineeringVisible Wavelengths')
     end
   end
 

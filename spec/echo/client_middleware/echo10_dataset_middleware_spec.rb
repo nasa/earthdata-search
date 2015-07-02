@@ -119,7 +119,7 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "processing_level_id" => nil,
           "orderable" => nil,
           "visible" => nil,
-          "temporal" => "1984-12-25 to 1994-12-25",
+          "temporal" => "1984-12-25T00:00:00.000Z to 1994-12-25T00:00:00.000Z",
           "contacts" => [
             {
               "name" => "PLEASE CONTACT ORNL DAAC User Services",
