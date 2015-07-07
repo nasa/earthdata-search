@@ -17,7 +17,7 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
 
     getPolygons: ->
       if !@_polygons? && @polygons?
-        @_polygons = (@polygons.map(parseSpatial) for polygon in @polygons)
+        @_polygons = @polygons.map(parseSpatial)
       @_polygons
 
     getLines: ->
