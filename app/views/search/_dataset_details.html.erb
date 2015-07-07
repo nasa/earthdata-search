@@ -33,8 +33,8 @@
           <div class="second-col col-md-6 col-sm-12">
               <dt>Spatial Coordinates:</dt>
               <dd>
-                <p><span data-bind="text: $data.spatial[0]"></span>
-                  <span data-bind="text: $data.spatial.length > 1 ? ' ...' : ''"></span></p>
+                <span data-bind="text: $data.spatial[0]"></span>
+                <span data-bind="text: $data.spatial.length > 1 ? ' ...' : ''"></span>
               </dd>
               <dt>Temporal Extent:</dt>
               <dd data-bind="text: $root.ui.datasetsList.selected().timeRange"></dd>
@@ -97,11 +97,11 @@
           <div class="second-col col-md-6 col-sm-12">
             <dt>Contacts:</dt>
             <dd data-bind="foreach: $data.contacts">
-              <p data-bind="text: name"></p>
-              <p data-bind="foreach: phones">
+              <div data-bind="text: name"></div>
+              <div data-bind="foreach: phones">
                 <span data-bind="text: $data"></span><br />
-              </p>
-              <p data-bind="text: email"></p>
+              </div>
+              <div data-bind="text: email"></div>
             </dd>
             <!--ko foreach: $data.online_access_urls-->
             <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data.URL}" target="_blank">Download Page</a></dt>
