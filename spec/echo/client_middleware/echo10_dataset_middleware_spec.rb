@@ -131,8 +131,8 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
             }
           ],
           "science_keywords" => [
-            "EARTH SCIENCE >> HYDROSPHERE >> SURFACE WATER",
-            "EARTH SCIENCE >> HYDROSPHERE >> SURFACEWATER"
+              ["Earth Science", "Hydrosphere", "Surface Water"],
+            ["Earth Science", "Hydrosphere", "Surfacewater"]
           ],
           "online_access_urls" => [
             {

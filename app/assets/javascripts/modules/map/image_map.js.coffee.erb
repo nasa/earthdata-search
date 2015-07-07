@@ -1,0 +1,42 @@
+ns = @edsc.map
+
+ns.ImageMap = do (window, L, page=@edsc.page) ->
+
+  ScaledLonLatProjection = (scale) ->
+    project: (latlng) ->
+      new L.Point(latlng.lng * scale, latlng.lat * scale)
+    unproject: (point) ->
+      new L.LatLng(point.y / scale, point.x / scale);
+    bounds: L.bounds([-180 * scale, -90 * scale], [180 * scale, 90 * scale])
+
+  SimpleScaledCrs = (scale) ->
+    L.extend({}, L.CRS.Simple, projection: ScaledLonLatProjection(scale))
+
+
+  class ImageMap
+
+    loadImageMap: ->
+      @map = map = L.map 'image-map',
+        minZoom: 0
+        maxZoom: 0
+        zoom: 0
+        center: [0, 0]
+        crs: SimpleScaledCrs(.75)
+        zoomControl: false
+        attributionControl: false
+      # Disable drag and zoom handlers.
+      map.dragging.disable()
+      map.touchZoom.disable()
+      map.doubleClickZoom.disable()
+      map.scrollWheelZoom.disable()
+      # Disable tap handler, if present.
+      map.tap.disable() if (map.tap)
+
+      url = window.location.origin + '<%= image_path('plate_carree_earth_scaled.png') %>'
+      L.imageOverlay(url, [[-90, -180], [90, 180]]).addTo(map)
+
+      selectedDataset = page.ui.datasetsList.selected()
+      selectedDataset.buildLayer(color: "#54F7A3", fillOpacity: 0.4, weight: 1).addTo(map)
+      map
+
+  exports = ImageMap

@@ -3,7 +3,7 @@
 ns = @edsc.models.ui
 data = @edsc.models.data
 
-ns.DatasetsList = do ($=jQuery, config = @edsc.config, DatasetsModel=data.Datasets, GranulesList=ns.GranulesList) ->
+ns.DatasetsList = do ($=jQuery, document, config = @edsc.config, DatasetsModel=data.Datasets, GranulesList=ns.GranulesList) ->
 
   class DatasetsList
     constructor: (@query, @datasets, @project) ->

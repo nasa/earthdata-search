@@ -10,124 +10,127 @@
   <header >
     <h2 data-bind="ifnot: $root.ui.datasetsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
     <!-- ko if: $root.ui.datasetsList.selected().detailsLoaded -->
-    <h2 data-bind="text: $root.ui.datasetsList.selected().dataset_id"></h2>
+      <h4 data-bind="with: $root.ui.datasetsList.selected()"><!-- ko text: dataset_id --><!-- /ko -->
+        <!-- ko if: details().version_id -->
+          <small class="version-label"> VERSION <!-- ko text: details().version_id --><!-- /ko --></small>
+        <!-- /ko -->
+      </h4>
     <!-- /ko -->
   </header>
-  <div class="master-overlay-info">
-    <p class="panel-list-meta">
-    <% if Rails.configuration.feedback_url.present? %>
-      <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Dataset Details', $root.ui.datasetsList.selected().id)" class="button feedback-button" title="Leave metadata feedback">
-        <i class="fa fa-exclamation-circle"></i>
-        Report a metadata problem
-      </a>
-    <% end %>
-    </p>
-  </div>
+
   <!-- /ko -->
   <!-- ko if: $root.ui.datasetsList.selected() && $root.ui.datasetsList.selected().detailsLoaded -->
   <!-- ko with: $root.ui.datasetsList.selected().details -->
-  <ul id="dataset-details-nav" class="nav nav-tabs">
-    <li class="active" title="Dataset information"><a href="#dataset-information" data-toggle="tab">Information</a></li>
-    <li><a href="#dataset-metadata" data-toggle="tab" title="Dataset metadata">Metadata</a></li>
-    <li><a href="#dataset-api" data-toggle="tab" title="API endpoint details">API Endpoints</a></li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active" id="dataset-information">
-      <dl class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
-        <!-- ko if: $data.online_access_urls.length > 0 -->
-        <dt>Download Page:</dt>
-        <dd data-bind="foreach: $data.online_access_urls">
-          <p><a data-bind="attr: {href: URL}, text: description" target="_blank"></a></p>
-        </dd>
-        <!-- /ko -->
-        <dt>Description:</dt>
-        <dd data-bind="text: $data.description"></dd>
-        <dt>Archive Center:</dt>
-        <dd data-bind="text: $data.archive_center"></dd>
-        <dt>Processing Center:</dt>
-        <dd data-bind="text: $data.processing_center"></dd>
-        <dt>Short Name:</dt>
-        <dd data-bind="text: $data.short_name"></dd>
-        <dt>Version:</dt>
-        <dd data-bind="text: $data.version_id"></dd>
-        <dt>Contacts:</dt>
-        <dd data-bind="foreach: $data.contacts">
-          <p data-bind="text: name"></p>
-           <p data-bind="foreach: phones">
-            <span data-bind="text: $data"></span><br />
-          </p>
-          <p data-bind="text: email"></p>
-        </dd>
-        <dt>Spatial Extent:</dt>
-        <dd data-bind="foreach: $data.spatial">
-          <p data-bind="text: $data"></p>
-        </dd>
-        <dt>Temporal Extent:</dt>
-        <dd data-bind="with: $data.temporal">
-          <p data-bind="text: $data"></p>
-        </dd>
-        <dt>Science Keywords:</dt>
-        <dd data-bind="foreach: $data.science_keywords">
-          <p data-bind="text: $data"></p>
-        </dd>
-        <dt>Online Resources:</dt>
-        <!-- ko foreach: $data.online_resources -->
-        <dd><a data-bind="attr: {href: URL}, text: Description" target="_blank"></a></li></dd>
-        <!-- /ko -->
-        <dt>Browse Products:</dt>
-        <dd data-bind="foreach: $data.browse_images">
-          <a data-bind="attr: {href: URL}" target="_blank">
-            <img data-bind="attr: {src: URL}" style="height: 150px;"/>
-          </a>
-        </dd>
-        <dt>GCMD DIF Record:</dt>
-        <dd data-bind="with: $data.associated_difs">
-          <a data-bind="attr: { href: url }, text: id" target="_blank"></a>
-        </dd>
-      </dl>
-    </div>
-    <div class="tab-pane" id="dataset-metadata">
-      <dl class="master-overlay-content">
-        <dt>Download Metadata:</dt>
-        <dd><a data-bind="attr: { href: $data.native_url }">Native</a></dd>
-        <dd><a data-bind="attr: { href: $data.atom_url }">ATOM</a></dd>
-        <dd><a data-bind="attr: { href: $data.echo10_url }">ECHO 10</a></dd>
-        <dd><a data-bind="attr: { href: $data.iso19115_url }">ISO 19115</a></dd>
-        <dd data-bind="if: $data.smap_iso_url"><a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a></dd>
-        <dd><a data-bind="attr: { href: $data.dif_url }">DIF</a></dd>
-      </dl>
-    </div>
-    <div class="tab-pane" id="dataset-api">
-      <dl class="master-overlay-content">
-        <!-- ko with: $root.ui.datasetsList.selected() -->
-        <!-- ko if: has_granules -->
-        <dt>CMR</dt>
-        <dd><a data-bind="attr: { href: echoGranulesUrl }, text: echoGranulesUrl" target="_blank">Granules</a></dd>
-        <dd><a href="https://cmr.earthdata.nasa.gov/search/site/api_docs.html" target="_blank">CMR Documentation</a></dd>
-        <!-- /ko -->
-        <!-- ko if: gibs() -->
-        <dt>GIBS</dt>
-        <!-- ko foreach: gibs() -->
-        <dd>
-          <p class="gibs-endpoint" data-bind="text: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'"></p>
-        </dd>
-        <!-- /ko -->
-        <dd><a href="https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers#GIBSAPIforDevelopers-GenericXYZTileAccess" target="_blank">GIBS Documentation</a></dd>
-        <!-- /ko -->
-        <!-- ko if: opendap() -->
-        <dt>OPeNDAP</dt>
-        <dd><a data-bind="attr: { href: opendap() }, text: opendap" target="_blank">OPeNDAP</a></dd>
-        <dd><a href="http://acdisc.gsfc.nasa.gov/opendap/docs/" target="_blank">OPeNDAP Documentation</a></dd>
-        <!-- /ko -->
 
-        <!-- ko if: modaps() -->
-        <dt>MODAPS Web Coverage Service (WCS)</dt>
-        <dd>GetCapabilities: <a data-bind="attr: { href: modaps().get_capabilities }, text: modaps().get_capabilities" target="_blank"></a></dd>
-        <dd><a href="http://modwebsrv.modaps.eosdis.nasa.gov/wcs/" target="_blank">MODAPS WCS Documentation</a></dd>
-        <!-- /ko -->
+  <div class="master-overlay-info">
+    <div class="tab-pane" id="dataset-information">
 
-        <!-- /ko -->
-      </dl>
+      <div class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
+        <div class="row">
+          <div class="first-col col-md-6 col-sm-12">
+            <div id="image-map" class="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
+          </div>
+          <div class="second-col col-md-6 col-sm-12">
+              <dt>Spatial Coordinates:</dt>
+              <dd>
+                <span data-bind="text: $data.spatial[0]"></span>
+                <span data-bind="text: $data.spatial.length > 1 ? ' ...' : ''"></span>
+              </dd>
+              <dt>Temporal Extent:</dt>
+              <dd data-bind="text: $root.ui.datasetsList.selected().timeRange"></dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <dt>Metadata Formats:</dt>
+            <dd><a data-bind="attr: { href: $data.native_url }">Native</a>
+              | <a data-bind="attr: { href: $data.atom_url }">ATOM</a>
+              | <a data-bind="attr: { href: $data.echo10_url }">ECHO10</a>
+              | <a data-bind="attr: { href: $data.iso19115_url }">ISO19115</a>
+              <!-- ko if: $data.smap_iso_url -->
+                | <a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a>
+              <!-- /ko -->
+              | <a data-bind="attr: { href: $data.dif_url }">DIF</a></dd>
+          </div>
+          <div class="second-col col-md-6 col-sm-12">
+            <dt>API Endpoints:</dt>
+            <dd>
+            <!-- ko with: $root.ui.datasetsList.selected() -->
+              <!-- ko if: has_granules -->
+                <a class="endpoint-label" data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a>
+              <!-- /ko -->
+
+              <!-- ko foreach: gibs() -->
+                <a class="endpoint-label" data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a>
+              <!-- /ko -->
+
+              <!-- ko if: opendap() -->
+                <a class="endpoint-label" data-bind="attr: {href: opendap()}" target="_blank">OPeNDAP</a>
+              <!-- /ko -->
+
+              <!-- ko if: modaps() -->
+              <a class="endpoint-label" data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a>
+              <!-- /ko -->
+            <!-- /ko -->
+            </dd>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 long-paragraph collapsed" data-bind="text: $data.description"></div>
+          <!--ko if: $root.ui.datasetsList.selected().detailsLoaded -->
+          <div class="description-toggle col-sm-12">
+            <i class="fa fa-chevron-down"></i>
+          </div>
+          <!--/ko-->
+        </div>
+
+        <div class="row">
+          <div class="first-col col-md-6 col-sm-12">
+            <dt>Processing Center:</dt>
+            <dd data-bind="text: $data.processing_center"></dd>
+            <dt>Archive Center:</dt>
+            <dd data-bind="text: $data.archive_center"></dd>
+            <dt>Short Name:</dt>
+            <dd data-bind="text: $data.short_name"></dd>
+          </div>
+          <div class="second-col col-md-6 col-sm-12">
+            <dt>Contacts:</dt>
+            <dd data-bind="foreach: $data.contacts">
+              <div class="contact-content">
+                <div data-bind="text: name"></div>
+                <div data-bind="foreach: phones">
+                  <span data-bind="text: $data"></span><br />
+                </div>
+                <div data-bind="text: email"></div>
+              </div>
+            </dd>
+            <!--ko foreach: $data.online_access_urls-->
+            <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data.URL}" target="_blank">Download Page</a></dt>
+            <!--/ko -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <dt>Science Keywords:</dt>
+            <!--ko if: $data.science_keywords.length == 0 -->
+            <dd>Not Available</dd>
+            <!--/ko-->
+            <!--ko if: $data.science_keywords.length > 0 -->
+            <dd data-bind="foreach: $data.science_keywords">
+              <div class="arrow-tag-group">
+                <ul class="arrow-tag-group-list">
+                  <!--ko foreach: $data-->
+                  <li class="arrow-tag-group-item" data-bind="text: $data"></li>
+                  <!--/ko-->
+                </ul>
+              </div>
+            </dd>
+            <!--/ko-->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <!-- /ko -->

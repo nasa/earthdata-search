@@ -19,3 +19,4 @@
 //= require modules/map/granule_visualizations_layer
 //= require modules/map/mouse_events_layer
 //= require modules/map/map
+//= require modules/map/image_map

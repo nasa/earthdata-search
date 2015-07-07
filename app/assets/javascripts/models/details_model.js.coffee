@@ -3,6 +3,8 @@ ns = @edsc.models
 ns.DetailsModel = do (ko
                       KnockoutModel = @edsc.models.KnockoutModel
                       ajax = @edsc.util.xhr.ajax
+                      $=jQuery
+                      document
                       ) ->
   class DetailsModel extends KnockoutModel
 
@@ -26,5 +28,8 @@ ns.DetailsModel = do (ko
             details.summaryData = this if type == 'dataset'
             @details(details)
             @detailsLoaded(true)
+            desc = $('.long-paragraph')
+            if desc.height() < 142 # refer to dataset_details.css.scss .long-paragraph
+              $('.description-toggle').hide()
 
   exports = DetailsModel
