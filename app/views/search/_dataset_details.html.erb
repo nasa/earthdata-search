@@ -78,9 +78,11 @@
 
         <div class="row">
           <div class="col-sm-12 long-paragraph collapsed" data-bind="text: $data.description"></div>
+          <!--ko if: $root.ui.datasetsList.selected().detailsLoaded -->
           <div class="description-toggle col-sm-12">
             <i class="fa fa-chevron-down"></i>
           </div>
+          <!--/ko-->
         </div>
 
         <div class="row">

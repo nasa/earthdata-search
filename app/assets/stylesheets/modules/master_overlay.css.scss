@@ -146,6 +146,10 @@
     height: 36px;
   }
 
+  p {
+    margin: 1em 1em 0;
+  }
+
   .button {
     @include dark-button;
     float: right;
