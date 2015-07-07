@@ -120,10 +120,4 @@ ns.DatasetsList = do ($=jQuery, document, config = @edsc.config, DatasetsModel=d
       @_hasFocus(focused)
       @_hasSelected(selected)
 
-    $(document).on 'click', '.description-toggle', (e) =>
-      e.preventDefault()
-      $('.long-paragraph').toggleClass('expanded')
-      $('.description-toggle').find('i').toggleClass('fa-chevron-down')
-      $('.description-toggle').find('i').toggleClass('fa-chevron-up')
-
   exports = DatasetsList

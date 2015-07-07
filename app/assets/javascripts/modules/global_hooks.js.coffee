@@ -51,6 +51,12 @@ do (document
   $(document).on 'dataaccessevent', (e, dataset, options=null) ->
     metrics.createDataAccessEvent(dataset, options)
 
+  $(document).on 'click', '.description-toggle', (e) ->
+    e.preventDefault()
+    $('.long-paragraph').toggleClass('expanded')
+    $('.description-toggle').find('i').toggleClass('fa-chevron-down')
+    $('.description-toggle').find('i').toggleClass('fa-chevron-up')
+
   $(document).ready ->
     map = $('#map').data('map')?.map
     if map?
