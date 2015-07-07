@@ -1,3 +1,4 @@
+//= require util/compat
 //= require util/deparam
 //= require util/string
 //= require util/array
