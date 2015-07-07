@@ -109,8 +109,12 @@ ns.GranuleLayer = do (L
       intersects = @_intersects
 
       for polygon in granule.getPolygons() ? []
-        interiors = dividePolygon(polygon[0]).interiors
+        interiors = dividePolygon(polygon).interiors
         @_addIntersections(result, interiors, tileBounds, 'poly', 'geodetic')
+        # Workaround for EDSC-657
+        # Avoid spamming the map with a large number of barely intersecting orbits by only
+        # drawing the first orbit. Hovering will continue to draw the full orbit.
+        break if granule.orbit
 
       @_addIntersections(result, granule.getRectangles(), tileBounds, 'poly', 'cartesian')
       @_addIntersections(result, granule.getLines(), tileBounds, 'line', 'geodetic')
@@ -201,6 +205,7 @@ ns.GranuleLayer = do (L
             path.url = url
             path.granule = granule
             path.poly.reverse() if path.poly? && isClockwise(path.poly)
+
         paths = paths.concat(overlaps)
 
       # Marks the tile as drawn.  As a callback to _drawClippedPaths, the user
