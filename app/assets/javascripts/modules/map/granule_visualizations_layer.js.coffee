@@ -44,12 +44,22 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.exte
           layer = new GranuleLayer(dataset, color, options)
           map.addLayer(layer)
 
+          if dataset.boxes?.length > 0
+            [lat1, lon2, lat2, lon1] = dataset.boxes[0].split(' ').map((item) ->
+              parseFloat item)
+            if lat2 - lat1 < 10 && lon2 - lon1 < 10
+              marker = L.featureGroup().addLayer(L.marker([(lat2 + lat1) / 2, (lon2 + lon1) / 2]))
+              map.addLayer(marker)
+              newDatasetIdsToLayers[id + '-marker'] = marker
+
         layer.setZIndex(z)
         newDatasetIdsToLayers[id] = layer
 
       for own id, layer of datasetIdsToLayers
         unless newDatasetIdsToLayers[id]?
           map.removeLayer(layer)
+          if newDatasetIdsToLayers[id+'-marker']?
+            map.removeLayer(newDatasetIdsToLayers[id+'-marker'])
 
       @_datasetIdsToLayers = newDatasetIdsToLayers
 
