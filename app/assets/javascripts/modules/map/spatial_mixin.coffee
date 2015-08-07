@@ -47,7 +47,20 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
     buildLayer: (options) ->
       layer = L.featureGroup()
       layer.addLayer(L.circleMarker(point, options)) for point in @getPoints() ? []
-      layer.addLayer(L.sphericalPolygon(poly, options)) for poly in @getPolygons() ? []
+      for poly in @getPolygons() ? []
+        layer.addLayer(L.sphericalPolygon(poly, options))
+        lat1 = 90
+        lat2 = -90
+        lng1 = -180
+        lng2 = 180
+        for point in poly
+          lat1 = point.lat if point.lat < lat1
+          lat2 = point.lat if point.lat > lat2
+          lng1 = point.lng if point.lng > lng1
+          lng2 = point.lng if point.lng < lng2
+        if lat2 - lat1 < .5 && lng1 - lng2 < .5
+          layer.addLayer(L.marker([(lat1 + lat2) / 2, (lng2 + lng1) / 2]))
+
       layer.addLayer(L.polyline(line, options)) for line in @getLines() ? []
 
       for rect in @getRectangles() ? []
@@ -55,6 +68,9 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
         shape = L.polygon(rect, options)
         shape._interpolationFn = 'cartesian'
         layer.addLayer(shape)
+        if rect[2].lat - rect[0].lat < .5 && rect[2].lng - rect[0].lng < .5
+          layer.addLayer(L.marker([(rect[0].lat + rect[2].lat) / 2, (rect[2].lng + rect[0].lng) / 2]))
+
       layer
 
 

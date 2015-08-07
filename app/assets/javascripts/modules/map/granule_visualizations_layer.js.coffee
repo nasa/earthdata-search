@@ -47,7 +47,7 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.exte
           if dataset.boxes?.length > 0
             [lat1, lon2, lat2, lon1] = dataset.boxes[0].split(' ').map((item) ->
               parseFloat item)
-            if lat2 - lat1 < 10 && lon2 - lon1 < 10
+            if lat2 - lat1 < .5 && lon2 - lon1 < .5
               marker = L.featureGroup().addLayer(L.marker([(lat2 + lat1) / 2, (lon2 + lon1) / 2]))
               map.addLayer(marker)
               newDatasetIdsToLayers[id + '-marker'] = marker
