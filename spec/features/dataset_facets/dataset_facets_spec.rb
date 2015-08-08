@@ -49,7 +49,7 @@ describe "Dataset Facets", reset: false do
 
     it "shows the first Topic Keyword facet" do
       find("h3.facet-title", text: 'Topic Keyword').click
-      expect(page).to have_content("Topic Keyword AGRICULTURE")
+      expect(page).to have_content("Topic Keyword BIOSPHERE")
       find("h3.facet-title", text: 'Topic Keyword').click
     end
 
