@@ -45,10 +45,13 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.exte
           map.addLayer(layer)
 
           if dataset.boxes?.length > 0
-            [lat1, lon2, lat2, lon1] = dataset.boxes[0].split(' ').map((item) ->
+            [lat1, lon1, lat2, lon2] = dataset.boxes[0].split(' ').map((item) ->
               parseFloat item)
-            if lat2 - lat1 < .5 && lon2 - lon1 < .5
-              marker = L.featureGroup().addLayer(L.marker([(lat2 + lat1) / 2, (lon2 + lon1) / 2]))
+            southWest = L.latLng(lat1, lon1)
+            northEast = L.latLng(lat2, lon2)
+            bounds = L.latLngBounds(southWest, northEast);
+            if bounds.getNorth() - bounds.getSouth() < .5 && bounds.getWest() - bounds.getEast() < .5
+              marker = L.featureGroup().addLayer(L.marker(bounds.getCenter()))
               map.addLayer(marker)
               newDatasetIdsToLayers[id + '-marker'] = marker
 
