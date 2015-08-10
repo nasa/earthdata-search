@@ -47,7 +47,11 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
     buildLayer: (options) ->
       layer = L.featureGroup()
       layer.addLayer(L.circleMarker(point, options)) for point in @getPoints() ? []
-      layer.addLayer(L.sphericalPolygon(poly, options)) for poly in @getPolygons() ? []
+      for poly in @getPolygons() ? []
+        bounds = L.latLngBounds(poly)
+        if bounds.getNorth() - bounds.getSouth() < .5 && bounds.getWest() - bounds.getEast() < .5
+          layer.addLayer(L.marker(bounds.getCenter()))
+
       layer.addLayer(L.polyline(line, options)) for line in @getLines() ? []
 
       for rect in @getRectangles() ? []
@@ -55,6 +59,10 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
         shape = L.polygon(rect, options)
         shape._interpolationFn = 'cartesian'
         layer.addLayer(shape)
+        bounds = L.latLngBounds(rect)
+        if bounds.getNorth() - bounds.getSouth() < .5 && bounds.getWest() - bounds.getEast() < .5
+          layer.addLayer(L.marker(bounds.getCenter()))
+
       layer
 
 
