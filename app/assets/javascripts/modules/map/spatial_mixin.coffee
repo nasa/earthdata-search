@@ -48,6 +48,7 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
       layer = L.featureGroup()
       layer.addLayer(L.circleMarker(point, options)) for point in @getPoints() ? []
       for poly in @getPolygons() ? []
+        layer.addLayer(L.sphericalPolygon(poly, options))
         bounds = L.latLngBounds(poly)
         if bounds.getNorth() - bounds.getSouth() < .5 && bounds.getWest() - bounds.getEast() < .5
           layer.addLayer(L.marker(bounds.getCenter()))
