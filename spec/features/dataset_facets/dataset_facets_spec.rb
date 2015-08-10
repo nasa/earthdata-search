@@ -49,7 +49,7 @@ describe "Dataset Facets", reset: false do
 
     it "shows the first Topic Keyword facet" do
       find("h3.facet-title", text: 'Topic Keyword').click
-      expect(page).to have_content("Topic Keyword AGRICULTURE")
+      expect(page).to have_content("Topic Keyword BIOSPHERE")
       find("h3.facet-title", text: 'Topic Keyword').click
     end
 
@@ -292,6 +292,36 @@ describe "Dataset Facets", reset: false do
 
     it "does displays the selected entry" do
       expect(page).to have_content("ANIMALS/VERTEBRATES")
+    end
+  end
+
+  context "when applying facets containing trailing whitespace" do
+    before :all do
+      find("h3.facet-title", text: 'Platform').click
+      find(".facets-item", text: "AQUARIUS_SAC-D ").click
+      wait_for_xhr
+    end
+
+    after :all do
+      reset_search
+      find("h3.facet-title", text: 'Platform').click
+    end
+
+    it "displays correct count on dataset list pane" do
+      facet_count = 0
+      dataset_count = -1
+
+      # get count from facet list
+      within '#master-overlay-parent' do
+        facet_count = find('h3', text: 'Platform').parent.parent.find('p.facets-item.selected').all('span')[1].text
+      end
+
+      # get count from dataset list pane
+      within '#dataset-results' do
+        dataset_count = find('header').find('h2').find('strong').text
+      end
+
+      expect(facet_count).to eq(dataset_count)
     end
   end
 end
