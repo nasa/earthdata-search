@@ -4,3 +4,12 @@
 		font-size: 1em;
 	}
 }
+
+.leaflet-control-layers-toggle-demo {
+  background-image: image-url("leaflet-0.7/layers.png");
+  background-size: 16px;
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
