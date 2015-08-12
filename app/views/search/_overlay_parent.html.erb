@@ -51,7 +51,8 @@
     <!-- /ko -->
     <!-- ko if: datasets.facets.isRelevant() -->
     <!-- ko foreach: datasets.facets.results -->
-    <!-- ko if: values().length > 0 -->
+    <!-- # Temporarily filter out 'Category Keyword' facet. Once CMR-1923 is implemented, the changes can be reverted. -->
+    <!-- ko if: values().length > 0 && name != "Category Keyword" -->
     <div data-bind="css: class_name" class="panel panel-default">
       <div class="panel-heading">
         <h3 data-bind="click: toggleList" class="panel-title facet-title">
@@ -82,6 +83,7 @@
         </div>
       </div>
     </div>
+    <!-- /ko -->
     <!-- /ko -->
     <!-- /ko -->
     <!-- /ko -->
