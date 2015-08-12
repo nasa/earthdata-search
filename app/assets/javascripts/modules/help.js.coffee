@@ -99,11 +99,11 @@
       element: '#granule-list .panel-list-item:nth-child(2)'
     }, {
       title: 'Map View'
-      content: 'On the map view, you may select granules, select alternate base layers or projections, and pan and zoom to
+      content: 'On the map view, you may select granules, select alternate base layers or projections ( <div class="leaflet-control-layers-toggle-demo"></div> button), and pan and zoom to
                 an area of interest. Select the <strong>Land / Water Map</strong> base layer now to make the data stand
                 out more and zoom or pan the map. Click <strong>Next</strong> when you are ready to continue.'
       showNext: true
-      element: '#map-center'
+      element: '.leaflet-control-layers-toggle'
     }, {
       title: 'Granule Timeline (Part 1)'
       content: 'Below the map there is a timeline view showing when this dataset has data. You can pan
