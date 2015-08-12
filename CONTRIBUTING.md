@@ -8,8 +8,9 @@ To allow us to incorporate your changes, please use the following process:
 2. Create a branch and make your changes.
 3. Test the changes locally/in your personal fork.
 4. Submit a pull request to open a discussion about your proposed changes.
-5. We'll talk about it and decide to merge or request additional changes.
+5. The maintainers will talk with you about it and decide to merge or request additional changes.
 
+Below are specific guidelines for contributing to Earthdata Search.
 For general tips on open source contributions, see [Contributing to Open Source on GitHub](https://guides.github.com/activities/contributing-to-open-source/).
 
 # General Contribution Guidelines
@@ -62,9 +63,12 @@ readable to non-developers.
 
 ## Keep Tests Fast
 
-Our full test suite runs in about 15 minutes, which if anything is higher than ideal. Please
-ensure that new tests do not adversely impact the overall performance of the test suite by
-caching or mocking expensive operations.
+Our full test suite runs in about 15 minutes, which if anything is higher than ideal.
+We prefer testing at the integration level and ensure the test suite remains fast by
+mocking external service calls and avoiding unnececessary page loads in our specs.
+
+Please test thoroughly, but follow this pattern to ensure that new tests do not
+adversely affect the overall performance of the test suite.
 
 # Code structure
 
@@ -79,14 +83,14 @@ important pieces of code and do not attempt to describe every directory.
         * `util/` Domain-agnostic utility methods which may be generally useful for any Javascript application
         * `modules/` Non-knockout components or customizations developed for Earthdata Search
           * `maps/` Leaflet.js customizations
-          * `timeline/ Granule timeline implementation
+          * `timeline/` Granule timeline implementation
         * `models/` Knockout.js models, cusomizations, and base classes
           * `data/` Models for data items such as datasets and granules, separate from UI concerns
           * `ui/` Models for UI elements, containing click handlers and tracking UI state
           * `page/` Models for aggregating the UI and data models into a complete page state
     * `services/` Interfaces with 3rd party services
   * `lib/`
-    * `echo/` client code for interfacing with ECHO, meant to be a thin wrapper able to be separated as a gem
+    * `echo/` client code for interfacing with ECHO and the CMR, meant to be a thin wrapper able to be separated as a gem
     * `vcr/` customizations to the [VCR](https://github.com/vcr/vcr/) fixture library which configure fixture files, improve performance, and limit the number of merge conflicts we deal with in our fixtures.
   * `spec/` Test suite
     * `features/` Capybara specs
@@ -95,8 +99,8 @@ important pieces of code and do not attempt to describe every directory.
 
 # Dependencies
 
-Earthdata Search is implemented primarily using Ruby on Rails 4.1 running on
-Ruby 2.1 (MRI).
+Earthdata Search is implemented primarily using Ruby on Rails 4 running on
+Ruby 2 (MRI).
 
 Production instances run on unicorn / nginx and are backed by a Postgres
 database.
@@ -136,12 +140,6 @@ Fast and consistent tests are critical. The full suite should run in under 15
 minutes and faster is better. Please ensure tests run quickly and pass
 consistently regardless of execution order.
 
-In order to ensure speed and consistency, we have mocked all of our external service calls
-using VCR and customized Capybara to avoid reloading sessions between every
-spec (generally this means you want to use `before(:all)` instead of
-`before(:each)` in specs and ensure that there is a corresponding
-`after(:all)` block that resets the page state.
-
 The entire suite of Earthdata Search tests, including unit, functional, and
 integration tests, may be run using the `rake test` command. Earthdata Search
 uses RSpec and Jasmine for its tests.
@@ -149,6 +147,13 @@ uses RSpec and Jasmine for its tests.
 Integration specs use Capybara and CapybaraWebkit to simulate browser
 interactions. We include the capybara-screenshot gem and publish screenshots
 produced by failing builds to aid debugging.
+
+In order to ensure speed and consistency in our integration specs, we
+have mocked all of our external service calls using VCR and customized
+Capybara to avoid reloading sessions between every spec (generally this
+means you want to use `before(:all)` instead of `before(:each)` in specs
+and ensure that there is a corresponding `after(:all)` block that resets
+the page state.
 
 We document the application's behavior using our RSpec integration specs. To
 generate this documentation, run `rspec spec/features/ --format=documentation
