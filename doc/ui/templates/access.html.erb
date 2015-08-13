@@ -1,0 +1,90 @@
+
+<div class="data-access">
+  <nav class="data-access-nav">
+    <a href="#">Back navigation</a>
+  </nav>
+  <header>
+    <h1>Access and Retrieval styles</h1>
+  </header>
+  <div class="data-access-content">
+    <p>Access content</p>
+    <table class="data-retrievals">
+      <thead>
+        <tr><th>Data retrieval table header</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr class="odd"><td>Odd Row</td><td class="data-retrieval-time-ago">Time ago text</td></tr>
+        <tr class="even"><td>Even Row</td><td class="data-retrieval-time-ago"></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ol class="data-access-content data-access-datasets-config" data-bind="css: { 'knockout-template': !bindingsLoaded }">
+    <li class="access-item">
+      <div class="access-item-details panel-body">
+        <div class="access-item-header">
+          <h2>Data access configuration styles</h2>
+        </div>
+        <div class="access-item-body">
+          <h3>Access item body</h3>
+          <div class="access-item-review">
+            <h4>Review</h4>
+            <p class="summary">
+              <span class="summary-data">Data</span>
+              <span class="summary-label">Summary label</span>
+              <span class="summary-caveat">Summary caveat</span>
+            </p>
+          </div>
+        </div>
+        <div class="access-item-options">
+          <h4>Service Options</h4>
+          <div>
+            <p class="access-item-selection">
+              <span class="access-method-label">Access method label</span>
+              <a class="remove-access-item" href="#" title="Remove access method"><i class="fa fa-times-circle"></i></a>
+              <label>
+                <input type="radio" /><span>Access method</span>
+              </label>
+            </p>
+            <div class="access-subset-options" data->
+              <div class="access-subset-options-section">
+                <h5>Subsetting option</h5>
+                <label class="radio-label">
+                  <input type="radio" />
+                  <span data-bind="text: name"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="access-item-actions">
+            <button class="button-back low-priority">Access item action</button>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ol>
+</div>
+<section class="data-access data-access-retrieve">
+  <header class="data-access-header">
+    <h1>Retrieval header</h1>
+  </header>
+  <div class="data-access-container">
+    <section class="data-access-content">
+      <h2>Data access content</h2>
+      <p>Informative text with a <a href="#" class="link">link</a>.</p>
+      <ul class="data-access-datasets-list">
+        <li class="data-access-dataset">
+          <p class="data-access-dataset-name">Dataset name</p>
+          <div class="data-access-dataset-actions">
+            <a class="button text-button" href="#">Dataset actions</a>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+  <section class="data-access-next">
+    <h2>Next steps for data access</h2>
+    <ul>
+      <li><a href="#" class="link">Link to next step</a></li>
+    </ul>
+  </section>
+</section>

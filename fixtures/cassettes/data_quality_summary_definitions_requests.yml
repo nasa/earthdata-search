@@ -1,0 +1,207 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C115003855-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 21 Jan 2015 13:49:48 GMT
+  digest: 8f767cac58ee060cb897681d2b26c8cbba37cb11
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C115003857-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 08 Apr 2015 17:57:18 GMT
+  digest: 46f3fd27cf388f059b398de96ba9d0f8ec410607
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C179001887-SEDAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 21 Jan 2015 13:48:49 GMT
+  digest: b55f66c71304053b265677c811e48a73a407254c
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C179002107-SEDAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 08 Apr 2015 17:57:38 GMT
+  digest: 2edb558d058b25ca4c00aa7d33810567c15161b4
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C179002914-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 21 Jan 2015 13:50:12 GMT
+  digest: 1443f8e619e70de36aa22e76ccf3c6962652805c
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C179003030-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 21 Jan 2015 13:48:48 GMT
+  digest: 9ea543ae65845811adaab1f6f0978239f7a4704c
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C179014698-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 05 May 2015 15:18:47 GMT
+  digest: b426b6bfd70fc30c9148d4130059a2a0d4b52ce3
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C181553784-GSFCS4PA
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 21 Jan 2015 13:49:31 GMT
+  digest: 1aa5127a2fbe162b14f453dc7b3924c73accfcad
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C2821-NSIDCV0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 21 Jan 2015 13:48:51 GMT
+  digest: 3fb6085c8bd6fb99c88d4ca6b4afad49a70e64d5
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C4543622-LARC_ASDC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 23 Apr 2015 18:43:48 GMT
+  digest: cbb97be5f5d809e845b7ab45c95aa423fc25cee3
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 21 Jan 2015 13:49:49 GMT
+  digest: efc63ff63a18ff2f17a1d16ae26052e1530e437e
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 05 May 2015 15:18:48 GMT
+  digest: b568f11066a8a8a4538ed8051c5469b7d46af9ac
+recorded_with: VCR 2.6.0

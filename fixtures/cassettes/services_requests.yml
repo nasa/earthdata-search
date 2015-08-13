@@ -1,0 +1,14 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://acdisc.gsfc.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level3/OMAEROe.003/2004/OMI-Aura_L3-OMAEROe_2004m1001_v003-2011m1109t080411.he5.ddx
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 21 Jan 2015 13:49:32 GMT
+  digest: 613ccaaf24f9875c7923b7d9bfd102c1b4200bcf
+recorded_with: VCR 2.6.0

@@ -1,0 +1,217 @@
+<section id="master-overlay" class="master-overlay">
+  <section class="master-overlay-parent">
+    <header>
+      <h2>This is a master-overlay</h2>
+    </header>
+    <div class="master-overlay-content">
+      <p>
+        Master overlays are the master portion of a master-detail view which is overlayed over the
+        main content view.  For the EDSC, this typically contains the dataset facets, search results,
+        and pinned datasets, overlayed over the main map view.
+      </p>
+      <p>
+        Master overlays contain two sections, styled as vertical columns.  The left column is the
+        "master-overlay-parent", the right is the "master-overlay-main".  They differ mostly
+        in size, background color, and the ability to close the parent while keeping the main
+        area visible.
+      </p>
+      <p>
+        Master overlays have a static header area and a scrollable body which stretches the vertical
+        height of the main portion of the page
+      </p>
+    </div>
+  </section>
+  <div class="master-overlay-main" style="height: 2000px">
+    <div class="master-overlay-main-content" data-level="0">
+      <section>
+        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+        <nav class="master-overlay-nav">
+          <a class="master-overlay-back master-overlay-show-parent" href="#">
+            <i class="fa fa-circle-o-left"></i> Back navigation
+          </a>
+        </nav>
+        <header class="with-options">
+          <h2>This is the master overlay main area <small class="version-label">VERSION 1</small> </h2>
+          <p>
+            It contains an example of a panel-list.  Panel lists are used to show item summaries as
+            tiles / panels (as opposed to a columnar view).  Typically, panel-list-items will have thumbnails
+            or placeholders, some obvious title, some descriptive text, and some actions to perform on the
+            item.  Panel lists are used most often for dataset views.
+          </p>
+          <div class="master-overlay-global-actions actions">
+            Global actions
+            <a href="#" class="button icon-button" title="Normal button"><i class="edsc-icon-info"></i></a>
+            <a href="#" class="button icon-button button-disabled" title="Disabled button"><i class="edsc-icon-info"></i></a>
+            <a href="#" class="button icon-button button-active" title="Active button"><i class="edsc-icon-info"></i></a>
+            <a href="#" class="button icon-button button-highlighted" title="Highlighted button"><i class="edsc-icon-info"></i></a>
+          </div>
+        </header>
+        <div class="master-overlay-info">
+          This is an additional informative area within the overlay <em>with emphasis</em>
+          <p class="button-details">
+            <a class="button" href="#">Normal Button</a>
+            <span>Button details here</span>
+          </p>
+          <p class="button-details"><a class="button button-disabled" href="#">Disabled Button</a></p>
+          <p class="button-details"><a class="button button-active" href="#">Active Button</a></p>
+          <p class="button-details"><a class="button button-highlighted" href="#">Highlighted Button</a></p>
+          <p class="button-details"><a class="button low-priority" href="#">Low Priority Button</a></p>
+          <p class="button-details"><a class="button low-priority" href="#">Low Priority Button</a></p>
+          <p class="button-details"><a class="button low-priority button-disabled" href="#">Disabled Low Priority Button</a></p>
+          <p class="button-details"><a class="button low-priority button-active" href="#">Active Low Priority Button</a></p>
+          <p class="button-details"><a class="button low-priority button-highlighted" href="#">Highlighted Low Priority Button</a></p>
+          <p class="panel-list-meta">
+            Meta information about the panel list
+          </p>
+        </div>
+        <dl class="master-overlay-content" style="height: auto">
+          <dt>Definition list content</dt>
+          <dd>Data definition</dd>
+        </dl>
+        <div class="master-overlay-content" style="height: auto">
+          <div class="master-overlay-help">
+            <p>Help text</p>
+          </div>
+          <p>Endpoint Styles <span class="endpoint-label">CMR</span></p>
+          <p class="long-paragraph">
+            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
+            quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
+            ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.
+            Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt
+            condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis.
+            Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
+            Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus
+          </p>
+          <p>Expand/collapse button for dataset description on dataset detail page: <i class="fa fa-chevron-down description-toggle-size"></i></p>
+          <div>
+            <p>Long paragraph expand/collapse toggle:</p>
+            <div class="description-toggle col-sm-12">
+              <i class="fa fa-chevron-down description-toggle-size"></i>
+            </div>
+          </div>
+          <div>
+            Science Keywords:
+            <div class="arrow-tag-group">
+              <ul>
+                <li>
+                  <div>Earth Science</div>
+                </li>
+                <li>
+                  <div>Atmosphere</div>
+                </li>
+                <li>
+                  <div>Atmospheric Chemistry</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p>Responsive content</p>
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <dt>Column 1</dt>
+              <dd><a>Native</a>
+                | <a>ATOM</a>
+                | <a >ECHO10</a>
+                | <a>DIF</a>
+            </div>
+            <div class="second-col col-md-6 col-sm-12">
+              <dt>Column 2</dt>
+              <dd>
+                <a class="endpoint-label" href="#">CMR</a>
+                <a class="endpoint-label" href="#">ECHO</a>
+                <a class="endpoint-label" href="#">MODAPS WCS</a>
+              </dd>
+            </div>
+          </div>
+        </div>
+        <div class="image-map">
+
+        </div>
+        <div class="master-overlay-content" style="height: auto">
+          <h3 class="panel-list-title">Panel List Title</h3>
+          <div class="panel-list">
+            <ul class="panel-list-list">
+              <li class="panel-list-item master-overlay-forward">
+                <div class="panel-list-thumbnail-container">
+                  <div class="panel-list-badges">
+                    <span class="badge badge-gibs"></span>
+                    <span class="badge badge-opendap"></span>
+                  </div>
+                  <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
+                    <i class="fa fa-picture-o"></i><br />No image available
+                  </div>
+                </div>
+                <a class="panel-list-remove panel-list-when-selected" href="#" title="Remove button"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>
+                <h3>This is a normal, hoverable panel list item.  Hover me.</h3>
+                <p class="panel-list-details">
+                  These are the panel-list-details
+                </p>
+                <p class="panel-list-when-selected panel-list-details">THIS TEXT SHOULD BE HIDDEN!!!</p>
+                <p class="panel-list-comparison-details">
+                  Comparison details
+                  <span class="panel-list-muted">Muted information</span>
+                </p>
+              </li>
+              <li class="panel-list-item" draggable="true">
+                <div class="panel-list-drag-handle"></div>
+                <h3>This item is draggable</h3>
+              </li>
+              <li class="panel-list-item sortable-placeholder master-overlay-forward">
+                <h3>This item is a drag placeholder</h3>
+              </li>
+              <li class="panel-list-item panel-list-selected">
+                <h3>This item is selected</h3>
+                <p class="panel-list-when-selected panel-list-details">This text appears when selected</p>
+              </li>
+              <li class="panel-list-item panel-list-selected panel-list-focused">
+                <h3>This item is focused</h3>
+              </li>
+              <li class="panel-list-item">
+                <h3>Panel list items can have buttons</h3>
+                <div class="panel-list-item-actions">
+                  <a href="#" class="button icon-button" title="Normal button"><i class="edsc-icon-poly"></i></a>
+                  <a href="#" class="button icon-button button-active" title="Active button"><i class="edsc-icon-poly"></i></a>
+                  <a href="#" class="button icon-button button-highlighted" title="Highlighted button"><i class="edsc-icon-poly"></i></a>
+                  <a href="#" class="button icon-button button-disabled" title="Disabled button"><i class="edsc-icon-poly"></i></a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="master-overlay-secondary">
+    <p class="message message-warning">Warning message</p>
+    <div class="master-overlay-secondary-content">
+      <dl>
+        <dt>Definition list title</dt>
+        <dd>Definition list content</dd>
+        <dt>Single Granule ID Search</dt>
+        <dd class="granule-id-search search-single">
+          <section class="single-granule-id-search">
+            <p>
+              Single granule id search
+            </p>
+            <p class="instructions">
+              Instructions
+            </p>
+          </section>
+          <section class="multiple-granule-id-search">
+            <p>
+              Multiple granule id search
+            </p>
+          </section>
+        </dd>
+        <dt>Multiple Granule ID Search</dt>
+        <dd class="granule-id-search search-multiple">
+          <section class="single-granule-id-search">
+            <p>Content</p>
+          </section>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</section>

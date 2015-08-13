@@ -1,0 +1,133 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1000000019-LANCEMODIS.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:51:19 GMT
+  digest: d696def6590ee7ba23a31d5b9a233227eeaefa09
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1027-NSIDCV0.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:51:32 GMT
+  digest: 32c36bb8e6afe2ac27954bd8eb6491bf1d6b21f3
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1580-NSIDCV0.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:51:36 GMT
+  digest: a8625406c735635e8f0d54555083fa434ca22391
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179001887-SEDAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:51:14 GMT
+  digest: 63e6a16ffb2a1b7f0ebd8b1ec4d863a89b47dc94
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179002914-ORNL_DAAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Fri, 07 Aug 2015 23:38:20 GMT
+  digest: 62d69a3c2cec87d3b6e90d31814b5785bafc9710
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179002945-ORNL_DAAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:51:30 GMT
+  digest: 55bdcbe03a881d71233144fd2e44704efd118082
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179003030-ORNL_DAAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:51:09 GMT
+  digest: 1992aff66cd33220943ac7c465ba5cb8ef2e0513
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:51:08 GMT
+  digest: 9fcb925ab30c4bfb5e034aa20b2d816cecd4b0ee
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C183451157-GSFCS4PA.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:51:16 GMT
+  digest: 24d1f087ca6a550f99e4402261aa64c0fc4553ca
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 21 Jan 2015 13:53:44 GMT
+  digest: 85892f8c99e8741c752c85cba65ba582ef91ac45
+recorded_with: VCR 2.6.0

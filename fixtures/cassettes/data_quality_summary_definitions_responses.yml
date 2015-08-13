@@ -1,0 +1,370 @@
+---
+8f767cac58ee060cb897681d2b26c8cbba37cb11:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"9dfc62149e07e7dffc01d4cb0d9810da"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.650000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '199'
+      date:
+      - Wed, 21 Jan 2015 13:49:50 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
+    http_version: 
+46f3fd27cf388f059b398de96ba9d0f8ec410607:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"9dfc62149e07e7dffc01d4cb0d9810da"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.477000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Wed, 08 Apr 2015 17:57:18 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
+    http_version: 
+b55f66c71304053b265677c811e48a73a407254c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.218000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '2'
+      date:
+      - Wed, 21 Jan 2015 13:48:51 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+2edb558d058b25ca4c00aa7d33810567c15161b4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.169000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Wed, 08 Apr 2015 17:57:38 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+1443f8e619e70de36aa22e76ccf3c6962652805c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.180000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '2'
+      date:
+      - Wed, 21 Jan 2015 13:50:14 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+9ea543ae65845811adaab1f6f0978239f7a4704c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.217000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '2'
+      date:
+      - Wed, 21 Jan 2015 13:48:51 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+b426b6bfd70fc30c9148d4130059a2a0d4b52ce3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"4fe3283590e40aaebbf396376e95ae1a"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '1.535000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 05 May 2015 15:18:47 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
+    http_version: 
+1aa5127a2fbe162b14f453dc7b3924c73accfcad:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.232000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '2'
+      date:
+      - Wed, 21 Jan 2015 13:49:34 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+3fb6085c8bd6fb99c88d4ca6b4afad49a70e64d5:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.520000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '2'
+      date:
+      - Wed, 21 Jan 2015 13:48:53 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+cbb97be5f5d809e845b7ab45c95aa423fc25cee3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.372000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 23 Apr 2015 18:43:48 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+efc63ff63a18ff2f17a1d16ae26052e1530e437e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"35bee4758cac370f4dbf73dd9deb7b52"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.424000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Wed, 21 Jan 2015 13:49:51 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <data_quality_summary_definition>
+          <id>77EDC43F-3BBC-2E39-BFBA-16DDE3540447</id>
+          <summary>&lt;p&gt;-------------------------------------------------------------------------------------------------------- &lt;br /&gt; MODIS Snow and Sea Ice Quality Assessment and Validation: &lt;br /&gt; -------------------------------------------------------------------------------------------------------- &lt;br /&gt;Product QA:&lt;br /&gt; Product quality assessment QA and validation are integral parts of the MODIS Land product generation process. The MODIS Land products have different data versions and levels of maturity reflecting algorithm refinement and the input data used in their production.&amp;nbsp; Please view technical information regarding product maturity and QA at:  &lt;a href="http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi" target="_modisqa"&gt;http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;&amp;nbsp;&lt;/p&gt;
+        &lt;p&gt;Data Validation:&lt;/p&gt;
+        &lt;p&gt;Versions 5 MODIS/Terra and MODIS/Aqua snow and sea ice products are currently at a 'Validated Stage 2' status. Validated products are high-quality products with well-defined uncertainties, which are suitable for longer term or systematic scientific studies and publication.  While the products as a whole are at &amp;lsquo;Validated Stage 2' status, this is not necessarily true for each parameter within a product.  For example, the validation status of the albedo and fractional snow parameters is provisional. Users are encouraged to review product quality summaries before publication of results.  Please refer to the MODIS Validation Web site &lt;a href="http://landval.gsfc.nasa.gov/" target="_modisvalid"&gt;http://landval.gsfc.nasa.gov/&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;&amp;nbsp;&lt;/p&gt;
+        &lt;p&gt;For answers to questions concerning MODIS Snow or Sea Ice data products please refer to data documentation at &lt;a href="http://nsidc.org/data/modis/data_summaries/index.html" target="_modisnsidc"&gt;http://nsidc.org/data/modis/data_summaries/index.html&lt;/a&gt;&lt;/p&gt;</summary>
+          <name>MODIS</name>
+          <updated_at type="datetime">2011-01-31T20:35:12Z</updated_at>
+          <provider_id>NSIDC_ECS</provider_id>
+        </data_quality_summary_definition>
+    http_version: 
+b568f11066a8a8a4538ed8051c5469b7d46af9ac:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"7cd8d34f81260d66e45fe59c44390187"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.688000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 05 May 2015 15:18:48 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <data_quality_summary_definition>
+          <id>7F7F0445-FDFB-5D08-E982-9242C48FC0FB</id>
+          <summary>&lt;p&gt;AMSR-E Quality Assessment&lt;br /&gt;&lt;br /&gt;QA Summaries:&lt;br /&gt;Quality Assessment summaries are produced for each AMSR-E standard product file.  For information on the QA summaries, please refer to the MSFC AMSR-E Quality Assessment Web site: &lt;a href="http://wwwghcc.msfc.nasa.gov/AMSR/qa.html" target="_msfc"&gt;http://wwwghcc.msfc.nasa.gov/AMSR/qa.html&lt;/a&gt;&lt;br /&gt;&lt;br /&gt; Quality flags:&lt;br /&gt; The quality flags found in individual products are detailed in each product's guide document. Please refer to the NSIDC AMSR-E/Aqua Data Summaries Web site: &lt;a href="http://nsidc.org/data/amsre/data_summaries.html" target="_amsredata"&gt;http://nsidc.org/data/amsre/data_summaries.html&lt;/a&gt; for access to product documentation. &lt;br /&gt;&lt;br /&gt;Version information:&lt;br /&gt; AMSR-E product versions are designated by a Product Maturity  code indicating the level of validation and algorithm refinement.  Validated products are also assigned an associated Validation Stage.  For information on the Product Maturity codes as well as changes included in algorithm versions, please refer to the NSIDC  AMSR-E/Aqua Data Versions Web site:  &lt;a href="http://nsidc.org/data/amsre/versions.html" target="_amsre"&gt;http://nsidc.org/data/amsre/versions.html&lt;/a&gt;&lt;/p&gt;</summary>
+          <name>AMSR-E</name>
+          <updated_at type="datetime">2011-12-14T14:29:49Z</updated_at>
+          <provider_id>NSIDC_ECS</provider_id>
+        </data_quality_summary_definition>
+    http_version: 

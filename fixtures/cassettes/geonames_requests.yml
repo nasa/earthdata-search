@@ -1,0 +1,135 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=%22Texas%2C+United+States%22&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 06 Apr 2015 20:09:23 GMT
+  digest: 4ca6412fa50feb9358aeadde633231506802a4cc
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=%22texas&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 03 Apr 2015 17:50:52 GMT
+  digest: dcc2b09714a899df18b019deb8fae5427ae8639b
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=AST&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 16 Jan 2015 15:52:41 GMT
+  digest: 49b88654d7384520e8b15e0f878fc9e77c4a0d88
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=NSIDC-0022&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 16 Jan 2015 15:58:31 GMT
+  digest: 1bfe213d1ae75980c4ea7ba60f5d8d2da23d2b8d
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=NSIDC-0239&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 16 Jan 2015 15:58:34 GMT
+  digest: d9bbcff8a73b768d1979f0b66d46905ae15ccc05
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=Texas&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 07 Apr 2015 20:12:13 GMT
+  digest: c0d62da42d27a20af06069e22f65bef39128f943
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=asdfasdfasdfasdfasdf&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 16 Jan 2015 16:00:51 GMT
+  digest: b5e29d316f94313e0d8a8f5edc02bee0341c0977
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=asdfasdfasdfqwer&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 16 Jan 2015 16:07:14 GMT
+  digest: e9dadbaadd61cc605a52bc698b7abbaced5464a3
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=snow+cover+nrt&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 16 Jan 2015 15:52:42 GMT
+  digest: 375316b0756584b85bc008cd03fa59af8f01b371
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=somestringthatmatchesnodatasets&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 16 Jan 2015 16:00:03 GMT
+  digest: d0e5b46aa49aaa344d5e7a6ee5154ac4ed2cf780
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=texas&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 16 Jan 2015 16:07:15 GMT
+  digest: 6d6c5bf65c987f75b3977608cc87a76043078cc7
+- request:
+    method: get
+    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=trigger500&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 16 Jan 2015 16:26:20 GMT
+  digest: 315a3ddb04a2f6e25b3e5280f510668732d93d27
+recorded_with: VCR 2.6.0
