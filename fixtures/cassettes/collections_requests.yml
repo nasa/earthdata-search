@@ -289,6 +289,19 @@ http_interactions:
   digest: 1fff4d2bc79668c32c1055fa521dc9343a9396ce
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C189202233-LPDAAC_ECS&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Thu, 13 Aug 2015 20:53:32 GMT
+  digest: d6da20ff8b64565e9de4af86a6efd49d6c3639eb
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C2821-NSIDCV0&page_num=1&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -897,6 +910,21 @@ http_interactions:
   digest: 575be641bde76cc5f4b93598d5ce88346806b206
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C189202233-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 13 Aug 2015 20:50:32 GMT
+  digest: 863a2d012e29e9d92ce79ba1765e53b68e8e79e0
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C189399410-GSFCS4PA%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -1311,6 +1339,21 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 18 Mar 2015 17:27:40 GMT
   digest: 7e61b7e5340dc6b9c6476ea75f3dfb05abfb92b1
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=C189202233-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 13 Aug 2015 20:03:45 GMT
+  digest: dd05a3445834d32c768ac47178ea39002a201276
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=C189399410-GSFCS4PA%2A&include_has_granules=true&include_granule_counts=true
