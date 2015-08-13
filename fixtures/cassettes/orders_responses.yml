@@ -1,0 +1,276 @@
+---
+acab3c43996bb7f51d50e4301fe55418086eadbd:
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      location:
+      - https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZTk1YzFiNzkyZjQ1OGUzMjQwYWZmZmZhZTUwOTJhZjE%3D--09127bf89cbc1d57fff11b51d978319ddc52e7a7;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.256000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '76'
+      date:
+      - Thu, 15 Jan 2015 21:08:30 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"order":{"id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","provider_orders":[]}}'
+    http_version: 
+d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNmU2OTRmYWU3MjJmMzBjNTZlZDhkYWRiMDAxZTYzNTY%3D--64028cef8babaf7e1a48210bd0a1fb1fd0069cb8;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.685000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 23 Apr 2015 18:44:04 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+    http_version: 
+07819583163554fb8646f33d6003fb54e7c2ec35:
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNjJkZGE2YjJiZWI4YmE4YTUwZmY4MTgxZTQ5YjUwYzc%3D--c36fb7749edbcdaf0c11ca841be4f83bc93fe127;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.924000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Wed, 08 Apr 2015 20:10:38 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+    http_version: 
+6a350797bd129196a4f83d9f237799cf5a097f11:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNDlhZmVmMWYxOWEzMDVjNjkzMDM3YzBkZDMzMjk4MzQ%3D--c59ebcc697c7dd6da3a6a497b43f65850e15b92d;
+        path=/; HttpOnly
+      x-runtime:
+      - '8.974000'
+      content-type:
+      - application/xml;charset=utf-8
+      content-length:
+      - '1'
+      date:
+      - Thu, 15 Jan 2015 21:08:39 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: " "
+    http_version: 
+e8a5589d2ff2055ca1341127f5c403c1363024ec:
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNjQxZWEyNjhmMjIxYjY0NWNmMzliYzViYjYxMDdiMGY%3D--525b6e789593b58dba684b9fd3f977d7b141947c;
+        path=/; HttpOnly
+      x-runtime:
+      - '3.839000'
+      date:
+      - Thu, 15 Jan 2015 21:08:46 GMT
+      connection:
+      - close
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"bde5174463bb071b6216eaa603b6983c"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOGVhM2MwMDc2Zjc0MGIyZGExNWIzYmJlYTE1Y2E4ODE%3D--f2e2ee8efa0655d75077af5054db3cb24aada33b;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.622000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 15 Jan 2015 21:08:42 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <user_information>
+          <shipping_contact>
+            <id>E05C23B0-3193-326F-C651-7153C6A9D024</id>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <id>D80DE72C-7DF9-9E25-F7B0-4928A7F8A1AB</id>
+              <us_format type="boolean">false</us_format>
+              <street1>101 N. Columbus St.</street1>
+              <street2>Suite 200</street2>
+              <city>Alexandria</city>
+              <state>VA</state>
+              <zip>22314</zip>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <id>128956E1-6811-E516-2B84-0829DEC46C4A</id>
+                <number>555-555-5555</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+              <phone>
+                <id>E1CFAD31-35D1-E6D5-5AD4-C1ECC079B632</id>
+                <number>555-555-6666</number>
+                <phone_number_type>BUSINESS_FAX</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </shipping_contact>
+          <billing_contact>
+            <id>E05C23B0-3193-326F-C651-7153C6A9D024</id>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <id>D80DE72C-7DF9-9E25-F7B0-4928A7F8A1AB</id>
+              <us_format type="boolean">false</us_format>
+              <street1>101 N. Columbus St.</street1>
+              <street2>Suite 200</street2>
+              <city>Alexandria</city>
+              <state>VA</state>
+              <zip>22314</zip>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <id>128956E1-6811-E516-2B84-0829DEC46C4A</id>
+                <number>555-555-5555</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+              <phone>
+                <id>E1CFAD31-35D1-E6D5-5AD4-C1ECC079B632</id>
+                <number>555-555-6666</number>
+                <phone_number_type>BUSINESS_FAX</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </billing_contact>
+          <order_contact>
+            <id>E05C23B0-3193-326F-C651-7153C6A9D024</id>
+            <role>Order Contact</role>
+            <first_name>Earthdata</first_name>
+            <last_name>Search</last_name>
+            <address>
+              <id>D80DE72C-7DF9-9E25-F7B0-4928A7F8A1AB</id>
+              <us_format type="boolean">false</us_format>
+              <street1>101 N. Columbus St.</street1>
+              <street2>Suite 200</street2>
+              <city>Alexandria</city>
+              <state>VA</state>
+              <zip>22314</zip>
+              <country>United States</country>
+            </address>
+            <phones type="array">
+              <phone>
+                <id>128956E1-6811-E516-2B84-0829DEC46C4A</id>
+                <number>555-555-5555</number>
+                <phone_number_type>BUSINESS</phone_number_type>
+              </phone>
+              <phone>
+                <id>E1CFAD31-35D1-E6D5-5AD4-C1ECC079B632</id>
+                <number>555-555-6666</number>
+                <phone_number_type>BUSINESS_FAX</phone_number_type>
+              </phone>
+            </phones>
+            <email>patrick+edsc@element84.com</email>
+            <organization>EDSC</organization>
+          </order_contact>
+          <user_domain>OTHER</user_domain>
+          <user_region>USA</user_region>
+        </user_information>
+    http_version: 

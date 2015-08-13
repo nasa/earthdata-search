@@ -1,0 +1,38 @@
+development:
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: sqlite3
+  database: db/test.sqlite3
+  pool: 5
+  timeout: 5000
+
+defaults: &defaults
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+vagrant_defaults: &vagrant_defaults
+  <<: *defaults
+  host: 192.168.2.10
+
+development_postgres:
+  <<: *vagrant_defaults
+  database: rails-edsc-development
+  username: rails-edsc-development
+  password: password
+
+test_postgres:
+  <<: *vagrant_defaults
+  database: rails-edsc-test
+  username: rails-edsc-test
+  password: password
+
+vagrant:
+  <<: *vagrant_defaults
+  database: rails-edsc
+  username: rails-edsc
+  password: password

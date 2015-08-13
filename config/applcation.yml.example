@@ -1,0 +1,35 @@
+defaults: &defaults
+#### Change these values ####
+  # Username and password of the application configured in URS
+  urs_username: "<urs_username>"
+  urs_password: "<urs_password>"
+
+  # Domain as configured in the URS application.  The configured application must be in the ECHO group.
+  urs_callback_url: "http://<urs_domain>/urs_callback"
+
+  # Root URL for an ogre shapefile conversion service (See: http://ogre.adc4gis.com/)
+  ogre_url: "<ogre_url>"
+
+  # URL and API user id for a placename search service.  The URL should stay the same, but you will need
+  # to register an API user.
+  places_url: http://api.geonames.org/
+  places_user_id: "<places_user_id>"
+
+  # A random key used to sign cookies, at least 30 characters.  Generate with the following command:
+  # $ hexdump -n 128 -v -e '/1 "%02X"' -e '/128 "\n"' /dev/urandom  | tr '[:upper:]' '[:lower:]'
+  # Note: this key is not used in development or test modes where it defaults to a string of 0's instead
+  secret_key_base: "<secret_key_base>"
+####
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+  # These need not be changed to run tests.  Change to real token values when generating fixtures.
+  test_urs_edsc_access_token: "edsc-access"
+  test_urs_edsc_refresh_token: "edsc-refresh"
+  test_urs_expired_access_token: "expired-access"
+  test_urs_expired_refresh_token: "expired-refresh"
+  test_urs_edscbasic_access_token: "edscbasic-access"
+  test_urs_edscbasic_refresh_token: "edscbasic-refresh"

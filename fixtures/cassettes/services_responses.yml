@@ -1,0 +1,673 @@
+---
+613ccaaf24f9875c7923b7d9bfd102c1b4200bcf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 21 Jan 2015 13:49:34 GMT
+      server:
+      - Apache
+      last-modified:
+      - Sat, 24 Mar 2012 19:05:44 GMT
+      xdods-server:
+      - dods/3.2
+      xopendap-server:
+      - bes/3.11.0, libdap/3.11.7, dap-server/ascii/4.1.2, freeform_handler/3.8.5,
+        fileout_netcdf/1.1.3, hdf4_handler/3.11.4, hdf5_handler/2.1.2, netcdf_handler/3.10.2,
+        ncml_module/1.2.2, dap-server/usage/4.1.2, dap-server/www/4.1.2
+      xdap:
+      - '3.2'
+      content-description:
+      - dods_ddx
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+      content-type:
+      - text/xml
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="ISO-8859-1"?>
+        <Dataset name="virtual" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xml.opendap.org/ns/DAP2" xsi:schemaLocation="http://xml.opendap.org/ns/DAP2 http://xml.opendap.org/dap/dap2.xsd">
+            <Attribute name="HDFEOS" type="Container"/>
+            <Attribute name="HDFEOS_ADDITIONAL" type="Container"/>
+            <Attribute name="HDFEOS_ADDITIONAL_FILE_ATTRIBUTES" type="Container">
+                <Attribute name="OrbitNumber" type="Int32">
+                    <value>1132</value>
+                    <value>1133</value>
+                    <value>1134</value>
+                    <value>1135</value>
+                    <value>1136</value>
+                    <value>1137</value>
+                    <value>1138</value>
+                    <value>1139</value>
+                    <value>1140</value>
+                    <value>1141</value>
+                    <value>1142</value>
+                    <value>1143</value>
+                    <value>1144</value>
+                    <value>1145</value>
+                    <value>1146</value>
+                    <value>1147</value>
+                    <value>1148</value>
+                    <value>1149</value>
+                    <value>1150</value>
+                    <value>1151</value>
+                    <value>1152</value>
+                    <value>1153</value>
+                    <value>1154</value>
+                    <value>1155</value>
+                    <value>1156</value>
+                    <value>1157</value>
+                    <value>1158</value>
+                    <value>1159</value>
+                    <value>1160</value>
+                    <value>1161</value>
+                </Attribute>
+                <Attribute name="OrbitPeriod" type="Float64">
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                    <value>5933.0000000000000</value>
+                    <value>5932.0000000000000</value>
+                </Attribute>
+                <Attribute name="InstrumentName" type="String">
+                    <value>OMI</value>
+                </Attribute>
+                <Attribute name="ProcessLevel" type="String">
+                    <value>3e</value>
+                </Attribute>
+                <Attribute name="GranuleMonth" type="Int32">
+                    <value>10</value>
+                </Attribute>
+                <Attribute name="GranuleDay" type="Int32">
+                    <value>1</value>
+                </Attribute>
+                <Attribute name="GranuleYear" type="Int32">
+                    <value>2004</value>
+                </Attribute>
+                <Attribute name="GranuleDayOfYear" type="Int32">
+                    <value>275</value>
+                </Attribute>
+                <Attribute name="TAI93At0zOfGranule" type="Float64">
+                    <value>370742405.00000000</value>
+                </Attribute>
+                <Attribute name="PGEVersion" type="String">
+                    <value>&quot;1.1.0.1&quot;</value>
+                </Attribute>
+                <Attribute name="StartUTC" type="String">
+                    <value>2004-09-30T12:15:00.000000Z</value>
+                </Attribute>
+                <Attribute name="EndUTC" type="String">
+                    <value>2004-10-02T11:45:00.000000Z</value>
+                </Attribute>
+                <Attribute name="Period" type="String">
+                    <value>Daily</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/ADDITIONAL/FILE_ATTRIBUTES</value>
+                </Attribute>
+            </Attribute>
+            <Attribute name="HDFEOS_GRIDS" type="Container"/>
+            <Attribute name="HDFEOS_GRIDS_ColumnAmountAerosol" type="Container">
+                <Attribute name="GCTPProjectionCode" type="Int32">
+                    <value>0</value>
+                </Attribute>
+                <Attribute name="Projection" type="String">
+                    <value>Geographic</value>
+                </Attribute>
+                <Attribute name="GridOrigin" type="String">
+                    <value>Center</value>
+                </Attribute>
+                <Attribute name="GridSpacing" type="String">
+                    <value>(0.25,0.25)</value>
+                </Attribute>
+                <Attribute name="GridSpacingUnit" type="String">
+                    <value>deg</value>
+                </Attribute>
+                <Attribute name="GridSpan" type="String">
+                    <value>(-180,180,-90,90)</value>
+                </Attribute>
+                <Attribute name="GridSpanUnit" type="String">
+                    <value>deg</value>
+                </Attribute>
+                <Attribute name="NumberOfLongitudesInGrid" type="Int32">
+                    <value>1440</value>
+                </Attribute>
+                <Attribute name="NumberOfLatitudesInGrid" type="Int32">
+                    <value>720</value>
+                </Attribute>
+                <Attribute name="WavelDiagnostic" type="String">
+                    <value>342.5, 388.0, 442.0, 463.0, 483.5</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol</value>
+                </Attribute>
+            </Attribute>
+            <Attribute name="HDFEOS_GRIDS_ColumnAmountAerosol_Data_Fields" type="Container"/>
+            <Attribute name="HDFEOS_INFORMATION" type="Container">
+                <Attribute name="HDFEOSVersion" type="String">
+                    <value>HDFEOS_5.1.11</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS INFORMATION</value>
+                </Attribute>
+            </Attribute>
+            <Array name="AbsorbingAerosolOpticalThicknessMW">
+                <Attribute name="_FillValue" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Spectral Absorbing Aerosol Optical Thickness for best fit aerosol model derived with the Multi-Wavelength method, scaled by a factor 1000</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>0.0010000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>AbsorbingAerosolOpticalThicknessMW</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/AbsorbingAerosolOpticalThicknessMW</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Int16/>
+                <dimension name="nWavelDiagnostic" size="5"/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="AerosolModelMW">
+                <Attribute name="_FillValue" type="UInt16">
+                    <value>65535</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Aerosol model indicator for best fit aerosol model derived with the Multi-Wavelength method</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>1.0000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="UInt16">
+                    <value>65535</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>AerosolModelMW</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/AerosolModelMW</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <UInt16/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="AerosolOpticalThicknessMW">
+                <Attribute name="_FillValue" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Spectral Aerosol Optical Thickness for best fit aerosol model derived with the Multi-Wavelength method, scaled by a factor 1000</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>0.0010000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>AerosolOpticalThicknessMW</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/AerosolOpticalThicknessMW</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Int16/>
+                <dimension name="nWavelDiagnostic" size="5"/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="AerosolOpticalThicknessPassedThresholdMean">
+                <Attribute name="_FillValue" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Mean spectral Aerosol Optical Thickness of aerosol models that passed the threshold.Scaled by a factor 1000.</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>0.0010000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>AerosolOpticalThicknessPassedThresholdMean</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/AerosolOpticalThicknessPassedThresholdMean</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Int16/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="AerosolOpticalThicknessPassedThresholdStd">
+                <Attribute name="_FillValue" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Standard deviation of the spectral Single  ScatteringAlbedo ss of aerosol models that passed the threshold.Scaled by a factor 1000.</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>0.0010000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>AerosolOpticalThicknessPassedThresholdStd</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/AerosolOpticalThicknessPassedThresholdStd</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Int16/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="SingleScatteringAlbedoMW">
+                <Attribute name="_FillValue" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Spectral Single Scattering Albedo for best fit aerosol model derived with the Multi-Wavelength method, scaled by a factor 1000</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>0.0010000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>SingleScatteringAlbedoMW</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/SingleScatteringAlbedoMW</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Int16/>
+                <dimension name="nWavelDiagnostic" size="5"/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="SingleScatteringAlbedoPassedThresholdMean">
+                <Attribute name="_FillValue" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Mean spectral Aerosol Optical Thickness of aerosol models that passed the threshold.Scaled by a factor 1000.</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>0.0010000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>SingleScatteringAlbedoPassedThresholdMean</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/SingleScatteringAlbedoPassedThresholdMean</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Int16/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="SingleScatteringAlbedoPassedThresholdStd">
+                <Attribute name="_FillValue" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Standard deviation of the spectral Single  ScatteringAlbedo of aerosol models that passed the threshold.Scaled by a factor 1000.</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>0.0010000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>SingleScatteringAlbedoPassedThresholdStd</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/SingleScatteringAlbedoPassedThresholdStd</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Int16/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="SolarZenithAngle">
+                <Attribute name="_FillValue" type="Float32">
+                    <value>-1.267650600e+30</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>deg</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Solar zenith angle at WGS84 ellipsoid for center co-ordinate of the ground pixel</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>Aura-Shared</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>1.0000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Float32">
+                    <value>-1.267650600e+30</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>SolarZenithAngle</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/SolarZenithAngle</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Float32/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="TerrainReflectivity">
+                <Attribute name="_FillValue" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Reflectivity of the ground pixel, scaled by a factor 1000</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>0.0010000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Int16">
+                    <value>-32767</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>TerrainReflectivity</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/TerrainReflectivity</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Int16/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="UVAerosolIndex">
+                <Attribute name="_FillValue" type="Float32">
+                    <value>-1.267650600e+30</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>UV Aerosol Index</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>1.0000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Float32">
+                    <value>-1.267650600e+30</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>UVAerosolIndex</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/UVAerosolIndex</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Float32/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="VISAerosolIndex">
+                <Attribute name="_FillValue" type="Float32">
+                    <value>-1.267650600e+30</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>NoUnits</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>VIS Aerosol Index</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>1.0000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Float32">
+                    <value>-1.267650600e+30</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>VISAerosolIndex</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/VISAerosolIndex</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Float32/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="ViewingZenithAngle">
+                <Attribute name="_FillValue" type="Float32">
+                    <value>-1.267650600e+30</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>deg</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Viewing zenith angle at WGS84 ellipsoid for center co-ordinate of the ground pixel</value>
+                </Attribute>
+                <Attribute name="UniqueFieldDefinition" type="String">
+                    <value>OMI-Specific</value>
+                </Attribute>
+                <Attribute name="scale_factor" type="Float64">
+                    <value>1.0000000000000000</value>
+                </Attribute>
+                <Attribute name="add_offset" type="Float64">
+                    <value>0.0000000000000000</value>
+                </Attribute>
+                <Attribute name="missing_value" type="Float32">
+                    <value>-1.267650600e+30</value>
+                </Attribute>
+                <Attribute name="origname" type="String">
+                    <value>ViewingZenithAngle</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS/GRIDS/ColumnAmountAerosol/Data Fields/ViewingZenithAngle</value>
+                </Attribute>
+                <Attribute name="orig_dimname_list" type="String">
+                    <value>XDim </value>
+                </Attribute>
+                <Float32/>
+                <dimension name="lat" size="720"/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <String name="StructMetadata_0">
+                <Attribute name="origname" type="String">
+                    <value>StructMetadata.0</value>
+                </Attribute>
+                <Attribute name="fullnamepath" type="String">
+                    <value>/HDFEOS INFORMATION/StructMetadata.0</value>
+                </Attribute>
+            </String>
+            <Array name="lon">
+                <Attribute name="units" type="String">
+                    <value>degrees_east</value>
+                </Attribute>
+                <Float32/>
+                <dimension name="lon" size="1440"/>
+            </Array>
+            <Array name="lat">
+                <Attribute name="units" type="String">
+                    <value>degrees_north</value>
+                </Attribute>
+                <Float32/>
+                <dimension name="lat" size="720"/>
+            </Array>
+            <Array name="nWavelDiagnostic">
+                <Attribute name="units" type="String">
+                    <value>level</value>
+                </Attribute>
+                <Int32/>
+                <dimension name="nWavelDiagnostic" size="5"/>
+            </Array>
+            <dataBLOB href=""/>
+        </Dataset>
+    http_version: 
