@@ -12,11 +12,6 @@ gem 'toastr-rails'
 gem 'unicorn'
 gem 'whenever', :require => false
 
-if File.exists?('vendor/cmep')
-  gem 'cmep', '0.0.4', :path => 'vendor/cmep'
-end
-#gem "cmep", :path => '../metadata-editor-prototype' # For debugging metadata editor prototype
-
 gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'a89da600f389c53c88362ce5133d8d3945776464'
 
 group :test do
