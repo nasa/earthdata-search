@@ -1,0 +1,4 @@
+language: ruby
+script:
+  - bundle exec rake bamboo:prepare
+  - bundle exec rake spec
