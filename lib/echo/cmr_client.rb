@@ -6,7 +6,7 @@ module Echo
       get("/search/collections.#{format}", query, token_header(token))
     end
 
-    def get_dataset(id, options={}, token=nil)
+    def get_dataset(id, token=nil)
       response = get("/search/concepts/#{id}.echo10", {}, token_header(token))
       response.body[0].granule_url = @root + "/search/granules.json" if response.body.is_a?(Array) && response.body.first.respond_to?(:granule_url)
       response

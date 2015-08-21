@@ -1162,6 +1162,31 @@ c6a6648587d792539daeeebf88431b35003110df:
         for OMAEROe_V003\n       (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://disc.sci.gsfc.nasa.gov/Aura/data-holdings/OMI/documents/v003/OMAEROe_FileSpec_V003.txt","hreflang":"en-US","title":"FileSpec
         for OMAEROe_V003\n       (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]}]}}'
     http_version: 
+d6da20ff8b64565e9de4af86a6efd49d6c3639eb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 13 Aug 2015 20:53:30 GMT
+      cmr-took:
+      - '342'
+      cmr-hits:
+      - '1'
+      access-control-allow-origin:
+      - "*"
+      content-type:
+      - application/json; charset=utf-8
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2015-08-13T20:53:30.478Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C189202233-LPDAAC_ECS&page_num=1&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
 ab03e412d750ecd03b5c010607e1e9a3679af123:
   response:
     status:
@@ -8632,6 +8657,26 @@ d7a36a668ff59031d800a0b601af05d93f3d3ccd:
       encoding: UTF-8
       string: '{"feed":{"updated":"2015-03-18T17:27:42.259Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C187016591-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[],"facets":[{"field":"archive_center","value-counts":[]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[]},{"field":"instrument","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
+    http_version: 
+863a2d012e29e9d92ce79ba1765e53b68e8e79e0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 13 Aug 2015 20:50:29 GMT
+      access-control-allow-origin:
+      - "*"
+      content-type:
+      - application/json;charset=ISO-8859-1
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2015-08-13T20:55:05.229Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C189202233-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[],"facets":[{"field":"archive_center","value-counts":[]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[]},{"field":"instrument","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
     http_version: 
 f5eedc7cc80e060d92070f390cfab0b9fb048464:
   response:
@@ -17937,6 +17982,34 @@ f22e97385c43c6381c097f45bec933514ffa378e:
         SCIENCE",1]]},{"field":"topic","value-counts":[["LAND SURFACE",1]]},{"field":"term","value-counts":[["LAND
         TEMPERATURE",1],["SURFACE RADIATIVE PROPERTIES",1]]},{"field":"variable_level_1","value-counts":[["EMISSIVITY",1],["LAND
         SURFACE TEMPERATURE",1]]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
+    http_version: 
+dd05a3445834d32c768ac47178ea39002a201276:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 13 Aug 2015 20:03:38 GMT
+      access-control-allow-origin:
+      - "*"
+      content-type:
+      - application/json;charset=ISO-8859-1
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2015-08-13T20:48:06.151Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=C189202233-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"3","boxes":["-90 -180 90
+        180"],"time_start":"1999-12-18T00:00:00Z","dif_ids":["ASTGTM1"],"version_id":"1","updated":"2009-08-19T13:38:57.220Z","dataset_id":"ASTER
+        Global Digital Elevation Model V001","data_center":"LPDAAC_ECS","short_name":"ASTGTM","title":"ASTER
+        Global Digital Elevation Model V001","coordinate_system":"CARTESIAN","summary":"ASTER
+        Global Digital Elevation Model","has_granules":true,"time_end":"2008-06-30T23:59:59Z","orbit_parameters":{},"id":"C189202233-LPDAAC_ECS","score":0.5,"original_format":"ECHO10","granule_count":22604,"archive_center":"LPDAAC","browse_flag":false,"online_access_flag":false,"links":[{"href":"https://lpdaac.usgs.gov/lpdaac/products/aster_product_table","hreflang":"en-US","title":"Documents
+        page for LP DAAC ASTER Products. (MiscInformation)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]}],"facets":[{"field":"archive_center","value-counts":[["LPDAAC",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["Terra",1]]},{"field":"instrument","value-counts":[["ASTER",1]]},{"field":"sensor","value-counts":[["SWIR",1],["TIR",1],["VNIR",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",1]]},{"field":"category","value-counts":[["EARTH
+        SCIENCE",1]]},{"field":"topic","value-counts":[["LAND SURFACE",1]]},{"field":"term","value-counts":[["TOPOGRAPHY",1]]},{"field":"variable_level_1","value-counts":[["TERRAIN
+        ELEVATION",1],["TOPOGRAPHICAL RELIEF",1]]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
     http_version: 
 9212b9a3547a768d4066be47b8da8568f1ffad3d:
   response:

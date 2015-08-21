@@ -23,6 +23,39 @@ describe 'Dataset details', reset: false do
     end
   end
 
+  context "when selecting a dataset that is only viewable after logging in" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search
+      login
+      wait_for_xhr
+      fill_in 'keywords', with: 'C189202233-LPDAAC_ECS'
+      wait_for_xhr
+    end
+
+    after :all do
+      Capybara.reset_sessions!
+    end
+
+    it "displays the dataset details" do
+      first_dataset_result.click_link('View dataset details')
+      wait_for_xhr
+      within('#dataset-details') do
+        expect(page).to have_content('ASTER Global Digital Elevation Model V001')
+        expect(page).to have_content('Archive Center: LPDAAC')
+        expect(page).to have_content('Processing Center: JPL')
+        expect(page).to have_content('Short Name: ASTGTM')
+        expect(page).to have_content('VERSION 1')
+        expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (phone) 605-594-6963 (fax) lpdaac@eos.nasa.gov')
+        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
+        expect(page).to have_content('Metadata Formats: Native | ATOM | ECHO10 | ISO19115 | DIF')
+        expect(page).to have_content('Temporal Extent: 1999-12-18 to 2008-06-30')
+        expect(page).to have_content('API Endpoints: CMR')
+        expect(page).to have_content('Science Keywords: Earth ScienceLand SurfaceTopography')
+      end
+    end
+  end
+
   context "when selecting a dataset with point spatial" do
     before :all do
       load_page :search
