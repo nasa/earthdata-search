@@ -41,12 +41,6 @@ describe "Dataset Facets", reset: false do
       find("h3.facet-title", text: '2D Coordinate Name').click
     end
 
-    it "shows the first Category Keyword facet" do
-      find("h3.facet-title", text: 'Category Keyword').click
-      expect(page).to have_content("Category Keyword ATMOSPHERE")
-      find("h3.facet-title", text: 'Category Keyword').click
-    end
-
     it "shows the first Topic Keyword facet" do
       find("h3.facet-title", text: 'Topic Keyword').click
       expect(page).to have_content("Topic Keyword BIOSPHERE")
