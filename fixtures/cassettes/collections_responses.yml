@@ -25953,6 +25953,201 @@ ff0598375a7a44cc3e548d26472e1a5ffcec14f4:
       string: '{"errors":["The polygon boundary contains both the North and South
         Poles. A polygon can contain at most one pole."]}'
     http_version: 
+ab77a0372dac56e70370835e17091c59c2abc1ed:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 23 Aug 2015 19:17:22 GMT
+      cmr-took:
+      - '152'
+      cmr-hits:
+      - '0'
+      access-control-allow-origin:
+      - "*"
+      content-type:
+      - application/json; charset=utf-8
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2015-08-23T19:17:23.131Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&processing_level_id%5B%5D=L1T&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"archive_center","value-counts":[]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[]},{"field":"instrument","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
+    http_version: 
+4c40c976bf035f1d9608d0faed7d034c0c91b6da:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 23 Aug 2015 19:17:22 GMT
+      cmr-took:
+      - '103'
+      cmr-hits:
+      - '6'
+      access-control-allow-origin:
+      - "*"
+      content-type:
+      - application/json; charset=utf-8
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2015-08-23T19:17:22.237Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&processing_level_id%5B%5D=L1T&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"L1T","boxes":["-90 -180
+        90 180"],"time_start":"1999-06-29T00:00:00Z","dif_ids":["MOSAICETM"],"version_id":"1","updated":"2011-03-14T09:30:00.000Z","dataset_id":"Tri-Decadal
+        Global Landsat Orthorectified ETM+ Pan Mosaic V1","data_center":"USGS_EROS","short_name":"MOSAICETM","title":"Tri-Decadal
+        Global Landsat Orthorectified ETM+ Pan Mosaic V1","coordinate_system":"CARTESIAN","summary":"
+        Abstract: The Landsat Orthorectified data collection consists of a global\n                set
+        of high-quality, relatively cloud-free orthorectified MSS, TM and ETM+ imagery\n                from
+        Landsats 1-5 and 7. This dataset was selected and generated through NASA''s\n                Commercial
+        Remote Sensing Program, as part of a cooperative effort between NASA and\n                the
+        commercial remote sensing community to provide users with access to\n                quality-screened,
+        high-resolution satellite images with global coverage over the\n                Earth''s
+        land masses. The data collection was compiled via NASA contract with Earth\n                Satellite
+        Corporation (Rockville, MD) in association with NASA''s Scientific Data\n                Purchase
+        program. The Landsat Orthorectified data collection consists of\n                approximately
+        7,500 MSS (Landsat 1-5) images, 7,461 TM (Landsat 4-5) images and\n                approximately
+        8,500 ETM+ (Landsat 7) images, which were selected to provide two full\n                sets
+        of global coverage over an approximate 10-year interval (circa 1990 and circa\n                2000).
+        All selected images were either cloud-free or contained minimal cloud cover.\n                In
+        addition, only images with a high quality ranking in regards to the possible\n                presence
+        of errors such as missing scans or saturated bands were selected. Purpose:\n                To
+        provide users with access to quality-screened, high-resolution satellite images\n                with
+        global coverage over the Earth''s land masses. Supplemental_Information: The\n                average
+        acquisition date for the Landsat Orthorectified ETM+ data is 2000 (+/- 1\n                year).
+        All scenes were acquired between 1999 and 2001. These data have been\n                orthorectified
+        for coregistration with the earlier (circa 1990) Landsat TM coverage.","has_granules":true,"orbit_parameters":{},"id":"C162886583-USGS_EROS","original_format":"ECHO10","granule_count":2467,"archive_center":"LTA","browse_flag":false,"online_access_flag":false},{"processing_level_id":"L1T","boxes":["-90
+        -180 90 180"],"time_start":"1999-06-29T00:00:00Z","dif_ids":["ETMPAN"],"version_id":"1","updated":"2011-03-14T09:30:00.000Z","dataset_id":"Tri-Decadal
+        Global Landsat Orthorectified ETM+ Pan Scene V1","data_center":"USGS_EROS","short_name":"ETMPAN","title":"Tri-Decadal
+        Global Landsat Orthorectified ETM+ Pan Scene V1","coordinate_system":"CARTESIAN","summary":"
+        Abstract: The Landsat Orthorectified data collection consists of a global\n                set
+        of high-quality, relatively cloud-free orthorectified MSS, TM and ETM+ imagery\n                from
+        Landsats 1-5 and 7. This dataset was selected and generated through NASA''s\n                Commercial
+        Remote Sensing Program, as part of a cooperative effort between NASA and\n                the
+        commercial remote sensing community to provide users with access to\n                quality-screened,
+        high-resolution satellite images with global coverage over the\n                Earth''s
+        land masses. The data collection was compiled via NASA contract with Earth\n                Satellite
+        Corporation (Rockville, MD) in association with NASA''s Scientific Data\n                Purchase
+        program. The Landsat Orthorectified data collection consists of\n                approximately
+        7,500 MSS (Landsat 1-5) images, 7,461 TM (Landsat 4-5) images and\n                approximately
+        8,500 ETM+ (Landsat 7) images, which were selected to provide two full\n                sets
+        of global coverage over an approximate 10-year interval (circa 1990 and circa\n                2000).
+        All selected images were either cloud-free or contained minimal cloud cover.\n                In
+        addition, only images with a high quality ranking in regards to the possible\n                presence
+        of errors such as missing scans or saturated bands were selected. Purpose:\n                To
+        provide users with access to quality-screened, high-resolution satellite images\n                with
+        global coverage over the Earth''s land masses. Supplemental_Information: The\n                average
+        acquisition date for the Landsat Orthorectified ETM+ data is 2000 (+/- 1\n                year).
+        All scenes were acquired between 1999 and 2001. These data have been\n                orthorectified
+        for coregistration with the earlier (circa 1990) Landsat TM coverage.","has_granules":true,"orbit_parameters":{},"id":"C162886584-USGS_EROS","original_format":"ECHO10","granule_count":8461,"archive_center":"LTA","browse_flag":false,"online_access_flag":false},{"processing_level_id":"L1T","boxes":["-90
+        -180 90 180"],"time_start":"1999-06-29T00:00:00Z","dif_ids":["ETM"],"version_id":"1","updated":"2011-03-14T09:30:00.000Z","dataset_id":"Tri-Decadal
+        Global Landsat Orthorectified ETM+ Reg Scene V1","data_center":"USGS_EROS","short_name":"ETM","title":"Tri-Decadal
+        Global Landsat Orthorectified ETM+ Reg Scene V1","coordinate_system":"CARTESIAN","summary":"
+        Abstract: The Landsat Orthorectified data collection consists of a global\n                set
+        of high-quality, relatively cloud-free orthorectified MSS, TM and ETM+ imagery\n                from
+        Landsats 1-5 and 7. This dataset was selected and generated through NASA''s\n                Commercial
+        Remote Sensing Program, as part of a cooperative effort between NASA and\n                the
+        commercial remote sensing community to provide users with access to\n                quality-screened,
+        high-resolution satellite images with global coverage over the\n                Earth''s
+        land masses. The data collection was compiled via NASA contract with Earth\n                Satellite
+        Corporation (Rockville, MD) in association with NASA''s Scientific Data\n                Purchase
+        program. The Landsat Orthorectified data collection consists of\n                approximately
+        7,500 MSS (Landsat 1-5) images, 7,461 TM (Landsat 4-5) images and\n                approximately
+        8,500 ETM+ (Landsat 7) images, which were selected to provide two full\n                sets
+        of global coverage over an approximate 10-year interval (circa 1990 and circa\n                2000).
+        All selected images were either cloud-free or contained minimal cloud cover.\n                In
+        addition, only images with a high quality ranking in regards to the possible\n                presence
+        of errors such as missing scans or saturated bands were selected. Purpose:\n                To
+        provide users with access to quality-screened, high-resolution satellite images\n                with
+        global coverage over the Earth''s land masses. Supplemental_Information: The\n                average
+        acquisition date for the Landsat Orthorectified ETM+ data is 2000 (+/- 1\n                year).
+        All scenes were acquired between 1999 and 2001. These data have been\n                orthorectified
+        for coregistration with the earlier (circa 1990) Landsat TM coverage.","has_granules":true,"orbit_parameters":{},"id":"C162886581-USGS_EROS","original_format":"ECHO10","granule_count":8444,"archive_center":"LTA","browse_flag":false,"online_access_flag":false},{"processing_level_id":"L1T","boxes":["-90
+        -180 90 180"],"time_start":"1972-07-25T00:00:00Z","dif_ids":["MSS"],"version_id":"1","updated":"2011-03-14T09:30:00.000Z","dataset_id":"Tri-Decadal
+        Global Landsat Orthorectified MSS Scene V1","data_center":"USGS_EROS","short_name":"MSS","title":"Tri-Decadal
+        Global Landsat Orthorectified MSS Scene V1","coordinate_system":"CARTESIAN","summary":"
+        Abstract: The Landsat Orthorectified data collection consists of a global\n                set
+        of high-quality, relatively cloud-free orthorectified MSS, TM and ETM+ imagery\n                from
+        Landsats 1-5 and 7. This dataset was selected and generated through NASA''s\n                Commercial
+        Remote Sensing Program, as part of a cooperative effort between NASA and\n                the
+        commercial remote sensing community to provide users with access to\n                quality-screened,
+        high-resolution satellite images with global coverage over the\n                Earth''s
+        land masses. The data collection was compiled via NASA contract with Earth\n                Satellite
+        Corporation (Rockville, MD) in association with NASA''s Scientific Data\n                Purchase
+        program. The Landsat Orthorectified data collection consists of\n                approximately
+        7,500 MSS (Landsat 1-5) images, 7,461 TM (Landsat 4-5) images and\n                approximately
+        8,500 ETM+ (Landsat 7) images, which were selected to provide two full\n                sets
+        of global coverage over an approximate 10-year interval (circa 1990 and circa\n                2000).
+        All selected images were either cloud-free or contained minimal cloud cover.\n                In
+        addition, only images with a high quality ranking in regards to the possible\n                presence
+        of errors such as missing scans or saturated bands were selected. Purpose:\n                To
+        provide users with access to quality-screened, high-resolution satellite images\n                with
+        global coverage over the Earth''s land masses. Supplemental_Information: The\n                average
+        acquisition date for the Landsat Orthorectified ETM+ data is 2000 (+/- 1\n                year).
+        All scenes were acquired between 1999 and 2001. These data have been\n                orthorectified
+        for coregistration with the earlier (circa 1990) Landsat TM coverage.","has_granules":true,"orbit_parameters":{},"id":"C162886585-USGS_EROS","original_format":"ECHO10","granule_count":7537,"archive_center":"LTA","browse_flag":false,"online_access_flag":false},{"processing_level_id":"L1T","boxes":["-90
+        -180 90 180"],"time_start":"1984-04-13T00:00:00Z","dif_ids":["MOSAICTM"],"version_id":"1","updated":"2011-03-14T09:30:00.000Z","dataset_id":"Tri-Decadal
+        Global Landsat Orthorectified TM Mosaic V1","data_center":"USGS_EROS","short_name":"MOSAICTM","title":"Tri-Decadal
+        Global Landsat Orthorectified TM Mosaic V1","coordinate_system":"CARTESIAN","summary":"
+        Abstract: The Landsat Orthorectified data collection consists of a global\n                set
+        of high-quality, relatively cloud-free orthorectified MSS, TM and ETM+ imagery\n                from
+        Landsats 1-5 and 7. This dataset was selected and generated through NASA''s\n                Commercial
+        Remote Sensing Program, as part of a cooperative effort between NASA and\n                the
+        commercial remote sensing community to provide users with access to\n                quality-screened,
+        high-resolution satellite images with global coverage over the\n                Earth''s
+        land masses. The data collection was compiled via NASA contract with Earth\n                Satellite
+        Corporation (Rockville, MD) in association with NASA''s Scientific Data\n                Purchase
+        program. The Landsat Orthorectified data collection consists of\n                approximately
+        7,500 MSS (Landsat 1-5) images, 7,461 TM (Landsat 4-5) images and\n                approximately
+        8,500 ETM+ (Landsat 7) images, which were selected to provide two full\n                sets
+        of global coverage over an approximate 10-year interval (circa 1990 and circa\n                2000).
+        All selected images were either cloud-free or contained minimal cloud cover.\n                In
+        addition, only images with a high quality ranking in regards to the possible\n                presence
+        of errors such as missing scans or saturated bands were selected. Purpose:\n                To
+        provide users with access to quality-screened, high-resolution satellite images\n                with
+        global coverage over the Earth''s land masses. Supplemental_Information: The\n                average
+        acquisition date for the Landsat Orthorectified ETM+ data is 2000 (+/- 1\n                year).
+        All scenes were acquired between 1999 and 2001. These data have been\n                orthorectified
+        for coregistration with the earlier (circa 1990) Landsat TM coverage.","has_granules":true,"orbit_parameters":{},"id":"C162886586-USGS_EROS","original_format":"ECHO10","granule_count":488,"archive_center":"LTA","browse_flag":false,"online_access_flag":false},{"processing_level_id":"L1T","boxes":["-90
+        -180 90 180"],"time_start":"1984-04-13T00:00:00Z","dif_ids":["TM"],"version_id":"1","updated":"2011-03-14T09:30:00.000Z","dataset_id":"Tri-Decadal
+        Global Landsat Orthorectified TM Scene V1","data_center":"USGS_EROS","short_name":"TM","title":"Tri-Decadal
+        Global Landsat Orthorectified TM Scene V1","coordinate_system":"CARTESIAN","summary":"
+        Abstract: The Landsat Orthorectified data collection consists of a global\n                set
+        of high-quality, relatively cloud-free orthorectified MSS, TM and ETM+ imagery\n                from
+        Landsats 1-5 and 7. This dataset was selected and generated through NASA''s\n                Commercial
+        Remote Sensing Program, as part of a cooperative effort between NASA and\n                the
+        commercial remote sensing community to provide users with access to\n                quality-screened,
+        high-resolution satellite images with global coverage over the\n                Earth''s
+        land masses. The data collection was compiled via NASA contract with Earth\n                Satellite
+        Corporation (Rockville, MD) in association with NASA''s Scientific Data\n                Purchase
+        program. The Landsat Orthorectified data collection consists of\n                approximately
+        7,500 MSS (Landsat 1-5) images, 7,461 TM (Landsat 4-5) images and\n                approximately
+        8,500 ETM+ (Landsat 7) images, which were selected to provide two full\n                sets
+        of global coverage over an approximate 10-year interval (circa 1990 and circa\n                2000).
+        All selected images were either cloud-free or contained minimal cloud cover.\n                In
+        addition, only images with a high quality ranking in regards to the possible\n                presence
+        of errors such as missing scans or saturated bands were selected. Purpose:\n                To
+        provide users with access to quality-screened, high-resolution satellite images\n                with
+        global coverage over the Earth''s land masses. Supplemental_Information: The\n                average
+        acquisition date for the Landsat Orthorectified ETM+ data is 2000 (+/- 1\n                year).
+        All scenes were acquired between 1999 and 2001. These data have been\n                orthorectified
+        for coregistration with the earlier (circa 1990) Landsat TM coverage.","has_granules":true,"orbit_parameters":{},"id":"C162886582-USGS_EROS","original_format":"ECHO10","granule_count":7044,"archive_center":"LTA","browse_flag":false,"online_access_flag":false}],"facets":[{"field":"archive_center","value-counts":[["LTA",6]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["LANDSAT-4",3],["LANDSAT-5",3],["LANDSAT-7",3],["LANDSAT-1",1],["LANDSAT-2",1],["LANDSAT-3",1]]},{"field":"instrument","value-counts":[["LANDSAT-4",3],["LANDSAT-5",3],["LANDSAT-7",3],["LANDSAT-1",1],["LANDSAT-2",1],["LANDSAT-3",1]]},{"field":"sensor","value-counts":[["ETM+",2],["TM",2],["ETM",1],["MSS",1]]},{"field":"two_d_coordinate_system_name","value-counts":[["WRS-2",4],["WRS-1",1]]},{"field":"processing_level_id","value-counts":[["L1T",6]]},{"field":"category","value-counts":[["EARTH
+        SCIENCE",6]]},{"field":"topic","value-counts":[["SPECTRAL/ENGINEERING",6]]},{"field":"term","value-counts":[["VISIBLE
+        WAVELENGTHS",6],["INFRARED WAVELENGTHS",5]]},{"field":"variable_level_1","value-counts":[["VISIBLE
+        IMAGERY",6],["THERMAL INFRARED",5]]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
+    http_version: 
 3e6cb734614b2bd0ef4b21514a57c4bf275437e5:
   response:
     status:
