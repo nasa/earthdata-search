@@ -111,7 +111,7 @@ this.edsc.util.url = do(window
     new ArrayJoiner('instrument', 'fi')
     new ArrayJoiner('sensor', 'fs')
     new ArrayJoiner('two_d_coordinate_system_name', 'f2')
-    new ArrayJoiner('processing_level', 'fl')
+    new ArrayJoiner('processing_level_id', 'fl')
 
     new ParamFlattener(['science_keywords', '0', 'category'], 'fsc', true)
     new ParamFlattener(['science_keywords', '0', 'topic'], 'fst', true)
