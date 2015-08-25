@@ -1746,6 +1746,32 @@ http_interactions:
   digest: 5d002f5f6ec23ed72a0d7710b3f753e1ba62fe85
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&processing_level_id%5B%5D=L1T&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Sun, 23 Aug 2015 19:17:23 GMT
+  digest: ab77a0372dac56e70370835e17091c59c2abc1ed
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&processing_level_id%5B%5D=L1T&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Sun, 23 Aug 2015 19:17:22 GMT
+  digest: 4c40c976bf035f1d9608d0faed7d034c0c91b6da
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=AQUA&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
