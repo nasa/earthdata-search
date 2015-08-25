@@ -2,9 +2,7 @@ language: ruby
 cache: bundler
 sudo: false
 script:
-  - bundle exec rake bamboo:prepare
-  - bundle exec rake db:migrate
-  - bundle exec rake knapsack:rspec
+  - bundle exec rake travis:ci
 env:
   global:
     - CI_NODE_TOTAL=4
@@ -12,4 +10,5 @@ env:
     - CI_NODE_INDEX=0
     - CI_NODE_INDEX=1
     - CI_NODE_INDEX=2
-    - CI_NODE_INDEX=4
+    - CI_NODE_INDEX=3
+    - JASMINE=true

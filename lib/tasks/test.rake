@@ -26,4 +26,15 @@ namespace :ci do
   end
 end
 
+namespace :travis do
+  task :ci => ['bamboo:prepare', 'db:migrate', 'db:seed', 'ci:prepare'] do
+    if ENV['JASMINE'] == 'true'
+      Rake::Task['jasmine:ci']
+    else
+      Rake::Task['knapsack:rspec']
+    end
+    Rake::Task['ci:cleancache']
+  end
+end
+
 Rake::Task[:spec].enhance(['ci:prepare', 'jasmine:ci', 'ci:cleancache'])
