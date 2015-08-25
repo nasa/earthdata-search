@@ -42,7 +42,7 @@ class DatasetDetailsPresenter < DetailsPresenter
     @dataset.temporal = temporal(dataset.temporal)
     @dataset.associated_difs = associated_difs(dataset.associated_difs)
 
-    metadata_url = "https://cmr.#{Rails.env.uat? ? 'uat.' : nil}earthdata.nasa.gov/search/concepts/#{@dataset.id}"
+    metadata_url = "#{Rails.configuration.services['earthdata'][env]['cmr_root']}/search/concepts/#{@dataset.id}"
     url_token = "?token=#{token}:#{client_id(env)}" if token
     @dataset.native_url = "#{metadata_url}#{url_token}"
     @dataset.atom_url = "#{metadata_url}.atom#{url_token}"
