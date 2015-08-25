@@ -12,6 +12,10 @@ require 'headless'
 require 'capybara-screenshot/rspec'
 require 'rack_session_access/capybara'
 
+require 'knapsack'
+
+Knapsack::Adapters::RspecAdapter.bind
+
 if ENV['driver'] == 'poltergeist'
   require 'capybara/poltergeist'
   Capybara.javascript_driver = :poltergeist

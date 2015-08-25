@@ -48,6 +48,7 @@ group :development, :test do
   gem 'colored'
   gem 'vcr'
   gem 'sqlite3'
+  gem 'knapsack'
 
   gem 'jasmine'
   gem 'jasmine_junitxml_formatter'
