@@ -318,4 +318,22 @@ describe "Dataset Facets", reset: false do
       expect(facet_count).to eq(dataset_count)
     end
   end
+
+  context "when selecting a processing level facet" do
+    before :all do
+      load_page :search, facets: true
+      find("h3.facet-title", text: 'Processing level').click
+      find(".facets-item", text: "L1T").click
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+    end
+
+    it "shortens the query parameter to 'fl' in the url" do
+      uri = URI.parse(current_url)
+      uri.query.should have_content('fl=')
+    end
+  end
 end
