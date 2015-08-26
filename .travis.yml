@@ -14,7 +14,7 @@ env:
     - JASMINE=true
 deploy:
   provider: script
-  script: scripts/sync
+  script: bin/ecc-sync
   on:
     branch: master
     repo: nasa/earthdata-search
