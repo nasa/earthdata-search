@@ -35,6 +35,7 @@ describe 'Map Zooming', reset: false do
       before :all do
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
+        sleep 0.2 # Allow animations to finish and avoid clickfailed
       end
 
       after :all do
