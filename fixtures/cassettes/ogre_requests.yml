@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://ogre.adc4gis.com/convert
+    uri: http://ogre.example.com/convert
     body:
       encoding: UTF-8
       string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";
@@ -31,7 +31,7 @@ http_interactions:
   digest: 8ee674031b2620c5db3e78ccb980a82b6dd743e7
 - request:
     method: post
-    uri: http://ogre.adc4gis.com/convert
+    uri: http://ogre.example.com/convert
     body:
       encoding: UTF-8
       string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";
@@ -218,7 +218,7 @@ http_interactions:
   digest: a7134186e27a2585fd0360ed3cd637a61ccd1dac
 - request:
     method: post
-    uri: http://ogre.adc4gis.com/convert
+    uri: http://ogre.example.com/convert
     body:
       encoding: UTF-8
       string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";

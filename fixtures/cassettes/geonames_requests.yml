@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=%22Texas%2C+United+States%22&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=%22Texas%2C+United+States%22&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -13,7 +13,7 @@ http_interactions:
   digest: 4ca6412fa50feb9358aeadde633231506802a4cc
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=%22texas&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=%22texas&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -24,7 +24,7 @@ http_interactions:
   digest: dcc2b09714a899df18b019deb8fae5427ae8639b
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=AST&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=AST&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -35,7 +35,7 @@ http_interactions:
   digest: 49b88654d7384520e8b15e0f878fc9e77c4a0d88
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=NSIDC-0022&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=NSIDC-0022&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -46,7 +46,7 @@ http_interactions:
   digest: 1bfe213d1ae75980c4ea7ba60f5d8d2da23d2b8d
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=NSIDC-0239&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=NSIDC-0239&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -57,7 +57,7 @@ http_interactions:
   digest: d9bbcff8a73b768d1979f0b66d46905ae15ccc05
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=Texas&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=Texas&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -68,7 +68,7 @@ http_interactions:
   digest: c0d62da42d27a20af06069e22f65bef39128f943
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=asdfasdfasdfasdfasdf&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=asdfasdfasdfasdfasdf&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -79,7 +79,7 @@ http_interactions:
   digest: b5e29d316f94313e0d8a8f5edc02bee0341c0977
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=asdfasdfasdfqwer&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=asdfasdfasdfqwer&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -90,7 +90,7 @@ http_interactions:
   digest: e9dadbaadd61cc605a52bc698b7abbaced5464a3
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=snow+cover+nrt&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=snow+cover+nrt&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -101,7 +101,7 @@ http_interactions:
   digest: 375316b0756584b85bc008cd03fa59af8f01b371
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=somestringthatmatchesnodatasets&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=somestringthatmatchesnodatasets&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -112,7 +112,7 @@ http_interactions:
   digest: d0e5b46aa49aaa344d5e7a6ee5154ac4ed2cf780
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=texas&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=texas&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
@@ -123,7 +123,7 @@ http_interactions:
   digest: 6d6c5bf65c987f75b3977608cc87a76043078cc7
 - request:
     method: get
-    uri: http://api.geonames.org/search?username=edsc&maxRows=5&q=trigger500&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=trigger500&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''
