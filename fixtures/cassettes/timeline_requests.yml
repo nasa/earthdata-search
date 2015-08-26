@@ -1316,6 +1316,36 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-08T14%3A15%3A35.060Z&interval=month&start_date=1973-02-13T14%3A15%3A35.060Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - EDSC
+  recorded_at: Tue, 25 Aug 2015 21:04:04 GMT
+  digest: c8b40caaf9a19b9f9167480a4c952254a899f960
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-08T14%3A15%3A35.062Z&interval=month&start_date=1973-02-13T14%3A15%3A35.062Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 26 Aug 2015 01:00:14 GMT
+  digest: 3c829d4e7717b38c165486ee8124a82b8d39947c
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: concept_id=C179003030-ORNL_DAAC&end_date=2003-03-08T14%3A15%3A35.063Z&interval=month&start_date=1973-02-13T14%3A15%3A35.063Z
     headers:
       User-Agent:
@@ -1566,6 +1596,21 @@ http_interactions:
       - EDSC
   recorded_at: Mon, 20 Apr 2015 20:44:18 GMT
   digest: 97c3366b38dc80c4d16acb9e043c13709f71f8ab
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C179003030-ORNL_DAAC&end_date=2005-03-08T23%3A59%3A59.998Z&interval=month&start_date=1975-02-14T23%3A59%3A59.998Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 26 Aug 2015 01:00:10 GMT
+  digest: a6e0ffcc6f7b85f69d3312121abcfe9b91449875
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
