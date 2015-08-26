@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json?Echo-Token=2e3021135ad360d78dae733a6c2e8af3e33cd62722d1c74ffb9d281ba00b9fcd%3AGsk6IBbEfa98sbE5UavsZQ
+    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json
     body:
       encoding: US-ASCII
       string: ''
@@ -13,11 +13,13 @@ http_interactions:
       - EDSC
       Echo-ClientId:
       - EDSC
+      Echo-Token:
+      - edsc
   recorded_at: Fri, 15 May 2015 20:49:08 GMT
   digest: 1b73315229d1227f70194f1ebc342c39de44a775
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json?Echo-Token=42dbf97efb0f45e90a305be08c96c4032d0ddbb9d6b36d9e86fbe026725183fe%3AGsk6IBbEfa98sbE5UavsZQ
+    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json
     body:
       encoding: US-ASCII
       string: ''
@@ -28,11 +30,13 @@ http_interactions:
       - EDSC
       Echo-ClientId:
       - EDSC
+      Echo-Token:
+      - edsc
   recorded_at: Tue, 19 May 2015 13:59:16 GMT
   digest: 3c3270ffbfc0169e378e41d8f5db600f8a55214f
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json?Echo-Token=981234f6acdc8e92a91f21bcaa326e01282a3c293a026bd500161fb7edd73957%3AGsk6IBbEfa98sbE5UavsZQ
+    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json
     body:
       encoding: US-ASCII
       string: ''
@@ -43,11 +47,13 @@ http_interactions:
       - EDSC
       Echo-ClientId:
       - EDSC
+      Echo-Token:
+      - edsc
   recorded_at: Fri, 15 May 2015 20:20:26 GMT
   digest: dc050b7ad07a130b66aebcf491f56fa5ebd6b06b
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json?Echo-Token=b41b98c6308688123890c85dfc48c4def3ea65e9f32f6e2b39915db450ad5a6b%3AGsk6IBbEfa98sbE5UavsZQ
+    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json
     body:
       encoding: US-ASCII
       string: ''
@@ -58,11 +64,13 @@ http_interactions:
       - EDSC
       Echo-ClientId:
       - EDSC
+      Echo-Token:
+      - edsc
   recorded_at: Fri, 19 Jun 2015 18:34:02 GMT
   digest: 4dd24bad2043482cb0ce67328257e869fb8d1db5
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json?Echo-Token=edsc-access%3AGsk6IBbEfa98sbE5UavsZQ
+    uri: https://api.echo.nasa.gov/echo-rest/service_entries/5AE45EAE-C41E-04C0-087A-5C6FF266F58E.json
     body:
       encoding: US-ASCII
       string: ''
@@ -73,6 +81,8 @@ http_interactions:
       - EDSC
       Echo-ClientId:
       - EDSC
+      Echo-Token:
+      - edsc
   recorded_at: Tue, 25 Aug 2015 20:59:33 GMT
   digest: 2560f7df34f299232209e4218ad53864213c87b9
 recorded_with: VCR 2.6.0

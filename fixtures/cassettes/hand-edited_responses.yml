@@ -409,7 +409,7 @@ b591cfd9f66d9e60549268630de2aa867d7e5c17:
       - close
     body:
       encoding: UTF-8
-      string: '{"errors":["Token [443617573ca70bd88451a4c040f166cbab11b722b4683eaf5138a26cf4427aef:Gsk6IBbEfa98sbE5UavsZQ]
+      string: '{"errors":["Token [expired]
         has expired."]}'
     http_version:
 invalid_token:
@@ -436,7 +436,7 @@ invalid_token:
       - close
     body:
       encoding: UTF-8
-      string: '{"errors":["Token [invalid:Gsk6IBbEfa98sbE5UavsZQ] is not a valid URS
+      string: '{"errors":["Token [invalid] is not a valid URS
         token"]}'
     http_version:
 invalid_datasets_logged_in:
@@ -467,7 +467,7 @@ invalid_datasets_logged_in:
       - close
     body:
       encoding: UTF-8
-      string: '{"errors":["Token invalid:Gsk6IBbEfa98sbE5UavsZQ does not exist"]}'
+      string: '{"errors":["Token invalid does not exist"]}'
     http_version:
 invalid_datasets_logged_out:
   response:
