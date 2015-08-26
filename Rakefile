@@ -15,3 +15,5 @@ namespace :db do
   end
 end
 
+
+Knapsack.load_tasks if defined?(Knapsack)

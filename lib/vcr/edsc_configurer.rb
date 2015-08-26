@@ -33,8 +33,8 @@ module VCR
       r1.headers['Echo-Token'] == r2.headers['Echo-Token']
     end
 
-    def self.register_token(name, token)
-      @persister.tokens[name] = token
+    def self.register_normalizer(normalizer)
+      @persister.normalizers << normalizer
     end
 
     def self.configure(c, options={})
@@ -63,9 +63,9 @@ module VCR
 
           cassette = 'services'
           uri = request.uri
-          if uri.start_with? 'http://api.geonames.org'
+          if uri.include? 'orderby=relevance&isNameRequired=true&style=full&type=json'
             cassette = 'geonames'
-          elsif uri.start_with? 'http://ogre.adc4gis.com'
+          elsif uri.include? '/convert'
             cassette = 'ogre'
           elsif (request.method == :delete ||
                  (request.uri.include?('/orders.json') && request.method == :get) ||

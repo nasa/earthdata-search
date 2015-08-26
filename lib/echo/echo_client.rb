@@ -51,7 +51,7 @@ module Echo
     end
 
     def get_option_definition(id, token)
-      get("/echo-rest/option_definitions/#{id}.json")
+      get("/echo-rest/option_definitions/#{id}.json", {}, token_header(token))
     end
 
     def get_service_order_information(id, token)
@@ -59,11 +59,11 @@ module Echo
     end
 
     def get_service_option_definition(id, token)
-      get("/echo-rest/service_option_definitions/#{id}.json", token_header(token))
+      get("/echo-rest/service_option_definitions/#{id}.json", {}, token_header(token))
     end
 
     def get_service_entry(id, token)
-      get("/echo-rest/service_entries/#{id}.json", token_header(token))
+      get("/echo-rest/service_entries/#{id}.json", {}, token_header(token))
     end
 
     def get_orders(params, token)

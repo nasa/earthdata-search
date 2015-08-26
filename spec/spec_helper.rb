@@ -112,15 +112,23 @@ RSpec.configure do |config|
   timings = {}
 
   config.before :suite do
-    #register tokens for usernames
-    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['edsc']
-    VCR::EDSCConfigurer.register_token('edsc', token['access_token'] + ':' + ENV['urs_client_id'])
+    normalizers = []
+    # Avoid recording tokens
+    ['edsc', 'edscbasic', 'expired_token'].each do |token_key|
+      token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key]['access_token']
+      access_token = "#{token}:#{ENV['urs_client_id']}"
+      normalizers << VCR::HeaderNormalizer.new('Echo-Token', access_token, token_key)
+    end
 
-    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['edscbasic']
-    VCR::EDSCConfigurer.register_token('edscbasic', token['access_token'] + ':' + ENV['urs_client_id'])
+    normalizers << VCR::HeaderNormalizer.new('Echo-Token', "invalid:#{ENV['urs_client_id']}", 'invalid')
+    # Avoid recording ogre and places urls
+    normalizers << VCR::UriNormalizer.new(ENV['ogre_url'], 'http://ogre.example.com')
+    normalizers << VCR::UriNormalizer.new(ENV['places_url'], 'http://places.example.com/')
+    normalizers << VCR::UriNormalizer.new("username=#{ENV['places_user_id']}&maxRows", 'username=edsc&maxRows')
 
-    token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens['expired_token']
-    VCR::EDSCConfigurer.register_token('expired_token', token['access_token'] + ':' + ENV['urs_client_id'])
+    normalizers.each do |normalizer|
+      VCR::EDSCConfigurer.register_normalizer(normalizer)
+    end
   end
 
   config.before :suite do
