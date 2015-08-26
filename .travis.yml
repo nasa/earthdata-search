@@ -17,3 +17,4 @@ deploy:
   script: scripts/sync
   on:
     branch: master
+    repo: nasa/earthdata-search
