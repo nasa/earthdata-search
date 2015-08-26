@@ -37,10 +37,10 @@ test_results
 # rubymine project files
 /.idea
 
+/bin/ecc-sync
 /bin/bundle
 /bin/rails
 /bin/rake
 config/initializers/cookies_serializer.rb
 config/initializers/filter_parameter_logging.rb
 config/secrets.yml
-

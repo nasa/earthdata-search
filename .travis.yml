@@ -12,3 +12,14 @@ env:
     - CI_NODE_INDEX=2
     - CI_NODE_INDEX=3
     - JASMINE=true
+deploy:
+  provider: script
+  script: scripts/sync
+  on:
+    branch: master
+before_install:
+  - mkdir -p tmp
+  - openssl aes-256-cbc -K $encrypted_461274fed2c2_key -iv $encrypted_461274fed2c2_iv
+    -in .travis/ecc-sync.enc -out bin/ecc-sync -d
+  - openssl aes-256-cbc -K $encrypted_461274fed2c2_key -iv $encrypted_461274fed2c2_iv
+    -in .travis/travis.enc -out tmp/travis -d
