@@ -15,7 +15,7 @@ Rake::Task[:test].enhance(['doc:ui']) do
 end
 
 namespace :ci do
-  task :prepare => 'colormaps:load' do
+  task :prepare do
     FileUtils.mkdir_p 'build_output'
     FileUtils.mkdir_p 'test_results'
     FileUtils.mkdir_p 'tmp/capybara'
@@ -31,10 +31,13 @@ namespace :travis do
     if ENV['JASMINE'] == 'true'
       Rake::Task['jasmine:ci'].invoke
     else
-      #Rake::Task['knapsack:rspec'].invoke
+      Rake::Task['knapsack:rspec'].invoke
     end
     Rake::Task['ci:cleancache'].invoke
   end
 end
+
+# Deployment branch. Tests have already passed at this point.
+Rake::Task[:spec].clear if ENV['bamboo_repository_git_branch'] == 'deploy'
 
 Rake::Task[:spec].enhance(['ci:prepare', 'jasmine:ci', 'ci:cleancache'])
