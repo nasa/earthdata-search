@@ -1589,7 +1589,7 @@
       "antarctic": false
     }
   ],
-  "___GPM_1CGPMGMI": [
+  "GSFCS4PA___GPM_1CGPMGMI": [
     {
       "match": {
         "time_start": ">=2014-10-11"
@@ -1597,34 +1597,6 @@
       "product": "GMI_Brightness_Temp_Asc",
       "maxNativeZoom": 5,
       "title": "Brightness Temperature (Ascending)",
-      "source": "GPM / GMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2014-10-11"
-      },
-      "product": "GMI_Brightness_Temp_Asc",
-      "maxNativeZoom": 5,
-      "title": "Brightness Temperature (Ascending)",
-      "source": "GPM / GMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2014-10-11"
-      },
-      "product": "GMI_Brightness_Temp_Dsc",
-      "maxNativeZoom": 5,
-      "title": "Brightness Temperature (Descending)",
       "source": "GPM / GMI",
       "format": "png",
       "resolution": "2km",
@@ -1647,21 +1619,7 @@
       "antarctic": false
     }
   ],
-  "___GPM_2AGPROFGPMGMI": [
-    {
-      "match": {
-        "time_start": ">=2014-10-11"
-      },
-      "product": "GMI_Rain_Rate_Dsc",
-      "maxNativeZoom": 5,
-      "title": "Rain Rate (Descending)",
-      "source": "GPM / GMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
+  "GSFCS4PA___GPM_2AGPROFGPMGMI": [
     {
       "match": {
         "time_start": ">=2014-10-11"
@@ -1694,51 +1652,9 @@
       "match": {
         "time_start": ">=2014-10-11"
       },
-      "product": "GMI_Snow_Rate_Dsc",
-      "maxNativeZoom": 5,
-      "title": "Snow Rate (Descending)",
-      "source": "GPM / GMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2014-10-11"
-      },
       "product": "GMI_Rain_Rate_Asc",
       "maxNativeZoom": 5,
       "title": "Rain Rate (Ascending)",
-      "source": "GPM / GMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2014-10-11"
-      },
-      "product": "GMI_Rain_Rate_Asc",
-      "maxNativeZoom": 5,
-      "title": "Rain Rate (Ascending)",
-      "source": "GPM / GMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2014-10-11"
-      },
-      "product": "GMI_Snow_Rate_Asc",
-      "maxNativeZoom": 5,
-      "title": "Snow Rate (Ascending)",
       "source": "GPM / GMI",
       "format": "png",
       "resolution": "2km",

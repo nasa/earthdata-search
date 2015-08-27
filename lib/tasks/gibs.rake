@@ -62,7 +62,9 @@ namespace :gibs do
       if datacenter.size == 0
         # Secial cases of bad config
         special = {
-          'OMSO2' => 'GSFCS4PA'
+          'OMSO2' => 'GSFCS4PA',
+          'GPM_1CGPMGMI' => 'GSFCS4PA',
+          'GPM_2AGPROFGPMGMI' => 'GSFCS4PA'
         }
         datacenter << special[shortname.first] if special.key?(shortname.first)
         $stderr.puts "Bad configuration: #{shortname}" if datacenter.size == 0
