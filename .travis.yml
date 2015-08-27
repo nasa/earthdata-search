@@ -12,6 +12,9 @@ env:
     - CI_NODE_INDEX=2
     - CI_NODE_INDEX=3
     - JASMINE=true
+branches:
+  only: # Only build master. Pull requests to master also get built.
+    - master
 deploy:
   provider: script
   script: bin/ecc-sync

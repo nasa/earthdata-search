@@ -116,11 +116,11 @@ RSpec.configure do |config|
     # Avoid recording tokens
     ['edsc', 'edscbasic', 'expired_token'].each do |token_key|
       token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key]['access_token']
-      access_token = "#{token}:#{ENV['urs_client_id']}"
+      access_token = "#{token}:#{Rails.configuration.urs_client_id}"
       normalizers << VCR::HeaderNormalizer.new('Echo-Token', access_token, token_key)
     end
 
-    normalizers << VCR::HeaderNormalizer.new('Echo-Token', "invalid:#{ENV['urs_client_id']}", 'invalid')
+    normalizers << VCR::HeaderNormalizer.new('Echo-Token', "invalid:#{Rails.configuration.urs_client_id}", 'invalid')
     # Avoid recording ogre and places urls
     normalizers << VCR::UriNormalizer.new(ENV['ogre_url'], 'http://ogre.example.com')
     normalizers << VCR::UriNormalizer.new(ENV['places_url'], 'http://places.example.com/')
