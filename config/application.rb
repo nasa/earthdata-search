@@ -93,5 +93,7 @@ module EarthdataSearchClient
     config.gibs = JSON.parse(IO.read(Rails.root.join('config/gibs.json')))
     config.echo_env = 'ops'
     config.cmr_client_id = ENV['cmr_client_id'] || config.services['cmr'][Rails.env.to_s]['cmr_client_id']
+    services = config.services
+    config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
   end
 end

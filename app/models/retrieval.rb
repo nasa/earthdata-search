@@ -30,7 +30,7 @@ class Retrieval < ActiveRecord::Base
   # Delayed Jobs calls this method to excute an order creation
   def self.process(id, token, env, base_url)
     if Rails.env.test?
-      normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + ENV['urs_client_id'], 'edsc')
+      normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
       VCR::EDSCConfigurer.register_normalizer(normalizer)
     end
     retrieval = Retrieval.find_by_id(id)
