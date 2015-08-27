@@ -7,8 +7,6 @@ describe 'Background jobs ordering', reset: false do
 
   before :all do
       Delayed::Worker.delay_jobs = true
-      Rake.application.rake_require "tasks/background_jobs"
-      Rake::Task.define_task(:environment)
 
       load_page :search, overlay: false
       login
@@ -25,7 +23,7 @@ describe 'Background jobs ordering', reset: false do
   end
 
   after :all do
-    Delayed::Worker.delay_jobs = !Rails.env.test?
+    Delayed::Worker.delay_jobs = false
     run_stop_task
   end
 
@@ -35,8 +33,8 @@ describe 'Background jobs ordering', reset: false do
 
   context 'after allowing the background job time to process order' do
     before :all do
-        run_check_task
         sleep 1
+        expect(Delayed::Worker.new.work_off).to  eq([1, 0])
         load_page "data/retrieve/#{Retrieval.last.to_param}"
     end
 
