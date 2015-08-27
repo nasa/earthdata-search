@@ -1,9 +1,23 @@
 #!/bin/bash
 
-mkdir -p tmp
-openssl aes-256-cbc -K $encrypted_461274fed2c2_key -iv $encrypted_461274fed2c2_iv -in .travis/travis.enc -out tmp/travis -d
+set -e
 
-chmod 600 tmp/travis # this key should have push access
-ssh-add tmp/travis
-git remote add ecc https://pquinn@git.earthdata.nasa.gov/scm/edsc/earthdata-search-client_repo.git
-git push ecc master:deploy
+mkdir -p tmp
+cd tmp
+curl -Lo travis_after_all.py 'https://raw.githubusercontent.com/dmakhno/travis_after_all/b7172b/travis_after_all.py'
+python travis_after_all.py
+export $(cat .to_export_back)
+
+if [ "$BUILD_LEADER" = "YES" ] && [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+    echo 'deploying'
+    openssl aes-256-cbc -K $encrypted_461274fed2c2_key -iv $encrypted_461274fed2c2_iv -in ../.travis/travis.enc -out travis -d
+
+    chmod 600 travis
+    eval `ssh-agent -s`
+    ssh-add travis
+    ssh-keyscan -t rsa -p 7999 git.earthdata.nasa.gov >> ~/.ssh/known_hosts
+    git remote add ecc ssh://git@git.earthdata.nasa.gov:7999/edsc/earthdata-search-client_repo.git
+
+    echo "TRAVIS_COMMIT=$TRAVIS_COMMIT"
+    git push ecc $TRAVIS_COMMIT:refs/heads/deploy
+fi

@@ -31,7 +31,7 @@ namespace :travis do
     if ENV['JASMINE'] == 'true'
       Rake::Task['jasmine:ci'].invoke
     else
-      Rake::Task['knapsack:rspec'].invoke
+      #Rake::Task['knapsack:rspec'].invoke
     end
     Rake::Task['ci:cleancache'].invoke
   end
