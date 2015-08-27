@@ -197,16 +197,16 @@
       "antarctic": false
     }
   ],
-  "LAADS___MYD04_L2": [
+  "LAADS___MOD06_L2": [
     {
       "match": {
-        "time_start": ">=2013-01-31",
-        "time_end": "<=2014-05-29"
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "DAY"
       },
-      "product": "MODIS_Combined_Value_Added_AOD",
+      "product": "MODIS_Terra_Cloud_Top_Temp_Day",
       "maxNativeZoom": 5,
-      "title": "MODIS Combined Value-Added Aerosol Optical Depth",
-      "source": "Terra and Aqua / MODIS",
+      "title": "Cloud Top Temperature (Day)",
+      "source": "Terra / MODIS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -215,12 +215,43 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08"
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "DAY"
       },
-      "product": "MODIS_Aqua_Aerosol",
+      "product": "MODIS_Terra_Cloud_Top_Pressure_Day",
       "maxNativeZoom": 5,
-      "title": "Aerosol Optical Depth",
-      "source": "Aqua / MODIS",
+      "title": "Cloud Top Pressure (Day)",
+      "source": "Terra / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "NIGHT"
+      },
+      "product": "MODIS_Terra_Cloud_Top_Pressure_Night",
+      "maxNativeZoom": 5,
+      "title": "Cloud Top Pressure (Night)",
+      "source": "Terra / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "NIGHT"
+      },
+      "product": "MODIS_Terra_Cloud_Top_Temp_Night",
+      "maxNativeZoom": 5,
+      "title": "Cloud Top Temperature (Night)",
+      "source": "Terra / MODIS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -228,16 +259,16 @@
       "antarctic": false
     }
   ],
-  "LANCEMODIS___MYD04_L2": [
+  "LANCEMODIS___MOD06_L2": [
     {
       "match": {
-        "time_start": ">=2013-01-31",
-        "time_end": "<=2014-05-29"
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "DAY"
       },
-      "product": "MODIS_Combined_Value_Added_AOD",
+      "product": "MODIS_Terra_Cloud_Top_Temp_Day",
       "maxNativeZoom": 5,
-      "title": "MODIS Combined Value-Added Aerosol Optical Depth",
-      "source": "Terra and Aqua / MODIS",
+      "title": "Cloud Top Temperature (Day)",
+      "source": "Terra / MODIS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -246,12 +277,43 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08"
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "DAY"
       },
-      "product": "MODIS_Aqua_Aerosol",
+      "product": "MODIS_Terra_Cloud_Top_Pressure_Day",
       "maxNativeZoom": 5,
-      "title": "Aerosol Optical Depth",
-      "source": "Aqua / MODIS",
+      "title": "Cloud Top Pressure (Day)",
+      "source": "Terra / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "NIGHT"
+      },
+      "product": "MODIS_Terra_Cloud_Top_Pressure_Night",
+      "maxNativeZoom": 5,
+      "title": "Cloud Top Pressure (Night)",
+      "source": "Terra / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "NIGHT"
+      },
+      "product": "MODIS_Terra_Cloud_Top_Temp_Night",
+      "maxNativeZoom": 5,
+      "title": "Cloud Top Temperature (Night)",
+      "source": "Terra / MODIS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -321,6 +383,288 @@
       "antarctic": false
     }
   ],
+  "___A2_RainOcn_NRT": [
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Cloud_Liquid_Water_Night",
+      "maxNativeZoom": 5,
+      "title": "Columnar Cloud Liquid Water (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Cloud_Liquid_Water_Night",
+      "maxNativeZoom": 5,
+      "title": "Columnar Cloud Liquid Water (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Columnar_Water_Vapor_Day",
+      "maxNativeZoom": 5,
+      "title": "Columnar Water Vapor (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Columnar_Water_Vapor_Day",
+      "maxNativeZoom": 5,
+      "title": "Columnar Water Vapor (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Wind_Speed_Day",
+      "maxNativeZoom": 5,
+      "title": "Wind Speed (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Wind_Speed_Day",
+      "maxNativeZoom": 5,
+      "title": "Wind Speed (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Surface_Rain_Rate_Day",
+      "maxNativeZoom": 5,
+      "title": "Surface Rain Rate (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Surface_Rain_Rate_Day",
+      "maxNativeZoom": 5,
+      "title": "Surface Rain Rate (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Surface_Precipitation_Rate_Night",
+      "maxNativeZoom": 5,
+      "title": "Surface Precipitation Rate (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Surface_Precipitation_Rate_Night",
+      "maxNativeZoom": 5,
+      "title": "Surface Precipitation Rate (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Cloud_Liquid_Water_Day",
+      "maxNativeZoom": 5,
+      "title": "Columnar Cloud Liquid Water (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Cloud_Liquid_Water_Day",
+      "maxNativeZoom": 5,
+      "title": "Columnar Cloud Liquid Water (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Columnar_Water_Vapor_Night",
+      "maxNativeZoom": 5,
+      "title": "Columnar Water Vapor (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Columnar_Water_Vapor_Night",
+      "maxNativeZoom": 5,
+      "title": "Columnar Water Vapor (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Surface_Precipitation_Rate_Day",
+      "maxNativeZoom": 5,
+      "title": "Surface Precipitation Rate (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Surface_Precipitation_Rate_Day",
+      "maxNativeZoom": 5,
+      "title": "Surface Precipitation Rate (Day)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Wind_Speed_Night",
+      "maxNativeZoom": 5,
+      "title": "Wind Speed (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Wind_Speed_Night",
+      "maxNativeZoom": 5,
+      "title": "Wind Speed (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Surface_Rain_Rate_Night",
+      "maxNativeZoom": 5,
+      "title": "Surface Rain Rate (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-06-07"
+      },
+      "product": "AMSR2_Surface_Rain_Rate_Night",
+      "maxNativeZoom": 5,
+      "title": "Surface Rain Rate (Night)",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
   "GSFCS4PA___ML2HNO3": [
     {
       "match": {
@@ -381,6 +725,176 @@
       "antarctic": false
     }
   ],
+  "NSIDC_ECS___SPL1CTB": [
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Fore_V",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature (L1, Passive, Fore, V Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Fore_H",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature (L1, Passive, Fore, H Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Fore_H_QA",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature QA (L1, Passive, Fore, H Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Aft_V_RFI",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature RFI (L1, Passive, Aft, V Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Aft_V",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature (L1, Passive, Aft, V Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Aft_H",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature (L1, Passive, Aft, H Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Fore_H_RFI",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature RFI (L1, Passive, Fore, H Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Aft_H_QA",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature QA (L1, Passive, Aft, H Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Fore_V_QA",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature QA (L1, Passive, Fore, V Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Aft_V_QA",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature QA (L1, Passive, Aft, V Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Aft_H_RFI",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature RFI (L1, Passive, Aft, H Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "SMAP_L1_Passive_Brightness_Temp_Fore_V_RFI",
+      "maxNativeZoom": 5,
+      "title": "Uncorrected Brightness Temperature RFI (L1, Passive, Fore, V Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
   "GSFCS4PA___AIRX2RET": [
     {
       "match": {
@@ -430,21 +944,6 @@
     {
       "match": {
         "time_start": ">=2013-07-16",
-        "day_night_flag": "NIGHT"
-      },
-      "product": "AIRS_RelativeHumidity_850hPa_Night",
-      "maxNativeZoom": 5,
-      "title": "Relative Humidity (850 hPa, Night)",
-      "source": "Aqua / AIRS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2013-07-16",
         "day_night_flag": "DAY"
       },
       "product": "AIRS_Temperature_700hPa_Day",
@@ -475,11 +974,11 @@
     {
       "match": {
         "time_start": ">=2013-07-16",
-        "day_night_flag": "NIGHT"
+        "day_night_flag": "DAY"
       },
-      "product": "AIRS_Temperature_400hPa_Night",
+      "product": "AIRS_RelativeHumidity_700hPa_Day",
       "maxNativeZoom": 5,
-      "title": "Temperature (400 hPa, Night)",
+      "title": "Relative Humidity (700 hPa, Day)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -489,7 +988,7 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08",
+        "time_start": ">=2013-11-18",
         "day_night_flag": "NIGHT"
       },
       "product": "AIRS_CO_Total_Column_Night",
@@ -504,27 +1003,12 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08",
+        "time_start": ">=2013-11-18",
         "day_night_flag": "DAY"
       },
       "product": "AIRS_CO_Total_Column_Day",
       "maxNativeZoom": 5,
       "title": "Carbon Monoxide (Total Column, Day)",
-      "source": "Aqua / AIRS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2013-07-16",
-        "day_night_flag": "NIGHT"
-      },
-      "product": "AIRS_Temperature_850hPa_Night",
-      "maxNativeZoom": 5,
-      "title": "Temperature (850 hPa, Night)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -567,9 +1051,9 @@
         "time_start": ">=2013-07-16",
         "day_night_flag": "NIGHT"
       },
-      "product": "AIRS_RelativeHumidity_700hPa_Night",
+      "product": "AIRS_RelativeHumidity_850hPa_Night",
       "maxNativeZoom": 5,
-      "title": "Relative Humidity (700 hPa, Night)",
+      "title": "Relative Humidity (850 hPa, Night)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -610,11 +1094,11 @@
     {
       "match": {
         "time_start": ">=2013-07-16",
-        "day_night_flag": "DAY"
+        "day_night_flag": "NIGHT"
       },
-      "product": "AIRS_RelativeHumidity_700hPa_Day",
+      "product": "AIRS_RelativeHumidity_700hPa_Night",
       "maxNativeZoom": 5,
-      "title": "Relative Humidity (700 hPa, Day)",
+      "title": "Relative Humidity (700 hPa, Night)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -630,6 +1114,21 @@
       "product": "AIRS_Temperature_600hPa_Day",
       "maxNativeZoom": 5,
       "title": "Temperature (600 hPa, Day)",
+      "source": "Aqua / AIRS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-07-16",
+        "day_night_flag": "NIGHT"
+      },
+      "product": "AIRS_Temperature_400hPa_Night",
+      "maxNativeZoom": 5,
+      "title": "Temperature (400 hPa, Night)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -675,6 +1174,21 @@
       "product": "AIRS_RelativeHumidity_400hPa_Day",
       "maxNativeZoom": 5,
       "title": "Relative Humidity (400 hPa, Day)",
+      "source": "Aqua / AIRS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-07-16",
+        "day_night_flag": "NIGHT"
+      },
+      "product": "AIRS_Temperature_850hPa_Night",
+      "maxNativeZoom": 5,
+      "title": "Temperature (850 hPa, Night)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -762,21 +1276,6 @@
     {
       "match": {
         "time_start": ">=2013-07-16",
-        "day_night_flag": "NIGHT"
-      },
-      "product": "AIRS_RelativeHumidity_850hPa_Night",
-      "maxNativeZoom": 5,
-      "title": "Relative Humidity (850 hPa, Night)",
-      "source": "Aqua / AIRS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2013-07-16",
         "day_night_flag": "DAY"
       },
       "product": "AIRS_Temperature_700hPa_Day",
@@ -807,11 +1306,11 @@
     {
       "match": {
         "time_start": ">=2013-07-16",
-        "day_night_flag": "NIGHT"
+        "day_night_flag": "DAY"
       },
-      "product": "AIRS_Temperature_400hPa_Night",
+      "product": "AIRS_RelativeHumidity_700hPa_Day",
       "maxNativeZoom": 5,
-      "title": "Temperature (400 hPa, Night)",
+      "title": "Relative Humidity (700 hPa, Day)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -821,7 +1320,7 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08",
+        "time_start": ">=2013-11-18",
         "day_night_flag": "NIGHT"
       },
       "product": "AIRS_CO_Total_Column_Night",
@@ -836,27 +1335,12 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08",
+        "time_start": ">=2013-11-18",
         "day_night_flag": "DAY"
       },
       "product": "AIRS_CO_Total_Column_Day",
       "maxNativeZoom": 5,
       "title": "Carbon Monoxide (Total Column, Day)",
-      "source": "Aqua / AIRS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2013-07-16",
-        "day_night_flag": "NIGHT"
-      },
-      "product": "AIRS_Temperature_850hPa_Night",
-      "maxNativeZoom": 5,
-      "title": "Temperature (850 hPa, Night)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -899,9 +1383,9 @@
         "time_start": ">=2013-07-16",
         "day_night_flag": "NIGHT"
       },
-      "product": "AIRS_RelativeHumidity_700hPa_Night",
+      "product": "AIRS_RelativeHumidity_850hPa_Night",
       "maxNativeZoom": 5,
-      "title": "Relative Humidity (700 hPa, Night)",
+      "title": "Relative Humidity (850 hPa, Night)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -942,11 +1426,11 @@
     {
       "match": {
         "time_start": ">=2013-07-16",
-        "day_night_flag": "DAY"
+        "day_night_flag": "NIGHT"
       },
-      "product": "AIRS_RelativeHumidity_700hPa_Day",
+      "product": "AIRS_RelativeHumidity_700hPa_Night",
       "maxNativeZoom": 5,
-      "title": "Relative Humidity (700 hPa, Day)",
+      "title": "Relative Humidity (700 hPa, Night)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -962,6 +1446,21 @@
       "product": "AIRS_Temperature_600hPa_Day",
       "maxNativeZoom": 5,
       "title": "Temperature (600 hPa, Day)",
+      "source": "Aqua / AIRS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-07-16",
+        "day_night_flag": "NIGHT"
+      },
+      "product": "AIRS_Temperature_400hPa_Night",
+      "maxNativeZoom": 5,
+      "title": "Temperature (400 hPa, Night)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -1017,6 +1516,21 @@
     {
       "match": {
         "time_start": ">=2013-07-16",
+        "day_night_flag": "NIGHT"
+      },
+      "product": "AIRS_Temperature_850hPa_Night",
+      "maxNativeZoom": 5,
+      "title": "Temperature (850 hPa, Night)",
+      "source": "Aqua / AIRS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-07-16",
         "day_night_flag": "DAY"
       },
       "product": "AIRS_Temperature_500hPa_Day",
@@ -1045,16 +1559,15 @@
       "antarctic": false
     }
   ],
-  "LAADS___MOD06_L2": [
+  "NSIDC_ECS___SPL1BTB": [
     {
       "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "DAY"
+        "time_start": ">=2015-07-30"
       },
-      "product": "MODIS_Terra_Cloud_Top_Pressure_Day",
+      "product": "SMAP_L1_Passive_Faraday_Rotation_Fore",
       "maxNativeZoom": 5,
-      "title": "Cloud Top Pressure (Day)",
-      "source": "Terra / MODIS",
+      "title": "Faraday Rotation Angle (L1, Passive, Fore)",
+      "source": "SMAP / Radiometer",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1063,43 +1576,12 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "DAY"
+        "time_start": ">=2015-07-30"
       },
-      "product": "MODIS_Terra_Cloud_Top_Temp_Day",
+      "product": "SMAP_L1_Passive_Faraday_Rotation_Aft",
       "maxNativeZoom": 5,
-      "title": "Cloud Top Temperature (Day)",
-      "source": "Terra / MODIS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "NIGHT"
-      },
-      "product": "MODIS_Terra_Cloud_Top_Pressure_Night",
-      "maxNativeZoom": 5,
-      "title": "Cloud Top Pressure (Night)",
-      "source": "Terra / MODIS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "NIGHT"
-      },
-      "product": "MODIS_Terra_Cloud_Top_Temp_Night",
-      "maxNativeZoom": 5,
-      "title": "Cloud Top Temperature (Night)",
-      "source": "Terra / MODIS",
+      "title": "Faraday Rotation Angle (L1, Passive, Aft)",
+      "source": "SMAP / Radiometer",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1107,16 +1589,15 @@
       "antarctic": false
     }
   ],
-  "LANCEMODIS___MOD06_L2": [
+  "___GPM_1CGPMGMI": [
     {
       "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "DAY"
+        "time_start": ">=2014-10-11"
       },
-      "product": "MODIS_Terra_Cloud_Top_Pressure_Day",
+      "product": "GMI_Brightness_Temp_Asc",
       "maxNativeZoom": 5,
-      "title": "Cloud Top Pressure (Day)",
-      "source": "Terra / MODIS",
+      "title": "Brightness Temperature (Ascending)",
+      "source": "GPM / GMI",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1125,13 +1606,12 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "DAY"
+        "time_start": ">=2014-10-11"
       },
-      "product": "MODIS_Terra_Cloud_Top_Temp_Day",
+      "product": "GMI_Brightness_Temp_Asc",
       "maxNativeZoom": 5,
-      "title": "Cloud Top Temperature (Day)",
-      "source": "Terra / MODIS",
+      "title": "Brightness Temperature (Ascending)",
+      "source": "GPM / GMI",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1140,13 +1620,12 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "NIGHT"
+        "time_start": ">=2014-10-11"
       },
-      "product": "MODIS_Terra_Cloud_Top_Pressure_Night",
+      "product": "GMI_Brightness_Temp_Dsc",
       "maxNativeZoom": 5,
-      "title": "Cloud Top Pressure (Night)",
-      "source": "Terra / MODIS",
+      "title": "Brightness Temperature (Descending)",
+      "source": "GPM / GMI",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1155,36 +1634,164 @@
     },
     {
       "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "NIGHT"
+        "time_start": ">=2014-10-11"
       },
-      "product": "MODIS_Terra_Cloud_Top_Temp_Night",
+      "product": "GMI_Brightness_Temp_Dsc",
       "maxNativeZoom": 5,
-      "title": "Cloud Top Temperature (Night)",
-      "source": "Terra / MODIS",
+      "title": "Brightness Temperature (Descending)",
+      "source": "GPM / GMI",
       "format": "png",
       "resolution": "2km",
       "geo": true,
       "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "___GPM_2AGPROFGPMGMI": [
+    {
+      "match": {
+        "time_start": ">=2014-10-11"
+      },
+      "product": "GMI_Rain_Rate_Dsc",
+      "maxNativeZoom": 5,
+      "title": "Rain Rate (Descending)",
+      "source": "GPM / GMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-10-11"
+      },
+      "product": "GMI_Rain_Rate_Dsc",
+      "maxNativeZoom": 5,
+      "title": "Rain Rate (Descending)",
+      "source": "GPM / GMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-10-11"
+      },
+      "product": "GMI_Snow_Rate_Dsc",
+      "maxNativeZoom": 5,
+      "title": "Snow Rate (Descending)",
+      "source": "GPM / GMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-10-11"
+      },
+      "product": "GMI_Snow_Rate_Dsc",
+      "maxNativeZoom": 5,
+      "title": "Snow Rate (Descending)",
+      "source": "GPM / GMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-10-11"
+      },
+      "product": "GMI_Rain_Rate_Asc",
+      "maxNativeZoom": 5,
+      "title": "Rain Rate (Ascending)",
+      "source": "GPM / GMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-10-11"
+      },
+      "product": "GMI_Rain_Rate_Asc",
+      "maxNativeZoom": 5,
+      "title": "Rain Rate (Ascending)",
+      "source": "GPM / GMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-10-11"
+      },
+      "product": "GMI_Snow_Rate_Asc",
+      "maxNativeZoom": 5,
+      "title": "Snow Rate (Ascending)",
+      "source": "GPM / GMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-10-11"
+      },
+      "product": "GMI_Snow_Rate_Asc",
+      "maxNativeZoom": 5,
+      "title": "Snow Rate (Ascending)",
+      "source": "GPM / GMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "___A2_DySno_NRT": [
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "AMSR2_Snow_Water_Equivalent",
+      "maxNativeZoom": 5,
+      "title": "Snow / Water Equivalent",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-07-30"
+      },
+      "product": "AMSR2_Snow_Water_Equivalent",
+      "maxNativeZoom": 5,
+      "title": "Snow / Water Equivalent",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
       "antarctic": false
     }
   ],
   "LPDAAC_ECS___MOD11_L2": [
-    {
-      "match": {
-        "sit": true
-      },
-      "product": "MODIS_Terra_Chlorophyll_A_Granule_v5_NRT",
-      "granule": true,
-      "maxNativeZoom": 5,
-      "title": "Land Surface Temperature (Day)",
-      "source": "Terra / MODIS",
-      "format": "png",
-      "resolution": "1km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
     {
       "match": {
         "time_start": ">=2012-05-08",
@@ -1520,6 +2127,23 @@
       "antarctic": false
     }
   ],
+  "NSIDC_ECS___AE_SI25": [
+    {
+      "match": {
+        "time_start": ">=2002-06-01",
+        "time_end": "<=2011-10-04"
+      },
+      "product": "AMSRE_Sea_Ice_Concentration_25km",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Concentration, 25km",
+      "source": "Aqua / AMSR-E",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    }
+  ],
   "NSIDC_ECS___MOD29": [
     {
       "match": {
@@ -1552,50 +2176,6 @@
       "geo": true,
       "arctic": true,
       "antarctic": true
-    }
-  ],
-  "GSFCS4PA___OMAERUV": [
-    {
-      "match": {
-        "time_start": ">=2012-05-08"
-      },
-      "product": "OMI_Aerosol_Index",
-      "maxNativeZoom": 5,
-      "title": "Aerosol Index",
-      "source": "Aura / OMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2012-05-08"
-      },
-      "product": "OMI_Absorbing_Aerosol_Optical_Depth",
-      "maxNativeZoom": 5,
-      "title": "Absorbing Aerosol Optical Depth",
-      "source": "Aura / OMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2012-05-08"
-      },
-      "product": "OMI_Aerosol_Optical_Depth",
-      "maxNativeZoom": 5,
-      "title": "Aerosol Optical Depth",
-      "source": "Aura / OMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
     }
   ],
   "LPDAAC_ECS___MOD09GQ": [
@@ -1658,31 +2238,15 @@
       "antarctic": false
     }
   ],
-  "GSFCS4PA___AIRX2SUP": [
+  "LAADS___MYD04_L2": [
     {
       "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "DAY"
+        "time_start": ">=2012-06-22"
       },
-      "product": "AIRS_Precipitation_Day",
+      "product": "MODIS_Aqua_Aerosol",
       "maxNativeZoom": 5,
-      "title": "Precipitation Estimate (Day)",
-      "source": "Aqua / AIRS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "NIGHT"
-      },
-      "product": "AIRS_Precipitation_Night",
-      "maxNativeZoom": 5,
-      "title": "Precipitation Estimate (Night)",
-      "source": "Aqua / AIRS",
+      "title": "Aerosol Optical Depth",
+      "source": "Aqua / MODIS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1690,16 +2254,32 @@
       "antarctic": false
     }
   ],
-  "GSFCS4PA___AIRX2SUP_NRT": [
+  "LANCEMODIS___MYD04_L2": [
+    {
+      "match": {
+        "time_start": ">=2012-06-22"
+      },
+      "product": "MODIS_Aqua_Aerosol",
+      "maxNativeZoom": 5,
+      "title": "Aerosol Optical Depth",
+      "source": "Aqua / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "LAADS___MYD05_L2": [
     {
       "match": {
         "time_start": ">=2012-05-08",
-        "day_night_flag": "DAY"
+        "day_night_flag": "NIGHT"
       },
-      "product": "AIRS_Precipitation_Day",
+      "product": "MODIS_Aqua_Water_Vapor_5km_Night",
       "maxNativeZoom": 5,
-      "title": "Precipitation Estimate (Day)",
-      "source": "Aqua / AIRS",
+      "title": "Water Vapor (Night)",
+      "source": "Aqua / MODIS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1709,12 +2289,44 @@
     {
       "match": {
         "time_start": ">=2012-05-08",
+        "day_night_flag": "DAY"
+      },
+      "product": "MODIS_Aqua_Water_Vapor_5km_Day",
+      "maxNativeZoom": 5,
+      "title": "Water Vapor (Day)",
+      "source": "Aqua / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "LANCEMODIS___MYD05_L2": [
+    {
+      "match": {
+        "time_start": ">=2012-05-08",
         "day_night_flag": "NIGHT"
       },
-      "product": "AIRS_Precipitation_Night",
+      "product": "MODIS_Aqua_Water_Vapor_5km_Night",
       "maxNativeZoom": 5,
-      "title": "Precipitation Estimate (Night)",
-      "source": "Aqua / AIRS",
+      "title": "Water Vapor (Night)",
+      "source": "Aqua / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "DAY"
+      },
+      "product": "MODIS_Aqua_Water_Vapor_5km_Day",
+      "maxNativeZoom": 5,
+      "title": "Water Vapor (Day)",
+      "source": "Aqua / MODIS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1786,6 +2398,23 @@
       "antarctic": false
     }
   ],
+  "NSIDC_ECS___AE_SI12": [
+    {
+      "match": {
+        "time_start": ">=2002-06-01",
+        "time_end": "<=2011-10-04"
+      },
+      "product": "AMSRE_Sea_Ice_Concentration_12km",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Concentration, 12km",
+      "source": "Aqua / AMSR-E",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    }
+  ],
   "LPDAAC_ECS___MOD09GA": [
     {
       "match": {
@@ -1848,22 +2477,6 @@
       "geo": true,
       "arctic": true,
       "antarctic": true
-    }
-  ],
-  "GSFCS4PA___OMCLDRR": [
-    {
-      "match": {
-        "time_start": ">=2012-05-08"
-      },
-      "product": "OMI_Cloud_Pressure",
-      "maxNativeZoom": 5,
-      "title": "Cloud Pressure",
-      "source": "Aura / OMI",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
     }
   ],
   "GSFCS4PA___ML2H2O": [
@@ -2050,6 +2663,36 @@
       "antarctic": false
     }
   ],
+  "___MCDAODHD": [
+    {
+      "match": {
+        "time_start": ">=2013-01-31"
+      },
+      "product": "MODIS_Combined_Value_Added_AOD",
+      "maxNativeZoom": 5,
+      "title": "MODIS Combined Value-Added Aerosol Optical Depth",
+      "source": "Terra and Aqua / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-01-31"
+      },
+      "product": "MODIS_Combined_Value_Added_AOD",
+      "maxNativeZoom": 5,
+      "title": "MODIS Combined Value-Added Aerosol Optical Depth",
+      "source": "Terra and Aqua / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
   "GSFCS4PA___AIRIBQAP": [
     {
       "match": {
@@ -2084,15 +2727,63 @@
       "antarctic": false
     }
   ],
-  "LAADS___MOD04_L2": [
+  "NSIDC_ECS___AE_SI6": [
     {
       "match": {
-        "time_start": ">=2012-05-08"
+        "time_start": ">=2002-06-01",
+        "time_end": "<=2011-10-04",
+        "day_night_flag": "DAY"
       },
-      "product": "MODIS_Terra_Aerosol",
+      "product": "AMSRE_Sea_Ice_Brightness_Temp_89V",
       "maxNativeZoom": 5,
-      "title": "Aerosol Optical Depth",
-      "source": "Terra / MODIS",
+      "title": "Sea Ice Brightness Temperature (89V GHz B Scan)",
+      "source": "Aqua / AMSR-E",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    },
+    {
+      "match": {
+        "time_start": ">=2002-06-01",
+        "time_end": "<=2011-10-04",
+        "day_night_flag": "DAY"
+      },
+      "product": "AMSRE_Sea_Ice_Brightness_Temp_89H",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Brightness Temperature (89H GHz B Scan)",
+      "source": "Aqua / AMSR-E",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    }
+  ],
+  "GSFCS4PA___ML2N2O": [
+    {
+      "match": {
+        "time_start": ">=2013-05-09"
+      },
+      "product": "MLS_N2O_46hPa_Night",
+      "maxNativeZoom": 5,
+      "title": "Nitrous Oxide (46 hPa, Night)",
+      "source": "Aura / MLS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-05-09"
+      },
+      "product": "MLS_N2O_46hPa_Day",
+      "maxNativeZoom": 5,
+      "title": "Nitrous Oxide (46 hPa, Day)",
+      "source": "Aura / MLS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -2100,15 +2791,29 @@
       "antarctic": false
     }
   ],
-  "LANCEMODIS___MOD04_L2": [
+  "GSFCS4PA___ML2N2O_NRT": [
     {
       "match": {
-        "time_start": ">=2012-05-08"
+        "time_start": ">=2013-05-09"
       },
-      "product": "MODIS_Terra_Aerosol",
+      "product": "MLS_N2O_46hPa_Night",
       "maxNativeZoom": 5,
-      "title": "Aerosol Optical Depth",
-      "source": "Terra / MODIS",
+      "title": "Nitrous Oxide (46 hPa, Night)",
+      "source": "Aura / MLS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-05-09"
+      },
+      "product": "MLS_N2O_46hPa_Day",
+      "maxNativeZoom": 5,
+      "title": "Nitrous Oxide (46 hPa, Day)",
+      "source": "Aura / MLS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -2150,108 +2855,16 @@
       "antarctic": true
     }
   ],
-  "GSFCS4PA___ML2N2O": [
-    {
-      "match": {
-        "time_start": ">=2013-05-09"
-      },
-      "product": "MLS_N2O_46hPa_Day",
-      "maxNativeZoom": 5,
-      "title": "Nitrous Oxide (46 hPa, Day)",
-      "source": "Aura / MLS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2013-05-09"
-      },
-      "product": "MLS_N2O_46hPa_Night",
-      "maxNativeZoom": 5,
-      "title": "Nitrous Oxide (46 hPa, Night)",
-      "source": "Aura / MLS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    }
-  ],
-  "GSFCS4PA___ML2N2O_NRT": [
-    {
-      "match": {
-        "time_start": ">=2013-05-09"
-      },
-      "product": "MLS_N2O_46hPa_Day",
-      "maxNativeZoom": 5,
-      "title": "Nitrous Oxide (46 hPa, Day)",
-      "source": "Aura / MLS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2013-05-09"
-      },
-      "product": "MLS_N2O_46hPa_Night",
-      "maxNativeZoom": 5,
-      "title": "Nitrous Oxide (46 hPa, Night)",
-      "source": "Aura / MLS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    }
-  ],
-  "LAADS___MYD05_L2": [
-    {
-      "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "DAY"
-      },
-      "product": "MODIS_Aqua_Water_Vapor_5km_Day",
-      "maxNativeZoom": 5,
-      "title": "Water Vapor (Day)",
-      "source": "Aqua / MODIS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
+  "GSFCS4PA___AIRX2SUP": [
     {
       "match": {
         "time_start": ">=2012-05-08",
         "day_night_flag": "NIGHT"
       },
-      "product": "MODIS_Aqua_Water_Vapor_5km_Night",
+      "product": "AIRS_Precipitation_Night",
       "maxNativeZoom": 5,
-      "title": "Water Vapor (Night)",
-      "source": "Aqua / MODIS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    }
-  ],
-  "LANCEMODIS___MYD05_L2": [
-    {
-      "match": {
-        "time_start": ">=2012-05-08",
-        "day_night_flag": "DAY"
-      },
-      "product": "MODIS_Aqua_Water_Vapor_5km_Day",
-      "maxNativeZoom": 5,
-      "title": "Water Vapor (Day)",
-      "source": "Aqua / MODIS",
+      "title": "Precipitation Estimate (Night)",
+      "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -2261,12 +2874,76 @@
     {
       "match": {
         "time_start": ">=2012-05-08",
+        "day_night_flag": "DAY"
+      },
+      "product": "AIRS_Precipitation_Day",
+      "maxNativeZoom": 5,
+      "title": "Precipitation Estimate (Day)",
+      "source": "Aqua / AIRS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "GSFCS4PA___AIRX2SUP_NRT": [
+    {
+      "match": {
+        "time_start": ">=2012-05-08",
         "day_night_flag": "NIGHT"
       },
-      "product": "MODIS_Aqua_Water_Vapor_5km_Night",
+      "product": "AIRS_Precipitation_Night",
       "maxNativeZoom": 5,
-      "title": "Water Vapor (Night)",
-      "source": "Aqua / MODIS",
+      "title": "Precipitation Estimate (Night)",
+      "source": "Aqua / AIRS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2012-05-08",
+        "day_night_flag": "DAY"
+      },
+      "product": "AIRS_Precipitation_Day",
+      "maxNativeZoom": 5,
+      "title": "Precipitation Estimate (Day)",
+      "source": "Aqua / AIRS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "LAADS___MOD04_L2": [
+    {
+      "match": {
+        "time_start": ">=2012-06-22"
+      },
+      "product": "MODIS_Terra_Aerosol",
+      "maxNativeZoom": 5,
+      "title": "Aerosol Optical Depth",
+      "source": "Terra / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "LANCEMODIS___MOD04_L2": [
+    {
+      "match": {
+        "time_start": ">=2012-06-22"
+      },
+      "product": "MODIS_Terra_Aerosol",
+      "maxNativeZoom": 5,
+      "title": "Aerosol Optical Depth",
+      "source": "Terra / MODIS",
       "format": "png",
       "resolution": "2km",
       "geo": true,
