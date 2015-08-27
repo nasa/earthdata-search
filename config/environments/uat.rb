@@ -78,4 +78,6 @@ EarthdataSearchClient::Application.configure do
 
   config.url_limit = 2000
   config.echo_env = 'partnertest'
+  services = config.services
+  config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
 end
