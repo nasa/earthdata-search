@@ -16,5 +16,5 @@ deploy:
   provider: script
   script: bin/ecc-sync
   on:
-    branch: features/deploy-test
+    branch: master
     repo: nasa/earthdata-search
