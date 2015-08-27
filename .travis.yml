@@ -12,9 +12,9 @@ env:
     - CI_NODE_INDEX=2
     - CI_NODE_INDEX=3
     - JASMINE=true
-#deploy:
-#  provider: script
-#  script: bin/ecc-sync
-#  on:
-#    branch: master
-#    repo: nasa/earthdata-search
+deploy:
+  provider: script
+  script: bin/ecc-sync
+  on:
+    branch: features/deploy-test
+    repo: nasa/earthdata-search
