@@ -5,7 +5,7 @@ require 'json'
 namespace :gibs do
   desc "Create gibs.yml configuration file"
   task :configure do
-    json = JSON.parse(Net::HTTP.get(URI('https://earthdata.nasa.gov/labs/worldview/conf/wv.json')))
+    json = JSON.parse(Net::HTTP.get(URI('https://earthdata.nasa.gov/labs/worldview/config/wv.json')))
 
     layers = json['layers']
     products = json['products']
