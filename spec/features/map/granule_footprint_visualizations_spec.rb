@@ -158,7 +158,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
   end
 
   context "for bounding box datasets" do
-    use_dataset 'C204200620-GSFCS4PA', 'CloudSat'
+    use_dataset 'C204200619-GSFCS4PA', 'CloudSat'
 
     before :all do
       create_bounding_box(0, 0, 15, 15)

@@ -30,7 +30,10 @@ $toolbar-background-bottom: #283949;
 $toolbar-accent-border: #21303f;
 
 // Master Overlay
-$master-overlay-parent-bg-color: transparentize(#111, .2);
+$master-overlay-parent-bg-color: #191A1B;
 $master-overlay-parent-on-main-bg-color: transparentize(#111, .3); // Used when drawing parent overlapping main
 $master-overlay-main-bg-color: transparentize(#111, .1);
 $overlay-heading-font-color: #c9c9c9;
+
+// Facet Overlay
+$facet-overlay-width: 270px;

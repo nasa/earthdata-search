@@ -46,17 +46,27 @@
 // A parent panel for the overlday.  For instance, dataset facets are a parent
 // panel to dataset search results
 .master-overlay-parent {
-  // background-color: $master-overlay-parent-bg-color;
-  @include retina-image(denim, 145px 145px, png, null, '@2x', true);
-  width: 20%;
+  background-color: $master-overlay-parent-bg-color;
+  width: $facet-overlay-width;
   left: 0;
+
+  header {
+    margin: 1em 1em 0 .5em;
+
+    h2 {
+      color: #FFFFFF;
+      margin: 0;
+      font-size: 1em;
+      font-weight: bold;
+    }
+  }
 }
 
 // The main section in the overlay.  Dataset results, pinned datasets, whatnot.
 .master-overlay-main {
   background-color: $master-overlay-main-bg-color;
   width: 40%;
-  left: 20%;
+  left: $facet-overlay-width;
   overflow: hidden;
 }
 
@@ -268,7 +278,7 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 }
 
 .is-master-overlay-parent-hidden {
-  .master-overlay-parent { left:-240px; }
+  .master-overlay-parent { left:-$facet-overlay-width; }
   .master-overlay-main   { left:0%; }
 }
 
@@ -297,23 +307,11 @@ $browser-split: 1550px;
 $parent-split: 1200px;
 
 $main-width: $browser-split * 0.4;
-$parent-width: $parent-split * 0.2;
-
-@media (min-width: $parent-split) {
-  .master-overlay-parent {
-    width: $parent-width;
-  }
-
-  .master-overlay-main {
-    left: $parent-width;
-  }
-
-}
+$parent-width: $parent-split * 0.21;
 
 @media (min-width: $browser-split) {
   .master-overlay-main {
     width: $main-width;
-    left: $parent-width;
   }
 
   .master-overlay-secondary {

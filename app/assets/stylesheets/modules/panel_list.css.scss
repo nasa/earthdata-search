@@ -105,7 +105,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   top: 0;
   left: 0;
   .tooltip {
-    width: 240px;
+    width: $facet-overlay-width;
   }
 
   .tooltip.right .tooltip-arrow {
@@ -113,7 +113,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   }
 
   .tooltip-inner {
-    max-width: 240px;
+    max-width: $facet-overlay-width;
     background-color: #263c50;
   }
 
@@ -158,6 +158,11 @@ $panel-list-thumbnail-size: $panel-list-item-height;
     content: "NRT";
   }
   // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
+}
+
+.panel-header-toggle {
+  color: #888;
+  line-height: 1.5em;
 }
 
 .panel-list-muted {
