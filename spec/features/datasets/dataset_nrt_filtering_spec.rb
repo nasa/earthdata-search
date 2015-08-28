@@ -4,7 +4,6 @@ describe 'Dataset NRT Filtering', reset: false do
   before :all do
     Capybara.reset_sessions!
     load_page :search, facets: true
-    find("h3.facet-title", text: 'Features').click
   end
 
   context 'when selecting the NRT filter' do
@@ -19,7 +18,7 @@ describe 'Dataset NRT Filtering', reset: false do
 
     context 'when un-selecting the NRT filter' do
       before :all do
-          find('.applied-facets .facets-item', text: 'Near Real Time').click
+          find('p.facets-item', text: 'Near Real Time').click
         wait_for_xhr
       end
 

@@ -273,6 +273,7 @@ ns.query = do (ko,
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
       @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, propagate: true)
       @facets = @queryComponent(new FacetParam(), ko.observableArray())
+      @scienceKeywordFacets = @computed(read: @_computeScienceKeywordFacets, deferEvaluation: true)
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
       super(parentQuery)
@@ -282,6 +283,9 @@ ns.query = do (ko,
       @focusedInterval(null)
       @placename("")
       super()
+
+    _computeScienceKeywordFacets: =>
+      facet for facet in @facets() when facet.param.indexOf('sci') == 0
 
   class GranuleQuery extends Query
     constructor: (datasetId, parentQuery, attributes) ->

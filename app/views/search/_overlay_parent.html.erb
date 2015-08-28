@@ -4,51 +4,7 @@
     <h2>Browse Datasets</h2>
     </p>
   </header>
-  <div class="master-overlay-info">
-    <p data-bind="if: datasets.facets.results().length > 0" class="panel-list-meta">
-      <% if Rails.configuration.feedback_url.present? %>
-      <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Dataset Facets', null)" class="button feedback-button">
-        <i class="fa fa-exclamation-circle"></i>
-        Report a metadata problem
-      </a>
-      <% end %>
-    </p>
-  </div>
   <div class="master-overlay-content panel-group">
-    <!-- ko if: query.facets() && query.facets().length > 0 -->
-    <div class="panel panel-default selected-facets-panel">
-      <div class="panel-heading">
-        <h3 class="panel-title facet-title">
-          Values Selected
-        </h3>
-      </div>
-      <div class="panel-body facets">
-        <dl class="applied-facets">
-          <!-- ko foreach: datasets.facets.appliedFacets -->
-              <dt data-bind="text: name" class="facet-title"></dt>
-                <dd data-bind="css: {'features-facet': name == 'Features', 'facets': name != 'Features'}">
-                  <!-- ko foreach: selectedValues -->
-                    <span data-bind="click: $root.datasets.facets.removeFacet" class="facets-item selected">
-                      <span data-bind="text: term" ></span>
-                      <i class="fa fa-times"></i>
-                      <!-- ko if: term == 'Subsetting Services' -->
-                      <span class="badge badge-opendap"></span>
-                      <!-- /ko -->
-                      <!-- ko if: term == 'Map Imagery' -->
-                      <span class="badge badge-gibs"></span>
-                      <!-- /ko -->
-                      <!-- ko if: term == 'Near Real Time' -->
-                      <span class="badge badge-nrt"></span>
-                      <!-- /ko -->
-                    </span>
-                    <span data-bind="if: $parent.selectedValues().indexOf($data) < $parent.selectedValues().length - 1"> and </span>
-                  <!-- /ko -->
-                </dd>
-          <!-- /ko -->
-        </dl>
-      </div>
-    </div>
-    <!-- /ko -->
     <!-- ko if: datasets.facets.isRelevant() -->
     <!-- ko foreach: datasets.facets.results -->
     <!-- # Temporarily filter out 'Category Keyword' facet. Once CMR-1923 is implemented, the changes can be reverted. -->
@@ -56,26 +12,31 @@
     <div data-bind="css: class_name" class="panel panel-default">
       <div class="panel-heading">
         <h3 data-bind="click: toggleList" class="panel-title facet-title">
-          <i data-bind="css: {'fa-caret-down': closed(), 'fa-caret-up': opened()}" class="fa pull-right"></i>
+          <i data-bind="css: {'fa-chevron-down': closed(), 'fa-chevron-up': opened()}" class="fa pull-right panel-header-toggle"></i>
           <a data-bind="text: name, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
         </h3>
       </div>
       <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed(), 'features-facet': name == 'Features'}">
         <div class="panel-body facets">
           <!-- ko foreach: values -->
-          <p class="facets-item" data-bind="click: $root.datasets.facets.toggleFacet, css: {selected: isSelected}">
-            <span data-bind="text: term"></span>
-            <!-- ko ifnot: $parent.name == 'Features' -->
-            (<span data-bind="text: count"></span>)
+          <p class="facets-item" data-bind="click: $root.datasets.facets.toggleFacet, css: {selected: isSelected(), 'facets-child': isChild(), 'facets-ancestor': isAncestor(), 'facets-parent': isParent()}, attr: {title: term}">
+            <span class="active-indicator"></span>
+            <!--ko if: isAncestor() && !isParent() -->
+              <i class="fa fa-chevron-left"></i>
+            <!--/ko-->
+
+            <span data-bind="text: term" class="facet-term"></span>
+            <!-- ko ifnot: $parent.name == 'Features' || isAncestor() -->
+            <span class="facet-item-dataset-count" data-bind="text: count"></span>
             <!-- /ko -->
             <!-- ko if: term == 'Subsetting Services' -->
-            <span class="badge badge-opendap"></span>
+            <span class="facet-badge badge-opendap"></span>
             <!-- /ko -->
             <!-- ko if: term == 'Map Imagery' -->
-            <span class="badge badge-gibs"></span>
+            <span class="facet-badge badge-gibs"></span>
             <!-- /ko -->
             <!-- ko if: term == 'Near Real Time' -->
-            <span class="badge badge-nrt"></span>
+            <span class="facet-badge badge-nrt"></span>
             <!-- /ko -->
             <i class="fa fa-times"></i>
           </p>

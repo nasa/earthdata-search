@@ -38,13 +38,13 @@ this.edsc.util.metrics = do ->
       ga('set', 'dimension5', d5)
 
       # Dimension 6, Search facets
-      facet_names = ['features', 'archive_center', 'project', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'processing_level_id']
+      facet_names = ['category', 'features', 'archive_center', 'project', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'processing_level_id']
       facets = []
       for name in facet_names when state[name]?
         facets.push("#{name}/#{value}") for value in state[name]
 
       if state.science_keywords?
-        keyword_names = ['category', 'topic', 'term', 'variable_level_1', 'variable_level_2', 'variable_level_3', 'detailed_variable']
+        keyword_names = ['topic', 'term', 'variable_level_1', 'variable_level_2', 'variable_level_3', 'detailed_variable']
         for name in keyword_names when state.science_keywords[0][name]?
           facets.push("#{name}/#{value}") for value in state.science_keywords[0][name]
 
