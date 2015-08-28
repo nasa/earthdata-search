@@ -35,13 +35,14 @@ describe 'Background jobs ordering', reset: false do
 
   context 'after allowing the background job time to process order' do
     before :all do
-        run_check_task
-        sleep 1
-        load_page "data/retrieve/#{Retrieval.last.to_param}"
+      run_check_task
     end
 
     it 'indicates current order status' do
-      expect(page).to have_text('Not Validated')
+      synchronize do
+        load_page "data/retrieve/#{Retrieval.last.to_param}"
+        expect(page).to have_text('Not Validated')
+      end
     end
   end
 end
