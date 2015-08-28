@@ -95,7 +95,9 @@ describe "Featured datasets", reset: false do
     end
 
     it "shows the two most recently visited datasets among the featured datasets" do
-      expect(featured_dataset_results).to have_css('.panel-list-item', count: 4)
+      within "#dataset-featured-list" do
+        expect(page).to have_css('.panel-list-item', count: 4)
+      end
     end
   end
 
