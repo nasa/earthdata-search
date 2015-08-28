@@ -33,9 +33,8 @@ describe 'Background jobs ordering', reset: false do
 
   context 'after allowing the background job time to process order' do
     before :all do
-        sleep 1
-        expect(Delayed::Worker.new.work_off).to  eq([1, 0])
-        load_page "data/retrieve/#{Retrieval.last.to_param}"
+      expect(Delayed::Worker.new.work_off).to  eq([1, 0])
+      load_page "data/retrieve/#{Retrieval.last.to_param}"
     end
 
     it 'indicates current order status' do
