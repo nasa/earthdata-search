@@ -1,4 +1,5 @@
 Rake::Task[:test].enhance(['doc:ui']) do
+  Rake::Task['ci:prepare'].invoke
   puts "[1/6] Precompiling assets"
   Rake::Task['assets:clobber'].invoke
   Rake::Task['assets:precompile'].invoke
