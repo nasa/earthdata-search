@@ -77,4 +77,6 @@ EarthdataSearchClient::Application.configure do
   config.feedback_url = 'https://fbm.earthdata.nasa.gov/for/EdSearch/feedback.js'
 
   config.url_limit = 2000
+
+  config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-prod'
 end
