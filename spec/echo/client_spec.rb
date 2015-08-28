@@ -153,14 +153,14 @@ describe Echo::Client do
       expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
 
       basic_client.request(:post, dummy_url, nil, nil, {})
-      expect(req.headers['Client-Id']).to eq('EDSC')
+      expect(req.headers['Client-Id']).to eq('edsc-dev')
     end
 
     it 'sets a client id compatible with echo-rest requests' do
       expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
 
       basic_client.request(:post, dummy_url, nil, nil, {})
-      expect(req.headers['Echo-ClientId']).to eq('EDSC')
+      expect(req.headers['Echo-ClientId']).to eq('edsc-dev')
     end
   end
 
