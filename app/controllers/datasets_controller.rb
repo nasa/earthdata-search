@@ -1,6 +1,8 @@
 class DatasetsController < ApplicationController
   respond_to :json
 
+  KEYWORD_CHILD = {'topic' => 'term', 'term' => 'variable_level_1', 'variable_level_1' => 'variable_level_2', 'variable_level_2' => 'variable_level_3', 'variable_level_3' => nil}
+
   def index
     catalog_response = echo_client.get_datasets(dataset_params_for_request(request), token)
 
@@ -56,7 +58,7 @@ class DatasetsController < ApplicationController
 
     fields_to_params = {
       'two_d_coordinate_system_name' => ['2D Coordinate Name', 'two_d_coordinate_system_name[]'],
-      'category' => ['Category Keyword', 'science_keywords[0][category][]'],
+      # 'category' => ['Category Keyword', 'science_keywords[0][category][]'],
       'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
       'term' => ['Term Keyword', 'science_keywords[0][term][]'],
       'variable_level_1' => ['Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'],
@@ -68,17 +70,91 @@ class DatasetsController < ApplicationController
     features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
     facets.unshift(features).flatten!
 
-    results = facets.map do |facet|
-      items = facet['value-counts'].map do |term, count|
-        {'term' => term, 'count' => count}
+    keyword_index = 8
+
+    # CMR-1722 Temporarily filter out detailed_variable keywords
+    # FIXME: The proposed fix to CMR-1722 may break our facets
+    facets = facets.reject {|facet| facet['field'] == 'detailed_variable'}
+
+    science_keywords_facets = facets.find {|facet| facet['field'] == 'science_keywords'}
+    facets.delete(science_keywords_facets)
+
+    # find all science_keywords query params
+    keyword_query_params = {}
+    query.each {|k, v| keyword_query_params[k[/science_keywords\[0\]\[(.*)\]\[\]/, 1]] = v[0][1].gsub('+', ' ') if k.match(/science_keywords\[0\]/) }
+
+    # add child param to the hash
+    cutoff_key = nil
+    KEYWORD_CHILD.keys.each do |key|
+      keyword_query_params.except!(key) if cutoff_key && keyword_query_params[key]
+      if keyword_query_params[key].nil?
+        unless cutoff_key
+          keyword_query_params[key] = '--ALL--'
+          cutoff_key = key
+        end
+        next
       end
+    end
+
+    facet_tree = science_keywords_facets['category'].find { |facet| facet['value'] == 'EARTH SCIENCE' }['topic'] unless science_keywords_facets.nil? || science_keywords_facets['category'].nil?
+    if facet_tree
+      KEYWORD_CHILD.keys.each do |keyword|
+        rtn_hash = parse_hierarchical_keywords(facet_tree, keyword, keyword_query_params)
+        facets << rtn_hash[:value]
+        break if rtn_hash[:facet_tree].nil?
+        facet_tree = rtn_hash[:facet_tree]
+      end
+    end
+
+    selected_keywords = []
+    keyword_facets = []
+
+    results = facets.map.with_index do |facet, index|
+      if facet['value-counts'].empty?
+        items = []
+      else
+        items = facet['value-counts'].map do |term, count|
+          {'term' => term, 'count' => count}
+        end
+      end
+
       field = facet['field']
       params = fields_to_params[field]
       unless params
         params = [field.humanize.capitalize, field + '[]']
       end
-      facet_response(query, items, params.first, params.last)
+
+      previous_applied = false
+      if index < keyword_index
+        facet_response(query, items, params.first, params.last)
+      else
+        if items.size > 0 # FIXME if no items are returned, doesn't show any selected facets
+          previous_param = fields_to_params[facets[index-1]['field']]
+          previous_applied = true if previous_param && query[previous_param.last]
+
+          if query[params.last] # if current keyword param has applied facet
+            selected_keyword = URI.unescape(query[params.last].flatten.last.gsub('+', ' '))
+            selected_item = items.select{|facet| facet['term'] == selected_keyword}.first
+            selected_item['param'] = params.last
+            selected_item['term'] = selected_item['term']
+            selected_item['index'] = index
+            selected_keywords += [selected_item]
+          elsif index == keyword_index || previous_applied # if previous keyword param has applied facet
+            keyword_facets += items.map do |item|
+              item['param'] = params.last
+              item
+            end
+          else # other keywords without previously applied keywords
+            nil
+          end
+        end
+        nil
+      end
     end
+
+    keyword_facets.sort_by! {|facet| facet['term']}
+    results.insert(1, {name: "Keywords", param: nil, values: selected_keywords + keyword_facets})
+    results.compact
   end
 
   def facet_response(query, items, name, param)
@@ -167,6 +243,42 @@ class DatasetsController < ApplicationController
       params["two_d_coordinate_system_name"] = old["name"]
     end
 
+    params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true'
+
     params
   end
+
+  def parse_hierarchical_keywords(facets, parent, params)
+    facets = [facets] if facets.is_a? Hash
+    KEYWORD_CHILD.keys.each do |key|
+      if key == parent
+        if params[key]
+          if params[key] == '--ALL--'
+            # add all, don't trim
+            items = []
+            facets.each do |facet|
+              items << [facet['value'], facet['count']]
+            end
+            rtn = {:value => {'field' => key, 'value-counts' => items}, :facet_tree => facets}
+            return rtn
+          else
+            # for every facet in this level
+            facets.each do |facet|
+              if facet['value'] == URI.unescape(params[key])
+                # find the right one and trim facets tree
+                tmp1 = {'field' => key, 'value-counts' => [[facet['value'], facet['count']]]}
+                tmp2 =  (facet.is_a? Hash) && !facet['subfields'].nil? ? facet[facet['subfields'][0]] : nil
+                rtn = {:value => tmp1, :facet_tree => tmp2}
+                return rtn
+              end
+            end
+          end
+        else
+          # this is not gonna happen if the facets tree is trimmed correctly
+          return {:value => {'field' => key, 'value-counts' => []}, :facet_tree => facets}
+        end
+      end
+    end
+  end
+
 end

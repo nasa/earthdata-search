@@ -150,7 +150,7 @@ describe 'Address bar', reset: false do
     before(:all) { visit '/search?fpj=EOSDIS' }
 
     it 'displays the selected facet condition' do
-      within(:css, '.selected-facets-panel') do
+      within(:css, '#collapse3 .panel-body.facets') do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
