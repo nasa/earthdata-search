@@ -40,6 +40,10 @@ See public/licenses.txt
 * A Ruby manager such as [RVM](http://rvm.io/) or [rbenv](https://github.com/sstephenson/rbenv) is strongly recommended.
 * (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
 * (For placename completion) a [GeoNames](http://www.geonames.org) account
+* Postgres development headers
+  * Mac (homebrew): `brew install postgresql`
+  * Ubuntu: `sudo apt-get install libpq-dev`
+  * RHEL: `yum install postgresql-devel`
 
 ### URS Configuration
 
@@ -61,7 +65,10 @@ If using Pow, create a symlink to your application directory, for instance `ln -
 (making your app available at `http://earthdata-search.dev`).  If you set up URS, ensure that the domain matches
 the callback URL specified in URS.
 
-Run `cp config/application.yml.example config/application.yml`
+Run
+
+    cp config/database.yml.example config/database.yml
+    cp config/application.yml.example config/application.yml
 
 Open `config/application.yml` and edit configuration values as described in that file to set up URS, shapefile support,
 and placename completion as appropriate.
@@ -69,6 +76,7 @@ and placename completion as appropriate.
 ### Initial setup
 
 Run
+
     bundle install
     rake db:migrate
     rake db:seed
