@@ -80,4 +80,6 @@ EarthdataSearchClient::Application.configure do
   config.echo_env = 'partnertest'
   services = config.services
   config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
+
+  config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-prod'
 end

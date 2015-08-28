@@ -12,7 +12,7 @@ earthdata:
     urs_root: "https://sit.urs.earthdata.nasa.gov"
     echo_root: "https://testbed.echo.nasa.gov"
     cmr_root: "https://cmr.sit.earthdata.nasa.gov"
-
+    
 # Every (EDSC, URS) environment pair has a different client id.  Yay combinatorics.
 urs:
   production:
