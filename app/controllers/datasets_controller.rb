@@ -110,7 +110,7 @@ class DatasetsController < ApplicationController
     keyword_facets = []
 
     results = facets.map.with_index do |facet, index|
-      if facet['value-counts'].empty?
+      if facet['value-counts'].blank?
         items = []
       else
         items = facet['value-counts'].map do |term, count|
