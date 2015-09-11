@@ -17,6 +17,7 @@ class ESIClient
     params_hash = build_params
     options.merge!(params_hash)
 
+    Rails.logger.info("EsiClient.submit_esi_request: service_url: #{service_url}, options: #{options.inspect}")
     post(service_url, options)
   end
 

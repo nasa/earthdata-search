@@ -31,6 +31,7 @@ class Retrieval < ActiveRecord::Base
   def self.process(id, token, env, base_url)
     VCR::EDSCConfigurer.register_token('edsc', token + ':' + ENV['urs_client_id']) if Rails.env.test?
     retrieval = Retrieval.find_by_id(id)
+    Rails.logger.info("Retrieval.process: id: #{id}, retrieval: #{retrieval.inspect}")
     project = retrieval.jsondata
     user_id = retrieval.user.echo_id
     client = Echo::Client.client_for_environment(env, Rails.configuration.services)
@@ -53,7 +54,9 @@ class Retrieval < ActiveRecord::Base
         elsif method['type'] == 'service'
           request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
 
+          Rails.logger.info("Retrieval.process: ESIClient.submit_esi_request(dataset['id']: #{dataset['id']}, params: #{params.inspect}, method: #{method.inspect}, request_url: #{request_url}, client: #{client.inspect}, token: #{token})")
           service_response = ESIClient.submit_esi_request(dataset['id'], params, method, request_url, client, token).body
+          Rails.logger.info("Retrieval.process: service_response: #{service_response.inspect}")
           method[:dataset_id] = dataset['id']
           method[:order_id] = MultiXml.parse(service_response)['agentResponse']['order']['orderId']
         end
