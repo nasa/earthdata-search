@@ -90,8 +90,8 @@ class DataAccessController < ApplicationController
     end
 
     user = current_user
-    render file: "#{Rails.root}/public/401.html", status: :unauthorized unless user
-    render file: "#{Rails.root}/public/403.html", status: :forbidden unless user == @retrieval.user
+    render file: "#{Rails.root}/public/401.html", status: :unauthorized  and return unless user
+    render file: "#{Rails.root}/public/403.html", status: :forbidden and return unless user == @retrieval.user
     respond_to do |format|
       format.html
       format.json { render json: @retrieval.jsondata.merge(id: @retrieval.to_param).to_json }
@@ -113,8 +113,8 @@ class DataAccessController < ApplicationController
     elsif params[:retrieval_id]
       retrieval = Retrieval.find(params[:retrieval_id])
       user = current_user
-      render file: "#{Rails.root}/public/401.html", status: :unauthorized unless user
-      render file: "#{Rails.root}/public/403.html", status: :forbidden unless user == retrieval.user
+      render file: "#{Rails.root}/public/401.html", status: :unauthorized and return unless user
+      render file: "#{Rails.root}/public/403.html", status: :forbidden and return unless user == retrieval.user
 
       retrieval.destroy
       redirect_to action: :status, status: :found
