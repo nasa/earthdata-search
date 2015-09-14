@@ -26,7 +26,9 @@ class DataAccessController < ApplicationController
     retrieval.user = user
     retrieval.jsondata = project
     retrieval.save!
+    Rails.logger.info("DataAccessController#retrieve: retrieval: #{retrieval.inspect}")
 
+    Rails.logger.info("DataAccessController#retrieve: process(retrieval_id: #{retrieval.id}, token: filtered, echo_env: #{echo_env.inspect}, request.base_url: #{request.base_url})")
     Retrieval.delay.process(retrieval.id, token, echo_env, request.base_url)
 
     redirect_to action: 'retrieval', id: retrieval.to_param
