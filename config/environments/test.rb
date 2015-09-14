@@ -43,4 +43,6 @@ EarthdataSearchClient::Application.configure do
   config.middleware.use RackSessionAccess::Middleware
 
   config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-dev'
+
+  config.opensearch_client_id = ENV['opensearch_client_id'] || 'edsc-dev'
 end
