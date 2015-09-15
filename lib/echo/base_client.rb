@@ -28,8 +28,8 @@ module Echo
     def request(method, url, params, body, headers)
       faraday_response = connection.send(method, url, params) do |req|
         req.headers['Content-Type'] = 'application/json' unless method == :get
-        req.headers['Client-Id'] = Rails.configuration.cmr_client_id
-        req.headers['Echo-ClientId'] = Rails.configuration.cmr_client_id unless self.class == CmrClient
+        req.headers['Client-Id'] = Rails.configuration.client_id
+        req.headers['Echo-ClientId'] = Rails.configuration.client_id unless self.class == CmrClient
         headers.each do |header, value|
           req.headers[header] = value
         end
