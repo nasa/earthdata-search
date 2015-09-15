@@ -3,6 +3,9 @@ require 'spec_helper'
 describe DatasetDetailsPresenter do
   before do
     @dataset = Echo::Dataset.new
+    @dataset.short_name = "MOD02QKM"
+    @dataset.version_id = 5
+    @dataset.archive_center = "LAADS"
   end
 
   it "converts difs" do
@@ -18,7 +21,7 @@ describe DatasetDetailsPresenter do
     @dataset.archive_center = "LAADS"
     DatasetDetailsPresenter.new(@dataset)
 
-    expect(@dataset.osdd_url).to eq("https://api.echo.nasa.gov/opensearch/granules/descriptor_document.xml?utf8=%E2%9C%93&clientId=#{Rails.configuration.opensearch_client_id}&shortName=MOD02QKM&versionId=5&dataCenter=LAADS&commit=Generate")
+    expect(@dataset.osdd_url).to eq("https://api.echo.nasa.gov/opensearch/granules/descriptor_document.xml?utf8=%E2%9C%93&clientId=#{Rails.configuration.client_id}&shortName=MOD02QKM&versionId=5&dataCenter=LAADS&commit=Generate")
   end
 
   it "converts spatial points" do
