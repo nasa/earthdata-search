@@ -56,9 +56,11 @@ class Retrieval < ActiveRecord::Base
         elsif method['type'] == 'service'
           request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
 
-          service_response = ESIClient.submit_esi_request(dataset['id'], params, method, request_url, client, token).body
           method[:dataset_id] = dataset['id']
-          method[:order_id] = MultiXml.parse(service_response)['agentResponse']['order']['orderId']
+          service_response = MultiXml.parse(ESIClient.submit_esi_request(dataset['id'], params, method, request_url, client, token).body)
+          method[:order_id] = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
+          method[:error_code] = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
+          method[:error_message] = service_response['Exception'].nil? ? nil : service_response['Exception']['Message']
         end
       end
     end
