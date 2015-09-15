@@ -329,6 +329,7 @@ describe "Dataset Facets", reset: false do
 
     context "when selecting a term keyword" do
       before :all do
+        page.save_screenshot "1.png"
         find(".facets-item", text: "AEROSOLS").click
         wait_for_xhr
       end
@@ -349,6 +350,12 @@ describe "Dataset Facets", reset: false do
         wait_for_xhr
         find(".facets-item", text: "NITRATE PARTICLES").click
         wait_for_xhr
+        find(".facets-item", text: "ATMOSPHERE").click
+        wait_for_xhr
+      end
+
+      after :all do
+        reset_search
         find(".facets-item", text: "ATMOSPHERE").click
         wait_for_xhr
       end
