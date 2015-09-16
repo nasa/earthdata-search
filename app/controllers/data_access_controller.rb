@@ -235,13 +235,19 @@ class DataAccessController < ApplicationController
     end
 
     defs = defs.map do |option_id, config|
-      config[:id] = option_id
-      config[:type] = 'order'
-      config[:form] = echo_client.get_option_definition(option_id, token).body['option_definition']['form']
-      config[:all] = config[:count] == granules.size
-      config[:count] = (hits.to_f * config[:count] / granules.size).round
+      option_def = echo_client.get_option_definition(option_id, token).body['option_definition']
+      if option_def['deprecated']
+        config = nil
+      else
+        config[:id] = option_id
+        config[:type] = 'order'
+        config[:form] = option_def['form']
+        config[:all] = config[:count] == granules.size
+        config[:count] = (hits.to_f * config[:count] / granules.size).round
+      end
       config
     end
+    defs = defs.select{|d| d != nil}
 
     # If no order options exist, still place an order
     if defs.size == 0 && orderable_count > 0
