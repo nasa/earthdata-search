@@ -3,7 +3,7 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -116,12 +116,12 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         label=\"Include associated Browse file in order?\" ref=\"ecs:orderBrowse\"
         type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"19AFC933-5015-F5D6-0D38-C2414CCB520F","name":"M*D29P1D
         Order Option","scope":"PROVIDER"}}'
-    http_version: 
+    http_version:
 8a1f939b65d74b01ed312e4ebef7adf5e40b665d:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -143,7 +143,7 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
       - close
     body:
       encoding: UTF-8
-      string: '{"option_definition":{"deprecated":false,"description":"Ftp_Pull","form":"<form
+      string: '{"option_definition":{"deprecated":true,"description":"Ftp_Pull","form":"<form
         xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:echo=\"http://provider_refer_system_must_match_this\"
         xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"http://for_further_reference\">\n\n<!--
         ORNL media option example  -->\n\n<import name=\"ECHO_SYSTEM_OPTIONS_V1\"/>\n<model>\n  <instance>\n    <providerOptions
@@ -156,12 +156,12 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         label=\"Tape Archive Format (TAR)\" value=\"TAR\"/>\n        <item label=\"Gzipped
         Tape Archive Format (TARGZ)\" value=\"TARGZ\"/>\n        <item label=\"PK/Win
         Zip Format\" value=\"WINZIP\"/>\n    </selectref>\n  </group>\n\n</ui>\n</form>","id":"5F92533B-A6C8-896F-46D4-7516CE7CDDC4","name":"Ftp_Pull","scope":"PROVIDER"}}'
-    http_version: 
+    http_version:
 84c0390553f226c2b4eeb3e14a7d15b143ec6b80:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -265,12 +265,12 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         label=\"SWE_SouthernPentad\" value=\"SWE_SouthernPentad\"/>\n                    <item
         label=\"Flags_SouthernPentad\" value=\"Flags_SouthernPentad\"/>\n               </select>\n            </group>\t\t\n        </group>\n    </ui>\n</form>","id":"906C81F9-4941-1D4D-2EB5-07B6DBBBBDFA","name":"AE_5DSno
         Order Options","scope":"PROVIDER"}}'
-    http_version: 
+    http_version:
 439a0217018a702f093ab4626ca3250f2887ec54:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -380,4 +380,4 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         label=\"Include associated Browse file in order?\" ref=\"ecs:orderBrowse\"
         type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"9940B026-5C7C-BC3E-049B-89F6D2A35AD8","name":"M*D29P1N
         Order Option","scope":"PROVIDER"}}'
-    http_version: 
+    http_version:
