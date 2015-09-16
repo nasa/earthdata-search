@@ -160,7 +160,7 @@ describe Echo::ClientMiddleware::Echo10DatasetMiddleware do
           "iso19115_url" => "https://cmr.earthdata.nasa.gov/search/concepts/.iso19115",
           "smap_iso_url" => nil,
           "dif_url" => "https://cmr.earthdata.nasa.gov/search/concepts/.dif",
-          "osdd_url" => "https://api.echo.nasa.gov/opensearch/granules/descriptor_document.xml?utf8=%E2%9C%93&clientId=#{Rails.configuration.client_id}&shortName=AST_L1AE&versionId=3&dataCenter=LPDAAC&commit=Generate",
+          "osdd_url" => "https://api.echo.nasa.gov/opensearch/granules/descriptor_document.xml?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=AST_L1AE&versionId=3&dataCenter=LPDAAC&commit=Generate",
           "xml" => {
             "ShortName"=>"AST_L1AE",
             "VersionId"=>"3",

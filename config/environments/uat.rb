@@ -81,6 +81,7 @@ EarthdataSearchClient::Application.configure do
   services = config.services
   config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
 
-  # This is the client ID that Earthdata Search sends to other services, i.e. CMR and OpenSearch
-  config.client_id = ENV['client_id'] || 'edsc-prod'
+  # This is also the client ID sent to OpenSearch. It is kept the same since the OpenSearch endpoint ultimately
+  # talks to ECHO/CMR.
+  config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-prod'
 end
