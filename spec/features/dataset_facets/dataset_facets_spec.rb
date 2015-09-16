@@ -365,4 +365,24 @@ describe "Dataset Facets", reset: false do
       end
     end
   end
+
+  context "selecting a processing level facet" do
+    before :all do
+      find("h3.facet-title", text: 'Processing level').click
+      within(:css, '.processing-level') do
+        find(".facets-item", text: "1", match: :prefer_exact).click
+      end
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+      find("h3.facet-title", text: 'Processing level').click
+    end
+
+    it "shortens the query parameter to 'fl' in the url" do
+      uri = URI.parse(current_url)
+      expect(uri.query).to have_content('fl=')
+    end
+  end
 end
