@@ -4,15 +4,18 @@ earthdata:
     urs_root: "https://urs.earthdata.nasa.gov"
     echo_root: "https://api.echo.nasa.gov"
     cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
+    opensearch_root: "https://api.echo.nasa.gov/opensearch"
   partnertest:
     urs_root: "https://uat.urs.earthdata.nasa.gov"
     echo_root: "https://api-test.echo.nasa.gov"
     cmr_root: "https://cmr.uat.earthdata.nasa.gov" # Does not exist yet
+    opensearch_root: "https://api-test.echo.nasa.gov/opensearch/"
   testbed:
     urs_root: "https://sit.urs.earthdata.nasa.gov"
     echo_root: "https://testbed.echo.nasa.gov"
     cmr_root: "https://cmr.sit.earthdata.nasa.gov"
-    
+    opensearch_root: "https://api.echo.nasa.gov/opensearch"
+
 # Every (EDSC, URS) environment pair has a different client id.  Yay combinatorics.
 urs:
   production:
