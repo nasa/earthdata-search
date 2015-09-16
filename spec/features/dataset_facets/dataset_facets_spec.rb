@@ -363,7 +363,9 @@ describe "Dataset Facets", reset: false do
   context "selecting a processing level facet" do
     before :all do
       find("h3.facet-title", text: 'Processing level').click
-      find(".facets-item", text: "0").click
+      within(:css, '.processing-level') do
+        find(".facets-item", text: "1", match: :prefer_exact).click
+      end
       wait_for_xhr
     end
 
