@@ -1,4 +1,39 @@
+require 'nokogiri'
+require 'open-uri'
+require 'json'
+
 module Colormaps
+
+  def self.load
+    puts "Loading GIBS colormap data..."
+    output_dir = "#{Rails.root}/public/colormaps"
+    FileUtils::mkdir_p(output_dir)
+    gibs_url = "http://map1a.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi/?SERVICE=WMTS&REQUEST=GetCapabilities"
+
+    file_count = 0
+    error_count = 0
+
+    capabilities_str = open(gibs_url).read
+    # This xmlns was breaking xpath queries
+    capabilities_file = Nokogiri::XML(capabilities_str.sub('xmlns="http://www.opengis.net/wmts/1.0"', ''))
+
+    layers = capabilities_file.xpath("/Capabilities/Contents/Layer")
+    layers.each do |layer|
+      id = layer.xpath("./ows:Identifier").first.content.to_s
+      url = layer.xpath("./ows:Metadata/@xlink:href").to_s
+
+      unless id.empty? || url.empty?
+        file_count += 1
+        result = Colormaps.xml_to_json(id, url, output_dir)
+        error_count += 1 unless result
+      end
+    end
+
+    puts "#{error_count} error(s), #{file_count} file(s)"
+
+    error_count
+  end
+
     # This method takes a XML formatted GIBS colormap and converts it to JSON format
     # https://github.com/nasa-gibs/worldview/blob/12ac2e188048c1d32a858f68b2eaac85852462d6/bin/wv-options-colormap
     # id: ID found in XML colormap. Used to name JSON file. (MODIS_Terra_Snow_Cover)

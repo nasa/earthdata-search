@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.2'
 
 gem 'rails', '~> 4.1.1'
 
@@ -11,6 +12,8 @@ gem 'multi_xml'
 gem 'toastr-rails'
 gem 'unicorn'
 gem 'whenever', :require => false
+gem 'rufus-scheduler'
+gem 'rails_12factor'
 
 gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'a89da600f389c53c88362ce5133d8d3945776464'
 
