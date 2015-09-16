@@ -204,6 +204,8 @@ ns.ProjectList = do (ko
             number_processed: m.serviceOptions.number_processed
             total_number: m.serviceOptions.total_number
             downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&dataset=#{datasetId}"
+            error_code: m.errorCode
+            error_message: m.errorMessage
       serviceOrders
 
     _computeDatasetOnly: ->

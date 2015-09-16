@@ -78,12 +78,19 @@ class DataAccessController < ApplicationController
           response = ESIClient.get_esi_request(s['dataset_id'], s['order_id'], echo_client, token, header_value).body
           response_json = MultiXml.parse(response)
 
-          status = response_json['agentResponse']['requestStatus']
+          urls = []
+          if response_json['agentResponse']
+            status = response_json['agentResponse']['requestStatus']
+            urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
+          else
+            status = {'status' => 'failed'}
+            s['error_code'] = response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Code']
+            s['error_message'] = response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Message']
+          end
+
           s['order_status'] = status['status']
           s['service_options']['number_processed'] = status['numberProcessed']
           s['service_options']['total_number'] = status['totalNumber']
-          urls = []
-          urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
           s['service_options']['download_urls'] = urls
         end
       end
