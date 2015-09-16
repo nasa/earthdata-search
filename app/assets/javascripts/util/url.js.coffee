@@ -31,6 +31,7 @@ this.edsc.util.url = do(window
     inflate: (params) ->
       super(params)
       value = params[@from]
+      value = value.toString() if typeof value == 'number'
       params[@from] = value.split('!') if value?
 
   class ParamFlattener extends ArrayJoiner
