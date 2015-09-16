@@ -353,6 +353,12 @@ describe "Dataset Facets", reset: false do
         wait_for_xhr
       end
 
+      after :all do
+        reset_search
+        find(".facets-item", text: "ATMOSPHERE").click
+        wait_for_xhr
+      end
+
       it "removes the children keywords" do
         expect(page).to have_no_content("AEROSOLS")
         expect(page).to have_no_content("NITRATE PARTICLES")
