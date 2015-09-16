@@ -169,6 +169,11 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.1)
       sprockets-rails (~> 2.0)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.2)
+    rails_stdout_logging (0.0.3)
     railties (4.1.1)
       actionpack (= 4.1.1)
       activesupport (= 4.1.1)
@@ -200,6 +205,7 @@ GEM
       rspec (~> 2.0)
       rspec-core (!= 2.12.0)
     ruby-progressbar (1.5.0)
+    rufus-scheduler (3.1.2)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -290,8 +296,10 @@ DEPENDENCIES
   quiet_assets
   rack_session_access
   rails (~> 4.1.1)
+  rails_12factor
   rspec-rails
   rspec_junit_formatter
+  rufus-scheduler
   sass-rails (~> 4.0.0)
   seed_dump
   sqlite3
