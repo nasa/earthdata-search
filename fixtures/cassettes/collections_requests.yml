@@ -345,6 +345,21 @@ http_interactions:
   digest: 96274ebd2af2b7edfcbbef175320872e03eef164
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C90762182-LAADS&echo_collection_id%5B%5D=C2821-NSIDCV0&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 15:36:39 GMT
+  digest: a38e22b3cb52b6ac58c9f2a50dbfee3c46744db5
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C90762182-LAADS&page_num=1&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII

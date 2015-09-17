@@ -1,14 +1,16 @@
 require "spec_helper"
 
 describe "Data download page", reset: false do
-  downloadable_dataset_id = 'C179003030-ORNL_DAAC'
-  downloadable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+  downloadable_dataset_id = 'C90762182-LAADS'
+  downloadable_dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
   non_downloadable_dataset_id = 'C179001887-SEDAC'
   non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
-  orderable_dataset_id = 'C179003030-ORNL_DAAC'
-  orderable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+  orderable_dataset_id = 'C90762182-LAADS'
+  orderable_dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
+
+  no_direct_download_dataset_id = 'C179003030-ORNL_DAAC'
 
   non_orderable_dataset_id = 'C179001887-SEDAC'
   non_orderable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
@@ -49,12 +51,12 @@ describe "Data download page", reset: false do
     end
 
     it "displays links for datasets with additional resources and documentation" do
-      expect(page).to have_link("USGS 15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED INFORMATION)")
+      expect(page).to have_link("MODIS Level 1B Product Information Page at MCST (MiscInformation)")
     end
 
     it "displays titles for datasets with additional resources and documentation" do
       within('.data-access-resources') do
-        expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
+        expect(page).to have_content("MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005")
       end
     end
 
@@ -113,7 +115,7 @@ describe "Data download page", reset: false do
 
   context "selecting the direct download option for granules without browse imagery" do
     before :all do
-      load_page 'data/configure', project: [downloadable_dataset_id]
+      load_page 'data/configure', project: [no_direct_download_dataset_id]
       wait_for_xhr
 
       choose 'Download'
@@ -175,9 +177,8 @@ describe "Data download page", reset: false do
       load_page 'data/configure', project: [orderable_dataset_id]
       wait_for_xhr
 
-      choose 'Ftp_Pull'
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      choose 'FtpPushPull'
+      select 'FtpPull', from: 'Distribution Options'
       click_on 'Continue'
 
       # Confirm address
@@ -191,7 +192,7 @@ describe "Data download page", reset: false do
 
   context "when datasets have been selected for direct download" do
     before :all do
-      load_page 'data/configure', project: [downloadable_dataset_id, non_downloadable_dataset_id]
+      load_page 'data/configure', {project: [downloadable_dataset_id, non_downloadable_dataset_id], temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
       wait_for_xhr
 
       # Download the first
@@ -227,11 +228,12 @@ describe "Data download page", reset: false do
     context 'upon clicking a "View Download Links" button' do
       before :all do
         click_link "View Download Links"
+        wait_for_xhr
       end
 
       it "displays a page containing direct download hyperlinks for the dataset's granules in a new window" do
         within_last_window do
-          expect(page).to have_link("http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1984/43601715.s15")
+          expect(page).to have_link("ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf")
         end
       end
 
@@ -250,7 +252,7 @@ describe "Data download page", reset: false do
       it "downloads a shell script which performs the user's query" do
         within_last_window do
           expect(page).to have_content('#!/bin/sh')
-          expect(page).to have_content('http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80611715.s15')
+          expect(page).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
         end
       end
     end
@@ -258,12 +260,10 @@ describe "Data download page", reset: false do
 
   context "when no datasets have been selected for direct download" do
     before :all do
-      load_page 'data/configure', project: [orderable_dataset_id]
+      load_page 'data/configure', project: [no_direct_download_dataset_id]
       wait_for_xhr
 
-      choose 'Ftp_Pull'
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      choose 'Order'
       click_on 'Continue'
 
       # Confirm address
@@ -280,9 +280,8 @@ describe "Data download page", reset: false do
       load_page 'data/configure', project: [orderable_dataset_id, non_orderable_dataset_id]
       wait_for_xhr
 
-      choose 'Ftp_Pull'
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      choose 'FtpPushPull'
+      select 'FtpPull', from: 'Distribution Options'
       click_on 'Continue'
 
       # No actions available on the second, continue
