@@ -12,7 +12,7 @@ describe "User missing ordering preferences", reset: false do
       login 'edscbasic'
 
       click_link "Retrieve project data"
-      
+
       choose "FtpPushPull"
       select 'FtpPull', from: 'Distribution Options'
       click_button "Continue"
