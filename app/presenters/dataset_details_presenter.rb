@@ -51,7 +51,7 @@ class DatasetDetailsPresenter < DetailsPresenter
     @dataset.dif_url = "#{metadata_url}.dif#{url_token}"
     @dataset.smap_iso_url = nil #"#{metadata_url}.smap_iso"
     opensearch_url = "#{Rails.configuration.services['earthdata'][env]['opensearch_root']}/granules/descriptor_document.xml"
-    @dataset.osdd_url = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.escape(@dataset.short_name)}&versionId=#{@dataset.version_id}&dataCenter=#{URI.escape(@dataset.archive_center)}&commit=Generate#{url_token}"
+    @dataset.osdd_url = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.encode_www_form_component(@dataset.short_name)}&versionId=#{@dataset.version_id}&dataCenter=#{URI.encode_www_form_component(@dataset.archive_center)}&commit=Generate#{url_token}"
 
     # Set description to URL if URLDescription doesn't exist
     @dataset.online_access_urls = [] if @dataset.online_access_urls.nil?
