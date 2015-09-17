@@ -34,6 +34,7 @@ test_results
 /doc/ui/portfolio
 
 /vendor/cmep
+/vendor/bundle
 
 # rubymine project files
 /.idea

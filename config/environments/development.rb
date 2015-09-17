@@ -37,5 +37,7 @@ EarthdataSearchClient::Application.configure do
 
   config.url_limit = 200
 
+  # This is also the client ID sent to OpenSearch. It is kept the same since the OpenSearch endpoint ultimately
+  # talks to ECHO/CMR.
   config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-dev'
 end
