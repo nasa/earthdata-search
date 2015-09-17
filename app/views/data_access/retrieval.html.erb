@@ -105,7 +105,22 @@
               </ul>
             </div>
             <!-- /ko -->
-            <!-- ko if: order_status != 'complete' -->
+            <!-- ko if: order_status == 'failed' -->
+            <div>
+              <p><strong>Error: </strong> <span data-bind="text: error_code"></span></p>
+              <p><strong>Message: </strong> <span data-bind="text: error_message"></span></p>
+              <% if Rails.configuration.feedback_url.present? %>
+                <p>Please
+                  <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Data Access', dataset_id)" class="button feedback-button">
+                    <i class="fa fa-exclamation-circle"></i>
+                    report a problem
+                  </a>
+                  with a short description on how to trigger this error. We will get back to you as soon as possible.
+                 </p>
+              <% end %>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: order_status != 'complete' && order_status != 'failed' -->
             <div data-bind="if: order_status != 'submitting'">
               <p>
                 Progress: <span data-bind="text: number_processed"></span> of <span data-bind="text: total_number"></span> items processed (<span data-bind="text: (number_processed / total_number * 100).toFixed(2)"></span>%)
