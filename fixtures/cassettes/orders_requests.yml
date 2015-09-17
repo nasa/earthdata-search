@@ -180,6 +180,25 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
     body:
       encoding: UTF-8
+      string: '[{"order_item":{"catalog_item_id":"G179111301-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111300-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111299-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111298-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111297-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111296-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111295-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111294-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111293-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111292-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111291-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111290-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111289-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111288-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111287-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111286-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111285-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111284-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111283-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111282-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111281-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111280-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111279-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111278-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111277-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111276-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111275-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111274-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111273-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111272-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111271-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111270-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111269-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111268-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111267-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111266-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179111265-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179109564-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179109563-ORNL_DAAC","quantity":1}}]'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 15:36:43 GMT
+  digest: ae82d2a1dc8801714b10b5ddc4152532641556d8
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
+    body:
+      encoding: UTF-8
       string: '[{"order_item":{"catalog_item_id":"G240658864-LAADS","quantity":1,"option_selection":{"id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","option_definition_name":"FtpPushPull","content":"\u003cprov:packageOption
         xmlns:prov=\"http://ecsodl.nasa.gov/orderoptions\"\u003e\u003c!-- Distribution
         Specification--\u003e\u003cprov:dist\u003e\u003cprov:value\u003eFtpPull\u003c/prov:value\u003e\u003c/prov:dist\u003e\u003cprov:distributionSpecification
