@@ -172,6 +172,40 @@ http_interactions:
   digest: cbb97be5f5d809e845b7ab45c95aa423fc25cee3
 - request:
     method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C90762182-LAADS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 01:42:28 GMT
+  digest: d7b94c7a2ab18eb7211db51415137edd2cae1139
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions/3C37FE59-7568-1D93-9D36-730668C0F9E5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 01:42:29 GMT
+  digest: c21776d11745f862856a82e0962cd12be5d2d95c
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447
     body:
       encoding: US-ASCII

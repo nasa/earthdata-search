@@ -376,6 +376,23 @@ http_interactions:
   digest: 0025b3c140c47238bb5f11c9eca55273756a69d2
 - request:
     method: get
+    uri: https://api.echo.nasa.gov/echo-rest/order_information.json?catalog_item_id%5B%5D=G201150492-LAADS&catalog_item_id%5B%5D=G201150491-LAADS&catalog_item_id%5B%5D=G201150434-LAADS&catalog_item_id%5B%5D=G201150535-LAADS&catalog_item_id%5B%5D=G201150490-LAADS&catalog_item_id%5B%5D=G201150534-LAADS&catalog_item_id%5B%5D=G201150489-LAADS&catalog_item_id%5B%5D=G201150702-LAADS&catalog_item_id%5B%5D=G201150533-LAADS&catalog_item_id%5B%5D=G201150701-LAADS&catalog_item_id%5B%5D=G201150339-LAADS&catalog_item_id%5B%5D=G201150488-LAADS&catalog_item_id%5B%5D=G201150433-LAADS&catalog_item_id%5B%5D=G201150432-LAADS&catalog_item_id%5B%5D=G201150374-LAADS&catalog_item_id%5B%5D=G201150373-LAADS&catalog_item_id%5B%5D=G201150431-LAADS&catalog_item_id%5B%5D=G201150532-LAADS&catalog_item_id%5B%5D=G201150430-LAADS&catalog_item_id%5B%5D=G201150372-LAADS&catalog_item_id%5B%5D=G201150531-LAADS&catalog_item_id%5B%5D=G201150295-LAADS&catalog_item_id%5B%5D=G201150262-LAADS&catalog_item_id%5B%5D=G201150429-LAADS&catalog_item_id%5B%5D=G201150428-LAADS&catalog_item_id%5B%5D=G201150427-LAADS&catalog_item_id%5B%5D=G201150230-LAADS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 01:42:31 GMT
+  digest: ad8ff59d7922f48906d763b04161df286d748735
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/echo-rest/order_information.json?catalog_item_id%5B%5D=G212764493-GSFCS4PA&catalog_item_id%5B%5D=G212757661-GSFCS4PA&catalog_item_id%5B%5D=G212750921-GSFCS4PA&catalog_item_id%5B%5D=G212736872-GSFCS4PA&catalog_item_id%5B%5D=G212710028-GSFCS4PA&catalog_item_id%5B%5D=G212697512-GSFCS4PA&catalog_item_id%5B%5D=G212674414-GSFCS4PA&catalog_item_id%5B%5D=G212665849-GSFCS4PA&catalog_item_id%5B%5D=G212659447-GSFCS4PA&catalog_item_id%5B%5D=G212652860-GSFCS4PA&catalog_item_id%5B%5D=G212649534-GSFCS4PA
     body:
       encoding: US-ASCII
