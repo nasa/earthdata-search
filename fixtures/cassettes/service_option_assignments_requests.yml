@@ -136,4 +136,21 @@ http_interactions:
       - edsc
   recorded_at: Wed, 13 May 2015 14:28:41 GMT
   digest: 84f71ca1ecec0349c09d686b9243ee338b9a6beb
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C90762182-LAADS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 01:42:32 GMT
+  digest: f455a04f5fd40b792f49ccfe597eff85a3d60c4a
 recorded_with: VCR 2.6.0

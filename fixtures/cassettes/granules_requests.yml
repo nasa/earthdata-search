@@ -704,6 +704,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
+      string: echo_collection_id=C179001887-SEDAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=2014-07-10T00%3A00%3A00.000Z%2C2014-07-10T03%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 01:42:27 GMT
+  digest: 9a4fc539b80e68568da7cb3bd13710dd086964e4
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
       string: echo_collection_id=C179002107-SEDAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
@@ -1881,4 +1898,68 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 21 Jan 2015 18:39:43 GMT
   digest: 8e3d0a3289d935e7781dc8451d88ffe4c464311c
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C90762182-LAADS&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=2014-07-10T00%3A00%3A00.000Z%2C2014-07-10T03%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 01:42:25 GMT
+  digest: 36d382d734173a0d10233bc1126e1b39fceb9e3a
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C90762182-LAADS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - edsc-dev
+  recorded_at: Thu, 17 Sep 2015 01:42:36 GMT
+  digest: aa8569a428bfd747ed9ef08eaaa71696ae9d648a
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C90762182-LAADS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=2014-07-10T00%3A00%3A00.000Z%2C2014-07-10T03%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - edsc-dev
+  recorded_at: Thu, 17 Sep 2015 01:42:21 GMT
+  digest: affe894443e04c7abd39d8b5e27a7070eec3fbc2
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C90762182-LAADS&page_num=2&page_size=20&sort_key%5B%5D=-start_date&temporal=2014-07-10T00%3A00%3A00.000Z%2C2014-07-10T03%3A59%3A59.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 01:42:34 GMT
+  digest: d83e4338cb018ec06e7c79fa30d2e54592536c16
 recorded_with: VCR 2.6.0

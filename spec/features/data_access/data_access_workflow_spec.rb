@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe "Data Access workflow", reset: false do
-  downloadable_dataset_id = 'C179003030-ORNL_DAAC'
-  downloadable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+  downloadable_dataset_id = 'C90762182-LAADS'
+  downloadable_dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
   non_downloadable_dataset_id = 'C179001887-SEDAC'
   non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
@@ -42,7 +42,7 @@ describe "Data Access workflow", reset: false do
 
   context "when the user is logged in" do
     before(:all) do
-      load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
+      load_page :search, {project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project, temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
       login
       click_link "Retrieve project data"
       wait_for_xhr
@@ -63,8 +63,7 @@ describe "Data Access workflow", reset: false do
       end
 
       it "displays granule information" do
-        expect(page).to have_content "39 Granules"
-        expect(page).to have_content "246.9 Kilobytes"
+        expect(page).to have_content "27 Granules"
       end
 
       it 'displays a "continue" button' do
@@ -88,12 +87,12 @@ describe "Data Access workflow", reset: false do
         end
 
         it "displays granule information" do
-          expect(page).to have_content "FIFE_STRM_15M.80611715.s15"
+          expect(page).to have_content "MYD02QKM.A2014191.0330.005.2014191162458.hdf"
         end
 
         it "displays more granules when scrolling" do
           page.execute_script "$('.granule-list div')[0].scrollTop = 10000"
-          expect(page).to have_css '.granule-list h5', count: 39
+          expect(page).to have_css '.granule-list h5', count: 27
         end
 
         it "displays an option to download" do
@@ -101,7 +100,7 @@ describe "Data Access workflow", reset: false do
         end
 
         it "displays options provided by orders" do
-          expect(page).to have_field('Ftp_Pull')
+          expect(page).to have_field('FtpPushPull')
         end
       end
 
@@ -123,7 +122,7 @@ describe "Data Access workflow", reset: false do
 
     context "when displaying options for the last of multiple datasets" do
       before :all do
-        choose "Ftp_Pull"
+        choose "FtpPushPull"
         click_button "Continue"
       end
 
@@ -151,8 +150,7 @@ describe "Data Access workflow", reset: false do
         end
 
         it 'displays the previous dataset in the list' do
-          expect(page).to have_content "39 Granules"
-          expect(page).to have_content "246.9 Kilobytes"
+          expect(page).to have_content "27 Granules"
         end
       end
     end
@@ -179,7 +177,7 @@ describe "Data Access workflow", reset: false do
 
     context "on the final step before submitting when contact information is required" do
       before :all do
-        choose "Ftp_Pull"
+        choose "FtpPushPull"
         click_button "Continue"
         click_button "Continue"
       end
