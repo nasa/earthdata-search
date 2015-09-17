@@ -253,8 +253,7 @@ class DataAccessController < ApplicationController
         config[:count] = (hits.to_f * config[:count] / granules.size).round
       end
       config
-    end
-    defs = defs.select{|d| d != nil}
+    end.compact
 
     # If no order options exist, still place an order
     if defs.size == 0 && orderable_count > 0
