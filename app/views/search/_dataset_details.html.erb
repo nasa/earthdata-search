@@ -50,8 +50,7 @@
               <!-- ko if: $data.smap_iso_url -->
                 | <a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a>
               <!-- /ko -->
-              | <a data-bind="attr: { href: $data.dif_url }">DIF</a>
-              | <a data-bind="attr: { href: $data.osdd_url }" target="_blank">OSDD</a></dd>
+              | <a data-bind="attr: { href: $data.dif_url }">DIF</a></dd>
           </div>
           <div class="second-col col-md-6 col-sm-12">
             <dt>API Endpoints:</dt>
@@ -71,6 +70,10 @@
 
               <!-- ko if: modaps() -->
               <a class="endpoint-label" data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a>
+              <!-- /ko -->
+
+              <!-- ko if: $parent.osdd_url -->
+              <a class="endpoint-label" data-bind="attr: { href: $parent.osdd_url }" target="_blank">OSDD</a>
               <!-- /ko -->
             <!-- /ko -->
             </dd>
