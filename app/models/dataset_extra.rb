@@ -162,7 +162,6 @@ class DatasetExtra < ActiveRecord::Base
     decorate_modaps_layers(dataset)
 
     dataset[:links] = Array.wrap(dataset[:links]) # Ensure links attribute is present
-    dataset[:browseable_collection] = dataset[:id] unless dataset[:links].select{|link| link[:rel].include? 'browse'}.empty?
 
     dataset
   end

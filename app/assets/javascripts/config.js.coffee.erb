@@ -37,7 +37,7 @@
     debug: true
     gibsSitUrl: 'https://sit.gibs.earthdata.nasa.gov/wmts-{lprojection}/wmts.cgi?{timeparam}&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}'
     gibsUrl: 'https://map1{s}.vis.earthdata.nasa.gov/wmts-{endpoint}/wmts.cgi?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}'
-    browseScalerUrl: "https://api.echo.nasa.gov/browse-scaler/browse_images/granules"
+    browseScalerUrl: "https://api.echo.nasa.gov/browse-scaler/browse_images"
     present: -> new Date() - 0
     animateMap: true
 
@@ -52,7 +52,7 @@
     csrfToken: csrfToken
     hoverTimeoutMs: 500
     gibsUrl: 'https://map1{s}.vis.earthdata.nasa.gov/wmts-{endpoint}/wmts.cgi?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}'
-    browseScalerUrl: "https://api.echo.nasa.gov/browse-scaler/browse_images/granules"
+    browseScalerUrl: "https://api.echo.nasa.gov/browse-scaler/browse_images"
     present: -> new Date() - 0
     animateMap: true
 
