@@ -74,7 +74,9 @@ class DatasetsController < ApplicationController
 
     # CMR-1722 Temporarily filter out detailed_variable keywords
     # FIXME: The proposed fix to CMR-1722 may break our facets
-    facets = facets.reject {|facet| facet['field'] == 'detailed_variable'}
+    # EDSC-698 Dropping sensor as a facet.
+    # FIXME: This may need retouch once CMR drops the sensor facet.
+    facets = facets.reject {|facet| facet['field'] == 'detailed_variable' || facet['field'] == 'sensor'}
 
     science_keywords_facets = facets.find {|facet| facet['field'] == 'science_keywords'}
     facets.delete(science_keywords_facets)
