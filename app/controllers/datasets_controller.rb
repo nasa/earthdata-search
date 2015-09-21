@@ -74,9 +74,7 @@ class DatasetsController < ApplicationController
 
     # CMR-1722 Temporarily filter out detailed_variable keywords
     # FIXME: The proposed fix to CMR-1722 may break our facets
-    # EDSC-698 Dropping sensor as a facet.
-    # FIXME: This may need retouch once CMR drops the sensor facet.
-    facets = facets.reject {|facet| facet['field'] == 'detailed_variable' || facet['field'] == 'sensor'}
+    facets = facets.reject {|facet| facet['field'] == 'detailed_variable'}
 
     science_keywords_facets = facets.find {|facet| facet['field'] == 'science_keywords'}
     facets.delete(science_keywords_facets)
@@ -156,6 +154,9 @@ class DatasetsController < ApplicationController
 
     keyword_facets.sort_by! {|facet| facet['term']}
     results.insert(1, {name: "Keywords", param: nil, values: selected_keywords + keyword_facets})
+    # EDSC-698 Dropping sensor as a facet.
+    # FIXME: This may need retouch once CMR drops the sensor facet.
+    results.reject!{|facet| !facet.nil? && facet[:name] == 'Sensor'}
     results.compact
   end
 
