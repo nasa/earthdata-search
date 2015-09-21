@@ -287,6 +287,74 @@ cbb97be5f5d809e845b7ab45c95aa423fc25cee3:
       encoding: UTF-8
       string: "[]"
     http_version: 
+d7b94c7a2ab18eb7211db51415137edd2cae1139:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"5f995dd86b18a85501e99f41297a75fd"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.752000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 17 Sep 2015 01:42:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"3C37FE59-7568-1D93-9D36-730668C0F9E5","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/3C37FE59-7568-1D93-9D36-730668C0F9E5","name":"MODIS"}}]'
+    http_version: 
+c21776d11745f862856a82e0962cd12be5d2d95c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"0ceac08799d4d4dbab24377c47fdf996"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.356000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 17 Sep 2015 01:42:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <data_quality_summary_definition>
+          <id>3C37FE59-7568-1D93-9D36-730668C0F9E5</id>
+          <summary>&lt;p&gt;------------------------------------------------------------------------------------&lt;br /&gt; MODIS DATA AT the Level 1 and Atmosphere Archive and &lt;br /&gt; Distribution System (LAADS) &lt;a href="http://ladsweb.nascom.nasa.gov/" target="_laads"&gt;http://ladsweb.nascom.nasa.gov/&lt;/a&gt; &lt;br /&gt;------------------------------------------------------------------------------------&lt;br /&gt;&lt;br /&gt; MODIS is described at: &lt;a href="http://modis.gsfc.nasa.gov/" target="_modis"&gt;http://modis.gsfc.nasa.gov/&lt;/a&gt;&lt;br /&gt;&lt;br /&gt; L1B radiance calibration is described on the MODIS Characterization&lt;br /&gt;Support Team (MCST) main page: &lt;a href="http://mcst.gsfc.nasa.gov/" target="_modl1b"&gt;http://mcst.gsfc.nasa.gov/&lt;/a&gt;&lt;br /&gt;&lt;br /&gt; Atmosphere products are described at:&lt;br /&gt; &lt;a href="http://modis-atmos.gsfc.nasa.gov/products.html" target="_atmos"&gt;http://modis-atmos.gsfc.nasa.gov/products.html&lt;/a&gt;&lt;br /&gt;&lt;br /&gt; See also: &lt;a href="http://modaps.nascom.nasa.gov/services/" target="_modaps"&gt;http://modaps.nascom.nasa.gov/services/&lt;/a&gt;&lt;/p&gt;</summary>
+          <name>MODIS</name>
+          <updated_at type="datetime">2011-01-20T13:22:28Z</updated_at>
+          <provider_id>LAADS</provider_id>
+        </data_quality_summary_definition>
+    http_version: 
 efc63ff63a18ff2f17a1d16ae26052e1530e437e:
   response:
     status:

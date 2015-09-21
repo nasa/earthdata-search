@@ -3,7 +3,7 @@ require "spec_helper"
 # Reset because this spec is heavily dependent on the database, which gets
 # cleared between runs
 describe "Access Option Defaults", reset: true do
-  dataset_id = 'C179003030-ORNL_DAAC'
+  dataset_id = 'C90762182-LAADS'
 
   before :each do
     load_page :search, overlay: false
@@ -23,7 +23,7 @@ describe "Access Option Defaults", reset: true do
 
     it "presents default options" do
       expect(page).to have_unchecked_field('Download')
-      expect(page).to have_unchecked_field('Ftp_Pull')
+      expect(page).to have_unchecked_field('FtpPushPull')
     end
   end
 
@@ -36,11 +36,10 @@ describe "Access Option Defaults", reset: true do
       click_on 'Add access method'
 
       within '.access-item-selection:nth-child(4)' do
-        choose 'Ftp_Pull'
+        choose 'FtpPushPull'
       end
 
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      select 'FtpPull', from: 'Distribution Options'
 
       click_on 'Continue'
       click_on 'Submit'
@@ -53,16 +52,15 @@ describe "Access Option Defaults", reset: true do
     it "restores options from the second retrieval" do
       within '.access-item-selection:nth-child(1)' do
         expect(page).to have_checked_field('Download')
-        expect(page).to have_unchecked_field('Ftp_Pull')
+        expect(page).to have_unchecked_field('FtpPushPull')
       end
 
       within '.access-item-selection:nth-child(4)' do
         expect(page).to have_unchecked_field('Download')
-        expect(page).to have_checked_field('Ftp_Pull')
+        expect(page).to have_checked_field('FtpPushPull')
       end
 
-      expect(page).to have_select('Offered Media Delivery Types', selected: 'FTP Pull')
-      expect(page).to have_select('Offered Media Format for FTPPULL', selected: 'Tape Archive Format (TAR)')
+      expect(page).to have_select('Distribution Options', selected: 'FtpPull')
     end
   end
 
@@ -75,11 +73,10 @@ describe "Access Option Defaults", reset: true do
       click_on 'Add access method'
 
       within '.access-item-selection:nth-child(4)' do
-        choose 'Ftp_Pull'
+        choose 'FtpPushPull'
       end
 
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      select 'FtpPull', from: 'Distribution Options'
 
       click_on 'Continue'
       click_on 'Submit'
@@ -103,7 +100,7 @@ describe "Access Option Defaults", reset: true do
     it "restores options from the second retrieval" do
       expect(page).to have_css('.access-item-selection', count: 1)
       expect(page).to have_checked_field('Download')
-      expect(page).to have_unchecked_field('Ftp_Pull')
+      expect(page).to have_unchecked_field('FtpPushPull')
     end
   end
 

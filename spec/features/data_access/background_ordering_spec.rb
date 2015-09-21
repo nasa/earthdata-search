@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'rake'
 
 describe 'Background jobs ordering', reset: false do
-  orderable_dataset_id = 'C179003030-ORNL_DAAC'
-  orderable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+  orderable_dataset_id = 'C90762182-LAADS'
+  orderable_dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
   before :all do
       Delayed::Worker.delay_jobs = true
@@ -13,9 +13,8 @@ describe 'Background jobs ordering', reset: false do
       load_page 'data/configure', project: [orderable_dataset_id]
       wait_for_xhr
 
-      choose 'Ftp_Pull'
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      choose 'FtpPushPull'
+      select 'FtpPull', from: 'Distribution Options'
       click_on 'Continue'
 
       # Confirm address

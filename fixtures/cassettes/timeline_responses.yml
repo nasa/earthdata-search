@@ -3041,3 +3041,23 @@ cd5855e458141e09b22ff45e49f1289366293fc2:
       encoding: UTF-8
       string: '[{"concept-id":"C5920490-LARC_ASDC","intervals":[[1292371199,1320192000,8128]]}]'
     http_version: 
+cc037c594c3cfd6824069490353da2e0405a2da7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 17 Sep 2015 01:42:21 GMT
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '79'
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C90762182-LAADS","intervals":[[1330387200,1425254400,173927]]}]'
+    http_version: 
