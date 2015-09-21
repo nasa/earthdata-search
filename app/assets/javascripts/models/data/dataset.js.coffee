@@ -5,7 +5,8 @@ ns = @edsc.models.data
 
 ns.Dataset = do (ko
                  DetailsModel = @edsc.models.DetailsModel
-                 scalerUrl = @edsc.config.browseScalerUrl
+                 granuleScalerUrl = @edsc.config.granuleBrowseScalerUrl
+                 collectionScalerUrl = @edsc.config.collectionBrowseScalerUrl
                  Granules=ns.Granules
                  GranuleQuery = ns.query.GranuleQuery
                  ServiceOptionsModel = ns.ServiceOptions
@@ -97,7 +98,13 @@ ns.Dataset = do (ko
 
     thumbnail: ->
       granule = @browseable_granule
-      "#{scalerUrl}/#{granule}?h=85&w=85" if granule?
+      collection_id = @browseable_collection
+      if granule?
+        "#{granuleScalerUrl}/#{granule}?h=85&w=85"
+      else if collection_id?
+        "#{collectionScalerUrl}/#{collection_id}?h=85&w=85"
+      else
+        null
 
     granuleFiltersApplied: ->
       # granuleQuery.params() will have echo_collection_id and page_size by default
