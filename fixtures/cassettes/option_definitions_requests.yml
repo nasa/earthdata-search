@@ -60,4 +60,21 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 08 Apr 2015 17:57:21 GMT
   digest: 439a0217018a702f093ab4626ca3250f2887ec54
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/option_definitions/E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 17 Sep 2015 01:42:31 GMT
+  digest: 1dd37a16f9e46063a69d4ef6fbbf7931e276c3f5
 recorded_with: VCR 2.6.0

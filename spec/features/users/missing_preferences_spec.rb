@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe "User missing ordering preferences", reset: false do
-  dataset_id = 'C179003030-ORNL_DAAC'
-  dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+  dataset_id = 'C90762182-LAADS'
+  dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
   context "when configuring a data access request" do
     before :all do
@@ -13,9 +13,8 @@ describe "User missing ordering preferences", reset: false do
 
       click_link "Retrieve project data"
 
-      choose "Ftp_Pull"
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      choose "FtpPushPull"
+      select 'FtpPull', from: 'Distribution Options'
       click_button "Continue"
     end
 
@@ -38,7 +37,7 @@ describe "User missing ordering preferences", reset: false do
     end
 
     it "shows the data retrieval page" do
-      expect(page).to have_link("USGS 15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED INFORMATION)")
+      expect(page).to have_link("MODIS Level 1B Product Information Page at MCST (MiscInformation)")
     end
   end
 end
