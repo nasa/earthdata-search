@@ -98,10 +98,10 @@ ns.Dataset = do (ko
     thumbnail: ->
       granule = @browseable_granule
       collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
-      if granule?
-        "#{scalerUrl}/granules/#{granule}?h=85&w=85"
-      else if collection_id?
+      if collection_id?
         "#{scalerUrl}/datasets/#{collection_id}?h=85&w=85"
+      else if granule?
+        "#{scalerUrl}/granules/#{granule}?h=85&w=85"
       else
         null
 
