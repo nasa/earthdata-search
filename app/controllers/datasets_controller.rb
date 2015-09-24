@@ -154,6 +154,9 @@ class DatasetsController < ApplicationController
 
     keyword_facets.sort_by! {|facet| facet['term']}
     results.insert(1, {name: "Keywords", param: nil, values: selected_keywords + keyword_facets})
+    # EDSC-698 Dropping sensor as a facet.
+    # FIXME: This may need retouch once CMR drops the sensor facet.
+    results.reject!{|facet| !facet.nil? && facet[:name] == 'Sensor'}
     results.compact
   end
 
