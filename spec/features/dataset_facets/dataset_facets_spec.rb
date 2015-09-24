@@ -27,16 +27,22 @@ describe "Dataset Facets", reset: false do
       find("h3.facet-title", text: 'Instrument').click
     end
 
-    it "shows the first Sensors facet" do
-      find("h3.facet-title", text: 'Sensor').click
-      expect(page.text).to match('Sensor\s*\d* AA')
-      find("h3.facet-title", text: 'Sensor').click
-    end
-
     it "shows the first 2D Coordinate Name facet" do
       find("h3.facet-title", text: '2D Coordinate Name').click
       expect(page.text).to match('2D Coordinate Name\s*\d* CALIPSO')
       find("h3.facet-title", text: '2D Coordinate Name').click
+    end
+
+    it "does not show Sensor facet" do
+      within(:css, '#master-overlay-parent') do
+        expect(page).to have_no_content("Sensor")
+      end
+    end
+
+    it "does not show Category Keyword facet" do
+      within(:css, '#master-overlay-parent') do
+        expect(page).to have_no_content("Category Keyword")
+      end
     end
 
     # it "shows the first Category Keyword facet" do
