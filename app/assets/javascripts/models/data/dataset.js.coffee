@@ -97,7 +97,13 @@ ns.Dataset = do (ko
 
     thumbnail: ->
       granule = @browseable_granule
-      "#{scalerUrl}/#{granule}?h=85&w=85" if granule?
+      collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
+      if collection_id?
+        "#{scalerUrl}/datasets/#{collection_id}?h=85&w=85"
+      else if granule?
+        "#{scalerUrl}/granules/#{granule}?h=85&w=85"
+      else
+        null
 
     granuleFiltersApplied: ->
       # granuleQuery.params() will have echo_collection_id and page_size by default

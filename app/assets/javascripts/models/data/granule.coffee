@@ -14,7 +14,7 @@
     edsc_browse_url: (w, h) ->
       w ?= 170
       h ?= w
-      "#{scalerUrl}/#{@id}?h=#{h}&w=#{w}"
+      "#{scalerUrl}/granules/#{@id}?h=#{h}&w=#{w}"
 
     edsc_full_browse_url: ->
       for link in @links

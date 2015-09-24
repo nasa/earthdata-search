@@ -42,6 +42,13 @@ describe "Dataset results", reset: false do
     expect(page).to have_no_text("No image available")
   end
 
+  it "displays thumbnails for datasets that have browse images in dataset metadata" do
+    fill_in "keywords", with: 'C138500-PODAAC'
+    wait_for_xhr
+    expect(page).to have_css("img.panel-list-thumbnail")
+    expect(page).to have_no_text("No image available")
+  end
+
   it "displays a badge for OPeNDAP-enabled datasets" do
     fill_in "keywords", with: "C181553784-GSFCS4PA"
     wait_for_xhr
