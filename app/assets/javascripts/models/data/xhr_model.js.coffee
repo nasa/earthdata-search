@@ -99,6 +99,10 @@ ns.XhrModel = do (ko
         url = @path
         data = query
 
+      console.log("----- _load: url: " + url + "--- query: " + query.toString())
+      console.log(params)
+      console.log(current)
+      console.log("-----------------------------------------------------------------")
       @currentRequest = xhr = ajax
         method: method
         dataType: 'json'

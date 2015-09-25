@@ -1,9 +1,26 @@
 //= require typeahead-0.10.2/typeahead.bundle
 
-do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax) ->
+do (ko
+    $=jQuery
+    currentPage = window.edsc.models.page.current
+    ajax=@edsc.util.xhr.ajax
+    DatasetsListModel = window.edsc.models.ui.DatasetsList
+    DatasetsModel = window.edsc.models.data.Datasets
+    ProjectList = window.edsc.models.ui.ProjectList
+    Project = window.edsc.models.data.Project
+    StateManager = window.edsc.models.ui.StateManager) ->
 
   $(document).ready ->
     $placenameInputs = $('.autocomplete-placenames')
+
+    datasetsList = new DatasetsListModel(currentPage.query, currentPage.ui.datasetsList, currentPage.ui.projectList.project)
+    datasetsModel = new DatasetsModel(currentPage.query)
+    project = new Project(currentPage.query)
+    projectList = new ProjectList(project)
+
+#    @workspaceName = ko.observable(null)
+#    @workspaceNameField = ko.observable(null)
+#    new StateManager(this).monitor()
 
     engine = new Bloodhound
       name: 'placenames'
@@ -49,7 +66,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
         p2 = points[2].split(',').reverse()
       $('#map').data('map').map.fitBounds([p1,p2])
 
-    $('.autocomplete-placenames').on 'keyup', ->
+    $placenameInputs.on 'keyup', ->
       newValue = $(this).typeahead('val')
       query = currentPage.query
       currentValue = query.keywords()
@@ -83,6 +100,25 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
     currentPage.query.spatial.subscribe readSpatial
 
     $placenameInputs.on 'blur', (e) ->
+      console.log("---- fire!")
+      console.log(datasetsModel)
+      href = window.location.href
+      if href.match(/search\/granules\?/) # granule list page
+        console.log("--------------------- granule list")
+
+        projectList.hideFilters()
+        datasetsList.unfocusDataset()
+
+        console.log(currentPage.query)
+        params = currentPage.query.params()
+        params.page_num = 1
+        datasetsModel.search(params)
+      else if href.match(/search\/project\?/) # project page
+        console.error("--------------------- not implemented")
+      else # dataset list page or dataset detail page
+        datasetsList.hideDatasetDetails
+      $('.master-overlay-main-content').attr('data-level', 0)
+
       query = this.value
       if !$(e.relatedTarget).hasClass('clear-filters') && query.length > 0 && query.indexOf('place:') != -1
         ajax
