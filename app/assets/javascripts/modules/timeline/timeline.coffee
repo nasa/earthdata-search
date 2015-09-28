@@ -456,12 +456,19 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       Math.floor((p - originPx) * scale + start)
 
     zoomIn: ->
+      @_centerTemporalSelection()
       @root.trigger('buttonzoom')
       @_deltaZoom(-1)
 
     zoomOut: ->
+      @_centerTemporalSelection()
       @root.trigger('buttonzoom')
       @_deltaZoom(1)
+
+    _centerTemporalSelection: =>
+      temporal = @_datasets[0].query.temporal.applied
+      if temporal.start.date()? && temporal.stop.date()?
+        @center(temporal.start.date().getTime() + (temporal.stop.date().getTime() - temporal.start.date().getTime()) / 2)
 
     zoom: (arg) ->
       if arg?

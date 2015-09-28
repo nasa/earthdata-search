@@ -7,8 +7,8 @@ describe "Data download page", reset: false do
   non_downloadable_dataset_id = 'C179001887-SEDAC'
   non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
-  orderable_dataset_id = 'C90762182-LAADS'
-  orderable_dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
+  orderable_dataset_id = 'C1020-GHRC'
+  orderable_dataset_title = 'ACES CONTINUOUS DATA V1'
 
   no_direct_download_dataset_id = 'C179003030-ORNL_DAAC'
 
@@ -177,8 +177,8 @@ describe "Data download page", reset: false do
       load_page 'data/configure', project: [orderable_dataset_id]
       wait_for_xhr
 
-      choose 'FtpPushPull'
-      select 'FtpPull', from: 'Distribution Options'
+      choose 'GHRC_ECHO_FtpPull_v1'
+      select 'FtpPull', from: 'Only Available By'
       click_on 'Continue'
 
       # Confirm address
@@ -280,8 +280,8 @@ describe "Data download page", reset: false do
       load_page 'data/configure', project: [orderable_dataset_id, non_orderable_dataset_id]
       wait_for_xhr
 
-      choose 'FtpPushPull'
-      select 'FtpPull', from: 'Distribution Options'
+      choose 'GHRC_ECHO_FtpPull_v1'
+      select 'FtpPull', from: 'Only Available By'
       click_on 'Continue'
 
       # No actions available on the second, continue
@@ -292,7 +292,7 @@ describe "Data download page", reset: false do
 
     it "displays a link to return to search results" do
       expect(page).to have_link("Back to Data Access Options")
-      expect(page).to have_css("a[href^=\"/data/configure?p=%21#{downloadable_dataset_id}\"]")
+      expect(page).to have_css("a[href^=\"/data/configure?p=%21#{orderable_dataset_id}\"]")
     end
 
     it "displays information on obtaining data asynchronously" do

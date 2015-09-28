@@ -15,6 +15,36 @@ http_interactions:
   digest: a624c9b4c3fe07c5c29f3d31d5957994e14128cf
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1020-GHRC&echo_collection_id%5B%5D=C179001887-SEDAC&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 28 Sep 2015 17:27:58 GMT
+  digest: f5ce8ac08b0ae49116dc10139b64a3ddd3bfff02
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1020-GHRC&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 28 Sep 2015 17:28:17 GMT
+  digest: 7e58efcda6b4ec01b53eea0fddd915a40f587698
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C115003855-NSIDC_ECS&page_num=1&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2681,6 +2711,32 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 18 Mar 2015 17:20:21 GMT
   digest: 187f11825b76c21b16ec4baa7b8d205f620931c7
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD09GA&short_name%5B%5D=MYD09&short_name%5B%5D=MOD06_L2&short_name%5B%5D=MOD06_L2&short_name%5B%5D=AE_L2A&short_name%5B%5D=A2_RainOcn_NRT&short_name%5B%5D=ML2HNO3&short_name%5B%5D=ML2HNO3_NRT&short_name%5B%5D=SPL1CTB&short_name%5B%5D=AIRX2RET&short_name%5B%5D=AIRX2RET_NRT&short_name%5B%5D=SPL1BTB&short_name%5B%5D=GPM_1CGPMGMI&short_name%5B%5D=GPM_2AGPROFGPMGMI&short_name%5B%5D=A2_DySno_NRT&short_name%5B%5D=MOD11_L2&short_name%5B%5D=MOD11_L2&short_name%5B%5D=OMSO2&short_name%5B%5D=OMSO2NRTb&short_name%5B%5D=ML2O3&short_name%5B%5D=ML2O3_NRT&short_name%5B%5D=ML2T&short_name%5B%5D=ML2T_NRT&short_name%5B%5D=MYD11_L2&short_name%5B%5D=MYD11_L2&short_name%5B%5D=AE_SI25&short_name%5B%5D=MOD29&short_name%5B%5D=MOD29&short_name%5B%5D=MOD09GQ&short_name%5B%5D=MOD09&short_name%5B%5D=MYD04_L2&short_name%5B%5D=MYD04_L2&short_name%5B%5D=MYD05_L2&short_name%5B%5D=MYD05_L2&short_name%5B%5D=AIRIBRAD&short_name%5B%5D=AIRIBRAD_NRT&short_name%5B%5D=AE_SI12&short_name%5B%5D=MOD09GA&short_name%5B%5D=MYD10_L2&short_name%5B%5D=MYD10_L2&short_name%5B%5D=ML2H2O&short_name%5B%5D=ML2H2O_NRT&short_name%5B%5D=MOD05_L2&short_name%5B%5D=MOD05_L2&short_name%5B%5D=ML2CO&short_name%5B%5D=ML2CO_NRT&short_name%5B%5D=MCDAODHD&short_name%5B%5D=AIRIBQAP&short_name%5B%5D=AIRIBQAP_NRT&short_name%5B%5D=AE_SI6&short_name%5B%5D=ML2N2O&short_name%5B%5D=ML2N2O_NRT&short_name%5B%5D=MOD10_L2&short_name%5B%5D=MOD10_L2&short_name%5B%5D=AIRX2SUP&short_name%5B%5D=AIRX2SUP_NRT&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MYD09GQ&short_name%5B%5D=ML2SO2&short_name%5B%5D=ML2SO2_NRT&short_name%5B%5D=MYD29&short_name%5B%5D=MYD29&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 28 Sep 2015 17:22:40 GMT
+  digest: 53b63d1c79af7dbc9b314920b27cb648b6576096
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD09GA&short_name%5B%5D=MYD09&short_name%5B%5D=MOD06_L2&short_name%5B%5D=MOD06_L2&short_name%5B%5D=AE_L2A&short_name%5B%5D=A2_RainOcn_NRT&short_name%5B%5D=ML2HNO3&short_name%5B%5D=ML2HNO3_NRT&short_name%5B%5D=SPL1CTB&short_name%5B%5D=AIRX2RET&short_name%5B%5D=AIRX2RET_NRT&short_name%5B%5D=SPL1BTB&short_name%5B%5D=GPM_1CGPMGMI&short_name%5B%5D=GPM_2AGPROFGPMGMI&short_name%5B%5D=A2_DySno_NRT&short_name%5B%5D=MOD11_L2&short_name%5B%5D=MOD11_L2&short_name%5B%5D=OMSO2&short_name%5B%5D=OMSO2NRTb&short_name%5B%5D=ML2O3&short_name%5B%5D=ML2O3_NRT&short_name%5B%5D=ML2T&short_name%5B%5D=ML2T_NRT&short_name%5B%5D=MYD11_L2&short_name%5B%5D=MYD11_L2&short_name%5B%5D=AE_SI25&short_name%5B%5D=MOD29&short_name%5B%5D=MOD29&short_name%5B%5D=MOD09GQ&short_name%5B%5D=MOD09&short_name%5B%5D=MYD04_L2&short_name%5B%5D=MYD04_L2&short_name%5B%5D=MYD05_L2&short_name%5B%5D=MYD05_L2&short_name%5B%5D=AIRIBRAD&short_name%5B%5D=AIRIBRAD_NRT&short_name%5B%5D=AE_SI12&short_name%5B%5D=MOD09GA&short_name%5B%5D=MYD10_L2&short_name%5B%5D=MYD10_L2&short_name%5B%5D=ML2H2O&short_name%5B%5D=ML2H2O_NRT&short_name%5B%5D=MOD05_L2&short_name%5B%5D=MOD05_L2&short_name%5B%5D=ML2CO&short_name%5B%5D=ML2CO_NRT&short_name%5B%5D=MCDAODHD&short_name%5B%5D=AIRIBQAP&short_name%5B%5D=AIRIBQAP_NRT&short_name%5B%5D=AE_SI6&short_name%5B%5D=ML2N2O&short_name%5B%5D=ML2N2O_NRT&short_name%5B%5D=MOD10_L2&short_name%5B%5D=MOD10_L2&short_name%5B%5D=AIRX2SUP&short_name%5B%5D=AIRX2SUP_NRT&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MYD09GQ&short_name%5B%5D=ML2SO2&short_name%5B%5D=ML2SO2_NRT&short_name%5B%5D=MYD29&short_name%5B%5D=MYD29&hierarchical_facets=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 28 Sep 2015 17:22:38 GMT
+  digest: 06b7f4cc2f3b525ae2b5c6994a3733a0347de1f4
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD09GA&short_name%5B%5D=MYD09&short_name%5B%5D=MYD04_L2&short_name%5B%5D=MYD04_L2&short_name%5B%5D=AE_L2A&short_name%5B%5D=ML2HNO3&short_name%5B%5D=ML2HNO3_NRT&short_name%5B%5D=AIRX2RET&short_name%5B%5D=AIRX2RET_NRT&short_name%5B%5D=MOD06_L2&short_name%5B%5D=MOD06_L2&short_name%5B%5D=MOD11_L2&short_name%5B%5D=MOD11_L2&short_name%5B%5D=OMSO2&short_name%5B%5D=OMSO2NRTb&short_name%5B%5D=ML2O3&short_name%5B%5D=ML2O3_NRT&short_name%5B%5D=ML2T&short_name%5B%5D=ML2T_NRT&short_name%5B%5D=MYD11_L2&short_name%5B%5D=MYD11_L2&short_name%5B%5D=MOD29&short_name%5B%5D=MOD29&short_name%5B%5D=OMAERUV&short_name%5B%5D=MOD09GQ&short_name%5B%5D=MOD09&short_name%5B%5D=AIRX2SUP&short_name%5B%5D=AIRX2SUP_NRT&short_name%5B%5D=AIRIBRAD&short_name%5B%5D=AIRIBRAD_NRT&short_name%5B%5D=MOD09GA&short_name%5B%5D=MYD10_L2&short_name%5B%5D=MYD10_L2&short_name%5B%5D=OMCLDRR&short_name%5B%5D=ML2H2O&short_name%5B%5D=ML2H2O_NRT&short_name%5B%5D=MOD05_L2&short_name%5B%5D=MOD05_L2&short_name%5B%5D=ML2CO&short_name%5B%5D=ML2CO_NRT&short_name%5B%5D=AIRIBQAP&short_name%5B%5D=AIRIBQAP_NRT&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MOD10_L2&short_name%5B%5D=MOD10_L2&short_name%5B%5D=ML2N2O&short_name%5B%5D=ML2N2O_NRT&short_name%5B%5D=MYD05_L2&short_name%5B%5D=MYD05_L2&short_name%5B%5D=MYD09GQ&short_name%5B%5D=ML2SO2&short_name%5B%5D=ML2SO2_NRT&short_name%5B%5D=MYD29&short_name%5B%5D=MYD29&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
