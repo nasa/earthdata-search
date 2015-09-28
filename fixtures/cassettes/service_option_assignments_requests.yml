@@ -19,6 +19,23 @@ http_interactions:
   digest: e340db9ab0d2434ebcbc26f324e513cf8ec8f25f
 - request:
     method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C1020-GHRC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 28 Sep 2015 17:28:10 GMT
+  digest: 20e2f42780cc631513247be4f51696ecb73d41fd
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C115003855-NSIDC_ECS
     body:
       encoding: US-ASCII

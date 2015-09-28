@@ -2493,6 +2493,26 @@ b1b4330dfe77b8d355daff6901bebc57e6f8a3ed:
       encoding: UTF-8
       string: "[]"
     http_version: 
+d260779ba788590859aca3cb1d6653386713f87a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Sep 2015 17:34:03 GMT
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 94d43f26fe40150dd20ce7275b0828730154c41c:
   response:
     status:
@@ -2643,6 +2663,26 @@ fcd98a8cd034a6da279fcc90712ea98a27bd1ea6:
       - Accept-Encoding
       content-length:
       - '22'
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+1275bd16b2165096f77865cea8102f4a49da45ab:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Sep 2015 17:34:05 GMT
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
     body:
       encoding: UTF-8
       string: "[]"
