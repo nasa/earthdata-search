@@ -4,7 +4,15 @@ class DatasetsController < ApplicationController
   KEYWORD_CHILD = {'topic' => 'term', 'term' => 'variable_level_1', 'variable_level_1' => 'variable_level_2', 'variable_level_2' => 'variable_level_3', 'variable_level_3' => nil}
 
   def index
-    catalog_response = echo_client.get_datasets(dataset_params_for_request(request), token)
+    start = (Time.now.to_f * 1000).to_i
+    client = echo_client
+    # FIXME Termporary workaround for CMR-2038 and CMR-2049
+    # Fire two requests to CMR. One to retrieve hierarchical facets, the other to get non-hierarchical facets, in parallel.
+    hierarchical_search = lambda {client.get_datasets(dataset_params_for_request(request), token)}
+    non_hierarchical_search = lambda {client.get_datasets(dataset_params_for_request(request, false), token)}
+    catalog_response = execute_search(hierarchical_search, non_hierarchical_search)
+
+    # catalog_response = echo_client.get_datasets(dataset_params_for_request(request), token)
 
     if catalog_response.success?
       add_featured_datasets!(dataset_params_for_request(request), token, catalog_response.body)
@@ -16,6 +24,8 @@ class DatasetsController < ApplicationController
         response.headers[key] = value if key.start_with?('cmr-')
       end
     end
+
+    Rails.logger.debug "Total time: #{(Time.now.to_f * 1000).to_i - start} ms"
 
     respond_with(catalog_response.body, status: catalog_response.status)
   end
@@ -48,6 +58,40 @@ class DatasetsController < ApplicationController
   end
 
   private
+
+  def execute_search(hierarchical, non_hierarchical)
+    nh_response = nil
+    nh_thread = Thread.new do
+      timestamp = (Time.now.to_f * 1000).to_i
+      Rails.logger.debug "Started retrieving non_hierarchical facets at #{timestamp}"
+      nh_response = non_hierarchical.call
+      Rails.logger.debug "Completed retrieving non_hierarchical facets. Time used: #{(Time.now.to_f * 1000).to_i - timestamp}"
+    end
+    timestamp = (Time.now.to_f * 1000).to_i
+    Rails.logger.debug "Started retrieving hierarchical facets at #{timestamp}"
+    h_response = hierarchical.call
+    Rails.logger.debug "Completed retrieving hierarchical facets. Time used: #{(Time.now.to_f * 1000).to_i - timestamp}"
+    nh_thread.join
+
+    # merge
+    h_facets = h_response.body['feed']['facets']
+    nh_facets = nh_response.body['feed']['facets']
+    nh_archive_center = nh_facets.select {|facet| facet['field'] == 'archive_center'}
+    nh_platform = nh_facets.select {|facet| facet['field'] == 'platform'}
+    nh_instrument = nh_facets.select {|facet| facet['field'] == 'instrument'}
+    h_facets.map! do |facet|
+      if facet['field'] == 'archive_centers'
+        nh_archive_center[0]
+      elsif facet['field'] == 'platforms'
+        nh_platform[0]
+      elsif facet['field'] == 'instruments'
+        nh_instrument[0]
+      else
+        facet
+      end
+    end
+    h_response
+  end
 
   def facet_results(request, response)
     # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
@@ -224,7 +268,7 @@ class DatasetsController < ApplicationController
     base_results
   end
 
-  def dataset_params_for_request(request)
+  def dataset_params_for_request(request, hierarchical=true)
     features = request.query_parameters['features']
     use_opendap = features && features.include?('Subsetting Services')
     params = request.query_parameters.except('features')
@@ -246,7 +290,7 @@ class DatasetsController < ApplicationController
       params["two_d_coordinate_system_name"] = old["name"]
     end
 
-    params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true'
+    params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
     params
   end
