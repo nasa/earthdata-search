@@ -5,29 +5,26 @@ class DatasetsController < ApplicationController
 
   def index
     start = (Time.now.to_f * 1000).to_i
-    client = echo_client
-    # FIXME Termporary workaround for CMR-2038 and CMR-2049
+    # FIXME Temporary workaround for CMR-2038 and CMR-2049
     # Fire two requests to CMR. One to retrieve hierarchical facets, the other to get non-hierarchical facets, in parallel.
-    hierarchical_search = lambda {client.get_datasets(dataset_params_for_request(request), token)}
-    non_hierarchical_search = lambda {client.get_datasets(dataset_params_for_request(request, false), token)}
-    catalog_response = execute_search(hierarchical_search, non_hierarchical_search)
+    execute_hierarchical_search = lambda {hierarchical_search()}
+    execute_non_hierarchical_search = lambda {non_hierarchical_search()}
+    catalog_response = execute_search(execute_hierarchical_search, execute_non_hierarchical_search)
 
-    # catalog_response = echo_client.get_datasets(dataset_params_for_request(request), token)
-
-    if catalog_response.success?
+    if (200..299).include? catalog_response.code.to_i
       add_featured_datasets!(dataset_params_for_request(request), token, catalog_response.body)
       catalog_response.body['feed']['facets'] = facet_results(request, catalog_response)
 
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
 
-      catalog_response.headers.each do |key, value|
+      catalog_response.header.each do |key, value|
         response.headers[key] = value if key.start_with?('cmr-')
       end
     end
 
     Rails.logger.debug "Total time: #{(Time.now.to_f * 1000).to_i - start} ms"
 
-    respond_with(catalog_response.body, status: catalog_response.status)
+    respond_with(catalog_response.body, status: catalog_response.code)
   end
 
   def show
@@ -59,6 +56,58 @@ class DatasetsController < ApplicationController
 
   private
 
+  def hierarchical_search
+    service_config = Rails.configuration.services['earthdata'][echo_env]
+    root = service_config['cmr_root']
+    get_datasets(root, dataset_params_for_request(request), token)
+  end
+
+  def non_hierarchical_search
+    service_config = Rails.configuration.services['earthdata'][echo_env]
+    root = service_config['cmr_root']
+    get_datasets(root, dataset_params_for_request(request, false), token)
+  end
+
+  def get_datasets(root, options={}, token=nil)
+    format = options.delete(:format) || 'json'
+    query = options.merge(include_has_granules: true, include_granule_counts: true)
+    http_get("#{root}/search/collections.#{format}", query, token)
+  end
+
+  def http_get(path, params, token)
+    uri = URI.parse(path)
+    uri.query = encode(params)
+    req = Net::HTTP::Get.new(uri.request_uri)
+    req["Echo-Token"] = token unless token.nil?
+    req['Client-Id'] = Rails.configuration.cmr_client_id
+    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      http.request req
+    end
+  end
+
+  def encode(value, key = nil)
+    case value
+      when Hash then value.map { |k,v| encode(v, key.nil? ? k : "#{key}[#{k.to_s}]") }.join('&')
+      when Array then value.map { |v| encode(v, "#{key}[]") }.join('&')
+      when nil then ''
+      else
+        "#{key}=#{CGI.escape(value.to_s)}"
+    end
+  end
+
+  # This connection is cached as a thread local variable so subsequent calls to this method from the same thread will
+  # return the same instance.
+  # However it is commented out on a second thought. This might bring into too much overheads and not be what we need.
+  # def send_request(uri, request)
+  #   begin
+  #     key = [uri.host, uri.port, use_ssl: uri.scheme == 'https']
+  #     Thread.current[key.to_s] ||= Net::HTTP.new(*key)
+  #     Thread.current[key.to_s].request(request)
+  #   rescue Exception => exception
+  #     Rails.logger.error("EXCEPTION - #{self.class.name}: #{exception.message}\n#{exception.inspect}\n#{exception.backtrace.join("\n")}\n")
+  #   end
+  # end
+
   def execute_search(hierarchical, non_hierarchical)
     nh_response = nil
     nh_thread = Thread.new do
@@ -73,9 +122,12 @@ class DatasetsController < ApplicationController
     Rails.logger.debug "Completed retrieving hierarchical facets. Time used: #{(Time.now.to_f * 1000).to_i - timestamp}"
     nh_thread.join
 
-    # merge
-    h_facets = h_response.body['feed']['facets']
-    nh_facets = nh_response.body['feed']['facets']
+    # merge non_hierarchical response to hierarchical response
+    h_json = JSON.parse(h_response.body)
+    nh_json = JSON.parse(nh_response.body)
+    h_response.body = h_json
+    h_facets = h_json['feed']['facets']
+    nh_facets = nh_json['feed']['facets']
     nh_archive_center = nh_facets.select {|facet| facet['field'] == 'archive_center'}
     nh_platform = nh_facets.select {|facet| facet['field'] == 'platform'}
     nh_instrument = nh_facets.select {|facet| facet['field'] == 'instrument'}
