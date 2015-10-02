@@ -1,26 +1,9 @@
 //= require typeahead-0.10.2/typeahead.bundle
 
-do (ko
-    $=jQuery
-    currentPage = window.edsc.models.page.current
-    ajax=@edsc.util.xhr.ajax
-    DatasetsListModel = window.edsc.models.ui.DatasetsList
-    DatasetsModel = window.edsc.models.data.Datasets
-    ProjectList = window.edsc.models.ui.ProjectList
-    Project = window.edsc.models.data.Project
-    StateManager = window.edsc.models.ui.StateManager) ->
+do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax) ->
 
   $(document).ready ->
     $placenameInputs = $('.autocomplete-placenames')
-
-    datasetsList = new DatasetsListModel(currentPage.query, currentPage.ui.datasetsList, currentPage.ui.projectList.project)
-    datasetsModel = new DatasetsModel(currentPage.query)
-    project = new Project(currentPage.query)
-    projectList = new ProjectList(project)
-
-#    @workspaceName = ko.observable(null)
-#    @workspaceNameField = ko.observable(null)
-#    new StateManager(this).monitor()
 
     engine = new Bloodhound
       name: 'placenames'
@@ -100,24 +83,17 @@ do (ko
     currentPage.query.spatial.subscribe readSpatial
 
     $placenameInputs.on 'blur', (e) ->
-      console.log("---- fire!")
-      console.log(datasetsModel)
-      href = window.location.href
-      if href.match(/search\/granules\?/) # granule list page
-        console.log("--------------------- granule list")
-
+      # TODO: blur isn't a good event to listen to. It should get triggered
+      #       when the keyword changes.
+      $overlay = $('.master-overlay')
+      if $overlay.masterOverlay('level') != 0
+        ui = currentPage.ui
+        {datasetsList, projectList} = ui
         projectList.hideFilters()
+        datasetsList.hideDatasetDetails()
+        datasetsList.focused()?.hideGranuleDetails()
         datasetsList.unfocusDataset()
-
-        console.log(currentPage.query)
-        params = currentPage.query.params()
-        params.page_num = 1
-        datasetsModel.search(params)
-      else if href.match(/search\/project\?/) # project page
-        console.error("--------------------- not implemented")
-      else # dataset list page or dataset detail page
-        datasetsList.hideDatasetDetails
-      $('.master-overlay-main-content').attr('data-level', 0)
+        $overlay.masterOverlay('level', 0)
 
       query = this.value
       if !$(e.relatedTarget).hasClass('clear-filters') && query.length > 0 && query.indexOf('place:') != -1
