@@ -58,23 +58,79 @@ class DatasetsController < ApplicationController
 
   def hierarchical_search
     service_config = Rails.configuration.services['earthdata'][echo_env]
+    urs_client_id = Rails.configuration.services['urs'][Rails.env.to_s][service_config['urs_root']]
     root = service_config['cmr_root']
-    get_datasets(root, dataset_params_for_request(request), token)
+    get_datasets(root, dataset_params_for_request(request), token.nil? ? "" : "#{token}:#{urs_client_id}")
   end
 
   def non_hierarchical_search
     service_config = Rails.configuration.services['earthdata'][echo_env]
+    urs_client_id = Rails.configuration.services['urs'][Rails.env.to_s][service_config['urs_root']]
     root = service_config['cmr_root']
-    get_datasets(root, dataset_params_for_request(request, false), token)
+    get_datasets(root, dataset_params_for_request(request, false), token.nil? ? "" : "#{token}:#{urs_client_id}")
   end
 
   def get_datasets(root, options={}, token=nil)
     format = options.delete(:format) || 'json'
+    load_freetext_query(options)
     query = options.merge(include_has_granules: true, include_granule_counts: true)
-    http_get("#{root}/search/collections.#{format}", query, token)
+    and_query(query)
+    response = http_get("#{root}/search/collections.#{format}", query, token)
+    Rails.logger.info "------- get_datasets: response code: #{response.code}"
+    response
+  end
+
+  def load_freetext_query(query)
+    freetext = query.delete(:free_text)
+    if freetext
+      # Escape catalog-rest reserved characters, then add a wildcard character to the
+      # end of each word to allow partial matches of any word
+      query[:keyword] = catalog_wildcard(catalog_escape(freetext))
+    end
+  end
+
+  def catalog_escape(value)
+    if value.is_a? String
+      # Escape % and _ with a single \.  No idea why it takes 4 slashes before \1 to output a single slash
+      value.gsub(/(%)/, '\\\\\1') # don't escape _ in CMR
+    elsif value.is_a? Hash
+      Hash[value.map {|k, v| [k, catalog_escape(v)]}]
+    elsif value.is_a? Enumerable
+      value.map {|v| catalog_escape(v)}
+    elsif !value.is_a?(TrueClass) && !value.is_a?(FalseClass) && !value.is_a?(Numeric)
+      Rails.logger.warn("Unrecognized value type for #{value} (#{value.class})")
+    end
+  end
+
+  def catalog_wildcard(value)
+    value.strip.gsub(/\s+/, '* ') + '*'
+  end
+
+  def and_query(query)
+    if query[:campaign]
+      query[:options] ||= Hash.new
+      query[:options][:campaign] = Hash.new
+      query[:options][:campaign][:and] = true
+    end
+    if query[:platform]
+      query[:options] ||= Hash.new
+      query[:options][:platform] = Hash.new
+      query[:options][:platform][:and] = true
+    end
+    if query[:instrument]
+      query[:options] ||= Hash.new
+      query[:options][:instrument] = Hash.new
+      query[:options][:instrument][:and] = true
+    end
+    if query[:sensor]
+      query[:options] ||= Hash.new
+      query[:options][:sensor] = Hash.new
+      query[:options][:sensor][:and] = true
+    end
   end
 
   def http_get(path, params, token)
+    Rails.logger.info("---------- http_get: path: #{path.inspect}, query: #{params.inspect}, token: #{token}")
     uri = URI.parse(path)
     uri.query = encode(params)
     req = Net::HTTP::Get.new(uri.request_uri)
