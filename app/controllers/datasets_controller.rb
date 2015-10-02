@@ -60,22 +60,22 @@ class DatasetsController < ApplicationController
     service_config = Rails.configuration.services['earthdata'][echo_env]
     urs_client_id = Rails.configuration.services['urs'][Rails.env.to_s][service_config['urs_root']]
     root = service_config['cmr_root']
-    get_datasets(root, dataset_params_for_request(request), token.nil? ? "" : "#{token}:#{urs_client_id}")
+    get_datasets(root, dataset_params_for_request(request), token, urs_client_id)
   end
 
   def non_hierarchical_search
     service_config = Rails.configuration.services['earthdata'][echo_env]
     urs_client_id = Rails.configuration.services['urs'][Rails.env.to_s][service_config['urs_root']]
     root = service_config['cmr_root']
-    get_datasets(root, dataset_params_for_request(request, false), token.nil? ? "" : "#{token}:#{urs_client_id}")
+    get_datasets(root, dataset_params_for_request(request, false), token, urs_client_id)
   end
 
-  def get_datasets(root, options={}, token=nil)
+  def get_datasets(root, options={}, token=nil, urs_client_id=nil)
     format = options.delete(:format) || 'json'
     load_freetext_query(options)
     query = options.merge(include_has_granules: true, include_granule_counts: true)
     and_query(query)
-    response = http_get("#{root}/search/collections.#{format}", query, token)
+    response = http_get("#{root}/search/collections.#{format}", query, token, urs_client_id)
     Rails.logger.info "------- get_datasets: response code: #{response.code}"
     response
   end
@@ -129,12 +129,12 @@ class DatasetsController < ApplicationController
     end
   end
 
-  def http_get(path, params, token)
+  def http_get(path, params, token, urs_client_id)
     Rails.logger.info("---------- http_get: path: #{path.inspect}, query: #{params.inspect}, token: #{token}")
     uri = URI.parse(path)
     uri.query = encode(params)
     req = Net::HTTP::Get.new(uri.request_uri)
-    req["Echo-Token"] = token unless token.nil?
+    req["Echo-Token"] = "#{token}:#{urs_client_id}" unless token.nil?
     req['Client-Id'] = Rails.configuration.cmr_client_id
     Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
       http.request req
