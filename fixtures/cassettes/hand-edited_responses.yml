@@ -55,6 +55,34 @@ trigger_500:
       encoding: UTF-8
       string: '{"errors": {"error": "Some error string"}}'
     http_version:
+trigger_500_non_hierarchical:
+  response:
+    status:
+      code: 500
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"cb9cf9f9d68fe41ba4f6be498917ef7c"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.406000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '0'
+      date:
+      - Wed, 07 May 2014 17:59:34 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"errors": {"error": "Some error string"}}'
+    http_version:
 1cbd4e6a78c1b324003422421b02adfe1c27b6e4:
   response:
     status:
@@ -469,7 +497,91 @@ invalid_datasets_logged_in:
       encoding: UTF-8
       string: '{"errors":["Token invalid does not exist"]}'
     http_version:
+invalid_datasets_logged_in_non_hierarchical:
+  response:
+    status:
+      code: 401
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 71a0b0ddcce83361e6148d51603b93d0
+      x-runtime:
+      - '0.519000'
+      date:
+      - Mon, 08 Sep 2014 17:55:46 GMT
+      x-rack-cache:
+      - miss
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '35'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Token invalid does not exist"]}'
+    http_version:
 invalid_datasets_logged_out:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      echo-hits:
+      - '1'
+      echo-hits-estimated:
+      - 'false'
+      echo-cursor-at-end:
+      - 'true'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      etag:
+      - '"887f69e76214573412fff0d5487cb934"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - 004754a61895609924016e314bebfb16
+      x-runtime:
+      - '0.433000'
+      date:
+      - Mon, 08 Sep 2014 20:32:44 GMT
+      x-rack-cache:
+      - miss
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '1560'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
+        "title":"ECHO dataset metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
+        AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "summary":"ABSTRACT:
+        Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide,
+        and ozone over the entire BOREAS region to tie together measurements made
+        in both the SSA and the NSA.", "updated":"2000-01-27T00:00:00.000Z", "dataset_id":"BOREAS
+        AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "short_name":"doi:10.3334/ORNLDAAC/495",
+        "version_id":"1", "original_format":"ECHO10", "data_center":"ORNL_DAAC", "archive_center":"ORNL_DAAC",
+        "processing_level_id":"3", "time_start":"1994-05-24T00:00:00.000Z", "time_end":"1994-09-16T00:00:00.000Z",
+        "links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495", "hreflang":"en-US",
+        "rel":"http://esipfed.org/ns/fedsearch/1.1/data#"}, {"href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html",
+        "hreflang":"en-US", "title":"Measurements of the fluxes of momentum, sensible
+        and latent heat, carbon dioxide, and ozone over the entire BOREAS region to
+        tie together measurements made in both the SSA and the NSA. (VIEW RELATED
+        INFORMATION)", "rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}], "boxes":["53.42
+        -106.32 56.25 -97.23"], "dif_ids":["BOREAS_AFM3MW94"], "online_access_flag":"true",
+        "browse_flag":"false", "relevance_score":0.5}]}}'
+    http_version:
+invalid_datasets_logged_out_non_hierarchical:
   response:
     status:
       code: 200
