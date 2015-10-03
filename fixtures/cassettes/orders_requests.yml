@@ -83,6 +83,25 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
     body:
       encoding: UTF-8
+      string: '[{"order_item":{"catalog_item_id":"G179098142-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098143-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098144-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098245-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098246-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098247-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098248-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098249-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098250-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098251-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098252-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098253-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098254-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098255-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098256-ORNL_DAAC","quantity":1}}]'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Sat, 03 Oct 2015 21:49:53 GMT
+  digest: 39a0c2d0a26838756cded942aaafa01146536c60
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
+    body:
+      encoding: UTF-8
       string: '[{"order_item":{"catalog_item_id":"G179111301-ORNL_DAAC","quantity":1,"option_selection":{"id":"5F92533B-A6C8-896F-46D4-7516CE7CDDC4","option_definition_name":"Ftp_Pull","content":"\u003cprov:providerOptions
         xmlns=\"http://schema_verify_provider_instance_and_match_alias\" xmlns:prov=\"http://schema_verify_provider_instance_and_match_alias\"
         xmlns:sys=\"http://schema_verify_system_instance_and_match_alias\"\u003e\u003cprov:mediaOptions\u003e\u003cprov:mediaType\u003e\u003cprov:value\u003eFTPPULL\u003c/prov:value\u003e\u003c/prov:mediaType\u003e\u003cprov:mediaFormat\u003e\u003cprov:value\u003eTAR\u003c/prov:value\u003e\u003c/prov:mediaFormat\u003e\u003c/prov:mediaOptions\u003e\u003c/prov:providerOptions\u003e"}}},{"order_item":{"catalog_item_id":"G179111300-ORNL_DAAC","quantity":1,"option_selection":{"id":"5F92533B-A6C8-896F-46D4-7516CE7CDDC4","option_definition_name":"Ftp_Pull","content":"\u003cprov:providerOptions
