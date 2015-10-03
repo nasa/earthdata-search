@@ -179,6 +179,36 @@ a7b2b024ee68b45ae086db066b22748faa45dd4c:
       encoding: UTF-8
       string: "[]"
     http_version: 
+f9882fe21b9dd48571e79bd9e6942838572e3e63:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.855000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Sat, 03 Oct 2015 21:49:49 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 ddd4802ffe551b04d87a753b10d4b5864577d28b:
   response:
     status:

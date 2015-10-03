@@ -4,27 +4,25 @@ class DatasetsController < ApplicationController
   KEYWORD_CHILD = {'topic' => 'term', 'term' => 'variable_level_1', 'variable_level_1' => 'variable_level_2', 'variable_level_2' => 'variable_level_3', 'variable_level_3' => nil}
 
   def index
-    start = (Time.now.to_f * 1000).to_i
-    # FIXME Temporary workaround for CMR-2038 and CMR-2049
+    client = echo_client
+    # FIXME Termporary workaround for CMR-2038 and CMR-2049
     # Fire two requests to CMR. One to retrieve hierarchical facets, the other to get non-hierarchical facets, in parallel.
-    execute_hierarchical_search = lambda {hierarchical_search()}
-    execute_non_hierarchical_search = lambda {non_hierarchical_search()}
-    catalog_response = execute_search(execute_hierarchical_search, execute_non_hierarchical_search)
+    hierarchical_search = lambda {client.get_datasets(dataset_params_for_request(request), token)}
+    non_hierarchical_search = lambda {client.get_datasets(dataset_params_for_request(request, false), token)}
+    catalog_response = execute_search(hierarchical_search, non_hierarchical_search)
 
-    if (200..299).include? catalog_response.code.to_i
+    if catalog_response.success?
       add_featured_datasets!(dataset_params_for_request(request), token, catalog_response.body)
       catalog_response.body['feed']['facets'] = facet_results(request, catalog_response)
 
       DatasetExtra.decorate_all(catalog_response.body['feed']['entry'])
 
-      catalog_response.header.each do |key, value|
+      catalog_response.headers.each do |key, value|
         response.headers[key] = value if key.start_with?('cmr-')
       end
     end
 
-    Rails.logger.debug "Total time: #{(Time.now.to_f * 1000).to_i - start} ms"
-
-    respond_with(catalog_response.body, status: catalog_response.code)
+    respond_with(catalog_response.body, status: catalog_response.status)
   end
 
   def show
@@ -56,146 +54,31 @@ class DatasetsController < ApplicationController
 
   private
 
-  def hierarchical_search
-    service_config = Rails.configuration.services['earthdata'][echo_env]
-    urs_client_id = Rails.configuration.services['urs'][Rails.env.to_s][service_config['urs_root']]
-    root = service_config['cmr_root']
-    get_datasets(root, dataset_params_for_request(request), token, urs_client_id)
-  end
-
-  def non_hierarchical_search
-    service_config = Rails.configuration.services['earthdata'][echo_env]
-    urs_client_id = Rails.configuration.services['urs'][Rails.env.to_s][service_config['urs_root']]
-    root = service_config['cmr_root']
-    get_datasets(root, dataset_params_for_request(request, false), token, urs_client_id)
-  end
-
-  def get_datasets(root, options={}, token=nil, urs_client_id=nil)
-    format = options.delete(:format) || 'json'
-    load_freetext_query(options)
-    query = options.merge(include_has_granules: true, include_granule_counts: true)
-    and_query(query)
-    response = http_get("#{root}/search/collections.#{format}", query, token, urs_client_id)
-    Rails.logger.info "------- get_datasets: response code: #{response.code}"
-    response
-  end
-
-  def load_freetext_query(query)
-    freetext = query.delete(:free_text)
-    if freetext
-      # Escape catalog-rest reserved characters, then add a wildcard character to the
-      # end of each word to allow partial matches of any word
-      query[:keyword] = catalog_wildcard(catalog_escape(freetext))
-    end
-  end
-
-  def catalog_escape(value)
-    if value.is_a? String
-      # Escape % and _ with a single \.  No idea why it takes 4 slashes before \1 to output a single slash
-      value.gsub(/(%)/, '\\\\\1') # don't escape _ in CMR
-    elsif value.is_a? Hash
-      Hash[value.map {|k, v| [k, catalog_escape(v)]}]
-    elsif value.is_a? Enumerable
-      value.map {|v| catalog_escape(v)}
-    elsif !value.is_a?(TrueClass) && !value.is_a?(FalseClass) && !value.is_a?(Numeric)
-      Rails.logger.warn("Unrecognized value type for #{value} (#{value.class})")
-    end
-  end
-
-  def catalog_wildcard(value)
-    value.strip.gsub(/\s+/, '* ') + '*'
-  end
-
-  def and_query(query)
-    if query[:campaign]
-      query[:options] ||= Hash.new
-      query[:options][:campaign] = Hash.new
-      query[:options][:campaign][:and] = true
-    end
-    if query[:platform]
-      query[:options] ||= Hash.new
-      query[:options][:platform] = Hash.new
-      query[:options][:platform][:and] = true
-    end
-    if query[:instrument]
-      query[:options] ||= Hash.new
-      query[:options][:instrument] = Hash.new
-      query[:options][:instrument][:and] = true
-    end
-    if query[:sensor]
-      query[:options] ||= Hash.new
-      query[:options][:sensor] = Hash.new
-      query[:options][:sensor][:and] = true
-    end
-  end
-
-  def http_get(path, params, token, urs_client_id)
-    Rails.logger.info("---------- http_get: path: #{path.inspect}, query: #{params.inspect}, token: #{token}")
-    uri = URI.parse(path)
-    uri.query = encode(params)
-    req = Net::HTTP::Get.new(uri.request_uri)
-    req["Echo-Token"] = "#{token}:#{urs_client_id}" unless token.nil?
-    req['Client-Id'] = Rails.configuration.cmr_client_id
-    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
-      http.request req
-    end
-  end
-
-  def encode(value, key = nil)
-    case value
-      when Hash then value.map { |k,v| encode(v, key.nil? ? k : "#{key}[#{k.to_s}]") }.join('&')
-      when Array then value.map { |v| encode(v, "#{key}[]") }.join('&')
-      when nil then ''
-      else
-        "#{key}=#{CGI.escape(value.to_s)}"
-    end
-  end
-
-  # This connection is cached as a thread local variable so subsequent calls to this method from the same thread will
-  # return the same instance.
-  # However it is commented out on a second thought. This might bring into too much overheads and not be what we need.
-  # def send_request(uri, request)
-  #   begin
-  #     key = [uri.host, uri.port, use_ssl: uri.scheme == 'https']
-  #     Thread.current[key.to_s] ||= Net::HTTP.new(*key)
-  #     Thread.current[key.to_s].request(request)
-  #   rescue Exception => exception
-  #     Rails.logger.error("EXCEPTION - #{self.class.name}: #{exception.message}\n#{exception.inspect}\n#{exception.backtrace.join("\n")}\n")
-  #   end
-  # end
-
   def execute_search(hierarchical, non_hierarchical)
     nh_response = nil
     nh_thread = Thread.new do
-      timestamp = (Time.now.to_f * 1000).to_i
-      Rails.logger.debug "Started retrieving non_hierarchical facets at #{timestamp}"
       nh_response = non_hierarchical.call
-      Rails.logger.debug "Completed retrieving non_hierarchical facets. Time used: #{(Time.now.to_f * 1000).to_i - timestamp}"
     end
-    timestamp = (Time.now.to_f * 1000).to_i
-    Rails.logger.debug "Started retrieving hierarchical facets at #{timestamp}"
     h_response = hierarchical.call
-    Rails.logger.debug "Completed retrieving hierarchical facets. Time used: #{(Time.now.to_f * 1000).to_i - timestamp}"
     nh_thread.join
 
-    # merge non_hierarchical response to hierarchical response
-    h_json = JSON.parse(h_response.body)
-    nh_json = JSON.parse(nh_response.body)
-    h_response.body = h_json
-    h_facets = h_json['feed']['facets']
-    nh_facets = nh_json['feed']['facets']
-    nh_archive_center = nh_facets.select {|facet| facet['field'] == 'archive_center'}
-    nh_platform = nh_facets.select {|facet| facet['field'] == 'platform'}
-    nh_instrument = nh_facets.select {|facet| facet['field'] == 'instrument'}
-    h_facets.map! do |facet|
-      if facet['field'] == 'archive_centers'
-        nh_archive_center[0]
-      elsif facet['field'] == 'platforms'
-        nh_platform[0]
-      elsif facet['field'] == 'instruments'
-        nh_instrument[0]
-      else
-        facet
+    # merge
+    h_facets = h_response.body['feed']['facets'] if h_response.body['feed'].present?
+    nh_facets = nh_response.body['feed']['facets'] if nh_response.body['feed'].present?
+    if h_facets.present? && nh_facets.present?
+      nh_archive_center = nh_facets.select { |facet| facet['field'] == 'archive_center' }
+      nh_platform = nh_facets.select { |facet| facet['field'] == 'platform' }
+      nh_instrument = nh_facets.select { |facet| facet['field'] == 'instrument' }
+      h_facets.map! do |facet|
+        if facet['field'] == 'archive_centers'
+          nh_archive_center[0]
+        elsif facet['field'] == 'platforms'
+          nh_platform[0]
+        elsif facet['field'] == 'instruments'
+          nh_instrument[0]
+        else
+          facet
+        end
       end
     end
     h_response

@@ -28,10 +28,21 @@ module Echo
           end
         end
         info(yellow("#{method} #{url}"))
-        Echo::Util.time(@logger, response_message) { super(env) }
+        time(@logger, response_message) { super(env) }
       end
 
       private
+
+      def time(logger, message, &block)
+        start = Time.now
+        result = yield
+      ensure
+        if message.is_a?(Proc)
+          message.call(Time.now-start, result)
+        else
+          logger.info("#{message} [#{Time.now - start}s]")
+        end
+      end
 
       def green(text)
         color("0;32", text)
