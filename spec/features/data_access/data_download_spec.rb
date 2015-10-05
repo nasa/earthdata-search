@@ -10,6 +10,8 @@ describe "Data download page", reset: false do
   orderable_dataset_id = 'C90762182-LAADS'
   orderable_dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
+  orderable_dataset_id_with_no_browseable_granules = 'C179003216-ORNL_DAAC'
+
   no_direct_download_dataset_id = 'C179003030-ORNL_DAAC'
 
   non_orderable_dataset_id = 'C179001887-SEDAC'
@@ -174,11 +176,10 @@ describe "Data download page", reset: false do
 
   context "selecting an asychronous access option for granules without browse imagery" do
     before :all do
-      load_page 'data/configure', project: [orderable_dataset_id]
+      load_page 'data/configure', project: [orderable_dataset_id_with_no_browseable_granules]
       wait_for_xhr
 
-      choose 'FtpPushPull'
-      select 'FtpPull', from: 'Distribution Options'
+      choose 'Order'
       click_on 'Continue'
 
       # Confirm address
