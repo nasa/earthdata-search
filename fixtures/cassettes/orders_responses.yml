@@ -92,6 +92,37 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
+39a0c2d0a26838756cded942aaafa01146536c60:
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMjE4NmNiODlkMDBlODY2ZTBjYzM0NTIxNmE1NzNiNTY%3D--0007f6941fda239530a6ff4b0867f87fae3950a5;
+        path=/; HttpOnly
+      x-runtime:
+      - '1.108000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Sat, 03 Oct 2015 21:49:52 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+    http_version: 
 6a350797bd129196a4f83d9f237799cf5a097f11:
   response:
     status:
