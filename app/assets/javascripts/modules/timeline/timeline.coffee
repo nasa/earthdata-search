@@ -233,6 +233,9 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @_zoom = 4
       @end = config.present()
       @start = @end - ZOOM_LEVELS[@_zoom]
+      @_selectedLabelStart = 0
+      @_selectedLabelEnd = 0
+      @_forceUpdate = false
       @originPx = 0
 
       @_loadedRange = []
@@ -456,19 +459,47 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       Math.floor((p - originPx) * scale + start)
 
     zoomIn: ->
-      @_centerTemporalSelection()
-      @root.trigger('buttonzoom')
-      @_deltaZoom(-1)
-
-    zoomOut: ->
-      @_centerTemporalSelection()
-      @root.trigger('buttonzoom')
-      @_deltaZoom(1)
-
-    _centerTemporalSelection: =>
       temporal = @_datasets[0].query.temporal.applied
       if temporal.start.date()? && temporal.stop.date()?
-        @center(temporal.start.date().getTime() + (temporal.stop.date().getTime() - temporal.start.date().getTime()) / 2)
+        # temporal constraints
+        @_centerTemporalSelection(temporal)
+        @root.trigger('buttonzoom')
+        @_deltaZoom(-1)
+      else if @_selectedLabelStart != 0 && @_selectedLabelEnd != 0
+        # date label
+        @_hasFocus = @_forceUpdate = true
+        @center(@_selectedLabelStart + (@_selectedLabelEnd - @_selectedLabelStart) / 2)
+        @root.trigger('buttonzoom')
+        @_deltaZoom(-1)
+        @focus(@_selectedLabelStart, @_selectedLabelEnd)
+#        @_hasFocus = false
+        @_forceUpdate = false
+      else
+        @root.trigger('buttonzoom')
+        @_deltaZoom(-1)
+
+    zoomOut: ->
+      temporal = @_datasets[0].query.temporal.applied
+      if temporal.start.date()? && temporal.stop.date()?
+        # temporal constraints
+        @_centerTemporalSelection(temporal)
+        @root.trigger('buttonzoom')
+        @_deltaZoom(1)
+      else if @_selectedLabelStart != 0 && @_selectedLabelEnd != 0
+        # date label
+        @_hasFocus = @_forceUpdate = true
+        @center(@_selectedLabelStart + (@_selectedLabelEnd - @_selectedLabelStart) / 2)
+        @root.trigger('buttonzoom')
+        @_deltaZoom(1)
+        @focus(@_selectedLabelStart, @_selectedLabelEnd)
+#        @_hasFocus = false
+        @_forceUpdate = false
+      else
+        @root.trigger('buttonzoom')
+        @_deltaZoom(1)
+
+    _centerTemporalSelection: (temporal) =>
+      @center(temporal.start.date().getTime() + (temporal.stop.date().getTime() - temporal.start.date().getTime()) / 2)
 
     zoom: (arg) ->
       if arg?
@@ -507,12 +538,20 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @focus()
       @_updateTimeline()
       @_drawTemporalBounds()
+#      [@_selectedLabelStart, @_selectedLabelEnd] = [null, null]
 
     focus: (t0, t1) ->
+      if t0? && @_focus?
+        @_selectedLabelStart = if typeof t0 == 'number' then t0 else t0.getTime()
+      if t1? && @_focus?
+        @_selectedLabelEnd = if typeof t1 == 'number' then t1 else t1.getTime()
       if  Math.abs(t0 - @_focus) < 1000
         return unless @_hasFocus # Regaining input focus, don't do anything (EDSC-323)
         t0 = null
-      @_focus = t0
+      if @_forceUpdate && t0?
+        @_focus = t0 = @_selectedLabelStart
+      else
+        @_focus = t0
 
       root = @root
       overlay = @focusOverlay
@@ -583,6 +622,10 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @root.trigger('clicklabel')
       label = e.currentTarget
       [start, stop] = @_timespanForLabel(label)
+#      if @_focus?
+#        [@_selectedLabelStart, @_selectedLabelEnd] = [null, null]
+#      else
+      [@_selectedLabelStart, @_selectedLabelEnd] = [start, stop]
       if @_canFocusTimespan(start, stop)
         @focus(start, stop)
 
