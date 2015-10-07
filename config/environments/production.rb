@@ -71,7 +71,7 @@ EarthdataSearchClient::Application.configure do
 
   config.gather_metrics = true
   config.analytics_id = 'UA-50960810-3'
-  config.logo_name = "search-logo-beta"
+  config.logo_name = ""
   config.env_name = ""
   config.tophat_url = "https://cdn.earthdata.nasa.gov/tophat/tophat.js"
   config.feedback_url = 'https://fbm.earthdata.nasa.gov/for/EdSearch/feedback.js'
