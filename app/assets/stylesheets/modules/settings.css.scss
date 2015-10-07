@@ -9,11 +9,15 @@
 $toolbar-search-field-width: 300px;
 $toolbar-search-field-sm-width: 250px;
 
-$toolbar-logo-width: 200px;
+$toolbar-logo-width: 172px;
+$toolbar-logo-container-width: 142px;
 
 
 // Colors
 // ========================================
+
+// EUI
+$ocean-blue: rgb(34, 118, 172);
 
 // Buttons
 $button-dark-bottom-gradient: #315880;
@@ -22,12 +26,12 @@ $button-dark-top-gradient: #5382b1;
 $button-dark-text-shadow: #315880;
 $button-dark-lp-border: #fff;
 
-$dropdown-highlight: #264463;
+$dropdown-highlight: $ocean-blue;
 
 // Toolbar and Footer
 $toolbar-background: #2c3e50;
 $toolbar-background-bottom: #283949;
-$toolbar-accent-border: #21303f;
+$toolbar-accent-border: #236d9e;
 
 // Master Overlay
 $master-overlay-parent-bg-color: #191A1B;

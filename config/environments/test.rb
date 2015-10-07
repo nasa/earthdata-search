@@ -34,7 +34,7 @@ EarthdataSearchClient::Application.configure do
 
   VCR.configure { |c| VCR::EDSCConfigurer.configure(c) }
 
-  config.logo_name = "dev-logo-beta"
+  config.logo_name = "dev"
   config.env_name = ""
   config.tophat_url = ""
 

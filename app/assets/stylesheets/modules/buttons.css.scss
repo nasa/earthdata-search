@@ -66,13 +66,13 @@
 }
 
 @mixin dark-menu-button {
-  border: 1px solid rgba(10,10,10,.3);
-  background: rgba(10,10,10,.2);
+  border: 1px solid rgba(10,10,10,.2);
+  background: darken($ocean-blue, 10%);
   color: #fff;
   text-shadow: none;
 
   &:hover {
-    background: rgba(10,10,10,.3);
+    background: darken($ocean-blue, 6%);
   }
 }
 
