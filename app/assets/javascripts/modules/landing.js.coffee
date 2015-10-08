@@ -41,7 +41,7 @@ do ($=jQuery
     else
       endOffset = $('.landing-toolbar-container').offset()
       endOffset.top += 8
-      endOffset.left += 10
+      endOffset.left += 0
       $content.animate(endOffset,
         complete: ->
           $('.landing-visible').fadeOut()

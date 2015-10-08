@@ -29,7 +29,7 @@ EarthdataSearchClient::Application.configure do
     VCR.configure { |c| VCR::EDSCConfigurer.configure(c, record: :none) }
   end
 
-  config.logo_name = "dev-logo-beta"
+  config.logo_name = "DEV"
   config.env_name = "[DEV]"
   # SIT Tophat
   config.tophat_url = "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js"

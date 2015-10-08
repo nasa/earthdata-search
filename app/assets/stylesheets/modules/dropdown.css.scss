@@ -3,7 +3,7 @@
     color: #fff;
   }
 
-  a.ir {
+  a.logo{
     margin: 10px 0 0 10px;
   }
 
@@ -25,7 +25,7 @@
     position: absolute;
     z-index: 81;
     margin: 0;
-    background: #263646;
+    background: darken($ocean-blue, 15%);
     border: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -148,7 +148,6 @@ input.day-of-year-input {
     text-decoration: none;
 
     &:hover {
-      background: #263646;
       color: rgba(255,255,255,1);
       .fa-caret-down {
         color: rgba(255,255,255,1);
