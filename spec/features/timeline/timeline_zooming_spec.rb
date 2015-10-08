@@ -6,11 +6,11 @@ require "spec_helper"
 describe "Timeline zooming", reset: false do
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 
-  month_start = DateTime.new(2013, 8, 14, 12, 0, 0, '+0')
-  month_end = DateTime.new(2013, 9, 14, 12, 0, 0, '+0')
+  month_start = DateTime.new(2014, 1, 31, 2, 30, 0, '+0')
+  month_end = DateTime.new(2014, 3, 3, 2, 30, 0, '+0')
 
-  decade_start = DateTime.new(2008, 8, 26, 0, 0, 0, '+0')
-  decade_end = DateTime.new(2018, 9, 3, 0, 0, 0, '+0')
+  decade_start = DateTime.new(2009, 2, 11, 14, 30, 0, '+0')
+  decade_end = DateTime.new(2019, 2, 19, 14, 30, 0, '+0')
 
   start = present - 31.days
 
@@ -39,7 +39,7 @@ describe "Timeline zooming", reset: false do
     end
 
     it "displays interval labels with month and year" do
-      expect(page).to have_content('01 Sep 2013')
+      expect(page).to have_content('01 Feb 2014')
     end
 
     it "fetches new data" do
@@ -58,7 +58,7 @@ describe "Timeline zooming", reset: false do
       end
 
       it "displays interval labels with day month and year" do
-        expect(page).to have_content('00:00 30 Aug 2013')
+        expect(page).to have_content('00:00 16 Feb 2014')
       end
     end
   end
