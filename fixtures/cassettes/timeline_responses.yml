@@ -3051,6 +3051,26 @@ cad01e8f61e0fa5b85a89c8232be8d07e32555f6:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[441763200,599616000,39]]}]'
     http_version: 
+644dd311d9f39bb69c4d9571a62d313c304cf6f6:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 08 Oct 2015 18:45:14 GMT
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '78'
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[441763200,599616000,39]]}]'
+    http_version: 
 476903d60b18b7b846163f49bf6ec7c61f05b22a:
   response:
     status:
