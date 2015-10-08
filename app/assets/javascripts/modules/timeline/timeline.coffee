@@ -465,15 +465,17 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         @_centerTemporalSelection(temporal)
         @root.trigger('buttonzoom')
         @_deltaZoom(-1)
-      else if @_selectedLabelStart != 0 && @_selectedLabelEnd != 0
+        return
+
+      @_selectedLabelStart = if typeof @_selectedLabelStart == 'number' then @_selectedLabelStart else @_selectedLabelStart.getTime()
+      @_selectedLabelEnd = if typeof @_selectedLabelEnd == 'number' then @_selectedLabelEnd else @_selectedLabelEnd.getTime()
+      if @_selectedLabelStart != 0 && @_selectedLabelEnd != 0
         # date label
         @_hasFocus = @_forceUpdate = true
         @center(@_selectedLabelStart + (@_selectedLabelEnd - @_selectedLabelStart) / 2)
         @root.trigger('buttonzoom')
         @_deltaZoom(-1)
-        @focus(@_selectedLabelStart, @_selectedLabelEnd)
-#        @_hasFocus = false
-        @_forceUpdate = false
+        @_hasFocus = @_forceUpdate = false
       else
         @root.trigger('buttonzoom')
         @_deltaZoom(-1)
@@ -485,15 +487,17 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
         @_centerTemporalSelection(temporal)
         @root.trigger('buttonzoom')
         @_deltaZoom(1)
-      else if @_selectedLabelStart != 0 && @_selectedLabelEnd != 0
+        return
+
+      @_selectedLabelStart = if typeof @_selectedLabelStart == 'number' then @_selectedLabelStart else @_selectedLabelStart.getTime()
+      @_selectedLabelEnd = if typeof @_selectedLabelEnd == 'number' then @_selectedLabelEnd else @_selectedLabelEnd.getTime()
+      if @_selectedLabelStart != 0 && @_selectedLabelEnd != 0
         # date label
         @_hasFocus = @_forceUpdate = true
         @center(@_selectedLabelStart + (@_selectedLabelEnd - @_selectedLabelStart) / 2)
         @root.trigger('buttonzoom')
         @_deltaZoom(1)
-        @focus(@_selectedLabelStart, @_selectedLabelEnd)
-#        @_hasFocus = false
-        @_forceUpdate = false
+        @_hasFocus = @_forceUpdate = false
       else
         @root.trigger('buttonzoom')
         @_deltaZoom(1)
@@ -535,23 +539,19 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
 
       @scale = scale
 
-      @focus()
+      if @_forceUpdate
+        @focus(@_selectedLabelStart, @_selectedLabelEnd)
+      else
+        @focus()
       @_updateTimeline()
       @_drawTemporalBounds()
-#      [@_selectedLabelStart, @_selectedLabelEnd] = [null, null]
 
     focus: (t0, t1) ->
-      if t0? && @_focus?
-        @_selectedLabelStart = if typeof t0 == 'number' then t0 else t0.getTime()
-      if t1? && @_focus?
-        @_selectedLabelEnd = if typeof t1 == 'number' then t1 else t1.getTime()
       if  Math.abs(t0 - @_focus) < 1000
         return unless @_hasFocus # Regaining input focus, don't do anything (EDSC-323)
-        t0 = null
-      if @_forceUpdate && t0?
-        @_focus = t0 = @_selectedLabelStart
-      else
-        @_focus = t0
+        t0 = null unless @_forceUpdate
+
+      @_focus = t0
 
       root = @root
       overlay = @focusOverlay
@@ -570,6 +570,14 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       else
         root.trigger(@scopedEventName('focusremove'))
       @_forceRedraw()
+      if @_focus > 0
+        if @_selectedLabelStart == 0 && @_selectedLabelEnd == 0
+          @_selectedLabelStart = t0
+          @_selectedLabelEnd = t1
+        else if !@_forceUpdate
+          @_selectedLabelStart = @_selectedLabelEnd = 0
+      else
+        @_selectedLabelStart = @_selectedLabelEnd = 0
       null
 
     panToTime: (time) ->
@@ -622,10 +630,6 @@ do (document, ko, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, strin
       @root.trigger('clicklabel')
       label = e.currentTarget
       [start, stop] = @_timespanForLabel(label)
-#      if @_focus?
-#        [@_selectedLabelStart, @_selectedLabelEnd] = [null, null]
-#      else
-      [@_selectedLabelStart, @_selectedLabelEnd] = [start, stop]
       if @_canFocusTimespan(start, stop)
         @focus(start, stop)
 
