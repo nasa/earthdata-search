@@ -15,36 +15,6 @@ http_interactions:
   digest: a624c9b4c3fe07c5c29f3d31d5957994e14128cf
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1020-GHRC&echo_collection_id%5B%5D=C179001887-SEDAC&page_num=1&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 28 Sep 2015 17:27:58 GMT
-  digest: f5ce8ac08b0ae49116dc10139b64a3ddd3bfff02
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1020-GHRC&page_num=1&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 28 Sep 2015 17:28:17 GMT
-  digest: 7e58efcda6b4ec01b53eea0fddd915a40f587698
-- request:
-    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C115003855-NSIDC_ECS&page_num=1&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -261,6 +231,21 @@ http_interactions:
       - edsc
   recorded_at: Wed, 18 Mar 2015 17:17:33 GMT
   digest: 353e4e3cb1a9297c82bbd1da5f793db2a9039282
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C179003216-ORNL_DAAC&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Sat, 03 Oct 2015 21:49:43 GMT
+  digest: ca0151d19b0ba0073256e0056f56e98549ab7d8d
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C179014698-NSIDC_ECS&include_has_granules=true&include_granule_counts=true
@@ -650,6 +635,19 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 18 Mar 2015 17:28:34 GMT
   digest: aa14e2edfc78fbc0ddd5e516137f7156d859fb9b
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&bounding_box=0%2C0%2C15%2C15&page_size=20&page_num=1&keyword=C204200619-GSFCS4PA%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:49:21 GMT
+  digest: 25c93f1b5cda89420f2b62c4c1d549180edc8466
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&bounding_box=0%2C0%2C15%2C15&page_size=20&page_num=1&keyword=C204200620-GSFCS4PA%2A&include_has_granules=true&include_granule_counts=true
@@ -2425,6 +2423,19 @@ http_interactions:
   digest: 00fb47b4c9656f67416e7e72133980fe41e8ef54
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=C138500-PODAAC%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:41:04 GMT
+  digest: 0091db9b354016a3437c94c89b408afb17f1e2f2
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=C14758250-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2622,6 +2633,19 @@ http_interactions:
   digest: 4961ba88440da67b6326b8adfec3d9734f80b4d5
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=C204200619-GSFCS4PA%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:49:18 GMT
+  digest: b61c820310e77bd2da25c9e70dfdf90a2eb55862
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=C204200620-GSFCS4PA%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2722,7 +2746,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - eed-edsc-dev
-  recorded_at: Mon, 28 Sep 2015 17:22:40 GMT
+  recorded_at: Sat, 03 Oct 2015 21:44:10 GMT
   digest: 53b63d1c79af7dbc9b314920b27cb648b6576096
 - request:
     method: get
@@ -2735,8 +2759,21 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - eed-edsc-dev
-  recorded_at: Mon, 28 Sep 2015 17:22:38 GMT
+  recorded_at: Sat, 03 Oct 2015 21:44:06 GMT
   digest: 06b7f4cc2f3b525ae2b5c6994a3733a0347de1f4
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD09GA&short_name%5B%5D=MYD09&short_name%5B%5D=MOD06_L2&short_name%5B%5D=MOD06_L2&short_name%5B%5D=AE_L2A&short_name%5B%5D=A2_RainOcn_NRT&short_name%5B%5D=ML2HNO3&short_name%5B%5D=ML2HNO3_NRT&short_name%5B%5D=SPL1CTB&short_name%5B%5D=AIRX2RET&short_name%5B%5D=AIRX2RET_NRT&short_name%5B%5D=SPL1BTB&short_name%5B%5D=GPM_1CGPMGMI&short_name%5B%5D=GPM_2AGPROFGPMGMI&short_name%5B%5D=A2_DySno_NRT&short_name%5B%5D=MOD11_L2&short_name%5B%5D=MOD11_L2&short_name%5B%5D=OMSO2&short_name%5B%5D=OMSO2NRTb&short_name%5B%5D=ML2O3&short_name%5B%5D=ML2O3_NRT&short_name%5B%5D=ML2T&short_name%5B%5D=ML2T_NRT&short_name%5B%5D=MYD11_L2&short_name%5B%5D=MYD11_L2&short_name%5B%5D=AE_SI25&short_name%5B%5D=MOD29&short_name%5B%5D=MOD29&short_name%5B%5D=MOD09GQ&short_name%5B%5D=MOD09&short_name%5B%5D=MYD04_L2&short_name%5B%5D=MYD04_L2&short_name%5B%5D=MYD05_L2&short_name%5B%5D=MYD05_L2&short_name%5B%5D=AIRIBRAD&short_name%5B%5D=AIRIBRAD_NRT&short_name%5B%5D=AE_SI12&short_name%5B%5D=MOD09GA&short_name%5B%5D=MYD10_L2&short_name%5B%5D=MYD10_L2&short_name%5B%5D=ML2H2O&short_name%5B%5D=ML2H2O_NRT&short_name%5B%5D=MOD05_L2&short_name%5B%5D=MOD05_L2&short_name%5B%5D=ML2CO&short_name%5B%5D=ML2CO_NRT&short_name%5B%5D=MCDAODHD&short_name%5B%5D=AIRIBQAP&short_name%5B%5D=AIRIBQAP_NRT&short_name%5B%5D=AE_SI6&short_name%5B%5D=ML2N2O&short_name%5B%5D=ML2N2O_NRT&short_name%5B%5D=MOD10_L2&short_name%5B%5D=MOD10_L2&short_name%5B%5D=AIRX2SUP&short_name%5B%5D=AIRX2SUP_NRT&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MYD09GQ&short_name%5B%5D=ML2SO2&short_name%5B%5D=ML2SO2_NRT&short_name%5B%5D=MYD29&short_name%5B%5D=MYD29&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:44:08 GMT
+  digest: 51aa4cb5b0e409fd4b865334244f1f1efad86b5b
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD09GA&short_name%5B%5D=MYD09&short_name%5B%5D=MYD04_L2&short_name%5B%5D=MYD04_L2&short_name%5B%5D=AE_L2A&short_name%5B%5D=ML2HNO3&short_name%5B%5D=ML2HNO3_NRT&short_name%5B%5D=AIRX2RET&short_name%5B%5D=AIRX2RET_NRT&short_name%5B%5D=MOD06_L2&short_name%5B%5D=MOD06_L2&short_name%5B%5D=MOD11_L2&short_name%5B%5D=MOD11_L2&short_name%5B%5D=OMSO2&short_name%5B%5D=OMSO2NRTb&short_name%5B%5D=ML2O3&short_name%5B%5D=ML2O3_NRT&short_name%5B%5D=ML2T&short_name%5B%5D=ML2T_NRT&short_name%5B%5D=MYD11_L2&short_name%5B%5D=MYD11_L2&short_name%5B%5D=MOD29&short_name%5B%5D=MOD29&short_name%5B%5D=OMAERUV&short_name%5B%5D=MOD09GQ&short_name%5B%5D=MOD09&short_name%5B%5D=AIRX2SUP&short_name%5B%5D=AIRX2SUP_NRT&short_name%5B%5D=AIRIBRAD&short_name%5B%5D=AIRIBRAD_NRT&short_name%5B%5D=MOD09GA&short_name%5B%5D=MYD10_L2&short_name%5B%5D=MYD10_L2&short_name%5B%5D=OMCLDRR&short_name%5B%5D=ML2H2O&short_name%5B%5D=ML2H2O_NRT&short_name%5B%5D=MOD05_L2&short_name%5B%5D=MOD05_L2&short_name%5B%5D=ML2CO&short_name%5B%5D=ML2CO_NRT&short_name%5B%5D=AIRIBQAP&short_name%5B%5D=AIRIBQAP_NRT&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MOD10_L2&short_name%5B%5D=MOD10_L2&short_name%5B%5D=ML2N2O&short_name%5B%5D=ML2N2O_NRT&short_name%5B%5D=MYD05_L2&short_name%5B%5D=MYD05_L2&short_name%5B%5D=MYD09GQ&short_name%5B%5D=ML2SO2&short_name%5B%5D=ML2SO2_NRT&short_name%5B%5D=MYD29&short_name%5B%5D=MYD29&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
@@ -3311,6 +3348,19 @@ http_interactions:
   digest: 844f2b77fe8578fb817307685a69ebb568070f48
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&processing_level_id%5B%5D=0&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:39:40 GMT
+  digest: 4ecb1ff14d5c0aef78a71246b5fad44c5a266a65
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=AQUA&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3623,6 +3673,19 @@ http_interactions:
   digest: 202308831a09930bf6dde1cb6dc1cdb041ebeab2
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:39:56 GMT
+  digest: 853bf22118133b6c0ebf48326f3e872465126ad9
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AEROSOLS&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3647,6 +3710,19 @@ http_interactions:
       - EDSC
   recorded_at: Tue, 25 Aug 2015 14:39:31 GMT
   digest: acfe3e2fe40d5ddd25a47379a928c6bf0fe23451
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AEROSOLS&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:39:59 GMT
+  digest: aab1c5f583c0b4291e870e6dfc1015c5e7b159d5
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AEROSOLS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=NITRATE+PARTICLES&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
@@ -3675,6 +3751,19 @@ http_interactions:
   digest: 2c341867fb1e3b13d95ffcad422a140edeabaed1
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AEROSOLS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=NITRATE+PARTICLES&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:40:05 GMT
+  digest: 3e401a69954ce483e53c8f68750968fdc39aa269
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=SPECTRAL%2FENGINEERING&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3701,6 +3790,19 @@ http_interactions:
   digest: c9ef072a6eccff9e7341e385e7f38398d259417c
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=SPECTRAL%2FENGINEERING&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:39:49 GMT
+  digest: e4c82b818d9a1d7327d94bf987eaa82a0878cee9
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=SPECTRAL%2FENGINEERING&science_keywords%5B0%5D%5Bterm%5D%5B%5D=LAND+USE%2FLAND+COVER&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3725,6 +3827,19 @@ http_interactions:
       - EDSC
   recorded_at: Tue, 25 Aug 2015 14:39:24 GMT
   digest: 5203cecfd3b41723c81218ccb3f0faaea0432ce0
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=SPECTRAL%2FENGINEERING&science_keywords%5B0%5D%5Bterm%5D%5B%5D=LAND+USE%2FLAND+COVER&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Sat, 03 Oct 2015 21:39:52 GMT
+  digest: 1ee78d128bdbbdd78ded114e4b4376570417e8bd
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=%2C1970-12-01T00%3A00%3A00.000Z&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
