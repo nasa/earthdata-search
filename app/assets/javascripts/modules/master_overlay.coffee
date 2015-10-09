@@ -26,7 +26,6 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     hideSecondary: -> @toggleSecondary(false)
 
     _hideNodes: ($nodes) ->
-      console.log 'hide', $nodes
       fn = =>
         $nodes.hide()
         @_triggerStateChange()
