@@ -1,5 +1,5 @@
 ---
-4ca6412fa50feb9358aeadde633231506802a4cc:
+3a87d6db6a74f6c8f8277d7ca0b1d835d0b35de0:
   response:
     status:
       code: 200
@@ -214,7 +214,7 @@
         Q29hc3QgUmVnaW9uYWwgQWlycG9ydCIsImZjbCI6IlMiLCJjb250aW5lbnRD
         b2RlIjoiTkEifV19
     http_version: 
-dcc2b09714a899df18b019deb8fae5427ae8639b:
+95d59fd045d1b0a6c54d9e310e04c91d109bc8ee:
   response:
     status:
       code: 200
@@ -401,7 +401,7 @@ dcc2b09714a899df18b019deb8fae5427ae8639b:
         dHJ5Q29kZSI6Ik1YIiwidG9wb255bU5hbWUiOiJUZXhhcyIsImZjbCI6IlAi
         LCJjb250aW5lbnRDb2RlIjoiTkEifV19
     http_version: 
-49b88654d7384520e8b15e0f878fc9e77c4a0d88:
+3c71b8d7ec2f7aca39b6a81a2c0176185ba9fe78:
   response:
     status:
       code: 200
@@ -551,7 +551,7 @@ dcc2b09714a899df18b019deb8fae5427ae8639b:
         InRvcG9ueW1OYW1lIjoiQXN0aSIsImZjbCI6IlAiLCJjb250aW5lbnRDb2Rl
         IjoiRVUifV19
     http_version: 
-1bfe213d1ae75980c4ea7ba60f5d8d2da23d2b8d:
+56670aeb2d38c533adb33b9e25c305a5eaf4889b:
   response:
     status:
       code: 200
@@ -575,7 +575,7 @@ dcc2b09714a899df18b019deb8fae5427ae8639b:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
-d9bbcff8a73b768d1979f0b66d46905ae15ccc05:
+bd8021457700cd15a98be551b8c9dd0539999890:
   response:
     status:
       code: 200
@@ -599,7 +599,7 @@ d9bbcff8a73b768d1979f0b66d46905ae15ccc05:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
-c0d62da42d27a20af06069e22f65bef39128f943:
+34e1f212faa944c9958a483ff5082367c3c86be2:
   response:
     status:
       code: 200
@@ -786,7 +786,7 @@ c0d62da42d27a20af06069e22f65bef39128f943:
         bWUiOiJNZXhpY28iLCJmY29kZU5hbWUiOiJwb3B1bGF0ZWQgcGxhY2UiLCJh
         ZG1pbk5hbWUxIjoiWXVjYXTDoW4ifV19
     http_version: 
-b5e29d316f94313e0d8a8f5edc02bee0341c0977:
+8e23899e41b940826827530d255db1c4363281a4:
   response:
     status:
       code: 200
@@ -810,7 +810,7 @@ b5e29d316f94313e0d8a8f5edc02bee0341c0977:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
-e9dadbaadd61cc605a52bc698b7abbaced5464a3:
+710f917cd3af2942adf538e38d387c7992667661:
   response:
     status:
       code: 200
@@ -834,7 +834,31 @@ e9dadbaadd61cc605a52bc698b7abbaced5464a3:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
-375316b0756584b85bc008cd03fa59af8f01b371:
+49e2eb60d39e894bb5420c3957b34eb99d70629c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 09 Oct 2015 14:42:58 GMT
+      server:
+      - Apache/2.4.6 (Linux/SUSE)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
+ef6133bd0170b04a70aeb4ad9beaad45bf7414c8:
   response:
     status:
       code: 200
@@ -858,7 +882,7 @@ e9dadbaadd61cc605a52bc698b7abbaced5464a3:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
-d0e5b46aa49aaa344d5e7a6ee5154ac4ed2cf780:
+7d435d849fb072ffc0c8a2b5780af995da1a476c:
   response:
     status:
       code: 200
@@ -882,7 +906,7 @@ d0e5b46aa49aaa344d5e7a6ee5154ac4ed2cf780:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
-6d6c5bf65c987f75b3977608cc87a76043078cc7:
+ec635bd83ab4685cfcdd98cc31d9370465026414:
   response:
     status:
       code: 200
@@ -1069,7 +1093,7 @@ d0e5b46aa49aaa344d5e7a6ee5154ac4ed2cf780:
         bnRyeUNvZGUiOiJNWCIsInRvcG9ueW1OYW1lIjoiVGV4YXMiLCJmY2wiOiJQ
         IiwiY29udGluZW50Q29kZSI6Ik5BIn1dfQ==
     http_version: 
-315a3ddb04a2f6e25b3e5280f510668732d93d27:
+2dc8f5a45614c86042731204ab89380fccee421b:
   response:
     status:
       code: 200

@@ -131,7 +131,13 @@ class DatasetsController < ApplicationController
       end
     end
 
-    facet_tree = science_keywords_facets['category'].find { |facet| facet['value'] == 'EARTH SCIENCE' }['topic'] unless science_keywords_facets.nil? || science_keywords_facets['category'].nil?
+    facet_tree = nil
+    unless science_keywords_facets.nil? || science_keywords_facets['category'].nil?
+      earth_science_keywords = science_keywords_facets['category'].find do |facet|
+        facet['value'] == 'EARTH SCIENCE'
+      end || science_keywords_facets['category'].first
+      facet_tree = earth_science_keywords['topic'] unless earth_science_keywords.nil?
+    end
     if facet_tree
       KEYWORD_CHILD.keys.each do |keyword|
         rtn_hash = parse_hierarchical_keywords(facet_tree, keyword, keyword_query_params)
