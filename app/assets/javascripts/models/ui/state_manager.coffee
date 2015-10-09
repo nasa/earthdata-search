@@ -15,6 +15,7 @@
       @historyChanged = false
       @loaded = false
       @echo_env = null
+      @lastKeywords = null
 
       $(window).on 'edsc.save_workspace', =>
           urlUtil.saveState(@path(), @serialize(), !@historyChanged, @page.workspaceNameField())
@@ -234,8 +235,30 @@
     _persistStateInUrl: ->
       path = @path()
       serialized = @serialize()
+
+      # EDSC-540: If the query string changes and we're not on the datasets list, go to the
+      #           datasets list
+      prevKeywords = @lastKeywords
+      @lastKeywords = @_textQuery(serialized)
+      if path != '/search' && path != '/search/datasets' && prevKeywords? && prevKeywords != @lastKeywords
+        @_sendToDatasetList()
+        path = @path()
+        serialized = @serialize()
+
       if @_isValid(path, serialized)
         changed = urlUtil.saveState(path, serialized, !@historyChanged, @page.workspaceNameField.peek())
         @historyChanged = true if changed
+
+    _textQuery: (serialized) ->
+      (serialized.free_text || '') + (serialized.placename || '') + (serialized.q || '')
+
+    _sendToDatasetList: ->
+      ui = @page.ui
+      {datasetsList, projectList} = ui
+      projectList.hideFilters()
+      datasetsList.hideDatasetDetails()
+      datasetsList.focused()?.hideGranuleDetails()
+      datasetsList.unfocusDataset()
+      @overlay.level(0)
 
   exports = StateManager

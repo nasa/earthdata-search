@@ -85,16 +85,6 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
     $placenameInputs.on 'blur', (e) ->
       # TODO: blur isn't a good event to listen to. It should get triggered
       #       when the keyword changes.
-      $overlay = $('.master-overlay')
-      if $overlay.masterOverlay('level') != 0
-        ui = currentPage.ui
-        {datasetsList, projectList} = ui
-        projectList.hideFilters()
-        datasetsList.hideDatasetDetails()
-        datasetsList.focused()?.hideGranuleDetails()
-        datasetsList.unfocusDataset()
-        $overlay.masterOverlay('level', 0)
-
       query = this.value
       if !$(e.relatedTarget).hasClass('clear-filters') && query.length > 0 && query.indexOf('place:') != -1
         ajax
