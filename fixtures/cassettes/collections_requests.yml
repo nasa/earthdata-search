@@ -1849,6 +1849,21 @@ http_interactions:
   digest: bc3b0ef901f9c6859116b209925bf0b7e42fcf9c
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=octs%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 09 Oct 2015 14:42:59 GMT
+  digest: af688ffa1b2688753659e55269cc20d6cf8e7f02
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A+nrt%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2278,6 +2293,21 @@ http_interactions:
       - EDSC
   recorded_at: Tue, 25 Aug 2015 14:33:11 GMT
   digest: c026807db77591cd3e88f58a1739fa31df8e9d49
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=octs%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 09 Oct 2015 14:42:54 GMT
+  digest: 6b46e95608e30e9ed533faddca4b682fab48e528
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=snow%2A+cover%2A+nrt%2A&include_has_granules=true&include_granule_counts=true
@@ -2722,6 +2752,21 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 18 Mar 2015 17:22:39 GMT
   digest: 129000f7365af516956586dcb9547b4350a834a5
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=octs%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 09 Oct 2015 14:42:57 GMT
+  digest: 593b7032000d3f54ed8ffb3419e177fec741252b
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=snow%2A+cover%2A+nrt%2A&include_has_granules=true&include_granule_counts=true

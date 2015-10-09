@@ -391,4 +391,21 @@ describe "Dataset Facets", reset: false do
       expect(uri.query).to have_content('fl=')
     end
   end
+
+  # EDSC-790
+  context "when no collections have the EARTH SCIENCE category facet" do
+    before :all do
+      login
+      load_page :search, facets: true, q: 'octs'
+    end
+
+    after :all do
+      Capybara.reset_sessions!
+      load_page :search, facets: true
+    end
+
+    it "displays the first available facet's topics" do
+      expect(page).to have_content("Ocean Optics")
+    end
+  end
 end

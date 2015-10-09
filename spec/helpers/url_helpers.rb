@@ -37,6 +37,7 @@ module Helpers
         params['qt'] = temporal(*options[:temporal]) if options[:temporal]
         params['tl'] = "#{options[:timeline].to_i}!4!!" if options[:timeline]
         params['sgd'] = options[:granule_id] if options[:granule_id]
+        params['q'] = options[:q] if options[:q]
 
         p = ([options[:focus]] + Array.wrap(options[:project])).join('!')
         params['p'] = p if p.present?
