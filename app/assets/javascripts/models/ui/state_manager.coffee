@@ -240,7 +240,10 @@
       #           datasets list
       prevKeywords = @lastKeywords
       @lastKeywords = @_textQuery(serialized)
-      if path != '/search' && path != '/search/datasets' && prevKeywords? && prevKeywords != @lastKeywords
+      if (path != '/search' && path != '/search/datasets' &&  # Not viewing datasets
+          prevKeywords? &&                                    # Not initial page load
+          @lastKeywords != '' &&                              # Haven't cleared the query
+          prevKeywords != @lastKeywords)                      # Query changed
         @_sendToDatasetList()
         path = @path()
         serialized = @serialize()

@@ -4,6 +4,7 @@ describe 'Granule details', reset: false do
   it 'displays the granule details' do
     load_page :search
     fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
+    wait_for_xhr
     expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
     first_dataset_result.click
     wait_for_xhr
