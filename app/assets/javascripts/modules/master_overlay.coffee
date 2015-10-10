@@ -25,6 +25,12 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
 
     hideSecondary: -> @toggleSecondary(false)
 
+    _hideNodes: ($nodes) ->
+      fn = =>
+        $nodes.hide()
+        @_triggerStateChange()
+      @_levelTimeout = window.setTimeout(fn, config.defaultAnimationDurationMs) if $nodes.size() > 0
+
     hideLevel: (level) ->
       fn = =>
         @children().eq(level).hide()
@@ -72,7 +78,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         value = parseInt(value, 10)
         currentLevel = @level()
         if currentLevel != value
-          @hideLevel(currentLevel) if @current().hasClass(@scope('hide-self')) && currentLevel > value
+          if value < currentLevel
+            toHide = @children().filter(":gt(#{Math.max(value, 0)})").filter(@scope('.hide-self'))
+            @_hideNodes(toHide)
           @_content().attr('data-level', value)
         @_setBreadcrumbs()
         @contentHeightChanged()
