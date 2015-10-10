@@ -1,4 +1,6 @@
 EarthdataSearchClient::Application.routes.draw do
+  get 'health/index'
+
   mount Cmep::Engine => "/cmep" if defined?(Cmep)
 
   get 'urs_callback' => 'oauth_tokens#urs_callback'
@@ -55,6 +57,7 @@ EarthdataSearchClient::Application.routes.draw do
   post 'data/remove' => 'data_access#remove', format: 'json'
 
   get 'search(/*overlay_params)' => 'search#index'
+  get 'health' => 'health#index'
   root :to => 'search#index'
 
 
