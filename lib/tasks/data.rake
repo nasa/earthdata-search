@@ -9,12 +9,22 @@ namespace :data do
     task :granules => ['environment'] do
       DatasetExtra.load
     end
+
+    desc "Record the last run of task 'data:load' by touching a file in ./tmp dir"
+    task :log_dataload do
+      Dir.glob(Rails.root.join('tmp', "data_load_*")).each do |f|
+        File.delete(f)
+      end
+
+      FileUtils.touch Rails.root.join('tmp', "data_load_#{Time.now.to_i}")
+    end
+
   end
 
   desc "Load data from ECHO"
   task :load
 
-  Rake::Task['data:load'].enhance(['data:load:echo10', 'data:load:granules'])
+  Rake::Task['data:load'].enhance(['data:load:echo10', 'data:load:granules', 'data:load:log_dataload'])
 
   namespace :dump do
     # Only dump the DatasetExtra model
