@@ -42,6 +42,7 @@ namespace :colormaps do
 
   desc "Record the last run of task 'colormaps:load' by touching a file in ./tmp dir"
   task :log_colormaps_load do
+    Dir.mkdir Rails.root.join('tmp') unless Dir.exist? Rails.root.join('tmp')
     Dir.glob(Rails.root.join('tmp', "colormaps_load_*")).each do |f|
       File.delete(f)
     end
