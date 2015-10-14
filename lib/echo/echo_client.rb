@@ -1,5 +1,17 @@
 module Echo
   class EchoClient < BaseClient
+    def get_echo_availability
+      get("/echo-rest/availability.json")
+    end
+
+    def get_opensearch_availability
+      get("/opensearch")
+    end
+
+    def get_browse_scaler_availability
+      get("/browse-scaler/availability")
+    end
+
     def get_provider_holdings
       get("/catalog-rest/echo_catalog/provider_holdings.json")
     end
