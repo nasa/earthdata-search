@@ -671,3 +671,176 @@
             <dataBLOB href=""/>
         </Dataset>
     http_version: 
+d9b715ca78067fa784c5f4d12c2583edab525706:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      etag:
+      - '"a582a0893b7951b116764bc69d971fa4"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - c6f6e184a8b0cec07af54d583405093b
+      x-runtime:
+      - '0.152000'
+      date:
+      - Tue, 13 Oct 2015 20:31:58 GMT
+      x-rack-cache:
+      - miss
+      content-type:
+      - text/html;charset=utf-8
+      vary:
+      - Accept-Encoding
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: hdf2jpeg is UP, image_magick is UP
+    http_version: 
+969be064023f01da319cc4cc5c53365270133b77:
+  response:
+    status:
+      code: 302
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      location:
+      - http://api.echo.nasa.gov/opensearch/
+      content-length:
+      - '0'
+      date:
+      - Tue, 13 Oct 2015 20:31:57 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+7e0afaafffad89232611dd3c5660225d59bdf6dd:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - nginx/1.4.7
+      date:
+      - Tue, 13 Oct 2015 20:31:58 GMT
+      content-type:
+      - text/html; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      cache-control:
+      - max-age=0, private, must-revalidate
+      set-cookie:
+      - _urs-gui_session=V3owZlYzbVVNVkt0OVRyNi9GVGtWOXJ5SGFHZVpQYy9XUjNmWlp5b2U4azNpOFBiMitwdlBtK0NmTVNSTmlza1JQUWE0RUkrWGlHQStnMExISGxwSmgxRENGeFdUTUw5MkVmNDFvdmZidmNJMEpzOUk4UWhUMHdtU2NJZHVERDlQY1pmcXVRZmJIZ2krQktSV05WNnlTdFl1ejJWb0JzaThQRkJlYkVteHZkVDVvNlNqMUR4aTNSQ0s3YnBzQThwLS1JSGRuUllTVnVQMnArckdzQW5EOWNRPT0%3D--748142d9aa68ddedb38da08702d8d2b3a4ca7599;
+        path=/; expires=Wed, 14 Oct 2015 20:31:58 -0000; HttpOnly
+      x-request-id:
+      - ab9daea1-0f7e-406f-8f3b-7005e46f4949
+      x-runtime:
+      - '0.004766'
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html>\n<!--[if lt IE 7]><html class=\"no-js lt-ie9 lt-ie8
+        lt-ie7\"> <![endif]-->\n<!--[if IE 7]><html class=\"no-js lt-ie9 lt-ie8\">
+        <![endif]-->\n<!--[if IE 8]><html class=\"no-js lt-ie9\"> <![endif]-->\n<!--[if
+        gt IE 8]><!--><html lang=\"en\" class=\"no-js\"><!--<![endif]-->\n  <head>\n
+        \   <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\n
+        \   <title>Earthdata Login</title>\n    <meta name=\"description\" content=\"Earthdata
+        Login\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n
+        \   <link href=\"/assets/application-23b3acd7fb2acc9c210002637e0066e3.css\"
+        media=\"all\" rel=\"stylesheet\" />\n    <!--[if IE 7]>\n      <link rel=\"stylesheet\"
+        href=\"/assets/font-awesome-ie7.min.css\">\n    <![endif]-->\n    <link href=\"//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css\"
+        rel=\"stylesheet\">\n    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700'
+        rel='stylesheet' type='text/css'>\n    <meta content=\"authenticity_token\"
+        name=\"csrf-param\" />\n<meta content=\"9lUFCqv3TgzGCRw5ittekAd9+4KpUpDP0cMtu/u1yn8=\"
+        name=\"csrf-token\" />\n    \n    <!-- Grid background: http://subtlepatterns.com/graphy/
+        -->\n  </head>\n  <body class=\"static_pages home\" data-turbolinks-eval=false>\n
+        \   <!--[if lt IE 7]>\n      <p class=\"chromeframe\">You are using an <strong>outdated</strong>
+        browser. Please <a href=\"http://browsehappy.com/\">upgrade your browser</a>
+        or <a href=\"http://www.google.com/chromeframe/?redirect=true\">activate Google
+        Chrome Frame</a> to improve your experience.</p>\n    <![endif]-->\n    <div
+        class=\"container\">\n      <header role=\"banner\">\n  <h1><a class=\"ir\"
+        href=\"/\">Earthdata Login</a></h1>\n  <a id=\"hamburger\" href=\"#\"><img
+        alt=\"Hamburger\" src=\"/assets/hamburger-26d09d522027782abd59c49edec91baf.png\"
+        title=\"Menu\" /></a>\n  <nav role=\"navigation\">\n    <div id=\"hide\">\n
+        \     <ul>\n      </ul>\n    </div>\n  </nav>\n</header>\n\n      \n\n\n\n\n\n
+        \     <section id=\"callout-login\">\n  <form accept-charset=\"UTF-8\" action=\"/login\"
+        id=\"login\" method=\"post\"><div style=\"display:none\"><input name=\"utf8\"
+        type=\"hidden\" value=\"&#x2713;\" /><input name=\"authenticity_token\" type=\"hidden\"
+        value=\"9lUFCqv3TgzGCRw5ittekAd9+4KpUpDP0cMtu/u1yn8=\" /></div>\n    <p><label
+        for=\"username\">Username</label><br /><input autofocus=\"autofocus\" id=\"username\"
+        name=\"username\" type=\"text\" /></p>\n    <p><label for=\"password\">Password</label><br
+        /><input id=\"password\" name=\"password\" type=\"password\" /></p>\n    \n
+        \   <p class=\"button-wtih-notes\">\n      <input class=\"button dark button-go\"
+        name=\"commit\" type=\"submit\" value=\"Log in\" />\n      <a class=\"button
+        dark\" href=\"/users/new\">Register</a>\n    </p>\n    <p class=\"form-instructions\">\n
+        \     <em class=\"icon-question-sign\"></em>\n      <a class=\"\" href=\"/retrieve_info\">I
+        don&rsquo;t remember my username</a>\n      <br /><em class=\"icon-question-sign\"></em>\n
+        \     <a class=\"\" href=\"/reset_passwords/new\">I don&rsquo;t remember my
+        password</a>\n      <br />\n      <em class=\"icon-question-sign\"></em>\n
+        \     <a href=\"javascript:feedback.showForm();\" title = 'Need Help? Click
+        on the Feedback button to request help'>Help</a>\n    </p>\n</form>\n<div
+        class=\"govt-msg\">\n  <h3></h3>\n  <p>\n    The Earthdata Login provides
+        a single mechanism for user registration and profile management for all EOSDIS
+        system components (DAACs, Tools, Services).\n    Your Earthdata login also
+        helps the EOSDIS program better understand the usage of EOSDIS services to
+        improve user experience through customization of tools and improvement of
+        services.\n    EOSDIS data are openly available to all and free of charge
+        except where governed by international agreements.\n  </p>\n</div>\n\n</section>\n<section
+        id=\"cta\">\n  <h3>Get single sign-on access to all your favorite EOSDIS sites</h3>\n
+        \     <a class=\"button inverse\" href=\"/users/new\">Register for a Profile</a>\n</section>\n\n
+        \   </div>\n    <footer role=\"contentinfo\">\n      <h3>For questions regarding
+        the EOSDIS Earthdata Login, please contact <a href=\"javascript:feedback.showForm();\"
+        title=\"Earthdata Support form\">Earthdata Support</a></h3>\n      <ul>\n
+        \       <li><a href=\"/\">Earthdata Login Home</a></li>\n        <li><a href=\"/users/new\">Register</a></li>\n
+        \       <li><a href=\"/documentation\">Documentation</a></li>\n        <li><a
+        title=\"NASA Home\" href=\"http://www.nasa.gov\">NASA</a> Official: Andy Mitchell</li>\n
+        \     </ul>\n      <div class=\"govt-warning\">\n        <p><strong>Warning:
+        This U.S. Government resource is for authorized use only.</strong><br />By
+        accessing the system, you are consenting to complete monitoring with no expectation
+        of privacy. Unauthorized access or use may subject you to disciplinary action
+        and criminal prosecution.</p>\n      </div>\n    </footer>\n    <script src=\"/assets/application-aa65deec63ad656ea601778fd979e8dc.js\"></script>\n
+        \   <script type=\"text/javascript\" charset=\"utf-8\">\n    $(window).scroll(function(e){\n
+        \     parallax();\n    });\n    function parallax(){\n      var scrolled =
+        $(window).scrollTop();\n      $('#content').css('background-position', 'right
+        ' + -(scrolled*0.25)+'px ');\n    }\n    </script>\n    <script type=\"text/javascript\"
+        src=\"https://cdn.earthdata.nasa.gov/tophat/tophat.js\" id=\"earthdata-tophat-loader\"></script>\n
+        \   <script type=\"text/javascript\" src=\"https://fbm.earthdata.nasa.gov/for/URS4/feedback.js\"></script>\n
+        \   <script type=\"text/javascript\">\n      feedback.init();\n    </script>\n
+        \   <script type=\"text/javascript\">\n        setTimeout(function()\n                {var
+        a=document.createElement(\"script\"); var b=document.getElementsByTagName(\"script\")[0];\n
+        \                   a.src=document.location.protocol+\"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/2090.js?\"+Math.floor(new
+        Date().getTime()/3600000);\n                    a.async=true;a.type=\"text/javascript\";b.parentNode.insertBefore(a,b)}\n
+        \               , 1);\n    </script>\n\n    <!-- BEGIN: Unica Page Tag -->\n
+        \   <!-- Copyright 2004-2010 Unica Corporation.  All rights reserved. -->\n
+        \   <script type=\"text/javascript\" language=\"JavaScript\" src=\"/ntpagetag.js\"></script>\n
+        \   <noscript>\n      <img src=\"https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0\"
+        height=\"1\" width=\"1\" border=\"0\" hspace=\"0\" vspace=\"0\" alt=\"\">\n
+        \   </noscript>\n    <!-- END: Unica Page Tag -->\n\n    <!-- BEGIN: Google
+        Analytics (URSFOUR) -->\n    <script>\n      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n
+        \     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n
+        \     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n
+        \     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');\n\n
+        \     ga('create', 'UA-62340125-2', 'auto');\n      ga('send', 'pageview');\n
+        \   </script>\n    <!-- END: Google Analytics Tag -->\n    \n  </body>\n</html>\n"
+    http_version: 
