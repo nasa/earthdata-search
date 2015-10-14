@@ -33,11 +33,14 @@ namespace :colormaps do
 
     puts "#{error_count} error(s), #{file_count} file(s)"
 
-    exit 1 if error_count > 0
-
     # explicitly invoke the task here to make sure task colormaps:load completes successfully.
     Rake::Task['colormaps:log_colormaps_load'].invoke
 
+    if error_count > 0
+      FileUtils.remove Rails.root.join('tmp', "colormaps_load_ok")
+      open(Rails.root.join('tmp', "colormaps_load_failed"), 'w') {|f| f.puts "#{error_count} error(s), #{file_count} file(s)"}
+      exit 1
+    end
   end
 
   desc "Record the last run of task 'colormaps:load' by touching a file in ./tmp dir"
@@ -47,7 +50,7 @@ namespace :colormaps do
       File.delete(f)
     end
 
-    FileUtils.touch Rails.root.join('tmp', "colormaps_load_#{Time.now.to_i}")
+    FileUtils.touch Rails.root.join('tmp', "colormaps_load_ok")
   end
 end
 

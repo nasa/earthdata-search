@@ -10,13 +10,21 @@ class Health
   end
 
   def delayed_job_status
+    # The job hasn't been run yet. Go on to check retrieval.created_at. If the time is more than 10 minutes (threshold)
+    # ago, consider the delayed job is down.
     job = DelayedJob.last
-    retrieval = Retrieval.last
-    if job.run_at > retrieval.created_at
-      {ok?: true}
-    else
+    retrieval = Retrieval.find_by_id(job.id)
+
+    if job.run_at.nil? && retrieval.created_at < 10.minutes.ago
       @ok = false
-      {ok?: false, error: "Last job ran at #{job.run_at} which is behind order retrieval creation time of #{retrieval.created_at}"}
+      {ok?: false, error: "Last job (job id: #{job.id}) failed to start 10 minutes after retrieval is created."}
+    else
+      # Further check failed_at and last_error if failed_error is not empty
+      if job.failed_at
+        @ok = false
+        return {ok?: false, error: "Last job (job id: #{job.id}) failed with error: #{job.last_error}"}
+      end
+      {ok?: true}
     end
   end
 
@@ -61,10 +69,12 @@ class Health
 
   def check_cron_job(job, interval)
     Dir.glob(Rails.root.join('tmp', "#{job}_*")).each do |f|
-      last_run_time = Time.at(f.match(/[a-zA-Z_]+_(\d+)/)[1].to_i)
-      if last_run_time.nil? || last_run_time < Time.now - interval * 3
+      if File.mtime(f) < Time.now - interval * 3
         @ok = false
-        return {ok?: false, error: "Cron job '#{job.split('_').join(':')}' hasn't been run since #{last_run_time}."}
+        return {ok?: false, error: "Cron job '#{job.split('_').join(':')}' hasn't been run since #{File.mtime(f)}."}
+      elsif f.match /_failed$/
+        @ok = false
+        return {ok?: false, error: "Cron job '#{job.split('_').join(':')}' failed in last run at #{File.mtime(f)} with message '#{File.read(f)}'."}
       else
         return {ok?: true}
       end
