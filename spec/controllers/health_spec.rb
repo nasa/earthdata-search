@@ -6,6 +6,8 @@ describe HealthController, type: :controller do
     before :all do
       @delayed_job = DelayedJob.new
       @delayed_job.run_at = Time.now
+      @delayed_job.created_at = Time.now
+      @delayed_job.handler = 'test'
 
       @retrieval = Retrieval.new
       @retrieval.created_at = Time.now - 1.minute
@@ -25,9 +27,9 @@ describe HealthController, type: :controller do
     end
 
     context "when everything is up" do
-      it "should return a json response indicating the system is ok" do
+      it "returns a json response indicating the system is ok" do
         expect(DelayedJob).to receive(:last).and_return(@delayed_job)
-        expect(Retrieval).to receive(:last).and_return(@retrieval)
+        expect(Retrieval).to receive(:find_by_id).and_return(@retrieval)
 
         get :index, format: 'json'
 
@@ -45,7 +47,7 @@ describe HealthController, type: :controller do
     end
 
     context "when one of the dependencies is down" do
-      it "should return a json response indicating edsc is not ok" do
+      it "returns a json response indicating edsc is not ok" do
         mock_client = Object.new
         expect(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
 
@@ -58,7 +60,7 @@ describe HealthController, type: :controller do
         expect(mock_client).to receive(:get_browse_scaler_availability).and_return(res)
 
         expect(DelayedJob).to receive(:last).and_return(@delayed_job)
-        expect(Retrieval).to receive(:last).and_return(@retrieval)
+        expect(Retrieval).to receive(:find_by_id).and_return(@retrieval)
 
         get :index, format: 'json'
 
@@ -76,15 +78,15 @@ describe HealthController, type: :controller do
     end
 
     context "when one of the cron job hasn't been run for a while" do
-      it "should return a json response indicating edsc is not ok" do
+      it "returns a json response indicating edsc is not ok" do
         Dir.glob(Rails.root.join('tmp', "data_load_*")).each { |f| File.delete(f) }
         Dir.glob(Rails.root.join('tmp', "colormaps_load_*")).each { |f| File.delete(f) }
 
-        FileUtils.touch Rails.root.join('tmp', "data_load_#{(Time.now - 4.hours).to_i}")
-        FileUtils.touch Rails.root.join('tmp', "colormaps_load_#{(Time.now - 4.days).to_i}")
+        open(Rails.root.join('tmp', "data_load_failed"), 'w') {|f| f.puts "test error message: data"}
+        open(Rails.root.join('tmp', "colormaps_load_failed"), 'w') {|f| f.puts "test error message: colormaps"}
 
         expect(DelayedJob).to receive(:last).and_return(@delayed_job)
-        expect(Retrieval).to receive(:last).and_return(@retrieval)
+        expect(Retrieval).to receive(:find_by_id).and_return(@retrieval)
 
         get :index, format: 'json'
 
@@ -96,8 +98,8 @@ describe HealthController, type: :controller do
         expect(json['dependencies']['opensearch']).to eq({"ok?"=>true})
         expect(json['dependencies']['browse_scaler']).to eq({"ok?"=>true})
         expect(json['background_jobs']['delayed_job']).to eq({"ok?"=>true})
-        expect(json['background_jobs']['data_load'].to_json).to have_text('"ok?":false')
-        expect(json['background_jobs']['colormaps_load'].to_json).to have_text('"ok?":false')
+        expect(json['background_jobs']['data_load'].to_json).to match(/"ok\?":false,"error":"Cron job 'data:load' failed in last run at .* with message 'test error message: data\\n'/)
+        expect(json['background_jobs']['colormaps_load'].to_json).to match(/"ok\?":false,"error":"Cron job 'colormaps:load' failed in last run at .* with message 'test error message: colormaps\\n'/)
       end
     end
   end
