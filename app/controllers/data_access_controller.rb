@@ -33,8 +33,11 @@ class DataAccessController < ApplicationController
   end
 
   def retrieval
-    @retrieval = Retrieval.find_by_id(params[:id].to_i)
-    render file: "#{Rails.root}/public/404.html", status: :not_found and return if @retrieval.nil?
+    begin
+      @retrieval = Retrieval.find(params[:id].to_i)
+    rescue ActiveRecord::RecordNotFound
+      render file: "#{Rails.root}/public/404.html", status: :not_found and return
+    end
 
     Rails.logger.info(@retrieval.to_json)
 
