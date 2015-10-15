@@ -10,22 +10,22 @@ class Health
   end
 
   def delayed_job_status
-    # The job hasn't been run yet. Go on to check retrieval.created_at. If the time is more than 10 minutes (threshold)
-    # ago, consider the delayed job is down.
-    job = DelayedJob.last
-    retrieval = Retrieval.find_by_id(job.id)
-
-    if job.run_at.nil? && retrieval.created_at < 10.minutes.ago
+    # check if there are any jobs that hadn't been run after 10 minutes passed.
+    queued_jobs = DelayedJob.where('created_at < ? AND run_at IS NULL', 10.minutes.ago)
+    if queued_jobs.size > 0
       @ok = false
-      {ok?: false, error: "Last job (job id: #{job.id}) failed to start 10 minutes after retrieval is created."}
-    else
-      # Further check failed_at and last_error if failed_error is not empty
-      if job.failed_at
-        @ok = false
-        return {ok?: false, error: "Last job (job id: #{job.id}) failed with error: #{job.last_error}"}
-      end
-      {ok?: true}
+      return {ok?: false, error: "Last job (job id: #{job.id}) failed to start 10 minutes after retrieval is created."}
     end
+
+    # Further check failed_at and last_error
+    failed_jobs = DelayedJob.where('failed_at > ?', 1.hour.ago)
+    if failed_jobs.size > 0
+      total_jobs = DelayedJob.where('created_at > ?', 1.hour.ago)
+      @ok = false
+      return {ok?: false, error: "There are #{failed_jobs.size} out of #{total_jobs.size} failed jobs in the past hour."}
+    end
+
+    {ok?: true}
   end
 
   def data_load_status
