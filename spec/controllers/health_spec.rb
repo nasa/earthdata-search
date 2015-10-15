@@ -28,8 +28,6 @@ describe HealthController, type: :controller do
 
     context "when everything is up" do
       it "returns a json response indicating the system is ok" do
-        expect(DelayedJob).to receive(:last).and_return(@delayed_job)
-        expect(Retrieval).to receive(:find_by_id).and_return(@retrieval)
 
         get :index, format: 'json'
 
@@ -59,9 +57,6 @@ describe HealthController, type: :controller do
         expect(mock_client).to receive(:get_opensearch_availability).and_return(res)
         expect(mock_client).to receive(:get_browse_scaler_availability).and_return(res)
 
-        expect(DelayedJob).to receive(:last).and_return(@delayed_job)
-        expect(Retrieval).to receive(:find_by_id).and_return(@retrieval)
-
         get :index, format: 'json'
 
         json = JSON.parse response.body
@@ -84,9 +79,6 @@ describe HealthController, type: :controller do
 
         open(Rails.root.join('tmp', "data_load_failed"), 'w') {|f| f.puts "test error message: data"}
         open(Rails.root.join('tmp', "colormaps_load_failed"), 'w') {|f| f.puts "test error message: colormaps"}
-
-        expect(DelayedJob).to receive(:last).and_return(@delayed_job)
-        expect(Retrieval).to receive(:find_by_id).and_return(@retrieval)
 
         get :index, format: 'json'
 
