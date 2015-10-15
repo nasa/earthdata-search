@@ -1,0 +1,3 @@
+[submodule "edsc/timeline"]
+	path = edsc/timeline
+	url = git@github.com:nasa/edsc-timeline.git

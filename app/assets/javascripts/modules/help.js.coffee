@@ -113,9 +113,9 @@
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        $('#timeline').off 'timeline.rangechange', closeFn
+        $('#timeline').off 'rangechange.timeline', closeFn
       advanceHook: (nextFn, closeFn) ->
-        $('#timeline').one 'timeline.rangechange', nextFn
+        $('#timeline').one 'rangechange.timeline', nextFn
     }, {
       title: 'Granule Timeline (Part 2)'
       content: 'You can click on a date on the timeline to focus on granules for that time span.  Note that this
@@ -124,9 +124,9 @@
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        $('#timeline').off 'timeline.focusset', closeFn
+        $('#timeline').off 'focusset.timeline', closeFn
       advanceHook: (nextFn, closeFn) ->
-        $('#timeline').one 'timeline.focusset', nextFn
+        $('#timeline').one 'focusset.timeline', nextFn
     }, {
       title: 'Granule Timeline (Part 3)'
       content: 'You may also restrict your search results to a temporal range by clicking and dragging across
@@ -134,9 +134,9 @@
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        $('#timeline').off 'timeline.temporalchange', closeFn
+        $('#timeline').off 'temporalchange.timeline', closeFn
       advanceHook: (nextFn, closeFn) ->
-        $('#timeline').one 'timeline.temporalchange', nextFn
+        $('#timeline').one 'temporalchange.timeline', nextFn
     }, {
       title: 'Back to Datasets'
       content: 'Let\'s go back to our dataset results'
