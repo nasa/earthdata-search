@@ -65,6 +65,7 @@ module EarthdataSearchClient
 
     # Add FontAwesome to the asset pipeline
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    config.assets.paths << Rails.root.join("edsc")
     config.assets.precompile += %w(.svg .eot .woff .ttf)
     config.assets.initialize_on_precompile = false
 
