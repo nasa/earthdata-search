@@ -76,7 +76,7 @@ ns.Granules = do (ko,
       @excludedGranulesList.push({index: index, granule: granule})
       @query.excludedGranules.push(granule.id)
       # Avoid reloading if no other changes are pending
-      @_prevQuery = param(@params()) if @_prevQuery == currentQuery
+      @_prevQuery = param(@params()) if @_prevQuery == currentQuery && results.length != 0
 
     undoExclude: =>
       newGranule = @excludedGranulesList.pop()
