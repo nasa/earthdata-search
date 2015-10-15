@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213195321) do
+ActiveRecord::Schema.define(version: 20151015191049) do
 
   create_table "access_configurations", force: true do |t|
     t.integer  "user_id"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 20150213195321) do
     t.datetime "updated_at"
   end
 
+  add_index "delayed_jobs", ["created_at"], name: "index_delayed_jobs_on_created_at"
+  add_index "delayed_jobs", ["failed_at"], name: "index_delayed_jobs_on_failed_at"
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "projects", force: true do |t|
