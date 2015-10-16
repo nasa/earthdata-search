@@ -105,4 +105,17 @@ describe "Data access status page", reset: false do
       expect(page).to have_content("No recent retrievals")
     end
   end
+
+  context "when the current user tries to access an invalid retrieval ID" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, overlay: false
+      login 'edscbasic'
+      visit '/data/retrieve/not_a_valid_retrieval_id'
+    end
+
+    it "displays 404 page" do
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+    end
+  end
 end
