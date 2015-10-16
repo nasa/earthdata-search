@@ -16,12 +16,13 @@ do ($=jQuery
     $content = $('.landing-toolbar-content')
     $('.landing-hidden').toggle(!isLandingPage)
     $('.landing-visible').toggle(isLandingPage)
+    hasTimeline = $('#timeline').data('timeline')?
     if isLandingPage
-      $('#timeline').timeline('hide')
+      $('#timeline').timeline('hide') if hasTimeline
       $('.landing-dialog-toolbar').append($content)
       $('#keywords').focus()
     else
-      $('#timeline').timeline('refresh')
+      $('#timeline').timeline('refresh') if hasTimeline
       $('.landing-toolbar-container').append($content)
     $content.css(top: 0, left: 0, position: 'static')
 
@@ -32,7 +33,8 @@ do ($=jQuery
     $('.landing-toolbar-container').append($content)
 
     if isLandingPage
-      $('#timeline').timeline('hide')
+      hasTimeline = $('#timeline').data('timeline')?
+      $('#timeline').timeline('hide') if hasTimeline
       $('.landing-hidden').fadeOut()
       $('.landing-visible').fadeIn
         complete: ->

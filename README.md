@@ -14,6 +14,14 @@ EOSDIS [User Registration System (URS)](https://urs.earthdata.nasa.gov) authenti
 the [Global Imagery Browse Services (GIBS)](https://earthdata.nasa.gov/gibs) for visualization,
 and a number of OPeNDAP services hosted by data providers.
 
+## Components
+
+In addition to the main project, we have open sourced stand-alone components built for
+Earthdata Search as separate projects with the "edsc-" (Earthdata Search components) prefix.
+
+ * Our timeline: https://github.com/nasa/edsc-timeline
+ * Our ECHO forms implementation: https://github.com/nasa/edsc-echoforms
+
 ## License
 
 > Copyright © 2007-2014 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
