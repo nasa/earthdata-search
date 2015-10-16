@@ -33,7 +33,12 @@ class DataAccessController < ApplicationController
   end
 
   def retrieval
-    @retrieval = Retrieval.find(params[:id].to_i)
+    begin
+      @retrieval = Retrieval.find(params[:id].to_i)
+    rescue ActiveRecord::RecordNotFound
+      render file: "#{Rails.root}/public/404.html", status: :not_found and return
+    end
+
     Rails.logger.info(@retrieval.to_json)
 
     orders = @retrieval.jsondata['datasets'].map do |dataset|
