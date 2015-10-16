@@ -1,5 +1,9 @@
 module Echo
   class CmrClient < BaseClient
+    def get_cmr_availability
+      get("/search/health")
+    end
+
     def get_datasets(options={}, token=nil)
       format = options.delete(:format) || 'json'
       query = options_to_dataset_query(options).merge(include_has_granules: true, include_granule_counts: true)

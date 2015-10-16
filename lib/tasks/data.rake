@@ -2,19 +2,47 @@ namespace :data do
   namespace :load do
     desc "Cache data contained in the ECHO 10 format to return with granule results"
     task :echo10 => ['environment'] do
-      DatasetExtra.load_echo10
+      log_error do
+        DatasetExtra.load_echo10
+      end
     end
 
     desc "Data about granules in datasets to return with granule results"
     task :granules => ['environment'] do
-      DatasetExtra.load
+      log_error do
+        DatasetExtra.load
+      end
     end
+
+    desc "Record the last run of task 'data:load' by touching a file in ./tmp dir"
+    task :log_dataload do
+      Dir.mkdir Rails.root.join('tmp') unless Dir.exist? Rails.root.join('tmp')
+      Dir.glob(Rails.root.join('tmp', "data_load_*")).each do |f|
+        File.delete(f)
+      end
+
+      FileUtils.touch Rails.root.join('tmp', "data_load_ok")
+    end
+
+    def log_error(&block)
+      begin
+        yield
+      rescue
+        Dir.mkdir Rails.root.join('tmp') unless Dir.exist? Rails.root.join('tmp')
+        Dir.glob(Rails.root.join('tmp', "data_load_*")).each do |f|
+          File.delete(f)
+        end
+        open (Rails.root.join('tmp', "data_load_failed")) {|f| f.puts "#{error.inspect}"}
+        exit 1
+      end
+    end
+
   end
 
   desc "Load data from ECHO"
   task :load
 
-  Rake::Task['data:load'].enhance(['data:load:echo10', 'data:load:granules'])
+  Rake::Task['data:load'].enhance(['data:load:echo10', 'data:load:granules', 'data:load:log_dataload'])
 
   namespace :dump do
     # Only dump the DatasetExtra model
