@@ -120,7 +120,6 @@ ns.GranuleTimeline = do (ko
 
       @range(null)
       @datasets = @computed(@_computeDatasets)
-      @computed(@_computeTemporal)
 
     _readSerialized: ->
       return @_pending unless @_constructed()
@@ -185,8 +184,9 @@ ns.GranuleTimeline = do (ko
       # First load.  Construct if there are datasets, otherwise wait
       if !$timeline.data('timeline')?
         if result.length > 0
-          $timeline.timeline()
+          $timeline.timeline(animate: config.defaultAnimationDurationMs > 0, end: config.present())
           @serialized(@_pending)
+          @computed(@_computeTemporal)
         else
           return
 

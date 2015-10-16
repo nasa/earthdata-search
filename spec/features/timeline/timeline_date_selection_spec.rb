@@ -22,7 +22,6 @@ describe "Timeline date selection", reset: false do
 
   before :all do
     load_page :search, focus: 'C179003030-ORNL_DAAC'
-
     wait_for_xhr
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
@@ -86,7 +85,7 @@ describe "Timeline date selection", reset: false do
       end
 
       context 'and arrowing to a date outside of the constraint' do
-        before(:all) { keypress('#timeline', :left); wait_for_xhr }
+        before(:all) { keypress('#timeline .timeline-container', :left); wait_for_xhr }
 
         it 'does not update the focused time span' do
           expect(page).to have_focused_time_span(start_1987, start_1988)
@@ -137,8 +136,8 @@ describe "Timeline date selection", reset: false do
     end
 
     context "pressing the left arrow key" do
-      before(:all) { keypress('#timeline', :left); wait_for_xhr }
-      after(:all) { keypress('#timeline', :right); wait_for_xhr }
+      before(:all) { keypress('#timeline .timeline-container', :left); wait_for_xhr }
+      after(:all) { keypress('#timeline .timeline-container', :right); wait_for_xhr }
 
       it "selects the previous time span" do
         expect(page).to have_focused_time_span(start_1986, start_1987)
@@ -150,8 +149,8 @@ describe "Timeline date selection", reset: false do
     end
 
     context "pressing the right arrow key" do
-      before(:all) { keypress('#timeline', :right); wait_for_xhr; }
-      after(:all) { keypress('#timeline', :left); wait_for_xhr }
+      before(:all) { keypress('#timeline .timeline-container', :right); wait_for_xhr; }
+      after(:all) { keypress('#timeline .timeline-container', :left); wait_for_xhr }
 
       it "selects the next time span" do
         expect(page).to have_focused_time_span(start_1988, start_1989)
@@ -198,7 +197,6 @@ describe "Timeline date selection", reset: false do
       end
 
       it "centers the selected time span" do
-        expect(page).to have_focused_time_span(start_1987, start_1988)
         expect(page).to have_timeline_range(present - 52.years, present - 2.years)
       end
     end
@@ -229,7 +227,6 @@ describe "Timeline date selection", reset: false do
       # end
 
       it "centers the selected time span" do
-        expect(page).to have_focused_time_span(start_1987, start_1988)
         expect(page).to have_timeline_range(present - 326.months, present - 314.months)
       end
 
@@ -258,8 +255,8 @@ describe "Timeline date selection", reset: false do
         end
 
         context "pressing the left arrow key" do
-          before(:all) { keypress('#timeline', :left); wait_for_xhr }
-          after(:all) { keypress('#timeline', :right); wait_for_xhr }
+          before(:all) { keypress('#timeline .timeline-container', :left); wait_for_xhr }
+          after(:all) { keypress('#timeline .timeline-container', :right); wait_for_xhr }
 
           it "selects the previous scaled time span" do
             expect(page).to have_focused_time_span(start_jan_1987, start_feb_1987)
@@ -267,8 +264,8 @@ describe "Timeline date selection", reset: false do
         end
 
         context "pressing the right arrow key" do
-          before(:all) { keypress('#timeline', :right); wait_for_xhr }
-          after(:all) { keypress('#timeline', :left); wait_for_xhr }
+          before(:all) { keypress('#timeline .timeline-container', :right); wait_for_xhr }
+          after(:all) { keypress('#timeline .timeline-container', :left); wait_for_xhr }
 
           it "selects the next scaled time span" do
             expect(page).to have_focused_time_span(start_mar_1987, start_apr_1987)
