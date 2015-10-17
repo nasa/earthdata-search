@@ -32,6 +32,10 @@ EarthdataSearchClient::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
+  config.assets.configure do |env|
+    env.cache = ThreadSafe::Cache.new
+  end
+
   VCR.configure { |c| VCR::EDSCConfigurer.configure(c) }
 
   config.logo_name = "DEV"
