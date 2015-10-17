@@ -1,5 +1,13 @@
 @edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page, preferences = @edsc.page.preferences) ->
 
+  mapViewOptions =
+    title: 'Map View'
+    content: 'On the map view, you may select granules, select alternate base layers or projections
+              and pan and zoom to an area of interest. Select the <strong>Land / Water Map</strong> base
+              layer now to make the data stand out more and zoom or pan the map. Click
+              <strong>Next</strong> when you are ready to continue.'
+  landWaterSelector = '.leaflet-control-layers label:contains("Land / Water") input'
+
   tourOptions =
     shapefile_multiple:
       title: "Choose a Search Constraint"
@@ -97,14 +105,21 @@
                 Click a granule to bring it to the top of the stack.'
       wait: true
       element: '#granule-list .panel-list-item:nth-child(2)'
-    }, {
-      title: 'Map View'
-      content: 'On the map view, you may select granules, select alternate base layers or projections ( <div class="leaflet-control-layers-toggle-demo"></div> button), and pan and zoom to
-                an area of interest. Select the <strong>Land / Water Map</strong> base layer now to make the data stand
-                out more and zoom or pan the map. Click <strong>Next</strong> when you are ready to continue.'
-      showNext: true
-      element: '.leaflet-control-layers-toggle'
-    }, {
+    }, $.extend({}, mapViewOptions,
+        element: '.leaflet-control-layers-toggle'
+        cleanup: (nextFn, closeFn) ->
+          $('.leaflet-control-layers').off 'mouseover', nextFn
+        advanceHook: (nextFn, closeFn) ->
+          $('.leaflet-control-layers').one 'mouseover', nextFn
+
+    ), $.extend({}, mapViewOptions,
+        element: landWaterSelector,
+        cleanup: (nextFn, closeFn) ->
+          $(landWaterSelector).off 'mouseover', nextFn
+        advanceHook: (nextFn, closeFn) ->
+          $(landWaterSelector).one 'change', nextFn
+      wait: true
+    ), {
       title: 'Granule Timeline (Part 1)'
       content: 'Below the map there is a timeline view showing when this dataset has data. You can pan
                 and zoom this view to change the period of time and granularity of data it displays. Zoom
@@ -113,7 +128,7 @@
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        $('#timeline').off 'timeline.rangechange', closeFn
+        $('#timeline').off 'timeline.rangechange', nextFn
       advanceHook: (nextFn, closeFn) ->
         $('#timeline').one 'timeline.rangechange', nextFn
     }, {
@@ -124,7 +139,7 @@
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        $('#timeline').off 'timeline.focusset', closeFn
+        $('#timeline').off 'timeline.focusset', nextFn
       advanceHook: (nextFn, closeFn) ->
         $('#timeline').one 'timeline.focusset', nextFn
     }, {
@@ -134,7 +149,7 @@
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        $('#timeline').off 'timeline.temporalchange', closeFn
+        $('#timeline').off 'timeline.temporalchange', nextFn
       advanceHook: (nextFn, closeFn) ->
         $('#timeline').one 'timeline.temporalchange', nextFn
     }, {
