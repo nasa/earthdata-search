@@ -1,0 +1,31 @@
+---
+b99e39f70e8bd26011052dc5f647e80655cc9c88:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"e8b40be704f263df8b86d54fc32fb9a1"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.034000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 13 Oct 2015 20:31:56 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"availability":"Available"}'
+    http_version: 
