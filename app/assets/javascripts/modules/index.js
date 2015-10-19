@@ -11,5 +11,4 @@
 //= require modules/dropdown
 //= require modules/global_hooks
 //= require modules/granule_filters
-//= require modules/timeline/index
 //= require modules/projects
