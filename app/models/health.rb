@@ -73,7 +73,7 @@ class Health
     # deployment. And give it 3 * 1hour grace period before reporting @ok = false.
     #
     # i.e. Report cron_jobs healthy for 3 hours after a new deployment.
-    if File.mtime(Rails.root.join('README.md')) > 3.hours.ago
+    if File.ctime(Rails.root.join('README.md')) > 3.hours.ago
       return {ok?: true, info: "Suspend cron job checks for 3 hours after new deployment."}
     end
 
