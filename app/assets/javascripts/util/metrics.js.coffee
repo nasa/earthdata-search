@@ -63,6 +63,12 @@ this.edsc.util.metrics = do ->
         # Dimension 8, Access Options (Download, FTP_Pull, etc.)
         for accessMethod in options.accessMethod
           ga('set', 'dimension8', accessMethod.method)
+          opts = accessMethod.options
+          subtype = accessMethod.type
+          subtype = 'opendap' if accessMethod.subset?.parameters
+          subtype = 'esi' if subtype == 'service'
+          ga('set', 'dimension9', subtype)
+
           ga('send', 'event', 'Data Access', 'Completion', 'Data Access Completion', 1)
       else
         ga('send', 'event', 'Data Access', 'Initiation', 'Data Access Initiation', 1)
