@@ -29,6 +29,7 @@ describe "Data download page", reset: false do
                                temporal: ['2015-01-01T00:00:00Z', '2015-01-01T00:00:01Z']}
 
   before(:all) do
+    AccessConfiguration.destroy_all
     load_page :search, overlay: false
     login
   end
