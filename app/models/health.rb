@@ -18,7 +18,7 @@ class Health
     end
 
     # Further check failed_at and last_error
-    failed_jobs = DelayedJob.where('failed_at > ?', 1.hour.ago)
+    failed_jobs = DelayedJob.where('last_error IS NOT NULL AND created_at > ?', 1.hour.ago)
     if failed_jobs.size > 0
       total_jobs = DelayedJob.where('created_at > ?', 1.hour.ago)
       @ok = false
