@@ -18,7 +18,7 @@ class Health
     end
 
     # Further check failed_at and last_error
-    failed_jobs = DelayedJob.where('failed_at > ?', 1.hour.ago)
+    failed_jobs = DelayedJob.where('last_error IS NOT NULL AND created_at > ?', 1.hour.ago)
     if failed_jobs.size > 0
       total_jobs = DelayedJob.where('created_at > ?', 1.hour.ago)
       @ok = false
@@ -68,6 +68,15 @@ class Health
   private
 
   def check_cron_job(job, interval)
+    # After deployment, the tmp folder will contain nothing and data:load won't be run until 1 hour passed.
+    # To stop sending false negative to ops, we need to check the created time of the tmp folder to 'detect' a new
+    # deployment. And give it 3 * 1hour grace period before reporting @ok = false.
+    #
+    # i.e. Report cron_jobs healthy for 3 hours after a new deployment.
+    if File.ctime(Rails.root.join('README.md')) > 3.hours.ago
+      return {ok?: true, info: "Suspend cron job checks for 3 hours after new deployment."}
+    end
+
     Dir.glob(Rails.root.join('tmp', "#{job}_*")).each do |f|
       if File.mtime(f) < Time.now - interval * 3
         @ok = false
