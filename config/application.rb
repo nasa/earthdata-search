@@ -55,7 +55,7 @@ module EarthdataSearchClient
     # Precompile application.js, application.css, and any file that's not
     config.assets.precompile += ['application.js', 'application.css', 'splash.css']
     config.assets.precompile << Proc.new do |path|
-      !%w(.js .css).include?(File.extname(path))
+      !%w(.js .css .map).include?(File.extname(path))
     end
 
     config.log_tags = [:uuid]
