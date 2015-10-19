@@ -45,7 +45,10 @@ describe "Site tour", reset: true do
       second_granule_list_item.click
 
       expect(page).to have_popover('Map View')
-      click_on 'Next'
+      page.find('.leaflet-control-layers').trigger(:mouseover)
+
+      expect(page).to have_popover('Map View')
+      choose 'Land / Water Map'
 
       expect(page).to have_popover('Granule Timeline (Part 1)')
       find('.timeline-zoom-in').click

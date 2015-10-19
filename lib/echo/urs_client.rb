@@ -1,5 +1,9 @@
 module Echo
   class UrsClient < BaseClient
+    def get_urs_availability
+      connection.get("/")
+    end
+
     def urs_login_path(callback_url=ENV['urs_callback_url'])
       "#{@root}/oauth/authorize?client_id=#{@client_id}&redirect_uri=#{callback_url}&response_type=code"
     end

@@ -33,7 +33,10 @@ class DataAccessController < ApplicationController
   end
 
   def retrieval
-    @retrieval = Retrieval.find(params[:id].to_i)
+    id = Retrieval.deobfuscate_id params[:id].to_i
+    @retrieval = Retrieval.find_by_id id
+    render file: "#{Rails.root}/public/404.html", status: :not_found and return if @retrieval.nil?
+
     Rails.logger.info(@retrieval.to_json)
 
     orders = @retrieval.jsondata['datasets'].map do |dataset|
