@@ -73,8 +73,8 @@ class Health
     # deployment. And give it 3 * 1hour grace period before reporting @ok = false.
     #
     # i.e. Report cron_jobs healthy for 3 hours after a new deployment.
-    if creation_time(Rails.root.join('tmp').to_s) > 3.hours.ago
-      return {ok?: true}
+    if File.mtime(Rails.root.join('README.md')) > 3.hours.ago
+      return {ok?: true, info: "Suspend cron job checks for 3 hours after new deployment."}
     end
 
     Dir.glob(Rails.root.join('tmp', "#{job}_*")).each do |f|
@@ -90,15 +90,6 @@ class Health
     end
     @ok = false
     {ok?: false, error: "Cron job '#{job.split('_').join(':')}' has never been run."}
-  end
-
-  # File.ctime doesn't return the creation time but "changed time"
-  # This method splits a 'mdls' command into arguments to prevent possible terminal injection.
-  def creation_time(file)
-    Time.parse(Open3.popen3("mdls",
-                            "-name",
-                            "kMDItemContentCreationDate",
-                            "-raw", file)[1].read)
   end
 
   def ok?(response, condition=nil)
