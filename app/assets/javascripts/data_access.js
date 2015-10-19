@@ -7,7 +7,7 @@
 //= require toastr
 //= require history.js-1.8.6/jquery.history.js
 //= require dropzone-3.8.3
-//= require echoforms/dist/jquery.echoforms-full.min
+//= require jquery.echoforms-full.min
 //= require namespaces
 //= require config
 //= require util/index
