@@ -19,6 +19,7 @@ describe HealthController, type: :controller do
 
       FileUtils.touch Rails.root.join('tmp', "data_load_#{Time.now.to_i}")
       FileUtils.touch Rails.root.join('tmp', "colormaps_load_#{Time.now.to_i}")
+      allow(File).to receive(:ctime).with(Rails.root.join('README.md')).and_return(Time.now - 5.days)
     end
 
     after :each do
