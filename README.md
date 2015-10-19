@@ -85,6 +85,8 @@ and placename completion as appropriate.
 
 Run
 
+    git submodule init
+    git submodule update
     bundle install
     rake db:migrate
     rake db:seed
