@@ -17,7 +17,15 @@ ns.GranuleTimeline = do (ko
       @method = 'post'
       super("/granules/timeline.json", this)
       @prevParams = {}
-      @params = ko.computed(@_computeParams)
+      @params = @computed(@_computeParams)
+
+      $timeline = $('#timeline')
+      $timeline.on 'rowtemporalchange.timeline', (e, rowId, start, stop) =>
+        if rowId == @dataset.id
+          temporal = @dataset.granuleQuery.temporal.applied
+          temporal.isRecurring(false)
+          temporal.start.date(start)
+          temporal.stop.date(stop)
 
       # Start computing, but avoid introducing a dependency on results in the caller
       @results.peek()
@@ -29,7 +37,12 @@ ns.GranuleTimeline = do (ko
         end_date: dateUtil.toISOString(end)
         interval: interval
 
+      temporal = @dataset.granuleQuery.temporal.applied.ranges()
+      $timeline = $('#timeline')
+      if $timeline.timeline('getRowTemporal', @dataset.id)?.toString() != temporal?.toString()
+        $timeline.timeline('setRowTemporal', @dataset.id, temporal)
       params = extend({}, @dataset.granulesModel.params(), timelineParams)
+
       delete params.temporal
       delete params.page_num
       delete params.page_size
@@ -62,7 +75,13 @@ ns.GranuleTimeline = do (ko
 
     _toResults: (data, current, params) ->
       intervals = data[0]?.intervals ? []
-      $('#timeline').timeline('data', @dataset.id, @range()..., intervals, @color)
+      [start, end, resolution] = @range()
+      $('#timeline').timeline 'data', @dataset.id,
+        start: start,
+        end: end,
+        resolution: resolution
+        intervals: intervals
+        color: @color
       intervals
 
   class GranuleTimeline extends KnockoutModel
@@ -72,26 +91,35 @@ ns.GranuleTimeline = do (ko
       @_constructed = ko.observable(false)
       @_pending = null
 
-      @serialized = ko.computed(read: @_readSerialized, write: @_writeSerialized, owner: this, deferEvaluation: true)
+      @serialized = @computed(read: @_readSerialized, write: @_writeSerialized, owner: this, deferEvaluation: true)
       @range = ko.observable(null)
 
       $timeline = $('#timeline')
 
-      $timeline.on 'timeline.rangechange', (e, range...) =>
+      $timeline.on 'rangechange.timeline', (e, range...) =>
         @range(range)
 
-      $timeline.on 'timeline.focusset', (e, t0, t1, interval) =>
+      $timeline.on 'heightchange.timeline', (e, height) =>
+        $('.master-overlay').masterOverlay().masterOverlay('contentHeightChanged')
+
+      $timeline.on 'temporalchange.timeline', (e, start, stop) =>
+        temporal = @datasetsList.query.temporal.applied
+        temporal.isRecurring(false)
+        temporal.start.date(start)
+        temporal.stop.date(stop)
+
+      $timeline.on 'focusset.timeline', (e, t0, t1, interval) =>
         query = @datasetsList.query
         query.focusedInterval(interval)
         query.focusedTemporal((new Date(t) for t in [t0, t1]))
 
-      $timeline.on 'timeline.focusremove', (e) =>
+      $timeline.on 'focusremove.timeline', (e) =>
         query = @datasetsList.query
         query.focusedInterval(null)
         query.focusedTemporal(null)
 
       @range(null)
-      @datasets = ko.computed(@_computeDatasets)
+      @datasets = @computed(@_computeDatasets)
 
     _readSerialized: ->
       return @_pending unless @_constructed()
@@ -132,6 +160,12 @@ ns.GranuleTimeline = do (ko
     clear: ->
       $('#timeline').timeline('focus')
 
+    _computeTemporal: =>
+      temporal = @datasetsList.query.temporal.applied.ranges()
+      $timeline = $('#timeline')
+      if $timeline.timeline('getTemporal')?.toString() != temporal?.toString()
+        $timeline.timeline('setTemporal', temporal)
+
     _computeDatasets: =>
       range = @range
       focused = @datasetsList.focused()
@@ -150,12 +184,13 @@ ns.GranuleTimeline = do (ko
       # First load.  Construct if there are datasets, otherwise wait
       if !$timeline.data('timeline')?
         if result.length > 0
-          $timeline.timeline()
+          $timeline.timeline(animate: config.defaultAnimationDurationMs > 0, end: config.present())
           @serialized(@_pending)
+          @computed(@_computeTemporal)
         else
           return
 
-      $timeline.timeline('datasets', result)
+      $timeline.timeline('rows', result)
 
       currentTimelines = @_datasetsToTimelines
       newTimelines = {}
@@ -190,7 +225,13 @@ ns.GranuleTimeline = do (ko
       @_datasetsToTimelines = newTimelines
 
       for own key, data of newTimelines when !data.isLoading.peek()
-        $timeline.timeline('data', data.dataset.id, range()..., data.results.peek(), data.color)
+        [start, end, resolution] = range()
+        $timeline.timeline 'data', data.dataset.id,
+          start: start,
+          end: end,
+          resolution: resolution
+          intervals: data.results.peek()
+          color: data.color
 
       result
 

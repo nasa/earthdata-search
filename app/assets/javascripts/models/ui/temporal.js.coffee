@@ -159,8 +159,8 @@ ns.Temporal = do (ko,
             year_start = Date.UTC(year, 0, 0)
             result.push [year_start + start_offset, year_start + stop_offset]
       else
-        start_date = start.date() ? Date.UTC(1970, 0, 0)
-        stop_date = stop.date() ? config.present()
+        start_date = start.date() ? new Date(Date.UTC(1970, 0, 0))
+        stop_date = stop.date() ? new Date(config.present())
         result.push [start_date, stop_date]
 
       result

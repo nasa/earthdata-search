@@ -33,7 +33,7 @@ describe "Project dataset dragging", reset: false do
     end
 
     it "updates the order of the datasets in the timeline" do
-      expect(page.find('.timeline-dataset')).to have_text("#{second_dataset_title}#{first_dataset_title}")
+      expect(page.find('.timeline-row')).to have_text("#{second_dataset_title}#{first_dataset_title}")
     end
 
     it "updates the z-index of the datasets visualized on the map" do
@@ -64,7 +64,7 @@ describe "Project dataset dragging", reset: false do
     end
 
     it "maintains the order of the datasets in the timeline" do
-      expect(page.find('.timeline-dataset')).to have_text("#{first_dataset_title}#{second_dataset_title}")
+      expect(page.find('.timeline-row')).to have_text("#{first_dataset_title}#{second_dataset_title}")
     end
 
     it "maintains the z-index of the datasets visualized on the map" do
