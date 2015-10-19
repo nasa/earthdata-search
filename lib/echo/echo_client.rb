@@ -108,7 +108,7 @@ module Echo
         }
       end
       order_items = granules.map {|g| {order_item: {catalog_item_id: g['id']}.merge(common_options)}}
-      items_response = post("/echo-rest/orders/#{id}/order_items/bulk_action", order_items.to_json, token_header(token))
+      items_response = post("/echo-rest/orders/#{id}/order_items/bulk_action", order_items.to_json, token_header(token), timeout: 600)
 
       prefs_response = get_preferences(user_id, token)
       user_response = get_user(user_id, token)

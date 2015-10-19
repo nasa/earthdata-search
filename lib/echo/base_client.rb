@@ -25,7 +25,7 @@ module Echo
       token.present? ? {'Echo-Token' => "#{token}:#{@client_id}"} : {}
     end
 
-    def request(method, url, params, body, headers)
+    def request(method, url, params, body, headers, options)
       faraday_response = connection.send(method, url, params) do |req|
         req.headers['Content-Type'] = 'application/json' unless method == :get
         req.headers['Client-Id'] = Rails.configuration.cmr_client_id
@@ -33,25 +33,28 @@ module Echo
         headers.each do |header, value|
           req.headers[header] = value
         end
+        options.each do |opt, value|
+          req.options[opt] = value
+        end
         req.body = body if body
       end
       Echo::Response.new(faraday_response)
     end
 
-    def get(url, params={}, headers={})
-      request(:get, url, params, nil, headers)
+    def get(url, params={}, headers={}, options={})
+      request(:get, url, params, nil, headers, options)
     end
 
-    def delete(url, params={}, headers={})
-      request(:delete, url, params, nil, headers)
+    def delete(url, params={}, headers={}, options={})
+      request(:delete, url, params, nil, headers, options)
     end
 
-    def post(url, body, headers={})
-      request(:post, url, nil, body, headers)
+    def post(url, body, headers={}, options={})
+      request(:post, url, nil, body, headers, options)
     end
 
-    def put(url, body, headers={})
-      request(:put, url, nil, body, headers)
+    def put(url, body, headers={}, options={})
+      request(:put, url, nil, body, headers, options)
     end
 
     def build_connection
