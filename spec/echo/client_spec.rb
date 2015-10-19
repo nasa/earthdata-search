@@ -138,28 +138,28 @@ describe Echo::Client do
     it 'defaults Content-Type to application/json for POST requests' do
       expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
 
-      basic_client.request(:post, dummy_url, nil, nil, {})
+      basic_client.request(:post, dummy_url, nil, nil, {}, {})
       expect(req.headers['Content-Type']).to eq('application/json')
     end
 
     it 'does not default Content-Type for GET requests' do
       expect(connection).to receive(:get).with(dummy_url, nil).and_yield(req)
 
-      basic_client.request(:get, dummy_url, nil, nil, {})
+      basic_client.request(:get, dummy_url, nil, nil, {}, {})
       expect(req.headers['Content-Type']).to be_nil
     end
 
     it 'sets a client id compatible with catalog-rest requests' do
       expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
 
-      basic_client.request(:post, dummy_url, nil, nil, {})
+      basic_client.request(:post, dummy_url, nil, nil, {}, {})
       expect(req.headers['Client-Id']).to eq(Rails.configuration.cmr_client_id)
     end
 
     it 'sets a client id compatible with echo-rest requests' do
       expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
 
-      basic_client.request(:post, dummy_url, nil, nil, {})
+      basic_client.request(:post, dummy_url, nil, nil, {}, {})
       expect(req.headers['Echo-ClientId']).to eq(Rails.configuration.cmr_client_id)
     end
   end
