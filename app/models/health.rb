@@ -68,6 +68,15 @@ class Health
   private
 
   def check_cron_job(job, interval)
+    # After deployment, the tmp folder will contain nothing and data:load won't be run until 1 hour passed.
+    # To stop sending false negative to ops, we need to check the created time of the tmp folder to 'detect' a new
+    # deployment. And give it 3 * 1hour grace period before reporting @ok = false.
+    #
+    # i.e. Report cron_jobs healthy for 3 hours after a new deployment.
+    if creation_time(Rails.root.join('tmp').to_s) > 3.hours.ago
+      return {ok?: true}
+    end
+
     Dir.glob(Rails.root.join('tmp', "#{job}_*")).each do |f|
       if File.mtime(f) < Time.now - interval * 3
         @ok = false
@@ -81,6 +90,15 @@ class Health
     end
     @ok = false
     {ok?: false, error: "Cron job '#{job.split('_').join(':')}' has never been run."}
+  end
+
+  # File.ctime doesn't return the creation time but "changed time"
+  # This method splits a 'mdls' command into arguments to prevent possible terminal injection.
+  def creation_time(file)
+    Time.parse(Open3.popen3("mdls",
+                            "-name",
+                            "kMDItemContentCreationDate",
+                            "-raw", file)[1].read)
   end
 
   def ok?(response, condition=nil)
