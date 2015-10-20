@@ -123,13 +123,14 @@ describe "Granule list", reset: false do
         end
 
         after :all do
-          num_of_clicks = 19
-          while num_of_clicks > 0
-            page.save_screenshot "#{(num_of_clicks+10).to_s}.png"
-            click_link "Undo"
-            num_of_clicks -= 1
-            wait_for_xhr
-          end
+          Capybara.reset_sessions!
+          load_page :search
+          fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
+          view_granule_results
+
+          first_granule_list_item.click
+          first_granule_list_item.click_link "Exclude this granule"
+          wait_for_xhr
         end
 
         it "loads next page" do

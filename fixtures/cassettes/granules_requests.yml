@@ -257,6 +257,21 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
+      string: browse_only=true&echo_collection_id=C179003030-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111301-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111300-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111299-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111298-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111297-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111296-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111295-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111294-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111293-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111292-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111291-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111290-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111289-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111288-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111287-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111286-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111285-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111284-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111283-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111282-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111281-ORNL_DAAC&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 20 Oct 2015 18:21:18 GMT
+  digest: 1f4ba55fff2560573ce34add03b475f5644bc2c7
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
       string: browse_only=true&echo_collection_id=C179003030-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111301-ORNL_DAAC&page_num=1&page_size=20&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
@@ -1028,6 +1043,21 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 21 Jan 2015 18:27:18 GMT
   digest: 8a5897a8c848b46a22fa5c675addc31593691e89
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C179003030-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111301-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111300-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111299-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111298-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111297-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111296-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111295-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111294-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111293-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111292-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111291-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111290-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111289-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111288-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111287-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111286-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111285-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111284-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111283-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111282-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111281-ORNL_DAAC&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 20 Oct 2015 18:21:31 GMT
+  digest: 208135442420362f26d5a97f1ee6d0c462ec2a07
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
