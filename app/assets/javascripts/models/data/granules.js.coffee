@@ -26,7 +26,6 @@ ns.Granules = do (ko,
           @results.readImmediate()
         focusedTemporal = newFocus
 
-      @excludedGranulesList = ko.observableArray()
 
     _toResults: (data, current, params) ->
       entries = data.feed.entry
@@ -52,7 +51,7 @@ ns.Granules = do (ko,
         params.page_num = @page = 1
 
         if needsLoad && @_prevQuery != query
-          @excludedGranulesList([])
+#          @excludedGranulesList([])
           @_prevQuery = query
           if params.temporal == 'no-data'
             @results([])

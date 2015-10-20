@@ -112,6 +112,32 @@ describe "Granule list", reset: false do
         expect(page).to have_content("Granule excluded. Undo")
       end
 
+      context "until all granules on current page are excluded" do
+        before :all do
+          num_of_clicks = 19
+          while num_of_clicks > 0
+            first_granule_list_item.click_link "Exclude this granule"
+            num_of_clicks -= 1
+          end
+          wait_for_xhr
+        end
+
+        after :all do
+          num_of_clicks = 19
+          while num_of_clicks > 0
+            page.save_screenshot "#{(num_of_clicks+10).to_s}.png"
+            click_link "Undo"
+            num_of_clicks -= 1
+            wait_for_xhr
+          end
+        end
+
+        it "loads next page" do
+          expect(page).to have_content("Showing 19 of 19 matching granules")
+          expect(page).to have_content("Granule excluded. Undo")
+        end
+      end
+
       context "and clicking the undo button" do
         before :all do
           click_link "Undo"
