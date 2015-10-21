@@ -40,7 +40,7 @@
                   <i class="fa fa-eye"></i>
                 </a>
                 <!-- /ko -->
-                <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Datasets" data-bind="click: $parent.ui.datasetsList.showDatasetDetails" title="View dataset details">
+                <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Datasets" data-bind="click: $parent.ui.datasetsList.showDatasetDetails" title="View collection details">
                   <i class="fa fa-info-circle"></i>
                 </a>
                 <% if is_project %>
@@ -61,11 +61,11 @@
                   </a>
                   <!-- /ko -->
                 <% end %>
-                <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add dataset to the current project"
+                <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
                    data-bind="visible: !$root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
                   <i class="fa fa-plus"></i>
                 </a>
-                <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove dataset from the current project"
+                <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
                    data-bind="visible: $root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
                   <i class="fa fa-minus"></i>
                 </a>

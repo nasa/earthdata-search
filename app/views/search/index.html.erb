@@ -19,7 +19,7 @@
     <p>
       <input id="keywords" type="text" name="keywords" class="autocomplete-placenames"
              data-bind="valueUpdate: 'keyup'"
-             placeholder="Type any topic or dataset name"
+             placeholder="Type any topic or collection name"
              autofocus>
     </p>
   <% end %>
@@ -62,32 +62,32 @@
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav master-overlay-when-parent-hidden">
           <a href="#" class="master-overlay-show-parent">
-            <i class="fa fa-search"></i> Browse Datasets
+            <i class="fa fa-search"></i> Browse Collections
             <span data-bind="if: query.facets() && query.facets().length > 0">
                (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
             </span>
           </a>
         </nav>
         <header>
-          <h2><strong data-bind="text: datasets.hits"></strong> Matching Datasets</h2>
+          <h2><strong data-bind="text: datasets.hits"></strong> Matching Collections</h2>
         </header>
         <div class="master-overlay-info">
           <p data-bind="visible: project.isEmpty()" class="button-details">
             <a class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#">
               <i class="fa fa-question-circle"></i> Learn More
             </a>
-            <span>Add datasets to your project to compare and retrieve their data.</span>
+            <span>Add collections to your project to compare and retrieve their data.</span>
           </p>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
             <a id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
               <i class="fa fa-folder-o"></i> View Project
             </a>
-            <span>You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'dataset', 'datasets')"></em> in your project.</span>
+            <span>You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'collection', 'collections')"></em> in your project.</span>
           </p>
           <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
             Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
             <% if Rails.configuration.feedback_url.present? %>
-            <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Dataset Results', null)" class="button feedback-button">
+            <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Collection Results', null)" class="button feedback-button">
               <i class="fa fa-exclamation-circle"></i>
               Report a metadata problem
             </a>
@@ -105,7 +105,7 @@
             </ul>
           </div>
 
-          <h3 class="panel-list-title">More Datasets</h3>
+          <h3 class="panel-list-title">More Collections</h3>
           <!-- /ko -->
           <div class="panel-list">
             <ul id="dataset-results-list"
@@ -114,7 +114,7 @@
               <%= render partial: 'dataset_list_item', locals: {is_project: false} %>
             </ul>
             <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
-              Loading datasets...
+              Loading collections...
             </p>
           </div>
         </div>
@@ -123,20 +123,20 @@
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
           <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.projectList.hideFilters">
-            <i class="fa fa-arrow-circle-o-left"></i> Back to Dataset Search
+            <i class="fa fa-arrow-circle-o-left"></i> Back to Collection Search
           </a>
         </nav>
         <header class="with-options">
-          <h2>Project Datasets</h2>
+          <h2>Project Collections</h2>
           <div class="master-overlay-global-actions actions">
             <a href="#" class="button retrieve" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject, visible: !project.isEmpty()">
               <i class="fa fa-download"></i> Retrieve Project Data
             </a>
 
-            <a href="#" title="View all datasets" data-bind="visible: !$root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button" >
+            <a href="#" title="View all collections" data-bind="visible: !$root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button" >
               <i class="fa fa-eye"></i>
             </a>
-            <a href="#" title="Hide all datasets" data-bind="visible: $root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button button-active" >
+            <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button button-active" >
               <i class="fa fa-eye"></i>
             </a>
           </div>
@@ -149,11 +149,11 @@
           </ul>
           <div class="master-overlay-help" data-bind="if: project.datasets().length == 0">
             <p>
-              Use this space to collect datasets of interest as you adjust your search parameters.
+              Use this space to collect collections of interest as you adjust your search parameters.
             </p>
             <p>
-              To add a dataset to your project, click the <i class="fa fa-plus"></i> icon on the desired dataset.
-              Once collected, you can use the tools available in this view to compare datasets on the map or on a timeline
+              To add a collection to your project, click the <i class="fa fa-plus"></i> icon on the desired collection.
+              Once collected, you can use the tools available in this view to compare collections on the map or on a timeline
               and choose granules you want from each.
             </p>
             <p>
@@ -377,7 +377,7 @@
     </div>
     <div class="landing-dialog-actions">
       <a href="#datasets-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
-      <p><i class="fa fa-arrow-circle-left"></i> See featured datasets or use categories to narrow your results.</p>
+      <p><i class="fa fa-arrow-circle-left"></i> See featured collections or use categories to narrow your results.</p>
     </div>
   </div>
 
