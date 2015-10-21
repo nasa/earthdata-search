@@ -20,7 +20,7 @@
   </header>
   <div class="data-access-container">
     <section class="data-access-content data-access-downloads" data-bind="visible: ui.projectList.datasetsToDownload().length > 0">
-      <h2>The following datasets are available for immediate download</h2>
+      <h2>The following collections are available for immediate download</h2>
       <p>
         Click the "View Download Links" button to view a page containing links to your data.
         You may bookmark this page for later access.
@@ -42,7 +42,7 @@
       </ul>
     </section>
     <section class="data-access-content data-access-dataset-only" data-bind="visible: ui.projectList.datasetOnly().length > 0">
-      <h2>The following datasets are available on the provider's website</h2>
+      <h2>The following collections are available on the provider's website</h2>
       <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetOnly">
         <li class="data-access-dataset">
           <p class="data-access-dataset-name" data-bind="text: dataset.dataset_id"></p>
@@ -55,7 +55,7 @@
       </ul>
     </section>
     <section class="data-access-content data-access-orders" data-bind="visible: ui.projectList.submittedOrders().length > 0">
-      <h2>The following datasets are being processed</h2>
+      <h2>The following collections are being processed</h2>
       <p>
         When the data becomes available, an email containing download links will be sent to the address you provided.
       </p>
@@ -84,7 +84,7 @@
       </ul>
     </section>
     <section class="data-access-content data-access-services" data-bind="visible: ui.projectList.submittedServiceOrders().length > 0">
-      <h2>The following datasets are being processed</h2>
+      <h2>The following collections are being processed</h2>
       <p>
         When the data becomes available, an email containing download links will be sent to the address you provided.
       </p>

@@ -2,7 +2,7 @@
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
           <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: function() {ui.projectList.hideFilters(); ui.datasetsList.unfocusDataset(); }">
-            <i class="fa fa-arrow-circle-o-left"></i> Back to Datasets
+            <i class="fa fa-arrow-circle-o-left"></i> Back to Collections
           </a>
         </nav>
         <!-- ko if: ui.datasetsList.focused() -->
@@ -11,10 +11,10 @@
           <h2 data-bind="text: dataset.title"></h2>
           <!-- ko with: dataset -->
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button retrieve" title="Retrieve dataset data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
-              <i class="fa fa-download"></i> Retrieve Dataset Data
+            <a href="#" class="button retrieve" title="Retrieve collection data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
+              <i class="fa fa-download"></i> Retrieve Collection Data
             </a>
-            <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.datasetsList.showDatasetDetails" title="View dataset details">
+            <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.datasetsList.showDatasetDetails" title="View collection details">
               <i class="fa fa-info-circle"></i>
             </a>
             <!-- ko if: has_granules -->
@@ -25,11 +25,11 @@
               <i class="fa fa-edit"></i>
             </a>
             <!-- /ko -->
-            <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add dataset to the current project"
+            <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
                data-bind="visible: !$root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
               <i class="fa fa-plus"></i>
             </a>
-            <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove dataset from the current project"
+            <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
                data-bind="visible: $root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
               <i class="fa fa-minus"></i>
             </a>

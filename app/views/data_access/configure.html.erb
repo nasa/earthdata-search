@@ -43,7 +43,7 @@
           </div>
 
           <!-- ko if: granuleAccessOptions().hits == 0 -->
-          <p>There are no matching granules to access for this dataset</p>
+          <p>There are no matching granules to access for this collection</p>
           <!-- /ko -->
           <!-- ko if: granuleAccessOptions().hits > 0 -->
           <div class="granule-list">
@@ -129,7 +129,7 @@
                 </div>
                 <!-- /ko -->
                 <!-- ko if: serviceOptions.accessMethod().length == 0 -->
-                  <p>Data access is not available for this dataset.</p>
+                  <p>Data access is not available for this collection.</p>
                 <!-- /ko -->
               <!-- /ko -->
               <p class="add-access-item" data-bind="visible: serviceOptions.canAddAccessMethod()">
@@ -142,7 +142,7 @@
           <!-- /ko -->
           <!-- ko if: !dataset.has_granules -->
           <div class="access-item-review">
-            <h4>Dataset Only</h4>
+            <h4>Collection Only</h4>
             <div>
               <p class="access-item-selection">
                 <span class="access-method-label">Select Data Access Method:</span>
