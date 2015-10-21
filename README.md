@@ -43,8 +43,7 @@ See public/licenses.txt
 ### Prerequisites
 
 * Ruby 2.1.2
-* Bundler (`gem install bundler`)
-* [Pow](http://pow.cx/) is recommended for local testing with URS
+* [Pow](http://pow.cx/) is recommended for local testing with Earthdata Login
 * A Ruby manager such as [RVM](http://rvm.io/) or [rbenv](https://github.com/sstephenson/rbenv) is strongly recommended.
 * (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
 * (For placename completion) a [GeoNames](http://www.geonames.org) account
@@ -53,43 +52,34 @@ See public/licenses.txt
   * Ubuntu: `sudo apt-get install libpq-dev`
   * RHEL: `yum install postgresql-devel`
 
-### URS Configuration
+### Earthdata Login (URS) Configuration
 
-If you would like to set up URS login, you will need to perform the following steps:
+If you would like to set up Earthdata Login login, you will need to perform the following steps:
 
-Register an account on [the URS home page](https://urs.earthdata.nasa.gov/profile)
+Register an account on [the Earthdata Login home page](https://urs.earthdata.nasa.gov/profile)
 
-Create an application in the URS console.  Its callback URL should be `http://<domain>/urs_callback`.  If you are using Pow, this will be something
+Create an application in the Earthdata Login console.  Its callback URL should be `http://<domain>/urs_callback`.  If you are using Pow, this will be something
 like `http://earthdata-search.dev/urs_callback`
 
-Click the "Feedback" icon on the URS page and request that your new application be placed in the ECHO application group
+Click the "Feedback" icon on the Earthdata Login page and request that your new application be placed in the ECHO application group
 (required for ECHO/CMR to recognize your tokens).
 
-Modify line 37 of `config/services.yml` to contain your URS application's client ID
+Modify line 37 of `config/services.yml` to contain your Earthdata Login application's client ID
 
 ### Application configuration
 
 If using Pow, create a symlink to your application directory, for instance `ln -s $(pwd) ~/.pow/earthdata-search`
-(making your app available at `http://earthdata-search.dev`).  If you set up URS, ensure that the domain matches
-the callback URL specified in URS.
-
-Run
-
-    cp config/database.yml.example config/database.yml
-    cp config/application.yml.example config/application.yml
-
-Open `config/application.yml` and edit configuration values as described in that file to set up URS, shapefile support,
-and placename completion as appropriate.
+(making your app available at `http://earthdata-search.dev`).  If you set up Earthdata Login, ensure that the domain matches
+the callback URL specified in Earthdata Login.
 
 ### Initial setup
 
 Run
 
-    git submodule init
-    git submodule update
-    bundle install
-    rake db:migrate
-    rake db:seed
+    bin/setup
+
+Open `config/application.yml` and edit configuration values as described in that file to set up Earthdata Login, shapefile support,
+and placename completion as appropriate.
 
 ### Running
 
