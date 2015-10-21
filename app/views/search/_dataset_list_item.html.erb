@@ -25,29 +25,6 @@
               <!-- /ko -->
               </div>
               <h3 data-bind="text: dataset_id"></h3>
-
-              <p>
-                <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForDataset($data)}"<% end %>>
-                  <span data-bind="text: short_name"></span>
-                  <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
-                  v<span data-bind="text: version_id"></span>
-                  <!-- /ko -->
-                  <!-- ko if: $data.archive_center -->
-                  - <span data-bind="text: archive_center"></span>
-                  <!-- /ko -->
-                </span>
-              </p>
-
-              <p class="dataset-granules-info panel-list-comparison-details">
-                <span data-bind="text: timeRange"></span>
-                <!-- ko if: granuleDescription -->
-                <span class="panel-list-granule-description" data-bind="text: granuleDescription"></span>
-                <!-- /ko -->
-                <span data-bind="if: granulesModel.loadTime()" class="panel-list-muted">
-                  in <span data-bind="text: granulesModel.loadTime">0.000</span>s
-                </span>
-              </p>
-
               <div class="panel-list-item-actions">
                 <!-- ko if: $root.ui.datasetsList.canQueryDatasetSpatial($data) -->
                 <a href="#" class="button icon-button" title="Search using this dataset's location"
@@ -71,7 +48,7 @@
                     <i class="fa fa-download"></i>
                   </a>
                   <!-- ko if: has_granules -->
-                  <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
+                    <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
                     <i class="fa fa-edit"></i>
                   </a>
                   <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
@@ -93,4 +70,25 @@
                   <i class="fa fa-minus"></i>
                 </a>
               </div>
+              <p>
+                <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForDataset($data)}"<% end %>>
+                  <span data-bind="text: short_name"></span>
+                  <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
+                  v<span data-bind="text: version_id"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $data.archive_center -->
+                  - <span data-bind="text: archive_center"></span>
+                  <!-- /ko -->
+                </span>
+              </p>
+
+              <p class="dataset-granules-info panel-list-comparison-details">
+                <span data-bind="text: timeRange"></span>
+                <!-- ko if: granuleDescription -->
+                <span class="panel-list-granule-description" data-bind="text: granuleDescription"></span>
+                <!-- /ko -->
+                <span data-bind="if: granulesModel.loadTime()" class="panel-list-muted">
+                  in <span data-bind="text: granulesModel.loadTime">0.000</span>s
+                </span>
+              </p>
             </li>
