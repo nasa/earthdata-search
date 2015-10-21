@@ -192,19 +192,11 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   margin-left: 4px;
 }
 
-@media (max-width: 1400px) {
-  .panel-list-item-actions {
-    margin-left: 90px;
-  }
-}
-
-@media (min-width: 1401px) {
-  .panel-list-item-actions {
-    position: absolute;
-    padding: 1em;
-    right: 0;
-    bottom: 0;
-  }
+.panel-list-item-actions {
+  position: absolute;
+  padding: 1em;
+  right: 0;
+  bottom: 0;
 }
 
 #granule-list:focus, #granule-list.has-focus {
