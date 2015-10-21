@@ -34,7 +34,13 @@ namespace :travis do
     else
       Rake::Task['knapsack:rspec'].invoke
     end
+
     Rake::Task['ci:cleancache'].invoke
+
+    puts "-------------------------------------------------------------------------------"
+    puts "                             cat ./log/test.log"
+    puts "-------------------------------------------------------------------------------"
+    puts File.open(File.join(Rails.root, 'log/test.log'), 'rb').read
   end
 end
 
