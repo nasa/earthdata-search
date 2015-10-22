@@ -22,7 +22,7 @@ describe "Granule list", reset: false do
     end
 
     it "provides a button to get download the collection" do
-      expect(granule_list).to have_link('Retrieve data')
+      expect(granule_list).to have_link('Retrieve collection data')
     end
 
     it "provides a button to edit granule filters" do
@@ -50,7 +50,7 @@ describe "Granule list", reset: false do
 
     context "clicking on the download button" do
       before :all do
-        granule_list.find('.master-overlay-global-actions').click_link('Retrieve data')
+        granule_list.find('.master-overlay-global-actions').click_link('Retrieve collection data')
       end
 
       after :all do

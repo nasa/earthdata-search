@@ -9,7 +9,8 @@ class OpendapConfiguration
     ddx = Faraday.get(opendap_config['ddx_url']).body
     parsed = MultiXml.parse(ddx)
 
-    parsed_attribute_arrays = parsed["Collection"] && parsed["Collection"]["Array"]
+    # The response has a root node 'Dataset'
+    parsed_attribute_arrays = parsed["Dataset"] && parsed["Dataset"]["Array"]
     return OpendapConfiguration.new() unless parsed_attribute_arrays.present?
 
     title_attribute = opendap_config['title_attribute']
