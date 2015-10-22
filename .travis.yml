@@ -3,7 +3,7 @@ cache: bundler
 sudo: false
 script:
   - bundle exec rake travis:ci
-after_script:
+after_failure:
   - cat ./log/test.log
 env:
   global:
