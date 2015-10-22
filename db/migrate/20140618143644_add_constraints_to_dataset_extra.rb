@@ -1,6 +1,6 @@
 class AddConstraintsToDatasetExtra < ActiveRecord::Migration
   def change
-    grouped = CollectionExtra.all.order('updated_at').group_by(&:echo_id).values
+    grouped = DatasetExtra.all.order('updated_at').group_by(&:echo_id).values
     grouped.each do |duplicates|
       first_one = duplicates.pop # Keep the most recent one
       duplicates.map(&:destroy) # Remove duplicates
