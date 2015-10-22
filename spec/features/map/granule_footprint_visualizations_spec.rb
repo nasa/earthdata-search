@@ -8,19 +8,19 @@
 require "spec_helper"
 
 describe "Granule footprint visualizations", reset: false, wait: 60 do
-  extend Helpers::DatasetHelpers
+  extend Helpers::CollectionHelpers
 
   before :all do
     load_page :search
   end
 
-  context "for point datasets" do
-    use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data'
+  context "for point collections" do
+    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data'
 
-    context "visualizing a dataset's granules" do
+    context "visualizing a collection's granules" do
       hook_granule_results
 
-      it "draws a single point on the map representing all of the dataset's granules" do
+      it "draws a single point on the map representing all of the collection's granules" do
         wait_for_xhr
         expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
@@ -51,24 +51,24 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       end
     end
 
-    context "removing a visualized dataset" do
+    context "removing a visualized collection" do
       hook_granule_results_back
 
-      it "hides the dataset's visualizations" do
+      it "hides the collection's visualizations" do
         expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
     end
   end
 
-  context "for polygon datasets" do
-    use_dataset 'C1000000011-LANCEMODIS', 'MOD02QKM'
+  context "for polygon collections" do
+    use_collection 'C1000000011-LANCEMODIS', 'MOD02QKM'
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
       wait_for_xhr
     end
 
-    context "visualizing a dataset's granules" do
+    context "visualizing a collection's granules" do
       hook_granule_results
 
       it "draws polygons on the map for granule spatial areas" do
@@ -102,19 +102,19 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       end
     end
 
-    context "removing a visualized dataset" do
+    context "removing a visualized collection" do
       hook_granule_results_back
 
-      it "hides the dataset's visualizations" do
+      it "hides the collection's visualizations" do
         expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
     end
   end
 
-  context "for line datasets" do
-    use_dataset 'C5920490-LARC_ASDC', 'CAL_IIR_L2_Track-Beta-V3-01'
+  context "for line collections" do
+    use_collection 'C5920490-LARC_ASDC', 'CAL_IIR_L2_Track-Beta-V3-01'
 
-    context "visualizing a dataset's granules" do
+    context "visualizing a collection's granules" do
       hook_granule_results
 
       it "draws lines on the map for granule spatial areas" do
@@ -148,24 +148,24 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       end
     end
 
-    context "removing a visualized dataset" do
+    context "removing a visualized collection" do
       hook_granule_results_back
 
-      it "hides the dataset's visualizations" do
+      it "hides the collection's visualizations" do
         expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
     end
   end
 
-  context "for bounding box datasets" do
-    use_dataset 'C204200619-GSFCS4PA', 'CloudSat'
+  context "for bounding box collections" do
+    use_collection 'C204200619-GSFCS4PA', 'CloudSat'
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
       wait_for_xhr
     end
 
-    context "visualizing a dataset's granules" do
+    context "visualizing a collection's granules" do
       hook_granule_results
 
       it "draws polygons on the map for granule spatial areas" do
@@ -199,10 +199,10 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       end
     end
 
-    context "removing a visualized dataset" do
+    context "removing a visualized collection" do
       hook_granule_results_back
 
-      it "hides the dataset's visualizations" do
+      it "hides the collection's visualizations" do
         expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
       end
     end

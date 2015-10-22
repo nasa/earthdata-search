@@ -3,14 +3,14 @@ namespace :data do
     desc "Cache data contained in the ECHO 10 format to return with granule results"
     task :echo10 => ['environment'] do
       log_error do
-        DatasetExtra.load_echo10
+        CollectionExtra.load_echo10
       end
     end
 
-    desc "Data about granules in datasets to return with granule results"
+    desc "Data about granules in collections to return with granule results"
     task :granules => ['environment'] do
       log_error do
-        DatasetExtra.load
+        CollectionExtra.load
       end
     end
 
@@ -45,9 +45,9 @@ namespace :data do
   Rake::Task['data:load'].enhance(['data:load:echo10', 'data:load:granules', 'data:load:log_dataload'])
 
   namespace :dump do
-    # Only dump the DatasetExtra model
+    # Only dump the CollectionExtra model
     task :environment do
-      ENV['MODEL'] = 'DatasetExtra'
+      ENV['MODEL'] = 'CollectionExtra'
     end
 
     # Gets run after db:seed:dump to ensure that seeds.rb is only loaded as needed
@@ -56,10 +56,10 @@ namespace :data do
       new_file = original_file + '.new'
       File.open(new_file, 'w') do |f|
         lines = ["Cmep::Engine.load_seed if defined?(Cmep)",
-                 "load_extra = DatasetExtra.maximum('updated_at').to_i < #{DatasetExtra.maximum('updated_at').to_i}",
-                 "!load_extra && puts('DatasetExtra seeds are already up-to-date')",
-                 "load_extra && puts('Loading DatasetExtra seeds')",
-                 "load_extra && DatasetExtra.destroy_all",
+                 "load_extra = CollectionExtra.maximum('updated_at').to_i < #{CollectionExtra.maximum('updated_at').to_i}",
+                 "!load_extra && puts('CollectionExtra seeds are already up-to-date')",
+                 "load_extra && puts('Loading CollectionExtra seeds')",
+                 "load_extra && CollectionExtra.destroy_all",
                  "load_extra && "
                  ]
         f.print lines.join("\n")
