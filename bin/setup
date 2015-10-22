@@ -86,7 +86,6 @@ Dir.chdir APP_ROOT do
     install('PostgreSQL development headers', 'postgresql', 'libpq-dev', 'postgresql-devel') unless pgconfig
     install('Node.js', 'node', 'nodejs', 'nodejs') unless command?('node')
 
-
     run_cmd 'gem install bundler --conservative'
     run_cmd 'bundle check || bundle install'
   end
@@ -107,8 +106,8 @@ Dir.chdir APP_ROOT do
   end
 
   section "Removing old logs and tempfiles" do
-    run_cmd 'rm -f log/*'
     run_cmd 'rm -rf tmp/cache'
+    run_cmd 'rm -f mkmf.log'
   end
 
   section "Restarting application server" do
