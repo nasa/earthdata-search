@@ -17,16 +17,16 @@
     <h1>Data Access</h1>
     <p>Review and select service options for your data prior to download</p>
   </header>
-  <ol class="data-access-content data-access-datasets-config" data-bind="css: { 'knockout-template': !bindingsLoaded }">
-    <!-- ko foreach: project.accessDatasets -->
+  <ol class="data-access-content data-access-collections-config" data-bind="css: { 'knockout-template': !bindingsLoaded }">
+    <!-- ko foreach: project.accessCollections -->
     <li class="access-item">
       <div class="access-item-header">
-        <h2 data-bind="text: dataset.dataset_id"></h2>
+        <h2 data-bind="text: collection.collection_id"></h2>
       </div>
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
           <h3 data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
-          <!-- ko if: granuleAccessOptions().hits != null && dataset.has_granules -->
+          <!-- ko if: granuleAccessOptions().hits != null && collection.has_granules -->
           <div class="access-item-review">
             <h4>Review</h4>
             <p class="summary">
@@ -59,7 +59,7 @@
             </p>
             <div data-bind="event: {scroll: $root.ui.serviceOptionsList.scrolled}">
               <ul>
-              <!-- ko foreach: dataset.granulesModel.results() -->
+              <!-- ko foreach: collection.granulesModel.results() -->
                 <li>
                   <h5 data-bind="text: displayName()"></h5>
                   <span data-bind="text: getTemporal()"></span>
@@ -140,7 +140,7 @@
           </div>
           <!-- /ko -->
           <!-- /ko -->
-          <!-- ko if: !dataset.has_granules -->
+          <!-- ko if: !collection.has_granules -->
           <div class="access-item-review">
             <h4>Collection Only</h4>
             <div>
@@ -170,7 +170,7 @@
         <h2>Contact Information &amp; Submit</h2>
       </div>
 
-      <div class="access-item-body" data-bind="css: { hidden: project.accessDatasets().length != ui.serviceOptionsList.activeIndex() }">
+      <div class="access-item-body" data-bind="css: { hidden: project.accessCollections().length != ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
           <form data-bind="submit: account.updateContactInformation" class="account-form">
             <%= render partial: 'users/contact_info_form' %>

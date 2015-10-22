@@ -48,8 +48,8 @@ do (document
   $(document).on 'timingevent', (e, path, timing) ->
     metrics.createTiming(path, timing)
 
-  $(document).on 'dataaccessevent', (e, dataset, options=null) ->
-    metrics.createDataAccessEvent(dataset, options)
+  $(document).on 'dataaccessevent', (e, collection, options=null) ->
+    metrics.createDataAccessEvent(collection, options)
 
   $(document).on 'click', '.description-toggle', (e) ->
     e.preventDefault()

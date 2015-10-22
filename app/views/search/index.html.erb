@@ -32,7 +32,7 @@
     <ul class="dropdown-menu temporal-dropdown">
       <li>
         <!-- ko with: query.temporal.pending -->
-        <%= render partial: 'temporal_template', locals: {prefix: 'dataset', show_actions: true} %>
+        <%= render partial: 'temporal_template', locals: {prefix: 'collection', show_actions: true} %>
         <!-- /ko -->
       </li>
     </ul>
@@ -54,11 +54,11 @@
 </div>
 <% end %>
 
-<div class="master-overlay homepage-search is-master-overlay-secondary-hidden" id="datasets-overlay">
+<div class="master-overlay homepage-search is-master-overlay-secondary-hidden" id="collections-overlay">
   <%= render partial: 'overlay_parent' %>
   <div class="master-overlay-main">
     <div class="master-overlay-main-content" data-level="0">
-      <section id="dataset-results" data-master-overlay-title="Datasets">
+      <section id="collection-results" data-master-overlay-title="Collections">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav master-overlay-when-parent-hidden">
           <a href="#" class="master-overlay-show-parent">
@@ -69,7 +69,7 @@
           </a>
         </nav>
         <header>
-          <h2><strong data-bind="text: datasets.hits"></strong> Matching Collections</h2>
+          <h2><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
         </header>
         <div class="master-overlay-info">
           <p data-bind="visible: project.isEmpty()" class="button-details">
@@ -82,10 +82,10 @@
             <a id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
               <i class="fa fa-folder-o"></i> View Project
             </a>
-            <span>You have <em id="project-count" data-bind="text: pluralize(project.datasets().length, 'collection', 'collections')"></em> in your project.</span>
+            <span>You have <em id="project-count" data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></em> in your project.</span>
           </p>
-          <p data-bind="if: datasets.loadTime() !== null" class="panel-list-meta">
-            Search Time: <span data-bind="text: datasets.loadTime">0.000</span>s
+          <p data-bind="if: collections.loadTime() !== null" class="panel-list-meta">
+            Search Time: <span data-bind="text: collections.loadTime">0.000</span>s
             <% if Rails.configuration.feedback_url.present? %>
             <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Collection Results', null)" class="button feedback-button">
               <i class="fa fa-exclamation-circle"></i>
@@ -94,26 +94,26 @@
             <% end %>
           </p>
         </div>
-        <div class="master-overlay-content" data-bind="event: {scroll: ui.datasetsList.scrolled}">
-          <!-- ko if: datasets.featured().length > 0 -->
+        <div class="master-overlay-content" data-bind="event: {scroll: ui.collectionsList.scrolled}">
+          <!-- ko if: collections.featured().length > 0 -->
           <h3 class="panel-list-title">Recent and Featured</h3>
           <div class="panel-list">
-            <ul id="dataset-featured-list"
+            <ul id="collection-featured-list"
                 class="panel-list-list knockout-template"
-                data-bind="foreach: datasets.featured, css: { 'knockout-template': !bindingsLoaded }">
-              <%= render partial: 'dataset_list_item', locals: {is_project: false} %>
+                data-bind="foreach: collections.featured, css: { 'knockout-template': !bindingsLoaded }">
+              <%= render partial: 'collection_list_item', locals: {is_project: false} %>
             </ul>
           </div>
 
           <h3 class="panel-list-title">More Collections</h3>
           <!-- /ko -->
           <div class="panel-list">
-            <ul id="dataset-results-list"
+            <ul id="collection-results-list"
                 class="panel-list-list knockout-template"
-                data-bind="foreach: datasets.unfeatured, css: { 'knockout-template': !bindingsLoaded }">
-              <%= render partial: 'dataset_list_item', locals: {is_project: false} %>
+                data-bind="foreach: collections.unfeatured, css: { 'knockout-template': !bindingsLoaded }">
+              <%= render partial: 'collection_list_item', locals: {is_project: false} %>
             </ul>
-            <p class="panel-list-load-more" data-bind="visible: datasets.isLoading">
+            <p class="panel-list-load-more" data-bind="visible: collections.isLoading">
               Loading collections...
             </p>
           </div>
@@ -133,21 +133,21 @@
               <i class="fa fa-download"></i> Retrieve Project Data
             </a>
 
-            <a href="#" title="View all collections" data-bind="visible: !$root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button" >
+            <a href="#" title="View all collections" data-bind="visible: !$root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button" >
               <i class="fa fa-eye"></i>
             </a>
-            <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allDatasetsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllDatasets" class="button icon-button button-active" >
+            <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button button-active" >
               <i class="fa fa-eye"></i>
             </a>
           </div>
         </header>
         <div class="master-overlay-content panel-list">
-          <ul id="project-datasets-list"
+          <ul id="project-collections-list"
               class="panel-list-list knockout-template"
-              data-bind="foreach: project.datasets, css: { 'knockout-template': !bindingsLoaded }">
-            <%= render partial: 'dataset_list_item', locals: {is_project: true} %>
+              data-bind="foreach: project.collections, css: { 'knockout-template': !bindingsLoaded }">
+            <%= render partial: 'collection_list_item', locals: {is_project: true} %>
           </ul>
-          <div class="master-overlay-help" data-bind="if: project.datasets().length == 0">
+          <div class="master-overlay-help" data-bind="if: project.collections().length == 0">
             <p>
               Use this space to collect collections of interest as you adjust your search parameters.
             </p>
@@ -165,7 +165,7 @@
       </section>
       <%= render partial: 'granule_list' %>
       <%= render partial: 'granule_details' %>
-      <%= render partial: 'dataset_details' %>
+      <%= render partial: 'collection_details' %>
     </div>
   </div>
   <div class="master-overlay-secondary">
@@ -175,9 +175,9 @@
         <nav class="master-overlay-nav">
           <i class="fa fa-edit"></i> Granule Filters
         </nav>
-        <!-- ko if: project.searchGranulesDataset() -->
+        <!-- ko if: project.searchGranulesCollection() -->
         <header>
-          <h2 data-bind="text: project.searchGranulesDataset().dataset_id"></h2>
+          <h2 data-bind="text: project.searchGranulesCollection().collection_id"></h2>
         </header>
         <%= render partial: 'granule_search' %>
         <!-- /ko -->
@@ -185,7 +185,7 @@
     </div>
   </div>
   <div class="master-overlay-minimized">
-    <a href="#datasets-overlay" class="button text-button master-overlay-show">
+    <a href="#collections-overlay" class="button text-button master-overlay-show">
       <i class="fa fa-th-list"></i> Results List
     </a>
   </div>
@@ -193,8 +193,8 @@
 
 <div id="map" class="map" style="height:100%">
   <div id="map-center"></div>
-  <!-- ko if: ui.datasetsList.focused() -->
-  <!-- ko with: ui.datasetsList.focused() -->
+  <!-- ko if: ui.collectionsList.focused() -->
+  <!-- ko with: ui.collectionsList.focused() -->
   <!-- ko if: stickied() && (stickied().browse_flag === 'true' || stickied().browse_flag === true) -->
   <div class="granule-browse" data-bind="css: {busy: loadingBrowse()}">
     <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
@@ -376,7 +376,7 @@
     <div class="landing-dialog-toolbar toolbar">
     </div>
     <div class="landing-dialog-actions">
-      <a href="#datasets-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
+      <a href="#collections-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
       <p><i class="fa fa-arrow-circle-left"></i> See featured collections or use categories to narrow your results.</p>
     </div>
   </div>

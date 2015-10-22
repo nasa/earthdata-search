@@ -6,46 +6,46 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.exte
 
   class GranuleVisualizationsLayer
     constructor: ->
-      @_datasetIdsToLayers = {}
+      @_collectionIdsToLayers = {}
 
     onAdd: (map) ->
       @_map = map
-      map.on 'edsc.visibledatasetschange', @_onVisibleDatasetsChange
+      map.on 'edsc.visiblecollectionschange', @_onVisibleCollectionsChange
 
     onRemove: (map) ->
       @_map = map
-      map.off 'edsc.visibledatasetschange', @_onVisibleDatasetsChange
+      map.off 'edsc.visiblecollectionschange', @_onVisibleCollectionsChange
 
-    _onVisibleDatasetsChange: (e) =>
-      @setVisibleDatasets(e.datasets)
+    _onVisibleCollectionsChange: (e) =>
+      @setVisibleCollections(e.collections)
 
-    setVisibleDatasets: (datasets) =>
+    setVisibleCollections: (collections) =>
       map = @_map
 
-      datasetIdsToLayers = @_datasetIdsToLayers
-      newDatasetIdsToLayers = {}
+      collectionIdsToLayers = @_collectionIdsToLayers
+      newCollectionIdsToLayers = {}
 
       baseZ = 6
       overlayZ = 16
 
-      for dataset in datasets
-        id = dataset.id
-        options = dataset.gibs()
+      for collection in collections
+        id = collection.id
+        options = collection.gibs()
         if options?[0].format == 'jpeg'
           z = Math.min(baseZ++, 9)
         else
           z = Math.min(overlayZ++, 19)
 
-        if datasetIdsToLayers[id]?
-          layer = datasetIdsToLayers[id]
+        if collectionIdsToLayers[id]?
+          layer = collectionIdsToLayers[id]
         else
-          color = project.colorForDataset(dataset)
+          color = project.colorForCollection(collection)
           # Note: our algorithms rely on sort order being [-start_date]
-          layer = new GranuleLayer(dataset, color, options)
+          layer = new GranuleLayer(collection, color, options)
           map.addLayer(layer)
 
-          if dataset.boxes?.length > 0
-            [lat1, lon1, lat2, lon2] = dataset.boxes[0].split(' ').map((item) ->
+          if collection.boxes?.length > 0
+            [lat1, lon1, lat2, lon2] = collection.boxes[0].split(' ').map((item) ->
               parseFloat item)
             southWest = L.latLng(lat1, lon1)
             northEast = L.latLng(lat2, lon2)
@@ -53,18 +53,18 @@ ns.GranuleVisualizationsLayer = do (L, dateUtil=@edsc.util.date, extend = $.exte
             if bounds.getNorth() - bounds.getSouth() < .5 && bounds.getWest() - bounds.getEast() < .5
               marker = L.featureGroup().addLayer(L.marker(bounds.getCenter()))
               map.addLayer(marker)
-              newDatasetIdsToLayers[id + '-marker'] = marker
+              newCollectionIdsToLayers[id + '-marker'] = marker
 
         layer.setZIndex(z)
-        newDatasetIdsToLayers[id] = layer
+        newCollectionIdsToLayers[id] = layer
 
-      for own id, layer of datasetIdsToLayers
-        unless newDatasetIdsToLayers[id]?
+      for own id, layer of collectionIdsToLayers
+        unless newCollectionIdsToLayers[id]?
           map.removeLayer(layer)
-          if newDatasetIdsToLayers[id+'-marker']?
-            map.removeLayer(newDatasetIdsToLayers[id+'-marker'])
+          if newCollectionIdsToLayers[id+'-marker']?
+            map.removeLayer(newCollectionIdsToLayers[id+'-marker'])
 
-      @_datasetIdsToLayers = newDatasetIdsToLayers
+      @_collectionIdsToLayers = newCollectionIdsToLayers
 
       null
 

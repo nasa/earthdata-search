@@ -6,7 +6,7 @@ describe 'Granule details', reset: false do
     fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
     wait_for_xhr
     expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
-    first_dataset_result.click
+    first_collection_result.click
     wait_for_xhr
     # Select a specific granule
     click_link 'Filter granules'

@@ -1,15 +1,15 @@
-<!-- ko with: project.searchGranulesDataset() -->
+<!-- ko with: project.searchGranulesCollection() -->
 <div class="master-overlay-content" data-master-overlay-pad="50">
   <!-- ko if: granuleQuery.excludedGranules().length == 1 -->
   <p class="message message-warning">
     1 granule has been removed from your results.
-    <a data-bind="click: $root.ui.datasetsList.focused().clearExclusions" href="#">Add it back</a>
+    <a data-bind="click: $root.ui.collectionsList.focused().clearExclusions" href="#">Add it back</a>
   </p>
   <!-- /ko -->
   <!-- ko if: granuleQuery.excludedGranules().length > 1 -->
   <p class="message message-warning">
     <span data-bind="text: granuleQuery.excludedGranules().length"></span> granules have been removed from your results.
-    <a data-bind="click: $root.ui.datasetsList.focused().clearExclusions" href="#">Add them back</a>
+    <a data-bind="click: $root.ui.collectionsList.focused().clearExclusions" href="#">Add them back</a>
   </p>
   <!-- /ko -->
   <dl>
@@ -78,11 +78,11 @@
     <dd>
       <!-- ko foreach: searchable_attributes -->
       <div class="granule-filter-attribute">
-        <label class="granule-filter-attribute-label" data-bind="text: name, attr: {for: 'dataset_aa' + $index()}"></label>
+        <label class="granule-filter-attribute-label" data-bind="text: name, attr: {for: 'collection_aa' + $index()}"></label>
         <!-- ko if: $data.description -->
         <p class="granule-filter-attribute-help" data-bind="text: description"></p>
         <!-- /ko -->
-        <input type="text" data-bind="value: value, attr: {id: 'dataset_aa' + $index(), placeholder: help}">
+        <input type="text" data-bind="value: value, attr: {id: 'collection_aa' + $index(), placeholder: help}">
         <span data-bind="visible: error, text: error" class="error"></span>
       </div>
       <!-- /ko -->
