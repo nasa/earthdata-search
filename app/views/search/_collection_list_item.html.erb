@@ -1,0 +1,94 @@
+            <li data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}"
+                class="panel-list-item"<%=raw ' draggable="true"' if is_project %>>
+              <% if is_project %>
+              <div class="panel-list-drag-handle"></div>
+              <% end %>
+              <div class="panel-list-thumbnail-container">
+                <div class="panel-list-badges">
+                  <!-- ko if: gibs() -->
+                  <a href="#" class="badge badge-gibs" data-tooltip="true" title="Supports advanced map visualizations using the GIBS tile service"></a>
+                  <!-- /ko -->
+                  <!-- ko if: opendap() -->
+                  <a href="#" class="badge badge-opendap" data-tooltip="true" title="Supports spatial and parameter subsetting using OPeNDAP"></a>
+                  <!-- /ko -->
+                  <!-- ko if: nrt -->
+                  <a href="#" class="badge badge-nrt" data-tooltip="true" title="Near Real Time (NRT) Data"></a>
+                  <!-- /ko -->
+                </div>
+              <!-- ko if: thumbnail() -->
+              <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: collection_id}">
+              <!-- /ko -->
+              <!-- ko ifnot: thumbnail() -->
+              <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
+                <i class="fa fa-globe"></i><br />No image available
+              </div>
+              <!-- /ko -->
+              </div>
+              <h3 data-bind="text: collection_id"></h3>
+              <div class="panel-list-item-actions">
+                <!-- ko if: $root.ui.collectionsList.canQueryCollectionSpatial($data) -->
+                <a href="#" class="button icon-button" title="Search using this collection's location"
+                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.ui.collectionsList.toggleQueryCollectionSpatial">
+                  <i class="fa fa-map-marker"></i>
+                </a>
+                <!-- /ko -->
+                <!-- ko if: has_granules -->
+                <a href="#" class="button icon-button" title="View collection" data-bind="visible: !visible(), click: $root.collections.toggleVisibleCollection">
+                  <i class="fa fa-eye"></i>
+                </a>
+                <a href="#" class="button icon-button button-active" title="Hide collection" data-bind="visible: visible(), click: $root.collections.toggleVisibleCollection">
+                  <i class="fa fa-eye"></i>
+                </a>
+                <!-- /ko -->
+                <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Collections" data-bind="click: $parent.ui.collectionsList.showCollectionDetails" title="View collection details">
+                  <i class="fa fa-info-circle"></i>
+                </a>
+                <% if is_project %>
+                  <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
+                    <i class="fa fa-download"></i>
+                  </a>
+                  <!-- ko if: has_granules -->
+                    <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <!-- /ko -->
+                  <!-- ko ifnot: has_granules -->
+                  <a href="#" class="button icon-button button-disabled" title="No granules">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <!-- /ko -->
+                <% end %>
+                <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
+                   data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
+                  <i class="fa fa-plus"></i>
+                </a>
+                <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
+                   data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
+                  <i class="fa fa-minus"></i>
+                </a>
+              </div>
+              <p>
+                <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
+                  <span data-bind="text: short_name"></span>
+                  <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
+                  v<span data-bind="text: version_id"></span>
+                  <!-- /ko -->
+                  <!-- ko if: $data.archive_center -->
+                  - <span data-bind="text: archive_center"></span>
+                  <!-- /ko -->
+                </span>
+              </p>
+
+              <p class="collection-granules-info panel-list-comparison-details">
+                <span data-bind="text: timeRange"></span>
+                <!-- ko if: granuleDescription -->
+                <span class="panel-list-granule-description" data-bind="text: granuleDescription"></span>
+                <!-- /ko -->
+                <span data-bind="if: granulesModel.loadTime()" class="panel-list-muted">
+                  in <span data-bind="text: granulesModel.loadTime">0.000</span>s
+                </span>
+              </p>
+            </li>

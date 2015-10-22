@@ -1,4 +1,4 @@
-# EDSC-20 As a user, I want to search for datasets by spatial point so that I
+# EDSC-20 As a user, I want to search for collections by spatial point so that I
 #         may limit my results to my point of interest
 
 require "spec_helper"
@@ -102,7 +102,7 @@ describe "Spatial" do
   end
 
   context "point selection" do
-    it "filters datasets using the selected point" do
+    it "filters collections using the selected point" do
       create_point(0, 0)
       wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -117,7 +117,7 @@ describe "Spatial" do
         wait_for_xhr
       end
 
-      it "updates the dataset filters using the new point selection" do
+      it "updates the collection filters using the new point selection" do
         expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
       end
     end
@@ -130,14 +130,14 @@ describe "Spatial" do
         wait_for_xhr
       end
 
-      it "removes the spatial point dataset filter" do
+      it "removes the spatial point collection filter" do
         expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       end
     end
   end
 
   context "bounding box selection" do
-    it "filters datasets using the selected bounding box" do
+    it "filters collections using the selected bounding box" do
       create_bounding_box(0, 0, 10, 10)
       wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -152,7 +152,7 @@ describe "Spatial" do
         wait_for_xhr
       end
 
-      it "updates the dataset filters using the new bounding box selection" do
+      it "updates the collection filters using the new bounding box selection" do
         expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
       end
     end
@@ -165,7 +165,7 @@ describe "Spatial" do
         wait_for_xhr
       end
 
-      it "removes the spatial bounding box dataset filter" do
+      it "removes the spatial bounding box collection filter" do
         expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       end
     end
@@ -201,7 +201,7 @@ describe "Spatial" do
       end
     end
 
-    it "filters datasets using north polar bounding boxes in the north polar projection" do
+    it "filters collections using north polar bounding boxes in the north polar projection" do
       click_link "North Polar Stereographic"
       create_arctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
@@ -209,7 +209,7 @@ describe "Spatial" do
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
-    it "filters datasets using south polar bounding boxes in the south polar projection" do
+    it "filters collections using south polar bounding boxes in the south polar projection" do
       click_link "South Polar Stereographic"
       create_antarctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
@@ -219,7 +219,7 @@ describe "Spatial" do
   end
 
   context "polygon selection" do
-    it "filters datasets using the selected polygon" do
+    it "filters collections using the selected polygon" do
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
@@ -240,7 +240,7 @@ describe "Spatial" do
         wait_for_xhr
       end
 
-      it "updates the dataset filters using the new bounding box selection" do
+      it "updates the collection filters using the new bounding box selection" do
         expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
       end
     end
@@ -253,7 +253,7 @@ describe "Spatial" do
         wait_for_xhr
       end
 
-      it "removes the spatial bounding box dataset filter" do
+      it "removes the spatial bounding box collection filter" do
         expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       end
     end

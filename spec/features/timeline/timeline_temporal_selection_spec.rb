@@ -4,7 +4,7 @@
 require "spec_helper"
 
 describe "Timeline temporal selection", reset: false do
-  extend Helpers::DatasetHelpers
+  extend Helpers::CollectionHelpers
 
   def date_display(date)
     date.iso8601.gsub('T', ' ').gsub(/\+.*$/, '')
@@ -21,10 +21,10 @@ describe "Timeline temporal selection", reset: false do
 
   before :all do
     load_page :search
-    add_dataset_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
-    add_dataset_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
+    add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
+    add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
-    dataset_results.click_link "View Project"
+    collection_results.click_link "View Project"
     zoom_out_button = find('.timeline-zoom-out')
     zoom_out_button.click
     pan_to_time(present - 25.years)
@@ -54,7 +54,7 @@ describe "Timeline temporal selection", reset: false do
         expect(page).to have_no_temporal
       end
 
-      it 'clears dataset-specific temporal constraints' do
+      it 'clears collection-specific temporal constraints' do
         expect(page).to have_no_temporal(0)
       end
     end
@@ -67,7 +67,7 @@ describe "Timeline temporal selection", reset: false do
         expect(page).to have_no_temporal
       end
 
-      it 'does not clear dataset-specific temporal constraints' do
+      it 'does not clear collection-specific temporal constraints' do
         expect(page).to have_temporal(local_start_date, local_stop_date, nil, 0)
       end
     end
@@ -80,16 +80,16 @@ describe "Timeline temporal selection", reset: false do
         expect(page).to have_temporal(global_stop_date, start_drag_date)
       end
 
-      it 'does not update dataset-specific conditions' do
+      it 'does not update collection-specific conditions' do
         expect(page).to have_temporal(local_start_date, local_stop_date, nil, 0)
       end
     end
 
-    context 'dragging the start fencepost of a dataset-specific temporal condition' do
+    context 'dragging the start fencepost of a collection-specific temporal condition' do
       before(:all) { drag_temporal(local_start_date, start_drag_date) }
       after(:all) { set_temporal(local_start_date, local_stop_date, nil, 0) }
 
-      it 'updates the dataset-specific condition' do
+      it 'updates the collection-specific condition' do
         expect(page).to have_temporal(local_stop_date, start_drag_date, nil, 0)
       end
 
@@ -106,16 +106,16 @@ describe "Timeline temporal selection", reset: false do
         expect(page).to have_temporal(stop_drag_date, global_start_date)
       end
 
-      it 'does not update dataset-specific conditions' do
+      it 'does not update collection-specific conditions' do
         expect(page).to have_temporal(local_start_date, local_stop_date, nil, 0)
       end
     end
 
-    context 'dragging the end fencepost of a dataset-specific temporal condition' do
+    context 'dragging the end fencepost of a collection-specific temporal condition' do
       before(:all) { drag_temporal(local_stop_date, stop_drag_date) }
       after(:all) { set_temporal(local_start_date, local_stop_date, nil, 0) }
 
-      it 'updates the dataset-specific condition' do
+      it 'updates the collection-specific condition' do
         expect(page).to have_temporal(stop_drag_date, local_start_date, nil, 0)
       end
 
@@ -131,11 +131,11 @@ describe "Timeline temporal selection", reset: false do
         set_temporal(global_start_date, global_stop_date)
       end
 
-      it 'sets a new global temporal condition for all datasets' do
+      it 'sets a new global temporal condition for all collections' do
         expect(page).to have_temporal(stop_drag_date, start_drag_date)
       end
 
-      it 'does not update dataset-specific conditions' do
+      it 'does not update collection-specific conditions' do
         expect(page).to have_temporal(local_start_date, local_stop_date, nil, 0)
       end
     end
@@ -146,7 +146,7 @@ describe "Timeline temporal selection", reset: false do
       before(:all) { drag_temporal(stop_drag_date, start_drag_date) }
       after(:all) { unset_temporal }
 
-      it 'sets a global temporal condition for all datasets' do
+      it 'sets a global temporal condition for all collections' do
         expect(page).to have_temporal(stop_drag_date, start_drag_date)
       end
     end

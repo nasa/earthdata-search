@@ -15,7 +15,7 @@ describe "Sharing Projects", reset: false do
       logout
 
       project_id = Project.first.to_param
-      visit "/search/datasets?projectId=#{project_id}"
+      visit "/search/collections?projectId=#{project_id}"
       wait_for_xhr
     end
 
@@ -24,7 +24,7 @@ describe "Sharing Projects", reset: false do
     end
 
     it "shows the contents of the project" do
-      expect(page).to have_content 'You have 2 datasets in your project'
+      expect(page).to have_content 'You have 2 collections in your project'
     end
 
     it "inflates the url" do
@@ -37,7 +37,7 @@ describe "Sharing Projects", reset: false do
     new_project_id = nil
 
     before :all do
-      path = '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC!C179002107-SEDAC!C179002147-SEDAC!C1000000000-SEDAC'
+      path = '/search/collections?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC!C179002107-SEDAC!C179002147-SEDAC!C1000000000-SEDAC'
       user = User.first
       project = Project.new
       project.path = path
@@ -48,13 +48,13 @@ describe "Sharing Projects", reset: false do
       logout
 
       project_id = Project.first.to_param
-      visit "/search/datasets?projectId=#{project_id}"
+      visit "/search/collections?projectId=#{project_id}"
       wait_for_xhr
       new_project_id = Project.first.to_param
     end
 
     it "shows the contents of the project" do
-      expect(page).to have_content 'You have 8 datasets in your project'
+      expect(page).to have_content 'You have 8 collections in your project'
     end
 
     it "saves the path into a new project for the new user" do

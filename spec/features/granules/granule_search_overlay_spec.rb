@@ -7,10 +7,10 @@ describe "Granule search overlay", reset: false do
   end
 
   before(:each) do
-    first_dataset_result.click_link "Add dataset to the current project"
-    second_dataset_result.click_link "Add dataset to the current project"
+    first_collection_result.click_link "Add collection to the current project"
+    second_collection_result.click_link "Add collection to the current project"
 
-    dataset_results.click_link "View Project"
+    collection_results.click_link "View Project"
   end
 
   after(:each) do
@@ -20,7 +20,7 @@ describe "Granule search overlay", reset: false do
 
   context "when clicking the 'Filter Granules' button" do
     before(:each) do
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
     end
 
     it "should open granule search overlay" do
@@ -29,27 +29,27 @@ describe "Granule search overlay", reset: false do
     end
 
     it "should close granule search overlay when clicking again" do
-      first_project_dataset.click_link "Hide granule filters"
+      first_project_collection.click_link "Hide granule filters"
 
       expect(page).to_not have_visible_granule_search
       expect(page).to have_no_link("Hide granule filters")
     end
 
-    it "should hide the granule search overlay when returning to dataset list" do
-      project_overview.click_link "Back to Dataset Search"
+    it "should hide the granule search overlay when returning to collection list" do
+      project_overview.click_link "Back to Collection Search"
 
       expect(page).to_not have_visible_granule_search
     end
 
     it "should hide the granule search overlay when returning to the project" do
-      project_overview.click_link "Back to Dataset Search"
-      dataset_results.click_link "View Project"
+      project_overview.click_link "Back to Collection Search"
+      collection_results.click_link "View Project"
 
       expect(page).to_not have_visible_granule_search
       expect(page).to have_no_link("Hide granule filters")
     end
 
-    it "should not show 'Filter Granules' button for datasets without granules" do
+    it "should not show 'Filter Granules' button for collections without granules" do
       within("#project-overview") do
         expect(page).to have_xpath(".//a[@title='No granules']", count: 1)
       end

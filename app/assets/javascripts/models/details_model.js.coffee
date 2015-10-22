@@ -11,8 +11,8 @@ ns.DetailsModel = do (ko
     _computeGranuleDetails: ->
       @_computeDetails('granule')
 
-    _computeDatasetDetails: ->
-      @_computeDetails('dataset')
+    _computeCollectionDetails: ->
+      @_computeDetails('collection')
 
     _computeDetails: (type) ->
       id = @id
@@ -25,11 +25,11 @@ ns.DetailsModel = do (ko
           retry: => @_computeDetails(type)
           success: (data) =>
             details = data[type]
-            details.summaryData = this if type == 'dataset'
+            details.summaryData = this if type == 'collection'
             @details(details)
             @detailsLoaded(true)
             desc = $('.long-paragraph')
-            if desc.height() < 142 # refer to dataset_details.css.scss .long-paragraph
+            if desc.height() < 142 # refer to collection_details.css.scss .long-paragraph
               $('.description-toggle').hide()
 
   exports = DetailsModel

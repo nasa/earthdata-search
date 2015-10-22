@@ -1,4 +1,4 @@
-# EDSC-15 As a user, I want to search for datasets by simple temporal date
+# EDSC-15 As a user, I want to search for collections by simple temporal date
 #         range so that I may limit my results the relevant time span
 
 require "spec_helper"
@@ -82,7 +82,7 @@ describe "Temporal" do
   context "recurring range selection" do
     it "allows the user to search by recurring date time range" do
       click_link "Temporal"
-      js_check_recurring "dataset"
+      js_check_recurring "collection"
       fill_in "Start", with: "12-01 00:00:00\t"
       fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
@@ -98,7 +98,7 @@ describe "Temporal" do
 
     it "allows the user to clear the recurring date time search" do
       click_link "Temporal"
-      js_check_recurring "dataset"
+      js_check_recurring "collection"
       fill_in "Start", with: "12-01 00:00:00\t"
       fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
@@ -124,7 +124,7 @@ describe "Temporal" do
 
     it "validates incorrect user input" do
       click_link "Temporal"
-      js_check_recurring "dataset"
+      js_check_recurring "collection"
       fill_in "Start", with: "12-10 00:00:00\t"
       fill_in "End", with: "12-01 00:00:00\t"
 
@@ -133,7 +133,7 @@ describe "Temporal" do
 
     it "validates both start and end are present" do
       click_link "Temporal"
-      js_check_recurring "dataset"
+      js_check_recurring "collection"
       fill_in "Start", with: "12-10 00:00:00\t"
 
       expect(page).to have_content("Start and End dates must both be selected")

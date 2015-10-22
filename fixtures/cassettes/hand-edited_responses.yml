@@ -467,7 +467,7 @@ invalid_token:
       string: '{"errors":["Token [invalid] is not a valid URS
         token"]}'
     http_version:
-invalid_datasets_logged_in:
+invalid_collections_logged_in:
   response:
     status:
       code: 401
@@ -497,7 +497,7 @@ invalid_datasets_logged_in:
       encoding: UTF-8
       string: '{"errors":["Token invalid does not exist"]}'
     http_version:
-invalid_datasets_logged_in_non_hierarchical:
+invalid_collections_logged_in_non_hierarchical:
   response:
     status:
       code: 401
@@ -527,7 +527,7 @@ invalid_datasets_logged_in_non_hierarchical:
       encoding: UTF-8
       string: '{"errors":["Token invalid does not exist"]}'
     http_version:
-invalid_datasets_logged_out:
+invalid_collections_logged_out:
   response:
     status:
       code: 200
@@ -563,12 +563,12 @@ invalid_datasets_logged_out:
       - close
     body:
       encoding: UTF-8
-      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
-        "title":"ECHO dataset metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
+      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/collections.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
+        "title":"ECHO collection metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
         AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "summary":"ABSTRACT:
         Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide,
         and ozone over the entire BOREAS region to tie together measurements made
-        in both the SSA and the NSA.", "updated":"2000-01-27T00:00:00.000Z", "dataset_id":"BOREAS
+        in both the SSA and the NSA.", "updated":"2000-01-27T00:00:00.000Z", "collection_id":"BOREAS
         AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "short_name":"doi:10.3334/ORNLDAAC/495",
         "version_id":"1", "original_format":"ECHO10", "data_center":"ORNL_DAAC", "archive_center":"ORNL_DAAC",
         "processing_level_id":"3", "time_start":"1994-05-24T00:00:00.000Z", "time_end":"1994-09-16T00:00:00.000Z",
@@ -581,7 +581,7 @@ invalid_datasets_logged_out:
         -106.32 56.25 -97.23"], "dif_ids":["BOREAS_AFM3MW94"], "online_access_flag":"true",
         "browse_flag":"false", "relevance_score":0.5}]}}'
     http_version:
-invalid_datasets_logged_out_non_hierarchical:
+invalid_collections_logged_out_non_hierarchical:
   response:
     status:
       code: 200
@@ -617,12 +617,12 @@ invalid_datasets_logged_out_non_hierarchical:
       - close
     body:
       encoding: UTF-8
-      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
-        "title":"ECHO dataset metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
+      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/collections.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
+        "title":"ECHO collection metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
         AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "summary":"ABSTRACT:
         Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide,
         and ozone over the entire BOREAS region to tie together measurements made
-        in both the SSA and the NSA.", "updated":"2000-01-27T00:00:00.000Z", "dataset_id":"BOREAS
+        in both the SSA and the NSA.", "updated":"2000-01-27T00:00:00.000Z", "collection_id":"BOREAS
         AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "short_name":"doi:10.3334/ORNLDAAC/495",
         "version_id":"1", "original_format":"ECHO10", "data_center":"ORNL_DAAC", "archive_center":"ORNL_DAAC",
         "processing_level_id":"3", "time_start":"1994-05-24T00:00:00.000Z", "time_end":"1994-09-16T00:00:00.000Z",
@@ -658,13 +658,13 @@ invalid_but_load_page:
     body:
       encoding: UTF-8
       string: '{"feed":{"updated":"2015-01-21T13:47:36.322Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true","title":"ECHO
-        dataset metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        collection metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","collection_id":"15
         Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","title":"15
         Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
         15 minute stream flow data for Kings Creek on the Konza Prairie","has_granules":true,"time_end":"1988-03-04T00:00:00Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","granule_count":39,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html","hreflang":"en-US","title":"USGS
         15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
         INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2000
+        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","collection_id":"2000
         Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","title":"2000
         Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
         2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
@@ -682,7 +682,7 @@ invalid_but_load_page:
         Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-2000/data-download","hreflang":"en-US","title":"data
         download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4NK3BZJ","hreflang":"en-US","title":"data
         set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2001"],"version_id":"2.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2001
+        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2001"],"version_id":"2.0","updated":"2014-05-13T00:00:00.000Z","collection_id":"2001
         Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2001","title":"2001
         Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
         2001 Environmental Sustainability Index (ESI) utilizes a refined methodology
@@ -701,7 +701,7 @@ invalid_but_load_page:
         download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/maps","hreflang":"en-US","title":"maps
         download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4X34VDM","hreflang":"en-US","title":"data
         set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2002"],"version_id":"3.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2002
+        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2002"],"version_id":"3.0","updated":"2014-05-13T00:00:00.000Z","collection_id":"2002
         Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2002","title":"2002
         Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
         2002 Environmental Sustainability Index (ESI) measures overall progress toward
@@ -716,13 +716,13 @@ invalid_but_load_page:
         Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001967-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/data-download","hreflang":"en-US","title":"data
         download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H40V89R6","hreflang":"en-US","title":"data
         set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2005"],"version_id":"4.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2005
+        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2005"],"version_id":"4.0","updated":"2014-05-13T00:00:00.000Z","collection_id":"2005
         Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2005","title":"2005
         Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
         2005 Environmental Sustainability Index (ESI) is a measure of overall progress
         towards environmental sustainability, developed for 146 countries. The index
         provides a composite profile of national environmental stewardship based on
-        a compilation of 21 indicators derived from 76 underlying datasets. The 2005
+        a compilation of 21 indicators derived from 76 underlying collections. The 2005
         version of the ESI represents a significant update and improvement on earlier
         versions; the country ESI scores or rankings should not be compared to earlier
         versions because of changes to the methodology and underlying data. The index
@@ -734,7 +734,7 @@ invalid_but_load_page:
         Commission.","has_granules":false,"orbit_parameters":{},"id":"C179001889-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2005/data-download","hreflang":"en-US","title":"data
         download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H40V89R6","hreflang":"en-US","title":"data
         set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2005/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1994-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2008"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2008
+        2","boxes":["-55 -180 90 180"],"time_start":"1994-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2008"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","collection_id":"2008
         Environmental Performance Index (EPI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_EPI_2008","title":"2008
         Environmental Performance Index (EPI)","coordinate_system":"CARTESIAN","summary":"The
         2008 Environmental Performance Index (EPI) centers on two broad environmental
@@ -758,19 +758,19 @@ invalid_but_load_page:
         Economic \n\nForum (WEF), and the Joint Research Centre (JRC), European Commission.","has_granules":false,"orbit_parameters":{},"id":"C179001707-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2008/data-download","hreflang":"en-US","title":"data
         download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4HT2M77","hreflang":"en-US","title":"data
         set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2008/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"2004-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_NRMI_2008"],"version_id":"1.0","updated":"2009-12-01T00:00:00.000Z","dataset_id":"2008
+        2","boxes":["-55 -180 90 180"],"time_start":"2004-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_NRMI_2008"],"version_id":"1.0","updated":"2009-12-01T00:00:00.000Z","collection_id":"2008
         Natural Resource Management Index (NRMI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_NRMI_2008","title":"2008
         Natural Resource Management Index (NRMI)","coordinate_system":"CARTESIAN","summary":"The
         2008 Natural Resources Management Index (NRMI) is a composite index for 226
         countries derived from the average of four proximity-to-target scores from
         eco-region protection, access to improved sanitation, access to improved water
         and child mortality indicators. The 2008 NRMI includes data for the NRMI for
-        2006, 2007 and 2008. The dataset is produced and distributed by the Columbia
+        2006, 2007 and 2008. The collection is produced and distributed by the Columbia
         University Center for International Earth Science Information Network (CIESIN)
         in collaboration with the Yale Center for Environmental Law and Policy (YCELP).","has_granules":false,"orbit_parameters":{},"id":"C179002048-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/es/data/NRMI_2008_final-1.xls","hreflang":"en-US","title":"Data
         in Microsoft Excel (XLS) format","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://sedac.ciesin.columbia.edu/es/mcc.html","hreflang":"en-US","title":"data
         set homepage (static URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1994-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2010"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2010
+        2","boxes":["-55 -180 90 180"],"time_start":"1994-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2010"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","collection_id":"2010
         Environmental Performance Index (EPI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_EPI_2010","title":"2010
         Environmental Performance Index (EPI)","coordinate_system":"CARTESIAN","summary":"The
         2010 Environmental Performance Index (EPI) ranks 163 countries on environmental
@@ -786,7 +786,7 @@ invalid_but_load_page:
         Center for International Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179002147-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2010/data-download","hreflang":"en-US","title":"data
         download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4D21VHT","hreflang":"en-US","title":"data
         set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"2000-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2012"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2012
+        2","boxes":["-55 -180 90 180"],"time_start":"2000-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2012"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","collection_id":"2012
         Environmental Performance Index and Pilot Trend Environmental Performance
         Index","data_center":"SEDAC","short_name":"CIESIN_SEDAC_EPI_2012","title":"2012
         Environmental Performance Index and Pilot Trend Environmental Performance
@@ -811,12 +811,12 @@ invalid_but_load_page:
         Website for the 2012 EPI is at http://epi.yale.edu/.","has_granules":false,"orbit_parameters":{},"id":"C1000000000-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-pilot-trend-2012/data-download","hreflang":"en-US","title":"data
         download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H48913SG","hreflang":"en-US","title":"data
         set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-pilot-trend-2012/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"3","boxes":["39.08
-        -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00Z","dif_ids":["FIFE_RAIN_30M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00Z","dif_ids":["FIFE_RAIN_30M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","collection_id":"30
         Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/2","title":"30
         Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
         minute rainfall data for the Konza Prairie","has_granules":true,"time_end":"1987-10-26T00:00:00Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","original_format":"ECHO10","granule_count":117,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html","hreflang":"en-US","title":"30
         minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-90
-        -180 79 177.9"],"time_start":"1977-11-16T00:00:00Z","dif_ids":["GLOBAL_MICROBIAL_BIOMASS_C_N_P"],"version_id":"1","updated":"2015-01-12T00:00:00.000Z","dataset_id":"A
+        -180 79 177.9"],"time_start":"1977-11-16T00:00:00Z","dif_ids":["GLOBAL_MICROBIAL_BIOMASS_C_N_P"],"version_id":"1","updated":"2015-01-12T00:00:00.000Z","collection_id":"A
         Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
         Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1264","title":"A
         Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
@@ -875,7 +875,7 @@ invalid_but_load_page:
         at 0.05-degree by 0.5-degree spatial resolution. The biome map and six estimates
         of C and N storage and C:N ration in soil microbial biomass are provided in
         a single netCDF format file.  (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-43.2
-        -122.4 58.42 176.13"],"time_start":"1993-01-01T00:00:00Z","dif_ids":["LEAF_PHOTOSYNTHESIS_TRAITS"],"version_id":"1","updated":"2014-06-27T00:00:00.000Z","dataset_id":"A
+        -122.4 58.42 176.13"],"time_start":"1993-01-01T00:00:00Z","dif_ids":["LEAF_PHOTOSYNTHESIS_TRAITS"],"version_id":"1","updated":"2014-06-27T00:00:00.000Z","collection_id":"A
         Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf
         Area","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1224","title":"A
         Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf
@@ -911,7 +911,7 @@ invalid_but_load_page:
         These data are suitable for exploring the general relationships of Vcmax and
         Jmax with each other and with leaf N, P and SLA. This data set contains one
         *.csv file. (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-50
-        -159.7 68.5 176.9"],"time_start":"1970-01-01T00:00:00Z","dif_ids":["LEAF_CARBON_NUTRIENTS"],"version_id":"1","updated":"2012-07-19T00:00:00.000Z","dataset_id":"A
+        -159.7 68.5 176.9"],"time_start":"1970-01-01T00:00:00Z","dif_ids":["LEAF_CARBON_NUTRIENTS"],"version_id":"1","updated":"2012-07-19T00:00:00.000Z","collection_id":"A
         Global Database of Carbon and Nutrient Concentrations of Green and Senesced
         Leaves","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1106","title":"A
         Global Database of Carbon and Nutrient Concentrations of Green and Senesced
@@ -932,7 +932,7 @@ invalid_but_load_page:
         both green and senesced leaves from woody and non-woody vegetation as described
         in Vergutz et al (2012). The studies were conducted from 1970-2009. There
         are two comma-delimited data files with this data set. (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-54.2
-        -164.78 78.42 175.62"],"time_start":"1932-01-01T00:00:00Z","dif_ids":["LAI_WOODY_PLANTS"],"version_id":"1","updated":"2014-07-22T00:00:00.000Z","dataset_id":"A
+        -164.78 78.42 175.62"],"time_start":"1932-01-01T00:00:00Z","dif_ids":["LAI_WOODY_PLANTS"],"version_id":"1","updated":"2014-07-22T00:00:00.000Z","collection_id":"A
         Global Database of Field-observed Leaf Area Index in Woody Plant Species,
         1932-2011","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1231","title":"A
         Global Database of Field-observed Leaf Area Index in Woody Plant Species,
@@ -966,7 +966,7 @@ invalid_but_load_page:
         provided in the data file. There is one data file in comma-separated (.csv)
         format with this data set and one companion file which provides the data sources.
         (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-36.45
-        -149.63 74.5 160.52"],"time_start":"1956-01-01T00:00:00Z","dif_ids":["GLOBAL_RTSG_FLUX_V1"],"version_id":"1","updated":"2012-04-16T00:00:00.000Z","dataset_id":"A
+        -149.63 74.5 160.52"],"time_start":"1956-01-01T00:00:00Z","dif_ids":["GLOBAL_RTSG_FLUX_V1"],"version_id":"1","updated":"2012-04-16T00:00:00.000Z","collection_id":"A
         Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
         1.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1078","title":"A
         Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
@@ -1004,7 +1004,7 @@ invalid_but_load_page:
         rainfall, soil moisture, soil gas flux after wetting and thawing, peak soil
         gas flux properties, and the corresponding study references. There is one
         comma-delimited data file.  (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-42.5
-        -117.86 63.23 117.6"],"time_start":"1985-01-01T00:00:00Z","dif_ids":["GLOBAL_PHOSPHORUS_HEDLEY_FRACT"],"version_id":"1","updated":"2014-07-18T00:00:00.000Z","dataset_id":"A
+        -117.86 63.23 117.6"],"time_start":"1985-01-01T00:00:00Z","dif_ids":["GLOBAL_PHOSPHORUS_HEDLEY_FRACT"],"version_id":"1","updated":"2014-07-18T00:00:00.000Z","collection_id":"A
         Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1230","title":"A
         Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","coordinate_system":"CARTESIAN","summary":"This
         data set provides concentrations of soil phosphorus (P) compiled from the
@@ -1037,7 +1037,7 @@ invalid_but_load_page:
         data Yang and Post (2011) also compiled information on soil order, soil pH,
         organic carbon and nitrogen content, as well as the geographic location (longitude
         and latitude) of the measurement sites.  (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-78.02
-        -162.2 78.17 175.5"],"time_start":"1961-01-01T00:00:00Z","dif_ids":["GLOBAL_SRDB_V3"],"version_id":"1","updated":"2014-08-04T00:00:00.000Z","dataset_id":"A
+        -162.2 78.17 175.5"],"time_start":"1961-01-01T00:00:00Z","dif_ids":["GLOBAL_SRDB_V3"],"version_id":"1","updated":"2014-08-04T00:00:00.000Z","collection_id":"A
         Global Database of Soil Respiration Data, Version 3.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1235","title":"A
         Global Database of Soil Respiration Data, Version 3.0","coordinate_system":"CARTESIAN","summary":"This
         data set provides an update of the soil respiration database (SRDB), a near-universal
@@ -1065,7 +1065,7 @@ invalid_but_load_page:
         measurement locations. The data set includes a file of RS data and a linked
         file of study bibliographic data; both files are in comma-separated format.
         (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"boxes":["68
-        -24 90 110","45 -130 90 105"],"time_start":"1953-01-01T01:00:00Z","dif_ids":["NSIDC-0050"],"version_id":"Undefined","updated":"2013-03-12T12:00:00.000Z","dataset_id":"AARI
+        -24 90 110","45 -130 90 105"],"time_start":"1953-01-01T01:00:00Z","dif_ids":["NSIDC-0050"],"version_id":"Undefined","updated":"2013-03-12T12:00:00.000Z","collection_id":"AARI
         10-Day Arctic Ocean EASE-Grid Sea Ice Observations","data_center":"NSIDCV0","short_name":"NSIDC-0050","title":"AARI
         10-Day Arctic Ocean EASE-Grid Sea Ice Observations","coordinate_system":"CARTESIAN","summary":"<span
         style=\"color: red; font-weight: bold;\">NOTE: This data set has been replaced
@@ -1096,7 +1096,7 @@ invalid_but_load_page:
         format. Postscript (.ps) files depicting\ncoverage per year are also provided
         with the data.","has_granules":false,"time_end":"1990-12-30T23:59:59Z","orbit_parameters":{},"id":"C2821-NSIDCV0","original_format":"ECHO10","granule_count":0,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://nsidc.org/data/g02172.html","hreflang":"en-US","title":"Data
         Access","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"}]},{"processing_level_id":"1B","boxes":["23
-        -85 26 -81"],"time_start":"2002-07-10T00:00:00Z","dif_ids":["aces1cont"],"version_id":"1","updated":"2011-12-01T11:06:14.000Z","dataset_id":"ACES
+        -85 26 -81"],"time_start":"2002-07-10T00:00:00Z","dif_ids":["aces1cont"],"version_id":"1","updated":"2011-12-01T11:06:14.000Z","collection_id":"ACES
         CONTINUOUS DATA V1","data_center":"GHRC","short_name":"aces1cont","title":"ACES
         CONTINUOUS DATA V1","coordinate_system":"CARTESIAN","summary":"The ALTUS Cloud
         Electrification Study (ACES) was Based at the Naval Air Facility Key West
@@ -1107,12 +1107,12 @@ invalid_but_load_page:
         sensors and other instruments, it allowed scientists to collect cloud electrification
         data for the first time from above the storm from it''s birth through dissipation.
         This experiment allowed scientists to achieve the dual goals of gathering
-        weather data safely, and testing new aircraft technology. This dataset consists
+        weather data safely, and testing new aircraft technology. This collection consists
         of data collected from seven instruments: the Slow/Fast antenna, Electric
         Field Mill, Dual Optical Pulse Sensor, Searchcoil magnetometer, Accelerometers,
         Gerdien Conductivity Prove, and the Fluxgate Magnetometer. Data consists of
-        sensor reads at 50HZ throughout the flight from all 64 channels.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C1020-GHRC","original_format":"ECHO10","granule_count":26,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1cont","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"1B","boxes":["23
-        -85 26 -81"],"time_start":"2002-07-10T00:00:00Z","dif_ids":["aces1efm"],"version_id":"1","updated":"2011-12-01T11:09:46.000Z","dataset_id":"ACES
+        sensor reads at 50HZ throughout the flight from all 64 channels.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C1020-GHRC","original_format":"ECHO10","granule_count":26,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1cont","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_collection.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"1B","boxes":["23
+        -85 26 -81"],"time_start":"2002-07-10T00:00:00Z","dif_ids":["aces1efm"],"version_id":"1","updated":"2011-12-01T11:09:46.000Z","collection_id":"ACES
         ELECTRIC FIELD MILL V1","data_center":"GHRC","short_name":"aces1efm","title":"ACES
         ELECTRIC FIELD MILL V1","coordinate_system":"CARTESIAN","summary":"The ALTUS
         Cloud Electrification Study (ACES) was based at the Naval Air Facility Key
@@ -1124,8 +1124,8 @@ invalid_but_load_page:
         cloud electrification data for the first time from above the storm from it''s
         birth through dissipation.  This experiment allowed scientists to achieve
         the dual goals of gathering weather data safely, and testing new aircraft
-        technology.  This dataset consists of data from the Electric Field Mills which
-        yield information about the atmospheric electrical fields above the instruments.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C194462-GHRC","original_format":"ECHO10","granule_count":14,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1efm","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]}]}}'
+        technology.  This collection consists of data from the Electric Field Mills which
+        yield information about the atmospheric electrical fields above the instruments.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C194462-GHRC","original_format":"ECHO10","granule_count":14,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1efm","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_collection.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]}]}}'
     http_version:
 first_service_request:
   response:

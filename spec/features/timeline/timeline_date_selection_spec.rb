@@ -4,7 +4,7 @@
 require "spec_helper"
 
 describe "Timeline date selection", reset: false do
-  extend Helpers::DatasetHelpers
+  extend Helpers::CollectionHelpers
 
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 

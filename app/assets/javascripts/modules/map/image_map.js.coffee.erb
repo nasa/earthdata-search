@@ -35,8 +35,8 @@ ns.ImageMap = do (window, L, page=@edsc.page) ->
       url = window.location.origin + '<%= image_path('plate_carree_earth_scaled.png') %>'
       L.imageOverlay(url, [[-90, -180], [90, 180]]).addTo(map)
 
-      selectedDataset = page.ui.datasetsList.selected()
-      selectedDataset.buildLayer(color: "#54F7A3", fillOpacity: 0.4, weight: 1).addTo(map)
+      selectedCollection = page.ui.collectionsList.selected()
+      selectedCollection.buildLayer(color: "#54F7A3", fillOpacity: 0.4, weight: 1).addTo(map)
       map
 
   exports = ImageMap

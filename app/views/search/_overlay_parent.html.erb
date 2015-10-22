@@ -1,12 +1,12 @@
 <section id="master-overlay-parent" class="master-overlay-parent">
   <header>
     <a class="master-overlay-close master-overlay-hide-parent" href="#" title="close"><i class="fa fa-times-circle"></i></a>
-    <h2>Browse Datasets</h2>
+    <h2>Browse Collections</h2>
     </p>
   </header>
   <div class="master-overlay-content panel-group">
-    <!-- ko if: datasets.facets.isRelevant() -->
-    <!-- ko foreach: datasets.facets.results -->
+    <!-- ko if: collections.facets.isRelevant() -->
+    <!-- ko foreach: collections.facets.results -->
     <!-- # Temporarily filter out 'Category Keyword' facet. Once CMR-1923 is implemented, the changes can be reverted. -->
     <!-- ko if: values().length > 0 && name != "Category Keyword" -->
     <div data-bind="css: class_name" class="panel panel-default">
@@ -19,7 +19,7 @@
       <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed(), 'features-facet': name == 'Features'}">
         <div class="panel-body facets">
           <!-- ko foreach: values -->
-          <p class="facets-item" data-bind="click: $root.datasets.facets.toggleFacet, css: {selected: isSelected(), 'facets-child': isChild(), 'facets-ancestor': isAncestor(), 'facets-parent': isParent()}, attr: {title: term}">
+          <p class="facets-item" data-bind="click: $root.collections.facets.toggleFacet, css: {selected: isSelected(), 'facets-child': isChild(), 'facets-ancestor': isAncestor(), 'facets-parent': isParent()}, attr: {title: term}">
             <span class="active-indicator"></span>
             <!--ko if: isAncestor() && !isParent() -->
               <i class="fa fa-chevron-left"></i>
@@ -27,7 +27,7 @@
 
             <span data-bind="text: term" class="facet-term"></span>
             <!-- ko ifnot: $parent.name == 'Features' || isAncestor() -->
-            <span class="facet-item-dataset-count" data-bind="text: count"></span>
+            <span class="facet-item-collection-count" data-bind="text: count"></span>
             <!-- /ko -->
             <!-- ko if: term == 'Subsetting Services' -->
             <span class="facet-badge badge-opendap"></span>

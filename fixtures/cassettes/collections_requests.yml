@@ -3471,7 +3471,7 @@ http_interactions:
   digest: efdee9e9a5302230b0b5c15a06fbd6fe74b7199e
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnodatasets%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -3497,7 +3497,7 @@ http_interactions:
   digest: 5bc82d1ee8dcc11a8f10c1711707b6e1768846c5
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnodatasets%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -3523,7 +3523,7 @@ http_interactions:
   digest: 0a7e6952e3f507c8ecebf5f6d3c3f28fd34c4b0e
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&keyword=somestringthatmatchesnodatasets%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -3549,7 +3549,7 @@ http_interactions:
   digest: 3662a8a695231309dee4ed7785cfea5fef15a9ff
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&keyword=somestringthatmatchesnodatasets%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
