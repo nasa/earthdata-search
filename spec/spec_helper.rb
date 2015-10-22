@@ -148,7 +148,9 @@ RSpec.configure do |config|
     index += 1
     puts " (Suite #{index} of #{count})"
 
-    models_to_preserve = [CollectionExtra, ActiveRecord::SchemaMigration]
+    # include deprecated 'DatasetExtra' here to prevent an error on model.destroy_all. For more info, see comments in
+    # dataset_extra.rb
+    models_to_preserve = [CollectionExtra, ActiveRecord::SchemaMigration, DatasetExtra]
     ActiveRecord::Base.descendants.each do |model|
       model.destroy_all unless models_to_preserve.include?(model)
     end
