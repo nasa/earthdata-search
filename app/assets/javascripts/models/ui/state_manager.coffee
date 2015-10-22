@@ -36,7 +36,7 @@
       result.labs = page.labs() if page.labs()
       result.echo_env = @echo_env if @echo_env
 
-      result = extend(result, page.project.serialized(), ui.collectionsList.serialized())
+      result = extend(result, page.project.serialized(), ui.datasetsList.serialized())
 
       if @isDomLoaded()
         serialMap = @page.map.serialized()
@@ -54,7 +54,7 @@
 
       if page.map
         page.map.serialized(params.m)
-        ui.collectionsList.serialized(params)
+        ui.datasetsList.serialized(params)
       else
         @_mapParams = params.m
         @_dsListParams = {g: params.g}
@@ -93,7 +93,7 @@
 
       @page.map.serialized(@_mapParams) if @_mapParams
       @page.ui.granuleTimeline.serialized(@_timelineParams) if @_timelineParams
-      @page.ui.collectionsList.serialized(@_dsListParams) if @_dsListParams?
+      @page.ui.datasetsList.serialized(@_dsListParams) if @_dsListParams?
 
       @isDomLoaded(true)
 
@@ -102,19 +102,19 @@
       last = null
       last = parts.pop() while !last && parts.length > 0
       @page.ui.projectList.visible(last == 'project')
-      @_toggleWithTimeout('facets', @page.collections.facets.isRelevant, last == 'search')
-      @_toggleWithTimeout('collections', @page.collections.isRelevant, last == 'collections' || last == 'search')
+      @_toggleWithTimeout('facets', @page.datasets.facets.isRelevant, last == 'search')
+      @_toggleWithTimeout('datasets', @page.datasets.isRelevant, last == 'datasets' || last == 'search')
 
     # The following two methods read a path from and write a path to the master overlay state, respectively
     #
     # Paths are as follows:
     #   / - The landing page
-    #   /search - The search page with browse collections and collection list open
+    #   /search - The search page with browse datasets and dataset list open
     #   /search/map - The search page with the overlays closed
-    #   /search/collections - The search page with browse collections closed
+    #   /search/datasets - The search page with browse datasets closed
     #   /search/project - The project page
-    #   /search(/project)?/:id/granules - The granule results page for the given collection id
-    #   /search(/project)?/:id(/granules)?/collection-details - The collection details page for the given collection id
+    #   /search(/project)?/:id/granules - The granule results page for the given dataset id
+    #   /search(/project)?/:id(/granules)?/dataset-details - The dataset details page for the given dataset id
     #   /search(/project)?/:id(/granules)?/granule-details - The granules details page for the given granule id
     #
     # Note this is not perfect serialization of the overlay state.  In particular, hiding the overlay and reloading
@@ -137,14 +137,14 @@
 
       return root if state.parent
       return "#{root}/map" unless state.visible
-      return "#{root}/collections" if state.current == 'collection-results'
+      return "#{root}/datasets" if state.current == 'dataset-results'
 
       root += '/project' if state.children.indexOf('project-overview') != -1
       return root if state.current == 'project-overview'
 
       root += "/granules" if state.children.indexOf('granule-list') != -1
       return root if state.current == 'granule-list'
-      return "#{root}/collection-details" if state.current == 'collection-details'
+      return "#{root}/dataset-details" if state.current == 'dataset-details'
       return "#{root}/granule-details" if state.current == 'granule-details'
 
       console.error "Unrecognized overlay state: #{JSON.stringify(state)}"
@@ -160,48 +160,48 @@
         parent: true
         secondary: false
         children: null
-        current: 'collection-results'
+        current: 'dataset-results'
 
       components = path[1...].split('/')
 
-      children = ['collection-results']
+      children = ['dataset-results']
 
       component = components.shift() # 'search'
       component = components.shift()
 
       state.visible = component != 'map'
       state.parent = !component
-      state.current = 'collection-results' if component == 'collections' || state.parent
+      state.current = 'dataset-results' if component == 'datasets' || state.parent
 
       if component == 'project'
         children.push('project-overview')
         state.current = 'project-overview'
         component = components.shift()
 
-      collectionFocused = false
-      collectionSelected = false
+      datasetFocused = false
+      datasetSelected = false
       granuleFocused = false
       granuleSelected = false
       components.unshift(component)
       if components.indexOf('granules') != -1
         children.push('granule-list')
-        collectionFocused = true
+        datasetFocused = true
         granuleFocused = true
         state.current = 'granule-list'
       if components.indexOf('granule-details') != -1
         granuleSelected = true
         state.current = 'granule-details'
       children.push('granule-details')
-      if components.indexOf('collection-details') != -1
-        collectionSelected = true
-        state.current = 'collection-details'
+      if components.indexOf('dataset-details') != -1
+        datasetSelected = true
+        state.current = 'dataset-details'
         children.pop() # granule-details
-      children.push('collection-details')
+      children.push('dataset-details')
 
       state.children = children
 
-      dsList = @page.ui.collectionsList
-      dsList.state(collectionFocused, collectionSelected)
+      dsList = @page.ui.datasetsList
+      dsList.state(datasetFocused, datasetSelected)
       if granuleFocused
         subscription = dsList.focused.subscribe (value) ->
           if value?
@@ -227,7 +227,7 @@
         # If the user is on the granule details page, but there is no selected selected granule
         false
       if path.indexOf('/granules') != -1 && (!serialized.p || serialized.p.indexOf('!') == 0)
-        # If the user is viewing granules, but there is no selected collection
+        # If the user is viewing granules, but there is no selected dataset
         false
       else
         true
@@ -236,15 +236,15 @@
       path = @path()
       serialized = @serialize()
 
-      # EDSC-540: If the query string changes and we're not on the collections list, go to the
-      #           collections list
+      # EDSC-540: If the query string changes and we're not on the datasets list, go to the
+      #           datasets list
       prevKeywords = @lastKeywords
       @lastKeywords = @_textQuery(serialized)
-      if (path != '/search' && path != '/search/collections' &&  # Not viewing collections
+      if (path != '/search' && path != '/search/datasets' &&  # Not viewing datasets
           prevKeywords? &&                                    # Not initial page load
           @lastKeywords != '' &&                              # Haven't cleared the query
           prevKeywords != @lastKeywords)                      # Query changed
-        @_sendToCollectionList()
+        @_sendToDatasetList()
         path = @path()
         serialized = @serialize()
 
@@ -255,13 +255,13 @@
     _textQuery: (serialized) ->
       (serialized.free_text || '') + (serialized.placename || '') + (serialized.q || '')
 
-    _sendToCollectionList: ->
+    _sendToDatasetList: ->
       ui = @page.ui
-      {collectionsList, projectList} = ui
+      {datasetsList, projectList} = ui
       projectList.hideFilters()
-      collectionsList.hideCollectionDetails()
-      collectionsList.focused()?.hideGranuleDetails()
-      collectionsList.unfocusCollection()
+      datasetsList.hideDatasetDetails()
+      datasetsList.focused()?.hideGranuleDetails()
+      datasetsList.unfocusDataset()
       @overlay.level(0)
 
   exports = StateManager

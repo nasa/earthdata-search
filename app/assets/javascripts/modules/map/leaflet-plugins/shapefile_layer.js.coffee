@@ -64,7 +64,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       @_isActive = true
       @show()
       @showHelp() if showHelp
-      $('#collections-overlay').masterOverlay('hide')
+      $('#datasets-overlay').masterOverlay('hide')
 
     deactivate: ->
       @_isActive = false

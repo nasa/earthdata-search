@@ -15,7 +15,7 @@ describe 'First time user' do
 
     it 'saves the preferences and shows the landing page' do
       expect(User.count).to eq(1)
-      expect(page).to have_content('Browse Collections')
+      expect(page).to have_content('Browse Datasets')
     end
   end
 end

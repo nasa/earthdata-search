@@ -9,60 +9,60 @@ describe Echo::Client do
 
   before { allow(cmr_client).to receive(:connection).and_return(connection) }
 
-  context 'collection search' do
-    let(:collection_search_url) { "/search/collections.json" }
+  context 'dataset search' do
+    let(:dataset_search_url) { "/search/collections.json" }
 
     context 'using free text' do
       it 'performs searches using partial matches' do
-        expect(connection).to receive(:get).with(collection_search_url, keyword: "term*", :include_has_granules=>true, :include_granule_counts=>true).and_return(:response)
+        expect(connection).to receive(:get).with(dataset_search_url, keyword: "term*", :include_has_granules=>true, :include_granule_counts=>true).and_return(:response)
 
-        response = cmr_client.get_collections(free_text: "term")
+        response = cmr_client.get_datasets(free_text: "term")
         expect(response.faraday_response).to eq(:response)
       end
 
       it 'partially matches any word in the free text query' do
-        expect(connection).to receive(:get).with(collection_search_url, keyword: "term1* term2*", :include_has_granules=>true, :include_granule_counts=>true).and_return(:response)
+        expect(connection).to receive(:get).with(dataset_search_url, keyword: "term1* term2*", :include_has_granules=>true, :include_granule_counts=>true).and_return(:response)
 
-        response = cmr_client.get_collections(free_text: "term1 term2")
+        response = cmr_client.get_datasets(free_text: "term1 term2")
         expect(response.faraday_response).to eq(:response)
       end
 
       it 'collapses whitespace in the free text query' do
-        expect(connection).to receive(:get).with(collection_search_url, keyword: "term1* term2*", :include_has_granules=>true, :include_granule_counts=>true).and_return(:response)
+        expect(connection).to receive(:get).with(dataset_search_url, keyword: "term1* term2*", :include_has_granules=>true, :include_granule_counts=>true).and_return(:response)
 
-        response = cmr_client.get_collections(free_text: "  term1\t term2 \n")
+        response = cmr_client.get_datasets(free_text: "  term1\t term2 \n")
         expect(response.faraday_response).to eq(:response)
       end
 
       it 'escape catalog-rest reserved characters in the free text query' do
-        expect(connection).to receive(:get).with(collection_search_url, keyword: "cloud_cover_\\%*", :include_has_granules=>true, :include_granule_counts=>true).and_return(:response)
+        expect(connection).to receive(:get).with(dataset_search_url, keyword: "cloud_cover_\\%*", :include_has_granules=>true, :include_granule_counts=>true).and_return(:response)
 
-        response = cmr_client.get_collections(free_text: "cloud_cover_%")
+        response = cmr_client.get_datasets(free_text: "cloud_cover_%")
         expect(response.faraday_response).to eq(:response)
       end
     end
   end
 
-  context 'collection details' do
-    let(:collection_url) { "/search/concepts/C14758250-LPDAAC_ECS.echo10" }
+  context 'dataset details' do
+    let(:dataset_url) { "/search/concepts/C14758250-LPDAAC_ECS.echo10" }
     let(:resp) { Faraday::Response.new }
     let(:body) { Object.new }
     let(:granule_url) { "http://example.com/search/granules.json" }
 
-    it 'with valid collection ID' do
-      expect(connection).to receive(:get).with(collection_url, {}).and_return(resp)
+    it 'with valid dataset ID' do
+      expect(connection).to receive(:get).with(dataset_url, {}).and_return(resp)
 
-      response = cmr_client.get_collection('C14758250-LPDAAC_ECS')
+      response = cmr_client.get_dataset('C14758250-LPDAAC_ECS')
       expect(response.faraday_response).to eq(resp)
     end
 
     it "sets the granule_url" do
-      expect(connection).to receive(:get).with(collection_url, {}).and_return(resp)
+      expect(connection).to receive(:get).with(dataset_url, {}).and_return(resp)
       expect(resp).to receive(:body).and_return([body]).at_least(:once)
       expect(body).to receive(:granule_url=).with(granule_url)
       expect(body).to receive(:granule_url).and_return(granule_url)
 
-      response = cmr_client.get_collection('C14758250-LPDAAC_ECS')
+      response = cmr_client.get_dataset('C14758250-LPDAAC_ECS')
       expect(response.body[0].granule_url).to_not be_nil
     end
   end
@@ -104,18 +104,18 @@ describe Echo::Client do
     end
   end
 
-  context 'collection facets' do
-    let(:collection_facets_url) { "/search/collections.json" }
+  context 'dataset facets' do
+    let(:dataset_facets_url) { "/search/collections.json" }
 
-    it 'returns collection facets in json format' do
-      expect(connection).to receive(:get).with(collection_facets_url, {:include_facets=>true, :page_size=>1, :include_has_granules=>true, :include_granule_counts=>true}).and_return(:response)
+    it 'returns dataset facets in json format' do
+      expect(connection).to receive(:get).with(dataset_facets_url, {:include_facets=>true, :page_size=>1, :include_has_granules=>true, :include_granule_counts=>true}).and_return(:response)
 
       response = cmr_client.get_facets()
       expect(response.faraday_response).to eq(:response)
     end
 
-    it 'returns collection facets with a filter' do
-      expect(connection).to receive(:get).with(collection_facets_url, {:campaign=>["AQUA"], :include_facets=>true, :page_size=>1, :options=>{:campaign=>{:and=>true}}, :include_has_granules=>true, :include_granule_counts=>true}).and_return(:response)
+    it 'returns dataset facets with a filter' do
+      expect(connection).to receive(:get).with(dataset_facets_url, {:campaign=>["AQUA"], :include_facets=>true, :page_size=>1, :options=>{:campaign=>{:and=>true}}, :include_has_granules=>true, :include_granule_counts=>true}).and_return(:response)
 
       response = cmr_client.get_facets(campaign: ["AQUA"])
       expect(response.faraday_response).to eq(:response)

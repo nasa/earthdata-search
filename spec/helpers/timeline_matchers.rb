@@ -129,7 +129,7 @@ RSpec::Matchers.define :have_focused_time_span do |start, stop|
   end
 end
 
-RSpec::Matchers.define :have_temporal do |start, stop, range=nil, collection_n=nil|
+RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
   match do |page|
     condition = []
     condition << start.to_i
@@ -139,10 +139,10 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, collection_n=n
     script = "(function(temporal) {"
     script += "  return temporal.queryCondition();"
 
-    if collection_n.nil?
+    if dataset_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.collections()[#{collection_n}].granulesModel.temporal.applied);"
+      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
     end
 
     synchronize do
@@ -169,10 +169,10 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, collection_n=n
     script = "(function(temporal) {"
     script += "  return temporal.queryCondition();"
 
-    if collection_n.nil?
+    if dataset_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.collections()[#{collection_n}].granulesModel.temporal.applied);"
+      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
     end
 
     actual = page.evaluate_script(script).split(',').join(' - ')
@@ -182,15 +182,15 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, collection_n=n
 end
 
 
-RSpec::Matchers.define :have_no_temporal do |collection_n=nil|
+RSpec::Matchers.define :have_no_temporal do |dataset_n=nil|
   match do |page|
     script = "(function(temporal) {"
     script += "  return temporal.queryCondition();"
 
-    if collection_n.nil?
+    if dataset_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.collections()[#{collection_n}].granulesModel.temporal.applied);"
+      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
     end
 
     synchronize do

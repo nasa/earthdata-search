@@ -7,7 +7,7 @@ describe 'Data Quality Summaries', :reset => false do
     login
   end
 
-  context "when configuring retrieval for a collection with quality information" do
+  context "when configuring retrieval for a dataset with quality information" do
     before :all do
       load_page '/data/configure', project: ['C115003855-NSIDC_ECS']
       wait_for_xhr
@@ -19,7 +19,7 @@ describe 'Data Quality Summaries', :reset => false do
     end
   end
 
-  context "when configuring retrieval for a collection with no quality information" do
+  context "when configuring retrieval for a dataset with no quality information" do
     before :all do
       load_page '/data/configure', project: ['C179003030-ORNL_DAAC']
       wait_for_xhr

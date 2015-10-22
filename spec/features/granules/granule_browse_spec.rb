@@ -4,7 +4,7 @@
 require "spec_helper"
 
 describe "Granule browse display", reset: false do
-  extend Helpers::CollectionHelpers
+  extend Helpers::DatasetHelpers
 
   before :all do
     Capybara.reset_sessions!
@@ -12,7 +12,7 @@ describe "Granule browse display", reset: false do
   end
 
   context "for granules with browse" do
-    use_collection 'C14758250-LPDAAC_ECS', 'AST_L1A'
+    use_dataset 'C14758250-LPDAAC_ECS', 'AST_L1A'
 
     context "viewing the granule list" do
       hook_granule_results
@@ -50,7 +50,7 @@ describe "Granule browse display", reset: false do
   end
 
   context "for granules with no browse" do
-    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+    use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
 
     context "viewing the granule list" do
       hook_granule_results

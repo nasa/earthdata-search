@@ -5,7 +5,7 @@ describe 'Granule metadata' do
     load_page :search
     fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
     wait_for_xhr
-    first_collection_result.click
+    first_dataset_result.click
     # Select a specific granule
     click_link 'Filter granules'
     fill_in 'granule_id', with: 'FIFE_STRM_15M.80611715.s15'

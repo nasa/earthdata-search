@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe 'Collection Colormaps', reset: false do
-  gibs_collection_id = 'C1000000016-LANCEMODIS'
-  non_gibs_collection_id = 'C179003030-ORNL_DAAC'
-  gibs_granules_collection_id = 'C187016591-LPDAAC_ECS'
+describe 'Dataset Colormaps', reset: false do
+  gibs_dataset_id = 'C1000000016-LANCEMODIS'
+  non_gibs_dataset_id = 'C179003030-ORNL_DAAC'
+  gibs_granules_dataset_id = 'C187016591-LPDAAC_ECS'
 
   before :all do
     load_page :search
   end
 
-  context "when viewing a GIBS-enabled collection" do
+  context "when viewing a GIBS-enabled dataset" do
     before :all do
       # load_page :search
-      fill_in 'keywords', with: gibs_collection_id
+      fill_in 'keywords', with: gibs_dataset_id
       wait_for_xhr
       expect(page).to have_content("MOD10_L2")
-      first_featured_collection.click
+      first_featured_dataset.click
       wait_for_xhr
     end
 
@@ -27,9 +27,9 @@ describe 'Collection Colormaps', reset: false do
       expect(page).to have_css(".legend.leaflet-control")
     end
 
-    context "when returning to the collection results" do
+    context "when returning to the dataset results" do
       before :all do
-        click_link 'Back to Collections'
+        click_link 'Back to Datasets'
       end
 
       it "removes the colormap" do
@@ -38,18 +38,18 @@ describe 'Collection Colormaps', reset: false do
     end
   end
 
-  context "when viewing a non-GIBS-enabled collection" do
+  context "when viewing a non-GIBS-enabled dataset" do
     before :all do
       # load_page :search
-      fill_in 'keywords', with: non_gibs_collection_id
+      fill_in 'keywords', with: non_gibs_dataset_id
       wait_for_xhr
       expect(page).to have_content("doi:10.3334/ORNLDAAC/1")
-      first_collection_result.click
+      first_dataset_result.click
       wait_for_xhr
     end
 
     after :all do
-      click_link 'Back to Collections'
+      click_link 'Back to Datasets'
       reset_search
     end
 
@@ -59,13 +59,13 @@ describe 'Collection Colormaps', reset: false do
 
   end
 
-  context "when viewing the GIBS-granule test collection" do
+  context "when viewing the GIBS-granule test dataset" do
     before :all do
       # load_page :search
-      fill_in 'keywords', with: gibs_granules_collection_id
+      fill_in 'keywords', with: gibs_granules_dataset_id
       wait_for_xhr
       expect(page).to have_content("MOD11_L2")
-      first_collection_result.click
+      first_dataset_result.click
       wait_for_xhr
     end
 
@@ -74,7 +74,7 @@ describe 'Collection Colormaps', reset: false do
     end
 
     after :all do
-      click_link 'Back to Collections'
+      click_link 'Back to Datasets'
       reset_search
     end
   end

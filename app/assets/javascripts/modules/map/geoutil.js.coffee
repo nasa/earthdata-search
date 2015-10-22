@@ -170,9 +170,9 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
     # more calculations.
     # If polygons still cause problems, interpolate more :)
     # Example of a problematic polygon before interpolation:
-    # http://edsc.dev/search/collections?polygon=-38.53125%2C37.125%2C-60.75%2C56.109375%2C1.6875%2C0.28125%2C-38.53125%2C37.125&m=15.5390625!10.8984375!2!1!0!
+    # http://edsc.dev/search/datasets?polygon=-38.53125%2C37.125%2C-60.75%2C56.109375%2C1.6875%2C0.28125%2C-38.53125%2C37.125&m=15.5390625!10.8984375!2!1!0!
     # Example of a problematic polygon after interpolation:
-    # http://edsc.dev/search/collections?polygon=-38.53125%2C37.125%2C-60.75%2C56.109375%2C-11.390625%2C-4.5%2C-38.53125%2C37.125&m=15.5390625!10.8984375!2!1!0!
+    # http://edsc.dev/search/datasets?polygon=-38.53125%2C37.125%2C-60.75%2C56.109375%2C-11.390625%2C-4.5%2C-38.53125%2C37.125&m=15.5390625!10.8984375!2!1!0!
     latlngs = []
     len = origLatlngs.length
     for i in [0...len]

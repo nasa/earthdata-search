@@ -12,14 +12,14 @@ describe "Data access status page", reset: false do
 
       retrievals = [
         {"query" => "p=C179003030-ORNL_DAAC",
-         "collections" => [{
+         "datasets" => [{
                           "id"=>"C179003030-ORNL_DAAC",
                           "params"=>"echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20",
                           "serviceOptions"=>{"accessMethod"=>[{"method"=>"Download", "type"=>"download"}]}
                         }],
          "source" => "p=C179003030-ORNL_DAAC&m=0.0703125!0!2"},
         {"query" => "p=!C179003030-ORNL_DAAC!C179001887-SEDAC",
-         "collections" => [{
+         "datasets" => [{
                           "id"=>"C179003030-ORNL_DAAC",
                           "params"=>"echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20",
                           "serviceOptions"=>{"accessMethod"=>[{"method"=>"Download", "type"=>"download"}]}
@@ -44,7 +44,7 @@ describe "Data access status page", reset: false do
     end
 
     it "displays a textual summary of recent retrievals" do
-      expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE) and 1 other collection")
+      expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE) and 1 other dataset")
     end
 
     it "displays an indication of how long ago orders were placed" do
@@ -70,7 +70,7 @@ describe "Data access status page", reset: false do
         visit '/data/status'
       end
 
-      it "removes the collection from the list" do
+      it "removes the dataset from the list" do
         expect(page).to have_no_selector('tbody tr:nth-child(2)')
         expect(page).to have_selector('tbody tr', count: 1)
       end
@@ -82,7 +82,7 @@ describe "Data access status page", reset: false do
           end
         end
 
-        it "removes the collection from the list" do
+        it "removes the dataset from the list" do
           expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
         end
 

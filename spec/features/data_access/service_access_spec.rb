@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe 'Services Access', reset: false do
-  serviceable_collection_id = 'C179014698-NSIDC_ECS'
-  serviceable_collection_title = 'AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002'
+  serviceable_dataset_id = 'C179014698-NSIDC_ECS'
+  serviceable_dataset_title = 'AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002'
 
-  context 'when viewing data access with a serviceable collection' do
+  context 'when viewing data access with a serviceable dataset' do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, focus: serviceable_collection_id
+      load_page :search, focus: serviceable_dataset_id
       login
       first_granule_list_item.click_link "Retrieve single granule data"
       wait_for_xhr
@@ -47,7 +47,7 @@ describe 'Services Access', reset: false do
         context 'when returning to the retrieval page after a service is complete' do
           before :all do
             visit "/data/status"
-            click_on serviceable_collection_title
+            click_on serviceable_dataset_title
             wait_for_xhr
           end
 

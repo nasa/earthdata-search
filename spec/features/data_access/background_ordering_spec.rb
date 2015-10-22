@@ -2,15 +2,15 @@ require 'spec_helper'
 require 'rake'
 
 describe 'Background jobs ordering', reset: false do
-  orderable_collection_id = 'C90762182-LAADS'
-  orderable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
+  orderable_dataset_id = 'C90762182-LAADS'
+  orderable_dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
   before :all do
       Delayed::Worker.delay_jobs = true
 
       load_page :search, overlay: false
       login
-      load_page 'data/configure', project: [orderable_collection_id]
+      load_page 'data/configure', project: [orderable_dataset_id]
       wait_for_xhr
 
       choose 'FtpPushPull'

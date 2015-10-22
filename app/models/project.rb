@@ -10,10 +10,10 @@ class Project < ActiveRecord::Base
     "#{self.path.split('?')[0]}?projectId=#{self.to_param}"
   end
 
-  def number_collections
-    collection_list = self.path[/[?&]p=([\w!-]+)/, 1]
-    collection_ids = collection_list.split('!').map(&:presence).compact.uniq
-    collection_ids.size
+  def number_datasets
+    dataset_list = self.path[/[?&]p=([\w!-]+)/, 1]
+    dataset_ids = dataset_list.split('!').map(&:presence).compact.uniq
+    dataset_ids.size
   rescue
     0
   end

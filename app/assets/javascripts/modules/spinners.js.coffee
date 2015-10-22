@@ -15,10 +15,10 @@ do ($=jQuery) ->
         $(@button).prop("disabled", false)
 
   spinners = [
-    new XhrSpinner(/\bcollections.json\b.+\bpage_num=1\b/, '#collection-results .panel-list-meta'), # collections list first page
-    new XhrSpinner(/\bcollections.json\b.+\bpage_num=([2-9]\d*|\d{2,})\b/, '.master-overlay-main .panel-list-load-more'), # collections list scrolling
-    new XhrSpinner('/collection_facets.json', '.master-overlay-parent .panel-list-meta'), # facets
-    new XhrSpinner('/collections/', '#collection-details .loading'), # collection details
+    new XhrSpinner(/\bdatasets.json\b.+\bpage_num=1\b/, '#dataset-results .panel-list-meta'), # datasets list first page
+    new XhrSpinner(/\bdatasets.json\b.+\bpage_num=([2-9]\d*|\d{2,})\b/, '.master-overlay-main .panel-list-load-more'), # datasets list scrolling
+    new XhrSpinner('/dataset_facets.json', '.master-overlay-parent .panel-list-meta'), # facets
+    new XhrSpinner('/datasets/', '#dataset-details .loading'), # dataset details
     new XhrSpinner('/granules/', '#granule-details .loading'), # granule details
     new XhrSpinner('/granules.json', '#granule-list .panel-list-load-more'), # granule list
     new XhrSpinner('/timeline.json', '.timeline-tools'), # timeline

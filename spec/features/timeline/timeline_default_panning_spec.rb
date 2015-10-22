@@ -1,9 +1,9 @@
 require "spec_helper"
 
 describe "Timeline default panning", reset: false do
-  collection_end = DateTime.new(1988, 3, 4, 0, 0, 0, '+0')
+  dataset_end = DateTime.new(1988, 3, 4, 0, 0, 0, '+0')
 
-  context "when the timeline range is before the time span of all currently visible collections" do
+  context "when the timeline range is before the time span of all currently visible datasets" do
     end_date = DateTime.new(1971, 1, 1, 0, 0, 0, '+0')
 
     before :all do
@@ -11,12 +11,12 @@ describe "Timeline default panning", reset: false do
       wait_for_xhr
     end
 
-    it "pans the timeline to one appropriate for the visible collections" do
-      expect(page).to have_timeline_range(collection_end - 1.year, collection_end)
+    it "pans the timeline to one appropriate for the visible datasets" do
+      expect(page).to have_timeline_range(dataset_end - 1.year, dataset_end)
     end
   end
 
-  context "when the timeline range is within the time span of currently visible collections" do
+  context "when the timeline range is within the time span of currently visible datasets" do
     end_date = DateTime.new(1985, 3, 1, 0, 0, 0, '+0')
 
     before :all do
@@ -29,7 +29,7 @@ describe "Timeline default panning", reset: false do
     end
   end
 
-  context "when the timeline range is after the time span of all currently visible collections" do
+  context "when the timeline range is after the time span of all currently visible datasets" do
     end_date = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 
     before :all do
@@ -37,8 +37,8 @@ describe "Timeline default panning", reset: false do
       wait_for_xhr
     end
 
-    it "pans the timeline to one appropriate for the visible collections" do
-      expect(page).to have_timeline_range(collection_end - 1.year, collection_end)
+    it "pans the timeline to one appropriate for the visible datasets" do
+      expect(page).to have_timeline_range(dataset_end - 1.year, dataset_end)
     end
   end
 end

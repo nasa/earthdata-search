@@ -9,7 +9,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     wait_for_xhr
   end
 
-  context 'when ordering a collection with XY Box subsetting and a spatial constraint in the northern hemisphere' do
+  context 'when ordering a dataset with XY Box subsetting and a spatial constraint in the northern hemisphere' do
     before reset_scope do
       load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, bounding_box: [80, 0, 85, 10]
       wait_for_xhr
@@ -106,7 +106,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     end
   end
 
-  context 'when ordering a collection with XY Box subsetting and a spatial constraint in the southern hemisphere' do
+  context 'when ordering a dataset with XY Box subsetting and a spatial constraint in the southern hemisphere' do
     before reset_scope do
       load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, point: [-80, 10]
       wait_for_xhr
@@ -203,7 +203,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     end
   end
 
-  context 'when ordering a collection with XY Box subsetting and a spatial constraint near the equator' do
+  context 'when ordering a dataset with XY Box subsetting and a spatial constraint near the equator' do
     before reset_scope do
       load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, bounding_box: [10, 0, 80, 10]
       wait_for_xhr
@@ -236,7 +236,7 @@ describe "Data Access XY Box Subsetting", reset: false do
     end
   end
 
-  context 'when ordering a collection with XY Box subsetting and no spatial constraint' do
+  context 'when ordering a dataset with XY Box subsetting and no spatial constraint' do
     before reset_scope do
       load_page :search, project: ['C115003855-NSIDC_ECS'], view: :project, bounding_box: [10, 0, 80, 10]
       wait_for_xhr

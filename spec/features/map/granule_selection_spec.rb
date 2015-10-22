@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Granule selection", reset: false do
-  extend Helpers::CollectionHelpers
+  extend Helpers::DatasetHelpers
   Capybara.ignore_hidden_elements = true
 
   is_temporal_ordered_script = """

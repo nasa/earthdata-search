@@ -1,5 +1,5 @@
 
-do (L, extend = $.extend, Collection = @edsc.models.data.Collection, Granule = @edsc.models.data.Granule) ->
+do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.models.data.Granule) ->
 
   parseSpatial = (str) ->
     str = str[0] if str instanceof Array
@@ -7,7 +7,7 @@ do (L, extend = $.extend, Collection = @edsc.models.data.Collection, Granule = @
     len = coords.length - 1
     new L.LatLng(coords[i], coords[i+1]) for i in [0...len] by 2
 
-  # Mixin for collections and granules that parses/normalizes their spatial coordinates
+  # Mixin for datasets and granules that parses/normalizes their spatial coordinates
   SpatialMixin =
     getPoints: ->
       if !@_points? && @points?
@@ -67,7 +67,7 @@ do (L, extend = $.extend, Collection = @edsc.models.data.Collection, Granule = @
       layer
 
 
-  extend(Collection.prototype, SpatialMixin)
+  extend(Dataset.prototype, SpatialMixin)
   extend(Granule.prototype, SpatialMixin)
 
   null

@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe "Base layer date display", reset: false do
-  extend Helpers::CollectionHelpers
+  extend Helpers::DatasetHelpers
 
   present = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
 

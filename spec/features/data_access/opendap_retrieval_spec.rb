@@ -12,12 +12,12 @@ describe 'OPeNDAP Retrieval', reset: false do
     AccessConfiguration.destroy_all if page.server.responsive?
   end
 
-  opendap_collection = 'C181553784-GSFCS4PA'
-  non_opendap_collection = 'C179003030-ORNL_DAAC'
+  opendap_dataset = 'C181553784-GSFCS4PA'
+  non_opendap_dataset = 'C179003030-ORNL_DAAC'
 
-  context 'configuring a non-OPeNDAP collection and selecting the "Download" option' do
+  context 'configuring a non-OPeNDAP dataset and selecting the "Download" option' do
     before(:all) do
-      load_page 'data/configure', project: [non_opendap_collection]
+      load_page 'data/configure', project: [non_opendap_dataset]
       choose 'Download'
     end
 
@@ -32,10 +32,10 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
   end
 
-  context 'configuring an OPeNDAP collection and selecting the "Download" option' do
+  context 'configuring an OPeNDAP dataset and selecting the "Download" option' do
     before(:all) do
       load_page('data/configure',
-                project: [opendap_collection],
+                project: [opendap_dataset],
                 bounding_box: [0, 0, 2, 2],
                 temporal: ['2014-07-23T00:00:00Z', '2014-08-02T00:00:00Z'])
       choose 'Download'
@@ -93,10 +93,10 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
   end
 
-  context 'downloading an OPeNDAP collection with subsetting options' do
+  context 'downloading an OPeNDAP dataset with subsetting options' do
     before(:all) do
       load_page('data/configure',
-                project: [opendap_collection],
+                project: [opendap_dataset],
                 bounding_box: [0, 0, 2, 2],
                 temporal: ['2014-07-23T00:00:00Z', '2014-08-02T00:00:00Z'])
       choose 'Download'
@@ -112,7 +112,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       login
     end
 
-    it 'provides a URL describing metadata about the collection\'s parameters' do
+    it 'provides a URL describing metadata about the dataset\'s parameters' do
       within_window('Earthdata Search - Downloads') do
         expect(page).to have_css('a[href*=".he5.info"]')
       end
@@ -142,10 +142,10 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
   end
 
-  context 'downloading an OPeNDAP collection in its original format' do
+  context 'downloading an OPeNDAP dataset in its original format' do
     before(:all) do
       load_page('data/configure',
-                project: [opendap_collection],
+                project: [opendap_dataset],
                 bounding_box: [0, 0, 2, 2],
                 temporal: ['2014-07-23T00:00:00Z', '2014-08-02T00:00:00Z'])
       choose 'Download'
@@ -160,7 +160,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       login
     end
 
-    it 'does not provide a URL describing the collection\'s parameters' do
+    it 'does not provide a URL describing the dataset\'s parameters' do
       within_window('Earthdata Search - Downloads') do
         expect(page).to have_no_css('a[href*=".info"]')
       end

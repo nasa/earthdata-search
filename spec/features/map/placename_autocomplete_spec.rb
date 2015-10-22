@@ -1,4 +1,4 @@
-# EDSC-26: As a user, I want to search for collections by place name so that I may limit my results to my area of interest
+# EDSC-26: As a user, I want to search for datasets by place name so that I may limit my results to my area of interest
 
 require "spec_helper"
 
@@ -124,7 +124,7 @@ describe "Place name autocomplete" do
     end
   end
 
-  context "search for common collection terms" do
+  context "search for common dataset terms" do
     it 'returns no placenames matching "landsat"' do
       fill_in "keywords", with: "landsat"
       wait_for_xhr

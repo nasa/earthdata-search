@@ -22,13 +22,13 @@ this.edsc.util.metrics = do ->
           temporal = 'Standard Temporal'
       ga('set', 'dimension3', temporal)
 
-      # Dimension 4, collections viewed
-      # Dimension 5, collections added to project
+      # Dimension 4, datasets viewed
+      # Dimension 5, datasets added to project
       d4 = null
       d5 = null
       if state.p?
-        collectionIds = state.p.split('!')
-        for id, index in collectionIds
+        datasetIds = state.p.split('!')
+        for id, index in datasetIds
           if id.length > 0
             if index == 0
               d4 = id
@@ -54,10 +54,10 @@ this.edsc.util.metrics = do ->
       # Send the page view
       ga('send', 'pageview', path)
 
-  createDataAccessEvent: (collection, options) ->
+  createDataAccessEvent: (dataset, options) ->
     if ga?
-      # Dimension 7, Collection Accessed
-      ga('set', 'dimension7', collection)
+      # Dimension 7, Dataset Accessed
+      ga('set', 'dimension7', dataset)
 
       if options? # If options exist, it is completing data access
         # Dimension 8, Access Options (Download, FTP_Pull, etc.)

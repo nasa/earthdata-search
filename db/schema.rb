@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022123255) do
+ActiveRecord::Schema.define(version: 20151015191049) do
 
   create_table "access_configurations", force: true do |t|
     t.integer  "user_id"
-    t.string   "collection_id"
+    t.string   "dataset_id"
     t.text     "service_options"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20151022123255) do
 
   add_index "access_configurations", ["user_id"], name: "index_access_configurations_on_user_id"
 
-  create_table "collection_extras", force: true do |t|
+  create_table "dataset_extras", force: true do |t|
     t.string   "echo_id",                 null: false
     t.boolean  "has_browseable_granules"
     t.datetime "created_at"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20151022123255) do
     t.text     "orbit"
   end
 
-  add_index "collection_extras", ["echo_id"], name: "index_collection_extras_on_echo_id", unique: true
+  add_index "dataset_extras", ["echo_id"], name: "index_dataset_extras_on_echo_id", unique: true
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -63,14 +63,14 @@ ActiveRecord::Schema.define(version: 20151022123255) do
     t.string   "name"
   end
 
-  create_table "recent_collections", force: true do |t|
+  create_table "recent_datasets", force: true do |t|
     t.integer  "user_id"
     t.string   "echo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "recent_collections", ["user_id"], name: "index_recent_collections_on_user_id"
+  add_index "recent_datasets", ["user_id"], name: "index_recent_datasets_on_user_id"
 
   create_table "retrievals", force: true do |t|
     t.integer  "user_id"

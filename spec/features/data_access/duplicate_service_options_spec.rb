@@ -1,20 +1,20 @@
 require 'spec_helper'
 
 describe 'Duplicate Service Options', reset: false do
-  downloadable_collection_id = 'C179003030-ORNL_DAAC'
-  downloadable_collection_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+  downloadable_dataset_id = 'C179003030-ORNL_DAAC'
+  downloadable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
 
-  non_downloadable_collection_id = 'C179001887-SEDAC'
-  non_downloadable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
+  non_downloadable_dataset_id = 'C179001887-SEDAC'
+  non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   before :all do
-    load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
+    load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
     login
     click_link "Retrieve project data"
     wait_for_xhr
   end
 
-  context "when setting options for downloadable collection" do
+  context "when setting options for downloadable dataset" do
     after :all do
       reset_access_page
     end
@@ -53,7 +53,7 @@ describe 'Duplicate Service Options', reset: false do
     end
   end
 
-  context 'when setting options for a collection whose only option is "Download"' do
+  context 'when setting options for a dataset whose only option is "Download"' do
     before :all do
       choose 'Download'
       click_button 'Continue'

@@ -10,13 +10,13 @@ module Helpers
       """
     end
 
-    def reset_visible_collections
+    def reset_visible_datasets
       page.evaluate_script("""
-        var i, len, visible = edsc.models.data.Collection.visible();
+        var i, len, visible = edsc.models.data.Dataset.visible();
         for (i = 0, len = visible.length; i < len; i++) {
           visible[i].visible(false);
         }
-        edsc.models.page.current.collections.allCollectionsVisible(false)
+        edsc.models.page.current.datasets.allDatasetsVisible(false)
         null
       """)
     end
@@ -25,36 +25,36 @@ module Helpers
       have_css('.is-master-overlay-parent-hidden')
     end
 
-    def collection_results
-      page.find('#collection-results')
+    def dataset_results
+      page.find('#dataset-results')
     end
 
-    def unfeatured_collection_results
-      page.find('#collection-results-list')
+    def unfeatured_dataset_results
+      page.find('#dataset-results-list')
     end
 
-    def featured_collection_results
-      page.find('#collection-featured-list')
+    def featured_dataset_results
+      page.find('#dataset-featured-list')
     end
 
-    def first_featured_collection
-      nth_panel(featured_collection_results, 1)
+    def first_featured_dataset
+      nth_panel(featured_dataset_results, 1)
     end
 
-    def first_collection_result
-      nth_panel(unfeatured_collection_results, 1)
+    def first_dataset_result
+      nth_panel(unfeatured_dataset_results, 1)
     end
 
-    def second_collection_result
-      nth_panel(unfeatured_collection_results, 2)
+    def second_dataset_result
+      nth_panel(unfeatured_dataset_results, 2)
     end
 
-    def nth_collection_result(n)
-      nth_panel(unfeatured_collection_results, n)
+    def nth_dataset_result(n)
+      nth_panel(unfeatured_dataset_results, n)
     end
 
-    def collection_details
-      page.find('#collection-details')
+    def dataset_details
+      page.find('#dataset-details')
     end
 
     def granule_details
@@ -65,15 +65,15 @@ module Helpers
       page.find('#project-overview')
     end
 
-    def first_project_collection
+    def first_project_dataset
       nth_panel(project_overview, 1)
     end
 
-    def second_project_collection
+    def second_project_dataset
       nth_panel(project_overview, 2)
     end
 
-    def nth_project_collection(n)
+    def nth_project_dataset(n)
       nth_panel(project_overview, n)
     end
 
