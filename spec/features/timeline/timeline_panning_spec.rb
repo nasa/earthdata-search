@@ -11,11 +11,11 @@ describe "Timeline panning", reset: false do
     load_page :search, project: ['C179003030-ORNL_DAAC'], view: :project, temporal: [DateTime.new(2014, 2, 10, 12, 30, 0, '+0')]
     #load_page :search
 
-    #add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
+    #add_dataset_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
     #set_temporal(DateTime.new(2014, 2, 10, 12, 30, 0, '+0'), DateTime.new(2014, 2, 20, 16, 30, 0, '+0'))
 
-    #collection_results.click_link "View Project"
+    #dataset_results.click_link "View Project"
     wait_for_xhr
     pan_to_time(present)
     wait_for_xhr
@@ -34,7 +34,7 @@ describe "Timeline panning", reset: false do
       expect(page).to have_time_offset('.timeline-selection', -25.days)
     end
 
-    it "keeps collection names in their original location" do
+    it "keeps dataset names in their original location" do
       expect(page).to have_time_offset('.timeline-overlay', 0.seconds)
     end
   end

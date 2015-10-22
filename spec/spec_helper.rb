@@ -148,7 +148,7 @@ RSpec.configure do |config|
     index += 1
     puts " (Suite #{index} of #{count})"
 
-    models_to_preserve = [CollectionExtra, ActiveRecord::SchemaMigration]
+    models_to_preserve = [DatasetExtra, ActiveRecord::SchemaMigration]
     ActiveRecord::Base.descendants.each do |model|
       model.destroy_all unless models_to_preserve.include?(model)
     end
@@ -192,7 +192,7 @@ RSpec.configure do |config|
   config.include Helpers::SpatialHelpers
   config.include Helpers::ProjectHelpers
   config.include Helpers::PageHelpers
-  config.include Helpers::CollectionHelpers
+  config.include Helpers::DatasetHelpers
   config.include Helpers::DefaultTags
   config.include Helpers::TemporalHelpers
   config.include Helpers::UrlHelpers

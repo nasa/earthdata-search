@@ -10,12 +10,12 @@ module Echo
         query
       end
 
-      def options_to_collection_query(options={})
+      def options_to_dataset_query(options={})
         options_to_item_query(options)
       end
 
       def options_to_facet_query(options={})
-        options_to_collection_query(options)
+        options_to_dataset_query(options)
       end
 
       def options_to_granule_query(options={})

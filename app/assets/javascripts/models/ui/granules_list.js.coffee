@@ -3,13 +3,13 @@ ns = @edsc.models.ui
 ns.GranulesList = do ($=jQuery, config = @edsc.config)->
 
   class GranulesList
-    constructor: (@collection) ->
-      @collection.reference()
+    constructor: (@dataset) ->
+      @dataset.reference()
 
-      @_wasVisible = @collection.visible()
-      @collection.visible(true)
+      @_wasVisible = @dataset.visible()
+      @dataset.visible(true)
 
-      @granules = @collection.granulesModel
+      @granules = @dataset.granulesModel
 
       @_hasFocus = ko.observable(false)
       @focused = ko.observable(null)
@@ -57,17 +57,17 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
         setTimeout((=> @_hasFocus(true)), 500)
 
       @_setupSwipeEvents($granuleList)
-      map.focusCollection(@collection)
+      map.focusDataset(@dataset)
 
     dispose: ->
       map = $('#map').data('map')
-      map.focusCollection(null)
+      map.focusDataset(null)
 
       @_map.off 'edsc.focusgranule', @_onFocusGranule
       @_map.off 'edsc.stickygranule', @_onStickyGranule
       @_map.off 'edsc.excludestickygranule', @_onRemoveStickyGranule
-      @collection.visible(@_wasVisible)
-      @collection.dispose()
+      @dataset.visible(@_wasVisible)
+      @dataset.dispose()
       @_setStickyComputed.dispose()
       @stickied(null)
 

@@ -1,11 +1,11 @@
 #= require models/data/grid
 #= require models/data/query
-#= require models/data/collections
+#= require models/data/datasets
 #= require models/data/project
 #= require models/data/preferences
 #= require models/ui/spatial_type
 #= require models/ui/temporal
-#= require models/ui/collections_list
+#= require models/ui/datasets_list
 #= require models/ui/project_list
 #= require models/ui/granule_timeline
 #= require models/ui/state_manager
@@ -19,11 +19,11 @@ ns = models.page
 
 ns.SearchPage = do (ko
                     setCurrent = ns.setCurrent
-                    QueryModel = data.query.CollectionQuery
-                    CollectionsModel = data.Collections
+                    QueryModel = data.query.DatasetQuery
+                    DatasetsModel = data.Datasets
                     ProjectModel = data.Project
                     SpatialTypeModel = ui.SpatialType
-                    CollectionsListModel = ui.CollectionsList
+                    DatasetsListModel = ui.DatasetsList
                     ProjectListModel = ui.ProjectList
                     GranuleTimelineModel = ui.GranuleTimeline
                     PreferencesModel = data.Preferences
@@ -33,20 +33,20 @@ ns.SearchPage = do (ko
 
   $(document).ready ->
     current.map = map = new window.edsc.map.Map(document.getElementById('map'), 'geo')
-    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.collectionsList, current.ui.projectList)
+    current.ui.granuleTimeline = new GranuleTimelineModel(current.ui.datasetsList, current.ui.projectList)
     $('.master-overlay').masterOverlay()
 
   class SearchPage
     constructor: ->
       @query = new QueryModel()
-      @collections = new CollectionsModel(@query)
+      @datasets = new DatasetsModel(@query)
       @project = new ProjectModel(@query)
       @preferences = new PreferencesModel()
 
       @ui =
         spatialType: new SpatialTypeModel(@query)
-        collectionsList: new CollectionsListModel(@query, @collections, @project)
-        projectList: new ProjectListModel(@project, @collections)
+        datasetsList: new DatasetsListModel(@query, @datasets, @project)
+        projectList: new ProjectListModel(@project, @datasets)
         isLandingPage: ko.observable(null) # Used by modules/landing
         feedback: new FeedbackModel()
 
@@ -55,7 +55,7 @@ ns.SearchPage = do (ko
 
       @spatialError = ko.computed(@_computeSpatialError)
 
-      @collections.isRelevant(false) # Avoid load until the URL says it's ok
+      @datasets.isRelevant(false) # Avoid load until the URL says it's ok
 
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
@@ -71,7 +71,7 @@ ns.SearchPage = do (ko
       "#{value} #{word}"
 
     _computeSpatialError: =>
-      error = @collections.error()
+      error = @datasets.error()
       if error?
         for e in error
           return e if e? && (e.indexOf('polygon') != -1 ||

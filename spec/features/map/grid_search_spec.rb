@@ -1,10 +1,10 @@
-# EDSC-24: As a user, I want to search for collections by 2D coordinates so that I
+# EDSC-24: As a user, I want to search for datasets by 2D coordinates so that I
 #          may limit my results to my area of interest
 
 require "spec_helper"
 
 describe "Grid coordinate search", reset: false do
-  extend Helpers::CollectionHelpers
+  extend Helpers::DatasetHelpers
 
   before :all do
     load_page :search
@@ -33,8 +33,8 @@ describe "Grid coordinate search", reset: false do
       before(:all) { select 'WRS-1 (Landsat 1-3)', from: 'Grid Coordinates' }
       after(:all) { select 'Coordinate System...', from: 'Grid Coordinates' }
 
-      it 'filters collections to those which use that coordinate system' do
-        expect(first_collection_result).to have_text('Landsat')
+      it 'filters datasets to those which use that coordinate system' do
+        expect(first_dataset_result).to have_text('Landsat')
       end
 
       context 'and choosing a different spatial type' do

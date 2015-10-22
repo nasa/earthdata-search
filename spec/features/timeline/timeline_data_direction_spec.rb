@@ -7,7 +7,7 @@ describe "Timeline data direction", reset: false do
     wait_for_xhr
   end
 
-  context "when the timeline shows data for a collection" do
+  context "when the timeline shows data for a dataset" do
     end_date = DateTime.new(1987, 3, 1, 0, 0, 0, '+0')
     before :all do
       pan_to_time(end_date - 6.months)
@@ -23,7 +23,7 @@ describe "Timeline data direction", reset: false do
     end
   end
 
-  context "when the timeline is scrolled to before a collection's first data" do
+  context "when the timeline is scrolled to before a dataset's first data" do
     end_date = DateTime.new(1971, 1, 1, 0, 0, 0, '+0')
     before :all do
       pan_to_time(end_date - 6.months)
@@ -39,7 +39,7 @@ describe "Timeline data direction", reset: false do
     end
   end
 
-  context "when the timeline is scrolled to after a collection's first data" do
+  context "when the timeline is scrolled to after a dataset's first data" do
     end_date = DateTime.new(2014, 3, 1, 0, 0, 0, '+0')
     before :all do
       pan_to_time(end_date - 6.months)

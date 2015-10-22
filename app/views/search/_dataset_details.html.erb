@@ -1,0 +1,144 @@
+<!-- ko if: $root.ui.datasetsList.selected() -->
+<section id="dataset-details" class="details">
+  <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+  <nav class="master-overlay-nav">
+    <a href="#" class="master-overlay-back" data-bind="click: ui.datasetsList.hideDatasetDetails">
+      <i class="fa fa-arrow-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Datasets</span>
+    </a>
+  </nav>
+  <!-- ko if: $root.ui.datasetsList.selected() -->
+  <header >
+    <h2 data-bind="ifnot: $root.ui.datasetsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
+    <!-- ko if: $root.ui.datasetsList.selected().detailsLoaded -->
+      <h4 data-bind="with: $root.ui.datasetsList.selected()"><!-- ko text: dataset_id --><!-- /ko -->
+        <!-- ko if: details().version_id -->
+          <small class="version-label"> VERSION <!-- ko text: details().version_id --><!-- /ko --></small>
+        <!-- /ko -->
+      </h4>
+    <!-- /ko -->
+  </header>
+
+  <!-- /ko -->
+  <!-- ko if: $root.ui.datasetsList.selected() && $root.ui.datasetsList.selected().detailsLoaded -->
+  <!-- ko with: $root.ui.datasetsList.selected().details -->
+
+  <div class="master-overlay-info">
+    <div class="tab-pane" id="dataset-information">
+
+      <div class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
+        <div class="row">
+          <div class="first-col col-md-6 col-sm-12">
+            <div id="image-map" class="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
+          </div>
+          <div class="second-col col-md-6 col-sm-12">
+              <dt>Spatial Coordinates:</dt>
+              <dd>
+                <span data-bind="text: $data.spatial[0]"></span>
+                <span data-bind="text: $data.spatial.length > 1 ? ' ...' : ''"></span>
+              </dd>
+              <dt>Temporal Extent:</dt>
+              <dd data-bind="text: $root.ui.datasetsList.selected().timeRange"></dd>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <dt>Metadata Formats:</dt>
+            <dd><a data-bind="attr: { href: $data.native_url }">Native</a>
+              | <a data-bind="attr: { href: $data.atom_url }">ATOM</a>
+              | <a data-bind="attr: { href: $data.echo10_url }">ECHO10</a>
+              | <a data-bind="attr: { href: $data.iso19115_url }">ISO19115</a>
+              <!-- ko if: $data.smap_iso_url -->
+                | <a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a>
+              <!-- /ko -->
+              | <a data-bind="attr: { href: $data.dif_url }">DIF</a></dd>
+          </div>
+          <div class="second-col col-md-6 col-sm-12">
+            <dt>API Endpoints:</dt>
+            <dd>
+            <!-- ko with: $root.ui.datasetsList.selected() -->
+              <!-- ko if: has_granules -->
+                <a class="endpoint-label" data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a>
+              <!-- /ko -->
+
+              <!-- ko foreach: gibs() -->
+                <a class="endpoint-label" data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a>
+              <!-- /ko -->
+
+              <!-- ko if: opendap() -->
+                <a class="endpoint-label" data-bind="attr: {href: opendap()}" target="_blank">OPeNDAP</a>
+              <!-- /ko -->
+
+              <!-- ko if: modaps() -->
+              <a class="endpoint-label" data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a>
+              <!-- /ko -->
+
+              <!-- ko if: $parent.osdd_url -->
+              <a class="endpoint-label" data-bind="attr: { href: $parent.osdd_url }" target="_blank">OSDD</a>
+              <!-- /ko -->
+            <!-- /ko -->
+            </dd>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 long-paragraph collapsed" data-bind="text: $data.description"></div>
+          <!--ko if: $root.ui.datasetsList.selected().detailsLoaded -->
+          <div class="description-toggle col-sm-12">
+            <i class="fa fa-chevron-down"></i>
+          </div>
+          <!--/ko-->
+        </div>
+
+        <div class="row">
+          <div class="first-col col-md-6 col-sm-12">
+            <dt>Processing Center:</dt>
+            <dd data-bind="text: $data.processing_center"></dd>
+            <dt>Archive Center:</dt>
+            <dd data-bind="text: $data.archive_center"></dd>
+            <dt>Short Name:</dt>
+            <dd data-bind="text: $data.short_name"></dd>
+          </div>
+          <div class="second-col col-md-6 col-sm-12">
+            <dt>Contacts:</dt>
+            <dd data-bind="foreach: $data.contacts">
+              <div class="contact-content">
+                <div data-bind="text: name"></div>
+                <div data-bind="foreach: phones">
+                  <span data-bind="text: $data"></span><br />
+                </div>
+                <div data-bind="text: email"></div>
+              </div>
+            </dd>
+            <!--ko foreach: $data.online_access_urls-->
+            <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data.URL}" target="_blank">Download Page</a></dt>
+            <!--/ko -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <dt>Science Keywords:</dt>
+            <!--ko if: $data.science_keywords.length == 0 -->
+            <dd>Not Available</dd>
+            <!--/ko-->
+            <!--ko if: $data.science_keywords.length > 0 -->
+            <dd data-bind="foreach: $data.science_keywords">
+              <div class="arrow-tag-group">
+                <ul class="arrow-tag-group-list">
+                  <!--ko foreach: $data-->
+                  <li class="arrow-tag-group-item" data-bind="text: $data"></li>
+                  <!--/ko-->
+                </ul>
+              </div>
+            </dd>
+            <!--/ko-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /ko -->
+
+  <!-- /ko -->
+</section>
+<!-- /ko -->

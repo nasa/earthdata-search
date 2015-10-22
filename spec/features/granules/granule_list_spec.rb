@@ -6,22 +6,22 @@
 require "spec_helper"
 
 describe "Granule list", reset: false do
-  extend Helpers::CollectionHelpers
+  extend Helpers::DatasetHelpers
 
   before :all do
     Capybara.reset_sessions!
     load_page :search
   end
 
-  context "for all collections with granules" do
-    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+  context "for all datasets with granules" do
+    use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
     hook_granule_results
 
-    it "provides a button to get collection details" do
-      expect(granule_list).to have_link('View collection details')
+    it "provides a button to get dataset details" do
+      expect(granule_list).to have_link('View dataset details')
     end
 
-    it "provides a button to get download the collection" do
+    it "provides a button to get download the dataset" do
       expect(granule_list).to have_link('Retrieve data')
     end
 
@@ -29,22 +29,22 @@ describe "Granule list", reset: false do
       expect(granule_list).to have_link('Filter granules')
     end
 
-    context "clicking on the collection details button" do
+    context "clicking on the dataset details button" do
       before :all do
-        granule_list.find('.master-overlay-global-actions').click_link('View collection details')
+        granule_list.find('.master-overlay-global-actions').click_link('View dataset details')
       end
 
       after :all do
-        collection_details.click_link('Back to Granules')
+        dataset_details.click_link('Back to Granules')
       end
 
-      it "displays the collection details" do
-        expect(page).to have_visible_collection_details
+      it "displays the dataset details" do
+        expect(page).to have_visible_dataset_details
         expect(page).to have_content('ornldaac@ornl.gov')
       end
 
       it "displays back navigation with the appropriate text" do
-        expect(collection_details).to have_link('Back to Granules')
+        expect(dataset_details).to have_link('Back to Granules')
       end
     end
 
@@ -155,10 +155,10 @@ describe "Granule list", reset: false do
     end
   end
 
-  context "for collections with many granule results" do
-    use_collection 'C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)'
+  context "for datasets with many granule results" do
+    use_dataset 'C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)'
 
-    context "clicking on a collection result" do
+    context "clicking on a dataset result" do
       hook_granule_results(:each)
 
       it "displays the first granule results in a list that pages by 20" do
@@ -170,10 +170,10 @@ describe "Granule list", reset: false do
     end
   end
 
-  context "for collections with few granule results" do
-    use_collection 'C179003380-ORNL_DAAC', 'A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves'
+  context "for datasets with few granule results" do
+    use_dataset 'C179003380-ORNL_DAAC', 'A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves'
 
-    context "clicking on a collection result" do
+    context "clicking on a dataset result" do
       hook_granule_results
 
       it "displays all available granule results" do
@@ -186,13 +186,13 @@ describe "Granule list", reset: false do
     end
   end
 
-  context "for collections without granules" do
-    use_collection 'C179002107-SEDAC', 'Anthropogenic Biomes of the World, Version 1'
+  context "for datasets without granules" do
+    use_dataset 'C179002107-SEDAC', 'Anthropogenic Biomes of the World, Version 1'
 
-    context "clicking on a collection result" do
+    context "clicking on a dataset result" do
       before :all do
-        expect(page).to have_visible_collection_results
-        first_collection_result.click
+        expect(page).to have_visible_dataset_results
+        first_dataset_result.click
         wait_for_xhr
       end
 

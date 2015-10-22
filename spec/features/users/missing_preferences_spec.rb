@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe "User missing ordering preferences", reset: false do
-  collection_id = 'C90762182-LAADS'
-  collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
+  dataset_id = 'C90762182-LAADS'
+  dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
   context "when configuring a data access request" do
     before :all do
-      load_page :search, project: [collection_id], view: :project
+      load_page :search, project: [dataset_id], view: :project
       wait_for_xhr
 
       login 'edscbasic'
@@ -25,7 +25,7 @@ describe "User missing ordering preferences", reset: false do
 
   context "when accessing downloadable data" do
     before :all do
-      load_page :search, project: [collection_id], view: :project
+      load_page :search, project: [dataset_id], view: :project
       wait_for_xhr
 
       login 'edscbasic'

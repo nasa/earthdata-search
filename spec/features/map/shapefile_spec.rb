@@ -1,4 +1,4 @@
-# EDSC-25: As a user, I want to search for collections by ESRI shapefile so that I
+# EDSC-25: As a user, I want to search for datasets by ESRI shapefile so that I
 #          may limit my results to my area of interest
 
 require "spec_helper"

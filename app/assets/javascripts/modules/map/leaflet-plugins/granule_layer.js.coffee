@@ -364,8 +364,8 @@ ns.GranuleLayer = do (L
       @_tileOnLoad.call(tile)
 
   class GranuleLayer extends GibsTileLayer
-    constructor: (@collection, color, @multiOptions) ->
-      @granules = @collection.granulesModel
+    constructor: (@dataset, color, @multiOptions) ->
+      @granules = @dataset.granulesModel
       @_hasGibs = @multiOptions?.length > 0
       @color = color ? '#25c85b';
       super({})
@@ -373,9 +373,9 @@ ns.GranuleLayer = do (L
     onAdd: (map) ->
       super(map)
 
-      @layer._container.setAttribute('id', "granule-vis-#{@collection.id}")
-      @_handle(map, 'on', 'edsc.focuscollection')
-      @setFocus(map.focusedCollection?.id == @collection.id)
+      @layer._container.setAttribute('id', "granule-vis-#{@dataset.id}")
+      @_handle(map, 'on', 'edsc.focusdataset')
+      @setFocus(map.focusedDataset?.id == @dataset.id)
 
       @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
       @_loadResults(@granules.results())
@@ -384,7 +384,7 @@ ns.GranuleLayer = do (L
       super(map)
 
       @setFocus(false, map)
-      @_handle(map, 'off', 'edsc.focuscollection')
+      @_handle(map, 'off', 'edsc.focusdataset')
       @_resultsSubscription.dispose()
       @_results = null
 
@@ -409,8 +409,8 @@ ns.GranuleLayer = do (L
         method = '_on' + event.split('.').map(capitalize).join('')
         obj[onOrOff] event, this[method]
 
-    _onEdscFocuscollection: (e) =>
-      @setFocus(e.collection?.id == @collection.id)
+    _onEdscFocusdataset: (e) =>
+      @setFocus(e.dataset?.id == @dataset.id)
 
     _onEdscMouseout: (e) =>
       if @_granule?

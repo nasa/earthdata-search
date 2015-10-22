@@ -10,16 +10,16 @@ class Retrieval < ActiveRecord::Base
   def description
     @description ||= jsondata['description']
     unless @description
-      collections = jsondata['collections']
-      collection = collections.first
-      @description = get_collection_id(collection['id']) if collection
+      datasets = jsondata['datasets']
+      dataset = datasets.first
+      @description = get_dataset_id(dataset['id']) if dataset
 
       if @description
-        if collections.size > 1
-          @description += " and #{pluralize(collections.size - 1, 'other collection')}"
+        if datasets.size > 1
+          @description += " and #{pluralize(datasets.size - 1, 'other dataset')}"
         end
       else
-        @description = pluralize(collections.size, 'collection')
+        @description = pluralize(datasets.size, 'dataset')
       end
       jsondata['description'] = @description
       save!
@@ -38,11 +38,11 @@ class Retrieval < ActiveRecord::Base
     user_id = retrieval.user.echo_id
     client = Echo::Client.client_for_environment(env, Rails.configuration.services)
 
-    project['collections'].each do |collection|
-      params = Rack::Utils.parse_query(collection['params'])
+    project['datasets'].each do |dataset|
+      params = Rack::Utils.parse_query(dataset['params'])
       params.merge!(page_size: 2000, page_num: 1)
 
-      access_methods = collection['serviceOptions']['accessMethod']
+      access_methods = dataset['serviceOptions']['accessMethod']
       access_methods.each do |method|
         if method['type'] == 'order'
           order_response = client.create_order(params,
@@ -56,8 +56,8 @@ class Retrieval < ActiveRecord::Base
         elsif method['type'] == 'service'
           request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
 
-          method[:collection_id] = collection['id']
-          service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
+          method[:dataset_id] = dataset['id']
+          service_response = MultiXml.parse(ESIClient.submit_esi_request(dataset['id'], params, method, request_url, client, token).body)
           method[:order_id] = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
           method[:error_code] = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
           method[:error_message] = service_response['Exception'].nil? ? nil : service_response['Exception']['Message']
@@ -71,10 +71,10 @@ class Retrieval < ActiveRecord::Base
 
   private
 
-  def get_collection_id(id)
+  def get_dataset_id(id)
     result = nil
     client = Echo::Client.client_for_environment(@echo_env || 'ops', Rails.configuration.services)
-    response = client.get_collections(echo_collection_id: [id])
+    response = client.get_datasets(echo_collection_id: [id])
     if response.success?
       entry = response.body['feed']['entry'].first
       result = entry['title'] if entry
@@ -83,10 +83,10 @@ class Retrieval < ActiveRecord::Base
   end
 
   def update_access_configurations
-    Array.wrap(self.jsondata['collections']).each do |collection|
-      if collection.key?('serviceOptions') && collection.key?('id')
-        config = AccessConfiguration.find_or_initialize_by('collection_id' => collection['id'])
-        config.service_options = collection['serviceOptions']
+    Array.wrap(self.jsondata['datasets']).each do |dataset|
+      if dataset.key?('serviceOptions') && dataset.key?('id')
+        config = AccessConfiguration.find_or_initialize_by('dataset_id' => dataset['id'])
+        config.service_options = dataset['serviceOptions']
         config.user = self.user
         config.save!
       end

@@ -110,8 +110,8 @@ ns.Granules = do (ko,
 
       if focusedTemporal?
         granuleTemporal = @query.temporal.applied
-        collectionTemporal = @parentQuery.temporal.applied
-        condition = collectionTemporal
+        datasetTemporal = @parentQuery.temporal.applied
+        condition = datasetTemporal
         condition = granuleTemporal if granuleTemporal.isSet()
 
         focusedTemporal = condition.intersect(focusedTemporal...)

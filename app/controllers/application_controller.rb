@@ -89,21 +89,21 @@ class ApplicationController < ActionController::Base
   end
 
   @@recent_lock = Mutex.new
-  def use_collection(id)
+  def use_dataset(id)
     return false if id.blank? || (Rails.env.test? && cookies['persist'] != 'true')
 
     id = id.first if id.is_a? Array
     if current_user.present?
       @@recent_lock.synchronize do
-        RecentCollection.find_or_create_by(user: current_user, echo_id: id).touch
+        RecentDataset.find_or_create_by(user: current_user, echo_id: id).touch
       end
     else
       # FIXME This does not work for guests loading directly to a project with more then 1
-      # collection, the session gets session does not carry over between the multiple calls to
-      # collections_controller:show
-      recent = session[:recent_collections] || []
+      # dataset, the session gets session does not carry over between the multiple calls to
+      # datasets_controller:show
+      recent = session[:recent_datasets] || []
       recent.unshift(id)
-      session[:recent_collections] = recent.uniq.take(RECENT_DATASET_COUNT)
+      session[:recent_datasets] = recent.uniq.take(RECENT_DATASET_COUNT)
     end
     true
   end
@@ -111,7 +111,7 @@ class ApplicationController < ActionController::Base
   def clear_session
     store_oauth_token()
     session[:user_id] = nil
-    session[:recent_collections] = []
+    session[:recent_datasets] = []
   end
 
   def store_oauth_token(json={})

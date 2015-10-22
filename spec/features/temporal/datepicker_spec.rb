@@ -89,7 +89,7 @@ describe 'Date picker', reset: false do
     context "when selecting an end date" do
       before :all do
         click_link 'Temporal'
-        js_check_recurring 'collection'
+        js_check_recurring 'dataset'
         find('.temporal-recurring-start').click
         find('span.month', text: "Jan").click
         find('td.day', text: "15").click
@@ -102,7 +102,7 @@ describe 'Date picker', reset: false do
       after :all do
         reset_search
         click_link 'Temporal'
-        js_uncheck_recurring 'collection'
+        js_uncheck_recurring 'dataset'
         js_click_apply ".temporal-dropdown"
       end
 
@@ -114,7 +114,7 @@ describe 'Date picker', reset: false do
     context "when typing an invalid date" do
       before :all do
         click_link "Temporal"
-        js_check_recurring 'collection'
+        js_check_recurring 'dataset'
         fill_in "Start", with: "gibberish\t"
       end
 
@@ -123,7 +123,7 @@ describe 'Date picker', reset: false do
         click_link 'Temporal'
         reset_search
         click_link 'Temporal'
-        js_uncheck_recurring 'collection'
+        js_uncheck_recurring 'dataset'
         js_click_apply ".temporal-dropdown"
       end
 

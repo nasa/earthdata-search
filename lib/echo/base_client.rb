@@ -3,7 +3,7 @@ module Echo
   Faraday.register_middleware(:response,
                               :logging => Echo::ClientMiddleware::LoggingMiddleware,
                               :errors => Echo::ClientMiddleware::ErrorsMiddleware,
-                              :echo10_collections => Echo::ClientMiddleware::Echo10CollectionMiddleware,
+                              :echo10_datasets => Echo::ClientMiddleware::Echo10DatasetMiddleware,
                               :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware,
                               :events => Echo::ClientMiddleware::EventMiddleware)
 
@@ -67,7 +67,7 @@ module Echo
         conn.response :errors, :content_type => /\bjson$/
         conn.response :json, :content_type => /\bjson$/
         conn.response :echo10_granules, :content_type => /^application\/(echo10\+)?xml$/
-        conn.response :echo10_collections, :content_type => /^application\/(echo10\+)?xml$/
+        conn.response :echo10_datasets, :content_type => /^application\/(echo10\+)?xml$/
         conn.response :events, :content_type => /\bxml$/
         conn.response :xml, :content_type => /\bxml$/
 

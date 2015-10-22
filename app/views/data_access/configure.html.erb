@@ -17,16 +17,16 @@
     <h1>Data Access</h1>
     <p>Review and select service options for your data prior to download</p>
   </header>
-  <ol class="data-access-content data-access-collections-config" data-bind="css: { 'knockout-template': !bindingsLoaded }">
-    <!-- ko foreach: project.accessCollections -->
+  <ol class="data-access-content data-access-datasets-config" data-bind="css: { 'knockout-template': !bindingsLoaded }">
+    <!-- ko foreach: project.accessDatasets -->
     <li class="access-item">
       <div class="access-item-header">
-        <h2 data-bind="text: collection.collection_id"></h2>
+        <h2 data-bind="text: dataset.dataset_id"></h2>
       </div>
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
           <h3 data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
-          <!-- ko if: granuleAccessOptions().hits != null && collection.has_granules -->
+          <!-- ko if: granuleAccessOptions().hits != null && dataset.has_granules -->
           <div class="access-item-review">
             <h4>Review</h4>
             <p class="summary">
@@ -43,7 +43,7 @@
           </div>
 
           <!-- ko if: granuleAccessOptions().hits == 0 -->
-          <p>There are no matching granules to access for this collection</p>
+          <p>There are no matching granules to access for this dataset</p>
           <!-- /ko -->
           <!-- ko if: granuleAccessOptions().hits > 0 -->
           <div class="granule-list">
@@ -59,7 +59,7 @@
             </p>
             <div data-bind="event: {scroll: $root.ui.serviceOptionsList.scrolled}">
               <ul>
-              <!-- ko foreach: collection.granulesModel.results() -->
+              <!-- ko foreach: dataset.granulesModel.results() -->
                 <li>
                   <h5 data-bind="text: displayName()"></h5>
                   <span data-bind="text: getTemporal()"></span>
@@ -129,7 +129,7 @@
                 </div>
                 <!-- /ko -->
                 <!-- ko if: serviceOptions.accessMethod().length == 0 -->
-                  <p>Data access is not available for this collection.</p>
+                  <p>Data access is not available for this dataset.</p>
                 <!-- /ko -->
               <!-- /ko -->
               <p class="add-access-item" data-bind="visible: serviceOptions.canAddAccessMethod()">
@@ -140,9 +140,9 @@
           </div>
           <!-- /ko -->
           <!-- /ko -->
-          <!-- ko if: !collection.has_granules -->
+          <!-- ko if: !dataset.has_granules -->
           <div class="access-item-review">
-            <h4>Collection Only</h4>
+            <h4>Dataset Only</h4>
             <div>
               <p class="access-item-selection">
                 <span class="access-method-label">Select Data Access Method:</span>
@@ -170,7 +170,7 @@
         <h2>Contact Information &amp; Submit</h2>
       </div>
 
-      <div class="access-item-body" data-bind="css: { hidden: project.accessCollections().length != ui.serviceOptionsList.activeIndex() }">
+      <div class="access-item-body" data-bind="css: { hidden: project.accessDatasets().length != ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
           <form data-bind="submit: account.updateContactInformation" class="account-form">
             <%= render partial: 'users/contact_info_form' %>
