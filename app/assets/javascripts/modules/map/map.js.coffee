@@ -111,12 +111,12 @@ ns.Map = do (window,
       @setOverlays([])
 
       @time = ko.computed(@_computeTime, this)
-      @_showDatasetSpatial(page.ui.datasetsList.selected())
-      @_datasetSubscription = page.ui.datasetsList.selected.subscribe(@_showDatasetSpatial)
+      @_showCollectionSpatial(page.ui.collectionsList.selected())
+      @_collectionSubscription = page.ui.collectionsList.selected.subscribe(@_showCollectionSpatial)
 
-      map.fire('edsc.visibledatasetschange', datasets: page.project.visibleDatasets())
-      @_granuleVisualizationSubscription = page.project.visibleDatasets.subscribe (datasets) ->
-        map.fire('edsc.visibledatasetschange', datasets: datasets)
+      map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
+      @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
+        map.fire('edsc.visiblecollectionschange', collections: collections)
 
       @_setupStatePersistence()
 
@@ -124,7 +124,7 @@ ns.Map = do (window,
     destroy: ->
       @map.remove()
       @time.dispose()
-      @_datasetSubscription.dispose()
+      @_collectionSubscription.dispose()
       @_granuleVisualizationSubscription.dispose()
 
     _setupStatePersistence: ->
@@ -173,14 +173,14 @@ ns.Map = do (window,
           if zoom != mapZoom || map.latLngToLayerPoint(mapCenter).distanceTo(map.latLngToLayerPoint(center)) > 10
             map.setView(L.latLng(lat, lng), parseInt(zoom, 10))
 
-    focusDataset: (dataset) ->
-      @_addLegend(dataset)
-      @map.focusedDataset = dataset
-      @map.fire 'edsc.focusdataset', dataset: dataset
+    focusCollection: (collection) ->
+      @_addLegend(collection)
+      @map.focusedCollection = collection
+      @map.fire 'edsc.focuscollection', collection: collection
 
-    _addLegend: (dataset) ->
+    _addLegend: (collection) ->
       @legendControl.setData(null, {})
-      gibs = dataset?.gibs() ? []
+      gibs = collection?.gibs() ? []
       name = null
       for config in gibs
         unless config.match?.sit
@@ -194,7 +194,7 @@ ns.Map = do (window,
         ajax
           dataType: 'json'
           url: path
-          retry: => @_addLegend(dataset)
+          retry: => @_addLegend(collection)
           success: (data) =>
             @legendControl.setData(name, data)
         null
@@ -352,19 +352,19 @@ ns.Map = do (window,
       map._overlays = overlays
       @_rebuildLayers()
 
-    _showDatasetSpatial: (dataset) =>
-      @_hideDatasetSpatial()
+    _showCollectionSpatial: (collection) =>
+      @_hideCollectionSpatial()
 
-      return unless dataset?
+      return unless collection?
 
-      layer = dataset.buildLayer(color: "#ff7800", weight: 1)
+      layer = collection.buildLayer(color: "#ff7800", weight: 1)
       layer.addTo(@map)
-      @_datasetSpatialLayer = layer
+      @_collectionSpatialLayer = layer
 
-    _hideDatasetSpatial: =>
-      if @_datasetSpatialLayer
-        @map.removeLayer(@_datasetSpatialLayer)
-        @_datasetSpatialLayer = null
+    _hideCollectionSpatial: =>
+      if @_collectionSpatialLayer
+        @map.removeLayer(@_collectionSpatialLayer)
+        @_collectionSpatialLayer = null
 
     # Debugging spherical polygons
     #L.sphericalPolygon([

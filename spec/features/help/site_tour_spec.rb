@@ -28,18 +28,18 @@ describe "Site tour", reset: true do
       fill_in 'keywords', with: 'snow cover nrt'
       click_on 'Browse All Data'
 
-      expect(page).to have_popover('Browse Datasets')
+      expect(page).to have_popover('Browse Collections')
       find_link('Platform').click
 
-      expect(page).to have_popover('Browse Datasets')
+      expect(page).to have_popover('Browse Collections')
       find(".facets-item", text: "Terra").click
       wait_for_xhr
 
       expect(page).to have_popover('Spatial Search')
       create_bounding_box(0, 0, 10, 10)
 
-      expect(page).to have_popover('Dataset Results')
-      first_featured_dataset.click
+      expect(page).to have_popover('Collection Results')
+      first_featured_collection.click
 
       expect(page).to have_popover('Matching Granules')
       second_granule_list_item.click
@@ -59,11 +59,11 @@ describe "Site tour", reset: true do
       expect(page).to have_popover('Granule Timeline (Part 3)')
       drag_temporal(DateTime.new(2014, 8, 23, 0, 0, 0, '+0'), DateTime.new(2015, 8, 25, 0, 0, 0, '+0'))
 
-      expect(page).to have_popover('Back to Datasets')
-      granule_list.click_on 'Back to Datasets'
+      expect(page).to have_popover('Back to Collections')
+      granule_list.click_on 'Back to Collections'
 
-      expect(page).to have_popover('Comparing Multiple Datasets')
-      first_featured_dataset.find('.add-to-project').click
+      expect(page).to have_popover('Comparing Multiple Collections')
+      first_featured_collection.find('.add-to-project').click
 
       expect(page).to have_popover('Projects')
       click_on 'View Project'

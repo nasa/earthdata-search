@@ -6,26 +6,26 @@ describe "Add to project", reset: false do
     load_page :search
   end
 
-  context "in the dataset results list" do
-    it 'displays "Add" buttons for datasets not in the current project' do
-      within '#dataset-results-list > :first-child' do
-        expect(page).to have_link("Add dataset to the current project")
-        expect(page).to have_no_link("Remove dataset from the current project")
+  context "in the collection results list" do
+    it 'displays "Add" buttons for collections not in the current project' do
+      within '#collection-results-list > :first-child' do
+        expect(page).to have_link("Add collection to the current project")
+        expect(page).to have_no_link("Remove collection from the current project")
       end
     end
 
-    it 'displays "Remove" buttons for datasets not in the current project' do
-      within '#dataset-results-list > :first-child' do
-        click_link "Add dataset to the current project"
-        expect(page).to have_no_link("Add dataset to the current project")
-        expect(page).to have_link("Remove dataset from the current project")
+    it 'displays "Remove" buttons for collections not in the current project' do
+      within '#collection-results-list > :first-child' do
+        click_link "Add collection to the current project"
+        expect(page).to have_no_link("Add collection to the current project")
+        expect(page).to have_link("Remove collection from the current project")
       end
 
       reset_project
     end
 
     it 'initially displays information about adding items to projects' do
-      expect(page).to have_text('Add datasets to your project to compare and retrieve their data.')
+      expect(page).to have_text('Add collections to your project to compare and retrieve their data.')
     end
 
     it 'initially displays no link to view the current project' do
@@ -34,8 +34,8 @@ describe "Add to project", reset: false do
 
     context 'clicking on an "Add" button' do
       before(:all) do
-        within '#dataset-results-list > :first-child' do
-          click_link "Add dataset to the current project"
+        within '#collection-results-list > :first-child' do
+          click_link "Add collection to the current project"
           wait_for_xhr
         end
       end
@@ -47,26 +47,26 @@ describe "Add to project", reset: false do
       # EDSC-146: As a user, I want to see how long my granule searches take,
       #           so that I may understand the performance of the system
       it "searches for granules, displaying a granule count and search time" do
-        within '#dataset-results-list > :first-child' do
+        within '#collection-results-list > :first-child' do
           expect(page).to have_text("Granules")
-          granules_info = find('.dataset-granules-info')
+          granules_info = find('.collection-granules-info')
           expect(granules_info.text).to match(/\d Granules in \d+\.\d+s/)
         end
       end
 
-      it 'adds the dataset to the current project' do
-        expect(project_dataset_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
+      it 'adds the collection to the current project' do
+        expect(project_collection_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
       end
 
-      it 'updates the button for the dataset to be a remove button' do
-        within '#dataset-results-list > :first-child' do
-          expect(page).to have_no_link("Add dataset to the current project")
-          expect(page).to have_link("Remove dataset from the current project")
+      it 'updates the button for the collection to be a remove button' do
+        within '#collection-results-list > :first-child' do
+          expect(page).to have_no_link("Add collection to the current project")
+          expect(page).to have_link("Remove collection from the current project")
         end
       end
 
-      it 'displays a summary of the datasets in the project' do
-        expect(page).to have_text("You have 1 dataset in your project.")
+      it 'displays a summary of the collections in the project' do
+        expect(page).to have_text("You have 1 collection in your project.")
       end
 
       it 'displays a link to view the project' do
@@ -75,11 +75,11 @@ describe "Add to project", reset: false do
     end
 
     context 'clicking on a "Remove" button' do
-      context 'when the removed dataset was the last one in the project' do
+      context 'when the removed collection was the last one in the project' do
         before(:all) do
-          within '#dataset-results-list > :first-child' do
-            click_link "Add dataset to the current project"
-            click_link "Remove dataset from the current project"
+          within '#collection-results-list > :first-child' do
+            click_link "Add collection to the current project"
+            click_link "Remove collection from the current project"
           end
         end
 
@@ -87,35 +87,35 @@ describe "Add to project", reset: false do
           reset_project
         end
 
-        it 'removes the summary of the datasets in the project' do
-          expect(page).to have_no_text("You have 1 dataset in your project.")
-          expect(page).to have_text('Add datasets to your project to compare and retrieve their data.')
+        it 'removes the summary of the collections in the project' do
+          expect(page).to have_no_text("You have 1 collection in your project.")
+          expect(page).to have_text('Add collections to your project to compare and retrieve their data.')
         end
 
         it 'hides the link to view the project' do
           expect(page).to have_no_link("View Project")
         end
 
-        it 'removes the dataset from the current project' do
-          expect(project_dataset_ids).to match_array([])
+        it 'removes the collection from the current project' do
+          expect(project_collection_ids).to match_array([])
         end
 
-        it 'updates the button for the dataset to be an add button' do
-          within '#dataset-results-list > :first-child' do
-            expect(page).to have_link("Add dataset to the current project")
-            expect(page).to have_no_link("Remove dataset from the current project")
+        it 'updates the button for the collection to be an add button' do
+          within '#collection-results-list > :first-child' do
+            expect(page).to have_link("Add collection to the current project")
+            expect(page).to have_no_link("Remove collection from the current project")
           end
         end
       end
 
-      context 'when datasets remain in the project' do
+      context 'when collections remain in the project' do
         before(:all) do
-          within '#dataset-results-list > :first-child' do
-            click_link "Add dataset to the current project"
+          within '#collection-results-list > :first-child' do
+            click_link "Add collection to the current project"
           end
-          within '#dataset-results-list > :nth-child(2)' do
-            click_link "Add dataset to the current project"
-            click_link "Remove dataset from the current project"
+          within '#collection-results-list > :nth-child(2)' do
+            click_link "Add collection to the current project"
+            click_link "Remove collection from the current project"
           end
         end
 
@@ -123,23 +123,23 @@ describe "Add to project", reset: false do
           reset_project
         end
 
-        it 'updates the summary of the datasets in the project' do
-          expect(page).to have_text("You have 1 dataset in your project.")
-          expect(page).to have_no_text('Add datasets to your project to compare and retrieve their data.')
+        it 'updates the summary of the collections in the project' do
+          expect(page).to have_text("You have 1 collection in your project.")
+          expect(page).to have_no_text('Add collections to your project to compare and retrieve their data.')
         end
 
         it 'continues to show the link to view the project' do
           expect(page).to have_link("View Project")
         end
 
-        it 'removes the dataset from the current project' do
-          expect(project_dataset_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
+        it 'removes the collection from the current project' do
+          expect(project_collection_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
         end
 
-        it 'updates the button for the dataset to be an add button' do
-          within '#dataset-results-list > :nth-child(2)' do
-            expect(page).to have_link("Add dataset to the current project")
-            expect(page).to have_no_link("Remove dataset from the current project")
+        it 'updates the button for the collection to be an add button' do
+          within '#collection-results-list > :nth-child(2)' do
+            expect(page).to have_link("Add collection to the current project")
+            expect(page).to have_no_link("Remove collection from the current project")
           end
         end
       end

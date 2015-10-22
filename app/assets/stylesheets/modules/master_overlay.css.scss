@@ -43,8 +43,8 @@
   border-bottom: 1px solid #333;
 }
 
-// A parent panel for the overlday.  For instance, dataset facets are a parent
-// panel to dataset search results
+// A parent panel for the overlday.  For instance, collection facets are a parent
+// panel to collection search results
 .master-overlay-parent {
   background-color: $master-overlay-parent-bg-color;
   width: $facet-overlay-width;
@@ -62,7 +62,7 @@
   }
 }
 
-// The main section in the overlay.  Dataset results, pinned datasets, whatnot.
+// The main section in the overlay.  Collection results, pinned collections, whatnot.
 .master-overlay-main {
   background-color: $master-overlay-main-bg-color;
   width: 40%;
@@ -178,7 +178,7 @@
   }
 }
 
-#dataset-results .master-overlay-info {
+#collection-results .master-overlay-info {
   height: 71px;
 }
 
@@ -210,7 +210,7 @@
   cursor: pointer;
 }
 
-#project-datasets-list {
+#project-collections-list {
   margin-top: 0;
 }
 
