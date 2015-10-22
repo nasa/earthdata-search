@@ -47,10 +47,18 @@ See public/licenses.txt
 * A Ruby manager such as [RVM](http://rvm.io/) or [rbenv](https://github.com/sstephenson/rbenv) is strongly recommended.
 * (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
 * (For placename completion) a [GeoNames](http://www.geonames.org) account
+
+Additionally, you will need the following, which will be installed automatically by `bin/setup` on most UNIX-like systems:
+
 * Postgres development headers
   * Mac (homebrew): `brew install postgresql`
-  * Ubuntu: `sudo apt-get install libpq-dev`
-  * RHEL: `yum install postgresql-devel`
+  * Ubuntu: `sudo apt-get install -y libpq-dev`
+  * RHEL: `sudo yum install -y postgresql-devel`
+
+* Node.js (with npm)
+  * Mac (homebrew): `brew install node`
+  * Ubuntu: `sudo apt-get install -y nodejs`
+  * RHEL: `sudo curl -sL https://rpm.nodesource.com/setup | bash - && sudo yum install -y nodejs`
 
 ### Earthdata Login (URS) Configuration
 
