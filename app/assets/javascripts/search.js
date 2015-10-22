@@ -10,6 +10,7 @@
 //= require proj4
 //= require leaflet-0.7/leaflet-src
 //= require leaflet.draw-0.2.2/leaflet.draw-src
+//= require edsc-search.min
 //= require namespaces
 //= require config
 //= require util/index
