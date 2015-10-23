@@ -27,7 +27,7 @@
               <h3 data-bind="text: collection_id"></h3>
 
               <p>
-                <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForDataset($data)}"<% end %>>
+                <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
                   <span data-bind="text: short_name"></span>
                   <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
                   v<span data-bind="text: version_id"></span>
