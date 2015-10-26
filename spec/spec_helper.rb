@@ -136,6 +136,10 @@ RSpec.configure do |config|
     Headless.new(:destroy_on_exit => false).start
   end
 
+  config.before :each do
+    Rails.logger.info "Executing test: #{example.metadata[:example_group][:file_path]}:#{example.metadata[:example_group][:line_number]}"
+  end
+  
   config.before :all do
     file_time = Time.now
     Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
