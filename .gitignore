@@ -46,6 +46,7 @@ config/initializers/cookies_serializer.rb
 config/initializers/filter_parameter_logging.rb
 config/secrets.yml
 
+dist
 node_modules
 npm-debug.log*
 /edsc/dist
