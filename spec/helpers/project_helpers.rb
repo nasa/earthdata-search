@@ -17,7 +17,7 @@ module Helpers
     end
 
     def project_collection_ids
-      page.evaluate_script('edsc.models.page.current.project.collections().map(function(ds){return ds.collection_id;})')
+      page.evaluate_script('edsc.models.page.current.project.collections().map(function(ds){return ds.dataset_id;})')
     end
 
     def click_save_project_name

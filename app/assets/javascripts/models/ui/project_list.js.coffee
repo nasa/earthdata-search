@@ -129,7 +129,7 @@ ns.ProjectList = do (ko
       collections = []
       for projectCollection in @project.accessCollections()
         collection = projectCollection.collection
-        title = collection.collection_id
+        title = collection.dataset_id
         links = []
         for link in collection.links ? [] when link.rel.indexOf('metadata#') != -1
           links.push
@@ -149,7 +149,7 @@ ns.ProjectList = do (ko
         collection = projectCollection.collection
         has_browse = collection.browseable_granule?
         collectionId = collection.id
-        title = collection.collection_id
+        title = collection.dataset_id
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'download'
           collections.push
             title: title

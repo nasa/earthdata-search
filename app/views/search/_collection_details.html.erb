@@ -10,7 +10,7 @@
   <header >
     <h2 data-bind="ifnot: $root.ui.collectionsList.selected().detailsLoaded" class="loading">Details Loading...</h2>
     <!-- ko if: $root.ui.collectionsList.selected().detailsLoaded -->
-      <h4 data-bind="with: $root.ui.collectionsList.selected()"><!-- ko text: collection_id --><!-- /ko -->
+      <h4 data-bind="with: $root.ui.collectionsList.selected()"><!-- ko text: dataset_id --><!-- /ko -->
         <!-- ko if: details().version_id -->
           <small class="version-label"> VERSION <!-- ko text: details().version_id --><!-- /ko --></small>
         <!-- /ko -->
