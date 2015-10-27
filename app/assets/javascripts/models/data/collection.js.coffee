@@ -99,7 +99,7 @@ ns.Collection = do (ko
       granule = @browseable_granule
       collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
       if collection_id?
-        "#{scalerUrl}/collections/#{collection_id}?h=85&w=85"
+        "#{scalerUrl}/datasets/#{collection_id}?h=85&w=85"
       else if granule?
         "#{scalerUrl}/granules/#{granule}?h=85&w=85"
       else
@@ -144,7 +144,6 @@ ns.Collection = do (ko
       @granuleCount(jsonObj.granule_count)
 
       for own key, value of jsonObj
-        this['collection_id'] = value if key == 'dataset_id'
         this[key] = value unless ko.isObservable(this[key])
 
     _setObservable: (prop, jsonObj) =>
