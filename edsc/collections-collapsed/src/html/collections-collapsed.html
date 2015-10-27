@@ -3,12 +3,12 @@
     <h2 class="ccols-title"><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
   </header>
   <!-- ko if: collections.featured.length > 0 -->
-    <h3 class="ccols-group-title">Recent and Featured</h3>
+    <h3 class="ccols-title">Recent and Featured</h3>
     <ul class="ccols-list" data-bind="foreach: collections.featured">
       <edsc-collection-collapsed params="collection: $data, page: $component.page"></edsc-collections-collapsed>
     </ul>
 
-    <h3 class="ccols-group-title">More Collections</h3>
+    <h3 class="ccols-title">More Collections</h3>
   <!-- /ko -->
   <ul class="ccols-list" data-bind="foreach: collections.unfeatured">
     <edsc-collection-collapsed params="collection: $data, page: $component.page"></edsc-collections-collapsed>
