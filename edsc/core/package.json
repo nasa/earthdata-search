@@ -1,7 +1,7 @@
 {
-  "name": "edsc-collections-collapsed",
-  "main": "src/js/edsc-collections-collapsed.coffee",
-  "description": "Collapsed collections view used by Earthdata Search",
+  "name": "edsc-core",
+  "main": "src/index.js",
+  "description": "Core utility libraries for Earthdata Search",
   "version": "1.0.0",
   "repository": {
     "type": "git",
@@ -35,7 +35,6 @@
     "file-loader": "^0.8.4",
     "handlebars": "^4.0.3",
     "handlebars-loader": "^1.1.4",
-    "html-loader": "^0.3.0",
     "jasmine": "^2.3.2",
     "jasmine-core": "^2.3.4",
     "jasmine-jquery": "^2.1.0",

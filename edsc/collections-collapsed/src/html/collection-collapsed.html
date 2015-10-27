@@ -1,0 +1,109 @@
+<li data-bind="with: collection,
+               click: $component.page.ui.collectionsList.focusCollection,
+               css: {'master-overlay-forward': collection.has_granules, 'master-overlay-hide-parent': collection.has_granules}
+               attr: {draggable: $component.isProject}"
+    class="ccol">
+  <div>
+    <div class="ccol-header">
+      <span class="ccol-active"></span>
+      <span class="ccol-badge badge-collection"></span>
+      <span class="ccol-title">
+        <a href="#" class="button icon-button" title="More details" data-bind="attr:{id: id}">
+          <i class="fa fa-chevron-circle-right"></i>
+        </a>
+        <span data-bind="text: short_name"></span> - <span data-bind="text: version_id"></span>
+      </span>
+    </div>
+    <div class="ccol-mini-map"></div>
+    <div class="flyout" data-bind="attr:{id: id + '-flyout'}">
+      <div class="flyout-header">
+        <div class="flyout-info" data-bind="if: has_granules">
+          <span class="badge-granule"></span>
+          <span class="granule-count" data-bind="text: granule_count"></span>
+        </div>
+        <span data-bind="text: short_name"></span>
+      </div>
+      <h4 class="flyout-title" data-bind="text: dataset_id"></h4>
+      <p class="flyout-content">
+        <i class="fa fa-crop"></i>
+        <span data-bind="text: spatial"></span>
+      </p>
+      <p class="flyout-content">
+        <i class="fa fa-clock-o"></i>
+        <span data-bind="text: timeRange"></span>
+      </p>
+      <p class="flyout-content">
+        <span><strong>Archive Center: </strong></span>
+        <span data-bind="text: archive_center"></span>
+      </p>
+      <p class="flyout-content">
+        <span><strong>Data Center: </strong></span>
+        <span data-bind="text: data_center"></span>
+      </p>
+    </div>
+    <!-- ko if: $component.isProject -->
+      <div class="ccol-drag-handle"></div>
+    <!-- /ko -->
+    <div class="ccol-actions-container">
+      <div class="ccol-actions">
+        <!-- ko if: has_granules -->
+          <a href="#" class="button icon-button" title="View collection" data-bind="visible: !visible(), click: $component.page.collections.toggleVisibleCollection">
+            <i class="fa fa-eye"></i>
+          </a>
+          <a href="#" class="button icon-button button-active" title="Hide collection" data-bind="visible: visible(), click: $component.page.collections.toggleVisibleCollection">
+            <i class="fa fa-eye"></i>
+          </a>
+        <!-- /ko -->
+        <a href="#" class="button icon-button add-to-project" data-pulse="#project-count"
+           class="button icon-button add-to-project"
+           data-pulse="#project-count"
+           data-bind="visible: !$component.page.project.hasCollection($data),
+                      click: $component.page.ui.projectList.toggleCollection">
+          <i class="fa fa-plus-circle"></i>
+        </a>
+        <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
+           data-bind="visible: $component.page.project.hasCollection($data), click: $component.page.ui.projectList.toggleCollection">
+          <i class="fa fa-minus-circle"></i>
+        </a>
+        <a href="#" class="button icon-button master-overlay-forward"
+           data-master-overlay-forward="Collections"
+           data-bind="click: $component.page.ui.collectionsList.showCollectionDetails"
+           title="View collection details">
+          <i class="fa fa-info-circle"></i>
+        </a>
+        <!-- ko if: $component.isProject -->
+          <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $component.page.ui.projectList.loginAndDownloadCollection">
+            <i class="fa fa-download"></i>
+          </a>
+          <!-- ko if: has_granules -->
+            <a href="#" data-bind="visible: !$component.page.project.isSearchingGranules($data),
+                                   click: $component.page.ui.projectList.showFilters,
+                                   css: {'button-highlighted': granuleFiltersApplied()}"
+               class="button icon-button master-overlay-hide-parent master-overlay-show-secondary"
+               title="Show granule filters">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="#" data-bind="visible: $component.page.project.isSearchingGranules($data),
+                                   click: $component.page.ui.projectList.hideFilters,
+                                   css: {'button-highlighted': granuleFiltersApplied()}"
+               class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary"
+               title="Hide granule filters">
+              <i class="fa fa-edit"></i>
+            </a>
+          <!-- /ko -->
+          <!-- ko ifnot: has_granules -->
+          <a href="#" class="button icon-button button-disabled" title="No granules">
+            <i class="fa fa-edit"></i>
+          </a>
+          <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if: $component.page.ui.collectionsList.canQueryCollectionSpatial($data) -->
+          <a href="#" class="button icon-button" title="Search using this collection's location"
+             data-bind="css: {'button-active': $component.page.query.spatial() == spatial_constraint()}, click: $component.page.ui.collectionsList.toggleQueryCollectionSpatial">
+            <i class="fa fa-map-marker"></i>
+          </a>
+        <!-- /ko -->
+      </div>
+    </div>
+  </div>
+</li>

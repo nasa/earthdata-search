@@ -22,15 +22,13 @@ module.exports = {
       { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee?literate" },
       { test: /\.(gif|png)$/, loader: "url-loader?limit=100000" },
       { test: /\.hbs$/, loader: "handlebars-loader" },
-      { test: /\.jpg$/, loader: "file-loader" },
-      { test: /\.html$/, loader: "html-loader?removeComments=false" }
+      { test: /\.jpg$/, loader: "file-loader" }
     ]
   },
   devtool: '#sourcemap',
   externals: {
     "jquery": "jQuery",
-    "window": "window",
-    "ko": "ko"
+    "window": "window"
   },
   resolve: {
     extensions: ['', '.js', '.json', '.coffee'],
