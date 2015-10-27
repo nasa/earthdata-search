@@ -14,7 +14,6 @@
 //= require namespaces
 //= require config
 //= require util/index
-//= require edsc-timeline.min
 //= require models/index
 //= require models/page/search_page
 //= require modules/index
