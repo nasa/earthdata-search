@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Collapsed Collections Example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+    <script src="../dist/edsc-collections-collapsed.min.js"></script>
+  </head>
+  <body>
+    <h1>Collapsed Collections Examples</h1>
+
+    <h2>Collection Results</h2>
+    <edsc-collections-collapsed params="page: example1.page, isProject: false"></edsc-collections-collapsed>
+
+    <h2>Project List</h2>
+    <edsc-collections-collapsed params="page: example2.page, isProject: true"></edsc-collections-collapsed>
+
+    <h2>No Featured collections</h2>
+    <edsc-collections-collapsed params="page: example3.page, isProject: false"></edsc-collections-collapsed>
+
+    <script>
+      // Create a mock function with the given name that just writes a log or returns retVal
+      var mockFn = function(name, retVal) {
+        return function() {
+          var args = Array.prototype.slice.call(arguments);
+          if (typeof(retVal) === 'undefined') console.log(name, args);
+          return retVal;
+        };
+      };
+
+      // Create an object with the given list of function properties, all created with mockFn
+      var mockFns = function(fns) {
+        var result = {};
+        for (var i = 0; i < fns.length; i++) {
+          var fn = fns[i];
+          if (typeof(fn) == 'string') fn = [fn];
+          result[fn[0]] = mockFn(fn[0], fn[1]);
+        }
+        return result;
+      }
+
+      // Create structure necessary for list to function
+      var mockPage = function() {
+        var result = {
+          ui: {
+            collectionsList: mockFns(['focusCollection', 'showCollectionDetails', ['canQueryCollectionSpatial', false], 'toggleQueryCollectionSpatial']),
+            projectList: mockFns(['toggleCollection', 'loginAndDownloadCollection', 'showFilters', 'hideFilters'])
+          },
+          project: mockFns([['hasCollection', true], ['isSearchingGranules', true]]),
+          query: mockFns([['spatial', null]])
+
+        };
+        return result;
+      };
+
+      var id=0
+      // Create a mock collection
+      var mockCollection = function() {
+        return {
+          id: 'C0000' + id++ + '-MYPROV',
+          dataset_id: 'coll_dataset_id',
+          short_name: 'coll_sn',
+          version_id: '1.1',
+          spatial: [],
+          timeRange: '2015-01-01 to 2015-06-01',
+          visible: mockFn('visible', true),
+          has_granules: true,
+          archive_center: 'coll_archive_center',
+          data_center: 'coll_data_center',
+          granule_count: 1234
+        };
+      }
+
+      // Create a mock collections list
+      var mockCollections = function(page) {
+        page.collections = {
+          hits: 6,
+          isLoading: false,
+          toggleVisibleCollection: mockFn('toggleVisibleCollection'),
+          featured: [mockCollection(), mockCollection()],
+          unfeatured: [mockCollection(), mockCollection(), mockCollection(), mockCollection()]
+        };
+        return page;
+      }
+
+      var bindings = {
+        example1: {page: mockCollections(mockPage())},
+        example2: {page: mockCollections(mockPage())},
+        example3: {page: mockCollections(mockPage())}
+      }
+
+      bindings.example3.page.collections.featured = [];
+
+
+      ko.applyBindings(bindings);
+    </script>
+  </body>
+</html>

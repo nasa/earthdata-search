@@ -1,0 +1,210 @@
+// Mixin
+.dark-ccol-action-icon {
+  background: #2c3e50;
+  color: #ccd2d6;
+  margin-top: 1px;
+
+  &:hover {
+    background: darken(#2c3e50, 10%);
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &.button-disabled {
+    color: #aaa;
+    cursor: default;
+
+    &:hover {
+      background: #ddd;
+    }
+  }
+
+  &.button-active {
+    background: #27AE60;
+    color: #ffffff;
+    &:hover {
+      background: darken(#27AE60, 10%);
+    }
+  }
+
+  &.button-highlighted {
+    box-shadow: 0 0 5px #27AE60;
+  }
+}
+
+@ccols-width: 270px;
+@ccols-background: rgba(0, 0, 0, .95);
+@ccols-color: #fff;
+
+@ccol-header-background: #292c2d;
+@ccol-width: @ccols-width;
+@ccol-actions-width: 29px;
+@ccol-content-width: @ccol-width - @ccol-actions-width;
+@ccol-content-height: @ccol-content-width / 2;
+@ccol-header-height: 29px;
+@ccol-height: @ccol-header-height + @ccol-content-height;
+
+@flyout-height: @ccol-height;
+@flyout-width: @ccol-width;
+@flyout-header-background: @ccol-header-background;
+@flyout-background: @ccols-background;
+@flyout-color: #fff;
+
+.ccols * {
+  box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  h2 {
+    font-size: 1.1em;
+    font-weight: normal;
+  }
+  h4 {
+    font-size: 1em;
+  }
+}
+
+.ccols {
+  width: @ccols-width;
+  color: @ccols-color;
+  background: @ccols-background;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+
+  ul {
+    list-style: none;
+  }
+
+  .icon-button {
+    width: @ccol-actions-width;
+    height: @ccol-actions-width;
+    text-align: center;
+  }
+
+  .badge-collection {
+    background: transparent url('../img/collection-icon.png') no-repeat center center;
+    background-size: contain;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+  }
+
+  .badge-granule {
+    background: transparent url('../img/granule-icon.png') no-repeat center center;
+    background-size: contain;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+  }
+}
+
+.ccol {
+  position: relative;
+}
+
+.ccol-title {
+  text-overflow: ellipsis;
+  width: @ccols-width;
+  white-space: nowrap;
+  overflow: hidden;
+
+  .icon-button {
+    float: right;
+    color: #fff;
+
+    &:hover {
+      color: #888;
+    }
+  }
+}
+
+.ccol-actions-container {
+  width: 29px;
+  height: 116px;
+  background-color: #191a1b;
+  right: 0;
+  top: 0;
+  position: absolute;
+  margin-top: 29px;
+}
+
+.ccols-title, .ccols-group-title {
+  padding: .6em .5em;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.ccol-header {
+  height: @ccol-header-height;
+  background: @ccol-header-background;
+  padding: 5px 0 5px 5px;
+}
+
+.ccol-mini-map {
+  height: @ccol-content-height;
+  width: @ccol-content-width;
+  background-color: #ed009d;
+}
+
+.ccol-actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  a.button {
+    .dark-ccol-action-icon;
+    font-size: 1em;
+    padding: 5px 2px 1px 3px;
+    display: block;
+    border-radius: 0;
+
+    &:hover {
+      .add-to-project-tooltip {
+        position: absolute;
+        display: block;
+      }
+    }
+  }
+}
+
+.flyout {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: @ccol-width;
+  width: @flyout-width;
+  height: @flyout-height;
+  font-size: .8em;
+  background: @flyout-background;
+  color: @flyout-color;
+}
+
+.flyout-content {
+  padding-left: 10px;
+  font-size: 10px;
+}
+
+.flyout-header {
+  height: @ccol-header-height;
+  background: @ccol-header-background;
+  padding: 5px;
+  background: @flyout-header-background;
+
+  .flyout-info {
+    float: right;
+    span {
+      vertical-align: top;
+    }
+  }
+}
+
+.flyout-title {
+  margin: 0 0 5px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: normal;
+  padding-left: 10px;
+}
