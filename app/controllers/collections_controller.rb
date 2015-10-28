@@ -105,8 +105,6 @@ class CollectionsController < ApplicationController
     features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
     facets.unshift(features).flatten!
 
-    keyword_index = 8
-
     # CMR-1722 Temporarily filter out detailed_variable keywords
     # FIXME: The proposed fix to CMR-1722 may break our facets
     facets = facets.reject {|facet| facet['field'] == 'detailed_variable'}
@@ -166,9 +164,7 @@ class CollectionsController < ApplicationController
       end
 
       previous_applied = false
-      if index < keyword_index
-        facet_response(query, items, params.first, params.last)
-      else
+      if ['topic', 'term', 'variable_level_1', 'variable_level_2', 'variable_level_3'].include? facet['field']
         if items.size > 0 # FIXME if no items are returned, doesn't show any selected facets
           previous_param = fields_to_params[facets[index-1]['field']]
           previous_applied = true if previous_param && query[previous_param.last]
@@ -180,7 +176,7 @@ class CollectionsController < ApplicationController
             selected_item['term'] = selected_item['term']
             selected_item['index'] = index
             selected_keywords += [selected_item]
-          elsif index == keyword_index || previous_applied # if previous keyword param has applied facet
+          elsif facet['field'] == 'topic' || previous_applied # if previous keyword param has applied facet
             keyword_facets += items.map do |item|
               item['param'] = params.last
               item
@@ -190,6 +186,8 @@ class CollectionsController < ApplicationController
           end
         end
         nil
+      else
+        facet_response(query, items, params.first, params.last)
       end
     end
 
