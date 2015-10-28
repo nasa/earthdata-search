@@ -3,6 +3,44 @@ dom = require 'core/src/dom'
 extend = require 'core/src/extend'
 events = require 'core/src/events'
 
+sortable = (root, rowClass) ->
+    $root = $(root)
+    $placeholder = $("<li class=\"sortable-placeholder #{rowClass}\"/>")
+
+    index = null
+    $dragging = null
+
+    $root.on 'dragstart.sortable', '> *', (e) ->
+      dt = e.originalEvent.dataTransfer;
+      dt.effectAllowed = 'move';
+      dt.setData('Text', 'dummy');
+      $dragging = $(this)
+      index = $dragging.index();
+
+    $root.on 'dragend.sortable', '> *', (e) ->
+      $dragging.show()
+      $placeholder.detach()
+      startIndex = index
+      endIndex = $dragging.index()
+      if startIndex != endIndex
+        $root.trigger('sortupdate', startIndex: startIndex, endIndex: endIndex)
+      $dragging = null
+
+    $root.on 'drop.sortable', '> *', (e) ->
+      e.stopPropagation()
+      $placeholder.after($dragging)
+      false
+
+    $root.on 'dragover.sortable dragenter.sortable', '> *', (e) ->
+      e.preventDefault()
+      e.originalEvent.dataTransfer.dropEffect = 'move';
+      $dragging.hide().appendTo($root) # appendTo to ensure top margins are ok
+      if $placeholder.index() < $(this).index()
+        $(this).after($placeholder)
+      else
+        $(this).before($placeholder)
+      false
+
 class KnockoutComponentModel
   @register: (klass, name, template) ->
     ko.components.register name,
@@ -16,13 +54,17 @@ class KnockoutComponentModel
     extend(this, params)
 
 class CollectionsCollapsedModel extends KnockoutComponentModel
-
-class CollectionCollapsedModel extends KnockoutComponentModel
-  constructor: (params, componentInfo) ->
-    super(params, componentInfo)
-    parent = @parent
-    @page = parent.page
-    @isProject = parent.isProject
+  # These methods should be factored out eventually
+  collections: => @page.collections.results()
+  focusCollection: (args...) => @page.ui.collectionsList.focusCollection(args...)
+  toggleVisibleCollection: (args...) => @page.collections.toggleVisibleCollection(args...)
+  hasCollection: (args...) => @page.project.hasCollection(args...)
+  toggleCollection: (args...) => @page.ui.projectList.toggleCollection(args...)
+  accessCollection: (args...) => @page.ui.projectList.loginAndDownloadCollection(args...)
+  canQueryCollectionSpatial: (args...) => @page.ui.collectionsList.canQueryCollectionSpatial(args...)
+  spatialQuery: (args...) => @page.query.spatial(args...)
+  toggleQueryCollectionSpatial: (args...) => @page.ui.collectionsList.toggleQueryCollectionSpatial(args...)
+  # End methods to factor out
 
   _getFlyoutTarget: (e) ->
     target = e.target
@@ -47,7 +89,8 @@ class CollectionCollapsedModel extends KnockoutComponentModel
       flyout = dom.stringToNode(require("../html/#{template}.html"))
       ko.utils.domData.set(target, 'flyout', flyout)
       ko.applyBindings(context, flyout)
-      parent = @_root.firstElementChild
+      parent = target
+      parent = parent.parentNode until dom.hasClass(parent, 'ccol')
       if dom.hasClass(target, 'flyout-tooltip-button')
         flyout.style.top = @_relativeTop(target, parent) + 'px'
         dom.addClass(flyout, 'flyout-tooltip')
@@ -72,6 +115,3 @@ class CollectionCollapsedModel extends KnockoutComponentModel
 
 ccolsHtml = require('../html/collections-collapsed.html')
 KnockoutComponentModel.register(CollectionsCollapsedModel, 'edsc-collections-collapsed', ccolsHtml)
-
-ccolHtml = require('../html/collection-collapsed.html')
-KnockoutComponentModel.register(CollectionCollapsedModel, 'edsc-collection-collapsed', ccolHtml)

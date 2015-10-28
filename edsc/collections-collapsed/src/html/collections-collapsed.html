@@ -1,19 +1,63 @@
-<section class="ccols" data-bind="with: page">
-  <header>
-    <h2 class="ccols-title"><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
-  </header>
-  <!-- ko if: collections.featured.length > 0 -->
-    <h3 class="ccols-title">Recent and Featured</h3>
-    <ul class="ccols-list" data-bind="foreach: collections.featured">
-      <edsc-collection-collapsed params="collection: $data, parent: $component"></edsc-collections-collapsed>
-    </ul>
-
-    <h3 class="ccols-title">More Collections</h3>
-  <!-- /ko -->
-  <ul class="ccols-list" data-bind="foreach: collections.unfeatured">
-    <edsc-collection-collapsed params="collection: $data, parent: $component"></edsc-collections-collapsed>
-  </ul>
-  <p class="ccols-load-more" data-bind="visible: collections.isLoading">
-    Loading collections...
-  </p>
-</section>
+<ul class="ccols" data-bind="foreach: collections()">
+<li data-bind="click: $component.focusCollection,
+               attr: {draggable: $component.isProject}"
+    class="ccol">
+  <div class="ccol-header">
+    <span class="ccol-badge badge-collection"></span>
+    <span class="ccol-title">
+      <!-- ko if: has_granules -->
+        <a href="#" class="button icon-button" title="More details" data-bind="attr:{id: id}">
+          <i class="fa fa-chevron-circle-right"></i>
+        </a>
+      <!-- /ko -->
+      <span data-bind="text: short_name"></span> - <span data-bind="text: version_id"></span>
+    </span>
+  </div>
+  <div class="ccol-mini-map"></div>
+  <div class="ccol-actions-container">
+    <div class="ccol-actions">
+      <!-- ko if: has_granules -->
+        <a href="#" class="button icon-button" title="View collection" data-bind="visible: !visible(), click: $component.toggleVisibleCollection">
+          <i class="fa fa-eye"></i>
+        </a>
+        <a href="#" class="button icon-button button-active" title="Hide collection" data-bind="visible: visible(), click: $component.toggleVisibleCollection">
+          <i class="fa fa-eye"></i>
+        </a>
+      <!-- /ko -->
+      <a href="#" class="button icon-button add-to-project flyout-tooltip-button"
+         data-pulse="#project-count"
+         data-flyout="add-to-project-flyout"
+         class="button icon-button add-to-project"
+         data-bind="visible: !$component.hasCollection($data),
+                    click: $component.toggleCollection,
+                    event: {mouseover: $component.showFlyout, mouseout: $component.hideFlyout, click: $component.hideFlyout}">
+        <i class="fa fa-plus-circle"></i>
+      </a>
+      <a href="#" class="button icon-button button-active"
+         data-pulse="#project-count"
+         title="Remove collection from the current project"
+         data-bind="visible: $component.hasCollection($data),
+                    click: $component.toggleCollection">
+        <i class="fa fa-minus-circle"></i>
+      </a>
+      <a href="#" class="button icon-button ccol-details-button"
+         data-flyout="collection-details-flyout"
+         data-bind="click: $component.toggleFlyout"
+         title="View collection details">
+        <i class="fa fa-info-circle"></i>
+      </a>
+      <!-- ko if: $component.isProject -->
+        <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $component.accessCollection">
+          <i class="fa fa-download"></i>
+        </a>
+      <!-- /ko -->
+      <!-- ko if: !$component.isProject && $component.canQueryCollectionSpatial($data) -->
+        <a href="#" class="button icon-button" title="Search using this collection's location"
+           data-bind="css: {'button-active': $component.spatialQuery() == spatial_constraint()}, click: $component.toggleQueryCollectionSpatial">
+          <i class="fa fa-map-marker"></i>
+        </a>
+      <!-- /ko -->
+    </div>
+  </div>
+</li>
+</ul>
