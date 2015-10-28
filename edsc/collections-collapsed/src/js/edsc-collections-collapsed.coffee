@@ -43,6 +43,7 @@ sortable = (root, rowClass) ->
 
 class KnockoutComponentModel
   @register: (klass, name, template) ->
+    console.log ko
     ko.components.register name,
       viewModel:
         createViewModel: (params, componentInfo) -> new klass(params, componentInfo)
@@ -56,7 +57,7 @@ class KnockoutComponentModel
 class CollectionsCollapsedModel extends KnockoutComponentModel
   # These methods should be factored out eventually
   collections: => @page.collections.results()
-  focusCollection: (args...) => @page.ui.collectionsList.focusCollection(args...)
+
   toggleVisibleCollection: (args...) => @page.collections.toggleVisibleCollection(args...)
   hasCollection: (args...) => @page.project.hasCollection(args...)
   toggleCollection: (args...) => @page.ui.projectList.toggleCollection(args...)
