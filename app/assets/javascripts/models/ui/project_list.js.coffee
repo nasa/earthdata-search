@@ -53,6 +53,8 @@ ns.ProjectList = do (ko
       @visible = ko.observable(false)
       @needsTemporalChoice = ko.observable(false)
 
+      @filtersVisible = ko.observable(false)
+
       @datasetLinks = ko.computed(@_computeDatasetLinks, this, deferEvaluation: true)
       @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
       @datasetOnly = ko.computed(@_computeDatasetOnly, this, deferEvaluation: true)
@@ -215,6 +217,7 @@ ns.ProjectList = do (ko
       datasets
 
     showFilters: (dataset) =>
+      @filtersVisible(true)
       if @project.searchGranulesDataset(dataset)
         $('.granule-temporal-filter').temporalSelectors({
           uiModel: dataset.granulesModel.temporal,
@@ -227,6 +230,7 @@ ns.ProjectList = do (ko
       @hideFilters()
 
     hideFilters: =>
+      @filtersVisible(false)
       $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
       @project.searchGranulesDataset(null)
 
