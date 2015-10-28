@@ -11,11 +11,11 @@
 #    load_page :search
 #  end
 #
-#  context "when viewing the tooltip for a dataset whose granules has browse" do
+#  context "when viewing the tooltip for a collection whose granules has browse" do
 #    before :all do
 #      # Has browse
-#      add_dataset_to_project('C189399410-GSFCS4PA', 'AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005')
-#      dataset_results.click_link "View Project"
+#      add_collection_to_project('C189399410-GSFCS4PA', 'AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005')
+#      collection_results.click_link "View Project"
 #      map_mouseclick()
 #    end
 #
@@ -30,10 +30,10 @@
 #    end
 #  end
 #
-#  context "when viewing the tooltip for a dataset whose granules have no browse" do
+#  context "when viewing the tooltip for a collection whose granules have no browse" do
 #    before :all do
-#      add_dataset_to_project('C191370861-GSFCS4PA', 'AIRS/Aqua Level 1B Calibration subset V005')
-#      dataset_results.click_link "View Project"
+#      add_collection_to_project('C191370861-GSFCS4PA', 'AIRS/Aqua Level 1B Calibration subset V005')
+#      collection_results.click_link "View Project"
 #      map_mouseclick()
 #    end
 #

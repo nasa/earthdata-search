@@ -34,6 +34,7 @@ namespace :travis do
     else
       Rake::Task['knapsack:rspec'].invoke
     end
+
     Rake::Task['ci:cleancache'].invoke
   end
 end

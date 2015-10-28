@@ -3471,7 +3471,7 @@ http_interactions:
   digest: efdee9e9a5302230b0b5c15a06fbd6fe74b7199e
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnodatasets%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -3481,7 +3481,7 @@ http_interactions:
       Client-Id:
       - EDSC
   recorded_at: Wed, 18 Mar 2015 17:21:52 GMT
-  digest: f386b0d32ceb388e57bfb1afe7254d8fe851181e
+  digest: 2b4ec58038b5c2935f46da7664c107e2c0609d7c
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
@@ -3497,7 +3497,7 @@ http_interactions:
   digest: 5bc82d1ee8dcc11a8f10c1711707b6e1768846c5
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnodatasets%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -3507,7 +3507,7 @@ http_interactions:
       Client-Id:
       - EDSC
   recorded_at: Tue, 25 Aug 2015 14:40:15 GMT
-  digest: 14e9c8094826bf6c25899b4425ed891574492bef
+  digest: 86edc4f1b7720131be378af3495126566b6aed5a
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&include_has_granules=true&include_granule_counts=true
@@ -3523,7 +3523,7 @@ http_interactions:
   digest: 0a7e6952e3f507c8ecebf5f6d3c3f28fd34c4b0e
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&keyword=somestringthatmatchesnodatasets%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&hierarchical_facets=true&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -3533,7 +3533,7 @@ http_interactions:
       Client-Id:
       - EDSC
   recorded_at: Tue, 25 Aug 2015 14:40:13 GMT
-  digest: 8bee91ab96417b3b79304ab18b45119cf0fd0fef
+  digest: f7ad86c381be68530aeaf0aa43870de0f1423608
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
@@ -3549,7 +3549,7 @@ http_interactions:
   digest: 3662a8a695231309dee4ed7785cfea5fef15a9ff
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&keyword=somestringthatmatchesnodatasets%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&page_size=20&page_num=1&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -3559,7 +3559,7 @@ http_interactions:
       Client-Id:
       - EDSC
   recorded_at: Wed, 18 Mar 2015 17:21:51 GMT
-  digest: 2db4fb3c7a91aa91bee76a53eeeccea1124d3920
+  digest: d0d1f1006dac71ca69564879c3f7b17689606802
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&project%5B%5D=EOSDIS&platform%5B%5D=FIELD+INVESTIGATION&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&options%5Bplatform%5D%5Band%5D=true&include_has_granules=true&include_granule_counts=true
@@ -4392,6 +4392,32 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 18 Mar 2015 17:24:01 GMT
   digest: 2a69627f9ca9a72f1101388c23e33ce6a7f003c0
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2014-08-22T23%3A33%3A31.764Z%2C2015-08-24T23%3A39%3A42.352Z&bounding_box=0%2C0%2C10%2C10&platform%5B%5D=Terra&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A+nrt%2A&options%5Bplatform%5D%5Band%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 27 Oct 2015 16:26:21 GMT
+  digest: 71f64c7b7a14a8032194504ed8e1084104ae5c2a
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2014-08-22T23%3A33%3A31.764Z%2C2015-08-24T23%3A39%3A42.352Z&bounding_box=0%2C0%2C10%2C10&platform%5B%5D=Terra&page_size=20&page_num=1&hierarchical_facets=true&keyword=snow%2A+cover%2A+nrt%2A&options%5Bplatform%5D%5Band%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 27 Oct 2015 16:26:19 GMT
+  digest: 80b6238a2baf0d795657fb6075a1dc481b0e7f81
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2014-08-22T23%3A33%3A31.764Z%2C2015-08-24T23%3A39%3A42.352Z&bounding_box=0%2C0%2C10%2C10&platform%5B%5D=Terra&page_size=20&page_num=1&keyword=snow%2A+cover%2A+nrt%2A&options%5Bplatform%5D%5Band%5D=true&include_has_granules=true&include_granule_counts=true

@@ -3,9 +3,9 @@ describe "query", ->
   param = $.param
   ns = window.edsc.models.data.query
 
-  describe "DatasetQuery", ->
+  describe "CollectionQuery", ->
     beforeEach ->
-      @query = new ns.DatasetQuery()
+      @query = new ns.CollectionQuery()
 
     it "has a page size of 20 by default", ->
       expect(param(@query.params())).toEqual("page_size=20")
@@ -63,7 +63,7 @@ describe "query", ->
         @query.params(params)
         expect(param(@query.params())).toEqual(param(params))
 
-    it "serializes dataset facets", ->
+    it "serializes collection facets", ->
       # This is intentionally a little different.  We don't deserialize facets
       params = {campaign: ['campaign1', 'campaign2'], sensor: ['sensor1'], page_size: 20}
       @query.facets.push(param: 'campaign', term: 'campaign1')
@@ -71,7 +71,7 @@ describe "query", ->
       @query.facets.push(param: 'sensor', term: 'sensor1')
       expect(param(@query.params())).toEqual(param(params))
 
-    it "does not deserialize dataset facets", ->
+    it "does not deserialize collection facets", ->
       params = {campaign: ['campaign1', 'campaign2'], sensor: ['sensor1'], page_size: 20}
       expect(param(@query.params())).toEqual("page_size=20")
 
@@ -109,7 +109,7 @@ describe "query", ->
   describe "GranuleQuery", ->
     beforeEach ->
       @ds_id = 'my_item_id'
-      @parent = new ns.DatasetQuery()
+      @parent = new ns.CollectionQuery()
       @query = new ns.GranuleQuery(@ds_id, @parent)
 
     it 'serializes catalog item id, sort key, and page size by default', ->

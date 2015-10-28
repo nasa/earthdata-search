@@ -18,7 +18,7 @@ module Helpers
 
       def path_from_options(url, options)
         if url == '/search'
-          url = '/search/datasets'
+          url = '/search/collections'
           url = '/search/map' if options[:overlay] == false
           url = '/search/project' if options[:view] == :project
           url = '/search' if options[:facets]
