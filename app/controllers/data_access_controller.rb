@@ -182,9 +182,9 @@ class DataAccessController < ApplicationController
         response.headers[key] = value if key.start_with?('cmr-')
       end
 
-      respond_with(result, status: catalog_response.status)
+      respond_with(result, status: catalog_response.status, location: nil)
     else
-      respond_with(catalog_response.body, status: catalog_response.status)
+      respond_with(catalog_response.body, status: catalog_response.status, location: nil)
     end
   end
 
