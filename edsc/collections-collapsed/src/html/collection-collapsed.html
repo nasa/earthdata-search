@@ -15,32 +15,6 @@
       </span>
     </div>
     <div class="ccol-mini-map"></div>
-    <div class="flyout" data-bind="attr:{id: id + '-flyout'}">
-      <div class="flyout-header">
-        <div class="flyout-info" data-bind="if: has_granules">
-          <span class="badge-granule"></span>
-          <span class="granule-count" data-bind="text: granule_count"></span>
-        </div>
-        <span data-bind="text: short_name"></span>
-      </div>
-      <h4 class="flyout-title" data-bind="text: dataset_id"></h4>
-      <p class="flyout-content">
-        <i class="fa fa-crop"></i>
-        <span data-bind="text: spatial"></span>
-      </p>
-      <p class="flyout-content">
-        <i class="fa fa-clock-o"></i>
-        <span data-bind="text: timeRange"></span>
-      </p>
-      <p class="flyout-content">
-        <span><strong>Archive Center: </strong></span>
-        <span data-bind="text: archive_center"></span>
-      </p>
-      <p class="flyout-content">
-        <span><strong>Data Center: </strong></span>
-        <span data-bind="text: data_center"></span>
-      </p>
-    </div>
     <!-- ko if: $component.isProject -->
       <div class="ccol-drag-handle"></div>
     <!-- /ko -->
@@ -54,20 +28,25 @@
             <i class="fa fa-eye"></i>
           </a>
         <!-- /ko -->
-        <a href="#" class="button icon-button add-to-project" data-pulse="#project-count"
-           class="button icon-button add-to-project"
+        <a href="#" class="button icon-button add-to-project"
            data-pulse="#project-count"
+           data-flyout="add-to-project-flyout"
+           class="button icon-button add-to-project"
            data-bind="visible: !$component.page.project.hasCollection($data),
-                      click: $component.page.ui.projectList.toggleCollection">
+                      click: $component.page.ui.projectList.toggleCollection,
+                      event: {mouseover: $component.showFlyout, mouseout: $component.hideFlyout}">
           <i class="fa fa-plus-circle"></i>
         </a>
-        <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
-           data-bind="visible: $component.page.project.hasCollection($data), click: $component.page.ui.projectList.toggleCollection">
+        <a href="#" class="button icon-button button-active"
+           data-pulse="#project-count" title="Remove collection from the current project"
+           data-bind="visible: $component.page.project.hasCollection($data),
+                      click: $component.page.ui.projectList.toggleCollection">
           <i class="fa fa-minus-circle"></i>
         </a>
-        <a href="#" class="button icon-button master-overlay-forward"
+        <a href="#" class="button icon-button ccol-details-button"
            data-master-overlay-forward="Collections"
-           data-bind="click: $component.page.ui.collectionsList.showCollectionDetails"
+           data-flyout="collection-details-flyout"
+           data-bind="click: $component.toggleFlyout"
            title="View collection details">
           <i class="fa fa-info-circle"></i>
         </a>

@@ -51,6 +51,8 @@
 @flyout-header-background: @ccol-header-background;
 @flyout-background: @ccols-background;
 @flyout-color: #fff;
+@flyout-toggle-background: #27ae60;
+@flyout-toggle-color: #fff;
 
 .ccols * {
   box-sizing: border-box;
@@ -75,6 +77,21 @@
   padding: .6em .5em;
   font-size: 1em;
   font-weight: normal;
+}
+
+.ccols-tooltip {
+  position: fixed;
+  float: right;
+  z-index: 999;
+  left: 230px;
+  width: 400px;
+  background: #F1C40F;
+  color: #000000;
+  font-size: .8em;
+  padding: 1em;
+  h4 {
+    margin: 0 0 .5em;
+  }
 }
 
 .ccol {
@@ -133,6 +150,11 @@
   margin-top: 29px;
 }
 
+.ccol-details-button.flyout-visible {
+  background-color: @flyout-toggle-background !important;
+  color: @flyout-toggle-color !important;
+}
+
 .ccol-header {
   height: @ccol-header-height;
   background: @ccol-header-background;
@@ -150,19 +172,12 @@
   right: 0;
   top: 0;
 
-  a.button {
+  .button {
     .dark-ccol-action-icon;
     font-size: 1em;
     padding: 5px 2px 1px 3px;
     display: block;
     border-radius: 0;
-
-    &:hover {
-      .add-to-project-tooltip {
-        position: absolute;
-        display: block;
-      }
-    }
   }
 }
 
