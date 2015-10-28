@@ -3,6 +3,7 @@
   <head>
     <title>Collapsed Collections Example</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
     <script src="../dist/edsc-collections-collapsed.min.js"></script>
   </head>
@@ -14,9 +15,6 @@
 
     <h2>Project List</h2>
     <edsc-collections-collapsed params="page: example2.page, isProject: true"></edsc-collections-collapsed>
-
-    <h2>No Featured collections</h2>
-    <edsc-collections-collapsed params="page: example3.page, isProject: false"></edsc-collections-collapsed>
 
     <script>
       // Create a mock function with the given name that just writes a log or returns retVal
@@ -78,8 +76,7 @@
           hits: 6,
           isLoading: false,
           toggleVisibleCollection: mockFn('toggleVisibleCollection'),
-          featured: [mockCollection(), mockCollection()],
-          unfeatured: [mockCollection(), mockCollection(), mockCollection(), mockCollection()]
+          results: mockFn('results', [mockCollection(), mockCollection(), mockCollection(), mockCollection()])
         };
         return page;
       }
@@ -87,11 +84,7 @@
       var bindings = {
         example1: {page: mockCollections(mockPage())},
         example2: {page: mockCollections(mockPage())},
-        example3: {page: mockCollections(mockPage())}
       }
-
-      bindings.example3.page.collections.featured = [];
-
 
       ko.applyBindings(bindings);
     </script>
