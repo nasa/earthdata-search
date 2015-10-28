@@ -5,13 +5,13 @@
   <!-- ko if: collections.featured.length > 0 -->
     <h3 class="ccols-title">Recent and Featured</h3>
     <ul class="ccols-list" data-bind="foreach: collections.featured">
-      <edsc-collection-collapsed params="collection: $data, page: $component.page"></edsc-collections-collapsed>
+      <edsc-collection-collapsed params="collection: $data, parent: $component"></edsc-collections-collapsed>
     </ul>
 
     <h3 class="ccols-title">More Collections</h3>
   <!-- /ko -->
   <ul class="ccols-list" data-bind="foreach: collections.unfeatured">
-    <edsc-collection-collapsed params="collection: $data, page: $component.page"></edsc-collections-collapsed>
+    <edsc-collection-collapsed params="collection: $data, parent: $component"></edsc-collections-collapsed>
   </ul>
   <p class="ccols-load-more" data-bind="visible: collections.isLoading">
     Loading collections...

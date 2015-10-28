@@ -1,5 +1,7 @@
 require '../css/collections-collapsed.less'
-{extend, dom} = require('core')
+dom = require 'core/src/dom'
+extend = require 'core/src/extend'
+events = require 'core/src/events'
 
 class KnockoutComponentModel
   @register: (klass, name, template) ->
@@ -18,6 +20,9 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
 class CollectionCollapsedModel extends KnockoutComponentModel
   constructor: (params, componentInfo) ->
     super(params, componentInfo)
+    parent = @parent
+    @page = parent.page
+    @isProject = parent.isProject
 
   _getFlyoutTarget: (e) ->
     target = e.target
@@ -28,19 +33,35 @@ class CollectionCollapsedModel extends KnockoutComponentModel
     target = @_getFlyoutTarget(e)
     if ko.utils.domData.get(target, 'flyout') || dom.hasClass(target, 'flyout-visible')
       @hideFlyout(context, e)
+      dom.removeClass(target, 'button-active')
     else
       @showFlyout(context, e)
+      dom.addClass(target, 'button-active')
 
   showFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
-    if target
+    if target && !ko.utils.domData.get(target, 'flyout')
       @hideFlyout(context, e)
       dom.addClass(target, 'flyout-visible')
       template = target.getAttribute('data-flyout')
       flyout = dom.stringToNode(require("../html/#{template}.html"))
       ko.utils.domData.set(target, 'flyout', flyout)
       ko.applyBindings(context, flyout)
-      @_root.firstElementChild.appendChild(flyout)
+      parent = @_root.firstElementChild
+      if dom.hasClass(target, 'flyout-tooltip-button')
+        flyout.style.top = @_relativeTop(target, parent) + 'px'
+        dom.addClass(flyout, 'flyout-tooltip')
+      parent.appendChild(flyout)
+
+  # Finds vertical distance from the top of parent to the top of el,
+  # traversing offsetParents
+  _relativeTop: (el, parent) ->
+    top = -parent.offsetTop
+    parent = parent.offsetParent if top != 0
+    while el && el != parent
+      top += el.offsetTop
+      el = el.offsetParent
+    top
 
   hideFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
