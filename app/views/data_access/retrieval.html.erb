@@ -19,8 +19,8 @@
     <p>Your request has been processed.  See below for information on accessing your data.</p>
   </header>
   <div class="data-access-container">
-    <section class="data-access-content data-access-downloads" data-bind="visible: ui.projectList.datasetsToDownload().length > 0">
-      <h2>The following datasets are available for immediate download</h2>
+    <section class="data-access-content data-access-downloads" data-bind="visible: ui.projectList.collectionsToDownload().length > 0">
+      <h2>The following collections are available for immediate download</h2>
       <p>
         Click the "View Download Links" button to view a page containing links to your data.
         You may bookmark this page for later access.
@@ -28,10 +28,10 @@
         <a class="link" href="https://addons.mozilla.org/en-US/firefox/addon/downthemall/">DownThemAll!</a>
         can assist you in managing a large number of download links.
       </p>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetsToDownload">
-        <li class="data-access-dataset">
-          <p class="data-access-dataset-name" data-bind="text: title"></p>
-          <div class="data-access-dataset-actions">
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.collectionsToDownload">
+        <li class="data-access-collection">
+          <p class="data-access-collection-name" data-bind="text: title"></p>
+          <div class="data-access-collection-actions">
             <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadPageUrl}">View Download Links</a>
             <!-- ko if: downloadBrowseUrl -->
             <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadBrowseUrl}">View Browse Image Links</a>
@@ -41,12 +41,12 @@
         </li>
       </ul>
     </section>
-    <section class="data-access-content data-access-dataset-only" data-bind="visible: ui.projectList.datasetOnly().length > 0">
-      <h2>The following datasets are available on the provider's website</h2>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetOnly">
-        <li class="data-access-dataset">
-          <p class="data-access-dataset-name" data-bind="text: dataset.dataset_id"></p>
-          <!-- ko foreach: (dataset.hasAtomData() ? dataset.links : []) -->
+    <section class="data-access-content data-access-collection-only" data-bind="visible: ui.projectList.collectionOnly().length > 0">
+      <h2>The following collections are available on the provider's website</h2>
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.collectionOnly">
+        <li class="data-access-collection">
+          <p class="data-access-collection-name" data-bind="text: collection.dataset_id"></p>
+          <!-- ko foreach: (collection.hasAtomData() ? collection.links : []) -->
           <p data-bind="if: $data.rel == 'enclosure' || $data.rel.indexOf('/data') > -1">
             <a class="link" data-bind="attr: {href: $data.href}, text: edsc.util.string.capitalize($data.title)" target="_blank"></a>
           </p>
@@ -55,19 +55,19 @@
       </ul>
     </section>
     <section class="data-access-content data-access-orders" data-bind="visible: ui.projectList.submittedOrders().length > 0">
-      <h2>The following datasets are being processed</h2>
+      <h2>The following collections are being processed</h2>
       <p>
         When the data becomes available, an email containing download links will be sent to the address you provided.
       </p>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.submittedOrders">
-        <li class="data-access-dataset">
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.submittedOrders">
+        <li class="data-access-collection">
           <p>
-            <span class="data-access-dataset-name" data-bind="text: dataset_id"></span>
+            <span class="data-access-collection-name" data-bind="text: collection_id"></span>
             <!-- ko if: order_status -->
             <span class="order-state" data-bind="css: order_status, text: order_status"></span>
             <!-- /ko -->
           </p>
-          <div class="data-access-dataset-actions">
+          <div class="data-access-collection-actions">
             <!-- ko if: downloadBrowseUrl -->
             <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadBrowseUrl}">View Browse Image Links</a>
             <!-- /ko -->
@@ -84,19 +84,19 @@
       </ul>
     </section>
     <section class="data-access-content data-access-services" data-bind="visible: ui.projectList.submittedServiceOrders().length > 0">
-      <h2>The following datasets are being processed</h2>
+      <h2>The following collections are being processed</h2>
       <p>
         When the data becomes available, an email containing download links will be sent to the address you provided.
       </p>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.submittedServiceOrders">
-        <li class="data-access-dataset">
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.submittedServiceOrders">
+        <li class="data-access-collection">
           <p>
-            <span class="data-access-dataset-name" data-bind="text: dataset_id"></span>
+            <span class="data-access-collection-name" data-bind="text: collection_id"></span>
             <!-- ko if: order_status -->
             <span class="order-state" data-bind="css: order_status, text: order_status"></span>
             <!-- /ko -->
           </p>
-          <div class="data-access-dataset-actions">
+          <div class="data-access-collection-actions">
             <!-- ko if: order_status == 'complete' -->
             <p>Your request is complete and can be downloaded using the following urls:</p>
             <div>
@@ -111,7 +111,7 @@
               <p><strong>Message: </strong> <span data-bind="text: error_message"></span></p>
               <% if Rails.configuration.feedback_url.present? %>
                 <p>Please
-                  <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Data Access', dataset_id)" class="button feedback-button">
+                  <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Data Access', collection_id)" class="button feedback-button">
                     <i class="fa fa-exclamation-circle"></i>
                     report a problem
                   </a>
@@ -141,12 +141,12 @@
         </li>
       </ul>
     </section>
-    <section class="data-access-content data-access-resources" data-bind="visible: ui.projectList.datasetLinks().length > 0">
+    <section class="data-access-content data-access-resources" data-bind="visible: ui.projectList.collectionLinks().length > 0">
       <h2>Additional Resources and Documentation</h2>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetLinks">
-        <li class="data-access-dataset">
-          <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
-          <ul class="data-access-dataset-actions" data-bind="foreach: links">
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.collectionLinks">
+        <li class="data-access-collection">
+          <p class="data-access-collection-name" data-bind="text: collection_id"></p>
+          <ul class="data-access-collection-actions" data-bind="foreach: links">
             <li><a class="link" data-bind="attr: {href: href}, text: title"></a></li>
           </ul>
         </li>

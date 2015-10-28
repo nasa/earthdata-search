@@ -50,11 +50,11 @@ describe "Timeline temporal display", reset: false do
       expect(page).to have_highlighted_selection(start_date, stop_date)
     end
 
-    context "and a dataset overrides the global temporal range" do
+    context "and a collection overrides the global temporal range" do
       before(:all) { set_temporal(ds_specific_date, nil, nil, 0) }
       after(:all) { unset_temporal(0) }
 
-      it "displays both the global and dataset-specific temporal ranges" do
+      it "displays both the global and collection-specific temporal ranges" do
         expect(page).to have_highlighted_selection(start_date, stop_date)
         expect(page).to have_highlighted_selection(ds_specific_date, max_date)
       end
