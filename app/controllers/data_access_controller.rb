@@ -9,7 +9,7 @@ class DataAccessController < ApplicationController
   def configure
     @back_path = request.query_parameters['back']
     if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
-      @back_path = '/search/datasets'
+      @back_path = '/search/collections'
     end
   end
 
@@ -39,12 +39,12 @@ class DataAccessController < ApplicationController
 
     Rails.logger.info(@retrieval.to_json)
 
-    orders = @retrieval.jsondata['datasets'].map do |dataset|
-      dataset['serviceOptions']['accessMethod'].select { |m| m['type'] == 'order' }
+    orders = @retrieval.jsondata['collections'].map do |collection|
+      collection['serviceOptions']['accessMethod'].select { |m| m['type'] == 'order' }
     end.flatten.compact
 
-    service_orders = @retrieval.jsondata['datasets'].map do |dataset|
-      dataset['serviceOptions']['accessMethod'].select { |m| m['type'] == 'service' }
+    service_orders = @retrieval.jsondata['collections'].map do |collection|
+      collection['serviceOptions']['accessMethod'].select { |m| m['type'] == 'service' }
     end.flatten.compact
 
     if orders.size > 0
@@ -76,9 +76,9 @@ class DataAccessController < ApplicationController
         s['order_status'] = 'submitting'
         s['service_options'] = {}
 
-        if s['dataset_id']
+        if s['collection_id']
           header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
-          response = ESIClient.get_esi_request(s['dataset_id'], s['order_id'], echo_client, token, header_value).body
+          response = ESIClient.get_esi_request(s['collection_id'], s['order_id'], echo_client, token, header_value).body
           response_json = MultiXml.parse(response)
 
           urls = []
@@ -138,12 +138,12 @@ class DataAccessController < ApplicationController
     catalog_response = echo_client.get_granules(granule_params, token)
 
     if catalog_response.success?
-      dataset = Array.wrap(request.query_parameters[:echo_collection_id]).first
-      if dataset
-        dqs = echo_client.get_data_quality_summary(dataset, token)
+      collection = Array.wrap(request.query_parameters[:echo_collection_id]).first
+      if collection
+        dqs = echo_client.get_data_quality_summary(collection, token)
       end
 
-      access_config = AccessConfiguration.find_by(user: current_user, dataset_id: dataset)
+      access_config = AccessConfiguration.find_by(user: current_user, collection_id: collection)
       defaults = access_config.service_options if access_config
 
       granules = catalog_response.body['feed']['entry']
@@ -167,7 +167,7 @@ class DataAccessController < ApplicationController
           dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
-          methods: get_downloadable_access_methods(dataset, granules, granule_params, hits) + get_order_access_methods(dataset, granules, hits) + get_service_access_methods(dataset, granules, hits),
+          methods: get_downloadable_access_methods(collection, granules, granule_params, hits) + get_order_access_methods(collection, granules, hits) + get_service_access_methods(collection, granules, hits),
           defaults: defaults
         }
       else
@@ -190,11 +190,11 @@ class DataAccessController < ApplicationController
 
   private
 
-  def get_downloadable_access_methods(dataset_id, granules, granule_params, hits)
+  def get_downloadable_access_methods(collection_id, granules, granule_params, hits)
     result = []
     downloadable = granules.select {|granule| granule['online_access_flag'] == 'true' || granule['online_access_flag'] == true}
     if downloadable.size > 0
-      opendap_config = OpendapConfiguration.find(dataset_id)
+      opendap_config = OpendapConfiguration.find(collection_id)
 
       spatial = granule_params['bounding_box'] || granule_params['polygon'] || granule_params['point'] || granule_params['line']
 
@@ -221,7 +221,7 @@ class DataAccessController < ApplicationController
     result
   end
 
-  def get_order_access_methods(dataset_id, granules, hits)
+  def get_order_access_methods(collection_id, granules, hits)
     granule_ids = granules.map {|granule| granule['id']}
     order_info = echo_client.get_order_information(granule_ids, token).body
     orderable_count = 0 #order_info['order_information']['orderable']
@@ -273,8 +273,8 @@ class DataAccessController < ApplicationController
     defs
   end
 
-  def get_service_access_methods(dataset_id, granules, hits)
-    service_order_info = echo_client.get_service_order_information(dataset_id, token).body
+  def get_service_access_methods(collection_id, granules, hits)
+    service_order_info = echo_client.get_service_order_information(collection_id, token).body
 
     service_order_info.map do |info|
       option_id = info['service_option_assignment']['service_option_definition_id']

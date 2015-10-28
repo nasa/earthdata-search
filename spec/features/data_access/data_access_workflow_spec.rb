@@ -1,17 +1,17 @@
 require "spec_helper"
 
 describe "Data Access workflow", reset: false do
-  downloadable_dataset_id = 'C90762182-LAADS'
-  downloadable_dataset_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
+  downloadable_collection_id = 'C90762182-LAADS'
+  downloadable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
-  non_downloadable_dataset_id = 'C179001887-SEDAC'
-  non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
+  non_downloadable_collection_id = 'C179001887-SEDAC'
+  non_downloadable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   context "when a malicious user attempts an XSS attack using the data access back link" do
     before(:each) do
       load_page :root
       login
-      visit "/data/configure?p=!#{downloadable_dataset_id}&back=javascript:alert(%27ohai%27)//"
+      visit "/data/configure?p=!#{downloadable_collection_id}&back=javascript:alert(%27ohai%27)//"
     end
 
     after :each do
@@ -20,15 +20,16 @@ describe "Data Access workflow", reset: false do
 
     it "uses a safe back link" do
       expect(page).to have_link("Back to Search Session")
-      expect(page).to have_css("a[href^=\"/search/datasets?p=!#{downloadable_dataset_id}\"]")
+      expect(page).to have_css("a[href^=\"/search/collections?p=!#{downloadable_collection_id}\"]")
     end
   end
 
   context "when the user is not logged in" do
     before(:each) do
-      load_page :search, project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project
+      load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
       wait_for_xhr
       click_link "Retrieve project data"
+      wait_for_xhr
     end
 
     after :each do
@@ -42,7 +43,7 @@ describe "Data Access workflow", reset: false do
 
   context "when the user is logged in" do
     before(:all) do
-      load_page :search, {project: [downloadable_dataset_id, non_downloadable_dataset_id], view: :project, temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
+      load_page :search, {project: [downloadable_collection_id, non_downloadable_collection_id], view: :project, temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
       login
       click_link "Retrieve project data"
       wait_for_xhr
@@ -54,10 +55,10 @@ describe "Data Access workflow", reset: false do
 
     it "displays a link to return to search results" do
       expect(page).to have_link("Back to Search Session")
-      expect(page).to have_css("a[href^=\"/search/project?p=!#{downloadable_dataset_id}\"]")
+      expect(page).to have_css("a[href^=\"/search/project?p=!#{downloadable_collection_id}\"]")
     end
 
-    context "when displaying options for the first of multiple datasets" do
+    context "when displaying options for the first of multiple collections" do
       after :all do
         reset_access_page
       end
@@ -114,13 +115,13 @@ describe "Data Access workflow", reset: false do
           reset_access_page
         end
 
-        it 'displays the next dataset in the list' do
-          expect(page).to have_content "Dataset Only"
+        it 'displays the next collection in the list' do
+          expect(page).to have_content "Collection Only"
         end
       end
     end
 
-    context "when displaying options for the last of multiple datasets" do
+    context "when displaying options for the last of multiple collections" do
       before :all do
         choose "FtpPushPull"
         click_button "Continue"
@@ -131,7 +132,7 @@ describe "Data Access workflow", reset: false do
       end
 
       it "displays granule information" do
-        expect(page).to have_content "Dataset Only"
+        expect(page).to have_content "Collection Only"
       end
 
       it 'displays a "continue" button to confirm contact information' do
@@ -149,13 +150,13 @@ describe "Data Access workflow", reset: false do
           click_button "Back"
         end
 
-        it 'displays the previous dataset in the list' do
+        it 'displays the previous collection in the list' do
           expect(page).to have_content "27 Granules"
         end
       end
     end
 
-    context "on the final dataset's step when contact information is not required" do
+    context "on the final collection's step when contact information is not required" do
       before :all do
         choose "Download"
         click_button "Continue"
@@ -261,8 +262,8 @@ describe "Data Access workflow", reset: false do
           click_button "Continue"
         end
 
-        it 'displays the previous dataset in the list' do
-          expect(page).to have_content "Dataset Only"
+        it 'displays the previous collection in the list' do
+          expect(page).to have_content "Collection Only"
         end
       end
     end
