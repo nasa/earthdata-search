@@ -16,33 +16,38 @@ class KnockoutComponentModel
 class CollectionsCollapsedModel extends KnockoutComponentModel
 
 class CollectionCollapsedModel extends KnockoutComponentModel
-  toggleFlyout: (args...) =>
-    if @_flyout
-      @hideFlyout(args...)
-    else
-      @showFlyout(args...)
+  constructor: (params, componentInfo) ->
+    super(params, componentInfo)
 
   _getFlyoutTarget: (e) ->
-    target
-
-  showFlyout: (context, e) =>
-    @hideFlyout()
     target = e.target
     target = target.parentNode until !target || flyout = target.getAttribute('data-flyout')
-    @_flyoutTarget = target
-    if target
-      dom.addClass(target, 'flyout-visible')
-      console.log target
-      @_flyout = dom.stringToNode(require("../html/#{flyout}.html"))
-      ko.applyBindings(context, @_flyout)
-      @_root.firstElementChild.appendChild(@_flyout)
+    target
 
-  hideFlyout: =>
-    if @_flyoutTarget
-      dom.removeClass( @_flyoutTarget, 'flyout-visible')
-      @_flyoutTarget = null
-    dom.remove(@_flyout)
-    @_flyout = null
+  toggleFlyout: (context, e) =>
+    target = @_getFlyoutTarget(e)
+    if ko.utils.domData.get(target, 'flyout') || dom.hasClass(target, 'flyout-visible')
+      @hideFlyout(context, e)
+    else
+      @showFlyout(context, e)
+
+  showFlyout: (context, e) =>
+    target = @_getFlyoutTarget(e)
+    if target
+      @hideFlyout(context, e)
+      dom.addClass(target, 'flyout-visible')
+      template = target.getAttribute('data-flyout')
+      flyout = dom.stringToNode(require("../html/#{template}.html"))
+      ko.utils.domData.set(target, 'flyout', flyout)
+      ko.applyBindings(context, flyout)
+      @_root.firstElementChild.appendChild(flyout)
+
+  hideFlyout: (context, e) =>
+    target = @_getFlyoutTarget(e)
+    if target
+      dom.remove(ko.utils.domData.get(target, 'flyout'))
+      dom.removeClass(target, 'flyout-visible')
+      ko.utils.domData.set(target, 'flyout', null)
 
 ccolsHtml = require('../html/collections-collapsed.html')
 KnockoutComponentModel.register(CollectionsCollapsedModel, 'edsc-collections-collapsed', ccolsHtml)
