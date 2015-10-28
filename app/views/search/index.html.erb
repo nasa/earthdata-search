@@ -98,6 +98,7 @@
           <!-- ko if: collections.featured().length > 0 -->
           <h3 class="panel-list-title">Recent and Featured</h3>
           <div class="panel-list">
+            <edsc-collections-collapsed params="page: $data, collections: collections.featured, isProject: false"></edsc-collections-collapsed>
             <ul id="collection-featured-list"
                 class="panel-list-list knockout-template"
                 data-bind="foreach: collections.featured, css: { 'knockout-template': !bindingsLoaded }">
