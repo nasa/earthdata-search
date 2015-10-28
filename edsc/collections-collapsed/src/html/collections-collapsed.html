@@ -3,14 +3,14 @@
                attr: {draggable: $component.isProject}"
     class="ccol">
   <div class="ccol-header">
+    <!-- ko if: has_granules -->
+    <a href="#" class="ccol-more button icon-button" title="More details" data-bind="attr:{id: id}">
+      <i class="fa fa-chevron-circle-right"></i>
+    </a>
+    <!-- /ko -->
     <span class="ccol-badge badge-collection"></span>
     <span class="ccol-title">
-      <!-- ko if: has_granules -->
-        <a href="#" class="button icon-button" title="More details" data-bind="attr:{id: id}">
-          <i class="fa fa-chevron-circle-right"></i>
-        </a>
-      <!-- /ko -->
-      <span data-bind="text: short_name"></span> - <span data-bind="text: version_id"></span>
+      <span data-bind="text: short_name"></span><span> - </span><span data-bind="text: version_id"></span>
     </span>
   </div>
   <div class="ccol-mini-map"></div>

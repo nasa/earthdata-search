@@ -67,7 +67,7 @@
   color: @ccols-color;
   background: @ccols-background;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12pt;
+  font-size: 10pt;
   list-style: none;
   position: relative;
   padding: 0;
@@ -81,10 +81,16 @@
     font-size: 1em;
   }
 
-  .icon-button {
+  a.icon-button {
     width: @ccol-actions-width;
     height: @ccol-actions-width;
     text-align: center;
+    border: 0;
+    border-radius: 0;
+
+    &:hover {
+      border: 0;
+    }
   }
 
   .badge-collection {
@@ -102,6 +108,19 @@
     height: 16px;
     width: 16px;
   }
+
+  .ccol-more {
+    float: right;
+    color: #fff;
+    background: transparent;
+    font-size: 1em;
+    padding: 0;
+
+    &:hover {
+      color: #888;
+      background: transparent;
+    }
+  }
 }
 
 .ccol-selectable {
@@ -110,17 +129,13 @@
 
 .ccol-title {
   text-overflow: ellipsis;
-  width: @ccols-width;
+  display: block;
+  margin: 0 2em;
   white-space: nowrap;
   overflow: hidden;
 
-  .icon-button {
-    float: right;
-    color: #fff;
-
-    &:hover {
-      color: #888;
-    }
+  span {
+    vertical-align: top;
   }
 }
 
@@ -139,6 +154,10 @@
   border-top: 1px solid lighten(@ccol-header-background, 15%);
   background: @ccol-header-background;
   padding: 5px 0 5px 5px;
+
+  .badge-collection {
+    float: left;
+  }
 }
 
 .ccol-mini-map {
