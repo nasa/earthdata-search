@@ -1,5 +1,5 @@
 // Mixin
-.dark-ccol-action-icon {
+.dark-ccol-action-icon() {
   background: #2c3e50;
   color: #ccd2d6;
   margin-top: 1px;
@@ -168,6 +168,7 @@
 
 .ccol-header {
   height: @ccol-header-height;
+  border-top: 1px solid lighten(@ccol-header-background, 15%);
   background: @ccol-header-background;
   padding: 5px 0 5px 5px;
 }
