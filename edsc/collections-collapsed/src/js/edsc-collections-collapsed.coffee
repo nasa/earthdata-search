@@ -56,8 +56,6 @@ class KnockoutComponentModel
 
 class CollectionsCollapsedModel extends KnockoutComponentModel
   # These methods should be factored out eventually
-  collections: => @page.collections.results()
-
   toggleVisibleCollection: (args...) => @page.collections.toggleVisibleCollection(args...)
   hasCollection: (args...) => @page.project.hasCollection(args...)
   toggleCollection: (args...) => @page.ui.projectList.toggleCollection(args...)

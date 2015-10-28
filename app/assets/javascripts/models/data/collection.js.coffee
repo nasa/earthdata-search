@@ -56,6 +56,7 @@ ns.Collection = do (ko
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
       @detailsLoaded = ko.observable(false)
 
+      @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
       @granuleDescription = @computed(@_computeGranuleDescription, this, deferEvaluation: true)
 
@@ -80,7 +81,7 @@ ns.Collection = do (ko
         result = dateUtil.timeSpanToIsoDate(@time_start, @time_end)
       (result || "Unknown")
 
-    spatial: ->
+    _computeSpatial: ->
       (@_spatialString("Bounding Rectangles", @boxes) ?
        @_spatialString("Points", @points) ?
        @_spatialString("Polygons", @polygons) ?
