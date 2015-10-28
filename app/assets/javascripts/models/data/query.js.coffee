@@ -261,7 +261,7 @@ ns.query = do (ko,
     _computeGlobalParams: => @_writeComponents(@_propagated)
     _computeOwnParams: => @_writeComponents(@_components, {})
 
-  class DatasetQuery extends Query
+  class CollectionQuery extends Query
     constructor: (parentQuery) ->
       @focusedTemporal = ko.observable(null)
       @focusedInterval = ko.observable(null)
@@ -288,7 +288,7 @@ ns.query = do (ko,
       facet for facet in @facets() when facet.param.indexOf('sci') == 0
 
   class GranuleQuery extends Query
-    constructor: (datasetId, parentQuery, attributes) ->
+    constructor: (collectionId, parentQuery, attributes) ->
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
       @granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
       @dayNightFlagOptions = [{name: "Anytime", value: null},
@@ -305,7 +305,7 @@ ns.query = do (ko,
       @temporal = new Temporal()
       @cloudCover = new Range()
 
-      @queryComponent(new QueryParam('echo_collection_id'), datasetId, ephemeral: true)
+      @queryComponent(new QueryParam('echo_collection_id'), collectionId, ephemeral: true)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition)
       @sortKey = @queryComponent(new QueryParam('sort_key'), ['-start_date'], ephemeral: true)
 
@@ -342,5 +342,5 @@ ns.query = do (ko,
       isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max)
 
   exports =
-    DatasetQuery: DatasetQuery
+    CollectionQuery: CollectionQuery
     GranuleQuery: GranuleQuery

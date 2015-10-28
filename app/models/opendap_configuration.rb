@@ -2,13 +2,14 @@ require 'addressable/template'
 
 class OpendapConfiguration
 
-  def self.find(dataset_id)
-    opendap_config = Rails.configuration.services['opendap'][dataset_id]
+  def self.find(collection_id)
+    opendap_config = Rails.configuration.services['opendap'][collection_id]
     return OpendapConfiguration.new() unless opendap_config.present?
 
     ddx = Faraday.get(opendap_config['ddx_url']).body
     parsed = MultiXml.parse(ddx)
 
+    # The response has a root node 'Dataset'
     parsed_attribute_arrays = parsed["Dataset"] && parsed["Dataset"]["Array"]
     return OpendapConfiguration.new() unless parsed_attribute_arrays.present?
 

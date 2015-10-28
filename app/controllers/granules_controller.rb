@@ -76,7 +76,7 @@ class GranulesController < ApplicationController
 
   def download
     retrieval = Retrieval.find(request[:project])
-    dataset_id = request[:dataset]
+    collection_id = request[:collection]
     user = current_user
     unless user == retrieval.user
       render file: "#{Rails.root}/public/403.html", status: :forbidden
@@ -84,17 +84,17 @@ class GranulesController < ApplicationController
     end
 
     project = retrieval.jsondata
-    dataset = Array.wrap(project['datasets']).find {|ds| ds['id'] == dataset_id}
+    collection = Array.wrap(project['collections']).find {|ds| ds['id'] == collection_id}
 
-    query = Rack::Utils.parse_nested_query(dataset['params'])
+    query = Rack::Utils.parse_nested_query(collection['params'])
 
     url_type = :download
     url_type = :browse if request[:browse] == true || request[:browse] == 'true'
 
-    url_mapper = OpendapConfiguration.find(dataset_id)
+    url_mapper = OpendapConfiguration.find(collection_id)
 
     if url_type == :download
-      method = dataset['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
+      method = collection['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
       url_mapper.apply_subsetting(method['subset'])
     end
 

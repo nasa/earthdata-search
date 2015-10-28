@@ -467,7 +467,7 @@ invalid_token:
       string: '{"errors":["Token [invalid] is not a valid URS
         token"]}'
     http_version:
-invalid_datasets_logged_in:
+invalid_collections_logged_in:
   response:
     status:
       code: 401
@@ -497,7 +497,7 @@ invalid_datasets_logged_in:
       encoding: UTF-8
       string: '{"errors":["Token invalid does not exist"]}'
     http_version:
-invalid_datasets_logged_in_non_hierarchical:
+invalid_collections_logged_in_non_hierarchical:
   response:
     status:
       code: 401
@@ -527,7 +527,7 @@ invalid_datasets_logged_in_non_hierarchical:
       encoding: UTF-8
       string: '{"errors":["Token invalid does not exist"]}'
     http_version:
-invalid_datasets_logged_out:
+invalid_collections_logged_out:
   response:
     status:
       code: 200
@@ -563,8 +563,8 @@ invalid_datasets_logged_out:
       - close
     body:
       encoding: UTF-8
-      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
-        "title":"ECHO dataset metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
+      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/collections.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
+        "title":"ECHO collection metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
         AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "summary":"ABSTRACT:
         Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide,
         and ozone over the entire BOREAS region to tie together measurements made
@@ -581,7 +581,7 @@ invalid_datasets_logged_out:
         -106.32 56.25 -97.23"], "dif_ids":["BOREAS_AFM3MW94"], "online_access_flag":"true",
         "browse_flag":"false", "relevance_score":0.5}]}}'
     http_version:
-invalid_datasets_logged_out_non_hierarchical:
+invalid_collections_logged_out_non_hierarchical:
   response:
     status:
       code: 200
@@ -617,8 +617,8 @@ invalid_datasets_logged_out_non_hierarchical:
       - close
     body:
       encoding: UTF-8
-      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
-        "title":"ECHO dataset metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
+      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/collections.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
+        "title":"ECHO collection metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
         AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "summary":"ABSTRACT:
         Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide,
         and ozone over the entire BOREAS region to tie together measurements made
@@ -658,7 +658,7 @@ invalid_but_load_page:
     body:
       encoding: UTF-8
       string: '{"feed":{"updated":"2015-01-21T13:47:36.322Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true","title":"ECHO
-        dataset metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        collection metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
         Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","title":"15
         Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
         15 minute stream flow data for Kings Creek on the Konza Prairie","has_granules":true,"time_end":"1988-03-04T00:00:00Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","granule_count":39,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html","hreflang":"en-US","title":"USGS
@@ -722,7 +722,7 @@ invalid_but_load_page:
         2005 Environmental Sustainability Index (ESI) is a measure of overall progress
         towards environmental sustainability, developed for 146 countries. The index
         provides a composite profile of national environmental stewardship based on
-        a compilation of 21 indicators derived from 76 underlying datasets. The 2005
+        a compilation of 21 indicators derived from 76 underlying collections. The 2005
         version of the ESI represents a significant update and improvement on earlier
         versions; the country ESI scores or rankings should not be compared to earlier
         versions because of changes to the methodology and underlying data. The index
@@ -765,7 +765,7 @@ invalid_but_load_page:
         countries derived from the average of four proximity-to-target scores from
         eco-region protection, access to improved sanitation, access to improved water
         and child mortality indicators. The 2008 NRMI includes data for the NRMI for
-        2006, 2007 and 2008. The dataset is produced and distributed by the Columbia
+        2006, 2007 and 2008. The collection is produced and distributed by the Columbia
         University Center for International Earth Science Information Network (CIESIN)
         in collaboration with the Yale Center for Environmental Law and Policy (YCELP).","has_granules":false,"orbit_parameters":{},"id":"C179002048-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/es/data/NRMI_2008_final-1.xls","hreflang":"en-US","title":"Data
         in Microsoft Excel (XLS) format","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://sedac.ciesin.columbia.edu/es/mcc.html","hreflang":"en-US","title":"data
@@ -1107,11 +1107,11 @@ invalid_but_load_page:
         sensors and other instruments, it allowed scientists to collect cloud electrification
         data for the first time from above the storm from it''s birth through dissipation.
         This experiment allowed scientists to achieve the dual goals of gathering
-        weather data safely, and testing new aircraft technology. This dataset consists
+        weather data safely, and testing new aircraft technology. This collection consists
         of data collected from seven instruments: the Slow/Fast antenna, Electric
         Field Mill, Dual Optical Pulse Sensor, Searchcoil magnetometer, Accelerometers,
         Gerdien Conductivity Prove, and the Fluxgate Magnetometer. Data consists of
-        sensor reads at 50HZ throughout the flight from all 64 channels.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C1020-GHRC","original_format":"ECHO10","granule_count":26,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1cont","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"1B","boxes":["23
+        sensor reads at 50HZ throughout the flight from all 64 channels.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C1020-GHRC","original_format":"ECHO10","granule_count":26,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1cont","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_collection.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"1B","boxes":["23
         -85 26 -81"],"time_start":"2002-07-10T00:00:00Z","dif_ids":["aces1efm"],"version_id":"1","updated":"2011-12-01T11:09:46.000Z","dataset_id":"ACES
         ELECTRIC FIELD MILL V1","data_center":"GHRC","short_name":"aces1efm","title":"ACES
         ELECTRIC FIELD MILL V1","coordinate_system":"CARTESIAN","summary":"The ALTUS
@@ -1124,8 +1124,8 @@ invalid_but_load_page:
         cloud electrification data for the first time from above the storm from it''s
         birth through dissipation.  This experiment allowed scientists to achieve
         the dual goals of gathering weather data safely, and testing new aircraft
-        technology.  This dataset consists of data from the Electric Field Mills which
-        yield information about the atmospheric electrical fields above the instruments.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C194462-GHRC","original_format":"ECHO10","granule_count":14,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1efm","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]}]}}'
+        technology.  This collection consists of data from the Electric Field Mills which
+        yield information about the atmospheric electrical fields above the instruments.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C194462-GHRC","original_format":"ECHO10","granule_count":14,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1efm","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_collection.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]}]}}'
     http_version:
 first_service_request:
   response:

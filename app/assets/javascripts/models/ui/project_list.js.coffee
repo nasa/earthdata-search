@@ -49,34 +49,34 @@ ns.ProjectList = do (ko
       false
 
   class ProjectList
-    constructor: (@project, @datasetResults) ->
+    constructor: (@project, @collectionResults) ->
       @visible = ko.observable(false)
       @needsTemporalChoice = ko.observable(false)
 
-      @datasetLinks = ko.computed(@_computeDatasetLinks, this, deferEvaluation: true)
-      @datasetsToDownload = ko.computed(@_computeDatasetsToDownload, this, deferEvaluation: true)
-      @datasetOnly = ko.computed(@_computeDatasetOnly, this, deferEvaluation: true)
+      @collectionLinks = ko.computed(@_computeCollectionLinks, this, deferEvaluation: true)
+      @collectionsToDownload = ko.computed(@_computeCollectionsToDownload, this, deferEvaluation: true)
+      @collectionOnly = ko.computed(@_computeCollectionOnly, this, deferEvaluation: true)
       @submittedOrders = ko.computed(@_computeSubmittedOrders, this, deferEvaluation: true)
       @submittedServiceOrders = ko.computed(@_computeSubmittedServiceOrders, this, deferEvaluation: true)
 
-      @allDatasetsVisible = ko.computed(@_computeAllDatasetsVisible, this, deferEvaluation: true)
+      @allCollectionsVisible = ko.computed(@_computeAllCollectionsVisible, this, deferEvaluation: true)
 
       $(document).ready(@_onReady)
 
     _onReady: =>
-      sortable('#project-datasets-list')
-      $('#project-datasets-list').on 'sortupdate', (e, {item, startIndex, endIndex}) =>
-        datasets = @project.datasets().concat()
-        [dataset] = datasets.splice(startIndex, 1)
-        datasets.splice(endIndex, 0, dataset)
-        @project.datasets(datasets)
+      sortable('#project-collections-list')
+      $('#project-collections-list').on 'sortupdate', (e, {item, startIndex, endIndex}) =>
+        collections = @project.collections().concat()
+        [collection] = collections.splice(startIndex, 1)
+        collections.splice(endIndex, 0, collection)
+        @project.collections(collections)
 
-    loginAndDownloadDataset: (dataset) =>
-      @project.focus(dataset)
+    loginAndDownloadCollection: (collection) =>
+      @project.focus(collection)
       @configureProject()
 
-    loginAndDownloadGranule: (dataset, granule) =>
-      @project.focus(dataset)
+    loginAndDownloadGranule: (collection, granule) =>
+      @project.focus(collection)
       @configureProject(granule.id)
 
     loginAndDownloadProject: =>
@@ -117,73 +117,73 @@ ns.ProjectList = do (ko
       @needsTemporalChoice(false)
       callback(focusedStr)
 
-    toggleDataset: (dataset) =>
+    toggleCollection: (collection) =>
       project = @project
-      if project.hasDataset(dataset)
-        project.removeDataset(dataset)
+      if project.hasCollection(collection)
+        project.removeCollection(collection)
       else
-        dataset.makeRecent()
-        project.addDataset(dataset)
+        collection.makeRecent()
+        project.addCollection(collection)
 
-    _computeDatasetLinks: ->
-      datasets = []
-      for projectDataset in @project.accessDatasets()
-        dataset = projectDataset.dataset
-        title = dataset.dataset_id
+    _computeCollectionLinks: ->
+      collections = []
+      for projectCollection in @project.accessCollections()
+        collection = projectCollection.collection
+        title = collection.dataset_id
         links = []
-        for link in dataset.links ? [] when link.rel.indexOf('metadata#') != -1
+        for link in collection.links ? [] when link.rel.indexOf('metadata#') != -1
           links.push
             title: link.title ? link.href
             href: link.href
         if links.length > 0
-          datasets.push
-            dataset_id: title
+          collections.push
+            collection_id: title
             links: links
-      datasets
+      collections
 
-    _computeDatasetsToDownload: ->
-      datasets = []
+    _computeCollectionsToDownload: ->
+      collections = []
       id = @project.id()
-      return datasets unless id?
-      for projectDataset in @project.accessDatasets()
-        dataset = projectDataset.dataset
-        has_browse = dataset.browseable_granule?
-        datasetId = dataset.id
-        title = dataset.dataset_id
-        for m in projectDataset.serviceOptions.accessMethod() when m.type == 'download'
-          datasets.push
+      return collections unless id?
+      for projectCollection in @project.accessCollections()
+        collection = projectCollection.collection
+        has_browse = collection.browseable_granule?
+        collectionId = collection.id
+        title = collection.dataset_id
+        for m in projectCollection.serviceOptions.accessMethod() when m.type == 'download'
+          collections.push
             title: title
-            downloadPageUrl: "/granules/download.html?project=#{id}&dataset=#{datasetId}"
-            downloadScriptUrl: "/granules/download.sh?project=#{id}&dataset=#{datasetId}"
-            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&dataset=#{datasetId}"
+            downloadPageUrl: "/granules/download.html?project=#{id}&collection=#{collectionId}"
+            downloadScriptUrl: "/granules/download.sh?project=#{id}&collection=#{collectionId}"
+            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
 
-      datasets
+      collections
 
     _computeSubmittedOrders: ->
       orders = []
       id = @project.id()
-      for projectDataset in @project.accessDatasets()
-        dataset = projectDataset.dataset
-        datasetId = dataset.id
-        has_browse = dataset.browseable_granule?
-        for m in projectDataset.serviceOptions.accessMethod() when m.type == 'order'
+      for projectCollection in @project.accessCollections()
+        collection = projectCollection.collection
+        collectionId = collection.id
+        has_browse = collection.browseable_granule?
+        for m in projectCollection.serviceOptions.accessMethod() when m.type == 'order'
           canCancel = ['QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
           orders.push
-            dataset_id: dataset.dataset_id
+            collection_id: collection.collection_id
             order_id: m.orderId
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
             cancel_link: "/data/remove?order_id=#{m.orderId}" if canCancel
-            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&dataset=#{datasetId}"
+            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
       orders
 
     _computeSubmittedServiceOrders: ->
       serviceOrders = []
       id = @project.id()
-      for projectDataset in @project.accessDatasets()
-        dataset = projectDataset.dataset
-        datasetId = dataset.id
-        has_browse = dataset.browseable_granule?
-        for m in projectDataset.serviceOptions.accessMethod() when m.type == 'service'
+      for projectCollection in @project.accessCollections()
+        collection = projectCollection.collection
+        collectionId = collection.id
+        has_browse = collection.browseable_granule?
+        for m in projectCollection.serviceOptions.accessMethod() when m.type == 'service'
           if m.orderStatus == 'processing' || m.orderStatus == 'submitting'
             console.log "Loading project data for #{id}"
             url = window.location.href + '.json'
@@ -197,28 +197,28 @@ ns.ProjectList = do (ko
             , 5000)
 
           serviceOrders.push
-            dataset_id: dataset.dataset_id
+            collection_id: collection.collection_id
             order_id: m.orderId
             order_status: m.orderStatus
             download_urls: m.serviceOptions.download_urls
             number_processed: m.serviceOptions.number_processed
             total_number: m.serviceOptions.total_number
-            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&dataset=#{datasetId}"
+            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
             error_code: m.errorCode
             error_message: m.errorMessage
       serviceOrders
 
-    _computeDatasetOnly: ->
-      datasets = []
-      for dataset in @project.accessDatasets()
-        datasets.push(dataset) if dataset.serviceOptions.accessMethod().length == 0
-      datasets
+    _computeCollectionOnly: ->
+      collections = []
+      for collection in @project.accessCollections()
+        collections.push(collection) if collection.serviceOptions.accessMethod().length == 0
+      collections
 
-    showFilters: (dataset) =>
-      if @project.searchGranulesDataset(dataset)
+    showFilters: (collection) =>
+      if @project.searchGranulesCollection(collection)
         $('.granule-temporal-filter').temporalSelectors({
-          uiModel: dataset.granulesModel.temporal,
-          modelPath: "(project.searchGranulesDataset() ? project.searchGranulesDataset().granulesModel.temporal.pending : null)",
+          uiModel: collection.granulesModel.temporal,
+          modelPath: "(project.searchGranulesCollection() ? project.searchGranulesCollection().granulesModel.temporal.pending : null)",
           prefix: 'granule'
         })
 
@@ -228,17 +228,17 @@ ns.ProjectList = do (ko
 
     hideFilters: =>
       $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
-      @project.searchGranulesDataset(null)
+      @project.searchGranulesCollection(null)
 
-    toggleViewAllDatasets: =>
-      visible = !@allDatasetsVisible()
-      for dataset in @project.datasets()
-        dataset.visible(visible)
+    toggleViewAllCollections: =>
+      visible = !@allCollectionsVisible()
+      for collection in @project.collections()
+        collection.visible(visible)
 
-    _computeAllDatasetsVisible: =>
+    _computeAllCollectionsVisible: =>
       all_visible = true
-      for dataset in @project.datasets()
-        all_visible = false if !dataset.visible()
+      for collection in @project.collections()
+        all_visible = false if !collection.visible()
       all_visible
 
   exports = ProjectList

@@ -13,7 +13,7 @@ ns.GranuleTimeline = do (ko
                          ) ->
   # intervals: 'year', 'month', 'day', 'hour', 'minute'
   class GranuleTimelineData extends XhrModel
-    constructor: (@dataset, @range, @color) ->
+    constructor: (@collection, @range, @color) ->
       @method = 'post'
       super("/granules/timeline.json", this)
       @prevParams = {}
@@ -21,8 +21,8 @@ ns.GranuleTimeline = do (ko
 
       $timeline = $('#timeline')
       $timeline.on 'rowtemporalchange.timeline', (e, rowId, start, stop) =>
-        if rowId == @dataset.id
-          temporal = @dataset.granuleQuery.temporal.applied
+        if rowId == @collection.id
+          temporal = @collection.granuleQuery.temporal.applied
           temporal.isRecurring(false)
           temporal.start.date(start)
           temporal.stop.date(stop)
@@ -37,11 +37,11 @@ ns.GranuleTimeline = do (ko
         end_date: dateUtil.toISOString(end)
         interval: interval
 
-      temporal = @dataset.granuleQuery.temporal.applied.ranges()
+      temporal = @collection.granuleQuery.temporal.applied.ranges()
       $timeline = $('#timeline')
-      if $timeline.timeline('getRowTemporal', @dataset.id)?.toString() != temporal?.toString()
-        $timeline.timeline('setRowTemporal', @dataset.id, temporal)
-      params = extend({}, @dataset.granulesModel.params(), timelineParams)
+      if $timeline.timeline('getRowTemporal', @collection.id)?.toString() != temporal?.toString()
+        $timeline.timeline('setRowTemporal', @collection.id, temporal)
+      params = extend({}, @collection.granulesModel.params(), timelineParams)
 
       delete params.temporal
       delete params.page_num
@@ -53,7 +53,7 @@ ns.GranuleTimeline = do (ko
       GranulesModel.prototype._queryFor(params)
 
     _computeSearchResponse: (current, callback) =>
-      return unless @dataset.granulesModel.query.isValid()
+      return unless @collection.granulesModel.query.isValid()
       params = @params()
       prev = @prevParams
 
@@ -70,13 +70,13 @@ ns.GranuleTimeline = do (ko
 
       @prevParams = params
 
-      $('#timeline').timeline('loadstart', @dataset.id, @range()...) if reload
+      $('#timeline').timeline('loadstart', @collection.id, @range()...) if reload
       @_load(params, current, callback) if changed
 
     _toResults: (data, current, params) ->
       intervals = data[0]?.intervals ? []
       [start, end, resolution] = @range()
-      $('#timeline').timeline 'data', @dataset.id,
+      $('#timeline').timeline 'data', @collection.id,
         start: start,
         end: end,
         resolution: resolution
@@ -85,8 +85,8 @@ ns.GranuleTimeline = do (ko
       intervals
 
   class GranuleTimeline extends KnockoutModel
-    constructor: (@datasetsList, @projectList) ->
-      @_datasetsToTimelines = {}
+    constructor: (@collectionsList, @projectList) ->
+      @_collectionsToTimelines = {}
 
       @_constructed = ko.observable(false)
       @_pending = null
@@ -103,30 +103,30 @@ ns.GranuleTimeline = do (ko
         $('.master-overlay').masterOverlay().masterOverlay('contentHeightChanged')
 
       $timeline.on 'temporalchange.timeline', (e, start, stop) =>
-        temporal = @datasetsList.query.temporal.applied
+        temporal = @collectionsList.query.temporal.applied
         temporal.isRecurring(false)
         temporal.start.date(start)
         temporal.stop.date(stop)
 
       $timeline.on 'focusset.timeline', (e, t0, t1, interval) =>
-        query = @datasetsList.query
+        query = @collectionsList.query
         query.focusedInterval(interval)
         query.focusedTemporal((new Date(t) for t in [t0, t1]))
 
       $timeline.on 'focusremove.timeline', (e) =>
-        query = @datasetsList.query
+        query = @collectionsList.query
         query.focusedInterval(null)
         query.focusedTemporal(null)
 
       @range(null)
-      @datasets = @computed(@_computeDatasets)
+      @collections = @computed(@_computeCollections)
 
     _readSerialized: ->
       return @_pending unless @_constructed()
-      return null if @datasets()? && @datasets().length == 0
+      return null if @collections()? && @collections().length == 0
 
       @range() # Read and discard this to register as an observer
-      query = @datasetsList.query
+      query = @collectionsList.query
       timeline = $('#timeline').data('timeline')
 
       center = Math.round(timeline.center() / 1000)
@@ -145,7 +145,7 @@ ns.GranuleTimeline = do (ko
       timeline = $('#timeline').data('timeline')
       if timeline?
         if newValue
-          query = @datasetsList.query
+          query = @collectionsList.query
           [center, zoom, start, end] = newValue.split('!')
           timeline.center(parseInt(center, 10) * 1000)
           timeline.zoom(parseInt(zoom, 10))
@@ -161,27 +161,27 @@ ns.GranuleTimeline = do (ko
       $('#timeline').timeline('focus')
 
     _computeTemporal: =>
-      temporal = @datasetsList.query.temporal.applied.ranges()
+      temporal = @collectionsList.query.temporal.applied.ranges()
       $timeline = $('#timeline')
       if $timeline.timeline('getTemporal')?.toString() != temporal?.toString()
         $timeline.timeline('setTemporal', temporal)
 
-    _computeDatasets: =>
+    _computeCollections: =>
       range = @range
-      focused = @datasetsList.focused()
+      focused = @collectionsList.focused()
       result = []
       if focused?
-        result = [focused.dataset]
+        result = [focused.collection]
       else if  @projectList.visible()
-        result = @projectList.project.datasets()
+        result = @projectList.project.collections()
 
-      # Pick only the first 3 datasets with granules
-      result = (dataset for dataset in result when dataset.has_granules)
+      # Pick only the first 3 collections with granules
+      result = (collection for collection in result when collection.has_granules)
       result = result[0...3]
 
       $timeline = $('#timeline')
 
-      # First load.  Construct if there are datasets, otherwise wait
+      # First load.  Construct if there are collections, otherwise wait
       if !$timeline.data('timeline')?
         if result.length > 0
           $timeline.timeline(animate: config.defaultAnimationDurationMs > 0, end: config.present())
@@ -192,41 +192,41 @@ ns.GranuleTimeline = do (ko
 
       $timeline.timeline('rows', result)
 
-      currentTimelines = @_datasetsToTimelines
+      currentTimelines = @_collectionsToTimelines
       newTimelines = {}
 
       lastDate = Number.MIN_VALUE
       firstDate = Number.MAX_VALUE
       listChanged = false
-      for dataset in result
-        listChanged = listChanged || !currentTimelines[dataset.id]?
-        if dataset.time_end?
-          lastDate = Math.max(lastDate, new Date(dataset.time_end).getTime())
-          firstDate = Math.min(firstDate, new Date(dataset.time_start).getTime())
+      for collection in result
+        listChanged = listChanged || !currentTimelines[collection.id]?
+        if collection.time_end?
+          lastDate = Math.max(lastDate, new Date(collection.time_end).getTime())
+          firstDate = Math.min(firstDate, new Date(collection.time_start).getTime())
       [start, end] = @range.peek()
       if listChanged && (lastDate > Number.MIN_VALUE && lastDate < start || firstDate < Number.MAX_VALUE && firstDate > end)
         @_lastDate = lastDate
         $timeline.timeline('panToTime', lastDate)
 
       project = @projectList.project
-      for dataset in result
-        id = dataset.id
+      for collection in result
+        id = collection.id
         if currentTimelines[id]
           newTimelines[id] = currentTimelines[id]
           delete currentTimelines[id]
         else
-          data = new GranuleTimelineData(dataset, range, project.colorForDataset(dataset))
+          data = new GranuleTimelineData(collection, range, project.colorForCollection(collection))
 
           newTimelines[id] = data
 
       for own k, v of currentTimelines
         v.dispose()
 
-      @_datasetsToTimelines = newTimelines
+      @_collectionsToTimelines = newTimelines
 
       for own key, data of newTimelines when !data.isLoading.peek()
         [start, end, resolution] = range()
-        $timeline.timeline 'data', data.dataset.id,
+        $timeline.timeline 'data', data.collection.id,
           start: start,
           end: end,
           resolution: resolution

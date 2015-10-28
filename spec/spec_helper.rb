@@ -137,6 +137,10 @@ RSpec.configure do |config|
     Headless.new(:destroy_on_exit => false).start
   end
 
+  config.before :each do
+    Rails.logger.info "Executing test: #{example.metadata[:example_group][:file_path]}:#{example.metadata[:example_group][:line_number]}"
+  end
+  
   config.before :all do
     file_time = Time.now
     Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
@@ -149,7 +153,9 @@ RSpec.configure do |config|
     index += 1
     puts " (Suite #{index} of #{count})"
 
-    models_to_preserve = [DatasetExtra, ActiveRecord::SchemaMigration]
+    # include deprecated 'DatasetExtra' here to prevent an error on model.destroy_all. For more info, see comments in
+    # dataset_extra.rb
+    models_to_preserve = [CollectionExtra, ActiveRecord::SchemaMigration, DatasetExtra]
     ActiveRecord::Base.descendants.each do |model|
       model.destroy_all unless models_to_preserve.include?(model)
     end
@@ -193,7 +199,7 @@ RSpec.configure do |config|
   config.include Helpers::SpatialHelpers
   config.include Helpers::ProjectHelpers
   config.include Helpers::PageHelpers
-  config.include Helpers::DatasetHelpers
+  config.include Helpers::CollectionHelpers
   config.include Helpers::DefaultTags
   config.include Helpers::TemporalHelpers
   config.include Helpers::UrlHelpers
