@@ -1,4 +1,4 @@
 exports.events = require('./events');
 exports.extend = require('./extend');
 exports.extern = require('./extern');
-exports.stringToDom = require('./stringToDom');
+exports.dom = require('./dom');

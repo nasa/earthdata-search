@@ -80,6 +80,19 @@ ns.Dataset = do (ko
         result = dateUtil.timeSpanToIsoDate(@time_start, @time_end)
       (result || "Unknown")
 
+    spatial: ->
+      (@_spatialString("Bounding Rectangles", @boxes) ?
+       @_spatialString("Points", @points) ?
+       @_spatialString("Polygons", @polygons) ?
+       @_spatialString("Lines", @polygons))
+
+    _spatialString: (title, spatial) ->
+      if spatial
+        suffix = if spatial.length > 1 then "" else " ..."
+        "#{title}: #{spatial[0]}#{suffix}"
+      else
+        null
+
     _computeGranuleDescription: ->
       result = null
       return result unless @hasAtomData()
