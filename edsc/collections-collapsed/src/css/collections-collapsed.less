@@ -32,6 +32,7 @@
   &.button-highlighted {
     box-shadow: 0 0 5px #27AE60;
   }
+
 }
 
 @ccols-width: 270px;
@@ -51,8 +52,8 @@
 @flyout-header-background: @ccol-header-background;
 @flyout-background: @ccols-background;
 @flyout-color: #fff;
-@flyout-toggle-background: #27ae60;
-@flyout-toggle-color: #fff;
+@flyout-tooltip-background: #f2c500;
+@flyout-tooltip-color: #fff;
 
 .ccols * {
   box-sizing: border-box;
@@ -124,6 +125,10 @@
   }
 }
 
+.ccol-selectable {
+  cursor: pointer;
+}
+
 .ccol-title {
   text-overflow: ellipsis;
   width: @ccols-width;
@@ -140,6 +145,17 @@
   }
 }
 
+.ccol-drag-handle {
+  float: left;
+  border: 2px solid #424242;
+  border-top: 0;
+  border-bottom: 0;
+  cursor: move;
+  height: @ccol-height + 12px;
+  width: 8px;
+  margin: -6px 12px -6px -8px;
+}
+
 .ccol-actions-container {
   width: 29px;
   height: 116px;
@@ -148,11 +164,6 @@
   top: 0;
   position: absolute;
   margin-top: 29px;
-}
-
-.ccol-details-button.flyout-visible {
-  background-color: @flyout-toggle-background !important;
-  color: @flyout-toggle-color !important;
 }
 
 .ccol-header {
@@ -195,7 +206,7 @@
 
 .flyout-content {
   padding-left: 10px;
-  font-size: 10px;
+  font-size: .9em;
 }
 
 .flyout-header {
@@ -218,4 +229,14 @@
   font-weight: bold;
   white-space: normal;
   padding-left: 10px;
+}
+
+.flyout-tooltip, .flyout-tooltip-button.flyout-visible:hover {
+  background: @flyout-tooltip-background;
+  color: @flyout-tooltip-color;
+}
+
+.flyout-tooltip {
+  padding: 1em;
+  height: auto;
 }
