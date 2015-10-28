@@ -89,7 +89,7 @@ ns.Collection = do (ko
 
     _spatialString: (title, spatial) ->
       if spatial
-        suffix = if spatial.length > 1 then "" else " ..."
+        suffix = if spatial.length > 1 then " ..." else ""
         "#{title}: #{spatial[0]}#{suffix}"
       else
         null

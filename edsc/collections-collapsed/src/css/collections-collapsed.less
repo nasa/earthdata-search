@@ -53,7 +53,7 @@
 @flyout-background: @ccols-background;
 @flyout-color: #fff;
 @flyout-tooltip-background: #f2c500;
-@flyout-tooltip-color: #fff;
+@flyout-tooltip-color: #000;
 
 .ccols * {
   box-sizing: border-box;
@@ -186,8 +186,7 @@
   top: 0;
   left: @ccol-width;
   width: @flyout-width;
-  height: @flyout-height;
-  font-size: .8em;
+  min-height: @flyout-height;
   background: @flyout-background;
   color: @flyout-color;
 }
@@ -199,9 +198,9 @@
 
 .flyout-header {
   height: @ccol-header-height;
-  background: @ccol-header-background;
   padding: 5px;
   background: @flyout-header-background;
+  border-top: 1px solid lighten(@flyout-header-background, 15%);
 
   .flyout-info {
     float: right;
@@ -221,10 +220,10 @@
 
 .flyout-tooltip, .flyout-tooltip-button.flyout-visible:hover {
   background: @flyout-tooltip-background;
-  color: @flyout-tooltip-color;
 }
 
 .flyout-tooltip {
-  padding: 1em;
-  height: auto;
+  color: @flyout-tooltip-color;
+  padding: .5em 1em;
+  min-height: 0;
 }
