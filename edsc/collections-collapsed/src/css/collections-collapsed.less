@@ -55,14 +55,14 @@
 @flyout-tooltip-background: #f2c500;
 @flyout-tooltip-color: #000;
 
-.ccols * {
+.ccols *, .flyout * {
   box-sizing: border-box;
   border: 0;
   padding: 0;
   margin: 0;
 }
 
-.ccols {
+.ccols, .flyout {
   width: @ccols-width;
   color: @ccols-color;
   background: @ccols-background;
@@ -182,7 +182,7 @@
 
 .flyout {
   position: absolute;
-  z-index: -1;
+  z-index: 1000;
   top: 0;
   left: @ccol-width;
   width: @flyout-width;

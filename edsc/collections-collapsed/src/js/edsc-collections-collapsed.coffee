@@ -43,7 +43,6 @@ sortable = (root, rowClass) ->
 
 class KnockoutComponentModel
   @register: (klass, name, template) ->
-    console.log ko
     ko.components.register name,
       viewModel:
         createViewModel: (params, componentInfo) -> new klass(params, componentInfo)
@@ -88,22 +87,29 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
       flyout = dom.stringToNode(require("../html/#{template}.html"))
       ko.utils.domData.set(target, 'flyout', flyout)
       ko.applyBindings(context, flyout)
-      parent = target
-      parent = parent.parentNode until dom.hasClass(parent, 'ccol')
+      parent = listItem = target
+      listItem = listItem.parentNode until dom.hasClass(listItem, 'ccol')
       if dom.hasClass(target, 'flyout-tooltip-button')
-        flyout.style.top = @_relativeTop(target, parent) + 'px'
         dom.addClass(flyout, 'flyout-tooltip')
-      parent.appendChild(flyout)
+      else
+        parent = listItem
+      listOffset = @_offset(listItem, document.body)
+      parentOffset = @_offset(parent, document.body)
+      flyout.style.top = parentOffset.top + 'px'
+      flyout.style.left = listOffset.left + listItem.clientWidth + 'px'
+      document.body.appendChild(flyout)
 
   # Finds vertical distance from the top of parent to the top of el,
   # traversing offsetParents
-  _relativeTop: (el, parent) ->
+  _offset: (el, parent) ->
     top = -parent.offsetTop
-    parent = parent.offsetParent if top != 0
+    left = -parent.offsetLeft
+    parent = parent.offsetParent if top != 0 || left != 0
     while el && el != parent
       top += el.offsetTop
+      left += el.offsetLeft
       el = el.offsetParent
-    top
+    {top: top, left: left}
 
   hideFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
