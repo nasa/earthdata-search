@@ -6,44 +6,6 @@ async = require 'core/src/async'
 domData = ko.utils.domData
 domNodeDisposal = ko.utils.domNodeDisposal
 
-sortable = (root, rowClass) ->
-    $root = $(root)
-    $placeholder = $("<li class=\"sortable-placeholder #{rowClass}\"/>")
-
-    index = null
-    $dragging = null
-
-    $root.on 'dragstart.sortable', '> *', (e) ->
-      dt = e.originalEvent.dataTransfer;
-      dt.effectAllowed = 'move';
-      dt.setData('Text', 'dummy');
-      $dragging = $(this)
-      index = $dragging.index();
-
-    $root.on 'dragend.sortable', '> *', (e) ->
-      $dragging.show()
-      $placeholder.detach()
-      startIndex = index
-      endIndex = $dragging.index()
-      if startIndex != endIndex
-        $root.trigger('sortupdate', startIndex: startIndex, endIndex: endIndex)
-      $dragging = null
-
-    $root.on 'drop.sortable', '> *', (e) ->
-      e.stopPropagation()
-      $placeholder.after($dragging)
-      false
-
-    $root.on 'dragover.sortable dragenter.sortable', '> *', (e) ->
-      e.preventDefault()
-      e.originalEvent.dataTransfer.dropEffect = 'move';
-      $dragging.hide().appendTo($root) # appendTo to ensure top margins are ok
-      if $placeholder.index() < $(this).index()
-        $(this).after($placeholder)
-      else
-        $(this).before($placeholder)
-      false
-
 class KnockoutComponentModel
   @register: (klass, name, template) ->
     ko.components.register name,
