@@ -8,11 +8,11 @@
 @ccol-header-height: 29px;
 // Height is the height of the header + the height of four actions with space between them
 @ccol-height: @ccol-header-height + @ccol-actions-height * 4 + 3 * @ccol-actions-space;
-// For plate-careee maps, width should be 2x height
-@ccol-content-width: 2 * @ccol-height;
 @ccols-width: @ccol-content-width + @ccol-actions-width;
 @ccol-width: @ccols-width;
 @ccol-content-height: @ccol-height - @ccol-header-height;
+// For plate-careee maps, width should be 2x height
+@ccol-content-width: 2 * @ccol-content-height;
 
 @ccol-actions-container-height: @ccol-height - @ccol-header-height;
 
