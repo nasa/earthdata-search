@@ -38,10 +38,11 @@
 @ccol-header-background: #292c2d;
 @ccol-width: @ccols-width;
 @ccol-actions-width: 29px;
-@ccol-content-width: @ccol-width - @ccol-actions-width;
-@ccol-content-height: @ccol-content-width / 2;
 @ccol-header-height: 29px;
-@ccol-height: @ccol-header-height + @ccol-content-height;
+@ccol-height: @ccol-header-height * 5;
+@ccol-content-width: @ccol-width - @ccol-actions-width;
+@ccol-content-height: @ccol-height - @ccol-header-height;
+
 
 @flyout-height: @ccol-height;
 @flyout-width: @ccol-width;
