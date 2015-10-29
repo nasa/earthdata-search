@@ -48,7 +48,7 @@
             <!-- /ko -->
           </p>
 
-          <!-- ko if: granules.excludedGranulesList().length > 0 -->
+          <!-- ko if: granules.excludedGranulesList().length > 0 && !$root.ui.projectList.filtersVisible() -->
           <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
           <!-- /ko -->
 

@@ -53,6 +53,8 @@ ns.ProjectList = do (ko
       @visible = ko.observable(false)
       @needsTemporalChoice = ko.observable(false)
 
+      @filtersVisible = ko.observable(false)
+
       @collectionLinks = ko.computed(@_computeCollectionLinks, this, deferEvaluation: true)
       @collectionsToDownload = ko.computed(@_computeCollectionsToDownload, this, deferEvaluation: true)
       @collectionOnly = ko.computed(@_computeCollectionOnly, this, deferEvaluation: true)
@@ -215,6 +217,7 @@ ns.ProjectList = do (ko
       collections
 
     showFilters: (collection) =>
+      @filtersVisible(true)
       if @project.searchGranulesCollection(collection)
         $('.granule-temporal-filter').temporalSelectors({
           uiModel: collection.granulesModel.temporal,
@@ -227,6 +230,7 @@ ns.ProjectList = do (ko
       @hideFilters()
 
     hideFilters: =>
+      @filtersVisible(false)
       $('.master-overlay').addClass('is-master-overlay-secondary-hidden')
       @project.searchGranulesCollection(null)
 
