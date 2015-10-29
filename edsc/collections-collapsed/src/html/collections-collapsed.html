@@ -1,13 +1,14 @@
 <ul class="ccols" data-bind="foreach: collections()">
 <li data-bind="click: $component.focusCollection,
-               attr: {draggable: $component.isProject}"
+               attr: {draggable: $component.isProject},
+               css: {'ccol-selectable': has_granules}"
     class="ccol">
   <div class="ccol-header">
-    <!-- ko if: has_granules -->
-    <a href="#" class="ccol-more button icon-button" title="More details" data-bind="attr:{id: id}">
-      <i class="fa fa-chevron-circle-right"></i>
+    <a href="#" class="ccol-more button icon-button" title="More details"
+       data-flyout="collection-details-flyout"
+       data-bind="click: $component.toggleFlyout">
+      <i class="fa fa-chevron-circle-right"></i><i class="fa fa-chevron-circle-left"></i>
     </a>
-    <!-- /ko -->
     <span class="ccol-badge badge-collection"></span>
     <span class="ccol-title">
       <span data-bind="text: short_name"></span><
@@ -44,8 +45,6 @@
         <i class="fa fa-minus-circle"></i>
       </a>
       <a href="#" class="button icon-button ccol-details-button"
-         data-flyout="collection-details-flyout"
-         data-bind="click: $component.toggleFlyout"
          title="View collection details">
         <i class="fa fa-info-circle"></i>
       </a>

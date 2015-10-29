@@ -22,7 +22,7 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
   constructor: (params, componentInfo) ->
     super(params, componentInfo)
     @_scrollParent = dom.scrollParent(@_root)
-    @_flyouts = []
+    @_flyouts = ko.observableArray([])
     if @_scrollParent
       @_scrollParent.addEventListener('scroll', async.throttled => @_alignFlyouts())
 
