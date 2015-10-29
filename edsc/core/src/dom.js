@@ -72,5 +72,21 @@ module.exports = {
     else {
       return this.getClasses(el).indexOf(name) !== -1;
     }
+  },
+  getStyle: function(node, style) {
+    return window.getComputedStyle(node, null).getPropertyValue(style);
+  },
+  scrollParent: function(el) {
+    var overflowX, overflowY;
+    while (el instanceof HTMLElement) {
+      overflowX = this.getStyle(el, 'overflow-y');
+      overflowY = this.getStyle(el, 'overflow-x');
+      if (overflowX === 'auto' || overflowX === 'scroll' ||
+          overflowY === 'auto' || overflowY === 'scroll') {
+        return el;
+      }
+      el = el.parentNode;
+    }
+    return null;
   }
 };

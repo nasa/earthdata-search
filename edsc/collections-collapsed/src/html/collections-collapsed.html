@@ -10,7 +10,10 @@
     <!-- /ko -->
     <span class="ccol-badge badge-collection"></span>
     <span class="ccol-title">
-      <span data-bind="text: short_name"></span><span> - </span><span data-bind="text: version_id"></span>
+      <span data-bind="text: short_name"></span><
+      <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
+        <span> - </span><span data-bind="text: version_id"></span>
+      <!-- /ko -->
     </span>
   </div>
   <div class="ccol-mini-map"></div>

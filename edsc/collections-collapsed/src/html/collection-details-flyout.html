@@ -15,11 +15,12 @@
     <i class="fa fa-clock-o"></i>
     <span data-bind="text: timeRange"></span>
   </p>
-  <p class="flyout-content">
+  <p class="flyout-content" data-bind="if: $data.archive_center">
     <span><strong>Archive Center: </strong></span>
     <span data-bind="text: archive_center"></span>
   </p>
-  <p class="flyout-content">
+  <!-- /ko -->
+  <p class="flyout-content" data-bind="if: $data.data_center">
     <span><strong>Data Center: </strong></span>
     <span data-bind="text: data_center"></span>
   </p>
