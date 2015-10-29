@@ -21,9 +21,9 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
   constructor: (params, componentInfo) ->
     super(params, componentInfo)
     @_scrollParent = dom.scrollParent(@_root)
-    @_flyouts = ko.observableArray([])
+    @_flyouts = []
     if @_scrollParent
-      @_scrollParent.addEventListener('scroll', async.throttled => @_alignFlyouts())
+      @_scrollParent.addEventListener('scroll', async.throttled(@_alignFlyouts))
 
   # These methods should be factored out eventually
   toggleVisibleCollection: (args...) => @page.collections.toggleVisibleCollection(args...)
@@ -67,15 +67,13 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
         parent = listItem
       listOffset = @_offset(listItem, document.body)
       parentOffset = @_offset(parent, document.body)
-      dom.remove(domData.get(target, 'flyout'))
-
       flyout.style.top = parentOffset.top + 'px'
       flyout.style.left = listOffset.left + listItem.clientWidth + 'px'
-      @_alignFlyouts();
+      @_alignFlyouts()
       document.body.appendChild(flyout)
       domNodeDisposal.addDisposeCallback target, => @_destroyFlyout(target)
 
-  _alignFlyouts: ->
+  _alignFlyouts: =>
     scroll = @_scrollParent?.scrollTop ? 0
     for flyout in @_flyouts
       prevScroll = domData.get(flyout, 'flyout-scroll') || 0
