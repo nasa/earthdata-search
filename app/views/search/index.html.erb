@@ -54,12 +54,13 @@
 </div>
 <% end %>
 
-<div class="master-overlay homepage-search is-master-overlay-secondary-hidden" id="collections-overlay">
+<div class="master-overlay homepage-search is-master-overlay-secondary-hidden is-master-overlay-maximized" id="collections-overlay">
   <%= render partial: 'overlay_parent' %>
   <div class="master-overlay-main">
     <div class="master-overlay-main-content" data-level="0">
       <section id="collection-results" data-master-overlay-title="Collections">
-        <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+        <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-angle-double-left"></i></a>
+        <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-angle-double-right"></i></a>
         <nav class="master-overlay-nav master-overlay-when-parent-hidden">
           <a href="#" class="master-overlay-show-parent">
             <i class="fa fa-search"></i> Browse Collections
@@ -71,8 +72,15 @@
         <header>
           <h2><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
         </header>
-        <div class="master-overlay-info">
-          <p data-bind="visible: project.isEmpty()" class="button-details">
+        <div class="master-overlay-info master-overlay-when-min">
+          <p data-bind="visible: !project.isEmpty()" class="button-details">
+            <a id="view-project-min" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
+              <i class="fa fa-folder-o"></i> View Project
+            </a>
+          </p>
+        </div>
+        <div class="master-overlay-info master-overlay-when-max">
+          <p data-bind="visible: project.isEmpty()"class="button-details">
             <a class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#">
               <i class="fa fa-question-circle"></i> Learn More
             </a>
@@ -98,9 +106,9 @@
           <!-- ko if: collections.featured().length > 0 -->
           <h3 class="panel-list-title">Recent and Featured</h3>
           <div class="panel-list">
-            <edsc-collections-collapsed params="page: $data, collections: collections.featured, isProject: false"></edsc-collections-collapsed>
+            <edsc-collections-collapsed params="page: $data, collections: collections.featured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
             <ul id="collection-featured-list"
-                class="panel-list-list knockout-template"
+                class="panel-list-list knockout-template master-overlay-when-max"
                 data-bind="foreach: collections.featured, css: { 'knockout-template': !bindingsLoaded }">
               <%= render partial: 'collection_list_item', locals: {is_project: false} %>
             </ul>
@@ -109,8 +117,9 @@
           <h3 class="panel-list-title">More Collections</h3>
           <!-- /ko -->
           <div class="panel-list">
+            <edsc-collections-collapsed params="page: $data, collections: collections.unfeatured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
             <ul id="collection-results-list"
-                class="panel-list-list knockout-template"
+                class="panel-list-list knockout-template master-overlay-when-max"
                 data-bind="foreach: collections.unfeatured, css: { 'knockout-template': !bindingsLoaded }">
               <%= render partial: 'collection_list_item', locals: {is_project: false} %>
             </ul>

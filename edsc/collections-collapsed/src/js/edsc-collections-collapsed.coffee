@@ -54,6 +54,10 @@ class KnockoutComponentModel
     extend(this, params)
 
 class CollectionsCollapsedModel extends KnockoutComponentModel
+  constructor: (params, componentInfo) ->
+    super(params, componentInfo)
+    @_scrollParent = dom.scrollParent(@_root)
+
   # These methods should be factored out eventually
   toggleVisibleCollection: (args...) => @page.collections.toggleVisibleCollection(args...)
   hasCollection: (args...) => @page.project.hasCollection(args...)
@@ -95,9 +99,13 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
         parent = listItem
       listOffset = @_offset(listItem, document.body)
       parentOffset = @_offset(parent, document.body)
-      flyout.style.top = parentOffset.top + 'px'
+      flyout.style.top = parentOffset.top - @_scrollTop() + 'px'
       flyout.style.left = listOffset.left + listItem.clientWidth + 'px'
       document.body.appendChild(flyout)
+
+  _scrollTop: ->
+    console.log dom.scrollParent(@_root), @_scrollParent, @_scrollParent?.scrollTop, @_scrollParent?.scrollTop ? 0
+    @_scrollParent?.scrollTop ? 0
 
   # Finds vertical distance from the top of parent to the top of el,
   # traversing offsetParents

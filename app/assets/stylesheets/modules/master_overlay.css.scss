@@ -178,7 +178,7 @@
   }
 }
 
-#collection-results .master-overlay-info {
+.is-master-overlay-maximized #collection-results .master-overlay-info {
   height: 71px;
 }
 
@@ -220,6 +220,17 @@
   height: 80%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+.master-overlay-minimize, .master-overlay-maximize {
+  font-size: 1.3em;
+  position: absolute;
+  right: 1em;
+  top: .5em;
+  display: block;
+  &:hover {
+    color: #aaa;
+  }
 }
 
 .master-overlay-close {
@@ -269,8 +280,39 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
   border-color:transparent #2b4c6f transparent transparent;
 }
 
-.master-overlay-when-parent-hidden {
+.master-overlay-when-parent-hidden, .master-overlay-when-min {
   display: none;
+}
+
+.is-master-overlay-minimized {
+  .master-overlay-when-max { display: none; }
+  .master-overlay-when-min { display: block; }
+  header h2 {
+    font-size: 1.2em;
+  }
+  .master-overlay-main {
+    width: 267px;
+  }
+  .master-overlay-content {
+    padding: .5em 0 1em;
+    direction:rtl; // Puts the scrollbar on the left hand side
+    > * {
+      direction:ltr;
+    }
+  }
+  .master-overlay-info {
+    height: 32px;
+    .button-details {
+      text-align: right;
+      padding-top: 4px;
+      margin-top: 0;
+    }
+    .button {
+      float: none;
+      font-size: .8em;
+      padding: 4px 6px;
+    }
+  }
 }
 
 .is-master-overlay-parent-hidden .master-overlay-when-parent-hidden {

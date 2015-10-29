@@ -17,6 +17,18 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @root.toggleClass('is-hidden', !show)
       @_triggerStateChange() if event
 
+    minimize: ->
+      @root
+        .addClass(@scope('is-minimized'))
+        .removeClass(@scope('is-maximized'))
+      @contentHeightChanged()
+
+    maximize: ->
+      @root
+        .addClass(@scope('is-maximized'))
+        .removeClass(@scope('is-minimized'))
+      @contentHeightChanged()
+
     showParent: -> @toggleParent(true)
 
     hideParent: -> @toggleParent(false)
