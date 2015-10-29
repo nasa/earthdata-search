@@ -13,6 +13,8 @@
 @ccol-content-width: @ccol-width - @ccol-actions-width;
 @ccol-content-height: @ccol-height - @ccol-header-height;
 
+@ccol-actions-container-height: @ccol-height - @ccol-header-height;
+
 
 @flyout-height: @ccol-height;
 @flyout-width: @ccol-width;
@@ -141,7 +143,7 @@
 
 .ccol-actions-container {
   width: 29px;
-  height: 116px;
+  height: @ccol-actions-container-height;
   background-color: #191a1b;
   right: 0;
   top: 0;
