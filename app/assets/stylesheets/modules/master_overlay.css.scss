@@ -225,7 +225,7 @@
 .master-overlay-minimize, .master-overlay-maximize {
   font-size: 1.3em;
   position: absolute;
-  right: 1em;
+  right: .5em;
   top: .5em;
   display: block;
   &:hover {
@@ -287,9 +287,13 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 .is-master-overlay-minimized {
   .master-overlay-when-max { display: none; }
   .master-overlay-when-min { display: block; }
-  header h2 {
-    font-size: 1.2em;
+  header {
+    margin: 1em .5em 0;
+    h2 {
+      font-size: 1.1em;
+    }
   }
+
   .master-overlay-main {
     width: 267px;
   }
