@@ -4,6 +4,7 @@ extend = require 'core/src/extend'
 events = require 'core/src/events'
 async = require 'core/src/async'
 domData = ko.utils.domData
+domNodeDisposal = ko.utils.domNodeDisposal
 
 sortable = (root, rowClass) ->
     $root = $(root)
@@ -111,6 +112,7 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
       flyout.style.left = listOffset.left + listItem.clientWidth + 'px'
       @_alignFlyouts();
       document.body.appendChild(flyout)
+      domNodeDisposal.addDisposeCallback target, => @_destroyFlyout(target)
 
   _alignFlyouts: ->
     scroll = @_scrollParent?.scrollTop ? 0
@@ -134,15 +136,18 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
       el = el.offsetParent
     {top: top, left: left}
 
+  _destroyFlyout: (target) ->
+    flyout = domData.get(target, 'flyout')
+    if flyout
+      index = @_flyouts.indexOf(flyout)
+      @_flyouts.splice(index, 1) if index != -1
+      domData.clear(flyout)
+      dom.remove(flyout)
+
   hideFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
     if target
-      flyout = domData.get(target, 'flyout')
-      if flyout
-        index = @_flyouts.indexOf(flyout)
-        @_flyouts.splice(index, 1) if index != -1
-        domData.clear(flyout)
-        dom.remove(flyout)
+      @_destroyFlyout(target)
       dom.removeClass(target, 'flyout-visible')
       domData.set(target, 'flyout', null)
 
