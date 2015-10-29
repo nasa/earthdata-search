@@ -1,7 +1,6 @@
 require '../css/collections-collapsed.less'
 dom = require 'core/src/dom'
 extend = require 'core/src/extend'
-events = require 'core/src/events'
 async = require 'core/src/async'
 domData = ko.utils.domData
 domNodeDisposal = ko.utils.domNodeDisposal

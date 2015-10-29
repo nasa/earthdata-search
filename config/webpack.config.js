@@ -9,12 +9,10 @@ license = fs.readFileSync('./LICENSE')
 
 module.exports = {
   context: __dirname + '/..',
-  entry: {
-    search: "./edsc/search.js"
-  },
+  entry: "./edsc/search.js",
   output: {
     path: "./edsc/dist",
-    filename: "edsc-[name].min.js"
+    filename: "edsc-search.min.js"
   },
   module: {
     loaders: [
@@ -31,7 +29,8 @@ module.exports = {
   devtool: '#sourcemap',
   externals: {
     "jquery": "jQuery",
-    "window": "window"
+    "window": "window",
+    "ko": "ko"
   },
   resolve: {
     extensions: ['', '.js', '.json', '.coffee'],
