@@ -2,6 +2,8 @@ require '../css/collections-collapsed.less'
 dom = require 'core/src/dom'
 extend = require 'core/src/extend'
 events = require 'core/src/events'
+async = require 'core/src/async'
+domData = ko.utils.domData
 
 sortable = (root, rowClass) ->
     $root = $(root)
@@ -57,6 +59,9 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
   constructor: (params, componentInfo) ->
     super(params, componentInfo)
     @_scrollParent = dom.scrollParent(@_root)
+    @_flyouts = []
+    if @_scrollParent
+      @_scrollParent.addEventListener('scroll', async.throttled => @_alignFlyouts())
 
   # These methods should be factored out eventually
   toggleVisibleCollection: (args...) => @page.collections.toggleVisibleCollection(args...)
@@ -75,7 +80,7 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
 
   toggleFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
-    if ko.utils.domData.get(target, 'flyout') || dom.hasClass(target, 'flyout-visible')
+    if domData.get(target, 'flyout') || dom.hasClass(target, 'flyout-visible')
       @hideFlyout(context, e)
       dom.removeClass(target, 'button-active')
     else
@@ -84,12 +89,13 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
 
   showFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
-    if target && !ko.utils.domData.get(target, 'flyout')
+    if target && !domData.get(target, 'flyout')
       @hideFlyout(context, e)
       dom.addClass(target, 'flyout-visible')
       template = target.getAttribute('data-flyout')
       flyout = dom.stringToNode(require("../html/#{template}.html"))
-      ko.utils.domData.set(target, 'flyout', flyout)
+      domData.set(target, 'flyout', flyout)
+      @_flyouts.push(flyout)
       ko.applyBindings(context, flyout)
       parent = listItem = target
       listItem = listItem.parentNode until dom.hasClass(listItem, 'ccol')
@@ -99,13 +105,22 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
         parent = listItem
       listOffset = @_offset(listItem, document.body)
       parentOffset = @_offset(parent, document.body)
-      flyout.style.top = parentOffset.top - @_scrollTop() + 'px'
+      dom.remove(domData.get(target, 'flyout'))
+
+      flyout.style.top = parentOffset.top + 'px'
       flyout.style.left = listOffset.left + listItem.clientWidth + 'px'
+      @_alignFlyouts();
       document.body.appendChild(flyout)
 
-  _scrollTop: ->
-    console.log dom.scrollParent(@_root), @_scrollParent, @_scrollParent?.scrollTop, @_scrollParent?.scrollTop ? 0
-    @_scrollParent?.scrollTop ? 0
+  _alignFlyouts: ->
+    scroll = @_scrollParent?.scrollTop ? 0
+    for flyout in @_flyouts
+      prevScroll = domData.get(flyout, 'flyout-scroll') || 0
+      domData.set(flyout, 'flyout-scroll', scroll)
+      if prevScroll != scroll
+        top = parseInt(flyout.style.top)
+        flyout.style.top = (top + prevScroll - scroll) + 'px'
+
 
   # Finds vertical distance from the top of parent to the top of el,
   # traversing offsetParents
@@ -122,9 +137,14 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
   hideFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
     if target
-      dom.remove(ko.utils.domData.get(target, 'flyout'))
+      flyout = domData.get(target, 'flyout')
+      if flyout
+        index = @_flyouts.indexOf(flyout)
+        @_flyouts.splice(index, 1) if index != -1
+        domData.clear(flyout)
+        dom.remove(flyout)
       dom.removeClass(target, 'flyout-visible')
-      ko.utils.domData.set(target, 'flyout', null)
+      domData.set(target, 'flyout', null)
 
 ccolsHtml = require('../html/collections-collapsed.html')
 KnockoutComponentModel.register(CollectionsCollapsedModel, 'edsc-collections-collapsed', ccolsHtml)
