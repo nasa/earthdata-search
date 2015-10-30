@@ -1,7 +1,6 @@
 <ul class="ccols" data-bind="foreach: collections()">
 <li data-bind="click: $component.focusCollection,
-               attr: {draggable: $component.isProject},
-               css: {'ccol-selectable': has_granules}"
+               css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}"
     class="ccol">
   <div class="ccol-header">
     <a href="#" class="ccol-more button icon-button" title="More details"
@@ -44,7 +43,9 @@
                     click: $component.toggleCollection">
         <i class="fa fa-minus-circle"></i>
       </a>
-      <a href="#" class="button icon-button ccol-details-button"
+      <a href="#" class="button icon-button ccol-details-button master-overlay-forward"
+         data-master-overlay-forward="Collections"
+         data-bind="click: $component.showCollectionDetails"
          title="View collection details">
         <i class="fa fa-info-circle"></i>
       </a>

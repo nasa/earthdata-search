@@ -4,6 +4,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     constructor: (root, namespace, options={}) ->
       super(root, namespace, options)
       $(window).on 'load resize', @contentHeightChanged
+      @_minimized = false
 
     destroy: ->
       super()
@@ -18,15 +19,13 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @_triggerStateChange() if event
 
     minimize: ->
-      @root
-        .addClass(@scope('is-minimized'))
-        .removeClass(@scope('is-maximized'))
+      @_minimized = true
+      @_updateMinMaxState()
       @contentHeightChanged()
 
     maximize: ->
-      @root
-        .addClass(@scope('is-maximized'))
-        .removeClass(@scope('is-minimized'))
+      @_minimized = false
+      @_updateMinMaxState()
       @contentHeightChanged()
 
     showParent: -> @toggleParent(true)
@@ -36,6 +35,13 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     showSecondary: -> @toggleSecondary(true)
 
     hideSecondary: -> @toggleSecondary(false)
+
+    _updateMinMaxState: ->
+      needsMin = @_minimized && !@current().is(@scope('.no-min'))
+      @root
+        .toggleClass(@scope('is-minimized-desired'), @_minimized)
+        .toggleClass(@scope('is-minimized'), needsMin)
+        .toggleClass(@scope('is-maximized'), !needsMin)
 
     _hideNodes: ($nodes) ->
       fn = =>
@@ -94,6 +100,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
             toHide = @children().filter(":gt(#{Math.max(value, 0)})").filter(@scope('.hide-self'))
             @_hideNodes(toHide)
           @_content().attr('data-level', value)
+          @_updateMinMaxState()
         @_setBreadcrumbs()
         @contentHeightChanged()
         @_triggerStateChange() if event

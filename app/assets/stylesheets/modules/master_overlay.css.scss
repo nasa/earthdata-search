@@ -117,8 +117,20 @@
   z-index: 60;
   position: absolute;
   height: 100%;
-  transition-property: left;
+  transition-property: left, width;
   transition-duration: 0.3s;
+}
+
+.master-overlay-parent, .master-overlay-main {
+  box-shadow: 5px 0px 2px 0px rgba(0,0,0,0.4);
+}
+
+.master-overlay-parent {
+  z-index: 62;
+}
+
+.master-overlay-main {
+  z-index: 61;
 }
 
 .master-overlay-minimized {
@@ -284,37 +296,42 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
   display: none;
 }
 
+.is-master-overlay-minimized-desired.is-master-overlay-maximized {
+  .master-overlay-has-min {
+    visibility: hidden; // Avoids glitches during animation transitions
+  }
+}
+
 .is-master-overlay-minimized {
   .master-overlay-when-max { display: none; }
   .master-overlay-when-min { display: block; }
-  header {
-    margin: 1em .5em 0;
-    h2 {
-      font-size: 1.1em;
-    }
-  }
-
   .master-overlay-main {
     width: 267px;
-  }
-  .master-overlay-content {
-    padding: .5em 0 1em;
-    direction:rtl; // Puts the scrollbar on the left hand side
-    > * {
-      direction:ltr;
+    header {
+      margin: 1em .5em 0;
+      h2 {
+        font-size: 1.1em;
+      }
     }
-  }
-  .master-overlay-info {
-    height: 32px;
-    .button-details {
-      text-align: right;
-      padding-top: 4px;
-      margin-top: 0;
+    .master-overlay-content {
+      padding: .5em 0 1em;
+      direction:rtl; // Puts the scrollbar on the left hand side
+      > * {
+        direction:ltr;
+      }
     }
-    .button {
-      float: none;
-      font-size: .8em;
-      padding: 4px 6px;
+    .master-overlay-info {
+      height: 32px;
+      .button-details {
+        text-align: right;
+        padding-top: 4px;
+        margin-top: 0;
+      }
+      .button {
+        float: none;
+        font-size: .8em;
+        padding: 4px 6px;
+      }
     }
   }
 }
