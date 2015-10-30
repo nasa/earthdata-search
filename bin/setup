@@ -88,6 +88,7 @@ Dir.chdir APP_ROOT do
 
     run_cmd 'gem install bundler --conservative'
     run_cmd 'bundle check || bundle install'
+    run_cmd 'npm install'
   end
 
   section "Copying example configuration" do
