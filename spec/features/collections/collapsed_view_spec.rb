@@ -89,7 +89,12 @@ describe "Collections Collapsed View", reset: false, pq: true do
       end
 
       context "and clicking a collection's more info button" do
-        context "twice" do
+        it "displays a flyout with additional collection information"
+        it "changes the more info button into a less info button"
+
+        context "followed by its less info button" do
+          it "hides the flyout with additional collection information"
+          it "changes the less info button into a more info button"
         end
       end
 
