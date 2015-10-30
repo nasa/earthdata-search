@@ -196,13 +196,20 @@ ns.ProjectList = do (ko
                 @project.fromJson(data))
             , 5000)
 
+          number_processed = m.serviceOptions.number_processed
+          total_number = m.serviceOptions.total_number
+          percent_done = (number_processed / total_number * 100).toFixed(0)
+
           serviceOrders.push
             collection_id: collection.collection_id
             order_id: m.orderId
             order_status: m.orderStatus
+            is_in_progress: m.orderStatus != 'submitting' && m.orderStatus != 'failed' && m.orderStatus != 'complete'
             download_urls: m.serviceOptions.download_urls
             number_processed: m.serviceOptions.number_processed
             total_number: m.serviceOptions.total_number
+            percent_done: percent_done
+            percent_done_str: percent_done + '%'
             downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
             error_code: m.errorCode
             error_message: m.errorMessage
