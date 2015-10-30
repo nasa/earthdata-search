@@ -25,7 +25,6 @@ ns.XhrModel = do (ko
       @hits = ko.observable(0)
       @hasNextPage = ko.observable(true)
       @hitsEstimated = ko.observable(false)
-      @excludedGranulesList = ko.observableArray()
 
     search: (params=@params(), callback=null) =>
       params.page_num = @page = 1
