@@ -118,8 +118,8 @@ describe "Granule list", reset: false do
           while num_of_clicks > 0
             first_granule_list_item.click_link "Exclude this granule"
             num_of_clicks -= 1
+            wait_for_xhr
           end
-          wait_for_xhr
         end
 
         after :all do
@@ -134,7 +134,7 @@ describe "Granule list", reset: false do
         end
 
         it "loads next page" do
-          expect(page).to have_content("Showing 19 of 19 matching granules")
+          expect(page.text).to match(/Showing [1-9]\d* of 19 matching granules/)
           expect(page).to have_content("Granule excluded. Undo")
         end
       end
