@@ -25,7 +25,7 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
     if @_scrollParent
       @_scrollParent.addEventListener('scroll', async.throttled(@_alignFlyouts))
 
-  # These methods should be factored out eventually
+  # These methods should be factored out eventually, as well as master-overlay actions
   toggleVisibleCollection: (args...) => @page.collections.toggleVisibleCollection(args...)
   hasCollection: (args...) => @page.project.hasCollection(args...)
   toggleCollection: (args...) => @page.ui.projectList.toggleCollection(args...)
@@ -33,6 +33,8 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
   canQueryCollectionSpatial: (args...) => @page.ui.collectionsList.canQueryCollectionSpatial(args...)
   spatialQuery: (args...) => @page.query.spatial(args...)
   toggleQueryCollectionSpatial: (args...) => @page.ui.collectionsList.toggleQueryCollectionSpatial(args...)
+  showCollectionDetails: (args...) => @page.ui.collectionsList.showCollectionDetails(args...)
+  focusCollection: (args...) => @page.ui.collectionsList.focusCollection(args...)
   # End methods to factor out
 
   _getFlyoutTarget: (e) ->
