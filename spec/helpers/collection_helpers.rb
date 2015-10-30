@@ -14,6 +14,16 @@ module Helpers
       end
     end
 
+    def for_collapsed_collection(id, text)
+      wait_for_xhr
+      fill_in "keywords", with: id
+      wait_for_xhr
+      expect(first_collapsed_collection).to have_content(text)
+      yield
+      reset_search
+      wait_for_xhr
+    end
+
     def view_granule_results(from='collection-results')
       wait_for_xhr
       expect(page).to have_visible_overlay(from)

@@ -106,7 +106,7 @@
           <!-- ko if: collections.featured().length > 0 -->
           <h3 class="panel-list-title">Recent and Featured</h3>
           <div class="panel-list">
-            <edsc-collections-collapsed params="page: $data, collections: collections.featured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
+            <edsc-collections-collapsed id="coll-collection-featured-list" params="page: $data, collections: collections.featured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
             <ul id="collection-featured-list"
                 class="panel-list-list knockout-template master-overlay-when-max"
                 data-bind="foreach: collections.featured, css: { 'knockout-template': !bindingsLoaded }">
@@ -117,7 +117,7 @@
           <h3 class="panel-list-title">More Collections</h3>
           <!-- /ko -->
           <div class="panel-list">
-            <edsc-collections-collapsed params="page: $data, collections: collections.unfeatured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
+            <edsc-collections-collapsed id="coll-collection-results-list" params="page: $data, collections: collections.unfeatured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
             <ul id="collection-results-list"
                 class="panel-list-list knockout-template master-overlay-when-max"
                 data-bind="foreach: collections.unfeatured, css: { 'knockout-template': !bindingsLoaded }">

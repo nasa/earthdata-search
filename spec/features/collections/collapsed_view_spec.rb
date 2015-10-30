@@ -10,23 +10,70 @@ describe "Collections Collapsed View", reset: false, pq: true do
       load_page :search
     end
 
-    it 'shows the expanded collections list by default'
+    it 'shows the expanded collections list by default' do
+      width = page.evaluate_script('$("#collection-results").width()')
+      expect(width).to be > 350
+      expect(page).to have_css('.is-master-overlay-maximized')
+      expect(collection_results).to have_no_css('.ccol')
+    end
 
-    it 'displays a minimize button for the collections list'
+    it 'displays a minimize button for the collections list' do
+      expect(page).to have_link('Minimize')
+    end
 
-    it 'displays no close button for the collections list'
+    it 'displays no close button for the collections list' do
+      expect(collection_results).to have_no_css('.master-overlay-close')
+    end
 
     context 'clicking the minimize button for the collections list' do
-      it 'displays a narrower view of collections'
-      it 'displays a map for each collection'
-      it 'displays a more info button for each collection'
-      it 'displays an add to project button for each collection'
-      it 'displays a collection details button for each collection'
-      it 'displays a spatial query button for collections with point spatial'
-      it 'displays no spatial query button for collections without spatial'
-      it 'displays a view collection button for collections with granules'
-      it 'displays no view collection button for collections with granules'
-      it 'keeps the facet display visible'
+      before :all do
+        click_link 'Minimize'
+      end
+
+      it 'displays a narrower view of collections' do
+        width = page.evaluate_script('$("#collection-results").width()')
+        expect(width).to be < 350
+        expect(collection_results).to have_css('.ccols')
+      end
+
+      # TODO
+      it 'displays a map with spatial for each collection'
+
+      it 'displays a more info button for each collection' do
+        expect(first_collapsed_collection).to have_link("More details")
+      end
+
+      it 'displays an add to project button for each collection' do
+        expect(first_collapsed_collection).to have_css("a.add-to-project")
+      end
+
+      it 'displays a collection details button for each collection' do
+        expect(first_collapsed_collection).to have_link("View collection details")
+      end
+
+      it 'displays a spatial query button for collections with point spatial' do
+        for_collapsed_collection  'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC' do
+          expect(first_collapsed_collection).to have_link("Search using this collection's location")
+        end
+      end
+
+      it 'displays no spatial query button for collections without spatial' do
+        for_collapsed_collection 'C14758250-LPDAAC_ECS', 'AST_L1A' do
+          expect(first_collapsed_collection).to have_no_link("Search using this collection's location")
+        end
+      end
+
+      it 'displays a view collection button for collections with granules' do
+        for_collapsed_collection  'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC' do
+          expect(first_collapsed_collection).to have_link('Preview collection')
+        end
+      end
+
+      it 'displays no view collection button for collections without granules' do
+        for_collapsed_collection  'C179002107-SEDAC', 'CIESIN_SEDAC_ANTHROMES' do
+          expect(first_collapsed_collection).to have_no_link('Preview collection')
+        end
+      end
 
       context 'and clicking a collection with granules' do
         it "shows the collection's granule list"

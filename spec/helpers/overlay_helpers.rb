@@ -37,8 +37,24 @@ module Helpers
       page.find('#collection-featured-list')
     end
 
+    def featured_collapsed_collection_results
+      page.find('#coll-collection-featured-list')
+    end
+
+    def unfeatured_collapsed_collection_results
+      page.find('#coll-collection-results-list')
+    end
+
     def first_featured_collection
       nth_panel(featured_collection_results, 1)
+    end
+
+    def first_collapsed_featured_collection
+      nth_ccol(featured_collapsed_collection_results, 1)
+    end
+
+    def first_collapsed_collection
+      nth_ccol(unfeatured_collapsed_collection_results, 1)
     end
 
     def first_collection_result
@@ -97,6 +113,10 @@ module Helpers
 
     def nth_panel(root, n)
       root.find(".panel-list-item:nth-child(#{n})")
+    end
+
+    def nth_ccol(root, n)
+      root.find(".ccol:nth-child(#{n})")
     end
   end
 end
