@@ -22,7 +22,7 @@
     gibs_accuracy:
       once: true
       title: "Approximate Granule Imagery"
-      content: 'This dataset shows approximate full-resolution browse obtained from
+      content: 'This collection shows approximate full-resolution browse obtained from
                 <a href="https://earthdata.nasa.gov/about-eosdis/system-description/global-imagery-browse-services-gibs" target="_blank">GIBS</a>.
                 Imagery may not correspond to the indicated granule in the following circumstances:
                 <ol>
@@ -59,7 +59,7 @@
     }, {
       title: "Keyword Search"
       content: 'Here you can enter search terms to find relevant data. Search terms can be science
-                terms, instrument names, or even dataset IDs. Let\'s start by searching for
+                terms, instrument names, or even collection IDs. Let\'s start by searching for
                 <em>Snow Cover NRT</em> to find near real-time snow cover data. Type <em>Snow Cover NRT</em> in the
                 keywords box and press <strong>Enter.</strong>'
       element: '#keywords'
@@ -70,13 +70,13 @@
           else
             closeFn()
     }, {
-      title: "Browse Datasets"
+      title: "Browse Collections"
       content: 'In addition to searching for keywords, you can narrow your search through this list of
                 terms. Click <strong>Platform</strong> to expand the list of platforms'
       wait: true
       element: '.facet-title a:contains(Platform)'
     }, {
-      title: "Browse Datasets"
+      title: "Browse Collections"
       content: 'Now click <strong>Terra</strong> to select the Terra satellite'
       wait: true
       element: '.facets-item:contains(Terra)'
@@ -94,9 +94,9 @@
             closeFn()
           subscription.dispose()
     }, {
-      title: 'Dataset Results'
-      content: 'Your dataset results appear here.  This result has a "GIBS" badge, indicating that it
-               has advanced visualizations. Click on the dataset to preview its data.'
+      title: 'Collection Results'
+      content: 'Your collection results appear here.  This result has a "GIBS" badge, indicating that it
+               has advanced visualizations. Click on the collection to preview its data.'
       wait: true
       element: '.panel-list-item:contains(MOD10_L2)'
     }, {
@@ -121,7 +121,7 @@
       wait: true
     ), {
       title: 'Granule Timeline (Part 1)'
-      content: 'Below the map there is a timeline view showing when this dataset has data. You can pan
+      content: 'Below the map there is a timeline view showing when this collection has data. You can pan
                 and zoom this view to change the period of time and granularity of data it displays. Zoom
                 into a particular day by scrolling over that day. Try panning and zooming the timeline now.'
 
@@ -153,26 +153,26 @@
       advanceHook: (nextFn, closeFn) ->
         $('#timeline').one 'temporalchange.timeline', nextFn
     }, {
-      title: 'Back to Datasets'
-      content: 'Let\'s go back to our dataset results'
+      title: 'Back to Collections'
+      content: 'Let\'s go back to our collection results'
       element: '#granule-list .master-overlay-back'
     }, {
-      title: 'Comparing Multiple Datasets'
-      content: 'Earthdata Search allows you to visualize and compare two or more datasets using projects.
-                Add this dataset to your project now.'
+      title: 'Comparing Multiple Collections'
+      content: 'Earthdata Search allows you to visualize and compare two or more collections using projects.
+                Add this collection to your project now.'
       waitOnAnimate: true
       placement: 'right'
       element: '.panel-list-item:contains(MOD10_L2) .add-to-project'
     }, {
       title: 'Projects'
-      content: 'From here, you can start a new search to find additional datasets to compare. You may add
-                more datasets to your project now. Click <strong>View Project</strong> when you are ready to continue.'
+      content: 'From here, you can start a new search to find additional collections to compare. You may add
+                more collections to your project now. Click <strong>View Project</strong> when you are ready to continue.'
       element: '#view-project'
     }, {
       title: 'Project (cont.)'
-      content: 'From the project list, you may visualize multiple datasets using the <i class="fa fa-eye"></i>
+      content: 'From the project list, you may visualize multiple collections using the <i class="fa fa-eye"></i>
                 button, view their granule results by clicking on them, set advanced filters using the
-                <i class="fa fa-edit"></i> button or compare datasets on the timeline.
+                <i class="fa fa-edit"></i> button or compare collections on the timeline.
                 When you are satisfied with the data you have selected, you
                 may access the underlying data by clicking on the <i class="fa fa-download"></i>
                 button. For this tour, though, we will stop here. Feel free to keep exploring, or

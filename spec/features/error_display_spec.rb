@@ -1,4 +1,4 @@
-# EDSC-247: Allow retrying dataset and granule searches after timeout errors
+# EDSC-247: Allow retrying collection and granule searches after timeout errors
 
 require "spec_helper"
 
@@ -15,7 +15,7 @@ describe "Displaying system errors", reset: false do
     end
 
     it "displays an error message containing the type of request that caused the error" do
-      expect(page.find('.banner-error')).to have_text('Error retrieving datasets')
+      expect(page.find('.banner-error')).to have_text('Error retrieving collections')
     end
 
     it "displays the readable message from the server, if available" do
@@ -37,7 +37,7 @@ describe "Displaying system errors", reset: false do
       end
 
       it 'removes the error message' do
-        expect(page).to have_no_text('Error retrieving datasets')
+        expect(page).to have_no_text('Error retrieving collections')
       end
     end
   end

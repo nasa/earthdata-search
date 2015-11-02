@@ -6,14 +6,14 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
       @activeIndex = ko.observable(0)
       @showGranules = ko.observable(false)
       @needsContactInfo = ko.computed =>
-        for dataset in @project.accessDatasets()
-          for m in dataset.serviceOptions.accessMethod()
+        for collection in @project.accessCollections()
+          for m in collection.serviceOptions.accessMethod()
             method = m.method()
             return true if method? && method != 'Download'
         false
       @isLastOption = ko.computed =>
-        datasets = @project.accessDatasets()
-        @activeIndex() == datasets.length - 1 && !@needsContactInfo()
+        collections = @project.accessCollections()
+        @activeIndex() == collections.length - 1 && !@needsContactInfo()
 
     showNext: =>
       @activeIndex(@activeIndex() + 1)
@@ -40,8 +40,8 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
     scrolled: (data, event) =>
       elem = event.target
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
-        dataset = @project.accessDatasets()[@activeIndex()].dataset
-        dataset.granulesModel.loadNextPage()
+        collection = @project.accessCollections()[@activeIndex()].collection
+        collection.granulesModel.loadNextPage()
 
     downloadProject: ->
       $project = $('#data-access-project')

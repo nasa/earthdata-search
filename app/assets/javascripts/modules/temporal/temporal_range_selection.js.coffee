@@ -144,7 +144,7 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
       validateTemporalInputs(root)
 
   $(document).on 'click', '.clear-filters.button', ->
-    validateTemporalInputs($('.dataset-temporal-filter'))
+    validateTemporalInputs($('.collection-temporal-filter'))
 
   $(document).on 'click', '.granule-filters-clear', ->
     validateTemporalInputs($('.granule-temporal-filter'))
@@ -158,10 +158,10 @@ do (document, $=jQuery, edsc_date=@edsc.util.date, temporalModel=@edsc.page.quer
   $(document).ready ->
     $(".temporal-dropdown-button").on 'click', ->
       $(this).parents('.dropdown').toggleClass('open')
-    $('.dataset-temporal-filter').temporalSelectors({
+    $('.collection-temporal-filter').temporalSelectors({
       uiModel: temporalModel,
       modelPath: "query.temporal.pending",
-      prefix: 'dataset'
+      prefix: 'collection'
     })
 
     $('.temporal').keydown (e) ->

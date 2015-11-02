@@ -21,8 +21,8 @@ EarthdataSearchClient::Application.routes.draw do
 
   match 'static' => 'static_pages#index', :via => [:get]
 
-  get 'dataset_facets' => 'datasets#facets'
-  resources :datasets, only: [:index, :show], defaults: {format: 'json'} do
+  get 'collection_facets' => 'collections#facets'
+  resources :collections, only: [:index, :show], defaults: {format: 'json'} do
     member do
       post 'use'
     end

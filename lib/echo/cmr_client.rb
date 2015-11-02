@@ -4,13 +4,13 @@ module Echo
       get("/search/health")
     end
 
-    def get_datasets(options={}, token=nil)
+    def get_collections(options={}, token=nil)
       format = options.delete(:format) || 'json'
-      query = options_to_dataset_query(options).merge(include_has_granules: true, include_granule_counts: true)
+      query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
       get("/search/collections.#{format}", query, token_header(token))
     end
 
-    def get_dataset(id, token=nil)
+    def get_collection(id, token=nil)
       response = get("/search/concepts/#{id}.echo10", {}, token_header(token))
       response.body[0].granule_url = @root + "/search/granules.json" if response.body.is_a?(Array) && response.body.first.respond_to?(:granule_url)
       response
@@ -29,7 +29,7 @@ module Echo
     end
 
     def get_facets(options={}, token=nil)
-      get_datasets(options.merge(include_facets: true, page_size: 1), token)
+      get_collections(options.merge(include_facets: true, page_size: 1), token)
     end
 
     def post_timeline(options={}, token=nil)
