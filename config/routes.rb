@@ -47,7 +47,7 @@ EarthdataSearchClient::Application.routes.draw do
   post 'convert' => 'conversions#convert'
   resources :convert, only: [:create], defaults: {format: 'json'}
 
-  get 'data/options' => 'data_access#options', format: 'json'
+  match 'data/options' => 'data_access#options', format: 'json', via: [:get, :post]
   post 'data/configure' => 'data_access#configure'
   get 'data/configure' => 'data_access#configure'
   post 'data/retrieve' => 'data_access#retrieve'

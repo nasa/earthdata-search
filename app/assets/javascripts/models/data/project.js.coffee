@@ -79,6 +79,7 @@ ns.Project = do (ko,
         dataType: 'json'
         url: '/data/options'
         data: params
+        method: 'post'
         retry: => @_loadGranuleAccessOptions()
         success: (data, status, xhr) =>
           console.log "Finished loading access options for #{@collection.id}"

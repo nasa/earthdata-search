@@ -2220,4 +2220,21 @@ http_interactions:
       - edsc
   recorded_at: Thu, 17 Sep 2015 01:42:34 GMT
   digest: d83e4338cb018ec06e7c79fa30d2e54592536c16
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: page_num=1&page_size=150
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 28 Oct 2015 19:10:58 GMT
+  digest: 5fff4b09654c338edf8c989b799f6508285ea450
 recorded_with: VCR 2.6.0

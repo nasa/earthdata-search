@@ -134,11 +134,11 @@ class DataAccessController < ApplicationController
   # This rolls up getting information on data access into an API that approximates
   # what we'd like ECHO / CMR to support.
   def options
-    granule_params = request.query_parameters.merge(page_size: 150, page_num: 1)
+    granule_params = params.reject!{|p| ['controller', 'action', 'format'].include? p}.merge(page_size: 150, page_num: 1)
     catalog_response = echo_client.get_granules(granule_params, token)
 
     if catalog_response.success?
-      collection = Array.wrap(request.query_parameters[:echo_collection_id]).first
+      collection = Array.wrap(granule_params[:echo_collection_id]).first
       if collection
         dqs = echo_client.get_data_quality_summary(collection, token)
       end
@@ -182,9 +182,9 @@ class DataAccessController < ApplicationController
         response.headers[key] = value if key.start_with?('cmr-')
       end
 
-      respond_with(result, status: catalog_response.status)
+      respond_with(result, status: catalog_response.status, location: nil)
     else
-      respond_with(catalog_response.body, status: catalog_response.status)
+      respond_with(catalog_response.body, status: catalog_response.status, location: nil)
     end
   end
 
