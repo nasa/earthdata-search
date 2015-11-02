@@ -70,7 +70,7 @@ describe 'Map Zooming', reset: false do
       end
 
       it 'zooms to the center of the visible map' do
-        expect(page).to have_map_center(0, 19, 3)
+        expect(page).to have_map_center(0, 19.6, 3)
       end
     end
   end
