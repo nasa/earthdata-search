@@ -46,6 +46,7 @@ do (L, extend = $.extend, Collection = @edsc.models.data.Collection, Granule = @
 
     getMbr: ->
       spatial = (@getPoints() && [@getPoints()]) || @getRectangles() || @getLines() || @getPolygons()
+      return null unless spatial
       bounds = new L.LatLngBounds()
       for area in spatial
         bounds.extend(area)
@@ -72,7 +73,6 @@ do (L, extend = $.extend, Collection = @edsc.models.data.Collection, Granule = @
           layer.addLayer(L.marker(bounds.getCenter()))
 
       layer
-
 
   extend(Collection.prototype, SpatialMixin)
   extend(Granule.prototype, SpatialMixin)

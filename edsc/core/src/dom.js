@@ -76,6 +76,12 @@ module.exports = {
   getStyle: function(node, style) {
     return window.getComputedStyle(node, null).getPropertyValue(style);
   },
+  setStyles: function(node, styleObj) {
+    var key, style = node.style;
+    for (key in styleObj) {
+      style[key] = styleObj[key];
+    }
+  },
   scrollParent: function(el) {
     var overflowX, overflowY;
     while (el instanceof HTMLElement) {
