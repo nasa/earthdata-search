@@ -4,6 +4,7 @@
 ns = @edsc.models.data
 
 ns.Collection = do (ko
+                 $ = jQuery,
                  DetailsModel = @edsc.models.DetailsModel
                  scalerUrl = @edsc.config.browseScalerUrl
                  Granules=ns.Granules
@@ -57,6 +58,7 @@ ns.Collection = do (ko
       @detailsLoaded = ko.observable(false)
 
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
+      @spatial_layer_css = @computed(@_computeSpatialLayerCss, this, deferEvaluation: true)
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
       @granuleDescription = @computed(@_computeGranuleDescription, this, deferEvaluation: true)
 
@@ -85,7 +87,7 @@ ns.Collection = do (ko
       (@_spatialString("Bounding Rectangles", @boxes) ?
        @_spatialString("Points", @points) ?
        @_spatialString("Polygons", @polygons) ?
-       @_spatialString("Lines", @polygons))
+       @_spatialString("Lines", @lines))
 
     _spatialString: (title, spatial) ->
       if spatial
@@ -93,6 +95,39 @@ ns.Collection = do (ko
         "#{title}: #{spatial[0]}#{suffix}"
       else
         null
+
+    _computeSpatialLayerCss: ->
+      parent_width = $("#" + @id + "-map").width()
+      parent_height = $("#" + @id + "-map").height()
+      # Pick the first spatial element and draw on the mini map.
+      # For complex polygons, the layer is estimated and is just for illustration.
+      if @boxes?
+        first_elem = @boxes[0].split(' ')
+        top = (90 - Math.max(first_elem[0], first_elem[2])) / 180 * parent_height
+        left = (Math.min(first_elem[1], first_elem[3]) + 180) / 360 * parent_width
+        width = ((Math.max(first_elem[1], first_elem[3]) + 180) - (Math.min(first_elem[1], first_elem[3]) + 180)) / 360 * parent_width
+        height = ((Math.max(first_elem[0], first_elem[2]) + 90) - (Math.min(first_elem[0], first_elem[2]) + 90)) / 180 * parent_height
+      else if @points?
+        first_elem = []
+        first_elem.push parseInt(p) for p in @points[0].split(' ')
+        if first_elem[0] >= 0 then top = (90 - first_elem[0]) / 180 * parent_height else top = (90 + first_elem[0]) / 180 * parent_height
+        left = (180 + first_elem[1]) / 360 * parent_width
+        width = height = 10
+      else if @polygons?
+        first_elem = @polygons[0][0].split(' ')
+        lats = []
+        lats.push parseInt(first_elem[i]) for i in [0..first_elem.length - 1] when i % 2 == 0
+        lngs = []
+        lngs.push parseInt(first_elem[i]) for i in [0..first_elem.length - 1] when i % 2 == 1
+        top = (90 - (Math.max.apply @, lats)) / 180 * parent_height
+        left = ((Math.min.apply @, lngs) + 180) / 360 * parent_width
+        height = (((Math.max.apply @, lats) + 180) - ((Math.min.apply @, lats) + 180)) / 360 * parent_width
+        width = (((Math.max.apply @, lngs) + 90) - ((Math.min.apply @, lngs) + 90)) / 180 * parent_height
+      else
+        top = left = 0
+        width = parent_width
+        height = parent_height
+      "top: " + top + "px; left: " + left + "px; width: " + width + "px; height: " + height + "px;"
 
     _computeGranuleDescription: ->
       result = null
