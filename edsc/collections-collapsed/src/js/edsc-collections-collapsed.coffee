@@ -37,9 +37,35 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
   focusCollection: (args...) => @page.ui.collectionsList.focusCollection(args...)
   # End methods to factor out
 
+  spatialLayerCss: (collection) ->
+    mbr = collection.getMbr()
+    mapWidth = $("#" + collection.id + "-map").width()
+    mapHeight = $("#" + collection.id + "-map").height()
+
+    border = 2
+
+    latToPx = (lat) -> Math.floor((180 - (90 + lat)) * mapHeight / 180)
+    lngToPx = (lng) -> Math.floor((180 + lng) * mapWidth / 360)
+
+    top = latToPx mbr.getNorth()
+    left = lngToPx mbr.getWest()
+    width = lngToPx(mbr.getEast()) - left
+    height = latToPx(mbr.getSouth()) - top
+
+    # Adjust positionining of small boxes to better center on their area
+    if width < border
+      width = border * 2
+      left -= border
+
+    if height < border
+      height = border * 2
+      top -= border
+
+    "width: #{width}px; height: #{height}px; top: #{top}px; left: #{left}px;"
+
   _getFlyoutTarget: (e) ->
     target = e.target
-    target = target.parentNode until !target || flyout = target.getAttribute('data-flyout')
+    target = target.parentNode until !target || target.getAttribute?('data-flyout')
     target
 
   toggleFlyout: (context, e) =>
@@ -74,6 +100,7 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
       @_alignFlyouts()
       document.body.appendChild(flyout)
       domNodeDisposal.addDisposeCallback target, => @_destroyFlyout(target)
+
 
   _alignFlyouts: =>
     scroll = @_scrollParent?.scrollTop ? 0
