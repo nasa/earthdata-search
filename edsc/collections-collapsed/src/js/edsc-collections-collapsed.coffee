@@ -152,5 +152,5 @@ ko.bindingHandlers.divSpatial =
       height = border * 2
       top -= border
 
-    dom.setStyles(spatialDiv, display: 'block', top: top, left: left, width: width, height: height)
+    dom.setStyles(spatialDiv, display: 'block', top: top + 'px', left: left + 'px', width: width + 'px', height: height + 'px')
     null
