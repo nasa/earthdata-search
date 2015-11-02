@@ -37,7 +37,7 @@ describe "Collections Collapsed View", reset: false do
       end
 
       it 'displays a map with spatial for each collection' do
-        expect(first_collapsed_collection).to have_css('.ccol-mini-map-spatial-layer[style*="width"]')
+        expect(first_collapsed_collection).to have_css('.ccol-mini-map-spatial-layer', visible: true)
       end
 
       it 'displays a more info button for each collection' do
