@@ -4,7 +4,6 @@
 ns = @edsc.models.data
 
 ns.Collection = do (ko
-                 $ = jQuery,
                  DetailsModel = @edsc.models.DetailsModel
                  scalerUrl = @edsc.config.browseScalerUrl
                  Granules=ns.Granules
@@ -97,8 +96,9 @@ ns.Collection = do (ko
         null
 
     _computeSpatialLayerCss: ->
-      parent_width = $("#" + @id + "-map").width()
-      parent_height = $("#" + @id + "-map").height()
+      parent_styles = getComputedStyle(document.getElementById(@id + "-map"))
+      parent_width = parseInt(parent_styles.width)
+      parent_height = parseInt(parent_styles.height)
       # Pick the first spatial element and draw on the mini map.
       # For complex polygons, the layer is estimated and is just for illustration.
       if @boxes?
