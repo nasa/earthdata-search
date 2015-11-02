@@ -3,7 +3,7 @@
                css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}"
     class="ccol">
   <div class="ccol-header">
-    <a href="#" class="ccol-more button icon-button" title="More details"
+    <a href="#" class="ccol-more button icon-button" title="Toggle details"
        data-flyout="collection-details-flyout"
        data-bind="click: $component.toggleFlyout">
       <i class="fa fa-chevron-circle-right"></i><i class="fa fa-chevron-circle-left"></i>
@@ -17,7 +17,7 @@
     </span>
   </div>
   <div class="ccol-mini-map" data-bind="attr: {id: id + '-map'}">
-    <div class="ccol-mini-map-spatial-layer" data-bind="attr: {style: spatial_layer_css}"></div>
+    <div class="ccol-mini-map-spatial-layer" data-bind="attr: {style: $component.spatialLayerCss($data)}"></div>
   </div>
   <div class="ccol-actions-container">
     <div class="ccol-actions">

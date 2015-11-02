@@ -44,6 +44,13 @@ do (L, extend = $.extend, Collection = @edsc.models.data.Collection, Granule = @
 
       @_rects
 
+    getMbr: ->
+      spatial = (@getPoints() && [@getPoints()]) || @getRectangles() || @getLines() || @getPolygons()
+      bounds = new L.LatLngBounds()
+      for area in spatial
+        bounds.extend(area)
+      bounds
+
     buildLayer: (options) ->
       layer = L.featureGroup()
       layer.addLayer(L.circleMarker(point, options)) for point in @getPoints() ? []

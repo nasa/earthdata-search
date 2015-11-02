@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Collections Collapsed View", reset: false, pq: true do
+describe "Collections Collapsed View", reset: false do
   extend Helpers::CollectionHelpers
 
   context 'on the search results screen' do
@@ -36,11 +36,12 @@ describe "Collections Collapsed View", reset: false, pq: true do
         expect(collection_results).to have_css('.ccols')
       end
 
-      # TODO
-      it 'displays a map with spatial for each collection'
+      it 'displays a map with spatial for each collection' do
+        expect(first_collapsed_collection).to have_css('.ccol-mini-map-spatial-layer[style*="width"]')
+      end
 
       it 'displays a more info button for each collection' do
-        expect(first_collapsed_collection).to have_link("More details")
+        expect(first_collapsed_collection).to have_link("Toggle details")
       end
 
       it 'displays an add to project button for each collection' do
@@ -64,7 +65,7 @@ describe "Collections Collapsed View", reset: false, pq: true do
       end
 
       it 'displays a view collection button for collections with granules' do
-        for_collapsed_collection  'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC' do
+        for_collapsed_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC' do
           expect(first_collapsed_collection).to have_link('Preview collection')
         end
       end
@@ -76,71 +77,257 @@ describe "Collections Collapsed View", reset: false, pq: true do
       end
 
       context 'and clicking a collection with granules' do
-        it "shows the collection's granule list"
-        it "maximizes the overlay"
+        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+
+        before :all do
+          view_granule_results
+        end
+
+        it "shows the collection's granule list" do
+          expect(page).to have_visible_granule_list
+        end
+
+        it "maximizes the overlay" do
+          expect(page).to have_css('.is-master-overlay-maximized')
+        end
 
         context "and returning to the collection list" do
-          it "minimizes the overlay"
+          before :all do
+            leave_granule_results
+          end
+
+          it "minimizes the overlay" do
+            expect(page).to have_css('.is-master-overlay-minimized')
+          end
         end
       end
 
       context 'and clicking a collection without granules' do
-        it "does nothing"
+        use_collection  'C179002107-SEDAC', 'CIESIN_SEDAC_ANTHROMES'
+
+        before :all do
+          page.execute_script("$('#collection-results .ccol:first-child').click()")
+          wait_for_xhr
+        end
+
+        it "does nothing" do
+          expect(page).to have_visible_collection_results
+        end
       end
 
       context "and clicking a collection's more info button" do
-        it "displays a flyout with additional collection information"
-        it "changes the more info button into a less info button"
+        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+
+        before :all do
+          first_collapsed_collection.click_link('Toggle details')
+        end
+
+        it "displays a flyout with additional collection information" do
+          expect(page).to have_selector('.flyout')
+          expect(page.find('.flyout')).to have_text('Archive Center')
+        end
+
+        it "changes the more info button into a less info button" do
+          expect(page).to have_selector('.fa-chevron-circle-left')
+          expect(page).to have_no_selector('.fa-chevron-circle-right')
+        end
 
         context "followed by its less info button" do
-          it "hides the flyout with additional collection information"
-          it "changes the less info button into a more info button"
+          before :all do
+            first_collapsed_collection.click_link('Toggle details')
+          end
+
+          it "hides the flyout with additional collection information" do
+            expect(page).to have_no_selector('.flyout')
+          end
+
+          it "changes the less info button into a more info button" do
+            expect(page).to have_selector('.fa-chevron-circle-right', visible: true)
+            expect(page).to have_no_selector('.fa-chevron-circle-left', visible: true)
+          end
         end
       end
 
       context "and hovering a collection's add to project button" do
-        it "displays help text"
+        before :all do
+          first_collapsed_collection.find('a.add-to-project').trigger(:mouseover)
+          wait_for_xhr
+        end
+
+        it "displays help text" do
+          expect(page.find('.flyout')).to have_text('Add collections to your project')
+        end
+
+        context "followed by un-hovering the add to project button" do
+          before :all do
+            first_collapsed_collection.find('a.add-to-project').trigger(:mouseout)
+            wait_for_xhr
+          end
+
+          it "hides the help text" do
+            expect(page).to have_no_text('Add collections to your project')
+          end
+        end
       end
 
       context "and clicking a collection's add to project button" do
-        it "adds the collection to the project"
-        it "changes the add to project button to a remove button"
-        it "displays a view project button on the collection list"
+        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+
+        before :all do
+          first_collapsed_collection.find('a.add-to-project').click
+          wait_for_xhr
+        end
+
+        after :all do
+          first_collapsed_collection.click_link 'Remove collection from the current project'
+          wait_for_xhr
+        end
+
+        it "adds the collection to the project" do
+          expect(project_collection_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
+        end
+
+        it "changes the add to project button to a remove button" do
+          expect(first_collapsed_collection).to have_no_css("a.add-to-project")
+          expect(first_collapsed_collection).to have_link('Remove collection from the current project')
+        end
+
+        it "displays a view project button on the collection list" do
+          expect(collection_results).to have_link('View Project')
+        end
+
+        it "hides the add to project help text" do
+          expect(page).to have_no_text('Add collections to your project')
+        end
 
         context "followed by its remove button" do
-          it "removes the collection from the project"
-          it "displays an add to project button"
-          it "hides the view project button"
+          before :all do
+            first_collapsed_collection.click_link 'Remove collection from the current project'
+            wait_for_xhr
+          end
+
+          after :all do
+            first_collapsed_collection.find('a.add-to-project').click
+            wait_for_xhr
+          end
+
+          it "removes the collection from the project" do
+            expect(project_collection_ids).to match_array([])
+          end
+
+          it "displays an add to project button" do
+            expect(first_collapsed_collection).to have_css("a.add-to-project")
+          end
+
+          it "hides the view project button" do
+            expect(collection_results).to have_no_link('View Project')
+          end
         end
 
         context "clicking on the view project button" do
-          it "displays the project"
-          it "maximizes the overlay"
+          before :all do
+            collection_results.click_link "View Project"
+            wait_for_xhr
+          end
+
+          after :all do
+            project_overview.click_link "Back to Collection Search"
+            wait_for_xhr
+          end
+
+          it "displays the project" do
+            expect(page).to have_visible_project_overview
+          end
+
+          it "maximizes the overlay" do
+            expect(page).to have_css('.is-master-overlay-maximized')
+          end
         end
       end
 
       context "and clicking a collection's collection details button" do
-        it "displays the collection details"
-        it "maximizes the overlay"
+        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+
+        before :all do
+          first_collapsed_collection.click_link "View collection details"
+          wait_for_xhr
+        end
+
+        after :all do
+          collection_details.click_link "Back to Collections"
+          wait_for_xhr
+        end
+
+        it "displays the collection details" do
+          expect(page).to have_visible_collection_details
+        end
+
+        it "maximizes the overlay" do
+          expect(page).to have_css('.is-master-overlay-maximized')
+        end
       end
 
       context "and clicking a collection's spatial query button" do
-        it "constraint the spatial query to the collection's spatial"
-        it "highlights the spatial query button"
+        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+
+        before :all do
+          first_collapsed_collection.click_link "Search using this collection's location"
+          wait_for_xhr
+        end
+
+        it "constrains the spatial query to the collection's spatial" do
+          expect(page).to have_css('#map .leaflet-marker-icon')
+        end
+
+        it "highlights the spatial query button" do
+          expect(first_collapsed_collection).to have_css('a.button-active .fa-map-marker')
+        end
 
         context "twice" do
-          it "removes the spatial query constraint"
-          it "does not highlight the spatial query button"
+          before :all do
+            first_collapsed_collection.click_link "Search using this collection's location"
+            wait_for_xhr
+          end
+
+          it "removes the spatial query constraint" do
+            expect(page).to have_no_css('#map .leaflet-marker-icon')
+          end
+
+          it "does not highlight the spatial query button" do
+            expect(first_collapsed_collection).to have_no_css('a.button-active .fa-map-marker')
+          end
         end
       end
 
       context "and clicking a collection's view collection button" do
-        it "displays a hide collection button"
-        it "displays the collection's spatial extent on the map"
+        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+
+        before :all do
+          first_collapsed_collection.click_link 'Preview collection'
+        end
+
+        it "displays a hide collection button" do
+          expect(first_collapsed_collection).to have_link('Hide collection')
+          expect(first_collapsed_collection).to have_no_link('Preview collection')
+        end
+
+        it "displays the collection's spatial extent on the map" do
+          expect(page).to have_selector('.leaflet-layer[id^="granule-vis-"] canvas')
+        end
 
         context "followed by its hide collection button" do
-          it "displays a view collection button"
-          it "hides the collection's spatial extent from the map"
+          before :all do
+            first_collapsed_collection.click_link 'Hide collection'
+          end
+
+          it "displays a view collection button" do
+            expect(first_collapsed_collection).to have_link('Preview collection')
+            expect(first_collapsed_collection).to have_no_link('Hide collection')
+          end
+
+          it "hides the collection's spatial extent from the map" do
+            expect(page).to have_no_selector('.leaflet-layer[id^="granule-vis-"] canvas')
+          end
         end
       end
     end
