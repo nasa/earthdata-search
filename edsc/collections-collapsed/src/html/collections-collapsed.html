@@ -16,8 +16,8 @@
       <!-- /ko -->
     </span>
   </div>
-  <div class="ccol-mini-map" data-bind="attr: {id: id + '-map'}">
-    <div class="ccol-mini-map-spatial-layer" data-bind="attr: {style: $component.spatialLayerCss($data)}"></div>
+  <div class="ccol-mini-map" data-bind="attr: {id: id + '-map'}, divSpatial: $data">
+    <div class="ccol-mini-map-spatial-layer"></div>
   </div>
   <div class="ccol-actions-container">
     <div class="ccol-actions">

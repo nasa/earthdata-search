@@ -117,7 +117,9 @@
           <h3 class="panel-list-title">More Collections</h3>
           <!-- /ko -->
           <div class="panel-list">
+            <!-- ko if: collections.unfeatured().length > 0 -->
             <edsc-collections-collapsed id="coll-collection-results-list" params="page: $data, collections: collections.unfeatured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
+            <!-- /ko -->
             <ul id="collection-results-list"
                 class="panel-list-list knockout-template master-overlay-when-max"
                 data-bind="foreach: collections.unfeatured, css: { 'knockout-template': !bindingsLoaded }">
