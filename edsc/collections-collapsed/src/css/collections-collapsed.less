@@ -167,7 +167,14 @@
 .ccol-mini-map {
   height: @ccol-content-height;
   width: @ccol-content-width;
-  background-color: #ed009d;
+  background: transparent url('../img/mini-map.png') no-repeat center center;
+//  @include image-2x("../img/mini-map@2x.png", 476px, 238px);
+}
+
+.ccol-mini-map-spatial-layer {
+  border: 1px solid #c0c0c0;
+  background-color: rgba(171, 171, 171, .7);
+  position: relative;
 }
 
 .ccol-actions {

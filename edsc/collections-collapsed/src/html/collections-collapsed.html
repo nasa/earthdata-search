@@ -16,7 +16,9 @@
       <!-- /ko -->
     </span>
   </div>
-  <div class="ccol-mini-map"></div>
+  <div class="ccol-mini-map" data-bind="attr: {id: id + '-map'}">
+    <div class="ccol-mini-map-spatial-layer" data-bind="attr: {style: spatial_layer_css}"></div>
+  </div>
   <div class="ccol-actions-container">
     <div class="ccol-actions">
       <!-- ko if: has_granules -->
