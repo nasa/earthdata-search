@@ -264,11 +264,13 @@ describe "Granule search filters", reset: false do
     end
 
     it "removes the granule from the granule list" do
-      expect(page).to have_css('#granule-list .panel-list-item', count: 19)
+      expect(page).to have_css('#granule-list .panel-list-item', count: 38)
     end
 
     it "updates the page's hits count" do
-      expect(granule_list).to have_content("Showing 19 of #{before_granule_count.to_i - 1} matching granules")
+      # 38 = (page size - 1) * 2. Because of the browser height
+      # removing a granule immediately loads the next page.
+      expect(granule_list).to have_content("Showing 38 of #{before_granule_count.to_i - 1} matching granules")
     end
 
     context "when the user clicks the link to clear removed granules" do

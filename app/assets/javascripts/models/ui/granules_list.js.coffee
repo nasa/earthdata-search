@@ -231,6 +231,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       if granule == @stickied()
         @_map.fire('edsc.stickygranule', scroll: false, granule: newGranule ? null)
       @granules.exclude(granule)
+      @scrolled(null, target: document.getElementById('granules-scroll'))
 
     undoExcludeGranule: =>
       granule = @granules.undoExclude()
