@@ -1,4 +1,4 @@
-# EDSC-37 As a user, I want to clear my dataset filters so that I may start a new search
+# EDSC-37 As a user, I want to clear my collection filters so that I may start a new search
 
 require 'spec_helper'
 
@@ -46,8 +46,8 @@ describe "'Clear Filters' button", reset: false do
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       click_link "Temporal"
-      expect(page.find("#dataset-temporal-range-start")).to have_no_text("1978-12-01 00:00:00")
-      expect(page.find("#dataset-temporal-range-stop")).to have_no_text("1979-12-01 00:00:00")
+      expect(page.find("#collection-temporal-range-start")).to have_no_text("1978-12-01 00:00:00")
+      expect(page.find("#collection-temporal-range-stop")).to have_no_text("1979-12-01 00:00:00")
       page.find('body > footer .version').click # Click away from timeline
     end
 
@@ -65,15 +65,15 @@ describe "'Clear Filters' button", reset: false do
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       click_link "Temporal"
-      expect(page.find("#dataset-temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")
-      expect(page.find("#dataset-temporal-recurring-stop")).to have_no_text("1975-12-31 00:00:00")
+      expect(page.find("#collection-temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")
+      expect(page.find("#collection-temporal-recurring-stop")).to have_no_text("1975-12-31 00:00:00")
       expect(page.find(".temporal-recurring-year-range-value")).to have_text("1960 - #{Time.new.year}")
       page.find('body > footer .version').click # Click away from timeline
     end
   end
 
   it "clears facets" do
-    click_on 'Browse Datasets'
+    click_on 'Browse Collections'
     find("h3.facet-title", text: 'Project').click
     find(".facets-item", text: "EOSDIS").click
     within(:css, '#collapse3 .panel-body.facets') do

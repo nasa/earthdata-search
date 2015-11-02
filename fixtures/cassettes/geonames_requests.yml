@@ -112,7 +112,7 @@ http_interactions:
   digest: ef6133bd0170b04a70aeb4ad9beaad45bf7414c8
 - request:
     method: get
-    uri: http://places.example.com/search?username=edsc&maxRows=5&q=somestringthatmatchesnodatasets&orderby=relevance&isNameRequired=true&style=full&type=json
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=somestringthatmatchesnocollections&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
       string: ''

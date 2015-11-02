@@ -1,5 +1,5 @@
 # EDSC-5 As a user, I want to see a simple search interface upon visiting the site
-#        so that I may quickly begin my search for datasets
+#        so that I may quickly begin my search for collections
 
 require 'spec_helper'
 

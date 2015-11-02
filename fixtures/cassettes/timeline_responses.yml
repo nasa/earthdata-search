@@ -1159,6 +1159,26 @@ d6763eddb1895cee1199dd74a4c507447b961496:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[498960000,556070400,23],[560044800,573523200,6]]}]'
     http_version: 
+0924dbe8a1b460dab96b29e45c70204410fa0b4b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 27 Oct 2015 16:47:14 GMT
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '108'
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.02372799998E8,556070400,21],[560044800,573523200,6]]}]'
+    http_version: 
 43916107b277efd45a900f6aa2ff8727e71ab5c1:
   response:
     status:
@@ -1258,6 +1278,26 @@ e281d5cb2c7266f502554e3541ae74bd0543a08f:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.07470399997E8,556070400,20],[560044800,573523200,6]]}]'
+    http_version: 
+2e2f92a47d4a1708b56908d2f9eb5cffbfc65295:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 27 Oct 2015 16:47:12 GMT
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '108'
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179003030-ORNL_DAAC","intervals":[[5.07470399998E8,556070400,20],[560044800,573523200,6]]}]'
     http_version: 
 aef5130385142c23986a41463bc76ed4e20d20f7:
   response:

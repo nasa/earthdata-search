@@ -1,8 +1,8 @@
 class ESIClient
   Faraday.register_middleware(:response, :logging => Echo::ClientMiddleware::LoggingMiddleware)
 
-  def self.submit_esi_request(dataset_id, params, method, request_url, client, token)
-    service_url = get_service_url(dataset_id, client, token)
+  def self.submit_esi_request(collection_id, params, method, request_url, client, token)
+    service_url = get_service_url(collection_id, client, token)
 
     # FILE_IDS is a comma seperated list of granule_ur's
     granules = client.get_granules(params, token).body['feed']['entry'].map{|g| g['title']}
@@ -20,8 +20,8 @@ class ESIClient
     post(service_url, options)
   end
 
-  def self.get_esi_request(dataset_id, service_order_id, client, token, header_value)
-    service_url = get_service_url(dataset_id, client, token)
+  def self.get_esi_request(collection_id, service_order_id, client, token, header_value)
+    service_url = get_service_url(collection_id, client, token)
     get(service_url + '/' + service_order_id.to_s, {}, header_value)
   end
 
@@ -48,8 +48,8 @@ class ESIClient
     end
   end
 
-  def self.get_service_url(dataset_id, client, token)
-      service_option_assignment = client.get_service_order_information(dataset_id, token).body
+  def self.get_service_url(collection_id, client, token)
+      service_option_assignment = client.get_service_order_information(collection_id, token).body
 
       service_entry_id = service_option_assignment[0]['service_option_assignment']['service_entry_id']
 
