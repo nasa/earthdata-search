@@ -138,7 +138,7 @@ class DataAccessController < ApplicationController
     catalog_response = echo_client.get_granules(granule_params, token)
 
     if catalog_response.success?
-      dataset = Array.wrap(request.query_parameters[:echo_collection_id]).first
+      dataset = Array.wrap(granule_params[:echo_collection_id]).first
       if dataset
         dqs = echo_client.get_data_quality_summary(dataset, token)
       end
