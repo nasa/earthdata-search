@@ -19,6 +19,7 @@ describe 'Background jobs ordering', reset: false do
 
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
   end
 
   after :all do

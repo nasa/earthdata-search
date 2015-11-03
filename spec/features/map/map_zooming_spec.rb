@@ -49,13 +49,12 @@ describe 'Map Zooming', reset: false do
       end
     end
 
-    context 'and the overlay is hidden' do
+    context 'and the overlay is minimized' do
       before :all do
         within '.master-overlay-main' do
-          find('.master-overlay-close').click
+          find('.master-overlay-minimize').click
         end
-        expect(page).to have_css(".master-overlay.is-hidden")
-
+        wait_for_xhr
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
       end
@@ -64,15 +63,14 @@ describe 'Map Zooming', reset: false do
         synchronize do
           # Synchronize because animations can cause occlusion if execution is very fast
           find('.leaflet-control-zoom-out').click
-          find('.master-overlay-show').click
+          find('.master-overlay-maximize').click
         end
-        expect(page).to have_no_css(".master-overlay.is-hidden")
         wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
 
       it 'zooms to the center of the visible map' do
-        expect(page).to have_map_center(0, 0, 3)
+        expect(page).to have_map_center(0, 19.6, 3)
       end
     end
   end
