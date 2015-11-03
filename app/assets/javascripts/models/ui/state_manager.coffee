@@ -102,7 +102,7 @@
       last = null
       last = parts.pop() while !last && parts.length > 0
       @page.ui.projectList.visible(last == 'project')
-      @_toggleWithTimeout('facets', @page.collections.facets.isRelevant, last == 'search')
+      @_toggleWithTimeout('facets', @page.collections.facets.isRelevant, last == 'search' || last == 'collection-details')
       @_toggleWithTimeout('collections', @page.collections.isRelevant, last == 'collections' || last == 'search')
 
     # The following two methods read a path from and write a path to the master overlay state, respectively
@@ -135,7 +135,7 @@
 
       root = '/search'
 
-      return root if state.parent
+      return root if state.parent && state.current != 'collection-details'
       return "#{root}/map" unless state.visible
       return "#{root}/collections" if state.current == 'collection-results'
 
