@@ -4,6 +4,7 @@ require "spec_helper"
 # cleared between runs
 describe "Access Option Defaults", reset: true do
   collection_id = 'C90762182-LAADS'
+  collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
   before :each do
     load_page :search, overlay: false
@@ -44,6 +45,7 @@ describe "Access Option Defaults", reset: true do
       click_on 'Continue'
       click_on 'Submit'
       expect(page).to have_content('Not Validated')
+      expect(page).to have_content(collection_title)
 
       load_page 'data/configure', project: [collection_id]
       wait_for_xhr
