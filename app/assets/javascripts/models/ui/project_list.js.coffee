@@ -169,7 +169,7 @@ ns.ProjectList = do (ko
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'order'
           canCancel = ['QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
           orders.push
-            collection_id: collection.collection_id
+            collection_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
             cancel_link: "/data/remove?order_id=#{m.orderId}" if canCancel
@@ -197,7 +197,7 @@ ns.ProjectList = do (ko
             , 5000)
 
           serviceOrders.push
-            collection_id: collection.collection_id
+            collection_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus
             download_urls: m.serviceOptions.download_urls
