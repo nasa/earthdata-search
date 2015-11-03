@@ -3,7 +3,7 @@ class GranuleDetailsPresenter < DetailsPresenter
     @granule = granule
     @granule.id = granule_id
 
-    metadata_url = "https://cmr.earthdata.nasa.gov/search/concepts/#{@granule.id}"
+    metadata_url = "#{Rails.configuration.services['earthdata'][env]['cmr_root']}/search/concepts/#{@granule.id}"
     url_token = "?token=#{token}:#{client_id(env)}" if token
     @granule.native_url = "#{metadata_url}#{url_token}"
     @granule.atom_url = "#{metadata_url}.atom#{url_token}"
