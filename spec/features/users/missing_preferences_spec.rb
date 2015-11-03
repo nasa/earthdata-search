@@ -18,7 +18,7 @@ describe "User missing ordering preferences", reset: false do
       click_button "Continue"
     end
 
-    it "does not show an error message" do
+    it "does not show an error message", intermittent: 1 do
       expect(page).to have_no_content('Contact information could not be loaded, please try again later')
     end
   end
