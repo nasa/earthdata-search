@@ -1,0 +1,51 @@
+{
+  "name": "earthdata-search",
+  "description": "Earthdata Search",
+  "version": "1.0.0",
+  "repository": "nasa/earthdata-search",
+  "author": {
+    "name": "Patrick Quinn",
+    "email": "patrick@element84.com"
+  },
+  "maintainers": [
+    {
+      "name": "Patrick Quinn",
+      "email": "patrick@element84.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.10.0",
+    "css-loader": "^0.17.0",
+    "es5-shim": "^4.1.13",
+    "expose-loader": "^0.7.0",
+    "file-loader": "^0.8.4",
+    "handlebars": "^4.0.3",
+    "handlebars-loader": "^1.1.4",
+    "html-loader": "^0.3.0",
+    "jasmine": "^2.3.2",
+    "jasmine-core": "^2.3.4",
+    "jasmine-jquery": "^2.1.0",
+    "jasmine-reporters": "^2.0.7",
+    "jquery": "^2.1.4",
+    "jstree": "3.0.1",
+    "karma": "^0.13.9",
+    "karma-cli": "^0.1.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-webpack": "^1.7.0",
+    "less": "^2.5.1",
+    "less-loader": "^2.2.0",
+    "phantomjs": "^1.9.18",
+    "script-loader": "^0.6.1",
+    "style-loader": "^0.12.3",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.12.1"
+  },
+  "scripts": {
+    "prepublish": "./node_modules/.bin/webpack --config config/webpack.config.js -p --bail --colors",
+    "start": "./node_modules/.bin/webpack --config config/webpack.config.js -w --colors",
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+  }
+}
