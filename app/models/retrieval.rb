@@ -10,8 +10,7 @@ class Retrieval < ActiveRecord::Base
   def description
     @description ||= jsondata['description']
     unless @description
-      collections = jsondata['collections']
-      collection = collections.first
+      collection = self.collections.first
       @description = get_collection_id(collection['id']) if collection
 
       if @description
@@ -38,7 +37,7 @@ class Retrieval < ActiveRecord::Base
     user_id = retrieval.user.echo_id
     client = Echo::Client.client_for_environment(env, Rails.configuration.services)
 
-    project['collections'].each do |collection|
+    retrieval.collections.each do |collection|
       params = Rack::Utils.parse_query(collection['params'])
       params.merge!(page_size: 2000, page_num: 1)
 
@@ -69,6 +68,10 @@ class Retrieval < ActiveRecord::Base
     retrieval.save!
   end
 
+  def collections
+    Array.wrap(self.jsondata['collections'] || self.jsondata['datasets'])
+  end
+
   private
 
   def get_collection_id(id)
@@ -83,7 +86,7 @@ class Retrieval < ActiveRecord::Base
   end
 
   def update_access_configurations
-    Array.wrap(self.jsondata['collections']).each do |collection|
+    self.collections.each do |collection|
       if collection.key?('serviceOptions') && collection.key?('id')
         config = AccessConfiguration.find_or_initialize_by('collection_id' => collection['id'])
         config.service_options = collection['serviceOptions']
