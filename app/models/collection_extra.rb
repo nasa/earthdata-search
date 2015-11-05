@@ -26,7 +26,8 @@ class CollectionExtra < ActiveRecord::Base
       extra.has_browseable_granules = false unless extra.has_granules
 
       if extra.has_granules
-        if extra.has_browseable_granules.nil? || (extra.has_browseable_granules && extra.browseable_granule.nil?)
+        # Edited the condition to update browseable_granule ID if it hasn't been updated for a week.
+        if extra.has_browseable_granules.nil? || (extra.has_browseable_granules && extra.updated_at < 1.week.ago)
           browseable = echo_client.get_granules(format: 'json',
                                                  echo_collection_id: [id],
                                                  page_size: 1, browse_only: true).body['feed']['entry']
