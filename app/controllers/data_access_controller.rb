@@ -143,7 +143,7 @@ class DataAccessController < ApplicationController
         dqs = echo_client.get_data_quality_summary(collection, token)
       end
 
-      defaults = AccessConfig.get_default_options(current_user, collection)
+      defaults = AccessConfiguration.get_default_options(current_user, collection)
 
       granules = catalog_response.body['feed']['entry']
 
