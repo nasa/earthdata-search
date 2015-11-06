@@ -78,7 +78,7 @@ module VCR
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('invalid')) ||
                  uri.include?('C179002986-ORNL') ||
                  (request.uri.include?('trigger500')) ||
-                 (request.uri.include?('urs.earthdata')))
+                 (request.uri.include?('urs.earthdata.nasa.gov/api')))
             cassette = 'hand-edited'
             record = :none
           elsif request.uri.include? '/search/granules/timeline.json'
