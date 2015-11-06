@@ -22,6 +22,11 @@ class UsersController < ApplicationController
 
   def get_preferences
     response = echo_client.get_preferences(get_user_id, token)
+    user = echo_client.get_urs_user(session[:user_name], session[:access_token]).body
+    Rails.logger.info "--------- user: #{user.inspect}"
+    response.body['preferences']['general_contact'] = user
+    Rails.logger.info "--------- response: #{response.body}"
+
     render json: response.body, status: response.status
   end
 
