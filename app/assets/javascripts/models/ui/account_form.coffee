@@ -4,7 +4,7 @@ ns.AccountForm = do (ko, $=jQuery) ->
   class AccountForm
     constructor: (@account, @isServiceForm) ->
       @_userRequestedEdit = ko.observable(false)
-      @isEditingAccount = ko.computed(@_computeIsEditingAccount, this)
+      @isEditingNotificationPreference = ko.computed(@_computeIsEditingNotificationPreference, this)
 
     needsAccount: =>
       true
@@ -40,7 +40,11 @@ ns.AccountForm = do (ko, $=jQuery) ->
       if @validate()
         @account.updateContactInformation(callback)
 
-    _computeIsEditingAccount: ->
-      !@isServiceForm || @_userRequestedEdit() || !@account.preferencesLoaded() || !@hasCompleteAccount()
+    _computeIsEditingNotificationPreference: ->
+      console.log ("----------" + !@isServiceForm)
+      console.log "-----------" + @_userRequestedEdit()
+      console.log "------ " + !@account.preferencesLoaded()
+      console.log "+++00 " + !@hasCompleteAccount()
+      !@isServiceForm || @_userRequestedEdit() || !@account.preferencesLoaded()
 
   exports = AccountForm

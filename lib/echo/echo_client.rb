@@ -50,7 +50,7 @@ module Echo
       get("/echo-rest/users/current.json", {}, token_header(token))
     end
 
-    def get_user(user_id, token)
+    def get_echo_user(user_id, token)
       get("/echo-rest/users/#{user_id}", {}, token_header(token))
     end
 
@@ -111,7 +111,7 @@ module Echo
       items_response = post("/echo-rest/orders/#{id}/order_items/bulk_action", order_items.to_json, token_header(token), timeout: 600)
 
       prefs_response = get_preferences(user_id, token)
-      user_response = get_user(user_id, token)
+      user_response = get_echo_user(user_id, token)
 
       contact = prefs_response.body['preferences']['general_contact']
       user = user_response.body['user']
