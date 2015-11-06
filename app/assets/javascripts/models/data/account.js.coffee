@@ -59,15 +59,18 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
       @emailError = ko.observable(false)
       @firstName = ko.observable("")
       @firstNameError = ko.observable(false)
+      @middleInitial = ko.observable("")
       @lastName = ko.observable("")
       @lastNameError = ko.observable(false)
       @organizationName = ko.observable("")
+      @affiliation = ko.observable("")
+      @country = ko.observable("")
       @organizationNameError = ko.observable(false)
       @domain = ko.observable("")
       @domainError = ko.observable(false)
       @userType = ko.observable("")
       @userTypeError = ko.observable(false)
-      @primaryStudyArea = ko.observable("")
+      @studyArea = ko.observable("")
       @primaryStudyAreaError = ko.observable(false)
       @address = new Address()
       @region = ko.computed =>
@@ -137,35 +140,43 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
       contact = prefs.general_contact
       if contact?
         @firstName(contact.first_name)
+        @middleInitial(contact.middle_initial)
         @lastName(contact.last_name)
-        @email(contact.email)
+        @email(contact.email_address)
         @organizationName(contact.organization)
-        @role(contact.role)
-        @address.from_json(contact.address)
-        for phone in contact.phones ? []
-          if phone.phone_number_type == "BUSINESS"
-            @phone.number(phone.number)
-            @phone.id(phone.id)
-          else if phone.phone_number_type == "BUSINESS_FAX"
-            @fax.number(phone.number)
-            @fax.id(phone.id)
+
+        @country(contact.country)
+
+        @userType(contact.user_type)
+        @studyArea(contact.study_area)
+        @affiliation(contact.affiliation)
+
+#        @role(contact.role)
+#        @address.from_json(contact.address)
+#        for phone in contact.phones ? []
+#          if phone.phone_number_type == "BUSINESS"
+#            @phone.number(phone.number)
+#            @phone.id(phone.id)
+#          else if phone.phone_number_type == "BUSINESS_FAX"
+#            @fax.number(phone.number)
+#            @fax.id(phone.id)
 
     _buildPreferences: =>
-      phones = []
-      phones.push(@phone.to_json()) if @phone.number()?.length > 0
-      phones.push(@fax.to_json()) if @fax.number()?.length > 0
-
-      contact =
-        first_name: @firstName()
-        last_name: @lastName()
-        email: @email()
-        organization: @organizationName()
-        address: @address.to_json()
-        phones: phones
-        role: @role()
+#      phones = []
+#      phones.push(@phone.to_json()) if @phone.number()?.length > 0
+#      phones.push(@fax.to_json()) if @fax.number()?.length > 0
+#
+#      contact =
+#        first_name: @firstName()
+#        last_name: @lastName()
+#        email: @email()
+#        organization: @organizationName()
+#        address: @address.to_json()
+#        phones: phones
+#        role: @role()
 
       prefs =
-        general_contact: contact
+#        general_contact: contact
         order_notification_level: @notificationLevel()
 
       data =
