@@ -5,7 +5,7 @@ class CollectionDetailsPresenter < DetailsPresenter
 
     if collection.xml
       collection_xml = collection.xml
-      @collection.collection_id = collection_xml['DataSetId']
+      @collection.dataset_id = collection_xml['DataSetId']
       @collection.description = collection_xml['Description']
       @collection.short_name = collection_xml['ShortName']
       @collection.version_id = collection_xml['VersionId']
