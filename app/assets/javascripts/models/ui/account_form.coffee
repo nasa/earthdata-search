@@ -38,13 +38,9 @@ ns.AccountForm = do (ko, $=jQuery) ->
 
     saveAccountEdit: (callback) =>
       if @validate()
-        @account.updateContactInformation(callback)
+        @account.updateNotificationPreference(callback)
 
     _computeIsEditingNotificationPreference: ->
-      console.log ("----------" + !@isServiceForm)
-      console.log "-----------" + @_userRequestedEdit()
-      console.log "------ " + !@account.preferencesLoaded()
-      console.log "+++00 " + !@hasCompleteAccount()
       !@isServiceForm || @_userRequestedEdit() || !@account.preferencesLoaded()
 
   exports = AccountForm
