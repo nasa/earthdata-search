@@ -398,3 +398,36 @@ d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
           <user_region>USA</user_region>
         </user_information>
     http_version: 
+0878c483a2af2b15f560564541b64683ac575547:
+  response:
+    status:
+      code: 400
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNmIyYzk3MGJkYjU0OTMwMDdhYTM5NjUzNzExYjk5NmY%3D--e651484d8ec85ea94511cfa15d307db1a72de8b8;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.091000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Fri, 06 Nov 2015 19:02:52 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '<errors><error>cvc-complex-type.2.4.a: Invalid content was found starting
+        with element ''ns2:FirstName''. One of ''{"http://echo.nasa.gov/echo/v10/types":Guid,
+        "http://echo.nasa.gov/echo/v10/types":Role}'' is expected.</error></errors>'
+    http_version: 

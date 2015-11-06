@@ -10298,4 +10298,23 @@ http_interactions:
       - edsc
   recorded_at: Thu, 15 Jan 2015 21:08:41 GMT
   digest: d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/user_information
+    body:
+      encoding: UTF-8
+      string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123"},"billing_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123"},"order_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123"},"user_domain":"OTHER","user_region":"USA"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 06 Nov 2015 19:02:52 GMT
+  digest: 0878c483a2af2b15f560564541b64683ac575547
 recorded_with: VCR 2.6.0
