@@ -135,6 +135,44 @@ http_interactions:
   recorded_at: Fri, 06 Jun 2014 01:49:50 GMT
   digest: edsc_prefs
 - request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123","role":"Order Contact"},"order_notification_level":"NONE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 06 Nov 2015 17:57:15 GMT
+  digest: set_preference_none
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123","role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 06 Nov 2015 17:57:15 GMT
+  digest: set_preference_verbose
+- request:
     method: get
     uri: https://api.echo.nasa.gov/echo-rest/users/current.json
     body:
@@ -160,42 +198,6 @@ http_interactions:
       - edsc
   recorded_at: Wed, 06 Aug 2014 13:01:33 GMT
   digest: edsc_current
-- request:
-    method: put
-    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"street1":"101
-        N. Columbus St.","street2":"Suite 200","city":"Alexandria","state":"VA","zip":"22314","country":"United
-        States"},"phones":{"0":{"id":"F21AF1B0-35C0-261A-8DD6-17324A1B0654","number":"555-555-5555","phone_number_type":"BUSINESS"},"1":{"id":"0DDFC63B-84B4-AEBA-A705-74432B678795","number":"555-555-6666","phone_number_type":"BUSINESS_FAX"}},"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Fri, 06 Jun 2014 01:54:08 GMT
-  digest: 526d18465f10028b986afeec4cbd04dea793c924
-- request:
-    method: put
-    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"first_name":"Edsc","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"street1":"101
-        North Columbus St.","street2":"Suite 200","city":"Alexandria","state":"VA","zip":"22314","country":"United
-        States"},"phones":{"0":{"id":"128956E1-6811-E516-2B84-0829DEC46C4A","number":"555-444-4444","phone_number_type":"BUSINESS"},"1":{"id":"E1CFAD31-35D1-E6D5-5AD4-C1ECC079B632","number":"555-555-6666","phone_number_type":"BUSINESS_FAX"}},"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Echo-Token:
-      - edsc
-  recorded_at: Fri, 06 Jun 2014 01:54:07 GMT
-  digest: b591cfd9f66d9e60549268630de2aa867d7e5c17
 - request:
     method: get
     uri: https://api.echo.nasa.gov/echo-rest/users/current.json
@@ -332,4 +334,21 @@ http_interactions:
       - application/x-www-form-urlencoded
   recorded_at: Wed, 20 May 2015 17:21:59 GMT
   digest: 0074182fcbff52d0a40b77dc7bdd7bc21e2489df
+- request:
+    method: get
+    uri: https://urs.earthdata.nasa.gov/api/users/edsc?client_id=Gsk6IBbEfa98sbE5UavsZQ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Authorization:
+      - Bearer edsc-access
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 06 Nov 2015 14:31:36 GMT
+  digest: 14a0ec30b17ac928b6678e04f531f842e2a96520
 recorded_with: "VCR 2.6.0"

@@ -172,7 +172,7 @@
 
       <div class="access-item-body" data-bind="css: { hidden: project.accessCollections().length != ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
-          <form data-bind="submit: account.updateContactInformation" class="account-form">
+          <form data-bind="submit: account.updateNotificationPreference" class="account-form">
             <%= render partial: 'users/contact_info_form' %>
           </form>
         </div>

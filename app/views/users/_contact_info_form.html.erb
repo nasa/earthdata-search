@@ -27,48 +27,40 @@
 <!-- ko if: ui.accountForm.isEditingNotificationPreference() -->
 <!-- ko with: account -->
 
-  <!-- ko if: errors() -->
-  <p data-bind="foreach: errors">
-    <span class="error" data-bind="text: $data"></span>
-  </p>
-  <!-- /ko -->
-
-  <!-- ko if: message() -->
-  <p class="confirmation-message" data-bind="text: message"></p>
-  <!-- /ko -->
-
-  <p>
-    <label for="firstName">First name</label>
-    <span data-bind="text: firstName"></span>
-  </p>
-  <p>
-    <label for="lastName">Last name</label>
-    <span data-bind="text: lastName"></span>
-  </p>
-  <p>
-    <label for="email">Email</label>
-    <span data-bind="text: email"></span>
-  </p>
-  <p>
-    <label for="organizationName">Organization name</label>
-    <span data-bind="text: organizationName"></span>
-  </p>
-  <p>
-    <label for="address_country">Country</label>
-    <span data-bind="text: country"></span>
-  </p>
-  <p>
-    <label for="affiliation">Affiliation</label>
-    <span data-bind="text: affiliation"></span>
-  </p>
-  <p>
-    <label for="studyArea">Study Area</label>
-    <span data-bind="text: studyArea"></span>
-  </p>
-  <p>
-    <label for="userType">User Type</label>
-    <span data-bind="text: userType"></span>
-  </p>
+  <ul>
+    <li>
+      <span class="urs-profile-label">First Name</span>
+      <span data-bind="text: firstName"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Last Name</span>
+      <span data-bind="text: lastName"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Email</span>
+      <span data-bind="text: email"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Organization Name</span>
+      <span data-bind="text: organizationName"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Country</span>
+      <span data-bind="text: country"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Affiliation</span>
+      <span data-bind="text: affiliation"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Study Area</span>
+      <span data-bind="text: studyArea"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">User Type</span>
+      <span data-bind="text: userType"></span>
+    </li>
+  </ul>
 
 
   <p>
@@ -76,6 +68,16 @@
   </p>
 
   <hr>
+
+  <!-- ko if: message() -->
+  <p class="confirmation-message" data-bind="text: message"></p>
+  <!-- /ko -->
+
+  <!-- ko if: errors() -->
+  <p data-bind="foreach: errors">
+    <span class="error" data-bind="text: $data"></span>
+  </p>
+  <!-- /ko -->
 
   <h3>Update Notification Preference Level</h3>
 

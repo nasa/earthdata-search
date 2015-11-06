@@ -283,10 +283,69 @@ edsc_prefs:
       - close
     body:
       encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"city":"Alexandria","country":"United
-        States","id":"D80DE72C-7DF9-9E25-F7B0-4928A7F8A1AB","state":"VA","street1":"101
-        N. Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"},"email":"patrick+edsc@element84.com","first_name":"Earthdata","id":"E05C23B0-3193-326F-C651-7153C6A9D024","last_name":"Search","organization":"EDSC","phones":[{"id":"128956E1-6811-E516-2B84-0829DEC46C4A","number":"555-555-5555","phone_number_type":"BUSINESS"},{"id":"E1CFAD31-35D1-E6D5-5AD4-C1ECC079B632","number":"555-555-6666","phone_number_type":"BUSINESS_FAX"}],"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123"},"order_notification_level":"NONE"}}'
+    http_version:
+set_preference_none:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYmY2NjEwN2RiMWRmZWM4NWNmNGU0NjIzY2ZhODc4NTc%3D--954bffa449e17341b6023ac11915ad82f80e0bc6;
+        path=/; HttpOnly
+      x-runtime:
+      - '1.117000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Fri, 06 Nov 2015 17:57:14 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123"},"order_notification_level":"NONE"}}'
+    http_version:
+set_preference_verbose:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYmY2NjEwN2RiMWRmZWM4NWNmNGU0NjIzY2ZhODc4NTc%3D--954bffa449e17341b6023ac11915ad82f80e0bc6;
+        path=/; HttpOnly
+      x-runtime:
+      - '1.117000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Fri, 06 Nov 2015 17:57:14 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123"},"order_notification_level":"VERBOSE"}}'
     http_version:
 edscbasic_current:
   response:
@@ -344,74 +403,6 @@ edsc_current:
       encoding: UTF-8
       string: '{"user":{"addresses":[{"city":"Alexandria","country":"United States","id":"4029FD6E-AA1A-87A3-209F-C012B8DD9A51","state":"VA","street1":"101
         N. Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"}],"creation_date":"2014-02-04T20:55:34Z","email":"patrick+edsc@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","opt_in":false,"organization_name":"EDSC","primary_study_area":"OTHER","user_domain":"OTHER","user_region":"USA","user_type":"PRODUCTION_USER","username":"edsc"}}'
-    http_version:
-526d18465f10028b986afeec4cbd04dea793c924:
-  response:
-    status:
-      code: 201
-      message:
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      location:
-      - https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences?clientId=unknown
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMmU1MGMxZjcyYTE1NWY5NmJjODAyODk3NzYyOGI5ZWE%3D--ffd2086ed3164eaf39c2f3ff3d9a1d3330c7cb04;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.467000'
-      content-type:
-      - application/json;charset=utf-8
-      content-length:
-      - '661'
-      date:
-      - Fri, 06 Jun 2014 01:54:08 GMT
-      connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"city":"Alexandria","country":"United
-        States","id":"C683CC30-5EF9-E4DA-1AD7-C13C12D030CD","state":"VA","street1":"101
-        N. Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"},"email":"patrick+edsc@element84.com","first_name":"Earthdata","id":"FB24DE10-937A-560D-A5D2-3DF3FA8B4B98","last_name":"Search","organization":"EDSC","phones":[{"id":"358FF255-556C-3D31-9411-724D260B9625","number":"555-555-5555","phone_number_type":"BUSINESS"},{"id":"0C56B80A-44E3-4265-A1BB-E3BA59C16C6D","number":"555-555-6666","phone_number_type":"BUSINESS_FAX"}],"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
-    http_version:
-b591cfd9f66d9e60549268630de2aa867d7e5c17:
-  response:
-    status:
-      code: 201
-      message:
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      location:
-      - https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences?clientId=unknown
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMWRjY2MxMmM2ZDYzNzk2NTBhNzBjZmNhNWYwZTE5ZWI%3D--86afd787edb70cf9beaaf8972be01bb53cb5caac;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.452000'
-      content-type:
-      - application/json;charset=utf-8
-      content-length:
-      - '659'
-      date:
-      - Fri, 06 Jun 2014 01:54:06 GMT
-      connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"city":"Alexandria","country":"United
-        States","id":"DA261793-AF5A-702F-2A1E-AA00CE42AD7D","state":"VA","street1":"101
-        North Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"},"email":"patrick+edsc@element84.com","first_name":"Edsc","id":"88BA2C2D-5E2F-4B9C-E9E9-5B39056106BF","last_name":"Search","organization":"EDSC","phones":[{"id":"F21AF1B0-35C0-261A-8DD6-17324A1B0654","number":"555-444-4444","phone_number_type":"BUSINESS"},{"id":"0DDFC63B-84B4-AEBA-A705-74432B678795","number":"555-555-6666","phone_number_type":"BUSINESS_FAX"}],"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
     http_version:
 365deea9191426660df70c9dce859bda79ab9e9d:
   response:
@@ -1258,4 +1249,40 @@ second_service_request:
                 <totalNumber>1</totalNumber>
             </requestStatus>
         </eesi:agentResponse>
+    http_version:
+14a0ec30b17ac928b6678e04f531f842e2a96520:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - nginx/1.4.7
+      date:
+      - Fri, 06 Nov 2015 14:31:35 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      status:
+      - 2000 OK
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      www-authenticate:
+      - Bearer realm="URS",error="invalid_token"
+      cache-control:
+      - no-cache
+      x-request-id:
+      - fe9929bc-1cee-4090-9299-c08c5cc1f422
+      x-runtime:
+      - '0.005787'
+    body:
+      encoding: UTF-8
+      string: "{\"uid\":\"edsc\",\"first_name\":\"Earthdata\",\"last_name\":\"Search\",\"middle_initial\":\"\",\"email_address\":\"patrick+edsc@element84.com\",\"country\":\"United States\",\"study_area\":\"Air Sea Interaction\",\"user_type\":\"Science Team\",\"affiliation\":\"GOVERNMENT\",\"organization\":\"test123\",\"member_groups\":[\"earthdata_ecc\",\"echo\"]}"
     http_version:
