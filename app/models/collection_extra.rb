@@ -30,7 +30,7 @@ class CollectionExtra < ActiveRecord::Base
         if extra.has_browseable_granules.nil? || (extra.has_browseable_granules && extra.updated_at < 1.week.ago)
           browseable = echo_client.get_granules(format: 'json',
                                                  echo_collection_id: [id],
-                                                 page_size: 1, browse_only: true).body['feed']['entry']
+                                                 page_size: 1, browse_only: true, sort_key: ['-start_date']).body['feed']['entry']
           extra.has_browseable_granules = browseable.size > 0
           if extra.has_browseable_granules
             extra.granule = extra.browseable_granule = browseable.first['id']
