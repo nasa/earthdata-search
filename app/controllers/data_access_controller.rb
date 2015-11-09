@@ -24,7 +24,7 @@ class DataAccessController < ApplicationController
 
     retrieval = Retrieval.new
     retrieval.user = user
-    retrieval.jsondata = project
+    retrieval.project = project
     retrieval.save!
 
     Retrieval.delay.process(retrieval.id, token, echo_env, request.base_url)
@@ -39,11 +39,11 @@ class DataAccessController < ApplicationController
 
     Rails.logger.info(@retrieval.to_json)
 
-    orders = @retrieval.jsondata['collections'].map do |collection|
+    orders = @retrieval.collections.map do |collection|
       collection['serviceOptions']['accessMethod'].select { |m| m['type'] == 'order' }
     end.flatten.compact
 
-    service_orders = @retrieval.jsondata['collections'].map do |collection|
+    service_orders = @retrieval.collections.map do |collection|
       collection['serviceOptions']['accessMethod'].select { |m| m['type'] == 'service' }
     end.flatten.compact
 
@@ -104,7 +104,7 @@ class DataAccessController < ApplicationController
     render file: "#{Rails.root}/public/403.html", status: :forbidden and return unless user == @retrieval.user
     respond_to do |format|
       format.html
-      format.json { render json: @retrieval.jsondata.merge(id: @retrieval.to_param).to_json }
+      format.json { render json: @retrieval.project.merge(id: @retrieval.to_param).to_json }
     end
   end
 
@@ -143,8 +143,7 @@ class DataAccessController < ApplicationController
         dqs = echo_client.get_data_quality_summary(collection, token)
       end
 
-      access_config = AccessConfiguration.find_by(user: current_user, collection_id: collection)
-      defaults = access_config.service_options if access_config
+      defaults = AccessConfiguration.get_default_options(current_user, collection)
 
       granules = catalog_response.body['feed']['entry']
 
