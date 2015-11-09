@@ -4361,6 +4361,51 @@ http_interactions:
   digest: 741677077c9b9a53f059ae1af88553228f79bd0a
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z&page_size=20&page_num=1&hierarchical_facets=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 09 Nov 2015 19:05:20 GMT
+  digest: 5f53a65d6171c55617674029a6d6e721a6c7707a
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z&page_size=20&page_num=1&hierarchical_facets=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 09 Nov 2015 19:05:17 GMT
+  digest: 20c9e5695d8ce55b136bf282d0c1775387b6d549
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 09 Nov 2015 19:05:14 GMT
+  digest: b81dc00582ac84aa162735dc6c61624abdf7cc6a
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2013-12-01T00%3A00%3A00.000Z%2C&page_size=20&page_num=1&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
