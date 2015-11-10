@@ -65,6 +65,7 @@ describe "Collection keyword searches", reset: false do
 
       context "setting a new keyword search value" do
         before(:all) do
+          wait_for_xhr
           fill_in "keywords", with: "AST_L"
           wait_for_xhr
         end
