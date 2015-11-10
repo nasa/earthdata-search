@@ -4600,4 +4600,121 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 18 Mar 2015 17:20:18 GMT
   digest: 06416dcb93a6fb9ed6f566cf56fd76bf870feaae
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=gov.nasa.earthdata.search.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:12 GMT
+  digest: 709f4ba03151d63f8374b8ad6409a86b3249eb83
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=gov.nasa.earthdata.search.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C1000003579-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:20 GMT
+  digest: d3b3fcf22b22e6d294a4aa2681b028596e4d005b
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=gov.nasa.earthdata.search.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C3878-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:40 GMT
+  digest: 64c83d7f61c139f7d1475c11a9d99c6f8c25b69c
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=gov.nasa.earthdata.search.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:10 GMT
+  digest: 0884eebc96a73860ee0ebc9ee83fe4953cf33d85
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=gov.nasa.earthdata.search.%2A&keyword=C1000003579-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:15 GMT
+  digest: 8538e1173c0288f67e83c5e13e6ff23d047cf04f
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=gov.nasa.earthdata.search.%2A&keyword=C3878-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:38 GMT
+  digest: c7e1ebb03427bc7d51eb1bd91042dfc3eb62dbf9
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=gov.nasa.earthdata.search.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:04 GMT
+  digest: 79ea886bbada85e96dd560c944dfbaa64918d304
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=gov.nasa.earthdata.search.%2A&keyword=C1000003579-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:18 GMT
+  digest: daa52b64898c75e665787ac39f01e4b8184645f0
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=gov.nasa.earthdata.search.%2A&keyword=C3878-LPDAAC_ECS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:36 GMT
+  digest: 6110f922bb9c2c33f4efe94c310ddcb9dda06be8
 recorded_with: VCR 2.6.0

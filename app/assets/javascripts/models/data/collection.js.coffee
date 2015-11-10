@@ -13,7 +13,12 @@ ns.Collection = do (ko
                  extend=jQuery.extend
                  ajax = @edsc.util.xhr.ajax
                  dateUtil = @edsc.util.date
+                 config = @edsc.config
                  ) ->
+
+  openSearchKeyToEndpoint =
+    CWIC: (collection) ->
+      "http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=#{collection.short_name}&clientId=#{config.cmrClientId}"
 
   collections = ko.observableArray()
 
@@ -105,6 +110,8 @@ ns.Collection = do (ko
         if hits?
           result = "#{hits} Granule"
           result += 's' if hits != 1
+      else if @isExternal()
+        result = "External search"
       else
         result = 'Collection only'
       result
@@ -142,6 +149,15 @@ ns.Collection = do (ko
           method: 'post'
           success: (data) ->
             @featured = data
+
+    isExternal: ->
+      @openSearchEndpoint()?
+
+    openSearchEndpoint: ->
+      if @json.tags
+        for [k, v] in @json.tags
+          return openSearchKeyToEndpoint[v]?(this) if k == 'gov.nasa.earthdata.search.opensearch'
+      return null
 
     fromJson: (jsonObj) ->
       @json = jsonObj

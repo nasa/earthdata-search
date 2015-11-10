@@ -4,6 +4,9 @@
       <span class="badge-granule"></span>
       <span class="granule-count" data-bind="text: granule_count"></span>
     </div>
+    <div class="flyout-info" data-bind="if: isExternal()">
+      <span class="cwic-indicator">External</span>
+    </div>
     <span data-bind="text: short_name"></span>
   </div>
   <h4 class="flyout-title" data-bind="text: dataset_id"></h4>
