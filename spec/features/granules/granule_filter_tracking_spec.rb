@@ -26,7 +26,7 @@ describe "Granule filter tracking", reset: false do
         wait_for_xhr
       end
 
-      it 'maintains information on the collection' do
+      it 'maintains information on the collection', intermittent: 1 do
         synchronize do
           has_reference = page.evaluate_script(has_reference_script)
           expect(has_reference).to be_true
@@ -39,7 +39,7 @@ describe "Granule filter tracking", reset: false do
           wait_for_xhr
         end
 
-        it 'restores the original granule filters that had been set' do
+        it 'restores the original granule filters that had been set', intermittent: 1 do
           synchronize do
             has_reference = page.evaluate_script(has_reference_script)
             expect(has_reference).to be_true
