@@ -73,9 +73,10 @@ describe "Expired user token", reset: true do
         page.set_rack_session(refresh_token: 'invalid')
 
         load_page :root
+        wait_for_xhr
       end
 
-      it "sends the user to login", intermittent: 2 do
+      it "sends the user to login", intermittent: 0 do #reset counter after adding the wait.
         expect(page).to have_content "EOSDIS Earthdata Login"
       end
     end
