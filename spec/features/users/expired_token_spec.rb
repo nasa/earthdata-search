@@ -75,7 +75,7 @@ describe "Expired user token", reset: true do
         load_page :root
       end
 
-      it "sends the user to login", intermittent: 1 do
+      it "sends the user to login", intermittent: 2 do
         expect(page).to have_content "EOSDIS Earthdata Login"
       end
     end
