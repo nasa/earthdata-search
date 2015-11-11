@@ -7,13 +7,14 @@ require 'spec_helper'
 describe 'First time user' do
   context 'when saving preferences after viewing the splash screen' do
     before :each do
+      User.destroy_all
       SearchController.any_instance.stub(:get_user_id).and_return('test_user_id')
       SearchController.any_instance.stub(:test_splash_page).and_return(true)
       Capybara.current_session.driver.header 'Referer', 'https://search.sit.earthdata.nasa.gov/'
       visit '/'
     end
 
-    it 'saves the preferences and shows the landing page', intermittent: 2 do
+    it 'saves the preferences and shows the landing page' do
       expect(User.count).to eq(1)
       expect(page).to have_content('Browse Collections')
     end
