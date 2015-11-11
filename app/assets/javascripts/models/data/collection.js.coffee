@@ -18,7 +18,8 @@ ns.Collection = do (ko
 
   openSearchKeyToEndpoint =
     CWIC: (collection) ->
-      "http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=#{collection.short_name}&clientId=#{config.cmrClientId}"
+      short_name = collection.json.short_name
+      "http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=#{short_name}&clientId=#{config.cmrClientId}"
 
   collections = ko.observableArray()
 
@@ -153,6 +154,9 @@ ns.Collection = do (ko
     isExternal: ->
       @openSearchEndpoint()?
 
+    osddUrl: ->
+      @openSearchEndpoint
+
     openSearchEndpoint: ->
       if @json.tags
         for [k, v] in @json.tags
@@ -170,6 +174,11 @@ ns.Collection = do (ko
       @_setObservable('gibs', jsonObj)
       @_setObservable('opendap', jsonObj)
       @_setObservable('modaps', jsonObj)
+      @_setObservable('osdd_url', jsonObj)
+
+      @osdd_url ?= ko.observable(undefined)
+      @osdd_url(@openSearchEndpoint() ? @json.osdd_url ? @osdd_url())
+
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)
 
