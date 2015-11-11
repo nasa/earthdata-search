@@ -110,7 +110,7 @@ describe Echo::ClientMiddleware::Echo10CollectionMiddleware do
     let(:expected_body) do
       {
         'collection' => {
-          "collection_id" => "ASTER Expedited L1A Reconstructed Unprocessed Instrument Data",
+          "dataset_id" => "ASTER Expedited L1A Reconstructed Unprocessed Instrument Data",
           "description" => "Expedited ASTER level-1A data are reconstructed, unprocessed instrument digital counts with radiometric and geometric coefficients included.",
           "short_name" => "AST_L1AE",
           "version_id" => "3",

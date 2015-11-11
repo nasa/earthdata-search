@@ -7,6 +7,19 @@ describe 'Address bar', reset: false do
     URI.parse(current_url).query
   end
 
+  context 'when loading collection details page from search page' do
+    before :all do
+      visit '/search'
+      wait_for_xhr
+      first_collection_result.click_link('View collection details')
+      wait_for_xhr
+    end
+
+    it 'saves "collection-details" in the address bar' do
+      expect(page).to have_path('/search/collection-details')
+    end
+  end
+
   context 'when searching by keywords' do
     before(:all) do
       visit '/search/map'

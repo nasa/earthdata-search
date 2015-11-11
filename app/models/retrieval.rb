@@ -72,6 +72,19 @@ class Retrieval < ActiveRecord::Base
     Array.wrap(self.jsondata['collections'] || self.jsondata['datasets'])
   end
 
+  def source
+    self.jsondata['source']
+  end
+
+  def project
+    self.jsondata.except('datasets').merge('collections' => self.collections)
+  end
+
+  def project=(project_json)
+    datasets = Array.wrap(project_json['collections'] || project_json['datasets'])
+    self.jsondata = project_json.except('collections').merge('datasets' => datasets)
+  end
+
   private
 
   def get_collection_id(id)
@@ -88,10 +101,7 @@ class Retrieval < ActiveRecord::Base
   def update_access_configurations
     self.collections.each do |collection|
       if collection.key?('serviceOptions') && collection.key?('id')
-        config = AccessConfiguration.find_or_initialize_by('collection_id' => collection['id'])
-        config.service_options = collection['serviceOptions']
-        config.user = self.user
-        config.save!
+        AccessConfiguration.set_default_options(self.user, collection['id'], collection['serviceOptions'])
       end
     end
   end

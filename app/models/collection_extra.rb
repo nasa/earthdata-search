@@ -1,4 +1,6 @@
 class CollectionExtra < ActiveRecord::Base
+  self.table_name = "dataset_extras"
+
   validates_presence_of :echo_id
   validates_uniqueness_of :echo_id
 
