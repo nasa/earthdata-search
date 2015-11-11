@@ -4,9 +4,10 @@ let registry = Symbol();
 
 export default class PluginSupport {
   constructor() {
-    this[registry] = {
-      "edsc-plugin-example": new Plugin("file:///Users/pquinn/earthdata/search/edsc/plugins/example/dist/edsc-plugin-example.min.js")
-    };
+    this[registry] = {};
+  }
+  register(name, url) {
+    this[registry][name] = new Plugin(url);
   }
   load(name) {
     this[registry][name].load();

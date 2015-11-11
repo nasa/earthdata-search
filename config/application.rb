@@ -52,10 +52,14 @@ module EarthdataSearchClient
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    config.is_plugin = Proc.new do |path|
+      !%w(.css .map).include?(File.extname(path)) && File.basename(path).start_with?('edsc-plugin.')
+    end
+
     # Precompile application.js, application.css, and any file that's not
-    config.assets.precompile += ['application.js', 'application.css', 'splash.css']
+    config.assets.precompile += ['application.js', 'application.css', 'splash.css', 'search.js', 'data_access.js', 'account.js']
     config.assets.precompile << Proc.new do |path|
-      !%w(.js .css .map).include?(File.extname(path))
+      !%w(.js .css .map).include?(File.extname(path)) || config.is_plugin.call(path)
     end
 
     config.log_tags = [:uuid]
