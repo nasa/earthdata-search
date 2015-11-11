@@ -287,6 +287,8 @@ class CollectionsController < ApplicationController
 
     params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
+    params['include_tags'] = 'gov.nasa.earthdata.search.*'
+
     params
   end
 
