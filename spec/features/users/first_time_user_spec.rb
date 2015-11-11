@@ -13,7 +13,8 @@ describe 'First time user' do
       visit '/'
     end
 
-    it 'saves the preferences and shows the landing page', intermittent: 1 do
+    it 'saves the preferences and shows the landing page', intermittent: 2 do
+      sleep 1 # a wait for User table to clean up.
       expect(User.count).to eq(1)
       expect(page).to have_content('Browse Collections')
     end
