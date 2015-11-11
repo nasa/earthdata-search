@@ -9,10 +9,13 @@ license = fs.readFileSync('./LICENSE')
 
 module.exports = {
   context: __dirname + '/..',
-  entry: "./edsc/search.js",
+  entry: {
+    "edsc-search": "./edsc/search.js",
+    "edsc-plugin.example": "./edsc/plugins/example/src/js/edsc-plugin-example.jsx"
+  },
   output: {
     path: "./edsc/dist",
-    filename: "edsc-search.min.js"
+    filename: "[name].min.js"
   },
   module: {
     loaders: [
@@ -20,6 +23,7 @@ module.exports = {
       { test: /\.less$/, loader: "style!css!less" },
       { test: /\.coffee$/, loader: "coffee" },
       { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee?literate" },
+      { test: /\.jsx$/, exclude: /(node_modules|bower_components)/, loader: 'babel?presets[]=es2015' },
       { test: /\.(gif|png)$/, loader: "url-loader?limit=100000" },
       { test: /\.hbs$/, loader: "handlebars-loader" },
       { test: /\.jpg$/, loader: "file-loader" },

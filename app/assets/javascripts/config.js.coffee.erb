@@ -1,7 +1,14 @@
 # Environment-specific config
-@edsc.config = do (window, env='<%= Rails.env %>') ->
+@edsc.config = do (window, plugin = window.edscplugin, env='<%= Rails.env %>') ->
 
   csrfToken = document.querySelector?('meta[name=csrf-token]')?.content
+
+  <% Rails.application.assets.each_file do |path| %>
+  <% if Rails.configuration.is_plugin.call(path) %>
+  <% name = File.basename(path).gsub(/^edsc-plugin\./, '').gsub(/\.js$/, '') %>
+  plugin.register("<%= name.gsub(/\.min$/, '') %>", "<%= javascript_path(File.basename(path)) %>")
+  <% end %>
+  <% end %>
 
   <% if Rails.env.test? %>
 
