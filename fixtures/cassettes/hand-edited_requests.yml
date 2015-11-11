@@ -295,6 +295,19 @@ http_interactions:
   digest: invalid_but_load_page
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - EDSC
+  recorded_at: Wed, 18 Mar 2015 17:16:41 GMT
+  digest: b3130dad8d7c28b6ec097306b828c84a78a66518
+- request:
+    method: get
     uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request/5000000002756
     body:
       encoding: US-ASCII
