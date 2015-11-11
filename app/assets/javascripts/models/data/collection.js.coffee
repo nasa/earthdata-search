@@ -65,6 +65,7 @@ ns.Collection = do (ko
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
       @granuleDescription = @computed(@_computeGranuleDescription, this, deferEvaluation: true)
+      @osddUrl = @computed(@_computeOsddUrl, this, deferEvaluation: true)
 
       @visible = ko.observable(false)
 
@@ -117,6 +118,9 @@ ns.Collection = do (ko
         result = 'Collection only'
       result
 
+    _computeOsddUrl: ->
+      @openSearchEndpoint() ? @details()?.osdd_url ? @osdd_url
+
     thumbnail: ->
       granule = @browseable_granule
       collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
@@ -154,9 +158,6 @@ ns.Collection = do (ko
     isExternal: ->
       @openSearchEndpoint()?
 
-    osddUrl: ->
-      @openSearchEndpoint
-
     openSearchEndpoint: ->
       if @json.tags
         for [k, v] in @json.tags
@@ -175,9 +176,6 @@ ns.Collection = do (ko
       @_setObservable('opendap', jsonObj)
       @_setObservable('modaps', jsonObj)
       @_setObservable('osdd_url', jsonObj)
-
-      @osdd_url ?= ko.observable(undefined)
-      @osdd_url(@openSearchEndpoint() ? @json.osdd_url ? @osdd_url())
 
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)
