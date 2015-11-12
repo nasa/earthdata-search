@@ -38,7 +38,7 @@ class Retrieval < ActiveRecord::Base
     client = Echo::Client.client_for_environment(env, Rails.configuration.services)
 
     retrieval.collections.each do |collection|
-      params = Rack::Utils.parse_query(collection['params'])
+      params = Rack::Utils.parse_nested_query(collection['params'])
       params.merge!(page_size: 2000, page_num: 1)
 
       access_methods = collection['serviceOptions']['accessMethod']
@@ -52,6 +52,8 @@ class Retrieval < ActiveRecord::Base
                                                 token,
                                                 client)
           method[:order_id] = order_response[:order_id]
+          Rails.logger.info "Dropped granules: #{order_response[:dropped_granules]}"
+          method[:dropped_granules] = order_response[:dropped_granules]
         elsif method['type'] == 'service'
           request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
 

@@ -78,7 +78,22 @@
                  data-method="post"
                  data-confirm="Are you sure you want to remove this order?  This action cannot be undone."
                  rel="nofollow">Cancel</a>
-              <!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: dropped_granules -->
+              <p>The following granules are dropped from this order because the data access method <strong data-bind="text: method_name"></strong> is not supported:</p>
+              <div class="granule-list">
+                <div>
+                  <ul>
+                  <!--ko foreach: dropped_granules-->
+                    <li>
+                      <h5 data-bind="text: producer_granule_id"></h5>
+                      <span data-bind="text: title"></span>
+                    </li>
+                  <!--/ko-->
+                  </ul>
+                </div>
+              </div>
+            <!-- /ko -->
           </div>
         </li>
       </ul>
