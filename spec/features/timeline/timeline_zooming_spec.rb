@@ -27,8 +27,8 @@ describe "Timeline zooming", reset: false do
   end
 
   context "when zooming in on the timeline" do
-    before(:all) { find('.timeline-zoom-in').click }
-    after(:all)  { find('.timeline-zoom-out').click }
+    before(:all) { click_timeline_zoom_in }
+    after(:all)  { click_timeline_zoom_out }
 
     it "shows a new time range with updated intervals" do
       expect(page).to have_timeline_range(month_start, month_end)
@@ -50,8 +50,8 @@ describe "Timeline zooming", reset: false do
     end
 
     context "to hour resolution" do
-      before(:all) { find('.timeline-zoom-in').click }
-      after(:all)  { find('.timeline-zoom-out').click }
+      before(:all) { click_timeline_zoom_in }
+      after(:all)  { click_timeline_zoom_out }
 
       it "disables the zoom-in button" do
         expect(page).to have_selector('.timeline-min-zoom')
@@ -64,9 +64,9 @@ describe "Timeline zooming", reset: false do
   end
 
 
-  context "when zooming out on the timeline" do
-    before(:all) { find('.timeline-zoom-out').click }
-    after(:all) { find('.timeline-zoom-in').click }
+  context "when zooming out on the timeline", pq: true do
+    before(:all) { click_timeline_zoom_out }
+    after(:all) { click_timeline_zoom_in }
 
     it "shows a new time range with updated intervals" do
       expect(page).to have_timeline_range(decade_start, decade_end)
@@ -84,8 +84,8 @@ describe "Timeline zooming", reset: false do
     end
 
     context "to year resolution" do
-      before(:all) { find('.timeline-zoom-out').click }
-      after(:all) { find('.timeline-zoom-in').click }
+      before(:all) { click_timeline_zoom_out }
+      after(:all) { click_timeline_zoom_in }
 
       it "disables the zoom-out button" do
         expect(page).to have_selector('.timeline-max-zoom')
