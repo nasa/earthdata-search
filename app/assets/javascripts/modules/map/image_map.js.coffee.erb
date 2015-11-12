@@ -32,7 +32,7 @@ ns.ImageMap = do (window, L, page=@edsc.page) ->
       # Disable tap handler, if present.
       map.tap.disable() if (map.tap)
 
-      url = window.location.origin + '<%= image_path('plate_carree_earth_scaled.png') %>'
+      url = '<%= image_path('plate_carree_earth_scaled.png') %>'
       L.imageOverlay(url, [[-90, -180], [90, 180]]).addTo(map)
 
       selectedCollection = page.ui.collectionsList.selected()
