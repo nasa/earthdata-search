@@ -43,7 +43,7 @@
     present: -> new Date() - 0
     animateMap: true
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
-    tagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
+    cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
 
   <% else %>
   # Production config
@@ -60,6 +60,6 @@
     present: -> new Date() - 0
     animateMap: true
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
-    tagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
+    cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
 
   <% end %>
