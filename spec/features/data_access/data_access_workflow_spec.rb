@@ -36,7 +36,7 @@ describe "Data Access workflow", reset: false do
       Capybara.reset_sessions!
     end
 
-    it "forces the user to login before showing data access page" do
+    it "forces the user to login before showing data access page", intermittent: 2 do
       expect(page).to have_content('EOSDIS Earthdata Login')
     end
   end
