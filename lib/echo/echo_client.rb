@@ -59,7 +59,7 @@ module Echo
     end
 
     def get_order_information(item_ids, token)
-      post('/echo-rest/order_information.json', options_to_granule_query({catalog_item_id: item_ids}).to_query, token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded'))
+      post('/echo-rest/order_information.json', options_to_item_query({catalog_item_id: item_ids}).to_query, token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded'))
     end
 
     def get_option_definition(id, token)
