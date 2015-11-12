@@ -151,6 +151,7 @@ ns.ProjectList = do (ko
         collectionId = collection.id
         title = collection.dataset_id
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'download'
+          console.log m
           collections.push
             title: title
             downloadPageUrl: "/granules/download.html?project=#{id}&collection=#{collectionId}"
