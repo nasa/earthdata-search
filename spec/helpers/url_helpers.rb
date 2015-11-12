@@ -34,6 +34,8 @@ module Helpers
           params[type.to_s] = spatial(options[type]) if options[type]
         end
 
+        envs = {sit: 'testbed', uat: 'partnertest', ops: 'ops'}
+        params['echo_env'] = envs[options[:env]] if options[:env]
         params['qt'] = temporal(*options[:temporal]) if options[:temporal]
         params['tl'] = "#{options[:timeline].to_i}!4!!" if options[:timeline]
         params['sgd'] = options[:granule_id] if options[:granule_id]

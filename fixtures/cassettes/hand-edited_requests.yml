@@ -65,7 +65,7 @@ http_interactions:
   digest: delete_order
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=gov.nasa.earthdata.search.%2A&include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -80,7 +80,7 @@ http_interactions:
   digest: trigger_500
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=gov.nasa.earthdata.search.%2A&include_facets=true&page_size=20&page_num=1&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -224,7 +224,7 @@ http_interactions:
   digest: invalid_token
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=gov.nasa.earthdata.search.%2A&include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -239,7 +239,7 @@ http_interactions:
   digest: invalid_collections_logged_in
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=gov.nasa.earthdata.search.%2A&include_facets=true&page_size=20&page_num=1&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -254,7 +254,7 @@ http_interactions:
   digest: invalid_collections_logged_in_non_hierarchical
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=gov.nasa.earthdata.search.%2A&include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -267,7 +267,7 @@ http_interactions:
   digest: invalid_collections_logged_out
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=gov.nasa.earthdata.search.%2A&include_facets=true&page_size=20&page_num=1&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -280,7 +280,7 @@ http_interactions:
   digest: invalid_collections_logged_out_non_hierarchical
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=gov.nasa.earthdata.search.%2A&include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
