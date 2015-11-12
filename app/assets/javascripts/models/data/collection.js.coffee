@@ -161,7 +161,7 @@ ns.Collection = do (ko
     openSearchEndpoint: ->
       if @json.tags
         for [k, v] in @json.tags
-          return openSearchKeyToEndpoint[v]?(this) if k == 'gov.nasa.earthdata.search.opensearch'
+          return openSearchKeyToEndpoint[v]?(this) if k == "#{config.cmrTagNamespace}opensearch"
       return null
 
     fromJson: (jsonObj) ->

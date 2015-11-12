@@ -287,7 +287,7 @@ class CollectionsController < ApplicationController
 
     params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
-    params['include_tags'] = 'gov.nasa.earthdata.search.*'
+    params['include_tags'] = "#{Rails.configuration.cmr_tag_namespace}*"
 
     params
   end
