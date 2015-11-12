@@ -83,6 +83,51 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
     body:
       encoding: UTF-8
+      string: '[{"order_item":{"catalog_item_id":"G1046013597-LPDAAC_ECS","quantity":1,"option_selection":{"id":"BA87A7EE-0FE6-03EB-C5F3-3B494726055B","option_definition_name":"AST_07XT","content":"\u003cecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\"\u003e\u003c!--Default distribution
+        method is FTP Pull --\u003e\u003cecs:distribution\u003e\u003cecs:mediatype\u003e\u003cecs:value\u003eFtpPull\u003c/ecs:value\u003e\u003c/ecs:mediatype\u003e\u003cecs:mediaformat\u003e\u003cecs:ftppull-format\u003e\u003cecs:value\u003eFILEFORMAT\u003c/ecs:value\u003e\u003c/ecs:ftppull-format\u003e\u003c/ecs:mediaformat\u003e\u003c/ecs:distribution\u003e\u003cecs:processing\u003e\u003cecs:endpoint\u003ehttp://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway\u003c/ecs:endpoint\u003e\u003cecs:consider-processing-options-in-request-bundling\u003efalse\u003c/ecs:consider-processing-options-in-request-bundling\u003e\u003cecs:max-order-item-size\u003e100\u003c/ecs:max-order-item-size\u003e\u003c/ecs:processing\u003e\u003clpdaac:subsetSpecification\u003e\u003clpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\"\u003eAST_07XT\u003c/lpdaac:productName\u003e\u003clpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\"\u003eASTER On-Demand L2
+        Surface Reflectance VNIR and SWIR Crosstalk-Corrected\u003c/lpdaac:longName\u003e\u003clpdaac:granuleSize
+        criteriaName=\"Granule_size\" criteriaType=\"FIXED\"\u003e0\u003c/lpdaac:granuleSize\u003e\u003clpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\"\u003e\u003clpdaac:fileFormatValue\u003eHDF\u003c/lpdaac:fileFormatValue\u003e\u003c/lpdaac:fileFormat\u003e\u003clpdaac:aerosols
+        criteriaName=\"Aerosols\" criteriaType=\"STRING\"\u003e\u003clpdaac:aerosolsValue\u003eClimatology\u003c/lpdaac:aerosolsValue\u003e\u003c/lpdaac:aerosols\u003e\u003clpdaac:columnOzone
+        criteriaName=\"Column Ozone\" criteriaType=\"STRING\"\u003e\u003clpdaac:columnOzoneValue\u003eOZ2DAILY
+        - NCEP TOVS Daily Ozone\u003c/lpdaac:columnOzoneValue\u003e\u003c/lpdaac:columnOzone\u003e\u003clpdaac:moistureTemperaturePressure
+        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\"\u003e\u003clpdaac:moistureTemperaturePressureValue\u003eGDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg\u003c/lpdaac:moistureTemperaturePressureValue\u003e\u003c/lpdaac:moistureTemperaturePressure\u003e\u003c/lpdaac:subsetSpecification\u003e\u003c/ecs:options\u003e"}}},{"order_item":{"catalog_item_id":"G1046013227-LPDAAC_ECS","quantity":1,"option_selection":{"id":"BA87A7EE-0FE6-03EB-C5F3-3B494726055B","option_definition_name":"AST_07XT","content":"\u003cecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\"\u003e\u003c!--Default distribution
+        method is FTP Pull --\u003e\u003cecs:distribution\u003e\u003cecs:mediatype\u003e\u003cecs:value\u003eFtpPull\u003c/ecs:value\u003e\u003c/ecs:mediatype\u003e\u003cecs:mediaformat\u003e\u003cecs:ftppull-format\u003e\u003cecs:value\u003eFILEFORMAT\u003c/ecs:value\u003e\u003c/ecs:ftppull-format\u003e\u003c/ecs:mediaformat\u003e\u003c/ecs:distribution\u003e\u003cecs:processing\u003e\u003cecs:endpoint\u003ehttp://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway\u003c/ecs:endpoint\u003e\u003cecs:consider-processing-options-in-request-bundling\u003efalse\u003c/ecs:consider-processing-options-in-request-bundling\u003e\u003cecs:max-order-item-size\u003e100\u003c/ecs:max-order-item-size\u003e\u003c/ecs:processing\u003e\u003clpdaac:subsetSpecification\u003e\u003clpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\"\u003eAST_07XT\u003c/lpdaac:productName\u003e\u003clpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\"\u003eASTER On-Demand L2
+        Surface Reflectance VNIR and SWIR Crosstalk-Corrected\u003c/lpdaac:longName\u003e\u003clpdaac:granuleSize
+        criteriaName=\"Granule_size\" criteriaType=\"FIXED\"\u003e0\u003c/lpdaac:granuleSize\u003e\u003clpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\"\u003e\u003clpdaac:fileFormatValue\u003eHDF\u003c/lpdaac:fileFormatValue\u003e\u003c/lpdaac:fileFormat\u003e\u003clpdaac:aerosols
+        criteriaName=\"Aerosols\" criteriaType=\"STRING\"\u003e\u003clpdaac:aerosolsValue\u003eClimatology\u003c/lpdaac:aerosolsValue\u003e\u003c/lpdaac:aerosols\u003e\u003clpdaac:columnOzone
+        criteriaName=\"Column Ozone\" criteriaType=\"STRING\"\u003e\u003clpdaac:columnOzoneValue\u003eOZ2DAILY
+        - NCEP TOVS Daily Ozone\u003c/lpdaac:columnOzoneValue\u003e\u003c/lpdaac:columnOzone\u003e\u003clpdaac:moistureTemperaturePressure
+        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\"\u003e\u003clpdaac:moistureTemperaturePressureValue\u003eGDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg\u003c/lpdaac:moistureTemperaturePressureValue\u003e\u003c/lpdaac:moistureTemperaturePressure\u003e\u003c/lpdaac:subsetSpecification\u003e\u003c/ecs:options\u003e"}}}]'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 12 Nov 2015 16:47:06 GMT
+  digest: 31af7ba74170cc2541b61a8c978886bc1d3c38cc
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
+    body:
+      encoding: UTF-8
       string: '[{"order_item":{"catalog_item_id":"G179098142-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098143-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098144-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098245-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098246-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098247-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098248-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098249-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098250-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098251-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098252-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098253-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098254-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098255-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179098256-ORNL_DAAC","quantity":1}}]'
     headers:
       User-Agent:

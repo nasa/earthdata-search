@@ -785,6 +785,26 @@ d2488ecacdee111ddc95ad253e3ac42abfbcd4ba:
       encoding: UTF-8
       string: "[]"
     http_version: 
+a3d70f79d0978348a4805bf6fa331a04523501b0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 12 Nov 2015 16:46:43 GMT
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 a82796837be19c05101c2c2848686438e546e04e:
   response:
     status:

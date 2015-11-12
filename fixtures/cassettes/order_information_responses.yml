@@ -804,6 +804,39 @@ b13be9352bccecc4831ee2edfd520a03caa67d21:
         Order Option"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1001085209-NSIDC_ECS","location":"http://api-vip.ops.echo.nasa.gov/catalog-rest/echo_catalog/granules/G1001085209-NSIDC_ECS","name":"G1001085209-NSIDC_ECS"},"option_definition_refs":[{"id":"19AFC933-5015-F5D6-0D38-C2414CCB520F","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/19AFC933-5015-F5D6-0D38-C2414CCB520F","name":"M*D29P1D
         Order Option"}],"orderable":true,"price":0.0}}]'
     http_version: 
+af0e7a6815a1d7cedb7dc420320d6524234dd42d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"760dbb5b675abbd9959d5405bb3e5047"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOTBkNTQ2MGU0MjM1ZDNhZjRiY2M5NzNlOWJjMTc1Yzg%3D--02c1b95646e93ca5069025affa8e01264511998d;
+        path=/; HttpOnly
+      x-runtime:
+      - '2.472000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:53 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"order_information":{"catalog_item_ref":{"id":"G1046013227-LPDAAC_ECS","location":"http://api-vip.ops.echo.nasa.gov/catalog-rest/echo_catalog/granules/G1046013227-LPDAAC_ECS","name":"G1046013227-LPDAAC_ECS"},"option_definition_refs":[{"id":"C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","name":"AST_L1A"},{"id":"96DBA166-0E46-8F4E-9D52-2AC4685268E7","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/96DBA166-0E46-8F4E-9D52-2AC4685268E7","name":"AST_L1B"},{"id":"82D38BDE-E319-A530-8770-07A7A6F515AC","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/82D38BDE-E319-A530-8770-07A7A6F515AC","name":"AST_05"},{"id":"7E65A0BF-6A43-1891-1A2E-D6D8CBF01768","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/7E65A0BF-6A43-1891-1A2E-D6D8CBF01768","name":"AST_08"},{"id":"E441136C-03AB-2A45-B698-7A62659FD463","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/E441136C-03AB-2A45-B698-7A62659FD463","name":"AST_09T"}],"orderable":true,"price":0.0}},{"order_information":{"catalog_item_ref":{"id":"G1046013597-LPDAAC_ECS","location":"http://api-vip.ops.echo.nasa.gov/catalog-rest/echo_catalog/granules/G1046013597-LPDAAC_ECS","name":"G1046013597-LPDAAC_ECS"},"option_definition_refs":[{"id":"E1032659-E26F-226C-C668-4B5E3A7B5EB0","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/E1032659-E26F-226C-C668-4B5E3A7B5EB0","name":"AST14DMO"},{"id":"9703E1B6-0334-2376-4BB2-A90C769D5D2B","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/9703E1B6-0334-2376-4BB2-A90C769D5D2B","name":"AST14DEM"},{"id":"67B936C6-25C0-70B0-74DE-DB6D398AC3D9","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/67B936C6-25C0-70B0-74DE-DB6D398AC3D9","name":"AST14OTH"},{"id":"C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","name":"AST_L1A"},{"id":"96DBA166-0E46-8F4E-9D52-2AC4685268E7","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/96DBA166-0E46-8F4E-9D52-2AC4685268E7","name":"AST_L1B"},{"id":"A876D145-3D53-D9FF-985B-EFE14FC966F0","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/A876D145-3D53-D9FF-985B-EFE14FC966F0","name":"AST_09"},{"id":"88537F09-C291-396F-91DC-96ED6B1F3318","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/88537F09-C291-396F-91DC-96ED6B1F3318","name":"AST_09XT"},{"id":"BA87A7EE-0FE6-03EB-C5F3-3B494726055B","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/BA87A7EE-0FE6-03EB-C5F3-3B494726055B","name":"AST_07XT"},{"id":"F56BCDCE-BA50-059C-6E3F-ED793ACDCD41","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/F56BCDCE-BA50-059C-6E3F-ED793ACDCD41","name":"AST_07"},{"id":"82D38BDE-E319-A530-8770-07A7A6F515AC","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/82D38BDE-E319-A530-8770-07A7A6F515AC","name":"AST_05"},{"id":"7E65A0BF-6A43-1891-1A2E-D6D8CBF01768","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/7E65A0BF-6A43-1891-1A2E-D6D8CBF01768","name":"AST_08"},{"id":"E441136C-03AB-2A45-B698-7A62659FD463","location":"https://api.echo.nasa.gov:443/echo-rest/option_definitions/E441136C-03AB-2A45-B698-7A62659FD463","name":"AST_09T"}],"orderable":true,"price":0.0}}]'
+    http_version: 
 98eaca6c2f246cf7f49d08b51afe2595eaf119a0:
   response:
     status:
