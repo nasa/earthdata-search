@@ -9,6 +9,16 @@ module Helpers
       page.execute_script("$('#timeline').timeline('panToTime', #{time.to_i * 1000})")
     end
 
+    def click_timeline_zoom_in
+      find('.timeline-zoom-in').click
+      wait_for_xhr
+    end
+
+    def click_timeline_zoom_out
+      find('.timeline-zoom-out').click
+      wait_for_xhr
+    end
+
     def click_timeline_date(text, subtext=nil)
       if subtext.nil?
         page.find('.timeline-date-label text', text: text).click
