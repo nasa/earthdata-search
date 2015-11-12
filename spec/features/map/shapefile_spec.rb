@@ -98,11 +98,11 @@ describe "Shapefile search", reset: false, wait: 30 do
       clear_spatial
     end
 
-    it "sets a search constraint containing a reduced number of points" do
+    it "sets a search constraint containing a reduced number of points", intermittent: 1 do
       expect(MapUtil.spatial(page).split(':').size).to be <= 51
     end
 
-    it "displays a help message explaining the point reduction" do
+    it "displays a help message explaining the point reduction", intermittent: 1 do
       expect(page).to have_popover('Shape file has too many points')
     end
   end

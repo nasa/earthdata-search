@@ -57,7 +57,7 @@
         ui.collectionsList.serialized(params)
       else
         @_mapParams = params.m
-        @_dsListParams = {g: params.g}
+        @_collectionListParams = {g: params.g}
 
       if ui.granuleTimeline
         ui.granuleTimeline?.serialized(params.tl)
@@ -93,7 +93,7 @@
 
       @page.map.serialized(@_mapParams) if @_mapParams
       @page.ui.granuleTimeline.serialized(@_timelineParams) if @_timelineParams
-      @page.ui.collectionsList.serialized(@_dsListParams) if @_dsListParams?
+      @page.ui.collectionsList.serialized(@_collectionListParams) if @_collectionListParams?
 
       @isDomLoaded(true)
 
@@ -200,12 +200,12 @@
 
       state.children = children
 
-      dsList = @page.ui.collectionsList
-      dsList.state(collectionFocused, collectionSelected)
+      collectionList = @page.ui.collectionsList
+      collectionList.state(collectionFocused, collectionSelected)
       if granuleFocused
-        subscription = dsList.focused.subscribe (value) ->
+        subscription = collectionList.focused.subscribe (value) ->
           if value?
-            dsList.focused().state(granuleSelected)
+            collectionList.focused().state(granuleSelected)
             subscription.dispose()
       @overlayState(state)
 
@@ -251,6 +251,8 @@
       if @_isValid(path, serialized)
         changed = urlUtil.saveState(path, serialized, !@historyChanged, @page.workspaceNameField.peek())
         @historyChanged = true if changed
+        if path == '/search/collection-details' || path == '/search/granules' || path == '/search/project'
+          @page.collections.isRelevant(true)
 
     _textQuery: (serialized) ->
       (serialized.free_text || '') + (serialized.placename || '') + (serialized.q || '')

@@ -8,6 +8,7 @@ describe "Granule search filters", reset: false do
 
     # Labs parameter enables additional attribute searching
     load_page :search, project: ['C14758250-LPDAAC_ECS'], view: :project, labs: true
+    wait_for_xhr
 
     temporal_start_date = DateTime.new(1999, 12, 1, 0, 0, 0, '+0')
     temporal_stop_date = DateTime.new(2015, 1, 1, 0, 0, 0, '+0')
@@ -18,7 +19,7 @@ describe "Granule search filters", reset: false do
 
     before_granule_count = 0
     synchronize do
-      number_granules = expect(page.text).to match /\d+ Granules/
+      number_granules = expect(find('#project-collections-list').text).to match /\d+ Granules/
       before_granule_count = number_granules.to_s.split(" ")[0].to_i
     end
   end
@@ -35,35 +36,35 @@ describe "Granule search filters", reset: false do
     after :each do
       first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
     end
 
     it "selecting day returns day granules" do
       select 'Day only', from: "day-night-select"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "selecting night returns night granules" do
       select 'Night only', from: "day-night-select"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "selecting both returns both day and night granules" do
       select 'Both day and night', from: "day-night-select"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "clicking the clear button selects Anytime" do
       select 'Day only', from: "day-night-select"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
 
       first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
 
       expect(page).to have_select("day-night-select", selected: "Anytime")
       click_button "granule-filters-submit"
@@ -74,37 +75,36 @@ describe "Granule search filters", reset: false do
     after :each do
       first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
     end
 
     it "filters with both min and max" do
       fill_in "Minimum:", with: "2.5"
       fill_in "Maximum:", with: "5.0"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "filters with only min" do
       fill_in "Minimum:", with: "2.5"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "filters with only max" do
       fill_in "Maximum:", with: "5.0"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "clicking the clear button clears minimum and maximum" do
       fill_in "Minimum:", with: "2.5"
       fill_in "Maximum:", with: "5.0"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
-
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
       first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
 
       expect(page).to have_field("Minimum", with: "")
       expect(page).to have_field("Maximum", with: "")
@@ -147,30 +147,30 @@ describe "Granule search filters", reset: false do
     after :each do
       first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
     end
 
     it "selecting browse only loads granules with browse images" do
       check "Find only granules that have browse images."
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "selecting online only loads downloadable granules" do
       check "Find only granules that are available online."
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "clicking the clear button unchecks data access options" do
       check "Find only granules that have browse images."
       check "Find only granules that are available online."
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
 
       first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
 
       expect(page).to have_unchecked_field("Find only granules that have browse images.")
       expect(page).to have_unchecked_field("Find only granules that are available online.")
@@ -182,7 +182,7 @@ describe "Granule search filters", reset: false do
     after :each do
       first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
     end
 
     context "with single granule id field" do
@@ -190,18 +190,18 @@ describe "Granule search filters", reset: false do
         choose "Search by Granule UR"
         fill_in "granule_id", with: "%2006227720%"
         click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
+        expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
       end
 
       it "clicking the clear button clears granule id field" do
         choose "Search by Granule UR"
         fill_in "granule_id", with: "%2006227720%"
         click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
+        expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
 
         first_project_collection.click_link "Show granule filters"
         click_button "granule-filters-clear"
-        expect(page).to reset_granules_to(before_granule_count)
+        expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
 
         expect(page).to have_field("granule_id", with: "")
         click_button "granule-filters-submit"
@@ -217,25 +217,25 @@ describe "Granule search filters", reset: false do
         choose "Search by Granule UR"
         fill_in "granule_id_field", with: "%2006227720%"
         click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
+        expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
       end
 
       it "selecting Local Granule ID filters granules" do
         choose "Search by Local Granule ID"
         fill_in "granule_id_field", with: "%03232002054831%"
         click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
+        expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
       end
 
       it "clicking the clear button clears granule id textarea" do
         choose "Search by Granule UR"
         fill_in "granule_id_field", with: "%2006227720%"
         click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
+        expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
 
         first_project_collection.click_link "Show granule filters"
         click_button "granule-filters-clear"
-        expect(page).to reset_granules_to(before_granule_count)
+        expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
 
         expect(page).to have_field("granule_id_field", with: "")
         click_button "granule-filters-submit"
@@ -300,7 +300,7 @@ describe "Granule search filters", reset: false do
       first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
       js_uncheck_recurring 'granule'
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
     end
 
     it "selecting temporal range filters granules" do
@@ -308,7 +308,7 @@ describe "Granule search filters", reset: false do
       fill_in "End", with: "2013-12-31 00:00:00\t"
       js_click_apply ".master-overlay-content"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "selecting temporal recurring filters granules" do
@@ -319,7 +319,7 @@ describe "Granule search filters", reset: false do
       page.execute_script(script)
       js_click_apply ".master-overlay-content"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     it "clicking the clear button clears temporal fields" do
@@ -327,11 +327,11 @@ describe "Granule search filters", reset: false do
       fill_in "End", with: "2013-12-31 00:00:00\t"
       js_click_apply ".master-overlay-content"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
 
       first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
 
       expect(page).to have_field("Start", with: "")
       expect(page).to have_field("End", with: "")
@@ -353,7 +353,7 @@ describe "Granule search filters", reset: false do
     end
 
     it "filters granules using the additional attribute values" do
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(find('#project-collections-list')).to filter_granules_from(before_granule_count)
     end
 
     context "when clearing the attribute search" do
@@ -367,7 +367,7 @@ describe "Granule search filters", reset: false do
       end
 
       it "resets the granule search" do
-        expect(page).to reset_granules_to(before_granule_count)
+        expect(find('#project-collections-list')).to reset_granules_to(before_granule_count)
       end
     end
   end
