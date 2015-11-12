@@ -87,36 +87,6 @@
       encoding: UTF-8
       string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
     http_version: 
-3d267502bdbd47cf5a2c56ba24241a0d7b9c36cf:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"dc8c2f79641fd38ed6282152ce64218d"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '2.894000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 12 Nov 2015 16:13:33 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D","name":"ASTER_L1A_L1B"}}]'
-    http_version: 
 b55f66c71304053b265677c811e48a73a407254c:
   response:
     status:
@@ -443,44 +413,6 @@ c21776d11745f862856a82e0962cd12be5d2d95c:
           <name>MODIS</name>
           <updated_at type="datetime">2011-01-20T13:22:28Z</updated_at>
           <provider_id>LAADS</provider_id>
-        </data_quality_summary_definition>
-    http_version: 
-530d616307ac04cced5e780a30277c9d6463a9f0:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"83087cc3c97613d0abb6e9970c33cab6"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '1.141000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 12 Nov 2015 16:13:34 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <data_quality_summary_definition>
-          <id>6BA6DB2C-29E8-03DF-DCEB-9CBC2B70920D</id>
-          <summary>&lt;p&gt;The LP DAAC provides general access to all archived ASTER L1B scenes/granules over the US and US Territories, ASTER L1A &amp;amp; L1B Expedited products, and the ASTER Global Digital Elevation model at no-cost.&amp;nbsp; The on-demand products, such as the Level 1A, The higher-level products and L1B over international areas of interest are available only to approved users via an application process. More information on the application process and qualifications is available on the &lt;a href="https://lpdaac.usgs.gov/products/aster_policies" target="_blank"&gt;ASTER Policies Page&lt;/a&gt; under the heading Data Access for NASA Approved Users.&amp;nbsp; Otherwise, the on-demand data products are available through &lt;a href="http://ims.aster.ersdac.jspacesystems.or.jp/" target="_blank"&gt;Japan's ERSDAC WWW IMS&lt;/a&gt; interface at a cost. &lt;br /&gt;Please contact &lt;a href="https://lpdaac.usgs.gov/customer_service" target="_blank"&gt;LP DAAC User Services&lt;/a&gt; for additional information.&lt;br /&gt;&amp;nbsp; &lt;br /&gt;ASTER DATA PRODUCTS: &lt;br /&gt;-------------------- &lt;br /&gt;&amp;nbsp; &lt;br /&gt;ASTER data products are all validated. Before using any ASTER data product, the appropriate Product Release Notes as well as the metadata contained within the granule should be&amp;nbsp; consulted. &lt;br /&gt;Release Notes for each product may be found at:&amp;nbsp; &lt;br /&gt;&lt;a href="http://asterweb.jpl.nasa.gov/data_products.asp" target="_blank"&gt;http://asterweb.jpl.nasa.gov/data_products.asp&lt;/a&gt; &lt;br /&gt;&amp;nbsp;&lt;br /&gt;IMPORTANT: Before placing your order, please review the browse image for cloud cover by clicking on the Info (i) icon in the granule results listing.&amp;nbsp; The cloud cover amount shown may occasionally be inaccurate due to discrepancies in the cloud cover calculations.&lt;/p&gt;</summary>
-          <name>ASTER_L1A_L1B</name>
-          <updated_at type="datetime">2013-02-08T18:35:00Z</updated_at>
-          <provider_id>LPDAAC_ECS</provider_id>
         </data_quality_summary_definition>
     http_version: 
 efc63ff63a18ff2f17a1d16ae26052e1530e437e:
