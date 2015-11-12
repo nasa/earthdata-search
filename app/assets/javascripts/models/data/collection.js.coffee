@@ -18,7 +18,8 @@ ns.Collection = do (ko
 
   openSearchKeyToEndpoint =
     CWIC: (collection) ->
-      "http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=#{collection.short_name}&clientId=#{config.cmrClientId}"
+      short_name = collection.json.short_name
+      "http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=#{short_name}&clientId=#{config.cmrClientId}"
 
   collections = ko.observableArray()
 
@@ -64,6 +65,7 @@ ns.Collection = do (ko
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
       @granuleDescription = @computed(@_computeGranuleDescription, this, deferEvaluation: true)
+      @osddUrl = @computed(@_computeOsddUrl, this, deferEvaluation: true)
 
       @visible = ko.observable(false)
 
@@ -116,6 +118,9 @@ ns.Collection = do (ko
         result = 'Collection only'
       result
 
+    _computeOsddUrl: ->
+      @openSearchEndpoint() ? @details()?.osdd_url ? @osdd_url
+
     thumbnail: ->
       granule = @browseable_granule
       collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
@@ -156,7 +161,7 @@ ns.Collection = do (ko
     openSearchEndpoint: ->
       if @json.tags
         for [k, v] in @json.tags
-          return openSearchKeyToEndpoint[v]?(this) if k == 'gov.nasa.earthdata.search.opensearch'
+          return openSearchKeyToEndpoint[v]?(this) if k == "#{config.cmrTagNamespace}opensearch"
       return null
 
     fromJson: (jsonObj) ->
@@ -172,6 +177,8 @@ ns.Collection = do (ko
       @_setObservable('gibs', jsonObj)
       @_setObservable('opendap', jsonObj)
       @_setObservable('modaps', jsonObj)
+      @_setObservable('osdd_url', jsonObj)
+
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)
 

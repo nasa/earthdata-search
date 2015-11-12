@@ -72,8 +72,8 @@
               <a class="endpoint-label" data-bind="attr: {href: modaps().get_capabilities}" target="_blank">MODAPS WCS</a>
               <!-- /ko -->
 
-              <!-- ko if: $parent.osdd_url -->
-              <a class="endpoint-label" data-bind="attr: { href: $parent.osdd_url }" target="_blank">OSDD</a>
+              <!-- ko if: osddUrl() -->
+              <a class="endpoint-label" data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a>
               <!-- /ko -->
             <!-- /ko -->
             </dd>

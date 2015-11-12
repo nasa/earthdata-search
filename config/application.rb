@@ -100,5 +100,6 @@ module EarthdataSearchClient
     config.echo_env = 'ops'
     services = config.services
     config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
+    config.cmr_tag_namespace = ENV['cmr_tag_namespace'] || 'edsc.'
   end
 end
