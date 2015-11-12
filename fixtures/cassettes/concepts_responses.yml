@@ -1175,7 +1175,32 @@ a8625406c735635e8f0d54555083fa434ca22391:
       - '166'
     body:
       encoding: UTF-8
-      string: "<Collection><ShortName>ASTGTM</ShortName><VersionId>1</VersionId><InsertTime>2009-04-21T12:19:34.810Z</InsertTime><LastUpdate>2009-08-19T13:38:57.220Z</LastUpdate><LongName>ASTER Global Digital Elevation Model</LongName><DataSetId>ASTER Global Digital Elevation Model V001</DataSetId><Description>ASTER Global Digital Elevation Model</Description><Orderable>false</Orderable><Visible>true</Visible><RevisionDate>2009-06-18T00:00:00Z</RevisionDate><SuggestedUsage>Science Research</SuggestedUsage><ProcessingCenter>JPL</ProcessingCenter><ProcessingLevelId>3</ProcessingLevelId><ProcessingLevelDescription>GRID</ProcessingLevelDescription><ArchiveCenter>LPDAAC</ArchiveCenter><VersionDescription>One time global production</VersionDescription><CitationForExternalPublication>The ASTER Global DEM was developed jointly by the Ministry of Economy, Trade and Industry of Japan (METI) and the United States National Aeronautics and Space Administration (NASA).</CitationForExternalPublication><CollectionState>Completed</CollectionState><MaintenanceAndUpdateFrequency>None Planned</MaintenanceAndUpdateFrequency><Temporal><TimeType>UTC</TimeType><DateType>Gregorian</DateType><TemporalRangeType>Continuous Range</TemporalRangeType><PrecisionOfSeconds>0</PrecisionOfSeconds><EndsAtPresentFlag>false</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>1999-12-18T00:00:00Z</BeginningDateTime><EndingDateTime>2008-06-30T23:59:59Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>Archive</Role><HoursOfService>M-F, 8am to 4pm. Central Time</HoursOfService><Instructions>None</Instructions><OrganizationName>LP DAAC User Services</OrganizationName><OrganizationAddresses><Address><StreetAddress>U.S. Geological Survey, EROS Data Center</StreetAddress><City>Sioux Falls</City><StateProvince>South Dakota</StateProvince><PostalCode>57198</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>605-594-6116</Number><Type>phone</Type></Phone><Phone><Number>605-594-6963</Number><Type>fax</Type></Phone></OrganizationPhones><OrganizationEmails><Email>lpdaac@eos.nasa.gov</Email></OrganizationEmails></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>TOPOGRAPHY</TermKeyword><VariableLevel1Keyword><Value>TERRAIN ELEVATION</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>TOPOGRAPHY</TermKeyword><VariableLevel1Keyword><Value>TOPOGRAPHICAL RELIEF</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Terra</ShortName><LongName>First EOS Polar Orbiting Satellite, 10:30 AM Descending Equator Crossing</LongName><Type>Spacecraft</Type><Instruments><Instrument><ShortName>ASTER</ShortName><LongName>Advanced Spaceborne Thermal Emission and Reflection Radiometer</LongName><Technique>Imaging Radiometry</Technique><Sensors><Sensor><ShortName>TIR</ShortName><LongName>Thermal Infrared</LongName><Technique>Imaging Radiometry</Technique></Sensor><Sensor><ShortName>VNIR</ShortName><LongName>Visible Near Infrared</LongName><Technique>Imaging Radiometry</Technique></Sensor><Sensor><ShortName>SWIR</ShortName><LongName>Shortwave Infrared</LongName><Technique>Imaging Radiometry</Technique></Sensor></Sensors><OperationModes><OperationMode>Calibration</OperationMode><OperationMode>Normal</OperationMode></OperationModes></Instrument></Instruments></Platform></Platforms><CSDTDescriptions><CSDTDescription><PrimaryCSDT>Structured Grid</PrimaryCSDT><Implementation>GeoTIFF</Implementation></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>https://lpdaac.usgs.gov/lpdaac/products/aster_product_table</URL><Description>Documents page for LP DAAC ASTER Products.</Description><Type>MiscInformation</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>ASTGTM1</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
+      string: "<Collection><ShortName>ASTGTM</ShortName><VersionId>1</VersionId><InsertTime>2009-04-21T12:19:34.810Z</InsertTime><LastUpdate>2009-08-19T13:38:57.220Z</LastUpdate><LongName>ASTER
+        Global Digital Elevation Model</LongName><DataSetId>ASTER Global Digital Elevation
+        Model V001</DataSetId><Description>ASTER Global Digital Elevation Model</Description><Orderable>false</Orderable><Visible>true</Visible><RevisionDate>2009-06-18T00:00:00Z</RevisionDate><SuggestedUsage>Science
+        Research</SuggestedUsage><ProcessingCenter>JPL</ProcessingCenter><ProcessingLevelId>3</ProcessingLevelId><ProcessingLevelDescription>GRID</ProcessingLevelDescription><ArchiveCenter>LPDAAC</ArchiveCenter><VersionDescription>One
+        time global production</VersionDescription><CitationForExternalPublication>The
+        ASTER Global DEM was developed jointly by the Ministry of Economy, Trade and
+        Industry of Japan (METI) and the United States National Aeronautics and Space
+        Administration (NASA).</CitationForExternalPublication><CollectionState>Completed</CollectionState><MaintenanceAndUpdateFrequency>None
+        Planned</MaintenanceAndUpdateFrequency><Temporal><TimeType>UTC</TimeType><DateType>Gregorian</DateType><TemporalRangeType>Continuous
+        Range</TemporalRangeType><PrecisionOfSeconds>0</PrecisionOfSeconds><EndsAtPresentFlag>false</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>1999-12-18T00:00:00Z</BeginningDateTime><EndingDateTime>2008-06-30T23:59:59Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>Archive</Role><HoursOfService>M-F,
+        8am to 4pm. Central Time</HoursOfService><Instructions>None</Instructions><OrganizationName>LP
+        DAAC User Services</OrganizationName><OrganizationAddresses><Address><StreetAddress>U.S.
+        Geological Survey, EROS Data Center</StreetAddress><City>Sioux Falls</City><StateProvince>South
+        Dakota</StateProvince><PostalCode>57198</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>605-594-6116</Number><Type>phone</Type></Phone><Phone><Number>605-594-6963</Number><Type>fax</Type></Phone></OrganizationPhones><OrganizationEmails><Email>lpdaac@eos.nasa.gov</Email></OrganizationEmails></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>TOPOGRAPHY</TermKeyword><VariableLevel1Keyword><Value>TERRAIN
+        ELEVATION</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>TOPOGRAPHY</TermKeyword><VariableLevel1Keyword><Value>TOPOGRAPHICAL
+        RELIEF</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Terra</ShortName><LongName>First
+        EOS Polar Orbiting Satellite, 10:30 AM Descending Equator Crossing</LongName><Type>Spacecraft</Type><Instruments><Instrument><ShortName>ASTER</ShortName><LongName>Advanced
+        Spaceborne Thermal Emission and Reflection Radiometer</LongName><Technique>Imaging
+        Radiometry</Technique><Sensors><Sensor><ShortName>TIR</ShortName><LongName>Thermal
+        Infrared</LongName><Technique>Imaging Radiometry</Technique></Sensor><Sensor><ShortName>VNIR</ShortName><LongName>Visible
+        Near Infrared</LongName><Technique>Imaging Radiometry</Technique></Sensor><Sensor><ShortName>SWIR</ShortName><LongName>Shortwave
+        Infrared</LongName><Technique>Imaging Radiometry</Technique></Sensor></Sensors><OperationModes><OperationMode>Calibration</OperationMode><OperationMode>Normal</OperationMode></OperationModes></Instrument></Instruments></Platform></Platforms><CSDTDescriptions><CSDTDescription><PrimaryCSDT>Structured
+        Grid</PrimaryCSDT><Implementation>GeoTIFF</Implementation></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>https://lpdaac.usgs.gov/lpdaac/products/aster_product_table</URL><Description>Documents
+        page for LP DAAC ASTER Products.</Description><Type>MiscInformation</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>ASTGTM1</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
     http_version: 
 85892f8c99e8741c752c85cba65ba582ef91ac45:
   response:
@@ -1221,4 +1246,40 @@ a8625406c735635e8f0d54555083fa434ca22391:
         \         <URLDescription>USGS 15 minute stream flow data for Kings Creek
         on the Konza Prairie</URLDescription>\n        </OnlineAccessURL>\n      </OnlineAccessURLs>\n
         \     <Orderable>false</Orderable>\n      <DataFormat>txt</DataFormat>\n    </Granule>"
+    http_version: 
+013c6817f5992501315f8a22d003da836cd8de71:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 11 Nov 2015 18:40:22 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>3DIMG_L2P_IRW</ShortName><VersionId></VersionId><InsertTime>2014-07-15T00:00:00.000Z</InsertTime><LastUpdate>2014-10-01T00:00:00.000Z</LastUpdate><LongName>INSAT-3D
+        Imager Level-2P IR WINDS</LongName><DataSetId>INSAT-3D Imager Level-2P IR
+        WINDS</DataSetId><Description>Suitable tracers are identified in TIR1 band
+        imagery and tracked in subsequent half-hourly imageries to determine cloud
+        motion vector</Description><Orderable>true</Orderable><Visible>true</Visible><SuggestedUsage>This
+        data set from  INSAT-3D Imager (optical radiometer) contains Atmospheric motion
+        vectors derived from TIR-1 channel, this data set can be used for Atmospheric
+        Studies and is also used in NWP Models.</SuggestedUsage><CollectionState>In
+        Work</CollectionState><TemporalKeywords><Keyword>30min</Keyword></TemporalKeywords><Temporal><RangeDateTime><BeginningDateTime>2013-10-01T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>TECHNICAL
+        CONTACT</Role><OrganizationEmails><Email>nitant@sac.isro.gov.in</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>NITANT</FirstName><LastName>DUBE</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        WINDS</TermKeyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>INSAT-3D</ShortName><LongName></LongName><Type>Not
+        Specified</Type></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-05-21
+        15:54:37</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>IMDPS</ShortName><LongName>INSAT
+        3D Meteorological Data Processing System (IMDPS)</LongName></Campaign><Campaign><ShortName>CWIC</ShortName><LongName>CEOS
+        WGISS Integrated Catalog</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>www.mosdac.gov.in</URL><Type>USER
+        SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>20</WestBoundingCoordinate><NorthBoundingCoordinate>50</NorthBoundingCoordinate><EastBoundingCoordinate>130</EastBoundingCoordinate><SouthBoundingCoordinate>-50</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 

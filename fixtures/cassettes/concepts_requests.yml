@@ -145,4 +145,17 @@ http_interactions:
       - EDSC
   recorded_at: Wed, 21 Jan 2015 13:53:44 GMT
   digest: 85892f8c99e8741c752c85cba65ba582ef91ac45
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000003579-GCMDTEST.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 11 Nov 2015 18:40:22 GMT
+  digest: 013c6817f5992501315f8a22d003da836cd8de71
 recorded_with: VCR 2.6.0

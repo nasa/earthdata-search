@@ -23,6 +23,7 @@
     present: -> Date.UTC(2014, 2, 1)
     animateMap: false
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
+    cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
 
   <% elsif Rails.env.development? %>
 
@@ -42,6 +43,7 @@
     present: -> new Date() - 0
     animateMap: true
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
+    cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
 
   <% else %>
   # Production config
@@ -58,5 +60,6 @@
     present: -> new Date() - 0
     animateMap: true
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
+    cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
 
   <% end %>
