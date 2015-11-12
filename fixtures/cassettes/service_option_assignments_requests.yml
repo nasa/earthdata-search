@@ -70,6 +70,23 @@ http_interactions:
   digest: ab342f347c81d276a2fc5ba9dae8fc0166afe9ef
 - request:
     method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C14758250-LPDAAC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 12 Nov 2015 16:13:52 GMT
+  digest: b6c853aa91cb9aaee38c1fbe697d17a4eeccada3
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C179002914-ORNL_DAAC
     body:
       encoding: US-ASCII
