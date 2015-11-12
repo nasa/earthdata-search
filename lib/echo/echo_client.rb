@@ -59,7 +59,7 @@ module Echo
     end
 
     def get_order_information(item_ids, token)
-      get('/echo-rest/order_information.json', {catalog_item_id: item_ids}, token_header(token))
+      post('/echo-rest/order_information.json', options_to_granule_query({catalog_item_id: item_ids}).to_query, token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded'))
     end
 
     def get_option_definition(id, token)
@@ -94,6 +94,20 @@ module Echo
       #return {order_id: 1234, count: 2000}
       catalog_response = cmr_client.get_granules(granule_query, token)
       granules = catalog_response.body['feed']['entry']
+      order_info = get_order_information(granules.map {|g| g['id']}, token).body
+
+      # drop granules from the order if the selected order option is not one of the supported options by this granule
+      dropped_granules = []
+      Array.wrap(order_info).each do |info|
+        info = info['order_information']
+        unless Array.wrap(info['option_definition_refs']).any? {|ref| ref['name'] == option_name}
+          granule = granules.select {|g| g['id'] == info['catalog_item_ref']['id']}
+          dropped_granules.push granule.first
+          granules.delete granule
+        end
+      end
+
+      Rails.logger.info "Granules dropped from the order: #{dropped_granules.map {|dg| dg['id']}}"
 
       order_response = post("/echo-rest/orders.json", {order: {}}.to_json, token_header(token))
       id = order_response.body['order']['id']
@@ -133,7 +147,7 @@ module Echo
       Rails.logger.info "User info response: #{user_info_response.body.inspect}"
       Rails.logger.info "Submission response: #{submission_response.body.inspect}"
 
-      {order_id: id, response: submission_response, count: granules.size}
+      {order_id: id, response: submission_response, count: granules.size, dropped_granules: dropped_granules}
     end
   end
 end
