@@ -160,13 +160,13 @@ describe 'OPeNDAP Retrieval', reset: false do
       login
     end
 
-    it 'does not provide a URL describing the collection\'s parameters' do
+    it 'does not provide a URL describing the collection\'s parameters', intermittent: 1 do # can't modify frozen array
       within_window('Earthdata Search - Downloads') do
         expect(page).to have_no_css('a[href*=".info"]')
       end
     end
 
-    it 'provides links to the original data without opendap parameters' do
+    it 'provides links to the original data without opendap parameters', intermittent: 1 do # can't modify frozen array
       within_window('Earthdata Search - Downloads') do
         expect(page).to have_no_css('a[href*="http://acdisc.gsfc.nasa.gov/opendap"]')
         expect(page).to have_css('a[href*="ftp://acdisc.gsfc.nasa.gov/data/s4pa/"]')
