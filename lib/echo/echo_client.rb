@@ -101,9 +101,9 @@ module Echo
       Array.wrap(order_info).each do |info|
         info = info['order_information']
         unless Array.wrap(info['option_definition_refs']).any? {|ref| ref['name'] == option_name}
-          granule = granules.select {|g| g['id'] == info['catalog_item_ref']['id']}
-          dropped_granules.push granule.first
-          granules.delete granule
+          granule = granules.select {|g| g['id'] == info['catalog_item_ref']['id']}.first
+          dropped_granules.push granule
+          granules.reject! {|g| g['id'] == granule['id']}
         end
       end
 
