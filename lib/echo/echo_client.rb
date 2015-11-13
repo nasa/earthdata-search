@@ -131,13 +131,14 @@ module Echo
       user = user_response.body['user']
       user_info = {
         user_information: {
-          shipping_contact: contact,
-          billing_contact: contact,
-          order_contact: contact,
+          shipping_contact: contact.nil? ? contact_from_urs(user) : contact,
+          billing_contact: contact.nil? ? contact_from_urs(user) : contact,
+          order_contact: contact.nil? ? contact_from_urs(user) : contact,
           user_domain: user['user_domain'],
           user_region: user['user_region']
         }
       }
+      Rails.logger.info "======== user: #{user}"
       user_info_response = put("/echo-rest/orders/#{id}/user_information", user_info.to_json, token_header(token))
 
       submission_response = post("/echo-rest/orders/#{id}/submit", nil, token_header(token))
@@ -149,5 +150,9 @@ module Echo
 
       {order_id: id, response: submission_response, count: granules.size, dropped_granules: dropped_granules}
     end
+  end
+
+  def contact_from_urs(user)
+
   end
 end
