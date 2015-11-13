@@ -1,7 +1,7 @@
 {
-  "name": "edsc-plugin.example",
-  "main": "src/js/edsc-plugin-example.jsx",
-  "description": "Example plugin for Earthdata Search",
+  "name": "edsc-plugin.cwic",
+  "main": "src/js/edsc-plugin.ciwc.jsx",
+  "description": "CWIC plugin for Earthdata Search",
   "version": "1.0.0",
   "repository": {
     "type": "git",

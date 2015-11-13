@@ -16,8 +16,8 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.use\.css$/, loader: "style/useable!css" },
-      { test: /\.use\.less$/, loader: "style/useable!css!less" },
+      { test: /\.useable\.css$/, loader: "style/useable!css" },
+      { test: /\.useable\.less$/, loader: "style/useable!css!less" },
       { test: /\.css$/, exclude: /\.use\.css$/, loader: "style!css" },
       { test: /\.less$/, exclude: /\.use\.less$/, loader: "style!css!less" },
       { test: /\.coffee$/, loader: "coffee" },
