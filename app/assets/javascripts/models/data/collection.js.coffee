@@ -155,6 +155,12 @@ ns.Collection = do (ko
           success: (data) ->
             @featured = data
 
+    granulesRenderer: ->
+      # TODO: Move the entire tag to be edsc.renderers
+      if @isExternal()
+        return 'cwic'
+      null
+
     isExternal: ->
       @openSearchEndpoint()?
 
@@ -163,6 +169,9 @@ ns.Collection = do (ko
         for [k, v] in @json.tags
           return openSearchKeyToEndpoint[v]?(this) if k == "#{config.cmrTagNamespace}opensearch"
       return null
+
+    canFocus: ->
+      @has_granules || @granulesRenderer()
 
     fromJson: (jsonObj) ->
       @json = jsonObj

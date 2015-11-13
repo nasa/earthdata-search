@@ -1,14 +1,15 @@
 import EdscFacade from './edsc-facade.jsx';
 
 export default class Plugin {
-  constructor(path) {
+  constructor(name, path) {
+    this.name = name;
     this.path = path;
     this.pluginClass = null;
     this.pluginInstance = null;
     this.edscFacade = null;
     this.loading = false;
   }
-  load() {
+  load(callback) {
     if (this.loading || this.pluginInstance) {
       return;
     }
@@ -17,7 +18,7 @@ export default class Plugin {
       let script = document.createElement('script');
       script.onload = () => {
         script.parentNode.removeChild(script);
-        this.instantiate();
+        this._instantiate(callback);
       };
       script.onerror = () => {
         this.loading = false;
@@ -26,19 +27,25 @@ export default class Plugin {
       document.getElementsByTagName("head")[0].appendChild(script);
     }
     else if (!this.pluginInstance) {
-      this.instantiate();
+      this._instantiate(callback);
     }
-  }
-  instantiate() {
-    this.edscFacade = new EdscFacade();
-    this.pluginInstance = new this.pluginClass(this.edscFacade);
-    this.loading = false;
   }
   unload() {
     if (this.pluginInstance) {
       this.pluginInstance.destroy(this.edscFacade);
       this.edscFacade = null;
       this.pluginInstance = null;
+      this.loading = false;
     }
+  }
+  _instantiate(callback) {
+    if (this.loading) { // Not unloaded before async finishes
+      this.edscFacade = new EdscFacade();
+      this.pluginInstance = new this.pluginClass(this.edscFacade);
+      if (callback) {
+        callback(this.name, this);
+      }
+    }
+    this.loading = false;
   }
 };
