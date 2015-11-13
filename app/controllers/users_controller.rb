@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     render json: response.body, status: response.status
   end
 
-  def update_contact_info
+  def update_notification_pref
     preferences = {preferences: params.delete('preferences')}
     preferences[:preferences]['general_contact']['role'] = "Order Contact"
     response = echo_client.update_preferences(get_user_id, preferences, token)
