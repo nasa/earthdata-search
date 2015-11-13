@@ -33,7 +33,7 @@ describe 'Background jobs ordering', reset: false do
       load_page "data/retrieve/#{Retrieval.last.to_param}"
     end
     it "displays dropped granules that don't have the specified access method" do
-      expect(page).to have_text('The following granules are dropped from this order because the data access method AST_07XT is not supported')
+      expect(page).to have_text('The following granules will not be processed because they do not support the AST_07XT access method')
     end
   end
 
