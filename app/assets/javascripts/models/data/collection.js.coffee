@@ -113,7 +113,7 @@ ns.Collection = do (ko
           result = "#{hits} Granule"
           result += 's' if hits != 1
       else if @isExternal()
-        result = "External search"
+        result = "Int'l/Interagency"
       else
         result = 'Collection only'
       result
