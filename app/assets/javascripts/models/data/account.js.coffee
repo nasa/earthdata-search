@@ -2,6 +2,57 @@ ns = @edsc.models.data
 
 ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
 
+  class Address
+    constructor: ->
+      @street1 = ko.observable("")
+      @street2 = ko.observable("")
+      @street3 = ko.observable("")
+      @city = ko.observable("")
+      @state = ko.observable("")
+      @zip = ko.observable("")
+      @country = ko.observable("")
+      @countryError = ko.observable(false)
+
+    to_json: =>
+      address =
+        street1: @street1()
+        street2: @street2()
+        street3: @street3()
+        city: @city()
+        state: @state()
+        zip: @zip()
+        country: @country()
+
+    from_json: (json) =>
+      @street1(json?.street1)
+      @street2(json?.street2)
+      @street3(json?.street3)
+      @city(json?.city)
+      @state(json?.state)
+      @zip(json?.zip)
+      @country(json.country)
+
+    clear: =>
+      @street1("")
+      @street2("")
+      @street3("")
+      @city("")
+      @state("")
+      @zip("")
+      @country("")
+
+  class Phone
+    constructor: (type) ->
+      @id = ko.observable("")
+      @number = ko.observable("")
+      @type = type
+
+    to_json: =>
+      phone =
+        id: @id()
+        number: @number()
+        phone_number_type: @type
+
   class Account
     constructor: ->
       @email = ko.observable("")
@@ -10,15 +61,25 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
       @lastName = ko.observable("")
       @organizationName = ko.observable("")
       @affiliation = ko.observable("")
-      @country = ko.observable("")
-      @userType = ko.observable("")
       @studyArea = ko.observable("")
+      @userType = ko.observable("")
+      @domain = ko.observable("")
+      @userType = ko.observable("")
+      @primaryStudyArea = ko.observable("")
+      @address = new Address()
+      @region = ko.computed =>
+        if @address.country() == "United States" then "USA" else "INTERNATIONAL"
 
+      @phone = new Phone("BUSINESS")
+      @fax = new Phone("BUSINESS_FAX")
       @notificationLevel = ko.observable("")
+      @role = ko.observable("Main User Contact")
 
       @errors = ko.observable("")
       @message = ko.observable("")
       @preferencesLoaded = ko.observable(false)
+
+      @continueSubmission = ko.observable(false)
 
       if window.tokenExpiresIn?
         @_from_user()
@@ -43,7 +104,7 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
 
       if @errors()?.length == 0
         xhr = ajax
-          url: '/users/update_contact_info'
+          url: '/users/update_notification_pref'
           data: @_buildPreferences()
           dataType: 'json'
           method: 'post'
@@ -51,11 +112,13 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
             @_preferencesFromJson(response)
             @preferencesLoaded(true)
             @message("Successfully updated notification preference")
+            @continueSubmission(true)
             callback?()
           fail: (response, type, reason) =>
             @preferencesLoaded(false)
             errors = JSON.parse(response.responseText)?.errors
             @errors(errors)
+            @continueSubmission(false)
 
     _preferencesFromJson: (json) =>
       prefs = json.preferences
@@ -63,23 +126,35 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
       contact = prefs.general_contact
       if contact?
         @firstName(contact.first_name)
-        @middleInitial(contact.middle_initial)
         @lastName(contact.last_name)
         @email(contact.email_address)
-        @organizationName(contact.organization)
-
-        @country(contact.country)
-
         @userType(contact.user_type)
-        @studyArea(contact.study_area)
         @affiliation(contact.affiliation)
+        @studyArea(contact.study_area)
+        @organizationName(contact.organization)
+        @role(contact.role)
+        @address.from_json(contact)
+        for phone in contact.phones ? []
+          if phone.phone_number_type == "BUSINESS"
+            @phone.number(phone.number)
+            @phone.id(phone.id)
+          else if phone.phone_number_type == "BUSINESS_FAX"
+            @fax.number(phone.number)
+            @fax.id(phone.id)
 
     _buildPreferences: =>
+      phones = []
+      phones.push(@phone.to_json()) if @phone.number()?.length > 0
+      phones.push(@fax.to_json()) if @fax.number()?.length > 0
+
       contact =
         first_name: @firstName()
         last_name: @lastName()
         email: @email()
         organization: @organizationName()
+        address: @address.to_json()
+        phones: phones
+        role: @role()
 
       prefs =
         general_contact: contact

@@ -13,7 +13,7 @@ EarthdataSearchClient::Application.routes.draw do
       post 'username_recall'
       post 'password_reset'
       get 'get_preferences'
-      post 'update_contact_info'
+      post 'update_notification_pref'
       get 'site_preferences' => 'users#get_site_preferences'
       post 'site_preferences' => 'users#set_site_preferences'
     end
