@@ -86,6 +86,10 @@ module Echo
       delete("/echo-rest/orders/#{order_id}", {}, token_header(token))
     end
 
+    def get_option_names(option_def_refs)
+      option_def_refs.map {|ref| ref['name']}
+    end
+
     def create_order(granule_query, option_id, option_name, option_model, user_id, token, cmr_client)
       # Some submissions fail if we don't strip whitespace between tags (MYD29P1N)
       option_model = option_model.gsub(/>\s+</,"><").strip() if option_model
@@ -97,17 +101,13 @@ module Echo
       order_info = get_order_information(granules.map {|g| g['id']}, token).body
 
       # drop granules from the order if the selected order option is not one of the supported options by this granule
-      dropped_granules = []
-      Array.wrap(order_info).each do |info|
-        info = info['order_information']
-        unless Array.wrap(info['option_definition_refs']).any? {|ref| ref['name'] == option_name}
-          granule = granules.select {|g| g['id'] == info['catalog_item_ref']['id']}
-          dropped_granules.push granule.first
-          granules.delete granule
-        end
-      end
+      granules_by_id = granules.index_by {|g| g['id']}
+      order_info_hash = order_info.index_by { |info| info['order_information']['catalog_item_ref']['id'] }
+      granule_options = order_info_hash.update(order_info_hash) { |k, v| get_option_names(v['order_information']['option_definition_refs']) }
 
-      Rails.logger.info "Granules dropped from the order: #{dropped_granules.map {|dg| dg['id']}}"
+      excluded_granule_ids = granule_options.reject {|k, v| v.include?(option_name)}.keys
+      granules = granules_by_id.except(*excluded_granule_ids).values
+      dropped_granules = granules_by_id.values_at(*excluded_granule_ids).map {|g| {id: g['id'], name: g['producer_granule_id'].nil? ? g['title'] : g['producer_granule_id']}}
 
       order_response = post("/echo-rest/orders.json", {order: {}}.to_json, token_header(token))
       id = order_response.body['order']['id']

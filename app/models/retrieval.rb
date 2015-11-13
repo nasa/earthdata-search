@@ -52,8 +52,8 @@ class Retrieval < ActiveRecord::Base
                                                 token,
                                                 client)
           method[:order_id] = order_response[:order_id]
-          Rails.logger.info "Dropped granules: #{order_response[:dropped_granules]}"
           method[:dropped_granules] = order_response[:dropped_granules]
+          Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map {|dg| dg[:id]}}"
         elsif method['type'] == 'service'
           request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
 
