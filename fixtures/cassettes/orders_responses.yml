@@ -3,7 +3,7 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
   response:
     status:
       code: 201
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -29,74 +29,74 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
     body:
       encoding: UTF-8
       string: '{"order":{"id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","provider_orders":[]}}'
-    http_version: 
-d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
-  response:
-    status:
-      code: 404
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNmU2OTRmYWU3MjJmMzBjNTZlZDhkYWRiMDAxZTYzNTY%3D--64028cef8babaf7e1a48210bd0a1fb1fd0069cb8;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.685000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 23 Apr 2015 18:44:04 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
-07819583163554fb8646f33d6003fb54e7c2ec35:
-  response:
-    status:
-      code: 404
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNjJkZGE2YjJiZWI4YmE4YTUwZmY4MTgxZTQ5YjUwYzc%3D--c36fb7749edbcdaf0c11ca841be4f83bc93fe127;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.924000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Wed, 08 Apr 2015 20:10:38 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
+    http_version:
+#d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
+#  response:
+#    status:
+#      code: 404
+#      message:
+#    headers:
+#      server:
+#      - Apache-Coyote/1.1
+#      cache-control:
+#      - no-cache
+#      x-ua-compatible:
+#      - IE=Edge,chrome=1
+#      set-cookie:
+#      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNmU2OTRmYWU3MjJmMzBjNTZlZDhkYWRiMDAxZTYzNTY%3D--64028cef8babaf7e1a48210bd0a1fb1fd0069cb8;
+#        path=/; HttpOnly
+#      x-runtime:
+#      - '0.685000'
+#      content-type:
+#      - application/xml;charset=utf-8
+#      vary:
+#      - Accept-Encoding
+#      date:
+#      - Thu, 23 Apr 2015 18:44:04 GMT
+#      connection:
+#      - close
+#      transfer-encoding:
+#      - chunked
+#    body:
+#      encoding: UTF-8
+#      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+#    http_version:
+#07819583163554fb8646f33d6003fb54e7c2ec35:
+#  response:
+#    status:
+#      code: 404
+#      message:
+#    headers:
+#      server:
+#      - Apache-Coyote/1.1
+#      cache-control:
+#      - no-cache
+#      x-ua-compatible:
+#      - IE=Edge,chrome=1
+#      set-cookie:
+#      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNjJkZGE2YjJiZWI4YmE4YTUwZmY4MTgxZTQ5YjUwYzc%3D--c36fb7749edbcdaf0c11ca841be4f83bc93fe127;
+#        path=/; HttpOnly
+#      x-runtime:
+#      - '0.924000'
+#      content-type:
+#      - application/xml;charset=utf-8
+#      vary:
+#      - Accept-Encoding
+#      date:
+#      - Wed, 08 Apr 2015 20:10:38 GMT
+#      connection:
+#      - close
+#      transfer-encoding:
+#      - chunked
+#    body:
+#      encoding: UTF-8
+#      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+#    http_version:
 39a0c2d0a26838756cded942aaafa01146536c60:
   response:
     status:
       code: 404
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -122,12 +122,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
+    http_version:
 6a350797bd129196a4f83d9f237799cf5a097f11:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -151,105 +151,105 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: " "
-    http_version: 
-ae82d2a1dc8801714b10b5ddc4152532641556d8:
-  response:
-    status:
-      code: 404
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYjVkM2ZjZjBjNThhN2ZlMjA4MmY0YjJlNGYxYTA0NzM%3D--0904bf603cbe16062c2cf6e58c179f0b3a7f1bc3;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.225000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 17 Sep 2015 15:36:43 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
-765fe82055de19ac1de4854e6cbc513820f8761e:
-  response:
-    status:
-      code: 404
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOTA3MDZhNGExYjQyYjhjNzA1ZjU0NjM3ODZjMTZiNjM%3D--625fa2f0d1dd47b6a1977eb76b5a88396fe9f3bb;
-        path=/; HttpOnly
-      x-runtime:
-      - '6.167000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Mon, 19 Oct 2015 16:01:27 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
-4cc3e62a1df809811f43e4880997b66b959c221d:
-  response:
-    status:
-      code: 404
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZDYyODliMzc1NjYyNzRmOWUwMTIxNjBlNjhiNTA0Zjc%3D--74a545c689d6f0753a185b0e1fa215a8ea1cded3;
-        path=/; HttpOnly
-      x-runtime:
-      - '4.547000'
-      content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 17 Sep 2015 13:46:43 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
+    http_version:
+#ae82d2a1dc8801714b10b5ddc4152532641556d8:
+#  response:
+#    status:
+#      code: 404
+#      message:
+#    headers:
+#      server:
+#      - Apache-Coyote/1.1
+#      cache-control:
+#      - no-cache
+#      x-ua-compatible:
+#      - IE=Edge,chrome=1
+#      set-cookie:
+#      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYjVkM2ZjZjBjNThhN2ZlMjA4MmY0YjJlNGYxYTA0NzM%3D--0904bf603cbe16062c2cf6e58c179f0b3a7f1bc3;
+#        path=/; HttpOnly
+#      x-runtime:
+#      - '0.225000'
+#      content-type:
+#      - application/xml;charset=utf-8
+#      vary:
+#      - Accept-Encoding
+#      date:
+#      - Thu, 17 Sep 2015 15:36:43 GMT
+#      connection:
+#      - close
+#      transfer-encoding:
+#      - chunked
+#    body:
+#      encoding: UTF-8
+#      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+#    http_version:
+#765fe82055de19ac1de4854e6cbc513820f8761e:
+#  response:
+#    status:
+#      code: 404
+#      message:
+#    headers:
+#      server:
+#      - Apache-Coyote/1.1
+#      cache-control:
+#      - no-cache
+#      x-ua-compatible:
+#      - IE=Edge,chrome=1
+#      set-cookie:
+#      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlOTA3MDZhNGExYjQyYjhjNzA1ZjU0NjM3ODZjMTZiNjM%3D--625fa2f0d1dd47b6a1977eb76b5a88396fe9f3bb;
+#        path=/; HttpOnly
+#      x-runtime:
+#      - '6.167000'
+#      content-type:
+#      - application/xml;charset=utf-8
+#      vary:
+#      - Accept-Encoding
+#      date:
+#      - Mon, 19 Oct 2015 16:01:27 GMT
+#      connection:
+#      - close
+#      transfer-encoding:
+#      - chunked
+#    body:
+#      encoding: UTF-8
+#      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+#    http_version:
+#4cc3e62a1df809811f43e4880997b66b959c221d:
+#  response:
+#    status:
+#      code: 404
+#      message:
+#    headers:
+#      server:
+#      - Apache-Coyote/1.1
+#      cache-control:
+#      - no-cache
+#      x-ua-compatible:
+#      - IE=Edge,chrome=1
+#      set-cookie:
+#      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZDYyODliMzc1NjYyNzRmOWUwMTIxNjBlNjhiNTA0Zjc%3D--74a545c689d6f0753a185b0e1fa215a8ea1cded3;
+#        path=/; HttpOnly
+#      x-runtime:
+#      - '4.547000'
+#      content-type:
+#      - application/xml;charset=utf-8
+#      vary:
+#      - Accept-Encoding
+#      date:
+#      - Thu, 17 Sep 2015 13:46:43 GMT
+#      connection:
+#      - close
+#      transfer-encoding:
+#      - chunked
+#    body:
+#      encoding: UTF-8
+#      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+#    http_version:
 e8a5589d2ff2055ca1341127f5c403c1363024ec:
   response:
     status:
       code: 204
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -269,12 +269,12 @@ e8a5589d2ff2055ca1341127f5c403c1363024ec:
     body:
       encoding: US-ASCII
       string: ''
-    http_version: 
+    http_version:
 d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -397,4 +397,4 @@ d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
           <user_domain>OTHER</user_domain>
           <user_region>USA</user_region>
         </user_information>
-    http_version: 
+    http_version:
