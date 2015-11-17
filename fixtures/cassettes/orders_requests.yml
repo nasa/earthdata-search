@@ -2,25 +2,6 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.echo.nasa.gov/echo-rest/orders.json
-    body:
-      encoding: UTF-8
-      string: '{"order":{}}'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Client-Id:
-      - EDSC
-      Echo-ClientId:
-      - EDSC
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 15 Jan 2015 21:08:30 GMT
-  digest: acab3c43996bb7f51d50e4301fe55418086eadbd
-- request:
-    method: post
     uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
     body:
       encoding: UTF-8
