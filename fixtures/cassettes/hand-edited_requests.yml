@@ -332,4 +332,23 @@ http_interactions:
       - application/x-www-form-urlencoded
   recorded_at: Wed, 20 May 2015 17:21:59 GMT
   digest: 0074182fcbff52d0a40b77dc7bdd7bc21e2489df
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/orders.json
+    body:
+      encoding: UTF-8
+      string: '{"order":{}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - EDSC
+      Echo-ClientId:
+      - EDSC
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 15 Jan 2015 21:08:30 GMT
+  digest: acab3c43996bb7f51d50e4301fe55418086eadbd
 recorded_with: "VCR 2.6.0"

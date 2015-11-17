@@ -1,40 +1,9 @@
 ---
-acab3c43996bb7f51d50e4301fe55418086eadbd:
-  response:
-    status:
-      code: 201
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      location:
-      - https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZTk1YzFiNzkyZjQ1OGUzMjQwYWZmZmZhZTUwOTJhZjE%3D--09127bf89cbc1d57fff11b51d978319ddc52e7a7;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.256000'
-      content-type:
-      - application/json;charset=utf-8
-      content-length:
-      - '76'
-      date:
-      - Thu, 15 Jan 2015 21:08:30 GMT
-      connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: '{"order":{"id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","provider_orders":[]}}'
-    http_version: 
 d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
   response:
     status:
       code: 404
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -60,12 +29,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
+    http_version:
 07819583163554fb8646f33d6003fb54e7c2ec35:
   response:
     status:
       code: 404
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -91,12 +60,74 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
+    http_version:
+31af7ba74170cc2541b61a8c978886bc1d3c38cc:
+  response:
+    status:
+      code: 404
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYjk0MmZhNmM1YWM5MDE2ZTY1YmMzOTQ0ZGEyMzliNTU%3D--ee7c14fd0321c3742b09eab5de4c72b4e4e878c8;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.389000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:47:05 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+    http_version:
+3c35b37665f77aca5c51a613fb7e3dfc55de9464:
+  response:
+    status:
+      code: 404
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMGJkODBjM2EyODE1Mzc3ZDJlYmE3NDllY2RmMmRjZTA%3D--d4a9902f05ef62c393824ed0741bf98c05a0a83e;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.958000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Fri, 13 Nov 2015 01:14:19 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+    http_version:
 39a0c2d0a26838756cded942aaafa01146536c60:
   response:
     status:
       code: 404
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -122,12 +153,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
+    http_version:
 6a350797bd129196a4f83d9f237799cf5a097f11:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -151,12 +182,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: " "
-    http_version: 
+    http_version:
 ae82d2a1dc8801714b10b5ddc4152532641556d8:
   response:
     status:
       code: 404
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -182,12 +213,12 @@ ae82d2a1dc8801714b10b5ddc4152532641556d8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
+    http_version:
 765fe82055de19ac1de4854e6cbc513820f8761e:
   response:
     status:
       code: 404
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -213,12 +244,12 @@ ae82d2a1dc8801714b10b5ddc4152532641556d8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
+    http_version:
 4cc3e62a1df809811f43e4880997b66b959c221d:
   response:
     status:
       code: 404
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -244,12 +275,12 @@ ae82d2a1dc8801714b10b5ddc4152532641556d8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version: 
+    http_version:
 e8a5589d2ff2055ca1341127f5c403c1363024ec:
   response:
     status:
       code: 204
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -269,12 +300,12 @@ e8a5589d2ff2055ca1341127f5c403c1363024ec:
     body:
       encoding: US-ASCII
       string: ''
-    http_version: 
+    http_version:
 d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       server:
       - Apache-Coyote/1.1
@@ -397,4 +428,4 @@ d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
           <user_domain>OTHER</user_domain>
           <user_region>USA</user_region>
         </user_information>
-    http_version: 
+    http_version:

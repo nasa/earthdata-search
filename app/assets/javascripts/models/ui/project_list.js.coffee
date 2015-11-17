@@ -173,7 +173,9 @@ ns.ProjectList = do (ko
             order_id: m.orderId
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
             cancel_link: "/data/remove?order_id=#{m.orderId}" if canCancel
+            dropped_granules: m.droppedGranules
             downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
+            method_name: m.method()
       orders
 
     _computeSubmittedServiceOrders: ->

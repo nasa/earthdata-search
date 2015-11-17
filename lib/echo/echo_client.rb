@@ -59,7 +59,7 @@ module Echo
     end
 
     def get_order_information(item_ids, token)
-      get('/echo-rest/order_information.json', {catalog_item_id: item_ids}, token_header(token))
+      post('/echo-rest/order_information.json', options_to_item_query({catalog_item_id: item_ids}).to_query, token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded'))
     end
 
     def get_option_definition(id, token)
@@ -86,6 +86,10 @@ module Echo
       delete("/echo-rest/orders/#{order_id}", {}, token_header(token))
     end
 
+    def get_option_names(option_def_refs)
+      option_def_refs.map {|ref| ref['name']}
+    end
+
     def create_order(granule_query, option_id, option_name, option_model, user_id, token, cmr_client)
       # Some submissions fail if we don't strip whitespace between tags (MYD29P1N)
       option_model = option_model.gsub(/>\s+</,"><").strip() if option_model
@@ -94,6 +98,16 @@ module Echo
       #return {order_id: 1234, count: 2000}
       catalog_response = cmr_client.get_granules(granule_query, token)
       granules = catalog_response.body['feed']['entry']
+      order_info = get_order_information(granules.map {|g| g['id']}, token).body
+
+      # drop granules from the order if the selected order option is not one of the supported options by this granule
+      granules_by_id = granules.index_by {|g| g['id']}
+      order_info_hash = order_info.index_by { |info| info['order_information']['catalog_item_ref']['id'] }
+      granule_options = order_info_hash.update(order_info_hash) { |k, v| get_option_names(v['order_information']['option_definition_refs']) }
+
+      excluded_granule_ids = granule_options.reject {|k, v| v.include?(option_name)}.keys
+      granules = granules_by_id.except(*excluded_granule_ids).values
+      dropped_granules = granules_by_id.values_at(*excluded_granule_ids).map {|g| {id: g['id'], name: g['producer_granule_id'].nil? ? g['title'] : g['producer_granule_id']}}
 
       order_response = post("/echo-rest/orders.json", {order: {}}.to_json, token_header(token))
       id = order_response.body['order']['id']
@@ -133,7 +147,7 @@ module Echo
       Rails.logger.info "User info response: #{user_info_response.body.inspect}"
       Rails.logger.info "Submission response: #{submission_response.body.inspect}"
 
-      {order_id: id, response: submission_response, count: granules.size}
+      {order_id: id, response: submission_response, count: granules.size, dropped_granules: dropped_granules}
     end
   end
 end

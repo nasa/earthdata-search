@@ -68,6 +68,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
       @orderStatus = jsonObj.order_status
       @errorCode = jsonObj.error_code
       @errorMessage = jsonObj.error_message
+      @droppedGranules = jsonObj.dropped_granules
       @subsetOptions()?.fromJson(jsonObj.subset) if jsonObj.subset
       @serviceOptions = jsonObj.service_options
       this

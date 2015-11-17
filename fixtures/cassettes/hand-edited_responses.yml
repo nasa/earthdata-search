@@ -1259,3 +1259,34 @@ second_service_request:
             </requestStatus>
         </eesi:agentResponse>
     http_version:
+acab3c43996bb7f51d50e4301fe55418086eadbd:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      location:
+      - https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZTk1YzFiNzkyZjQ1OGUzMjQwYWZmZmZhZTUwOTJhZjE%3D--09127bf89cbc1d57fff11b51d978319ddc52e7a7;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.256000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '76'
+      date:
+      - Thu, 15 Jan 2015 21:08:30 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"order":{"id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","provider_orders":[]}}'
+    http_version:

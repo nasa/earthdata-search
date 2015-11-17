@@ -68,7 +68,7 @@ module VCR
           elsif uri.include? '/convert'
             cassette = 'ogre'
           elsif (request.method == :delete ||
-                 (request.uri.include?('/orders.json') && request.method == :get) ||
+                 (request.uri.include?('/orders.json') && (request.method == :get || request.method == :post)) ||
                  (request.uri.include?('/echo-rest/calendar_events') && !request.uri.include?('testbed')) ||
                  uri.include?('users/current.json') ||
                  uri.include?('/echo-rest/users.json') ||
