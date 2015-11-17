@@ -79,7 +79,7 @@ module VCR
                  uri.include?('C179002986-ORNL') ||
                  (request.uri.include?('trigger500')))
             cassette = 'hand-edited'
-            record = :nonegs
+            record = :none
           elsif request.uri.include? '/search/granules/timeline.json'
             cassette = 'timeline'
           elsif request.uri.include? '/search/'
