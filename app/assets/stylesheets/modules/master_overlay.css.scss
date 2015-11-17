@@ -306,7 +306,7 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
   .master-overlay-when-max { display: none; }
   .master-overlay-when-min { display: block; }
   .master-overlay-main {
-    width: 267px;
+    width: $collapsed-overlay-width;
     header {
       margin: 1em .5em 0;
       h2 {
@@ -315,10 +315,11 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
     }
     .master-overlay-content {
       padding: .5em 0 1em;
-      direction:rtl; // Puts the scrollbar on the left hand side
-      > * {
-        direction:ltr;
-      }
+//      direction:rtl; // Puts the scrollbar on the left hand side
+//      > * {
+//        direction:ltr;
+//      }
+      width: $collapsed-overlay-width + 30px;
     }
     .master-overlay-info {
       height: 32px;
