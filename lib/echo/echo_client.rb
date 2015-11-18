@@ -117,9 +117,9 @@ module Echo
       user = user_response.body['user']
       user_info = {
         user_information: {
-          shipping_contact: contact.nil? ? contact_from_urs(user) : contact,
-          billing_contact: contact.nil? ? contact_from_urs(user) : contact,
-          order_contact: contact.nil? ? contact_from_urs(user) : contact,
+          shipping_contact: contact,
+          billing_contact: contact,
+          order_contact: contact,
           user_domain: user['user_domain'],
           user_region: user['user_region']
         }
