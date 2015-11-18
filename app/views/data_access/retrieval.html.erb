@@ -79,7 +79,7 @@
                  data-confirm="Are you sure you want to remove this order?  This action cannot be undone."
                  rel="nofollow">Cancel</a>
             <!-- /ko -->
-            <!-- ko if: dropped_granules -->
+            <!-- ko if: dropped_granules && dropped_granules.length > 0 -->
               <p>The following granules will not be processed because they do not support the <strong data-bind="text: method_name"></strong> access method:</p>
               <div class="granule-list">
                 <div>
