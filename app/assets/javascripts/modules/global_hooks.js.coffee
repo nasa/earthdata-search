@@ -57,6 +57,12 @@ do (document
     $('.description-toggle').find('i').toggleClass('fa-chevron-down')
     $('.description-toggle').find('i').toggleClass('fa-chevron-up')
 
+  $(document).on 'click', (e) ->
+    if $('.flyout').is(':visible')
+      $('.flyout').hide()
+      $('.ccol-header a').removeClass('button-active').removeClass('flyout-visible')
+      $('.flyout').remove()
+
   $(document).ready ->
     map = $('#map').data('map')?.map
     if map?
