@@ -44,7 +44,7 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
 
   toggleFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
-    if domData.get(target, 'flyout') || dom.hasClass(target, 'flyout-visible')
+    if dom.hasClass(target, 'flyout-visible')
       @hideFlyout(context, e)
       dom.removeClass(target, 'button-active')
     else
@@ -53,7 +53,7 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
 
   showFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
-    if target && !domData.get(target, 'flyout')
+    if target
       @hideFlyout(context, e)
       dom.addClass(target, 'flyout-visible')
       template = target.getAttribute('data-flyout')
