@@ -178,7 +178,7 @@
         </div>
         <div class="access-item-actions">
           <button data-bind="click: ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
-          <button data-bind="enable: project.allReadyToDownload() && account.continueSubmission, click: ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
+          <button data-bind="enable: project.allReadyToDownload(), click: ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>
       </div>
     </li>

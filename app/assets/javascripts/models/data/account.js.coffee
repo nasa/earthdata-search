@@ -71,15 +71,13 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
         if @address.country() == "United States" then "USA" else "INTERNATIONAL"
 
       @phone = new Phone("BUSINESS")
-      @fax = new Phone("BUSINESS_FAX")
+      @phone.number = "0000000000"
       @notificationLevel = ko.observable("")
       @role = ko.observable("Main User Contact")
 
       @errors = ko.observable("")
       @message = ko.observable("")
       @preferencesLoaded = ko.observable(false)
-
-      @continueSubmission = ko.observable(false)
 
       if window.tokenExpiresIn?
         @_from_user()
@@ -112,13 +110,11 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
             @_preferencesFromJson(response)
             @preferencesLoaded(true)
             @message("Successfully updated notification preference")
-            @continueSubmission(true)
             callback?()
           fail: (response, type, reason) =>
             @preferencesLoaded(false)
             errors = JSON.parse(response.responseText)?.errors
             @errors(errors)
-            @continueSubmission(false)
 
     _preferencesFromJson: (json) =>
       prefs = json.preferences
@@ -138,14 +134,10 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
           if phone.phone_number_type == "BUSINESS"
             @phone.number(phone.number)
             @phone.id(phone.id)
-          else if phone.phone_number_type == "BUSINESS_FAX"
-            @fax.number(phone.number)
-            @fax.id(phone.id)
 
     _buildPreferences: =>
       phones = []
       phones.push(@phone.to_json()) if @phone.number()?.length > 0
-      phones.push(@fax.to_json()) if @fax.number()?.length > 0
 
       contact =
         first_name: @firstName()
