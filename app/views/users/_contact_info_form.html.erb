@@ -18,28 +18,6 @@
     <span><strong>User Type: </strong> <!-- ko text: userType --><!-- /ko --></span><br>
     <!-- /ko -->
   </p>
-  <p>
-    <a href="<%="#{Rails.configuration.services['earthdata'][Rails.configuration.echo_env]['urs_root']}/profile/edit" %>" target="_blank" class="button text-button">Edit Profile in Earthdata Login <i class="fa fa-arrow-circle-right"></i></a> <span>(in a new page)</span>
-  </p>
-
-  <h3>Update Notification Preference Level</h3>
-
-  <p>
-    <label for="notificationLevel">Receive delayed access notifications</label>
-  </p>
-  <p>
-    <select data-bind="value: notificationLevel" id="notificationLevel">
-      <option value="VERBOSE">Always</option>
-      <option value="DETAIL">When requests change state</option>
-      <option value="INFO">When requests reach a completed or failed state</option>
-      <option value="CRITICAL">When requests fail</option>
-      <option value="NONE">Never</option>
-    </select>
-  </p>
-
-  <p>
-    <button data-bind="submit: $root.ui.accountForm.saveAccountEdit">Update Notification Preference</button>
-  </p>
 <!-- /ko -->
 <!-- /ko -->
 
