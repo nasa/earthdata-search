@@ -22,8 +22,9 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
     super(params, componentInfo)
     @_scrollParent = dom.scrollParent(@_root)
     @_flyouts = []
-    setTimeout((=>
-      $(window).on 'edsc.overlaychange', @_hideFlyouts), 0)
+
+    # TODO: This should be cleaner than reaching back to an ancestor
+    $?(@_root).closest('.master-overlay').on('edsc.overlaychange', @_hideFlyouts)
 
     if @_scrollParent
       @_scrollParent.addEventListener('scroll', async.throttled(@_alignFlyouts))
@@ -103,17 +104,20 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
 
   _destroyFlyout: (target) ->
     flyout = domData.get(target, 'flyout')
-    if flyout
-      index = @_flyouts.indexOf(flyout)
-      @_flyouts.splice(index, 1) if index != -1
-      domData.clear(flyout)
-      dom.remove(flyout)
+    @_removeFlyoutNode(flyout) if flyout
 
-  _hideFlyouts: (e) => @_destroyAndRemoveFlyout(target) for target in document.getElementsByClassName('flyout-visible')
+  _removeFlyoutNode: (flyout) ->
+    index = @_flyouts.indexOf(flyout)
+    @_flyouts.splice(index, 1) if index != -1
+    domData.clear(flyout)
+    dom.remove(flyout)
 
-  hideFlyout: (context, e) => @_destroyAndRemoveFlyout(@_getFlyoutTarget(e))
+  _hideFlyouts: (e) =>
+    for target in @_root.getElementsByClassName('flyout-visible')
+      @hideFlyout(null, target: target)
 
-  _destroyAndRemoveFlyout: (target) ->
+  hideFlyout: (context, e) =>
+    target = @_getFlyoutTarget(e)
     if target
       @_destroyFlyout(target)
       dom.removeClass(target, 'flyout-visible')
