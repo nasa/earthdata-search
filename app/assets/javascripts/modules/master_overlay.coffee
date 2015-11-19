@@ -23,12 +23,13 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @_minimized = true
       @_updateMinMaxState()
       @contentHeightChanged()
+      @_triggerStateChange()
 
     maximize: ->
-      @root.trigger('edsc.overlaychange')
       @_minimized = false
       @_updateMinMaxState()
       @contentHeightChanged()
+      @_triggerStateChange()
 
     showParent: -> @toggleParent(true)
 
@@ -115,6 +116,11 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         @toggle(arg.visible, false)
         @toggleParent(arg.parent, false)
         @toggleSecondary(arg.secondary, false)
+        if arg.minimized?
+          if arg.minimized
+            @minimize()
+          else
+            @maximize()
         children = arg.children
         for child in @_content().children()
           $child = $(child)
@@ -124,6 +130,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       else
         children = ($(child).attr('id') for child in @children())
         {
+          minimized: @_minimized
           visible: !@root.hasClass('is-hidden')
           parent: !@root.hasClass(@scope('is-parent-hidden'))
           secondary: !@root.hasClass(@scope('is-secondary-hidden'))
