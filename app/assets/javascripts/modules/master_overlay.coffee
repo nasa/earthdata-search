@@ -15,7 +15,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     hide: -> @toggle(false)
 
     toggle: (show = @root.hasClass('is-hidden'), event=true) ->
-      @_hideFlyouts()
+      @root.trigger('edsc.overlaychange')
       @root.toggleClass('is-hidden', !show)
       @_triggerStateChange() if event
 
@@ -25,17 +25,12 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @contentHeightChanged()
 
     maximize: ->
-      @_hideFlyouts()
+      @root.trigger('edsc.overlaychange')
       @_minimized = false
       @_updateMinMaxState()
       @contentHeightChanged()
 
     showParent: -> @toggleParent(true)
-
-    _hideFlyouts: ->
-      $('.flyout').hide()
-      $('.ccol-header a').removeClass('button-active').removeClass('flyout-visible')
-      $('.flyout').remove()
 
     hideParent: -> @toggleParent(false)
 
