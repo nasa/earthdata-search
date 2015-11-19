@@ -113,7 +113,8 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
     dom.remove(flyout)
 
   _hideFlyouts: (e) =>
-    for target in @_root.getElementsByClassName('flyout-visible')
+    els = Array.prototype.slice.call(@_root.getElementsByClassName('flyout-visible'));
+    for target in els
       @hideFlyout(null, target: target)
 
   hideFlyout: (context, e) =>
