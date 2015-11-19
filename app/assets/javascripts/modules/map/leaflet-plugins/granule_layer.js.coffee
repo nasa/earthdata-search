@@ -365,7 +365,7 @@ ns.GranuleLayer = do (L
 
   class GranuleLayer extends GibsTileLayer
     constructor: (@collection, color, @multiOptions) ->
-      @granules = @collection.granulesModel
+      @granules = @collection.granuleDatasource().cmrData()
       @_hasGibs = @multiOptions?.length > 0
       @color = color ? '#25c85b';
       super({})

@@ -10,8 +10,8 @@ export default class PluginSupport {
     this[registry][name] = new Plugin(name, url);
     console.log("Registered plugin:", name, url);
   }
-  load(name, callback) {
-    this[registry][name].load(callback);
+  load(name, callback, complete) {
+    this[registry][name].load(callback, complete);
   }
   unload(name) {
     this[registry][name].unload();
