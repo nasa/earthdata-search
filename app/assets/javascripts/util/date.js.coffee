@@ -20,6 +20,34 @@
       parsed[1]--
       new Date(Date.UTC.apply(Date, parsed))
 
+  computeRanges = (temporal, present=new Date()) ->
+    {startDate, endDate, recurring, startYear, endYear} = temporal
+    result = []
+    return result unless startDate? || endDate?
+
+    if recurring
+      if startDate? && endDate?
+        one_day = 1000 * 60 * 60 * 24
+        year = 2007 # Sunday is January 1st, not a leap year
+        #year = 2012 # Sunday is January 1st, leap year
+        start_in_year = new Date(startDate)
+        start_in_year.setUTCFullYear(year)
+        start_offset = start_in_year - Date.UTC(year, 0, 0)
+
+        end_in_year = new Date(endDate)
+        end_in_year.setUTCFullYear(year)
+        end_offset = end_in_year - Date.UTC(year, 0, 0)
+
+        for year in [startYear..endYear]
+          year_start = Date.UTC(year, 0, 0)
+          result.push [year_start + start_offset, year_start + end_offset]
+    else
+      start_date = startDate ? new Date(Date.UTC(1970, 0, 0))
+      end_date = endDate ? new Date(present)
+      result.push [start_date, end_date]
+
+    result
+
   dateToHuman = (date) ->
     if date?
       str = new Date(date).toString()
@@ -75,6 +103,7 @@
     date.toISOString().replace('.-', '.')
 
   exports =
+    computeRanges: computeRanges
     isoUtcDateString: isoUtcDateString
     isoUtcDateTimeString: isoUtcDateTimeString
     parseIsoUtcString: parseIsoUtcString

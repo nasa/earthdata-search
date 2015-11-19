@@ -9,7 +9,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @_wasVisible = @collection.visible()
       @collection.visible(true)
 
-      @granules = @collection.granulesModel
+      @granules = collection.granuleDatasource().cmrData()
 
       @_hasFocus = ko.observable(false)
       @focused = ko.observable(null)

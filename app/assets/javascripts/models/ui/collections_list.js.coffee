@@ -44,7 +44,7 @@ ns.CollectionsList = do ($=jQuery, document, config = @edsc.config, CollectionsM
 
     focusCollection: (collection, event=null) =>
       return true if $(event?.target).closest('a').length > 0
-      return false unless collection.granulesRenderer()
+      return false unless collection.canFocus()
       return false if @focused()?.collection.id == collection.id
 
       @focused(new GranulesList(collection))

@@ -3,7 +3,7 @@ var webpack = require("webpack"),
     pkg = JSON.parse(fs.readFileSync('./package.json')),
     license;
 
-license = fs.readFileSync('../../../LICENSE')
+license = fs.readFileSync('../../../../LICENSE')
   .toString()
   .split(/\s+---\s+/, 1)[0];
 

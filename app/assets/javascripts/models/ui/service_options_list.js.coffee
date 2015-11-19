@@ -41,7 +41,7 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
       elem = event.target
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
         collection = @project.accessCollections()[@activeIndex()].collection
-        collection.granulesModel.loadNextPage()
+        collection.granuleDatasource().cmrData().loadNextPage()
 
     downloadProject: ->
       $project = $('#data-access-project')

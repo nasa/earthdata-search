@@ -68,22 +68,15 @@ ns.Project = do (ko,
       @granuleAccessOptions.dispose()
 
     _loadGranuleAccessOptions: ->
+      dataSource = @collection.granuleDatasource()
+      return unless dataSource
       console.log "Loading granule access options for #{@collection.id}"
       $(document).trigger('dataaccessevent', [@collection.id])
-      singleGranuleId = @collection.granuleQuery.singleGranuleId()
-      if singleGranuleId
-        params = extend(@collection.granuleQuery.params(), {echo_granule_id: singleGranuleId})
-      else
-        params = @collection.granuleQuery.params()
-      ajax
-        dataType: 'json'
-        url: '/data/options'
-        data: params
-        method: 'post'
-        retry: => @_loadGranuleAccessOptions()
-        success: (data, status, xhr) =>
-          console.log "Finished loading access options for #{@collection.id}"
-          @granuleAccessOptions(data)
+      success = (data) =>
+        console.log "Finished loading access options for #{@collection.id}"
+        @granuleAccessOptions(data)
+      retry = => @_loadGranuleAccessOptions
+      dataSource.loadAccessOptions(success, retry)
 
     fromJson: (jsonObj) ->
       @serviceOptions.fromJson(jsonObj.serviceOptions)
@@ -93,11 +86,11 @@ ns.Project = do (ko,
       $(document).trigger('dataaccessevent', [@collection.id, options])
 
       id: @collection.id
-      params: param(@collection.granuleQuery.params())
+      params: param(@collection.granuleDatasource()?.toQueryParams())
       serviceOptions: options
 
   class Project
-    constructor: (@query, @loadGranulesOnAdd=true) ->
+    constructor: (@query) ->
       @_collectionIds = ko.observableArray()
       @_collectionsById = {}
 
@@ -182,9 +175,6 @@ ns.Project = do (ko,
       @_collectionsById[id] ?= new ProjectCollection(collection)
       @_collectionIds.remove(id)
       @_collectionIds.push(id)
-
-      # Force results to start being calculated
-      collection.granulesModel.results() if @loadGranulesOnAdd && collection.has_granules
       null
 
     removeCollection: (collection) =>
@@ -230,7 +220,7 @@ ns.Project = do (ko,
         start = 1
         start = 0 if @focus() && !@hasCollection(@focus())
         for collection, i in collections[start...]
-          query = collection.granuleQuery.serialize()
+          query = collection.granuleDatasource().toBookmarkParams()
           query.v = 't' if (i + start) != 0 && collection.visible()
           queries[i + start] = query
         result.pg = queries if queries.length > 0
@@ -265,8 +255,8 @@ ns.Project = do (ko,
             for collection, i in collections
               query = queries[i + offset]
               if query?
-                collection.granuleQuery.fromJson(query)
-                collection.granuleQuery.singleGranuleId(singleGranuleId) if singleGranuleId?
+                # FIXME
+                collection.granuleDatasource().fromBookmarkParams(query, value)
                 collection.visible(true) if query.v == 't'
               if i == 0 && focused
                 @focus(collection)

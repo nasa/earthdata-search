@@ -1,6 +1,6 @@
 {
-  "name": "edsc-plugin.cwic",
-  "main": "src/js/edsc-plugin.ciwc.jsx",
+  "name": "edsc-plugin.renderer.cmr",
+  "main": "src/js/edsc-plugin.renderer.cmr.jsx",
   "description": "CWIC plugin for Earthdata Search",
   "version": "1.0.0",
   "repository": {
@@ -59,8 +59,8 @@
     "webpack": "^1.12.3"
   },
   "scripts": {
-    "prepublish": "../../../node_modules/.bin/webpack -p",
-    "start": "../../../node_modules/.bin/webpack -w",
-    "test": "../../../node_modules/.bin/karma start --single-run --browsers PhantomJS"
+    "prepublish": "../../../../node_modules/.bin/webpack -p",
+    "start": "../../../../node_modules/.bin/webpack -w",
+    "test": "../../../../node_modules/.bin/karma start --single-run --browsers PhantomJS"
   }
 }
