@@ -22,6 +22,9 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
     super(params, componentInfo)
     @_scrollParent = dom.scrollParent(@_root)
     @_flyouts = []
+    setTimeout((=>
+      $(window).on 'edsc.overlaychange', @_hideFlyouts), 0)
+
     if @_scrollParent
       @_scrollParent.addEventListener('scroll', async.throttled(@_alignFlyouts))
 
@@ -44,7 +47,7 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
 
   toggleFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
-    if dom.hasClass(target, 'flyout-visible')
+    if domData.get(target, 'flyout') || dom.hasClass(target, 'flyout-visible')
       @hideFlyout(context, e)
       dom.removeClass(target, 'button-active')
     else
@@ -53,7 +56,7 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
 
   showFlyout: (context, e) =>
     target = @_getFlyoutTarget(e)
-    if target
+    if target && !domData.get(target, 'flyout')
       @hideFlyout(context, e)
       dom.addClass(target, 'flyout-visible')
       template = target.getAttribute('data-flyout')
@@ -106,8 +109,11 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
       domData.clear(flyout)
       dom.remove(flyout)
 
-  hideFlyout: (context, e) =>
-    target = @_getFlyoutTarget(e)
+  _hideFlyouts: (e) => @_destroyAndRemoveFlyout(target) for target in document.getElementsByClassName('flyout-visible')
+
+  hideFlyout: (context, e) => @_destroyAndRemoveFlyout(@_getFlyoutTarget(e))
+
+  _destroyAndRemoveFlyout: (target) ->
     if target
       @_destroyFlyout(target)
       dom.removeClass(target, 'flyout-visible')
