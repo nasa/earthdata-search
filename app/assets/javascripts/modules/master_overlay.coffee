@@ -26,10 +26,10 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @_triggerStateChange()
 
     maximize: ->
-      @_minimized = false
       @_updateMinMaxState()
       @contentHeightChanged()
-      @_triggerStateChange()
+      @_triggerStateChange() if @_minimized
+      @_minimized = false
 
     showParent: -> @toggleParent(true)
 
