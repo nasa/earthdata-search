@@ -28,7 +28,10 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     maximize: ->
       @_updateMinMaxState()
       @contentHeightChanged()
-      @_triggerStateChange() if @_minimized
+      # Temporarily store @_minimized value in a var because @_minimized value can be out of date: if it triggers the
+      # state change before setting it to false, the state change will say that the overlay is still minimized.
+      tmp = @_minimized
+      @_triggerStateChange() if tmp
       @_minimized = false
 
     showParent: -> @toggleParent(true)
