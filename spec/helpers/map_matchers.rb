@@ -78,7 +78,7 @@ RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected
   match do |page|
     synchronize do
       lat, lng, zoom = map_params(page)
-      delta = 0.5
+      delta = 1
 
       expect(lat).to be_within(delta).of(expected_lat)
       expect(lng).to be_within(delta).of(expected_lng)
