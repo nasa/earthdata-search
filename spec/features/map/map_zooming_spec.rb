@@ -141,6 +141,7 @@ describe 'Map Zooming', reset: false do
   context 'on geo view' do
     context 'at the minimum zoom level' do
       before :all do
+        visit '/search'
         MapUtil.set_zoom(page, 0)
       end
 
