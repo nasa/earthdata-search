@@ -79,6 +79,7 @@ describe 'Map Zooming', reset: false do
   context 'when using the zoom home button' do
     context 'with spatial bounds' do
       before :all do
+        visit '/search'
         script = "$('#map').data('map').map.fitBounds([{lat: -40, lng:0}, {lat: -20, lng: 0}]);"
         page.execute_script(script)
 
