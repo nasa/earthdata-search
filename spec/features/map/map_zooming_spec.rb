@@ -33,6 +33,7 @@ describe 'Map Zooming', reset: false do
   context 'when zooming with the zoom buttons' do
     context 'and the overlay is visible' do
       before :all do
+        visit '/search'
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
         sleep 0.2 # Allow animations to finish and avoid clickfailed
@@ -140,6 +141,7 @@ describe 'Map Zooming', reset: false do
   context 'on geo view' do
     context 'at the minimum zoom level' do
       before :all do
+        visit '/search'
         MapUtil.set_zoom(page, 0)
       end
 
