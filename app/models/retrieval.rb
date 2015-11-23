@@ -27,7 +27,7 @@ class Retrieval < ActiveRecord::Base
   end
 
   # Delayed Jobs calls this method to excute an order creation
-  def self.process(id, token, env, base_url)
+  def self.process(id, token, env, base_url, access_token)
     if Rails.env.test?
       normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
       VCR::EDSCConfigurer.register_normalizer(normalizer)
@@ -50,7 +50,8 @@ class Retrieval < ActiveRecord::Base
                                                 method['model'],
                                                 user_id,
                                                 token,
-                                                client)
+                                                client,
+                                                access_token)
           method[:order_id] = order_response[:order_id]
         elsif method['type'] == 'service'
           request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"

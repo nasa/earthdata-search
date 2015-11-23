@@ -5,8 +5,8 @@
     <!-- ko if: organizationName() -->
       <span><strong>Organization: </strong> <!-- ko text: organizationName --><!-- /ko --></span><br>
     <!-- /ko -->
-    <!-- ko if: address.country() -->
-    <span><strong>Country: </strong> <!-- ko text: address.country --><!-- /ko --></span><br>
+    <!-- ko if: country() -->
+    <span><strong>Country: </strong> <!-- ko text: country --><!-- /ko --></span><br>
     <!-- /ko -->
     <!-- ko if: affiliation() -->
     <span><strong>Affiliation: </strong> <!-- ko text: affiliation --><!-- /ko --></span><br>
@@ -43,7 +43,7 @@
     </li>
     <li>
       <span class="urs-profile-label">Country</span>
-      <span data-bind="text: address.country"></span>
+      <span data-bind="text: country"></span>
     </li>
     <li>
       <span class="urs-profile-label">Affiliation</span>

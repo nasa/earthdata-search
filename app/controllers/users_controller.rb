@@ -21,11 +21,16 @@ class UsersController < ApplicationController
   end
 
   def get_preferences
-    response = echo_client.get_preferences(get_user_id, token)
-    user = echo_client.get_urs_user(session[:user_name], session[:access_token]).body
-    response.body['preferences']['general_contact'] = user
+    preferences_response = echo_client.get_preferences(get_user_id, token, echo_client, session[:access_token])
 
-    render json: response.body, status: response.status
+    urs_response = echo_client.get_urs_user(session[:user_name], session[:access_token])
+    if urs_response.status == 200
+      preferences_response.body['preferences']['general_contact'] = urs_response.body
+    else
+      preferences_response.body['preferences']['general_contact'] = {}
+    end
+
+    render json: preferences_response.body, status: response.status
   end
 
   def update_notification_pref
