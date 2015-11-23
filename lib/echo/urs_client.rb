@@ -17,10 +17,7 @@ module Echo
     end
 
     def get_urs_user(user_name, access_token)
-      Rails.logger.info "----- user_name: #{user_name}, access_token: #{access_token}"
-      resp = get("/api/users/#{user_name}?client_id=#{@client_id}", nil, {'AUTHORIZATION' => "Bearer #{access_token}"})
-      Rails.logger.info "----- resp: #{resp.body.inspect}"
-      resp
+      get("/api/users/#{user_name}?client_id=#{@client_id}", nil, {'AUTHORIZATION' => "Bearer #{access_token}"})
     end
 
     protected

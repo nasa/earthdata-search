@@ -2,79 +2,20 @@ ns = @edsc.models.data
 
 ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
 
-  class Address
-    constructor: ->
-      @street1 = ko.observable("")
-      @street2 = ko.observable("")
-      @street3 = ko.observable("")
-      @city = ko.observable("")
-      @state = ko.observable("")
-      @zip = ko.observable("")
-      @country = ko.observable("")
-      @countryError = ko.observable(false)
-
-    to_json: =>
-      address =
-        street1: @street1()
-        street2: @street2()
-        street3: @street3()
-        city: @city()
-        state: @state()
-        zip: @zip()
-        country: @country()
-
-    from_json: (json) =>
-      @street1(json?.street1)
-      @street2(json?.street2)
-      @street3(json?.street3)
-      @city(json?.city)
-      @state(json?.state)
-      @zip(json?.zip)
-      @country(json.country)
-
-    clear: =>
-      @street1("")
-      @street2("")
-      @street3("")
-      @city("")
-      @state("")
-      @zip("")
-      @country("")
-
-  class Phone
-    constructor: (type) ->
-      @id = ko.observable("")
-      @number = ko.observable("")
-      @type = type
-
-    to_json: =>
-      phone =
-        id: @id()
-        number: @number()
-        phone_number_type: @type
-
   class Account
     constructor: ->
-      @email = ko.observable("")
-      @firstName = ko.observable("")
-      @middleInitial = ko.observable("")
-      @lastName = ko.observable("")
-      @organizationName = ko.observable("")
-      @affiliation = ko.observable("")
-      @studyArea = ko.observable("")
-      @userType = ko.observable("")
-      @domain = ko.observable("")
-      @userType = ko.observable("")
-      @primaryStudyArea = ko.observable("")
-      @address = new Address()
-      @region = ko.computed =>
-        if @address.country() == "United States" then "USA" else "INTERNATIONAL"
-
-      @phone = new Phone("BUSINESS")
-      @phone.number = "0000000000"
-      @notificationLevel = ko.observable("")
-      @role = ko.observable("Main User Contact")
-
+      @email = ko.observable("Loading ...")
+      @firstName = ko.observable("Loading ...")
+      @middleInitial = ko.observable("Loading ...")
+      @lastName = ko.observable("Loading ...")
+      @organizationName = ko.observable("Loading ...")
+      @affiliation = ko.observable("Loading ...")
+      @studyArea = ko.observable("Loading ...")
+      @userType = ko.observable("Loading ...")
+      @userType = ko.observable("Loading ...")
+      @primaryStudyArea = ko.observable("Loading ...")
+      @notificationLevel = ko.observable("Loading ...")
+      @country = ko.observable("Loading ...")
       @errors = ko.observable("")
       @message = ko.observable("")
       @preferencesLoaded = ko.observable(false)
@@ -128,25 +69,14 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
         @affiliation(contact.affiliation)
         @studyArea(contact.study_area)
         @organizationName(contact.organization)
-        @role(contact.role)
-        @address.from_json(contact)
-        for phone in contact.phones ? []
-          if phone.phone_number_type == "BUSINESS"
-            @phone.number(phone.number)
-            @phone.id(phone.id)
+        @country(contact.country)
 
     _buildPreferences: =>
-      phones = []
-      phones.push(@phone.to_json()) if @phone.number()?.length > 0
-
       contact =
         first_name: @firstName()
         last_name: @lastName()
         email: @email()
         organization: @organizationName()
-        address: @address.to_json()
-        phones: phones
-        role: @role()
 
       prefs =
         general_contact: contact
