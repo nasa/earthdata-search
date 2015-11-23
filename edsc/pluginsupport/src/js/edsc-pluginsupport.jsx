@@ -1,6 +1,6 @@
 import Plugin from './plugin.jsx';
 
-let registry = Symbol();
+let registry = '_edsc_registry';
 
 export default class PluginSupport {
   constructor() {
