@@ -1,9 +1,40 @@
 ---
+d268a090550a3b74992dca45607865a902cca590:
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNTBiMzVmZmZkMTJjZDUzMjk5YWRkMzc4ZjJjYjNkNmY%3D--2684a48752d19db9419a2432c286963f0f82df4e;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.492000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 17:36:17 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
+    http_version: 
 d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
   response:
     status:
       code: 404
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -29,12 +60,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version:
+    http_version: 
 07819583163554fb8646f33d6003fb54e7c2ec35:
   response:
     status:
       code: 404
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -60,12 +91,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version:
+    http_version: 
 31af7ba74170cc2541b61a8c978886bc1d3c38cc:
   response:
     status:
       code: 404
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -91,12 +122,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version:
+    http_version: 
 3c35b37665f77aca5c51a613fb7e3dfc55de9464:
   response:
     status:
       code: 404
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -122,12 +153,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version:
+    http_version: 
 39a0c2d0a26838756cded942aaafa01146536c60:
   response:
     status:
       code: 404
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -153,12 +184,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version:
+    http_version: 
 6a350797bd129196a4f83d9f237799cf5a097f11:
   response:
     status:
       code: 200
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -182,12 +213,12 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
     body:
       encoding: UTF-8
       string: " "
-    http_version:
+    http_version: 
 ae82d2a1dc8801714b10b5ddc4152532641556d8:
   response:
     status:
       code: 404
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -213,12 +244,12 @@ ae82d2a1dc8801714b10b5ddc4152532641556d8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version:
+    http_version: 
 765fe82055de19ac1de4854e6cbc513820f8761e:
   response:
     status:
       code: 404
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -244,12 +275,12 @@ ae82d2a1dc8801714b10b5ddc4152532641556d8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version:
+    http_version: 
 4cc3e62a1df809811f43e4880997b66b959c221d:
   response:
     status:
       code: 404
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -275,12 +306,12 @@ ae82d2a1dc8801714b10b5ddc4152532641556d8:
     body:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
-    http_version:
+    http_version: 
 e8a5589d2ff2055ca1341127f5c403c1363024ec:
   response:
     status:
       code: 204
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -300,12 +331,12 @@ e8a5589d2ff2055ca1341127f5c403c1363024ec:
     body:
       encoding: US-ASCII
       string: ''
-    http_version:
+    http_version: 
 d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
   response:
     status:
       code: 200
-      message:
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -460,41 +491,12 @@ d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
       encoding: UTF-8
       string: "<errors><error>Order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78]
         is not found</error></errors>"
-    http_version:
-5465c54b75a62eac4512160fe28a6627c96aea19:
+    http_version: 
+283d50ee42309ef1e15a8b270d5422dcae3aa875:
   response:
     status:
-      code: 200
-      message:
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.270000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Mon, 23 Nov 2015 20:32:40 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
-    http_version:
-f717b7bac78a8b703728b98e865ca64bfa163e46:
-  response:
-    status:
-      code: 200
-      message:
+      code: 404
+      message: 
     headers:
       server:
       - Apache-Coyote/1.1
@@ -503,54 +505,22 @@ f717b7bac78a8b703728b98e865ca64bfa163e46:
       x-ua-compatible:
       - IE=Edge,chrome=1
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlY2E0YjRjZTdmNjMzNGNhMzE0ZDAyNjQwNDNjOGRlZjk%3D--0b44a530e8cb56b529680441e91b9ac895282e98;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNmRmMGI0ZDE1NWZiMmJhNTM2ZTcxMDAzNDgyYzM0Yzk%3D--e1b7696e66a5064a0d69a864a1f587095eb8f2f0;
         path=/; HttpOnly
       x-runtime:
-      - '0.208000'
+      - '0.209000'
       content-type:
-      - application/json;charset=utf-8
+      - application/xml;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Tue, 24 Nov 2015 01:08:32 GMT
+      - Tue, 24 Nov 2015 20:31:45 GMT
       connection:
       - close
       transfer-encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
-        Contact"},"order_notification_level":"VERBOSE"}}'
-    http_version:
-2e163f69b80e598031d90fc65f75b21b9f1a5370:
-  response:
-    status:
-      code: 200
-      message:
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYTAyZGVhNzgwOTE0MmY4NTJjZTM3ZmVkMTMzMDQ1ODE%3D--f36247403c448b00561d5d864711f7b414a4d9ad;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.324000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Tue, 24 Nov 2015 02:22:08 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
-                       Contact"},"order_notification_level":"NONE"}}'
-    http_version:
+      string: "<errors><error>Order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78]
+        is not found</error></errors>"
+    http_version: 

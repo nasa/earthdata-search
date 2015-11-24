@@ -200,63 +200,6 @@ single_order:
       encoding: UTF-8
       string: "<?xml version=\x221.0\x22 encoding=\x22UTF-8\x22?>\n<calendar_events type=\x22array\x22>\n  <calendar_event>\n    <id>EE8C4D92-BDA5-514C-57C8-7A1A9244C3F3</id>\n    <title>ASTER GDEM V2 Tutorial</title>\n    <message>&lt;p&gt;A quick tutorial for ordering ASTER Global DEM V2 data.&amp;nbsp; &lt;br /&gt;&lt;a href=\x22http://www.echo.nasa.gov/reference/reverbastergdem_tutorial.htm\x22 target=\x22_GDEMtutorial\x22&gt;ASTER GDEM V2 Tutorial&lt;/a&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2011-10-17T08:00:00Z</start_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>CC771AB5-4D9A-4CD7-6358-B26DEC212457</id>\n    <title>ASDC Maintenance Event </title>\n    <message>&lt;p&gt;The NASA Langley DAAC (ASDC) will be doing system maintnenace from Monday January 9,2012 through Friday January 13,2012. This will prevent the distribution of CERES, CALIPSO, ISCCP, FLASHFlux, ACRIM, and SRB products. We apologize for any  inconvenience that  this may cause.  Please contact ASDC User Services  at larc-asdc-uds@lists.nasa.gov if you  have any questions.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-01-05T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-01-13T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>8FA581A3-382D-26A5-90CD-1CFC6E85C764</id>\n    <title>ECHO Degraded Service</title>\n    <message>&lt;p&gt;A live push of 10.75 will result in an outage of our non-redundant systems. Those systems are EIAT and FTP ingest&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-04-02T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-04-02T16:00:00Z</end_date>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>01697967-A7C2-190A-EE05-52BDF4E9507F</id>\n    <title>LARC ASDC Maintenance Alert</title>\n    <message>&lt;p&gt;Due to scheduled maintenance Wednesday, August 28th 2013:&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR Order and Browse tools, Reverb, and AMAPS will be unavailable from 8am to 5pm EDT.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-08-28T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-08-28T21:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>205F867D-49CF-7A6C-24A9-B44E7524F619</id>\n    <title>NASA Langley Maintenance Event</title>\n    <message>&lt;p&gt;The NASA Langley DAAC (ASDC) will be doing system maintenance on Wednesday June 20, 2012 from 7:00 am to 5:00 pm. (EST)&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-06-19T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-06-21T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>77F222B8-7472-F42F-978B-9EFD0D4C2FFB</id>\n    <title>ASDC Maintenance Event</title>\n    <message>&lt;p&gt;Downtime event on Wednesday, August 22, 2012, 7:00 am to 5:00 pm EDT:&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable due to maintenance&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-08-22T00:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-08-22T22:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>832C2896-C410-2B26-8EB6-1739DC69824C</id>\n    <title>LARC-ECS Downtime Event</title>\n    <message>&lt;p&gt;Downtime event on Tuesday, October 23, 2012, 12:00 pm GMT to Wednesday 24, 16:00 pm GMT: &lt;br /&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable due to maintenance.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-10-23T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-10-24T16:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>00E75C3A-FEF1-A641-7516-78B9249AB215</id>\n    <title>NASA LaRC Network Outage</title>\n    <message>&lt;p&gt;&lt;strong&gt;Friday, March 21, 2014 to Sunday, March 23, 2014&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;A LaRC Network Outage is scheduled from Friday, March 21 at 4:00pm  through Sunday, March 23 at 6:00pm EDT.&amp;nbsp; Due to this extended period,  please plan your network activities and data orders accordingly.&lt;/p&gt;\n&lt;p&gt;Please Expect:&lt;/p&gt;\n&lt;p&gt;&amp;bull; The data ordering and subsetting tools will be unavailable.&lt;/p&gt;\n&lt;p&gt;&amp;bull; A delay in delivery of data orders prior to, and immediately following the maintenance period.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-03-21T20:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-03-23T22:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>DD91F214-E655-807D-9824-BDFFC85C9E3D</id>\n    <title>CALIPSO in SAFE MODE</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Wednesday, July 18, 2012 due to elevated proton levels resulting from a solar flare. &lt;strong&gt;Science data is not acquired while the payload is in SAFE mode.&lt;/strong&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-18T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-25T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>EC39DA66-2443-4446-DA07-7AF3711930E3</id>\n    <title>CALIPSO in SAFE MODE:</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Thursday, May 17, 2012 due to elevated  proton levels resulting from a solar flare. CNES completed the shutdown of the  entire payload at 8:15 UTC. The payload will be off over the weekend and  recovery will start on Monday, May 21, 2012.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-05-17T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-05-21T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>EFE874E8-917D-0B79-792D-2C3EE9649357</id>\n    <title>ASDC NASA Langley Maintenance Event</title>\n    <message>&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Due to maintenance events between March 2 through March 8, 2012:&lt;/strong&gt; \n&lt;ul&gt;\n&lt;li&gt;The ASDC ordering tools will be unavailable.&lt;/li&gt;\n&lt;li&gt;There will be a delay in delivery of data orders.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;</message>\n    <start_date type=\x22datetime\x22>2012-02-01T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-03-09T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>B215E39B-3E46-3D2C-11F9-431C255DCD09</id>\n    <title>LARC-ECS Maintenance</title>\n    <message>&lt;p&gt;&lt;strong&gt;Scheduled Maintenance: Wednesday, April 23, 2014&lt;/strong&gt;:&lt;/p&gt;\n&lt;p&gt;Time: 7am - 5pm EDST&lt;/p&gt;\n&lt;p&gt;Due to scheduled maintenance Wednesday, April 23, 2014: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; from 7am - 5pm (Eastern Daylight Savings Time) EDST.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-04-21T11:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2034-04-23T21:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>B215E39B-3E46-3D2C-11F9-431C255DCD09-two</id>\n    <title>Second Notification</title>\n    <message>&lt;p&gt;&lt;strong&gt;Scheduled Maintenance: Wednesday, April 23, 2014&lt;/strong&gt;:&lt;/p&gt;\n&lt;p&gt;Time: 7am - 5pm EDST&lt;/p&gt;\n&lt;p&gt;Due to scheduled maintenance Wednesday, April 23, 2014: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; from 7am - 5pm (Eastern Daylight Savings Time) EDST.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-04-21T11:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2034-04-23T21:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>C35075C2-53F0-946C-1AF2-E559897AFE10</id>\n    <title>LARC ASDC Maintenance Alert</title>\n    <message>&lt;p&gt;January 9, 2013: 7:00am to 5pm EST: The Data Pool, MISR order and  browse tools, Reverb,and AMAPS will be unavailable due to maintenance.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-01-08T15:30:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-01-09T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>58751F12-8E15-9BB4-F04A-13DB19630A6E</id>\n    <title>No Landsat processing January 17 to January 21, 2014 ; data downloads unavailable January 18, 2014</title>\n    <message>&lt;p style=\x22font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; color: #444444; font-family: arial, helvetica, sans-serif;\x22&gt;Landsat data processing will be stopped beginning at&lt;span class=\x22Apple-converted-space\x22&gt;&amp;nbsp;&lt;/span&gt;&lt;span class=\x22aBn\x22 style=\x22border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: #cccccc; position: relative; top: -2px; z-index: 0;\x22&gt;&lt;span class=\x22aQJ\x22 style=\x22position: relative; top: 2px; z-index: -1;\x22&gt;3 p.m. CT on January 17, 2014&lt;/span&gt;&lt;/span&gt;, until&amp;nbsp;&lt;span&gt;&lt;span&gt;&lt;span class=\x22aBn\x22 style=\x22border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: #cccccc; position: relative; top: -2px; z-index: 0;\x22&gt;&lt;span class=\x22aQJ\x22 style=\x22position: relative; top: 2px; z-index: -1;\x22&gt;12 p.m. CT January 21, 2014&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&amp;nbsp;for server upgrades.&amp;nbsp;&amp;nbsp;Any on-demand orders placed will be held and the data will be processed when the upgrades are complete.&lt;/p&gt;\n&lt;p style=\x22font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; color: #444444; font-family: arial, helvetica, sans-serif;\x22&gt;Additionally, no Landsat data downloads will be available from&amp;nbsp;&lt;span&gt;&lt;span&gt;&lt;span class=\x22aBn\x22 style=\x22border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: #cccccc; position: relative; top: -2px; z-index: 0;\x22&gt;&lt;span class=\x22aQJ\x22 style=\x22position: relative; top: 2px; z-index: -1;\x22&gt;8:00 a.m. to 4:30 p.m. CT on Saturday, January 18, 2014&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-01-14T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-01-21T12:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>C12BA0D5-DC51-70C0-8F88-A96497B23429</id>\n    <title>LP DAAC System Upgrade</title>\n    <message>&lt;p&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;The LP DAAC will be undergoing a system upgrade beginning 5 AM CST on&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;Dec 2nd until 4 PM CST on Dec 3rd. Users will still be able to search&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;and place orders through Reverb during this time, however they will be&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;placed in a queue to be processed after the upgrade has completed.&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;Note that MRT and HEG services will be unavailable. Please contact LP&lt;/span&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt; DAAC User Services at&lt;span class=\x22Apple-converted-space\x22&gt;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;a style=\x22color: #1155cc; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 href=\x22mailto:lpdaac@usgs.gov\x22&gt;lpdaac@usgs.gov&lt;/a&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;&lt;span class=\x22Apple-converted-space\x22&gt;&amp;nbsp;&lt;/span&gt;with any questions.&lt;/span&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-11-26T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-12-03T16:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>0E9F135D-E243-FE58-684D-0A42D5640451</id>\n    <title>CALIPSO in SAFE MODE</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Wednesday, March 7, 2012 due to elevated 10MeV and 100MeV proton levels resulting from a solar flare.&amp;nbsp;&amp;nbsp;&amp;nbsp; CNES executed the commands to turn off the laser and the Payload Controller at 8:08 UTC.&amp;nbsp;&amp;nbsp; Return-to-service planning will begin once the proton levels return to below threshold levels.&amp;nbsp;&amp;nbsp; At this time, it is anticipated that the payload will remain OFF until early next week.&amp;nbsp;&amp;nbsp; Please check for updates here: http://www-calipso.larc.nasa.gov/&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-03-08T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-03-12T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>1B507A08-C39C-3EEF-6739-C42BD5DA5D99</id>\n    <title>MISR Production Alert</title>\n    <message>&lt;hr /&gt;\n&lt;p class=\x22MsoNormal\x22&gt;&lt;span style=\x22color: black;\x22&gt;MISR  production is currently stopped due to a MISR L1 processing issue  occurring after the addition of a leap second adjustment on June 30,  2012 at 23:59:60 UTC. This caused errors of up to 5km in the  georegistration of the MISR MIL1B2 data product. All higher level data  products from MISR Level 1 retrievals dated after July 1, 2012 (Orbit  66677 or greater) are considered invalid and should not be used. These  products will be reprocessed and re-released once the problem has been  corrected.&lt;/span&gt;&lt;/p&gt;\n&lt;p class=\x22MsoNormal\x22&gt;&lt;span style=\x22color: black;\x22&gt; &lt;/span&gt;&lt;/p&gt;\n&lt;hr /&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-01T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-16T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>92AE7657-9A27-01B1-2F64-6A42457A87BA</id>\n    <title>LaRC Maintenance Event</title>\n    <message>&lt;p&gt;Downtime event on Tuesday, May 22, 2012, 8:00 am to Wednesday, May 23, 2012,  5:00 pm EDT:&amp;nbsp; The MISR order tool, MISR browse tool, AMAPS, and Reverb will  be unavailable during custom code software installation. Order fulfillment will  be delayed.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-05-21T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-05-24T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>D3B1DDC6-E784-EA75-BF8F-2B67C81AF1E5</id>\n    <title>LP DAAC Maintenance</title>\n    <message>&lt;p&gt;The LP DAAC will be undergoing a system upgrade beginning 1 PM CDT on July 9th until 4 PM CDT on July 11th. Users will still be able to search and place orders through Reverb during this time, however they will be placed in a queue to be processed after the upgrade has completed.&amp;nbsp; Please contact LP DAAC User Services at lpdaac@usgs.gov with any questions.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-09T13:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-11T16:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>AE3B5EE1-97C5-5508-CF95-63B3384AEFEC</id>\n    <title>LP DAAC Extended Maintenance</title>\n    <message>&lt;p&gt;&lt;span style=\x22color: #222222; line-height: 115%; font-family: &amp;quot;Arial&amp;quot;,&amp;quot;sans-serif&amp;quot;; font-size: 10pt; mso-fareast-font-family: &amp;quot;Times New Roman&amp;quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;\x22&gt;15Jan2014:  LP DAAC Web access will be intermittent and HTTP download access will  be unavailable between&amp;nbsp;8 a.m. &amp;ndash; 2 p.m. CT&amp;nbsp;(1400 &amp;ndash; 2000 UTC). Please  contact LP DAAC User Services with any questions.&lt;/span&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-01-10T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-01-16T16:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>54882330-B0E3-88EE-6C91-0CFB7D17D785</id>\n    <title>NSIDC Downtime</title>\n    <message>&lt;p&gt;Technical difficultes of the systems at NSIDC will prevent the  distribution of AMSR-E, IceBridge, ICESat/GLAS, MODIS, and NISE data  holdings. During this downtime period, retrieving data will not be  possible. We apologize for any inconvenience that this may cause. Please  contact NSIDC User Services at nsidc@nsidc.org if you have any  questions.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-10-22T20:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-10-23T03:00:00Z</end_date>\n    <owner_provider_id>20604</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>488BEC97-82CC-08E7-E9FD-412798663FA7</id>\n    <title>LaRC ASDC Maintenance Event</title>\n    <message>&lt;p&gt;&lt;strong&gt;Saturday, October 6, 2012&lt;/strong&gt;&lt;strong&gt;, 9:00 am to 3:00 pm EDT: &lt;br /&gt;Connection to the ASDC web site will be unavailable due to maintenance of network hardware.&lt;/strong&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-09-21T00:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-10-07T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>535F88B5-C1B9-B371-6847-B2A92D36737D</id>\n    <title>Data Downloads from LP DAAC</title>\n    <message>&lt;p&gt;&lt;span&gt;LP DAAC Data downloads will be unavailable Wednesday July 3rd, from 8 am to 2 pm  central for an extended planned maintenance period. Contact User  Services with any questions at lpdaac@usgs.gov&lt;/span&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-07-03T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-07-04T12:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>1CF76BEE-51A5-25A4-57ED-2C2462687CE5</id>\n    <title>CALIPSO in SAFE Mode</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Friday, July 13, 2012 due to elevated  proton levels resulting from a solar flare. The payload will be off over the  weekend and recovery will start on Monday, July 16, 2012. &lt;strong&gt;Science data is not  acquired while the payload is in SAFE mode.&lt;/strong&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-13T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-16T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>46575AFE-4261-9723-308D-391552F485F0</id>\n    <title>NASA LaRC Extended Maintenance Event</title>\n    <message>&lt;p&gt;Due to an extended maintenance period, Monday, December 9th 2013 to Wednesday, December 11th 2013. Maintenance Time: Monday, 8:00am to Wednesday, 5:00pm EST.&lt;/p&gt;\n&lt;p&gt;Please expect:&lt;/p&gt;\n&lt;p&gt;- The Data Pool, MISR order and browse tools, Reverb, AMAPS and OPeNDAP will be unavailable during extended maintenance.&lt;br /&gt;- Connection to the ASDC web site will be temporarily unavailable on Wednesday, 12/11 from 9 - 11 am EST.&lt;/p&gt;\n&lt;ul&gt;\n&lt;/ul&gt;</message>\n    <start_date type=\x22datetime\x22>2013-12-09T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-12-11T21:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>3C385EFC-E4CB-5305-5A61-717F2BAF08AF</id>\n    <title>LARC ASDC Extended Maintenance Alert</title>\n    <message>&lt;p&gt;Due to an extended maintenance period beginning Friday, July 12, 2013 at 4pm EST, through Friday, July 19, 2013, at 4:00pm. Please expect: Interruption in availability of the data ordering and subsetting tool, including: the ASDC ordering tools, MISR Order and Customization Tool, CALIPSO, CERES, Reverb, AMAPS, and TES search and subset tools. There will be a delay in delivery of data orders.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-07-08T16:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-07-19T21:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>F4E9FDFD-3BFB-C368-FF98-6D282070ADFB</id>\n    <title>LARC ASDC Maintenance Event</title>\n    <message>&lt;p&gt;The NASA Langley DAAC (ASDC) will be experiencing system maintnenance from March 13, 2013, 7:00am to 5:00 pm EDT: The Data Pool MISR Order Tool, and browse tools, Reverb, and AMAPS will be unavailable during maintenance.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-03-12T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-03-13T22:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>01A7FBF2-F4EA-4D2F-D8C4-83788439FA32</id>\n    <title>LP DAAC to Suspend ASTER and MODIS Distribution During Federal Shutdown</title>\n    <message>&lt;p&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;The Land Processes Distributed Active Archive Center (LP DAAC) has suspended the distribution of ASTER and MODIS data due to the shutdown of the United States Federal government. Users will be unable to receive orders placed through Reverb, Earth Explorer, GloVis, the Global Data Explorer (GDEx), MRTWeb, and TerraLook. Users will also be unable to download data through the LP DAAC Data Pool, ASTER EDS, and HTTP.&lt;/span&gt;&lt;br style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 /&gt;&lt;br style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 /&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;User Services will be unavailable during the United States Federal government shutdown.&lt;/span&gt;&lt;br style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 /&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-10-01T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-10-31T12:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>4F3D0190-24B6-5B78-4A0E-4A17F09100D9</id>\n    <title>ECHO Outage</title>\n    <message>&lt;p&gt;10.71 code push. Torquebox upgrade will require outage&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-01-22T13:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-01-22T17:00:00Z</end_date>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n</calendar_events>\n"
     http_version:
-edscbasic_prefs:
-  response:
-    status:
-      code: 404
-      message:
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.200000'
-      content-type:
-      - application/json;charset=utf-8
-      content-length:
-      - '45'
-      date:
-      - Thu, 26 Jun 2014 19:18:07 GMT
-      connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: '{"errors":["Preferences not found for user"]}'
-    http_version:
-edscbasic_prefs_put:
-  response:
-    status:
-      code: 201
-      message:
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      location:
-      - https://api.echo.nasa.gov/echo-rest/users/69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences?clientId=unknown
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZjViZmY0MjU2OTQ5ZGMyZjZiMDU4NzFmNmJiYjg1NjY%3D--38eed0f9c9cd9dff0cebea15a11c933400e7370c;
-        path=/; HttpOnly
-      x-runtime:
-      - '15.571000'
-      content-type:
-      - application/json;charset=utf-8
-      content-length:
-      - '18'
-      date:
-      - Tue, 09 Sep 2014 19:12:17 GMT
-      connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{}}'
-    http_version:
 edscbasic_current:
   response:
     status:
@@ -1227,6 +1170,42 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
       encoding: UTF-8
       string: '{"order":{"id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","provider_orders":[]}}'
     http_version:
+14a0ec30b17ac928b6678e04f531f842e2a96520:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - nginx/1.4.7
+      date:
+      - Tue, 24 Nov 2015 17:33:21 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      www-authenticate:
+      - Bearer realm="URS",error="invalid_token"
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 9b962bd0-f008-49bb-8008-1da4ab44b713
+      x-runtime:
+      - '0.005167'
+    body:
+      encoding: UTF-8
+      string: '{"uid":"edsc","first_name":"Earthdata","last_name":"Search","email_address":"patrick+edsc@element84.com","country":"United States","study_area":"OTHER","user_type":"PRODUCTION_USER","affiliation":"OTHER","organization":"EDSC","member_groups":["earthdata_ecc","echo"]}'
+    http_version:
 5465c54b75a62eac4512160fe28a6627c96aea19:
   response:
     status:
@@ -1240,23 +1219,25 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.270000'
+      - '0.229000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Mon, 23 Nov 2015 20:32:40 GMT
+      - Tue, 24 Nov 2015 19:26:28 GMT
       connection:
       - close
       transfer-encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search",
+              "email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},
+              "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+              Contact"},"order_notification_level":"NONE"}}'
     http_version:
-f717b7bac78a8b703728b98e865ca64bfa163e46:
+0a02d564986dee8b88b72b36380ff495d8d4e1c0:
   response:
     status:
       code: 200
@@ -1269,26 +1250,25 @@ f717b7bac78a8b703728b98e865ca64bfa163e46:
       x-ua-compatible:
       - IE=Edge,chrome=1
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlY2E0YjRjZTdmNjMzNGNhMzE0ZDAyNjQwNDNjOGRlZjk%3D--0b44a530e8cb56b529680441e91b9ac895282e98;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzliNWI2ODZlNWNmYzk2MjIxMzZlYjI3MDU0MDZmMmY%3D--ccab90e99f84e4ef2a742a3ed51d22dc16d545c0;
         path=/; HttpOnly
       x-runtime:
-      - '0.208000'
+      - '0.192000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Tue, 24 Nov 2015 01:08:32 GMT
+      - Tue, 24 Nov 2015 19:26:38 GMT
       connection:
       - close
       transfer-encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
-        Contact"},"order_notification_level":"VERBOSE"}}'
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
     http_version:
-2e163f69b80e598031d90fc65f75b21b9f1a5370:
+78fc022f791584c4b09792c0d1a2d00ad8d4e1c0:
   response:
     status:
       code: 200
@@ -1301,22 +1281,21 @@ f717b7bac78a8b703728b98e865ca64bfa163e46:
       x-ua-compatible:
       - IE=Edge,chrome=1
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYTAyZGVhNzgwOTE0MmY4NTJjZTM3ZmVkMTMzMDQ1ODE%3D--f36247403c448b00561d5d864711f7b414a4d9ad;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzliNWI2ODZlNWNmYzk2MjIxMzZlYjI3MDU0MDZmMmY%3D--ccab90e99f84e4ef2a742a3ed51d22dc16d545c0;
         path=/; HttpOnly
       x-runtime:
-      - '0.324000'
+      - '0.192000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Tue, 24 Nov 2015 02:22:08 GMT
+      - Tue, 24 Nov 2015 19:26:38 GMT
       connection:
       - close
       transfer-encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
-                       Contact"},"order_notification_level":"NONE"}}'
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
     http_version:

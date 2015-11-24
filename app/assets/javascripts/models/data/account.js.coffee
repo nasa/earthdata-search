@@ -60,7 +60,6 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
     _preferencesFromJson: (json) =>
       prefs = json.preferences
       @notificationLevel(prefs.order_notification_level)
-      console.log @notificationLevel()
       contact = prefs.general_contact
       if contact?
         @firstName(contact.first_name)
