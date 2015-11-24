@@ -1317,3 +1317,96 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
       encoding: UTF-8
       string: '{"order":{"id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","provider_orders":[]}}'
     http_version:
+5465c54b75a62eac4512160fe28a6627c96aea19:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.270000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 23 Nov 2015 20:32:40 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+f717b7bac78a8b703728b98e865ca64bfa163e46:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlY2E0YjRjZTdmNjMzNGNhMzE0ZDAyNjQwNDNjOGRlZjk%3D--0b44a530e8cb56b529680441e91b9ac895282e98;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.208000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 01:08:32 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"order_notification_level":"VERBOSE"}}'
+    http_version:
+2e163f69b80e598031d90fc65f75b21b9f1a5370:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYTAyZGVhNzgwOTE0MmY4NTJjZTM3ZmVkMTMzMDQ1ODE%3D--f36247403c448b00561d5d864711f7b414a4d9ad;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.324000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 02:22:08 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+                       Contact"},"order_notification_level":"NONE"}}'
+    http_version:

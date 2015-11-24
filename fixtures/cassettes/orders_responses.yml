@@ -429,10 +429,10 @@ d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
           <user_region>USA</user_region>
         </user_information>
     http_version: 
-0878c483a2af2b15f560564541b64683ac575547:
+275c04549ca33257e5cb13578db427337d3c93c5:
   response:
     status:
-      code: 400
+      code: 404
       message: 
     headers:
       server:
@@ -442,23 +442,115 @@ d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
       x-ua-compatible:
       - IE=Edge,chrome=1
       set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlNmIyYzk3MGJkYjU0OTMwMDdhYTM5NjUzNzExYjk5NmY%3D--e651484d8ec85ea94511cfa15d307db1a72de8b8;
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYmVmN2FiNDY2Y2ZlYTE0ZGJkMjUzOGJiMTE2YjkyNDU%3D--62154dcd358c69b86b85541d8ec18148e5e660a9;
         path=/; HttpOnly
       x-runtime:
-      - '0.091000'
+      - '0.538000'
       content-type:
       - application/xml;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Fri, 06 Nov 2015 19:02:52 GMT
+      - Tue, 24 Nov 2015 01:06:10 GMT
       connection:
       - close
       transfer-encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '<errors><error>cvc-complex-type.2.4.a: Invalid content was found starting
-        with element ''ns2:FirstName''. One of ''{"http://echo.nasa.gov/echo/v10/types":Guid,
-        "http://echo.nasa.gov/echo/v10/types":Role}'' is expected.</error></errors>'
-    http_version: 
+      string: "<errors><error>Order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78]
+        is not found</error></errors>"
+    http_version:
+5465c54b75a62eac4512160fe28a6627c96aea19:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.270000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 23 Nov 2015 20:32:40 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+f717b7bac78a8b703728b98e865ca64bfa163e46:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlY2E0YjRjZTdmNjMzNGNhMzE0ZDAyNjQwNDNjOGRlZjk%3D--0b44a530e8cb56b529680441e91b9ac895282e98;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.208000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 01:08:32 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"order_notification_level":"VERBOSE"}}'
+    http_version:
+2e163f69b80e598031d90fc65f75b21b9f1a5370:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYTAyZGVhNzgwOTE0MmY4NTJjZTM3ZmVkMTMzMDQ1ODE%3D--f36247403c448b00561d5d864711f7b414a4d9ad;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.324000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 02:22:08 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+                       Contact"},"order_notification_level":"NONE"}}'
+    http_version:
