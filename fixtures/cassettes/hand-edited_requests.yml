@@ -123,57 +123,6 @@ http_interactions:
   digest: edscbasic_prefs_put
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Echo-Token:
-      - edsc
-  recorded_at: Fri, 06 Jun 2014 01:49:50 GMT
-  digest: edsc_prefs
-- request:
-    method: put
-    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123","role":"Order Contact"},"order_notification_level":"NONE"}}'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Fri, 06 Nov 2015 17:57:15 GMT
-  digest: set_preference_none
-- request:
-    method: put
-    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123","role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Fri, 06 Nov 2015 17:57:15 GMT
-  digest: set_preference_verbose
-- request:
-    method: get
     uri: https://api.echo.nasa.gov/echo-rest/users/current.json
     body:
       encoding: US-ASCII
