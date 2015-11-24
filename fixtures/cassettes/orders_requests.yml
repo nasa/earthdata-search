@@ -10356,4 +10356,27 @@ http_interactions:
       - edsc
   recorded_at: Thu, 15 Jan 2015 21:08:41 GMT
   digest: d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/user_information
+    body:
+      encoding: UTF-8
+      string: '{"user_information":{"shipping_contact":{"address":{"country":"United
+        States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"billing_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"order_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"user_domain":"OTHER","user_region":"USA"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 24 Nov 2015 01:06:22 GMT
+  digest: 275c04549ca33257e5cb13578db427337d3c93c5
 recorded_with: VCR 2.6.0
