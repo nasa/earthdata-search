@@ -11,6 +11,7 @@ module.exports = {
   context: __dirname + '/..',
   entry: {
     "edsc-search": "./edsc/search.js",
+    "edsc-access": "./edsc/access.js",
     "edsc-plugin.datasource.cwic": "./edsc/plugins/datasource/cwic/src/js/edsc-plugin.datasource.cwic.jsx",
     "edsc-plugin.renderer.cwic": "./edsc/plugins/renderer/cwic/src/js/edsc-plugin.renderer.cwic.jsx",
     "edsc-plugin.datasource.cmr": "./edsc/plugins/datasource/cmr/src/js/edsc-plugin.datasource.cmr.jsx",

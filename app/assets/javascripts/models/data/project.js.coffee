@@ -255,7 +255,6 @@ ns.Project = do (ko,
             for collection, i in collections
               query = queries[i + offset]
               if query?
-                # FIXME
                 collection.granuleDatasource().fromBookmarkParams(query, value)
                 collection.visible(true) if query.v == 't'
               if i == 0 && focused

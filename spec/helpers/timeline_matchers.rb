@@ -142,7 +142,7 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, collection_n=n
     if collection_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.collections()[#{collection_n}].granulesModel.temporal.applied);"
+      script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
     end
 
     synchronize do
@@ -172,7 +172,7 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, collection_n=n
     if collection_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.collections()[#{collection_n}].granulesModel.temporal.applied);"
+      script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
     end
 
     actual = page.evaluate_script(script).split(',').join(' - ')
@@ -190,7 +190,7 @@ RSpec::Matchers.define :have_no_temporal do |collection_n=nil|
     if collection_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.collections()[#{collection_n}].granulesModel.temporal.applied);"
+      script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource.temporal());"
     end
 
     synchronize do

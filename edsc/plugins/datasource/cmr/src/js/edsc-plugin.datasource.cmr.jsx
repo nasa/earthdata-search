@@ -24,7 +24,7 @@ export default class CmrDatasourcePlugin {
     }
   }
   toBookmarkParams() {
-    this.cmrQuery().serialize();
+    return this.cmrQuery().serialize();
   }
   fromBookmarkParams(json, fullQuery) {
     let query = this.cmrQuery();
@@ -65,10 +65,10 @@ export default class CmrDatasourcePlugin {
 
   // Implement only if row-specific temporal is supported
   setTemporal(values) {
-    let temporal = this.temporal(),
-        start = temporal.start,
-        end = temporal.stop;
+    let temporal = this.temporal();
     if (temporal) {
+      let start = temporal.start,
+          end = temporal.stop;
       if (values.hasOwnProperty('recurring')) {
         temporal.isRecurring(values.recurring);
       }
@@ -79,10 +79,10 @@ export default class CmrDatasourcePlugin {
         end.date(values.endDate);
       }
       if (values.startYear) {
-        start.date(values.startYear);
+        start.year(values.startYear);
       }
       if (values.endYear) {
-        end.date(values.endYear);
+        end.year(values.endYear);
       }
     }
   }

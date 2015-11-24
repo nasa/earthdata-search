@@ -21,7 +21,7 @@ describe "CWIC-capable collection search results", reset: false do
       end
 
       it "displays an indication that its search and retrieval is provided externally", acceptance: true do
-        expect(first_collection_result).to have_text("Int'l/Interagency")
+        expect(first_collection_result).to have_text("Int'l / Interagency")
       end
     end
 
@@ -33,7 +33,7 @@ describe "CWIC-capable collection search results", reset: false do
       end
 
       it "displays no indication of external search and retrieval", acceptance: true do
-        expect(first_collection_result).to have_no_text("Int'l/Interagency")
+        expect(first_collection_result).to have_no_text("Int'l / Interagency")
       end
     end
   end
@@ -63,7 +63,7 @@ describe "CWIC-capable collection search results", reset: false do
       end
 
       it "displays an indication that its search and retrieval is provided externally" do
-        expect(page.find('.flyout')).to have_text("Int'l/Interagency")
+        expect(page.find('.flyout')).to have_text("Int'l / Interagency")
       end
     end
 
