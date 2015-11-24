@@ -24,14 +24,14 @@ describe 'Contact Information', reset: false do
     expect(page).to have_content("First Name Earthdata")
     expect(page).to have_content("Last Name Search")
     expect(page).to have_content("Email patrick+edsc@element84.com")
-    expect(page).to have_content("Organization Name test123")
+    expect(page).to have_content("Organization Name EDSC")
     expect(page).to have_content("Country United States")
     expect(page).to have_select("notificationLevel", selected: "Never")
   end
 
   context "clicking Update Notification Preference button" do
     before :each do
-      expect(page).to have_select('Receive delayed access notifications', selected: 'Never')
+      expect(page).to have_select('notificationLevel', selected: 'Never')
       find('#notificationLevel').find(:xpath, 'option[1]').select_option
       click_button 'Update Notification Preference'
       wait_for_xhr
@@ -46,7 +46,7 @@ describe 'Contact Information', reset: false do
     end
 
     it "updates the order notification preference" do
-      expect(page).to have_select("Receive delayed access notifications", selected: "Always")
+      expect(page).to have_select("notificationLevel", selected: "Always")
     end
 
     it "displays appropriate successful messages" do

@@ -2,6 +2,19 @@
 http_interactions:
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C179003030-ORNL_DAAC&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 24 Nov 2015 18:02:15 GMT
+  digest: 3316e3f320ed33557778a92d557a99a21b057e37
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C179014698-NSIDC_ECS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII

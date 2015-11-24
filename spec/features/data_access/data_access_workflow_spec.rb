@@ -190,11 +190,11 @@ describe "Data Access workflow", reset: false do
       it "displays current contact information" do
         account_form = page.find('.account-form')
         expect(account_form).to have_text("Earthdata Search (patrick+edsc@element84.com)")
-        expect(account_form).to have_text("Organization: test123")
+        expect(account_form).to have_text("Organization: EDSC")
         expect(account_form).to have_text("Country: United States")
-        expect(account_form).to have_text("Affiliation: GOVERNMENT")
-        expect(account_form).to have_text("Study Area: Air Sea Interaction")
-        expect(account_form).to have_text("User Type: Science Team")
+        expect(account_form).to have_text("Affiliation: OTHER")
+        expect(account_form).to have_text("Study Area: OTHER")
+        expect(account_form).to have_text("User Type: PRODUCTION_USER")
 
         expect(account_form).to have_link('Edit Profile in Earthdata Login')
       end
