@@ -147,8 +147,11 @@ class ApplicationController < ActionController::Base
     logged_in = session[:access_token].present? &&
           session[:refresh_token].present? &&
           session[:expires_in].present? &&
-          session[:logged_in_at]
-
+                session[:logged_in_at]
+    if Rails.env.development?
+      Rails.logger.info "Access: #{session[:access_token]}"
+      Rails.logger.info "Refresh: #{session[:refresh_token]}"
+    end
     store_oauth_token() unless logged_in
     logged_in
   end

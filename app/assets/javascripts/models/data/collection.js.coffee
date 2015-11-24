@@ -65,9 +65,12 @@ ns.Collection = do (ko
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
       @granuleDescription = @computed(@_computeGranuleDescription, this, deferEvaluation: true)
       @granuleDatasource = ko.observable(null)
+      @_renderers = []
+      @_pendingRenderActions = []
       @osddUrl = @computed(@_computeOsddUrl, this, deferEvaluation: true)
 
       @visible = ko.observable(false)
+      @disposable(@visible.subscribe(@_visibilityChange))
 
       @fromJson(jsonData)
 
@@ -156,6 +159,51 @@ ns.Collection = do (ko
       else
         return []
 
+    _visibilityChange: (visible) =>
+      # TODO: Visibility continues to be too coupled to collections
+      action = if visible then 'startSearchView' else 'endSearchView'
+      @notifyRenderers(action)
+
+    destroy: ->
+      @_unloadDatasource()
+      @_unloadRenderers()
+      super()
+
+    notifyRenderers: (action) ->
+      @_loadRenderers()
+      if @_loading
+        @_pendingRenderActions.push(action)
+      else
+        for renderer in @_renderers
+          renderer[action]?()
+
+    _loadRenderers: ->
+      names = @granuleRendererNames()
+      loaded = names.join(',')
+      if loaded.length > 0 && loaded != @_currentRenderers
+        @_loading = true
+        @_currentRenderers = loaded
+        @_unloadRenderers()
+        expected = names.length
+        onload = (PluginClass, facade) =>
+          renderer = new PluginClass(facade, this)
+          @_renderers.push(renderer)
+          for action in @_pendingRenderActions
+            renderer[action]?()
+
+        oncomplete = =>
+          expected -= 1
+          if expected == 0
+            @_loading = false
+            @_pendingRenderActions = []
+
+        for renderer in names
+          edscplugin.load "renderer.#{renderer}", onload, oncomplete
+
+    _unloadRenderers: ->
+      renderer.destroy() for renderer in @_renderers
+      @_renderers = []
+
     _loadDatasource: ->
       desiredName = @granuleDatasourceName()
       if desiredName && @_currentName != desiredName
@@ -164,6 +212,7 @@ ns.Collection = do (ko
         onload = (PluginClass, facade) =>
           datasource = new PluginClass(facade, this)
           @_currentName = desiredName
+          @_unloadDatasource()
           @granuleDatasource(@disposable(datasource))
 
         oncomplete = =>

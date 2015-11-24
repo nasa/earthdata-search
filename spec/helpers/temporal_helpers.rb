@@ -1,6 +1,7 @@
 module Helpers
   module TemporalHelpers
     def set_temporal(start, stop=nil, range=nil, collection_n=nil)
+      wait_for_xhr
       start = start.strftime('%Y-%m-%d %H:%M:%S') if start && start.is_a?(DateTime)
       stop = stop.strftime('%Y-%m-%d %H:%M:%S') if stop && stop.is_a?(DateTime)
 
@@ -19,19 +20,20 @@ module Helpers
       if collection_n.nil?
         script += "})(edsc.page.query.temporal.applied);"
       else
-        script += "})(edsc.page.project.collections()[#{collection_n}].granulesModel.temporal.applied);"
+        script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
       end
       page.execute_script(script)
       wait_for_xhr
     end
 
     def unset_temporal(collection_n=nil)
+      wait_for_xhr
       script = "(function(temporal) {\n"
       script += "  temporal.clear();\n"
       if collection_n.nil?
         script += "})(edsc.page.query.temporal.applied);"
       else
-        script += "})(edsc.page.project.collections()[#{collection_n}].granulesModel.temporal.applied);"
+        script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
       end
       page.execute_script(script)
       wait_for_xhr
