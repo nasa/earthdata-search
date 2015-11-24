@@ -14,7 +14,7 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
       @userType = ko.observable("Loading ...")
       @userType = ko.observable("Loading ...")
       @primaryStudyArea = ko.observable("Loading ...")
-      @notificationLevel = ko.observable("Loading ...")
+      @notificationLevel = ko.observable("")
       @country = ko.observable("Loading ...")
       @errors = ko.observable("")
       @message = ko.observable("")
@@ -60,6 +60,7 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
     _preferencesFromJson: (json) =>
       prefs = json.preferences
       @notificationLevel(prefs.order_notification_level)
+      console.log @notificationLevel()
       contact = prefs.general_contact
       if contact?
         @firstName(contact.first_name)
@@ -77,6 +78,9 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
         last_name: @lastName()
         email: @email()
         organization: @organizationName()
+        address:
+          country: @country()
+        phones: [{number:"0000000000",phone_number_type:"BUSINESS"}]
 
       prefs =
         general_contact: contact

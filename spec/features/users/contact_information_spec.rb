@@ -26,7 +26,7 @@ describe 'Contact Information', reset: false do
     expect(page).to have_content("Email patrick+edsc@element84.com")
     expect(page).to have_content("Organization Name test123")
     expect(page).to have_content("Country United States")
-    expect(page).to have_select("Receive delayed access notifications", selected: "Never")
+    expect(page).to have_select("notificationLevel", selected: "Never")
   end
 
   context "clicking Update Notification Preference button" do

@@ -370,4 +370,62 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Fri, 06 Nov 2015 14:31:36 GMT
   digest: 14a0ec30b17ac928b6678e04f531f842e2a96520
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 23 Nov 2015 20:32:50 GMT
+  digest: 5465c54b75a62eac4512160fe28a6627c96aea19
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"test123","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"order_notification_level":"VERBOSE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 24 Nov 2015 01:08:44 GMT
+  digest: f717b7bac78a8b703728b98e865ca64bfa163e46
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"order_notification_level":"NONE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 24 Nov 2015 02:22:08 GMT
+  digest: 2e163f69b80e598031d90fc65f75b21b9f1a5370
 recorded_with: "VCR 2.6.0"
