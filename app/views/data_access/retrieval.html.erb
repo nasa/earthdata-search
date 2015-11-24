@@ -1,6 +1,6 @@
 <% content_for :javascript do %>
   <script>
-    this.edscPageData = <%= raw @retrieval.jsondata.merge(id: @retrieval.to_param).to_json %>;
+    this.edscPageData = <%= raw @retrieval.project.merge(id: @retrieval.to_param).to_json %>;
   </script>
   <%= javascript_include_tag "data_access" %>
 <% end %>
@@ -12,7 +12,7 @@
 
 <section class="data-access data-access-retrieve">
   <nav class="data-access-nav">
-    <a href="/data/configure?<%= @retrieval.jsondata['source'] %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Data Access Options</a>
+    <a href="/data/configure?<%= @retrieval.source %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Data Access Options</a>
   </nav>
   <header class="data-access-header">
     <h1>Success!</h1>
@@ -62,7 +62,7 @@
       <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.submittedOrders">
         <li class="data-access-collection">
           <p>
-            <span class="data-access-collection-name" data-bind="text: collection_id"></span>
+            <span class="data-access-collection-name" data-bind="text: dataset_id"></span>
             <!-- ko if: order_status -->
             <span class="order-state" data-bind="css: order_status, text: order_status"></span>
             <!-- /ko -->
@@ -78,7 +78,22 @@
                  data-method="post"
                  data-confirm="Are you sure you want to remove this order?  This action cannot be undone."
                  rel="nofollow">Cancel</a>
-              <!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: dropped_granules && dropped_granules.length > 0 -->
+              <p>The following granules will not be processed because they do not support the <strong data-bind="text: method_name"></strong> access method:</p>
+              <div class="granule-list">
+                <div>
+                  <ul>
+                  <!--ko foreach: dropped_granules-->
+                    <li>
+                      <h5 data-bind="text: name"></h5>
+                      <span data-bind="text: id"></span>
+                    </li>
+                  <!--/ko-->
+                  </ul>
+                </div>
+              </div>
+            <!-- /ko -->
           </div>
         </li>
       </ul>
@@ -91,7 +106,7 @@
       <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.submittedServiceOrders">
         <li class="data-access-collection">
           <p>
-            <span class="data-access-collection-name" data-bind="text: collection_id"></span>
+            <span class="data-access-collection-name" data-bind="text: dataset_id"></span>
             <!-- ko if: order_status -->
             <span class="order-state" data-bind="css: order_status, text: order_status"></span>
             <!-- /ko -->
@@ -111,7 +126,7 @@
               <p><strong>Message: </strong> <span data-bind="text: error_message"></span></p>
               <% if Rails.configuration.feedback_url.present? %>
                 <p>Please
-                  <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Data Access', collection_id)" class="button feedback-button">
+                  <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Data Access', dataset_id)" class="button feedback-button">
                     <i class="fa fa-exclamation-circle"></i>
                     report a problem
                   </a>
@@ -145,7 +160,7 @@
       <h2>Additional Resources and Documentation</h2>
       <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.collectionLinks">
         <li class="data-access-collection">
-          <p class="data-access-collection-name" data-bind="text: collection_id"></p>
+          <p class="data-access-collection-name" data-bind="text: dataset_id"></p>
           <ul class="data-access-collection-actions" data-bind="foreach: links">
             <li><a class="link" data-bind="attr: {href: href}, text: title"></a></li>
           </ul>
@@ -156,7 +171,7 @@
   <section class="data-access-next">
     <h2>Next Steps</h2>
     <ul>
-      <li><i class="fa fa-chevron-circle-right"></i> <a class="link" href="/search?<%= @retrieval.jsondata['source'] %>">Back to Earthdata Search Results</a></li>
+      <li><i class="fa fa-chevron-circle-right"></i> <a class="link" href="/search?<%= @retrieval.source %>">Back to Earthdata Search Results</a></li>
       <li><i class="fa fa-chevron-circle-right"></i> <a class="link" href="/">Start a New Earthdata Search Session</a></li>
     </ul>
   </section>

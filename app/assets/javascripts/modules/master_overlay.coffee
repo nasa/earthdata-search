@@ -15,6 +15,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     hide: -> @toggle(false)
 
     toggle: (show = @root.hasClass('is-hidden'), event=true) ->
+      @root.trigger('edsc.overlaychange')
       @root.toggleClass('is-hidden', !show)
       @_triggerStateChange() if event
 
@@ -22,11 +23,16 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @_minimized = true
       @_updateMinMaxState()
       @contentHeightChanged()
+      @_triggerStateChange()
 
     maximize: ->
-      @_minimized = false
       @_updateMinMaxState()
       @contentHeightChanged()
+      # Temporarily store @_minimized value in a var because @_minimized value can be out of date: if it triggers the
+      # state change before setting it to false, the state change will say that the overlay is still minimized.
+      tmp = @_minimized
+      @_minimized = false
+      @_triggerStateChange() if tmp
 
     showParent: -> @toggleParent(true)
 
@@ -113,6 +119,11 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         @toggle(arg.visible, false)
         @toggleParent(arg.parent, false)
         @toggleSecondary(arg.secondary, false)
+        if arg.minimized?
+          if arg.minimized
+            @minimize()
+          else
+            @maximize()
         children = arg.children
         for child in @_content().children()
           $child = $(child)
@@ -122,6 +133,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       else
         children = ($(child).attr('id') for child in @children())
         {
+          minimized: @_minimized
           visible: !@root.hasClass('is-hidden')
           parent: !@root.hasClass(@scope('is-parent-hidden'))
           secondary: !@root.hasClass(@scope('is-secondary-hidden'))

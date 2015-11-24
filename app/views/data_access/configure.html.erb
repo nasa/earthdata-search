@@ -21,7 +21,7 @@
     <!-- ko foreach: project.accessCollections -->
     <li class="access-item">
       <div class="access-item-header">
-        <h2 data-bind="text: collection.collection_id"></h2>
+        <h2 data-bind="text: collection.dataset_id"></h2>
       </div>
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">

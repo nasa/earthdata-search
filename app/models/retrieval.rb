@@ -38,7 +38,7 @@ class Retrieval < ActiveRecord::Base
     client = Echo::Client.client_for_environment(env, Rails.configuration.services)
 
     retrieval.collections.each do |collection|
-      params = Rack::Utils.parse_query(collection['params'])
+      params = Rack::Utils.parse_nested_query(collection['params'])
       params.merge!(page_size: 2000, page_num: 1)
 
       access_methods = collection['serviceOptions']['accessMethod']
@@ -53,6 +53,8 @@ class Retrieval < ActiveRecord::Base
                                                 client,
                                                 access_token)
           method[:order_id] = order_response[:order_id]
+          method[:dropped_granules] = order_response[:dropped_granules]
+          Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map {|dg| dg[:id]}}"
         elsif method['type'] == 'service'
           request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
 
@@ -73,6 +75,19 @@ class Retrieval < ActiveRecord::Base
     Array.wrap(self.jsondata['collections'] || self.jsondata['datasets'])
   end
 
+  def source
+    self.jsondata['source']
+  end
+
+  def project
+    self.jsondata.except('datasets').merge('collections' => self.collections)
+  end
+
+  def project=(project_json)
+    datasets = Array.wrap(project_json['collections'] || project_json['datasets'])
+    self.jsondata = project_json.except('collections').merge('datasets' => datasets)
+  end
+
   private
 
   def get_collection_id(id)
@@ -89,10 +104,7 @@ class Retrieval < ActiveRecord::Base
   def update_access_configurations
     self.collections.each do |collection|
       if collection.key?('serviceOptions') && collection.key?('id')
-        config = AccessConfiguration.find_or_initialize_by('collection_id' => collection['id'])
-        config.service_options = collection['serviceOptions']
-        config.user = self.user
-        config.save!
+        AccessConfiguration.set_default_options(self.user, collection['id'], collection['serviceOptions'])
       end
     end
   end

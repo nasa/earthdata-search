@@ -13,7 +13,13 @@ ns.Collection = do (ko
                  extend=jQuery.extend
                  ajax = @edsc.util.xhr.ajax
                  dateUtil = @edsc.util.date
+                 config = @edsc.config
                  ) ->
+
+  openSearchKeyToEndpoint =
+    CWIC: (collection) ->
+      short_name = collection.json.short_name
+      "http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=#{short_name}&clientId=#{config.cmrClientId}"
 
   collections = ko.observableArray()
 
@@ -59,6 +65,7 @@ ns.Collection = do (ko
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
       @granuleDescription = @computed(@_computeGranuleDescription, this, deferEvaluation: true)
+      @osddUrl = @computed(@_computeOsddUrl, this, deferEvaluation: true)
 
       @visible = ko.observable(false)
 
@@ -105,9 +112,14 @@ ns.Collection = do (ko
         if hits?
           result = "#{hits} Granule"
           result += 's' if hits != 1
+      else if @isExternal()
+        result = "Int'l/Interagency"
       else
         result = 'Collection only'
       result
+
+    _computeOsddUrl: ->
+      @openSearchEndpoint() ? @details()?.osdd_url ? @osdd_url
 
     thumbnail: ->
       granule = @browseable_granule
@@ -143,8 +155,19 @@ ns.Collection = do (ko
           success: (data) ->
             @featured = data
 
+    isExternal: ->
+      @openSearchEndpoint()?
+
+    openSearchEndpoint: ->
+      if @json.tags
+        for [k, v] in @json.tags
+          return openSearchKeyToEndpoint[v]?(this) if k == "#{config.cmrTagNamespace}opensearch"
+      return null
+
     fromJson: (jsonObj) ->
       @json = jsonObj
+
+      @short_name = ko.observable('N/A') unless jsonObj.short_name
 
       attributes = jsonObj.searchable_attributes
       if attributes && @granuleQueryLoaded()
@@ -154,6 +177,8 @@ ns.Collection = do (ko
       @_setObservable('gibs', jsonObj)
       @_setObservable('opendap', jsonObj)
       @_setObservable('modaps', jsonObj)
+      @_setObservable('osdd_url', jsonObj)
+
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)
 

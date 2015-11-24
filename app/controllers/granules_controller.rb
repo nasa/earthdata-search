@@ -83,7 +83,7 @@ class GranulesController < ApplicationController
       return
     end
 
-    project = retrieval.jsondata
+    project = retrieval.project
     collection = Array.wrap(project['collections']).find {|ds| ds['id'] == collection_id}
 
     query = Rack::Utils.parse_nested_query(collection['params'])
