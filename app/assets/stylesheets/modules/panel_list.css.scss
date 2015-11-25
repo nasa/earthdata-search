@@ -1,4 +1,4 @@
-$panel-list-item-height: 85px;
+$panel-list-item-height: 75px;
 $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list {
@@ -22,7 +22,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   background-color: #292929;
   border-left: 10px solid #424242;
   margin: 5px 5px 6px 5px;
-  min-height: $panel-list-thumbnail-size + 20px;
+  min-height: $panel-list-thumbnail-size + 30px;
   padding: 10px 10px 10px 14px;
   font-size: .8em;
   position: relative;
@@ -80,12 +80,18 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   float: left;
   position:relative;
   margin-right: .5em;
+  width: $panel-list-thumbnail-size + 10px;
+  height: $panel-list-thumbnail-size + 10px;
+  background-color: #222;
+  border: 5px solid #323232;
 }
 
 .panel-list-thumbnail {
   height: $panel-list-thumbnail-size;
-  width: $panel-list-thumbnail-size;
-  border: 5px solid #323232;
+  max-width: $panel-list-thumbnail-size;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .panel-list-thumbnail-placeholder {
