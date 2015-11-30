@@ -1103,42 +1103,6 @@ second_service_request:
             </requestStatus>
         </eesi:agentResponse>
     http_version:
-14a0ec30b17ac928b6678e04f531f842e2a96520:
-  response:
-    status:
-      code: 200
-      message:
-    headers:
-      server:
-      - nginx/1.4.7
-      date:
-      - Fri, 06 Nov 2015 14:31:35 GMT
-      content-type:
-      - application/json; charset=utf-8
-      transfer-encoding:
-      - chunked
-      connection:
-      - close
-      status:
-      - 2000 OK
-      x-frame-options:
-      - SAMEORIGIN
-      x-xss-protection:
-      - 1; mode=block
-      x-content-type-options:
-      - nosniff
-      www-authenticate:
-      - Bearer realm="URS",error="invalid_token"
-      cache-control:
-      - no-cache
-      x-request-id:
-      - fe9929bc-1cee-4090-9299-c08c5cc1f422
-      x-runtime:
-      - '0.005787'
-    body:
-      encoding: UTF-8
-      string: "{\"uid\":\"edsc\",\"first_name\":\"Earthdata\",\"last_name\":\"Search\",\"middle_initial\":\"\",\"email_address\":\"patrick+edsc@element84.com\",\"country\":\"United States\",\"study_area\":\"Air Sea Interaction\",\"user_type\":\"Science Team\",\"affiliation\":\"GOVERNMENT\",\"organization\":\"test123\",\"member_groups\":[\"earthdata_ecc\",\"echo\"]}"
-    http_version:
 acab3c43996bb7f51d50e4301fe55418086eadbd:
   response:
     status:
@@ -1194,8 +1158,6 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
       - 1; mode=block
       x-content-type-options:
       - nosniff
-      www-authenticate:
-      - Bearer realm="URS",error="invalid_token"
       cache-control:
       - no-cache
       x-request-id:
