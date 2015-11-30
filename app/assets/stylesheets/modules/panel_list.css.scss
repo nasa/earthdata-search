@@ -84,15 +84,15 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   height: $panel-list-thumbnail-size + 10px;
   background-color: #222;
   border: 5px solid #323232;
+  text-align: center;
+  line-height: $panel-list-thumbnail-size;
 }
 
 .panel-list-thumbnail {
   position: relative;
   max-width: $panel-list-item-height;
   max-height: $panel-list-item-height;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: inline;
 }
 
 .panel-list-thumbnail-placeholder {
