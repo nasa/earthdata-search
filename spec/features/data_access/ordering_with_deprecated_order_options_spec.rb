@@ -25,4 +25,30 @@ describe 'Ordering with deprecated order options', reset: false do
       expect(page).to have_no_text('Ftp_Pull')
     end
   end
+
+  context "and proceeding to the retrieval page" do
+    before :all do
+      Delayed::Worker.delay_jobs = true
+
+      choose "Order"
+      click_on 'Continue'
+      click_on 'Submit'
+      wait_for_xhr
+
+      expect(page).to have_text('Creating')
+    end
+
+    after :all do
+      Delayed::Worker.delay_jobs = false
+      run_stop_task
+    end
+
+    it "completes the order without dropping any granules" do
+      expect(Delayed::Worker.new.work_off).to  eq([1, 0])
+      load_page "data/retrieve/#{Retrieval.last.to_param}"
+
+      expect(page).to have_text('Not Validated')
+      expect(page).to have_no_text('The following granules will not be processed')
+    end
+  end
 end
