@@ -30,7 +30,7 @@ class UsersController < ApplicationController
       preferences_response.body['preferences']['general_contact'] = {}
     end
 
-    render json: preferences_response.body, status: response.status
+    render json: preferences_response.body, status: preferences_response.status
   end
 
   def update_notification_pref
