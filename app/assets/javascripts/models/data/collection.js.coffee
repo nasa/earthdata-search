@@ -125,9 +125,9 @@ ns.Collection = do (ko
       granule = @browseable_granule
       collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
       if collection_id?
-        "#{scalerUrl}/datasets/#{collection_id}?h=85&w=85"
+        "#{scalerUrl}/datasets/#{collection_id}?h=75&w=75"
       else if granule?
-        "#{scalerUrl}/granules/#{granule}?h=85&w=85"
+        "#{scalerUrl}/granules/#{granule}?h=75&w=75"
       else
         null
 

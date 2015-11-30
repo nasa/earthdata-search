@@ -18,7 +18,7 @@ describe "Granule browse display", reset: false do
       hook_granule_results
 
       it "displays browse thumbnails for each granule which link to the original browse image" do
-        expect(granule_list).to have_css('a.panel-list-thumbnail-container img[src$="h=65&w=65"]')
+        expect(granule_list).to have_css('a.panel-list-thumbnail-container img[src$="h=75&w=75"]')
       end
 
       context "clicking on a granule result" do
