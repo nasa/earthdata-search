@@ -5,25 +5,6 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
     body:
       encoding: UTF-8
-      string: "[]"
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Tue, 24 Nov 2015 17:36:17 GMT
-  digest: d268a090550a3b74992dca45607865a902cca590
-- request:
-    method: post
-    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
-    body:
-      encoding: UTF-8
       string: '[{"order_item":{"catalog_item_id":"G1000005847-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005928-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005952-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005950-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005947-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005946-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005942-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005897-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005920-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005879-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005892-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005889-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005887-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005885-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005871-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005881-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005859-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005867-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005863-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005864-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005861-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005862-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005860-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005819-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000004516-LARC_ASDC","quantity":1}}]'
     headers:
       User-Agent:
