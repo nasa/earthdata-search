@@ -10,7 +10,7 @@ namespace :colormaps do
     puts "Loading GIBS colormap data..."
     output_dir = "#{Rails.root}/public/colormaps"
     FileUtils::mkdir_p(output_dir)
-    gibs_url = "http://map2.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi/?SERVICE=WMTS&REQUEST=GetCapabilities"
+    gibs_url = "http://map1a.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi/?SERVICE=WMTS&REQUEST=GetCapabilities"
 
     file_count = 0
     error_count = 0
