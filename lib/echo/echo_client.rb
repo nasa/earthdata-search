@@ -134,7 +134,8 @@ module Echo
       order_info_hash = order_info.index_by { |info| info['order_information']['catalog_item_ref']['id'] }
       granule_options = order_info_hash.update(order_info_hash) { |k, v| get_option_names(v['order_information']['option_definition_refs']) }
 
-      excluded_granule_ids = granule_options.reject {|k, v| v.include?(option_name)}.keys
+      # No granules will be excluded from the order if the order option_name is 'deprecated'
+      excluded_granule_ids = option_name == 'Order' ? [] : granule_options.reject {|k, v| v.include?(option_name)}.keys
       granules = granules_by_id.except(*excluded_granule_ids).values
       dropped_granules = granules_by_id.values_at(*excluded_granule_ids).map {|g| {id: g['id'], name: g['producer_granule_id'].nil? ? g['title'] : g['producer_granule_id']}}
 
