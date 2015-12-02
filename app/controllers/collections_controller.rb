@@ -1,6 +1,8 @@
 class CollectionsController < ApplicationController
   respond_to :json
 
+  # Order matters in SCIENCE_KEYWORDS
+  SCIENCE_KEYWORDS = ['topic', 'term', 'variable_level_1', 'variable_level_2', 'variable_level_3']
   KEYWORD_CHILD = {'topic' => 'term', 'term' => 'variable_level_1', 'variable_level_1' => 'variable_level_2', 'variable_level_2' => 'variable_level_3', 'variable_level_3' => nil}
 
   def index
@@ -141,8 +143,9 @@ class CollectionsController < ApplicationController
     end
     if facet_tree.nil?
       keyword_query_params.each do |k, v|
-        selected_keywords.insert(0, {'term' => v, 'count' => 0, 'param' => fields_to_params[k].last, 'index' => nil}) unless v == '--ALL--'
+        selected_keywords.insert(SCIENCE_KEYWORDS.index(k), {'term' => v, 'count' => 0, 'param' => fields_to_params[k].last, 'index' => nil}) unless v == '--ALL--'
       end
+      selected_keywords.compact!
     else
       KEYWORD_CHILD.keys.each do |keyword|
         rtn_hash = parse_hierarchical_keywords(facet_tree, keyword, keyword_query_params)
