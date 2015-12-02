@@ -5,25 +5,6 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
     body:
       encoding: UTF-8
-      string: "[]"
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/json
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 30 Nov 2015 15:24:50 GMT
-  digest: d268a090550a3b74992dca45607865a902cca590
-- request:
-    method: post
-    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
-    body:
-      encoding: UTF-8
       string: '[{"order_item":{"catalog_item_id":"G1000005847-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005928-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005952-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005950-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005947-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005946-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005942-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005897-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005920-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005879-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005892-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005889-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005887-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005885-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005871-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005881-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005859-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005867-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005863-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005864-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005861-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005862-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005860-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000005819-LARC_ASDC","quantity":1}},{"order_item":{"catalog_item_id":"G1000004516-LARC_ASDC","quantity":1}}]'
     headers:
       User-Agent:
@@ -174,6 +155,25 @@ http_interactions:
       - edsc
   recorded_at: Sat, 03 Oct 2015 21:49:53 GMT
   digest: 39a0c2d0a26838756cded942aaafa01146536c60
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
+    body:
+      encoding: UTF-8
+      string: '[{"order_item":{"catalog_item_id":"G179106792-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106791-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106774-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106775-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106776-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106777-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106778-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106779-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106780-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106781-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106782-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106783-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106784-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106785-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106786-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106787-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106788-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106789-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106790-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106772-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106773-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106755-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106756-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106757-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106758-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106759-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106760-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106761-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106762-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106763-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106764-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106765-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106766-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106767-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106768-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106769-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106770-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106771-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106754-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106740-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106741-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106742-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106743-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106744-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106745-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106746-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106747-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106748-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106749-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106750-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106751-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106752-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106753-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106732-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106733-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106734-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106735-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106736-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106737-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106738-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106739-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106728-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106729-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106730-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106731-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106727-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106726-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106711-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106712-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106713-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106714-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106715-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106716-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106717-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106718-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106719-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106720-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106721-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106722-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106723-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106724-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106725-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106710-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106709-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106708-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106707-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106699-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106700-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106701-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106702-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106703-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106704-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106705-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106706-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106694-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106695-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106696-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106697-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106698-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106686-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106687-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106688-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106689-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106690-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106691-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106692-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106693-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106596-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106597-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106598-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106599-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106600-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106601-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106602-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106603-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106604-ORNL_DAAC","quantity":1}},{"order_item":{"catalog_item_id":"G179106685-ORNL_DAAC","quantity":1}}]'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 30 Nov 2015 17:09:25 GMT
+  digest: 8e5df437a803a1c898cd8037c730d6a8ed8f0e0f
 - request:
     method: post
     uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/order_items/bulk_action
@@ -10375,4 +10375,52 @@ http_interactions:
       - edsc
   recorded_at: Thu, 15 Jan 2015 21:08:41 GMT
   digest: d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/user_information
+    body:
+      encoding: UTF-8
+      string: '{"user_information":{"shipping_contact":{"address":{"country":"United
+        States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"billing_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"order_contact":{"address":{"country":"United States","id":"7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906","us_format":false},"email":"patrick+edscbasic@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","phones":[{"id":"5149B944-9E62-9C6C-8BB9-58122D84D456","number":"0000000000","phone_number_type":"BUSINESS"}],"role":"Order
+        Contact"},"user_domain":"OTHER","user_region":"USA"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 24 Nov 2015 01:06:22 GMT
+  digest: 275c04549ca33257e5cb13578db427337d3c93c5
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78/user_information
+    body:
+      encoding: UTF-8
+      string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"billing_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"order_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
+        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+        Contact"},"user_domain":"OTHER","user_region":"USA"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 24 Nov 2015 20:31:45 GMT
+  digest: 283d50ee42309ef1e15a8b270d5422dcae3aa875
 recorded_with: VCR 2.6.0
