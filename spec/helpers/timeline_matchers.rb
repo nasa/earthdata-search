@@ -190,7 +190,7 @@ RSpec::Matchers.define :have_no_temporal do |collection_n=nil|
     if collection_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource.temporal());"
+      script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
     end
 
     synchronize do

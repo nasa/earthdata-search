@@ -220,9 +220,14 @@ ns.Project = do (ko,
         start = 1
         start = 0 if @focus() && !@hasCollection(@focus())
         for collection, i in collections[start...]
-          query = collection.granuleDatasource().toBookmarkParams()
-          query.v = 't' if (i + start) != 0 && collection.visible()
-          queries[i + start] = query
+          datasource = collection.granuleDatasource()
+          if datasource?
+            query = datasource.toBookmarkParams()
+            query.v = 't' if (i + start) != 0 && collection.visible()
+            # Avoid inserting an empty map
+            for own k, v of query
+              queries[i + start] = query
+              break
         result.pg = queries if queries.length > 0
       result
 
@@ -254,7 +259,7 @@ ns.Project = do (ko,
             queries = value["pg"] ? []
             for collection, i in collections
               query = queries[i + offset]
-              if query?
+              if query? && collection.granuleDatasource()?
                 collection.granuleDatasource().fromBookmarkParams(query, value)
                 collection.visible(true) if query.v == 't'
               if i == 0 && focused
