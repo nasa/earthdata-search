@@ -246,7 +246,7 @@ describe "Collection Facets", reset: false do
     end
   end
 
-  context "when applied science keyword facets and search terms filter the collections list to no results" do
+  context "when applied one science keyword facets and search terms filter the collections list to no results" do
     before(:all) do
       find(".facets-item", text: "BIOSPHERE").click
       fill_in :keywords, with: "somestringthatmatchesnocollections"
@@ -255,13 +255,33 @@ describe "Collection Facets", reset: false do
 
     after(:all) do
       reset_search
-      find(".facets-item", text: 'BIOSPHERE').click
       wait_for_xhr
     end
 
     it "continues to display applied facets" do
       within(:css, '#collapse1 .panel-body.facets') do
         expect(page).to have_content("BIOSPHERE")
+      end
+    end
+  end
+
+  context "when applied multiple science keyword facets and search terms filter the collections list to no results" do
+    before(:all) do
+      find(".facets-item", text: "BIOSPHERE").click
+      find(".facets-item", text: "SOILS").click
+      find(".facets-item", text: "SOIL MOISTURE/WATER CONTENT").click
+      fill_in :keywords, with: "somestringthatmatchesnocollections"
+      wait_for_xhr
+    end
+
+    after(:all) do
+      reset_search
+      wait_for_xhr
+    end
+
+    it "continues to display applied science keyword facets in order" do
+      within(:css, '#collapse1 .panel-body.facets') do
+        expect(page).to have_text("BIOSPHERE SOILS SOIL MOISTURE%2FWATER CONTENT")
       end
     end
   end

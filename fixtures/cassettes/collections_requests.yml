@@ -652,6 +652,84 @@ http_interactions:
   digest: 882f8de7c9225a3782e8c3ce1b68122b0ee6fb41
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=BIOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=SOILS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 02 Dec 2015 17:34:51 GMT
+  digest: d69506756b4d7f68b6e74d627efab45727baa909
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=BIOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=SOILS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 02 Dec 2015 17:34:48 GMT
+  digest: 274dcf1754af0f5146fed7ea600a93ffbefa8863
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=BIOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=SOILS&page_size=20&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 02 Dec 2015 17:34:46 GMT
+  digest: 6ac30572c4f8a891bcb686de867f55395fc8657d
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=BIOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=SOILS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=SOIL+MOISTURE%2FWATER+CONTENT&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 02 Dec 2015 17:35:01 GMT
+  digest: 8a054cba31b75ecf326f3103144baa194d153d02
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=BIOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=SOILS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=SOIL+MOISTURE%2FWATER+CONTENT&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 02 Dec 2015 17:34:58 GMT
+  digest: c253daf026e4a8e49113244c904dc68b032716cb
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=BIOSPHERE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=SOILS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=SOIL+MOISTURE%2FWATER+CONTENT&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 02 Dec 2015 17:34:55 GMT
+  digest: 37333e5f032388e100d1c86b712d0c2065047735
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000011-LANCEMODIS&page_num=1&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
