@@ -11,7 +11,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - eed-edsc-dev
-  recorded_at: Mon, 30 Nov 2015 15:10:35 GMT
+  recorded_at: Tue, 24 Nov 2015 18:02:15 GMT
   digest: 3316e3f320ed33557778a92d557a99a21b057e37
 - request:
     method: get

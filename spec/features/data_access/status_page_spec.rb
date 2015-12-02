@@ -97,7 +97,7 @@ describe "Data access status page", reset: false do
     before :all do
       Capybara.reset_sessions!
       load_page :search, overlay: false
-      login 'edscbasic'
+      login
       visit '/data/status'
     end
 
@@ -110,7 +110,7 @@ describe "Data access status page", reset: false do
     before :all do
       Capybara.reset_sessions!
       load_page :search, overlay: false
-      login 'edscbasic'
+      login
       visit '/data/retrieve/not_a_valid_retrieval_id'
     end
 
