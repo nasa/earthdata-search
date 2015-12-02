@@ -34,7 +34,7 @@ describe 'Services Access', reset: false do
           click_on 'Submit'
         end
 
-        it 'displays a progress bar while the service is processing' do
+        it 'displays a progress bar while the service is processing', intermittent: 1 do
           expect(page).to have_content('Progress: 0 of 1 items processed (0.00%)')
           expect(page).to have_css('div.progress-bar')
 
@@ -51,7 +51,7 @@ describe 'Services Access', reset: false do
             wait_for_xhr
           end
 
-          it 'displays download urls' do
+          it 'displays download urls', intermittent: 1 do
             expect(page).to have_content('Complete')
           end
         end
