@@ -108,6 +108,8 @@ ns.Collection = do (ko
     _computeGranuleDescription: ->
       result = null
       return result unless @hasAtomData()
+      if @id == 'C14758250-LPDAAC_ECS'
+        console.log "DESCRIPTION: #{@granuleDatasource()?.granuleDescription() ? 'Collection only'}"
       @granuleDatasource()?.granuleDescription() ? 'Collection only'
 
     _computeOsddUrl: ->

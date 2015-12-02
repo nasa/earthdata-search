@@ -10,6 +10,7 @@ export default class CmrDatasourcePlugin {
     this._edsc = edsc;
     this._collection = collection;
     this._query = null;
+    this._dataLoaded = ko.observable(false);
     Object.defineProperty(collection, 'cmrGranuleQuery', {get: () => {return this.cmrQuery();}});
     Object.defineProperty(collection, 'cmrGranulesModel', {get: () => {return this.cmrData();}});
   }
@@ -105,7 +106,9 @@ export default class CmrDatasourcePlugin {
     return this.cmrQuery().temporal.applied;
   }
   granuleDescription() {
-    let hits = this._collection.granuleCount(),
+    let hits = (this._dataLoaded() && this.hasQueryConfig()) ?
+          this.cmrData().hits() :
+          this._collection.granuleCount(),
         result;
     result = `${hits} Granule`;
     if (hits != 1) {
@@ -126,6 +129,8 @@ export default class CmrDatasourcePlugin {
   cmrData() {
     if (!this._granules) {
       this._granules = new Granules(this.cmrQuery(), this.cmrQuery().parentQuery);
+      this._granules.results();
+      this._dataLoaded(true);
     }
     return this._granules;
   }
