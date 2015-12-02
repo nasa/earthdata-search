@@ -101,5 +101,6 @@ module EarthdataSearchClient
     services = config.services
     config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
     config.cmr_tag_namespace = ENV['cmr_tag_namespace'] || 'edsc.'
+    config.thumbnail_width = 75
   end
 end

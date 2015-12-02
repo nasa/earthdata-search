@@ -82,7 +82,7 @@
 
               <!-- ko if: browse_flag === 'true' || browse_flag === true -->
                 <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
-                  <img class="panel-list-thumbnail" data-bind="attr: {src: edsc_browse_url(75)}" alt="Browse Image">
+                  <img class="panel-list-thumbnail" data-bind="attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
                 </a>
               <!-- /ko -->
               <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>
