@@ -11,13 +11,13 @@ describe "Collection Facets", reset: false do
   context "facet listing" do
     it "shows the first Project facet" do
       find("h3.facet-title", text: 'Project').click
-      expect(page.text).to match('Project\s*\d* 2009_AN_NASA')
+      expect(page.text).to match('Project\s*\d* 2011_GR_NASA')
       find("h3.facet-title", text: 'Project').click
     end
 
     it "shows the first Platforms facet" do
       find("h3.facet-title", text: 'Platform').click
-      expect(page.text).to match('Platform\s*\d* ADEOS')
+      expect(page.text).to match('Platform\s*\d* AIRCRAFT')
       find("h3.facet-title", text: 'Platform').click
     end
 
@@ -82,13 +82,13 @@ describe "Collection Facets", reset: false do
     end
 
     it "collapses and expands facet lists by type" do
-      expect(page).to have_css("#collapse3.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-hide")
 
       find("h3.facet-title", text: "Project").click
-      expect(page).to have_css("#collapse3.facets-list-show")
+      expect(page).to have_css("#collapse2.facets-list-show")
 
       find("h3.facet-title", text: "Project").click
-      expect(page).to have_css("#collapse3.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-hide")
     end
   end
 
@@ -125,7 +125,7 @@ describe "Collection Facets", reset: false do
       find("h3.facet-title", text: 'Project').click
       find("p.facets-item", text: "EOSDIS").click
       wait_for_xhr
-      within(:css, '#collapse3 .panel-body.facets') do
+      within(:css, '#collapse2 .panel-body.facets') do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
@@ -145,7 +145,7 @@ describe "Collection Facets", reset: false do
       find(".facets-item", text: "ESIP").click
       wait_for_xhr
       within(:css, '.project') do
-        expect(page).to have_content("EOSDIS 498 ESIP 498")
+        expect(page).to have_content("EOSDIS 502 ESIP 502")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("p.facets-item.selected")
@@ -222,25 +222,25 @@ describe "Collection Facets", reset: false do
     end
 
     it "keeps facet lists collapsed after selecting and removing a facet" do
-      expect(page).to have_css("#collapse3.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-hide")
       find("h3.facet-title", text: "Project").click
-      expect(page).to have_css("#collapse3.facets-list-show")
+      expect(page).to have_css("#collapse2.facets-list-show")
 
       find("h3.facet-title", text: 'Platform').click
       within(:css, ".platform") do
         find("p.facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
-      expect(page).to have_css("#collapse3.facets-list-show")
+      expect(page).to have_css("#collapse2.facets-list-show")
 
       within(:css, ".platform") do
         find("p.facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
-      expect(page).to have_no_css(".factes-items.selected")
-      expect(page).to have_css("#collapse3.facets-list-show")
+      expect(page).to have_no_css(".facets-items.selected")
+      expect(page).to have_css("#collapse2.facets-list-show")
       find("h3.facet-title", text: "Project").click
-      expect(page).to have_css("#collapse3.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-hide")
 
       find("h3.facet-title", text: 'Platform').click
     end
@@ -260,9 +260,7 @@ describe "Collection Facets", reset: false do
     end
 
     it "continues to display applied facets with counts of 0" do
-      within(:css, '#collapse3 .panel-body.facets') do
-        expect(page).to have_content("EOSDIS 0")
-      end
+      expect(page).to have_content("EOSDIS 0")
     end
   end
 
@@ -321,7 +319,7 @@ describe "Collection Facets", reset: false do
 
   context "when selecting a topic keyword" do
     before :all do
-      find(".facets-item", text: "ATMOSPHERE").click
+      find(".facet-term", text: /\AATMOSPHERE\z/).click
       wait_for_xhr
     end
 
@@ -335,12 +333,12 @@ describe "Collection Facets", reset: false do
 
     context "when selecting a term keyword" do
       before :all do
-        find(".facets-item", text: "AEROSOLS").click
+        first(".facet-term", text: /\AAEROSOLS\z/).click
         wait_for_xhr
       end
 
       after :all do
-        find(".facets-item", text: "AEROSOLS").click
+        first(".facet-term", text: /\AAEROSOLS\z/).click
         wait_for_xhr
       end
 
@@ -351,17 +349,17 @@ describe "Collection Facets", reset: false do
 
     context "when the top level keyword is unchecked" do
       before :all do
-        find(".facets-item", text: "AEROSOLS").click
+        first(".facet-term", text: /\AAEROSOLS\z/).click
         wait_for_xhr
         find(".facets-item", text: "NITRATE PARTICLES").click
         wait_for_xhr
-        find(".facets-item", text: "ATMOSPHERE").click
+        find(".facet-term", text: /\AATMOSPHERE\z/).click
         wait_for_xhr
       end
 
       after :all do
         reset_search
-        find(".facets-item", text: "ATMOSPHERE").click
+        find(".facet-term", text: /\AATMOSPHERE\z/).click
         wait_for_xhr
       end
 
@@ -392,20 +390,20 @@ describe "Collection Facets", reset: false do
     end
   end
 
-  # EDSC-790
-  context "when no collections have the EARTH SCIENCE category facet" do
-    before :all do
-      login
-      load_page :search, facets: true, q: 'octs'
-    end
-
-    after :all do
-      Capybara.reset_sessions!
-      load_page :search, facets: true
-    end
-
-    it "displays the first available facet's topics" do
-      expect(page).to have_content("Ocean Optics")
-    end
-  end
+  # EDSC-790 - The metadata example was fixed
+  #context "when no collections have the EARTH SCIENCE category facet" do
+  #  before :all do
+  #    login
+  #    load_page :search, facets: true, q: 'octs'
+  #  end
+  #
+  #  after :all do
+  #    Capybara.reset_sessions!
+  #    load_page :search, facets: true
+  #  end
+  #
+  #  it "displays the first available facet's topics" do
+  #    expect(page).to have_content("Ocean Optics")
+  #  end
+  #end
 end
