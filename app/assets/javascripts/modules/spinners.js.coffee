@@ -23,7 +23,7 @@ do ($=jQuery) ->
     new XhrSpinner('/granules.json', '#granule-list .panel-list-load-more'), # granule list
     new XhrSpinner('/timeline.json', '.timeline-tools'), # timeline
     new XhrSpinner('/data/options', '.data-access-next'), # data access retrieval
-    new XhrSpinner('/update_contact_info', '.access-submit') # updating contact info before submitting an access request
+    new XhrSpinner('/update_notification_pref', '.access-submit') # updating contact info before submitting an access request
   ]
 
   $(document).ajaxSend (event, xhr, settings) ->

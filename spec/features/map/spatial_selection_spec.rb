@@ -219,14 +219,14 @@ describe "Spatial" do
   end
 
   context "polygon selection" do
-    it "filters collections using the selected polygon" do
+    it "filters collections using the selected polygon", intermittent: 1 do
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
-    it "displays errors for invalid polygons" do
+    it "displays errors for invalid polygons", intermittent: 1 do
       create_polygon([10, 10], [-10, -10], [10, -10], [-10, 10])
       wait_for_xhr
       expect(page).to have_content("The polygon boundary intersected itself at the following points:")

@@ -48,35 +48,19 @@ fieldset {
 .account-form {
   margin-bottom: 43px;
 
-  a:link, a:visited {
-    color: #2980b9;
-    text-decoration: underline;
-  }
-
-  label {
+  .urs-profile-label {
     display: inline-block;
     min-width: 200px;
+    font-weight: bold;
   }
 
-  .field-error {
-    box-shadow: 0 0 5px #c0392b;
-    border-color: #c0392b;
+  li {
+    margin: 10px 0;
   }
-}
-
-.required label:after {
-  content:'*';
 }
 
 .data-access-content .account-form {
   margin-bottom: 0;
-}
-
-.confirmation {
-  @include linear-gradient(#fff, #f3f3f3);
-  border-radius: 5px;
-  padding: 1em;
-  border-color: #e3e3e3;
 }
 
 select, option {color: #000;}

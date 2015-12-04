@@ -240,6 +240,7 @@
       #           collections list
       prevKeywords = @lastKeywords
       @lastKeywords = @_textQuery(serialized)
+      refreshColList = false
       if (path != '/search' && path != '/search/collections' &&  # Not viewing collections
           prevKeywords? &&                                    # Not initial page load
           @lastKeywords != '' &&                              # Haven't cleared the query
@@ -247,11 +248,12 @@
         @_sendToCollectionList()
         path = @path()
         serialized = @serialize()
+        refreshColList = true
 
       if @_isValid(path, serialized)
         changed = urlUtil.saveState(path, serialized, !@historyChanged, @page.workspaceNameField.peek())
         @historyChanged = true if changed
-        if path == '/search/collection-details' || path == '/search/granules' || path == '/search/project'
+        if refreshColList || path == '/search/collection-details' || path == '/search/granules' || path == '/search/project'
           @page.collections.isRelevant(true)
 
     _textQuery: (serialized) ->

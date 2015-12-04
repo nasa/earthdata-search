@@ -49,7 +49,7 @@ describe "Data download page", reset: false do
       click_on 'Submit'
     end
 
-    it "displays a section for additional resources and documentation" do
+    it "displays a section for additional resources and documentation", intermittent: 1 do
       expect(page).to have_content("Additional Resources and Documentation")
     end
 
@@ -158,7 +158,9 @@ describe "Data download page", reset: false do
       click_on 'Submit'
     end
 
-    it "displays a link to view browse images" do
+    # The intermittence might be caused by db not cleaned up.
+    # Reproduceable locally only if the db is not clean. The spec will pass after a db:drop/setup.
+    it "displays a link to view browse images", intermittent: 1 do
       expect(page).to have_link('View Browse Image Links')
     end
 
@@ -302,7 +304,7 @@ describe "Data download page", reset: false do
       expect(page).to have_content(orderable_collection_title)
     end
 
-    it "indicates current order status" do
+    it "indicates current order status", intermittent: 1 do
       expect(page).to have_text('Not Validated')
     end
 
