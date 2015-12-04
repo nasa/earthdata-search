@@ -190,15 +190,13 @@ describe "Data Access workflow", reset: false do
       it "displays current contact information" do
         account_form = page.find('.account-form')
         expect(account_form).to have_text("Earthdata Search (patrick+edsc@element84.com)")
-        expect(account_form).to have_text("EDSC")
+        expect(account_form).to have_text("Organization: EDSC")
+        expect(account_form).to have_text("Country: United States")
+        expect(account_form).to have_text("Affiliation: OTHER")
+        expect(account_form).to have_text("Study Area: OTHER")
+        expect(account_form).to have_text("User Type: PRODUCTION_USER")
 
-        expect(account_form).to have_text("101 N. Columbus St.")
-        expect(account_form).to have_text("Suite 200")
-        expect(account_form).to have_text("Alexandria, VA 22314")
-        expect(account_form).to have_no_text("United States")
-
-        expect(account_form).to have_text("555-555-5555 (Phone)")
-        expect(account_form).to have_text("555-555-6666 (Fax)")
+        expect(account_form).to have_link('Edit Profile in Earthdata Login')
       end
 
       it 'displays a "submit" button' do
@@ -208,48 +206,6 @@ describe "Data Access workflow", reset: false do
       it 'displays a "back" button' do
         within(".data-access-content") do
           expect(page).to have_content "Back"
-        end
-      end
-
-      context 'clicking the "edit" button for contact information' do
-        before :all do
-          click_link 'Edit'
-        end
-
-        it "presents a populated form to edit contact information" do
-          expect(page).to have_field("First name", with: "Earthdata")
-          expect(page).to have_field("Last name", with: "Search")
-          expect(page).to have_field("Email", with: "patrick+edsc@element84.com")
-          expect(page).to have_field("Organization name", with: "EDSC")
-          expect(page).to have_field("Phone number", with: "555-555-5555")
-          expect(page).to have_field("Fax number", with: "555-555-6666")
-          expect(page).to have_field("Street", with: "101 N. Columbus St.")
-          expect(page).to have_field("address_street2", with: "Suite 200")
-          expect(page).to have_field("address_street3", with: "")
-          expect(page).to have_select("Country", selected: "United States")
-          expect(page).to have_select("State", selected: "VA")
-          expect(page).to have_field("Zip", with: "22314")
-          expect(page).to have_select("Receive delayed access notifications", selected: "Never")
-        end
-
-        context "submitting with missing required fields" do
-          before :each do
-            fill_in "First name", with: ""
-            click_on "Submit"
-          end
-
-          after :each do
-            fill_in "First name", with: "Earthdata"
-            # Note: this does not clear the error.  That's not important for this suite.
-          end
-
-          it "displays appropriate error messages" do
-            expect(page).to have_text('Please fill in all required fields, highlighted below')
-          end
-
-          it "keeps the user on the data access page" do
-            expect(current_path).to eql('/data/configure')
-          end
         end
       end
 

@@ -111,6 +111,7 @@ class ApplicationController < ActionController::Base
   def clear_session
     store_oauth_token()
     session[:user_id] = nil
+    session[:user_name] = nil
     session[:recent_collections] = []
   end
 
@@ -119,6 +120,7 @@ class ApplicationController < ActionController::Base
     session[:access_token] = json["access_token"]
     session[:refresh_token] = json["refresh_token"]
     session[:expires_in] = json["expires_in"]
+    session[:user_name] = json['endpoint'].gsub('/api/users/', '') if json['endpoint']
     session[:logged_in_at] = json.empty? ? nil : Time.now.to_i
   end
 

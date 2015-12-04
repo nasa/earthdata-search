@@ -68,7 +68,7 @@ module VCR
           elsif uri.include? '/convert'
             cassette = 'ogre'
           elsif (request.method == :delete ||
-                 (request.uri.include?('/orders.json') && request.method == :get) ||
+                 (request.uri.include?('/orders.json') && (request.method == :get || request.method == :post)) ||
                  (request.uri.include?('/echo-rest/calendar_events') && !request.uri.include?('testbed')) ||
                  uri.include?('users/current.json') ||
                  uri.include?('/echo-rest/users.json') ||
@@ -77,7 +77,8 @@ module VCR
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('invalid')) ||
                  uri.include?('C179002986-ORNL') ||
-                 (request.uri.include?('trigger500')))
+                 (request.uri.include?('trigger500')) ||
+                 (request.uri.include?('urs.earthdata.nasa.gov/api')))
             cassette = 'hand-edited'
             record = :none
           elsif request.uri.include? '/search/granules/timeline.json'

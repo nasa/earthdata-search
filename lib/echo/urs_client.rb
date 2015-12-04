@@ -16,6 +16,10 @@ module Echo
       Echo::Response.new(connection.post("/oauth/token?grant_type=refresh_token&refresh_token=#{refresh_token}"))
     end
 
+    def get_urs_user(user_name, access_token)
+      get("/api/users/#{user_name}?client_id=#{@client_id}", nil, {'AUTHORIZATION' => "Bearer #{access_token}"})
+    end
+
     protected
 
     def build_connection

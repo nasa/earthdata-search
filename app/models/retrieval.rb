@@ -27,7 +27,7 @@ class Retrieval < ActiveRecord::Base
   end
 
   # Delayed Jobs calls this method to excute an order creation
-  def self.process(id, token, env, base_url)
+  def self.process(id, token, env, base_url, access_token)
     if Rails.env.test?
       normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
       VCR::EDSCConfigurer.register_normalizer(normalizer)
@@ -38,7 +38,7 @@ class Retrieval < ActiveRecord::Base
     client = Echo::Client.client_for_environment(env, Rails.configuration.services)
 
     retrieval.collections.each do |collection|
-      params = Rack::Utils.parse_query(collection['params'])
+      params = Rack::Utils.parse_nested_query(collection['params'])
       params.merge!(page_size: 2000, page_num: 1)
 
       access_methods = collection['serviceOptions']['accessMethod']
@@ -50,8 +50,11 @@ class Retrieval < ActiveRecord::Base
                                                 method['model'],
                                                 user_id,
                                                 token,
-                                                client)
+                                                client,
+                                                access_token)
           method[:order_id] = order_response[:order_id]
+          method[:dropped_granules] = order_response[:dropped_granules]
+          Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map {|dg| dg[:id]}}"
         elsif method['type'] == 'service'
           request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
 

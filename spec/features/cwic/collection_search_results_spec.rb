@@ -13,6 +13,10 @@ describe "CWIC-capable collection search results", reset: false do
   end
 
   context "in the collection results list" do
+    before :all do
+      load_page :search, env: :sit
+    end
+
     context "a CWIC-tagged item" do
       use_collection 'C1000003579-GCMDTEST', '3DIMG_L2P_IRW'
 

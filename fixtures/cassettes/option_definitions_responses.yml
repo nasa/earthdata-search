@@ -157,6 +157,275 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         Tape Archive Format (TARGZ)\" value=\"TARGZ\"/>\n        <item label=\"PK/Win
         Zip Format\" value=\"WINZIP\"/>\n    </selectref>\n  </group>\n\n</ui>\n</form>","id":"5F92533B-A6C8-896F-46D4-7516CE7CDDC4","name":"Ftp_Pull","scope":"PROVIDER"}}'
     http_version: 
+e3019fdce672a54756a77e7e9ca4d5fc0072a841:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"35061baf381b0b257e77b66a525e0f68"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.111000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:57 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L3 Orthorectified Images, GeoTIF Format","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST14DEM.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST14OTH</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L3 Orthorectified
+        Images, GeoTIF Format</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
+        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>GeoTIFF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:waterDetection
+        criteriaName=\"Water Detection\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:waterDetectionValue>On</lpdaac:waterDetectionValue>\n\t\t\t\t\t</lpdaac:waterDetection>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select label=\"Water
+        Detection:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:waterDetection\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"waterDetectionValue\">\n\t\t\t\t<item
+        label=\"On\" value=\"On\"/>\n\t\t\t\t<item label=\"Off\" value=\"Off\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"67B936C6-25C0-70B0-74DE-DB6D398AC3D9","name":"AST14OTH","scope":"PROVIDER","sort_key":"P"}}'
+    http_version: 
+07f0dcc65c075755f5b1a6725a28059ca319d395:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"1695e774608bfe9294f3ac5eac56d6a8"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.288000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:55 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L2 Surface Kinetic Temperature","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_08</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
+        Kinetic Temperature</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
+        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
+        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
+        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
+        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
+        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
+        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
+        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
+        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
+        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
+        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
+        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
+        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
+        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
+        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
+        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"7E65A0BF-6A43-1891-1A2E-D6D8CBF01768","name":"AST_08","scope":"PROVIDER","sort_key":"J"}}'
+    http_version: 
+dc0b347b5c5d3bde631586858de36b5efc829735:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"a05f2617aedce6ec7acbc96c62ffaaef"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.163000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:54 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L2 Surface Emissivity","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_05</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
+        Emissivity</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
+        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
+        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
+        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
+        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
+        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
+        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
+        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
+        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
+        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
+        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
+        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
+        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
+        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
+        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
+        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"82D38BDE-E319-A530-8770-07A7A6F515AC","name":"AST_05","scope":"PROVIDER","sort_key":"D"}}'
+    http_version: 
+08bed030297483430471c61bfa97520048788436:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"b664cadd002b280c52a339a740d4b9b7"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.308000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:59 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L2 Surface Radiance VNIR and SWIR Crosstalk-Corrected","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_09XT</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
+        Radiance VNIR and SWIR Crosstalk-Corrected</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize
+        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
+        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
+        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
+        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
+        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
+        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
+        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
+        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
+        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
+        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
+        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
+        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
+        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
+        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
+        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"88537F09-C291-396F-91DC-96ED6B1F3318","name":"AST_09XT","scope":"PROVIDER","sort_key":"L"}}'
+    http_version: 
 84c0390553f226c2b4eeb3e14a7d15b143ec6b80:
   response:
     status:
@@ -265,6 +534,117 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         label=\"SWE_SouthernPentad\" value=\"SWE_SouthernPentad\"/>\n                    <item
         label=\"Flags_SouthernPentad\" value=\"Flags_SouthernPentad\"/>\n               </select>\n            </group>\t\t\n        </group>\n    </ui>\n</form>","id":"906C81F9-4941-1D4D-2EB5-07B6DBBBBDFA","name":"AE_5DSno
         Order Options","scope":"PROVIDER"}}'
+    http_version: 
+faa91864937f64fe6fd6a7dff38324cfa87e2ae0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"9908c35ba91252564fbbe3dd2aaf3654"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.187000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:55 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER L1B Registered
+        Radiance at the Sensor","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_04.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_L1B</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER L1B Registered Radiance
+        at the Sensor</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
+        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
+        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
+        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"96DBA166-0E46-8F4E-9D52-2AC4685268E7","name":"AST_L1B","scope":"PROVIDER","sort_key":"B"}}'
+    http_version: 
+f9160bbb5ce6ed6fc2c5ea8800e8e757652a04a9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"76c2b469c0c50c1d19437bdb512c33f7"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.128000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:57 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L3 Digital Elevation Model, GeoTIF Format","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST14DEM.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull-->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST14DEM</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L3 Digital
+        Elevation Model, GeoTIF Format</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize
+        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>GeoTIFF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:waterDetection
+        criteriaName=\"Water Detection\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:waterDetectionValue>On</lpdaac:waterDetectionValue>\n\t\t\t\t\t</lpdaac:waterDetection>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select label=\"Water
+        Detection:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:waterDetection\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"waterDetectionValue\">\n\t\t\t\t<item
+        label=\"On\" value=\"On\"/>\n\t\t\t\t<item label=\"Off\" value=\"Off\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"9703E1B6-0334-2376-4BB2-A90C769D5D2B","name":"AST14DEM","scope":"PROVIDER","sort_key":"O"}}'
     http_version: 
 439a0217018a702f093ab4626ca3250f2887ec54:
   response:
@@ -381,6 +761,77 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"9940B026-5C7C-BC3E-049B-89F6D2A35AD8","name":"M*D29P1N
         Order Option","scope":"PROVIDER"}}'
     http_version: 
+33177a65b184a0a049610be688d38a09b125acd2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"51816506f465a3f12f784ce8d28ec421"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.186000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:58 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L2 Surface Radiance SWIR and VNIR","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_09</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
+        Radiance SWIR and VNIR</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
+        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
+        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
+        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
+        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
+        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
+        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
+        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
+        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
+        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
+        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
+        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
+        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
+        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
+        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
+        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"A876D145-3D53-D9FF-985B-EFE14FC966F0","name":"AST_09","scope":"PROVIDER","sort_key":"K"}}'
+    http_version: 
 06d28401e19fe3ea7843c0909abfce01aa9d5fa2:
   response:
     status:
@@ -423,6 +874,188 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         value=\"FtpPull\"/>\n      </select>\n\n      <group id=\"ftpPullGroup\" label=\"\"
         ref=\"ecs:mediatype\" relevant=\"//ecs:mediatype = ''FtpPull''\">\n\t\t\t
         <input label=\"\" ref=\"ecs:value\" type=\"xsd:string\"/> \n\t </group>\n\t\t</group>\n\n    \n  </ui>\n</form>","id":"AF37129D-374A-5095-EA02-6D1667018B58","name":"GHRC_ECHO_FtpPull_v1","scope":"PROVIDER"}}'
+    http_version: 
+6acb9d75486e37df4919d00b04eda8848126a869:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"0c8b2c05513a059e88d354a63cdaa8ed"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.287000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:47:00 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L2 Surface Reflectance VNIR and SWIR Crosstalk-Corrected","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_07XT</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
+        Reflectance VNIR and SWIR Crosstalk-Corrected</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize
+        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
+        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
+        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
+        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
+        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
+        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
+        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
+        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
+        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
+        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
+        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
+        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
+        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
+        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
+        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"BA87A7EE-0FE6-03EB-C5F3-3B494726055B","name":"AST_07XT","scope":"PROVIDER","sort_key":"I"}}'
+    http_version: 
+47b8343f4a276b94888e6c94b567a90819c83cbb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"74ef457c71fe8a0eb1e0ea74fe8606b0"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.162000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:54 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER L1A Reconstructed
+        Unprocessed Instrument Data","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_04.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_L1A</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER L1A Reconstructed
+        Unprocessed Instrument Data</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize
+        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
+        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
+        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"C1873DC2-F1AB-D769-A5F7-B26980EFAD8C","name":"AST_L1A","scope":"PROVIDER","sort_key":"A"}}'
+    http_version: 
+2c51d59bbd50225b83974fdc25cd7fdff77115ba:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"cdb0d3ad6bfd4b14daa42fc097a511ac"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.181000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:56 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L3 DEM and Orthorectified Images, GeoTIF Format","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST14DEM.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST14DMO</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L3 DEM and
+        Orthorectified Images, GeoTIF Format</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize
+        criteriaName=\"Granule_size\" criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>GeoTIFF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:waterDetection
+        criteriaName=\"Water Detection\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:waterDetectionValue>On</lpdaac:waterDetectionValue>\n\t\t\t\t\t</lpdaac:waterDetection>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select label=\"Water
+        Detection:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:waterDetection\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"waterDetectionValue\">\n\t\t\t\t<item
+        label=\"On\" value=\"On\"/>\n\t\t\t\t<item label=\"Off\" value=\"Off\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"E1032659-E26F-226C-C668-4B5E3A7B5EB0","name":"AST14DMO","scope":"PROVIDER","sort_key":"Q"}}'
     http_version: 
 1dd37a16f9e46063a69d4ef6fbbf7931e276c3f5:
   response:
@@ -476,4 +1109,146 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         required=\"true()\" type=\"xs:string\"/>\n      <secret label=\"Password:\"
         ref=\"prov:odl[@name=''PASSWORD'']\" required=\"true()\" type=\"xs:string\"/>\n      <input
         label=\"FTP Path:\" ref=\"prov:odl[@name=''FTP_PATH'']\" type=\"xs:string\"/>\n    </group>\n    \n  </ui>\n</form>","id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","name":"FtpPushPull","scope":"PROVIDER"}}'
+    http_version: 
+d81dba755226abc687ddae36e8cbce95de06e0dc:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"0020d19431204fc9be29d759195202c2"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.130000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:46:56 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L2 Surface Radiance TIR","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_09T</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
+        Radiance TIR</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
+        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
+        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
+        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
+        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
+        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
+        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
+        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
+        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
+        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
+        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
+        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
+        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
+        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
+        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
+        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"E441136C-03AB-2A45-B698-7A62659FD463","name":"AST_09T","scope":"PROVIDER","sort_key":"M"}}'
+    http_version: 
+c6b441fa70b1557e6bab1dc605f1049cba720d23:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"879cef1156757d9797e4bcf65659e259"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.145000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Thu, 12 Nov 2015 16:47:00 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"ASTER On-Demand
+        L2 Surface Reflectance","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+        targetNamespace=\"http://echo.nasa.gov/v9/echoforms\" xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms
+        http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\"
+        xmlns:lpdaacSchemaLocation=\"/v1/AST_09.xsd\">\n\n\t\t\t\t<!--Default distribution
+        method is FTP Pull -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n\t\t\t\t\t\t<ecs:value>FtpPull</ecs:value>\n\t\t\t\t\t</ecs:mediatype>\n\t\t\t\t\t<ecs:mediaformat>\n\t\t\t\t\t\t<ecs:ftppull-format>\n\t\t\t\t\t\t\t<ecs:value>FILEFORMAT</ecs:value>\n\t\t\t\t\t\t</ecs:ftppull-format>\n\t\t\t\t\t</ecs:mediaformat>\n\t\t\t\t</ecs:distribution>\n\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<ecs:endpoint>http://elpdx159.cr.usgs.gov:8180/tcoc/PXG_v1/ProcessingXMLGateway</ecs:endpoint>\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<ecs:max-order-item-size>100</ecs:max-order-item-size>\n\t\t\t\t</ecs:processing>\n\n\t\t\t\t<lpdaac:subsetSpecification>\n\t\t\t\t\t<lpdaac:productName
+        criteriaName=\"Product Name\" criteriaType=\"FIXED\">AST_07</lpdaac:productName>\n\t\t\t\t\t<lpdaac:longName
+        criteriaName=\"Long Name\" criteriaType=\"FIXED\">ASTER On-Demand L2 Surface
+        Reflectance</lpdaac:longName>\n\t\t\t\t\t<lpdaac:granuleSize criteriaName=\"Granule_size\"
+        criteriaType=\"FIXED\">0</lpdaac:granuleSize>\n\t\t\t\t\t<lpdaac:fileFormat
+        criteriaName=\"File Format\" criteriaType=\"FIXED\">\n\t\t\t\t\t\t<lpdaac:fileFormatValue>HDF</lpdaac:fileFormatValue>\n\t\t\t\t\t</lpdaac:fileFormat>\n\t\t\t\t\t<lpdaac:aerosols
+        criteriaName=\"Aerosols\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:aerosolsValue>Climatology</lpdaac:aerosolsValue>\n\t\t\t\t\t</lpdaac:aerosols>\n\t\t\t\t\t<lpdaac:columnOzone
+        criteriaName=\"Column Ozone\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:columnOzoneValue>OZ2DAILY
+        - NCEP TOVS Daily Ozone</lpdaac:columnOzoneValue>\n\t\t\t\t\t</lpdaac:columnOzone>\n\t\t\t\t\t<lpdaac:moistureTemperaturePressure
+        criteriaName=\"Moisture, Temperature, Pressure\" criteriaType=\"STRING\">\n\t\t\t\t\t\t<lpdaac:moistureTemperaturePressureValue>GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg</lpdaac:moistureTemperaturePressureValue>\n\t\t\t\t\t</lpdaac:moistureTemperaturePressure>\n\t\t\t\t</lpdaac:subsetSpecification>\n\n\t\t\t</ecs:options>\n\t\t</instance>\n\n\t\t<extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n\t\t\t<auto:expressions>\n\t\t\t\t<auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/lpdaac:subsetSpecification/lpdaac:granuleSize\"/>\n\t\t\t</auto:expressions>\n\t\t</extension>\n\t</model>\n\n\t<ui>\n\t\t<group
+        xmlns:lpdaac=\"http://lpdaac.usgs.gov/orderoptions.v1\" id=\"DistributionOptionsGroup\"
+        label=\"Distribution Options\" ref=\"ecs:distribution\">\n\t\t\t<output id=\"MediaTypeOutput\"
+        label=\"Media Type:\" relevant=\"ecs:mediatype/ecs:value =''FtpPull''\" type=\"xsd:string\"
+        value=\"''Http Pull''\"/>\n\n\t\t\t<output id=\"FtpPullMediaFormatOutput\"
+        label=\"Http Pull Media Format:\" relevant=\"ecs:mediaformat/ecs:ftppull-format/ecs:value=''FILEFORMAT''\"
+        type=\"xsd:string\" value=\"''File''\"/>\n\t\t</group>\n\n\t\t<group label=\"Processing
+        Options\" ref=\"lpdaac:subsetSpecification\">\n\t\t\t<select id=\"OutputFileTypeSelect\"
+        label=\"Data Format:\" multiple=\"false\" open=\"false\" ref=\"lpdaac:fileFormat\"
+        required=\"true()\" type=\"xsd:string\" valueElementName=\"fileFormatValue\">\n\t\t\t\t<item
+        label=\"HDF-EOS\" value=\"HDF\"/>\n\t\t\t\t<item label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n\t\t\t</select>\n\n\t\t\t<output
+        id=\"AerosolsOutput\" label=\"Aerosols:\" required=\"true()\" type=\"xsd:string\"
+        value=\"''Climatology''\"/>\n\n\t\t\t<select label=\"Column Ozone:\" multiple=\"false\"
+        open=\"false\" ref=\"lpdaac:columnOzone\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"columnOzoneValue\">\n\t\t\t\t<item label=\"OZ2DAILY - NCEP
+        TOVS Daily Ozone\" value=\"OZ2DAILY - NCEP TOVS Daily Ozone\"/>\n\t\t\t\t<item
+        label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\n\t\t\t<select
+        label=\"Moisture, Temperature, Pressure:\" multiple=\"false\" open=\"false\"
+        ref=\"lpdaac:moistureTemperaturePressure\" required=\"true()\" type=\"xsd:string\"
+        valueElementName=\"moistureTemperaturePressureValue\">\n\t\t\t\t<item label=\"GDAS0ZFH
+        - NOAA/NCEP GDAS model, 6h, 1 deg\" value=\"GDAS0ZFH - NOAA/NCEP GDAS model,
+        6h, 1 deg\"/>\n\t\t\t\t<item label=\"Climatology\" value=\"Climatology\"/>\n\t\t\t</select>\n\t\t</group>\n\t</ui>\n</form>","id":"F56BCDCE-BA50-059C-6E3F-ED793ACDCD41","name":"AST_07","scope":"PROVIDER","sort_key":"H"}}'
     http_version: 

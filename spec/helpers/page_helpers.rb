@@ -81,6 +81,7 @@ module Helpers
       page.set_rack_session(expires_in: json['expires_in'])
       page.set_rack_session(access_token: json['access_token'])
       page.set_rack_session(refresh_token: json['refresh_token'])
+      page.set_rack_session(user_name: key)
       page.set_rack_session(logged_in_at: Time.now.to_i)
     end
 
