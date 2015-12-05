@@ -6,7 +6,6 @@ module Helpers
       stop = stop.strftime('%Y-%m-%d %H:%M:%S') if stop && stop.is_a?(DateTime)
 
       script = "(function(temporal) {\n"
-
       script += "  temporal.isRecurring(#{!range.nil?});\n"
       unless range.nil?
         start = start.gsub(/^\d{4}-/, '')

@@ -69,7 +69,9 @@ ns.Project = do (ko,
 
     _loadGranuleAccessOptions: ->
       dataSource = @collection.granuleDatasource()
-      return unless dataSource
+      unless dataSource
+        @granuleAccessOptions(hits: 0, methods: [])
+        return
       console.log "Loading granule access options for #{@collection.id}"
       $(document).trigger('dataaccessevent', [@collection.id])
       success = (data) =>
@@ -86,7 +88,7 @@ ns.Project = do (ko,
       $(document).trigger('dataaccessevent', [@collection.id, options])
 
       id: @collection.id
-      params: param(@collection.granuleDatasource()?.toQueryParams())
+      params: param(@collection.granuleDatasource()?.toQueryParams() ? @collection.query.globalParams())
       serviceOptions: options
 
   class Project

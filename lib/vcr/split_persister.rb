@@ -60,7 +60,11 @@ module VCR
             digest = Digest::SHA1.hexdigest(unique_key(interaction))
             interaction['digest'] = digest
             requests[k] << interaction
-            responses[digest] = response
+            if interaction['request']['uri'].include?('include_facets=true')
+              responses[digest] = reduce_facet_size(response)
+            else
+              responses[digest] = response
+            end
           end
         else
           requests[k] = v
@@ -86,5 +90,29 @@ module VCR
     def file_name(root, type)
       "#{root}#{type}.#{@destination_serializer.file_extension}"
     end
+
+    # Big temporary hacks to reduces the size of facets we're recording. Right now if
+    # we record all of them, our collection_responses.yml is about 20MB. The CMR will
+    # fix the need for this with upcoming facet changes.
+    # This method ensures that there are no more than 5 facets of any type returned
+    # and that the hierarchy doesn't go below variable_level_1
+    def reduce_facet_size(response)
+      return response unless (response.present? &&
+                              response['response'].present? &&
+                              response['response']['headers'].present? &&
+                              response['response']['headers']['content-type'].present? &&
+                              response['response']['headers']['content-type'][0].start_with?('application/json'))
+      body = ActiveSupport::JSON.decode(response['response']['body']['string'])
+      if body && body['feed']['facets'] && !body['feed']['reduced']
+        before = response['response']['body']['string'].size
+        Echo::ClientMiddleware::FacetCullingMiddleware.cull(body)
+        response['response']['body']['string'] = body.to_json
+        after = response['response']['body']['string'].size
+        puts "Reduced: #{before} -> #{after}"
+      end
+      response['response']['reduced'] = true
+      response
+    end
+
   end
 end

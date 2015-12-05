@@ -1,4 +1,4 @@
-@edsc.util.date = do (string = @edsc.util.string) ->
+@edsc.util.date = do (string = @edsc.util.string, config = @edsc.config) ->
 
   # Returns an ISO-formatted date string (YYYY-MM-DD) containing the UTC value of the given date
   isoUtcDateString = (date) ->
@@ -20,7 +20,7 @@
       parsed[1]--
       new Date(Date.UTC.apply(Date, parsed))
 
-  computeRanges = (temporal, present=new Date()) ->
+  computeRanges = (temporal, present=config.present()) ->
     {startDate, endDate, recurring, startYear, endYear} = temporal
     result = []
     return result unless startDate? || endDate?

@@ -21,7 +21,6 @@ ns.GranuleTimeline = do (ko
 
       $timeline = $('#timeline')
       $timeline.on 'rowtemporalchange.timeline', (e, rowId, start, stop) =>
-        console.log 'rowtemporal'
         if rowId == @collection.id
           @collection.granuleDatasource()?.setTemporal?(startDate: start, endDate: stop, recurring: false)
 

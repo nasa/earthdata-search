@@ -2,6 +2,9 @@ export default class CwicDatasourcePlugin {
   constructor(edsc, collection) {
     this._edsc = edsc;
     this._collection = collection;
+    let short_name = collection.json.short_name;
+    let osdd_url = `http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=${short_name}`;
+    collection.osdd_url(osdd_url);
   }
   destroy(edsc) {
     this._edsc = null;

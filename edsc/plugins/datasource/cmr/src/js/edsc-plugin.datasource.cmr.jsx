@@ -67,22 +67,25 @@ export default class CmrDatasourcePlugin {
   // Implement only if row-specific temporal is supported
   setTemporal(values) {
     let temporal = this.temporal();
+    console.log("setTemporal: " + temporal);
+    console.log("values: " + values);
     if (temporal) {
+      console.log("setTemporalInner");
       let start = temporal.start,
           end = temporal.stop;
       if (values.hasOwnProperty('recurring')) {
         temporal.isRecurring(values.recurring);
       }
-      if (values.startDate) {
+      if (values.hasOwnProperty('startDate')) {
         start.date(values.startDate);
       }
-      if (values.endDate) {
+      if (values.hasOwnProperty('endDate')) {
         end.date(values.endDate);
       }
-      if (values.startYear) {
+      if (values.hasOwnProperty('startYear')) {
         start.year(values.startYear);
       }
-      if (values.endYear) {
+      if (values.hasOwnProperty('endYear')) {
         end.year(values.endYear);
       }
     }

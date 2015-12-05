@@ -46,13 +46,14 @@ describe "Add to project", reset: false do
 
       # EDSC-146: As a user, I want to see how long my granule searches take,
       #           so that I may understand the performance of the system
-      it "searches for granules, displaying a granule count and search time" do
-        within '#collection-results-list > :first-child' do
-          expect(page).to have_text("Granules")
-          granules_info = find('.collection-granules-info')
-          expect(granules_info.text).to match(/\d Granules in \d+\.\d+s/)
-        end
-      end
+      # Removed in EDSC-811. This is irrelevant here. We display it on the results page.
+      #it "searches for granules, displaying a granule count and search time" do
+      #  within '#collection-results-list > :first-child' do
+      #    expect(page).to have_text("Granules")
+      #    granules_info = find('.collection-granules-info')
+      #    expect(granules_info.text).to match(/\d Granules in \d+\.\d+s/)
+      #  end
+      #end
 
       it 'adds the collection to the current project' do
         expect(project_collection_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])

@@ -122,7 +122,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       within_window('Earthdata Search - Downloads') do
         expect(page).to have_css('a[href*=".he5.ascii?"]')
         expect(page).to have_css('a[href*="http://acdisc.gsfc.nasa.gov/opendap"]')
-        expect(page).to have_no_content('a[href*="ftp://acdisc.gsfc.nasa.gov/data/s4pa/"]')
+        expect(page).to have_no_content('a[href*="http://acdisc.gesdisc.eosdis.nasa.gov/data/s4pa/"]')
       end
     end
 
@@ -169,7 +169,7 @@ describe 'OPeNDAP Retrieval', reset: false do
     it 'provides links to the original data without opendap parameters' do
       within_window('Earthdata Search - Downloads') do
         expect(page).to have_no_css('a[href*="http://acdisc.gsfc.nasa.gov/opendap"]')
-        expect(page).to have_css('a[href*="ftp://acdisc.gsfc.nasa.gov/data/s4pa/"]')
+        expect(page).to have_css('a[href*="http://acdisc.gesdisc.eosdis.nasa.gov/data/s4pa/"]')
       end
     end
   end

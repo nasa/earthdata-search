@@ -13,7 +13,7 @@ describe "Granule Display Name", reset: false do
     hook_granule_results
 
     it "displays the producer_granule_id as the name" do
-      expect(page).to have_content("CER_SSF_Terra-FM1-MODIS_Edition3A_303305.2014113023")
+      expect(page).to have_content("CER_SSF_Terra-FM1-MODIS_Edition3A_")
     end
   end
 

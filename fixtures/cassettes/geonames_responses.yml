@@ -599,6 +599,54 @@ bd8021457700cd15a98be551b8c9dd0539999890:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
+25de8f34e9214af545b965c92e1f6c53b959d0da:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sat, 05 Dec 2015 02:21:39 GMT
+      server:
+      - Apache/2.2.15 (CentOS)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '37'
+      connection:
+      - close
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
+e2bc897baf06f37462037529a70cc36b016101bb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sat, 05 Dec 2015 02:23:25 GMT
+      server:
+      - Apache/2.2.15 (CentOS)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '37'
+      connection:
+      - close
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
 34e1f212faa944c9958a483ff5082367c3c86be2:
   response:
     status:
@@ -882,7 +930,31 @@ ef6133bd0170b04a70aeb4ad9beaad45bf7414c8:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
-7d435d849fb072ffc0c8a2b5780af995da1a476c:
+0cf4fc4d6bd05f82cfec258ba95cbbb8e6bded23:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sat, 05 Dec 2015 00:30:11 GMT
+      server:
+      - Apache/2.2.15 (CentOS)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '37'
+      connection:
+      - close
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
+478794d3601bcbeb34ce2d8bea6a218861527862:
   response:
     status:
       code: 200
