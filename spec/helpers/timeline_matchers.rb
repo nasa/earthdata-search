@@ -28,7 +28,7 @@ RSpec::Matchers.define :have_highlighted_selection do |start, stop|
       stop_pos = page.evaluate_script "$('#timeline').timeline('timeToPosition', #{stop_time})"
       width = stop_pos - start_pos
 
-      matches = page.all(".timeline-selection rect[x^=\"#{start_pos.to_s[0, 3]}\"][width^=\"#{width.to_s[0, 3]}\"]")
+      matches = page.all(".timeline-selection rect[x^=\"#{start_pos.to_s[0, 2]}\"][width^=\"#{width.to_s[0, 2]}\"]")
 
       expect(matches.size).to be > 0
     end

@@ -16,8 +16,7 @@ ns.Collection = do (ko
 
   openSearchKeyToEndpoint =
     cwic: (collection) ->
-      short_name = collection.json.short_name
-      "http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=#{short_name}&clientId=#{config.cmrClientId}"
+
 
   collections = ko.observableArray()
 
@@ -113,7 +112,9 @@ ns.Collection = do (ko
       @granuleDatasource()?.granuleDescription() ? 'Collection only'
 
     _computeOsddUrl: ->
-      @osdd_url ? @details()?.osdd_url
+      url = @osdd_url() ? @details()?.osdd_url
+      url += "&clientId=#{config.cmrClientId}" if url
+      url
 
     thumbnail: ->
       granule = @browseable_granule

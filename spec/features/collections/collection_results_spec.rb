@@ -26,7 +26,7 @@ describe "Collection results", reset: false do
   end
 
   it "does not load additional results after all results have been loaded" do
-    fill_in "keywords", with: "AST"
+    fill_in "keywords", with: "AQUARIUS_SAC-D as"
     wait_for_xhr
     page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 10000"
     wait_for_xhr

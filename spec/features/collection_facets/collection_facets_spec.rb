@@ -11,7 +11,7 @@ describe "Collection Facets", reset: false do
   context "facet listing" do
     it "shows the first Project facet" do
       find("h3.facet-title", text: 'Project').click
-      expect(page.text).to match('Project\s*\d* 2011_GR_NASA')
+      expect(page.text).to match('Project\s*\d* 2013_AN_NASA')
       find("h3.facet-title", text: 'Project').click
     end
 
@@ -145,7 +145,7 @@ describe "Collection Facets", reset: false do
       find(".facets-item", text: "ESIP").click
       wait_for_xhr
       within(:css, '.project') do
-        expect(page).to have_content("EOSDIS 502 ESIP 502")
+        expect(page).to have_content("EOSDIS 502")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("p.facets-item.selected")
@@ -246,46 +246,6 @@ describe "Collection Facets", reset: false do
     end
   end
 
-  context "when applied one science keyword facets and search terms filter the collections list to no results" do
-    before(:all) do
-      find(".facets-item", text: "BIOSPHERE").click
-      fill_in :keywords, with: "somestringthatmatchesnocollections"
-      wait_for_xhr
-    end
-
-    after(:all) do
-      reset_search
-      wait_for_xhr
-    end
-
-    it "continues to display applied facets" do
-      within(:css, '#collapse1 .panel-body.facets') do
-        expect(page).to have_content("BIOSPHERE")
-      end
-    end
-  end
-
-  context "when applied multiple science keyword facets and search terms filter the collections list to no results" do
-    before(:all) do
-      find(".facets-item", text: "BIOSPHERE").click
-      find(".facets-item", text: "SOILS").click
-      find(".facets-item", text: "SOIL MOISTURE/WATER CONTENT").click
-      fill_in :keywords, with: "somestringthatmatchesnocollections"
-      wait_for_xhr
-    end
-
-    after(:all) do
-      reset_search
-      wait_for_xhr
-    end
-
-    it "continues to display applied science keyword facets in order" do
-      within(:css, '#collapse1 .panel-body.facets') do
-        expect(page).to have_text("BIOSPHERE SOILS SOIL MOISTURE%2FWATER CONTENT")
-      end
-    end
-  end
-
   context "when applied facets and search terms filter the collections list to no results" do
     before(:all) do
       find("h3.facet-title", text: 'Project').click
@@ -308,9 +268,9 @@ describe "Collection Facets", reset: false do
   context "when applying facets containing special characters" do
     before(:all) do
       load_page :search, facets: true
-      find(".facets-item", text: "SPECTRAL/ENGINEERING").click
+      fill_in :keywords, with: "SPECTRAL/ENGINEERING x-ray"
       wait_for_xhr
-      find(".facets-item", text: "LAND USE/LAND COVER").click
+      find(".facets-item", text: "SPECTRAL/ENGINEERING").click
       wait_for_xhr
     end
 
@@ -319,11 +279,11 @@ describe "Collection Facets", reset: false do
     end
 
     it "does not display a duplicate entry with special characters escaped" do
-      expect(page).to have_no_content("LAND USE%2FLAND COVER")
+      expect(page).to have_no_content("SPECTRAL%2FENGINEERING")
     end
 
-    it "does displays the selected entry" do
-      expect(page).to have_content("LAND USE/LAND COVER")
+    it "displays the selected entry" do
+      expect(page).to have_content("SPECTRAL/ENGINEERING")
     end
   end
 
@@ -383,7 +343,7 @@ describe "Collection Facets", reset: false do
       end
 
       it "displays variable_level_1 keywords" do
-        expect(page).to have_content("NITRATE PARTICLES")
+        expect(page).to have_content("AEROSOL BACKSCATTER")
       end
     end
 
@@ -391,7 +351,7 @@ describe "Collection Facets", reset: false do
       before :all do
         first(".facet-term", text: /\AAEROSOLS\z/).click
         wait_for_xhr
-        find(".facets-item", text: "NITRATE PARTICLES").click
+        find(".facets-item", text: "AEROSOL BACKSCATTER").click
         wait_for_xhr
         find(".facet-term", text: /\AATMOSPHERE\z/).click
         wait_for_xhr
@@ -405,7 +365,7 @@ describe "Collection Facets", reset: false do
 
       it "removes the children keywords" do
         expect(page).to have_no_content("AEROSOLS")
-        expect(page).to have_no_content("NITRATE PARTICLES")
+        expect(page).to have_no_content("AEROSOL BACKSCATTER")
       end
     end
   end

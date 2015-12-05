@@ -62,7 +62,7 @@ describe "'Clear Filters' button", reset: false do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
 
       click_link "Clear Filters"
-
+      wait_for_xhr
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       click_link "Temporal"
       expect(page.find("#collection-temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")
@@ -76,7 +76,7 @@ describe "'Clear Filters' button", reset: false do
     click_on 'Browse Collections'
     find("h3.facet-title", text: 'Project').click
     find(".facets-item", text: "EOSDIS").click
-    within(:css, '#collapse3 .panel-body.facets') do
+    within(:css, '#collapse2 .panel-body.facets') do
       expect(page).to have_content("EOSDIS")
       expect(page).to have_css(".facets-item.selected")
     end

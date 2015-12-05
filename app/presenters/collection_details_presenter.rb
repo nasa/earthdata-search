@@ -51,7 +51,7 @@ class CollectionDetailsPresenter < DetailsPresenter
     @collection.dif_url = "#{metadata_url}.dif#{url_token}"
     @collection.smap_iso_url = nil #"#{metadata_url}.smap_iso"
     opensearch_url = "#{Rails.configuration.services['earthdata'][env]['opensearch_root']}/granules/descriptor_document.xml"
-    @collection.osdd_url = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.encode_www_form_component(@collection.short_name)}&versionId=#{@collection.version_id}&dataCenter=#{URI.encode_www_form_component(@collection.archive_center)}&commit=Generate#{url_token}"
+    @collection.osdd_url = "#{opensearch_url}?utf8=%E2%9C%93&shortName=#{URI.encode_www_form_component(@collection.short_name)}&versionId=#{@collection.version_id}&dataCenter=#{URI.encode_www_form_component(@collection.archive_center)}&commit=Generate#{url_token}"
 
     # Set description to URL if URLDescription doesn't exist
     @collection.online_access_urls = [] if @collection.online_access_urls.nil?

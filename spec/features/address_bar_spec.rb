@@ -163,7 +163,7 @@ describe 'Address bar', reset: false do
     before(:all) { visit '/search?fpj=EOSDIS' }
 
     it 'displays the selected facet condition' do
-      within(:css, '#collapse3 .panel-body.facets') do
+      within(:css, '#collapse2 .panel-body.facets') do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
@@ -220,7 +220,7 @@ describe 'Address bar', reset: false do
   context "when viewing a collection's details" do
     before(:all) do
       visit '/search/collections'
-      first_collection_result.click_link('View collection details')
+      second_collection_result.click_link('View collection details')
     end
 
     it 'saves the selected collection in the address bar' do
@@ -241,7 +241,7 @@ describe 'Address bar', reset: false do
     before :all do
       visit '/search/collections'
       wait_for_xhr
-      first_collection_result.click
+      second_collection_result.click
       wait_for_xhr
       first_granule_list_item.click_link 'View granule details'
       wait_for_xhr
