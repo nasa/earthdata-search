@@ -25,8 +25,16 @@ module Helpers
       have_css('.is-master-overlay-parent-hidden')
     end
 
+    def cwic_feature_facet
+      page.find('#master-overlay-parent .features', text: "Int'l / Interagency")
+    end
+
     def collection_results
       page.find('#collection-results')
+    end
+
+    def collection_results_header
+      page.find('#collection-results header h2')
     end
 
     def unfeatured_collection_results

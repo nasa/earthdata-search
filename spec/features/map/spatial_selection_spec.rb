@@ -248,7 +248,7 @@ describe "Spatial" do
 
     context "removing the bounding box selection" do
       before(:each) do
-        create_polygon([10, 10], [10, -10], [-10, -10], [-10, -10])
+        create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
         clear_spatial
         wait_for_xhr

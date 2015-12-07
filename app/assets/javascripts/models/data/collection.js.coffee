@@ -67,6 +67,8 @@ ns.Collection = do (ko
       @_renderers = []
       @_pendingRenderActions = []
       @osddUrl = @computed(@_computeOsddUrl, this, deferEvaluation: true)
+      @cwic = ko.observable(@_isCwic(jsonData))
+      @tags = ko.observable(jsonData.tags)
 
       @visible = ko.observable(false)
       @disposable(@visible.subscribe(@_visibilityChange))
@@ -85,6 +87,8 @@ ns.Collection = do (ko
       @echoGranulesUrl = @computed
         read: =>
           if @granuleDatasourceName() == 'cmr' && @granuleDatasource()
+            queryParams = @granuleDatasource().toQueryParams()
+            delete queryParams['datasource'] if queryParams['datasource']
             paramStr = toParam(@granuleDatasource().toQueryParams())
             "#{@details().granule_url}?#{paramStr}"
         deferEvaluation: true
@@ -242,8 +246,8 @@ ns.Collection = do (ko
         @_datasourceListeners.push(callback)
 
     getValueForTag: (key) ->
-      if @json.tags
-        for [k, v] in @json.tags
+      if @tags()
+        for [k, v] in @tags()
           return v if k == "#{config.cmrTagNamespace}#{key}"
       null
 
@@ -273,5 +277,10 @@ ns.Collection = do (ko
     _setObservable: (prop, jsonObj) =>
       this[prop] ?= ko.observable(undefined)
       this[prop](jsonObj[prop] ? this[prop]())
+
+    _isCwic: (jsonObj) ->
+      if jsonObj.tags?
+        return true for tag in jsonObj.tags when tag[1].toLowerCase() == 'cwic'
+      false
 
   exports = Collection

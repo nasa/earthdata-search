@@ -9,6 +9,9 @@ describe "Spatial search by collection location" do
 
   before do
     load_page :search
+    wait_for_xhr
+    fill_in "keywords", with: 'C179003030-ORNL_DAAC'
+    wait_for_xhr
   end
 
   context "for collections with point spatial" do

@@ -164,6 +164,21 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
 }
 
+.badge-cwic {
+  border-radius: 2px;
+  background-color: #ccaa00;
+  color: #fff;
+  text-shadow: .5px .5px .5px darken(#ccaa00, 20%);
+  font-size: 8px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 22px;
+  &:before {
+    content: "CWIC";
+  }
+  // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
+}
+
 .panel-header-toggle {
   color: #888;
   line-height: 1.5em;
