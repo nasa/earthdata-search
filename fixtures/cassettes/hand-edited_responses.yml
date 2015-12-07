@@ -257,6 +257,35 @@ edsc_current:
       string: '{"user":{"addresses":[{"city":"Alexandria","country":"United States","id":"4029FD6E-AA1A-87A3-209F-C012B8DD9A51","state":"VA","street1":"101
         N. Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"}],"creation_date":"2014-02-04T20:55:34Z","email":"patrick+edsc@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","opt_in":false,"organization_name":"EDSC","primary_study_area":"OTHER","user_domain":"OTHER","user_region":"USA","user_type":"PRODUCTION_USER","username":"edsc"}}'
     http_version:
+edsc_current_testbed:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"2b00373451a8f77db592e8b0e23fc1ea"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.179000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '542'
+      date:
+      - Wed, 06 Aug 2014 13:01:30 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"user":{"addresses":[{"city":"Alexandria","country":"United States","id":"4029FD6E-AA1A-87A3-209F-C012B8DD9A51","state":"VA","street1":"101
+        N. Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"}],"creation_date":"2014-02-04T20:55:34Z","email":"patrick+edsc@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","opt_in":false,"organization_name":"EDSC","primary_study_area":"OTHER","user_domain":"OTHER","user_region":"USA","user_type":"PRODUCTION_USER","username":"edsc"}}'
+    http_version:
 365deea9191426660df70c9dce859bda79ab9e9d:
   response:
     status:
@@ -490,7 +519,7 @@ invalid_but_load_page:
       access-control-allow-origin:
       - "*"
       cmr-hits:
-      - '3872'
+      - '1'
       cmr-took:
       - '55'
       content-type:
@@ -501,475 +530,55 @@ invalid_but_load_page:
       - Jetty(7.x.y-SNAPSHOT)
     body:
       encoding: UTF-8
-      string: '{"feed":{"updated":"2015-01-21T13:47:36.322Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true","title":"ECHO
-        collection metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
-        Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","title":"15
-        Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
-        15 minute stream flow data for Kings Creek on the Konza Prairie","has_granules":true,"time_end":"1988-03-04T00:00:00Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","granule_count":39,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html","hreflang":"en-US","title":"USGS
-        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
-        INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2000
-        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","title":"2000
-        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
-        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
-        to construct an index that measures the ability of a nation''s economy to
-        achieve sustainable development, with the long term goal of finding a single
-        indicator for environmental sustainability analagous to that of the Gross
-        Domestic Product (GDP). The index covering 56 countries is a composite measure
-        of the current status of a nation''s environmental systems, pressures on those
-        systems, human vulnerability to environmental change, national capacity to
-        respond, and contributions to global environmental stewardship. The index
-        was unveiled at the World Economic Forum''s annual meeting, January 2000,
-        Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration among
-        the World Economic Forum (WEF), Yale Center for Environmental Law and Policy
-        (YCELP), and the Columbia University Center for International Earth Science
-        Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-2000/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4NK3BZJ","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2001"],"version_id":"2.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2001
-        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2001","title":"2001
-        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
-        2001 Environmental Sustainability Index (ESI) utilizes a refined methodology
-        based on the 2000 Pilot ESI effort, to construct an index covering 122 countries
-        that measures the overall progress towards environmental sustainability. The
-        index is a composite measure of the current status of a nation''s environmental
-        systems, pressures on those systems, human vulnerability to environmental
-        change, national capacity to respond, and contributions to global environmental
-        stewardship. The refinements included the addition and deletion of indicators,
-        filling gaps in data coverage, new data sets, and the modification of the
-        aggregation scheme. The index was unveiled at the World Economic Forum''s
-        annual meeting, January 2001, Davos, Switzerland. The 2001 ESI is the result
-        of collaboration among the World Economic Forum (WEF), Yale Center for Environmental
-        Law and Policy (YCELP), and the Columbia University Center for International
-        Earth Science Information Network (CIESIN)","has_granules":false,"orbit_parameters":{},"id":"C1000000220-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/maps","hreflang":"en-US","title":"maps
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4X34VDM","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2002"],"version_id":"3.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2002
-        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2002","title":"2002
-        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
-        2002 Environmental Sustainability Index (ESI) measures overall progress toward
-        environmental sustainability for 142 countries based on environmental systems,
-        stresses, human vulnerability, social and institutional capacity and global
-        stewardship. The addition of a climate change indicator, reduction in number
-        of capacity indicators, and an improved imputation methodology contributed
-        to an improvement from the 2001 ESI. The index was unveiled at the World Economic
-        Forum''s annual meeting, January 2002, New York. The 2002 ESI is the result
-        of collaboration among the World Economic Forum (WEF), Yale Center for Environmental
-        Law and Policy (YCELP), and the Columbia University Center for International
-        Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001967-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H40V89R6","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2005"],"version_id":"4.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2005
-        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2005","title":"2005
-        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
-        2005 Environmental Sustainability Index (ESI) is a measure of overall progress
-        towards environmental sustainability, developed for 146 countries. The index
-        provides a composite profile of national environmental stewardship based on
-        a compilation of 21 indicators derived from 76 underlying collections. The 2005
-        version of the ESI represents a significant update and improvement on earlier
-        versions; the country ESI scores or rankings should not be compared to earlier
-        versions because of changes to the methodology and underlying data. The index
-        was unveiled at the World Economic Forum''s annual meeting, January 2005,
-        Davos, Switzerland. The 2005 ESI is a joint product of the Yale Center for
-        Environmental Law and Policy (YCELP) and the Columbia University Center for
-        International Earth Science Information Network (CIESIN), in collaboration
-        with the World Economic Forum (WEF) and the Joint Research Centre (JRC), European
-        Commission.","has_granules":false,"orbit_parameters":{},"id":"C179001889-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2005/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H40V89R6","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2005/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1994-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2008"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2008
-        Environmental Performance Index (EPI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_EPI_2008","title":"2008
-        Environmental Performance Index (EPI)","coordinate_system":"CARTESIAN","summary":"The
-        2008 Environmental Performance Index (EPI) centers on two broad environmental
-        protection objectives: (1) reducing environmental stresses on human \n\nhealth,
-        and (2) promoting ecosystem vitality and sound natural resource management.
-        Derived from a careful review of the environmental literature, these twin
-        goals mirror the priorities \n\nexpressed by policymakers. Environmental health
-        and ecosystem vitality are gauged using 25 indicators tracked in six well-established
-        policy categories: Environmental Health \n\n(Environmental Burden of Disease,
-        Water, and Air Pollution), Air Pollution (effects on ecosystems), Water (effects
-        on ecosystems), Biodiversity and Habitat, Productive Natural Resources \n\n(Forestry,
-        Fisheries, and Agriculture), and Climate Change. The 2008 EPI utilizes a proximity-to-target
-        methodology in which performance on each indicator is rated on a 0 to 100
-        scale \n\n(100 represents at target). By identifying specific targets and
-        measuring how close each country comes to them, the EPI provides a foundation
-        for policy analysis and a context for \n\nevaluating performance. Issue-by-issue
-        and aggregate rankings facilitate cross-country comparisons both globally
-        and within relevant peer groups. The 2008 EPI is the result of \n\ncollaboration
-        among the Yale Center for Environmental Law and Policy (YCELP), Columbia University
-        Center for International Earth Science Information Network (CIESIN), World
-        Economic \n\nForum (WEF), and the Joint Research Centre (JRC), European Commission.","has_granules":false,"orbit_parameters":{},"id":"C179001707-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2008/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4HT2M77","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2008/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"2004-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_NRMI_2008"],"version_id":"1.0","updated":"2009-12-01T00:00:00.000Z","dataset_id":"2008
-        Natural Resource Management Index (NRMI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_NRMI_2008","title":"2008
-        Natural Resource Management Index (NRMI)","coordinate_system":"CARTESIAN","summary":"The
-        2008 Natural Resources Management Index (NRMI) is a composite index for 226
-        countries derived from the average of four proximity-to-target scores from
-        eco-region protection, access to improved sanitation, access to improved water
-        and child mortality indicators. The 2008 NRMI includes data for the NRMI for
-        2006, 2007 and 2008. The collection is produced and distributed by the Columbia
-        University Center for International Earth Science Information Network (CIESIN)
-        in collaboration with the Yale Center for Environmental Law and Policy (YCELP).","has_granules":false,"orbit_parameters":{},"id":"C179002048-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/es/data/NRMI_2008_final-1.xls","hreflang":"en-US","title":"Data
-        in Microsoft Excel (XLS) format","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://sedac.ciesin.columbia.edu/es/mcc.html","hreflang":"en-US","title":"data
-        set homepage (static URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1994-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2010"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2010
-        Environmental Performance Index (EPI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_EPI_2010","title":"2010
-        Environmental Performance Index (EPI)","coordinate_system":"CARTESIAN","summary":"The
-        2010 Environmental Performance Index (EPI) ranks 163 countries on environmental
-        performance based on twenty-five indicators grouped within ten core policy
-        categories addressing environmental health, air quality, water resource management,
-        biodiversity and habitat, forestry, fisheries, agriculture, and climate change
-        in the context of two broad objectives: environmental health and ecosystem
-        vitality. The EPI?s proximity-to-target methodology facilitates cross-country
-        comparisons among economic and regional peer groups. It was formally released
-        in Davos, Switzerland, at the annual meeting of the World Economic Forum on
-        January 28, 2010. The 2010 EPI is the result of collaboration between the
-        Yale Center for Environmental Law and Policy (YCELP) and the Columbia University
-        Center for International Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179002147-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2010/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4D21VHT","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"2000-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2012"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2012
-        Environmental Performance Index and Pilot Trend Environmental Performance
-        Index","data_center":"SEDAC","short_name":"CIESIN_SEDAC_EPI_2012","title":"2012
-        Environmental Performance Index and Pilot Trend Environmental Performance
-        Index","coordinate_system":"CARTESIAN","summary":"The 2012 Environmental Performance
-        Index (EPI) ranks 132 countries on 22 performance indicators in the following
-        10 policy categories:  environmental burden of disease, water (effects on
-        human health), air pollution (effects on human health), air pollution (ecosystem
-        effects), water resources (ecosystem effects), biodiversity and habitat, forestry,
-        fisheries, agriculture and climate change. These categories track performance
-        and progress on two broad policy objectives, environmental health and ecosystem
-        vitality. Each indicator has an associated environmental public health or
-        ecosystem sustainability target. The EPI''s proximity-to-target methodology
-        facilitates cross-country comparisons among economic and regional peer groups.\n\nThe
-        Pilot Trend Environmental Performance Index (Trend EPI) ranks countries on
-        the change in their environmental performance over the last decade. As a complement
-        to the EPI, the Trend EPI shows who is improving and who is declining over
-        time. \n\nThe 2012 EPI and Pilot Trend EPI were formally released in Davos,
-        Switzerland, at the annual meeting of the World Economic Forum on January
-        27, 2012. These are the result of collaboration between the Yale Center for
-        Environmental Law and Policy (YCELP) and the Columbia University Center for
-        International Earth Science Information Network (CIESIN). The Interactive
-        Website for the 2012 EPI is at http://epi.yale.edu/.","has_granules":false,"orbit_parameters":{},"id":"C1000000000-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-pilot-trend-2012/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H48913SG","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-pilot-trend-2012/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"3","boxes":["39.08
-        -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00Z","dif_ids":["FIFE_RAIN_30M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
-        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/2","title":"30
-        Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
-        minute rainfall data for the Konza Prairie","has_granules":true,"time_end":"1987-10-26T00:00:00Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","original_format":"ECHO10","granule_count":117,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html","hreflang":"en-US","title":"30
-        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-90
-        -180 79 177.9"],"time_start":"1977-11-16T00:00:00Z","dif_ids":["GLOBAL_MICROBIAL_BIOMASS_C_N_P"],"version_id":"1","updated":"2015-01-12T00:00:00.000Z","dataset_id":"A
-        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
-        Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1264","title":"A
-        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
-        Data","coordinate_system":"CARTESIAN","summary":"This data set provides the
-        concentrations of soil microbial biomass carbon (C), nitrogen (N) and phosphorus
-        (P), soil organic carbon, total nitrogen, and total phosphorus at biome and
-        global scales. The data were compiled from a comprehensive survey of publications
-        from the late 1970s to 2012 and include 3,422 data points from 315 papers.
-        These data are from soil samples collected primarily at 0-15 cm depth with
-        some from 0-30 cm. In addition, data were compiled for soil microbial biomass
-        concentrations from soil profile samples to depths of 100 cm. Sampling site
-        latitude and longitude were available for the majority of the samples that
-        enabled assembling additional soil properties, site characteristics, vegetation
-        distributions, biomes, and long-term climate data from several global sources
-        of soil, land-cover, and climate data. These site attributes are included
-        with the microbial biomass data. This data set contains two *.csv files of
-        the soil microbial biomass C, N, P data. The first provides all compiled results
-        emphasizing the full spatial extent of the data, while the second is a subset
-        that provides only data from a series of profile samples emphasizing the vertical
-        distribution of microbial biomass concentrations.There is a companion file,
-        also in .csv format, of the references for the surveyed publications. A reference_number
-        relates the data to the respective publication.The concentrations of soil
-        microbial biomass, in combination with other soil databases, were used to
-        estimate the global storage of soil microbial biomass C and N in 0-30 cm and
-        0-100 cm soil profiles. These storage estimates were combined with a spatial
-        map of 12 major biomes (boreal forest, temperate coniferous forest, temperate
-        broadleaf forest, tropical and subtropical forests, mixed forest, grassland,
-        shrub, tundra, desert, natural wetland, cropland, and pasture) at 0.05-degree
-        by 0.5-degree spatial resolution. The biome map and six estimates of C and
-        N storage and C:N ration in soil microbial biomass are provided in a single
-        netCDF format file. ","has_granules":true,"time_end":"2012-06-01T00:00:00Z","orbit_parameters":{},"id":"C1000000000-ORNL_DAAC","original_format":"ECHO10","granule_count":3,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1264","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/SOILS/guides/Global_Microbial_Biomass_C_N_P.html","hreflang":"en-US","title":"This
-        data set provides the concentrations of soil microbial biomass carbon (C),
-        nitrogen (N) and phosphorus (P), soil organic carbon, total nitrogen, and
-        total phosphorus at biome and global scales. The data were compiled from a
-        comprehensive survey of publications from the late 1970s to 2012 and include
-        3,422 data points from 315 papers. These data are from soil samples collected
-        primarily at 0-15 cm depth with some from 0-30 cm. In addition, data were
-        compiled for soil microbial biomass concentrations from soil profile samples
-        to depths of 100 cm. Sampling site latitude and longitude were available for
-        the majority of the samples that enabled assembling additional soil properties,
-        site characteristics, vegetation distributions, biomes, and long-term climate
-        data from several global sources of soil, land-cover, and climate data. These
-        site attributes are included with the microbial biomass data. This data set
-        contains two *.csv files of the soil microbial biomass C, N, P data. The first
-        provides all compiled results emphasizing the full spatial extent of the data,
-        while the second is a subset that provides only data from a series of profile
-        samples emphasizing the vertical distribution of microbial biomass concentrations.There
-        is a companion file, also in .csv format, of the references for the surveyed
-        publications. A reference_number relates the data to the respective publication.The
-        concentrations of soil microbial biomass, in combination with other soil databases,
-        were used to estimate the global storage of soil microbial biomass C and N
-        in 0-30 cm and 0-100 cm soil profiles. These storage estimates were combined
-        with a spatial map of 12 major biomes (boreal forest, temperate coniferous
-        forest, temperate broadleaf forest, tropical and subtropical forests, mixed
-        forest, grassland, shrub, tundra, desert, natural wetland, cropland, and pasture)
-        at 0.05-degree by 0.5-degree spatial resolution. The biome map and six estimates
-        of C and N storage and C:N ration in soil microbial biomass are provided in
-        a single netCDF format file.  (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-43.2
-        -122.4 58.42 176.13"],"time_start":"1993-01-01T00:00:00Z","dif_ids":["LEAF_PHOTOSYNTHESIS_TRAITS"],"version_id":"1","updated":"2014-06-27T00:00:00.000Z","dataset_id":"A
-        Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf
-        Area","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1224","title":"A
-        Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf
-        Area","coordinate_system":"CARTESIAN","summary":"This global data set of photosynthetic
-        rates and leaf nutrient traits was compiled from a comprehensive literature
-        review. It includes estimates of Vcmax (maximum rate of carboxylation), Jmax
-        (maximum rate of electron transport), leaf nitrogen content (N), leaf phosphorus
-        content (P), and specific leaf area (SLA) data from both experimental and
-        ambient field conditions, for a total of 325 species and treatment combinations.
-        Both the original published Vcmax and Jmax values as well as estimates at
-        standard temperature are reported. The maximum rate of carboxylation (Vcmax)
-        and the maximum rate of electron transport (Jmax) are primary determinants
-        of photosynthetic rates in plants, and modeled carbon fluxes are highly sensitive
-        to these parameters. Previous studies have shown that Vcmax and Jmax correlate
-        with leaf nitrogen across species and regions, and locally across species
-        with leaf phosphorus and specific leaf area, yet no universal relationship
-        suitable for global-scale models is currently available. These data are suitable
-        for exploring the general relationships of Vcmax and Jmax with each other
-        and with leaf N, P and SLA. This data set contains one *.csv file.","has_granules":true,"time_end":"2010-12-31T00:00:00Z","orbit_parameters":{},"id":"C179126725-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1224","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/VEGETATION/guides/Leaf_Photosynthesis_Traits.html","hreflang":"en-US","title":"This
-        global data set of photosynthetic rates and leaf nutrient traits was compiled
-        from a comprehensive literature review. It includes estimates of Vcmax (maximum
-        rate of carboxylation), Jmax (maximum rate of electron transport), leaf nitrogen
-        content (N), leaf phosphorus content (P), and specific leaf area (SLA) data
-        from both experimental and ambient field conditions, for a total of 325 species
-        and treatment combinations. Both the original published Vcmax and Jmax values
-        as well as estimates at standard temperature are reported. The maximum rate
-        of carboxylation (Vcmax) and the maximum rate of electron transport (Jmax)
-        are primary determinants of photosynthetic rates in plants, and modeled carbon
-        fluxes are highly sensitive to these parameters. Previous studies have shown
-        that Vcmax and Jmax correlate with leaf nitrogen across species and regions,
-        and locally across species with leaf phosphorus and specific leaf area, yet
-        no universal relationship suitable for global-scale models is currently available.
-        These data are suitable for exploring the general relationships of Vcmax and
-        Jmax with each other and with leaf N, P and SLA. This data set contains one
-        *.csv file. (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-50
-        -159.7 68.5 176.9"],"time_start":"1970-01-01T00:00:00Z","dif_ids":["LEAF_CARBON_NUTRIENTS"],"version_id":"1","updated":"2012-07-19T00:00:00.000Z","dataset_id":"A
-        Global Database of Carbon and Nutrient Concentrations of Green and Senesced
-        Leaves","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1106","title":"A
-        Global Database of Carbon and Nutrient Concentrations of Green and Senesced
-        Leaves","coordinate_system":"CARTESIAN","summary":"This data set provides
-        carbon (C), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), and
-        magnesium (Mg) concentrations in green and senesced leaves. Vegetation characteristics
-        reported include species growth habit, leaf area, mass, and mass loss with
-        senescence. The data were compiled from 86 selected studies in 31 countries,
-        and resulted in approximately 1,000 data points for both green and senesced
-        leaves from woody and non-woody vegetation as described in Vergutz et al (2012).
-        The studies were conducted from 1970-2009. There are two comma-delimited data
-        files with this data set.","has_granules":true,"time_end":"2009-12-31T00:00:00Z","orbit_parameters":{},"id":"C179003380-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1106","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/VEGETATION/guides/Leaf_carbon_nutrients.html","hreflang":"en-US","title":"This
-        data set provides carbon (C), nitrogen (N), phosphorus (P), potassium (K),
-        calcium (Ca), and magnesium (Mg) concentrations in green and senesced leaves.
-        Vegetation characteristics reported include species growth habit, leaf area,
-        mass, and mass loss with senescence. The data were compiled from 86 selected
-        studies in 31 countries, and resulted in approximately 1,000 data points for
-        both green and senesced leaves from woody and non-woody vegetation as described
-        in Vergutz et al (2012). The studies were conducted from 1970-2009. There
-        are two comma-delimited data files with this data set. (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-54.2
-        -164.78 78.42 175.62"],"time_start":"1932-01-01T00:00:00Z","dif_ids":["LAI_WOODY_PLANTS"],"version_id":"1","updated":"2014-07-22T00:00:00.000Z","dataset_id":"A
-        Global Database of Field-observed Leaf Area Index in Woody Plant Species,
-        1932-2011","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1231","title":"A
-        Global Database of Field-observed Leaf Area Index in Woody Plant Species,
-        1932-2011","coordinate_system":"CARTESIAN","summary":"This data set provides
-        global leaf area index (LAI) values for woody species. The data are a compilation
-        of field-observed data from 1,216 locations obtained from 554 literature sources
-        published between 1932 and 2011. Only site-specific maximum LAI values were
-        included from the sources; values affected by significant artificial treatments
-        (e.g. continuous fertilization and/or irrigation) and LAI values that were
-        low due to drought or disturbance (e.g. intensive thinning, wildfire, or disease),
-        or because vegetation was immature or old/declining, were excluded (Lio et
-        al., 2014). To maximize the generic applicability of the data, original LAI
-        values from source literature and values standardized using the definition
-        of half of total surface area (HSA) are included. Supporting information,
-        such as geographical coordinates of plot, altitude, stand age, name of dominant
-        species, plant functional types, and climate data are also provided in the
-        data file. There is one data file in comma-separated (.csv) format with this
-        data set and one companion file which provides the data sources.","has_granules":true,"time_end":"2011-12-31T00:00:00Z","orbit_parameters":{},"id":"C179130805-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1231","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/VEGETATION/guides/LAI_Woody_Plants.html","hreflang":"en-US","title":"This
-        data set provides global leaf area index (LAI) values for woody species. The
-        data are a compilation of field-observed data from 1,216 locations obtained
-        from 554 literature sources published between 1932 and 2011. Only site-specific
-        maximum LAI values were included from the sources; values affected by significant
-        artificial treatments (e.g. continuous fertilization and/or irrigation) and
-        LAI values that were low due to drought or disturbance (e.g. intensive thinning,
-        wildfire, or disease), or because vegetation was immature or old/declining,
-        were excluded (Lio et al., 2014). To maximize the generic applicability of
-        the data, original LAI values from source literature and values standardized
-        using the definition of half of total surface area (HSA) are included. Supporting
-        information, such as geographical coordinates of plot, altitude, stand age,
-        name of dominant species, plant functional types, and climate data are also
-        provided in the data file. There is one data file in comma-separated (.csv)
-        format with this data set and one companion file which provides the data sources.
-        (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-36.45
-        -149.63 74.5 160.52"],"time_start":"1956-01-01T00:00:00Z","dif_ids":["GLOBAL_RTSG_FLUX_V1"],"version_id":"1","updated":"2012-04-16T00:00:00.000Z","dataset_id":"A
-        Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
-        1.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1078","title":"A
-        Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
-        1.0","coordinate_system":"CARTESIAN","summary":"This database contains information
-        compiled from published studies on gas flux from soil following rewetting
-        or thawing. The resulting database includes 222 field and laboratory observations
-        focused on rewetting of dry soils, and 116 field laboratory observations focused
-        on thawing of frozen soils studies conducted from 1956 to 2010. Fluxes of
-        carbon dioxide, methane, nitrous oxide, nitrogen oxide, and ammonia (CO2,
-        CH4, N2O, NO and NH3) were compiled from the literature and the flux rates
-        were normalized for ease of comparison. Field observations of gas flux following
-        rewetting of dry soils include events caused by natural rainfall, simulated
-        rainfall in natural ecosystems, and irrigation in agricultural lands. Similarly,
-        thawing of frozen soils include field observations of natural thawing, simulated
-        freezing-thawing events (i.e., thawing of simulated frozen soil by snow removal),
-        and thawing of seasonal ice in temperate and high latitude regions (Kim et
-        al., 2012). Reported parameters include experiment type, location, site type,
-        vegetation, climate, soil properties, rainfall, soil moisture, soil gas flux
-        after wetting and thawing, peak soil gas flux properties, and the corresponding
-        study references. There is one comma-delimited data file. ","has_granules":true,"time_end":"2009-12-31T00:00:00Z","orbit_parameters":{},"id":"C179003657-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1078","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/SOILS/guides/global_rtsg_flux_v1.html","hreflang":"en-US","title":"This
-        database contains information compiled from published studies on gas flux
-        from soil following rewetting or thawing. The resulting database includes
-        222 field and laboratory observations focused on rewetting of dry soils, and
-        116 field laboratory observations focused on thawing of frozen soils studies
-        conducted from 1956 to 2010. Fluxes of carbon dioxide, methane, nitrous oxide,
-        nitrogen oxide, and ammonia (CO2, CH4, N2O, NO and NH3) were compiled from
-        the literature and the flux rates were normalized for ease of comparison.
-        Field observations of gas flux following rewetting of dry soils include events
-        caused by natural rainfall, simulated rainfall in natural ecosystems, and
-        irrigation in agricultural lands. Similarly, thawing of frozen soils include
-        field observations of natural thawing, simulated freezing-thawing events (i.e.,
-        thawing of simulated frozen soil by snow removal), and thawing of seasonal
-        ice in temperate and high latitude regions (Kim et al., 2012). Reported parameters
-        include experiment type, location, site type, vegetation, climate, soil properties,
-        rainfall, soil moisture, soil gas flux after wetting and thawing, peak soil
-        gas flux properties, and the corresponding study references. There is one
-        comma-delimited data file.  (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-42.5
-        -117.86 63.23 117.6"],"time_start":"1985-01-01T00:00:00Z","dif_ids":["GLOBAL_PHOSPHORUS_HEDLEY_FRACT"],"version_id":"1","updated":"2014-07-18T00:00:00.000Z","dataset_id":"A
-        Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1230","title":"A
-        Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","coordinate_system":"CARTESIAN","summary":"This
-        data set provides concentrations of soil phosphorus (P) compiled from the
-        peer-reviewed literature that cited the Hedley fractionation method (Hedley
-        and Stewart, 1982). This database contains estimates of different forms of
-        naturally occurring soil phosphorus, including labile inorganic P, organic
-        P, occluded P, secondary mineral P, apatite P, and total P, based on the analyses
-        of the various Hedley soil fractions.The recent literature survey (Yang and
-        Post, 2011) was restricted to studies of natural, unfertilized, and uncultivated
-        soils since 1995. Ninety measurements of soil P fractions were identified.
-        These were added to the 88 values from soils in natural ecosystems that Cross
-        and Schlesinger (1995) had compiled. Cross and Schlesinger provided a comprehensive
-        survey on Hedley P data prior to 1995. Measurement data are provided for studies
-        published from 1985 through 2010. In addition to the Hedley P fraction measurement
-        data Yang and Post (2011) also compiled information on soil order, soil pH,
-        organic carbon and nitrogen content, as well as the geographic location (longitude
-        and latitude) of the measurement sites. ","has_granules":true,"time_end":"2010-12-31T00:00:00Z","orbit_parameters":{},"id":"C179130785-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1230","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/SOILS/guides/Global_Phosphorus_Hedley_Fract.html","hreflang":"en-US","title":"This
-        data set provides concentrations of soil phosphorus (P) compiled from the
-        peer-reviewed literature that cited the Hedley fractionation method (Hedley
-        and Stewart, 1982). This database contains estimates of different forms of
-        naturally occurring soil phosphorus, including labile inorganic P, organic
-        P, occluded P, secondary mineral P, apatite P, and total P, based on the analyses
-        of the various Hedley soil fractions.The recent literature survey (Yang and
-        Post, 2011) was restricted to studies of natural, unfertilized, and uncultivated
-        soils since 1995. Ninety measurements of soil P fractions were identified.
-        These were added to the 88 values from soils in natural ecosystems that Cross
-        and Schlesinger (1995) had compiled. Cross and Schlesinger provided a comprehensive
-        survey on Hedley P data prior to 1995. Measurement data are provided for studies
-        published from 1985 through 2010. In addition to the Hedley P fraction measurement
-        data Yang and Post (2011) also compiled information on soil order, soil pH,
-        organic carbon and nitrogen content, as well as the geographic location (longitude
-        and latitude) of the measurement sites.  (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-78.02
-        -162.2 78.17 175.5"],"time_start":"1961-01-01T00:00:00Z","dif_ids":["GLOBAL_SRDB_V3"],"version_id":"1","updated":"2014-08-04T00:00:00.000Z","dataset_id":"A
-        Global Database of Soil Respiration Data, Version 3.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1235","title":"A
-        Global Database of Soil Respiration Data, Version 3.0","coordinate_system":"CARTESIAN","summary":"This
-        data set provides an update of the soil respiration database (SRDB), a near-universal
-        compendium of published soil respiration (RS) data. Soil respiration, the
-        flux of autotrophically- and heterotrophically-generated CO2 from the soil
-        to the atmosphere, remains the least well-constrained component of the terrestrial
-        Carbon cycle. The database encompasses all published studies that report at
-        least one of the following data measured in the field (not laboratory): annual
-        RS, mean seasonal RS, a seasonal or annual partitioning of RS into its sources
-        fluxes, RS temperature response (Q10), or RS at 10 degrees C. The SRDB''s
-        orientation is thus to seasonal and annual fluxes, not shorter-term or chamber-specific
-        measurements, and the database is dominated by temperate, well-drained forest
-        measurement locations. The data set includes a file of RS data and a linked
-        file of study bibliographic data; both files are in comma-separated format.","has_granules":true,"time_end":"2011-12-31T00:00:00Z","orbit_parameters":{},"id":"C179130985-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1235","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/SOILS/guides/global_srdb_v3.html","hreflang":"en-US","title":"This
-        data set provides an update of the soil respiration database (SRDB), a near-universal
-        compendium of published soil respiration (RS) data. Soil respiration, the
-        flux of autotrophically- and heterotrophically-generated CO2 from the soil
-        to the atmosphere, remains the least well-constrained component of the terrestrial
-        Carbon cycle. The database encompasses all published studies that report at
-        least one of the following data measured in the field (not laboratory): annual
-        RS, mean seasonal RS, a seasonal or annual partitioning of RS into its sources
-        fluxes, RS temperature response (Q10), or RS at 10 degrees C. The SRDB''s
-        orientation is thus to seasonal and annual fluxes, not shorter-term or chamber-specific
-        measurements, and the database is dominated by temperate, well-drained forest
-        measurement locations. The data set includes a file of RS data and a linked
-        file of study bibliographic data; both files are in comma-separated format.
-        (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"boxes":["68
-        -24 90 110","45 -130 90 105"],"time_start":"1953-01-01T01:00:00Z","dif_ids":["NSIDC-0050"],"version_id":"Undefined","updated":"2013-03-12T12:00:00.000Z","dataset_id":"AARI
-        10-Day Arctic Ocean EASE-Grid Sea Ice Observations","data_center":"NSIDCV0","short_name":"NSIDC-0050","title":"AARI
-        10-Day Arctic Ocean EASE-Grid Sea Ice Observations","coordinate_system":"CARTESIAN","summary":"<span
-        style=\"color: red; font-weight: bold;\">NOTE: This data set has been replaced
-        by the <a href=\"http://nsidc.org/data/g02176.html\">Sea Ice Charts of the
-        \nRussian Arctic in Gridded Format, 1933-2006</a> data set.</span>\n\nThese
-        gridded ice charts represent a reformatting of information\ncontained in another
-        data set, the Russian Arctic and Antarctic\nResearch Institute''s (AARI) 10
-        Day Digital Arctic Sea Ice Charts. AARI\ndigitized Arctic sea ice concentration
-        and stage of development charts\nas part of an international data exchange
-        program. The AARI source\ncharts, similar to operational charts distributed
-        by the National Ice\nCenter describing ice type and constitution, were developed
-        from\naircraft and satellite observations for shipping purposes, and provide\nextremely
-        detailed information.  Such data are particularly valued in\nprocess studies
-        tracking the growth and recession of polynyas, or for\nlooking at the preponderance
-        of ice at certain stages of development\nin a particular area. NSIDC does
-        not maintain the operational charts,\nbut archives the AARI digitized version.
-        However, the Arctic and Antarctic Research Institute (AARI) 10 \nDay Digital
-        Arctic Sea Ice\nCharts were encoded in SIGRID (Sea Ice Grid) format, which
-        assigns\nnumerical values to ice parameters and records them at specific\nlat/lon
-        grid points. But due to the difficulties of visualizing, extracting and working
-        with data in SIGRID, \nNSIDC is now providing\nAARI data in NSIDC''s Equal
-        Area SSM/I Earth Grid.\n\nThe EASE-Grid format makes it especially easy to
-        compare observed ice\nconcentrations or ice types with the same parameters
-        derived from\nsatellite data (such as ice concentrations from passive microwave\nsensors).\n\nAARI
-        sea ice data in the EASE-Grid projection are gridded at a 12.5 km\nresolution,
-        for both Western (24W to 110E) and Eastern (105E to 130W)\nsectors . Data
-        extend from 1953 through 1990, and are available via\nftp in compressed tar
-        format. Postscript (.ps) files depicting\ncoverage per year are also provided
-        with the data.","has_granules":false,"time_end":"1990-12-30T23:59:59Z","orbit_parameters":{},"id":"C2821-NSIDCV0","original_format":"ECHO10","granule_count":0,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://nsidc.org/data/g02172.html","hreflang":"en-US","title":"Data
-        Access","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"}]},{"processing_level_id":"1B","boxes":["23
-        -85 26 -81"],"time_start":"2002-07-10T00:00:00Z","dif_ids":["aces1cont"],"version_id":"1","updated":"2011-12-01T11:06:14.000Z","dataset_id":"ACES
-        CONTINUOUS DATA V1","data_center":"GHRC","short_name":"aces1cont","title":"ACES
-        CONTINUOUS DATA V1","coordinate_system":"CARTESIAN","summary":"The ALTUS Cloud
-        Electrification Study (ACES) was Based at the Naval Air Facility Key West
-        in Florida.  ACES researchers in August 2002 conducted overflights of thunderstorms
-        over the southwestern corner of Florida.  For the first time in NASA research
-        an uninhabited aerial vehicle (UAV) named ALTUS was used to collect cloud
-        electrification data.  Carrying field mills, optical sensors, electric field
-        sensors and other instruments, it allowed scientists to collect cloud electrification
-        data for the first time from above the storm from it''s birth through dissipation.
-        This experiment allowed scientists to achieve the dual goals of gathering
-        weather data safely, and testing new aircraft technology. This collection consists
-        of data collected from seven instruments: the Slow/Fast antenna, Electric
-        Field Mill, Dual Optical Pulse Sensor, Searchcoil magnetometer, Accelerometers,
-        Gerdien Conductivity Prove, and the Fluxgate Magnetometer. Data consists of
-        sensor reads at 50HZ throughout the flight from all 64 channels.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C1020-GHRC","original_format":"ECHO10","granule_count":26,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1cont","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_collection.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"1B","boxes":["23
-        -85 26 -81"],"time_start":"2002-07-10T00:00:00Z","dif_ids":["aces1efm"],"version_id":"1","updated":"2011-12-01T11:09:46.000Z","dataset_id":"ACES
-        ELECTRIC FIELD MILL V1","data_center":"GHRC","short_name":"aces1efm","title":"ACES
-        ELECTRIC FIELD MILL V1","coordinate_system":"CARTESIAN","summary":"The ALTUS
-        Cloud Electrification Study (ACES) was based at the Naval Air Facility Key
-        West in Florida.  ACES researchers in August 2002 conducted overflights of
-        thunderstorms over the southwestern corner of Florida.  For the first time
-        in NASA research an uninhabited aerial vehicle (UAV) named ALTUS was used
-        to collect cloud electrification data.  Carrying field mills, optical sensors,
-        electric field sensors and other instruments, it allowed scientists to collect
-        cloud electrification data for the first time from above the storm from it''s
-        birth through dissipation.  This experiment allowed scientists to achieve
-        the dual goals of gathering weather data safely, and testing new aircraft
-        technology.  This collection consists of data from the Electric Field Mills which
-        yield information about the atmospheric electrical fields above the instruments.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C194462-GHRC","original_format":"ECHO10","granule_count":14,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1efm","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_collection.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]}]}}'
+      string: '{"feed":{"updated":"2015-12-28T19:53:08.349Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_namespace%5D=edsc.%2A&options%5Btag_namespace%5D%5Bpattern%5D=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[{"processing_level_id":"3","boxes":["53.42 -106.32 56.25 -97.23"],"time_start":"1994-05-24T00:00:00.000Z","dif_ids":["BOREAS_AFM3MW94"],"version_id":"1","updated":"2000-01-27T00:00:00.000Z","dataset_id":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/495","title":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","coordinate_system":"CARTESIAN","summary":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA.","has_granules":true,"time_end":"1994-09-16T00:00:00.000Z","orbit_parameters":{},"id":"C179002986-ORNL_DAAC","score":0.5,"original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html"}]}],"facets":[{"field":"project","value-counts":[["Boreal Ecosystem-Atmosphere Study",1],["EOSDIS",1],["ESIP",1]]},{"field":"sensor","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",1]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[{"subfields":["level_1"],"level_1":[{"subfields":["level_2"],"level_2":[{"subfields":["level_3"],"level_3":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"THE OAK RIDGE NATIONAL LABORATORY (ORNL) DISTRIBUTED ACTIVE ARCHIVE CENTER (DAAC)"}],"count":1,"value":"ORNL_DAAC"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"NASA"}],"count":1,"value":"GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES"}],"field":"data_centers"},{"subfields":["level_0"],"level_0":[{"subfields":["level_1"],"level_1":[{"subfields":["level_2"],"level_2":[{"subfields":["level_3"],"level_3":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"THE OAK RIDGE NATIONAL LABORATORY (ORNL) DISTRIBUTED ACTIVE ARCHIVE CENTER (DAAC)"}],"count":1,"value":"ORNL_DAAC"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"NASA"}],"count":1,"value":"GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES"}],"field":"archive_centers"},{"subfields":["category"],"category":[{"subfields":["series_entity"],"series_entity":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"NCAR ELECTRA"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Aircraft"}],"field":"platforms"},{"subfields":["category"],"category":[{"subfields":["class"],"class":[{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"GUST PROBE"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"INFRARED THERMOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"MULTIBAND VEGETATION IMAGER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"NET RADIOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PRESSURE TRANSDUCER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PYRANOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PYRGEOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"TEMPERATURE SENSOR"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"},{"subfields":["class"],"class":[{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Infrared Gas Analyzers"}],"count":1,"value":"IRGA"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Chemical Meters/Analyzers"},{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"CHEMILUMINESCENCE"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Spectrometers/Radiometers"}],"count":1,"value":"In Situ/Laboratory Instruments"}],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LONGWAVE RADIATION"},{"count":1,"value":"NET RADIATION"},{"count":1,"value":"SOLAR IRRADIANCE"}],"count":1,"value":"ATMOSPHERIC RADIATION"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"CARBON DIOXIDE"},{"count":1,"value":"OZONE"}],"count":1,"value":"ATMOSPHERIC CHEMISTRY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ATMOSPHERIC PRESSURE MEASUREMENTS"}],"count":1,"value":"ATMOSPHERIC PRESSURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"AIR TEMPERATURE"}],"count":1,"value":"ATMOSPHERIC TEMPERATURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"WATER VAPOR"}],"count":1,"value":"ATMOSPHERIC WATER VAPOR"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"UPPER LEVEL WINDS"}],"count":1,"value":"ATMOSPHERIC WINDS"}],"count":1,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LAND SURFACE TEMPERATURE"}],"count":1,"value":"LAND TEMPERATURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"REFLECTANCE"}],"count":1,"value":"SURFACE RADIATIVE PROPERTIES"}],"count":1,"value":"LAND SURFACE"}],"count":1,"value":"EARTH SCIENCE"}],"field":"science_keywords"}]}}'
+    http_version:
+invalid_but_load_page_none_hierarchical:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Wed, 21 Jan 2015 13:47:36 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '55'
+      content-type:
+      - application/json; charset=utf-8
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2015-12-28T19:57:02.254Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_namespace%5D=edsc.%2A&options%5Btag_namespace%5D%5Bpattern%5D=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[{"processing_level_id":"3","boxes":["53.42 -106.32 56.25 -97.23"],"time_start":"1994-05-24T00:00:00.000Z","dif_ids":["BOREAS_AFM3MW94"],"version_id":"1","updated":"2000-01-27T00:00:00.000Z","dataset_id":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/495","title":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","coordinate_system":"CARTESIAN","summary":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA.","has_granules":true,"time_end":"1994-09-16T00:00:00.000Z","orbit_parameters":{},"id":"C179002986-ORNL_DAAC","score":0.5,"original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html"}]}],"facets":[{"field":"data_center","value-counts":[["ORNL_DAAC",1]]},{"field":"archive_center","value-counts":[["ORNL_DAAC",1]]},{"field":"project","value-counts":[["Boreal Ecosystem-Atmosphere Study",1],["EOSDIS",1],["ESIP",1]]},{"field":"platform","value-counts":[["NCAR ELECTRA",1]]},{"field":"instrument","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"sensor","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",1]]},{"field":"category","value-counts":[["EARTH SCIENCE",1]]},{"field":"topic","value-counts":[["ATMOSPHERE",1],["LAND SURFACE",1]]},{"field":"term","value-counts":[["ATMOSPHERIC CHEMISTRY",1],["ATMOSPHERIC PRESSURE",1],["ATMOSPHERIC RADIATION",1],["ATMOSPHERIC TEMPERATURE",1],["ATMOSPHERIC WATER VAPOR",1],["ATMOSPHERIC WINDS",1],["LAND TEMPERATURE",1],["SURFACE RADIATIVE PROPERTIES",1]]},{"field":"variable_level_1","value-counts":[["AIR TEMPERATURE",1],["ATMOSPHERIC PRESSURE MEASUREMENTS",1],["CARBON DIOXIDE",1],["LAND SURFACE TEMPERATURE",1],["LONGWAVE RADIATION",1],["NET RADIATION",1],["OZONE",1],["REFLECTANCE",1],["SOLAR IRRADIANCE",1],["UPPER LEVEL WINDS",1],["WATER VAPOR",1]]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
+    http_version:
+on_collections_loaded_for_invalid_token:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Wed, 21 Jan 2015 13:47:36 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '55'
+      content-type:
+      - application/json; charset=utf-8
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2015-12-28T20:01:36.278Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_namespace%5D=edsc.%2A&options%5Btag_namespace%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}]}}'
     http_version:
 first_service_request:
   response:
