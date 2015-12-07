@@ -89,7 +89,6 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 }
 
 .panel-list-thumbnail {
-  position: relative;
   max-width: $panel-list-item-height;
   max-height: $panel-list-item-height;
 }
@@ -112,8 +111,8 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list-badges {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -5px;
+  left: -5px;
   .tooltip {
     width: $facet-overlay-width;
   }
