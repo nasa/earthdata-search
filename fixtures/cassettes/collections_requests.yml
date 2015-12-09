@@ -1370,6 +1370,32 @@ http_interactions:
   digest: 54c22ca402dc2dc8ff61cdfacd86c2d04faf80cd
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=Minute%2A+%28FIFE%29%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Dec 2015 14:39:08 GMT
+  digest: ff886780e2ccffae945c1d6cbca4d4a25c35f557
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=Minute%2A+FIFE%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Dec 2015 14:38:42 GMT
+  digest: e3ddd65ee5fa183de0db4f5a618e54090c52058a
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=NSIDC-0022%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -1420,6 +1446,19 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Sat, 05 Dec 2015 02:47:26 GMT
   digest: cdce507771d90ce9f5a840dd754c0cbd4e8cad81
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=asdfasdfasdfasdfasdf%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Dec 2015 14:26:04 GMT
+  digest: 5bb4554d334556234da71b63a65092cccc763a3c
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=asdfasdfasdfqwer%2A&include_has_granules=true&include_granule_counts=true
@@ -1959,6 +1998,32 @@ http_interactions:
   digest: 8ecd509d74cb75cd9ef5064960036f9b6532f6a1
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=Minute%2A+%28FIFE%29%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Dec 2015 14:39:04 GMT
+  digest: e8370999011215470a5ee338fe2a5d3b9f4bd7d0
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=Minute%2A+FIFE%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Dec 2015 14:38:39 GMT
+  digest: 3cc3f5daae42ce4028ab75a53821d52dbad7583a
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=NSIDC-0022%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2009,6 +2074,19 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Sat, 05 Dec 2015 02:47:21 GMT
   digest: c2b36dbd5be0e19e24729e97c9fae4a86efc81be
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=asdfasdfasdfasdfasdf%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Dec 2015 14:26:00 GMT
+  digest: c93107ec63ed6813feb289ac8cad9b733532504a
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=asdfasdfasdfqwer%2A&include_has_granules=true&include_granule_counts=true
@@ -2548,6 +2626,32 @@ http_interactions:
   digest: 1d478ddf793e1792ccb0154438595e20fa9fa2e3
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=Minute%2A+%28FIFE%29%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Dec 2015 14:39:06 GMT
+  digest: 9b140c7cd401102145330cba41b3453b3b19a0e7
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=Minute%2A+FIFE%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Dec 2015 14:38:37 GMT
+  digest: 689092336835f4a96003e8313ec9ea9cac561337
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=NSIDC-0022%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2598,6 +2702,19 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Sat, 05 Dec 2015 02:47:23 GMT
   digest: 07dbb781bceaa934e146a1e112cf17536d2636ce
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=asdfasdfasdfasdfasdf%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 09 Dec 2015 14:26:02 GMT
+  digest: 0f18ac1faf59b236998a570844ea0c48ddc0f0e0
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=asdfasdfasdfqwer%2A&include_has_granules=true&include_granule_counts=true

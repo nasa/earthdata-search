@@ -21,7 +21,7 @@ describe "Granule filter tracking", reset: false do
 
     context 'completely removing the collection from all views' do
       before :all do
-        first_collection_result.click_link "Remove collection from the current project"
+        target_collection_result.click_link "Remove collection from the current project"
         fill_in :keywords, with: 'asdfasdfasdfasdfasdf'
         wait_for_xhr
       end
@@ -57,7 +57,7 @@ describe "Granule filter tracking", reset: false do
 
     context 'completely removing the collection from all views' do
       before :all do
-        first_collection_result.click_link "Remove collection from the current project"
+        target_collection_result.click_link "Remove collection from the current project"
         fill_in :keywords, with: 'asdfasdfasdfasdfasdf'
         wait_for_xhr
       end

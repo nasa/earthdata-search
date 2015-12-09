@@ -365,7 +365,7 @@ ns.GranuleLayer = do (L
 
   class GranuleLayer extends GibsTileLayer
     constructor: (@collection, color, @multiOptions) ->
-      @granules = @collection.granuleDatasource().cmrData()
+      @granules = @collection.granuleDatasource()?.cmrData()
       @_hasGibs = @multiOptions?.length > 0
       @color = color ? '#25c85b';
       super({})
@@ -377,15 +377,15 @@ ns.GranuleLayer = do (L
       @_handle(map, 'on', 'edsc.focuscollection')
       @setFocus(map.focusedCollection?.id == @collection.id)
 
-      @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
-      @_loadResults(@granules.results())
+      @_resultsSubscription = @granules?.results.subscribe(@_loadResults.bind(this))
+      @_loadResults(@granules?.results())
 
     onRemove: (map) ->
       super(map)
 
       @setFocus(false, map)
       @_handle(map, 'off', 'edsc.focuscollection')
-      @_resultsSubscription.dispose()
+      @_resultsSubscription?.dispose()
       @_results = null
 
     url: ->

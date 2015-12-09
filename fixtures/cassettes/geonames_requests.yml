@@ -35,6 +35,28 @@ http_interactions:
   digest: 3c71b8d7ec2f7aca39b6a81a2c0176185ba9fe78
 - request:
     method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=Minute+%28FIFE%29&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 09 Dec 2015 14:39:07 GMT
+  digest: 7e4591de8b9263ca607aab51daeba52e0144a40d
+- request:
+    method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=Minute+FIFE&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 09 Dec 2015 14:38:40 GMT
+  digest: 0a1043e81d21e227c953ec3216e58453fd924a60
+- request:
+    method: get
     uri: http://places.example.com/search?username=edsc&maxRows=5&q=NSIDC-0022&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
