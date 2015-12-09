@@ -65,7 +65,7 @@ describe "Collection keyword searches", reset: false do
       before(:all) do
         target_collection_result.click_link "Add collection to the current project"
         collection_results.click_link "View Project"
-        view_granule_results('project-overview')
+        view_granule_results('15 Minute Stream Flow Data: USGS (FIFE)', 'project-overview')
         granule_list.click_link('Filter granules')
         first_granule_list_item.click_link('View granule details')
         expect(page).to have_content('Day / Night Flag')
