@@ -186,7 +186,7 @@ describe "Granule list", reset: false do
     use_collection 'C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)'
 
     context "clicking on a collection result" do
-      hook_granule_results(:each)
+      hook_granule_results('30 Minute Rainfall Data (FIFE)', :each)
 
       it "displays the first granule results in a list that pages by 20" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 20)
@@ -201,7 +201,7 @@ describe "Granule list", reset: false do
     use_collection 'C179003380-ORNL_DAAC', 'A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves'
 
     context "clicking on a collection result" do
-      hook_granule_results
+      hook_granule_results('A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves')
 
       it "displays all available granule results" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 2)

@@ -110,7 +110,7 @@ describe "Timeline display", reset: false do
       add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
 
       collection_results.click_link "View Project"
-      view_granule_results('project-overview')
+      view_granule_results('15 Minute Stream Flow Data: USGS (FIFE)', 'project-overview')
     end
 
     after :all do

@@ -64,7 +64,7 @@ describe "Grid coordinate search", reset: false do
       end
 
       context 'entering valid tile numbers and viewing granule results' do
-        hook_granule_results
+        hook_granule_results('Landsat 1-5 Multispectral Scanner V1')
 
         before(:all) do
           fill_in 'map-grid-coordinates', with: '111,111'

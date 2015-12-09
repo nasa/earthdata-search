@@ -43,7 +43,7 @@ describe "Project collection color coding", reset: false do
     end
 
     context 'viewing granules for a collection' do
-      before(:all) { view_granule_results('project-overview') }
+      before(:all) { view_granule_results('15 Minute Stream Flow Data: USGS (FIFE)', 'project-overview') }
       after(:all) { leave_granule_results('project-overview') }
 
       it 'draws granule footprints with the color corresponding the collection' do
