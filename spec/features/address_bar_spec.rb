@@ -459,7 +459,7 @@ describe 'Address bar', reset: false do
       before(:each) do
         visit long_path
         wait_for_xhr
-        first_collection_result.click_link('Add collection to the current project')
+        target_collection_result.click_link('Add collection to the current project')
         wait_for_xhr
       end
 

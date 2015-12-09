@@ -10,7 +10,7 @@ describe "Project collection color coding", reset: false do
 
   before(:all) do
     Capybara.reset_sessions!
-    load_page :search
+    load_page :search, q: 'Minute FIFE'
 
     view_granule_results
     zoom_out_button = find('.timeline-zoom-out')
@@ -23,7 +23,7 @@ describe "Project collection color coding", reset: false do
   context 'in the project view' do
     before :all do
       first_collection_result.click_link "Add collection to the current project"
-      nth_collection_result(10).click_link "Add collection to the current project"
+      second_collection_result.click_link "Add collection to the current project"
       collection_results.click_link "View Project"
     end
 
@@ -38,8 +38,8 @@ describe "Project collection color coding", reset: false do
     end
 
     it 'draws timeline data with the color corresponding to each collection' do
-      expect(page.find('#timeline .C179003030-ORNL_DAAC')).to have_css("rect[style*=\"#{first_color_hex}\"]")
-      expect(page.find('#timeline .C179002914-ORNL_DAAC')).to have_css("rect[style*=\"#{second_color_hex}\"]")
+      expect(page.find('#timeline .C179002914-ORNL_DAAC')).to have_css("rect[style*=\"#{first_color_hex}\"]")
+      expect(page.find('#timeline .C179003030-ORNL_DAAC')).to have_css("rect[style*=\"#{second_color_hex}\"]")
     end
 
     context 'viewing granules for a collection' do
@@ -48,7 +48,7 @@ describe "Project collection color coding", reset: false do
 
       it 'draws granule footprints with the color corresponding the collection' do
         map_mousemove('#map', 39.1, -96.6)
-        expect(page).to have_selector(".leaflet-overlay-pane path[stroke=\"#{first_color_hex}\"]")
+        expect(page).to have_selector(".leaflet-overlay-pane path[stroke=\"#{second_color_hex}\"]")
       end
     end
   end

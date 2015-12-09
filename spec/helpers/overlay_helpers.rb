@@ -69,6 +69,10 @@ module Helpers
       nth_panel(unfeatured_collection_results, n)
     end
 
+    def target_collection_result(col_name='15 Minute Stream Flow Data: USGS (FIFE)')
+      page.find("#collection-results-list .panel-list-item", text: col_name)
+    end
+
     def collection_details
       page.find('#collection-details')
     end

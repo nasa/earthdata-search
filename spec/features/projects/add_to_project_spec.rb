@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe "Add to project", reset: false do
+  collection_name = '15 Minute Stream Flow Data: USGS (FIFE)'
   before(:all) do
     Capybara.reset_sessions!
     load_page :search
@@ -34,10 +35,7 @@ describe "Add to project", reset: false do
 
     context 'clicking on an "Add" button' do
       before(:all) do
-        within '#collection-results-list > :first-child' do
-          click_link "Add collection to the current project"
-          wait_for_xhr
-        end
+        add_to_project(collection_name)
       end
 
       after(:all) do
@@ -56,14 +54,13 @@ describe "Add to project", reset: false do
       #end
 
       it 'adds the collection to the current project' do
-        expect(project_collection_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
+        expect(project_collection_ids).to match_array([collection_name])
       end
 
       it 'updates the button for the collection to be a remove button' do
-        within '#collection-results-list > :first-child' do
-          expect(page).to have_no_link("Add collection to the current project")
-          expect(page).to have_link("Remove collection from the current project")
-        end
+        panel_list_item = find("#collection-results-list .panel-list-item", text: collection_name)
+        expect(panel_list_item).to have_no_link("Add collection to the current project")
+        expect(panel_list_item).to have_link("Remove collection from the current project")
       end
 
       it 'displays a summary of the collections in the project' do
@@ -111,10 +108,8 @@ describe "Add to project", reset: false do
 
       context 'when collections remain in the project' do
         before(:all) do
-          within '#collection-results-list > :first-child' do
-            click_link "Add collection to the current project"
-          end
-          within '#collection-results-list > :nth-child(2)' do
+          target_collection_result.click_link "Add collection to the current project"
+          within '#collection-results-list > :nth-child(10)' do
             click_link "Add collection to the current project"
             click_link "Remove collection from the current project"
           end
@@ -134,11 +129,11 @@ describe "Add to project", reset: false do
         end
 
         it 'removes the collection from the current project' do
-          expect(project_collection_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
+          expect(project_collection_ids).to match_array([collection_name])
         end
 
         it 'updates the button for the collection to be an add button' do
-          within '#collection-results-list > :nth-child(2)' do
+          within '#collection-results-list > :nth-child(10)' do
             expect(page).to have_link("Add collection to the current project")
             expect(page).to have_no_link("Remove collection from the current project")
           end

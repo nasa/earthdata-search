@@ -5,7 +5,7 @@ describe 'Add to project', reset: false do
     before :all do
       Capybara.reset_sessions!
       load_page :search
-      fill_in 'keywords', with: 'C179002945-ORNL_DAAC'
+      fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
       wait_for_xhr
       first_collection_result.click
       wait_for_xhr

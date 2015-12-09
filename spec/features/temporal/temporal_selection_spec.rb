@@ -52,8 +52,8 @@ describe "Temporal" do
       fill_in "End", with: "1979-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
+      expect(page).to have_no_content("1-deg x 1-deg Terrestrial Mean Free-Air Anomalies")
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_no_content("2001 Environmental Sustainability Index (ESI)")
       expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
       expect(page).to have_content("Start 1978-12-01 00:00:00")
       expect(page).to have_content("Stop 1979-12-01 00:00:00")
@@ -62,9 +62,9 @@ describe "Temporal" do
       js_click_clear
       js_click_apply ".temporal-dropdown"
 
+      expect(page).to have_content("1-deg x 1-deg Terrestrial Mean Free-Air Anomalies")
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2001 Environmental Sustainability Index (ESI)")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_content("1886 Charleston, USA Images")
       expect(page).to have_no_content("Start 1978-12-01 00:00:00")
       expect(page).to have_no_content("Stop 1979-12-01 00:00:00")
     end

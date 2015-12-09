@@ -74,12 +74,14 @@ describe "Collection results", reset: false do
   end
 
   it "indicates if a collection's data collection is ongoing" do
-    expect(page).to have_content("1978-01-01 ongoing")
+    fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
+    wait_for_xhr
+    expect(page).to have_content("2014-12-25 ongoing")
   end
 
   context 'when clicking the "View collection" button' do
     before(:all) do
-      first_collection_result.click_link "View collection"
+      target_collection_result.click_link "View collection"
     end
 
     it 'highlights the "View collection" button' do
@@ -87,7 +89,7 @@ describe "Collection results", reset: false do
     end
 
     context 'and clicking back' do
-      before(:all) { first_collection_result.click_link "Hide collection" }
+      before(:all) { target_collection_result.click_link "Hide collection" }
 
       it "un-highlights the selected collection" do
         expect(page).to have_no_css('#collection-results a[title="Hide collection"].button-active')
