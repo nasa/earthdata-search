@@ -24,7 +24,7 @@ module Helpers
       wait_for_xhr
     end
 
-    def view_granule_results(from='collection-results', col_name='15 Minute Stream Flow Data: USGS (FIFE)')
+    def view_granule_results(col_name='15 Minute Stream Flow Data: USGS (FIFE)', from='collection-results')
       wait_for_xhr
       expect(page).to have_visible_overlay(from)
       root = from
@@ -60,14 +60,14 @@ module Helpers
       wait_for_xhr
     end
 
-    def hook_granule_results(scope=:all)
-      before(scope) { view_granule_results }
+    def hook_granule_results(col_name='15 Minute Stream Flow Data: USGS (FIFE)', scope=:all, from='collection-results')
+      before(scope) { view_granule_results(col_name, from) }
       after(scope) { leave_granule_results }
     end
 
-    def hook_granule_results_back
+    def hook_granule_results_back(col_name='15 Minute Stream Flow Data: USGS (FIFE)')
       before :all do
-        view_granule_results
+        view_granule_results(col_name)
         leave_granule_results
       end
     end

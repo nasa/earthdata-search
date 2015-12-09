@@ -63,7 +63,7 @@ describe "Collection keyword searches", reset: false do
       use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
 
       before(:all) do
-        first_collection_result.click_link "Add collection to the current project"
+        target_collection_result.click_link "Add collection to the current project"
         collection_results.click_link "View Project"
         view_granule_results('project-overview')
         granule_list.click_link('Filter granules')
@@ -85,6 +85,7 @@ describe "Collection keyword searches", reset: false do
         before(:all) do
           fill_in "keywords", with: "AST_L"
           wait_for_xhr
+          expect(page).to have_content('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
         end
 
         it "returns to the collection results list" do
@@ -105,7 +106,7 @@ describe "Collection keyword searches", reset: false do
 
         context "and clicking on the first collection result" do
           before(:all) do
-            view_granule_results
+            view_granule_results('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
           end
 
           it "shows the collection's granules" do
@@ -158,7 +159,7 @@ describe "Collection keyword searches", reset: false do
 
         context "and clicking on the first collection result" do
           before(:all) do
-            view_granule_results
+            view_granule_results('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
           end
 
           it "shows the collection's granules" do

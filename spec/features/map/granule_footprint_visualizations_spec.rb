@@ -61,7 +61,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
   end
 
   context "for polygon collections" do
-    use_collection 'C1000000011-LANCEMODIS', 'MOD02QKM'
+    use_collection 'C1000000011-LANCEMODIS', 'MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m V005 NRT'
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
@@ -69,7 +69,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "visualizing a collection's granules" do
-      hook_granule_results
+      hook_granule_results('MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m V005 NRT')
 
       it "draws polygons on the map for granule spatial areas" do
         wait_for_xhr
@@ -103,7 +103,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "removing a visualized collection" do
-      hook_granule_results_back
+      hook_granule_results_back('MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m V005 NRT')
 
       it "hides the collection's visualizations" do
         expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
@@ -115,7 +115,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     use_collection 'C5920490-LARC_ASDC', 'CAL_IIR_L2_Track-Beta-V3-01'
 
     context "visualizing a collection's granules" do
-      hook_granule_results
+      hook_granule_results('CAL_IIR_L2_Track-Beta-V3-01')
 
       it "draws lines on the map for granule spatial areas" do
         wait_for_xhr
@@ -149,7 +149,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "removing a visualized collection" do
-      hook_granule_results_back
+      hook_granule_results_back('CAL_IIR_L2_Track-Beta-V3-01')
 
       it "hides the collection's visualizations" do
         expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
@@ -158,7 +158,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
   end
 
   context "for bounding box collections" do
-    use_collection 'C204200619-GSFCS4PA', 'CloudSat'
+    use_collection 'C204200619-GSFCS4PA', 'AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1'
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
@@ -166,7 +166,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "visualizing a collection's granules" do
-      hook_granule_results
+      hook_granule_results('AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1')
 
       it "draws polygons on the map for granule spatial areas" do
         wait_for_xhr
@@ -200,7 +200,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "removing a visualized collection" do
-      hook_granule_results_back
+      hook_granule_results_back('AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1')
 
       it "hides the collection's visualizations" do
         expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')

@@ -15,7 +15,7 @@ describe "Granule browse display", reset: false do
     use_collection 'C14758250-LPDAAC_ECS', 'AST_L1A'
 
     context "viewing the granule list" do
-      hook_granule_results
+      hook_granule_results('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
 
       it "displays browse thumbnails for each granule which link to the original browse image" do
         expect(granule_list).to have_css('a.panel-list-thumbnail-container img[src$="h=65&w=65"]')
@@ -38,7 +38,7 @@ describe "Granule browse display", reset: false do
 
     context "returning to the search page with granule browse visible on the map" do
       before :all do
-        view_granule_results
+        view_granule_results('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
         first_granule_list_item.click
         leave_granule_results
       end

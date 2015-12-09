@@ -34,7 +34,7 @@ export default class CwicDatasourcePlugin {
     return null;
   }
   cwicData() {
-    return null;
+    return this;
   }
 };
 
