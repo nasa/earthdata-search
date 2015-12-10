@@ -281,7 +281,7 @@ describe "Collection Facets", reset: false do
 
     it "continues to display applied science keyword facets in order" do
       within(:css, '#collapse1 .panel-body.facets') do
-        expect(page).to have_text("BIOSPHERE SOILS SOIL MOISTURE%2FWATER CONTENT")
+        expect(page).to have_text("BIOSPHERE SOILS SOIL MOISTURE/WATER CONTENT")
       end
     end
   end
