@@ -44,7 +44,7 @@ See public/licenses.txt
 
 * Ruby 2.1.2
 * [Pow](http://pow.cx/) is recommended for local testing with Earthdata Login
-* A Ruby manager such as [RVM](http://rvm.io/) or [rbenv](https://github.com/sstephenson/rbenv) is strongly recommended.
+* A Ruby manager such as [RVM](http://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) is strongly recommended.
 * (For shapefile support) access to an [ogre](http://ogre.adc4gis.com) server
 * (For placename completion) a [GeoNames](http://www.geonames.org) account
 
@@ -64,7 +64,7 @@ Additionally, you will need the following, which will be installed automatically
 
 If you would like to set up Earthdata Login login, you will need to perform the following steps:
 
-Register an account on [the Earthdata Login home page](https://urs.earthdata.nasa.gov/profile)
+Register an account on [the Earthdata Login home page](https://urs.earthdata.nasa.gov/home)
 
 Create an application in the Earthdata Login console.  Its callback URL should be `http://<domain>/urs_callback`.  If you are using Pow, this will be something
 like `http://earthdata-search.dev/urs_callback`
