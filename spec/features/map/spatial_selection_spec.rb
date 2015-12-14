@@ -236,12 +236,13 @@ describe "Spatial" do
       before(:each) do
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
-        create_polygon([-74, 41], [-75, 41], [-75, -40], [-74, 40])
+        expect(page).to have_no_content("2004 Snapshot of bird species in the Antarctic - data from World Bird Database")
+        create_polygon([-87, -176], [-87, -166], [-79, -168], [-79, -179])
         wait_for_xhr
       end
 
       it "updates the collection filters using the new bounding box selection" do
-        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
+        expect(page).to have_content("2004 Snapshot of bird species in the Antarctic - data from World Bird Database")
       end
     end
 
