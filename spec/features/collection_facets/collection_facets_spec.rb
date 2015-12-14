@@ -267,9 +267,9 @@ describe "Collection Facets", reset: false do
 
   context "when applied multiple science keyword facets and search terms filter the collections list to no results" do
     before(:all) do
-      find(".facets-item", text: "BIOSPHERE").click
-      find(".facets-item", text: "SOILS").click
-      find(".facets-item", text: "SOIL MOISTURE/WATER CONTENT").click
+      find(".facets-item", text: "AGRICULTURE").click
+      find(".facets-item", text: "AGRICULTURAL CHEMICALS").click
+      find(".facets-item", text: "FERTILIZERS").click
       fill_in :keywords, with: "somestringthatmatchesnocollections"
       wait_for_xhr
     end
@@ -281,7 +281,7 @@ describe "Collection Facets", reset: false do
 
     it "continues to display applied science keyword facets in order" do
       within(:css, '#collapse1 .panel-body.facets') do
-        expect(page).to have_text("BIOSPHERE SOILS SOIL MOISTURE/WATER CONTENT")
+        expect(page).to have_text("AGRICULTURE AGRICULTURAL CHEMICALS FERTILIZERS")
       end
     end
   end
