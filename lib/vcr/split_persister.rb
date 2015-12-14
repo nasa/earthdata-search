@@ -103,7 +103,7 @@ module VCR
                               response['response']['headers']['content-type'].present? &&
                               response['response']['headers']['content-type'][0].start_with?('application/json'))
       body = ActiveSupport::JSON.decode(response['response']['body']['string'])
-      if body && body['feed']['facets'] && !body['feed']['reduced']
+      if body && body['feed'] && body['feed']['facets'] && !body['feed']['reduced']
         before = response['response']['body']['string'].size
         Echo::ClientMiddleware::FacetCullingMiddleware.cull(body)
         response['response']['body']['string'] = body.to_json

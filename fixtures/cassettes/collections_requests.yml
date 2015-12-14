@@ -3288,6 +3288,32 @@ http_interactions:
   digest: 31d59a94a5f21ae28498da41163509379c6cdda5
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&polygon=10%2C10%2C-10%2C-10%2C-10%2C10%2C10%2C-10%2C10%2C10&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 15:25:04 GMT
+  digest: 41a391585b6ddaf28e797be98075bf5e3006f3af
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&polygon=10%2C10%2C-10%2C-10%2C-10%2C10%2C10%2C-10%2C10%2C10&page_size=20&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 15:25:07 GMT
+  digest: d4dacc702803297236c213d7d61dcb047f2e510a
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&polygon=10%2C10%2C-10%2C10%2C-10%2C-10%2C10%2C-10%2C10%2C10&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
