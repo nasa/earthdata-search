@@ -3626,6 +3626,162 @@ http_interactions:
   digest: f4211a13410f2fed6cbac626b1715bb9b793acde
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:13 GMT
+  digest: 83d69d5b57bd9f79de17a406bfc4b896891304f2
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:11 GMT
+  digest: 75f7994fc96a5bcaa28bc84fbf5e3bb0020cb354
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&page_size=20&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:07 GMT
+  digest: 3693ebf13069e6d95f4eaa5f010915dd5904f7c0
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AGRICULTURAL+CHEMICALS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:23 GMT
+  digest: 031ed7bfbce99ef0fd668bfa19cd9952d5991744
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AGRICULTURAL+CHEMICALS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:17 GMT
+  digest: 22c5fdc89085526bc6001107be2b1dc31c080db6
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AGRICULTURAL+CHEMICALS&page_size=20&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:20 GMT
+  digest: 64e78eb882bd42168019c47162a0757a2f406c49
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AGRICULTURAL+CHEMICALS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=FERTILIZERS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:31 GMT
+  digest: 57889d0e44745406e18d2baba78ad2a3f77b6260
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AGRICULTURAL+CHEMICALS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=FERTILIZERS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:40 GMT
+  digest: ede21ae119339a414bf34a87601cff54723dbc57
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AGRICULTURAL+CHEMICALS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=FERTILIZERS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:26 GMT
+  digest: adb4b605a678a481f85de636dc5f9ae03646b0f4
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AGRICULTURAL+CHEMICALS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=FERTILIZERS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:35 GMT
+  digest: 64a195541d402dd7169ce152958eb7a4c9059365
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AGRICULTURAL+CHEMICALS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=FERTILIZERS&page_size=20&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:29 GMT
+  digest: 373ffada977c22e99344791bcf95b7c7eef0885b
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=AGRICULTURE&science_keywords%5B0%5D%5Bterm%5D%5B%5D=AGRICULTURAL+CHEMICALS&science_keywords%5B0%5D%5Bvariable_level_1%5D%5B%5D=FERTILIZERS&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:38 GMT
+  digest: 9299e549db5c585b1c6db1c50a2a9f5deb592165
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3741,6 +3897,45 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Sat, 05 Dec 2015 02:20:21 GMT
   digest: faf391cba9dbc96f222483db09a7c8773bd94b3d
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE-BIOSPHERE+INTERACTIONS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:10:01 GMT
+  digest: 36dda1a146eb4f85e12de5142e40a62412c7b040
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE-BIOSPHERE+INTERACTIONS&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:09:56 GMT
+  digest: 8ed639b75658770f898ef5ead739747c1a7aaf46
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE-BIOSPHERE+INTERACTIONS&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=somestringthatmatchesnocollections%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 17:09:58 GMT
+  digest: 7697903a95ce3d4185c581631d3f4c200c535d0e
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=SPECTRAL%2FENGINEERING&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=SPECTRAL%2FENGINEERING%2A+x-ray%2A&include_has_granules=true&include_granule_counts=true
