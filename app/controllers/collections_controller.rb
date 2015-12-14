@@ -158,7 +158,7 @@ class CollectionsController < ApplicationController
     end
     if facet_tree.nil?
       keyword_query_params.each do |k, v|
-        selected_keywords.insert(SCIENCE_KEYWORDS.index(k), {'term' => v, 'count' => 0, 'param' => fields_to_params[k].last, 'index' => nil}) unless v == '--ALL--'
+        selected_keywords.insert(SCIENCE_KEYWORDS.index(k), {'term' => URI.unescape(v), 'count' => 0, 'param' => fields_to_params[k].last, 'index' => nil}) unless v == '--ALL--'
       end
       selected_keywords.compact!
     else
