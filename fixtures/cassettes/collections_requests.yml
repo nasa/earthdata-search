@@ -3288,6 +3288,45 @@ http_interactions:
   digest: 31d59a94a5f21ae28498da41163509379c6cdda5
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&polygon=-176%2C-87%2C-166%2C-87%2C-168%2C-79%2C-179%2C-79%2C-176%2C-87&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 16:27:45 GMT
+  digest: 87f5d344f1694cea804c9eac3f8b27f4b9add0a9
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&polygon=-176%2C-87%2C-166%2C-87%2C-168%2C-79%2C-179%2C-79%2C-176%2C-87&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 16:27:40 GMT
+  digest: f039751e466d1e7939bc2060f51552a0ff2ab808
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&polygon=-176%2C-87%2C-166%2C-87%2C-168%2C-79%2C-179%2C-79%2C-176%2C-87&page_size=20&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Mon, 14 Dec 2015 16:27:43 GMT
+  digest: 22703543dca6709ac4f93997a9032ac3d645d50b
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&polygon=10%2C10%2C-10%2C-10%2C-10%2C10%2C10%2C-10%2C10%2C10&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
