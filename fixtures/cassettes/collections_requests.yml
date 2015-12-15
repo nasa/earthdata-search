@@ -106,6 +106,19 @@ http_interactions:
   digest: 54b078ac4ea045a1e69fbbccbd705a994a825ad2
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=Aqua_AMSR-E_L3_TB_23.8GHz-H%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 15 Dec 2015 16:31:57 GMT
+  digest: a8f662e0e5607a28f307ec294b60970f7b173920
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C1200018712-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -262,6 +275,19 @@ http_interactions:
   digest: d8bc7ba81b138518b8e1214bba8ac9a6e69f422d
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=Aqua_AMSR-E_L3_TB_23.8GHz-H%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 15 Dec 2015 16:31:55 GMT
+  digest: 827c13729a87b78f1555c6996abaa30f561123e1
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=C1200018712-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -416,6 +442,19 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Mon, 30 Nov 2015 15:29:20 GMT
   digest: 4d85bb49a8794fae40de3dd5fe4cda3b6cdeac1c
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=Aqua_AMSR-E_L3_TB_23.8GHz-H%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 15 Dec 2015 16:31:52 GMT
+  digest: bcb421963d70b3c2ff80f93b7a5d97f209f00df2
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=C1200018712-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
