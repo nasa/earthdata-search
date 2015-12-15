@@ -11,13 +11,13 @@ class CollectionsController < ApplicationController
     service_configs = Rails.configuration.services
     service_config = service_configs['earthdata'][echo_env]
     urs_client_id = service_configs['urs'][Rails.env.to_s][service_config['urs_root']]
+    h_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
+    nh_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
     hierarchical_search = lambda do
-      client = Echo::Client.new(service_config, urs_client_id)
-      client.get_collections(collection_params_for_request(request), token)
+      h_client.get_collections(collection_params_for_request(request), token)
     end
     non_hierarchical_search = lambda do
-      client = Echo::Client.new(service_config, urs_client_id)
-      client.get_collections(collection_params_for_request(request, false), token)
+      nh_client.get_collections(collection_params_for_request(request, false), token)
     end
     catalog_response = execute_search(hierarchical_search, non_hierarchical_search)
 
