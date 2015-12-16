@@ -9,7 +9,8 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @_wasVisible = @collection.visible()
       @collection.visible(true)
 
-      @granules = collection.granuleDatasource().cmrData()
+      granuleDatasource = @collection.granuleDatasource()
+      @granules = if @collection.granuleDatasourceName() == 'cmr' then granuleDatasource.cmrData() else granuleDatasource.cwicData()
 
       @_hasFocus = ko.observable(false)
       @focused = ko.observable(null)

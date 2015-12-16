@@ -2,15 +2,23 @@ class GranulesController < ApplicationController
   respond_to :json
 
   def create
-    catalog_response = echo_client.get_granules(granule_params_for_request(request), token)
+    if params['datasource'] == 'cmr'
+      catalog_response = echo_client.get_granules(granule_params_for_request(request), token)
 
-    if catalog_response.success?
-      catalog_response.headers.each do |key, value|
-        response.headers[key] = value if key.start_with?('cmr-')
+      if catalog_response.success?
+        catalog_response.headers.each do |key, value|
+          response.headers[key] = value if key.start_with?('cmr-')
+        end
+
+        render json: catalog_response.body, status: catalog_response.status
+      else
+        render json: catalog_response.body, status: catalog_response.status
       end
-
-      render json: catalog_response.body, status: catalog_response.status
     else
+      catalog_response = echo_client.get_cwic_granules(params['short_name'])
+      if catalog_response.success?
+        decorate_cwic_granules(catalog_response)
+      end
       render json: catalog_response.body, status: catalog_response.status
     end
   end
@@ -115,6 +123,26 @@ class GranulesController < ApplicationController
       params.delete('cloud_cover') if min.empty? && max.empty?
     end
 
+    params.delete('datasource') if params['datasource']
+    params.delete('short_name') if params['short_name']
+
     params
+  end
+
+  def decorate_cwic_granules(response)
+    response.body['feed']['entry'].each do |cwic_granule|
+      # decorate CWIC granules to make them look like CMR granules
+      # Rename 'link' to 'links'
+      cwic_granule['links'] = cwic_granule.delete('link')
+      # Initialize browse_flag
+      cwic_granule['browse_flag'] = false
+      cwic_granule['links'].each do |link|
+        if link['rel'] == 'icon'
+          cwic_granule['browse_flag'] = true
+          break
+        end
+      end
+      #TODO other 'translations' here
+    end
   end
 end
