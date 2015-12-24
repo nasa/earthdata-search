@@ -6,7 +6,7 @@ class CollectionDetailsPresenter < DetailsPresenter
     if collection.xml
       collection_xml = collection.xml
       @collection.dataset_id = collection_xml['DataSetId']
-      @collection.description = collection_xml['Description']
+      @collection.description = collection_xml['Description'].split(/\r?\n/)
       @collection.short_name = collection_xml['ShortName']
       @collection.version_id = collection_xml['VersionId']
       @collection.archive_center = collection_xml['ArchiveCenter']
