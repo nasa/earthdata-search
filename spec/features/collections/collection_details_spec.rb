@@ -56,6 +56,17 @@ describe 'Collection details', reset: false do
     end
   end
 
+  context "when selecting a collection without contacts in the xml" do
+    before :all do
+      load_page :search, q: 'Aqua_AMSR-E_L3_TB_23.8GHz-H'
+      first_collection_result.click_link('View collection details')
+    end
+
+    it "displays the collection's detail page with no errors" do
+      expect(page).to have_content('Contacts: Download Page')
+    end
+  end
+
   context "when selecting a collection with point spatial" do
     before :all do
       load_page :search

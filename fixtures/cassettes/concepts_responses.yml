@@ -431,6 +431,37 @@ d696def6590ee7ba23a31d5b9a233227eeaefa09:
         CIRES,  449 UCB
         </StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>Undefined</Country></Address></OrganizationAddresses><OrganizationPhones /><OrganizationEmails><Email>scambos@nsidc.org</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>Ted</FirstName><LastName>Scambos</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>THERMAL INFRARED</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>SENSOR COUNTS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>VISIBLE WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>VISIBLE IMAGERY</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>REFLECTED INFRARED</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>INFRARED IMAGERY</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>NOAA-11</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-11</LongName><Type>NOAA-11</Type><Characteristics /><Instruments /></Platform><Platform><ShortName>NOAA-10</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-10</LongName><Type>NOAA-10</Type><Characteristics /><Instruments /></Platform><Platform><ShortName>NOAA POES</ShortName><LongName>NOAA Polar Orbiting Environmental Satellites</LongName><Type>NOAA POES</Type><Characteristics /><Instruments /></Platform><Platform><ShortName>NOAA-12</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-12</LongName><Type>NOAA-12</Type><Characteristics /><Instruments /></Platform><Platform><ShortName>N/A</ShortName><LongName>Not Applicable</LongName><Type>N/A</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform></Platforms><OnlineAccessURLs><OnlineAccessURL><URL>http://nsidc.org/data/nsidc-0022.html</URL><URLDescription>Data Access</URLDescription></OnlineAccessURL></OnlineAccessURLs><AssociatedDIFs><DIF><EntryId>NSIDC-0022</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><GPolygon><Boundary><Point><PointLongitude>-180</PointLongitude><PointLatitude>-50</PointLatitude></Point><Point><PointLongitude>180</PointLongitude><PointLatitude>-50</PointLatitude></Point><Point><PointLongitude>180</PointLongitude><PointLatitude>-89</PointLatitude></Point><Point><PointLongitude>-180</PointLongitude><PointLatitude>-89</PointLatitude></Point></Boundary></GPolygon><GPolygon><Boundary><Point><PointLongitude>-180</PointLongitude><PointLatitude>89</PointLatitude></Point><Point><PointLongitude>180</PointLongitude><PointLatitude>89</PointLatitude></Point><Point><PointLongitude>180</PointLongitude><PointLatitude>50</PointLatitude></Point><Point><PointLongitude>-180</PointLongitude><PointLatitude>50</PointLatitude></Point></Boundary></GPolygon></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+9ac93877927dc4b4872ae99d24c79079cf293162:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 15 Dec 2015 16:31:59 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>Aqua_AMSR-E_L3_TB_23.8GHz-H</ShortName><VersionId>Latest
+        Version</VersionId><InsertTime>2012-08-21T00:00:00.000Z</InsertTime><LastUpdate>2015-12-02T00:00:00.000Z</LastUpdate><LongName>Aqua
+        AMSR-E Level 3 23.8GHz-H Mean for Brightness Temperature product</LongName><DataSetId>Aqua
+        AMSR-E Level 3 23.8GHz-H Mean for Brightness Temperature product</DataSetId><Description>AMSR-E
+        level 1B data (Brightness Temperature at 23.8GHz-H) is averaged temporarily
+        and spatially, and projected onto global map (EQR or PS).</Description><Orderable>true</Orderable><Visible>true</Visible><Temporal><RangeDateTime><BeginningDateTime>2002-06-01T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>MICROWAVE</TermKeyword><VariableLevel1Keyword><Value>BRIGHTNESS
+        TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>AQUA</ShortName><LongName>Earth
+        Observing System, AQUA</LongName><Type>Not Specified</Type></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>miura.satoko@jaxa.jp</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>a91fd035-c9cf-4a8f-81da-bec73581a8dc</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-01
+        16:32:49</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><OnlineAccessURLs><OnlineAccessURL><URL>http://www.eorc.jaxa.jp/en/about/distribution/index.html</URL></OnlineAccessURL></OnlineAccessURLs><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
 a8625406c735635e8f0d54555083fa434ca22391:
   response:
     status:
