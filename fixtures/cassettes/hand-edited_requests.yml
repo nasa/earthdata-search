@@ -13,6 +13,17 @@ http_interactions:
   digest: 1f91afed9d58f2fad47c150fe1b735e9828c71ca
 - request:
     method: get
+    uri: https://api-test.echo.nasa.gov/echo-rest/calendar_events?severity=ALERT
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 22 Apr 2014 20:34:23 GMT
+  digest: mocked_uat_calendar_events
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/echo-rest/orders.json
     body:
       encoding: US-ASCII
