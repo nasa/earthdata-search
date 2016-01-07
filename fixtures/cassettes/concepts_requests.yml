@@ -28,6 +28,19 @@ http_interactions:
   digest: 32c36bb8e6afe2ac27954bd8eb6491bf1d6b21f3
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1029-NSIDCV0.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Thu, 07 Jan 2016 16:31:35 GMT
+  digest: 0c831e5e5b5f612a812d70ab50dbda15aa01f0cb
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560812-JAXA.echo10
     body:
       encoding: US-ASCII
