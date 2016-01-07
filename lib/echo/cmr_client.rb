@@ -7,7 +7,8 @@ module Echo
     def get_collections(options={}, token=nil)
       format = options.delete(:format) || 'json'
       query = options_to_collection_query(options).merge(include_has_granules: true, include_granule_counts: true)
-      get("/search/collections.#{format}", query, token_header(token))
+      resp = get("/search/collections.#{format}", query, token_header(token))
+      resp
     end
 
     def get_collection(id, token=nil)
