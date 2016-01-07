@@ -15,7 +15,7 @@ class CollectionDetailsPresenter < DetailsPresenter
       @collection.orderable = collection_xml['Orderable']
       @collection.visible = collection_xml['Visible']
       @collection.temporal = collection_xml['Temporal']
-      @collection.contacts = Array.wrap(collection_xml['Contacts']['Contact'])
+      @collection.contacts = Array.wrap(collection_xml['Contacts']['Contact']) if collection_xml['Contacts']
       @collection.science_keywords = Array.wrap(collection_xml['ScienceKeywords']['ScienceKeyword']) if collection_xml['ScienceKeywords']
       if collection_xml['OnlineAccessURLs']
         @collection.online_access_urls = Array.wrap(collection_xml['OnlineAccessURLs']['OnlineAccessURL'])
