@@ -81,14 +81,7 @@
         </div>
 
         <div class="row">
-          <div class="col-sm-12 long-paragraph collapsed">
-            <!--ko foreach: $data.description-->
-              <!--ko if: $data.length == 0-->
-                <br>
-              <!--/ko-->
-              <div data-bind="text: $data"></div>
-            <!--/ko-->
-          </div>
+          <div class="col-sm-12 long-paragraph collapsed" data-bind="text: $data.description"></div>
           <!--ko if: $root.ui.collectionsList.selected().detailsLoaded -->
           <div class="description-toggle col-sm-12">
             <i class="fa fa-chevron-down"></i>
