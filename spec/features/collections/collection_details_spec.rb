@@ -147,10 +147,7 @@ describe 'Collection details', reset: false do
 
   context "when selecting a collection with multiple lines of description" do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: 'C1029-NSIDCV0'
-      wait_for_xhr
-      first_collection_result.click_link('View collection details')
+      load_page '/search/collection-details', focus: 'C1029-NSIDCV0'
     end
 
     it "displays carriage returns in the description" do
