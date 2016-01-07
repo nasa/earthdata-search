@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       end
       render json: preferences_response.body, status: 200
     else
-      render json: {'preferences' => {'general_contact' =>{}}}, status: 200
+      render preferences_response.body, status: preferences_response.status
     end
   end
 
