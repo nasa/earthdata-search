@@ -32,6 +32,8 @@ class CollectionsController < ApplicationController
       end
     end
 
+    Rails.logger.info "------- #{catalog_response.body}"
+
     respond_with(catalog_response.body, status: catalog_response.status)
   end
 
