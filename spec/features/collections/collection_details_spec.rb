@@ -56,6 +56,17 @@ describe 'Collection details', reset: false do
     end
   end
 
+  context "when selecting a collection without contacts in the xml" do
+    before :all do
+      load_page :search, q: 'Aqua_AMSR-E_L3_TB_23.8GHz-H'
+      first_collection_result.click_link('View collection details')
+    end
+
+    it "displays the collection's detail page with no errors" do
+      expect(page).to have_content('Contacts: Download Page')
+    end
+  end
+
   context "when selecting a collection with point spatial" do
     before :all do
       load_page :search
@@ -123,5 +134,16 @@ describe 'Collection details', reset: false do
   #    expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
   #  end
   #end
+
+  context "when selecting a collection with multiple temporal" do
+    before :all do
+      load_page '/search/collection-details', env: :uat, focus: 'C1204482909-GCMDTEST'
+      expect(page).to have_content('CALIPSO Lidar Level 2 5km aerosol profile data V3-01')
+    end
+
+    it 'displays the combined temporal' do
+      expect(page).to have_content('2006-06-13 to 2011-10-31')
+    end
+  end
 
 end

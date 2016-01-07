@@ -3,7 +3,7 @@
               <% if is_project %>
               <div class="panel-list-drag-handle"></div>
               <% end %>
-              <div class="panel-list-thumbnail-container">
+              <div class="panel-list-thumbnail-container" data-bind="css: {'panel-list-thumbnail-placeholder': !thumbnail()}">
                 <div class="panel-list-badges">
                   <!-- ko if: gibs() -->
                   <a href="#" class="badge badge-gibs" data-tooltip="true" title="Supports advanced map visualizations using the GIBS tile service"></a>
@@ -22,7 +22,7 @@
               <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
               <!-- /ko -->
               <!-- ko ifnot: thumbnail() -->
-              <div class="panel-list-thumbnail panel-list-thumbnail-placeholder">
+              <div class="panel-list-thumbnail">
                 <i class="fa fa-globe"></i><br />No image available
               </div>
               <!-- /ko -->

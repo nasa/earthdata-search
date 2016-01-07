@@ -31,6 +31,7 @@
     animateMap: false
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
+    thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
 
   <% elsif Rails.env.development? %>
 
@@ -51,6 +52,7 @@
     animateMap: true
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
+    thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
 
   <% else %>
   # Production config
@@ -68,5 +70,6 @@
     animateMap: true
     cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
     cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
+    thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
 
   <% end %>

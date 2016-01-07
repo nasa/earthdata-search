@@ -6,6 +6,9 @@ ns = @edsc.models.data
 ns.Collection = do (ko
                  DetailsModel = @edsc.models.DetailsModel
                  scalerUrl = @edsc.config.browseScalerUrl
+                 thumbnailWidth = @edsc.config.thumbnailWidth
+                 Granules=ns.Granules
+                 GranuleQuery = ns.query.GranuleQuery
                  ServiceOptionsModel = ns.ServiceOptions
                  toParam=jQuery.param
                  extend=jQuery.extend
@@ -127,9 +130,9 @@ ns.Collection = do (ko
       granule = @browseable_granule
       collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
       if collection_id?
-        "#{scalerUrl}/datasets/#{collection_id}?h=85&w=85"
+        "#{scalerUrl}/datasets/#{collection_id}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
       else if granule?
-        "#{scalerUrl}/granules/#{granule}?h=85&w=85"
+        "#{scalerUrl}/granules/#{granule}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
       else
         null
 
