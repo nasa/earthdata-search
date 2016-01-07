@@ -2,7 +2,15 @@ class DetailsPresenter
 
   def temporal(hash)
     if hash && hash['RangeDateTime']
-      "#{hash['RangeDateTime']['BeginningDateTime']} to #{hash['RangeDateTime']['EndingDateTime']}"
+      # some collections may have multiple temporal fields when retrieved in echo10 format. CMR returns the date time
+      # from elasticsearch where latest and earliest times are indexed.
+      if hash['RangeDateTime'].is_a? Array
+        start_time = hash['RangeDateTime'].min_by {|t_range| t_range['BeginningDateTime']}['BeginningDateTime']
+        end_time = hash['RangeDateTime'].max_by  {|t_range| t_range['EndingDateTime']}['EndingDateTime']
+        "#{start_time} to #{end_time}"
+      else
+        "#{hash['RangeDateTime']['BeginningDateTime']} to #{hash['RangeDateTime']['EndingDateTime']}"
+      end
     else
       'Not available'
     end
