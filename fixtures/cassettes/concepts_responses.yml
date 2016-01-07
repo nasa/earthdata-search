@@ -1314,3 +1314,42 @@ a8625406c735635e8f0d54555083fa434ca22391:
         WGISS Integrated Catalog</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>www.mosdac.gov.in</URL><Type>USER
         SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>20</WestBoundingCoordinate><NorthBoundingCoordinate>50</NorthBoundingCoordinate><EastBoundingCoordinate>130</EastBoundingCoordinate><SouthBoundingCoordinate>-50</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+4cfd759907f259bb6f4fc610b9295313769946d7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 05 Jan 2016 15:08:44 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 9e0a3bf3-6a98-43de-8f3c-10f990f0df48
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>CAL_LID_L2_05kmAPro-Prov-V3-01</ShortName><VersionId>V3-30</VersionId><InsertTime>2010-06-24T00:00:00.000Z</InsertTime><LastUpdate>2015-09-22T00:00:00.000Z</LastUpdate><LongName>CALIPSO Lidar Level 2 5km aerosol profile data V3-01</LongName><DataSetId>CALIPSO Lidar Level 2 5km aerosol profile data V3-01</DataSetId><Description>CAL_LID_L2_05kmAPro-Prov-V3-01 data are CALIPSO Lidar Level 2 aerosol profile data using the CALIPSO Lidar Ratio selection algorithm.
+
+        The Lidar Level 2 Aerosol Profile data products contain averaged aerosol profile data and ancillary data. There are no layer descriptors included in the lidar aerosol profile data products. The spatial distribution of the aerosol layers is instead completely characterized by the aerosol layer fraction and atmospheric volume description parameters.
+
+        The aerosol profile products are generated at a uniform horizontal resolution of 5 km. The aerosol backscatter and extinction coefficients are computed using a lidar ratio selected by the CALIPSO Lidar Ratio selection algorithm.
+
+        Cloud-Aerosol Lidar and Infrared Pathfinder Satellite Observations (CALIPSO) was launched on April 28, 2006 to study the impact of clouds and aerosols on the Earth's radiation budget and climate. It flies in formation with five other satellites in the international "A-Train" (PDF) constellation for coincident Earth observations. The CALIPSO satellite comprises three instruments, the Cloud-Aerosol LIdar with Orthogonal Polarization (CALIOP), the Imaging Infrared Radiometer (IIR), and the Wide Field Camera (WFC). CALIPSO is a joint satellite mission between NASA and the French Agency, CNES.</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>Completed</CollectionState><Temporal><RangeDateTime><BeginningDateTime>2006-06-13T00:00:00.000Z</BeginningDateTime><EndingDateTime>2009-02-16T00:00:00.000Z</EndingDateTime></RangeDateTime><RangeDateTime><BeginningDateTime>2009-03-17T00:00:00.000Z</BeginningDateTime><EndingDateTime>2011-10-31T00:00:00.000Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>DIF AUTHOR</Role><OrganizationEmails><Email>support-asdc@earthdata.nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>ASDC</FirstName><LastName>USER SERVICES</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>TECHNICAL CONTACT</Role><OrganizationEmails><Email>Charles.R.Trepte@nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>CHARLES</FirstName><LastName>TREPTE</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>david.m.winker@nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>DAVID</FirstName><LastName>WINKER</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL BACKSCATTER</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL EXTINCTION</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>LIDAR</TermKeyword><VariableLevel1Keyword><Value>LIDAR DEPOLARIZATION RATIO</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>CALIPSO</ShortName><LongName>Cloud-Aerosol Lidar and Infrared Pathfinder Satellite Observations</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>CALIOP</ShortName><LongName>Cloud-Aerosol Lidar with Orthogonal Polarization</LongName></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>emily.a.northup@nasa.gov</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>560cdb05-9e1c-455e-b7c5-ca90998725a1</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-09-21 15:32:18</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>EOS</ShortName><LongName>Earth Observing System</LongName></Campaign><Campaign><ShortName>EOSDIS</ShortName><LongName>Earth Observing System Data Information System</LongName></Campaign><Campaign><ShortName>ESIP_TS</ShortName><LongName>Earth Science Information Partners Program</LongName></Campaign><Campaign><ShortName>CALIPSO</ShortName><LongName>Cloud-Aerosol Lidar and Infrared Pathfinder Satellite Observations</LongName></Campaign><Campaign><ShortName>ESSP</ShortName><LongName>NASA Earth System Science Pathfinder</LongName></Campaign><Campaign><ShortName>CWIC</ShortName><LongName>CEOS WGISS Integrated Catalog</LongName></Campaign></Campaigns><OnlineAccessURLs><OnlineAccessURL><URL>http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&amp;spatial_map=satellite&amp;spatial_type=rectangle&amp;keywords=CALIPSO</URL><URLDescription>
+                 Access CALIPSO data via Reverb
+              </URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://eosweb.larc.nasa.gov/project/calipso/calipso_table</URL><URLDescription>
+                 Access CALIPSO data and information
+              </URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://www-calipso.larc.nasa.gov/</URL><Description>
+                 CALIPSO Home Page
+              </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://www.nasa.gov/mission_pages/calipso/main/</URL><Description>
+                 NASA CALIPSO Mission Portal
+              </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
