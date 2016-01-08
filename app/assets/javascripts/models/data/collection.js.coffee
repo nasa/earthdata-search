@@ -90,9 +90,16 @@ ns.Collection = do (ko
       @echoGranulesUrl = @computed
         read: =>
           if @granuleDatasourceName() == 'cmr' && @granuleDatasource()
-            queryParams = @granuleDatasource().toQueryParams()
-#            delete queryParams['datasource'] if queryParams['datasource']
-            paramStr = toParam(@granuleDatasource().toQueryParams())
+            _cloneQueryParams = (obj) ->
+              return obj  if obj is null or typeof (obj) isnt "object"
+              temp = new obj.constructor()
+              for key of obj
+                temp[key] = _cloneQueryParams(obj[key])
+              temp
+
+            queryParams = _cloneQueryParams(@granuleDatasource().toQueryParams())
+            delete queryParams['datasource'] if queryParams['datasource']
+            paramStr = toParam(queryParams)
             "#{@details().granule_url}?#{paramStr}"
         deferEvaluation: true
 
