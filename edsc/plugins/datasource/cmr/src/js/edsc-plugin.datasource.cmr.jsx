@@ -125,7 +125,7 @@ export default class CmrDatasourcePlugin {
   cmrQuery() {
     if (!this._query) {
       let collection = this._collection;
-      this._query = new GranuleQuery(collection.id, collection.query, collection.searchable_attributes);
+      this._query = new GranuleQuery(collection.id, collection.query, collection.searchable_attributes, 'cmr');
     }
     return this._query;
   }
