@@ -91,7 +91,7 @@ ns.Collection = do (ko
         read: =>
           if @granuleDatasourceName() == 'cmr' && @granuleDatasource()
             queryParams = @granuleDatasource().toQueryParams()
-            delete queryParams['datasource'] if queryParams['datasource']
+#            delete queryParams['datasource'] if queryParams['datasource']
             paramStr = toParam(@granuleDatasource().toQueryParams())
             "#{@details().granule_url}?#{paramStr}"
         deferEvaluation: true
