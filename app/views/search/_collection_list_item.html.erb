@@ -16,7 +16,7 @@
                   <!-- /ko -->
                 </div>
               <!-- ko if: thumbnail() -->
-              <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
+                <img class="panel-list-thumbnail" onerror="this.parentElement.className = 'panel-list-thumbnail-onerror';" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
               <!-- /ko -->
               <!-- ko ifnot: thumbnail() -->
               <div class="panel-list-thumbnail">

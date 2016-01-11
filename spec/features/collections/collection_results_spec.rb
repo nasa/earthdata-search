@@ -94,4 +94,19 @@ describe "Collection results", reset: false do
       end
     end
   end
+
+  # Can't really test this feature - the browse scaler root url is set to a constant /assets/gibs-example.jpeg in test
+  # environment.
+  #
+  # context 'viewing a testbed colleciton' do
+  #   before :all do
+  #     load_page :search, env: :sit, q: '2002 Environmental Sustainability Index (ESI)'
+  #     wait_for_xhr
+  #   end
+  #
+  #   it 'shows the testbed browse image url' do
+  #     img = page.find('img.panel-list-thumbnail')
+  #     expect(img['src']).to have_content('https://testbed.echo.nasa.gov/browse-scaler/browse_images/datasets/C1137-SEDAC?h=75&amp;w=75')
+  #   end
+  # end
 end
