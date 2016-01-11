@@ -57,9 +57,9 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       @_levelTimeout = window.setTimeout(fn, config.defaultAnimationDurationMs) if $nodes.size() > 0
 
     pluginPushMaster: (dom, options) ->
-      $(dom).addClass(@scope('plugin')).addClass(@scope('hide-self'))
       @current().after(dom)
-      @forward(title)
+      @forward()
+      $(dom).addClass(@scope('plugin'))
 
     pluginPopMaster: (dom, options) ->
       @back()
