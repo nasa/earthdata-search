@@ -195,7 +195,7 @@ ns.Collection = do (ko
         @_pendingRenderActions.push(action)
       else
         for renderer in @_renderers
-          renderer[action]?()
+          renderer[action]?(this)
 
     _loadRenderers: ->
       names = @granuleRendererNames()
@@ -209,7 +209,7 @@ ns.Collection = do (ko
           renderer = new PluginClass(facade, this)
           @_renderers.push(renderer)
           for action in @_pendingRenderActions
-            renderer[action]?()
+            renderer[action]?(this)
 
         oncomplete = =>
           expected -= 1

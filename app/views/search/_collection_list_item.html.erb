@@ -1,4 +1,4 @@
-            <li data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': canFocus(), 'master-overlay-hide-parent': canFocus()}"
+            <li data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-selectable': canFocus(), 'master-overlay-hide-parent': canFocus()}"
                 class="panel-list-item"<%=raw ' draggable="true"' if is_project %>>
               <% if is_project %>
               <div class="panel-list-drag-handle"></div>
