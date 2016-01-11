@@ -48,7 +48,7 @@ ns.Account = do (ko, ajax=@edsc.util.xhr.ajax) ->
           dataType: 'json'
           method: 'post'
           success: (response) =>
-            @_preferencesFromJson(response)
+            @_from_user()
             @preferencesLoaded(true)
             @message("Successfully updated notification preference")
             callback?()
