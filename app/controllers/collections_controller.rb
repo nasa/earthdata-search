@@ -68,12 +68,12 @@ class CollectionsController < ApplicationController
     h_facets = h_response.body['feed']['facets'] if h_response.body['feed'].present?
     nh_facets = nh_response.body['feed']['facets'] if nh_response.body['feed'].present?
     if h_facets.present? && nh_facets.present?
-      nh_archive_center = nh_facets.select { |facet| facet['field'] == 'archive_center' }
+      nh_data_center = nh_facets.select { |facet| facet['field'] == 'data_center' }
       nh_platform = nh_facets.select { |facet| facet['field'] == 'platform' }
       nh_instrument = nh_facets.select { |facet| facet['field'] == 'instrument' }
       h_facets.map! do |facet|
-        if facet['field'] == 'archive_centers'
-          nh_archive_center[0]
+        if facet['field'] == 'data_centers'
+          nh_data_center[0]
         elsif facet['field'] == 'platforms'
           nh_platform[0]
         elsif facet['field'] == 'instruments'
@@ -291,6 +291,8 @@ class CollectionsController < ApplicationController
       old = params.delete("two_d_coordinate_system")
       params["two_d_coordinate_system_name"] = old["name"]
     end
+
+    params['provider'] = params.delete('data_center') if params['data_center']
 
     params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
