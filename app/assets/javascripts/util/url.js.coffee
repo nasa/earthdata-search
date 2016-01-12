@@ -106,7 +106,7 @@ this.edsc.util.url = do(window
     new ParamFlattener(['two_d_coordinate_system', 'coordinates'], 's2c')
 
     new ArrayJoiner('features', 'ff')
-    new ArrayJoiner('archive_center', 'ac')
+    new ArrayJoiner('data_center', 'fdc')
     new ArrayJoiner('project', 'fpj')
     new ArrayJoiner('platform', 'fp')
     new ArrayJoiner('instrument', 'fi')
