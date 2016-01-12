@@ -145,6 +145,19 @@ http_interactions:
   digest: 436b16c22d5e10b8b84e7cd98f86e2af6721d09f
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C1214605943-SCIOPS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 12 Jan 2016 21:34:15 GMT
+  digest: 5f1294230c0371d5b51bd61c1bb529ed50107f8c
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=Landsat%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -314,6 +327,19 @@ http_interactions:
   digest: 4e12fb91a04319aaeec627d5b3f93dd0bfbf5ba6
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=C1214605943-SCIOPS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 12 Jan 2016 21:34:12 GMT
+  digest: e93c641c7b0269c1ef22625284801ed6a7cbbafa
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=Landsat%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -481,6 +507,19 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 12 Nov 2015 04:16:46 GMT
   digest: 8e2365c8863737775ff835aec999cc9ab8bcdc8f
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=C1214605943-SCIOPS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Tue, 12 Jan 2016 21:34:09 GMT
+  digest: 46d38239c40839be85214c9b78d40b5325b1e2a1
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=Landsat%2A&include_has_granules=true&include_granule_counts=true

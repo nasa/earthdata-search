@@ -168,7 +168,7 @@ ns.Collection = do (ko
     fromJson: (jsonObj) ->
       @json = jsonObj
 
-      @short_name = ko.observable('N/A') unless jsonObj.short_name
+      if jsonObj.short_name? then @short_name = ko.observable(jsonObj.short_name) else @short_name = ko.observable('N/A')
 
       attributes = jsonObj.searchable_attributes
       if attributes && @granuleQueryLoaded()
