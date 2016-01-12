@@ -11,7 +11,7 @@
     <span class="ccol-badge badge-collection"></span>
     <span class="ccol-title">
       <span data-bind="text: short_name"></span>
-      <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
+      <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided'-->
         <span> - </span><span data-bind="text: version_id"></span>
       <!-- /ko -->
     </span>

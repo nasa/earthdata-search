@@ -76,6 +76,15 @@ describe "Collections Collapsed View", reset: false do
         end
       end
 
+      context 'and viewing a collection without version_id' do
+        use_collection 'C1214605943-SCIOPS', 'CANEMRCCRSBAPMN'
+
+        it "doesn't show version id" do
+          expect(page).to have_content('CANEMRCCRSBAPMN')
+          expect(page).to have_no_content('CANEMRCCRSBAPMN - Not provided')
+        end
+      end
+
       context 'and clicking a collection with granules' do
         use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
 
