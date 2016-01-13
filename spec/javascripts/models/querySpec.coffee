@@ -110,7 +110,7 @@ describe "query", ->
     beforeEach ->
       @ds_id = 'my_item_id'
       @parent = new ns.CollectionQuery()
-      @query = new ns.GranuleQuery(@ds_id, @parent)
+      @query = new ns.GranuleQuery(@ds_id, @parent, null, '')
 
     it 'serializes catalog item id, sort key, and page size by default', ->
       expect(param(@query.params())).toEqual("echo_collection_id=#{@ds_id}&sort_key%5B%5D=-start_date&page_size=20")
