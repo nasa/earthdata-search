@@ -14,7 +14,7 @@ describe 'Collection CWIC Filtering', reset: false do
     Capybara.reset_sessions!
   end
 
-  context "when collection list is loaded" do
+  context "when the collection list is loaded" do
     it "the CWIC feature appears in the facets panel", acceptance: true do
       expect(cwic_feature_facet).to have_content("Int'l / Interagency")
     end

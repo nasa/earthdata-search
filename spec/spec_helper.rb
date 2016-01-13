@@ -119,6 +119,8 @@ RSpec.configure do |config|
       token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key]['access_token']
       access_token = "#{token}:#{Rails.configuration.urs_client_id}"
       normalizers << VCR::HeaderNormalizer.new('Echo-Token', access_token, token_key)
+      access_token = "#{token}:#{Rails.configuration.sit_urs_client_id}"
+      normalizers << VCR::HeaderNormalizer.new('Echo-Token', access_token, token_key)
     end
 
     normalizers << VCR::HeaderNormalizer.new('Echo-Token', "invalid:#{Rails.configuration.urs_client_id}", 'invalid')
