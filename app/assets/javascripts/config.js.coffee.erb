@@ -8,11 +8,11 @@
   echo_env = if match then match[1] else '<%= Rails.configuration.echo_env %>'
 
   if echo_env == 'partnertest'
-    browse_scaler_url = "https://api-test.echo.nasa.gov/browse-scaler/browse_images"
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['partnertest']['echo_root'] %>/browse-scaler/browse_images"
   else if echo_env == 'testbed'
-    browse_scaler_url = "https://testbed.echo.nasa.gov/browse-scaler/browse_images"
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['testbed']['echo_root'] %>/browse-scaler/browse_images"
   else
-    browse_scaler_url = "https://api.echo.nasa.gov/browse-scaler/browse_images"
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['ops']['echo_root'] %>/browse-scaler/browse_images"
 
   <% if Rails.env.test? %>
 
