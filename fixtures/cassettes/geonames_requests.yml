@@ -156,6 +156,17 @@ http_interactions:
   digest: ef6133bd0170b04a70aeb4ad9beaad45bf7414c8
 - request:
     method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=somestringthatmatchesnocollectio&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 13 Jan 2016 18:45:11 GMT
+  digest: 064f726e7bcd720bb716ae55e87eeff9e1391d00
+- request:
+    method: get
     uri: http://places.example.com/search?username=edsc&maxRows=5&q=somestringthatmatchesnocollection&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
