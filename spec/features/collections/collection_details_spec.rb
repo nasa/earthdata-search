@@ -146,4 +146,13 @@ describe 'Collection details', reset: false do
     end
   end
 
+  context "when selecting a collection with multiple lines of description" do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1029-NSIDCV0'
+    end
+
+    it "displays carriage returns in the description" do
+      expect(page).to have_content("\nto April 1992.\n\n")
+    end
+  end
 end
