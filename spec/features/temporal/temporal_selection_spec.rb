@@ -18,9 +18,8 @@ describe "Temporal" do
       fill_in "Start", with: "2013-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_content("Start 2013-12-01 00:00:00")
+      expect(page).to have_no_content("Canadian National Forestry Photograph Collection")
+      expect(page).to have_content("MODIS/Terra Aerosol")
     end
 
     it "allows the user to search up to the end date time" do
@@ -28,8 +27,8 @@ describe "Temporal" do
       fill_in "End", with: "1970-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+      expect(page).to have_no_content("MODIS/Terra Aerosol")
+
       expect(page).to have_content("Stop 1970-12-01 00:00:00")
     end
 
@@ -39,9 +38,8 @@ describe "Temporal" do
       fill_in "End", with: "1975-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_no_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+      expect(page).to have_no_content("MODIS/Terra Aerosol")
+
       expect(page).to have_content("Start 1975-12-01 00:00:00")
       expect(page).to have_content("Stop 1975-12-01 00:00:00")
     end
@@ -52,19 +50,14 @@ describe "Temporal" do
       fill_in "End", with: "1979-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("1-deg x 1-deg Terrestrial Mean Free-Air Anomalies")
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
-      expect(page).to have_content("Start 1978-12-01 00:00:00")
-      expect(page).to have_content("Stop 1979-12-01 00:00:00")
+      expect(page).to have_no_content("MODIS/Terra Aerosol")
 
       js_click_temporal
       js_click_clear
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_content("1-deg x 1-deg Terrestrial Mean Free-Air Anomalies")
-      expect(page).to have_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("1886 Charleston, USA Images")
+      expect(page).to have_content("MODIS/Terra Aerosol")
+
       expect(page).to have_no_content("Start 1978-12-01 00:00:00")
       expect(page).to have_no_content("Stop 1979-12-01 00:00:00")
     end
@@ -89,8 +82,8 @@ describe "Temporal" do
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
+      expect(page).to have_no_content("MODIS/Terra Aerosol")
+
       expect(page).to have_content("Start 12-01 00:00:00")
       expect(page).to have_content("Stop 12-31 00:00:00")
       expect(page).to have_content("Range 1970 - 1975")
@@ -105,8 +98,8 @@ describe "Temporal" do
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
+      expect(page).to have_no_content("MODIS/Terra Aerosol")
+
       expect(page).to have_content("Start 12-01 00:00:00")
       expect(page).to have_content("Stop 12-31 00:00:00")
       expect(page).to have_content("Range 1970 - 1975")
@@ -115,8 +108,8 @@ describe "Temporal" do
       js_click_clear
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_no_content("Amazon River Basin Precipitation, 1972-1992")
+      expect(page).to have_no_content("MODIS/Terra Aerosol")
+
       expect(page).to have_no_content("Start 12-01 00:00:00")
       expect(page).to have_no_content("Stop 12-31 00:00:00")
       expect(page).to have_no_content("Range 1970 - 1975")

@@ -419,6 +419,26 @@ fad73159b767f493c994f51b6027798cb236231b:
       encoding: UTF-8
       string: "[]"
     http_version: 
+4bd935a81df6dc7487ab936a87ded69949f31f16:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 13 Jan 2016 21:50:54 GMT
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 5739453ddad22b4ca82a9ad7dcc7503a83d069a1:
   response:
     status:

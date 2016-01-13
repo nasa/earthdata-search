@@ -285,7 +285,7 @@ describe "Granule search filters", reset: false do
         expect(page).to have_css('#granule-list .panel-list-item', count: 20)
       end
 
-      it "updates the granule hits count", pq: true do
+      it "updates the granule hits count" do
         expect(page).to have_content("Showing 20 of #{before_granule_count} matching granules")
       end
     end

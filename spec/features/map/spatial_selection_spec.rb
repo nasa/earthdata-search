@@ -105,8 +105,8 @@ describe "Spatial" do
     it "filters collections using the selected point" do
       create_point(0, 0)
       wait_for_xhr
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_no_content("Background Air Pollution Monitoring")
+      expect(page).to have_content("Two-Level, Seasonal SOx/NOx ")
     end
 
     context "changing the point selection" do
@@ -118,7 +118,7 @@ describe "Spatial" do
       end
 
       it "updates the collection filters using the new point selection" do
-        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
+        expect(page).to have_content("IGBP/IGAC/GEIA Canada_CGEIC_2levSOxNOxGlobeEmm")
       end
     end
 
@@ -131,7 +131,7 @@ describe "Spatial" do
       end
 
       it "removes the spatial point collection filter" do
-        expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+        expect(page).to have_content("Background Air Pollution Monitoring")
       end
     end
   end
@@ -153,7 +153,7 @@ describe "Spatial" do
       end
 
       it "updates the collection filters using the new bounding box selection" do
-        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
+        expect(page).to have_content("IGBP/IGAC/GEIA Canada_CGEIC_2levSOxNOxGlobeEmm")
       end
     end
 
@@ -166,7 +166,7 @@ describe "Spatial" do
       end
 
       it "removes the spatial bounding box collection filter" do
-        expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+        expect(page).to have_content("Background Air Pollution Monitoring")
       end
     end
 
@@ -255,7 +255,7 @@ describe "Spatial" do
       end
 
       it "removes the spatial bounding box collection filter" do
-        expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+        expect(page).to have_content("Background Air Pollution Monitoring")
       end
     end
   end

@@ -57,6 +57,10 @@ module Helpers
       nth_panel(featured_collection_results, 1)
     end
 
+    def second_featured_collection
+      nth_panel(featured_collection_results, 2)
+    end
+
     def first_collapsed_featured_collection
       nth_ccol(featured_collapsed_collection_results, 1)
     end

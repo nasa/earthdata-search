@@ -4,7 +4,7 @@ describe "Add to project", reset: false do
   collection_name = '15 Minute Stream Flow Data: USGS (FIFE)'
   before(:all) do
     Capybara.reset_sessions!
-    load_page :search
+    load_page :search, q: 'C179003030-ORNL_DAAC'
   end
 
   context "in the collection results list" do
@@ -109,13 +109,15 @@ describe "Add to project", reset: false do
       context 'when collections remain in the project' do
         before(:all) do
           target_collection_result.click_link "Add collection to the current project"
-          within '#collection-results-list > :nth-child(10)' do
+          fill_in :keywords, with: ' '
+          within first_featured_collection do
             click_link "Add collection to the current project"
             click_link "Remove collection from the current project"
           end
         end
 
         after(:all) do
+          fill_in :keywords, with: 'C179003030-ORNL_DAAC'
           reset_project
         end
 
