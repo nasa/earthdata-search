@@ -3,6 +3,13 @@
 require "spec_helper"
 
 describe "Collection Facets", reset: false do
+  let(:first_project_facet) { "AMBS" }
+  let(:first_platform_facet) { "ADEOS-II" }
+  let(:first_instrument_facet) { "ADCP" }
+  let(:first_coordinate_facet) { "CALIPSO" }
+  let(:first_processing_level_facet) { "0" }
+  let(:eosdis_count) { "505" }
+
   before :all do
     Capybara.reset_sessions!
     load_page :search, facets: true
@@ -11,25 +18,25 @@ describe "Collection Facets", reset: false do
   context "facet listing" do
     it "shows the first Project facet" do
       find("h3.facet-title", text: 'Project').click
-      expect(page.text).to match('Project\s*\d* 2013_AN_NASA')
+      expect(page.text).to match("Project\s*\d* #{first_project_facet}")
       find("h3.facet-title", text: 'Project').click
     end
 
     it "shows the first Platforms facet" do
       find("h3.facet-title", text: 'Platform').click
-      expect(page.text).to match('Platform\s*\d* AIRCRAFT')
+      expect(page.text).to match("Platform\s*\d* #{first_platform_facet}")
       find("h3.facet-title", text: 'Platform').click
     end
 
     it "shows the first Instruments facet" do
       find("h3.facet-title", text: 'Instrument').click
-      expect(page.text).to match('Instrument\s*\d* AIRS')
+      expect(page.text).to match("Instrument\s*\d* #{first_instrument_facet}")
       find("h3.facet-title", text: 'Instrument').click
     end
 
     it "shows the first 2D Coordinate Name facet" do
       find("h3.facet-title", text: '2D Coordinate Name').click
-      expect(page.text).to match('2D Coordinate Name\s*\d* CALIPSO')
+      expect(page.text).to match("2D Coordinate Name\s*\d* #{first_coordinate_facet}")
       find("h3.facet-title", text: '2D Coordinate Name').click
     end
 
@@ -77,7 +84,7 @@ describe "Collection Facets", reset: false do
 
     it "shows the first Processing Level facet" do
       find("h3.facet-title", text: 'Processing level').click
-      expect(page.text).to match('Processing level\s*\d* 0')
+      expect(page.text).to match("Processing level\s*\d* #{first_processing_level_facet}")
       find("h3.facet-title", text: 'Processing level').click
     end
 
@@ -145,7 +152,7 @@ describe "Collection Facets", reset: false do
       find(".facets-item", text: "ESIP").click
       wait_for_xhr
       within(:css, '.project') do
-        expect(page).to have_content("EOSDIS 502")
+        expect(page).to have_content("EOSDIS #{eosdis_count}")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("p.facets-item.selected")
@@ -196,13 +203,11 @@ describe "Collection Facets", reset: false do
     end
 
     it "updates the collection results" do
-      expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
       expect(page).to have_no_content("AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005")
 
       find("h3.facet-title", text: 'Project').click
       find(".project .facets-item", text: "AQUA").click
 
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
       expect(page).to have_content("AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005")
 
       find("h3.facet-title", text: 'Project').click
@@ -308,9 +313,9 @@ describe "Collection Facets", reset: false do
   context "when applying facets containing special characters" do
     before(:all) do
       load_page :search, facets: true
-      fill_in :keywords, with: "SPECTRAL/ENGINEERING x-ray"
+      fill_in :keywords, with: "C1214606011-SCIOPS"
       wait_for_xhr
-      find(".facets-item", text: "SPECTRAL/ENGINEERING").click
+      find(".facet-term", text: "SPECTRAL/ENGINEERING").click
       wait_for_xhr
     end
 

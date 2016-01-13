@@ -18,18 +18,19 @@ describe "'Clear Filters' button", reset: false do
 
   it "clears spatial" do
     create_point(0, 0)
-    expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-    expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+    expect(page).to have_no_content("Background Air Pollution Monitoring Network")
+    expect(page).to have_content("Two-Level, Seasonal SOx/NOx Global Emissions")
 
     click_link "Clear Filters"
-    expect(page).to have_content("15 Minute Stream Flow Data: USGS")
-    expect(page).to have_no_css('#map .leaflet-marker-icon')
+    expect(page).to have_content("Background Air Pollution Monitoring Network")
+    expect(page).to have_no_content("Two-Level, Seasonal SOx/NOx Global Emissions")
   end
 
   context "clears temporal" do
     after :each do
       # close temporal dropdown
       click_link "Temporal"
+      click_link "Clear Filters"
     end
 
     it "range" do
@@ -39,11 +40,13 @@ describe "'Clear Filters' button", reset: false do
                 temporal.isRecurring(false);
                 null;"
       page.execute_script(script)
+      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
 
       click_link "Clear Filters"
 
+      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       click_link "Temporal"
       expect(page.find("#collection-temporal-range-start")).to have_no_text("1978-12-01 00:00:00")
@@ -59,10 +62,12 @@ describe "'Clear Filters' button", reset: false do
                 null;"
       page.execute_script(script)
 
+      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
 
       click_link "Clear Filters"
       wait_for_xhr
+      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       click_link "Temporal"
       expect(page.find("#collection-temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")

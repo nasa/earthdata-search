@@ -7,7 +7,7 @@ describe "Granule search overlay", reset: false do
   end
 
   before(:each) do
-    second_collection_result.click_link "Add collection to the current project"
+    first_featured_collection.click_link "Add collection to the current project"
     first_collection_result.click_link "Add collection to the current project"
 
     collection_results.click_link "View Project"

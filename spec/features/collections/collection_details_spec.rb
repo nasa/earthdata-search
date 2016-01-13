@@ -69,7 +69,7 @@ describe 'Collection details', reset: false do
 
   context "when selecting a collection with point spatial" do
     before :all do
-      load_page :search
+      load_page :search, q: 'C179003030-ORNL_DAAC'
       expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
       first_collection_result.click_link('View collection details')
     end

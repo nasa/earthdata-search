@@ -32,7 +32,7 @@ describe "Collection keyword searches", reset: false do
 
   it "displays all collections when keywords are cleared" do
     fill_in "keywords", with: " "
-    expect(page).to have_content('15 Minute Stream')
+    expect(page).to have_content('MODIS/Terra Aerosol')
   end
 
   it "do not match wildcard characters" do
