@@ -31,7 +31,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
     margin-top: 0;
   }
 
-  &.master-overlay-forward:hover, &.master-overlay-selectable:hover {
+  &.master-overlay-forward:hover {
     border-left-color: #525252;
     background-color: #393939;
   }
