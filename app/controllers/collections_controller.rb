@@ -307,8 +307,6 @@ class CollectionsController < ApplicationController
       params["two_d_coordinate_system_name"] = old["name"]
     end
 
-    params['provider'] = params.delete('data_center') if params['data_center']
-
     params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
     cwic = features && features.include?("Int'l / Interagency")
