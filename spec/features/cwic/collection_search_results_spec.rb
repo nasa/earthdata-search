@@ -29,7 +29,7 @@ describe "CWIC-capable collection search results", reset: false do
 
     context "when CWIC feature is selected" do
       before :all do
-        find("p.facets-item", text: "Int'l / Interagency").click
+        cwic_feature_facet.click
         wait_for_xhr
         fill_in "keywords", with: 'C1000003579-GCMDTEST'
         wait_for_xhr
@@ -76,7 +76,7 @@ describe "CWIC-capable collection search results", reset: false do
 
       context "a CWIC-tagged item" do
         before :all do
-          find("p.facets-item", text: "Int'l / Interagency").click
+          cwic_feature_facet.click
           wait_for_xhr
           fill_in "keywords", with: 'C1000003579-GCMDTEST'
           wait_for_xhr

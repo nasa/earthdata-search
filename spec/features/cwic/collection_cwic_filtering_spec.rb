@@ -20,14 +20,14 @@ describe 'Collection CWIC Filtering', reset: false do
     end
 
     it "the CWIC feature is de-selected by default", acceptance: true do
-      expect(cwic_feature_facet).to have_no_css('.selected')
+      expect(cwic_feature_facet).to have_no_css('.fa-check-square-o')
     end
   end
 
   context 'selecting the CWIC filter' do
     before :all do
       before_collection_count = collection_results_header.text.match(/\d+ Matching Collections/).to_s.split(" ")[0].to_i
-      find("p.facets-item", text: "Int'l / Interagency").click
+      cwic_feature_facet.click
       wait_for_xhr
     end
 
@@ -37,7 +37,7 @@ describe 'Collection CWIC Filtering', reset: false do
     end
 
     it "has its selection state indicated in the UI", acceptance: true do
-      expect(cwic_feature_facet).to have_css('.selected')
+      expect(cwic_feature_facet).to have_css('.fa-check-square-o')
     end
 
     it "has its selection state saved in the URL", acceptance: true do
@@ -46,7 +46,7 @@ describe 'Collection CWIC Filtering', reset: false do
 
     context 'and de-selecting the CWIC filter' do
       before :all do
-        find("p.facets-item", text: "Int'l / Interagency").click
+        cwic_feature_facet.click
         wait_for_xhr
       end
 
@@ -56,7 +56,7 @@ describe 'Collection CWIC Filtering', reset: false do
       end
 
       it 'has its selection state indicated in the UI', acceptance: true do
-        expect(cwic_feature_facet).to have_no_css('.selected')
+        expect(cwic_feature_facet).to have_no_css('.fa-check-square-o')
       end
 
       it 'removes its selection state from the URL', acceptance: true do
@@ -86,7 +86,7 @@ describe 'Collection CWIC Filtering', reset: false do
     end
 
     it 'has its selection state indicated in the UI', acceptance: true do
-      expect(cwic_feature_facet).to have_css('.selected')
+      expect(cwic_feature_facet).to have_css('.fa-check-square-o')
     end
   end
 
