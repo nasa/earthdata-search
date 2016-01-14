@@ -71,7 +71,7 @@ describe "CWIC-capable collection search results", reset: false do
       end
 
       after :all do
-        click_link 'Maximize'
+        load_page :search, env: :sit, facets: true
       end
 
       context "a CWIC-tagged item" do
