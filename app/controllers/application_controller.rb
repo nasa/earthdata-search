@@ -70,7 +70,9 @@ class ApplicationController < ActionController::Base
     # Dont make a call to ECHO if we already know the user id
     return session[:user_id] if session[:user_id]
 
-    return 'edsc' if Rails.env.test?
+    # Work around a problem where logging into sit from the test environment goes haywire
+    # because of the way tokens are set up
+    return 'edsc' if Rails.env.test? && echo_env != 'ops'
 
     response = echo_client.get_current_user(token).body
     session[:user_id] = response["user"]["id"] if response["user"]

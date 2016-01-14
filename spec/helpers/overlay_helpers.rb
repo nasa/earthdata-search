@@ -26,7 +26,7 @@ module Helpers
     end
 
     def cwic_feature_facet
-      page.find('#master-overlay-parent .features', text: "Int'l / Interagency")
+      page.find('#master-overlay-parent .cwic-facet')
     end
 
     def collection_results
