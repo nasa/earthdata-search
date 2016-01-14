@@ -19,7 +19,7 @@
                   <!-- /ko -->
                 </div>
               <!-- ko if: thumbnail() -->
-              <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
+                <img class="panel-list-thumbnail" onerror="this.parentElement.className = 'panel-list-thumbnail-onerror';" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
               <!-- /ko -->
               <!-- ko ifnot: thumbnail() -->
               <div class="panel-list-thumbnail">
@@ -32,7 +32,7 @@
               <p>
                 <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
                   <span data-bind="text: short_name"></span>
-                  <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
+                  <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
                   v<span data-bind="text: version_id"></span>
                   <!-- /ko -->
                   <!-- ko if: $data.archive_center -->
