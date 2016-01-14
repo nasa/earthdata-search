@@ -366,7 +366,10 @@ ns.GranuleLayer = do (L
   class GranuleLayer extends GibsTileLayer
     constructor: (@collection, color, @multiOptions) ->
 
-      @_datasourceSubscription = @collection.granuleDatasource.subscribe(@_subscribe)
+      if @collection.granuleDatasource()
+        @granules = @collection.granuleDatasource().data()
+      else
+        @_datasourceSubscription = @collection.granuleDatasource.subscribe(@_subscribe)
       @_hasGibs = @multiOptions?.length > 0
       @color = color ? '#25c85b';
       super({})
@@ -391,13 +394,14 @@ ns.GranuleLayer = do (L
       @_resultsSubscription?.dispose()
       @_results = null
 
-    subscribe: ->
-      if @collection.granuleDatasource() && @added && !@_resultsSubscription
+    _subscribe: ->
+      console.warn 'sub', @collection.granuleDatasource()
+      if @collection.granuleDatasource() && @_added && !@_resultsSubscription
         granuleDatasource = @collection.granuleDatasource()
         @granules = granuleDatasource.data()
         @_resultsSubscription = @granules?.results?.subscribe(@_loadResults.bind(this))
         @_loadResults(@granules?.results())
-      @_datasourceSubscription?.dispose()
+        @_datasourceSubscription?.dispose()
 
     url: ->
       super() if @_hasGibs

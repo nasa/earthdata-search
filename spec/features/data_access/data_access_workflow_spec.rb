@@ -26,6 +26,11 @@ describe "Data Access workflow", reset: false do
 
   context "when the user is not logged in" do
     before(:each) do
+      # These two lines are not necessary but may help us clean up sessions in case that Capybara.reset_sessions! in
+      # the after block fails to do so.
+      load_page :root
+      expect(page).to have_css("a[href^=\"/login\"]")
+      ###
       load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
       wait_for_xhr
       click_link "Retrieve project data"
@@ -36,7 +41,7 @@ describe "Data Access workflow", reset: false do
       Capybara.reset_sessions!
     end
 
-    it "forces the user to login before showing data access page", intermittent: 2 do
+    it "forces the user to login before showing data access page" do
       expect(page).to have_content('EOSDIS Earthdata Login')
     end
   end

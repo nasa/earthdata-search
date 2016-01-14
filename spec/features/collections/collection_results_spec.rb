@@ -73,6 +73,12 @@ describe "Collection results", reset: false do
     expect(page).to have_content("1907-01-02 to 1952-08-11")
   end
 
+  it "doesn't' show version_id for collections that don't have one" do
+    fill_in "keywords", with: 'C1214605943-SCIOPS'
+    wait_for_xhr
+    expect(page).to have_no_content("vNot provided")
+  end
+
   it "indicates if a collection's data collection is ongoing" do
     fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
     wait_for_xhr
@@ -97,4 +103,19 @@ describe "Collection results", reset: false do
       end
     end
   end
+
+  # Can't really test this feature - the browse scaler root url is set to a constant /assets/gibs-example.jpeg in test
+  # environment.
+  #
+  # context 'viewing a testbed colleciton' do
+  #   before :all do
+  #     load_page :search, env: :sit, q: '2002 Environmental Sustainability Index (ESI)'
+  #     wait_for_xhr
+  #   end
+  #
+  #   it 'shows the testbed browse image url' do
+  #     img = page.find('img.panel-list-thumbnail')
+  #     expect(img['src']).to have_content('https://testbed.echo.nasa.gov/browse-scaler/browse_images/datasets/C1137-SEDAC?h=75&amp;w=75')
+  #   end
+  # end
 end
