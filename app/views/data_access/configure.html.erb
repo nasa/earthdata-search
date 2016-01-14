@@ -59,7 +59,7 @@
             </p>
             <div data-bind="event: {scroll: $root.ui.serviceOptionsList.scrolled}">
               <ul>
-              <!-- ko foreach: collection.granuleDatasource().cmrData().results() -->
+              <!-- ko foreach: collection.granuleDatasource().data().results() -->
                 <li>
                   <h5 data-bind="text: displayName()"></h5>
                   <span data-bind="text: getTemporal()"></span>
