@@ -70,8 +70,7 @@ ns.Collection = do (ko
       @_renderers = []
       @_pendingRenderActions = []
       @osddUrl = @computed(@_computeOsddUrl, this, deferEvaluation: true)
-      @cwic = ko.observable(@_isCwic(jsonData))
-      @tags = ko.observable(jsonData.tags)
+      @cwic = ko.observable(false)
 
       @visible = ko.observable(false)
       @disposable(@visible.subscribe(@_visibilityChange))
@@ -124,8 +123,6 @@ ns.Collection = do (ko
     _computeGranuleDescription: ->
       result = null
       return result unless @hasAtomData()
-      if @id == 'C14758250-LPDAAC_ECS'
-        console.log "DESCRIPTION: #{@granuleDatasource()?.granuleDescription() ? 'Collection only'}"
       @granuleDatasource()?.granuleDescription() ? 'Collection only'
 
     _computeOsddUrl: ->
@@ -274,6 +271,8 @@ ns.Collection = do (ko
       @_setObservable('opendap', jsonObj)
       @_setObservable('modaps', jsonObj)
       @_setObservable('osdd_url', jsonObj)
+      @_setObservable('tags', jsonObj)
+      @cwic(@_isCwic(jsonObj))
 
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)

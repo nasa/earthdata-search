@@ -2,25 +2,25 @@ class GranulesController < ApplicationController
   respond_to :json
 
   def create
-    if params['datasource'] == 'cmr'
-      catalog_response = echo_client.get_granules(granule_params_for_request(request), token)
+    catalog_response = echo_client.get_granules(granule_params_for_request(request), token)
 
-      if catalog_response.success?
-        catalog_response.headers.each do |key, value|
-          response.headers[key] = value if key.start_with?('cmr-')
-        end
-
-        render json: catalog_response.body, status: catalog_response.status
-      else
-        render json: catalog_response.body, status: catalog_response.status
+    if catalog_response.success?
+      catalog_response.headers.each do |key, value|
+        response.headers[key] = value if key.start_with?('cmr-')
       end
+
+      render json: catalog_response.body, status: catalog_response.status
     else
-      catalog_response = echo_client.get_cwic_granules(params['short_name'])
-      if catalog_response.success?
-        decorate_cwic_granules(catalog_response)
-      end
       render json: catalog_response.body, status: catalog_response.status
     end
+  end
+
+  def cwic
+    catalog_response = echo_client.get_cwic_granules(params['short_name'])
+    if catalog_response.success?
+      decorate_cwic_granules(catalog_response)
+    end
+    render json: catalog_response.body, status: catalog_response.status
   end
 
   def show

@@ -227,8 +227,8 @@ ns.ProjectList = do (ko
     showFilters: (collection) =>
       if @project.searchGranulesCollection(collection)
         $('.granule-temporal-filter').temporalSelectors({
-          uiModel: collection.granuleDatasource().cmrData().temporal,
-          modelPath: "(project.searchGranulesCollection() ? project.searchGranulesCollection().granuleDatasource().cmrData().temporal.pending : null)",
+          uiModel: collection.granuleDatasource().data().temporal,
+          modelPath: "(project.searchGranulesCollection() ? project.searchGranulesCollection().granuleDatasource().data().temporal.pending : null)",
           prefix: 'granule'
         })
 

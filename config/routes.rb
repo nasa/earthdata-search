@@ -30,6 +30,7 @@ EarthdataSearchClient::Application.routes.draw do
 
   resources :granules, only: [:create, :show], defaults: {format: 'json'} do
     collection do
+      post 'cwic'
       post 'timeline'
       get 'download', defaults: { format: ['html', 'sh'] }
     end

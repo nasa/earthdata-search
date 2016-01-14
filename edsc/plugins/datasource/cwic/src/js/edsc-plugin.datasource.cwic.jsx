@@ -1,6 +1,5 @@
-let GranuleQuery = window.edsc.models.data.query.GranuleQuery,
-  Granules = window.edsc.models.data.Granules,
-  ajax = window.edsc.util.xhr.ajax;
+import Granules from './Granules.jsx';
+import GranuleQuery from './GranuleQuery.jsx';
 
 export default class CwicDatasourcePlugin {
   constructor(edsc, collection) {
@@ -38,13 +37,14 @@ export default class CwicDatasourcePlugin {
   cwicQuery() {
     if (!this._query) {
       let collection = this._collection;
-      this._query = new GranuleQuery(collection.id, collection.query, collection.searchable_attributes, 'cwic', collection.json.short_name);
+      this._query = new GranuleQuery(collection.id, collection.query, collection.searchable_attributes);
     }
     return this._query;
   }
-  cwicData() {
+  data() {
     if (!this._granules) {
-      this._granules = new Granules(this.cwicQuery(), this.cwicQuery().parentQuery);
+      let collection = this._collection;
+      this._granules = new Granules(this.cwicQuery(), this.cwicQuery().parentQuery, collection.json.short_name);
       this._granules.results();
       this._dataLoaded(true);
     }

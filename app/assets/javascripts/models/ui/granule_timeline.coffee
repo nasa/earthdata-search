@@ -53,7 +53,7 @@ ns.GranuleTimeline = do (ko
       GranulesModel.prototype._queryFor(params)
 
     _computeSearchResponse: (current, callback) =>
-      return unless @collection.granuleDatasource()?.cmrQuery().isValid()
+      return unless @collection.granuleDatasource()?.cmrQuery?().isValid()
       params = @params()
       prev = @prevParams
 
