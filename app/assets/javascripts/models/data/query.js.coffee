@@ -288,7 +288,7 @@ ns.query = do (ko,
       facet for facet in @facets() when facet.param.indexOf('sci') == 0
 
   class GranuleQuery extends Query
-    constructor: (collectionId, parentQuery, attributes, datasource='cmr', short_name) ->
+    constructor: (collectionId, parentQuery, attributes) ->
       @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
       @granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
       @dayNightFlagOptions = [{name: "Anytime", value: null},
@@ -318,8 +318,6 @@ ns.query = do (ko,
       @attributeFilters = @queryComponent(new QueryParam('attribute'), @attributes.queryCondition)
 
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
-      @dataSource = @queryComponent(new QueryParam('datasource'), datasource, ephemeral: true)
-      @shortName = @queryComponent(new QueryParam('short_name'), short_name, ephemeral: true)
 
       @singleGranuleId = ko.observable(null)
       super(parentQuery)
