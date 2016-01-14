@@ -31,6 +31,7 @@ describe "'Clear Filters' button", reset: false do
       # close temporal dropdown
       click_link "Temporal"
       click_link "Clear Filters"
+      wait_for_xhr
     end
 
     it "range" do

@@ -45,7 +45,7 @@ describe 'Saving Projects', reset: false do
 
     context "when loading the named project" do
       before :each do
-        project = create_project
+        project = create_project(path)
 
         visit "/search/collections?projectId=#{project.to_param}"
         wait_for_xhr
