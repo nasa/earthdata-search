@@ -1,14 +1,13 @@
 require 'spec_helper'
 
-describe 'Archive Center Query Param', reset: false do
+describe 'Data Center Query Param', reset: false do
   before :all do
-    visit '/search?ac=ORNL_DAAC'
+    visit '/search?echo_env=testbed&fdc=AAFC'
   end
 
-  it "returns collections from the provided archive center" do
-    within '#collection-results .master-overlay-content' do
-      expect(page).to have_content("- ORNL_DAAC", count: 20)
-    end
+  it "returns collections from the provided data center" do
+    expect(page).to have_content("AAFC 10")
+    expect(page).to have_content("10 Matching Collections")
   end
 
   it "does not return collections from other archive centers" do
