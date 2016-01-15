@@ -1,4 +1,4 @@
-import style from '../css/cwic.useable.less';
+// import style from '../css/cwic.useable.less';
 
 export default class CwicRendererPlugin {
   constructor(edsc) {
