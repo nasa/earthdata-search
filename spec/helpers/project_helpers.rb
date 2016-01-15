@@ -33,8 +33,7 @@ module Helpers
       query[query_re, 1].to_i
     end
 
-    def create_project
-      path = '/search/collections?p=!C179003030-ORNL_DAAC!C179001887-SEDAC'
+    def create_project (path = '/search/collections?p=!C179003030-ORNL_DAAC!C1214558039-NOAA_NCEI')
       user = User.first
       project = Project.new
       project.path = path

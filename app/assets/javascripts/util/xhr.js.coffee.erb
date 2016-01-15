@@ -8,11 +8,13 @@
   isRefreshing = false
 
   hasPending = ->
-    xhrPool.length > 0 || timeoutPool.length > 0
+    xhrPool.length > 0 || timeoutPool.length > 0 || edscplugin.hasPending()
 
   runCallbacks = ->
     while !hasPending() && callbacks.length > 0
       callbacks.pop()()
+
+  edscplugin.onAllComplete(runCallbacks)
 
   window.setTimeout = (f, args...) ->
     id = null

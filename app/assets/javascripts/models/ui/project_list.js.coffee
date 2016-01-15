@@ -223,11 +223,12 @@ ns.ProjectList = do (ko
         collections.push(collection) if collection.serviceOptions.accessMethod().length == 0
       collections
 
+    # FIXME: This must be moved to granules list. Why is it here?!
     showFilters: (collection) =>
       if @project.searchGranulesCollection(collection)
         $('.granule-temporal-filter').temporalSelectors({
-          uiModel: collection.granulesModel.temporal,
-          modelPath: "(project.searchGranulesCollection() ? project.searchGranulesCollection().granulesModel.temporal.pending : null)",
+          uiModel: collection.granuleDatasource().data().temporal,
+          modelPath: "(project.searchGranulesCollection() ? project.searchGranulesCollection().granuleDatasource().data().temporal.pending : null)",
           prefix: 'granule'
         })
 

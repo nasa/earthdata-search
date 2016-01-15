@@ -49,7 +49,7 @@ end
 
 # In development mode, when running a server, also precompile assets in the background, ensuring
 # that only one process runs at once
-if Rails.env.development? && ENV['IS_RACK_RUN']
+if Rails.env.development? && ENV['IS_RACK_RUN'] == 'true'
   npm 'prepublish'
   pidlock(Rails.root.join('tmp', 'pids', 'npm-start')) do
     Thread.new do

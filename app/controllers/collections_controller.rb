@@ -6,11 +6,19 @@ class CollectionsController < ApplicationController
   KEYWORD_CHILD = {'topic' => 'term', 'term' => 'variable_level_1', 'variable_level_1' => 'variable_level_2', 'variable_level_2' => 'variable_level_3', 'variable_level_3' => nil}
 
   def index
-    client = echo_client
     # FIXME Termporary workaround for CMR-2038 and CMR-2049
     # Fire two requests to CMR. One to retrieve hierarchical facets, the other to get non-hierarchical facets, in parallel.
-    hierarchical_search = lambda {client.get_collections(collection_params_for_request(request), token)}
-    non_hierarchical_search = lambda {client.get_collections(collection_params_for_request(request, false), token)}
+    service_configs = Rails.configuration.services
+    service_config = service_configs['earthdata'][echo_env]
+    urs_client_id = service_configs['urs'][Rails.env.to_s][service_config['urs_root']]
+    h_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
+    nh_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
+    hierarchical_search = lambda do
+      h_client.get_collections(collection_params_for_request(request), token)
+    end
+    non_hierarchical_search = lambda do
+      nh_client.get_collections(collection_params_for_request(request, false), token)
+    end
     catalog_response = execute_search(hierarchical_search, non_hierarchical_search)
 
     if catalog_response.success?
@@ -61,7 +69,14 @@ class CollectionsController < ApplicationController
     nh_thread = Thread.new do
       nh_response = non_hierarchical.call
     end
-    h_response = hierarchical.call
+    h_response = nil
+    h_thread = Thread.new do
+      begin
+        h_response = hierarchical.call
+      rescue => e
+      end
+    end
+    h_thread.join
     nh_thread.join
 
     # merge
@@ -104,7 +119,7 @@ class CollectionsController < ApplicationController
       'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
     }
 
-    features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
+    features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0], ["Int'l / Interagency", 0]]}]
     facets.unshift(features).flatten!
 
     # CMR-1722 Temporarily filter out detailed_variable keywords
@@ -294,7 +309,13 @@ class CollectionsController < ApplicationController
 
     params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
-    params['include_tags'] = "#{Rails.configuration.cmr_tag_namespace}*"
+    cwic = features && features.include?("Int'l / Interagency")
+    if cwic || request.query_parameters['echo_collection_id']
+      params['include_tags'] = "#{Rails.configuration.cmr_tag_namespace}*"
+    else
+      params['exclude[tag_namespace]'] = "#{Rails.configuration.cmr_tag_namespace}*"
+      params['options[tag_namespace][pattern]'] = true
+    end
 
     params
   end

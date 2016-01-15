@@ -1,5 +1,5 @@
 {
-  "name": "edsc-plugin-example",
+  "name": "edsc-plugin.example",
   "main": "src/js/edsc-plugin-example.jsx",
   "description": "Example plugin for Earthdata Search",
   "version": "1.0.0",

@@ -26,7 +26,7 @@ describe "Collection results", reset: false do
   end
 
   it "does not load additional results after all results have been loaded" do
-    fill_in "keywords", with: "AST"
+    fill_in "keywords", with: "AQUARIUS_SAC-D as"
     wait_for_xhr
     page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 10000"
     wait_for_xhr
@@ -36,7 +36,7 @@ describe "Collection results", reset: false do
   end
 
   it "displays thumbnails for collections which have stored thumbnail URLs" do
-    fill_in "keywords", with: 'C186815383-GSFCS4PA'
+    fill_in "keywords", with: 'C32000-PODAAC'
     wait_for_xhr
     expect(page).to have_css("img.panel-list-thumbnail")
     expect(page).to have_no_text("No image available")
@@ -70,7 +70,7 @@ describe "Collection results", reset: false do
   end
 
   it "shows the temporal extent of collections whose data collection ended in the past" do
-    expect(page).to have_content("1984-12-25 to 1988-03-04")
+    expect(page).to have_content("1907-01-02 to 1952-08-11")
   end
 
   it "doesn't' show version_id for collections that don't have one" do
@@ -80,12 +80,15 @@ describe "Collection results", reset: false do
   end
 
   it "indicates if a collection's data collection is ongoing" do
-    expect(page).to have_content("1978-01-01 ongoing")
+    fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
+    wait_for_xhr
+    expect(page).to have_content("2014-12-25 ongoing")
   end
 
   context 'when clicking the "View collection" button' do
-    before(:all) do
-      first_collection_result.click_link "View collection"
+    before(:each) do
+      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
+      target_collection_result.click_link "View collection"
     end
 
     it 'highlights the "View collection" button' do
@@ -93,7 +96,7 @@ describe "Collection results", reset: false do
     end
 
     context 'and clicking back' do
-      before(:all) { first_collection_result.click_link "Hide collection" }
+      before(:each) { target_collection_result.click_link "Hide collection" }
 
       it "un-highlights the selected collection" do
         expect(page).to have_no_css('#collection-results a[title="Hide collection"].button-active')

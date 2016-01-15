@@ -22,10 +22,7 @@ ns.GranuleTimeline = do (ko
       $timeline = $('#timeline')
       $timeline.on 'rowtemporalchange.timeline', (e, rowId, start, stop) =>
         if rowId == @collection.id
-          temporal = @collection.granuleQuery.temporal.applied
-          temporal.isRecurring(false)
-          temporal.start.date(start)
-          temporal.stop.date(stop)
+          @collection.granuleDatasource()?.setTemporal?(startDate: start, endDate: stop, recurring: false)
 
       # Start computing, but avoid introducing a dependency on results in the caller
       @results.peek()
@@ -37,11 +34,14 @@ ns.GranuleTimeline = do (ko
         end_date: dateUtil.toISOString(end)
         interval: interval
 
-      temporal = @collection.granuleQuery.temporal.applied.ranges()
+      temporal = @collection.granuleDatasource()?.getTemporal?()
+      ranges = null
+
+      ranges = dateUtil.computeRanges(temporal) if temporal
       $timeline = $('#timeline')
-      if $timeline.timeline('getRowTemporal', @collection.id)?.toString() != temporal?.toString()
-        $timeline.timeline('setRowTemporal', @collection.id, temporal)
-      params = extend({}, @collection.granulesModel.params(), timelineParams)
+      if $timeline.timeline('getRowTemporal', @collection.id)?.toString() != ranges?.toString()
+        $timeline.timeline('setRowTemporal', @collection.id, ranges)
+      params = extend({}, @collection.granuleDatasource()?.toQueryParams(), timelineParams)
 
       delete params.temporal
       delete params.page_num
@@ -53,7 +53,7 @@ ns.GranuleTimeline = do (ko
       GranulesModel.prototype._queryFor(params)
 
     _computeSearchResponse: (current, callback) =>
-      return unless @collection.granulesModel.query.isValid()
+      return unless @collection.granuleDatasource()?.cmrQuery?().isValid()
       params = @params()
       prev = @prevParams
 
@@ -215,9 +215,10 @@ ns.GranuleTimeline = do (ko
           newTimelines[id] = currentTimelines[id]
           delete currentTimelines[id]
         else
-          data = new GranuleTimelineData(collection, range, project.colorForCollection(collection))
-
-          newTimelines[id] = data
+          # TODO: Future CWIC issues need to deal with the CWIC timeline and should clean this up
+          if collection.granuleDatasourceName() == 'cmr'
+            data = new GranuleTimelineData(collection, range, project.colorForCollection(collection))
+            newTimelines[id] = data
 
       for own k, v of currentTimelines
         v.dispose()

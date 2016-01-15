@@ -18,9 +18,8 @@ ns.Collection = do (ko
                  ) ->
 
   openSearchKeyToEndpoint =
-    CWIC: (collection) ->
-      short_name = collection.json.short_name
-      "http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=#{short_name}&clientId=#{config.cmrClientId}"
+    cwic: (collection) ->
+
 
   collections = ko.observableArray()
 
@@ -32,6 +31,16 @@ ns.Collection = do (ko
     collection
 
   class Collection extends DetailsModel
+    @awaitDatasources: (collections, callback) ->
+      calls = collections.length
+      aggregation = ->
+        calls--
+        callback(collections) if calls == 0
+
+      for collection in collections
+        collection.granuleDatasourceAsync(aggregation)
+
+
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
       featured = jsonData.featured
@@ -51,26 +60,25 @@ ns.Collection = do (ko
 
       @hasAtomData = ko.observable(false)
 
-      @granuleQueryLoaded = ko.observable(false)
-      Object.defineProperty this, 'granuleQuery',
-        get: ->
-          @granuleQueryLoaded(true)
-          @_granuleQuery ?= @disposable(new GranuleQuery(@id, @query, @searchable_attributes))
-
-      Object.defineProperty this, 'granulesModel',
-        get: -> @_granulesModel ?= @disposable(new Granules(@granuleQuery, @query))
-
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
       @detailsLoaded = ko.observable(false)
 
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
       @granuleDescription = @computed(@_computeGranuleDescription, this, deferEvaluation: true)
+      @granuleDatasource = ko.observable(null)
+      @_renderers = []
+      @_pendingRenderActions = []
       @osddUrl = @computed(@_computeOsddUrl, this, deferEvaluation: true)
+      @cwic = ko.observable(false)
 
       @visible = ko.observable(false)
+      @disposable(@visible.subscribe(@_visibilityChange))
 
       @fromJson(jsonData)
+
+      if @granuleDatasourceName() && @granuleDatasourceName() != 'cmr'
+        @has_granules = @canFocus()
 
       @spatial_constraint = @computed =>
         if @points?
@@ -80,8 +88,18 @@ ns.Collection = do (ko
 
       @echoGranulesUrl = @computed
         read: =>
-          paramStr = toParam(@granuleQuery.params())
-          "#{@details().granule_url}?#{paramStr}"
+          if @granuleDatasourceName() == 'cmr' && @granuleDatasource()
+            _cloneQueryParams = (obj) ->
+              return obj  if obj is null or typeof (obj) isnt "object"
+              temp = new obj.constructor()
+              for key of obj
+                temp[key] = _cloneQueryParams(obj[key])
+              temp
+
+            queryParams = _cloneQueryParams(@granuleDatasource().toQueryParams())
+            delete queryParams['datasource'] if queryParams['datasource']
+            paramStr = toParam(queryParams)
+            "#{@details().granule_url}?#{paramStr}"
         deferEvaluation: true
 
     _computeTimeRange: ->
@@ -105,22 +123,12 @@ ns.Collection = do (ko
     _computeGranuleDescription: ->
       result = null
       return result unless @hasAtomData()
-      if @has_granules
-        if @granulesModel.isLoaded()
-          hits = @granulesModel.hits()
-        else
-          hits = @granuleCount()
-        if hits?
-          result = "#{hits} Granule"
-          result += 's' if hits != 1
-      else if @isExternal()
-        result = "Int'l/Interagency"
-      else
-        result = 'Collection only'
-      result
+      @granuleDatasource()?.granuleDescription() ? 'Collection only'
 
     _computeOsddUrl: ->
-      @openSearchEndpoint() ? @details()?.osdd_url ? @osdd_url
+      url = @osdd_url() ? @details()?.osdd_url
+      url += "&clientId=#{config.cmrClientId}" if url
+      url
 
     thumbnail: ->
       granule = @browseable_granule
@@ -133,16 +141,10 @@ ns.Collection = do (ko
         null
 
     granuleFiltersApplied: ->
-      # granuleQuery.params() will have echo_collection_id and page_size by default
-      params = @granuleQuery.serialize()
-      return true for own key, value of params
-      return false
-
-    hasGranuleConfig: ->
-      @granuleQueryLoaded() && Object.keys(@granuleQuery.serialize()).length > 0
+      @granuleDatasource()?.hasQueryConfig()
 
     shouldDispose: ->
-      result = !@hasGranuleConfig()
+      result = !@granuleFiltersApplied()
       collections.remove(this) if result
       result
 
@@ -156,29 +158,121 @@ ns.Collection = do (ko
           success: (data) ->
             @featured = data
 
-    isExternal: ->
-      @openSearchEndpoint()?
+    granuleDatasourceName: ->
+      datasource = @getValueForTag('datasource')
+      if datasource
+        return datasource
+      else if @has_granules
+        return "cmr"
+      else
+        return null
 
-    openSearchEndpoint: ->
-      if @json.tags
-        for [k, v] in @json.tags
-          return openSearchKeyToEndpoint[v]?(this) if k == "#{config.cmrTagNamespace}opensearch"
-      return null
+    granuleRendererNames: ->
+      renderers = @getValueForTag('renderers')
+      if renderers
+        return renderers.split(',')
+      else if @has_granules
+        return ["cmr"]
+      else
+        return []
+
+    _visibilityChange: (visible) =>
+      # TODO: Visibility continues to be too coupled to collections
+      action = if visible then 'startSearchView' else 'endSearchView'
+      @notifyRenderers(action)
+
+    destroy: ->
+      @_unloadDatasource()
+      @_unloadRenderers()
+      super()
+
+    notifyRenderers: (action) ->
+      @_loadRenderers()
+      if @_loading
+        @_pendingRenderActions.push(action)
+      else
+        for renderer in @_renderers
+          renderer[action]?()
+
+    _loadRenderers: ->
+      names = @granuleRendererNames()
+      loaded = names.join(',')
+      if loaded.length > 0 && loaded != @_currentRenderers
+        @_loading = true
+        @_currentRenderers = loaded
+        @_unloadRenderers()
+        expected = names.length
+        onload = (PluginClass, facade) =>
+          renderer = new PluginClass(facade, this)
+          @_renderers.push(renderer)
+          for action in @_pendingRenderActions
+            renderer[action]?()
+
+        oncomplete = =>
+          expected -= 1
+          if expected == 0
+            @_loading = false
+            @_pendingRenderActions = []
+
+        for renderer in names
+          edscplugin.load "renderer.#{renderer}", onload, oncomplete
+
+    _unloadRenderers: ->
+      renderer.destroy() for renderer in @_renderers
+      @_renderers = []
+
+    _loadDatasource: ->
+      desiredName = @granuleDatasourceName()
+      if desiredName && @_currentName != desiredName
+        @_currentName = desiredName
+        @_unloadDatasource()
+        onload = (PluginClass, facade) =>
+          datasource = new PluginClass(facade, this)
+          @_currentName = desiredName
+          @_unloadDatasource()
+          @granuleDatasource(@disposable(datasource))
+
+        oncomplete = =>
+          if @_datasourceListeners
+            for listener in @_datasourceListeners
+              listener(@granuleDatasource())
+            @_datasourceListeners = null
+
+        edscplugin.load "datasource.#{desiredName}", onload, oncomplete
+
+    _unloadDatasource: ->
+      if @granuleDatasource()
+        @granuleDatasource().destroy()
+        @granuleDatasource(null)
+
+    granuleDatasourceAsync: (callback) ->
+      if !@canFocus() || @granuleDatasource()
+        callback(@granuleDatasource())
+      else
+        @_datasourceListeners ?= []
+        @_datasourceListeners.push(callback)
+
+    getValueForTag: (key) ->
+      if @tags()
+        for [k, v] in @tags()
+          return v if k == "#{config.cmrTagNamespace}#{key}"
+      null
+
+    canFocus: ->
+      @hasAtomData() && @granuleDatasourceName()
 
     fromJson: (jsonObj) ->
       @json = jsonObj
 
       if jsonObj.short_name? then @short_name = ko.observable(jsonObj.short_name) else @short_name = ko.observable('N/A')
 
-      attributes = jsonObj.searchable_attributes
-      if attributes && @granuleQueryLoaded()
-        @granuleQuery.attributes.definitions(attributes)
-
       @hasAtomData(jsonObj.short_name?)
       @_setObservable('gibs', jsonObj)
       @_setObservable('opendap', jsonObj)
       @_setObservable('modaps', jsonObj)
       @_setObservable('osdd_url', jsonObj)
+      @_setObservable('tags', jsonObj)
+      @cwic(@_isCwic(jsonObj))
 
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)
@@ -186,8 +280,16 @@ ns.Collection = do (ko
       for own key, value of jsonObj
         this[key] = value unless ko.isObservable(this[key])
 
+      @_loadDatasource()
+      @granuleDatasource()?.updateFromCollectionData?(jsonObj)
+
     _setObservable: (prop, jsonObj) =>
       this[prop] ?= ko.observable(undefined)
       this[prop](jsonObj[prop] ? this[prop]())
+
+    _isCwic: (jsonObj) ->
+      if jsonObj.tags?
+        return true for tag in jsonObj.tags when tag[1].toLowerCase() == 'cwic'
+      false
 
   exports = Collection

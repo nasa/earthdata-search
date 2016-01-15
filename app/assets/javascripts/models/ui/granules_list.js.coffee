@@ -9,7 +9,8 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @_wasVisible = @collection.visible()
       @collection.visible(true)
 
-      @granules = @collection.granulesModel
+      @granules = ko.computed =>
+        @collection.granuleDatasource()?.data()
 
       @_hasFocus = ko.observable(false)
       @focused = ko.observable(null)
@@ -112,7 +113,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
     scrolled: (data, event) =>
       elem = event.target
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
-        @granules.loadNextPage()
+        @granules().loadNextPage()
 
     _setSticky: ->
       if @stickied()
@@ -122,7 +123,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       id = @_pendingSticky()
       return unless id
 
-      for granule in @granules.results()
+      for granule in @granules().results()
         if granule.id == id
           @_pendingSticky(null)
 
@@ -182,7 +183,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       e.preventDefault() if isUp || isDown || isRemoval
 
       if stickied
-        granules = @granules.results()
+        granules = @granules().results()
         index = granules.indexOf(stickied)
         return if index == -1
 
@@ -221,7 +222,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @_map.fire 'edsc.stickygranule', granule: granule
 
     removeGranule: (granule, e) =>
-      granules = @granules.results()
+      granules = @granules().results()
       index = granules.indexOf(granule)
       newGranule = granules[index + 1]
       newGranule = granules[index - 1] unless newGranule?
@@ -230,11 +231,11 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
         @_map.fire('edsc.focusgranule', granule: newGranule)
       if granule == @stickied()
         @_map.fire('edsc.stickygranule', scroll: false, granule: newGranule ? null)
-      @granules.exclude(granule)
+      @granules().exclude(granule)
       @scrolled(null, target: document.getElementById('granules-scroll'))
 
     undoExcludeGranule: =>
-      granule = @granules.undoExclude()
+      granule = @granules().undoExclude()
 
       if @focused()
         @_map.fire('edsc.focusgranule', granule: granule)
@@ -245,8 +246,8 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       @removeGranule(@stickied(), e)
 
     clearExclusions: =>
-      @granules.excludedGranulesList([])
-      @granules.query.excludedGranules([])
+      @granules().excludedGranulesList([])
+      @granules().query.excludedGranules([])
 
     showGranuleDetails: (granule, event=null) =>
       @_map.fire 'edsc.stickygranule', granule: granule

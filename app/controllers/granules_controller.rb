@@ -15,6 +15,14 @@ class GranulesController < ApplicationController
     end
   end
 
+  def cwic
+    catalog_response = echo_client.get_cwic_granules(params['short_name'])
+    if catalog_response.success?
+      decorate_cwic_granules(catalog_response)
+    end
+    render json: catalog_response.body, status: catalog_response.status
+  end
+
   def show
     response = echo_client.get_granule(params[:id], {}, token)
 
@@ -32,6 +40,7 @@ class GranulesController < ApplicationController
 
   class GranuleUrlStreamer
     def initialize(params, token, url_mapper, echo_client, url_type=:download)
+      params.reject!{|p| ['datasource', 'short_name'].include? p}
       @params = params
       @token = token
       @url_mapper = url_mapper
@@ -115,6 +124,26 @@ class GranulesController < ApplicationController
       params.delete('cloud_cover') if min.empty? && max.empty?
     end
 
+    params.delete('datasource') if params['datasource']
+    params.delete('short_name') if params['short_name']
+
     params
+  end
+
+  def decorate_cwic_granules(response)
+    response.body['feed']['entry'].each do |cwic_granule|
+      # decorate CWIC granules to make them look like CMR granules
+      # Rename 'link' to 'links'
+      cwic_granule['links'] = cwic_granule.delete('link')
+      # Initialize browse_flag
+      cwic_granule['browse_flag'] = false
+      cwic_granule['links'].each do |link|
+        if link['rel'] == 'icon'
+          cwic_granule['browse_flag'] = true
+          break
+        end
+      end
+      #TODO other 'translations' here
+    end
   end
 end

@@ -39,6 +39,7 @@ class Retrieval < ActiveRecord::Base
 
     retrieval.collections.each do |collection|
       params = Rack::Utils.parse_nested_query(collection['params'])
+      params.reject!{|p| ['datasource', 'short_name'].include? p}
       params.merge!(page_size: 2000, page_num: 1)
 
       access_methods = collection['serviceOptions']['accessMethod']

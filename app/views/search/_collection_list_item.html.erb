@@ -1,4 +1,4 @@
-            <li data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}"
+            <li data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': canFocus(), 'master-overlay-hide-parent': canFocus()}"
                 class="panel-list-item"<%=raw ' draggable="true"' if is_project %>>
               <% if is_project %>
               <div class="panel-list-drag-handle"></div>
@@ -13,6 +13,9 @@
                   <!-- /ko -->
                   <!-- ko if: nrt -->
                   <a href="#" class="badge badge-nrt" data-tooltip="true" title="Near Real Time (NRT) Data"></a>
+                  <!-- /ko -->
+                  <!-- ko if: cwic() -->
+                  <a href="#" class="badge badge-cwic" data-tooltip="true" title="Int'l / Interagency Data"></a>
                   <!-- /ko -->
                 </div>
               <!-- ko if: thumbnail() -->
@@ -43,9 +46,6 @@
                 <!-- ko if: granuleDescription -->
                 <span class="panel-list-granule-description" data-bind="text: granuleDescription"></span>
                 <!-- /ko -->
-                <span data-bind="if: granulesModel.loadTime()" class="panel-list-muted">
-                  in <span data-bind="text: granulesModel.loadTime">0.000</span>s
-                </span>
               </p>
 
               <div class="panel-list-item-actions">

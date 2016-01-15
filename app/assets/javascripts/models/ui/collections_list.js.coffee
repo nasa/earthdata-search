@@ -3,7 +3,7 @@
 ns = @edsc.models.ui
 data = @edsc.models.data
 
-ns.CollectionsList = do ($=jQuery, document, config = @edsc.config, CollectionsModel=data.Collections, GranulesList=ns.GranulesList) ->
+ns.CollectionsList = do ($=jQuery, document, config = @edsc.config, CollectionsModel=data.Collections, GranulesList=ns.GranulesList, edscplugin=@edscplugin) ->
 
   class CollectionsList
     constructor: (@query, @collections, @project) ->
@@ -44,10 +44,13 @@ ns.CollectionsList = do ($=jQuery, document, config = @edsc.config, CollectionsM
 
     focusCollection: (collection, event=null) =>
       return true if $(event?.target).closest('a').length > 0
-      return false unless collection.has_granules
+      return false unless collection.canFocus()
       return false if @focused()?.collection.id == collection.id
 
       @focused(new GranulesList(collection))
+
+      return true
+
 
     canQueryCollectionSpatial: (collection) =>
       spatial = @query.spatial()

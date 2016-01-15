@@ -54,6 +54,32 @@ http_interactions:
   digest: 9ac93877927dc4b4872ae99d24c79079cf293162
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214605943-SCIOPS.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 13 Jan 2016 18:59:27 GMT
+  digest: b5c7e41c67b053b26b179892814464bd7ec6299a
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214607533-SCIOPS.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+  recorded_at: Wed, 13 Jan 2016 19:04:09 GMT
+  digest: 773f1a2581dbf71e513bbff27e62cb5e0b232ccf
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1580-NSIDCV0.echo10
     body:
       encoding: US-ASCII

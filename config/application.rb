@@ -52,10 +52,14 @@ module EarthdataSearchClient
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    config.is_plugin = Proc.new do |path|
+      !%w(.css .map).include?(File.extname(path)) && File.basename(path).start_with?('edsc-plugin.')
+    end
+
     # Precompile application.js, application.css, and any file that's not
-    config.assets.precompile += ['application.js', 'application.css', 'splash.css']
+    config.assets.precompile += ['application.js', 'application.css', 'splash.css', 'search.js', 'data_access.js', 'account.js']
     config.assets.precompile << Proc.new do |path|
-      !%w(.js .css .map).include?(File.extname(path))
+      !%w(.js .css .map).include?(File.extname(path)) || config.is_plugin.call(path)
     end
 
     config.log_tags = [:uuid]
@@ -100,6 +104,7 @@ module EarthdataSearchClient
     config.echo_env = 'ops'
     services = config.services
     config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
+    config.sit_urs_client_id = services['urs'][Rails.env.to_s][services['earthdata']['testbed']['urs_root']]
     config.cmr_tag_namespace = ENV['cmr_tag_namespace'] || 'edsc.'
     config.thumbnail_width = 75
   end

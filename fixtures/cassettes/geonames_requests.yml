@@ -35,6 +35,28 @@ http_interactions:
   digest: 3c71b8d7ec2f7aca39b6a81a2c0176185ba9fe78
 - request:
     method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=Minute+%28FIFE%29&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 09 Dec 2015 14:39:07 GMT
+  digest: 7e4591de8b9263ca607aab51daeba52e0144a40d
+- request:
+    method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=Minute+FIFE&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 09 Dec 2015 14:38:40 GMT
+  digest: 0a1043e81d21e227c953ec3216e58453fd924a60
+- request:
+    method: get
     uri: http://places.example.com/search?username=edsc&maxRows=5&q=NSIDC-0022&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
@@ -55,6 +77,28 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Fri, 16 Jan 2015 15:58:34 GMT
   digest: bd8021457700cd15a98be551b8c9dd0539999890
+- request:
+    method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=SPECTRAL%2FENGINEERING&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Sat, 05 Dec 2015 02:21:31 GMT
+  digest: 25de8f34e9214af545b965c92e1f6c53b959d0da
+- request:
+    method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=SPECTRAL%2FENGINEERING+x-ray&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Sat, 05 Dec 2015 02:23:16 GMT
+  digest: e2bc897baf06f37462037529a70cc36b016101bb
 - request:
     method: get
     uri: http://places.example.com/search?username=edsc&maxRows=5&q=Texas&orderby=relevance&isNameRequired=true&style=full&type=json
@@ -112,6 +156,28 @@ http_interactions:
   digest: ef6133bd0170b04a70aeb4ad9beaad45bf7414c8
 - request:
     method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=somestringthatmatchesnocollectio&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 13 Jan 2016 18:45:11 GMT
+  digest: 064f726e7bcd720bb716ae55e87eeff9e1391d00
+- request:
+    method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=somestringthatmatchesnocollection&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Sat, 05 Dec 2015 00:30:03 GMT
+  digest: 0cf4fc4d6bd05f82cfec258ba95cbbb8e6bded23
+- request:
+    method: get
     uri: http://places.example.com/search?username=edsc&maxRows=5&q=somestringthatmatchesnocollections&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
@@ -120,7 +186,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
   recorded_at: Fri, 16 Jan 2015 16:00:03 GMT
-  digest: 7d435d849fb072ffc0c8a2b5780af995da1a476c
+  digest: 478794d3601bcbeb34ce2d8bea6a218861527862
 - request:
     method: get
     uri: http://places.example.com/search?username=edsc&maxRows=5&q=texas&orderby=relevance&isNameRequired=true&style=full&type=json

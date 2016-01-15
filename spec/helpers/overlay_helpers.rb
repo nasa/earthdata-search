@@ -25,8 +25,16 @@ module Helpers
       have_css('.is-master-overlay-parent-hidden')
     end
 
+    def cwic_feature_facet
+      page.find('#master-overlay-parent .cwic-facet')
+    end
+
     def collection_results
       page.find('#collection-results')
+    end
+
+    def collection_results_header
+      page.find('#collection-results header h2')
     end
 
     def unfeatured_collection_results
@@ -49,6 +57,10 @@ module Helpers
       nth_panel(featured_collection_results, 1)
     end
 
+    def second_featured_collection
+      nth_panel(featured_collection_results, 2)
+    end
+
     def first_collapsed_featured_collection
       nth_ccol(featured_collapsed_collection_results, 1)
     end
@@ -67,6 +79,10 @@ module Helpers
 
     def nth_collection_result(n)
       nth_panel(unfeatured_collection_results, n)
+    end
+
+    def target_collection_result(col_name='15 Minute Stream Flow Data: USGS (FIFE)')
+      page.find("#collection-results-list .panel-list-item", text: col_name)
     end
 
     def collection_details
