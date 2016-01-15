@@ -15,6 +15,7 @@ describe "Timeline temporal display", reset: false do
   before :all do
     load_page :search, project: ['C179002914-ORNL_DAAC', 'C179003030-ORNL_DAAC'], view: :project
     wait_for_xhr
+    pan_to_time(max_date)
   end
 
   context "when there is no temporal range selected" do
@@ -55,6 +56,8 @@ describe "Timeline temporal display", reset: false do
       after(:all) { unset_temporal(0) }
 
       it "displays both the global and collection-specific temporal ranges" do
+        wait_for_xhr
+        page.evaluate_script("console.log('about to spec')")
         expect(page).to have_highlighted_selection(start_date, stop_date)
         expect(page).to have_highlighted_selection(ds_specific_date, max_date)
       end

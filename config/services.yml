@@ -5,16 +5,19 @@ earthdata:
     echo_root: "https://api.echo.nasa.gov"
     cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://api.echo.nasa.gov/opensearch"
+    cwic_root: "invalid_url"
   partnertest:
     urs_root: "https://uat.urs.earthdata.nasa.gov"
     echo_root: "https://api-test.echo.nasa.gov"
     cmr_root: "https://cmr.uat.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://api-test.echo.nasa.gov/opensearch/"
+    cwic_root: "invalid_url"
   testbed:
     urs_root: "https://sit.urs.earthdata.nasa.gov"
     echo_root: "https://testbed.echo.nasa.gov"
     cmr_root: "https://cmr.sit.earthdata.nasa.gov"
     opensearch_root: "https://api.echo.nasa.gov/opensearch"
+    cwic_root: "http://cwic.wgiss.ceos.org/"
 
 # Every (EDSC, URS) environment pair has a different client id.  Yay combinatorics.
 urs:

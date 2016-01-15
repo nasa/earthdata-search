@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Saving Projects', reset: false do
   context 'when adding a name to a project' do
-    let(:path) { '/search/collections?p=!C179003030-ORNL_DAAC!C179001887-SEDAC' }
+    let(:path) { '/search/collections?p=!C1000000016-LANCEMODIS!C1000000019-LANCEMODIS' }
     let(:query_re) { /^projectId=(\d+)$/ }
 
     before :all do
@@ -10,8 +10,8 @@ describe 'Saving Projects', reset: false do
       load_page :search
       login
 
-      first_collection_result.click_link "Add collection to the current project"
-      nth_collection_result(2).click_link "Add collection to the current project"
+      second_featured_collection.click_link "Add collection to the current project"
+      first_featured_collection.click_link "Add collection to the current project"
       click_link "Save your project"
       fill_in "workspace-name", with: "Test Project\t" #press tab to exit the input field
       click_save_project_name
@@ -45,7 +45,7 @@ describe 'Saving Projects', reset: false do
 
     context "when loading the named project" do
       before :each do
-        project = create_project
+        project = create_project(path)
 
         visit "/search/collections?projectId=#{project.to_param}"
         wait_for_xhr

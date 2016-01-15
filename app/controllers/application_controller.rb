@@ -70,6 +70,10 @@ class ApplicationController < ActionController::Base
     # Dont make a call to ECHO if we already know the user id
     return session[:user_id] if session[:user_id]
 
+    # Work around a problem where logging into sit from the test environment goes haywire
+    # because of the way tokens are set up
+    return 'edsc' if Rails.env.test? && echo_env != 'ops'
+
     response = echo_client.get_current_user(token).body
     session[:user_id] = response["user"]["id"] if response["user"]
     session[:user_id]
@@ -149,8 +153,11 @@ class ApplicationController < ActionController::Base
     logged_in = session[:access_token].present? &&
           session[:refresh_token].present? &&
           session[:expires_in].present? &&
-          session[:logged_in_at]
-
+                session[:logged_in_at]
+    if Rails.env.development?
+      Rails.logger.info "Access: #{session[:access_token]}"
+      Rails.logger.info "Refresh: #{session[:refresh_token]}"
+    end
     store_oauth_token() unless logged_in
     logged_in
   end

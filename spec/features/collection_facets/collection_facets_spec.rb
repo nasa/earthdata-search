@@ -3,6 +3,13 @@
 require "spec_helper"
 
 describe "Collection Facets", reset: false do
+  let(:first_project_facet) { "AMBS" }
+  let(:first_platform_facet) { "ADEOS-II" }
+  let(:first_instrument_facet) { "ADCP" }
+  let(:first_coordinate_facet) { "CALIPSO" }
+  let(:first_processing_level_facet) { "0" }
+  let(:eosdis_count) { "505" }
+
   before :all do
     Capybara.reset_sessions!
     load_page :search, facets: true
@@ -11,25 +18,25 @@ describe "Collection Facets", reset: false do
   context "facet listing" do
     it "shows the first Project facet" do
       find("h3.facet-title", text: 'Project').click
-      expect(page.text).to match('Project\s*\d* 2009_AN_NASA')
+      expect(page.text).to match("Project\s*\d* #{first_project_facet}")
       find("h3.facet-title", text: 'Project').click
     end
 
     it "shows the first Platforms facet" do
       find("h3.facet-title", text: 'Platform').click
-      expect(page.text).to match('Platform\s*\d* ADEOS')
+      expect(page.text).to match("Platform\s*\d* #{first_platform_facet}")
       find("h3.facet-title", text: 'Platform').click
     end
 
     it "shows the first Instruments facet" do
       find("h3.facet-title", text: 'Instrument').click
-      expect(page.text).to match('Instrument\s*\d* AIRS')
+      expect(page.text).to match("Instrument\s*\d* #{first_instrument_facet}")
       find("h3.facet-title", text: 'Instrument').click
     end
 
     it "shows the first 2D Coordinate Name facet" do
       find("h3.facet-title", text: '2D Coordinate Name').click
-      expect(page.text).to match('2D Coordinate Name\s*\d* CALIPSO')
+      expect(page.text).to match("2D Coordinate Name\s*\d* #{first_coordinate_facet}")
       find("h3.facet-title", text: '2D Coordinate Name').click
     end
 
@@ -77,18 +84,18 @@ describe "Collection Facets", reset: false do
 
     it "shows the first Processing Level facet" do
       find("h3.facet-title", text: 'Processing level').click
-      expect(page.text).to match('Processing level\s*\d* 0')
+      expect(page.text).to match("Processing level\s*\d* #{first_processing_level_facet}")
       find("h3.facet-title", text: 'Processing level').click
     end
 
     it "collapses and expands facet lists by type" do
-      expect(page).to have_css("#collapse3.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-hide")
 
       find("h3.facet-title", text: "Project").click
-      expect(page).to have_css("#collapse3.facets-list-show")
+      expect(page).to have_css("#collapse2.facets-list-show")
 
       find("h3.facet-title", text: "Project").click
-      expect(page).to have_css("#collapse3.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-hide")
     end
   end
 
@@ -125,7 +132,7 @@ describe "Collection Facets", reset: false do
       find("h3.facet-title", text: 'Project').click
       find("p.facets-item", text: "EOSDIS").click
       wait_for_xhr
-      within(:css, '#collapse3 .panel-body.facets') do
+      within(:css, '#collapse2 .panel-body.facets') do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
@@ -145,7 +152,7 @@ describe "Collection Facets", reset: false do
       find(".facets-item", text: "ESIP").click
       wait_for_xhr
       within(:css, '.project') do
-        expect(page).to have_content("EOSDIS 498 ESIP 498")
+        expect(page).to have_content("EOSDIS #{eosdis_count}")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("p.facets-item.selected")
@@ -196,13 +203,11 @@ describe "Collection Facets", reset: false do
     end
 
     it "updates the collection results" do
-      expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
       expect(page).to have_no_content("AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005")
 
       find("h3.facet-title", text: 'Project').click
       find(".project .facets-item", text: "AQUA").click
 
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
       expect(page).to have_content("AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005")
 
       find("h3.facet-title", text: 'Project').click
@@ -222,25 +227,25 @@ describe "Collection Facets", reset: false do
     end
 
     it "keeps facet lists collapsed after selecting and removing a facet" do
-      expect(page).to have_css("#collapse3.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-hide")
       find("h3.facet-title", text: "Project").click
-      expect(page).to have_css("#collapse3.facets-list-show")
+      expect(page).to have_css("#collapse2.facets-list-show")
 
       find("h3.facet-title", text: 'Platform').click
       within(:css, ".platform") do
         find("p.facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
-      expect(page).to have_css("#collapse3.facets-list-show")
+      expect(page).to have_css("#collapse2.facets-list-show")
 
       within(:css, ".platform") do
         find("p.facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
-      expect(page).to have_no_css(".factes-items.selected")
-      expect(page).to have_css("#collapse3.facets-list-show")
+      expect(page).to have_no_css(".facets-items.selected")
+      expect(page).to have_css("#collapse2.facets-list-show")
       find("h3.facet-title", text: "Project").click
-      expect(page).to have_css("#collapse3.facets-list-hide")
+      expect(page).to have_css("#collapse2.facets-list-hide")
 
       find("h3.facet-title", text: 'Platform').click
     end
@@ -267,9 +272,9 @@ describe "Collection Facets", reset: false do
 
   context "when applied multiple science keyword facets and search terms filter the collections list to no results" do
     before(:all) do
-      find(".facets-item", text: "BIOSPHERE").click
-      find(".facets-item", text: "SOILS").click
-      find(".facets-item", text: "SOIL MOISTURE/WATER CONTENT").click
+      find(".facets-item", text: "AGRICULTURE").click
+      find(".facets-item", text: "AGRICULTURAL CHEMICALS").click
+      find(".facets-item", text: "FERTILIZERS").click
       fill_in :keywords, with: "somestringthatmatchesnocollections"
       wait_for_xhr
     end
@@ -281,7 +286,7 @@ describe "Collection Facets", reset: false do
 
     it "continues to display applied science keyword facets in order" do
       within(:css, '#collapse1 .panel-body.facets') do
-        expect(page).to have_text("BIOSPHERE SOILS SOIL MOISTURE/WATER CONTENT")
+        expect(page).to have_text("AGRICULTURE AGRICULTURAL CHEMICALS FERTILIZERS")
       end
     end
   end
@@ -300,9 +305,7 @@ describe "Collection Facets", reset: false do
     end
 
     it "continues to display applied facets with counts of 0" do
-      within(:css, '#collapse3 .panel-body.facets') do
-        expect(page).to have_content("EOSDIS 0")
-      end
+      expect(page).to have_content("EOSDIS 0")
     end
   end
 
@@ -310,9 +313,9 @@ describe "Collection Facets", reset: false do
   context "when applying facets containing special characters" do
     before(:all) do
       load_page :search, facets: true
-      find(".facets-item", text: "SPECTRAL/ENGINEERING").click
+      fill_in :keywords, with: "C1214606011-SCIOPS"
       wait_for_xhr
-      find(".facets-item", text: "LAND USE/LAND COVER").click
+      find(".facet-term", text: "SPECTRAL/ENGINEERING").click
       wait_for_xhr
     end
 
@@ -321,11 +324,11 @@ describe "Collection Facets", reset: false do
     end
 
     it "does not display a duplicate entry with special characters escaped" do
-      expect(page).to have_no_content("LAND USE%2FLAND COVER")
+      expect(page).to have_no_content("SPECTRAL%2FENGINEERING")
     end
 
-    it "does displays the selected entry" do
-      expect(page).to have_content("LAND USE/LAND COVER")
+    it "displays the selected entry" do
+      expect(page).to have_content("SPECTRAL/ENGINEERING")
     end
   end
 
@@ -361,7 +364,7 @@ describe "Collection Facets", reset: false do
 
   context "when selecting a topic keyword" do
     before :all do
-      find(".facets-item", text: "ATMOSPHERE").click
+      find(".facet-term", text: /\AATMOSPHERE\z/).click
       wait_for_xhr
     end
 
@@ -375,39 +378,39 @@ describe "Collection Facets", reset: false do
 
     context "when selecting a term keyword" do
       before :all do
-        find(".facets-item", text: "AEROSOLS").click
+        first(".facet-term", text: /\AAEROSOLS\z/).click
         wait_for_xhr
       end
 
       after :all do
-        find(".facets-item", text: "AEROSOLS").click
+        first(".facet-term", text: /\AAEROSOLS\z/).click
         wait_for_xhr
       end
 
       it "displays variable_level_1 keywords" do
-        expect(page).to have_content("NITRATE PARTICLES")
+        expect(page).to have_content("AEROSOL BACKSCATTER")
       end
     end
 
     context "when the top level keyword is unchecked" do
       before :all do
-        find(".facets-item", text: "AEROSOLS").click
+        first(".facet-term", text: /\AAEROSOLS\z/).click
         wait_for_xhr
-        find(".facets-item", text: "NITRATE PARTICLES").click
+        find(".facets-item", text: "AEROSOL BACKSCATTER").click
         wait_for_xhr
-        find(".facets-item", text: "ATMOSPHERE").click
+        find(".facet-term", text: /\AATMOSPHERE\z/).click
         wait_for_xhr
       end
 
       after :all do
         reset_search
-        find(".facets-item", text: "ATMOSPHERE").click
+        find(".facet-term", text: /\AATMOSPHERE\z/).click
         wait_for_xhr
       end
 
       it "removes the children keywords" do
         expect(page).to have_no_content("AEROSOLS")
-        expect(page).to have_no_content("NITRATE PARTICLES")
+        expect(page).to have_no_content("AEROSOL BACKSCATTER")
       end
     end
   end
@@ -432,20 +435,20 @@ describe "Collection Facets", reset: false do
     end
   end
 
-  # EDSC-790
-  context "when no collections have the EARTH SCIENCE category facet" do
-    before :all do
-      login
-      load_page :search, facets: true, q: 'octs'
-    end
-
-    after :all do
-      Capybara.reset_sessions!
-      load_page :search, facets: true
-    end
-
-    it "displays the first available facet's topics" do
-      expect(page).to have_content("Ocean Optics")
-    end
-  end
+  # EDSC-790 - The metadata example was fixed
+  #context "when no collections have the EARTH SCIENCE category facet" do
+  #  before :all do
+  #    login
+  #    load_page :search, facets: true, q: 'octs'
+  #  end
+  #
+  #  after :all do
+  #    Capybara.reset_sessions!
+  #    load_page :search, facets: true
+  #  end
+  #
+  #  it "displays the first available facet's topics" do
+  #    expect(page).to have_content("Ocean Optics")
+  #  end
+  #end
 end

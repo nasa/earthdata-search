@@ -69,7 +69,7 @@ describe 'Collection details', reset: false do
 
   context "when selecting a collection with point spatial" do
     before :all do
-      load_page :search
+      load_page :search, q: 'C179003030-ORNL_DAAC'
       expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
       first_collection_result.click_link('View collection details')
     end
@@ -121,18 +121,19 @@ describe 'Collection details', reset: false do
     end
   end
 
-  context "when selecting a collection with line spatial" do
-    before :all do
-      load_page :search
-      fill_in 'keywords', with: 'NSIDC-0239'
-      expect(page).to have_content('SMEX02 Atmospheric Aerosol Optical Properties Data')
-      first_collection_result.click_link('View collection details')
-    end
-
-    it "displays the collection's spatial bounds on the map" do
-      expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
-    end
-  end
+  # FIXME: This collection no longer has line spatial
+  #context "when selecting a collection with line spatial" do
+  #  before :all do
+  #    load_page :search
+  #    fill_in 'keywords', with: 'NSIDC-0239'
+  #    expect(page).to have_content('SMEX02 Atmospheric Aerosol Optical Properties Data')
+  #    first_collection_result.click_link('View collection details')
+  #  end
+  #
+  #  it "displays the collection's spatial bounds on the map" do
+  #    expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
+  #  end
+  #end
 
   context "when selecting a collection with multiple temporal" do
     before :all do

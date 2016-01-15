@@ -551,6 +551,54 @@
         InRvcG9ueW1OYW1lIjoiQXN0aSIsImZjbCI6IlAiLCJjb250aW5lbnRDb2Rl
         IjoiRVUifV19
     http_version: 
+7e4591de8b9263ca607aab51daeba52e0144a40d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 09 Dec 2015 14:39:07 GMT
+      server:
+      - Apache/2.4.6 (Linux/SUSE)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
+0a1043e81d21e227c953ec3216e58453fd924a60:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 09 Dec 2015 14:38:40 GMT
+      server:
+      - Apache/2.4.6 (Linux/SUSE)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
 56670aeb2d38c533adb33b9e25c305a5eaf4889b:
   response:
     status:
@@ -593,6 +641,54 @@ bd8021457700cd15a98be551b8c9dd0539999890:
       - close
       transfer-encoding:
       - chunked
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
+25de8f34e9214af545b965c92e1f6c53b959d0da:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sat, 05 Dec 2015 02:21:39 GMT
+      server:
+      - Apache/2.2.15 (CentOS)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '37'
+      connection:
+      - close
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
+e2bc897baf06f37462037529a70cc36b016101bb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sat, 05 Dec 2015 02:23:25 GMT
+      server:
+      - Apache/2.2.15 (CentOS)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '37'
+      connection:
+      - close
       content-type:
       - application/json;charset=UTF-8
     body:
@@ -882,7 +978,55 @@ ef6133bd0170b04a70aeb4ad9beaad45bf7414c8:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
-7d435d849fb072ffc0c8a2b5780af995da1a476c:
+064f726e7bcd720bb716ae55e87eeff9e1391d00:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 13 Jan 2016 18:45:16 GMT
+      server:
+      - Apache/2.2.15 (CentOS)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '37'
+      connection:
+      - close
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
+0cf4fc4d6bd05f82cfec258ba95cbbb8e6bded23:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sat, 05 Dec 2015 00:30:11 GMT
+      server:
+      - Apache/2.2.15 (CentOS)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '37'
+      connection:
+      - close
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
+478794d3601bcbeb34ce2d8bea6a218861527862:
   response:
     status:
       code: 200

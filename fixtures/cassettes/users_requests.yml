@@ -17,4 +17,38 @@ http_interactions:
       - edsc
   recorded_at: Thu, 15 Jan 2015 21:08:40 GMT
   digest: 06f57afec45b734fc975b6fd35f65961b08077af
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/users/edsc/preferences.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 14 Jan 2016 16:00:18 GMT
+  digest: 1cf2af81db386d8a7a625f5b42b37901968e6bfc
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/users/edsc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 14 Jan 2016 16:00:24 GMT
+  digest: b9bdd35d4686ceac31f60d5952112afdc8d3153a
 recorded_with: VCR 2.6.0

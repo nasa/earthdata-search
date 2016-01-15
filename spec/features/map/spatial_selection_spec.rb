@@ -105,8 +105,8 @@ describe "Spatial" do
     it "filters collections using the selected point" do
       create_point(0, 0)
       wait_for_xhr
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_no_content("Background Air Pollution Monitoring")
+      expect(page).to have_content("Two-Level, Seasonal SOx/NOx ")
     end
 
     context "changing the point selection" do
@@ -118,7 +118,7 @@ describe "Spatial" do
       end
 
       it "updates the collection filters using the new point selection" do
-        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
+        expect(page).to have_content("IGBP/IGAC/GEIA Canada_CGEIC_2levSOxNOxGlobeEmm")
       end
     end
 
@@ -131,7 +131,7 @@ describe "Spatial" do
       end
 
       it "removes the spatial point collection filter" do
-        expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+        expect(page).to have_content("Background Air Pollution Monitoring")
       end
     end
   end
@@ -153,7 +153,7 @@ describe "Spatial" do
       end
 
       it "updates the collection filters using the new bounding box selection" do
-        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
+        expect(page).to have_content("IGBP/IGAC/GEIA Canada_CGEIC_2levSOxNOxGlobeEmm")
       end
     end
 
@@ -166,7 +166,7 @@ describe "Spatial" do
       end
 
       it "removes the spatial bounding box collection filter" do
-        expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+        expect(page).to have_content("Background Air Pollution Monitoring")
       end
     end
 
@@ -236,25 +236,26 @@ describe "Spatial" do
       before(:each) do
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
-        create_polygon([-74, 41], [-75, 41], [-75, -40], [-74, 40])
+        expect(page).to have_no_content("2004 Snapshot of bird species in the Antarctic - data from World Bird Database")
+        create_polygon([-87, -176], [-87, -166], [-79, -168], [-79, -179])
         wait_for_xhr
       end
 
       it "updates the collection filters using the new bounding box selection" do
-        expect(page).to have_content("A Global Database of Soil Respiration Data, Version 3.0")
+        expect(page).to have_content("2004 Snapshot of bird species in the Antarctic - data from World Bird Database")
       end
     end
 
     context "removing the bounding box selection" do
       before(:each) do
-        create_polygon([10, 10], [10, -10], [-10, -10], [-10, -10])
+        create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
         clear_spatial
         wait_for_xhr
       end
 
       it "removes the spatial bounding box collection filter" do
-        expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+        expect(page).to have_content("Background Air Pollution Monitoring")
       end
     end
   end

@@ -101,7 +101,7 @@ describe 'Address bar', reset: false do
 
     it 'filters collections using the condition' do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
+      expect(page).to have_content("Background Air Pollution")
     end
   end
 
@@ -163,7 +163,7 @@ describe 'Address bar', reset: false do
     before(:all) { visit '/search?fpj=EOSDIS' }
 
     it 'displays the selected facet condition' do
-      within(:css, '#collapse3 .panel-body.facets') do
+      within(:css, '#collapse2 .panel-body.facets') do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
@@ -199,12 +199,12 @@ describe 'Address bar', reset: false do
 
   context "when viewing a collection's granules" do
     before(:all) do
-      visit '/search/collections'
+      visit '/search/collections?q=C179003030-ORNL_DAAC'
       view_granule_results
     end
 
     it 'saves the selected collection in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&q=C179003030-ORNL_DAAC')
     end
   end
 
@@ -219,12 +219,12 @@ describe 'Address bar', reset: false do
 
   context "when viewing a collection's details" do
     before(:all) do
-      visit '/search/collections'
+      visit '/search/collections?q=C179003030-ORNL_DAAC'
       first_collection_result.click_link('View collection details')
     end
 
     it 'saves the selected collection in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&q=C179003030-ORNL_DAAC')
     end
   end
 
@@ -239,7 +239,7 @@ describe 'Address bar', reset: false do
 
   context "when viewing a granule's details" do
     before :all do
-      visit '/search/collections'
+      visit '/search/collections?q=C179003030-ORNL_DAAC'
       wait_for_xhr
       first_collection_result.click
       wait_for_xhr
@@ -248,7 +248,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the selected granule in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!&q=C179003030-ORNL_DAAC')
     end
   end
 
@@ -442,8 +442,8 @@ describe 'Address bar', reset: false do
   end
 
   context "Long URLs" do
-    let(:long_path) { '/search/collections?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC!C179002107-SEDAC' }
-    let(:longer_path) { long_path + '!C179003030-ORNL_DAAC' }
+    let(:long_path) { '/search/collections?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC&q=C179003030-ORNL_DAAC' }
+    let(:longer_path) { long_path.gsub('&', '!C179003030-ORNL_DAAC&') }
     let(:query_re) { /^projectId=(\d+)$/ }
 
     def query
@@ -459,7 +459,7 @@ describe 'Address bar', reset: false do
       before(:each) do
         visit long_path
         wait_for_xhr
-        first_collection_result.click_link('Add collection to the current project')
+        target_collection_result.click_link('Add collection to the current project')
         wait_for_xhr
       end
 
@@ -478,7 +478,7 @@ describe 'Address bar', reset: false do
         end
 
         it "keeps the URL the same but updates the remote store" do
-          expect(Project.find(project_id).path).to eql(longer_path + '&q=AST')
+          expect(Project.find(project_id).path).to eql(longer_path.gsub(/C179003030-ORNL_DAAC$/, 'AST'))
           expect(before_project_id).to eql(project_id)
         end
       end
@@ -495,7 +495,7 @@ describe 'Address bar', reset: false do
       end
 
       it "restores the persisted long path" do
-        expect(page).to have_text('You have 7 collections in your project.')
+        expect(page).to have_text('You have 6 collections in your project.')
       end
     end
   end

@@ -1,21 +1,42 @@
 import Plugin from './plugin.jsx';
 
-let registry = Symbol();
+let registry = '_edsc_registry';
+let loadingCount = '_edsc_loadingCount';
+let callbacks = '_edsc_callbacks';
 
 export default class PluginSupport {
   constructor() {
-    this[registry] = {
-      "edsc-plugin-example": new Plugin("file:///Users/pquinn/earthdata/search/edsc/plugins/example/dist/edsc-plugin-example.min.js")
-    };
+    this[registry] = {};
+    this[loadingCount] = 0;
+    this[callbacks] = [];
   }
-  load(name) {
-    this[registry][name].load();
+  register(name, url) {
+    this[registry][name] = new Plugin(name, url);
+    console.log(`Registered plugin: ${name} (${url})`);
+  }
+  load(name, callback, complete) {
+    let onComplete = () => {
+      this[loadingCount]--;
+      if (complete) complete();
+      let allCallbacks = this[callbacks];
+      for (let i = 0; i < allCallbacks.length; i++) {
+        allCallbacks[i]();
+      }
+    };
+    this[loadingCount]++;
+    this[registry][name].load(callback, onComplete);
   }
   unload(name) {
     this[registry][name].unload();
   }
   loaded(name, klass) {
     this[registry][name].pluginClass = klass;
+  }
+  hasPending() {
+    return this[loadingCount] !== 0;
+  }
+  onAllComplete(callback) {
+    this[callbacks].push(callback);
   }
 };
 

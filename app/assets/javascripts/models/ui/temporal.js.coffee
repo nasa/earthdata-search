@@ -138,32 +138,13 @@ ns.Temporal = do (ko,
       @start.date()? || @stop.date()?
 
     _computeRanges: ->
-      {start, stop} = this
-      result = []
-      return result unless @isSet()
-
-      if @isRecurring()
-        if start.date() && stop.date()
-          one_day = 1000 * 60 * 60 * 24
-          year = 2007 # Sunday is January 1st, not a leap year
-          #year = 2012 # Sunday is January 1st, leap year
-          start_in_year = new Date(start.date())
-          start_in_year.setUTCFullYear(year)
-          start_offset = start_in_year - Date.UTC(year, 0, 0)
-
-          stop_in_year = new Date(stop.date())
-          stop_in_year.setUTCFullYear(year)
-          stop_offset = stop_in_year - Date.UTC(year, 0, 0)
-
-          for year in [start.year()..stop.year()]
-            year_start = Date.UTC(year, 0, 0)
-            result.push [year_start + start_offset, year_start + stop_offset]
-      else
-        start_date = start.date() ? new Date(Date.UTC(1970, 0, 0))
-        stop_date = stop.date() ? new Date(config.present())
-        result.push [start_date, stop_date]
-
-      result
+      dateUtil.computeRanges(
+        startDate: @start.date(),
+        endDate: @stop.date(),
+        startYear: @start.year(),
+        endYear: @stop.year(),
+        recurring: @isRecurring(),
+        config.present())
 
     _computeYears: ->
       read: =>

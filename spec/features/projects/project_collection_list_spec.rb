@@ -3,9 +3,9 @@ require "spec_helper"
 describe "Project collection list", reset: true do
 
   before(:each) do
-    load_page :search
+    load_page :search, q: 'Minute (FIFE)'
     first_collection_result.click_link "Add collection to the current project"
-    nth_collection_result(10).click_link "Add collection to the current project"
+    second_collection_result.click_link "Add collection to the current project"
 
     collection_results.click_link "View Project"
   end

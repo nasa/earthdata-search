@@ -16,12 +16,15 @@ ns.Collections = do (ko
       collections = (Collection.findOrCreate({id: id}, query) for id in ids)
       needsLoad = (collection.id for collection in collections when !collection.hasAtomData())
 
+      awaitDatasources = ->
+        Collection.awaitDatasources collections, callback
+
       if needsLoad.length > 0
         new CollectionsModel(query).search {echo_collection_id: needsLoad}, (results) =>
           result.dispose() for result in results
-          callback(collections)
+          awaitDatasources()
       else
-        callback(collections)
+        awaitDatasources()
       null
 
 

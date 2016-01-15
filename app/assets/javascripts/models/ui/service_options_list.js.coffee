@@ -16,10 +16,17 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
         @activeIndex() == collections.length - 1 && !@needsContactInfo()
 
     showNext: =>
-      @activeIndex(@activeIndex() + 1)
+      @_moveActiveIndex(@activeIndex() + 1)
 
     showPrevious: =>
-      @activeIndex(@activeIndex() - 1)
+      @_moveActiveIndex(@activeIndex() - 1)
+
+    _moveActiveIndex: (newIndex) =>
+      if @showGranules()
+        @_currentCollection().notifyRenderers('endAccessPreview')
+      @activeIndex(newIndex)
+      if @showGranules()
+        @_currentCollection().notifyRenderers('startAccessPreview')
 
     submitRequest: =>
       $('.access-submit').prop('disabled', true)
@@ -33,21 +40,26 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
 
     showGranuleList: =>
       @showGranules(true)
+      @_currentCollection().notifyRenderers('startAccessPreview')
 
     hideGranuleList: =>
+      @_currentCollection().notifyRenderers('endAccessPreview')
       @showGranules(false)
 
     scrolled: (data, event) =>
       elem = event.target
       if (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))
         collection = @project.accessCollections()[@activeIndex()].collection
-        collection.granulesModel.loadNextPage()
+        collection.granuleDatasource().data().loadNextPage()
 
     downloadProject: ->
       $project = $('#data-access-project')
 
       $project.val(JSON.stringify(@project.serialize()))
       $('#data-access').submit()
+
+    _currentCollection: ->
+      @project.accessCollections()[@activeIndex()].collection
 
 
   exports = ServiceOptionsList

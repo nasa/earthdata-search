@@ -253,7 +253,8 @@
       if @_isValid(path, serialized)
         changed = urlUtil.saveState(path, serialized, !@historyChanged, @page.workspaceNameField.peek())
         @historyChanged = true if changed
-        @page.collections.isRelevant(true) if refreshColList
+        if refreshColList || path == '/search/collection-details' || path == '/search/granules' || path == '/search/project'
+          @page.collections.isRelevant(true)
 
     _textQuery: (serialized) ->
       (serialized.free_text || '') + (serialized.placename || '') + (serialized.q || '')

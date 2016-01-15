@@ -9,17 +9,27 @@ license = fs.readFileSync('./LICENSE')
 
 module.exports = {
   context: __dirname + '/..',
-  entry: "./edsc/search.js",
+  entry: {
+    "edsc-search": "./edsc/search.js",
+    "edsc-access": "./edsc/access.js",
+    "edsc-plugin.datasource.cwic": "./edsc/plugins/datasource/cwic/src/js/edsc-plugin.datasource.cwic.jsx",
+    "edsc-plugin.renderer.cwic": "./edsc/plugins/renderer/cwic/src/js/edsc-plugin.renderer.cwic.jsx",
+    "edsc-plugin.datasource.cmr": "./edsc/plugins/datasource/cmr/src/js/edsc-plugin.datasource.cmr.jsx",
+    "edsc-plugin.renderer.cmr": "./edsc/plugins/renderer/cmr/src/js/edsc-plugin.renderer.cmr.jsx"
+  },
   output: {
     path: "./edsc/dist",
-    filename: "edsc-search.min.js"
+    filename: "[name].min.js"
   },
   module: {
     loaders: [
-      { test: /\.css$/, loader: "style!css" },
-      { test: /\.less$/, loader: "style!css!less" },
+      { test: /\.use\.css$/, loader: "style/useable!css" },
+      { test: /\.use\.less$/, loader: "style/useable!css!less" },
+      { test: /\.css$/, exclude: /\.use\.css$/, loader: "style!css" },
+      { test: /\.less$/, exclude: /\.use\.less$/, loader: "style!css!less" },
       { test: /\.coffee$/, loader: "coffee" },
       { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee?literate" },
+      { test: /\.jsx$/, exclude: /(node_modules|bower_components)/, loader: 'babel?presets[]=es2015' },
       { test: /\.(gif|png)$/, loader: "url-loader?limit=100000" },
       { test: /\.hbs$/, loader: "handlebars-loader" },
       { test: /\.jpg$/, loader: "file-loader" },

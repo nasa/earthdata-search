@@ -12,6 +12,7 @@ module Echo
       clients << CmrClient.new(@config['cmr_root'], urs_client_id)
       clients << EchoClient.new(@config['echo_root'], urs_client_id)
       clients << UrsClient.new(@config['urs_root'], urs_client_id)
+      clients << CwicClient.new(@config['cwic_root'], urs_client_id)
       @clients = clients
     end
 

@@ -515,6 +515,129 @@ d696def6590ee7ba23a31d5b9a233227eeaefa09:
         Observing System, AQUA</LongName><Type>Not Specified</Type></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>miura.satoko@jaxa.jp</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>a91fd035-c9cf-4a8f-81da-bec73581a8dc</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-01
         16:32:49</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><OnlineAccessURLs><OnlineAccessURL><URL>http://www.eorc.jaxa.jp/en/about/distribution/index.html</URL></OnlineAccessURL></OnlineAccessURLs><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+b5c7e41c67b053b26b179892814464bd7ec6299a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 13 Jan 2016 18:59:27 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>CANEMRCCRSBAPMN</ShortName><VersionId>Not provided</VersionId><InsertTime>2001-07-25T00:00:00.000Z</InsertTime><LastUpdate>2015-12-02T00:00:00.000Z</LastUpdate><LongName>           Background Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         </LongName><DataSetId>           Background Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         </DataSetId><Description>This dataset includes measurements of greenhouse gases. Variables: CO2
+        (all), CH4, CFC's, N2O (Alert). The data covers the West Coast-Estevan Point,
+        the East Coast-Sable Island, and Arctic-Alert.
+
+                 This data is currently applied to the analysis of temporal trends in
+        greenhouse gases and atmospheric processes related to sources and sinks to
+        better predict climate impacts and changes.
+
+        Spatial Data Organization Information -
+
+            Indirect Spatial Reference:
+            Direct Spatial Reference: Point (Lat./Long. Coordinates)
+        Spatial Reference Information -
+        Horizontal Coordinate System Definition -
+        Planar -
+
+
+
+
+            Planar Coordinate Encoding Method:
+            Coordinate Representation:
+             Abscissa Resolution:
+             Ordinate Resolution:
+            Distance and Bearing Representation:
+             Distance Resolution:
+             Bearing Resolution:
+             Bearing Units:
+             Bearing Reference Direction:
+             Bearing Reference Meridian:
+            Planar Distance Units:
+
+           Geodetic Model:
+             Horizontal Datum Name:
+            Ellipsoid Name:
+            Semi-major Axis:
+            Denominator of Flattening Ratio:</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In Work</CollectionState><Temporal><RangeDateTime><BeginningDateTime>1975-01-01T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>TECHNICAL CONTACT</Role><OrganizationEmails><Email>kaz.higuchi@ec.gc.ca</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>KAZ</FirstName><LastName>HIGUCHI</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AIR QUALITY</TermKeyword><VariableLevel1Keyword><Value>TROPOSPHERIC OZONE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword><VariableLevel1Keyword><Value>TRACE GASES/TRACE SPECIES</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><AdditionalAttributes><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-02 12:24:59</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><OnlineResources><OnlineResource><URL>http://geodiscover.cgdi.ca/</URL><Description>
+                 GeoConnections Discovery Portal. Canada's IDN Node.
+              </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-135</WestBoundingCoordinate><NorthBoundingCoordinate>82</NorthBoundingCoordinate><EastBoundingCoordinate>-59</EastBoundingCoordinate><SouthBoundingCoordinate>43</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
+773f1a2581dbf71e513bbff27e62cb5e0b232ccf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 13 Jan 2016 19:04:09 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>Canada_CFS_NatlForestPhotos</ShortName><VersionId>Not provided</VersionId><InsertTime>2001-09-26T00:00:00.000Z</InsertTime><LastUpdate>2015-12-02T00:00:00.000Z</LastUpdate><LongName>           Canadian National Forestry Photograph Collection - Atlantic and Petawawa Components         </LongName><DataSetId>           Canadian National Forestry Photograph Collection - Atlantic and Petawawa Components         </DataSetId><Description>Forestry photographs of experimental trials, properties, and prominent
+        historical figures.  The collection consists of several thousand photos of
+        historical significance, most in good condition.
+
+                 To document significant locations, tree species, insect and disease
+        conditions, and people in the Canadian forestry domain.
+
+        Spatial Data Organization Information -
+
+            Indirect Spatial Reference:
+            Direct Spatial Reference:
+        Spatial Reference Information -
+             Horizontal Coordinate System Definition -
+
+        Planar -
+
+
+
+
+            Planar Coordinate Encoding Method:
+            Coordinate Representation:
+             Abscissa Resolution:
+             Ordinate Resolution:
+            Distance and Bearing Representation:
+             Distance Resolution:
+             Bearing Resolution:
+             Bearing Units:
+             Bearing Reference Direction:
+             Bearing Reference Meridian:
+            Planar Distance Units:
+
+           Geodetic Model:
+             Horizontal Datum Name:
+            Ellipsoid Name:
+            Semi-major Axis:
+            Denominator of Flattening Ratio:
+
+        Fees: Please consult distributor.  Professional photographic reproduction
+        fees apply.</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In Work</CollectionState><Temporal><RangeDateTime><BeginningDateTime>1907-01-02T00:00:00.000Z</BeginningDateTime><EndingDateTime>1952-08-11T00:00:00.000Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>DIF AUTHOR</Role><OrganizationEmails><Email>csimpson@nrcan.gc.ca</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>CAROLINE</FirstName><LastName>SIMPSON</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>BIOSPHERE</TopicKeyword><TermKeyword>TERRESTRIAL ECOSYSTEMS</TermKeyword><VariableLevel1Keyword><Value>FORESTS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>HUMAN DIMENSIONS</TopicKeyword><TermKeyword>ENVIRONMENTAL GOVERNANCE/MANAGEMENT</TermKeyword><VariableLevel1Keyword><Value>LAND MANAGEMENT</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND USE/LAND COVER CLASSIFICATION</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND PRODUCTIVITY</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND RESOURCES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND USE CLASSES</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><AdditionalAttributes><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-02 12:29:47</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><OnlineResources><OnlineResource><URL>http://geodiscover.cgdi.ca/</URL><Description>
+                 GeoConnections Discovery Portal. Canada's IDN Node.
+              </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-95</WestBoundingCoordinate><NorthBoundingCoordinate>61</NorthBoundingCoordinate><EastBoundingCoordinate>-52</EastBoundingCoordinate><SouthBoundingCoordinate>44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
 a8625406c735635e8f0d54555083fa434ca22391:
   response:
     status:

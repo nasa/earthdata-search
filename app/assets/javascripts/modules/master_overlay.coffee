@@ -52,8 +52,17 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     _hideNodes: ($nodes) ->
       fn = =>
         $nodes.hide()
+        $nodes.filter(@scope('plugin')).remove()
         @_triggerStateChange()
       @_levelTimeout = window.setTimeout(fn, config.defaultAnimationDurationMs) if $nodes.size() > 0
+
+    pluginPushMaster: (dom, options) ->
+      $(dom).addClass(@scope('plugin')).addClass(@scope('hide-self'))
+      @current().after(dom)
+      @forward(title)
+
+    pluginPopMaster: (dom, options) ->
+      @back()
 
     hideLevel: (level) ->
       fn = =>
@@ -78,7 +87,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     _triggerStateChange: ->
       @root.trigger('edsc.olstatechange')
 
-    forward: (source) ->
+    forward: ->
       @level(Math.min(@level() + 1, @children().length))
 
     back: ->

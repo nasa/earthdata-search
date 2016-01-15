@@ -15,13 +15,13 @@ describe "Granule filter tracking", reset: false do
 
   context 'when granule filters have been set for a collection' do
     before :all do
-      load_page :search, project: ['C179003030-ORNL_DAAC'], queries: [nil, {browse_only: true}]
+      load_page :search, q: 'C179003030-ORNL_DAAC', project: ['C179003030-ORNL_DAAC'], queries: [nil, {browse_only: true}]
       wait_for_xhr
     end
 
     context 'completely removing the collection from all views' do
       before :all do
-        first_collection_result.click_link "Remove collection from the current project"
+        target_collection_result.click_link "Remove collection from the current project"
         fill_in :keywords, with: 'asdfasdfasdfasdfasdf'
         wait_for_xhr
       end
@@ -51,13 +51,13 @@ describe "Granule filter tracking", reset: false do
 
   context 'when no granule filters have been set for a collection' do
     before :all do
-      load_page :search, project: ['C179003030-ORNL_DAAC']
+      load_page :search, q: 'C179003030-ORNL_DAAC', project: ['C179003030-ORNL_DAAC']
       wait_for_xhr
     end
 
     context 'completely removing the collection from all views' do
       before :all do
-        first_collection_result.click_link "Remove collection from the current project"
+        target_collection_result.click_link "Remove collection from the current project"
         fill_in :keywords, with: 'asdfasdfasdfasdfasdf'
         wait_for_xhr
       end

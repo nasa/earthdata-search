@@ -60,7 +60,16 @@ ns.SearchPage = do (ko
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
 
+      @project.focus.subscribe(@_updateFocusRenderState)
+
       new StateManager(this).monitor()
+
+    _updateFocusRenderState: (newFocus) =>
+      if @_focus
+        @_focus.notifyRenderers('endSearchFocus')
+      @_focus = newFocus
+      if @_focus
+        @_focus.notifyRenderers('startSearchFocus')
 
     clearFilters: =>
       @query.clearFilters()
