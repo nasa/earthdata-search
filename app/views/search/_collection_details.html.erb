@@ -56,7 +56,7 @@
             <dt>API Endpoints:</dt>
             <dd>
             <!-- ko with: $root.ui.collectionsList.selected() -->
-              <!-- ko if: has_granules -->
+              <!-- ko if: granuleDatasourceName() == "cmr" -->
                 <a class="endpoint-label" data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a>
               <!-- /ko -->
 
