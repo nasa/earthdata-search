@@ -25,7 +25,12 @@ class ApplicationController < ActionController::Base
 
   def echo_env
     @echo_env = session[:echo_env] unless session[:echo_env].nil?
-    @echo_env ||= request.headers['edsc-echo-env'] || request.query_parameters.delete('echo_env') || Rails.configuration.echo_env || 'ops'
+    @echo_env ||= request.headers['edsc-echo-env'] || request.query_parameters['echo_env']
+    if request.query_parameters['echo_env'] && !(['testbed', 'partnertest', 'ops'].include? request.query_parameters['echo_env'])
+      @echo_env = Rails.configuration.echo_env
+    else
+      @echo_env ||= Rails.configuration.echo_env || 'ops'
+    end
   end
   helper_method :echo_env
 
