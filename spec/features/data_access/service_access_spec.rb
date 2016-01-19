@@ -36,6 +36,7 @@ describe 'Services Access', reset: false do
 
         # this test and the one below are quite flaky.
         it 'displays a progress bar while the service is processing', intermittent: 2 do
+          # sleep 10
           expect(page).to have_content('Progress: 0 of 1 items processed (0.00%)')
           expect(page).to have_css('div.progress-bar')
 
