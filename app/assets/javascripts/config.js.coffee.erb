@@ -10,15 +10,15 @@
   <% end %>
   <% end %>
   query = window.location.search
-  match = /echo_env=(\w+)/.exec(query)
-  echo_env = if match then match[1] else '<%= Rails.configuration.echo_env %>'
+  match = /cmr_env=(\w+)/.exec(query)
+  cmr_env = if match then match[1] else '<%= Rails.configuration.cmr_env %>'
 
-  if echo_env == 'partnertest'
-    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['partnertest']['echo_root'] %>/browse-scaler/browse_images"
-  else if echo_env == 'testbed'
-    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['testbed']['echo_root'] %>/browse-scaler/browse_images"
+  if cmr_env == 'uat'
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['uat']['echo_root'] %>/browse-scaler/browse_images"
+  else if cmr_env == 'sit'
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['sit']['echo_root'] %>/browse-scaler/browse_images"
   else
-    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['ops']['echo_root'] %>/browse-scaler/browse_images"
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['prod']['echo_root'] %>/browse-scaler/browse_images"
 
   <% if Rails.env.test? %>
 
