@@ -18,25 +18,25 @@ class ApplicationController < ActionController::Base
   def echo_client
     if @echo_client.nil?
       service_configs = Rails.configuration.services
-      @echo_client = Echo::Client.client_for_environment(echo_env, Rails.configuration.services)
+      @echo_client = Echo::Client.client_for_environment(cmr_env, Rails.configuration.services)
     end
     @echo_client
   end
 
-  def echo_env
-    @echo_env = session[:echo_env] unless session[:echo_env].nil?
-    @echo_env ||= request.headers['edsc-echo-env'] || request.query_parameters['echo_env']
-    if request.query_parameters['echo_env'] && !(['testbed', 'partnertest', 'ops'].include? request.query_parameters['echo_env'])
-      @echo_env = Rails.configuration.echo_env
+  def cmr_env
+    @cmr_env = session[:cmr_env] unless session[:cmr_env].nil?
+    @cmr_env ||= request.headers['edsc-echo-env'] || request.query_parameters['cmr_env']
+    if request.query_parameters['cmr_env'] && !(['sit', 'uat', 'prod'].include? request.query_parameters['cmr_env'])
+      @cmr_env = Rails.configuration.cmr_env
     else
-      @echo_env ||= Rails.configuration.echo_env || 'ops'
+      @cmr_env ||= Rails.configuration.cmr_env || 'prod'
     end
   end
-  helper_method :echo_env
+  helper_method :cmr_env
 
   def set_env_session
-    session[:echo_env] = nil
-    session[:echo_env] = echo_env
+    session[:cmr_env] = nil
+    session[:cmr_env] = cmr_env
   end
 
   def refresh_urs_if_needed
@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
 
     # Work around a problem where logging into sit from the test environment goes haywire
     # because of the way tokens are set up
-    return 'edsc' if Rails.env.test? && echo_env != 'ops'
+    return 'edsc' if Rails.env.test? && cmr_env != 'prod'
 
     response = echo_client.get_current_user(token).body
     session[:user_id] = response["user"]["id"] if response["user"]

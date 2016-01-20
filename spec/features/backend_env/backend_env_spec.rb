@@ -2,9 +2,9 @@ require "spec_helper"
 
 describe "Backend environments", reset: false do
 
-  context "Setting echo_env to 'ops'" do
+  context "Setting cmr_env to 'prod'" do
     before :all do
-      load_page :search, env: :ops, q: 'C179003030-ORNL_DAAC'
+      load_page :search, env: :prod, q: 'C179003030-ORNL_DAAC'
       wait_for_xhr
     end
 
@@ -13,7 +13,7 @@ describe "Backend environments", reset: false do
     end
   end
 
-  context "Setting echo_env to 'partnertest'" do
+  context "Setting cmr_env to 'uat'" do
     before :all do
       load_page :search, env: :uat, q: 'C446457-ORNL_DAAC'
       wait_for_xhr
@@ -24,7 +24,7 @@ describe "Backend environments", reset: false do
     end
   end
 
-  context "Setting echo_env to 'testbed'" do
+  context "Setting cmr_env to 'sit'" do
     before :all do
       load_page :search, env: :sit, q: 'C1000000257-DEV07'
       wait_for_xhr
@@ -35,7 +35,7 @@ describe "Backend environments", reset: false do
     end
   end
 
-  context "Without specifying echo_env query param" do
+  context "Without specifying cmr_env query param" do
     before :all do
       load_page :search, q: 'C179003030-ORNL_DAAC'
       wait_for_xhr
@@ -46,7 +46,7 @@ describe "Backend environments", reset: false do
     end
   end
 
-  context "Setting echo_env value to an invalid value" do
+  context "Setting cmr_env value to an invalid value" do
     before :all do
       load_page :search, env: 'invalid', q: 'C179003030-ORNL_DAAC'
       wait_for_xhr
