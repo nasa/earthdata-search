@@ -77,9 +77,9 @@ EarthdataSearchClient::Application.configure do
   config.feedback_url = 'https://fbm.uat.earthdata.nasa.gov/for/EdSearch_SIT/feedback.js'
 
   config.url_limit = 2000
-  config.echo_env = 'testbed'
+  config.cmr_env = 'sit'
   services = config.services
-  config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
+  config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]
 
   # This is also the client ID sent to OpenSearch. It is kept the same since the OpenSearch endpoint ultimately
   # talks to ECHO/CMR.
