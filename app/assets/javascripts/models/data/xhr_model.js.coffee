@@ -126,6 +126,8 @@ ns.XhrModel = do (ko
             else
               @hasNextPage(fetched < hits)
             @hitsEstimated(false)
+          else if data.feed.totalResults
+            hits = data.feed.totalResults
 
           @hits(Math.max(hits, fetched))
 
