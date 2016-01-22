@@ -193,10 +193,13 @@ class DataAccessController < ApplicationController
 
   def get_downloadable_access_methods(collection_id, granules, granule_params, hits)
     result = []
-    downloadable = granules.select {|granule| granule['online_access_flag'] == 'true' || granule['online_access_flag'] == true}
+    opendap_config = OpendapConfiguration.find(collection_id)
+    if opendap_config.formats.present?
+      downloadable = granules
+    else
+      downloadable = granules.select {|granule| granule['online_access_flag'] == 'true' || granule['online_access_flag'] == true}
+    end
     if downloadable.size > 0
-      opendap_config = OpendapConfiguration.find(collection_id)
-
       spatial = granule_params['bounding_box'] || granule_params['polygon'] || granule_params['point'] || granule_params['line']
 
       mbr = nil
