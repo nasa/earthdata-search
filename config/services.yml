@@ -64,7 +64,23 @@ measures_defaults: &measures_defaults
 podaac_defaults: &podaac_defaults
   <<: *opendap_defaults
   title_attribute: long_name
+larc_defaults: &larc_defaults
+  <<: *opendap_defaults
+  latitude_dim_name: Latitude
+  longitude_dim_name: Longitude
 opendap:
+  C191855458-LARC:
+    <<: *larc_defaults
+    granule_url_template:
+      https://opendap.larc.nasa.gov/opendap/SortByDirectory/MOPITT/MOP03J.006/{od_time_start_dot:4}/{producer_granule_id}{od_ext}{+od_params}
+    ddx_url:
+      https://opendap.larc.nasa.gov/opendap/SortByDirectory/MOPITT/MOP03J.006/2012.06.18/MOP03J-20120618-L3V4.2.3.he5.ddx
+  C7085910-LARC_ASDC:
+    <<: *larc_defaults
+    granule_url_template:
+      https://opendap.larc.nasa.gov/opendap/SortByDirectory/CERES/EBAF/TOA_Edition2.8/{producer_granule_id}{od_ext}{+od_params}
+    ddx_url:
+      https://opendap.larc.nasa.gov/opendap/SortByDirectory/CERES/EBAF/TOA_Edition2.8/CERES_EBAF-TOA_Edition2.8_200003-201310.nc.ddx
   C183451149-GSFCS4PA:
     <<: *acdisc_defaults
     granule_url_template:
