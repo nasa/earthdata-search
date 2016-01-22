@@ -98,6 +98,7 @@ class CollectionsController < ApplicationController
       # 'category' => ['Category Keyword', 'science_keywords[0][category][]'],
       'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
       'term' => ['Term Keyword', 'science_keywords[0][term][]'],
+      'data_center' => ['Organization', 'data_center[]'],
       'variable_level_1' => ['Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'],
       'variable_level_2' => ['Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'],
       'variable_level_3' => ['Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'],

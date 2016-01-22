@@ -32,8 +32,8 @@
                   <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' -->
                   v<span data-bind="text: version_id"></span>
                   <!-- /ko -->
-                  <!-- ko if: $data.archive_center -->
-                  - <span data-bind="text: archive_center"></span>
+                  <!-- ko if: $data.org() -->
+                  - <span data-bind="text: org()"></span>
                   <!-- /ko -->
                 </span>
               </p>
