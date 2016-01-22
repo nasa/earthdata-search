@@ -164,6 +164,12 @@ ns.Collection = do (ko
           return openSearchKeyToEndpoint[v]?(this) if k == "#{config.cmrTagNamespace}opensearch"
       return null
 
+    org: ->
+      if @organizations?.length > 0
+        @organizations[0]
+      else
+        @archive_center
+
     fromJson: (jsonObj) ->
       @json = jsonObj
 
