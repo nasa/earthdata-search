@@ -126,7 +126,7 @@ ns.XhrModel = do (ko
             else
               @hasNextPage(fetched < hits)
             @hitsEstimated(false)
-          else if data.feed.totalResults
+          else if data.feed?.totalResults
             # cwic granule search response doesn't have a 'cmr-hits' header.
             hits = parseInt(data.feed.totalResults, 10)
             @hasNextPage(parseInt(data.feed.Query.startPage, 10) * parseInt(data.feed.Query.count, 10) < hits)
