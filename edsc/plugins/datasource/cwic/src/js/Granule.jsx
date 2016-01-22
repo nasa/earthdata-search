@@ -8,7 +8,6 @@ let CwicGranule = (function() {
   }
 
   CwicGranule.prototype.edsc_browse_url = function(w, h) {
-    console.log(this);
     // arguments w, h are not currently used.
     for (var i = 0; i < this.links.length; i ++) {
       if (this.links[i].title == 'Browser') {
