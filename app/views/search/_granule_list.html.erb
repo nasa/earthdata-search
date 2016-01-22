@@ -68,7 +68,9 @@
             <% end %>
           </p>
 
-          <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
+          <!--ko ifnot: $data.collection.cwic()-->
+            <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
+          <!--/ko-->
 
           <!-- /ko -->
 
