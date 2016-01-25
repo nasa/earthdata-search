@@ -74,6 +74,17 @@ let CwicGranules = (function() {
     }
   };
 
+  CwicGranules.prototype._decorateNextPage = function(params, results) {
+    if (results.length > 0) {
+      params.startPage = 2;
+      if (results.length > 0) {
+        return params.pageCount = results.length;
+      }
+    } else {
+      return params.startPage = 1;
+    }
+  };
+
   CwicGranules.prototype.loadNextPage = function(params, callback) {
     var results;
     if (params == null) {
@@ -82,11 +93,9 @@ let CwicGranules = (function() {
     if (callback == null) {
       callback = null;
     }
-
-    params.startPage = this.startPage + 1;
-    params.pageCount = this.pageCount;
     if (this.hasNextPage() && !this.isLoading()) {
       results = this.results();
+      this._decorateNextPage(params, results);
       return this._loadAndSet(params, results, callback);
     }
   };
