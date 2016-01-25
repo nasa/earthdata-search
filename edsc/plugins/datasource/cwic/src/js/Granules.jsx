@@ -16,7 +16,8 @@ let CwicGranules = (function() {
     CwicGranules.__super__.constructor.apply(this, Array.prototype.slice.call(arguments));
     this.path = '/granules/cwic.json';
     this.startPage = 1;
-    this.pageCount = 10;
+    this.pageCount = 20;
+    this.excludedGranulesList = ko.observableArray();
   }
 
   CwicGranules.prototype.params = function() {
@@ -52,9 +53,6 @@ let CwicGranules = (function() {
     if ((_ref = this.query) != null ? _ref.isValid() : void 0) {
       results = [];
       params = this.params();
-      delete params.page_size;
-      params.pageCount = this.pageCount;
-      params.startPage = this.startPage;
       query = jQuery.param(params);
       if (needsLoad && this._prevQuery !== query) {
         this.excludedGranulesList([]);
@@ -69,9 +67,54 @@ let CwicGranules = (function() {
         }
         this._resultsComputed = true;
         this.isLoaded(false);
+        delete params.page_size;
+        delete params.sort_key;
+        delete params.echo_collection_id;
+        params.pageCount = this.pageCount;
+        params.startPage = this.startPage;
         return this._load(params, current, callback);
       }
     }
+  };
+
+  CwicGranules.prototype.exclude = function(granule) {
+    var currentQuery, index, results;
+    results = this.results();
+    index = results.indexOf(granule);
+    results.splice(index, 1);
+    this.results(results);
+    this.hits(this.hits() - 1);
+    currentQuery = jQuery.param(this.params());
+    this.excludedGranulesList.push({
+      index: index,
+      granule: granule
+    });
+    this.query.excludedGranules.push(granule.id);
+    return this._prevQuery = jQuery.param(this.params());
+  };
+
+  CwicGranules.prototype.undoExclude = function() {
+    var afterValues, beforeValues, currentQuery, granule, granules, index, newGranule, newList;
+    newGranule = this.excludedGranulesList.pop();
+    index = newGranule.index;
+    granule = newGranule.granule;
+    granules = this.results();
+    if (index === 0) {
+      granules.unshift(granule);
+      newList = granules;
+    } else {
+      beforeValues = granules.splice(0, index);
+      afterValues = granules.splice(index - 1);
+      newList = beforeValues.concat(granule, afterValues);
+    }
+    this.results(newList);
+    this.hits(this.hits() + 1);
+    currentQuery = jQuery.param(this.params());
+    this.query.excludedGranules.pop();
+    if (this._prevQuery === currentQuery) {
+      this._prevQuery = jQuery.param(this.params());
+    }
+    return granule;
   };
 
   CwicGranules.prototype._decorateNextPage = function(params, results) {
