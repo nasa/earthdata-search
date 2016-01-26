@@ -1,18 +1,18 @@
 earthdata:
-  # Endpoints for Earthdata.  These must remain in sync, because for instance ECHO SIT can't accept tokens from URS ops
-  ops:
+  # Endpoints for Earthdata.  These must remain in sync, because for instance ECHO SIT can't accept tokens from URS prod
+  prod:
     urs_root: "https://urs.earthdata.nasa.gov"
     echo_root: "https://api.echo.nasa.gov"
     cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://api.echo.nasa.gov/opensearch"
     cwic_root: "invalid_url"
-  partnertest:
+  uat:
     urs_root: "https://uat.urs.earthdata.nasa.gov"
     echo_root: "https://api-test.echo.nasa.gov"
     cmr_root: "https://cmr.uat.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://api-test.echo.nasa.gov/opensearch/"
     cwic_root: "invalid_url"
-  testbed:
+  sit:
     urs_root: "https://sit.urs.earthdata.nasa.gov"
     echo_root: "https://testbed.echo.nasa.gov"
     cmr_root: "https://cmr.sit.earthdata.nasa.gov"

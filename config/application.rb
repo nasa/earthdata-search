@@ -101,10 +101,10 @@ module EarthdataSearchClient
 
     config.services = YAML.load_file(Rails.root.join('config/services.yml'))
     config.gibs = JSON.parse(IO.read(Rails.root.join('config/gibs.json')))
-    config.echo_env = 'ops'
+    config.cmr_env = 'prod'
     services = config.services
-    config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
-    config.sit_urs_client_id = services['urs'][Rails.env.to_s][services['earthdata']['testbed']['urs_root']]
+    config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]
+    config.sit_urs_client_id = services['urs'][Rails.env.to_s][services['earthdata']['sit']['urs_root']]
     config.cmr_tag_namespace = ENV['cmr_tag_namespace'] || 'edsc.'
     config.thumbnail_width = 75
   end

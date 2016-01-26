@@ -9,7 +9,7 @@ class CollectionsController < ApplicationController
     # FIXME Termporary workaround for CMR-2038 and CMR-2049
     # Fire two requests to CMR. One to retrieve hierarchical facets, the other to get non-hierarchical facets, in parallel.
     service_configs = Rails.configuration.services
-    service_config = service_configs['earthdata'][echo_env]
+    service_config = service_configs['earthdata'][cmr_env]
     urs_client_id = service_configs['urs'][Rails.env.to_s][service_config['urs_root']]
     h_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
     nh_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
@@ -41,7 +41,7 @@ class CollectionsController < ApplicationController
     use_collection(params[:id])
 
     if response.success?
-      respond_with(CollectionDetailsPresenter.new(response.body.first, params[:id], token, echo_env), status: response.status)
+      respond_with(CollectionDetailsPresenter.new(response.body.first, params[:id], token, cmr_env), status: response.status)
     else
       respond_with(response.body, status: response.status)
     end

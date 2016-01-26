@@ -41,7 +41,7 @@ describe 'Collection CWIC Filtering', reset: false do
     end
 
     it "has its selection state saved in the URL", acceptance: true do
-      expect(page).to have_query_string("echo_env=testbed&ff=Int'l+%2F+Interagency")
+      expect(page).to have_query_string("cmr_env=sit&ff=Int'l+%2F+Interagency")
     end
 
     context 'and de-selecting the CWIC filter' do
@@ -60,7 +60,7 @@ describe 'Collection CWIC Filtering', reset: false do
       end
 
       it 'removes its selection state from the URL', acceptance: true do
-        expect(page).to have_query_string("echo_env=testbed")
+        expect(page).to have_query_string("cmr_env=sit")
       end
     end
   end
