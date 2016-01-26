@@ -7,7 +7,7 @@ class CollectionExtra < ActiveRecord::Base
   store :searchable_attributes, coder: JSON
   store :orbit, coder: JSON
 
-  def self.build_echo_client(env=(@echo_env || Rails.configuration.echo_env))
+  def self.build_echo_client(env=(@cmr_env || Rails.configuration.cmr_env))
     Echo::Client.client_for_environment(env, Rails.configuration.services)
   end
 

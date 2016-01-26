@@ -93,7 +93,7 @@ class Retrieval < ActiveRecord::Base
 
   def get_collection_id(id)
     result = nil
-    client = Echo::Client.client_for_environment(@echo_env || 'ops', Rails.configuration.services)
+    client = Echo::Client.client_for_environment(@cmr_env || 'prod', Rails.configuration.services)
     response = client.get_collections(echo_collection_id: [id])
     if response.success?
       entry = response.body['feed']['entry'].first

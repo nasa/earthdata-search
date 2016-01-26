@@ -15,7 +15,7 @@ class OfflineTemplate < AbstractController::Base
   # Define additional helpers
   helper_method :protect_against_forgery?
   helper_method :logged_in?
-  helper_method :echo_env
+  helper_method :cmr_env
 
   # override the layout in your subclass if needed.
   layout 'application'
@@ -56,7 +56,7 @@ class OfflineTemplate < AbstractController::Base
     false
   end
 
-  def echo_env
+  def cmr_env
     ''
   end
 

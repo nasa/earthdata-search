@@ -27,7 +27,7 @@ class DataAccessController < ApplicationController
     retrieval.project = project
     retrieval.save!
 
-    Retrieval.delay.process(retrieval.id, token, echo_env, request.base_url, session[:access_token])
+    Retrieval.delay.process(retrieval.id, token, cmr_env, request.base_url, session[:access_token])
 
     redirect_to action: 'retrieval', id: retrieval.to_param
   end

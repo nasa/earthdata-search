@@ -1,5 +1,5 @@
 class CollectionDetailsPresenter < DetailsPresenter
-  def initialize(collection, collection_id=nil, token=nil, env='ops')
+  def initialize(collection, collection_id=nil, token=nil, env='prod')
     @collection = collection
     @collection.id = collection_id
 
