@@ -1963,6 +1963,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: concept_id=C179014698-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110928.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110923.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110918.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110913.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110908.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110903.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110829.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110824.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110819.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110814.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110809.hdf&producer_granule_id%5B%5D=AMSR_E_L3_5DaySnow_V10_20110804.hdf&start_date=2009-10-02T06%3A51%3A48.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 26 Jan 2016 23:34:57 GMT
+  digest: a341c3e1f1a027cd678609328440db69ce12506b
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: concept_id=C179014698-NSIDC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
     headers:
       User-Agent:
