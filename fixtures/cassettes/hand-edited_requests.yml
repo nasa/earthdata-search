@@ -298,6 +298,19 @@ http_interactions:
     uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request
     body:
       encoding: UTF-8
+      string: FILE_IDS=SC%3AAE_Land.002%3A35953019&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A59780%2Fdata%2Fretrieve%2F8206543921&FORMAT=HDF-EOS&PROJECTION=%26&CLIENT=ESI&SUBAGENT_ID=HEG&REQUEST_MODE=async&EMAIL=patrick%2Bedsc%40element84.com
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+  recorded_at: Tue, 26 Jan 2016 20:54:59 GMT
+  digest: 7b6c5c561563d5e7330b828edafd12de6c46b87f
+- request:
+    method: post
+    uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request
+    body:
+      encoding: UTF-8
       string: FILE_IDS=SC%3AAE_5DSno.002%3A36009049&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+https%3A%2F%2Fsearch.earthdata.nasa.gov%2Fdata%2Fretrieve%2F6895850043&INTERPOLATION=NN&FORMAT=%26&PROJECTION=%26&CLIENT=ESI&SUBAGENT_ID=HEG&REQUEST_MODE=async&INCLUDE_META=N&SUBSET_DATA_LAYERS=%2FAE_5DSno&EMAIL=patrick%2Bedsc%40element84.com
     headers:
       User-Agent:

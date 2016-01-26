@@ -32,6 +32,23 @@ http_interactions:
   digest: 8a1f939b65d74b01ed312e4ebef7adf5e40b665d
 - request:
     method: get
+    uri: https://api.echo.nasa.gov/echo-rest/option_definitions/64E1376B-C01B-949F-B846-A46F36A49505.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 26 Jan 2016 20:54:56 GMT
+  digest: fd2b0f2922e0269882d97621c5a4a34cc5d53238
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/echo-rest/option_definitions/67B936C6-25C0-70B0-74DE-DB6D398AC3D9.json
     body:
       encoding: US-ASCII

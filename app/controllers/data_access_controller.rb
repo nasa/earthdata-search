@@ -76,7 +76,9 @@ class DataAccessController < ApplicationController
         s['order_status'] = 'submitting'
         s['service_options'] = {}
 
-        if s['collection_id']
+        if !s['error_code'].blank?
+          s['order_status'] = 'failed'
+        elsif s['collection_id']
           header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
           response = ESIClient.get_esi_request(s['collection_id'], s['order_id'], echo_client, token, header_value).body
           response_json = MultiXml.parse(response)

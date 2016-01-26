@@ -702,6 +702,33 @@ second_service_request:
             </requestStatus>
         </eesi:agentResponse>
     http_version:
+7b6c5c561563d5e7330b828edafd12de6c46b87f:
+  response:
+    status:
+      code: 400
+      message:
+    headers:
+      date:
+      - Tue, 26 Jan 2016 20:54:59 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      content-type:
+      - text/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:Exception xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <Code>CollectionDisabled</Code>
+            <Message>This collection is currently not configured for subagent HEG</Message>
+        </eesi:Exception>
+    http_version: 
 0074182fcbff52d0a40b77dc7bdd7bc21e2489df:
   response:
     status:
