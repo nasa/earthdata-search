@@ -117,6 +117,47 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"19AFC933-5015-F5D6-0D38-C2414CCB520F","name":"M*D29P1D
         Order Option","scope":"PROVIDER"}}'
     http_version: 
+075d31c53726c5ba49965dd48fa65e5087f75eba:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"aa41aad14ef0f12a593028110c429b44"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.263000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Wed, 27 Jan 2016 20:02:48 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"Order option
+        for Adhoc ASDC data sets\n\nDecember 2008.","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"http://asdc.nasa.gov/options\">\n  <model>\n    <instance>\n      <asdc:options
+        xmlns:asdc=\"http://asdc.nasa.gov/options\">\n        <asdc:distribution>\n\t<asdc:mediatype>\n\t<asdc:value>FtpPull</asdc:value>\n\t</asdc:mediatype>\n  \t     <asdc:mediaformat>\n                      <asdc:ftppull-format>\n                      <asdc:value>FILEFORMAT</asdc:value>\n                      </asdc:ftppull-format>\n        </asdc:mediaformat>\n        </asdc:distribution>\n      </asdc:options>\n    </instance>\n  </model>\n  <ui>\n    <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"//asdc:distribution\">\n      <select
+        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
+        ref=\"//asdc:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n        <item
+        label=\"FTP Pull\" value=\"FtpPull\"/>\n      </select>\n      <select id=\"mediaFormatSelectFTPPULL\"
+        label=\"Media Format\" multiple=\"false\" open=\"false\" ref=\"asdc:mediaformat/asdc:ftppull-format\"
+        relevant=\"//asdc:mediatype/asdc:value = ''FtpPull''\" required=\"asdc:mediatype/asdc:value
+        = ''FtpPull''\" type=\"xsd:string\" valueElementName=\"value\"> \n        <item
+        label=\"File\" value=\"FILEFORMAT\"/>\n      </select>   \n    </group>\n  </ui>\n</form>","id":"2D86BA00-9709-8CB9-CB0B-6A430894417A","name":"ASDC_FTPPULL","scope":"PROVIDER","sort_key":"1"}}'
+    http_version: 
 8a1f939b65d74b01ed312e4ebef7adf5e40b665d:
   response:
     status:

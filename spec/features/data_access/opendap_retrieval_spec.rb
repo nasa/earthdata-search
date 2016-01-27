@@ -13,6 +13,7 @@ describe 'OPeNDAP Retrieval', reset: false do
   end
 
   opendap_collection = 'C181553784-GSFCS4PA'
+  grid_opendap_collection = 'C7085910-LARC_ASDC'
   non_opendap_collection = 'C179003030-ORNL_DAAC'
 
   context 'configuring a non-OPeNDAP collection and selecting the "Download" option' do
@@ -90,6 +91,19 @@ describe 'OPeNDAP Retrieval', reset: false do
         expect(page).to have_no_text('Parameters')
         expect(page).to have_no_field('AbsorbingAerosolOpticalThicknessMW')
       end
+    end
+  end
+
+  context 'configuring an OPeNDAP collection which uses <Grid> elements' do
+    before(:all) do
+      load_page('data/configure', project: [grid_opendap_collection])
+      choose 'Download'
+      choose 'ASCII'
+    end
+
+    it "presents parameters exposed by <Grid> elements" do
+      expect(page).to have_checked_field('toa_sw_all_mon')
+      expect(page).to have_text('Top of The Atmosphere Shortwave Flux, Monthly Means, All-Sky conditions')
     end
   end
 
