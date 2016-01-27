@@ -1,5 +1,5 @@
 class GranuleDetailsPresenter < DetailsPresenter
-  def initialize(granule, granule_id=nil, token=nil, env='ops')
+  def initialize(granule, granule_id=nil, token=nil, env='prod')
     @granule = granule
     @granule.id = granule_id
 

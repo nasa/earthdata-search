@@ -69,7 +69,7 @@ class Health
 
   def check_cron_job(job, interval)
     # After deployment, the tmp folder will contain nothing and data:load won't be run until 1 hour passed.
-    # To stop sending false negative to ops, we need to check the created time of the tmp folder to 'detect' a new
+    # To stop sending false negative to prod, we need to check the created time of the tmp folder to 'detect' a new
     # deployment. And give it 3 * 1hour grace period before reporting @ok = false.
     #
     # i.e. Report cron_jobs healthy for 3 hours after a new deployment.
