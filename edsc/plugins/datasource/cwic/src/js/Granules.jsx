@@ -27,17 +27,11 @@ let CwicGranules = (function() {
   };
 
   CwicGranules.prototype._toResults = function (data, current, params) {
-    var entries, entry, newItems;
+    var entries, newItems = [];
     entries = data.feed.entry;
-    newItems = (function () {
-      var _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = entries.length; _i < _len; _i++) {
-        entry = entries[_i];
-        _results.push(new Granule(entry));
-      }
-      return _results;
-    })();
+    for (var i = 0; i < entries.length; i ++) {
+      newItems.push(new Granule(entries[i]));
+    }
     if (params.startPage > 1) {
       return current.concat(newItems);
     } else {
