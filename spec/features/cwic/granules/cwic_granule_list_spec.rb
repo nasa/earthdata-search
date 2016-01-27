@@ -87,7 +87,7 @@ describe "CWIC Granule list", reset: false do
         end
 
         it "loads next page" do
-          expect(page.text).to match(/Showing [0-9]\d* of 27976 matching granules/)
+          expect(page.text).to match(/Showing [0-9]\d* of \d* matching granules/)
           expect(page).to have_content("Granule excluded. Undo")
         end
       end
