@@ -15,7 +15,7 @@
     <script>
       window.tokenExpiresIn = <%= logged_in? ? script_session_expires_in : 'null' %>;
       window.tokenLoadTime = +new Date();
-      window.echoEnv = "<%= echo_env %>";
+      window.echoEnv = "<%= cmr_env %>";
     </script>
     <% if Rails.configuration.respond_to?(:analytics_id) %>
     <script>
