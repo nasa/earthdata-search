@@ -904,3 +904,30 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
       encoding: UTF-8
       string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
     http_version:
+c56886b1aa890251bf223cc01d137a9a50876415:
+  response:
+    status:
+      code: 400
+      message:
+    headers:
+      date:
+      - Wed, 27 Jan 2016 01:57:20 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      content-type:
+      - text/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:Exception xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <Code>CollectionDisabled</Code>
+            <Message>This collection is currently not configured for subagent HEG</Message>
+        </eesi:Exception>
+    http_version: 

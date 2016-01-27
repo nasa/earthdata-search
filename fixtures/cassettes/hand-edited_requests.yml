@@ -298,7 +298,7 @@ http_interactions:
     uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request
     body:
       encoding: UTF-8
-      string: FILE_IDS=SC%3AAE_5DSno.002%3A36009049&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+https%3A%2F%2Fsearch.earthdata.nasa.gov%2Fdata%2Fretrieve%2F6895850043&INTERPOLATION=NN&FORMAT=%26&PROJECTION=%26&CLIENT=ESI&SUBAGENT_ID=HEG&REQUEST_MODE=async&INCLUDE_META=N&SUBSET_DATA_LAYERS=%2FAE_5DSno&EMAIL=patrick%2Bedsc%40element84.com
+      string: FILE_IDS=SC%3AAE_5DSno.002%3A36009049%2CSC%3AAE_5DSno.002%3A35947209%2CSC%3AAE_5DSno.002%3A35949029%2CSC%3AAE_5DSno.002%3A35855069%2CSC%3AAE_5DSno.002%3A35799658%2CSC%3AAE_5DSno.002%3A35809205%2CSC%3AAE_5DSno.002%3A35726443%2CSC%3AAE_5DSno.002%3A35697931%2CSC%3AAE_5DSno.002%3A35654610%2CSC%3AAE_5DSno.002%3A35655847%2CSC%3AAE_5DSno.002%3A35604461%2CSC%3AAE_5DSno.002%3A35634912&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+https%3A%2F%2Fsearch.earthdata.nasa.gov%2Fdata%2Fretrieve%2F6895850043&INTERPOLATION=NN&FORMAT=%26&PROJECTION=%26&CLIENT=ESI&SUBAGENT_ID=HEG&REQUEST_MODE=async&INCLUDE_META=N&SUBSET_DATA_LAYERS=%2FAE_5DSno&EMAIL=patrick%2Bedsc%40element84.com
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -398,4 +398,17 @@ http_interactions:
       - edsc
   recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
   digest: 78fc022f791584c4b09792c0d1a2d00ad8d4e1c0
+- request:
+    method: post
+    uri: http://n5eil01u.ecs.nsidc.org/ops/egi/request
+    body:
+      encoding: UTF-8
+      string: FILE_IDS=SC%3AAE_Land.002%3A35953019&CLIENT_STRING=To+view+the+status+of+your+request%2C+please+see%3A+http%3A%2F%2F127.0.0.1%3A64449%2Fdata%2Fretrieve%2F2934011165&FORMAT=HDF-EOS&PROJECTION=%26&CLIENT=ESI&SUBAGENT_ID=HEG&REQUEST_MODE=async&EMAIL=patrick%2Bedsc%40element84.com
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+  recorded_at: Wed, 27 Jan 2016 01:57:20 GMT
+  digest: c56886b1aa890251bf223cc01d137a9a50876415
 recorded_with: "VCR 2.6.0"
