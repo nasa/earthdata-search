@@ -87,6 +87,36 @@
       encoding: UTF-8
       string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
     http_version: 
+98c6bc77e6118a904e3cead1787dea4b41d7cdbf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"4fe3283590e40aaebbf396376e95ae1a"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.882000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Wed, 27 Jan 2016 01:20:46 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
+    http_version: 
 3d267502bdbd47cf5a2c56ba24241a0d7b9c36cf:
   response:
     status:

@@ -157,6 +157,73 @@ a0c27d3c8fb19875bb6e01b62ffd724c57ea9404:
         Tape Archive Format (TARGZ)\" value=\"TARGZ\"/>\n        <item label=\"PK/Win
         Zip Format\" value=\"WINZIP\"/>\n    </selectref>\n  </group>\n\n</ui>\n</form>","id":"5F92533B-A6C8-896F-46D4-7516CE7CDDC4","name":"Ftp_Pull","scope":"PROVIDER"}}'
     http_version: 
+fd2b0f2922e0269882d97621c5a4a34cc5d53238:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"efd41cd79031e1be0ae5fbeada478e9d"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.280000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Wed, 27 Jan 2016 01:20:49 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"Available order
+        options for AE_Land","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\"> \n                <!-- ECS distribution
+        options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n\t\t\t<ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n\t\t    <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                   </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
+        \n                <ecs:ancillary>\n                   <ecs:orderPH/>\n                   <ecs:orderQA/>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n             </ecs:options>\n        </instance>\n    </model>\n    <ui>\n        <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
+        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
+        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"FTP Pull\" value=\"FtpPull\"/>\n\t\t<item label=\"FTP Push\" value=\"FtpPush\"/>\n            </select>\n        <group
+        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
+        = ''FtpPush''\">\n            <input label=\"Username\" ref=\"ecs:user\" required=\"//ecs:mediatype/ecs:value
+        = ''FtpPush''\" type=\"xsd:string\"/>\n            <secret label=\"Password\"
+        ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\"
+        type=\"xsd:string\"/>\n            <input label=\"Hostname\" ref=\"ecs:host\"
+        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n            <input
+        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
+        =  ''FtpPush''\" type=\"xsd:string\"/>\n            <input label=\"User string\"
+        ref=\"ecs:user-string\" type=\"xsd:string\"/>\n        </group>\n             <select
+        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
+        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
+        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n
+        \t     </select>\n\t     <select id=\"mediaFormatSelectFTPPUSH\" label=\"Media
+        Format\" multiple=\"false\" open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\"
+        relevant=\"ecs:mediatype/ecs:value = ''FtpPush''\" required=\"ecs:mediatype/ecs:value
+        = ''FtpPush''\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"File\" value=\"FILEFORMAT\"/>\n              </select>\n        </group>
+        \n        <input id=\"ancillarySwitch\" label=\"Check here for ancillary data
+        options\" ref=\"ecs:do-ancillaryprocessing\" type=\"xsd:boolean\"/>  \n        <group
+        id=\"checkancillaryoptions\" label=\" \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing
+        =  ''true''\"> \n          <input label=\"Include associated Production History
+        file in order?\" ref=\"ecs:orderPH\" type=\"xsd:boolean\"/> \n          <input
+        label=\"Include associated Quality Assurance file in order?\" ref=\"ecs:orderQA\"
+        type=\"xsd:boolean\"/>\n          <input label=\"Include associated Browse
+        file in order?\" ref=\"ecs:orderBrowse\" type=\"xsd:boolean\"/>\n        </group>
+        \n    </ui>\n</form>","id":"64E1376B-C01B-949F-B846-A46F36A49505","name":"AE_Land
+        Order Options","scope":"PROVIDER"}}'
+    http_version: 
 e3019fdce672a54756a77e7e9ca4d5fc0072a841:
   response:
     status:
