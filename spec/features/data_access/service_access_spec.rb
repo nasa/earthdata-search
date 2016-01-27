@@ -3,6 +3,32 @@ require 'spec_helper'
 describe 'Services Access', reset: false do
   serviceable_collection_id = 'C179014698-NSIDC_ECS'
   serviceable_collection_title = 'AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002'
+  disabled_serviceable_collection_id = 'C128599377-NSIDC_ECS'
+
+  context 'when viewing data access with a collection that is not configured for ESI processing' do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, focus: disabled_serviceable_collection_id
+      login
+      first_granule_list_item.click_link "Retrieve single granule data"
+      wait_for_xhr
+    end
+
+    context 'and submitting an ESI service request' do
+      before :all do
+        choose 'AE_Land.2 ESI Service'
+        fill_in 'Email address', with: "patrick+edsc@element84.com\t"
+        click_on 'Continue'
+        click_on 'Submit'
+      end
+
+      it 'displays an error message' do
+        sleep 10
+        expect(page).to have_content('Error: CollectionDisabled')
+        expect(page).to have_content('Message: This collection is currently not configured for subagent HEG')
+      end
+    end
+  end
 
   context 'when viewing data access with a serviceable collection' do
     before :all do
@@ -14,6 +40,7 @@ describe 'Services Access', reset: false do
       choose "Search by Local Granule ID"
       fill_in "granule_id_field", with: "AMSR_E_L3_5DaySnow_V10_20110928.hdf\nAMSR_E_L3_5DaySnow_V10_20110923.hdf\nAMSR_E_L3_5DaySnow_V10_20110918.hdf\nAMSR_E_L3_5DaySnow_V10_20110913.hdf\nAMSR_E_L3_5DaySnow_V10_20110908.hdf\nAMSR_E_L3_5DaySnow_V10_20110903.hdf\nAMSR_E_L3_5DaySnow_V10_20110829.hdf\nAMSR_E_L3_5DaySnow_V10_20110824.hdf\nAMSR_E_L3_5DaySnow_V10_20110819.hdf\nAMSR_E_L3_5DaySnow_V10_20110814.hdf\nAMSR_E_L3_5DaySnow_V10_20110809.hdf\nAMSR_E_L3_5DaySnow_V10_20110804.hdf"
       click_button "granule-filters-submit"
+      wait_for_xhr
 
       click_link "Retrieve collection data"
       wait_for_xhr

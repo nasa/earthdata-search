@@ -33,6 +33,16 @@ module VCR
       r1.headers['Echo-Token'] == r2.headers['Echo-Token']
     end
 
+    def self.compare_esi_request_body(r1, r2)
+      query1 = Rack::Utils.parse_nested_query(r1.body)
+      query2 = Rack::Utils.parse_nested_query(r2.body)
+      keys_to_compare = ['FILE_IDS', 'EMAIL']
+      query1.map do |k, v|
+        return false if (keys_to_compare.include? k) && (v != query2[k])
+      end
+      true
+    end
+
     def self.register_normalizer(normalizer)
       @persister.normalizers << normalizer
     end
@@ -51,6 +61,7 @@ module VCR
 
       VCR.request_matchers.register(:parsed_uri) { |r1, r2| compare_uris(r1, r2) }
       VCR.request_matchers.register(:token) { |r1, r2| compare_tokens(r1, r2) }
+      VCR.request_matchers.register(:esi_request_body) { |r1, r2| compare_esi_request_body(r1, r2) }
 
       options = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
       default_record_mode = options[:record] || :new_episodes
@@ -93,7 +104,7 @@ module VCR
             parts = request.uri.split('/echo-rest/')[1]
             cassette = parts.split(/\.|\/|\?/).first
           elsif request.uri.include? 'nsidc.org/ops/egi/request'
-            opts[:match_requests_on] = [:method, :parsed_uri, :headers]
+            opts[:match_requests_on] = [:method, :parsed_uri, :headers, :esi_request_body]
             cassette = "hand-edited"
             record = :none
           end
