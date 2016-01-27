@@ -3,6 +3,32 @@ require 'spec_helper'
 describe 'Services Access', reset: false do
   serviceable_collection_id = 'C179014698-NSIDC_ECS'
   serviceable_collection_title = 'AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002'
+  disabled_serviceable_collection_id = 'C128599377-NSIDC_ECS'
+
+  context 'when viewing data access with a collection that is not configured for ESI processing' do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, focus: disabled_serviceable_collection_id
+      login
+      first_granule_list_item.click_link "Retrieve single granule data"
+      wait_for_xhr
+    end
+
+    context 'and submitting an ESI service request' do
+      before :all do
+        choose 'AE_Land.2 ESI Service'
+        fill_in 'Email address', with: "patrick+edsc@element84.com\t"
+        click_on 'Continue'
+        click_on 'Submit'
+      end
+
+      it 'displays an error message' do
+        sleep 10
+        expect(page).to have_content('Error: CollectionDisabled')
+        expect(page).to have_content('Message: This collection is currently not configured for subagent HEG')
+      end
+    end
+  end
 
   context 'when viewing data access with a serviceable collection' do
     before :all do
