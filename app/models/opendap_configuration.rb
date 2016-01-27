@@ -12,7 +12,12 @@ class OpendapConfiguration
 
     # The response has a root node 'Dataset'
     parsed_attribute_arrays = parsed["Dataset"] && parsed["Dataset"]["Array"]
-    return OpendapConfiguration.new() unless parsed_attribute_arrays.present?
+    parsed_grids = parsed["Dataset"] && parsed["Dataset"]["Grid"]
+    return OpendapConfiguration.new() unless parsed_attribute_arrays.present? || parsed_grids.present?
+    parsed_attribute_arrays = Array.wrap(parsed_attribute_arrays)
+    parsed_grids = Array.wrap(parsed_grids)
+
+    parsed_attribute_arrays += parsed_grids.map {|g| g["Array"]}
 
     title_attribute = opendap_config['title_attribute']
     units_attribute = opendap_config['units_attribute']
