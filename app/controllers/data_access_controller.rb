@@ -2,6 +2,7 @@ require 'json'
 
 class DataAccessController < ApplicationController
   include ActionView::Helpers::TextHelper
+  include GranuleUtils
   respond_to :json
 
   before_filter :require_login
@@ -136,8 +137,8 @@ class DataAccessController < ApplicationController
   # This rolls up getting information on data access into an API that approximates
   # what we'd like ECHO / CMR to support.
   def options
-    granule_params = params.reject!{|p| ['controller', 'action', 'format', 'datasource', 'short_name'].include? p}.merge(page_size: 150, page_num: 1)
-    catalog_response = echo_client.get_granules(granule_params, token)
+    granule_params = request.request_parameters
+    catalog_response = echo_client.get_granules(granule_params_for_request(request), token)
 
     if catalog_response.success?
       collection = Array.wrap(granule_params[:echo_collection_id]).first

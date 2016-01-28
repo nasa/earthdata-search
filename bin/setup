@@ -104,6 +104,10 @@ Dir.chdir APP_ROOT do
 
   section "Preparing database" do
     run_cmd 'rake db:setup'
+    # for local dev env, it is necessary to populate the test db so that tests that asserts browse download links can pass.
+    if RUBY_PLATFORM =~ /darwin/i
+      run_cmd 'rake db:setup RAILS_ENV=test'
+    end
   end
 
   section "Removing old logs and tempfiles" do
