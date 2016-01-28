@@ -225,9 +225,10 @@ ns.ProjectList = do (ko
 
     # FIXME: This must be moved to granules list. Why is it here?!
     showFilters: (collection) =>
+      temporal = collection.granuleDatasource().data().temporal
       if @project.searchGranulesCollection(collection)
         $('.granule-temporal-filter').temporalSelectors({
-          uiModel: collection.granuleDatasource().data().temporal,
+          uiModel: temporal,
           modelPath: "(project.searchGranulesCollection() ? project.searchGranulesCollection().granuleDatasource().data().temporal.pending : null)",
           prefix: 'granule'
         })
