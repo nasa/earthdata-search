@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Data Center Query Param', reset: false do
   before :all do
-    visit '/search?echo_env=testbed&fdc=AAFC'
+    visit '/search?cmr_env=sit&fdc=AAFC'
   end
 
   it "returns collections from the provided data center" do
