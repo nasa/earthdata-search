@@ -83,12 +83,12 @@ class CollectionsController < ApplicationController
     h_facets = h_response.body['feed']['facets'] if h_response.body['feed'].present?
     nh_facets = nh_response.body['feed']['facets'] if nh_response.body['feed'].present?
     if h_facets.present? && nh_facets.present?
-      nh_archive_center = nh_facets.select { |facet| facet['field'] == 'archive_center' }
+      nh_data_center = nh_facets.select { |facet| facet['field'] == 'data_center' }
       nh_platform = nh_facets.select { |facet| facet['field'] == 'platform' }
       nh_instrument = nh_facets.select { |facet| facet['field'] == 'instrument' }
       h_facets.map! do |facet|
-        if facet['field'] == 'archive_centers'
-          nh_archive_center[0]
+        if facet['field'] == 'data_centers'
+          nh_data_center[0]
         elsif facet['field'] == 'platforms'
           nh_platform[0]
         elsif facet['field'] == 'instruments'
@@ -113,6 +113,7 @@ class CollectionsController < ApplicationController
       # 'category' => ['Category Keyword', 'science_keywords[0][category][]'],
       'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
       'term' => ['Term Keyword', 'science_keywords[0][term][]'],
+      'data_center' => ['Organization', 'data_center[]'],
       'variable_level_1' => ['Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'],
       'variable_level_2' => ['Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'],
       'variable_level_3' => ['Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'],
