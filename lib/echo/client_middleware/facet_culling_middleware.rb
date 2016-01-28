@@ -4,7 +4,7 @@ module Echo
       def self.cull(body)
         hierarchical = body['feed']['id'].include?('hierarchical_facets=true')
         body['feed']['facets'].each do |facet|
-          if !hierarchical && !['archive_center', 'platform', 'instrument'].include?(facet['field'])
+          if !hierarchical && !['archive_center', 'data_center', 'platform', 'instrument'].include?(facet['field'])
             facet['value-counts'] = []
           end
           if facet['value-counts'] && facet['value-counts'].size > 20
