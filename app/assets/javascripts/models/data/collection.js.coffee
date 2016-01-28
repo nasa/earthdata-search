@@ -261,6 +261,12 @@ ns.Collection = do (ko
     canFocus: ->
       @hasAtomData() && @granuleDatasourceName()
 
+    org: ->
+      if @organizations?.length > 0
+        @organizations[0]
+      else
+        @archive_center
+
     fromJson: (jsonObj) ->
       @json = jsonObj
 
