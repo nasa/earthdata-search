@@ -5,6 +5,25 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1000005847-LARC_ASDC&catalog_item_id%5B%5D=G1000005928-LARC_ASDC&catalog_item_id%5B%5D=G1000005952-LARC_ASDC&catalog_item_id%5B%5D=G1000005950-LARC_ASDC&catalog_item_id%5B%5D=G1000005947-LARC_ASDC&catalog_item_id%5B%5D=G1000005946-LARC_ASDC&catalog_item_id%5B%5D=G1000005942-LARC_ASDC&catalog_item_id%5B%5D=G1000005897-LARC_ASDC&catalog_item_id%5B%5D=G1000005920-LARC_ASDC&catalog_item_id%5B%5D=G1000005879-LARC_ASDC&catalog_item_id%5B%5D=G1000005892-LARC_ASDC&catalog_item_id%5B%5D=G1000005889-LARC_ASDC&catalog_item_id%5B%5D=G1000005887-LARC_ASDC&catalog_item_id%5B%5D=G1000005885-LARC_ASDC&catalog_item_id%5B%5D=G1000005871-LARC_ASDC&catalog_item_id%5B%5D=G1000005881-LARC_ASDC&catalog_item_id%5B%5D=G1000005859-LARC_ASDC&catalog_item_id%5B%5D=G1000005867-LARC_ASDC&catalog_item_id%5B%5D=G1000005863-LARC_ASDC&catalog_item_id%5B%5D=G1000005864-LARC_ASDC
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 28 Jan 2016 14:40:35 GMT
+  digest: e2bf8c4da559bb274992eec080c4aeccd3abc7f5
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G1000005847-LARC_ASDC&catalog_item_id%5B%5D=G1000005928-LARC_ASDC&catalog_item_id%5B%5D=G1000005952-LARC_ASDC&catalog_item_id%5B%5D=G1000005950-LARC_ASDC&catalog_item_id%5B%5D=G1000005947-LARC_ASDC&catalog_item_id%5B%5D=G1000005946-LARC_ASDC&catalog_item_id%5B%5D=G1000005942-LARC_ASDC&catalog_item_id%5B%5D=G1000005897-LARC_ASDC&catalog_item_id%5B%5D=G1000005920-LARC_ASDC&catalog_item_id%5B%5D=G1000005879-LARC_ASDC&catalog_item_id%5B%5D=G1000005892-LARC_ASDC&catalog_item_id%5B%5D=G1000005889-LARC_ASDC&catalog_item_id%5B%5D=G1000005887-LARC_ASDC&catalog_item_id%5B%5D=G1000005885-LARC_ASDC&catalog_item_id%5B%5D=G1000005871-LARC_ASDC&catalog_item_id%5B%5D=G1000005881-LARC_ASDC&catalog_item_id%5B%5D=G1000005859-LARC_ASDC&catalog_item_id%5B%5D=G1000005867-LARC_ASDC&catalog_item_id%5B%5D=G1000005863-LARC_ASDC&catalog_item_id%5B%5D=G1000005864-LARC_ASDC&catalog_item_id%5B%5D=G1000005861-LARC_ASDC&catalog_item_id%5B%5D=G1000005862-LARC_ASDC&catalog_item_id%5B%5D=G1000005860-LARC_ASDC&catalog_item_id%5B%5D=G1000005819-LARC_ASDC&catalog_item_id%5B%5D=G1000004516-LARC_ASDC
     headers:
       User-Agent:
