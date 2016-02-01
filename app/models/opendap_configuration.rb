@@ -4,6 +4,7 @@ class OpendapConfiguration
 
   def self.find(collection_id)
     opendap_config = Rails.configuration.services['opendap'][collection_id]
+
     return OpendapConfiguration.new() unless opendap_config.present?
 
     ddx = Faraday.get(opendap_config['ddx_url']).body
@@ -11,7 +12,12 @@ class OpendapConfiguration
 
     # The response has a root node 'Dataset'
     parsed_attribute_arrays = parsed["Dataset"] && parsed["Dataset"]["Array"]
-    return OpendapConfiguration.new() unless parsed_attribute_arrays.present?
+    parsed_grids = parsed["Dataset"] && parsed["Dataset"]["Grid"]
+    return OpendapConfiguration.new() unless parsed_attribute_arrays.present? || parsed_grids.present?
+    parsed_attribute_arrays = Array.wrap(parsed_attribute_arrays)
+    parsed_grids = Array.wrap(parsed_grids)
+
+    parsed_attribute_arrays += parsed_grids.map {|g| g["Array"]}
 
     title_attribute = opendap_config['title_attribute']
     units_attribute = opendap_config['units_attribute']
@@ -181,9 +187,10 @@ class OpendapConfiguration
     extra = {}
     start = granule['time_start']
     if start
-      doy = Date.parse(granule['time_start'].slice(0, 10)).yday.to_s.rjust(3, '0')
+      day = granule['time_start'].slice(0, 10)
+      doy = Date.parse(day).yday.to_s.rjust(3, '0')
       month = granule['time_start'].slice(5, 2)
-      extra = {od_doy: doy, od_month: month}
+      extra = {od_doy: doy, od_month: month, od_time_start_dot: day.gsub('-', '.')}
     end
     extra.merge(granule)
   end
