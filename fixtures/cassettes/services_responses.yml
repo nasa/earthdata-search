@@ -769,6 +769,3805 @@ d9b715ca78067fa784c5f4d12c2583edab525706:
       encoding: UTF-8
       string: ''
     http_version: 
+4c3582b5f0d52434f78920c111ea92831b1b80ca:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 27 Jan 2016 20:02:45 GMT
+      x-frame-options:
+      - DENY
+      last-modified:
+      - Thu, 20 Mar 2014 22:11:00 GMT
+      set-cookie:
+      - JSESSIONID=66C6D30BA2DF3B768A8429A4389BBE09; Path=/opendap/; Secure; HttpOnly
+      xdods-server:
+      - dods/3.2
+      xopendap-server:
+      - bes/3.14.0, csv_handler/1.1.0, dap-server/ascii/4.1.5, dap-server/usage/4.2.0,
+        dap-server/www/4.1.5, dapreader_module/0.0.1, fileout_gdal/0.9.5, fileout_json/1.0.0,
+        fileout_netcdf/1.3.0, freeform_handler/3.9.0, gateway_module/1.1.3, gdal_handler/1.0.0,
+        hdf4_handler/3.11.7, hdf5_handler/2.3.0, libdap/3.14.0, ncml_moddule/1.2.5,
+        netcdf_handler/3.11.0, w10n_handler/1.0.0, xml_data_handler/1.0.6
+      x-dap:
+      - '3.2'
+      content-description:
+      - dods_ddx
+      content-type:
+      - text/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="ISO-8859-1"?>
+        <Dataset name="CERES_EBAF-TOA_Edition2.8_200003-201310.nc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.opendap.org/ns/DAP/3.2# http://xml.opendap.org/dap/dap3.2.xsd" xmlns:grddl="http://www.w3.org/2003/g/data-view#" grddl:transformation="http://xml.opendap.org/transforms/ddxToRdfTriples.xsl" xmlns="http://xml.opendap.org/ns/DAP/3.2#" xmlns:dap="http://xml.opendap.org/ns/DAP/3.2#" dapVersion="3.2" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:base="https://opendap.larc.nasa.gov:443/opendap/SortByDirectory/CERES/EBAF/TOA_Edition2.8/CERES_EBAF-TOA_Edition2.8_200003-201310.nc">
+            <Attribute name="NC_GLOBAL" type="Container">
+                <Attribute name="title" type="String">
+                    <value>CERES EBAF (Energy Balanced and Filled) Fluxes. Monthly Averages and 13-year Climatology.</value>
+                </Attribute>
+                <Attribute name="institution" type="String">
+                    <value>NASA/LaRC (Langley Research Center) Hampton, Va</value>
+                </Attribute>
+                <Attribute name="Conventions" type="String">
+                    <value>CF-1.4</value>
+                </Attribute>
+                <Attribute name="comment" type="String">
+                    <value>Data is from East to West and South to North. Climatology from 03/2000 to 10/2013.</value>
+                </Attribute>
+                <Attribute name="version" type="String">
+                    <value>This is version 2.8: March 7, 2014</value>
+                </Attribute>
+                <Attribute name="Fill_Value" type="String">
+                    <value>Fill Value is -999.0</value>
+                </Attribute>
+                <Attribute name="Production_Files" type="String">
+                    <value>List of files used in creating the present Master netCDF file:\012/homedir/nloeb/ebaf/monthly_means/adj_fluxes/deliverable/sw*.gz\012/homedir/nloeb/ebaf/monthly_means/adj_fluxes/deliverable/lw*.gz\012/homedir/nloeb/ebaf/monthly_means/adj_fluxes/deliverable/net*.gz\012/homedir/nloeb/ebaf/monthly_means/adj_fluxes/deliverable/solflx*.gz\012/homedir/nloeb/ebaf/monthly_means/out_glob_ed2.8_200003_201310.dat</value>
+                </Attribute>
+            </Attribute>
+            <Attribute name="DODS_EXTRA" type="Container">
+                <Attribute name="Unlimited_Dimension" type="String">
+                    <value>time</value>
+                </Attribute>
+            </Attribute>
+            <Array name="lon">
+                <Attribute name="long_name" type="String">
+                    <value>longitude</value>
+                </Attribute>
+                <Attribute name="standard_name" type="String">
+                    <value>longitude</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>degrees_east</value>
+                </Attribute>
+                <Attribute name="valid_range" type="Float32">
+                    <value>0.00000000</value>
+                    <value>360.000000</value>
+                </Attribute>
+                <Float32/>
+                <dimension name="lon" size="360"/>
+            </Array>
+            <Array name="lat">
+                <Attribute name="long_name" type="String">
+                    <value>latitude</value>
+                </Attribute>
+                <Attribute name="standard_name" type="String">
+                    <value>latitude</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>degrees_north</value>
+                </Attribute>
+                <Attribute name="valid_range" type="Float32">
+                    <value>-90.0000000</value>
+                    <value>90.0000000</value>
+                </Attribute>
+                <Float32/>
+                <dimension name="lat" size="180"/>
+            </Array>
+            <Array name="time">
+                <Attribute name="long_name" type="String">
+                    <value>time</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>days since 2000-03-01 00:00:00</value>
+                </Attribute>
+                <Attribute name="delta_t" type="String">
+                    <value>0000-00-01 00:00:00</value>
+                </Attribute>
+                <Int32/>
+                <dimension name="time" size="164"/>
+            </Array>
+            <Array name="ctime">
+                <Attribute name="long_name" type="String">
+                    <value>climatological monthly means. 13-year means.</value>
+                </Attribute>
+                <Attribute name="standard_name" type="String">
+                    <value>climatology time</value>
+                </Attribute>
+                <Attribute name="climatology" type="String">
+                    <value>climatology_bounds</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>months of a climatology year</value>
+                </Attribute>
+                <Attribute name="delta_t" type="String">
+                    <value>0000-01-00 00:00:00</value>
+                </Attribute>
+                <Int32/>
+                <dimension name="ctime" size="12"/>
+            </Array>
+            <Array name="climatology_bounds">
+                <Int32/>
+                <dimension name="ctime" size="12"/>
+                <dimension name="sc" size="2"/>
+            </Array>
+            <Grid name="toa_sw_all_mon">
+                <Array name="toa_sw_all_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, Monthly Means, All-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_lw_all_mon">
+                <Array name="toa_lw_all_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, Monthly Means, All-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_net_all_mon">
+                <Array name="toa_net_all_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, Monthly Means, All-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_sw_clr_mon">
+                <Array name="toa_sw_clr_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, Monthly Means, Clear-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_lw_clr_mon">
+                <Array name="toa_lw_clr_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, Monthly Means, Clear-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_net_clr_mon">
+                <Array name="toa_net_clr_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, Monthly Means, Clear-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_cre_sw_mon">
+                <Array name="toa_cre_sw_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Shortwave Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Shortwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_shortwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      100.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_cre_lw_mon">
+                <Array name="toa_cre_lw_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Longwave Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Longwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_longwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -100.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      300.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_cre_net_mon">
+                <Array name="toa_cre_net_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Net Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Net Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="solar_mon">
+                <Array name="solar_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Incoming Solar Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>Incoming Solar Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_incoming_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      800.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_sw_all_clim">
+                <Array name="toa_sw_all_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, All-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_lw_all_clim">
+                <Array name="toa_lw_all_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, All-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_net_all_clim">
+                <Array name="toa_net_all_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, All-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_sw_clr_clim">
+                <Array name="toa_sw_clr_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, Clear-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_lw_clr_clim">
+                <Array name="toa_lw_clr_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, Clear-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_net_clr_clim">
+                <Array name="toa_net_clr_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, Clear-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_cre_sw_clim">
+                <Array name="toa_cre_sw_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Shortwave Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Shortwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_shortwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      100.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_cre_lw_clim">
+                <Array name="toa_cre_lw_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Longwave Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Longwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_longwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -100.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      300.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="toa_cre_net_clim">
+                <Array name="toa_cre_net_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Net Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Net Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="solar_clim">
+                <Array name="solar_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Incoming Solar Flux,  13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>Incoming Solar Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_incoming_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      800.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>0.00000000</value>
+                        <value>360.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_sw_all_mon">
+                <Array name="ztoa_sw_all_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, Monthly Means, All-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_lw_all_mon">
+                <Array name="ztoa_lw_all_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, Monthly Means, All-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_net_all_mon">
+                <Array name="ztoa_net_all_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, Monthly Means, All-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_sw_clr_mon">
+                <Array name="ztoa_sw_clr_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, Monthly Means, Clear-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_lw_clr_mon">
+                <Array name="ztoa_lw_clr_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, Monthly Means, Clear-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_net_clr_mon">
+                <Array name="ztoa_net_clr_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, Monthly Means, Clear-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_cre_sw_mon">
+                <Array name="ztoa_cre_sw_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Shortwave Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Shortwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_shortwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      100.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_cre_lw_mon">
+                <Array name="ztoa_cre_lw_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Longwave Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Longwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_longwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -100.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      300.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_cre_net_mon">
+                <Array name="ztoa_cre_net_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Net Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Net Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="zsolar_mon">
+                <Array name="zsolar_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Incoming Solar Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>Incoming Solar Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_incoming_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      800.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_sw_all_clim">
+                <Array name="ztoa_sw_all_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, All-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_lw_all_clim">
+                <Array name="ztoa_lw_all_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, All-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_net_all_clim">
+                <Array name="ztoa_net_all_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, All-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_sw_clr_clim">
+                <Array name="ztoa_sw_clr_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, Clear-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_lw_clr_clim">
+                <Array name="ztoa_lw_clr_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, Clear-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_net_clr_clim">
+                <Array name="ztoa_net_clr_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, Clear-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_cre_sw_clim">
+                <Array name="ztoa_cre_sw_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Shortwave Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Shortwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_shortwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      100.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_cre_lw_clim">
+                <Array name="ztoa_cre_lw_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Longwave Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Longwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_longwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -100.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      300.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="ztoa_cre_net_clim">
+                <Array name="ztoa_cre_net_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Net Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Net Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="zsolar_clim">
+                <Array name="zsolar_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Incoming Solar Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>Incoming Solar Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_incoming_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      800.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                    <dimension name="lat" size="180"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="valid_range" type="Float32">
+                        <value>-90.0000000</value>
+                        <value>90.0000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_sw_all_mon">
+                <Array name="gtoa_sw_all_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, Monthly Means, All-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_lw_all_mon">
+                <Array name="gtoa_lw_all_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, Monthly Means, All-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_net_all_mon">
+                <Array name="gtoa_net_all_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, Monthly Means, All-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_sw_clr_mon">
+                <Array name="gtoa_sw_clr_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, Monthly Means, Clear-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_lw_clr_mon">
+                <Array name="gtoa_lw_clr_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, Monthly Means, Clear-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_net_clr_mon">
+                <Array name="gtoa_net_clr_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, Monthly Means, Clear-Sky conditions</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_cre_sw_mon">
+                <Array name="gtoa_cre_sw_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Shortwave Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Shortwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_shortwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      100.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_cre_lw_mon">
+                <Array name="gtoa_cre_lw_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Longwave Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Longwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_longwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -100.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      300.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_cre_net_mon">
+                <Array name="gtoa_cre_net_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Net Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Net Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gsolar_mon">
+                <Array name="gsolar_mon">
+                    <Attribute name="long_name" type="String">
+                        <value>Incoming Solar Flux, Monthly Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>Incoming Solar Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_incoming_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      800.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="164"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2000-03-01 00:00:00</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-00-01 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="time" size="164"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_sw_all_clim">
+                <Array name="gtoa_sw_all_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, All-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_lw_all_clim">
+                <Array name="gtoa_lw_all_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, All-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_net_all_clim">
+                <Array name="gtoa_net_all_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, All-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - All-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_sw_clr_clim">
+                <Array name="gtoa_sw_clr_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Shortwave Flux, Clear-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Shortwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_shortwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      600.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_lw_clr_clim">
+                <Array name="gtoa_lw_clr_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Longwave Flux, Clear-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Longwave Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_outgoing_longwave_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_net_clr_clim">
+                <Array name="gtoa_net_clr_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Net Flux, Clear-Sky conditions, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA Net Flux - Clear-Sky</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_downward_flux_assuming_clear_sky</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_cre_sw_clim">
+                <Array name="gtoa_cre_sw_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Shortwave Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Shortwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_shortwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      100.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_cre_lw_clim">
+                <Array name="gtoa_cre_lw_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Longwave Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Longwave Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_longwave_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -100.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      300.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <Grid name="gtoa_cre_net_clim">
+                <Array name="gtoa_cre_net_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Top of The Atmosphere Cloud Radiative Effects Net Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>TOA CRE Net Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_net_cloud_radiative_effect</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>     -400.000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      400.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <Grid name="gsolar_clim">
+                <Array name="gsolar_clim">
+                    <Attribute name="long_name" type="String">
+                        <value>Incoming Solar Flux, 13-year Climatological Means</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>Incoming Solar Flux</value>
+                    </Attribute>
+                    <Attribute name="CF_name" type="String">
+                        <value>toa_incoming_shortwave_flux</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>W m-2</value>
+                    </Attribute>
+                    <Attribute name="valid_min" type="String">
+                        <value>      0.00000</value>
+                    </Attribute>
+                    <Attribute name="valid_max" type="String">
+                        <value>      800.000</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>-999.000000</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="ctime" size="12"/>
+                </Array>
+                <Map name="ctime">
+                    <Attribute name="long_name" type="String">
+                        <value>climatological monthly means. 13-year means.</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>climatology time</value>
+                    </Attribute>
+                    <Attribute name="climatology" type="String">
+                        <value>climatology_bounds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>months of a climatology year</value>
+                    </Attribute>
+                    <Attribute name="delta_t" type="String">
+                        <value>0000-01-00 00:00:00</value>
+                    </Attribute>
+                    <Int32/>
+                    <dimension name="ctime" size="12"/>
+                </Map>
+            </Grid>
+            <blob href="cid:"/>
+        </Dataset>
+    http_version: 
 7e0afaafffad89232611dd3c5660225d59bdf6dd:
   response:
     status:

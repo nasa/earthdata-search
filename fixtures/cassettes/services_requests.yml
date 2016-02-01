@@ -73,6 +73,17 @@ http_interactions:
   digest: 969be064023f01da319cc4cc5c53365270133b77
 - request:
     method: get
+    uri: https://opendap.larc.nasa.gov/opendap/SortByDirectory/CERES/EBAF/TOA_Edition2.8/CERES_EBAF-TOA_Edition2.8_200003-201310.nc.ddx
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 27 Jan 2016 20:02:45 GMT
+  digest: 4c3582b5f0d52434f78920c111ea92831b1b80ca
+- request:
+    method: get
     uri: https://urs.earthdata.nasa.gov/
     body:
       encoding: US-ASCII
