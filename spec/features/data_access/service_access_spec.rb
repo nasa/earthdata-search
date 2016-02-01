@@ -66,13 +66,13 @@ describe 'Services Access', reset: false do
           fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
           click_on 'Continue'
           click_on 'Submit'
-          wait_for_xhr
        end
 
         # this test and the one below are quite flaky.
         # Cannot reliably display a progress bar using recordings
         xit 'displays a progress bar while the service is processing' do
-           if page.has_content?("AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002 Processing")
+          wait_for_xhr
+          if page.has_content?("AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002 Processing")
             expect(page).to have_content('of 12 items processed')
             expect(page).to have_css('div.progress-bar')
           else
