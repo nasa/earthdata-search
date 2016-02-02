@@ -139,7 +139,7 @@ describe "Collection keyword searches", reset: false do
       context "setting a new keyword search value" do
         before(:all) do
           fill_in "keywords", with: "AST_L"
-          wati_for_xhr
+          wait_for_xhr
         end
 
         it "returns to the collection results list" do
