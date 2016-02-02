@@ -282,7 +282,7 @@ DEPENDENCIES
   poltergeist
   quiet_assets
   rack_session_access
-  rails (~> 4.1.1)
+  rails (~> 4.1.14.1)
   rspec-rails
   rspec_junit_formatter
   sass-rails (~> 4.0.0)
