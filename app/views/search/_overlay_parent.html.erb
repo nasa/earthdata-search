@@ -7,6 +7,7 @@
   <div class="master-overlay-content panel-group">
     <!-- ko if: collections.facets.isRelevant() -->
     <!-- ko foreach: collections.facets.results -->
+      <% unless Rails.env.production? %>
       <!--ko if: name == 'Features'-->
         <!--ko foreach: values-->
           <!--ko if: term == "Int'l / Interagency"-->
@@ -26,6 +27,7 @@
           <!--/ko-->
         <!--/ko-->
       <!--/ko-->
+      <% end %>
     <!-- # Temporarily filter out 'Category Keyword' facet. Once CMR-1923 is implemented, the changes can be reverted. -->
     <!-- ko if: values().length > 0 && name != "Category Keyword" -->
     <div data-bind="css: class_name" class="panel panel-default">
