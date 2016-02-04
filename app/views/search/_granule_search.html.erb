@@ -47,14 +47,16 @@
     <!--ko if: cwic()-->
       <dt>Temporal</dt>
       <dd>
-        <p>temporal </p>
+        <!-- ko with: cwicGranulesModel.temporal.pending -->
+        <%= render partial: 'temporal_template', locals: {prefix: 'granule', show_actions: false, cwic: true} %>
+        <!--/ko-->
       </dd>
     <!--/ko-->
     <!-- ko ifnot: cwic() -->
       <dt>Temporal</dt>
       <dd>
         <!-- ko with: cmrGranulesModel.temporal.pending -->
-        <%= render partial: 'temporal_template', locals: {prefix: 'granule', show_actions: false} %>
+        <%= render partial: 'temporal_template', locals: {prefix: 'granule', show_actions: false, cwic: false} %>
         <!-- /ko -->
       </dd>
       <dt>Day / Night Flag</dt>
@@ -104,6 +106,11 @@
 </div>
 <div class="granule-filter-actions">
   <button data-bind="click: $root.ui.projectList.applyFilters" id="granule-filters-submit" class="button submit" title="Apply your selections" type="button">Apply</button>
+  <!--ko ifnot: cwic()-->
   <button id="granule-filters-clear" data-bind="click: cmrGranuleQuery.clearFilters" class="button low-priority" title="Clear your selections" type="button">Clear</button>
+  <!--/ko-->
+  <!--ko if: cwic()-->
+  <button id="granule-filters-clear" data-bind="click: cwicGranuleQuery.clearFilters" class="button low-priority" title="Clear your selections" type="button">Clear</button>
+  <!--/ko-->
 </div>
 <!-- /ko -->

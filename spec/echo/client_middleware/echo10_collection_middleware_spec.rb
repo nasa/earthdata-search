@@ -153,14 +153,14 @@ describe Echo::ClientMiddleware::Echo10CollectionMiddleware do
           },
           "spatial" => ["Point: (39.1\xC2\xB0, -96.6\xC2\xB0)"],
           "browse_images" => [],
-          "id" => nil,
-          "native_url" => "https://cmr.earthdata.nasa.gov/search/concepts/",
-          "atom_url" => "https://cmr.earthdata.nasa.gov/search/concepts/.atom",
-          "echo10_url" => "https://cmr.earthdata.nasa.gov/search/concepts/.echo10",
-          "iso19115_url" => "https://cmr.earthdata.nasa.gov/search/concepts/.iso19115",
+          "id" => 'C123-LPDAAC',
+          "native_url" => "https://cmr.earthdata.nasa.gov/search/concepts/C123-LPDAAC",
+          "atom_url" => "https://cmr.earthdata.nasa.gov/search/concepts/C123-LPDAAC.atom",
+          "echo10_url" => "https://cmr.earthdata.nasa.gov/search/concepts/C123-LPDAAC.echo10",
+          "iso19115_url" => "https://cmr.earthdata.nasa.gov/search/concepts/C123-LPDAAC.iso19115",
           "smap_iso_url" => nil,
-          "dif_url" => "https://cmr.earthdata.nasa.gov/search/concepts/.dif",
-          "osdd_url" => "https://api.echo.nasa.gov/opensearch/granules/descriptor_document.xml?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=AST_L1AE&versionId=3&dataCenter=LPDAAC&commit=Generate",
+          "dif_url" => "https://cmr.earthdata.nasa.gov/search/concepts/C123-LPDAAC.dif",
+          "osdd_url" => "https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=AST_L1AE&versionId=3&dataCenter=LPDAAC&commit=Generate",
           "xml" => {
             "ShortName"=>"AST_L1AE",
             "VersionId"=>"3",
@@ -258,7 +258,7 @@ describe Echo::ClientMiddleware::Echo10CollectionMiddleware do
       collections = env[:body].dup
       expect(collections).to be_instance_of(Array)
       expect(collections.size).to eq(1)
-      parse_collection = CollectionDetailsPresenter.new(collections[0])
+      parse_collection = CollectionDetailsPresenter.new(collections[0], 'C123-LPDAAC')
       expect(collections[0].as_json).to eq(expected_body['collection'])
     end
 

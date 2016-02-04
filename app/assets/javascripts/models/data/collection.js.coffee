@@ -77,9 +77,6 @@ ns.Collection = do (ko
 
       @fromJson(jsonData)
 
-      if @granuleDatasourceName() && @granuleDatasourceName() != 'cmr'
-        @has_granules = @canFocus()
-
       @spatial_constraint = @computed =>
         if @points?
           'point:' + @points[0].split(/\s+/).reverse().join(',')
@@ -288,6 +285,9 @@ ns.Collection = do (ko
 
       @_loadDatasource()
       @granuleDatasource()?.updateFromCollectionData?(jsonObj)
+
+      if @granuleDatasourceName() && @granuleDatasourceName() != 'cmr'
+        @has_granules = @canFocus()
 
     _setObservable: (prop, jsonObj) =>
       this[prop] ?= ko.observable(undefined)

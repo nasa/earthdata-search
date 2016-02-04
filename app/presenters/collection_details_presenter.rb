@@ -2,6 +2,8 @@ class CollectionDetailsPresenter < DetailsPresenter
   def initialize(collection, collection_id=nil, token=nil, env='prod')
     @collection = collection
     @collection.id = collection_id
+    data_center = ''
+    data_center = collection_id.split('-').last if collection_id.is_a?(String)
 
     if collection.xml
       collection_xml = collection.xml
@@ -15,6 +17,7 @@ class CollectionDetailsPresenter < DetailsPresenter
       @collection.orderable = collection_xml['Orderable']
       @collection.visible = collection_xml['Visible']
       @collection.temporal = collection_xml['Temporal']
+
       @collection.contacts = Array.wrap(collection_xml['Contacts']['Contact']) if collection_xml['Contacts']
       @collection.science_keywords = Array.wrap(collection_xml['ScienceKeywords']['ScienceKeyword']) if collection_xml['ScienceKeywords']
       if collection_xml['OnlineAccessURLs']
@@ -51,7 +54,7 @@ class CollectionDetailsPresenter < DetailsPresenter
     @collection.dif_url = "#{metadata_url}.dif#{url_token}"
     @collection.smap_iso_url = nil #"#{metadata_url}.smap_iso"
     opensearch_url = "#{Rails.configuration.services['earthdata'][env]['opensearch_root']}/granules/descriptor_document.xml"
-    @collection.osdd_url = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.encode_www_form_component(@collection.short_name)}&versionId=#{@collection.version_id}&dataCenter=#{URI.encode_www_form_component(@collection.archive_center)}&commit=Generate#{url_token}"
+    @collection.osdd_url = "#{opensearch_url}?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=#{URI.encode_www_form_component(@collection.short_name)}&versionId=#{@collection.version_id}&dataCenter=#{URI.encode_www_form_component(data_center)}&commit=Generate#{url_token}"
 
     # Set description to URL if URLDescription doesn't exist
     @collection.online_access_urls = [] if @collection.online_access_urls.nil?
