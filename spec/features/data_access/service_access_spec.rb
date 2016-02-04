@@ -23,7 +23,7 @@ describe 'Services Access', reset: false do
       end
 
       # Cannot reliably display a progress bar using recordings
-      xit 'displays an error message' do
+      it 'displays an error message' do
         sleep 10
         expect(page).to have_content('Error: CollectionDisabled')
         expect(page).to have_content('Message: This collection is currently not configured for subagent HEG')
@@ -66,23 +66,21 @@ describe 'Services Access', reset: false do
           fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
           click_on 'Continue'
           click_on 'Submit'
-       end
-
-        # this test and the one below are quite flaky.
-        # Cannot reliably display a progress bar using recordings
-        xit 'displays a progress bar while the service is processing' do
-          wait_for_xhr
-          if page.has_content?("AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002 Processing")
-            expect(page).to have_content('of 12 items processed')
-            expect(page).to have_css('div.progress-bar')
-          else
-            expect(page).to have_content("AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids V002 Complete")
+        end
+        
+        it 'displays a progress bar while the service is processing' do
+          retry_count = 0
+          has_progress_bar = false
+          is_esi_completed = false
+          while (retry_count < 150) && !has_progress_bar && !is_esi_completed
+            has_progress_bar = true if page.has_content?("Processing")
+            is_esi_completed = true if page.has_content?("Complete")
+            sleep 0.5
+            retry_count += 1
           end
+          p "Retried: #{retry_count} times."
 
-          # after waiting the progress bar moves
-          wait_for_xhr
-          expect(page).to have_content('Complete')
-          expect(page).to have_no_css('div.progress-bar')
+          expect(has_progress_bar && is_esi_completed).to be_true
         end
 
         context 'when returning to the retrieval page after a service is complete' do
