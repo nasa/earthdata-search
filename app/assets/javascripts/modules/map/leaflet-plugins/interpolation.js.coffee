@@ -22,13 +22,7 @@ ns.interpolation = do (L, gcInterpolate = window.edsc.map.geoutil.gcInterpolate,
   projectLatLngPath = (latLngs, proj, interpolateFn, tolerance=1, maxDepth=10) ->
     return [] if latLngs.length == 0
 
-    # Clone path and set its last element to its first so we can interpolate the last segment
-    if Math.abs(latLngs[0].lng) == Math.abs(latLngs[latLngs.length - 1].lng) == 180
-      # In this case the last element is an artificial longitude crossing.  Avoid interpolating
-      # with the first to prevent drawing strokes along the dateline
-      latLngs = latLngs.concat(latLngs[latLngs.length - 1])
-    else
-      latLngs = latLngs.concat(latLngs[0])
+    latLngs = latLngs.concat()
 
     points = (proj(ll) for ll in latLngs)
     #for ll in latLngs
