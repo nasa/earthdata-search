@@ -220,7 +220,16 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
         latlngs = latlngs[0]
       latlngs = (L.latLng(latlng) for latlng in latlngs)
 
-      @_latlngs = latlngs
+      @_latlngs = latlngs.concat()
+
+      # Draw closed path when not editing
+      if latlngs.length > 2 && !@drawing
+        if Math.abs(latlngs[0].lng) == Math.abs(latlngs[latlngs.length - 1].lng) == 180
+          # In this case the last element is an artificial longitude crossing.  Avoid interpolating
+          # with the first to prevent drawing strokes along the dateline
+          latlngs.push(latlngs[latlngs.length - 1])
+        else
+          latlngs.push(latlngs[0])
 
       divided = dividePolygon(latlngs)
 
@@ -270,6 +279,10 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
       L.Draw.Polyline.prototype.addHooks.call(this)
       if @_map
         this._poly = new L.SphericalPolygon([], @options.shapeOptions)
+        this._poly.drawing = true
+    removeHooks: ->
+      this._poly.drawing = false
+      L.Draw.Polyline.prototype.removeHooks.call(this)
 
   L.Edit.Poly = L.Edit.Poly.extend
     _getMiddleLatLng: (marker1, marker2) ->
