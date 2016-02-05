@@ -19,9 +19,9 @@ describe CollectionDetailsPresenter do
     @collection.short_name = "MOD02QKM"
     @collection.version_id = 5
     @collection.archive_center = "LAADS"
-    CollectionDetailsPresenter.new(@collection)
+    CollectionDetailsPresenter.new(@collection, 'C123-LAADS')
 
-    expect(@collection.osdd_url).to eq("https://api.echo.nasa.gov/opensearch/granules/descriptor_document.xml?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=MOD02QKM&versionId=5&dataCenter=LAADS&commit=Generate")
+    expect(@collection.osdd_url).to eq("https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?utf8=%E2%9C%93&clientId=#{Rails.configuration.cmr_client_id}&shortName=MOD02QKM&versionId=5&dataCenter=LAADS&commit=Generate")
   end
 
   it "converts spatial points" do
