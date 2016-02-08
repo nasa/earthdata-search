@@ -295,3 +295,6 @@ DEPENDENCIES
   unicorn
   vcr
   whenever
+
+BUNDLED WITH
+   1.11.2
