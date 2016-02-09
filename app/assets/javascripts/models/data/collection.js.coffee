@@ -259,7 +259,7 @@ ns.Collection = do (ko
       null
 
     canFocus: ->
-      @hasAtomData() && @granuleDatasourceName()
+      @hasAtomData() && @granuleDatasourceName()?
 
     org: ->
       if @organizations?.length > 0
