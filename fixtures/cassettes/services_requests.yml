@@ -43,6 +43,21 @@ http_interactions:
   digest: ab03b3f1c01eab9cd55e6d0aa2640bb9264a7378
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=gov.noaa.class.J2-XGDR&clientId=edsc-dev&startPage=1&count=20
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Tue, 09 Feb 2016 19:57:40 GMT
+  digest: 047cb28bb941e5afc5281bbe87bbb71d76b6f9f0
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/browse-scaler/availability
     body:
       encoding: US-ASCII
