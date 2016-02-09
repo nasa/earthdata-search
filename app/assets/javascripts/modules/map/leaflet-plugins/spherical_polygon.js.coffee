@@ -136,6 +136,8 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
 
     interior = []
     boundary = []
+    interiorStack = []
+    dir = null
 
     if hasInsertions
       # Rearrange the split array so that its beginning and end contain separate polygons
@@ -183,13 +185,21 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
         # If we joined the east and west side of the polygon by going across the pole
         # above, we want to keep adding to our current interior shape.  Otherwise,
         # we're stopping the interior at the antimeridian and adding it to our list.
-        unless hasPole
-          interiors.push(interior)
-          interior = []
+        if !hasPole
+          if !dir || dir == latlng.lng - next.lng
+            # We're crossing in the same direction we crossed last time, so the shape isn't complete
+            interiorStack.push(interior)
+            interior = []
+            dir = latlng.lng - next.lng
+          else
+            # We're crossing back in the opposite direction, so the shape is complete
+            interiors.push(interior)
+            interior = interiorStack.pop() ? []
 
     # Close any remaining boundaries or interiors
     boundaries.push(boundary) if boundary.length > 0
     interiors.push(interior) if interior.length > 0
+    interiors.push(interior) for interior in interiorStack
 
     # Special case: If we contain both poles but do not have an edge crossing the meridian
     # as dealt with above, reverse our drawing.
