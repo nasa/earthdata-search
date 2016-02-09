@@ -67,6 +67,7 @@ describe "Project collection list", reset: true do
       click_link "Back to Collection Search"
       sleep(1) # Wait for sliding transition
       collection_results.click_link "View Project"
+      sleep(1) # Wait for sliding transition
       expect(project_overview).to have_link('Hide collection', count: 1)
     end
 
