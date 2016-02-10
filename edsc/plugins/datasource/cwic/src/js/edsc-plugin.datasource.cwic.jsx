@@ -1,6 +1,5 @@
 import Granules from './Granules.jsx';
 import GranuleQuery from './GranuleQuery.jsx';
-let ajax = window.edsc.util.xhr.ajax;
 
 export default class CwicDatasourcePlugin {
   constructor(edsc, collection) {
@@ -22,23 +21,9 @@ export default class CwicDatasourcePlugin {
   }
 
   toQueryParams() {
-    let query = this.cwicQuery(),
-      params = query.params(),
-      singleGranuleId = query.singleGranuleId();
-    if (singleGranuleId) {
-      params.echo_granule_id = singleGranuleId;
-    }
-    return params;
+    return {};
   }
   loadAccessOptions(callback, retry) {
-    ajax({
-      dataType: 'json',
-      url: '/data/options',
-      data: this.toQueryParams(),
-      method: 'post',
-      retry: retry,
-      success: callback
-    });
   }
   hasQueryConfig() {
     return false;
