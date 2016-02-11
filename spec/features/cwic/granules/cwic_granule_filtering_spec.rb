@@ -34,10 +34,15 @@ describe "CWIC Granule list", reset: false do
           click_button "granule-filters-submit"
           wait_for_xhr
         end
+
         it "filters granules" do
           number_granules = granule_list.text.match /\d+ matching granules/
           after_granule_count = number_granules.to_s.split(" ")[0].to_i
           expect(after_granule_count < before_granule_count).to be_true
+        end
+
+        it "has query param 'pg[0][qt]' in the url" do
+          expect(current_url).to have_text("pg[0][qt]=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T22%3A59%3A59.000Z")
         end
       end
     end
