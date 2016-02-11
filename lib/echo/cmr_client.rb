@@ -22,7 +22,6 @@ module Echo
       format = options.delete(:format) || 'json'
       body = options_to_granule_query(options)
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      Rails.logger.info "__=------ get_granules: body: #{body}"
       post("/search/granules.#{format}", body.to_query, headers)
     end
 
