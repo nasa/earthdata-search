@@ -21,7 +21,7 @@ module GranuleUtils
   end
 
   def decorate_cwic_granules(response)
-    response.body['feed']['entry'].each do |cwic_granule|
+    Array.wrap(response.body['feed']['entry']).each do |cwic_granule|
       # decorate CWIC granules to make them look like CMR granules
       # Rename 'link' to 'links'
       cwic_granule['links'] = cwic_granule.delete('link')
