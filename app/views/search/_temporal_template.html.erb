@@ -33,6 +33,7 @@
     </div>
     <div class="temporal-error">Start must be no later than End</div>
   </div>
+  <% unless defined?(recurring) && !recurring %>
   <div>
     <input data-bind="checked: isRecurring" type="checkbox" id="<%= prefix %>-show-recurring"> <label for="<%= prefix %>-show-recurring">Recurring?</label>
   </div>
@@ -49,4 +50,5 @@
             class="button temporal-clear temporal-recurring low-priority"
             title="Clear your selections" type="button">Clear</button>
   </div>
+  <% end %>
 </div>
