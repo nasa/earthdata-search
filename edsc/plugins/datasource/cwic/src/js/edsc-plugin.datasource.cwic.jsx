@@ -13,6 +13,11 @@ export default class CwicDatasourcePlugin {
     let short_name = collection.json.short_name;
     let osdd_url = `http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=${short_name}`;
     collection.osdd_url(osdd_url);
+
+    var self = this;
+    this.clearFilters = () => {
+      self.cwicQuery().clearFilters();
+    };
   }
 
   destroy(edsc) {
@@ -21,13 +26,19 @@ export default class CwicDatasourcePlugin {
   }
 
   toBookmarkParams() {
-    return {};
+    return this.cwicQuery().serialize();
   }
 
   fromBookmarkParams(json, fullQuery) {
+    let query = this.cwicQuery();
+    query.fromJson(json);
+    if (fullQuery && fullQuery.sgd) {
+      query.singleGranuleId(fullQuery.sgd);
+    }
   }
 
   toQueryParams() {
+    console.log("TO QUERY PARAMS");
     let query = this.cwicQuery(),
       params = query.params(),
       singleGranuleId = query.singleGranuleId();
@@ -70,7 +81,11 @@ export default class CwicDatasourcePlugin {
   }
 
   temporal() {
-    return this.cwicQuery().temporal.applied;
+    return this.temporalModel().applied;
+  }
+
+  temporalModel() {
+    return this.cwicQuery().temporal;
   }
 
   granuleDescription() {
@@ -81,6 +96,9 @@ export default class CwicDatasourcePlugin {
     if (!this._query) {
       let collection = this._collection;
       this._query = new GranuleQuery(collection.id, collection.query, collection.searchable_attributes);
+      let temporal = this._query.temporal;
+      temporal.pending.allowRecurring(false);
+      temporal.applied.allowRecurring(false);
     }
     return this._query;
   }

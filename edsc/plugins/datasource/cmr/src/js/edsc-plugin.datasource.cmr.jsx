@@ -13,7 +13,13 @@ export default class CmrDatasourcePlugin {
     this._dataLoaded = ko.observable(false);
     Object.defineProperty(collection, 'cmrGranuleQuery', {get: () => {return this.cmrQuery();}});
     Object.defineProperty(collection, 'cmrGranulesModel', {get: () => {return this.data();}});
+
+    var self = this;
+    this.clearFilters = () => {
+      self.cmrQuery().clearFilters();
+    };
   }
+
   destroy(edsc) {
     this._edsc = null;
     this._collection = null;
@@ -108,6 +114,11 @@ export default class CmrDatasourcePlugin {
     // TODO: Better story for row-specific temporal
     return this.cmrQuery().temporal.applied;
   }
+
+  temporalModel() {
+    return this.cmrQuery().temporal;
+  }
+
   granuleDescription() {
     let hits = (this._dataLoaded() && this.hasQueryConfig()) ?
           this.data().hits() :
