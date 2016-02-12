@@ -45,6 +45,8 @@ export default class CwicDatasourcePlugin {
     if (singleGranuleId) {
       params.echo_granule_id = singleGranuleId;
     }
+    params.short_name = this._collection.json.short_name;
+    params.datasource = 'cwic';
     return params;
   }
 
