@@ -187,12 +187,13 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   background-color: #ccaa00;
   color: #fff;
   text-shadow: .5px .5px .5px darken(#ccaa00, 20%);
-  font-size: 8px;
+  font-size: 1em;
   font-weight: bold;
   text-align: center;
   line-height: 22px;
+  font-family: FontAwesome;
   &:before {
-    content: "CWIC";
+    content: "\f0ac";
   }
   // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
 }
