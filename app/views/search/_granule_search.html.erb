@@ -44,21 +44,13 @@
         </section>
       </dd>
     <!-- /ko -->
-    <!--ko if: cwic()-->
       <dt>Temporal</dt>
       <dd>
-        <!-- ko with: cwicGranulesModel.temporal.pending -->
-        <%= render partial: 'temporal_template', locals: {recurring: false, prefix: 'granule', show_actions: false, cwic: true} %>
+        <!-- ko with: granuleDatasource().temporalModel().pending -->
+        <%= render partial: 'temporal_template', locals: {prefix: 'granule', show_actions: false, cwic: true} %>
         <!--/ko-->
       </dd>
-    <!--/ko-->
-    <!-- ko ifnot: cwic() -->
-      <dt>Temporal</dt>
-      <dd>
-        <!-- ko with: cmrGranulesModel.temporal.pending -->
-        <%= render partial: 'temporal_template', locals: {prefix: 'granule', show_actions: false, cwic: false} %>
-        <!-- /ko -->
-      </dd>
+    <!--ko ifnot: cwic()-->
       <dt>Day / Night Flag</dt>
       <dd>
         <p>Find granules captured during the day, night or anytime.</p>
@@ -107,10 +99,10 @@
 <div class="granule-filter-actions">
   <button data-bind="click: $root.ui.projectList.applyFilters" id="granule-filters-submit" class="button submit" title="Apply your selections" type="button">Apply</button>
   <!--ko ifnot: cwic()-->
-  <button id="granule-filters-clear" data-bind="click: cmrGranuleQuery.clearFilters" class="button low-priority" title="Clear your selections" type="button">Clear</button>
+  <button id="granule-filters-clear" data-bind="click: granuleDatasource().clearFilters" class="button low-priority" title="Clear your selections" type="button">Clear</button>
   <!--/ko-->
   <!--ko if: cwic()-->
-  <button id="granule-filters-clear" data-bind="click: cwicGranuleQuery.clearFilters" class="button low-priority" title="Clear your selections" type="button">Clear</button>
+  <button id="granule-filters-clear" data-bind="click: granuleDatasource().clearFilters" class="button low-priority" title="Clear your selections" type="button">Clear</button>
   <!--/ko-->
 </div>
 <!-- /ko -->

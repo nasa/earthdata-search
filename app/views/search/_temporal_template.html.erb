@@ -33,7 +33,7 @@
     </div>
     <div class="temporal-error">Start must be no later than End</div>
   </div>
-  <% unless defined?(recurring) && !recurring %>
+  <!-- ko if: allowRecurring -->
   <div>
     <input data-bind="checked: isRecurring" type="checkbox" id="<%= prefix %>-show-recurring"> <label for="<%= prefix %>-show-recurring">Recurring?</label>
   </div>
@@ -41,6 +41,7 @@
     <label for="<%= prefix %>-temporal-slider">Year Range:</label> <span data-bind="text: yearsString" class="temporal-recurring-year-range-value"></span><br />
     <input id="<%= prefix %>-temporal-slider" class="temporal-recurring-year-range" type="text">
   </div>
+  <!-- /ko -->
 
   <div class="button-row <%= "hidden" unless show_actions %>">
     <button id="temporal-submit"
@@ -50,5 +51,4 @@
             class="button temporal-clear temporal-recurring low-priority"
             title="Clear your selections" type="button">Clear</button>
   </div>
-  <% end %>
 </div>
