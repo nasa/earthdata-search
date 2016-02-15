@@ -25,9 +25,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 27 Jan 2016 20:02:48 GMT
@@ -57,9 +57,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 27 Jan 2016 01:20:50 GMT
@@ -74,9 +74,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:57 GMT
@@ -91,9 +91,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:56 GMT
@@ -108,9 +108,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:55 GMT
@@ -125,9 +125,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:59 GMT
@@ -157,9 +157,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:55 GMT
@@ -174,9 +174,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:57 GMT
@@ -206,9 +206,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:58 GMT
@@ -223,9 +223,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Mon, 28 Sep 2015 17:28:09 GMT
@@ -240,9 +240,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:47:00 GMT
@@ -257,9 +257,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:55 GMT
@@ -274,9 +274,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:57 GMT
@@ -308,9 +308,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:56 GMT
@@ -325,9 +325,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:47:01 GMT

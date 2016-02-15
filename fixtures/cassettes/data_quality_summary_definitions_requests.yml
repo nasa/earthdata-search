@@ -10,9 +10,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Mon, 28 Sep 2015 17:28:02 GMT
@@ -61,9 +61,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 27 Jan 2016 01:20:47 GMT
@@ -78,9 +78,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:51 GMT
@@ -163,9 +163,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Sat, 03 Oct 2015 21:49:46 GMT
@@ -248,9 +248,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 27 Jan 2016 20:02:45 GMT
@@ -299,9 +299,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:46:51 GMT
