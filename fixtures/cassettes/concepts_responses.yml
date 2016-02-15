@@ -1490,6 +1490,71 @@ a8625406c735635e8f0d54555083fa434ca22391:
         WGISS Integrated Catalog</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>www.mosdac.gov.in</URL><Type>USER
         SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>20</WestBoundingCoordinate><NorthBoundingCoordinate>50</NorthBoundingCoordinate><EastBoundingCoordinate>130</EastBoundingCoordinate><SouthBoundingCoordinate>-50</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+3600219aef95c98ed6c15a9bcca628aff7c53b79:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 02 Feb 2016 15:34:01 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - d137f1b9-3777-4647-a4a6-d9dd0a8637e3
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Collection><ShortName>JAXA_EORC_Tropical_Cyclones_database</ShortName><VersionId>1.0</VersionId><InsertTime>2005-07-06T00:00:00.000Z</InsertTime><LastUpdate>2015-09-22T00:00:00.000Z</LastUpdate><LongName>JAXA/EORC
+        Tropical Cyclones database</LongName><DataSetId>JAXA/EORC Tropical Cyclones
+        database</DataSetId><Description>'Tropical Cyclone Database (Ver. 1.0)' was
+        produced and distribute by the Earth\nObservation Research and application
+        Center(EORC), Japan Aerospace Exploration\nAgency(JAXA).\n\nJAXA/EORC picked
+        up the data that observed typhoons, hurricanes, cyclones and\netc from the
+        data obtained by TRMM/PR, TMI, VIRS, Aqua/AMSR-E and\nMidori-II(ADEOS-II)/AMSR
+        and established this database. \n\nJAXA/EORC also obtained additional data
+        such as positional information, route\nmaps, classification and wind speed
+        of typhoons, hurricanes and cyclones to\nestablish the database. These data
+        are obtained from the University of Hawaii's\n\"Tropical Storms, Worldwide\",
+        Joint Typhoon Warning Center (JTWC), National\nHurricane Center (NHC) and
+        Central Pacific Hurricane Center (CPHC).</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In
+        Work</CollectionState><Temporal><RangeDateTime><BeginningDateTime>1997-12-07T00:00:00.000Z</BeginningDateTime><EndingDateTime>2001-08-06T00:00:00.000Z</EndingDateTime></RangeDateTime><RangeDateTime><BeginningDateTime>2001-08-25T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>DIF
+        AUTHOR</Role><OrganizationEmails><Email>R-rd@restec.or.jp</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>unknown</FirstName><LastName>RESTEC</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        PHENOMENA</TermKeyword><VariableLevel1Keyword><Value>HURRICANES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        PHENOMENA</TermKeyword><VariableLevel1Keyword><Value>STORMS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        PHENOMENA</TermKeyword><VariableLevel1Keyword><Value>TYPHOONS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        WATER VAPOR</TermKeyword><VariableLevel1Keyword><Value>HUMIDITY</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        WATER VAPOR</TermKeyword><VariableLevel1Keyword><Value>WATER VAPOR</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>CLOUDS</TermKeyword><VariableLevel1Keyword><Value>CLOUD
+        PROPERTIES</Value><VariableLevel2Keyword><Value>CLOUD FREQUENCY</Value></VariableLevel2Keyword></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>PRECIPITATION</TermKeyword><VariableLevel1Keyword><Value>PRECIPITATION
+        AMOUNT</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Not
+        provided</ShortName><LongName>Not provided</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>PR</ShortName><LongName>TRMM
+        Precipitation Radar</LongName></Instrument><Instrument><ShortName>AMSR</ShortName><LongName>Advanced
+        Microwave Scanning Radiometer</LongName></Instrument><Instrument><ShortName>TMI</ShortName><LongName>TRMM
+        Microwave Imager</LongName></Instrument><Instrument><ShortName>VIRS</ShortName><LongName>TRMM
+        Visible Infrared Scanner</LongName></Instrument><Instrument><ShortName>AMSR-E</ShortName><LongName>Advanced
+        Microwave Scanning Radiometer-EOS</LongName></Instrument></Instruments></Platform><Platform><ShortName>ADEOS-II</ShortName><LongName>Advanced
+        Earth Observing Satellite-II</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>TRMM</ShortName><LongName>Tropical
+        Rainfall Measuring Mission</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>TEST
+        AQUA</ShortName><LongName>Earth Observing System, AQUA</LongName><Type>Not
+        Specified</Type></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>miura.satoko@jaxa.jp</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>36b8692d-7e06-42d4-8273-ada9e4945cc9</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-09-21
+        14:21:06</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>EOSDIS</ShortName><LongName>Earth
+        Observing System Data Information System</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>http://www.eorc.jaxa.jp/TRMM/index_e.htm</URL><Description>\n
+        \        TRMM web site operated by JAXA\n      </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>36</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-36</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>36</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-36</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
 4cfd759907f259bb6f4fc610b9295313769946d7:
   response:
     status:

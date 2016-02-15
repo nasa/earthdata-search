@@ -146,6 +146,17 @@ describe 'Collection details', reset: false do
     end
   end
 
+  context "when selecting a collection with multiple temporal fields but some of which have only BeginningDateTime" do
+    before :all do
+      load_page '/search/collection-details', env: :uat, focus: 'C1204424196-GCMDTEST'
+      expect(page).to have_content('JAXA/EORC Tropical Cyclones database')
+    end
+
+    it 'displays the combined temporal' do
+      expect(page).to have_content('1997-12-07 to 2001-08-06')
+    end
+  end
+
   context "when selecting a collection with multiple lines of description" do
     before :all do
       load_page '/search/collection-details', focus: 'C1029-NSIDCV0'
