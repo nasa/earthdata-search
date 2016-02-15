@@ -21,5 +21,9 @@ module Echo
     def default_params
       { clientId: Rails.configuration.cmr_client_id }
     end
+
+    def get_cwic_granule(url)
+      get(url)
+    end
   end
 end

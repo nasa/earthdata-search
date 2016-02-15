@@ -42,7 +42,9 @@ class GranulesController < ApplicationController
 
   class GranuleUrlStreamer
     def initialize(params, token, url_mapper, echo_client, url_type=:download)
-      params.reject!{|p| ['datasource', 'short_name'].include? p}
+      @is_cwic = params['datasource'] != 'cmr'
+      @short_name = params['short_name']
+      params.reject!{|p| ['datasource', 'short_name', 'cwic'].include? p}
       @params = params
       @token = token
       @url_mapper = url_mapper
@@ -56,8 +58,15 @@ class GranulesController < ApplicationController
       page = 1
       page_size = @params["page_size"]
       until at_end
-        catalog_response = @echo_client.get_granules(@params.merge(page_num: page), @token)
-        hits = catalog_response.headers['CMR-Hits'].to_i
+        if @is_cwic
+          page_size = 200 # Max page_size for CWIC requests is 200.
+          catalog_response = @echo_client.get_cwic_granules(@short_name, page, page_size)
+          hits = catalog_response.body['feed']['totalResults'].to_i if catalog_response.success?
+        else
+          catalog_response = @echo_client.get_granules(@params.merge(page_num: page), @token)
+          hits = catalog_response.headers['CMR-Hits'].to_i
+        end
+
 
         if catalog_response.success?
           granules = catalog_response.body['feed']['entry']
@@ -71,7 +80,7 @@ class GranulesController < ApplicationController
               yielded_info = true
             end
 
-            @url_mapper.send("#{@url_type}_urls_for", granule).each do |url|
+            @url_mapper.send("#{@url_type}_urls_for", granule, @is_cwic).each do |url|
               yield url
             end
           end

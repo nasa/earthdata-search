@@ -160,11 +160,15 @@ class OpendapConfiguration
     end
   end
 
-  def download_urls_for(granule)
+  def download_urls_for(granule, is_cwic=false)
     if @can_subset
       [@template.expand(decorate(granule).merge(@template_params))]
     else
-      links_for(granule, 'enclosure', /\/data/)
+      if is_cwic
+        Array.wrap(links_for(granule['link'], 'enclosure', /enclosure/).first)
+      else
+        links_for(granule['links'], 'enclosure', /\/data/)
+      end
     end
   end
 
@@ -174,8 +178,8 @@ class OpendapConfiguration
 
   private
 
-  def links_for(granule, *rels)
-    links = Array.wrap(granule['links'])
+  def links_for(links, *rels)
+    links = Array.wrap(links)
     regexp_rels, string_rels = rels.partition {|rel| rel.is_a?(Regexp)}
     links = links.find_all do |link|
       !link['inherited'] && (string_rels.include?(link) || regexp_rels.any? {|rel| link['rel'][rel]})

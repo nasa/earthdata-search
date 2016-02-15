@@ -150,7 +150,12 @@ class DataAccessController < ApplicationController
         respond_with(catalog_response.body, status: catalog_response.status, location: nil)
       end
     else
-      catalog_response = echo_client.get_cwic_granules(short_name)
+      if params['echo_granule_id']
+        catalog_response = echo_client.get_cwic_granule(params['echo_granule_id'])
+      else
+        catalog_response = echo_client.get_cwic_granules(short_name)
+      end
+
       if catalog_response.success?
         result = parse_cwic_response(catalog_response)
         respond_with(result, status: catalog_response.status, location: nil)
@@ -160,18 +165,18 @@ class DataAccessController < ApplicationController
     end
   end
 
+  private
+
   def parse_cwic_response(catalog_response)
     {
         hits: catalog_response.body['feed']['totalResults'],
         dqs: nil,
-        size: 'Size Unavailable',
-        sizeUnit: nil,
+        size: 'N/A',
+        sizeUnit: 'N/A',
         methods: [{name: 'Download', type: 'download', subset: false, parameters: [], spatial: nil, formats: [], all: true, count: catalog_response.body['feed']['totalResults']}],
         defaults: {accessMethod: [{method: 'Download', type: 'download'}]}
     }
   end
-
-  private
 
   def parse_cmr_response(catalog_response, granule_params)
     collection = Array.wrap(granule_params[:echo_collection_id]).first
