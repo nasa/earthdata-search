@@ -42,7 +42,8 @@ describe "CWIC Granule list", reset: false do
         end
 
         it "has query param 'pg[0][qt]' in the url" do
-          expect(current_url).to have_text("pg[0][qt]=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T22%3A59%3A59.000Z")
+          project_id = current_url.match(/projectId=\d+/).to_s.split("=")[1]
+          expect(Project.find(project_id).path).to have_text("pg[0][qt]=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T23%3A59%3A59.000Z")
         end
       end
     end
