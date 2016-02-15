@@ -103,9 +103,9 @@ http_interactions:
       Content-Type:
       - application/json
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Sat, 05 Dec 2015 03:03:09 GMT
@@ -4122,9 +4122,9 @@ http_interactions:
       Content-Type:
       - application/json
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 02 Dec 2015 19:53:44 GMT
@@ -4141,9 +4141,9 @@ http_interactions:
       Content-Type:
       - application/json
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Sat, 03 Oct 2015 21:49:53 GMT
@@ -4160,9 +4160,9 @@ http_interactions:
       Content-Type:
       - application/json
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Sat, 05 Dec 2015 02:31:33 GMT
@@ -8295,9 +8295,9 @@ http_interactions:
       Content-Type:
       - application/json
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Mon, 19 Oct 2015 16:01:35 GMT
@@ -14386,9 +14386,9 @@ http_interactions:
       Content-Type:
       - application/json
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Fri, 04 Dec 2015 22:31:18 GMT

@@ -72,9 +72,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 12 Nov 2015 16:47:02 GMT
@@ -196,9 +196,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 27 Jan 2016 01:20:51 GMT

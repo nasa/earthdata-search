@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:54 GMT
   digest: 27f381eb987281af99f451fe8d394255e1feeecb
 - request:
@@ -23,7 +23,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 20:55:43 GMT
   digest: d2c23826f8bd4145202ee6929c478e8806bc76c0
 - request:
@@ -36,7 +36,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 17:16:19 GMT
@@ -51,7 +51,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 20:58:21 GMT
@@ -66,7 +66,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:34 GMT
   digest: 741d2c2a1639b88787d38026ba6852a77578a2d3
 - request:
@@ -79,7 +79,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:11:28 GMT
   digest: 477281d8a38889cf232523a4ff630fa2290e852b
 - request:
@@ -92,7 +92,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:44:14 GMT
@@ -107,7 +107,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 20:56:42 GMT
@@ -122,7 +122,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:23:24 GMT
@@ -137,7 +137,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 21:03:57 GMT
@@ -152,7 +152,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 27 Jan 2016 02:04:05 GMT
   digest: 5f6310e331c32ef8637df740f7f9c927bcaa1d4a
 - request:
@@ -165,7 +165,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 27 Jan 2016 01:20:27 GMT
   digest: 02a56d16ee8a2436be9365fba60f66b4aa982744
 - request:
@@ -178,7 +178,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:29:57 GMT
   digest: e9d805a002b363cd49dda76f84b177850c14b586
 - request:
@@ -191,7 +191,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 20:53:23 GMT
   digest: 956b22175c6c382390a139862f64dc85df0ff358
 - request:
@@ -204,7 +204,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:27:45 GMT
   digest: 6d8acea30c9b8d98dd6401feaae6e24ab7b1f5ab
 - request:
@@ -217,7 +217,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:13:23 GMT
   digest: af296a4e7b8b65346f0c4b84d8dce1e64978c709
 - request:
@@ -230,7 +230,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:04:50 GMT
   digest: 6df64383427262ac5ccd04a836bebddf8c5299c1
 - request:
@@ -243,7 +243,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:04:22 GMT
   digest: 1a542d0ad74361c955aa06cf08430f88370d9125
 - request:
@@ -256,7 +256,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 16:46:46 GMT
   digest: e8b7bd440c96ed32eaa2665ffd6872c31a5aa400
 - request:
@@ -269,7 +269,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:01:14 GMT
   digest: 9e4198c5bb97cf9b39f892559522d4179e01f292
 - request:
@@ -282,7 +282,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:46:11 GMT
   digest: 9519e54ad2f1ff120584fdc97ac004faa64ec6a7
 - request:
@@ -295,7 +295,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:01:03 GMT
   digest: 95a6b16f8d627ff504747b9c89b79d25a81cef6d
 - request:
@@ -308,7 +308,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:05:34 GMT
   digest: b0aadb9a7b32125365e2f98fe07afe91038edd8e
 - request:
@@ -321,7 +321,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:01:46 GMT
   digest: 043acc7f3d9cd60c18b6c11830c49345f7c553a1
 - request:
@@ -334,7 +334,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:23:17 GMT
@@ -349,7 +349,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 21:04:10 GMT
@@ -364,7 +364,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:52 GMT
   digest: 7d11283635f4740277c175c457483cb30d777dfa
 - request:
@@ -377,7 +377,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:09:58 GMT
   digest: a303d9160568346e8ebc373039a476c893cfb90e
 - request:
@@ -390,7 +390,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:31:13 GMT
   digest: 769f70796871f1daac5a19c42e6e6c2f87c4f112
 - request:
@@ -403,7 +403,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 20:49:18 GMT
@@ -418,7 +418,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:27:42 GMT
   digest: c38d604e6fcd11b0d6e97483e1fa27d60ba42f8c
 - request:
@@ -431,7 +431,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 20:47:55 GMT
@@ -446,7 +446,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:30 GMT
   digest: 08f53a50899a403e30e630ca051f765d390931db
 - request:
@@ -459,7 +459,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:09:07 GMT
   digest: 8ebe7ebffb321e26426e9f656c0b0886c4562ab2
 - request:
@@ -472,7 +472,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:03:35 GMT
   digest: 638e8312d1b7ebc3dc487e65c0ba24abbd9fb441
 - request:
@@ -485,7 +485,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:02:43 GMT
   digest: b2acd1fc523e632e4f96f0f183c9d6b1a7e38c0e
 - request:
@@ -498,7 +498,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:03:58 GMT
   digest: 44e652eb1c9d852d9231e9c48490b7d13d602bcf
 - request:
@@ -511,7 +511,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:02:50 GMT
   digest: 03761fa12683fd16999721733760a49f91c20659
 - request:
@@ -524,7 +524,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:43:48 GMT
   digest: 3316e3f320ed33557778a92d557a99a21b057e37
 - request:
@@ -537,7 +537,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:23:15 GMT
@@ -552,7 +552,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 20:48:22 GMT
   digest: 65eba850d6543f91fbfcab17b7726551efb72841
 - request:
@@ -565,7 +565,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:23:20 GMT
@@ -580,7 +580,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 21:04:57 GMT
@@ -595,7 +595,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:38:42 GMT
   digest: ce52abe3067c508cb0b6569a3615790d556ed081
 - request:
@@ -608,7 +608,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:38:24 GMT
   digest: 4251ac5d75f77578efa2b7b3515b4a1911c7357f
 - request:
@@ -621,7 +621,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 20:57:49 GMT
   digest: ae9ba37adc697bdd2d48d5a2bdf8f4c40aa98ec4
 - request:
@@ -634,7 +634,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:38:21 GMT
@@ -649,7 +649,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 21:03:50 GMT
@@ -664,7 +664,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:34:41 GMT
@@ -679,7 +679,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 21:19:59 GMT
@@ -694,7 +694,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:23:23 GMT
@@ -709,7 +709,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 21:04:45 GMT
@@ -724,7 +724,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 19:03:21 GMT
@@ -739,7 +739,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 20:48:07 GMT
@@ -754,7 +754,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 27 Jan 2016 20:02:40 GMT
@@ -769,7 +769,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:22:57 GMT
   digest: 926fc2c4803c11361daac6666e861f3397a713bb
 - request:
@@ -782,7 +782,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 20:58:33 GMT
   digest: b46a1921dd08fae35291723317ee18eeef7b2144
 - request:
@@ -795,7 +795,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:23:31 GMT
@@ -810,7 +810,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 21:04:22 GMT
@@ -825,7 +825,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:22:54 GMT
@@ -840,7 +840,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Thu, 14 Jan 2016 20:53:40 GMT
@@ -855,7 +855,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:08 GMT
   digest: 0a7e21dcb31935bcff04b9ecc9e137cc8673d1cc
 - request:
@@ -868,7 +868,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:10 GMT
   digest: 9194b3eff4951701a2f175bef5bf11c0369f3382
 - request:
@@ -881,7 +881,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:07 GMT
   digest: 495fa0e35f9f1c29887a47f0ba01cbeb0ca881d8
 - request:
@@ -894,7 +894,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:03 GMT
   digest: 243b1f84f73c476aa64d66e86f07f8ede410b0c6
 - request:
@@ -907,7 +907,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:37 GMT
   digest: dd6ea63ad94c9c53c3ad6a0188bb1dd0a228d294
 - request:
@@ -920,7 +920,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:09 GMT
   digest: 6a9d2136e809b7fc19eaaa1dcdee7d81cb8f1486
 - request:
@@ -933,7 +933,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:42 GMT
   digest: d42f3ff7b9e7e7d3d7533cad24c7f1059403d0eb
 - request:
@@ -946,7 +946,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:07 GMT
   digest: 1fb5d67f120fabe0a313bf8f54aa5d7ab9b8f12d
 - request:
@@ -959,7 +959,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:40 GMT
   digest: 7c353bd47f4179347320c8583ff92d4cb23b0ad1
 - request:
@@ -972,7 +972,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:56:44 GMT
   digest: fbc547a9c82565d9d0e628c48ad9d07bbb0d6f1d
 - request:
@@ -985,7 +985,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:56:46 GMT
   digest: 81ca89fda8403c3cbde1f6d9ab464b5ffaba5859
 - request:
@@ -998,7 +998,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:56:41 GMT
   digest: a251bc4dfe5a88a96d62ed7c12569ac51c7b3d5f
 - request:
@@ -1011,7 +1011,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:33 GMT
   digest: 7fabd2c8945b924f4d1e4dd170b2e8ab32a87ede
 - request:
@@ -1024,7 +1024,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:34 GMT
   digest: 0a87fcaaed3044c00b908fd9a939a8e9d00336be
 - request:
@@ -1037,7 +1037,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:32 GMT
   digest: 1d94bb1b744cd15b8e844cae0de2329457ebddd2
 - request:
@@ -1050,7 +1050,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:54 GMT
   digest: 85daaf075a72b80fe449bd2d4815873b034aa586
 - request:
@@ -1063,7 +1063,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:40 GMT
   digest: 5e03d54a7290d0a9864799536ee36fc1866d4a3a
 - request:
@@ -1076,7 +1076,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:53:02 GMT
   digest: a5e335f0b60b8ff2ddbe99f0eb27abd09c9b3ef9
 - request:
@@ -1089,7 +1089,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:59 GMT
   digest: c807b7bf3a988538ef3ec3b4cbc52b3df89da1ed
 - request:
@@ -1102,7 +1102,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:44 GMT
   digest: 09e7554a305a1be9158f0b99739b87dc3ff6c8d3
 - request:
@@ -1115,7 +1115,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:53:07 GMT
   digest: 37fde98a02fb7ddc258edf9f043749f95adce447
 - request:
@@ -1128,7 +1128,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:58 GMT
   digest: 6fa8d8c69720109a55c3cb8637e891af898cfa1a
 - request:
@@ -1141,7 +1141,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:42 GMT
   digest: f1dadce5f67439e4f02ef2801313528f05bcc836
 - request:
@@ -1154,7 +1154,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:53:04 GMT
   digest: bfcc0bb59d6696ea85b0367c3547573a9b58e381
 - request:
@@ -1167,7 +1167,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:55:43 GMT
@@ -1182,7 +1182,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:55:46 GMT
@@ -1197,7 +1197,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:55:41 GMT
@@ -1212,7 +1212,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:55:15 GMT
@@ -1227,7 +1227,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:55:21 GMT
@@ -1242,7 +1242,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:55:18 GMT
@@ -1257,7 +1257,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:57:54 GMT
   digest: 8baf09e8e4716bea3f009a3351f28f78e25c7696
 - request:
@@ -1270,7 +1270,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:57:57 GMT
   digest: fe74138e57744f6c5eb78c460798f69ccc60e0aa
 - request:
@@ -1283,7 +1283,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:57:51 GMT
   digest: daa04da318c03c1d29cac959e380fbda02188c5a
 - request:
@@ -1296,7 +1296,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:57:14 GMT
   digest: 79c60207885a38ced7d65a05802ee5030e47d1bc
 - request:
@@ -1309,7 +1309,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:57:17 GMT
   digest: 6b693649061444c640568494f5545b65105eecaf
 - request:
@@ -1322,7 +1322,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:57:11 GMT
   digest: a0124669af12c1c94b61fb2a1bfc169cc9820565
 - request:
@@ -1335,7 +1335,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:59 GMT
   digest: 3ff1c2310f9643772365860b0a30c8ebaf900bed
 - request:
@@ -1348,7 +1348,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:00 GMT
   digest: 2f2336e132d98c5b3890524cb1b8512406a62981
 - request:
@@ -1361,7 +1361,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:58 GMT
   digest: 3a157f3d1c4dc122efec943e9a2b560c78360fe3
 - request:
@@ -1374,7 +1374,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:43:20 GMT
   digest: c700de7a7350d6a524dadfb981d057f19dde65e1
 - request:
@@ -1387,7 +1387,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:43:18 GMT
   digest: 60d01067f3aa060f1f4d0fa0f727d3de8a220b7f
 - request:
@@ -1400,7 +1400,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:02 GMT
   digest: 42cd8569d4284d1893f73f72578b6c30d4e4305f
 - request:
@@ -1413,7 +1413,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:31:00 GMT
   digest: d4074de9b1881112a3b35b4e90fa90aba10e72ac
 - request:
@@ -1426,7 +1426,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:48:24 GMT
   digest: 9ee5ac6125b81e7c12f4716f02e2f5f9bdd5b050
 - request:
@@ -1439,7 +1439,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:45 GMT
   digest: 2f29143bd1de75569439b0685aeb50243f42d9da
 - request:
@@ -1452,7 +1452,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:04 GMT
   digest: d72c6f2e0d494e5125b1f39a40f240175db804d7
 - request:
@@ -1465,7 +1465,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:11 GMT
   digest: f54709180101a1f99fd196496d0b7f0bbdd7c569
 - request:
@@ -1478,7 +1478,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:28:07 GMT
   digest: ef91e4a51a284a4c45a259c09f5cbce1d96c9efe
 - request:
@@ -1491,7 +1491,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:01 GMT
   digest: 576b9249ffb796037d47d25c5f8707104c4fb547
 - request:
@@ -1504,7 +1504,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:39 GMT
   digest: dad48a49147ea94837a77fdf7107fdc0d1614a6e
 - request:
@@ -1517,7 +1517,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:31 GMT
   digest: 0f0dd1cb808b5a819f8351e67a1dd3eaa1dc35f6
 - request:
@@ -1530,7 +1530,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:43:26 GMT
   digest: 11f51679230fe8f4ad027be4383dab45a3e6796b
 - request:
@@ -1543,7 +1543,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:22 GMT
   digest: 2e3fd9c9a85025caceaf6c7a2cf976a6d6f74a43
 - request:
@@ -1556,7 +1556,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 20:18:37 GMT
   digest: f00ba463ae53adea3935d1fd3f579b44e6467df1
 - request:
@@ -1569,7 +1569,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:18:35 GMT
   digest: 54bcf996fdff277fc7591003a0844ac34b666820
 - request:
@@ -1582,7 +1582,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:49 GMT
   digest: d09b8202c7165c213b35569402a958cf2f93e9a2
 - request:
@@ -1595,7 +1595,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:30:29 GMT
   digest: 24baaf338774b06a7ee79201ba78beb845c450e1
 - request:
@@ -1608,7 +1608,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:34 GMT
   digest: 81f159d8882683a570f0f0b81ea0929dbdd999f4
 - request:
@@ -1621,7 +1621,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:37 GMT
   digest: d08c90f7e0583124d8977db6f8909dfcdaa2c30f
 - request:
@@ -1634,7 +1634,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:30:35 GMT
   digest: 5f3a358e676be10b7108a60937991f070f04752d
 - request:
@@ -1647,7 +1647,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:39 GMT
   digest: bd17f84091fb0dfb34e8e76680967036bb3b29e4
 - request:
@@ -1660,7 +1660,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:45 GMT
   digest: f3d845b77f787386a4a7dd86a5e11f2633a29c76
 - request:
@@ -1673,7 +1673,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:41 GMT
   digest: 12bb85f804b2278c630cfb6f546f0aab562eedb5
 - request:
@@ -1686,7 +1686,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:45:23 GMT
   digest: 8c2b07e0144c943fd18b7cf8a6fafa54b27f7b21
 - request:
@@ -1699,7 +1699,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:07 GMT
   digest: 33386fd49264430391e746f42c999099bfb159d9
 - request:
@@ -1712,7 +1712,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:48:13 GMT
   digest: 712ee575e7aa6f3fbb278c687589546657e7018f
 - request:
@@ -1725,7 +1725,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:15 GMT
   digest: c4c4ca6d1ddde7478f3135b635bdde3966c11361
 - request:
@@ -1738,7 +1738,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:57 GMT
   digest: aa3f195c21f3d0aa3e3c91640aa4728dfd3ba65b
 - request:
@@ -1751,7 +1751,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:43:35 GMT
   digest: dea71d081f536ca7d8cd8af040c4e9b31fca233d
 - request:
@@ -1764,7 +1764,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:37:08 GMT
@@ -1779,7 +1779,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:44 GMT
   digest: af7795be6f9f3544d19656df4a29c043bd85bbce
 - request:
@@ -1792,7 +1792,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:46 GMT
   digest: 8aa234d0f628d2320002fbb3a019c9fb58876960
 - request:
@@ -1805,7 +1805,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:56 GMT
   digest: 6fe73b7c24c00adb6146dc6adf43502a1b4d4bf2
 - request:
@@ -1818,7 +1818,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:23:49 GMT
   digest: fb97a21a1dd9250add0ae17221485083d0937560
 - request:
@@ -1831,7 +1831,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:11 GMT
   digest: 29f25bff92949e66eb1796627191315f048de013
 - request:
@@ -1844,7 +1844,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:53:16 GMT
   digest: 4408d3409e3cd9e345386f4085dd1e89d6d7a996
 - request:
@@ -1857,7 +1857,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:51:04 GMT
   digest: 98d61bac1516d39142023d096148d20c0950cba2
 - request:
@@ -1870,7 +1870,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:07:16 GMT
   digest: a24d24661bbe4d4be803a35f4db37bfff58ae505
 - request:
@@ -1883,7 +1883,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:16 GMT
   digest: 76f3ece3359b8b3fbe1eb79a442be13e6e31a773
 - request:
@@ -1896,7 +1896,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:18 GMT
   digest: 00c30616ee833107f2d58069309f03e71fd7d024
 - request:
@@ -1909,7 +1909,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:46:39 GMT
   digest: 35df943c1d33226268cef6c2e5b7d4eddbcdd85a
 - request:
@@ -1922,7 +1922,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:24 GMT
   digest: 379f44e284283df091923e7364e1527ef7939f86
 - request:
@@ -1935,7 +1935,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:40:35 GMT
   digest: b59a227599fbd8f7e7282dda37348e20a1e467dc
 - request:
@@ -1948,7 +1948,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:15 GMT
   digest: b36cb824cf8e92c72f8ae96dbc36cfafb7f98274
 - request:
@@ -1961,7 +1961,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:58 GMT
   digest: 3e4888299c5c041daab8aa997c7b0a813f6c8094
 - request:
@@ -1974,7 +1974,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:51:17 GMT
   digest: df240b3b286d2ecd5a615a450d81f3d34313e61c
 - request:
@@ -1987,7 +1987,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:19 GMT
   digest: 51226cc600850a32426e7b0b4b7d3a6f3889cf4e
 - request:
@@ -2000,7 +2000,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:30 GMT
   digest: 99d65f50bd8ec3c6b51185ff291881143b7c7308
 - request:
@@ -2013,7 +2013,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:59 GMT
   digest: 33d310f5de30f4dbf2e3ab026c6a92b351e71bd2
 - request:
@@ -2026,7 +2026,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:39 GMT
   digest: 477c0772b5c74518002aeec6acb13e23fdd24032
 - request:
@@ -2039,7 +2039,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:25 GMT
   digest: 5765b30f8adac64ee5613f83dd325c8faaf2316a
 - request:
@@ -2052,7 +2052,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:08 GMT
   digest: d655002026ae5272c25e6d07533d36204740aa5b
 - request:
@@ -2065,7 +2065,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:50 GMT
   digest: 2346a961e1e2256abd743ab6fee503db513eab3b
 - request:
@@ -2078,7 +2078,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 19:02:05 GMT
@@ -2093,7 +2093,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 19:02:21 GMT
@@ -2108,7 +2108,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:02:57 GMT
   digest: 888288a338aa5d9290c21fff16113544840b9ce3
 - request:
@@ -2121,7 +2121,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 19:02:37 GMT
@@ -2136,7 +2136,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:03 GMT
   digest: e0fce854171fecee4c6f8e439297510b699aa795
 - request:
@@ -2149,7 +2149,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:31:06 GMT
   digest: c4f57d89f2286a25551137100882a05387ba7042
 - request:
@@ -2162,7 +2162,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:48:26 GMT
   digest: 44f63458756c60e77793f105e4f67c4b36fb9e85
 - request:
@@ -2175,7 +2175,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:53 GMT
   digest: a7e540a0d68cf0bb738e8c4595a3e4c9c15fd6c1
 - request:
@@ -2188,7 +2188,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:08 GMT
   digest: 317fe0c3a4fcd34636f5125bf2002338ee72cb99
 - request:
@@ -2201,7 +2201,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:12 GMT
   digest: 0e0228f2bf72d0991daa96664164e44f3b69acfe
 - request:
@@ -2214,7 +2214,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:28:09 GMT
   digest: 52be160ad1fe37c2f8713ef9da019493c6191098
 - request:
@@ -2227,7 +2227,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:02 GMT
   digest: ad62184ede83c27e644d1c78959594a996929a9c
 - request:
@@ -2240,7 +2240,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:41 GMT
   digest: 95394bc5919705b01b17ceb6b0a3b2f24b9c7f20
 - request:
@@ -2253,7 +2253,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:37 GMT
   digest: 3143459c60b293439e13fd149b174da51c5b9ae2
 - request:
@@ -2266,7 +2266,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:43:27 GMT
   digest: 37c345e7df2a2b6f4bdb3dafc0eebf544caba218
 - request:
@@ -2279,7 +2279,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:23 GMT
   digest: 19e078c2ec506b0437977525fffdd7ab4b7c904c
 - request:
@@ -2292,7 +2292,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 20:18:40 GMT
   digest: 52c2ca4dae580a22c61127843b146ca9779f0419
 - request:
@@ -2305,7 +2305,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:18:40 GMT
   digest: fb9c441c19701c19f34dfc4c953fb52ba87157a9
 - request:
@@ -2318,7 +2318,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:51 GMT
   digest: 35988f7f3cf91041216ec280c05a46097e8e29f7
 - request:
@@ -2331,7 +2331,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:30:30 GMT
   digest: a53b70f3503f9004adc71f8b3bbc7a78a18b09b6
 - request:
@@ -2344,7 +2344,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:36 GMT
   digest: 539c790a2db4562582fc8fe82696f2ea9cafc88d
 - request:
@@ -2357,7 +2357,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:37 GMT
   digest: 8f26aa04e60f68cda693ebc10efb98f072fa8dab
 - request:
@@ -2370,7 +2370,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:30:37 GMT
   digest: f54fd5d757aa8884f7a62f5a0bb8c98ff11c4e78
 - request:
@@ -2383,7 +2383,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:40 GMT
   digest: 473cc6f876b9fa692ce1a839c726d991d953bd73
 - request:
@@ -2396,7 +2396,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:47 GMT
   digest: 7d26c391ce8297c6c7e3dc43251058be4e25bfc6
 - request:
@@ -2409,7 +2409,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:43 GMT
   digest: ce97c72c8115d074bf1697dd01346ce69b00912a
 - request:
@@ -2422,7 +2422,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:45:26 GMT
   digest: 5804f37caa808f3c736548afca89ee4af583cffe
 - request:
@@ -2435,7 +2435,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:10 GMT
   digest: f45d889b1a87c719136261b355a662f86b1fd754
 - request:
@@ -2448,7 +2448,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:48:17 GMT
   digest: 0ce5903dc8787a131cc62a1bd4c3bef3de10fdb3
 - request:
@@ -2461,7 +2461,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:17 GMT
   digest: c48e4c3378430c64fd0246bd3e1bf46c166ff272
 - request:
@@ -2474,7 +2474,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:59 GMT
   digest: cd3b15426800ee736f8233778d9a539fcbe7e8be
 - request:
@@ -2487,7 +2487,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:43:38 GMT
   digest: 18fffda205f7dba824cfe71e8869cc4c9d3edaff
 - request:
@@ -2500,7 +2500,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:37:11 GMT
@@ -2515,7 +2515,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:45 GMT
   digest: 18870407fa086fafff7316e611df012880c34112
 - request:
@@ -2528,7 +2528,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:47 GMT
   digest: 2269bd261ebfa1e7ace70f8659a19a12f6fca3dc
 - request:
@@ -2541,7 +2541,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:59 GMT
   digest: d38a601fcef0048065375a68f1d93a35b1953748
 - request:
@@ -2554,7 +2554,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:23:52 GMT
   digest: 1b5d17b3ce3817f4d902a2fab3a91b8193d178f9
 - request:
@@ -2567,7 +2567,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:15 GMT
   digest: 6973e4baaa3dd82e9e9ec848fe43a14041e2ef83
 - request:
@@ -2580,7 +2580,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:53:20 GMT
   digest: fd6cc509b8c3de8b08795086fc1d18011603daa1
 - request:
@@ -2593,7 +2593,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:51:10 GMT
   digest: ce2a9b7260905aae6a2dea5a57623d0e854b8ae0
 - request:
@@ -2606,7 +2606,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:07:19 GMT
   digest: e975ad83e809720c9e358c6406ae20e3f7281989
 - request:
@@ -2619,7 +2619,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:21 GMT
   digest: c2b9619101c013bfc4b4c9aeb718dc9f8770386d
 - request:
@@ -2632,7 +2632,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:20 GMT
   digest: 5e7302fabd6c1878ccf06920f143b5378a95b2a7
 - request:
@@ -2645,7 +2645,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:46:41 GMT
   digest: 31a797b434aff51ce19c8c1ee940f243cde71b0a
 - request:
@@ -2658,7 +2658,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:26 GMT
   digest: 940a03115cd631ac535fc3acea496c230364c2aa
 - request:
@@ -2671,7 +2671,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:40:38 GMT
   digest: 9533b0c8649ff7bec24dafd8f58fc86d5d89533d
 - request:
@@ -2684,7 +2684,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:18 GMT
   digest: e1fb7fa28243712e312201caf6f3e4f4c6e701e1
 - request:
@@ -2697,7 +2697,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:51:01 GMT
   digest: 6c73234a3fd74e01385bf7a50c5b1e8d3b9092e3
 - request:
@@ -2710,7 +2710,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:51:19 GMT
   digest: d0e2e6861c486607ef3dd84c3fa77c34a394e6eb
 - request:
@@ -2723,7 +2723,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:21 GMT
   digest: edac83d6fcd1cc8c535977439b01a8eb98a96bbe
 - request:
@@ -2736,7 +2736,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:33 GMT
   digest: 9f110e3c8dce87c35c6453b8444be45a1b88f753
 - request:
@@ -2749,7 +2749,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:01 GMT
   digest: d4d2701e65dcdd272208d64782d442a06685ad78
 - request:
@@ -2762,7 +2762,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:41 GMT
   digest: 20f38f96b6705b74318f17a636361a6d8f5a1943
 - request:
@@ -2775,7 +2775,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:26 GMT
   digest: 2d70d71132565b46d00ab27c8eb14d704a06218c
 - request:
@@ -2788,7 +2788,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:10 GMT
   digest: 2b2b92aff7d612daf51c3dd7c85a2299a4734766
 - request:
@@ -2801,7 +2801,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:53 GMT
   digest: ee1a7c9bd714441480929c9729979bcc5f75b131
 - request:
@@ -2814,7 +2814,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:01 GMT
   digest: cd46a9b54a5409a51bc483de9c5b229a7002a2b3
 - request:
@@ -2827,7 +2827,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:31:05 GMT
   digest: 4f17ecbe92144badfb3b413713852fa6ecc3203a
 - request:
@@ -2840,7 +2840,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:48:21 GMT
   digest: e4125b0770ee62a448b4e33656ce829833bb3f94
 - request:
@@ -2853,7 +2853,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:49 GMT
   digest: c5b6d02e6462973a138fb94f0a5d0f8a33616177
 - request:
@@ -2866,7 +2866,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:05 GMT
   digest: d21d39cd276958664587bca29062a9abc2817337
 - request:
@@ -2879,7 +2879,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:10 GMT
   digest: 19ad3614200e6c14cb84495aa0c18ff4e1e04f5e
 - request:
@@ -2892,7 +2892,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:28:08 GMT
   digest: dd2755518a212c1fb3bdb14a55729900cdb21570
 - request:
@@ -2905,7 +2905,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:59 GMT
   digest: d22713df359046b0f04adb1780034bedc27f908a
 - request:
@@ -2918,7 +2918,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:38 GMT
   digest: 994531728e53086c101ab3cd151a7150067ef5fa
 - request:
@@ -2931,7 +2931,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:34 GMT
   digest: 823a7c46dc88cdbfd3482c4c1c66fe23f846b595
 - request:
@@ -2944,7 +2944,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:43:25 GMT
   digest: 03f62ed3767e1762fdf6cf9df511c3b962508402
 - request:
@@ -2957,7 +2957,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:22 GMT
   digest: 29b109839fb324a7917cb46cd46c0931e8ace24e
 - request:
@@ -2970,7 +2970,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 20:18:34 GMT
   digest: f4ccc5f8f74242b5da6df08913d03aed291fa65c
 - request:
@@ -2983,7 +2983,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:18:37 GMT
   digest: 8a9810220bd18a5269edbb1ec1777f88b828201e
 - request:
@@ -2996,7 +2996,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:47 GMT
   digest: 5a8c3355f498aff83255588935ca7f3e84052822
 - request:
@@ -3009,7 +3009,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:30:28 GMT
   digest: 923c22ebf4b2cedc084d17a3c61a759afea74cb4
 - request:
@@ -3022,7 +3022,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:33 GMT
   digest: 04cfc53587f84fee2422c0b2e2556e42f46a3b97
 - request:
@@ -3035,7 +3035,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:36 GMT
   digest: a5c5ccccaab774959ee5754b623101963d23201b
 - request:
@@ -3048,7 +3048,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:30:33 GMT
   digest: 4cfddca1c63edc5b521a7f6eb46b146ae27ffcef
 - request:
@@ -3061,7 +3061,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:38 GMT
   digest: ef395d951708a02bb9d940dba8900261da64a7f8
 - request:
@@ -3074,7 +3074,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:44 GMT
   digest: 0b592ba9181f650435fe63b6c4a4efd19edf30ec
 - request:
@@ -3087,7 +3087,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:41 GMT
   digest: f900d5c6e4587113b249bdac19aa07c453c26d94
 - request:
@@ -3100,7 +3100,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:45:20 GMT
   digest: d9ba04678d5452b4c5c8a2e79dd963fa853e7e3c
 - request:
@@ -3113,7 +3113,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:04 GMT
   digest: bbd0547ce4949a9f5a05676c377184899259530b
 - request:
@@ -3126,7 +3126,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:48:15 GMT
   digest: 885a9d5dbfe0bdb9c21b5555644214b8d8ec61d8
 - request:
@@ -3139,7 +3139,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:16 GMT
   digest: b3ba2c222171238029d126baf4dfca7c1aff5c84
 - request:
@@ -3152,7 +3152,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:55 GMT
   digest: c9de484a47d7a04eca61865e70e92a8b432d28df
 - request:
@@ -3165,7 +3165,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:43:34 GMT
   digest: a35f9e4e951d55e01f319f329741febd8a9f1fcb
 - request:
@@ -3178,7 +3178,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:37:09 GMT
@@ -3193,7 +3193,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:44 GMT
   digest: 1e380dcbc60e1a37ab129ea97ed343c1bd5d1391
 - request:
@@ -3206,7 +3206,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:46 GMT
   digest: 89fcf0660027cc1e0bfe4a354e4a246d0a3c89e4
 - request:
@@ -3219,7 +3219,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:54 GMT
   digest: 4620dbe2eae84069b28c14bb65da58d701647532
 - request:
@@ -3232,7 +3232,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:23:46 GMT
   digest: 16e4e59f586c40eb980e84ba97c879f7e0a20cf6
 - request:
@@ -3245,7 +3245,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:52:13 GMT
   digest: 71c44e4fc5629654eece685780ed516e0bd56d76
 - request:
@@ -3258,7 +3258,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:53:18 GMT
   digest: d0aad3397f530f9f6ac21f2f5cfd5a623e2f1dd5
 - request:
@@ -3271,7 +3271,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:51:07 GMT
   digest: 036265e4872e17d0736b8aa1a4a3e00ae483b58c
 - request:
@@ -3284,7 +3284,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:07:13 GMT
   digest: 9c57fb6cb29f7085eeccae9c68d4688013fc188e
 - request:
@@ -3297,7 +3297,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 19:01:18 GMT
   digest: 9d20dde7347e4423fafed1210e19c321e589f254
 - request:
@@ -3310,7 +3310,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:15 GMT
   digest: 577befd4a970d243a92c409f9ca178456abb36ac
 - request:
@@ -3323,7 +3323,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:46:35 GMT
   digest: 3e4904f74ee02756e979d5b04583c7d0e01ad8c9
 - request:
@@ -3336,7 +3336,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:22 GMT
   digest: 8d664ff330dead07f674c6afbea2d6db1b251ee9
 - request:
@@ -3349,7 +3349,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:40:30 GMT
   digest: 604ae994d8aa26400f4ecceefbaf3100ccb6ce92
 - request:
@@ -3362,7 +3362,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:13 GMT
   digest: 6d478501967bcd25c083c9a3877de0ddc71e42c4
 - request:
@@ -3375,7 +3375,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:50:56 GMT
   digest: 73342cd52b9073644402e3976c848ed99d88de1a
 - request:
@@ -3388,7 +3388,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:51:14 GMT
   digest: d304ad44bba3e48b5725d7edea47cf86f599a72a
 - request:
@@ -3401,7 +3401,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:16 GMT
   digest: 896ae4a340a2edfcf2aad2b4a0882705fe484fc4
 - request:
@@ -3414,7 +3414,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:27 GMT
   digest: fe208a08b3da2f2638bc8997abdafedb2156816a
 - request:
@@ -3427,7 +3427,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:57 GMT
   digest: f3a30f9ab0b05450feeb3b5aba9b663809618b94
 - request:
@@ -3440,7 +3440,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:37 GMT
   digest: cbd7d8481ffc5e49d7f01cc8d68244c9fe953077
 - request:
@@ -3453,7 +3453,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:22 GMT
   digest: 13f4e8d9926525daf9b5b1f7df969ea63dab1baf
 - request:
@@ -3466,7 +3466,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:06 GMT
   digest: d4d4a243880827b98f73b69ad5a18c223184481f
 - request:
@@ -3479,7 +3479,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:48 GMT
   digest: 388b5bbb67c12a7e2ffb1dedad3d031869fb8577
 - request:
@@ -3492,7 +3492,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:59:09 GMT
   digest: 35d264113a69f78eb37e25ade22716f3b0e58427
 - request:
@@ -3505,7 +3505,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:59:12 GMT
   digest: 16413793abbb9ef97ad44d7c03417846f43ffaf6
 - request:
@@ -3518,7 +3518,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:59:05 GMT
   digest: 6cfe7dba1ee8b255fa1051d2fed6466e66f3673a
 - request:
@@ -3531,7 +3531,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:31:34 GMT
   digest: 2f705b065b29da5f3949042ba0ccf419b937159c
 - request:
@@ -3544,7 +3544,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:31:36 GMT
   digest: f021315e9928d182751efd783ae4343557e0802e
 - request:
@@ -3557,7 +3557,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:31:33 GMT
   digest: 95b09f0f14b18582babbc6e4f4efb9b3c9d0ad39
 - request:
@@ -3570,7 +3570,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:10:59 GMT
   digest: 3ab8de069bc96777b83016cbd21c4bd183428963
 - request:
@@ -3583,7 +3583,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:11:02 GMT
   digest: 3c2a826296a0f61985c95af6eb95f5fa57439fd7
 - request:
@@ -3596,7 +3596,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:10:56 GMT
   digest: 618dba54c54739614e72fc14a3cc32513d6c7a57
 - request:
@@ -3609,7 +3609,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:26 GMT
   digest: b16a09f88e49c56c474134d22649bac00d766a88
 - request:
@@ -3622,7 +3622,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:28 GMT
   digest: 55d3267c3a7bc91d2662049194982a18665897a1
 - request:
@@ -3635,7 +3635,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:25 GMT
   digest: f4fa2c5d2fb1b4fe86e1432ab790931462cb2141
 - request:
@@ -3648,7 +3648,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:29 GMT
   digest: e1546bc4a86c4363d364aa2f0ca3fec28102a6ff
 - request:
@@ -3661,7 +3661,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:30 GMT
   digest: ef79800360769a3163c8825df064416e9fed5393
 - request:
@@ -3674,7 +3674,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:28 GMT
   digest: b376231e42b60888060f178e9d96b6fe21700159
 - request:
@@ -3687,7 +3687,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:27:51 GMT
   digest: cb60fd45e5266dec31f539eb4ea2b1f8e3ab61c1
 - request:
@@ -3700,7 +3700,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:27:52 GMT
   digest: 4b7a635bd09e0c396d50f73a23f28e5dc10cf5cb
 - request:
@@ -3713,7 +3713,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:27:50 GMT
   digest: 72cf80557ee95549cf90cfc376419743af4daa24
 - request:
@@ -3726,7 +3726,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:53:41 GMT
   digest: 09a260a5fa05246be1e8d11a256bf9d48e83f348
 - request:
@@ -3739,7 +3739,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:53:44 GMT
   digest: 7f020b2647fd6637a88f9f34eb75a6f2a22d17b5
 - request:
@@ -3752,7 +3752,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:53:38 GMT
   digest: c5335b89212bb6162ae925066211810b3693af7b
 - request:
@@ -3765,7 +3765,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:54:33 GMT
   digest: 44a79400b9be379cf16f34ec6c5f870a8bb94883
 - request:
@@ -3778,7 +3778,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 19:02:28 GMT
@@ -3793,7 +3793,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 19:02:31 GMT
@@ -3808,7 +3808,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:54:35 GMT
   digest: b5ce3210ec06e5fb9a8cb60470f0eb38f20ac280
 - request:
@@ -3821,7 +3821,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:54:30 GMT
   digest: 52ae544d0bb5393196989b7e644a50ed2b80f52c
 - request:
@@ -3834,7 +3834,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 19:02:25 GMT
@@ -3849,7 +3849,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:55:30 GMT
@@ -3864,7 +3864,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:55:32 GMT
@@ -3879,7 +3879,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 18:55:28 GMT
@@ -3894,7 +3894,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:56:02 GMT
   digest: 2b0b6b8c8047234ed79ad5cebdf8528cf8feeba6
 - request:
@@ -3907,7 +3907,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:56:09 GMT
   digest: 4eabfaf6897c6cbc5ac637c5d351917a6c3a14a4
 - request:
@@ -3920,7 +3920,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:56:06 GMT
   digest: 99d01680d19f215c6d9498073fa8ec7b64cac69f
 - request:
@@ -3933,7 +3933,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:58:20 GMT
   digest: a4051ac5ab267a8536a588d476c20120f062bf42
 - request:
@@ -3946,7 +3946,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:58:27 GMT
   digest: 965bdcae6f7444686eb33f4777e42026050a43f3
 - request:
@@ -3959,7 +3959,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:58:24 GMT
   digest: af24b630f03170d83fb4ebbdeda5902346d8dde6
 - request:
@@ -3972,7 +3972,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:58:08 GMT
   digest: c461766f14780af94aa2e1e688af8de6e9e53fad
 - request:
@@ -3985,7 +3985,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:58:06 GMT
   digest: 5a6a84effc50aa5969e6186a409ba8a96188d22e
 - request:
@@ -3998,7 +3998,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:56:56 GMT
   digest: 7635af9b1cb246a04077a5040ec5f8ee92ae6622
 - request:
@@ -4011,7 +4011,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:56:58 GMT
   digest: fb8e811f18a90068aafb52e242ccf44d00ece42d
 - request:
@@ -4024,7 +4024,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:56:53 GMT
   digest: 111a1d9fce01262746c3fd21dfc51158d502cf77
 - request:
@@ -4037,7 +4037,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:33 GMT
   digest: a9b1bece289453d290cc989ee37c75edbb6766f5
 - request:
@@ -4050,7 +4050,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:35 GMT
   digest: a5fe982c7d6433a6c5fa091f4c62653e5931f9d4
 - request:
@@ -4063,7 +4063,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:32 GMT
   digest: f9b370d25ee23b4f0cc2275791d942a6742c4b39
 - request:
@@ -4076,7 +4076,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:46:21 GMT
   digest: 9071a5208b50b416b0e1e61ec57a9e3bedf8840f
 - request:
@@ -4089,7 +4089,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:46:25 GMT
   digest: f55690ef026083190c4896becbf0da07aad9bf33
 - request:
@@ -4102,7 +4102,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:46:23 GMT
   digest: 63aa77bec1aab9d2c35b333f1f8228e975118c82
 - request:
@@ -4115,7 +4115,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:19 GMT
   digest: 3bd61b752c62d57608d5ad33faa94d642c9f0bd3
 - request:
@@ -4128,7 +4128,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:10 GMT
   digest: 31ce30e67fe2c0c5319331c503d13a910484289d
 - request:
@@ -4141,7 +4141,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:22 GMT
   digest: 26a40988f9073baa7c418c0202b27bb52904e493
 - request:
@@ -4154,7 +4154,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:13 GMT
   digest: b98f9e18ad2ae8c156a1e1ecce4230b8095b3c88
 - request:
@@ -4167,7 +4167,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:21 GMT
   digest: 77eecb52f6e759129b5838591ce20dfa8da2b39f
 - request:
@@ -4180,7 +4180,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:09 GMT
   digest: 1930d5da93c9f3b52f950dfe2aa017c05185c3cc
 - request:
@@ -4193,7 +4193,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:26 GMT
   digest: 7683cab0a32dad19f07696873623cdb200491553
 - request:
@@ -4206,7 +4206,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:28 GMT
   digest: 7392d4d4564de7f4cb2edd74c39924a6765cd9de
 - request:
@@ -4219,7 +4219,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:25 GMT
   digest: adab5e5388507bcf7e75aedbab9dcb561561240f
 - request:
@@ -4232,7 +4232,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:33 GMT
   digest: 48ad5e9a02f6d0c5e2274e79019993be5e85a90a
 - request:
@@ -4245,7 +4245,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:35 GMT
   digest: 05265b3c6d36d639dec67fc322ed027cbc360ea7
 - request:
@@ -4258,7 +4258,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:31 GMT
   digest: bd8e1296bd1983032af0562995923caa27960dc6
 - request:
@@ -4271,7 +4271,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:39 GMT
   digest: 0d2416277aea4fbf183f3a5436f25a816bd67249
 - request:
@@ -4284,7 +4284,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:45 GMT
   digest: 742c8743686a3961961dae2b13b3cfcd14ef6fad
 - request:
@@ -4297,7 +4297,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:42 GMT
   digest: 1cc336afddb7a6f125d90884b96f1014d77446d3
 - request:
@@ -4310,7 +4310,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:51 GMT
   digest: 785fd18c862b48066f9e7ab244a64f26e829d42f
 - request:
@@ -4323,7 +4323,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:53 GMT
   digest: f8ecead2626e424ce121d8d6ceef2e5b592949de
 - request:
@@ -4336,7 +4336,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:49 GMT
   digest: 1c7dddbd49645a4df2a535f0203102ffb60a5903
 - request:
@@ -4349,7 +4349,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:57 GMT
   digest: ee002b2206e2bdde275659bacb8eb4cca8e351a2
 - request:
@@ -4362,7 +4362,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:58 GMT
   digest: 07bc9e572b18b6f639c304a7f0368efd919a7e04
 - request:
@@ -4375,7 +4375,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:44:55 GMT
   digest: e3c4e66edef57b940aedbbedc8d8080e05683c4c
 - request:
@@ -4388,7 +4388,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:00 GMT
   digest: 66fde9abc2ae337f1019718b73db9439d6b67b67
 - request:
@@ -4401,7 +4401,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:01 GMT
   digest: 37b7f5f34d13be84bc2f505f473223a8dabfbaa5
 - request:
@@ -4414,7 +4414,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:46:57 GMT
   digest: 89c35f68f5ab1f0767e04b2a035e145e39da1473
 - request:
@@ -4427,7 +4427,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:06 GMT
   digest: 3ac7b1143846745b950ef1c9669aabd973501bf0
 - request:
@@ -4440,7 +4440,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:08 GMT
   digest: 70c0baedd6d76a36f169ac040456dac889e03178
 - request:
@@ -4453,7 +4453,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:04 GMT
   digest: 7f7369daa56c77bacd9985c8acdf0fe38e031407
 - request:
@@ -4466,7 +4466,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:15 GMT
   digest: 972c8d1e5de620b9efbe97d661d17241565fb4e5
 - request:
@@ -4479,7 +4479,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:16 GMT
   digest: c20fe6fc48a80d72a5c7cce569eda82d073907b4
 - request:
@@ -4492,7 +4492,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:47:13 GMT
   digest: 8fef51e8e840d6ae735c94c805a55b239adfb458
 - request:
@@ -4505,7 +4505,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:03 GMT
   digest: 426ddbf5e4ca03bc1c2f301d8f2938aa992b932d
 - request:
@@ -4518,7 +4518,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:05 GMT
   digest: 29c25b34e1b1173c911a2708481fa9e02fec5346
 - request:
@@ -4531,7 +4531,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:45:01 GMT
   digest: dbb845bc03f7ae1c5763e580549deb6a39c9a2dc
 - request:
@@ -4544,7 +4544,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:18:47 GMT
   digest: c101d4365d2b1b486d1c246d18211438dd9dfa15
 - request:
@@ -4557,7 +4557,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:18:50 GMT
   digest: 8f54e8cf110ff17ca4aaabc5f8f03e07a9fa1bd8
 - request:
@@ -4570,7 +4570,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:18:44 GMT
   digest: dcaa26ed9d1ae7cd1834eae637d262634148e48a
 - request:
@@ -4583,7 +4583,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:27 GMT
   digest: 2795a7446af64079843fba020a40b329ae79ba32
 - request:
@@ -4596,7 +4596,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:27 GMT
   digest: 56790256b2af20c565bc76872a76e67c9dba1247
 - request:
@@ -4609,7 +4609,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:26 GMT
   digest: 7e86e62c135c8f7012e783cfda600bb95b58e84d
 - request:
@@ -4622,7 +4622,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:12 GMT
   digest: b7e135eae8ce390e0a16be1dabc17ca2422cc2e2
 - request:
@@ -4635,7 +4635,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:18 GMT
   digest: 493b9cf63f16dd33957f3d02b4f0c933853ae394
 - request:
@@ -4648,7 +4648,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:17 GMT
   digest: b7197e2b0ded9b9c32b6de839ad46a4eb0fd7b42
 - request:
@@ -4661,7 +4661,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:00:21 GMT
   digest: 747cf96b532bab9f12238c716624c205c59792ed
 - request:
@@ -4674,7 +4674,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:00:23 GMT
   digest: b47f1c189c256a8a011e7fe916be156c233046a6
 - request:
@@ -4687,7 +4687,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 21:00:18 GMT
   digest: ae5c1e584da67c4e64dd112e88c7a40fa9fdbe74
 - request:
@@ -4700,7 +4700,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:41 GMT
   digest: 8e1ea1578f2a866330143582b1a942a1b261e8ea
 - request:
@@ -4713,7 +4713,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:42 GMT
   digest: fbc32a56f9102ef2b63750c1989fa7a52caabcdb
 - request:
@@ -4726,7 +4726,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:40 GMT
   digest: 10d606ee1bda61d9401e05baec8b9b77c134298d
 - request:
@@ -4739,7 +4739,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:00 GMT
   digest: cc032f3856e001092649ef478aa317b300a7a8f7
 - request:
@@ -4752,7 +4752,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:00 GMT
   digest: 7543538f347b6805f7fc152b2d14be501c46d839
 - request:
@@ -4765,7 +4765,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:24:59 GMT
   digest: 8cf98d9c660973cf202f41e93d85a5c1bd0cdafa
 - request:
@@ -4778,7 +4778,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:15 GMT
   digest: 87f0ca351e925763b562dcd41b0f20287edd2fb7
 - request:
@@ -4791,7 +4791,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 17:17:59 GMT
   digest: 13b25e6ac61b3cd57f042cacef84daddda0e16b4
 - request:
@@ -4804,7 +4804,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:15 GMT
   digest: b532ed4ce7a5d8fa8d20b1e116418dc040e68de2
 - request:
@@ -4817,7 +4817,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 17:18:07 GMT
   digest: 849bf1734fffa8a507f9eae232ff9fb685fa0ebc
 - request:
@@ -4830,7 +4830,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:25:14 GMT
   digest: 24496c98603f7f5ca512e3e8b956f0ae163ea538
 - request:
@@ -4843,7 +4843,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 17:18:03 GMT
   digest: 6eb36aaf5d454ff2f79926fb668030d92b074169
 - request:
@@ -4856,7 +4856,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:04 GMT
   digest: 73c3ce85e271d7ac06aa3f2e78563fee9322f0f1
 - request:
@@ -4869,7 +4869,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:05 GMT
   digest: c21b1c5db0ce02db42a682f94d6627c9e6ad3328
 - request:
@@ -4882,7 +4882,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:03 GMT
   digest: 4396f32773a88fcff943d0142b2c97f062165ba1
 - request:
@@ -4895,7 +4895,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:53 GMT
   digest: 124794d9c67c37d7170ea96b12a4d241e5a81ffd
 - request:
@@ -4908,7 +4908,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:55 GMT
   digest: abfa1408dd48ea4506b3ad519f7d5b91ca264308
 - request:
@@ -4921,7 +4921,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:52 GMT
   digest: 5d5fa2b086f35cd3bc8662d88bc503ded018f4dc
 - request:
@@ -4934,7 +4934,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:08 GMT
   digest: 95c4179cc1275df69856af2ecd3dddbb5837edc0
 - request:
@@ -4947,7 +4947,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:11 GMT
   digest: eaa3034397ec9847ccaf9b67799b89cf54cb2cc8
 - request:
@@ -4960,7 +4960,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:09 GMT
   digest: 8a073f9466d3e70e22ecfc917f43831163aeb226
 - request:
@@ -4973,7 +4973,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:12 GMT
   digest: a9831c6b94862597b15f54c3fa930a065e7043f1
 - request:
@@ -4986,7 +4986,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:07 GMT
   digest: 1d696fa1d4ba93b79bc39b7f52cc2132c1d44e1b
 - request:
@@ -4999,7 +4999,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:26:10 GMT
   digest: f2e9e2698b848ca59200b7a31d3b9ad709f7b17d
 - request:
@@ -5012,7 +5012,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:28:16 GMT
   digest: cc7d6630fcbb07d3aa3bd73926d16f7257d27ab2
 - request:
@@ -5025,7 +5025,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:48 GMT
   digest: da50e3bbb34e1e6fe39e6a6f102dc89def0e9e3e
 - request:
@@ -5038,7 +5038,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:28:18 GMT
   digest: 5d106f49048e6f28fc3311c82842627ce3fee597
 - request:
@@ -5051,7 +5051,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:50 GMT
   digest: 3c3f7118506a66e8a205feced3a7b9cdfd387216
 - request:
@@ -5064,7 +5064,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:28:15 GMT
   digest: 529ad46a4b803ee1e3459c994bbc48cf66f6df74
 - request:
@@ -5077,7 +5077,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:47 GMT
   digest: 2fd6085034c47d1a3bd4d298e0023a60faac8588
 - request:
@@ -5090,7 +5090,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:59 GMT
   digest: 83aa968be38f3cbac7dbec7e6c9bde0dbe5229a8
 - request:
@@ -5103,7 +5103,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:01 GMT
   digest: b9e7f3536982b056f174b73c5ad2a52bd379017f
 - request:
@@ -5116,7 +5116,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:58 GMT
   digest: 00129f946c0b5751971cc728067c83efec4888c3
 - request:
@@ -5129,7 +5129,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:56 GMT
   digest: 54ba11186d64d035b6e3cf036726f6675befb633
 - request:
@@ -5142,7 +5142,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:57 GMT
   digest: 1ca693b216d9e6d81fe7de94eaef54a531d97261
 - request:
@@ -5155,7 +5155,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:54 GMT
   digest: 110a1ce18cc1bb2d6ecb02722982245294f93e33
 - request:
@@ -5168,7 +5168,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:23 GMT
   digest: f4f6aadb0dc22046b40b185f32a94964a97f141f
 - request:
@@ -5181,7 +5181,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:24 GMT
   digest: 059c30d741a04e844f6c782d65aec3e9dc032abc
 - request:
@@ -5194,7 +5194,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:21 GMT
   digest: d2b0cb34edf5f6e631a6f1fe23a83a372c562141
 - request:
@@ -5207,7 +5207,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:24:46 GMT
   digest: 0a792428cbabec0e682fa8630647f37f05df5a46
 - request:
@@ -5220,7 +5220,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:24:49 GMT
   digest: c0bda009c6df27fdb22676a3cf094704dc854a53
 - request:
@@ -5233,7 +5233,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:24:49 GMT
   digest: 9555c572cea662fb2300cf741fb380bc210feb93
 - request:
@@ -5246,7 +5246,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:35 GMT
   digest: 6e30985cf42fe266f63c6cd655c936232a8a5799
 - request:
@@ -5259,7 +5259,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:36 GMT
   digest: a995f2f1035ca5b8576892700cf66093f64cfae7
 - request:
@@ -5272,7 +5272,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:34 GMT
   digest: 3bedcf05627ab1e40e5635f9e5985398982581aa
 - request:
@@ -5285,7 +5285,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:29 GMT
   digest: 646a7abe3dc5440f1a2a1da2e3509754728f5fd2
 - request:
@@ -5298,7 +5298,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:29:51 GMT
   digest: af87dc37fd3f56a4cfc70e79cd781a558cdaf60f
 - request:
@@ -5311,7 +5311,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:30 GMT
   digest: 2b5a43c4293d96794682d605ef12eefb6a1adccd
 - request:
@@ -5324,7 +5324,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:29:52 GMT
   digest: 7eb5e82a35e014bba31cb6c7d36e7654616bea06
 - request:
@@ -5337,7 +5337,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:34:28 GMT
   digest: 7bc208a4487f6402dccde3fc6c3e7ec9e4428ed3
 - request:
@@ -5350,7 +5350,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:29:50 GMT
   digest: aa09ee74123ad02c34805aa18f45d638162ff84a
 - request:
@@ -5363,7 +5363,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:08 GMT
   digest: 7f8cead2533f1a08714f90864fb8a3bdb6d87504
 - request:
@@ -5376,7 +5376,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:09 GMT
   digest: 0b83a7dcf4379757a0da5f4a7ce5f20948a5e2d2
 - request:
@@ -5389,7 +5389,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:08 GMT
   digest: ba729cbc028f7118c3b2e3f114e26ed2a4a8771c
 - request:
@@ -5402,7 +5402,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:41 GMT
   digest: c941f7ef7957c03dfb323887bf411a7821b94a95
 - request:
@@ -5415,7 +5415,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:42 GMT
   digest: 4a5e2a18f17b0705330864c01a24b58cab11b383
 - request:
@@ -5428,7 +5428,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:36:39 GMT
   digest: e11b19d88f39bb733c53f4fc4ae9580376286b58
 - request:
@@ -5441,7 +5441,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:38 GMT
   digest: 7bc353cda0217bb1ca8d035f0815e55970c11119
 - request:
@@ -5454,7 +5454,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:40 GMT
   digest: ce2f8b3935b1bc54b24cc1f006a5a32aba2c061a
 - request:
@@ -5467,7 +5467,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:38 GMT
   digest: fd7287434e6f24d3d7cf78975f88b658f0f07aef
 - request:
@@ -5480,7 +5480,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:48:34 GMT
   digest: af6af1c06ace8ee77db30c669ace141a4436d7be
 - request:
@@ -5493,7 +5493,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:48:29 GMT
   digest: 592a0d260fcf0b21c70464f1d68d0103d0d126cd
 - request:
@@ -5506,7 +5506,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 28 Jan 2016 18:35:55 GMT
   digest: 6121b50dc052a81538280569d8e99075a37e220c
 - request:
@@ -5519,7 +5519,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 28 Jan 2016 18:35:57 GMT
   digest: 6d6920b3cd9ade213cd095939b7c7da7c2bf10b8
 - request:
@@ -5532,7 +5532,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 28 Jan 2016 18:35:52 GMT
   digest: 17b24a53358a92c6c81bbf7f06a35e38f2d8e6e3
 - request:
@@ -5545,7 +5545,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:16:40 GMT
   digest: 27fdc831f01f2ac731b0d96a934eb48b34e9a10d
 - request:
@@ -5558,7 +5558,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Tue, 19 Jan 2016 17:00:07 GMT
   digest: 4a2b55273428ab0df8b182fdd8d2e92a172ddb7c
 - request:
@@ -5571,7 +5571,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:18 GMT
@@ -5586,7 +5586,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:05:56 GMT
   digest: f40fcc1968665d051b81a7696c69aa0b8b1a9cbc
 - request:
@@ -5599,7 +5599,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:27 GMT
@@ -5614,7 +5614,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:16:43 GMT
   digest: 9db3769803b74f8f6d9394a2ec7931cfe9432b14
 - request:
@@ -5627,7 +5627,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Tue, 19 Jan 2016 17:00:09 GMT
   digest: 7fa8f842ac9550b0891f4ce46b0af8fb950d6d18
 - request:
@@ -5640,7 +5640,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:21 GMT
@@ -5655,7 +5655,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:05:58 GMT
   digest: ed7608be0948975fe69a09857df06ba1e07e30ab
 - request:
@@ -5668,7 +5668,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:29 GMT
@@ -5683,7 +5683,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 20:16:38 GMT
   digest: fbbabba3c9c7b5166f862e35a56c4734f766ac75
 - request:
@@ -5696,7 +5696,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Tue, 19 Jan 2016 17:00:05 GMT
   digest: f1a50e4266d3d2023739bf22cd90c914386a081f
 - request:
@@ -5709,7 +5709,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:16 GMT
@@ -5724,7 +5724,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:05:53 GMT
   digest: 9d33f7730a2fde241668ad0af50e0a7ed41d6b84
 - request:
@@ -5737,7 +5737,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:24 GMT
@@ -5752,7 +5752,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:19:41 GMT
@@ -5767,7 +5767,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:06 GMT
@@ -5795,7 +5795,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:47 GMT
@@ -5810,7 +5810,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:17:29 GMT
@@ -5825,7 +5825,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:01 GMT
@@ -5853,7 +5853,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:42 GMT
@@ -5868,7 +5868,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:17:24 GMT
@@ -5883,7 +5883,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:03 GMT
@@ -5911,7 +5911,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 13 Jan 2016 20:21:45 GMT
@@ -5926,7 +5926,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:49 GMT
   digest: 96b3e2768770989c60c5befdb18e2eb1b1121741
 - request:
@@ -5939,7 +5939,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Thu, 14 Jan 2016 21:11:37 GMT
   digest: 22332c829a66f625278b2c2a68b0df76884cace7
 - request:
@@ -5952,7 +5952,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:57 GMT
   digest: 631dbf642f83d7304e372093794a77bdb7168b5d
 - request:
@@ -5965,7 +5965,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Tue, 19 Jan 2016 17:00:14 GMT
   digest: 2589f654b006fcb4d2016277106ac55a16ed8170
 - request:
@@ -5978,7 +5978,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:58 GMT
   digest: 67582246e9e66bf5a189aa92a9064704c73a3d40
 - request:
@@ -5991,7 +5991,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Tue, 19 Jan 2016 17:00:19 GMT
   digest: cf56896d809d64ae6e79519cc52442ea726cccc1
 - request:
@@ -6004,7 +6004,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:37:55 GMT
   digest: a2996406174254b04352766915d7027a492c2f23
 - request:
@@ -6017,7 +6017,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
   recorded_at: Tue, 19 Jan 2016 17:00:16 GMT
   digest: af44d018980bbfcc2bad623fba74b6bed489084f
 recorded_with: VCR 2.6.0
