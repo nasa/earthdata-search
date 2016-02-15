@@ -150,7 +150,7 @@ ns.XhrModel = do (ko
 
 
     _responseHits: (xhr, data) ->
-      parseInt(xhr.getResponseHeader('cmr-hits') ? data.feed.totalResults ? '0', 10)
+      parseInt(xhr.getResponseHeader('cmr-hits') ? data.feed?.totalResults ? '0', 10)
 
     _onFailure: (response) ->
       if response.status == 403
