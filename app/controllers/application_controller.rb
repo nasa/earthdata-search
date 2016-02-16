@@ -26,11 +26,13 @@ class ApplicationController < ActionController::Base
   def cmr_env
     @cmr_env = session[:cmr_env] unless session[:cmr_env].nil?
     @cmr_env ||= request.headers['edsc-echo-env'] || request.query_parameters['cmr_env']
-    if request.query_parameters['cmr_env'] && !(['sit', 'uat', 'prod'].include? request.query_parameters['cmr_env'])
+    if request.query_parameters['cmr_env'] && !(['sit', 'uat', 'prod', 'ops'].include? request.query_parameters['cmr_env'])
       @cmr_env = Rails.configuration.cmr_env
     else
       @cmr_env ||= Rails.configuration.cmr_env || 'prod'
     end
+    @cmr_env = 'prod' if @cmr_env == 'ops'
+    @cmr_env
   end
   helper_method :cmr_env
 
