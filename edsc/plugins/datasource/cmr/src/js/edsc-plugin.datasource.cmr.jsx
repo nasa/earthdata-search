@@ -47,7 +47,6 @@ export default class CmrDatasourcePlugin {
     if (singleGranuleId) {
       params.echo_granule_id = singleGranuleId;
     }
-    params.datasource = 'cmr';
     return params;
   }
   loadAccessOptions(callback, retry) {

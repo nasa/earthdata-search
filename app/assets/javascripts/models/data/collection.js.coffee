@@ -289,7 +289,6 @@ ns.Collection = do (ko
         @granuleCount(jsonObj.granule_count)
 
       @_loadDatasource()
-      console.log "------------- collection: ", this
       @granuleDatasource()?.updateFromCollectionData?(jsonObj)
 
       if @granuleDatasourceName() && @granuleDatasourceName() != 'cmr'

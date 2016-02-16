@@ -22,6 +22,10 @@ module Echo
       { clientId: Rails.configuration.cmr_client_id }
     end
 
+    def get_cwic_granule(url)
+      get(url)
+    end
+
     private
 
     def with_unescaped_colons(&block)
@@ -41,10 +45,6 @@ module Echo
       Faraday::Utils.const_set(:ESCAPE_RE, orig_escape)
       $VERBOSE = warn_level
       result
-    end
-
-    def get_cwic_granule(url)
-      get(url)
     end
   end
 end

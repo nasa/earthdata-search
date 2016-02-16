@@ -172,8 +172,8 @@ class OpendapConfiguration
     end
   end
 
-  def browse_urls_for(granule)
-    links_for(granule, /\/browse/)
+  def browse_urls_for(granule, is_cwic=false)
+    links_for(granule['links'], /\/browse/)
   end
 
   private

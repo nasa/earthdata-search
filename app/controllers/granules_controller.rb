@@ -42,8 +42,8 @@ class GranulesController < ApplicationController
 
   class GranuleUrlStreamer
     def initialize(params, token, url_mapper, echo_client, url_type=:download)
-      @is_cwic = params['datasource'] != 'cmr'
-      @short_name = params['short_name']
+      @is_cwic = params['datasource'].present? && params['datasource'] != 'cmr'
+      @short_name = params['short_name'] if @is_cwic
       params.reject!{|p| ['datasource', 'short_name', 'cwic'].include? p}
       @params = params
       @token = token
@@ -59,8 +59,12 @@ class GranulesController < ApplicationController
       page_size = @params["page_size"]
       until at_end
         if @is_cwic
-          page_size = 200 # Max page_size for CWIC requests is 200.
-          catalog_response = @echo_client.get_cwic_granules(@short_name, page, page_size)
+          if @params['echo_granule_id']
+            catalog_response = @echo_client.get_cwic_granule(@params['echo_granule_id'])
+          else
+            page_size = 200 # Max page_size for CWIC requests is 200.
+            catalog_response = @echo_client.get_cwic_granules(@short_name, page, page_size)
+          end
           hits = catalog_response.body['feed']['totalResults'].to_i if catalog_response.success?
         else
           catalog_response = @echo_client.get_granules(@params.merge(page_num: page), @token)
@@ -69,7 +73,7 @@ class GranulesController < ApplicationController
 
 
         if catalog_response.success?
-          granules = catalog_response.body['feed']['entry']
+          granules = Array.wrap(catalog_response.body['feed']['entry'])
           at_end = page_size * page >= hits
 
           granules.each do |granule|
