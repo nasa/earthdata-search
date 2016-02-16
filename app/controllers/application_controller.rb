@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     else
       @cmr_env ||= Rails.configuration.cmr_env || 'prod'
     end
-    @cmr_env = 'prod' if @cmr_env = 'ops'
+    @cmr_env = 'prod' if @cmr_env == 'ops'
     @cmr_env
   end
   helper_method :cmr_env
