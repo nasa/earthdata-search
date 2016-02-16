@@ -92,6 +92,7 @@ describe "Access Option Defaults", reset: true do
       end
 
       click_on 'Submit'
+      wait_for_xhr
       expect(page).to have_link('View Download Links')
       expect(page).to have_no_link('Not Validated')
 
