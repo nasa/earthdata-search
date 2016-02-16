@@ -17,6 +17,27 @@ let CwicGranule = (function() {
     return null;
   };
 
+  CwicGranule.prototype.getTemporal = function () {
+    if (typeof this.date !== "undefined" && this.date !== null) {
+      var temporal = this.date.split("/");
+      var time_start, time_end;
+      time_start = temporal[0];
+      time_end = temporal[1];
+
+      if (time_start === time_end) {
+        return time_start;
+      }
+      if (time_end == null) {
+        return time_start;
+      }
+      if (time_start == null) {
+        return time_end;
+      }
+      return "" + time_start + " to " + time_end;
+    }
+    return null;
+  };
+
   return CwicGranule;
 })();
 

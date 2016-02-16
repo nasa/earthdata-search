@@ -101,6 +101,7 @@ ns.Temporal = do (ko,
   class TemporalCondition extends KnockoutModel
     constructor: ->
       @isRecurring = ko.observable(false)
+      @allowRecurring = ko.observable(true)
       @start = @disposable(new TemporalDate(1960, @isRecurring))
       @stop = @disposable(new TemporalDate(current_year, @isRecurring))
 
