@@ -27,7 +27,8 @@
       $banner.data('banner.persist', options.persist)
       $('body').after($banner)
       # Do this in a timeout so the element has time to be placed in the DOM and animations can happen
-      setTimeout((-> $banner?.removeClass('banner-hidden')), 0)
+      # $banner might be undefined. Keep an eye on this and file a bug if it happens again.
+      setTimeout((-> $banner.removeClass('banner-hidden')), 0)
       $banner.on 'click', '.banner-close', onClickClose
 
   showBanner = (args...) ->
