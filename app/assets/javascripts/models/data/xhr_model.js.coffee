@@ -117,21 +117,11 @@ ns.XhrModel = do (ko
           console.log("Complete (#{requestId}): #{url}")
           results = @_toResults(data, current, params)
 
-          fetched = results?.length ? 0
-          hits = 0
-          if xhr.getResponseHeader('cmr-hits')
-            hits = parseInt(xhr.getResponseHeader('cmr-hits'), 10)
-            if data.page_size && data.page_num
-              @hasNextPage(data.page_size * data.page_num < hits)
-            else
-              @hasNextPage(fetched < hits)
-            @hitsEstimated(false)
-          else if data.feed?.totalResults
-            # cwic granule search response doesn't have a 'cmr-hits' header.
-            hits = parseInt(data.feed.totalResults, 10)
-            @hasNextPage(parseInt(data.feed.Query.startPage, 10) * parseInt(data.feed.Query.count, 10) < hits)
-            @hitsEstimated(false)
+          @hitsEstimated(false)
 
+          fetched = results?.length ? 0
+          hits = @_responseHits(xhr, data)
+          @hasNextPage(@_responseHasNextPage(xhr, data, results))
           @hits(Math.max(hits, fetched))
 
           timing = ((new Date() - start) / 1000).toFixed(1)
@@ -150,6 +140,17 @@ ns.XhrModel = do (ko
           console.log("Fail (#{requestId}) [#{reason}]: #{url}")
           @_onFailure(response)
         null
+
+    _responseHasNextPage: (xhr, data, results) ->
+      hits = @_responseHits(xhr, data)
+      if data.page_size && data.page_num
+        data.page_size * data.page_num < hits
+      else
+        (results?.length ? 0) < hits
+
+
+    _responseHits: (xhr, data) ->
+      parseInt(xhr.getResponseHeader('cmr-hits') ? data.feed?.totalResults ? '0', 10)
 
     _onFailure: (response) ->
       if response.status == 403

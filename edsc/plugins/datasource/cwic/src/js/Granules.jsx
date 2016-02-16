@@ -28,7 +28,7 @@ let CwicGranules = (function() {
 
   CwicGranules.prototype._toResults = function (data, current, params) {
     var entries, newItems = [];
-    entries = data.feed.entry;
+    entries = data.feed.entry || [];
     for (var i = 0; i < entries.length; i ++) {
       newItems.push(new Granule(entries[i]));
     }
@@ -66,7 +66,7 @@ let CwicGranules = (function() {
         delete params.echo_collection_id;
         params.pageCount = this.pageCount;
         params.startPage = this.startPage;
-        return this._load(params, current, callback);
+        this._load(params, current, callback);
       }
     }
   };
@@ -84,7 +84,7 @@ let CwicGranules = (function() {
       granule: granule
     });
     this.query.excludedGranules.push(granule.id);
-    return this._prevQuery = jQuery.param(this.params());
+    this._prevQuery = jQuery.param(this.params());
   };
 
   CwicGranules.prototype.undoExclude = function() {
@@ -115,11 +115,16 @@ let CwicGranules = (function() {
     if (results.length > 0) {
       params.startPage = 2;
       if (results.length > 0) {
-        return params.pageCount = results.length;
+        params.pageCount = results.length;
       }
     } else {
-      return params.startPage = 1;
+      params.startPage = 1;
     }
+  };
+
+  CwicGranules.prototype._responseHasNextPage = function(xhr, data, results) {
+    let hits = this._responseHits(xhr, data);
+    return parseInt(data.feed.Query.startPage, 10) * parseInt(data.feed.Query.count, 10) < hits;
   };
 
   CwicGranules.prototype.loadNextPage = function(params, callback) {
@@ -133,7 +138,7 @@ let CwicGranules = (function() {
     if (this.hasNextPage() && !this.isLoading()) {
       results = this.results();
       this._decorateNextPage(params, results);
-      return this._loadAndSet(params, results, callback);
+      this._loadAndSet(params, results, callback);
     }
   };
 

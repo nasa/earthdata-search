@@ -29,7 +29,7 @@ ns.Granules = do (ko,
       @excludedGranulesList = ko.observableArray()
 
     _toResults: (data, current, params) ->
-      entries = data.feed.entry
+      entries = data.feed.entry || []
       newItems = (new Granule(entry) for entry in entries)
 
       if params.page_num > 1

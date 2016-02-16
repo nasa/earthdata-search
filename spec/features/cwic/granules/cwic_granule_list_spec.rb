@@ -133,4 +133,20 @@ describe "CWIC Granule list", reset: false do
     end
   end
 
+  context "for collections that have granules with temporal fields" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1200008589-GCMDTEST'
+      login
+      wait_for_xhr
+    end
+    context "clicking on a collection result" do
+      hook_granule_results("OSTM/Jason-2 Level-2 Geophysical Data Records")
+
+      it "displays temporal information on the granule list" do
+        expect(granule_list).to have_content('JA2_GPN_2PdP004_108_20080814_233038_20080815_002651.nc 2008-08-14Z to 2008-08-15Z')
+      end
+    end
+  end
+
 end
