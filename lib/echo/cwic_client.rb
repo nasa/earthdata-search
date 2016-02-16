@@ -22,6 +22,27 @@ module Echo
       { clientId: Rails.configuration.cmr_client_id }
     end
 
+    private
+
+    def with_unescaped_colons(&block)
+      # CWIC does not accept escaped colons in URLs, and they're valid in query params,
+      # so we add colon to the list of things Faraday should not escape. We also suppress
+      # warnings about changing constants. This is clearly a hack and is fixed with an
+      # upgrade to Faraday. CWIC may fix this on their end.
+      # Note: This could cause issues running multi-threaded environments, though this
+      #       is never a problem with current CWIC code.
+      # FIXME: Upgrade Faraday or remove once CWIC fixes this.
+      warn_level = $VERBOSE
+      $VERBOSE = nil
+      orig_escape = Faraday::Utils::ESCAPE_RE
+      Faraday::Utils.const_set(:ESCAPE_RE, /[^a-zA-Z0-9 .~_:-]/)
+      Rails.logger.warn("WARNING: Not escaping colons in URL")
+      result = block.call
+      Faraday::Utils.const_set(:ESCAPE_RE, orig_escape)
+      $VERBOSE = warn_level
+      result
+    end
+
     def get_cwic_granule(url)
       get(url)
     end
