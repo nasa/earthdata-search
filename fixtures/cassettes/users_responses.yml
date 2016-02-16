@@ -112,3 +112,32 @@ b9bdd35d4686ceac31f60d5952112afdc8d3153a:
       string: "<errors><error>Token [02752abd6f14b9e943dcaa988d78cbe724a11f4b584f24d4c9742b739113c4f6:Gsk6IBbEfa98sbE5UavsZQ]
         is not a valid URS token</error></errors>"
     http_version: 
+7f053cde77e4067238e2c12bc32097af017e0892:
+  response:
+    status:
+      code: 401
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.156000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 16 Feb 2016 19:52:18 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":["You are not authorized to manipulate user with id edsc
+        preferences."]}'
+    http_version: 
