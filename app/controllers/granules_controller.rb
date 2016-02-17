@@ -45,7 +45,7 @@ class GranulesController < ApplicationController
       @is_cwic = params['datasource'].present? && params['datasource'] != 'cmr'
       @short_name = params['short_name'] if @is_cwic
       @temporal = params['temporal'] if @is_cwic
-      params.reject!{|p| ['datasource', 'short_name', 'cwic', 'temporal'].include? p}
+      params.reject!{|p| ['datasource', 'short_name', 'cwic'].include? p}
       @params = params
       @token = token
       @url_mapper = url_mapper
