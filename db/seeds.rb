@@ -6,6 +6,7 @@ load_extra && CollectionExtra.destroy_all
 load_extra && CollectionExtra.create!([
   {echo_id: "C179003030-ORNL_DAAC", has_browseable_granules: false, has_granules: true, browseable_granule: nil, granule: "G179109563-ORNL_DAAC", searchable_attributes: {"attributes"=>[]}, orbit: {}},
   {echo_id: "C179001887-SEDAC", has_browseable_granules: false, has_granules: false, browseable_granule: nil, granule: nil, searchable_attributes: {"attributes"=>[]}, orbit: {}},
+  {echo_id: "C1000003579-GCMDTEST", has_browseable_granules: true, has_granules: true, browseable_granule: 'http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=3DIMG_L2P_IRW:MOSDAC:3DIMG_L2P_IRW:18JUL2014:0400', granule: nil, searchable_attributes: {"attributes"=>[]}, orbit: {}},
   {echo_id: "C1000000220-SEDAC", has_browseable_granules: false, has_granules: false, browseable_granule: nil, granule: nil, searchable_attributes: {"attributes"=>[]}, orbit: {}},
   {echo_id: "C179001967-SEDAC", has_browseable_granules: false, has_granules: false, browseable_granule: nil, granule: nil, searchable_attributes: {"attributes"=>[]}, orbit: {}},
   {echo_id: "C179001889-SEDAC", has_browseable_granules: false, has_granules: false, browseable_granule: nil, granule: nil, searchable_attributes: {"attributes"=>[]}, orbit: {}},

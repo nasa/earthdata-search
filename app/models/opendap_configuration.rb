@@ -173,7 +173,11 @@ class OpendapConfiguration
   end
 
   def browse_urls_for(granule, is_cwic=false)
-    links_for(granule['links'], /\/browse/)
+    if is_cwic
+      links_for(granule['link'], /icon/)
+    else
+      links_for(granule['links'], /\/browse/)
+    end
   end
 
   private
