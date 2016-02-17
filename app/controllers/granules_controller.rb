@@ -44,7 +44,8 @@ class GranulesController < ApplicationController
     def initialize(params, token, url_mapper, echo_client, url_type=:download)
       @is_cwic = params['datasource'].present? && params['datasource'] != 'cmr'
       @short_name = params['short_name'] if @is_cwic
-      params.reject!{|p| ['datasource', 'short_name', 'cwic'].include? p}
+      @temporal = params['temporal'] if @is_cwic
+      params.reject!{|p| ['datasource', 'short_name', 'cwic', 'temporal'].include? p}
       @params = params
       @token = token
       @url_mapper = url_mapper
@@ -63,7 +64,7 @@ class GranulesController < ApplicationController
             catalog_response = @echo_client.get_cwic_granule(@params['echo_granule_id'])
           else
             page_size = 200 # Max page_size for CWIC requests is 200.
-            catalog_response = @echo_client.get_cwic_granules(@short_name, page, page_size)
+            catalog_response = @echo_client.get_cwic_granules(@short_name, page, page_size, @temporal)
           end
           hits = catalog_response.body['feed']['totalResults'].to_i if catalog_response.success?
         else

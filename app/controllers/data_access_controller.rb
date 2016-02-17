@@ -153,7 +153,8 @@ class DataAccessController < ApplicationController
       if params['echo_granule_id']
         catalog_response = echo_client.get_cwic_granule(params['echo_granule_id'])
       else
-        catalog_response = echo_client.get_cwic_granules(short_name)
+        # Get just one granule for faster retrieval of 'catalog_response.body['feed']['totalResults']'
+        catalog_response = echo_client.get_cwic_granules(short_name, 1, 1, granule_params['temporal'])
       end
 
       if catalog_response.success?

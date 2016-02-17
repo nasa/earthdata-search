@@ -2,10 +2,10 @@ module Echo
   class CwicClient < BaseClient
     def get_cwic_granules(short_name, start_page=1, count=10, temporal=nil)
       params = default_params.merge({
-        datasetId: short_name,
-        startPage: start_page,
-        count: count
-      })
+                                        datasetId: short_name,
+                                        startPage: start_page,
+                                        count: count
+                                    })
       if temporal
         time_start, time_end = temporal.split(',')
         # Remove milliseconds from the date/time
@@ -13,20 +13,22 @@ module Echo
         params[:timeEnd] = time_end.gsub(/\.\d+Z$/, 'Z') if time_start.present?
       end
 
-      get("/opensearch/granules.atom", params)
+      with_unescaped_colons do
+        get("/opensearch/granules.atom", params)
+      end
+    end
+
+    def get_cwic_granule(url)
+      with_unescaped_colons do
+        get(url)
+      end
     end
 
     private
 
     def default_params
-      { clientId: Rails.configuration.cmr_client_id }
+      {clientId: Rails.configuration.cmr_client_id}
     end
-
-    def get_cwic_granule(url)
-      get(url)
-    end
-
-    private
 
     def with_unescaped_colons(&block)
       # CWIC does not accept escaped colons in URLs, and they're valid in query params,
