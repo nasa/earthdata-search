@@ -11,7 +11,7 @@ class CollectionDetailsPresenter < DetailsPresenter
       @collection.description = collection_xml['Description']
       @collection.short_name = collection_xml['ShortName']
       @collection.version_id = collection_xml['VersionId']
-      @collection.archive_center = collection_xml['ArchiveCenter']
+      @collection.archive_center = Array.wrap(collection_xml['ArchiveCenter']).first
       @collection.processing_center = collection_xml['ProcessingCenter']
       @collection.processing_level_id = collection_xml['ProcessingLevelId']
       @collection.orderable = collection_xml['Orderable']
