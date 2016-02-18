@@ -125,19 +125,19 @@ b9bdd35d4686ceac31f60d5952112afdc8d3153a:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.749000'
+      - '0.189000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Wed, 17 Feb 2016 16:01:37 GMT
+      - Thu, 18 Feb 2016 17:35:33 GMT
       connection:
       - close
       transfer-encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"errors":["Token [edsc-access:mUM6VJvn6dXjZfhdeSeBbA] is not a valid
-        URS token"]}'
+      string: '{"errors":["You are not authorized to manipulate user with id edsc
+        preferences."]}'
     http_version: 

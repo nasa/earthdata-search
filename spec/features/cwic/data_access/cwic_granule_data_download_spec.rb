@@ -4,21 +4,17 @@ describe "CWIC data download page", reset: false do
   extend Helpers::CollectionHelpers
 
   context "on CWIC granules list" do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1200008589-GCMDTEST'
-      wait_for_xhr
-      login
-      wait_for_xhr
-      view_granule_results('OSTM/Jason-2 Level-2 Geophysical Data Records')
-    end
 
-    after :all do
-      Capybara.reset_sessions!
-    end
 
     context "selecting the direct download option for multiple CWIC granules" do
       before :all do
+        Capybara.reset_sessions!
+        load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1200008589-GCMDTEST'
+        wait_for_xhr
+        login
+        wait_for_xhr
+        view_granule_results('OSTM/Jason-2 Level-2 Geophysical Data Records')
+
         granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
         fill_in "Start", with: "2010-02-02 00:00:00\t"
         fill_in "End", with: "2010-02-02 23:59:59\t"
@@ -82,14 +78,19 @@ describe "CWIC data download page", reset: false do
 
     context "selecting the direct download option for a single CWIC granule" do
       before :all do
+        Capybara.reset_sessions!
+        load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
+        wait_for_xhr
+        login
+        wait_for_xhr
+        view_granule_results('INSAT-3D Imager Level-2P IR WINDS')
+
         first_granule_list_item.click_link 'Retrieve single granule data'
         wait_for_xhr
       end
 
       after :all do
-        load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
-        wait_for_xhr
-        view_granule_results('INSAT-3D Imager Level-2P IR WINDS')
+        Capybara.reset_sessions!
       end
 
       it "displays the 'Download' option", acceptance: true do
