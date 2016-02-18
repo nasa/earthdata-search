@@ -87,9 +87,9 @@ describe "CWIC data download page", reset: false do
       end
 
       after :all do
-        load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1200008589-GCMDTEST'
+        load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
         wait_for_xhr
-        view_granule_results('OSTM/Jason-2 Level-2 Geophysical Data Records')
+        view_granule_results('INSAT-3D Imager Level-2P IR WINDS')
       end
 
       it "displays the 'Download' option", acceptance: true do
@@ -105,6 +105,20 @@ describe "CWIC data download page", reset: false do
         it "provides a button to view download links", acceptance: true do
           expect(page).to have_link('View Download Links')
           expect(page).to have_link('Download Access Script')
+          expect(page).to have_link('View Browse Image Links')
+        end
+
+        context "then clicking the 'View Browse Image Links' button" do
+          before :all do
+            click_link "View Browse Image Links"
+            wait_for_xhr
+          end
+
+          it "presents a list of browse image links", acceptance: true do
+            within_last_window do
+              expect(page).to have_link("http://www.mosdac.gov.in/servlet/Image?image=preview&loc=/mosdac_preview/3D_IMG/preview_thumb/2014/18JUL/3DIMG_18JUL2014_0400_L2P_IRW.gif")
+            end
+          end
         end
 
         context "then clicking the 'View Download Links' button" do
@@ -115,7 +129,7 @@ describe "CWIC data download page", reset: false do
 
           it "presents a list of download links", acceptance: true do
             within_last_window do
-              expect(page).to have_link("http://data.nodc.noaa.gov/thredds/catalog/jason2/gdr/gdr/cycle004/catalog.html?dataset=jason2/gdr/gdr/cycle004/JA2_GPN_2PdP004_107_20080814_223425_20080814_233038.nc")
+              expect(page).to have_link("http://www.mosdac.gov.in/servlet/Image?image=preview&loc=/mosdac_preview/3D_IMG/preview/2014/18JUL/3DIMG_18JUL2014_0400_L2P_IRW.gif")
             end
           end
         end
@@ -129,7 +143,7 @@ describe "CWIC data download page", reset: false do
           it "presents a shell script which performs the user's query", acceptance: true do
             within_last_window do
               expect(page).to have_content('#!/bin/sh')
-              expect(page).to have_content('http://data.nodc.noaa.gov/thredds/catalog/jason2/gdr/gdr/cycle004/catalog.html?dataset=jason2/gdr/gdr/cycle004/JA2_GPN_2PdP004_107_20080814_223425_20080814_233038.nc')
+              expect(page).to have_content('http://www.mosdac.gov.in/servlet/Image?image=preview&loc=/mosdac_preview/3D_IMG/preview/2014/18JUL/3DIMG_18JUL2014_0400_L2P_IRW.gif')
             end
           end
         end
