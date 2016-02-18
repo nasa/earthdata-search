@@ -35,7 +35,7 @@ EarthdataSearchClient::Application.configure do
   config.tophat_url = "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js"
   config.feedback_url = 'https://fbm.uat.earthdata.nasa.gov/for/EdSearch_SIT/feedback.js'
 
-  config.url_limit = 200
+  config.url_limit = 500
   #config.cmr_env = 'sit'
 
   # This is also the client ID sent to OpenSearch. It is kept the same since the OpenSearch endpoint ultimately
