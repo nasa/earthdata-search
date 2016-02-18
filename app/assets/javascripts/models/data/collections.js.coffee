@@ -20,8 +20,8 @@ ns.Collections = do (ko
         Collection.awaitDatasources collections, callback
 
       if needsLoad.length > 0
-#        new CollectionsModel(query).search {echo_collection_id: needsLoad}, (results) =>
-        new CollectionsModel(query).search {echo_collection_id: needsLoad, features: query.params().features if query.params().features? }, (results) =>
+        new CollectionsModel(query).search {echo_collection_id: needsLoad}, (results) =>
+#        new CollectionsModel(query).search {echo_collection_id: needsLoad, features: query.params().features if query.params().features? }, (results) =>
           result.dispose() for result in results
           awaitDatasources()
       else
