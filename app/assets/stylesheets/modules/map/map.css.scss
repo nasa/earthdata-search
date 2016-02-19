@@ -261,7 +261,7 @@ p.map-popup-info {
 .granule-browse {
   position: absolute;
   z-index: 49;
-  right: 20px;
+  right: 50px;
   bottom: 140px;
   border: 1px solid rgba(255,255,255,.6);
 
@@ -277,6 +277,11 @@ p.map-popup-info {
 
   a {
     display: block;
+  }
+
+  img {
+    max-width: 256px !important; // Overrides leaflet none !important
+    max-height: 256px;
   }
 }
 
