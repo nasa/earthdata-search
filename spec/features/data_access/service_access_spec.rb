@@ -67,18 +67,18 @@ describe 'Services Access', reset: false do
           click_on 'Continue'
           click_on 'Submit'
         end
-        
+
         it 'displays a progress bar while the service is processing' do
-          retry_count = 0
+          retries = 0
           has_progress_bar = false
           is_esi_completed = false
-          while (retry_count < 150) && !has_progress_bar && !is_esi_completed
+          while (retries < 50) && !has_progress_bar && !is_esi_completed
             has_progress_bar = true if page.has_content?("Processing")
             is_esi_completed = true if page.has_content?("Complete")
             sleep 0.5
-            retry_count += 1
+            retries += 1
           end
-          p "Retried: #{retry_count} times."
+          p "Retried: #{retries} times."
 
           expect(has_progress_bar && is_esi_completed).to be_true
         end
