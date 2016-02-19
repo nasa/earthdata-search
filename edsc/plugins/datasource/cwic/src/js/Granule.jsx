@@ -16,6 +16,16 @@ let CwicGranule = (function() {
     return null;
   };
 
+  CwicGranule.prototype.onThumbLoad = function(obj, e) {
+    var img = e.target;
+
+    // If the thumbnail itself is big, record it as what we
+    // may want to open when the user requests full browse
+    if (img.naturalWidth > 256 || img.naturalHeight > 256) {
+      this.full_browse_url = img.src;
+    }
+  };
+
   CwicGranule.prototype.edsc_full_browse_url = function() {
     // This is kind of a hack because CWIC does not have a standard link relation
     // for large-sized browse, so we look for URLs with extensions of jpg, jpeg,
@@ -28,7 +38,7 @@ let CwicGranule = (function() {
         return href;
       }
     }
-    return null;
+    return this.full_browse_url;
   };
 
 
