@@ -130,7 +130,7 @@
       },
       "product": "MODIS_Aqua_SurfaceReflectance_Bands721",
       "maxNativeZoom": 5,
-      "title": "Land Surface Reflectance (7-2-1)",
+      "title": "Land Surface Reflectance (Bands 7-2-1)",
       "source": "Aqua / MODIS",
       "format": "jpeg",
       "resolution": "500m",
@@ -160,7 +160,7 @@
       },
       "product": "MODIS_Aqua_SurfaceReflectance_Bands721",
       "maxNativeZoom": 5,
-      "title": "Land Surface Reflectance (7-2-1)",
+      "title": "Land Surface Reflectance (Bands 7-2-1)",
       "source": "Aqua / MODIS",
       "format": "jpeg",
       "resolution": "500m",
@@ -188,10 +188,152 @@
       },
       "product": "MODIS_Aqua_SurfaceReflectance_Bands121",
       "maxNativeZoom": 5,
-      "title": "Land Surface Reflectance (1-2-1)",
+      "title": "Land Surface Reflectance (Bands 1-2-1)",
       "source": "Aqua / MODIS",
       "format": "jpeg",
       "resolution": "250m",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "___SPL4SMAU": [
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Uncertainty_Analyzed_Root_Zone_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Root Zone Soil Moisture Uncertainty (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Uncertainty_Analyzed_Root_Zone_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Root Zone Soil Moisture Uncertainty (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Uncertainty_Analyzed_Surface_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Surface Soil Moisture Uncertainty (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Uncertainty_Analyzed_Surface_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Surface Soil Moisture Uncertainty (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Analyzed_Surface_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Surface Soil Moisture (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Analyzed_Surface_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Surface Soil Moisture (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Analyzed_Root_Zone_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Root Zone Soil Moisture (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Analyzed_Root_Zone_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Root Zone Soil Moisture (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Soil_Temperature_Layer_1",
+      "maxNativeZoom": 5,
+      "title": "Surface Soil Temperature (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L4_Soil_Temperature_Layer_1",
+      "maxNativeZoom": 5,
+      "title": "Surface Soil Temperature (L4, 12z Instantaneous)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
       "geo": true,
       "arctic": false,
       "antarctic": false
@@ -314,6 +456,92 @@
       "maxNativeZoom": 5,
       "title": "Cloud Top Temperature (Night)",
       "source": "Terra / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "___SPL3SMP": [
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L3_Passive_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Soil Moisture (L3, Passive)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L3_Passive_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Soil Moisture (L3, Passive)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L3_Passive_Brightness_Temp_H",
+      "maxNativeZoom": 5,
+      "title": "Corrected Brightness Temperature (L3, Passive, H Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L3_Passive_Brightness_Temp_H",
+      "maxNativeZoom": 5,
+      "title": "Corrected Brightness Temperature (L3, Passive, H Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L3_Passive_Brightness_Temp_V",
+      "maxNativeZoom": 5,
+      "title": "Corrected Brightness Temperature (L3, Passive, V Polarization)",
+      "source": "SMAP / Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31"
+      },
+      "product": "SMAP_L3_Passive_Brightness_Temp_V",
+      "maxNativeZoom": 5,
+      "title": "Corrected Brightness Temperature (L3, Passive, V Polarization)",
+      "source": "SMAP / Radiometer",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -728,7 +956,7 @@
   "NSIDC_ECS___SPL1CTB": [
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Fore_V",
       "maxNativeZoom": 5,
@@ -742,7 +970,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Fore_H",
       "maxNativeZoom": 5,
@@ -756,7 +984,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Fore_H_QA",
       "maxNativeZoom": 5,
@@ -770,7 +998,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Aft_V_RFI",
       "maxNativeZoom": 5,
@@ -784,7 +1012,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Aft_V",
       "maxNativeZoom": 5,
@@ -798,7 +1026,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Aft_H",
       "maxNativeZoom": 5,
@@ -812,7 +1040,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Fore_H_RFI",
       "maxNativeZoom": 5,
@@ -826,7 +1054,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Aft_H_QA",
       "maxNativeZoom": 5,
@@ -840,7 +1068,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Fore_V_QA",
       "maxNativeZoom": 5,
@@ -854,7 +1082,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Aft_V_QA",
       "maxNativeZoom": 5,
@@ -868,7 +1096,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Aft_H_RFI",
       "maxNativeZoom": 5,
@@ -882,7 +1110,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Brightness_Temp_Fore_V_RFI",
       "maxNativeZoom": 5,
@@ -973,21 +1201,6 @@
     },
     {
       "match": {
-        "time_start": ">=2013-07-16",
-        "day_night_flag": "DAY"
-      },
-      "product": "AIRS_RelativeHumidity_700hPa_Day",
-      "maxNativeZoom": 5,
-      "title": "Relative Humidity (700 hPa, Day)",
-      "source": "Aqua / AIRS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
         "time_start": ">=2013-11-18",
         "day_night_flag": "NIGHT"
       },
@@ -1051,6 +1264,21 @@
         "time_start": ">=2013-07-16",
         "day_night_flag": "NIGHT"
       },
+      "product": "AIRS_RelativeHumidity_700hPa_Night",
+      "maxNativeZoom": 5,
+      "title": "Relative Humidity (700 hPa, Night)",
+      "source": "Aqua / AIRS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-07-16",
+        "day_night_flag": "NIGHT"
+      },
       "product": "AIRS_RelativeHumidity_850hPa_Night",
       "maxNativeZoom": 5,
       "title": "Relative Humidity (850 hPa, Night)",
@@ -1094,11 +1322,11 @@
     {
       "match": {
         "time_start": ">=2013-07-16",
-        "day_night_flag": "NIGHT"
+        "day_night_flag": "DAY"
       },
-      "product": "AIRS_RelativeHumidity_700hPa_Night",
+      "product": "AIRS_RelativeHumidity_700hPa_Day",
       "maxNativeZoom": 5,
-      "title": "Relative Humidity (700 hPa, Night)",
+      "title": "Relative Humidity (700 hPa, Day)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -1305,21 +1533,6 @@
     },
     {
       "match": {
-        "time_start": ">=2013-07-16",
-        "day_night_flag": "DAY"
-      },
-      "product": "AIRS_RelativeHumidity_700hPa_Day",
-      "maxNativeZoom": 5,
-      "title": "Relative Humidity (700 hPa, Day)",
-      "source": "Aqua / AIRS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
         "time_start": ">=2013-11-18",
         "day_night_flag": "NIGHT"
       },
@@ -1383,6 +1596,21 @@
         "time_start": ">=2013-07-16",
         "day_night_flag": "NIGHT"
       },
+      "product": "AIRS_RelativeHumidity_700hPa_Night",
+      "maxNativeZoom": 5,
+      "title": "Relative Humidity (700 hPa, Night)",
+      "source": "Aqua / AIRS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-07-16",
+        "day_night_flag": "NIGHT"
+      },
       "product": "AIRS_RelativeHumidity_850hPa_Night",
       "maxNativeZoom": 5,
       "title": "Relative Humidity (850 hPa, Night)",
@@ -1426,11 +1654,11 @@
     {
       "match": {
         "time_start": ">=2013-07-16",
-        "day_night_flag": "NIGHT"
+        "day_night_flag": "DAY"
       },
-      "product": "AIRS_RelativeHumidity_700hPa_Night",
+      "product": "AIRS_RelativeHumidity_700hPa_Day",
       "maxNativeZoom": 5,
-      "title": "Relative Humidity (700 hPa, Night)",
+      "title": "Relative Humidity (700 hPa, Day)",
       "source": "Aqua / AIRS",
       "format": "png",
       "resolution": "2km",
@@ -1562,7 +1790,7 @@
   "NSIDC_ECS___SPL1BTB": [
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Faraday_Rotation_Fore",
       "maxNativeZoom": 5,
@@ -1576,7 +1804,7 @@
     },
     {
       "match": {
-        "time_start": ">=2015-07-30"
+        "time_start": ">=2015-03-31"
       },
       "product": "SMAP_L1_Passive_Faraday_Rotation_Aft",
       "maxNativeZoom": 5,
@@ -1592,7 +1820,7 @@
   "GSFCS4PA___GPM_1CGPMGMI": [
     {
       "match": {
-        "time_start": ">=2014-10-11"
+        "time_start": ">=2014-03-04"
       },
       "product": "GMI_Brightness_Temp_Asc",
       "maxNativeZoom": 5,
@@ -1606,7 +1834,7 @@
     },
     {
       "match": {
-        "time_start": ">=2014-10-11"
+        "time_start": ">=2014-03-04"
       },
       "product": "GMI_Brightness_Temp_Dsc",
       "maxNativeZoom": 5,
@@ -1622,7 +1850,7 @@
   "GSFCS4PA___GPM_2AGPROFGPMGMI": [
     {
       "match": {
-        "time_start": ">=2014-10-11"
+        "time_start": ">=2014-03-04"
       },
       "product": "GMI_Rain_Rate_Dsc",
       "maxNativeZoom": 5,
@@ -1636,7 +1864,7 @@
     },
     {
       "match": {
-        "time_start": ">=2014-10-11"
+        "time_start": ">=2014-03-04"
       },
       "product": "GMI_Snow_Rate_Dsc",
       "maxNativeZoom": 5,
@@ -1650,7 +1878,7 @@
     },
     {
       "match": {
-        "time_start": ">=2014-10-11"
+        "time_start": ">=2014-03-04"
       },
       "product": "GMI_Rain_Rate_Asc",
       "maxNativeZoom": 5,
@@ -1664,12 +1892,154 @@
     },
     {
       "match": {
-        "time_start": ">=2014-10-11"
+        "time_start": ">=2014-03-04"
       },
       "product": "GMI_Snow_Rate_Asc",
       "maxNativeZoom": 5,
       "title": "Snow Rate (Ascending)",
       "source": "GPM / GMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "___SPL4CMDL": [
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Mean_Gross_Primary_Productivity",
+      "maxNativeZoom": 5,
+      "title": "Gross Primary Production (L4, 9 km Grid Cell Mean)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Mean_Gross_Primary_Productivity",
+      "maxNativeZoom": 5,
+      "title": "Gross Primary Production (L4, 9 km Grid Cell Mean)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Mean_Net_Ecosystem_Exchange",
+      "maxNativeZoom": 5,
+      "title": "Net Ecosystem CO2 Exchange (L4, 9 km Grid Cell Mean)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Mean_Net_Ecosystem_Exchange",
+      "maxNativeZoom": 5,
+      "title": "Net Ecosystem CO2 Exchange (L4, 9 km Grid Cell Mean)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Frozen_Area",
+      "maxNativeZoom": 5,
+      "title": "Percent Frozen Area (L4, 9 km Grid Cell Coverage)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Frozen_Area",
+      "maxNativeZoom": 5,
+      "title": "Percent Frozen Area (L4, 9 km Grid Cell Coverage)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Emult_Average",
+      "maxNativeZoom": 5,
+      "title": "Percent of Potential Vegetation Light Use Efficiency (L4, 9 km Grid Cell Mean)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Emult_Average",
+      "maxNativeZoom": 5,
+      "title": "Percent of Potential Vegetation Light Use Efficiency (L4, 9 km Grid Cell Mean)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Mean_Heterotrophic_Respiration",
+      "maxNativeZoom": 5,
+      "title": "Heterotrophic Respiration (L4, 9 km Grid Cell Mean)",
+      "source": "SMAP / Model Value-Added",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13"
+      },
+      "product": "SMAP_L4_Mean_Heterotrophic_Respiration",
+      "maxNativeZoom": 5,
+      "title": "Heterotrophic Respiration (L4, 9 km Grid Cell Mean)",
+      "source": "SMAP / Model Value-Added",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1684,7 +2054,7 @@
       },
       "product": "AMSR2_Snow_Water_Equivalent",
       "maxNativeZoom": 5,
-      "title": "Snow / Water Equivalent",
+      "title": "Snow Water Equivalent",
       "source": "GCOM-W1 / AMSR2",
       "format": "png",
       "resolution": "1km",
@@ -1698,7 +2068,7 @@
       },
       "product": "AMSR2_Snow_Water_Equivalent",
       "maxNativeZoom": 5,
-      "title": "Snow / Water Equivalent",
+      "title": "Snow Water Equivalent",
       "source": "GCOM-W1 / AMSR2",
       "format": "png",
       "resolution": "1km",
@@ -1771,15 +2141,15 @@
       "antarctic": false
     }
   ],
-  "GSFCS4PA___OMSO2": [
+  "NSIDC_ECS___SPL2SMP": [
     {
       "match": {
-        "time_start": ">=2014-04-23"
+        "time_start": ">=2015-03-31"
       },
-      "product": "OMI_SO2_Middle_Troposphere",
+      "product": "SMAP_L2_Passive_Soil_Moisture_Option1",
       "maxNativeZoom": 5,
-      "title": "Sulfur Dioxide (Middle Troposphere)",
-      "source": "Aura / OMI",
+      "title": "Soil Moisture (L2, Passive, Single Channel Algorithm, H-pol)",
+      "source": "SMAP / Radiometer",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1788,12 +2158,12 @@
     },
     {
       "match": {
-        "time_start": ">=2014-04-23"
+        "time_start": ">=2015-03-31"
       },
-      "product": "OMI_SO2_Lower_Troposphere",
+      "product": "SMAP_L2_Passive_Soil_Moisture_Option2",
       "maxNativeZoom": 5,
-      "title": "Sulfur Dioxide (Lower Troposphere)",
-      "source": "Aura / OMI",
+      "title": "Soil Moisture (L2, Passive, Single Channel Algorithm, V-pol)",
+      "source": "SMAP / Radiometer",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1802,12 +2172,12 @@
     },
     {
       "match": {
-        "time_start": ">=2014-04-23"
+        "time_start": ">=2015-03-31"
       },
-      "product": "OMI_SO2_Upper_Troposphere_and_Stratosphere",
+      "product": "SMAP_L2_Passive_Soil_Moisture_Option3",
       "maxNativeZoom": 5,
-      "title": "Sulfur Dioxide (Upper Troposphere and Stratosphere)",
-      "source": "Aura / OMI",
+      "title": "Soil Moisture (L2, Passive, Dual Channel Algorithm)",
+      "source": "SMAP / Radiometer",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1815,15 +2185,46 @@
       "antarctic": false
     }
   ],
-  "GSFCS4PA___OMSO2NRTb": [
+  "___JPL-L4UHFND-GLOB-MUR": [
     {
       "match": {
-        "time_start": ">=2014-04-23"
+        "time_start": ">=2002-06-01"
       },
-      "product": "OMI_SO2_Middle_Troposphere",
+      "product": "GHRSST_L4_MUR_Sea_Surface_Temperature",
       "maxNativeZoom": 5,
-      "title": "Sulfur Dioxide (Middle Troposphere)",
-      "source": "Aura / OMI",
+      "title": "Sea Surface Temperature (L4, MUR)",
+      "source": "Multi-mission / GHRSST",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2002-06-01"
+      },
+      "product": "GHRSST_L4_MUR_Sea_Surface_Temperature",
+      "maxNativeZoom": 5,
+      "title": "Sea Surface Temperature (L4, MUR)",
+      "source": "Multi-mission / GHRSST",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "NSIDC_ECS___AE_Rain": [
+    {
+      "match": {
+        "time_start": ">=2002-06-01",
+        "time_end": "<=2011-10-04"
+      },
+      "product": "AMSRE_Surface_Rain_Rate_Day",
+      "maxNativeZoom": 5,
+      "title": "Surface Rain Rate (Day)",
+      "source": "Aqua / AMSR-E",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1832,12 +2233,13 @@
     },
     {
       "match": {
-        "time_start": ">=2014-04-23"
+        "time_start": ">=2002-06-01",
+        "time_end": "<=2011-10-04"
       },
-      "product": "OMI_SO2_Lower_Troposphere",
+      "product": "AMSRE_Surface_Precipitation_Rate_Night",
       "maxNativeZoom": 5,
-      "title": "Sulfur Dioxide (Lower Troposphere)",
-      "source": "Aura / OMI",
+      "title": "Surface Precipitation Rate (Night)",
+      "source": "Aqua / AMSR-E",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1846,12 +2248,28 @@
     },
     {
       "match": {
-        "time_start": ">=2014-04-23"
+        "time_start": ">=2002-06-01",
+        "time_end": "<=2011-10-04"
       },
-      "product": "OMI_SO2_Upper_Troposphere_and_Stratosphere",
+      "product": "AMSRE_Surface_Rain_Rate_Night",
       "maxNativeZoom": 5,
-      "title": "Sulfur Dioxide (Upper Troposphere and Stratosphere)",
-      "source": "Aura / OMI",
+      "title": "Surface Rain Rate (Night)",
+      "source": "Aqua / AMSR-E",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2002-06-01",
+        "time_end": "<=2011-10-04"
+      },
+      "product": "AMSRE_Surface_Precipitation_Rate_Day",
+      "maxNativeZoom": 5,
+      "title": "Surface Precipitation Rate (Day)",
+      "source": "Aqua / AMSR-E",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1859,15 +2277,15 @@
       "antarctic": false
     }
   ],
-  "GSFCS4PA___ML2O3": [
+  "___SPL4SMGP": [
     {
       "match": {
-        "time_start": ">=2013-05-09"
+        "time_start": ">=2015-03-31"
       },
-      "product": "MLS_O3_46hPa_Day",
+      "product": "SMAP_L4_Snow_Mass",
       "maxNativeZoom": 5,
-      "title": "Ozone (46 hPa, Day)",
-      "source": "Aura / MLS",
+      "title": "Snow Mass (L4, 12z-3z Average)",
+      "source": "SMAP / Model Value-Added",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -1876,42 +2294,12 @@
     },
     {
       "match": {
-        "time_start": ">=2013-05-09"
+        "time_start": ">=2015-03-31"
       },
-      "product": "MLS_O3_46hPa_Night",
+      "product": "SMAP_L4_Snow_Mass",
       "maxNativeZoom": 5,
-      "title": "Ozone (46 hPa, Night)",
-      "source": "Aura / MLS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    }
-  ],
-  "GSFCS4PA___ML2O3_NRT": [
-    {
-      "match": {
-        "time_start": ">=2013-05-09"
-      },
-      "product": "MLS_O3_46hPa_Day",
-      "maxNativeZoom": 5,
-      "title": "Ozone (46 hPa, Day)",
-      "source": "Aura / MLS",
-      "format": "png",
-      "resolution": "2km",
-      "geo": true,
-      "arctic": false,
-      "antarctic": false
-    },
-    {
-      "match": {
-        "time_start": ">=2013-05-09"
-      },
-      "product": "MLS_O3_46hPa_Night",
-      "maxNativeZoom": 5,
-      "title": "Ozone (46 hPa, Night)",
-      "source": "Aura / MLS",
+      "title": "Snow Mass (L4, 12z-3z Average)",
+      "source": "SMAP / Model Value-Added",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -2043,6 +2431,47 @@
       "antarctic": false
     }
   ],
+  "LPDAAC___ASTGTM": [
+    {
+      "match": {
+      },
+      "product": "ASTER_GDEM_Color_Shaded_Relief",
+      "maxNativeZoom": 5,
+      "title": "Global Digital Elevation Map (Color Shaded Relief)",
+      "source": "Terra / ASTER",
+      "format": "jpeg",
+      "resolution": "31m",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+      },
+      "product": "ASTER_GDEM_Color_Index",
+      "maxNativeZoom": 5,
+      "title": "Global Digital Elevation Map (Color Index)",
+      "source": "Terra / ASTER",
+      "format": "png",
+      "resolution": "31m",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+      },
+      "product": "ASTER_GDEM_Greyscale_Shaded_Relief",
+      "maxNativeZoom": 5,
+      "title": "Global Digital Elevation Map (Greyscale Shaded Relief)",
+      "source": "Terra / ASTER",
+      "format": "jpeg",
+      "resolution": "31m",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
   "NSIDC_ECS___AE_SI25": [
     {
       "match": {
@@ -2101,7 +2530,7 @@
       },
       "product": "MODIS_Terra_SurfaceReflectance_Bands121",
       "maxNativeZoom": 5,
-      "title": "Land Surface Reflectance (1-2-1)",
+      "title": "Land Surface Reflectance (Bands 1-2-1)",
       "source": "Terra / MODIS",
       "format": "jpeg",
       "resolution": "250m",
@@ -2117,7 +2546,7 @@
       },
       "product": "MODIS_Terra_SurfaceReflectance_Bands121",
       "maxNativeZoom": 5,
-      "title": "Land Surface Reflectance (1-2-1)",
+      "title": "Land Surface Reflectance (Bands 1-2-1)",
       "source": "Terra / MODIS",
       "format": "jpeg",
       "resolution": "250m",
@@ -2131,7 +2560,7 @@
       },
       "product": "MODIS_Terra_SurfaceReflectance_Bands721",
       "maxNativeZoom": 5,
-      "title": "Land Surface Reflectance (7-2-1)",
+      "title": "Land Surface Reflectance (Bands 7-2-1)",
       "source": "Terra / MODIS",
       "format": "jpeg",
       "resolution": "500m",
@@ -2179,6 +2608,98 @@
       "maxNativeZoom": 5,
       "title": "Aerosol Optical Depth",
       "source": "Aqua / MODIS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "___SPL3SMAP": [
+    {
+      "match": {
+        "time_start": ">=2015-03-31",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_Passive_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Soil Moisture (L3, Active/Passive)",
+      "source": "SMAP / Radar + Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_Passive_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Soil Moisture (L3, Active/Passive)",
+      "source": "SMAP / Radar + Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_Passive_Brightness_Temp_V",
+      "maxNativeZoom": 5,
+      "title": "Disaggregated Brightness Temperature (L3, Active/Passive, V Polarization)",
+      "source": "SMAP / Radar + Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_Passive_Brightness_Temp_V",
+      "maxNativeZoom": 5,
+      "title": "Disaggregated Brightness Temperature (L3, Active/Passive, V Polarization)",
+      "source": "SMAP / Radar + Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_Passive_Brightness_Temp_H",
+      "maxNativeZoom": 5,
+      "title": "Disaggregated Brightness Temperature (L3, Active/Passive, H Polarization)",
+      "source": "SMAP / Radar + Radiometer",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_Passive_Brightness_Temp_H",
+      "maxNativeZoom": 5,
+      "title": "Disaggregated Brightness Temperature (L3, Active/Passive, H Polarization)",
+      "source": "SMAP / Radar + Radiometer",
       "format": "png",
       "resolution": "2km",
       "geo": true,
@@ -2338,7 +2859,7 @@
       },
       "product": "MODIS_Terra_SurfaceReflectance_Bands721",
       "maxNativeZoom": 5,
-      "title": "Land Surface Reflectance (7-2-1)",
+      "title": "Land Surface Reflectance (Bands 7-2-1)",
       "source": "Terra / MODIS",
       "format": "jpeg",
       "resolution": "500m",
@@ -2393,6 +2914,66 @@
       "geo": true,
       "arctic": true,
       "antarctic": true
+    }
+  ],
+  "GSFCS4PA___ML2O3": [
+    {
+      "match": {
+        "time_start": ">=2013-05-09"
+      },
+      "product": "MLS_O3_46hPa_Day",
+      "maxNativeZoom": 5,
+      "title": "Ozone (46 hPa, Day)",
+      "source": "Aura / MLS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-05-09"
+      },
+      "product": "MLS_O3_46hPa_Night",
+      "maxNativeZoom": 5,
+      "title": "Ozone (46 hPa, Night)",
+      "source": "Aura / MLS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "GSFCS4PA___ML2O3_NRT": [
+    {
+      "match": {
+        "time_start": ">=2013-05-09"
+      },
+      "product": "MLS_O3_46hPa_Day",
+      "maxNativeZoom": 5,
+      "title": "Ozone (46 hPa, Day)",
+      "source": "Aura / MLS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2013-05-09"
+      },
+      "product": "MLS_O3_46hPa_Night",
+      "maxNativeZoom": 5,
+      "title": "Ozone (46 hPa, Night)",
+      "source": "Aura / MLS",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
     }
   ],
   "GSFCS4PA___ML2H2O": [
@@ -2643,6 +3224,64 @@
       "antarctic": false
     }
   ],
+  "___A2_SI6_NRT": [
+    {
+      "match": {
+        "time_start": ">=2016-01-13"
+      },
+      "product": "AMSR2_Sea_Ice_Brightness_Temp_6km_89H",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Brightness Temperature 6km 89H",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    },
+    {
+      "match": {
+        "time_start": ">=2016-01-13"
+      },
+      "product": "AMSR2_Sea_Ice_Brightness_Temp_6km_89H",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Brightness Temperature 6km 89H",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    },
+    {
+      "match": {
+        "time_start": ">=2016-01-13"
+      },
+      "product": "AMSR2_Sea_Ice_Brightness_Temp_6km_89V",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Brightness Temperature 6km 89V",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    },
+    {
+      "match": {
+        "time_start": ">=2016-01-13"
+      },
+      "product": "AMSR2_Sea_Ice_Brightness_Temp_6km_89V",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Brightness Temperature 6km 89V",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    }
+  ],
   "NSIDC_ECS___AE_SI6": [
     {
       "match": {
@@ -2737,6 +3376,124 @@
       "antarctic": false
     }
   ],
+  "GSFCS4PA___OMSO2": [
+    {
+      "match": {
+        "time_start": ">=2014-04-23"
+      },
+      "product": "OMI_SO2_Lower_Troposphere",
+      "maxNativeZoom": 5,
+      "title": "Sulfur Dioxide (Lower Troposphere)",
+      "source": "Aura / OMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-04-23"
+      },
+      "product": "OMI_SO2_Upper_Troposphere_and_Stratosphere",
+      "maxNativeZoom": 5,
+      "title": "Sulfur Dioxide (Upper Troposphere and Stratosphere)",
+      "source": "Aura / OMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-04-23"
+      },
+      "product": "OMI_SO2_Middle_Troposphere",
+      "maxNativeZoom": 5,
+      "title": "Sulfur Dioxide (Middle Troposphere)",
+      "source": "Aura / OMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "GSFCS4PA___OMSO2NRTb": [
+    {
+      "match": {
+        "time_start": ">=2014-04-23"
+      },
+      "product": "OMI_SO2_Lower_Troposphere",
+      "maxNativeZoom": 5,
+      "title": "Sulfur Dioxide (Lower Troposphere)",
+      "source": "Aura / OMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-04-23"
+      },
+      "product": "OMI_SO2_Upper_Troposphere_and_Stratosphere",
+      "maxNativeZoom": 5,
+      "title": "Sulfur Dioxide (Upper Troposphere and Stratosphere)",
+      "source": "Aura / OMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2014-04-23"
+      },
+      "product": "OMI_SO2_Middle_Troposphere",
+      "maxNativeZoom": 5,
+      "title": "Sulfur Dioxide (Middle Troposphere)",
+      "source": "Aura / OMI",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "___JPL_OUROCEAN-L4UHFND-GLOB-G1SST": [
+    {
+      "match": {
+        "time_start": ">=2010-06-21"
+      },
+      "product": "GHRSST_L4_G1SST_Sea_Surface_Temperature",
+      "maxNativeZoom": 5,
+      "title": "Sea Surface Temperature (L4, G1SST)",
+      "source": "Multi-mission / GHRSST",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2010-06-21"
+      },
+      "product": "GHRSST_L4_G1SST_Sea_Surface_Temperature",
+      "maxNativeZoom": 5,
+      "title": "Sea Surface Temperature (L4, G1SST)",
+      "source": "Multi-mission / GHRSST",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
   "NSIDC_ECS___MOD10_L2": [
     {
       "match": {
@@ -2769,6 +3526,70 @@
       "geo": true,
       "arctic": true,
       "antarctic": true
+    }
+  ],
+  "___SPL3FTA": [
+    {
+      "match": {
+        "time_start": ">=2015-04-13",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_AM_Freeze_Thaw",
+      "maxNativeZoom": 5,
+      "title": "Freeze/Thaw (L3, Active, Radar, SMAP)",
+      "source": "SMAP / Radar",
+      "format": "png",
+      "resolution": "1km",
+      "geo": false,
+      "arctic": true,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-04-13",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_AM_Freeze_Thaw",
+      "maxNativeZoom": 5,
+      "title": "Freeze/Thaw (L3, Active, Radar, SMAP)",
+      "source": "SMAP / Radar",
+      "format": "png",
+      "resolution": "1km",
+      "geo": false,
+      "arctic": true,
+      "antarctic": false
+    }
+  ],
+  "___SPL3SMA": [
+    {
+      "match": {
+        "time_start": ">=2015-03-31",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Soil Moisture (L3, Active)",
+      "source": "SMAP / Radar",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    },
+    {
+      "match": {
+        "time_start": ">=2015-03-31",
+        "time_end": "<=2015-07-07"
+      },
+      "product": "SMAP_L3_Active_Soil_Moisture",
+      "maxNativeZoom": 5,
+      "title": "Soil Moisture (L3, Active)",
+      "source": "SMAP / Radar",
+      "format": "png",
+      "resolution": "2km",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
     }
   ],
   "GSFCS4PA___AIRX2SUP": [
@@ -2835,6 +3656,36 @@
       "antarctic": false
     }
   ],
+  "___A2_SI12_NRT": [
+    {
+      "match": {
+        "time_start": ">=2016-01-13"
+      },
+      "product": "AMSR2_Sea_Ice_Concentration_12km",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Concentration 12km",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    },
+    {
+      "match": {
+        "time_start": ">=2016-01-13"
+      },
+      "product": "AMSR2_Sea_Ice_Concentration_12km",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Concentration 12km",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    }
+  ],
   "LAADS___MOD04_L2": [
     {
       "match": {
@@ -2867,6 +3718,51 @@
       "antarctic": false
     }
   ],
+  "LPDAAC___SRTMGL1": [
+    {
+      "match": {
+      },
+      "product": "SRTM_Color_Index",
+      "maxNativeZoom": 5,
+      "title": "Shuttle Radar Topography Mission (SRTM, Color Index)",
+      "source": "Space Shuttle Endeavour / STS-99",
+      "format": "png",
+      "resolution": "31m",
+      "geo": true,
+      "arctic": false,
+      "antarctic": false
+    }
+  ],
+  "___A2_SI25_NRT": [
+    {
+      "match": {
+        "time_start": ">=2016-01-13"
+      },
+      "product": "AMSR2_Sea_Ice_Concentration_25km",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Concentration 25km",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    },
+    {
+      "match": {
+        "time_start": ">=2016-01-13"
+      },
+      "product": "AMSR2_Sea_Ice_Concentration_25km",
+      "maxNativeZoom": 5,
+      "title": "Sea Ice Concentration 25km",
+      "source": "GCOM-W1 / AMSR2",
+      "format": "png",
+      "resolution": "1km",
+      "geo": true,
+      "arctic": true,
+      "antarctic": true
+    }
+  ],
   "LPDAAC_ECS___MYD09GQ": [
     {
       "match": {
@@ -2874,7 +3770,7 @@
       },
       "product": "MODIS_Aqua_SurfaceReflectance_Bands121",
       "maxNativeZoom": 5,
-      "title": "Land Surface Reflectance (1-2-1)",
+      "title": "Land Surface Reflectance (Bands 1-2-1)",
       "source": "Aqua / MODIS",
       "format": "jpeg",
       "resolution": "250m",
