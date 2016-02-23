@@ -77,9 +77,9 @@
       element: '.facet-title a:contains(Platform)'
     }, {
       title: "Browse Collections"
-      content: 'Now click <strong>Terra</strong> to select the Terra satellite'
+      content: 'Now click <strong>Aqua</strong> to select the Aqua satellite'
       wait: true
-      element: '.facets-item:contains(Terra)'
+      element: '.facets-item:contains(Aqua)'
     }, {
       title: 'Spatial Search'
       content: 'If you are not interested in data covering the whole Earth, you may restrict your search
@@ -98,7 +98,7 @@
       content: 'Your collection results appear here.  This result has a "GIBS" badge, indicating that it
                has advanced visualizations. Click on the collection to preview its data.'
       wait: true
-      element: '.panel-list-item:contains(MOD10_L2)'
+      element: '.panel-list-item:contains(MODIS/Aqua Snow Cover 5-Min L2 500m V005 NRT)'
     }, {
       title: 'Matching Granules'
       content: 'Here we see a list of data granules with corresponding imagery rendered drawn on the map.
@@ -293,6 +293,17 @@
   $(document).on 'click', '.show-tour', (e) ->
     e.preventDefault()
     startTour()
+
+  $(document).ready ->
+    facet_popover_top = null
+    collection_list_popover_top = null
+    granule_list_popover_top = null
+    $('.master-overlay-content.panel-group').scroll ->
+      $container = $(this)
+      $tour_popover = $('.popover.tour')
+      facet_popover_top = $tour_popover.offset().top unless facet_popover_top?
+      $tour_popover.css({top: facet_popover_top - $(this).scrollTop()})
+
 
   add = (key, options={}) ->
     unless tourRunning
