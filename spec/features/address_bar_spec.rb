@@ -322,6 +322,7 @@ describe 'Address bar', reset: false do
       visit '/search/map'
       wait_for_xhr
       page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
+      wait_for_zoom_animation(5)
       wait_for_xhr
     end
 
