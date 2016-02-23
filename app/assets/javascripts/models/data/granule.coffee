@@ -21,6 +21,8 @@
         return link.href if link.rel.indexOf('browse') != -1
       null
 
+    onThumbLoad: =>
+
     getTemporal: ->
       time_end = @_normalizeTime(@time_end)
       time_start = @_normalizeTime(@time_start)
