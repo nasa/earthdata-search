@@ -321,8 +321,10 @@ describe 'Address bar', reset: false do
     before(:all) do
       visit '/search/map'
       wait_for_xhr
-      page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
-      wait_for_xhr
+      synchronize do
+        page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
+        wait_for_xhr
+      end
     end
 
     it "saves the map state in the query conditions" do
