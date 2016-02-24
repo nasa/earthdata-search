@@ -80,6 +80,9 @@
       content: 'Now click <strong>Aqua</strong> to select the Aqua satellite'
       wait: true
       element: '.facets-item:contains(Aqua)'
+      top: null
+      positionHook: (positionFn) ->
+        positionFn()
     }, {
       title: 'Spatial Search'
       content: 'If you are not interested in data covering the whole Earth, you may restrict your search
@@ -105,6 +108,9 @@
                 Click a granule to bring it to the top of the stack.'
       wait: true
       element: '#granule-list .panel-list-item:nth-child(2)'
+      top: null
+      positionHook: (positionFn) ->
+        positionFn()
     }, $.extend({}, mapViewOptions,
         element: '.leaflet-control-layers-toggle'
         cleanup: (nextFn, closeFn) ->
@@ -162,7 +168,7 @@
                 Add this collection to your project now.'
       waitOnAnimate: true
       placement: 'right'
-      element: '.panel-list-item:contains(MOD10_L2) .add-to-project'
+      element: '.panel-list-item:contains(MODIS/Aqua Snow Cover 5-Min L2 500m V005 NRT) .add-to-project'
     }, {
       title: 'Projects'
       content: 'From here, you can start a new search to find additional collections to compare. You may add
@@ -238,6 +244,14 @@
     else
       close()
 
+  position = ->
+    $(".master-overlay-content").on 'scroll', (e) ->
+      if index == 3 || index == 5 || index == 6 || index == 13
+        $container = $(this)
+        $tour_popover = $('.popover.tour')
+        queue[index].top = $tour_popover.offset().top unless queue[index].top?
+        $tour_popover.css({top: queue[index].top - $(this).scrollTop()})
+
   showCurrentImmediate = ->
     $('.popover-advance').removeClass('popover-advance')
 
@@ -261,6 +275,7 @@
 
     queue[index].advanceHook?(next, close)
     queue[index].closeHook?(close)
+    queue[index].positionHook?(position)
 
     if tourRunning
       $tip.find('[data-role=end]').text('End Tour')
@@ -294,15 +309,30 @@
     e.preventDefault()
     startTour()
 
-  $(document).ready ->
-    facet_popover_top = null
-    collection_list_popover_top = null
-    granule_list_popover_top = null
-    $('.master-overlay-content.panel-group').scroll ->
-      $container = $(this)
-      $tour_popover = $('.popover.tour')
-      facet_popover_top = $tour_popover.offset().top unless facet_popover_top?
-      $tour_popover.css({top: facet_popover_top - $(this).scrollTop()})
+#  $(window).load ->
+#    facet_popover_top = null
+#    collection_list_popover_top = null
+#    granule_list_popover_top = null
+#    $(".master-overlay-content").scroll ->
+#      $container = $(this)
+#      $tour_popover = $('.popover.tour')
+#      if $tour_popover.find(".popover-title").text() == 'Keyword Search' || $tour_popover.find(".popover-title").text() =='Collection Results' || $tour_popover.find(".popover-title").text() == 'Matching Granules'
+#        facet_popover_top = $tour_popover.offset().top unless facet_popover_top?
+#        $tour_popover.css({top: facet_popover_top - $(this).scrollTop()})
+
+#    $("#granule-list .master-overlay-content").scroll ->
+#      console.log "-----------10320y56893"
+#      $container = $(this)
+#      $tour_popover = $('.popover.tour')
+#      granule_list_popover_top = $tour_popover.offset().top unless granule_list_popover_top?
+#      $tour_popover.css({top: granule_list_popover_top - $(this).scrollTop()})
+#
+#    $("#collection-results .master-overlay-content").scroll ->
+#      $container = $(this)
+#      $tour_popover = $('.popover.tour')
+#      if $tour_popover.find(".popover-title").text() == 'Collection Results'
+#        collection_list_popover_top = $tour_popover.offset().top unless collection_list_popover_top?
+#        $tour_popover.css({top: collection_list_popover_top - $(this).scrollTop()})
 
 
   add = (key, options={}) ->

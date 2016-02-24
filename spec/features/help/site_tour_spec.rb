@@ -32,7 +32,7 @@ describe "Site tour", reset: true do
       find_link('Platform').click
 
       expect(page).to have_popover('Browse Collections')
-      find(".facets-item", text: "Terra").click
+      find(".facets-item", text: "Aqua").click
       wait_for_xhr
 
       expect(page).to have_popover('Spatial Search')
@@ -40,7 +40,7 @@ describe "Site tour", reset: true do
       wait_for_xhr
 
       expect(page).to have_popover('Collection Results')
-      first_featured_collection.click
+      fourth_collection_result.click
 
       expect(page).to have_popover('Matching Granules')
       second_granule_list_item.click
@@ -64,7 +64,7 @@ describe "Site tour", reset: true do
       granule_list.click_on 'Back to Collections'
 
       expect(page).to have_popover('Comparing Multiple Collections')
-      first_featured_collection.find('.add-to-project').click
+      second_collection_result.find('.add-to-project').click
 
       expect(page).to have_popover('Projects')
       click_on 'View Project'
