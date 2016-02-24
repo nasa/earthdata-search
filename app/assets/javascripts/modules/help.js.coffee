@@ -82,7 +82,7 @@
       element: '.facets-item:contains(Aqua)'
       top: null
       positionHook: (positionFn) ->
-        positionFn()
+        positionFn("#master-overlay-parent .master-overlay-content")
     }, {
       title: 'Spatial Search'
       content: 'If you are not interested in data covering the whole Earth, you may restrict your search
@@ -102,6 +102,8 @@
                has advanced visualizations. Click on the collection to preview its data.'
       wait: true
       element: '.panel-list-item:contains(MODIS/Aqua Snow Cover 5-Min L2 500m V005 NRT)'
+      positionHook: (positionFn) ->
+        positionFn("#collection-results .master-overlay-content")
     }, {
       title: 'Matching Granules'
       content: 'Here we see a list of data granules with corresponding imagery rendered drawn on the map.
@@ -110,7 +112,7 @@
       element: '#granule-list .panel-list-item:nth-child(2)'
       top: null
       positionHook: (positionFn) ->
-        positionFn()
+        positionFn("#granule-list .master-overlay-content")
     }, $.extend({}, mapViewOptions,
         element: '.leaflet-control-layers-toggle'
         cleanup: (nextFn, closeFn) ->
@@ -244,8 +246,8 @@
     else
       close()
 
-  position = ->
-    $(".master-overlay-content").on 'scroll', (e) ->
+  position = (selector)->
+    $(selector).on 'scroll', (e) ->
       if index == 3 || index == 5 || index == 6 || index == 13
         $container = $(this)
         $tour_popover = $('.popover.tour')
@@ -308,32 +310,6 @@
   $(document).on 'click', '.show-tour', (e) ->
     e.preventDefault()
     startTour()
-
-#  $(window).load ->
-#    facet_popover_top = null
-#    collection_list_popover_top = null
-#    granule_list_popover_top = null
-#    $(".master-overlay-content").scroll ->
-#      $container = $(this)
-#      $tour_popover = $('.popover.tour')
-#      if $tour_popover.find(".popover-title").text() == 'Keyword Search' || $tour_popover.find(".popover-title").text() =='Collection Results' || $tour_popover.find(".popover-title").text() == 'Matching Granules'
-#        facet_popover_top = $tour_popover.offset().top unless facet_popover_top?
-#        $tour_popover.css({top: facet_popover_top - $(this).scrollTop()})
-
-#    $("#granule-list .master-overlay-content").scroll ->
-#      console.log "-----------10320y56893"
-#      $container = $(this)
-#      $tour_popover = $('.popover.tour')
-#      granule_list_popover_top = $tour_popover.offset().top unless granule_list_popover_top?
-#      $tour_popover.css({top: granule_list_popover_top - $(this).scrollTop()})
-#
-#    $("#collection-results .master-overlay-content").scroll ->
-#      $container = $(this)
-#      $tour_popover = $('.popover.tour')
-#      if $tour_popover.find(".popover-title").text() == 'Collection Results'
-#        collection_list_popover_top = $tour_popover.offset().top unless collection_list_popover_top?
-#        $tour_popover.css({top: collection_list_popover_top - $(this).scrollTop()})
-
 
   add = (key, options={}) ->
     unless tourRunning
