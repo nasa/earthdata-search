@@ -124,7 +124,15 @@ let CwicGranules = (function() {
 
   CwicGranules.prototype._responseHasNextPage = function(xhr, data, results) {
     let hits = this._responseHits(xhr, data);
-    return parseInt(data.feed.Query.startPage, 10) * parseInt(data.feed.Query.count, 10) < hits;
+    if (data.feed.Query.startPage) {
+      return parseInt(data.feed.Query.startPage, 10) * parseInt(data.feed.Query.count, 10) < hits;
+    }
+    else if (data.feed.Query.startIndex) {
+      return parseInt(data.feed.Query.startIndex, 10) + parseInt(data.feed.Query.count, 10) < hits;
+    }
+    else {
+      return false
+    }
   };
 
   CwicGranules.prototype.loadNextPage = function(params, callback) {
