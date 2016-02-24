@@ -20,10 +20,6 @@ describe "CWIC Granule list", reset: false do
         expect(page).to have_css('#granule-search')
       end
 
-      after :all do
-        collection_details.click_link('Back to Granules')
-      end
-
       it "does not display the search by granule id fields", acceptance: true do
         expect(page).to have_no_content("Granule ID")
       end
@@ -64,8 +60,7 @@ describe "CWIC Granule list", reset: false do
         end
 
         it "has query param 'pg[0][qt]' in the url", acceptance: true do
-          project_id = current_url.match(/projectId=\d+/).to_s.split("=")[1]
-          expect(Project.find(project_id).path).to have_text("pg[0][qt]=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T23%3A59%3A59.000Z")
+          expect(current_url).to include("pg[0][qt]=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T23%3A59%3A59.000Z")
         end
       end
     end
