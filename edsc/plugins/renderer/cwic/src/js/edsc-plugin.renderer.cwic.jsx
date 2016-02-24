@@ -1,42 +1,25 @@
-var style = require("../css/cwic.useable.less");
-
-console.log(style);
-
-function toggleClass(el, classname, set) {
-  let classes = el.className.split(/\s+/);
-  let index = classes.indexOf(classname);
-  if (index !== -1 && !set) {
-    classes.splice(index, 1);
-    this.setClasses(el, classes);
-  }
-  if (index === -1 && set) {
-    classes.push(classname);
-  }
-  el.className = classes.join(' ');
-}
-
 export default class CwicRendererPlugin {
   constructor(edsc, collection) {
     console.log('Loaded cwic renderer plugin');
+    this.edsc = edsc;
     this.collection = collection;
+    this._needsTemporalWarning = true;
   }
   destroy(edsc) {
     console.log('Unloaded cwic renderer plugin');
   }
   startSearchFocus() {
     console.log('Start search focus');
-    console.log(style);
-    style.use();
-    let flag = this._recurringQueryFlag();
-    this._onRecurringChange(flag());
-    this._recurringSubscription = flag.subscribe(this._onRecurringChange, this);
+    let query = this.collection.granuleDatasource().cwicQuery().params;
+    this._onQueryChange(query());
+    this._querySubscription = query.subscribe(this._onQueryChange, this);
   }
   endSearchFocus() {
-    if (this._recurringSubscription) {
-      this._recurringSubscription.dispose();
+    if (this._querySubscription) {
+      this._querySubscription.dispose();
     }
-    this._onRecurringChange(false);
-    style.unuse();
+    this._needsTemporalWarning = true;
+    this.edsc.removeElementHelp('recurringTemporal');
     console.log('End search focus');
   }
   startSearchView() {
@@ -52,15 +35,32 @@ export default class CwicRendererPlugin {
     console.log('End access preview');
   }
 
-  _onRecurringChange(isRecurring) {
-    let el = document.getElementById('temporal-query');
-    toggleClass(el, 'feature-missing', isRecurring);
-    console.log('recurring changed', isRecurring);
-  }
+  _onQueryChange(query) {
+    let key = 'recurringTemporal';
 
-  _recurringQueryFlag() {
-    // Demeter :(. This should probably end up in the facade somehow
-    return this.collection.query.temporal.applied.isRecurring;
+    let isRecurring = query.temporal && query.temporal.split(',').length > 2;
+
+    if (this._needsTemporalWarning && isRecurring) {
+      this._needsTemporalWarning = false;
+      let options = {
+        title: 'Recurring Temporal Unavailable',
+        content: 'This collection cannot be searched with a recurring temporal condition. ' +
+          'Search results will show all granules from the start of the first temporal range ' +
+          'to the end of the last.',
+        placement: 'bottom',
+        element: '#temporal-query'
+      };
+      if (document.getElementById('temporal-query')) {
+        this.edsc.addElementHelp(key, options);
+      }
+      else {
+        let self = this;
+      }
+    }
+    else if (!isRecurring) {
+      this._needsTemporalWarning = true;
+      this.edsc.removeElementHelp(key);
+    }
   }
 };
 
