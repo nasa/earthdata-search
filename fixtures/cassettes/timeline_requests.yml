@@ -20,7 +20,7 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&concept_id=C1000000016-LANCEMODIS&end_date=2013-10-15T12%3A00%3A00.000Z&interval=hour&start_date=2013-07-14T12%3A00%3A00.000Z
+      string: bounding_box=0%2C0%2C10%2C10&concept_id=C1000000047-LANCEMODIS&end_date=2013-10-15T12%3A00%3A00.000Z&interval=hour&start_date=2013-07-14T12%3A00%3A00.000Z
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -28,14 +28,14 @@ http_interactions:
       - application/x-www-form-urlencoded
       Client-Id:
       - edsc-dev
-  recorded_at: Fri, 04 Dec 2015 17:49:33 GMT
-  digest: d80c46420481e890e6de207c48810e064ebb04a6
+  recorded_at: Wed, 24 Feb 2016 02:28:38 GMT
+  digest: 1fb70c6eefc3acec0827b1cf5031a2cba06d86e2
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&concept_id=C1000000016-LANCEMODIS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+      string: bounding_box=0%2C0%2C10%2C10&concept_id=C1000000047-LANCEMODIS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -43,8 +43,8 @@ http_interactions:
       - application/x-www-form-urlencoded
       Client-Id:
       - edsc-dev
-  recorded_at: Fri, 04 Dec 2015 17:49:30 GMT
-  digest: a23dad9a05357dbe12971c218ab4fa2405532e2b
+  recorded_at: Wed, 24 Feb 2016 02:28:34 GMT
+  digest: 5c5832e6de189c715051fbad5cbd77e5c7c10217
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
