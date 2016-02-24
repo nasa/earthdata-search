@@ -6,11 +6,11 @@ module Echo
         startPage: start_page,
         count: count
       })
-      if temporal
+      if temporal.present?
         time_start, time_end = temporal.split(',')
         # Remove milliseconds from the date/time
         params[:timeStart] = time_start.gsub(/\.\d+Z$/, 'Z') if time_start.present?
-        params[:timeEnd] = time_end.gsub(/\.\d+Z$/, 'Z') if time_start.present?
+        params[:timeEnd] = time_end.gsub(/\.\d+Z$/, 'Z') if time_end.present?
       end
 
       get("/opensearch/granules.atom", params)

@@ -303,6 +303,12 @@
         queue.push(options)
         showCurrent()
 
+  remove = (key) ->
+    if queue[0]?.key == key
+      next()
+    else
+      queue = (item for item in queue when item.key != key)
+
   current = ->
     if tourRunning then nil else queue[index]
 
@@ -318,6 +324,7 @@
 
   exports =
     add: add
+    remove: remove
     current: current
     next: next
     prev: prev
