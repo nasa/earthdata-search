@@ -103,6 +103,36 @@ http_interactions:
   digest: 85a8c854af3fef5a6e92d66fb31ea2b0802d64f1
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?clientId=eed-edsc-dev&datasetId=gov.noaa.class.J2-XGDR&startPage=1&count=20&timeStart=2010-02-02T00%3A00%3A00Z&timeEnd=2010-02-02T23%3A59%3A59Z
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 24 Feb 2016 20:09:08 GMT
+  digest: 55bef0ee14e7ccc9a8ea5ca390869f8d8a3b7f47
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?clientId=eed-edsc-dev&datasetId=gov.noaa.class.J2-XGDR&startPage=1&count=20
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 24 Feb 2016 20:09:01 GMT
+  digest: 1ec9e115d008b59aa0557ca2f13e4bd114bfef0a
+- request:
+    method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=3DIMG_L2P_IRW&clientId=eed-edsc-dev&startPage=1&count=20
     body:
       encoding: US-ASCII
