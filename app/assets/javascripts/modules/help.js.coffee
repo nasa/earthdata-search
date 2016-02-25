@@ -107,7 +107,7 @@
     }, {
       title: 'Matching Granules'
       content: 'Here we see a list of data granules with corresponding imagery rendered drawn on the map.
-                Click a granule to bring it to the top of the stack.'
+                Click this granule to bring it to the top of the stack.'
       wait: true
       element: '#granule-list .panel-list-item:nth-child(2)'
       top: null
