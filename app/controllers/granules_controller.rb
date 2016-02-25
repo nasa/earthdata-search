@@ -40,65 +40,6 @@ class GranulesController < ApplicationController
     render json: catalog_response.body, status: catalog_response.status
   end
 
-  class GranuleUrlStreamer
-    def initialize(params, token, url_mapper, echo_client, url_type=:download)
-      @is_cwic = params['datasource'].present? && params['datasource'] != 'cmr'
-      @short_name = params['short_name'] if @is_cwic
-      @temporal = params['temporal'] if @is_cwic
-      params.reject!{|p| ['datasource', 'short_name', 'cwic'].include? p}
-      @params = params
-      @token = token
-      @url_mapper = url_mapper
-      @echo_client = echo_client
-      @url_type = url_type
-    end
-
-    def each
-      yielded_info = false
-      at_end = false
-      page = 1
-      page_size = @params["page_size"]
-      until at_end
-        if @is_cwic
-          if @params['echo_granule_id']
-            catalog_response = @echo_client.get_cwic_granule(@params['echo_granule_id'])
-          else
-            page_size = 200 # Max page_size for CWIC requests is 200.
-            catalog_response = @echo_client.get_cwic_granules(@short_name, page, page_size, @temporal)
-          end
-          hits = catalog_response.body['feed']['totalResults'].to_i if catalog_response.success?
-        else
-          catalog_response = @echo_client.get_granules(@params.merge(page_num: page), @token)
-          hits = catalog_response.headers['CMR-Hits'].to_i
-        end
-
-
-        if catalog_response.success?
-          granules = Array.wrap(catalog_response.body['feed']['entry'])
-          at_end = page_size * page >= hits
-
-          granules.each do |granule|
-            unless yielded_info
-              @url_mapper.info_urls_for(granule).each do |url|
-                yield url
-              end
-              yielded_info = true
-            end
-
-            @url_mapper.send("#{@url_type}_urls_for", granule, @is_cwic).each do |url|
-              yield url
-            end
-          end
-
-          page += 1
-        else
-          @errors = catalog_response.body
-          return
-        end
-      end
-    end
-  end
-
   def download
     retrieval = Retrieval.find(request[:project])
     collection_id = request[:collection]
@@ -116,14 +57,17 @@ class GranulesController < ApplicationController
     url_type = :download
     url_type = :browse if request[:browse] == true || request[:browse] == 'true'
 
-    url_mapper = OpendapConfiguration.find(collection_id)
-
-    if url_type == :download
-      method = collection['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
-      url_mapper.apply_subsetting(method['subset'])
+    if query['datasource']
+      url_mapper = "#{query['datasource'].capitalize}UrlMapper".constantize.new
+    else
+      url_mapper = OpendapConfiguration.find(collection_id)
+      if url_type == :download
+        method = collection['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
+        url_mapper.apply_subsetting(method['subset'])
+      end
     end
 
-    @urls = GranuleUrlStreamer.new(query.merge('page_size' => 2000), token, url_mapper, echo_client, url_type)
+    @urls = "#{query['datasource'].present? ? query['datasource'].capitalize : 'Cmr'}GranuleUrlStreamer".constantize.new(query.merge('page_size' => 2000), token, url_mapper, echo_client, url_type)
     render stream: true, layout: false
   end
 end

@@ -12,6 +12,7 @@ class CollectionExtra < ActiveRecord::Base
   end
 
   def self.load
+    #TODO: Load cwic
     echo_client = build_echo_client
 
     response = echo_client.get_provider_holdings
@@ -146,7 +147,7 @@ class CollectionExtra < ActiveRecord::Base
 
     collections.map! do |result|
       extra = extras[result['id']] || CollectionExtra.new
-      extra.decorate(result)
+      extra.decorate(result, build_echo_client)
     end
   end
 
@@ -154,7 +155,7 @@ class CollectionExtra < ActiveRecord::Base
     ['C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS']
   end
 
-  def decorate(collection)
+  def decorate(collection, echo_client)
     collection = collection.dup.with_indifferent_access
 
     decorate_browseable_granule(collection)
@@ -163,6 +164,7 @@ class CollectionExtra < ActiveRecord::Base
     decorate_opendap_layers(collection)
     decorate_echo10_attributes(collection)
     decorate_modaps_layers(collection)
+    decorate_cwic_information(collection, echo_client)
 
     collection[:links] = Array.wrap(collection[:links]) # Ensure links attribute is present
 
@@ -236,6 +238,23 @@ class CollectionExtra < ActiveRecord::Base
     collection[:orbit] = self.orbit if self.orbit.present?
   end
 
+  def decorate_cwic_information(collection, echo_client)
+    if cwic?(collection)
+      cwic_response = echo_client.get_cwic_granules(collection[:short_name])
+      if cwic_response.success?
+        cwic_granule = Array.wrap(cwic_response.body['feed']['entry']).first
+        cwic_granule['link'].each do |link|
+          if link['rel'] == 'icon'
+            collection[:browseable_granule] = true
+            break
+          end
+        end
+
+        collection[:has_granules] = cwic_granule.present?
+      end
+    end
+  end
+
   def decorate_browseable_granule(collection)
     collection[:browseable_granule] = self.browseable_granule
   end
@@ -265,6 +284,15 @@ class CollectionExtra < ActiveRecord::Base
       collection[:modaps] = Hash.new
       collection[:modaps][:get_capabilities] =  "http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/#{collection[:short_name]}/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities"
     end
+  end
+
+  def cwic?(collection)
+    return false unless collection[:tags].present?
+
+    collection[:tags].each do |tag|
+      return true if tag[0] == "#{Rails.configuration.cmr_tag_namespace}datasource" && tag[1] == 'cwic'
+    end
+    return false
   end
 
 end
