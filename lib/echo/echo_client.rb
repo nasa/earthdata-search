@@ -179,5 +179,11 @@ module Echo
 
       {order_id: id, response: submission_response, count: granules.size, dropped_granules: dropped_granules}
     end
+
+    protected
+
+    def default_headers
+      {'Client-Id' => client_id, 'Echo-ClientId' => client_id}
+    end
   end
 end
