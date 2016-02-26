@@ -21,6 +21,11 @@ let toLocalUrl = function(url) {
   return url;
 };
 
+let arrayWrap = function(obj) {
+  if (obj == null) return [];
+  return Array === obj.constructor ? obj : [obj];
+}
+
 let getLink = function(parent, rel) {
   let node = parent.firstElementChild;
   while (node) {
@@ -45,9 +50,7 @@ let elToObj = function(el) {
       let prop = child.tagName.replace(/^.*:/g, '');
       let obj = elToObj(child);
       if (result.hasOwnProperty(prop)) {
-        if (Array !== result[prop].constructor) {
-          result[prop] = [result[prop]];
-        }
+        result[prop] = arrayWrap(result[prop]);
         result[prop].push(obj);
       }
       else {
@@ -95,11 +98,22 @@ let CwicGranules = (function() {
           if (start && start.length > 0) result['time:start'] = start.replace(/\.\d{3}Z$/, 'Z');
           if (end && end.length > 0) result['time:end'] = end.replace(/\.\d{3}Z$/, 'Z');
         }
+        else if (key == 'bounding_box') {
+          result['geo:box'] = value;
+        }
+        else if (key == 'point') {
+          let p = value.split(',');
+          let lon = parseFloat(p[0]);
+          let lat = parseFloat(p[1]);
+          let epsilon = 0.001;
+          result['geo:box'] = `${lon-epsilon},${lat-epsilon},${lon+epsilon},${lat+epsilon}`;
+        }
         else {
           result[key] = value;
         }
       }
     }
+    if (!result.hasOwnProperty('count')) result.count = 20;
     return result;
   };
 
@@ -213,22 +227,23 @@ let CwicGranules = (function() {
   };
 
   CwicGranules.prototype._toResults = function (data, dataObj, current, params) {
-    let entries = dataObj.feed.entry;
     let granules = [];
-    for (let i = 0; i < entries.length; i++) {
-      let granule = entries[i];
-      let links = granule.link;
-      delete granule.link;
-      let hasBrowse = false;
-      for (let link of links) {
-        if (link.rel == 'icon') {
-          hasBrowse = true;
-          break;
+    if (dataObj.feed && dataObj.feed.entry) {
+      let entries = arrayWrap(dataObj.feed.entry);
+      for (let granule of entries) {
+        let links = arrayWrap(granule.link);
+        delete granule.link;
+        let hasBrowse = false;
+        for (let link of links) {
+          if (link.rel == 'icon') {
+            hasBrowse = true;
+            break;
+          }
         }
+        granule.browse_flag = hasBrowse;
+        granule.links = links;
+        granules.push(new Granule(granule));
       }
-      granule.browse_flag = hasBrowse;
-      granule.links = links;
-      granules.push(new Granule(granule));
     }
     if (getRootLink(data, 'previous')) {
       return current.concat(granules);
