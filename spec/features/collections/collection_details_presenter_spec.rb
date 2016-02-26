@@ -81,4 +81,10 @@ describe CollectionDetailsPresenter do
     expect(@collection.online_access_urls).to eq([{"URL"=>"http://www.example.com", "description"=>"http://www.example.com"}])
   end
 
+  it "converts no contacts to empty array" do
+    @collection.contacts = nil
+    presenter = CollectionDetailsPresenter.new(@collection)
+    @collection.contacts.should eq([])
+  end
+
 end
