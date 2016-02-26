@@ -92,7 +92,7 @@ class CollectionDetailsPresenter < DetailsPresenter
         {name: name, phones: phones, email: email}
       end)
     else
-      contact_list = ['Not available']
+      contact_list = []
     end
 
     contact_list
