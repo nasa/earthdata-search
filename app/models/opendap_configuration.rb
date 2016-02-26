@@ -1,6 +1,7 @@
 require 'addressable/template'
 
 class OpendapConfiguration
+  include LinksDecorator
 
   def self.find(collection_id)
     opendap_config = Rails.configuration.services['opendap'][collection_id]
@@ -160,38 +161,23 @@ class OpendapConfiguration
     end
   end
 
-  def download_urls_for(granule)
+  def download_urls_for(granule, is_cwic=false)
     if @can_subset
       [@template.expand(decorate(granule).merge(@template_params))]
     else
-      links_for(granule, 'enclosure', /\/data/)
+      if is_cwic
+        Array.wrap(links_for(granule['link'], 'enclosure', /enclosure/).first)
+      else
+        links_for(granule['links'], 'enclosure', /\/data/)
+      end
     end
   end
 
-  def browse_urls_for(granule)
-    links_for(granule, /\/browse/)
-  end
-
-  private
-
-  def links_for(granule, *rels)
-    links = Array.wrap(granule['links'])
-    regexp_rels, string_rels = rels.partition {|rel| rel.is_a?(Regexp)}
-    links = links.find_all do |link|
-      !link['inherited'] && (string_rels.include?(link) || regexp_rels.any? {|rel| link['rel'][rel]})
+  def browse_urls_for(granule, is_cwic=false)
+    if is_cwic
+      links_for(granule['link'], /icon/)
+    else
+      links_for(granule['links'], /\/browse/)
     end
-    links.map { |link| link['href'] }
-  end
-
-  def decorate(granule)
-    extra = {}
-    start = granule['time_start']
-    if start
-      day = granule['time_start'].slice(0, 10)
-      doy = Date.parse(day).yday.to_s.rjust(3, '0')
-      month = granule['time_start'].slice(5, 2)
-      extra = {od_doy: doy, od_month: month, od_time_start_dot: day.gsub('-', '.')}
-    end
-    extra.merge(granule)
   end
 end

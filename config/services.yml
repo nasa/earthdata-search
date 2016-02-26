@@ -5,7 +5,7 @@ earthdata:
     echo_root: "https://api.echo.nasa.gov"
     cmr_root: "https://cmr.earthdata.nasa.gov" # Does not exist yet
     opensearch_root: "https://cmr.earthdata.nasa.gov/opensearch"
-    cwic_root: "invalid_url"
+    cwic_root: "http://cwic.wgiss.ceos.org/"
   uat:
     urs_root: "https://uat.urs.earthdata.nasa.gov"
     echo_root: "https://api-test.echo.nasa.gov"

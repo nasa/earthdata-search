@@ -137,60 +137,93 @@ class DataAccessController < ApplicationController
   # This rolls up getting information on data access into an API that approximates
   # what we'd like ECHO / CMR to support.
   def options
-    granule_params = request.request_parameters
-    catalog_response = echo_client.get_granules(granule_params_for_request(request), token)
+    data_source = request.request_parameters['datasource']
+    short_name = request.request_parameters['short_name']
+    granule_params = granule_params_for_request(request)
 
-    if catalog_response.success?
-      collection = Array.wrap(granule_params[:echo_collection_id]).first
-      if collection
-        dqs = echo_client.get_data_quality_summary(collection, token)
+    if data_source == 'cmr' || data_source.nil?
+      catalog_response = echo_client.get_granules(granule_params, token)
+      if catalog_response.success?
+        result = parse_cmr_response(catalog_response, granule_params)
+        respond_with(result, status: catalog_response.status, location: nil)
+      else
+        respond_with(catalog_response.body, status: catalog_response.status, location: nil)
+      end
+    else
+      if params['echo_granule_id']
+        catalog_response = echo_client.get_cwic_granule(params['echo_granule_id'])
+      else
+        # Get just one granule for faster retrieval of 'catalog_response.body['feed']['totalResults']'
+        catalog_response = echo_client.get_cwic_granules(short_name, 1, 1, granule_params['temporal'])
       end
 
-      defaults = AccessConfiguration.get_default_options(current_user, collection)
+      if catalog_response.success?
+        result = parse_cwic_response(catalog_response)
+        respond_with(result, status: catalog_response.status, location: nil)
+      else
+        respond_with(catalog_response.body, status: catalog_response.status, location: nil)
+      end
+    end
+  end
 
-      granules = catalog_response.body['feed']['entry']
+  private
 
-      result = {}
-      if granules.size > 0
-        hits = catalog_response.headers['cmr-hits'].to_i
+  def parse_cwic_response(catalog_response)
+    {
+        hits: catalog_response.body['feed']['totalResults'],
+        dqs: nil,
+        size: 'N/A',
+        sizeUnit: 'N/A',
+        methods: [{name: 'Download', type: 'download', subset: false, parameters: [], spatial: nil, formats: [], all: true, count: catalog_response.body['feed']['totalResults']}],
+        defaults: {accessMethod: [{method: 'Download', type: 'download'}]}
+    }
+  end
+
+  def parse_cmr_response(catalog_response, granule_params)
+    collection = Array.wrap(granule_params[:echo_collection_id]).first
+    if collection
+      dqs = echo_client.get_data_quality_summary(collection, token)
+    end
+
+    defaults = AccessConfiguration.get_default_options(current_user, collection)
+
+    granules = catalog_response.body['feed']['entry']
+
+    result = {}
+    if granules.size > 0
+      hits = catalog_response.headers['cmr-hits'].to_i
 
 
-        sizeMB = granules.reduce(0) {|size, granule| size + granule['granule_size'].to_f}
-        size = (1024 * 1024 * sizeMB / granules.size) * hits
+      sizeMB = granules.reduce(0) { |size, granule| size + granule['granule_size'].to_f }
+      size = (1024 * 1024 * sizeMB / granules.size) * hits
 
-        units = ['Bytes', 'Kilobytes', 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes', 'Exabytes']
-        while size > 1024 && units.size > 1
-          size = size.to_f / 1024
-          units.shift()
-        end
+      units = ['Bytes', 'Kilobytes', 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes', 'Exabytes']
+      while size > 1024 && units.size > 1
+        size = size.to_f / 1024
+        units.shift()
+      end
 
-        result = {
+      result = {
           hits: hits,
           dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
           methods: get_downloadable_access_methods(collection, granules, granule_params, hits) + get_order_access_methods(collection, granules, hits) + get_service_access_methods(collection, granules, hits),
           defaults: defaults
-        }
-      else
-        result = {
+      }
+    else
+      result = {
           hits: 0,
           methods: [],
           defaults: defaults
-        }
-      end
-
-      catalog_response.headers.each do |key, value|
-        response.headers[key] = value if key.start_with?('cmr-')
-      end
-
-      respond_with(result, status: catalog_response.status, location: nil)
-    else
-      respond_with(catalog_response.body, status: catalog_response.status, location: nil)
+      }
     end
-  end
 
-  private
+    catalog_response.headers.each do |key, value|
+      response.headers[key] = value if key.start_with?('cmr-')
+    end
+    result
+  end
 
   def get_downloadable_access_methods(collection_id, granules, granule_params, hits)
     result = []

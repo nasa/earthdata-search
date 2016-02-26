@@ -36,7 +36,7 @@
                 Access methods other than "Download" are limited to the first 2000 granules.
               </span>
             </p>
-            <p class="summary" data-bind="if: granuleAccessOptions().size && granuleAccessOptions().size != 0">
+            <p class="summary" data-bind="if: granuleAccessOptions().size && granuleAccessOptions().size != 0 && !collection.cwic()">
               <span class="summary-data" data-bind="text: granuleAccessOptions().size"></span>
               <span class="summary-label" data-bind="text: granuleAccessOptions().sizeUnit"></span>
             </p>

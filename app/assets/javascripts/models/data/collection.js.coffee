@@ -278,10 +278,15 @@ ns.Collection = do (ko
       @cwic(@_isCwic(jsonObj))
 
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
-      @granuleCount(jsonObj.granule_count)
 
       for own key, value of jsonObj
         this[key] = value unless ko.isObservable(this[key])
+
+      if @_isCwic(jsonObj)
+        @granuleCount(1)
+        @has_granules = true
+      else
+        @granuleCount(jsonObj.granule_count)
 
       @_loadDatasource()
       @granuleDatasource()?.updateFromCollectionData?(jsonObj)

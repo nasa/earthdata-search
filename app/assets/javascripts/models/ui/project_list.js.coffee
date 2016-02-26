@@ -154,7 +154,7 @@ ns.ProjectList = do (ko
           collections.push
             title: title
             downloadPageUrl: "/granules/download.html?project=#{id}&collection=#{collectionId}"
-            downloadScriptUrl: "/granules/download.sh?project=#{id}&collection=#{collectionId}"
+            downloadScriptUrl: !collection.cwic() && "/granules/download.sh?project=#{id}&collection=#{collectionId}"
             downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
 
       collections
