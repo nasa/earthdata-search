@@ -30,7 +30,6 @@ EarthdataSearchClient::Application.routes.draw do
 
   resources :granules, only: [:create, :show], defaults: {format: 'json'} do
     collection do
-      post 'cwic'
       post 'timeline'
       get 'download', defaults: { format: ['html', 'sh'] }
     end
@@ -47,6 +46,9 @@ EarthdataSearchClient::Application.routes.draw do
 
   post 'convert' => 'conversions#convert'
   resources :convert, only: [:create], defaults: {format: 'json'}
+
+  get 'cwic/edsc_download(/*cwic_path)' => 'cwic#download', format: 'html'
+  get 'cwic(/*cwic_path)' => 'cwic#index'
 
   match 'data/options' => 'data_access#options', format: 'json', via: [:get, :post]
   post 'data/configure' => 'data_access#configure'

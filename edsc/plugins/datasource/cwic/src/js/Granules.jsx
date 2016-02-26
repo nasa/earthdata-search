@@ -1,149 +1,267 @@
 import extend from './extend.jsx';
 import Granule from './Granule.jsx';
 
+let ajax = window.edsc.util.xhr.ajax;
+let clientId = window.edsc.config.cmrClientId;
+
+let xmlNamespaces = {
+  os: 'http://a9.com/-/spec/opensearch/1.1/'
+};
+
 let bind = function(fn, self){
   return function(){
     return fn.apply(self, arguments);
   };
 };
 
+let toLocalUrl = function(url) {
+  if (url) {
+    url = url.replace(/^.*\/\/[^\/]+/, '/cwic');
+  }
+  return url;
+};
+
+let getLink = function(parent, rel) {
+  let node = parent.firstElementChild;
+  while (node) {
+    if (node.tagName == 'link' && node.getAttribute('rel') == rel) {
+      return node.getAttribute('href');
+    }
+    node = node.nextElementSibling;
+  }
+  return null;
+};
+
+let getRootLink = function(atomData, rel) {
+  return getLink(atomData.firstElementChild, rel);
+};
+
+let elToObj = function(el) {
+  let result;
+  if (el.firstElementChild) {
+    result = {};
+    let child = el.firstElementChild;
+    while (child) {
+      let prop = child.tagName.replace(/^.*:/g, '');
+      let obj = elToObj(child);
+      if (result.hasOwnProperty(prop)) {
+        if (Array !== result[prop].constructor) {
+          result[prop] = [result[prop]];
+        }
+        result[prop].push(obj);
+      }
+      else {
+        result[prop] = obj;
+      }
+      child = child.nextElementSibling;
+    }
+  }
+  else if (el.attributes.length == 0 || el.textContent && el.textContent.length > 0) {
+    result =  el.textContent;
+  }
+  else {
+    result = {};
+    let attrs = el.attributes;
+    for (let i = 0; i < attrs.length; i++) {
+      let attr = attrs[i];
+      let prop = attr.name.replace(/^.*:/g, '');
+      result[prop] = attr.value;
+    }
+  }
+  return result;
+};
+
 let CwicGranules = (function() {
   extend(CwicGranules, window.edsc.models.data.Granules);
 
-  function CwicGranules(query, parentQuery, short_name) {
+  function CwicGranules(query, parentQuery, datasetId) {
     this.params = bind(this.params, this);
-    this.short_name = short_name;
     CwicGranules.__super__.constructor.apply(this, Array.prototype.slice.call(arguments));
-    this.path = '/granules/cwic.json';
-    this.startPage = 1;
-    this.pageCount = 20;
-    this.excludedGranulesList = ko.observableArray();
+    this.method = 'get';
+    this.osddPath = `/cwic/opensearch/datasets/${datasetId}/osdd.xml?clientId=${clientId}`;
+    this.osdd = ko.observable(null);
   }
 
-  CwicGranules.prototype.params = function() {
-    let result = CwicGranules.__super__.params.call(this);
-    result.short_name = this.short_name;
-    return result;
+  CwicGranules.prototype._urlFor = function (params) {
+    let url;
+    if (typeof(params) == 'string') {
+      // Allow passing a URL directly
+      url = params;
+    }
+    else {
+      if (!this.osdd()) {
+        return null;
+      }
+      url  = this.osdd().url;
+      for (let key in params) {
+        if (params.hasOwnProperty(key)) {
+          let matcher = new RegExp("{" + key + "\\??}");
+          let value = encodeURIComponent(params[key]);
+          url = url.replace(matcher, value);
+        }
+      }
+    }
+
+    // Completely remove remaining parameters
+    url = url.replace(/[?&][^=]*=\{[^\}]*\}/g, "");
+    return url;
   };
 
-  CwicGranules.prototype._toResults = function (data, current, params) {
-    var entries, newItems = [];
-    entries = data.feed.entry || [];
-    for (var i = 0; i < entries.length; i ++) {
-      newItems.push(new Granule(entries[i]));
+  CwicGranules.prototype._load = function (params, current, callback) {
+    if (!this.osdd()) {
+      this._loadOsdd(() => this._load(params, current, callback));
+      return;
     }
-    if (params.startPage > 1) {
-      return current.concat(newItems);
-    } else {
-      return newItems;
+    let url = this._urlFor(params);
+
+    this.abort();
+    this.isLoading(true);
+    this.isError(false);
+
+    let requestId = this.completedRequestId + 1;
+    console.log(`Request (${requestId}): ${url}`);
+    let start = new Date();
+
+    let xhrOpts = {
+      method: 'get',
+      dataType: 'xml',
+      url: url,
+      retry: () => this._load(params, current, callback),
+      success: (data, status, xhr) => {
+        this.stale = false;
+        this.isLoaded(true);
+        console.log(`Complete (${requestId}): ${url}`);
+        let dataObj = elToObj(data);
+        let results = this._toResults(data, dataObj, current, params);
+        this.hits(dataObj.feed.totalResults);
+        this.nextPageUrl = toLocalUrl(getRootLink(data, 'next'));
+        this.hasNextPage(this.nextPageUrl != null);
+
+        let timing = ((new Date() - start) / 1000).toFixed(1);
+        this.loadTime(timing);
+        if (callback) callback(results);
+      },
+      complete: () => {
+        this.completedRequestId = requestId;
+        this.currentRequest = null;
+        this.isLoading(false);
+      },
+      error: (response, type, reason) => {
+        this.isError(true);
+        console.log(`Fail (${requestId}) [${reason}]: ${url}`);
+      }
+    };
+
+    this.currentRequest = ajax(xhrOpts);
+  };
+
+  CwicGranules.prototype._parseOsdd = function (doc) {
+    let urls = doc.getElementsByTagNameNS(xmlNamespaces.os, 'Url');
+    for (let i = 0; i < urls.length; i++) {
+      let url = urls[i];
+      if (url.getAttribute('type') =='application/atom+xml') {
+        return {
+          url: toLocalUrl(url.getAttribute('template'))
+        };
+      }
+    }
+    return null;
+  };
+
+  CwicGranules.prototype._loadOsdd = function (callback) {
+    this.isLoading(true);
+    let xhrOpts = {
+      method: 'get',
+      dataType: 'xml',
+      url: this.osddPath,
+      retry: () => this._loadOsdd(callback),
+      success: (data, status, xhr) => {
+        this.osdd(this._parseOsdd(data));
+        if (callback) callback();
+      },
+      complete: () => {
+        this.isLoading(!this.currentRequest);
+      },
+      error: (response, type, reason) => {
+        this.isError(true);
+        console.log(`Fail (OSDD Load) [${reason}]: ${this.osddPath}`);
+      }
+    };
+    ajax(xhrOpts);
+  };
+
+  CwicGranules.prototype._toResults = function (data, dataObj, current, params) {
+    let entries = dataObj.feed.entry;
+    let granules = [];
+    for (let i = 0; i < entries.length; i++) {
+      let granule = entries[i];
+      let links = granule.link;
+      delete granule.link;
+      let hasBrowse = false;
+      for (let link of links) {
+        if (link.rel == 'icon') {
+          hasBrowse = true;
+          break;
+        }
+      }
+      granule.browse_flag = hasBrowse;
+      granule.links = links;
+      granules.push(new Granule(granule));
+    }
+    if (getRootLink(data, 'previous')) {
+      return current.concat(granules);
+    }
+    else {
+      return granules;
     }
   };
 
-  CwicGranules.prototype._computeSearchResponse = function(current, callback, needsLoad) {
-    var params, query, results, _ref;
-    if (needsLoad == null) {
-      needsLoad = true;
+  CwicGranules.prototype.cwicUrl = function(overrides) {
+    let params = {};
+    let ownParams = this.params();
+    for (let key in ownParams) {
+      if (ownParams.hasOwnProperty(key))
+        params[key] = ownParams[key];
     }
-    if ((_ref = this.query) != null ? _ref.isValid() : void 0) {
-      results = [];
-      params = this.params();
-      query = jQuery.param(params);
-      if (needsLoad && this._prevQuery !== query) {
-        this.excludedGranulesList([]);
-        this._prevQuery = query;
-        if (params.temporal === 'no-data') {
+    if (overrides) {
+      for (let key in overrides) {
+        if (ownParams.hasOwnProperty(key))
+          params[key] = ownParams[key];
+      }
+    }
+    return this._urlFor(overrides);
+  };
+
+  CwicGranules.prototype._computeSearchResponse = function(current, callback) {
+    if (this.query && this.query.isValid()) {
+      if (!this.osdd()) {
+        this.results([]);
+        this._load(this.params(), current, callback);
+      }
+      else {
+        let url = this._urlFor(this.params());
+
+        if (this._prevUrl !== url) {
+          this._prevUrl = url;
+          if (url && url.match(/#no-data$/)) {
+            this.results([]);
+            this.hits(0);
+            return;
+          }
           this.results([]);
-          this.hits(0);
-          return;
+          this.isLoaded(false);
+          this._load(url, current, callback);
         }
-        if (this._resultsComputed) {
-          this.results([]);
-        }
-        this._resultsComputed = true;
-        this.isLoaded(false);
-        delete params.page_size;
-        delete params.sort_key;
-        delete params.echo_collection_id;
-        params.pageCount = this.pageCount;
-        params.startPage = this.startPage;
-        this._load(params, current, callback);
       }
     }
   };
 
-  CwicGranules.prototype.exclude = function(granule) {
-    var currentQuery, index, results;
-    results = this.results();
-    index = results.indexOf(granule);
-    results.splice(index, 1);
-    this.results(results);
-    this.hits(this.hits() - 1);
-    currentQuery = jQuery.param(this.params());
-    this.excludedGranulesList.push({
-      index: index,
-      granule: granule
-    });
-    this.query.excludedGranules.push(granule.id);
-    this._prevQuery = jQuery.param(this.params());
-  };
-
-  CwicGranules.prototype.undoExclude = function() {
-    var afterValues, beforeValues, currentQuery, granule, granules, index, newGranule, newList;
-    newGranule = this.excludedGranulesList.pop();
-    index = newGranule.index;
-    granule = newGranule.granule;
-    granules = this.results();
-    if (index === 0) {
-      granules.unshift(granule);
-      newList = granules;
-    } else {
-      beforeValues = granules.splice(0, index);
-      afterValues = granules.splice(index - 1);
-      newList = beforeValues.concat(granule, afterValues);
-    }
-    this.results(newList);
-    this.hits(this.hits() + 1);
-    currentQuery = jQuery.param(this.params());
-    this.query.excludedGranules.pop();
-    if (this._prevQuery === currentQuery) {
-      this._prevQuery = jQuery.param(this.params());
-    }
-    return granule;
-  };
-
-  CwicGranules.prototype._decorateNextPage = function(params, results) {
-    if (results.length > 0) {
-      params.startPage = 2;
-      if (results.length > 0) {
-        params.pageCount = results.length;
-      }
-    } else {
-      params.startPage = 1;
-    }
-  };
-
-  CwicGranules.prototype._responseHasNextPage = function(xhr, data, results) {
-    let hits = this._responseHits(xhr, data);
-    return parseInt(data.feed.Query.startPage, 10) * parseInt(data.feed.Query.count, 10) < hits;
-  };
-
-  CwicGranules.prototype.loadNextPage = function(params, callback) {
-    var results;
-    if (params == null) {
-      params = this.params();
-    }
-    if (callback == null) {
-      callback = null;
-    }
+  CwicGranules.prototype.loadNextPage = function() {
     if (this.hasNextPage() && !this.isLoading()) {
-      results = this.results();
-      this._decorateNextPage(params, results);
-      this._loadAndSet(params, results, callback);
+      this._loadAndSet(this.nextPageUrl, this.results());
     }
   };
 
   return CwicGranules;
 })();
-
-
 export default CwicGranules;

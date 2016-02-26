@@ -41,7 +41,7 @@ ns.GranuleTimeline = do (ko
       $timeline = $('#timeline')
       if $timeline.timeline('getRowTemporal', @collection.id)?.toString() != ranges?.toString()
         $timeline.timeline('setRowTemporal', @collection.id, ranges)
-      params = extend({}, @collection.granuleDatasource()?.toQueryParams(), timelineParams)
+      params = extend({}, @collection.granuleDatasource()?.toTimelineQueryParams(), timelineParams)
 
       delete params.temporal
       delete params.page_num

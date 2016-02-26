@@ -221,7 +221,12 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
       $(e.target).closest('.panel-list-item').toggleClass('panel-list-selected', !isStickied)
       @_map.fire 'edsc.stickygranule', granule: granule
 
+    canRemoveGranules: ->
+      @collection.granuleDatasource()?.hasCapability('excludeGranules')
+
     removeGranule: (granule, e) =>
+      return unless @canRemoveGranules()
+
       granules = @granules().results()
       index = granules.indexOf(granule)
       newGranule = granules[index + 1]

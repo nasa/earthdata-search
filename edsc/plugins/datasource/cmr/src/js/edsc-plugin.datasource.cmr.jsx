@@ -18,6 +18,12 @@ export default class CmrDatasourcePlugin {
     this.clearFilters = () => {
       self.cmrQuery().clearFilters();
     };
+
+    this.capabilities = {};
+ }
+
+  hasCapability(name) {
+    return this.capabilities[name] == true || this.capabilities[name] == null;
   }
 
   destroy(edsc) {
@@ -49,6 +55,9 @@ export default class CmrDatasourcePlugin {
     }
     return params;
   }
+  toTimelineQueryParams() {
+    return this.toQueryParams();
+  }
   loadAccessOptions(callback, retry) {
     ajax({
       dataType: 'json',
@@ -58,6 +67,18 @@ export default class CmrDatasourcePlugin {
       retry: retry,
       success: callback
     });
+  }
+  downloadLinks(projectId) {
+    let collection = this.collection;
+    let base = `/granules/download.html?project=${projectId}&collection=${collection.id}`;
+    var result = [
+      {title: "View Download Links", url: base},
+      {title: "Download Access Script", url: base.replace('.html', '.sh')}
+    ];
+    if (collection.browseable_granule) {
+      result.push({title: "View Browse Image Links", url: "${base}&browse=true"});
+    }
+    return result;
   }
   hasQueryConfig() {
     return this._query !== null && Object.keys(this._query.serialize()).length > 0;
