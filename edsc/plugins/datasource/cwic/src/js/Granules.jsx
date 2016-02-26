@@ -82,6 +82,27 @@ let CwicGranules = (function() {
     this.osdd = ko.observable(null);
   }
 
+  CwicGranules.prototype._edscParamsToOpenSearch = function (params) {
+    let result = {};
+
+    for (let key in params) {
+      let value = params[key];
+      if (params.hasOwnProperty(key) && value != null) {
+        if (key == 'temporal') {
+          let temporal = value.split(',');
+          let start = temporal[0], end = temporal[1];
+
+          if (start && start.length > 0) result['time:start'] = start.replace(/\.\d{3}Z$/, 'Z');
+          if (end && end.length > 0) result['time:end'] = end.replace(/\.\d{3}Z$/, 'Z');
+        }
+        else {
+          result[key] = value;
+        }
+      }
+    }
+    return result;
+  };
+
   CwicGranules.prototype._urlFor = function (params) {
     let url;
     if (typeof(params) == 'string') {
@@ -93,6 +114,7 @@ let CwicGranules = (function() {
         return null;
       }
       url  = this.osdd().url;
+      params = this._edscParamsToOpenSearch(params);
       for (let key in params) {
         if (params.hasOwnProperty(key)) {
           let matcher = new RegExp("{" + key + "\\??}");
@@ -233,25 +255,23 @@ let CwicGranules = (function() {
   };
 
   CwicGranules.prototype._computeSearchResponse = function(current, callback) {
-    if (this.query && this.query.isValid()) {
-      if (!this.osdd()) {
-        this.results([]);
-        this._load(this.params(), current, callback);
-      }
-      else {
-        let url = this._urlFor(this.params());
+    if (!this.osdd()) {
+      this.results([]);
+      this._load(this.params(), current, callback);
+    }
+    else {
+      let url = this._urlFor(this.params());
 
-        if (this._prevUrl !== url) {
-          this._prevUrl = url;
-          if (url && url.match(/#no-data$/)) {
-            this.results([]);
-            this.hits(0);
-            return;
-          }
+      if (this._prevUrl !== url) {
+        this._prevUrl = url;
+        if (url && url.match(/#no-data$/)) {
           this.results([]);
-          this.isLoaded(false);
-          this._load(url, current, callback);
+          this.hits(0);
+          return;
         }
+        this.results([]);
+        this.isLoaded(false);
+        this._load(url, current, callback);
       }
     }
   };

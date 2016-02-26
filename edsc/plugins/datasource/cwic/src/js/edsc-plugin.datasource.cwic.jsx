@@ -12,9 +12,8 @@ export default class CwicDatasourcePlugin {
     let osdd_url = `http://cwic.wgiss.ceos.org/opensearch/datasets/${short_name}/osdd.xml`;
     collection.osdd_url(osdd_url);
 
-    var self = this;
     this.clearFilters = () => {
-      self.cwicQuery().clearFilters();
+      this.cwicQuery().clearFilters();
     };
 
     this.capabilities = {
@@ -29,6 +28,7 @@ export default class CwicDatasourcePlugin {
   destroy(edsc) {
     this._edsc = null;
     this._collection = null;
+    this._query = null;
   }
 
   toBookmarkParams() {
@@ -43,12 +43,6 @@ export default class CwicDatasourcePlugin {
     }
   }
 
-  toQueryParams() {
-    let query = this.cwicQuery(),
-      params = query.params(),
-      singleGranuleId = query.singleGranuleId();
-    return params;
-  }
   toTimelineQueryParams() {
     return {};
   }
