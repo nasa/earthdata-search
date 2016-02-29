@@ -87,11 +87,11 @@ describe "CWIC-capable collection search results", reset: false do
           first_collapsed_collection.click_link('Toggle details')
         end
 
-        it "does not show a granule count" do
+        it "does not show a granule count", acceptance: true do
           expect(page).to have_no_selector('.flyout .badge-granule')
         end
 
-        it "displays an indication that its search and retrieval is provided externally" do
+        it "displays an indication that its search and retrieval is provided externally", acceptance: true do
           expect(page.find('.flyout')).to have_text("Int'l / Interagency")
         end
       end
@@ -107,11 +107,11 @@ describe "CWIC-capable collection search results", reset: false do
           first_collapsed_collection.click_link('Toggle details')
         end
 
-        it "shows a granule count" do
+        it "shows a granule count", acceptance: true do
           expect(page).to have_selector('.flyout .badge-granule')
         end
 
-        it "displays no indication of external search and retrieval" do
+        it "displays no indication of external search and retrieval", acceptance: true do
           expect(page.find('.flyout')).to have_no_text('External')
         end
       end
