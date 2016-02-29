@@ -24,7 +24,7 @@ describe "Temporal constraint disambiguation", reset: true do
     end
 
     context 'clicking the download button' do
-      before(:each) { find('.master-overlay-global-actions').click_on "Retrieve collection data" }
+      before(:each) { find('.master-overlay-global-actions').click_on "Retrieve Listed Data" }
 
       it 'takes the user to the access configuration page with the temporal constraint applied' do
         expect(page).to have_content("15 Granules")
@@ -39,7 +39,7 @@ describe "Temporal constraint disambiguation", reset: true do
     end
 
     context 'clicking the download button' do
-      before(:each) { find('.master-overlay-global-actions').click_on "Retrieve collection data" }
+      before(:each) { find('.master-overlay-global-actions').click_on "Retrieve Listed Data" }
 
       it 'takes the user to the access configuration page for the granules on the selected date' do
         expect(page).to have_content("12 Granules")
@@ -55,7 +55,7 @@ describe "Temporal constraint disambiguation", reset: true do
     end
 
     context 'clicking the download button' do
-      before(:each) { find('.master-overlay-global-actions').click_on "Retrieve collection data" }
+      before(:each) { find('.master-overlay-global-actions').click_on "Retrieve Listed Data" }
 
       it 'presents the user with a dialog to choose temporal behavior' do
         expect(page).to have_content("What temporal selection would you like to use?")
