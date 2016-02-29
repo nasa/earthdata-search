@@ -152,10 +152,8 @@ ns.ProjectList = do (ko
         title = collection.dataset_id
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'download'
           collections.push
-            title: title
-            downloadPageUrl: "/granules/download.html?project=#{id}&collection=#{collectionId}"
-            downloadScriptUrl: "/granules/download.sh?project=#{id}&collection=#{collectionId}"
-            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
+            title: title,
+            links: collection.granuleDatasource()?.downloadLinks(id)
 
       collections
 

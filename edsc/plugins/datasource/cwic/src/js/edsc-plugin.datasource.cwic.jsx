@@ -1,6 +1,5 @@
 import Granules from './Granules.jsx';
 import GranuleQuery from './GranuleQuery.jsx';
-let ajax = window.edsc.util.xhr.ajax;
 
 export default class CwicDatasourcePlugin {
   constructor(edsc, collection) {
@@ -8,21 +7,27 @@ export default class CwicDatasourcePlugin {
     this._collection = collection;
     this._query = null;
     this._dataLoaded = ko.observable(false);
-    Object.defineProperty(collection, 'cwicGranuleQuery', {get: () => {return this.cwicQuery();}});
-    Object.defineProperty(collection, 'cwicGranulesModel', {get: () => {return this.data();}});
     let short_name = collection.json.short_name;
-    let osdd_url = `http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=${short_name}`;
+    let osdd_url = `http://cwic.wgiss.ceos.org/opensearch/datasets/${short_name}/osdd.xml`;
     collection.osdd_url(osdd_url);
 
-    var self = this;
     this.clearFilters = () => {
-      self.cwicQuery().clearFilters();
+      this.cwicQuery().clearFilters();
     };
+
+    this.capabilities = {
+      excludeGranules: false
+    };
+  }
+
+  hasCapability(name) {
+    return this.capabilities[name] === true || this.capabilities[name] == null;
   }
 
   destroy(edsc) {
     this._edsc = null;
     this._collection = null;
+    this._query = null;
   }
 
   toBookmarkParams() {
@@ -37,28 +42,37 @@ export default class CwicDatasourcePlugin {
     }
   }
 
-  toQueryParams() {
-    console.log("TO QUERY PARAMS");
-    let query = this.cwicQuery(),
-      params = query.params(),
-      singleGranuleId = query.singleGranuleId();
-    if (singleGranuleId) {
-      params.echo_granule_id = singleGranuleId;
-    }
-    return params;
+  toTimelineQueryParams() {
+    return {};
   }
-
   loadAccessOptions(callback, retry) {
-    ajax({
-      dataType: 'json',
-      url: '/data/options',
-      data: this.toQueryParams(),
-      method: 'post',
-      retry: retry,
-      success: callback
-    });
+    let granules = null;
+    let query = this.cwicQuery();
+    let hits = query.singleGranuleId() == null ? granules.hits() : 1;
+    let options = {
+      hits: hits,
+      methods: [
+        {name: 'Download',
+         type: 'download',
+         all: true,
+         count: hits,
+         defaults: {accessMethod: [{method: 'Download', type: 'download'}]}}
+      ]
+    };
+    callback(options);
   }
-
+  downloadLinks() {
+    var result = [];
+    if (this.data()) {
+      let granules = this.data();
+      let url = granules.cwicUrl({count: 100});
+      if (url) {
+        let downloadUrl = url.replace(/^\/cwic/, '/cwic/edsc_download');
+        result.push({title: "View Download Links", url: downloadUrl});
+      }
+    }
+    return result;
+  }
   hasQueryConfig() {
     return this._query !== null && Object.keys(this._query.serialize()).length > 0;
   }
@@ -106,7 +120,8 @@ export default class CwicDatasourcePlugin {
   data() {
     if (!this._granules) {
       let collection = this._collection;
-      this._granules = new Granules(this.cwicQuery(), this.cwicQuery().parentQuery, collection.json.short_name);
+      let datasetId = collection.json.short_name;
+      this._granules = new Granules(this.cwicQuery(), this.cwicQuery().parentQuery, datasetId);
       this._granules.results();
       this._dataLoaded(true);
     }

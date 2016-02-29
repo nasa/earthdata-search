@@ -40,5 +40,11 @@ module Echo
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
       post("/search/granules/timeline.#{format}", query.to_query, headers)
     end
+
+    protected
+
+    def default_headers
+      {'Client-Id' => client_id, 'Echo-ClientId' => client_id}
+    end
   end
 end

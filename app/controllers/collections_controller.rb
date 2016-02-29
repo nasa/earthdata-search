@@ -311,11 +311,13 @@ class CollectionsController < ApplicationController
     params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
     cwic = features && features.include?("Int'l / Interagency")
-    if cwic || request.query_parameters['echo_collection_id']
-      params['include_tags'] = "#{Rails.configuration.cmr_tag_namespace}*"
-    else
-      params['exclude[tag_namespace]'] = "#{Rails.configuration.cmr_tag_namespace}*"
-      params['options[tag_namespace][pattern]'] = true
+    unless ['prod'].include?(cmr_env) && !Rails.env.test?
+      if cwic || request.query_parameters['echo_collection_id']
+        params['include_tags'] = "#{Rails.configuration.cmr_tag_namespace}*"
+      else
+        params['exclude[tag_key]'] = "#{Rails.configuration.cmr_tag_namespace}*"
+        params['options[tag_key][pattern]'] = true
+      end
     end
 
     params

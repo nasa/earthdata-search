@@ -32,11 +32,9 @@
         <li class="data-access-collection">
           <p class="data-access-collection-name" data-bind="text: title"></p>
           <div class="data-access-collection-actions">
-            <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadPageUrl}">View Download Links</a>
-            <!-- ko if: downloadBrowseUrl -->
-            <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadBrowseUrl}">View Browse Image Links</a>
+            <!-- ko foreach: links -->
+            <a class="button text-button" href="#" target="_blank" data-bind="text: title, attr: {href: url}"></a>
             <!-- /ko -->
-            <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadScriptUrl}">Download Access Script</a>
           </div>
         </li>
       </ul>

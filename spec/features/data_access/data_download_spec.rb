@@ -47,6 +47,7 @@ describe "Data download page", reset: false do
       click_on 'Continue'
       choose 'Download'
       click_on 'Submit'
+      wait_for_xhr
     end
 
     it "displays a section for additional resources and documentation", intermittent: 1 do
@@ -156,6 +157,7 @@ describe "Data download page", reset: false do
 
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
     end
 
     # The intermittence might be caused by db not cleaned up.
@@ -187,6 +189,7 @@ describe "Data download page", reset: false do
 
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
     end
 
     it "does not display a link to view browse images" do
@@ -204,11 +207,12 @@ describe "Data download page", reset: false do
       click_on 'Continue'
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
     end
 
     it "displays a link to return to search results" do
       expect(page).to have_link("Back to Data Access Options")
-      expect(page).to have_css("a[href^=\"/data/configure?p=%21#{downloadable_collection_id}\"]")
+      expect(page).to have_css("a[href^=\"/data/configure?\"]")
     end
 
     it "displays information on using direct download" do
@@ -272,6 +276,7 @@ describe "Data download page", reset: false do
 
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
     end
 
     it "displays no information on direct downloads" do
@@ -292,6 +297,7 @@ describe "Data download page", reset: false do
       click_on 'Continue'
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
     end
 
     it "displays a link to return to search results" do
@@ -326,6 +332,7 @@ describe "Data download page", reset: false do
 
       choose 'Download'
       click_on 'Submit'
+      wait_for_xhr
     end
 
     it "displays no information on direct downloads" do
