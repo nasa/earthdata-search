@@ -29,7 +29,7 @@ describe "CWIC-enabled collection details", reset: false do
 
     it "displays links to the collection's CWIC OpenSearch API endpoint", acceptance: true do
       expect(collection_details).to have_link('OSDD')
-      url = "http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=3DIMG_L2P_IRW&clientId="
+      url = "http://cwic.wgiss.ceos.org/opensearch/datasets/3DIMG_L2P_IRW/osdd.xml"
       expect(collection_details.find_link('OSDD')['href']).to start_with(url)
     end
 

@@ -6,18 +6,16 @@ describe "CWIC Granule list", reset: false do
   context "for all collections with granules" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
-      login
-      wait_for_xhr
+      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
     end
 
-    hook_granule_results("INSAT-3D Imager Level-2P IR WINDS")
+    hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     it "provides a button to get collection details", acceptance: true do
       expect(granule_list).to have_link('View collection details')
     end
 
-    it "provides a button to get download the collection", acceptance: true do
+    it "provides a button to download the collection", acceptance: true do
       expect(granule_list).to have_link('Retrieve collection data')
     end
 
@@ -25,9 +23,11 @@ describe "CWIC Granule list", reset: false do
       expect(granule_list).to have_link('Filter granules')
     end
 
-    context "clicking on the collection details button", acceptance: true do
+    context "clicking on the collection details button" do
       before :all do
+        wait_for_xhr
         granule_list.find('.master-overlay-global-actions').click_link('View collection details')
+        wait_for_xhr
       end
 
       after :all do
@@ -35,16 +35,20 @@ describe "CWIC Granule list", reset: false do
       end
 
       it "displays the collection details", acceptance: true do
+        page.execute_script("console.log(' --- AND ---');")
         expect(page).to have_visible_collection_details
-        expect(page).to have_content('nitant@sac.isro.gov.in')
+        expect(page).to have_content('lta@usgs.gov')
       end
 
       it "displays back navigation with the appropriate text", acceptance: true do
+        page.execute_script("console.log(' --- AND ---');")
         expect(collection_details).to have_link('Back to Granules')
       end
     end
 
-    xcontext "clicking the exclude granule button" do
+    # We don't currently support the exclude button for CWIC
+    xit "clicking the exclude granule button" do
+
       before :all do
         first_granule_list_item.click
         first_granule_list_item.click_link "Exclude this granule"
@@ -116,13 +120,11 @@ describe "CWIC Granule list", reset: false do
   context "for collections with many granule results" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
-      login
-      wait_for_xhr
+      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
     end
 
     context "clicking on a collection result" do
-      hook_granule_results("INSAT-3D Imager Level-2P IR WINDS")
+      hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
       it "displays the first granule results in a list that pages by 20" do
         expect(page).to have_css('#granule-list .panel-list-item', count: 20)
@@ -136,15 +138,14 @@ describe "CWIC Granule list", reset: false do
   context "for collections that have granules with temporal fields" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1200008589-GCMDTEST'
-      login
-      wait_for_xhr
+      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
     end
+
     context "clicking on a collection result" do
-      hook_granule_results("OSTM/Jason-2 Level-2 Geophysical Data Records")
+      hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
       it "displays temporal information on the granule list" do
-        expect(granule_list).to have_content('JA2_GPN_2PdP004_108_20080814_233038_20080815_002651.nc 2008-08-14Z to 2008-08-15Z')
+        expect(granule_list.text).to match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z to \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/)
       end
     end
   end

@@ -7,12 +7,10 @@ describe "CWIC Granule list", reset: false do
   context "for all collections with granules" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1200008589-GCMDTEST'
-      login
-      wait_for_xhr
+      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
     end
 
-    hook_granule_results("OSTM/Jason-2 Level-2 Geophysical Data Records")
+    hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     context "clicking on the 'Filter granules' button" do
       before :all do

@@ -249,7 +249,7 @@ let CwicGranules = (function() {
         delete granule.link;
         let hasBrowse = false;
         for (let j = 0; j < links.length; j++) {
-          if (links[i].rel == 'icon') {
+          if (links[j].rel == 'icon') {
             hasBrowse = true;
             break;
           }
@@ -284,7 +284,7 @@ let CwicGranules = (function() {
   };
 
   CwicGranules.prototype._computeSearchResponse = function(current, callback) {
-    if (!this.osdd()) {
+    if (!this.osdd() && !this.isLoading.peek()) {
       this.results([]);
       this._load(this.params(), current, callback);
     }
