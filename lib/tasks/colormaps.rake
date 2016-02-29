@@ -23,6 +23,7 @@ namespace :colormaps do
     layers.each do |layer|
       id = layer.xpath("./ows:Identifier").first.content.to_s
       url = layer.xpath("./ows:Metadata/@xlink:href").to_s
+      url = url.gsub(/^https/, 'http') # Avoid SSL errors in CI
 
       unless id.empty? || url.empty?
         file_count += 1

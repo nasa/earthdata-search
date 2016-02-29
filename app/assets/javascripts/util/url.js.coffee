@@ -241,7 +241,9 @@ this.edsc.util.url = do(window
 
     path = path.replace(/^\/#/, '/') # IE 9 bug with URL hashes
     path = path + paramStr
-    if workspaceName || path.length > config.urlLimit
+    # Avoid shortening urls when cmr_env is set
+    isTooLong = path.length > config.urlLimit && path.indexOf('cmr_env=') == -1
+    if workspaceName || isTooLong
       if path != savedPath || (workspaceName && savedName != workspaceName)
         # assign a guid
         shortenPath(path, state, workspaceName)

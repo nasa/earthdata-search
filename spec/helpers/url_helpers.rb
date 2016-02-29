@@ -58,7 +58,15 @@ module Helpers
 
         params['labs'] = options[:labs] if options[:labs]
 
-        params.to_param
+        result = []
+        params.each do |k, v|
+          param = {}
+          param[k] = v
+          result << param.to_param
+        end
+
+        # Ensure sorted order
+        result.join('&')
       end
 
       def temporal(start, stop=nil, range=nil)
