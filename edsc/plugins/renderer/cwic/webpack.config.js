@@ -18,8 +18,8 @@ module.exports = {
     loaders: [
       { test: /\.useable\.css$/, loader: "style/useable!css" },
       { test: /\.useable\.less$/, loader: "style/useable!css!less" },
-      { test: /\.css$/, exclude: /\.use\.css$/, loader: "style!css" },
-      { test: /\.less$/, exclude: /\.use\.less$/, loader: "style!css!less" },
+      { test: /\.css$/, exclude: /\.useable\.css$/, loader: "style!css" },
+      { test: /\.less$/, exclude: /\.useable\.less$/, loader: "style!css!less" },
       { test: /\.coffee$/, loader: "coffee" },
       { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee?literate" },
       { test: /\.jsx$/, exclude: /(node_modules|bower_components)/, loader: 'babel?presets[]=es2015' },

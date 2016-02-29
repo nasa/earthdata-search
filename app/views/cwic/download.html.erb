@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Earthdata Search - Downloads</title>
+    <link rel="shortcut icon" href="/favicon.ico?v=1.1">
+  </head>
+  <body>
+    <ul id="links">
+    </ul>
+    <div id="loading">Loading more...</div>
+    <div id="errors"></div>
+
+    <script>
+      (function() {
+
+        var el = document.getElementById('links');
+
+        function getDownloadLinks(entry) {
+          var node = entry.firstChild;
+          var result = []
+          while (node) {
+            if (node.nodeType == Node.ELEMENT_NODE && node.tagName == 'link') {
+              var a = document.createElement('A');
+              a.setAttribute('href', node.getAttribute('href'));
+              a.textContent = node.getAttribute('title');
+              result.push(a);
+            }
+            node = node.nextSibling;
+          }
+          return result;
+        }
+
+        function toLocalUrl(url) {
+          if (url) {
+            url = url.replace(/^.*\/\/[^\/]+/, '/cwic');
+          }
+          return url;
+        }
+
+        function getLink(parent, rel) {
+          var node = parent.firstchild;
+          while (node) {
+            if (node.nodeType == Node.ELEMENT_NODE && node.tagName == 'link' && node.getAttribute('rel') == rel) {
+              return node.getAttribute('href');
+            }
+            node = node.nextSibling;
+          }
+          return null;
+        }
+
+        function finish() {
+          document.getElementById('loading').style.display = 'none';
+        }
+
+        function renderEntry(title, links) {
+          var parent = document.createElement('LI');
+          var h3 = document.createElement('h3');
+          h3.textContent = title;
+          var ul = document.createElement('UL');
+
+          for (var i = 0; i < links.length; i++) {
+            var li = document.createElement('LI');
+            var link = links[i];
+            li.appendChild(link)
+            ul.appendChild(li);
+          }
+          parent.appendChild(h3);
+          parent.appendChild(ul);
+          document.getElementById('links').appendChild(parent);
+        }
+
+        function onLoad() {
+          var doc = this.responseXML;
+          console.log(this);
+          var entries = doc.getElementsByTagName('entry');
+          for (var i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            var title = entry.getElementsByTagName('title')[0];
+            renderEntry(title.textContent, getDownloadLinks(entries[i]));
+          }
+          var next = getLink(doc.firstChild, 'next');
+          if (next) {
+            fetchLinks(next);
+          }
+          else {
+            finish();
+          }
+        }
+
+        function onError() {
+          document.getElementById('loading').textContent = "There was an error loading granules. Refresh this page to try again."
+          finish();
+        }
+
+        function onAbort() {
+          finish();
+        }
+
+        function fetchLinks(url) {
+          url = toLocalUrl(url);
+
+          var request = new XMLHttpRequest();
+          request.open('GET', url, true);
+          request.send(null);
+
+          request.addEventListener("load", onLoad, false);
+          request.addEventListener("error", onError, false);
+          request.addEventListener("abort", finish, false);
+        }
+
+        fetchLinks("<%=raw @url %>")
+      })();
+    </script>
+  </body>
+</html>

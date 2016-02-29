@@ -225,6 +225,21 @@ http_interactions:
   digest: 3600219aef95c98ed6c15a9bcca628aff7c53b79
 - request:
     method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1204449891-GCMDTEST.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:13:59 GMT
+  digest: de6787e2295388fd7f01fd36c8e274e3bf4b0bba
+- request:
+    method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1204482909-GCMDTEST.echo10
     body:
       encoding: US-ASCII
