@@ -244,7 +244,7 @@ let CwicGranules = (function() {
     if (dataObj.feed && dataObj.feed.entry) {
       let entries = arrayWrap(dataObj.feed.entry);
       for (let i = 0; i < entries.length; i++) {
-        let granule = entries[0];
+        let granule = entries[i];
         let links = arrayWrap(granule.link);
         delete granule.link;
         let hasBrowse = false;
