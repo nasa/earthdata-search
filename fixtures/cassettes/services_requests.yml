@@ -13,6 +13,39 @@ http_interactions:
   digest: 613ccaaf24f9875c7923b7d9bfd102c1b4200bcf
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/3DIMG_L2P_IRW/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:42:33 GMT
+  digest: dfde3dfe7b88fe7ec2e8f65aac4e53c64c71e705
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/USGS_EDC_EO1_ALI/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:39:32 GMT
+  digest: a105d9a0885c8e97e8e3de58e36e6a9800e85f69
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/gov.noaa.class.J2-XGDR/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:43:33 GMT
+  digest: 0ac28ef339131bdc6f1e4a662cab6f2b81632419
+- request:
+    method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?clientId=edsc-dev&datasetId=3DIMG_L2P_IRW&startPage=1&count=20
     body:
       encoding: US-ASCII
@@ -163,6 +196,83 @@ http_interactions:
   digest: ab03b3f1c01eab9cd55e6d0aa2640bb9264a7378
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=3DIMG_L2P_IRW&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:42:36 GMT
+  digest: 6b059eeccd69fb9e1c118055a0f5198a2e11deaa
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:39:34 GMT
+  digest: 84c5d473775198fb01ee275f54741d6e4236cbc8
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&count=20&geoBox=-0.001%2C-0.001%2C0.001%2C0.001&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:40:07 GMT
+  digest: 51382a4157178307dc21e86828d30ed7d3ee9f33
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&count=20&geoBox=-75%2C40%2C-74%2C41&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:39:55 GMT
+  digest: 53ab5b0e14d7dfb753c34078bd17161f440ecc2f
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&count=20&geoBox=-75.001%2C39.999%2C-74.999%2C40.001&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:39:42 GMT
+  digest: de2ab0e5b8ba742a9a91b159f2aa18f61d2edf9e
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&count=20&timeStart=2013-12-01T00%3A00%3A00Z&timeEnd=2013-12-01T23%3A59%3A59Z&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:44:10 GMT
+  digest: 51dfeac5e9ec5537fc099815685f4a3d54be6e5b
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&count=20&timeStart=2013-12-01T00%3A00%3A00Z&timeEnd=2014-12-01T23%3A59%3A59Z&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:44:18 GMT
+  digest: b2883a60e6d66b6f65055d31d6e55d9c0d43c303
+- request:
+    method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=gov.noaa.class.J2-XGDR&clientId=edsc-dev&startPage=1&count=20&timeStart=2010-02-02&timeEnd=2010-02-02
     body:
       encoding: US-ASCII
@@ -191,6 +301,28 @@ http_interactions:
       - edsc-dev
   recorded_at: Tue, 09 Feb 2016 19:57:40 GMT
   digest: 047cb28bb941e5afc5281bbe87bbb71d76b6f9f0
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=gov.noaa.class.J2-XGDR&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:43:34 GMT
+  digest: 119940fae0596b79513e2d8bd1bd22cbca7468b8
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=gov.noaa.class.J2-XGDR&count=20&timeStart=2010-02-02T00%3A00%3A00Z&timeEnd=2010-02-02T23%3A59%3A59Z&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 15:43:35 GMT
+  digest: b2427c09a1088c260bfe07d32831bf58070088f6
 - request:
     method: get
     uri: https://api.echo.nasa.gov/browse-scaler/availability

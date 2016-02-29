@@ -27,36 +27,49 @@ let arrayWrap = function(obj) {
 }
 
 let getLink = function(parent, rel) {
-  let node = parent.firstElementChild;
+  let node = parent.firstChild;
   while (node) {
-    if (node.tagName == 'link' && node.getAttribute('rel') == rel) {
+    if (node.nodeType == Node.ELEMENT_NODE && node.tagName == 'link' && node.getAttribute('rel') == rel) {
       return node.getAttribute('href');
     }
-    node = node.nextElementSibling;
+    node = node.nextSibling;
   }
   return null;
 };
 
 let getRootLink = function(atomData, rel) {
-  return getLink(atomData.firstElementChild, rel);
+  return getLink(atomData.firstChild, rel);
 };
 
 let elToObj = function(el) {
   let result;
-  if (el.firstElementChild) {
+
+  let hasChildren = false;
+  let childEl = el.firstChild;
+  while (childEl) {
+    if (childEl.nodeType == Node.ELEMENT_NODE) {
+      hasChildren = true;
+      break;
+    }
+    childEl = childEl.nextSibling;
+  }
+
+  if (hasChildren) {
     result = {};
-    let child = el.firstElementChild;
+    let child = el.firstChild;
     while (child) {
-      let prop = child.tagName.replace(/^.*:/g, '');
-      let obj = elToObj(child);
-      if (result.hasOwnProperty(prop)) {
-        result[prop] = arrayWrap(result[prop]);
-        result[prop].push(obj);
+      if (child.nodeType == Node.ELEMENT_NODE) {
+        let prop = child.tagName.replace(/^.*:/g, '');
+        let obj = elToObj(child);
+        if (result.hasOwnProperty(prop)) {
+          result[prop] = arrayWrap(result[prop]);
+          result[prop].push(obj);
+        }
+        else {
+          result[prop] = obj;
+        }
       }
-      else {
-        result[prop] = obj;
-      }
-      child = child.nextElementSibling;
+      child = child.nextSibling;
     }
   }
   else if (el.attributes.length == 0 || el.textContent && el.textContent.length > 0) {
@@ -164,15 +177,15 @@ let CwicGranules = (function() {
       url: url,
       retry: () => this._load(params, current, callback),
       success: (data, status, xhr) => {
+        let dataObj, results;
         this.stale = false;
         this.isLoaded(true);
         console.log(`Complete (${requestId}): ${url}`);
-        let dataObj = elToObj(data);
-        let results = this._toResults(data, dataObj, current, params);
+        dataObj = elToObj(data);
+        results = this._toResults(data, dataObj, current, params);
         this.hits(dataObj.feed.totalResults);
         this.nextPageUrl = toLocalUrl(getRootLink(data, 'next'));
         this.hasNextPage(this.nextPageUrl != null);
-
         let timing = ((new Date() - start) / 1000).toFixed(1);
         this.loadTime(timing);
         if (callback) callback(results);
@@ -230,12 +243,13 @@ let CwicGranules = (function() {
     let granules = [];
     if (dataObj.feed && dataObj.feed.entry) {
       let entries = arrayWrap(dataObj.feed.entry);
-      for (let granule of entries) {
+      for (let i = 0; i < entries.length; i++) {
+        let granule = entries[0];
         let links = arrayWrap(granule.link);
         delete granule.link;
         let hasBrowse = false;
-        for (let link of links) {
-          if (link.rel == 'icon') {
+        for (let j = 0; j < links.length; j++) {
+          if (links[i].rel == 'icon') {
             hasBrowse = true;
             break;
           }
@@ -277,7 +291,7 @@ let CwicGranules = (function() {
     else {
       let url = this._urlFor(this.params());
 
-      if (this._prevUrl !== url) {
+      if (this._prevUrl != url) {
         this._prevUrl = url;
         if (url && url.match(/#no-data$/)) {
           this.results([]);

@@ -18,16 +18,16 @@
         var el = document.getElementById('links');
 
         function getDownloadLinks(entry) {
-          var node = entry.firstElementChild;
+          var node = entry.firstChild;
           var result = []
           while (node) {
-            if (node.tagName == 'link') {
+            if (node.nodeType == Node.ELEMENT_NODE && node.tagName == 'link') {
               var a = document.createElement('A');
               a.setAttribute('href', node.getAttribute('href'));
               a.textContent = node.getAttribute('title');
               result.push(a);
             }
-            node = node.nextElementSibling;
+            node = node.nextSibling;
           }
           return result;
         }
@@ -40,12 +40,12 @@
         }
 
         function getLink(parent, rel) {
-          var node = parent.firstElementChild;
+          var node = parent.firstchild;
           while (node) {
-            if (node.tagName == 'link' && node.getAttribute('rel') == rel) {
+            if (node.nodeType == Node.ELEMENT_NODE && node.tagName == 'link' && node.getAttribute('rel') == rel) {
               return node.getAttribute('href');
             }
-            node = node.nextElementSibling;
+            node = node.nextSibling;
           }
           return null;
         }
@@ -80,7 +80,7 @@
             var title = entry.getElementsByTagName('title')[0];
             renderEntry(title.textContent, getDownloadLinks(entries[i]));
           }
-          var next = getLink(doc.firstElementChild, 'next');
+          var next = getLink(doc.firstChild, 'next');
           if (next) {
             fetchLinks(next);
           }

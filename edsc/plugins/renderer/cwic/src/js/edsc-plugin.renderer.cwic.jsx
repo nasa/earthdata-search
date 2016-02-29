@@ -53,9 +53,6 @@ export default class CwicRendererPlugin {
       if (document.getElementById('temporal-query')) {
         this.edsc.addElementHelp(key, options);
       }
-      else {
-        let self = this;
-      }
     }
     else if (!isRecurring) {
       this._needsTemporalWarning = true;
