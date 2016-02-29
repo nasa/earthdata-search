@@ -44,6 +44,7 @@ describe "Access Option Defaults", reset: true do
 
       click_on 'Continue'
       click_on 'Submit'
+      wait_for_xhr
       expect(page).to have_content('Not Validated')
       expect(page).to have_content(collection_title)
 
