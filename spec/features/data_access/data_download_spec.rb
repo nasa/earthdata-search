@@ -212,7 +212,7 @@ describe "Data download page", reset: false do
 
     it "displays a link to return to search results" do
       expect(page).to have_link("Back to Data Access Options")
-      expect(page).to have_css("a[href^=\"/data/configure?p=%21#{downloadable_collection_id}\"]")
+      expect(page).to have_css("a[href^=\"/data/configure?\"]")
     end
 
     it "displays information on using direct download" do

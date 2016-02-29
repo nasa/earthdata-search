@@ -17,14 +17,6 @@ class GranulesController < ApplicationController
     end
   end
 
-  def cwic
-    catalog_response = echo_client.get_cwic_granules(params['short_name'], params['startPage'], params['pageCount'], params['temporal'])
-    if catalog_response.success?
-      decorate_cwic_granules(catalog_response)
-    end
-    render json: catalog_response.body, status: catalog_response.status
-  end
-
   def show
     response = echo_client.get_granule(params[:id], {}, token)
 

@@ -15,22 +15,32 @@ module Echo
       @connection ||= build_connection
     end
 
-    def initialize(root, client_id)
+    def initialize(root, urs_client_id=nil)
       @root = root
-      @client_id = client_id
+      @urs_client_id = urs_client_id
     end
 
     protected
 
+    def client_id
+      Rails.configuration.cmr_client_id
+    end
+
+    def default_headers
+      {}
+    end
+
     def token_header(token)
-      token.present? ? {'Echo-Token' => "#{token}:#{@client_id}"} : {}
+      token.present? ? {'Echo-Token' => "#{token}:#{@urs_client_id}"} : {}
     end
 
     def request(method, url, params, body, headers, options)
       faraday_response = connection.send(method, url, params) do |req|
+
         req.headers['Content-Type'] = 'application/json' unless method == :get
-        req.headers['Client-Id'] = Rails.configuration.cmr_client_id
-        req.headers['Echo-ClientId'] = Rails.configuration.cmr_client_id unless self.class == CmrClient
+        default_headers.each do |header, value|
+          req.headers[header] = value
+        end
         headers.each do |header, value|
           req.headers[header] = value
         end

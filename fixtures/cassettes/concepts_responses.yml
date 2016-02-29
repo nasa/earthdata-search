@@ -1555,6 +1555,84 @@ a8625406c735635e8f0d54555083fa434ca22391:
         Observing System Data Information System</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>http://www.eorc.jaxa.jp/TRMM/index_e.htm</URL><Description>\n
         \        TRMM web site operated by JAXA\n      </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>36</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-36</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>36</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-36</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
     http_version: 
+de6787e2295388fd7f01fd36c8e274e3bf4b0bba:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 29 Feb 2016 17:13:52 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 5adede26-2014-4cd2-866e-d02fbb629bfb
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Collection><ShortName>USGS_EDC_EO1_ALI</ShortName><VersionId>Not
+        provided</VersionId><InsertTime>2007-09-06T00:00:00.000Z</InsertTime><LastUpdate>2015-09-22T00:00:00.000Z</LastUpdate><LongName>EO-1
+        (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level
+        1Gs, Level 1Gst Data</LongName><DataSetId>EO-1 (Earth Observing-1) Advanced
+        Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data</DataSetId><Description>Advanced
+        Land Imager (ALI) provides image data from ten spectral bands (band designations).
+        The instrument operates in a pushbroom fashion, with a spatial resolution
+        of 30 meters for the multispectral bands and 10 meters for the panchromatic
+        band. The standard scene width is 37 kilometers. Standard scene length is
+        42 kilometers, with an optional increased scene length of 185 kilometers (additional
+        information).\n                  \nFor Advanced Land Imager (ALI) data, the
+        following levels of correction are available:\n                  \nLevel 1R
+        radiometrically corrected with no geometric correction applied. The image
+        data are provided in 16-bit radiance values. The data are available in Hierarchical
+        Data Format (HDF) and are distributed on CD-ROM, DVD, and File Transfer Protocol
+        (FTP).\n                  \nLevel 1Gs is geometrically corrected and will
+        be provided as a single \"stitched\" file. The image data are provided in
+        16-bit radiance values. The data are available in Hierarchical Data Format
+        (HDF) or Geographic Tagged Image-File Format (GeoTIFF) and are distributed
+        on DVD and File Transfer Protocol (FTP).\n                   \nLevel 1Gst
+        is terrain corrected and will be provided as a single \"stitched\" file. The
+        image data are provided in 16-bit radiance values. The data are available
+        in Hierarchical Data Format (HDF) or Geographic Tagged Image-File Format (GeoTIFF)
+        and are distributed on DVD and File Transfer Protocol (FTP). \n                  \n[Source:
+        USGS/EDC Homepage]</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In
+        Work</CollectionState><Temporal><RangeDateTime><BeginningDateTime>2001-03-16T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>TECHNICAL
+        CONTACT</Role><OrganizationEmails><Email>lta@usgs.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>LTA
+        REPRESENTATIVE</FirstName><LastName>USGS EROS CENTER</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>SURFACE
+        RADIATIVE PROPERTIES</TermKeyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED
+        WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>INFRARED IMAGERY</Value></VariableLevel1Keyword><DetailedVariableKeyword>NEAR
+        INFRARED</DetailedVariableKeyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED
+        WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>INFRARED RADIANCE</Value></VariableLevel1Keyword><DetailedVariableKeyword>NEAR
+        INFRARED</DetailedVariableKeyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>VISIBLE
+        WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>VISIBLE IMAGERY</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>VISIBLE
+        WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>VISIBLE RADIANCE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>EO-1</ShortName><LongName>Earth
+        Observing 1</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>ALI</ShortName><LongName>Advanced
+        Land Imager</LongName></Instrument><Instrument><ShortName>HYPERION</ShortName><LongName>HYPERSPECTRAL
+        IMAGER</LongName></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>3185d6bf-e098-4297-a911-fc5cea8f0b86</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-09-21
+        14:53:44</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>NMP</ShortName><LongName>New
+        Millennium Program</LongName></Campaign><Campaign><ShortName>CWIC</ShortName><LongName>CEOS
+        WGISS Integrated Catalog</LongName></Campaign></Campaigns><OnlineAccessURLs><OnlineAccessURL><URL>http://earthexplorer.usgs.gov/</URL><URLDescription>\n
+        \        Search for and order ALI data from the USGS Earth Explorer.\n      </URLDescription></OnlineAccessURL><OnlineAccessURL><URL>http://glovis.usgs.gov/</URL><URLDescription>\n
+        \        Search for and order ALI data from the USGS Global Visualizer (GLOVIS).\n
+        \     </URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://eo1.gsfc.nasa.gov/</URL><Description>\n
+        \        EO-1 Project homepage at NASA's Goddard Space Flight Center.\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nmp.nasa.gov/</URL><Description>\n
+        \        NASA's New Millennium Project homepage.\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>83.1</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-83.85</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
 4cfd759907f259bb6f4fc610b9295313769946d7:
   response:
     status:

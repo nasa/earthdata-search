@@ -149,19 +149,6 @@ describe Echo::Client do
       expect(req.headers['Content-Type']).to be_nil
     end
 
-    it 'sets a client id compatible with catalog-rest requests' do
-      expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
-
-      basic_client.request(:post, dummy_url, nil, nil, {}, {})
-      expect(req.headers['Client-Id']).to eq(Rails.configuration.cmr_client_id)
-    end
-
-    it 'sets a client id compatible with echo-rest requests' do
-      expect(connection).to receive(:post).with(dummy_url, nil).and_yield(req)
-
-      basic_client.request(:post, dummy_url, nil, nil, {}, {})
-      expect(req.headers['Echo-ClientId']).to eq(Rails.configuration.cmr_client_id)
-    end
   end
 
 end

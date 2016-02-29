@@ -7,21 +7,15 @@ describe "CWIC Granule list", reset: false do
   context "for all collections with granules" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1200008589-GCMDTEST'
-      login
-      wait_for_xhr
+      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
     end
 
-    hook_granule_results("OSTM/Jason-2 Level-2 Geophysical Data Records")
+    hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     context "clicking on the 'Filter granules' button" do
       before :all do
         granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
         expect(page).to have_css('#granule-search')
-      end
-
-      after :all do
-        collection_details.click_link('Back to Granules')
       end
 
       it "does not display the search by granule id fields", acceptance: true do
@@ -64,8 +58,7 @@ describe "CWIC Granule list", reset: false do
         end
 
         it "has query param 'pg[0][qt]' in the url", acceptance: true do
-          project_id = current_url.match(/projectId=\d+/).to_s.split("=")[1]
-          expect(Project.find(project_id).path).to have_text("pg[0][qt]=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T23%3A59%3A59.000Z")
+          expect(current_url).to include("pg[0][qt]=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T23%3A59%3A59.000Z")
         end
       end
     end
