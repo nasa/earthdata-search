@@ -2,7 +2,7 @@ module Helpers
   module PageHelpers
     def wait_for_xhr
       #@waiting ||= 0
-      synchronize(10) do
+      synchronize(30) do
         #message = lambda do |time, value|
         #  @waiting += time
         #  puts "window.edsc.util.xhr.hasPending() -> %.3f #{value.inspect}.  Total: %.3f" % [time, @waiting]

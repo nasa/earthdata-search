@@ -10,6 +10,8 @@
           $root = $(href) if href? && href.length > 1
 
         $root[pluginName](method, $this.attr(dataArg))
+        e.preventDefault()
+        e.stopPropagation()
       false
 
 
