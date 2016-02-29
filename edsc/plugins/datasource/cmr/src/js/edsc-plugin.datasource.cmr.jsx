@@ -69,14 +69,14 @@ export default class CmrDatasourcePlugin {
     });
   }
   downloadLinks(projectId) {
-    let collection = this.collection;
+    let collection = this._collection;
     let base = `/granules/download.html?project=${projectId}&collection=${collection.id}`;
     var result = [
       {title: "View Download Links", url: base},
       {title: "Download Access Script", url: base.replace('.html', '.sh')}
     ];
     if (collection.browseable_granule) {
-      result.push({title: "View Browse Image Links", url: "${base}&browse=true"});
+      result.push({title: "View Browse Image Links", url: `${base}&browse=true`});
     }
     return result;
   }
