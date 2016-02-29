@@ -1,6 +1,5 @@
 import Granules from './Granules.jsx';
 import GranuleQuery from './GranuleQuery.jsx';
-let ajax = window.edsc.util.xhr.ajax;
 
 export default class CwicDatasourcePlugin {
   constructor(edsc, collection) {
@@ -22,7 +21,7 @@ export default class CwicDatasourcePlugin {
   }
 
   hasCapability(name) {
-    return this.capabilities[name] == true || this.capabilities[name] == null;
+    return this.capabilities[name] === true || this.capabilities[name] == null;
   }
 
   destroy(edsc) {

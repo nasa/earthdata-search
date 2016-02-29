@@ -44,7 +44,7 @@ describe "CWIC Granule list", reset: false do
       end
     end
 
-    context "clicking the exclude granule button" do
+    xcontext "clicking the exclude granule button" do
       before :all do
         first_granule_list_item.click
         first_granule_list_item.click_link "Exclude this granule"
