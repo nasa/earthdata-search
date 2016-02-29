@@ -145,6 +145,17 @@ http_interactions:
   digest: 49e2eb60d39e894bb5420c3957b34eb99d70629c
 - request:
     method: get
+    uri: http://places.example.com/search?username=edsc&maxRows=5&q=snow+cover&orderby=relevance&isNameRequired=true&style=full&type=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 29 Feb 2016 17:39:05 GMT
+  digest: 71a01ff43b4a97432506b5b48934f89ac8f57daf
+- request:
+    method: get
     uri: http://places.example.com/search?username=edsc&maxRows=5&q=snow+cover+nrt&orderby=relevance&isNameRequired=true&style=full&type=json
     body:
       encoding: US-ASCII
