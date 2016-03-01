@@ -349,6 +349,28 @@ fd7d3e227e4f52e7247842bdb55e9fed2105d715:
       encoding: UTF-8
       string: '[{"concept-id":"C14758250-LPDAAC_ECS","intervals":[[1330387200,1383004800,317111],[1383091200,1383609600,2678],[1383696000,1425254400,246916]]}]'
     http_version: 
+84349d2a1c350a557996bf58f77a579e96b5b1d0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 01 Mar 2016 17:29:35 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 98d5b626-e35d-49e2-90fd-efc687987f2c
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 0b8bf9707020ec07e187dcab5c4d51e2a3965c6d:
   response:
     status:

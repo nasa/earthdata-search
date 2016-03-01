@@ -62,6 +62,7 @@ describe 'Address bar', reset: false do
       fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
+      wait_for_xhr
       js_click_apply ".temporal-dropdown"
       wait_for_xhr
     end
