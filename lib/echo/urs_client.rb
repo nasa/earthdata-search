@@ -23,7 +23,7 @@ module Echo
     protected
 
     def build_connection
-      super.tap do |conn|
+      super do |conn|
         conn.basic_auth(ENV['urs_username'], ENV['urs_password'])
         conn.request :json
       end

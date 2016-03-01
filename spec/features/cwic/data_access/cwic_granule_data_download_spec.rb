@@ -1,157 +1,92 @@
 require "spec_helper"
 
-if false
-describe "CWIC data download page", reset: false do
+describe "CWIC-enabled data access", reset: false do
 
   extend Helpers::CollectionHelpers
 
-  context "on CWIC granules list" do
+  dataset_id = "EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data"
+  search_params = {
+    env: :uat,
+    ff: "Int'l / Interagency",
+    q: 'USGS_EDC_EO1_ALI',
+    temporal: ['2016-01-21T00:00:00Z', '2016-01-21T23:59:59Z']
+  }
 
+  after(:all) do
+    wait_for_xhr
+    AccessConfiguration.destroy_all if page.server.responsive?
+  end
 
-    context "selecting the direct download option for multiple CWIC granules" do
-      before :all do
-        Capybara.reset_sessions!
-        load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1200008589-GCMDTEST'
-        wait_for_xhr
-        login
-        wait_for_xhr
-        view_granule_results('OSTM/Jason-2 Level-2 Geophysical Data Records')
-
-        granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
-        fill_in "Start", with: "2010-02-02 00:00:00\t"
-        fill_in "End", with: "2010-02-02 23:59:59\t"
-        js_click_apply ".master-overlay-content"
-        click_button "granule-filters-submit"
-        wait_for_xhr
-
-        click_link "Retrieve Collection Data"
-        wait_for_xhr
-      end
-
-      after :all do
-        load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1200008589-GCMDTEST'
-        wait_for_xhr
-        view_granule_results('OSTM/Jason-2 Level-2 Geophysical Data Records')
-      end
-
-      it "displays the 'Download' option", acceptance: true do
-        expect(page).to have_content("Select Data Access Method: Download")
-      end
-
-      context "and clicking submit" do
-        before :all do
-          click_on 'Submit'
-          wait_for_xhr
-        end
-
-        it "provides a button to view download links", acceptance: true do
-          expect(page).to have_link('View Download Links')
-          expect(page).to have_link('Download Access Script')
-        end
-
-        context "then clicking the 'View Download Links' button" do
-          before :all do
-            click_link "View Download Links"
-            wait_for_xhr
-          end
-
-          it "presents a list of download links", acceptance: true do
-            within_last_window do
-              expect(page).to have_link("http://data.nodc.noaa.gov/thredds/catalog/jason2/gdr/gdr/cycle058/catalog.html?dataset=jason2/gdr/gdr/cycle058/JA2_GPN_2PdP058_098_20100201_004856_20100201_014509.nc")
-            end
-          end
-        end
-
-        context "then clicking the 'Download Access Script' button" do
-          before :all do
-            click_link "Download Access Script"
-            wait_for_xhr
-          end
-
-          it "presents a shell script which performs the user's query", acceptance: true do
-            within_last_window do
-              expect(page).to have_content('#!/bin/sh')
-              expect(page).to have_content('http://data.nodc.noaa.gov/thredds/catalog/jason2/gdr/gdr/cycle058/catalog.html?dataset=jason2/gdr/gdr/cycle058/JA2_GPN_2PdP058_098_20100201_004856_20100201_014509.nc')
-            end
-          end
-        end
-      end
+  context "configuring data access for a CWIC-tagged collection" do
+    before :all do
+      AccessConfiguration.destroy_all
+      load_page :search, search_params
+      login
+      view_granule_results(dataset_id)
+      click_link 'Retrieve Collection Data'
+      wait_for_xhr
     end
 
-    context "selecting the direct download option for a single CWIC granule" do
-      before :all do
-        Capybara.reset_sessions!
-        load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
-        wait_for_xhr
-        login
-        wait_for_xhr
-        view_granule_results('INSAT-3D Imager Level-2P IR WINDS')
+    it 'provides the "Download" option', acceptance: true do
+      expect(page).to have_field("Download")
+    end
+  end
 
-        first_granule_list_item.click_link 'Retrieve single granule data'
-        wait_for_xhr
+  context "choosing to download data for a CWIC-tagged collection" do
+    before :all do
+      AccessConfiguration.destroy_all
+      load_page :search, search_params
+      login
+      view_granule_results(dataset_id)
+      click_link 'Retrieve Collection Data'
+      wait_for_xhr
+      choose 'Download'
+      click_on 'Submit'
+      wait_for_xhr
+    end
+
+    it "provides a button to view download links", acceptance: true do
+      expect(page).to have_link('View Download Links')
+    end
+
+
+    context "and clicking the view download links button" do
+      before(:all) do
+        click_on('View Download Links')
       end
-
-      after :all do
-        Capybara.reset_sessions!
-      end
-
-      it "displays the 'Download' option", acceptance: true do
-        expect(page).to have_content("Select Data Access Method: Download")
-      end
-
-      context "and clicking submit" do
-        before :all do
-          click_on 'Submit'
-          wait_for_xhr
-        end
-
-        it "provides a button to view download links", acceptance: true do
-          expect(page).to have_link('View Download Links')
-          expect(page).to have_link('Download Access Script')
-          expect(page).to have_link('View Browse Image Links')
-        end
-
-        context "then clicking the 'View Browse Image Links' button" do
-          before :all do
-            click_link "View Browse Image Links"
-            wait_for_xhr
-          end
-
-          it "presents a list of browse image links", acceptance: true do
-            within_last_window do
-              expect(page).to have_link("http://www.mosdac.gov.in/servlet/Image?image=preview&loc=/mosdac_preview/3D_IMG/preview_thumb/2014/18JUL/3DIMG_18JUL2014_0400_L2P_IRW.gif")
-            end
-          end
-        end
-
-        context "then clicking the 'View Download Links' button" do
-          before :all do
-            click_link "View Download Links"
-            wait_for_xhr
-          end
-
-          it "presents a list of download links", acceptance: true do
-            within_last_window do
-              expect(page).to have_link("http://www.mosdac.gov.in/servlet/Image?image=preview&loc=/mosdac_preview/3D_IMG/preview/2014/18JUL/3DIMG_18JUL2014_0400_L2P_IRW.gif")
-            end
-          end
-        end
-
-        context "then clicking the 'Download Access Script' button" do
-          before :all do
-            click_link "Download Access Script"
-            wait_for_xhr
-          end
-
-          it "presents a shell script which performs the user's query", acceptance: true do
-            within_last_window do
-              expect(page).to have_content('#!/bin/sh')
-              expect(page).to have_content('http://www.mosdac.gov.in/servlet/Image?image=preview&loc=/mosdac_preview/3D_IMG/preview/2014/18JUL/3DIMG_18JUL2014_0400_L2P_IRW.gif')
-            end
-          end
+      it 'presents a list of download links with associated link titles', acceptance: true do
+        within_last_window do
+          expect(page).to have_no_text('Loading more...')
+          expect(page).to have_link('Granule download URL', count: 37)
+          expect(page).to have_link('Browse image URL', count: 37)
         end
       end
     end
   end
-end
+
+  context "choosing to download data for single CWIC-tagged granule" do
+    before :all do
+      AccessConfiguration.destroy_all
+      load_page :search, search_params
+      login
+      view_granule_results(dataset_id)
+      within(first_granule_list_item) do
+        click_link 'Retrieve single granule data'
+      end
+      wait_for_xhr
+      choose 'Download'
+      click_on 'Submit'
+      wait_for_xhr
+      click_on('View Download Links')
+    end
+
+    it 'provides a list of download links for the single granule' do
+      within_last_window do
+        expect(page).to have_no_text('Loading more...')
+        expect(page).to have_link('Granule download URL', count: 1)
+        expect(page).to have_link('Browse image URL', count: 1)
+      end
+    end
+  end
+
 end

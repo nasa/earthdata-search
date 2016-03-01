@@ -1,4 +1,33 @@
 ---
+0ce2fe576ebcdd5e8cc9f34b5a14d8460feca223:
+  response:
+    status:
+      code: 401
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.399000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 01 Mar 2016 16:30:58 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":["You are not authorized to manipulate user with id edsc
+        preferences."]}'
+    http_version: 
 06f57afec45b734fc975b6fd35f65961b08077af:
   response:
     status:
