@@ -15,13 +15,27 @@ class GranuleQuery {
   }
 
   fromJson(query) {
+    if (query.sgd) {
+      this.singleGranuleId(query.sgd);
+    }
     this._temporalQuery(query.temporal);
   }
 
   serialize() {
-    let result = {
-      temporal: this._temporalQuery()
-    };
+    let result = {};
+    let parent = this.parentQuery.globalParams();
+    for (let key in parent) {
+      if (parent.hasOwnProperty(key)) {
+        result[key] = parent[key];
+      }
+    }
+    let temporal = this._temporalQuery();
+    if (temporal) {
+      result.temporal = temporal;
+    }
+    if (this.singleGranuleId()) {
+      result.sgd = this.singleGranuleId();
+    }
     return result;
   }
 
@@ -30,19 +44,12 @@ class GranuleQuery {
   }
 
   _temporalQuery() {
-    return this.temporal.applied.queryCondition;
+    return this.temporal.applied.queryCondition();
+  }
+
+  _parentTemporalQuery() {
+    return this.parentQuery.temporal.applied.queryCondition();
   }
 }
 
-let CwicGranuleQuery = (function() {
-  extend(CwicGranuleQuery, window.edsc.models.data.query.GranuleQuery);
-
-  function CwicGranuleQuery(collectionId, parentQuery, attributes) {
-    CwicGranuleQuery.__super__.constructor.apply(this, Array.prototype.slice.call(arguments));
-  }
-
-  return CwicGranuleQuery;
-})();
-
-
-export default CwicGranuleQuery;
+export default GranuleQuery;
