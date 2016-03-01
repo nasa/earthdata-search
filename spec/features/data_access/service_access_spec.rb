@@ -77,8 +77,8 @@ describe 'Services Access', reset: false do
             is_esi_completed = true if page.has_content?("Complete")
             sleep 0.5
             retries += 1
+            Rails.logger.info "-- Retried: #{retries}"
           end
-          p "Retried: #{retries} times."
 
           expect(has_progress_bar && is_esi_completed).to be_true
         end
