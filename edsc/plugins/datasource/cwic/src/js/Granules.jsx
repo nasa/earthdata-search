@@ -268,6 +268,9 @@ let CwicGranules = (function() {
   };
 
   CwicGranules.prototype.cwicUrl = function(overrides) {
+    if (this.query.singleGranuleId()) {
+      return toLocalUrl(this.query.singleGranuleId());
+    }
     let params = {};
     let ownParams = this.params();
     for (let key in ownParams) {
@@ -276,11 +279,11 @@ let CwicGranules = (function() {
     }
     if (overrides) {
       for (let key in overrides) {
-        if (ownParams.hasOwnProperty(key))
-          params[key] = ownParams[key];
+        if (overrides.hasOwnProperty(key))
+          params[key] = overrides[key];
       }
     }
-    return this._urlFor(overrides);
+    return this._urlFor(params);
   };
 
   CwicGranules.prototype._computeSearchResponse = function(current, callback) {

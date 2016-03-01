@@ -42,11 +42,15 @@ export default class CwicDatasourcePlugin {
     }
   }
 
+  toQueryParams() {
+    return this.cwicQuery().params();
+  }
+
   toTimelineQueryParams() {
     return {};
   }
   loadAccessOptions(callback, retry) {
-    let granules = null;
+    let granules = this.data();
     let query = this.cwicQuery();
     let hits = query.singleGranuleId() == null ? granules.hits() : 1;
     let options = {
@@ -59,7 +63,9 @@ export default class CwicDatasourcePlugin {
          defaults: {accessMethod: [{method: 'Download', type: 'download'}]}}
       ]
     };
-    callback(options);
+    if (this._granules.isLoaded()) {
+      callback(options);
+    }
   }
   downloadLinks() {
     var result = [];
@@ -71,6 +77,7 @@ export default class CwicDatasourcePlugin {
         result.push({title: "View Download Links", url: downloadUrl});
       }
     }
+
     return result;
   }
   hasQueryConfig() {
@@ -109,7 +116,7 @@ export default class CwicDatasourcePlugin {
   cwicQuery() {
     if (!this._query) {
       let collection = this._collection;
-      this._query = new GranuleQuery(collection.id, collection.query, collection.searchable_attributes);
+      this._query = new GranuleQuery(collection.query);
       let temporal = this._query.temporal;
       temporal.pending.allowRecurring(false);
       temporal.applied.allowRecurring(false);

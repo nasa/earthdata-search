@@ -83,6 +83,8 @@ module Echo
         conn.response :events, :content_type => /\bxml$/
         conn.response :xml, :content_type => /\bxml$/
 
+        yield(conn) if block_given?
+
         conn.adapter Faraday.default_adapter
       end
     end
