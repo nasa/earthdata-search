@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Collection Facets", reset: false do
   let(:first_project_facet) { "AMBS" }
   let(:first_platform_facet) { "ADEOS-II" }
-  let(:first_instrument_facet) { "ADCP" }
+  let(:first_instrument_facet) { "Acoustic Sounders" }
   let(:first_coordinate_facet) { "CALIPSO" }
   let(:first_processing_level_facet) { "0" }
   let(:eosdis_count) { "505" }
@@ -16,27 +16,33 @@ describe "Collection Facets", reset: false do
   end
 
   context "facet listing" do
+    it "shows facets in a case insensitive order" do
+      find("h3.facet-title", text: 'Platform').click
+      expect(page.text).to match("AQUA\\s*\\d*\\s*Aqua")
+      find("h3.facet-title", text: 'Platform').click
+    end
+
     it "shows the first Project facet" do
       find("h3.facet-title", text: 'Project').click
-      expect(page.text).to match("Project\s*\d* #{first_project_facet}")
+      expect(page.text).to match("Project\\s*\\d* #{first_project_facet}")
       find("h3.facet-title", text: 'Project').click
     end
 
     it "shows the first Platforms facet" do
       find("h3.facet-title", text: 'Platform').click
-      expect(page.text).to match("Platform\s*\d* #{first_platform_facet}")
+      expect(page.text).to match("Platform\\s*\\d* #{first_platform_facet}")
       find("h3.facet-title", text: 'Platform').click
     end
 
     it "shows the first Instruments facet" do
       find("h3.facet-title", text: 'Instrument').click
-      expect(page.text).to match("Instrument\s*\d* #{first_instrument_facet}")
+      expect(page.text).to match("Instrument\\s*\\d* #{first_instrument_facet}")
       find("h3.facet-title", text: 'Instrument').click
     end
 
     it "shows the first 2D Coordinate Name facet" do
       find("h3.facet-title", text: '2D Coordinate Name').click
-      expect(page.text).to match("2D Coordinate Name\s*\d* #{first_coordinate_facet}")
+      expect(page.text).to match("2D Coordinate Name\\s*\\d* #{first_coordinate_facet}")
       find("h3.facet-title", text: '2D Coordinate Name').click
     end
 
@@ -84,7 +90,7 @@ describe "Collection Facets", reset: false do
 
     it "shows the first Processing Level facet" do
       find("h3.facet-title", text: 'Processing level').click
-      expect(page.text).to match("Processing level\s*\d* #{first_processing_level_facet}")
+      expect(page.text).to match("Processing level\\s*\\d* #{first_processing_level_facet}")
       find("h3.facet-title", text: 'Processing level').click
     end
 
