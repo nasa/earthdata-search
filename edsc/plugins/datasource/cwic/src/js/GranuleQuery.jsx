@@ -8,7 +8,7 @@ class GranuleQuery {
     this.temporal = new Temporal();
     this.singleGranuleId = ko.observable(null);
     this.params = ko.computed({
-      read: this.serialize,
+      read: this._computeParams,
       write: this.fromJson,
       deferEvaluation: true,
       owner: this});
@@ -21,7 +21,7 @@ class GranuleQuery {
     this.temporal.applied.queryCondition(query.temporal);
   }
 
-  serialize() {
+  _computeParams() {
     let result = {};
     let parent = this.parentQuery.globalParams();
     for (let key in parent) {
@@ -29,6 +29,18 @@ class GranuleQuery {
         result[key] = parent[key];
       }
     }
+    let own = this.serialize();
+    for (let key in own) {
+      if (own.hasOwnProperty(key)) {
+        result[key] = own[key];
+      }
+    }
+
+    return result;
+  }
+
+  serialize() {
+    let result = {};
     let temporal = this._temporalQuery();
     if (temporal) {
       result.temporal = temporal;
