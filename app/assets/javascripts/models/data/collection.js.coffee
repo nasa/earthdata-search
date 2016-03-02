@@ -70,7 +70,7 @@ ns.Collection = do (ko
       @_renderers = []
       @_pendingRenderActions = []
       @osddUrl = @computed(@_computeOsddUrl, this, deferEvaluation: true)
-      @cwic = ko.observable(false)
+      @cwic = @computed((-> @granuleDatasourceName() == 'cwic'), this, deferEvaluation: true)
 
       @visible = ko.observable(false)
       @disposable(@visible.subscribe(@_visibilityChange))
@@ -228,7 +228,6 @@ ns.Collection = do (ko
           @_currentName = desiredName
           @_unloadDatasource()
           @granuleDatasource(@disposable(datasource))
-
         oncomplete = =>
           if @_datasourceListeners
             for listener in @_datasourceListeners
@@ -251,8 +250,11 @@ ns.Collection = do (ko
 
     getValueForTag: (key) ->
       if @tags()
-        for [k, v] in @tags()
-          return v if k == "#{config.cmrTagNamespace}#{key}"
+        prefix = "#{config.cmrTagNamespace}#{key}."
+        len = prefix.length
+        for tag in @tags()
+          tag = tag.join('.') if tag.constructor is Array
+          return tag.substr(len) if tag.substr(0, len) == prefix
       null
 
     canFocus: ->
@@ -275,7 +277,6 @@ ns.Collection = do (ko
       @_setObservable('modaps', jsonObj)
       @_setObservable('osdd_url', jsonObj)
       @_setObservable('tags', jsonObj)
-      @cwic(@_isCwic(jsonObj))
 
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)
@@ -292,10 +293,5 @@ ns.Collection = do (ko
     _setObservable: (prop, jsonObj) =>
       this[prop] ?= ko.observable(undefined)
       this[prop](jsonObj[prop] ? this[prop]())
-
-    _isCwic: (jsonObj) ->
-      if jsonObj.tags?
-        return true for tag in jsonObj.tags when tag[1].toLowerCase() == 'cwic'
-      false
 
   exports = Collection
