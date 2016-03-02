@@ -165,6 +165,7 @@ describe 'OPeNDAP Retrieval', reset: false do
       choose 'Download'
       choose 'Original (No Subsetting)'
       click_on 'Submit'
+      wait_for_xhr
       click_link "View Download Links"
     end
 
