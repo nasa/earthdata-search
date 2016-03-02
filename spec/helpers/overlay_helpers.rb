@@ -77,6 +77,10 @@ module Helpers
       nth_panel(unfeatured_collection_results, 2)
     end
 
+    def third_collection_result
+      nth_panel(unfeatured_collection_results, 3)
+    end
+
     def nth_collection_result(n)
       nth_panel(unfeatured_collection_results, n)
     end

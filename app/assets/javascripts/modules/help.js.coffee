@@ -60,26 +60,32 @@
       title: "Keyword Search"
       content: 'Here you can enter search terms to find relevant data. Search terms can be science
                 terms, instrument names, or even collection IDs. Let\'s start by searching for
-                <em>Snow Cover NRT</em> to find near real-time snow cover data. Type <em>Snow Cover NRT</em> in the
+                <em>Snow Cover</em> to find snow cover data. Type <em>Snow Cover</em> in the
                 keywords box and press <strong>Enter.</strong>'
       element: '#keywords'
       advanceHook: (nextFn, closeFn) ->
         $(window).one 'searchready', (e) ->
-          if $.trim($('#keywords').val().toLowerCase()) == 'snow cover nrt'
+          if $.trim($('#keywords').val().toLowerCase()) == 'snow cover'
             nextFn()
           else
             closeFn()
     }, {
       title: "Browse Collections"
       content: 'In addition to searching for keywords, you can narrow your search through this list of
-                terms. Click <strong>Platform</strong> to expand the list of platforms'
+                terms. Click <strong>Near Real Time</strong> to show the list of NRT collections'
       wait: true
-      element: '.facet-title a:contains(Platform)'
+      element: ".facets-item:contains(Near Real Time)"
+      top: null
+      positionHook: (positionFn) ->
+        positionFn("#master-overlay-parent .master-overlay-content")
     }, {
       title: "Browse Collections"
-      content: 'Now click <strong>Terra</strong> to select the Terra satellite'
+      content: 'Now click <strong>ATMOSPHERE</strong> to select the ATMOSPHERE science keyword'
       wait: true
-      element: '.facets-item:contains(Terra)'
+      element: '.facets-item:contains(ATMOSPHERE)'
+      top: null
+      positionHook: (positionFn) ->
+        positionFn("#master-overlay-parent .master-overlay-content")
     }, {
       title: 'Spatial Search'
       content: 'If you are not interested in data covering the whole Earth, you may restrict your search
@@ -98,13 +104,18 @@
       content: 'Your collection results appear here.  This result has a "GIBS" badge, indicating that it
                has advanced visualizations. Click on the collection to preview its data.'
       wait: true
-      element: '.panel-list-item:contains(MOD10_L2)'
+      element: '.panel-list-item:contains(MOD06_L2 v6NRT)'
+      positionHook: (positionFn) ->
+        positionFn("#collection-results .master-overlay-content")
     }, {
       title: 'Matching Granules'
       content: 'Here we see a list of data granules with corresponding imagery rendered drawn on the map.
-                Click a granule to bring it to the top of the stack.'
+                Click this granule to bring it to the top of the stack.'
       wait: true
       element: '#granule-list .panel-list-item:nth-child(2)'
+      top: null
+      positionHook: (positionFn) ->
+        positionFn("#granule-list .master-overlay-content")
     }, $.extend({}, mapViewOptions,
         element: '.leaflet-control-layers-toggle'
         cleanup: (nextFn, closeFn) ->
@@ -162,7 +173,7 @@
                 Add this collection to your project now.'
       waitOnAnimate: true
       placement: 'right'
-      element: '.panel-list-item:contains(MOD10_L2) .add-to-project'
+      element: '.panel-list-item:contains(MOD06_L2 v6NRT) .add-to-project'
     }, {
       title: 'Projects'
       content: 'From here, you can start a new search to find additional collections to compare. You may add
@@ -238,6 +249,14 @@
     else
       close()
 
+  position = (selector)->
+    $(selector).on 'scroll', (e) ->
+      if index == 2 || index == 3 || index == 5 || index == 6 || index == 13
+        $container = $(this)
+        $tour_popover = $('.popover.tour')
+        queue[index].top = $tour_popover.offset().top unless queue[index].top?
+        $tour_popover.css({top: queue[index].top - $(this).scrollTop()})
+
   showCurrentImmediate = ->
     $('.popover-advance').removeClass('popover-advance')
 
@@ -261,6 +280,7 @@
 
     queue[index].advanceHook?(next, close)
     queue[index].closeHook?(close)
+    queue[index].positionHook?(position)
 
     if tourRunning
       $tip.find('[data-role=end]').text('End Tour')

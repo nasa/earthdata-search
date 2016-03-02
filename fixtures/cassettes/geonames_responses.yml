@@ -954,6 +954,30 @@ e2bc897baf06f37462037529a70cc36b016101bb:
       encoding: UTF-8
       string: '{"totalResultsCount":0,"geonames":[]}'
     http_version: 
+71a01ff43b4a97432506b5b48934f89ac8f57daf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 29 Feb 2016 17:39:06 GMT
+      server:
+      - Apache/2.2.15 (CentOS)
+      cache-control:
+      - no-cache
+      access-control-allow-origin:
+      - "*"
+      content-length:
+      - '37'
+      connection:
+      - close
+      content-type:
+      - application/json;charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: '{"totalResultsCount":0,"geonames":[]}'
+    http_version: 
 ef6133bd0170b04a70aeb4ad9beaad45bf7414c8:
   response:
     status:
