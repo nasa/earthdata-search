@@ -18,7 +18,7 @@ class GranuleQuery {
     if (query.sgd) {
       this.singleGranuleId(query.sgd);
     }
-    this._temporalQuery(query.temporal);
+    this.temporal.applied.queryCondition(query.temporal);
   }
 
   serialize() {
