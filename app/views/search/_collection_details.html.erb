@@ -33,8 +33,9 @@
           <div class="second-col col-md-6 col-sm-12">
               <dt>Spatial Coordinates:</dt>
               <dd>
-                <span data-bind="text: $data.spatial[0]"></span>
-                <span data-bind="text: $data.spatial.length > 1 ? ' ...' : ''"></span>
+                <!--ko foreach: $data.spatial -->
+                <span data-bind="text: $data"></span><br/>
+                <!--/ko-->
               </dd>
               <dt>Temporal Extent:</dt>
               <dd data-bind="text: $root.ui.collectionsList.selected().timeRange"></dd>
