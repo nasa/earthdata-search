@@ -6,6 +6,8 @@ describe "Access Option Defaults", reset: true do
   collection_id = 'C90762182-LAADS'
   collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
+  let(:echo_id) { "4C0390AF-BEE1-32C0-4606-66CAFDD4131D" }
+
   before :each do
     load_page :search, overlay: false
     login
@@ -14,6 +16,40 @@ describe "Access Option Defaults", reset: true do
   after :each do
     wait_for_xhr
     AccessConfiguration.destroy_all if page.server.responsive?
+  end
+
+  context "accessing a collection with preferences for a method that no longer exists" do
+    before :each do
+      user = User.find_or_create_by(echo_id: echo_id)
+      options = {
+        accessMethod: [{method: 'stale', model: '<broken/>', rawModel: '<broken/>', type: 'order'}]
+      }
+      AccessConfiguration.set_default_options(user, collection_id, options)
+      load_page 'data/configure', project: [collection_id]
+    end
+
+    it "presents default options" do
+      expect(page).to have_unchecked_field('Download')
+      expect(page).to have_unchecked_field('FtpPushPull')
+      expect(page).to have_no_text('Ftp Pull Information')
+    end
+  end
+
+  context "accessing a collection with order preferences that are no longer valid" do
+    before :each do
+      user = User.find_or_create_by(echo_id: echo_id)
+      options = {
+        accessMethod: [{method: 'FtpPushPull', model: '<broken/>', rawModel: '<broken/>', type: 'order'}]
+      }
+      AccessConfiguration.set_default_options(user, collection_id, options)
+      load_page 'data/configure', project: [collection_id]
+    end
+
+    it "presents default options for the order" do
+      expect(page).to have_unchecked_field('Download')
+      expect(page).to have_checked_field('FtpPushPull')
+      expect(page).to have_text('Ftp Pull Information')
+    end
   end
 
   context "accessing a collection for the first time" do
@@ -51,7 +87,7 @@ describe "Access Option Defaults", reset: true do
       wait_for_xhr
     end
 
-    it "restores options from the second retrieval" do
+    it "restores options from the first retrieval" do
       within '.access-item-selection:nth-child(1)' do
         expect(page).to have_checked_field('Download')
         expect(page).to have_unchecked_field('FtpPushPull')
