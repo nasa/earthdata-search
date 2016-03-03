@@ -75,6 +75,7 @@ describe 'Services Access', reset: false do
           while (retries < 50) && !has_progress_bar && !is_esi_completed
             has_progress_bar = true if page.has_content?("Processing")
             is_esi_completed = true if page.has_content?("Complete")
+            break if has_progress_bar && is_esi_completed
             sleep 0.5
             retries += 1
           end
