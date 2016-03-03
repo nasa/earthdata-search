@@ -40,7 +40,7 @@ class DetailsPresenter
               south = box['SouthBoundingCoordinate']
               east = box['EastBoundingCoordinate']
               west = box['WestBoundingCoordinate']
-              spatial = "Bounding Rectangle: (#{degrees(north)}, #{degrees(west)}, #{degrees(south)}, #{degrees(east)})"
+              spatial << "Bounding Rectangle: (#{degrees(north)}, #{degrees(west)}, #{degrees(south)}, #{degrees(east)})"
             end
           elsif geometry['GPolygon']
             polygons = Array.wrap(geometry['GPolygon'])

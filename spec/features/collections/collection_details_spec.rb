@@ -166,4 +166,14 @@ describe 'Collection details', reset: false do
       expect(page).to have_content("\nto April 1992.\n\n")
     end
   end
+
+  context "when selecting a collection with multiple spatial values" do
+    before :all do
+      load_page '/search/collection-details', focus: 'C1214560151-JAXA'
+    end
+
+    it "displays all spatial content" do
+      expect(page).to have_content("Bounding Rectangle: (22°, -96°, -20°, -48°) Bounding Rectangle: (10°, -14°, -9°, 34°) Bounding Rectangle: (27°, 92°, -20°, 151°)")
+    end
+  end
 end

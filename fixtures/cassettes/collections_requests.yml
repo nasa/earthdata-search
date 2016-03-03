@@ -144,6 +144,21 @@ http_interactions:
   digest: f659b6ec4ca3480e41b53b756a197d2906d7893f
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1214560151-JAXA&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Thu, 03 Mar 2016 01:47:06 GMT
+  digest: 06bc2fd3affb09e3ba0abac76153a7adfd93b798
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C128599377-NSIDC_ECS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -1013,7 +1028,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 17:45:12 GMT
-  digest: e56322547375ff2d09a18e07f1641cabe0bad576
+  digest: dad295c74605537fd60b7844b7423054ab2af819
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&bounding_box=0%2C0%2C10%2C10&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
@@ -1026,7 +1041,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 17:45:18 GMT
-  digest: 69bb28768b4fd94411631799fe2ea3771745c625
+  digest: 1202dc15a7bd50b51018cbeb742716852dbbba51
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&bounding_box=0%2C0%2C10%2C10&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
@@ -1039,7 +1054,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 17:45:15 GMT
-  digest: 958c6cfbc5b9d9a88802a3977c7a9755c1c1440f
+  digest: a537cf959d14a6313a900407e0f5c281bc2228ef
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&bounding_box=0%2C0%2C15%2C15&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
@@ -1350,7 +1365,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 17:44:52 GMT
-  digest: b9a9b736e0e12e8a5aed5510a9d4a1ad81925d09
+  digest: bcfab36c9fe853c7f43a62bd1610f0ab5cddac06
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
@@ -1366,6 +1381,19 @@ http_interactions:
   digest: 9bb898c3c1a3378b22a31d2afe7c8a52639a22fc
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:44:58 GMT
+  digest: 68b6e9936949a54551526c33f1de3d6f062a5edc
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -1379,19 +1407,6 @@ http_interactions:
   digest: 0e9cbb415629c0c70458f666d204a10a718e266b
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:44:58 GMT
-  digest: efbdf3fd890b6709c1c7a7aa480f688cffd3d518
-- request:
-    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -1402,7 +1417,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 17:44:55 GMT
-  digest: f59edf9c75f429879c869f037dbb714ab051b12a
+  digest: 8c8af5e2ecd79933b564ee271be4ec76bf5e4835
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&echo_collection_id%5B%5D=C183451149-GSFCS4PA&echo_collection_id%5B%5D=C183451150-GSFCS4PA&echo_collection_id%5B%5D=C183451151-GSFCS4PA&echo_collection_id%5B%5D=C183451154-GSFCS4PA&echo_collection_id%5B%5D=C183451155-GSFCS4PA&echo_collection_id%5B%5D=C183451156-GSFCS4PA&echo_collection_id%5B%5D=C183451157-GSFCS4PA&echo_collection_id%5B%5D=C188143118-GSFCS4PA&echo_collection_id%5B%5D=C183451159-GSFCS4PA&echo_collection_id%5B%5D=C183451162-GSFCS4PA&echo_collection_id%5B%5D=C188143422-GSFCS4PA&echo_collection_id%5B%5D=C183451164-GSFCS4PA&echo_collection_id%5B%5D=C201055192-GSFCS4PA&echo_collection_id%5B%5D=C201055805-GSFCS4PA&echo_collection_id%5B%5D=C201055825-GSFCS4PA&echo_collection_id%5B%5D=C201056347-GSFCS4PA&echo_collection_id%5B%5D=C201056348-GSFCS4PA&echo_collection_id%5B%5D=C201071398-GSFCS4PA&echo_collection_id%5B%5D=C181553784-GSFCS4PA&echo_collection_id%5B%5D=C195023933-GSFCS4PA&echo_collection_id%5B%5D=C179080973-GSFCS4PA&echo_collection_id%5B%5D=C188290526-GSFCS4PA&echo_collection_id%5B%5D=C194770326-GSFCS4PA&echo_collection_id%5B%5D=C179080976-GSFCS4PA&echo_collection_id%5B%5D=C188290546-GSFCS4PA&echo_collection_id%5B%5D=C181833032-GSFCS4PA&echo_collection_id%5B%5D=C180742679-GSFCS4PA&echo_collection_id%5B%5D=C180742678-GSFCS4PA&echo_collection_id%5B%5D=C180788518-GSFCS4PA&echo_collection_id%5B%5D=C180152130-GSFCS4PA&echo_collection_id%5B%5D=C180139830-GSFCS4PA&echo_collection_id%5B%5D=C180152131-GSFCS4PA&echo_collection_id%5B%5D=C180152132-GSFCS4PA&echo_collection_id%5B%5D=C180152133-GSFCS4PA&echo_collection_id%5B%5D=C180152134-GSFCS4PA&echo_collection_id%5B%5D=C180152135-GSFCS4PA&echo_collection_id%5B%5D=C180458120-GSFCS4PA&echo_collection_id%5B%5D=C180458121-GSFCS4PA&echo_collection_id%5B%5D=C180458122-GSFCS4PA&echo_collection_id%5B%5D=C180152136-GSFCS4PA&echo_collection_id%5B%5D=C180152137-GSFCS4PA&echo_collection_id%5B%5D=C180152138-GSFCS4PA&echo_collection_id%5B%5D=C194815885-GSFCS4PA&echo_collection_id%5B%5D=C180152139-GSFCS4PA&echo_collection_id%5B%5D=C180152140-GSFCS4PA&echo_collection_id%5B%5D=C180152141-GSFCS4PA&echo_collection_id%5B%5D=C180152142-GSFCS4PA&echo_collection_id%5B%5D=C180152143-GSFCS4PA&echo_collection_id%5B%5D=C180152144-GSFCS4PA&echo_collection_id%5B%5D=C180152145-GSFCS4PA&echo_collection_id%5B%5D=C180152146-GSFCS4PA&echo_collection_id%5B%5D=C180152147-GSFCS4PA&echo_collection_id%5B%5D=C180152148-GSFCS4PA&echo_collection_id%5B%5D=C180139831-GSFCS4PA&echo_collection_id%5B%5D=C180139832-GSFCS4PA&echo_collection_id%5B%5D=C180139833-GSFCS4PA&echo_collection_id%5B%5D=C180139834-GSFCS4PA&echo_collection_id%5B%5D=C180139835-GSFCS4PA&echo_collection_id%5B%5D=C180152149-GSFCS4PA&echo_collection_id%5B%5D=C180152150-GSFCS4PA&echo_collection_id%5B%5D=C180152151-GSFCS4PA&echo_collection_id%5B%5D=C180152152-GSFCS4PA&echo_collection_id%5B%5D=C180152153-GSFCS4PA&echo_collection_id%5B%5D=C180152154-GSFCS4PA&echo_collection_id%5B%5D=C180152155-GSFCS4PA&echo_collection_id%5B%5D=C180152156-GSFCS4PA&echo_collection_id%5B%5D=C180139836-GSFCS4PA&echo_collection_id%5B%5D=C180152157-GSFCS4PA&echo_collection_id%5B%5D=C180152158-GSFCS4PA&echo_collection_id%5B%5D=C180152159-GSFCS4PA&echo_collection_id%5B%5D=C194815886-GSFCS4PA&echo_collection_id%5B%5D=C180152160-GSFCS4PA&echo_collection_id%5B%5D=C180152161-GSFCS4PA&echo_collection_id%5B%5D=C180458123-GSFCS4PA&echo_collection_id%5B%5D=C180458124-GSFCS4PA&echo_collection_id%5B%5D=C180458125-GSFCS4PA&echo_collection_id%5B%5D=C180458126-GSFCS4PA&echo_collection_id%5B%5D=C180458127-GSFCS4PA&echo_collection_id%5B%5D=C180458128-GSFCS4PA&echo_collection_id%5B%5D=C180458129-GSFCS4PA&echo_collection_id%5B%5D=C180458130-GSFCS4PA&echo_collection_id%5B%5D=C180457780-GSFCS4PA&echo_collection_id%5B%5D=C180458131-GSFCS4PA&echo_collection_id%5B%5D=C180458132-GSFCS4PA&echo_collection_id%5B%5D=C180458133-GSFCS4PA&echo_collection_id%5B%5D=C194815887-GSFCS4PA&echo_collection_id%5B%5D=C180458134-GSFCS4PA&echo_collection_id%5B%5D=C180458135-GSFCS4PA&echo_collection_id%5B%5D=C196779398-GSFCS4PA&echo_collection_id%5B%5D=C196779399-GSFCS4PA&echo_collection_id%5B%5D=C196779458-GSFCS4PA&echo_collection_id%5B%5D=C203661507-GSFCS4PA&echo_collection_id%5B%5D=C203660561-GSFCS4PA&echo_collection_id%5B%5D=C203692847-GSFCS4PA&echo_collection_id%5B%5D=C203692935-GSFCS4PA&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
@@ -1455,6 +1470,19 @@ http_interactions:
       - edsc-dev
   recorded_at: Fri, 19 Feb 2016 14:26:20 GMT
   digest: 6957d623921ecb00f9bbe1f2681e4b2b23fd8f0c
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:39:13 GMT
+  digest: 8f50504d209b49b2894cd309a799e12b315d3cc4
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
@@ -1545,6 +1573,19 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:28:07 GMT
+  digest: a0ef0d5197d18d6dcb0316af8640a819029aa6ec
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=AST_L1A%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:39:31 GMT
   digest: a0ef0d5197d18d6dcb0316af8640a819029aa6ec
 - request:
     method: get
@@ -2096,6 +2137,19 @@ http_interactions:
   digest: 8f79f4fb4de27107f5e75813a9c4543bebca83d0
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:38:59 GMT
+  digest: 1bca94fdc4bd738106025cc68f55cc8a040810ec
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A+nrt%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2133,45 +2187,6 @@ http_interactions:
       - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:50 GMT
   digest: 07c7dec380c583b591bd662cf91ceba316881b87
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:13 GMT
-  digest: 42cd8569d4284d1893f73f72578b6c30d4e4305f
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=AST_L1A%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:31 GMT
-  digest: ef91e4a51a284a4c45a259c09f5cbce1d96c9efe
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:38:59 GMT
-  digest: d30f41a78bb3f3fb4ba01a53c45d77a49e0d50f3
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&echo_collection_id%5B%5D=C1214607533-SCIOPS&echo_collection_id%5B%5D=C1214611011-SCIOPS&include_has_granules=true&include_granule_counts=true
@@ -2245,6 +2260,19 @@ http_interactions:
   digest: cde1f3870ed9a777977b5f7e112fd70e21271c1c
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:39:23 GMT
+  digest: cde1f3870ed9a777977b5f7e112fd70e21271c1c
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=A%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2308,6 +2336,19 @@ http_interactions:
       - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:33:12 GMT
   digest: cdcefc572160794659b67f6e5f7bed686787fda6
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=AST_L1A%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:39:35 GMT
+  digest: 457b9f289b40b45307a85fc59522c44e4946811d
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=AST_L1A%2A&include_has_granules=true&include_granule_counts=true
@@ -2871,6 +2912,19 @@ http_interactions:
   digest: 5c4ce7b6282bc585bf123d20fcdcb30f6a281117
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:39:06 GMT
+  digest: 80f7425395678be2425fce41389f92897a44e1b8
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A+nrt%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2920,6 +2974,19 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:23:01 GMT
+  digest: 2f80d4b2bfe5d60aa3ce4345f204bac76affaf80
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:39:20 GMT
   digest: 2f80d4b2bfe5d60aa3ce4345f204bac76affaf80
 - request:
     method: get
@@ -2998,6 +3065,19 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:28:08 GMT
+  digest: a34a7128eae1cad8c6f9ff0bff250d3e29d6685e
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=AST_L1A%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:39:28 GMT
   digest: a34a7128eae1cad8c6f9ff0bff250d3e29d6685e
 - request:
     method: get
@@ -3549,6 +3629,19 @@ http_interactions:
   digest: c2645f58594bb5873a640e77b6a9c86725bf33f2
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+  recorded_at: Mon, 29 Feb 2016 17:39:03 GMT
+  digest: 0392e7924580c0e4b376cbe58c5b9d809a92b300
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A+nrt%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3586,84 +3679,6 @@ http_interactions:
       - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:49:48 GMT
   digest: 99ae1acf6e6e1f83e4a8c856370b0fb1a1563e0d
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:23 GMT
-  digest: e0fce854171fecee4c6f8e439297510b699aa795
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=AST_L1A%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:35 GMT
-  digest: 52be160ad1fe37c2f8713ef9da019493c6191098
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:06 GMT
-  digest: e3579e5a9be32f0094883d1754cd080f4665b74e
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:20 GMT
-  digest: cd46a9b54a5409a51bc483de9c5b229a7002a2b3
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=AST_L1A%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:28 GMT
-  digest: dd2755518a212c1fb3bdb14a55729900cdb21570
-- request:
-    method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:03 GMT
-  digest: 22426283d40972aea52e77fd457e79abbbdb930f
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=&provider%5B%5D=NSIDC_ECS&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=&provider%5B%5D=NSIDC_ECS&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC&provider%5B%5D=NSIDC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=NSIDC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&provider%5B%5D=&provider%5B%5D=&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=&provider%5B%5D=LAADS&provider%5B%5D=LANCEMODIS&provider%5B%5D=LPDAAC&provider%5B%5D=&provider%5B%5D=LPDAAC_ECS&provider%5B%5D=GSFCS4PA&provider%5B%5D=GSFCS4PA&provider%5B%5D=NSIDC_ECS&provider%5B%5D=LANCEMODIS&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD06_L2&short_name%5B%5D=MYD09GA&short_name%5B%5D=MYD09&short_name%5B%5D=SPL4SMAU&short_name%5B%5D=MOD06_L2&short_name%5B%5D=MOD06_L2&short_name%5B%5D=SPL3SMP&short_name%5B%5D=AE_L2A&short_name%5B%5D=A2_RainOcn_NRT&short_name%5B%5D=ML2HNO3&short_name%5B%5D=ML2HNO3_NRT&short_name%5B%5D=SPL1CTB&short_name%5B%5D=AIRX2RET&short_name%5B%5D=AIRX2RET_NRT&short_name%5B%5D=SPL1BTB&short_name%5B%5D=GPM_1CGPMGMI&short_name%5B%5D=GPM_2AGPROFGPMGMI&short_name%5B%5D=SPL4CMDL&short_name%5B%5D=A2_DySno_NRT&short_name%5B%5D=MOD11_L2&short_name%5B%5D=MOD11_L2&short_name%5B%5D=SPL2SMP&short_name%5B%5D=JPL-L4UHFND-GLOB-MUR&short_name%5B%5D=AE_Rain&short_name%5B%5D=SPL4SMGP&short_name%5B%5D=ML2T&short_name%5B%5D=ML2T_NRT&short_name%5B%5D=MYD11_L2&short_name%5B%5D=MYD11_L2&short_name%5B%5D=ASTGTM&short_name%5B%5D=AE_SI25&short_name%5B%5D=MOD29&short_name%5B%5D=MOD29&short_name%5B%5D=MOD09GQ&short_name%5B%5D=MOD09&short_name%5B%5D=MYD04_L2&short_name%5B%5D=MYD04_L2&short_name%5B%5D=SPL3SMAP&short_name%5B%5D=MYD05_L2&short_name%5B%5D=MYD05_L2&short_name%5B%5D=AIRIBRAD&short_name%5B%5D=AIRIBRAD_NRT&short_name%5B%5D=AE_SI12&short_name%5B%5D=MOD09GA&short_name%5B%5D=MYD10_L2&short_name%5B%5D=MYD10_L2&short_name%5B%5D=ML2O3&short_name%5B%5D=ML2O3_NRT&short_name%5B%5D=ML2H2O&short_name%5B%5D=ML2H2O_NRT&short_name%5B%5D=MOD05_L2&short_name%5B%5D=MOD05_L2&short_name%5B%5D=ML2CO&short_name%5B%5D=ML2CO_NRT&short_name%5B%5D=MCDAODHD&short_name%5B%5D=AIRIBQAP&short_name%5B%5D=AIRIBQAP_NRT&short_name%5B%5D=A2_SI6_NRT&short_name%5B%5D=AE_SI6&short_name%5B%5D=ML2N2O&short_name%5B%5D=ML2N2O_NRT&short_name%5B%5D=OMSO2&short_name%5B%5D=OMSO2NRTb&short_name%5B%5D=JPL_OUROCEAN-L4UHFND-GLOB-G1SST&short_name%5B%5D=MOD10_L2&short_name%5B%5D=MOD10_L2&short_name%5B%5D=SPL3FTA&short_name%5B%5D=SPL3SMA&short_name%5B%5D=AIRX2SUP&short_name%5B%5D=AIRX2SUP_NRT&short_name%5B%5D=A2_SI12_NRT&short_name%5B%5D=MOD04_L2&short_name%5B%5D=MOD04_L2&short_name%5B%5D=SRTMGL1&short_name%5B%5D=A2_SI25_NRT&short_name%5B%5D=MYD09GQ&short_name%5B%5D=ML2SO2&short_name%5B%5D=ML2SO2_NRT&short_name%5B%5D=MYD29&short_name%5B%5D=MYD29&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
@@ -4611,7 +4626,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 17:45:05 GMT
-  digest: 6717bd084b4b6c003d876deb489d609219e1e976
+  digest: d40d90506e8c8de3ab71878cfad12a49f1de97c8
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
@@ -4624,7 +4639,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 17:45:08 GMT
-  digest: 9fef33591dee6950ca0f876d9323968faefd7033
+  digest: 62701f1b82222b1f31f02841c16db20c52efa691
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
@@ -4637,7 +4652,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 17:45:02 GMT
-  digest: 5d34d86071a52ab8557cd6a9dc45b518596e07a1
+  digest: 8c1bab083ff63c68946f4057bf5a7e25036da687
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
@@ -5664,7 +5679,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 18:04:07 GMT
-  digest: 381201755cd4550e603913aa944f089ac59443d6
+  digest: b352139a0eb8b0af97246f22dae6530c21a5e35d
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2014-12-01T00%3A00%3A00.000Z%2C&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=C16893867-LPDAAC%2A&include_has_granules=true&include_granule_counts=true
@@ -5716,7 +5731,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 18:08:07 GMT
-  digest: a98ec9e6b1c1aebe39b08e16e5e1a2e0a68d5bab
+  digest: fbbbf2865492e8741ccc83d2f04ce5ea5cf56f73
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2016-02-24T12%3A52%3A35.844Z%2C2016-02-25T06%3A23%3A22.597Z&bounding_box=0%2C0%2C10%2C10&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
@@ -5729,7 +5744,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 18:08:16 GMT
-  digest: cc16f9a9345b0ab617e90d3a8e8fc05924419031
+  digest: 8d7f021293a173e02191b279f61e9419332e53d0
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2016-02-24T12%3A52%3A35.844Z%2C2016-02-25T06%3A23%3A22.597Z&bounding_box=0%2C0%2C10%2C10&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
@@ -5742,7 +5757,7 @@ http_interactions:
       Client-Id:
       - edsc-dev
   recorded_at: Mon, 29 Feb 2016 18:08:13 GMT
-  digest: 678f0ea178f642550913e31d7b42b0b7e45ebb59
+  digest: 169afa15ae9172ed4a672e060a9f924b1c477918
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=2&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
