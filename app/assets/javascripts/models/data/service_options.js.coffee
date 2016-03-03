@@ -94,8 +94,9 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
       for method in methods
         method.availableMethods = availableMethods
       validDefaults = []
-      if (defaults = options.defaults)
-        for method in defaults.accessMethod
+      defaultMethods = options.defaults?.accessMethod
+      if defaultMethods
+        for method in defaultMethods
           for available in availableMethods
             validDefaults.push(method) if method.method == available.name
         @fromJson(accessMethod: validDefaults)
