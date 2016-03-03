@@ -61,7 +61,7 @@ describe 'Services Access', reset: false do
         expect(page).to have_content('Reformat Output (Optional)')
       end
 
-      context 'when submitting a service request' do
+      context 'when submitting a service request', pq: true do
         before :all do
           fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
           click_on 'Continue'
@@ -69,19 +69,9 @@ describe 'Services Access', reset: false do
         end
 
         it 'displays a progress bar while the service is processing' do
-          retries = 0
-          has_progress_bar = false
-          is_esi_completed = false
-          while retries < 50
-            has_progress_bar = true if page.has_content?("Processing")
-            is_esi_completed = true if page.has_content?("Complete")
-            break if has_progress_bar && is_esi_completed
-            sleep 0.5
-            retries += 1
+          synchronize do
+            expect(page).to have_content("Processing") unless page.has_content?("Complete")
           end
-          p "Retried: #{retries} times."
-
-          expect(has_progress_bar && is_esi_completed).to be_true
         end
 
         context 'when returning to the retrieval page after a service is complete' do
