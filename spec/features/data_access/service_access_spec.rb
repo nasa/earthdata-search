@@ -61,7 +61,7 @@ describe 'Services Access', reset: false do
         expect(page).to have_content('Reformat Output (Optional)')
       end
 
-      context 'when submitting a service request', pq: true do
+      context 'when submitting a service request' do
         before :all do
           fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
           click_on 'Continue'
@@ -69,7 +69,7 @@ describe 'Services Access', reset: false do
         end
 
         it 'displays a progress bar while the service is processing' do
-          synchronize do
+          synchronize(120) do
             expect(page).to have_content("Processing") unless page.has_content?("Complete")
           end
         end

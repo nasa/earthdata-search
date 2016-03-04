@@ -25,6 +25,8 @@ module Helpers
     def synchronize(seconds=Capybara.default_wait_time)
       start_time = Time.now
 
+      count = 0
+
       if @synchronized
         yield
       else
@@ -32,7 +34,9 @@ module Helpers
         begin
           yield
         rescue => e
+          count += 1
           if (Time.now - start_time) >= seconds
+            puts "ERROR: synchronize() timed out after #{Time.now - start_time} seconds and #{count} tries"
             Capybara::Screenshot.screenshot_and_save_page
             raise
           end
