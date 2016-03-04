@@ -93,10 +93,14 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
       methods = @accessMethod.peek()
       for method in methods
         method.availableMethods = availableMethods
-      if options.defaults
-        @fromJson(options.defaults)
-      else
-        @addAccessMethod() if methods.length == 0 && availableMethods.length > 0
+      validDefaults = []
+      defaultMethods = options.defaults?.accessMethod
+      if defaultMethods
+        for method in defaultMethods
+          for available in availableMethods
+            validDefaults.push(method) if method.method == available.name
+        @fromJson(accessMethod: validDefaults)
+      @addAccessMethod() if methods.length == 0 && availableMethods.length > 0 && validDefaults.length == 0
       @canAddAccessMethod(availableMethods.length > 1 ||
         (availableMethods.length == 1 && availableMethods[0].type != 'download'))
 
