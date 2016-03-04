@@ -215,6 +215,7 @@ ns.ProjectList = do (ko
             downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
             error_code: m.errorCode
             error_message: m.errorMessage
+      console.log("(DEBUG) Service Orders: #{JSON.stringify(serviceOrders)}")
       serviceOrders
 
     _computeCollectionOnly: ->
