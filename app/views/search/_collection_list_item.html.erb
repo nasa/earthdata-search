@@ -18,14 +18,7 @@
                   <a href="#" class="badge badge-cwic" data-tooltip="true" title="Int'l / Interagency Data"></a>
                   <!-- /ko -->
                 </div>
-              <!-- ko if: thumbnail() -->
-                <img class="panel-list-thumbnail" onerror="this.parentElement.className = 'panel-list-thumbnail-onerror';" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
-              <!-- /ko -->
-              <!-- ko ifnot: thumbnail() -->
-              <div class="panel-list-thumbnail">
-                <i class="fa fa-globe"></i><br />No image available
-              </div>
-              <!-- /ko -->
+                <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
               </div>
               <h3 data-bind="text: dataset_id"></h3>
 
