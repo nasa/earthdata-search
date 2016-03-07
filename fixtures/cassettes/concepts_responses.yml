@@ -484,6 +484,95 @@ d696def6590ee7ba23a31d5b9a233227eeaefa09:
         CIRES, 449 UCB
         University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>+1 (303) 492-2468</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>NSIDC</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><LastName>User Services</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>BRIGHTNESS TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC RADIATION</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>NOAA-11</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-11</LongName><Type>NOAA-11</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-9</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-9</LongName><Type>NOAA-9</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-8</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-8</LongName><Type>NOAA-8</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-10</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-10</LongName><Type>NOAA-10</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform></Platforms><AdditionalAttributes /><CSDTDescriptions /><CollectionAssociations /><Campaigns /><AlgorithmPackages /><TwoDCoordinateSystems /><OnlineAccessURLs><OnlineAccessURL><URL>http://nsidc.org/data/NSIDC-0026</URL><URLDescription>Data Access</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources /><AssociatedDIFs><DIF><EntryId>NSIDC-0026</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>60</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+77c51a0f2e8c8039dc7a7fd895fc03d89f6a54b9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 03 Mar 2016 01:47:11 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 7fee194f-550b-4d9b-a8d4-ce3e964c0939
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Collection><ShortName>GRFM_NASDA_NASA</ShortName><VersionId>Not
+        provided</VersionId><InsertTime></InsertTime><LastUpdate>2015-12-02T00:00:00.000Z</LastUpdate><LongName>Global
+        Rain Forest Mapping (GRFM) CD-ROMs from JAXA and NASA</LongName><DataSetId>Global
+        Rain Forest Mapping (GRFM) CD-ROMs from JAXA and NASA</DataSetId><Description>The
+        Global Rain Forest Mapping Project (GRFM) is an effort led by the\n            Earth
+        Observation Research Center (EORC) of the National Space\n            Development
+        Agency of Japan (NASDA) in cooperation with, among others,\n            NASA's
+        Jet Propulsion Laboratory (JPL), NASA's Alaska SAR Facility\n            (ASF),
+        the Space Applications Institute of the Joint Research Centre\n            of
+        the European Commission (JRC/SAI), the Unversity of California,\n            Santa
+        Barbara (UCSB), the Brazilian National Institute for Space\n            Research
+        (INPE) and the National Institute for Research of the\n            Amazon(INPA).
+        Its goal is to acquire contiguous Synthetic Aperture\n            Radar (SAR)
+        data sets of the Earth's major rain forests using the\n            Japanese
+        Earth Resources Satellite (JERS-1 or FUYO-1).\n            \n            This
+        project is divided into three geographical regions : South and\n            Central
+        America, Central and Western Africa, and South-East Asia and\n            Northern
+        Australia. Each region was observed at least once during a\n            \"single
+        season\" between September 1995 and January 1997.\n            \n            Several
+        CD-ROMs are available or are planned to be available during\n            1999
+        and 2000.  Planned data sets include:\n            AM-1 - Selected scenes
+        from South America (2 CD-ROMs)\n            AM-2 - Scenes from South America,
+        September/December 1995 (2 CD-ROMs)\n            AVAILABLE NOW. See:\n            \"http://southport.jpl.nasa.gov/GRFM/cdrom/2a/1STPAGE.HTM\"\n
+        \           \"http://southport.jpl.nasa.gov/GRFM/cdrom/2b/1STPAGE.HTM\"\n
+        \           AM-3 - Scenes from South America, September/December 1995 and
+        May/July\n                   1996 (4 CD-ROMs)\n            AFR-1 - Selected
+        scenes from Africa January - March 1996 and October -\n            November
+        1996, January 1997(3 CD-ROMs)\n            AVAILABLE NOW. See:\n            \"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1a/1stpage.htm\"\n
+        \           \"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1b/1stpage.htm\"\n
+        \           \"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1c/1stpage.htm\"\n
+        \           AFR-2 - Selected scences from Central/Western Africa January/March\n
+        \                   1996 (2 CD-ROMs)\n            AFR-3 - Selected scences
+        from Central Africa October/November 1996 (1 CD-ROM)\n            SEA-1 -
+        Selected scenes from Southeast Asia (2 CD-ROMs)\n            SEA-2 - Selected
+        scences from Southeast Asia November 1996/February\n                    1997
+        (3 CD-ROMs)\n            \n            Please see the EORC/JAXA web site at:\n
+        \           \"http://www.eorc.jaxa.jp/JERS-1/en/GFMP/index.html\"\n            \n
+        \           or the NASA/JPL web site at:\n            \"http://southport.jpl.nasa.gov/GRFM/\"</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In
+        Work</CollectionState><TemporalKeywords><Keyword>daily</Keyword></TemporalKeywords><Temporal><RangeDateTime><BeginningDateTime>1995-09-01T00:00:00.000Z</BeginningDateTime><EndingDateTime>1997-01-31T00:00:00.000Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>bruce.chapman@jpl.nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>BRUCE</FirstName><LastName>CHAPMAN</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>ake.rosenqvist@jrc.it</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>AKE</FirstName><LastName>ROSENQVIST</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>victor@eorc.nasda.go.jp</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>VICTOR</FirstName><LastName>TAYLOR</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>BIOSPHERE</TopicKeyword><TermKeyword>VEGETATION</TermKeyword><VariableLevel1Keyword><Value>FOREST
+        COMPOSITION/VEGETATION STRUCTURE</Value></VariableLevel1Keyword><DetailedVariableKeyword>RAIN
+        FORESTS</DetailedVariableKeyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>BIOSPHERE</TopicKeyword><TermKeyword>VEGETATION</TermKeyword><VariableLevel1Keyword><Value>VEGETATION
+        COVER</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND
+        USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND USE/LAND COVER
+        CLASSIFICATION</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>RADAR</TermKeyword><VariableLevel1Keyword><Value>RADAR
+        IMAGERY</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>JERS-1</ShortName><LongName>Japanese
+        Earth Resources Satellite-1</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>RADAR</ShortName><LongName>Radio
+        Detection and Ranging</LongName></Instrument><Instrument><ShortName>SAR</ShortName><LongName>Synthetic
+        Aperture Radar</LongName></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>miura.satoko@jaxa.jp</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>92e1eeee-e2c5-45a0-9b02-934b1a7dd7e7</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-01
+        16:31:28</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>GRFM</ShortName><LongName>Global
+        Rain Forest Mapping Project</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/2a/1STPAGE.HTM</URL><Description>\n
+        \        South American Amazon Rainforest - September / December 1995, AM2a\n
+        \     </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/2b/1STPAGE.HTM</URL><Description>\n
+        \        South American Amazon Rainforest - September / December 1995, AM2b\n
+        \     </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1a/1stpage.htm</URL><Description>\n
+        \        Central Africa Rainforest - low flood of Congo River, AFR1a\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1b/1stpage.htm</URL><Description>\n
+        \        West Africa, East Africa Rainforest and Madagascar - AFR1b\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1c/1stpage.htm</URL><Description>\n
+        \        Central Africa Rainforest - high flood of Congo River - AFR1c\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-96</WestBoundingCoordinate><NorthBoundingCoordinate>22</NorthBoundingCoordinate><EastBoundingCoordinate>-48</EastBoundingCoordinate><SouthBoundingCoordinate>-20</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-14</WestBoundingCoordinate><NorthBoundingCoordinate>10</NorthBoundingCoordinate><EastBoundingCoordinate>34</EastBoundingCoordinate><SouthBoundingCoordinate>-9</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>92</WestBoundingCoordinate><NorthBoundingCoordinate>27</NorthBoundingCoordinate><EastBoundingCoordinate>151</EastBoundingCoordinate><SouthBoundingCoordinate>-20</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
 9ac93877927dc4b4872ae99d24c79079cf293162:
   response:
     status:
