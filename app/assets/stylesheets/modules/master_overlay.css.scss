@@ -232,6 +232,11 @@
   height: 80%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+
+  dl {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .master-overlay-minimize, .master-overlay-maximize {
@@ -434,7 +439,6 @@ $parent-width: $parent-split * 0.21;
 }
 
 .col-md-6 {
-  margin-top: 10px;
   width: 50%;
   float: left;
 
@@ -444,11 +448,5 @@ $parent-width: $parent-split * 0.21;
     color: #FFFFFF;
     margin-bottom: 10px;
     word-wrap: break-word;
-  }
-}
-
-.second-col {
-  dt, dd {
-    padding-left: 25px;
   }
 }
