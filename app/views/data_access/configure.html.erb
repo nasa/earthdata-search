@@ -158,7 +158,7 @@
 
         <div class="access-item-actions">
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
-          <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
+          <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.checkOrderSize" class="button-next">Continue</button>
           <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>
       </div>
@@ -191,3 +191,34 @@
     </div>
   </form>
 </div>
+
+<!--begin modal-->
+<div class="modal fade" id="tooManyGranulesModal" tabindex="-1" role="dialog" aria-labelledby="tooManyGranulesModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="tooManyGranulesModalLabel">Maximum Granules Exceeded</h4>
+      </div>
+      <div class="modal-body">
+        <p>Access methods other than "Download" are limited to the first 2000 granules. For ESI services, this number could even smaller. Your request would result in more than 2000 granules being ordered/serviced.</p>
+        <hr>
+        <dl class="dl-horizontal">
+          <dt><a class="button-small button-outline button-float-right" href="<%= @back_path %>?<%= request.query_string %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a></dt>
+          <dd>Press the button to go back to search session and narrow your search through temporal and/or spatial filters.</dd>
+          <dt><a href="#" class="button-small button-outline button-float-right" data-dismiss="modal"><i class="fa fa-times-circle-o"></i> Close and Continue</a></dt>
+          <dd>Press the button to close this dialog and continue with the first 2000 granules.</dd>
+          <dt><a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Data Access Configure', null)" class="button-small button-outline button-float-right"><i class="fa fa-question-circle"></i> contact our support team</a></dt>
+          <dd>Press the button to contact our support team if you need to order more than 2000 granules.</dd>
+        </dl>
+        <hr>
+        <p>Click anywhere outside the dialog to dismiss the message.</p>
+      </div>
+      <div class="modal-footer">
+        <a class="button text-button" href="<%= @back_path %>?<%= request.query_string %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
+        <a class="button text-button" href="#" data-bind="click: $root.ui.serviceOptionsList.showNext"><i class="fa fa-times-circle-o"></i> Close and Continue</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end modal-->
+

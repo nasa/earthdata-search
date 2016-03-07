@@ -47,9 +47,7 @@ module Helpers
 
         Array.wrap(options[:queries]).each_with_index do |q, i|
           obj = {}
-          if q && q[:browse_only]
-            obj['bo'] = 'true'
-          end
+          obj = q if q
           if obj.keys.present?
             params['pg'] ||= {}
             params['pg'][i] = obj
