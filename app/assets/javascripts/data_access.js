@@ -14,6 +14,10 @@
 //= require util/index
 //= require modules/echoformsext
 //= require modules/spinners
+//= require modules/map/coordinate
+//= require modules/map/arc
+//= require modules/map/geoutil
+//= require modules/map/mbr
 //= require models/index
 //= require models/page/access_page
 //= require modules/banner

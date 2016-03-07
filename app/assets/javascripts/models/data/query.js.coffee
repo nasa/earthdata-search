@@ -11,6 +11,7 @@ ns.query = do (ko,
                KnockoutModel=@edsc.models.KnockoutModel
                Temporal=@edsc.models.ui.Temporal
                deparam=@edsc.util.deparam
+               mbr=@edsc.map.mbr
                extend=$.extend) ->
 
   # This is a little gross, but we're allowing an override of temporal
@@ -271,6 +272,7 @@ ns.query = do (ko,
       @placename = @queryComponent(new QueryParam('placename'), '', query: false)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
+      @mbr = @computed(read: @_computeMbr, owner: this, deferEvaluation: true)
       @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, propagate: true)
       @facets = @queryComponent(new FacetParam(), ko.observableArray())
       @scienceKeywordFacets = @computed(read: @_computeScienceKeywordFacets, deferEvaluation: true)
@@ -286,6 +288,18 @@ ns.query = do (ko,
 
     _computeScienceKeywordFacets: =>
       facet for facet in @facets() when facet.param.indexOf('sci') == 0
+
+    _computeMbr: ->
+      spatial = @spatial()
+      result = null
+      if spatial
+        [type, shapePoints...] = spatial.split(':')
+        shape = for pointStr in shapePoints
+          latlng = pointStr.split(',').reverse()
+          {lat: +latlng[0], lng: +latlng[1]}
+        result = mbr.mbr(type, shape)
+      result
+
 
   class GranuleQuery extends Query
     constructor: (collectionId, parentQuery, attributes) ->
