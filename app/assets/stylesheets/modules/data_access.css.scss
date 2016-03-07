@@ -404,3 +404,27 @@ section.data-access-next {
 .progress-bar {
   background-color: #2c3e50;
 }
+
+.modal-body p {
+  margin: 0 0 1.5em 0;
+}
+
+.dl-horizontal {
+
+  margin-top: 0;
+  margin-bottom: 20px;
+
+  dt {
+    float: left;
+    width: 220px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  dd {
+    margin-left: 240px;
+    margin-bottom: 15px;
+  }
+}
