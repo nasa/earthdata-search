@@ -235,7 +235,7 @@ class CollectionsController < ApplicationController
 
     items += applied
 
-    items.sort_by! {|facet| facet['term']}
+    items.sort_by! {|facet| facet['term'].downcase}
     {name: name, param: param, values: items}
   end
 
