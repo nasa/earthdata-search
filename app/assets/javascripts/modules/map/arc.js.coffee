@@ -1,6 +1,6 @@
 ns = window.edsc.map
 
-ns.Arc = do(L, Coordinate = ns.Coordinate) ->
+ns.Arc = do(Coordinate = ns.Coordinate) ->
   # A small number for dealing with near-0
   EPSILON = 0.00000001
 
@@ -10,13 +10,38 @@ ns.Arc = do(L, Coordinate = ns.Coordinate) ->
       if coordB.theta < coordA.theta
         [coordB, coordA] = [coordA, coordB]
 
-      if coordB.theta - coordA.theta > Math.PI
+      if Math.abs(coordB.theta - coordA.theta) > Math.PI
         @coordB = coordA
         @coordA = coordB
       else
         @coordA = coordA
         @coordB = coordB
       @normal = @coordA.cross(@coordB)
+
+    inflection: ->
+      normal = @normal.toLatLng()
+
+      southInflectionLat = -90 + Math.abs(normal.lat)
+      northInflectionLat = -southInflectionLat
+
+      southInflectionLon = normal.lng
+      northInflectionLon = normal.lng + 180
+      northInflectionLon -= 360 if northInflectionLon > 180
+
+      if @coversLongitude(northInflectionLon)
+        return Coordinate.fromLatLng(northInflectionLat, northInflectionLon)
+      if @coversLongitude(southInflectionLon)
+        return Coordinate.fromLatLng(southInflectionLat, southInflectionLon)
+      return null
+
+    coversLongitude: (lon) ->
+      theta = lon * Math.PI / 180.0
+      thetaMin = Math.min(@coordA.theta, @coordB.theta)
+      thetaMax = Math.max(@coordA.theta, @coordB.theta)
+      if Math.abs(thetaMax - thetaMin) < Math.PI
+        return thetaMin < theta < thetaMax
+      else
+        return theta > thetaMax || theta < thetaMin
 
     antimeridianCrossing: ->
       abs = Math.abs
