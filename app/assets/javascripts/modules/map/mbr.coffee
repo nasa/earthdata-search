@@ -1,6 +1,6 @@
 ns = window.edsc.map
 
-ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon) ->
+ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon, Coordinate = ns.Coordinate, Arc = ns.Arc) ->
 
   circularMax = (lng0, lng1) ->
     [left, right] = if lng0 < lng1 then [lng0, lng1] else [lng1, lng0]
@@ -21,11 +21,28 @@ ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon) ->
     minLng = 181
     maxLng = -181
 
-    for {lat, lng} in latlngs
+    coords = (Coordinate.fromLatLng(latlng) for latlng in latlngs)
+    len = coords.length
+    latLngsWithInflections = []
+    for coord, i in coords
+      latLngsWithInflections.push(coord.toLatLng())
+      next = coords[(i + 1) % len]
+      inflection = new Arc(coord, next).inflection()
+      latLngsWithInflections.push(inflection.toLatLng()) if inflection
+
+    first = latLngsWithInflections[0]
+    minLat = maxLat = first.lat
+    minLng = maxLng = first.lng
+
+    for {lat, lng} in latLngsWithInflections[1..]
       minLat = Math.min(minLat, lat)
       maxLat = Math.max(maxLat, lat)
-      minLng = Math.min(minLng, lng)
-      maxLng = Math.max(maxLng, lng)
+      if Math.abs(lat) != 90
+        minLng = circularMin(minLng, lng)
+        maxLng = circularMax(maxLng, lng)
+      else
+        minLng = Math.min(minLng, lng)
+        maxLng = Math.max(maxLng, lng)
 
     [minLat, minLng, maxLat, maxLng]
 
@@ -35,7 +52,8 @@ ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon) ->
   distance = (lng0, min, max) ->
     min += 360
     max += 360 while max < min
-    lng0 += 360 while lng0 < max - 180
+    dist = (max - min) / 2
+    lng0 += 360 while lng0 < min - dist
 
     if lng0 < min
       min - lng0
@@ -53,8 +71,8 @@ ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon) ->
     maxLng = first[3]
 
     for [lat0, lng0, lat1, lng1] in rest
-      maxLat = Math.max(maxLat, lat1)
       minLat = Math.min(minLat, lat0)
+      maxLat = Math.max(maxLat, lat1)
 
       lng0Distance = distance(lng0, minLng, maxLng)
       lng1Distance = distance(lng1, minLng, maxLng)
@@ -68,7 +86,7 @@ ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon) ->
         # If the ranges are disjoint
         if lng0Distance < lng1Distance
           # Both points are on the same side
-          if lng0Distance < 0
+          if lng0Distance < 0 && lng1Distance < 0 || lng0Distance > 0 && lng1Distance > 0
             minLng = lng0
           else
             maxLng = lng1
@@ -106,7 +124,6 @@ ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon) ->
     else
       {interiors} = dividePolygon(latlngs)
       mbrs = (findSimpleMbr(lls) for lls in interiors)
-
       mergeMbrs(mbrs)
 
   exports =
