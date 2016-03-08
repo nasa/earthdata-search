@@ -28,4 +28,14 @@ export default class EdscFacade {
   isMapReady() {
     return $('#map').data('map') != null;
   }
+
+  onMapEvent(name, callback, context) {
+    let map = $('#map').data('map');
+    if (map) map.map.on(name, callback, context);
+  }
+
+  offMapEvent(name, callback, context) {
+    let map = $('#map').data('map');
+    if (map) map.map.off(name, callback, context);
+  }
 };
