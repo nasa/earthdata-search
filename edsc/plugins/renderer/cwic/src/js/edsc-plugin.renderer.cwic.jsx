@@ -17,6 +17,8 @@ export default class CwicRendererPlugin {
       this._startTimeout = setTimeout((() => this.startSearchFocus()), 200);
       return;
     }
+    this.edsc.onMapEvent('draw:editstart draw:drawstart', this._onDrawStart, this);
+    this.edsc.onMapEvent('draw:editstop draw:drawstop', this._onDrawEnd, this);
     this.cwicQuery = this.collection.granuleDatasource().cwicQuery();
     let query = this.cwicQuery.params;
     this._onQueryChange(query());
@@ -46,6 +48,18 @@ export default class CwicRendererPlugin {
   }
   endAccessPreview() {
     console.log('End access preview');
+  }
+
+  _onDrawStart() {
+    for (let i = 0; i < this._layers.length; i++) {
+      this._layers[i].setStyle({stroke: false});
+    }
+  }
+
+  _onDrawEnd() {
+    for (let i = 0; i < this._layers.length; i++) {
+      this._layers[i].setStyle({stroke: true});
+    }
   }
 
   _clearLayers() {
