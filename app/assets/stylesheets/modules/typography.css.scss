@@ -8,6 +8,15 @@ a:link, a:visited {
   &.close:hover {
     color: #999;
   }
+
+  &.modal-close {
+    color: #888;
+    float: right;
+  }
+
+  &.modal-close:hover {
+    color: #444;
+  }
 }
 
 a:hover {
