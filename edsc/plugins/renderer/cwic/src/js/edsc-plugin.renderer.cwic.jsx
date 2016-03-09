@@ -31,7 +31,7 @@ export default class CwicRendererPlugin {
     clearTimeout(this._startTimeout);
     this.cwicQuery = null;
     this._needsTemporalWarning = true;
-    this._needsSpatialWarning = true;
+    //this._needsSpatialWarning = true;
     this._clearLayers();
     this.edsc.removeElementHelp('recurringTemporal');
     this.edsc.removeElementHelp('mbr');
