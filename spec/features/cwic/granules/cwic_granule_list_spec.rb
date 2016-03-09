@@ -150,4 +150,40 @@ describe "CWIC Granule list", reset: false do
     end
   end
 
+  context "for CWIC tagged collections" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
+      login
+      wait_for_xhr
+      view_granule_results("INSAT-3D Imager Level-2P IR WINDS")
+    end
+
+    it "displays a help button to find out more information about CWIC collections", acceptance: true do
+      expect(page).to have_link("What's Int'l / Interagency Data")
+    end
+
+    context "clicking on the CWIC help button" do
+      before :all do
+        click_on "What's Int'l / Interagency Data"
+        sleep 1
+      end
+
+      it "displays additional details about CWIC collections", acceptance: true do
+        expect(page).to have_content "CWIC is short for CEOS WGISS Integrated Catalog"
+      end
+    end
+  end
+
+  context "for non-CWIC collections" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, env: :sit, q: 'C24936-LAADS'
+      view_granule_results("MODIS/Terra Aerosol 5-Min L2 Swath 10km V005")
+    end
+
+    it "does not display a help button to find out more information about CWIC collections", acceptance: true do
+      expect(page).not_to have_link("What's Int'l / Interagency Data")
+    end
+  end
 end
