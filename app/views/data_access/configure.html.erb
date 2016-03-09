@@ -197,28 +197,22 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
         <h4 class="modal-title" id="tooManyGranulesModalLabel">Maximum Granules Exceeded</h4>
       </div>
       <div class="modal-body">
-        <p>Access methods other than "Download" are limited to the first 2000 granules. For ESI services, this number could even smaller. Your request would result in more than 2000 granules being ordered/serviced.</p>
-        <hr>
-        <dl class="dl-horizontal">
-          <dt><a class="button-small button-outline button-float-right" href="<%= @back_path %>?<%= request.query_string %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a></dt>
-          <dd>Press the button to go back to search session and narrow your search through temporal and/or spatial filters.</dd>
-          <dt><a href="#" class="button-small button-outline button-float-right" data-dismiss="modal"><i class="fa fa-times-circle-o"></i> Close and Continue</a></dt>
-          <dd>Press the button to close this dialog and continue with the first 2000 granules.</dd>
-          <dt><a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Data Access Configure', null)" class="button-small button-outline button-float-right"><i class="fa fa-question-circle"></i> contact our support team</a></dt>
-          <dd>Press the button to contact our support team if you need to order more than 2000 granules.</dd>
-        </dl>
-        <hr>
-        <p>Click anywhere outside the dialog to dismiss the message.</p>
+        <p>
+          Access methods other than "Download" are limited to the
+          first 2,000 granules.  If you choose to continue, your request
+          may be truncated to the first 2,000 granules or rejected entirely.
+        </p>
       </div>
       <div class="modal-footer">
-        <a class="button text-button" href="<%= @back_path %>?<%= request.query_string %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Search Session</a>
-        <a class="button text-button" href="#" data-bind="click: $root.ui.serviceOptionsList.showNext"><i class="fa fa-times-circle-o"></i> Close and Continue</a>
+        <a class="button text-button" href="<%= @back_path %>?<%= request.query_string %>"><i class="fa fa-arrow-circle-left"></i> Refine your search</a>
+        <a class="button text-button" data-dismiss="modal" href="#">Change access methods</a>
+        <a class="button text-button" href="#" data-bind="click: $root.ui.serviceOptionsList.showNext">Continue</a>
       </div>
     </div>
   </div>
 </div>
 <!--end modal-->
-
