@@ -55,6 +55,12 @@ describe "Collection results", reset: false do
     expect(page).to have_css('.badge-opendap')
   end
 
+  it "displays  for collections which have no thumbnail URLs" do
+    fill_in "keywords", with: 'C179003030-ORNL_DAAC'
+    wait_for_xhr
+    expect(find('img.panel-list-thumbnail')['src']).to have_content("image-unavailable.svg")
+  end
+
   # EDSC-145: As a user, I want to see how long my collection searches take, so that
   #           I may understand the performance of the system
   it "shows how much time the collection search took" do
