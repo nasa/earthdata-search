@@ -50,10 +50,10 @@ ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon, Coordinate = ns.Coordinat
   # if it's outside and below the interval, a positive if it's outside
   # and above, and 0 if it's within the interval
   distance = (lng0, min, max) ->
-    min += 360
+    min += 720
     max += 360 while max < min
-    dist = (max - min) / 2
-    lng0 += 360 while lng0 < min - dist
+    mid = min + (max - min) / 2
+    lng0 += 360 while lng0 < mid - 180
 
     if lng0 < min
       min - lng0
@@ -86,7 +86,7 @@ ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon, Coordinate = ns.Coordinat
         # If the ranges are disjoint
         if lng0Distance < lng1Distance
           # Both points are on the same side
-          if lng0Distance < 0 && lng1Distance < 0 || lng0Distance > 0 && lng1Distance > 0
+          if lng0Distance < 0
             minLng = lng0
           else
             maxLng = lng1
