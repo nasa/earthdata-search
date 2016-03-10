@@ -131,11 +131,11 @@ ns.Collection = do (ko
       granule = @browseable_granule
       collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
       if collection_id?
-        "#{scalerUrl}/datasets/#{collection_id}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
+        "#{scalerUrl}/browse_images/datasets/#{collection_id}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
       else if granule?
-        "#{scalerUrl}/granules/#{granule}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
+        "#{scalerUrl}/browse_images/granules/#{granule}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
       else
-        null
+        "#{scalerUrl}/image-unavailable.svg"
 
     granuleFiltersApplied: ->
       @granuleDatasource()?.hasQueryConfig()
