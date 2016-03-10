@@ -50,6 +50,12 @@ describe 'Background jobs ordering', reset: false do
       select 'FtpPull', from: 'Distribution Options'
       click_on 'Continue'
 
+      # wait for modal
+      sleep 1
+      within '.modal-footer' do
+        click_on 'Continue'
+      end
+
       # Confirm address
       click_on 'Submit'
       wait_for_xhr

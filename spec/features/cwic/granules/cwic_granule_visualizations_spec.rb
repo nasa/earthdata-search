@@ -8,7 +8,6 @@ describe "CWIC-enabled granule visualizations", reset: false do
       Capybara.reset_sessions!
       load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
       login
-      wait_for_xhr
     end
 
     hook_granule_results("INSAT-3D Imager Level-2P IR WINDS")
@@ -29,7 +28,8 @@ describe "CWIC-enabled granule visualizations", reset: false do
       end
 
       it "displays a larger preview of the browse data", acceptance: true do
-        expect(page).to have_css('#map .granule-browse a img[src*="/preview_thumb/"]')
+        src = page.evaluate_script("document.querySelector('#map .granule-browse a img').src")
+        expect(src).to have_content('/preview_thumb/')
       end
 
       context "clicking on the browse preview" do
