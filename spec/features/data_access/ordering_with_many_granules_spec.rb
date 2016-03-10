@@ -79,16 +79,14 @@ describe 'Access data with more than 2000 granules', reset: false do
 
         it "shows a modal dialog" do
           expect(page).to have_content('Maximum Granules Exceeded')
-          expect(modal_body).to have_link('Back to Search Session')
-          expect(modal_body).to have_link('Close and Continue')
-          expect(modal_body).to have_link('contact our support team')
-          expect(modal_footer).to have_link('Back to Search Session')
-          expect(modal_footer).to have_link('Close and Continue')
+          expect(modal_footer).to have_link('Change access methods')
+          expect(modal_footer).to have_link('Refine your search')
+          expect(modal_footer).to have_link('Continue')
 
           # wait for bootstrap animation
           sleep 1
           within '.modal-footer' do
-            click_on 'Close and Continue'
+            click_on 'Continue'
           end
 
           click_on 'Back'
@@ -100,7 +98,7 @@ describe 'Access data with more than 2000 granules', reset: false do
             # wait for bootstrap animation
             sleep 1
             within '.modal-footer' do
-              click_on 'Close and Continue'
+              click_on 'Continue'
             end
           end
 
@@ -119,7 +117,7 @@ describe 'Access data with more than 2000 granules', reset: false do
             # wait for bootstrap animation
             sleep 1
             within '.modal-footer' do
-              click_on "Back to Search Session"
+              click_on "Refine your search"
             end
             wait_for_xhr
           end
@@ -185,7 +183,7 @@ describe 'Access data with more than 2000 granules', reset: false do
         after :all do
           sleep 1
           within '.modal-footer' do
-            click_link 'Close and Continue'
+            click_link 'Continue'
           end
           click_on 'Back'
           click_on 'Back'
@@ -195,11 +193,9 @@ describe 'Access data with more than 2000 granules', reset: false do
 
         it "shows a modal dialog" do
           expect(page).to have_content('Maximum Granules Exceeded')
-          expect(modal_body).to have_link('Back to Search Session')
-          expect(modal_body).to have_link('Close and Continue')
-          expect(modal_body).to have_link('contact our support team')
-          expect(modal_footer).to have_link('Back to Search Session')
-          expect(modal_footer).to have_link('Close and Continue')
+          expect(modal_footer).to have_link('Change access methods')
+          expect(modal_footer).to have_link('Refine your search')
+          expect(modal_footer).to have_link('Continue')
         end
       end
     end

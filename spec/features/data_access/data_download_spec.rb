@@ -295,7 +295,7 @@ describe "Data download page", reset: false do
       # wait for modal
       sleep 1
       within '.modal-footer' do
-        click_on 'Close and Continue'
+        click_on 'Continue'
       end
 
       # No actions available on the second, continue
