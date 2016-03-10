@@ -8,7 +8,6 @@ describe "CWIC-enabled granule visualizations", reset: false do
       Capybara.reset_sessions!
       load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
       login
-      wait_for_xhr
     end
 
     hook_granule_results("INSAT-3D Imager Level-2P IR WINDS")
