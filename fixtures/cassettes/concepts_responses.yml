@@ -727,6 +727,55 @@ b5c7e41c67b053b26b179892814464bd7ec6299a:
                  GeoConnections Discovery Portal. Canada's IDN Node.
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-95</WestBoundingCoordinate><NorthBoundingCoordinate>61</NorthBoundingCoordinate><EastBoundingCoordinate>-52</EastBoundingCoordinate><SouthBoundingCoordinate>44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+6ab30dcea4757ad54bcae4d4ab2c577e53d31e56:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 10 Mar 2016 19:26:22 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 97810a91-edec-4052-a724-14c56e088a21
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>GHRSST-GOES15-OSPO-L2P</ShortName><VersionId>Not provided</VersionId><InsertTime>2015-02-18T00:00:00.000Z</InsertTime><LastUpdate>2015-10-08T00:00:00.000Z</LastUpdate><LongName>
+        GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)
+        </LongName><DataSetId>
+        GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)
+        </DataSetId><Description>
+        The Geostationary Operational Environmental Satellites (GOES) operated by the United States National Oceanographic and Atmospheric Administration (NOAA) support weather forecasting, severe storm tracking, meteorology and oceanography research. Generally there are several GOES satellites in geosynchronous orbit at any one time viewing different earth locations including the GOES-15 launched 4 March 2010. The radiometer aboard the satellite, The GOES N-P Imager, is a five channel (one visible, four infrared) imaging radiometer designed to sense radiant and solar reflected energy from sampled areas of the earth. The multi-element spectral channels simultaneously sweep east-west and west-east along a north-to-south path by means of a two-axis mirror scan system retuning telemetry in 10-bit precision. For this Group for High Resolution Sea Surface Temperature (GHRSST) dataset, skin sea surface temperature (SST) measurements are calculated from the far IR channels of GOES-15 at full resolution on a half hourly basis. In native satellite projection, vertically adjacent pixels are averaged and read out at every pixel. L2P datasets including Single Sensor Error Statistics (SSES) are then derived following the GHRSST Data Processing Specification (GDS) version 2.0. The full disk image is subsetted into granules representing distinct northern and southern regions.
+        </Description><Orderable>true</Orderable><Visible>true</Visible><SuggestedUsage>BASIC RESEARCH</SuggestedUsage><Temporal><RangeDateTime><BeginningDateTime>2012-03-08T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>TECHNICAL CONTACT</Role><OrganizationEmails><Email>bob.potash@noaa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>ROBERT</FirstName><LastName>POTASH</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>TECHNICAL CONTACT</Role><OrganizationEmails><Email>John.Sapper@noaa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>JOHN</FirstName><LastName>SAPPER</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>OCEAN TEMPERATURE</TermKeyword><VariableLevel1Keyword><Value>WATER TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword><TermKeyword>WATER QUALITY/WATER CHEMISTRY</TermKeyword><VariableLevel1Keyword><Value>WATER TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>GOES-15</ShortName><LongName>
+        Geostationary Operational Environmental Satellite 15
+        </LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>GOES-15 Imager</ShortName><LongName>
+        Geostationary Operational Environmental Satellite 15-Imager
+        </LongName></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2016-02-17 11:40:17</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>GHRSST</ShortName><LongName>Group for High Resolution Sea Surface Temperature</LongName></Campaign></Campaigns><OnlineAccessURLs><OnlineAccessURL><URL>
+        http://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/GOES15/OSPO/
+        </URL><URLDescription>
+        These data are available through a variety of services via a THREDDS (Thematic Real-time Environmental Distributed Data Services) Data Server (TDS). The base URL of NODC's TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset, the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.
+        </URLDescription></OnlineAccessURL><OnlineAccessURL><URL>
+        http://data.nodc.noaa.gov/opendap/ghrsst/L2P/GOES15/OSPO/
+        </URL><URLDescription>
+        These data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax server. The base URL of NODC's Hyrax server is http://data.nodc.noaa.gov/opendap/. For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please see the OPeNDAP web site at http://opendap.org/.
+        </URLDescription></OnlineAccessURL><OnlineAccessURL><URL>
+        ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/GOES15/OSPO/
+        </URL><URLDescription>
+        These data are available through the File Transfer Protocol (FTP). The base URL of NODC's FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP client to download these data.
+        </URLDescription></OnlineAccessURL></OnlineAccessURLs><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>146</WestBoundingCoordinate><NorthBoundingCoordinate>72</NorthBoundingCoordinate><EastBoundingCoordinate>-105</EastBoundingCoordinate><SouthBoundingCoordinate>-44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
 a8625406c735635e8f0d54555083fa434ca22391:
   response:
     status:
