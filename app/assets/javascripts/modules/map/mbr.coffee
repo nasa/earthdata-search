@@ -28,7 +28,12 @@ ns.mbr = do (dividePolygon = ns.geoutil.dividePolygon, Coordinate = ns.Coordinat
       latLngsWithInflections.push(coord.toLatLng())
       next = coords[(i + 1) % len]
       inflection = new Arc(coord, next).inflection()
-      latLngsWithInflections.push(inflection.toLatLng()) if inflection
+      if inflection
+        latLng = inflection.toLatLng()
+        if Math.abs(latLng.lat) != 90
+          # Has an inflection point, and it's not at the pole (which is handled
+          # separately for MBRs)
+          latLngsWithInflections.push(latLng)
 
     first = latLngsWithInflections[0]
     minLat = maxLat = first.lat

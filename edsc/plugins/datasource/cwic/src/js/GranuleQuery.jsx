@@ -27,7 +27,6 @@ class GranuleQuery {
 
   serializedMbr() {
     let mbr = this.mbr();
-    console.log('mbr', mbr);
     if (mbr) {
       return `${mbr[1]},${mbr[0]},${mbr[3]},${mbr[2]}`;
     }
