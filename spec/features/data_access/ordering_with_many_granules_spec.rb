@@ -17,6 +17,27 @@ describe 'Access data with more than 2000 granules', reset: false do
         load_page 'data/configure', {project: ['C119124186-NSIDC_ECS']}
       end
 
+      context "and selecting multiple access mothods" do
+        before :all do
+          click_button 'Add access method'
+          within '.access-item-selection:first-child' do
+            choose 'Download'
+          end
+          within '.access-item-selection:nth-child(4)' do
+            choose 'AE_Rain Order Option'
+          end
+          click_on 'Continue'
+        end
+
+        after :all do
+          load_page 'data/configure', {project: ['C119124186-NSIDC_ECS']}
+        end
+
+        it "shows a modal dialog" do
+          expect(page).to have_content('Maximum Granules Exceeded')
+        end
+      end
+
       context "and selecting 'Download' option" do
         before :all do
           choose 'Download'
