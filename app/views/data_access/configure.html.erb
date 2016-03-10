@@ -158,7 +158,7 @@
 
         <div class="access-item-actions">
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
-          <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
+          <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.checkOrderSize" class="button-next">Continue</button>
           <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>
       </div>
@@ -191,3 +191,28 @@
     </div>
   </form>
 </div>
+
+<!--begin modal-->
+<div class="modal fade" id="tooManyGranulesModal" tabindex="-1" role="dialog" aria-labelledby="tooManyGranulesModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+        <h4 class="modal-title" id="tooManyGranulesModalLabel">Maximum Granules Exceeded</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          Access methods other than "Download" are limited to the
+          first 2,000 granules.  If you choose to continue, your request
+          may be truncated to the first 2,000 granules or rejected entirely.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <a class="button text-button" href="<%= @back_path %>?<%= request.query_string %>"><i class="fa fa-arrow-circle-left"></i> Refine your search</a>
+        <a class="button text-button" data-dismiss="modal" href="#">Change access methods</a>
+        <a class="button text-button" href="#" data-bind="click: $root.ui.serviceOptionsList.showNext">Continue</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end modal-->

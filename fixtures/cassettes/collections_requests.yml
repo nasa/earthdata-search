@@ -144,6 +144,23 @@ http_interactions:
   digest: f659b6ec4ca3480e41b53b756a197d2906d7893f
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C119124186-NSIDC_ECS&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 07 Mar 2016 19:25:27 GMT
+  digest: c9ed3114248ce9c79d2f8630a1c2084788ee97c2
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1214560151-JAXA&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -369,6 +386,23 @@ http_interactions:
       - edsc
   recorded_at: Thu, 14 Jan 2016 21:04:10 GMT
   digest: 1deaa8b63c8dcb32e99969079ec25217818e8b2e
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C179002914-ORNL_DAAC&echo_collection_id%5B%5D=C119124186-NSIDC_ECS&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 07 Mar 2016 19:26:02 GMT
+  digest: 0e573e54b01dbe115ecc52264180190da72f687b
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C179002914-ORNL_DAAC&echo_collection_id%5B%5D=C179003030-ORNL_DAAC&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
@@ -1481,7 +1515,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:13 GMT
+  recorded_at: Wed, 13 Jan 2016 18:23:02 GMT
   digest: 8f50504d209b49b2894cd309a799e12b315d3cc4
 - request:
     method: get
@@ -1494,7 +1528,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - edsc-dev
-  recorded_at: Wed, 13 Jan 2016 18:23:02 GMT
+  recorded_at: Mon, 29 Feb 2016 17:39:13 GMT
   digest: 8f50504d209b49b2894cd309a799e12b315d3cc4
 - request:
     method: get
@@ -2347,7 +2381,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:35 GMT
+  recorded_at: Wed, 13 Jan 2016 18:28:09 GMT
   digest: 457b9f289b40b45307a85fc59522c44e4946811d
 - request:
     method: get
@@ -2360,7 +2394,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - edsc-dev
-  recorded_at: Wed, 13 Jan 2016 18:28:09 GMT
+  recorded_at: Mon, 29 Feb 2016 17:39:35 GMT
   digest: 457b9f289b40b45307a85fc59522c44e4946811d
 - request:
     method: get
@@ -2973,7 +3007,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - edsc-dev
-  recorded_at: Wed, 13 Jan 2016 18:23:01 GMT
+  recorded_at: Mon, 29 Feb 2016 17:39:20 GMT
   digest: 2f80d4b2bfe5d60aa3ce4345f204bac76affaf80
 - request:
     method: get
@@ -2986,7 +3020,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:20 GMT
+  recorded_at: Wed, 13 Jan 2016 18:23:01 GMT
   digest: 2f80d4b2bfe5d60aa3ce4345f204bac76affaf80
 - request:
     method: get
