@@ -551,6 +551,28 @@ fad73159b767f493c994f51b6027798cb236231b:
       encoding: UTF-8
       string: '[{"concept-id":"C115003855-NSIDC_ECS","intervals":[[1330387200,1334361600,46],[1346112000,1365984000,230],[1377648000,1397520000,230],[1409184000,1425254400,186]]}]'
     http_version: 
+43c035a06d4f9ab153bb299c9ea6e7beeb9e992c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 07 Mar 2016 19:25:52 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - fc18d939-7115-4a43-a3ab-703751a80037
+      content-length:
+      - '112'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C119124186-NSIDC_ECS","intervals":[[1254466308,1265155200,3584],[1265328000,1317686400,17633]]}]'
+    http_version: 
 e3cfa3582f82fef91cdec2844527b679c06db2ac:
   response:
     status:

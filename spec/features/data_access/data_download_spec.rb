@@ -292,6 +292,11 @@ describe "Data download page", reset: false do
       choose 'FtpPushPull'
       select 'FtpPull', from: 'Distribution Options'
       click_on 'Continue'
+      # wait for modal
+      sleep 1
+      within '.modal-footer' do
+        click_on 'Continue'
+      end
 
       # No actions available on the second, continue
       click_on 'Continue'

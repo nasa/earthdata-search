@@ -15,7 +15,7 @@ describe "Granule filter tracking", reset: false do
 
   context 'when granule filters have been set for a collection' do
     before :all do
-      load_page :search, q: 'C179003030-ORNL_DAAC', project: ['C179003030-ORNL_DAAC'], queries: [nil, {browse_only: true}]
+      load_page :search, q: 'C179003030-ORNL_DAAC', project: ['C179003030-ORNL_DAAC'], queries: [nil, {bo: true}]
       wait_for_xhr
     end
 

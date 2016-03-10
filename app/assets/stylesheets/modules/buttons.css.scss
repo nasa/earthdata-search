@@ -155,6 +155,10 @@ button:disabled {
     padding: 4px 8px;
   }
 
+  &.button-float-right {
+    float: right;
+  }
+
   &.button-outline-light {
     @include light-button;
     font-weight: bold;
