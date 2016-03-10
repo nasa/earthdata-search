@@ -21,12 +21,13 @@ ns.ServiceOptionsList = do (ko, $=jQuery) ->
         if accessCollection.collection.id == this._currentCollection().id
           # number of granules in the order
           if accessCollection.granuleAccessOptions().hits > 2000 # && accessCollection.serviceOptions.accessMethod()[0].method() ==
-            # if ESI service, don't show the modal
-            checkedAccessMethod = accessCollection.serviceOptions.accessMethod()[0].method()
-            for method in accessCollection.serviceOptions.granuleAccessOptions().methods
-              if method.name == checkedAccessMethod && method.type != 'service' && method.type != 'download'
-                $("#tooManyGranulesModal").modal('show')
-                return true
+            for checkedAccessMethod in accessCollection.serviceOptions.accessMethod()
+              checkedAccessMethodName = checkedAccessMethod.method()
+              # if ESI service, don't show the modal
+              for method in accessCollection.serviceOptions.granuleAccessOptions().methods
+                if method.name == checkedAccessMethodName && method.type != 'service' && method.type != 'download'
+                  $("#tooManyGranulesModal").modal('show')
+                  return true
             @showNext()
             return true
           else
