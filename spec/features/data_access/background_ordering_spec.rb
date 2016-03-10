@@ -53,7 +53,7 @@ describe 'Background jobs ordering', reset: false do
       # wait for modal
       sleep 1
       within '.modal-footer' do
-        click_on 'Close and Continue'
+        click_on 'Continue'
       end
 
       # Confirm address
