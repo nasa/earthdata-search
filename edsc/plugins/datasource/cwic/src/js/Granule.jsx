@@ -46,7 +46,8 @@ let CwicGranule = (function() {
   };
 
   CwicGranule.prototype.getTemporal = function () {
-    return this.date != null ? this.date.replace('/', ' to ') : null;
+    let date = this.date || this.temporal;
+    return date != null ? this.date.replace('/', ' to ') : null;
   };
 
   return CwicGranule;
