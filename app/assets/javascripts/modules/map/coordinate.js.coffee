@@ -40,6 +40,9 @@ ns.Coordinate = do(L) ->
       # Maintain the same sign as the original when theta is +/- PI
       theta = PI if theta == -PI && origTheta > 0
 
+      # At the poles, preserve the input longitude
+      theta = origTheta if Math.abs(phi) == PI / 2
+
       x = cos(phi) * cos(theta)
       y = cos(phi) * sin(theta)
       z = sin(phi)
