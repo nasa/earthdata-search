@@ -79,6 +79,7 @@ describe "Access Option Defaults", reset: true do
       select 'FtpPull', from: 'Distribution Options'
 
       click_on 'Continue'
+      sleep 1
       within '.modal-footer' do
         click_on 'Continue' # to dismiss the modal
       end
@@ -121,6 +122,7 @@ describe "Access Option Defaults", reset: true do
       select 'FtpPull', from: 'Distribution Options'
 
       click_on 'Continue'
+      sleep 1
       within '.modal-footer' do
         click_on 'Continue' # to dismiss the modal
       end
