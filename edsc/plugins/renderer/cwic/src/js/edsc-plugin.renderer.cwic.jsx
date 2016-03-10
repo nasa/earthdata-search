@@ -1,3 +1,6 @@
+import whatsCwicHtml from '../html/whats-cwic.html';
+import caveatsHtml from '../html/caveats.html';
+
 export default class CwicRendererPlugin {
   constructor(edsc, collection) {
     console.log('Loaded cwic renderer plugin');
@@ -13,6 +16,7 @@ export default class CwicRendererPlugin {
     let query = this.collection.granuleDatasource().cwicQuery().params;
     this._onQueryChange(query());
     this._querySubscription = query.subscribe(this._onQueryChange, this);
+    this._addCaveats();
   }
   endSearchFocus() {
     if (this._querySubscription) {
@@ -20,6 +24,7 @@ export default class CwicRendererPlugin {
     }
     this._needsTemporalWarning = true;
     this.edsc.removeElementHelp('recurringTemporal');
+    this._removeCaveats();
     console.log('End search focus');
   }
   startSearchView() {
@@ -33,6 +38,22 @@ export default class CwicRendererPlugin {
   }
   endAccessPreview() {
     console.log('End access preview');
+  }
+
+  _addCaveats() {
+    let root = document.getElementById('datasource-caveats');
+    if (root) {
+      root.innerHTML = caveatsHtml;
+    }
+    document.body.insertAdjacentHTML('beforeend', whatsCwicHtml);
+  }
+
+  _removeCaveats() {
+    let root;
+    root = document.getElementById('cwic-caveats');
+    if (root) root.parentNode.removeChild(root);
+    root = document.getElementById('whats-cwic-modal');
+    if (root) root.parentNode.removeChild(root);
   }
 
   _onQueryChange(query) {

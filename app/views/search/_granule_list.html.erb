@@ -9,13 +9,8 @@
         <!-- ko with: ui.collectionsList.focused() -->
         <header class="with-options">
           <h2 data-bind="text: collection.title"></h2>
+          <div id="datasource-caveats"></div>
           <!-- ko with: collection -->
-          <!--ko if: granuleDescription() == "Int'l / Interagency"-->
-          <div>This is <span class="cwic-label" data-bind="text: granuleDescription"></span> data. Searches will be
-            performed by external services which may vary in performance and available features.
-          </div>
-          <div><a href="#whats-cwic-modal" class="whats-cwic" data-toggle="modal"><i class="fa fa-question-circle"></i> What's Int'l / Interagency Data</a></div>
-          <!--/ko-->
           <div class="master-overlay-global-actions actions">
             <a href="#" class="button retrieve" title="Retrieve collection data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
               <i class="fa fa-download"></i> Retrieve Collection Data
