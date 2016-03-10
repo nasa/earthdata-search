@@ -160,12 +160,12 @@ describe "CWIC Granule list", reset: false do
     end
 
     it "displays a help button to find out more information about CWIC collections", acceptance: true do
-      expect(page).to have_link("What's Int'l / Interagency Data")
+      expect(page).to have_link("Learn More ...")
     end
 
     context "clicking on the CWIC help button" do
       before :all do
-        click_on "What's Int'l / Interagency Data"
+        click_on "Learn More ..."
         sleep 1
       end
 
@@ -183,7 +183,7 @@ describe "CWIC Granule list", reset: false do
     end
 
     it "does not display a help button to find out more information about CWIC collections", acceptance: true do
-      expect(page).not_to have_link("What's Int'l / Interagency Data")
+      expect(page).not_to have_link("Learn More ...")
     end
   end
 end
