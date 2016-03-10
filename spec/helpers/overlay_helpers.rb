@@ -129,6 +129,14 @@ module Helpers
       nth_panel(granule_list, n)
     end
 
+    def modal_body
+      page.find('.modal-body')
+    end
+
+    def modal_footer
+      page.find('.modal-footer')
+    end
+
     private
 
     def nth_panel(root, n)

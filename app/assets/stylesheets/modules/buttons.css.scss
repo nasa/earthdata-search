@@ -155,16 +155,14 @@ button:disabled {
     padding: 4px 8px;
   }
 
+  &.button-float-right {
+    float: right;
+  }
+
   &.button-outline-light {
     @include light-button;
     font-weight: bold;
   }
-}
-
-.modal-button {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
 }
 
 .choice {

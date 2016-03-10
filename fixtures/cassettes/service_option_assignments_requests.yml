@@ -70,6 +70,23 @@ http_interactions:
   digest: ab342f347c81d276a2fc5ba9dae8fc0166afe9ef
 - request:
     method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C119124186-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 07 Mar 2016 19:25:37 GMT
+  digest: 0c0cd27f7a37b8c29a84824c8b2999472fedbfab
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C128599377-NSIDC_ECS
     body:
       encoding: US-ASCII
