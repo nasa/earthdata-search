@@ -95,6 +95,21 @@ http_interactions:
   digest: 773f1a2581dbf71e513bbff27e62cb5e0b232ccf
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1224520098-NOAA_NCEI.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Thu, 10 Mar 2016 19:26:22 GMT
+  digest: 6ab30dcea4757ad54bcae4d4ab2c577e53d31e56
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1580-NSIDCV0.echo10
     body:
       encoding: US-ASCII

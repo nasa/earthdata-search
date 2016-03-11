@@ -165,6 +165,20 @@ button:disabled {
   }
 }
 
+.whats-cwic {
+  @include light-button;
+  color: #fff;
+  font-size: .8em;
+  padding: 10px 11px;
+  margin-left: 2px;
+  line-height: 3em;
+
+  &:hover {
+    color: #2980b9;
+    text-decoration: none;
+  }
+}
+
 .choice {
   width: 50%;
   text-align: center;
