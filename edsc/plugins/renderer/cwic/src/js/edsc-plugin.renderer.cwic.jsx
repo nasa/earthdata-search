@@ -70,8 +70,6 @@ export default class CwicRendererPlugin {
     if (root) root.parentNode.removeChild(root);
   }
 
-  _onQueryChange(query) {
-    let key = 'recurringTemporal';
   _onDrawStart() {
     for (let i = 0; i < this._layers.length; i++) {
       this._layers[i].setStyle({stroke: false});
