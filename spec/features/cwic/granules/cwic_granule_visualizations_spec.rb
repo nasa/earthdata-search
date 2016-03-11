@@ -28,8 +28,7 @@ describe "CWIC-enabled granule visualizations", reset: false do
       end
 
       it "displays a larger preview of the browse data", acceptance: true do
-        src = page.evaluate_script("document.querySelector('#map .granule-browse a img').src")
-        expect(src).to have_content('/preview_thumb/')
+        expect(page).to have_css('#map .granule-browse a img[src*="preview"]', visible: false)
       end
 
       context "clicking on the browse preview" do
