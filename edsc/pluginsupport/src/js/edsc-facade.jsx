@@ -13,4 +13,29 @@ export default class EdscFacade {
   appliedTemporal() {
     return window.edsc.page.query.temporal.applied;
   }
+
+  addMapLayer(layer) {
+    let map = $('#map').data('map');
+    if (map) map.addLayer(layer);
+    return map != null;
+  }
+
+  removeMapLayer(layer) {
+    let map = $('#map').data('map');
+    if (map) map.removeLayer(layer);
+  }
+
+  isMapReady() {
+    return $('#map').data('map') != null;
+  }
+
+  onMapEvent(name, callback, context) {
+    let map = $('#map').data('map');
+    if (map) map.map.on(name, callback, context);
+  }
+
+  offMapEvent(name, callback, context) {
+    let map = $('#map').data('map');
+    if (map) map.map.off(name, callback, context);
+  }
 };

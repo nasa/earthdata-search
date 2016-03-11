@@ -111,7 +111,7 @@ let CwicGranules = (function() {
           if (start && start.length > 0) result['time:start'] = start.replace(/\.\d{3}Z$/, 'Z');
           if (end && end.length > 0) result['time:end'] = end.replace(/\.\d{3}Z$/, 'Z');
         }
-        else if (key == 'bounding_box') {
+        else if (key == 'bounding_box' || key == 'mbr') {
           result['geo:box'] = value;
         }
         else if (key == 'point') {
