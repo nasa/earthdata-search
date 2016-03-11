@@ -10,6 +10,10 @@ describe "Project collection list", reset: true do
     collection_results.click_link "View Project"
   end
 
+  after(:each) do
+    Capybara.reset_sessions!
+  end
+
   it "displays collections that have been added to the project" do
     expect(project_overview).to have_css('.panel-list-item', count: 2)
   end
@@ -65,9 +69,9 @@ describe "Project collection list", reset: true do
 
     it "keeps the selected collection highlighted when returning to the project" do
       click_link "Back to Collection Search"
-      sleep(1) # Wait for sliding transition
+      expect(page).to have_visible_collection_results
       collection_results.click_link "View Project"
-      sleep(1) # Wait for sliding transition
+      expect(page).to have_visible_project_overview
       expect(project_overview).to have_link('Hide collection', count: 1)
     end
 
