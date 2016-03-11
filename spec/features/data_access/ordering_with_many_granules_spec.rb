@@ -62,7 +62,7 @@ describe 'Access data with more than 2000 granules', reset: false do
         end
 
         after :all do
-          click_on 'Back'
+          load_page 'data/configure', {project: ['C119124186-NSIDC_ECS']}
         end
 
         it "doesn't show a modal dialog" do
@@ -75,6 +75,10 @@ describe 'Access data with more than 2000 granules', reset: false do
         before :all do
           choose 'AE_Rain Order Option'
           click_on 'Continue'
+        end
+
+        after :all do
+          load_page 'data/configure', {project: ['C119124186-NSIDC_ECS']}
         end
 
         it "shows a modal dialog" do
