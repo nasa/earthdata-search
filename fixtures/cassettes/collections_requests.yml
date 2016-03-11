@@ -2341,7 +2341,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:39:23 GMT
+  recorded_at: Wed, 13 Jan 2016 18:23:03 GMT
   digest: cde1f3870ed9a777977b5f7e112fd70e21271c1c
 - request:
     method: get
@@ -2354,7 +2354,7 @@ http_interactions:
       - Faraday v0.8.8
       Client-Id:
       - edsc-dev
-  recorded_at: Wed, 13 Jan 2016 18:23:03 GMT
+  recorded_at: Mon, 29 Feb 2016 17:39:23 GMT
   digest: cde1f3870ed9a777977b5f7e112fd70e21271c1c
 - request:
     method: get
@@ -5821,6 +5821,36 @@ http_interactions:
       - edsc-dev
   recorded_at: Wed, 13 Jan 2016 18:32:38 GMT
   digest: a349b36d77976d3db27d9dd0da824c740d09d7b6
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2016-02-24T12%3A51%3A10.588Z%2C2016-02-25T06%3A10%3A35.294Z&bounding_box=0%2C0%2C10%2C10&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Fri, 11 Mar 2016 01:17:51 GMT
+  digest: 053f5fe9a3cb42e4c0e2061a114474c83f2b7808
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2016-02-24T12%3A51%3A10.588Z%2C2016-02-25T06%3A10%3A35.294Z&bounding_box=0%2C0%2C10%2C10&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Fri, 11 Mar 2016 01:17:48 GMT
+  digest: 80d24194e277ac1de79842e6cd3cf7c73cacb68d
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2016-02-24T12%3A52%3A35.844Z%2C2016-02-25T06%3A23%3A22.597Z&bounding_box=0%2C0%2C10%2C10&science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE&page_size=20&page_num=1&collection_data_type=NEAR_REAL_TIME&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=snow%2A+cover%2A&include_has_granules=true&include_granule_counts=true
