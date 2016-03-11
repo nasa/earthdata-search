@@ -14,6 +14,10 @@
 //= require namespaces
 //= require config
 //= require util/index
+//= require modules/map/coordinate
+//= require modules/map/arc
+//= require modules/map/geoutil
+//= require modules/map/mbr
 //= require models/index
 //= require models/page/search_page
 //= require modules/index

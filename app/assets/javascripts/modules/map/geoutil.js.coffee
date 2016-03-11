@@ -1,6 +1,18 @@
 ns = window.edsc.map
 
 ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.config) ->
+  # Avoid leaflet dependency
+  latLng = if L?
+    (a, b, c) -> L.latLng(a, b, c)
+  else
+    (a, b, c) ->
+      if a.constructor is Array
+        return if a.length == 2 then {lat: +a[0], lng: +a[1]} else null
+      if !a?
+        return a
+      if a? && a.lat? && a.lng?
+        return a
+      null
 
   # A small number for dealing with near-0
   EPSILON = 0.00000001
@@ -44,7 +56,7 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
       lon += 360 while lon < p1.lng - EPSILON
       lon -= 360 while lon > p2.lng + EPSILON
 
-      new L.LatLng(lat, lon)
+      latLng(lat, lon)
 
   # Determines the initial course direction from latlng1 setting off toward latlng2
   _course = (latlng1, latlng2) ->
@@ -109,7 +121,7 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
   containsPole = (latlngs) ->
     return false if latlngs.length < 3
 
-    latlngs = (L.latLng(latlng) for latlng in latlngs)
+    latlngs = (latLng(latlng) for latlng in latlngs)
 
     # http://www.element84.com/determining-if-a-spherical-polygon-contains-a-pole.html
 
@@ -158,7 +170,7 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
       0
 
   # Calculates the area within the given latlngs
-  area = (origLatlngs) ->
+  calculateArea = (origLatlngs) ->
     return 0 if origLatlngs.length < 3
 
     # This algorithm is an approximation to area.  For some polygons, particularly large and narrow
@@ -221,9 +233,223 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
     area = 4*Math.PI + area if area < 0
     area
 
+  # Converts the given latlngs to latlng objects and ensures they're
+  # normalized on the expected interval, [-180, 180]
+  convertLatLngs = (latlngs) ->
+    result = []
+    for original in latlngs
+      if original.constructor is Array
+        [lat, lng] = original
+      else
+        {lat, lng} = original
+      lng -= 360 while lng > 180
+      lng += 360 while lng < -180
+      result.push(latLng(lat, lng))
+
+    result
+
+  # Helper which delegates out to Arc to figure out where the great circle
+  # arc between latlng0 and latlng1 crosses the antimeridian.  Will either
+  # return the point of the crossing or null if the arc does not cross.
+  antimeridianCrossing = (latlng0, latlng1) ->
+    arc = new Arc(Coordinate.fromLatLng(latlng0),
+                  Coordinate.fromLatLng(latlng1))
+    arc.antimeridianCrossing()?.toLatLng()
+
+
+  # Ensures that latlngs is counterclockwise around its smallest area
+  # This is an in-place operation modifying the original list.
+  makeCounterclockwise = (latlngs) ->
+    area = calculateArea(latlngs)
+    latlngs.reverse() if area > 2 * Math.PI
+    latlngs
+
+  # For debugging
+  # Prints a string of latLng objects
+  #ll2s = (latlngs) ->
+  #  ("(#{ll.lat}, #{ll.lng})" for ll in latlngs).join(', ')
+
+  # Prints a string of latLng objects to a format useful in Jason's visualization
+  # tools: http://testbed.echo.nasa.gov/spatial-viz/interactive_spherical_polygon_coverage
+  #ll2j = (latlngs) ->
+  #  ("#{ll.lng},#{ll.lat}" for ll in latlngs.concat(latlngs[0])).join(', ')
+
+  # Given a list of latlngs constituting a polygon, returns an object:
+  # {interiors: [...], boundaries: [...]}
+  #
+  # When the interiors are drawn as filled un-stroked leaflet polygons and the
+  # boundaries are drawn as leaflet strokes (polylines), the displayed area
+  # is equivalent to how ECHO interprets the original latlngs.
+  #
+  # This is where all the magic happens.
+  #
+  # Problem:
+  # There are two ways to interpret the "interior" of a polygon on a globe, because a
+  # polygon divides the globe into two parts.  In ECHO, a list of points in a polygon
+  # proceeds counterclockwise around its interior.  Leaflet, on the other hand, ignores
+  # the problem entirely; the interior is whatever svg happens to draw for a set of
+  # projected points, which may or may not be completely different if you switch map
+  # projections.
+  #
+  # This method takes an ECHO polygon, normalizes its points, slices it along the meridian,
+  # and adds points for the poles to ensure that Leaflet renders the ECHO interpretation
+  # of the polygon in all projections.
+  #
+  # It is, necessarily, a hack.
+  dividePolygon = (latlngs) ->
+    interiors = []
+    boundaries = []
+    holes = []
+
+    # Handle a list containing holes
+    if latlngs && latlngs[0] && latlngs[0].constructor is Array && typeof latlngs[0][0] != 'number'
+      for hole in latlngs[1..]
+        hole = convertLatLngs(hole)
+        denormalizePath(hole)
+        holes.push(hole)
+      latlngs = latlngs[0]
+
+    # Ensure we're dealing with normalized latlng objects
+    latlngs = convertLatLngs(latlngs)
+
+    # Ensure the exterior points are counterclockwise around their smallest area
+    latlngs = makeCounterclockwise(latlngs)
+
+    # We will have to add points to accommodate the poles later
+    containedPoles = containsPole(latlngs)
+    containsNorthPole = (containedPoles & NORTH_POLE) != 0
+    containsSouthPole = (containedPoles & SOUTH_POLE) != 0
+
+    # The maximum and minimum latitudes we cross the antimeridian
+    maxCrossingLat = -95
+    minCrossingLat = 95
+
+    # Eventually we're going to want to split the polygon into multiple
+    # sub-polygons across the antimerdian.  So, a square crossing the
+    # antimeridian would have a tall rectangle in the eastern hemisphere
+    # and a tall rectangle in the western hemisphere, which individually
+    # can be drawn correctly by Leaflet.
+
+    # The following loop iterates across the original polygon.  Anywhere
+    # the polygon crosses the antimeridian, we ensure there two points,
+    # one at [crossing_lat, -180] and the other at [crossing_lon, 180]
+    split = []
+    len = latlngs.length
+    for i in [0...len]
+      latlng1 = latlngs[i]
+      latlng2 = latlngs[(i + 1) % len]
+
+      crossing = antimeridianCrossing(latlng1, latlng2)
+
+      split.push(latlng1)
+
+      extras = []
+      if crossing?
+        lat = crossing.lat
+        if latlng1.lng < latlng2.lng
+          extras = [[lat, -180], [lat, 180]]
+        else
+          extras = [[lat, 180], [lat, -180]]
+      else if latlng1.lng == 180 && latlng2.lng < 0
+        extras = [[latlng1.lat, -180]]
+      else if latlng1.lng == -180 && latlng2.lng > 0
+        extras = [[latlng1.lat, 180]]
+      else if latlng2.lng == 180 && latlng1.lng < 0
+        extras = [[latlng2.lat, -180]]
+      else if latlng2.lng == -180 && latlng1.lng > 0
+        extras = [[latlng2.lat, 180]]
+
+      for extra in extras
+        [lat, lng] = extra
+        split.push(latLng(lat, lng))
+        maxCrossingLat = Math.max(lat, maxCrossingLat)
+        minCrossingLat = Math.min(lat, minCrossingLat)
+
+    # Did we insert anything?
+    hasInsertions = latlngs.length < split.length
+
+    interior = []
+    boundary = []
+    interiorStack = []
+    dir = null
+
+    if hasInsertions
+      # Rearrange the split array so that its beginning and end contain separate polygons
+      if Math.abs(split[0].lng) != 180 || Math.abs(split[split.length - 1].lng) != 180
+        while Math.abs(split[0].lng) != 180
+          split.push(split.shift())
+        split.push(split.shift())
+
+    # We now take the expanded array created by inserting points at the antimeridian and
+    # use it to create boundary and interior polygons
+    for latlng, i in split
+      interior.push(latlng)
+      boundary.push(latlng)
+
+      next = split[(i + 1) % split.length]
+
+      # If we're at the antimeridian
+      if interior.length > 2 && Math.abs(latlng.lng) == 180 && Math.abs(next.lng) == 180
+        # We've reached the end of our current boundary
+        boundaries.push(boundary)
+        boundary = []
+
+        # If we contain the North pole, then we insert points at the northernmost
+        # antimeridian crossing which run along the top of the map in the default
+        # projection. and join it to its corresponding point on the other side
+        # of the map, ensuring that the pole will be filled-in.
+        hasPole = false
+        if containsNorthPole && latlng.lat == maxCrossingLat
+          hasPole = true
+          lng = latlng.lng
+
+          # We need a few points along the top of the map or polar projections screw up
+          inc = if lng < 0 then 90 else -90
+          for i in [0..4]
+            interior.push(latLng(90, lng + i*inc))
+
+        # Similarly for the South Pole
+        if containsSouthPole && latlng.lat == minCrossingLat
+          hasPole = true
+          lng = latlng.lng
+          inc = if lng < 0 then 90 else -90
+          for i in [0..4]
+            interior.push(latLng(-90, lng + i*inc))
+
+        # If we joined the east and west side of the polygon by going across the pole
+        # above, we want to keep adding to our current interior shape.  Otherwise,
+        # we're stopping the interior at the antimeridian and adding it to our list.
+        if !hasPole
+          if !dir || dir == latlng.lng - next.lng
+            # We're crossing in the same direction we crossed last time, so the shape isn't complete
+            interiorStack.push(interior)
+            interior = []
+            dir = latlng.lng - next.lng
+          else
+            # We're crossing back in the opposite direction, so the shape is complete
+            interiors.push(interior)
+            interior = interiorStack.pop() ? []
+
+    # Close any remaining boundaries or interiors
+    boundaries.push(boundary) if boundary.length > 0
+    interiors.push(interior) if interior.length > 0
+    interiors.push(interior) for interior in interiorStack
+
+    # Special case: If we contain both poles but do not have an edge crossing the meridian
+    # as dealt with above, reverse our drawing.
+    if containsNorthPole && containsSouthPole && !hasInsertions
+      interior = []
+      interior.push(latLng(90, -180 + i*90)) for i in [0..4]
+      interior.push(latLng(-90, 180 - i*90)) for i in [0..4]
+      interiors.unshift(interior)
+
+    {interiors: interiors, boundaries: boundaries}
+
   exports =
     gcInterpolate: gcInterpolate
-    area: area
+    area: calculateArea
     containsPole: containsPole
+    dividePolygon: dividePolygon
+    makeCounterclockwise: makeCounterclockwise
     NORTH_POLE: NORTH_POLE
     SOUTH_POLE: SOUTH_POLE

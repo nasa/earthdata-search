@@ -21,12 +21,29 @@ class GranuleQuery {
     this.temporal.applied.queryCondition(query.temporal);
   }
 
+  mbr() {
+    return this.parentQuery.mbr();
+  }
+
+  serializedMbr() {
+    let mbr = this.mbr();
+    if (mbr) {
+      return `${mbr[1]},${mbr[0]},${mbr[3]},${mbr[2]}`;
+    }
+    return null;
+  }
+
   _computeParams() {
     let result = {};
     let parent = this.parentQuery.globalParams();
     for (let key in parent) {
       if (parent.hasOwnProperty(key)) {
-        result[key] = parent[key];
+        if (key == 'polygon') {
+          result.mbr = this.serializedMbr();
+        }
+        else {
+          result[key] = parent[key];
+        }
       }
     }
     let own = this.serialize();
