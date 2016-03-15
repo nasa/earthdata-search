@@ -11,6 +11,7 @@ export default class CwicRendererPlugin {
     this._needsSpatialWarning = true;
   }
   destroy(edsc) {
+    this.endSearchFocus();
     console.log('Unloaded cwic renderer plugin');
   }
   startSearchFocus() {
@@ -31,6 +32,7 @@ export default class CwicRendererPlugin {
   endSearchFocus() {
     if (this._querySubscription) {
       this._querySubscription.dispose();
+      this._querySubscription = null;
     }
     clearTimeout(this._startTimeout);
     this.cwicQuery = null;
