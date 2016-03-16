@@ -27,6 +27,7 @@ describe "Data Access workflow", reset: false do
 
   context "when the user is not logged in" do
     before(:all) do
+      Capybara.reset_sessions!
       load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
       wait_for_xhr
       click_link "Retrieve project data"
