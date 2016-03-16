@@ -41,4 +41,32 @@ describe "CWIC-enabled granule visualizations", reset: false do
       end
     end
   end
+
+  context "when viewing CWIC granule results" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
+    end
+
+    hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
+
+    it "displays spatial footprints for the granules", acceptance: true do
+      expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+    end
+
+    context "clicking on a granule in the list" do
+      before :all do
+        first_granule_list_item.click
+      end
+
+      it "draws the granule on the map" do
+        expect(page).to have_selector('#map path', count: 4)
+      end
+
+      it "draws the granule's temporal extent on the map" do
+        expect(page).to have_selector('.granule-spatial-label-temporal', count: 1)
+      end
+    end
+
+  end
 end
