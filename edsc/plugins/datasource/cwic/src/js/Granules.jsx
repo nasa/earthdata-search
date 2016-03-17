@@ -239,6 +239,29 @@ let CwicGranules = (function() {
     ajax(xhrOpts);
   };
 
+  CwicGranules.prototype.transformSpatial = function (granule) {
+    // There's some precedence here because granules with multiple shapes typically
+    // use simpler shapes as a fallback for clients that can't handle complex shapes
+    let source, dest;
+
+    if (granule.polygon) {
+      source = 'polygon';
+    }
+    else if (granule.box) {
+      source = 'box';
+      dest = 'boxes';
+    }
+    else if (granule.point) {
+      source = 'point';
+    }
+
+    if (source) {
+      if (!dest) dest = source + 's';
+      granule[dest] = arrayWrap(granule[source]);
+      delete granule[source];
+    }
+  };
+
   CwicGranules.prototype._toResults = function (data, dataObj, current, params) {
     let granules = [];
     if (dataObj.feed && dataObj.feed.entry) {
@@ -254,6 +277,7 @@ let CwicGranules = (function() {
             break;
           }
         }
+        this.transformSpatial(granule);
         granule.browse_flag = hasBrowse;
         granule.links = links;
         granules.push(new Granule(granule));
