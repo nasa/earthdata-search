@@ -28,7 +28,7 @@ class Retrieval < ActiveRecord::Base
 
   # Delayed Jobs calls this method to excute an order creation
   def self.process(id, token, env, base_url, access_token)
-    logger.tagged("delayed_job version: #{Rails.configuration.version.strip}") do
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
       if Rails.env.test?
         normalizer = VCR::HeaderNormalizer.new('Echo-Token', token + ':' + Rails.configuration.urs_client_id, 'edsc')
         VCR::EDSCConfigurer.register_normalizer(normalizer)

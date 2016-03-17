@@ -88,10 +88,10 @@ module EarthdataSearchClient
     def self.load_version
       version_file = "#{config.root}/version.txt"
       if File.exist?(version_file)
-        return IO.read(version_file)
+        return IO.read(version_file).strip
       elsif File.exist?('.git/config') && `which git`.size > 0
         version = `git rev-parse --short HEAD`
-        return version
+        return version.strip
       end
       "(unknown)"
     end
