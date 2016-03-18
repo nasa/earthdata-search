@@ -225,11 +225,14 @@ ns.Project = do (ko,
           datasource = collection.granuleDatasource()
           if datasource?
             query = datasource.toBookmarkParams()
+            queries[i + start] = {} if Object.keys(query).length == 0
             query.v = 't' if (i + start) != 0 && collection.visible()
             # Avoid inserting an empty map
             for own k, v of query
               queries[i + start] = query
               break
+        for q, index in queries
+          queries[index] = {} if q == undefined 
         result.pg = queries if queries.length > 0
       result
 
