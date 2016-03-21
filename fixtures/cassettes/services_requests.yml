@@ -545,6 +545,17 @@ http_interactions:
   digest: 9e121d88262ee2aea2770484e757f8e8c2c6244b
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI%3AEO1A1190382016059110PF_AK3_01
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 21 Mar 2016 18:10:45 GMT
+  digest: 304527e86e7399446e72a8599506683da108d31c
+- request:
+    method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI%3AEO1A1321972016056110KF_AK3_01
     body:
       encoding: US-ASCII

@@ -394,6 +394,8 @@ $parent-width: $parent-split * 0.21;
 
 .details-content {
   white-space: pre;
+  font-family: monospace;
+  font-size: smaller;
 }
 
 .master-overlay-info .panel-list-meta, .panel-list-meta {
