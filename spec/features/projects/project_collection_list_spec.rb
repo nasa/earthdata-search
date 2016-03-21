@@ -102,4 +102,25 @@ describe "Project collection list", reset: true do
     end
   end
 
+  context "when applying a temporal constraint to the second collection in the project" do
+
+    before :each do
+      second_project_collection.click_link "Show granule filters"
+      select 'Day only', from: "day-night-select"
+      click_button "granule-filters-submit"
+      wait_for_xhr
+    end
+
+    after :each do
+      second_project_collection.click_link "Show granule filters"
+      click_button "granule-filters-clear"
+      expect(page).to have_select("day-night-select", selected: "Anytime")
+      click_button "granule-filters-submit"
+    end
+
+    it "doesn't show an empty query param 'pg[]=' in the url" do
+      expect(page).to have_query_string("p=!C179002914-ORNL_DAAC!C179003030-ORNL_DAAC&pg[2][dnf]=DAY&q=Minute+(FIFE)")
+    end
+  end
+
 end
