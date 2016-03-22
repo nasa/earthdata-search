@@ -9,11 +9,10 @@ let CwicGranule = (function() {
 
   function CwicGranule(jsonData) {
     CwicGranule.__super__.constructor.apply(this, Array.prototype.slice.call(arguments));
-    this.details = this.asyncComputed({}, 100, this._computeGranuleDetails, this);
   }
 
   CwicGranule.prototype._computeGranuleDetails = function(callback) {
-    var url = '/cwic/granule/' + encodeURIComponent(this.id);
+    var url = '/cwic/edsc_granule/' + encodeURIComponent(this.id);
     this.detailsLoaded(false);
     let xhrOpts = {
       method: 'get',
