@@ -22,7 +22,7 @@ let CwicGranule = (function() {
         return function(data) {
           var dataObj = XmlHelpers.elToObj(data);
           var serialized = CwicUtils.serializeObj(dataObj.feed);
-          _this.details({xml: serialized});
+          _this.details({xml: serialized, native_url: _this.id});
           _this.detailsLoaded(true);
         };
       })(this),
