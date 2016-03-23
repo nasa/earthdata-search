@@ -23,9 +23,6 @@ describe "CWIC-enabled granule results view", reset: false do
         click_link 'Metadata'
         within('#granule-details') do
           expect(page).to have_selector('a[href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1190382016059110PF_AK3_01"]')
-          expect(page).not_to have_content('ATOM')
-          expect(page).not_to have_content('ECHO10')
-          expect(page).not_to have_content('ISO 19115')
         end
         click_link 'Information'
       end
@@ -35,11 +32,7 @@ describe "CWIC-enabled granule results view", reset: false do
           click_link 'Metadata'
           click_on 'Native'
         end
-
-        after :all do
-          click_link 'Information'
-        end
-
+        
         it "downloads the original OpenSearch metadata in a new window", acceptance: true do
           within_last_window do
             expect(page).not_to have_link('Back to Granules')
@@ -48,6 +41,33 @@ describe "CWIC-enabled granule results view", reset: false do
             expect(metadata.include? '<?xml').to be_true
             expect(metadata.include? '<feed').to be_true
           end
+        end
+      end
+    end
+
+    context "on 'Information' tab" do
+      it "displays only metadata fields for which the granule has data", acceptance: true do
+        within('#granule-details') do
+          expect(page).not_to have_content('GranuleUR:')
+          expect(page).not_to have_content('Collection:')
+        end
+      end
+    end
+
+    context "on 'Metadata' tab" do
+      before :all do
+        click_link 'Metadata'
+      end
+
+      after :all do
+        click_link 'Information'
+      end
+
+      it "displays no links to CMR metadata or formats", acceptance: true do
+        within('#granule-details') do
+          expect(page).not_to have_content('ATOM')
+          expect(page).not_to have_content('ECHO10')
+          expect(page).not_to have_content('ISO 19115')
         end
       end
     end
