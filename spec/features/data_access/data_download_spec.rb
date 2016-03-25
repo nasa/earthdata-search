@@ -17,8 +17,8 @@ describe "Data download page", reset: false do
   non_orderable_collection_id = 'C179001887-SEDAC'
   non_orderable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
-  no_resource_collection_id = 'C2821-NSIDCV0'
-  no_resource_collection_title = 'AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations'
+  no_resource_collection_id = 'C1214614479-SCIOPS'
+  no_resource_collection_title = 'Aeolian Processes in the Dry Valleys'
 
   no_granules_collection_id = 'C179002107-SEDAC'
   no_granules_collection_title = 'Anthropogenic Biomes of the World, Version 1'
@@ -55,7 +55,7 @@ describe "Data download page", reset: false do
     end
 
     it "displays links for collections with additional resources and documentation" do
-      expect(page).to have_link("MODIS Level 1B Product Information Page at MCST (MiscInformation)")
+      expect(page).to have_link("MODIS Level 1B Product Information Page at MCST")
     end
 
     it "displays titles for collections with additional resources and documentation" do
@@ -65,9 +65,9 @@ describe "Data download page", reset: false do
     end
 
     it "displays no information for collections without additional resources and documentation" do
-      expect(page).to have_content("AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations")
+      expect(page).to have_content(no_resource_collection_title)
       within('.data-access-resources') do
-        expect(page).to have_no_content("AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations")
+        expect(page).to have_no_content(no_resource_collection_title)
       end
     end
   end
@@ -85,7 +85,7 @@ describe "Data download page", reset: false do
     end
 
     it "displays no information for collections without additional resources and documentation" do
-      expect(page).to have_content("AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations")
+      expect(page).to have_content(no_resource_collection_title)
       expect(page).to have_no_selector('.data-access-resources')
     end
   end

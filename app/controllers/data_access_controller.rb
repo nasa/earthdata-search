@@ -194,7 +194,8 @@ class DataAccessController < ApplicationController
 
   def get_downloadable_access_methods(collection_id, granules, granule_params, hits)
     result = []
-    opendap_config = OpendapConfiguration.find(collection_id)
+    opendap_config = OpendapConfiguration.find(collection_id, echo_client, token)
+    Rails.logger.info(opendap_config.inspect)
     if opendap_config.formats.present?
       downloadable = granules
     else
