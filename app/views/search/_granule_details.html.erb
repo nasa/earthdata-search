@@ -43,10 +43,10 @@
     <div class="tab-pane" id="granule-metadata">
       <dl class="master-overlay-content">
         <dt>Download Metadata:</dt>
-        <dd><a data-bind="attr: { href: $data.native_url }">Native</a></dd>
-        <dd><a data-bind="attr: { href: $data.atom_url }">ATOM</a></dd>
-        <dd><a data-bind="attr: { href: $data.echo10_url }">ECHO 10</a></dd>
-        <dd><a data-bind="attr: { href: $data.iso19115_url }">ISO 19115</a></dd>
+        <dd><a data-bind="attr: { href: $data.native_url }, visible: $data.native_url">Native</a></dd>
+        <dd><a data-bind="attr: { href: $data.atom_url }, visible: $data.atom_url">ATOM</a></dd>
+        <dd><a data-bind="attr: { href: $data.echo10_url }, visible: $data.echo10_url">ECHO 10</a></dd>
+        <dd><a data-bind="attr: { href: $data.iso19115_url }, visible: $data.iso19115_url">ISO 19115</a></dd>
       </dl>
     </div>
   </div>
