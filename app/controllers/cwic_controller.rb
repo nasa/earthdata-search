@@ -15,6 +15,12 @@ class CwicController < ApplicationController
     render content_type: 'text/html', layout: false
   end
 
+  def granule
+    path = URI.decode(request.fullpath.gsub(/\/cwic\/edsc_granule\//,''))
+    cwic_response = build_raw_client.send(request.method.downcase, path)
+    render xml: cwic_response.body, status: cwic_response.status
+  end
+
   private
 
   def build_raw_client
