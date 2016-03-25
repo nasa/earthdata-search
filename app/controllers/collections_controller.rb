@@ -290,7 +290,10 @@ class CollectionsController < ApplicationController
     features = request.query_parameters['features']
     use_opendap = features && features.include?('Subsetting Services')
     params = request.query_parameters.except('features')
-    params = params.merge('echo_collection_id' => Rails.configuration.services['opendap'].keys) if use_opendap
+    if use_opendap
+      params['tag_key'] = Array.wrap(params['tag_key'])
+      params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"
+    end
 
     gibs_keys = Rails.configuration.gibs.keys
     providers = gibs_keys.map{|key| key.split('___').first}
@@ -311,12 +314,10 @@ class CollectionsController < ApplicationController
     params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
     cwic = features && features.include?("Int'l / Interagency")
+    params['include_tags'] = "#{Rails.configuration.cmr_tag_namespace}.*"
     unless ['prod'].include?(cmr_env) && !Rails.env.test?
-      if cwic || request.query_parameters['echo_collection_id']
-        params['include_tags'] = "#{Rails.configuration.cmr_tag_namespace}*"
-      else
-        params['exclude[tag_key]'] = "#{Rails.configuration.cmr_tag_namespace}*"
-        params['options[tag_key][pattern]'] = true
+      unless cwic || request.query_parameters['echo_collection_id']
+        params['exclude[tag_key]'] = "#{Rails.configuration.cmr_tag_namespace}.datasource.cwic"
       end
     end
 

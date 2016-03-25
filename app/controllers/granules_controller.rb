@@ -94,7 +94,7 @@ class GranulesController < ApplicationController
     url_type = :download
     url_type = :browse if request[:browse] == true || request[:browse] == 'true'
 
-    url_mapper = OpendapConfiguration.find(collection_id)
+    url_mapper = OpendapConfiguration.find(collection_id, echo_client, token)
 
     if url_type == :download
       method = collection['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
