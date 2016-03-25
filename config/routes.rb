@@ -47,6 +47,7 @@ EarthdataSearchClient::Application.routes.draw do
   post 'convert' => 'conversions#convert'
   resources :convert, only: [:create], defaults: {format: 'json'}
 
+  get 'cwic/edsc_granule(/*cwic_path)' => 'cwic#granule'
   get 'cwic/edsc_download(/*cwic_path)' => 'cwic#download', format: 'html'
   get 'cwic(/*cwic_path)' => 'cwic#index'
 
