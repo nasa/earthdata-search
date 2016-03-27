@@ -7863,6 +7863,81 @@ a17695eab420ab294fcb8f15010f39d47f2b093f:
         Home Page\n      ","hreflang":"en-US","href":"http://www-calipso.larc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         NASA
         CALIPSO Mission Portal\n      ","hreflang":"en-US","href":"http://www.nasa.gov/mission_pages/calipso/main/"}]}]}}'
     http_version: 
+f7bf5b0a0db4f4207e5e658d1b0e4468252052ee:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:17 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '47'
+      cmr-request-id:
+      - 16e31b4e-5ff4-425b-890e-8ad6ca8c7fd3
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:17.933Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[["MODIS",2]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["1A",1],["2",1]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ATMOSPHERIC
+        EMITTED RADIATION"},{"count":1,"value":"EMISSIVITY"},{"count":1,"value":"OPTICAL
+        DEPTH/THICKNESS"},{"count":1,"value":"RADIATIVE FLUX"},{"count":1,"value":"REFLECTANCE"}],"count":1,"value":"ATMOSPHERIC
+        RADIATION"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"CLOUD
+        AMOUNT/FREQUENCY"},{"count":1,"value":"CLOUD ASYMMETRY"},{"count":1,"value":"CLOUD
+        CEILING"},{"count":1,"value":"CLOUD CONDENSATION NUCLEI"},{"count":1,"value":"CLOUD
+        EMISSIVITY"}],"count":1,"value":"CLOUDS"}],"count":1,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"TERRAIN
+        ELEVATION"}],"count":1,"value":"TOPOGRAPHY"}],"count":1,"value":"LAND SURFACE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ATTITUDE
+        CHARACTERISTICS"},{"count":1,"value":"ORBITAL CHARACTERISTICS"}],"count":1,"value":"PLATFORM
+        CHARACTERISTICS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"VIEWING
+        GEOMETRY"}],"count":1,"value":"SENSOR CHARACTERISTICS"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":2,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+ff1d86e9ddad82627a618369df39e57284f33db3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:19 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '48'
+      cmr-request-id:
+      - c7f4c20e-3348-48f4-9a11-1a4888b0a0b6
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:19.549Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C1204449891-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 c63d84899ddd74613e992b2a473a94a0088c8f8f:
   response:
     status:
@@ -7895,6 +7970,38 @@ c63d84899ddd74613e992b2a473a94a0088c8f8f:
         dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+2f60aa1cd97bc054540e66591cf6d407733423e6:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:21 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '42'
+      cmr-request-id:
+      - 3b68d2ac-c2e8-4c28-95cd-25667befa6d8
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:21.353Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C43947-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 62e93e81a823beb7562ce3a026a654ba922f414c:
   response:
     status:
@@ -7924,6 +8031,70 @@ c63d84899ddd74613e992b2a473a94a0088c8f8f:
     body:
       encoding: UTF-8
       string: '{"feed":{"updated":"2016-03-27T02:26:12.530Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+597af2eb2cd841347fda840ad58d5caaccf8d717:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:49 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '79'
+      cmr-request-id:
+      - 06f08fa9-c491-4e09-a074-78575832a3e4
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:50.019Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C1204449891-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+babd1180ea204013bf0ef660149eafaf315c3128:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:37 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '42'
+      cmr-request-id:
+      - 5f5b3766-d4d7-48ec-a782-80f3de148283
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:37.201Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C43947-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
@@ -8581,6 +8752,825 @@ c63d84899ddd74613e992b2a473a94a0088c8f8f:
         SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+cfd46bcb41ac9854af323d4e316c3f3f6ac7a46e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:49 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '51'
+      cmr-request-id:
+      - f327b5e7-fe74-4a81-9dd6-c0d314438eab
+      content-length:
+      - '825'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:49.332Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C1204449891-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+177c21d8af7ebb74879e54665fc5abe6ef958ce7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:35 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '51'
+      cmr-request-id:
+      - 77fd9891-469c-412c-8ee0-5fd552fb2e08
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:35.981Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C43947-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2012-09-25T00:00:00.000Z","dif_ids":["GES_DISC_AIRIBRAD_NRT_V005"],"version_id":"005","updated":"2012-10-02T13:55:25.000Z","dataset_id":"AIRS/Aqua
+        Near Real Time (NRT) Level 1B Infrared (IR) geolocated and calibrated radiances
+        V005","data_center":"GSFCS4PA","short_name":"AIRIBRAD_NRT","organizations":["GESDISC","GES
+        DAAC"],"title":"AIRS/Aqua Near Real Time (NRT) Level 1B Infrared (IR) geolocated
+        and calibrated radiances V005","coordinate_system":"CARTESIAN","summary":"The
+        AIRS Infrared (IR) level 1B data set contains AIRS infrared calibrated and
+        geolocated radiances in milliWatts/m^2/cm^-1/steradian. This data set is generated
+        from AIRS level 1A digital numbers (DN), including 2378 infrared channels
+        in the 3.74 to 15.4 micron region of the spectrum. A day\u0026apos;s worth
+        of AIRS data is divided into 240 scenes each of 6 minute duration. For the
+        AIRS infrared measurements, an individual scene consists of 135 scanlines
+        containing 90 cross-track footprints; thus there is a total of 135 x 90 =
+        12,150 footprints per AIRS IR scene.","has_granules":true,"orbit_parameters":{},"id":"C43947-GSFCS4PA","score":0.5,"original_format":"ECHO10","granule_count":259,"archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"ftp
+        site for AIRIBRAD_NRT.   User registration is required.    Register for a
+        username and password at the Land Atmosphere Near real-time Capability for
+        EOS (LANCE) web site (http://lance.nasa.gov/).\n       (GET DATA)","hreflang":"en-US","href":"ftp://discnrt1u.ecs.nasa.gov/ftp/data/Aqua_NRT/AIRIBRAD_NRT.005"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        home page at NASA/JPL. General information on the AIRS instrument suite, algorithms,
+        and other AIRS-related activities can be found. The Atmospheric Infrared Sounder
+        (AIRS) instrument suite is designed to measure the Earth''s atmospheric water
+        vapor and temperature profiles on a global scale. It is comprised of a space-based
+        hyperspectral infrared instrument (AIRS) and two multichannel microwave instruments,
+        the Advanced Microwave Sounding Unit\n                                    (AMSU-A)
+        and the Humidity Sounder for Brazil (HSB).\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://www-airs.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        data support home page at Goddard Earth Sciences Data Information and Service
+        Center/Distributed Active Archive Center (GES DISC). Online documentation,
+        software to read, visualize and analyze AIRS data and data access information
+        are available from this web site.\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://disc.gsfc.nasa.gov/AIRS/index.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRIBRAD_NRT
+        information page\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/nrt/data-holdings/AIRS/data-holdings/by-data-product/AIRIB_Rad_NRT.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        NRT page\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/nrt/data-holdings/airs-nrt-products"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"README
+        Document for AIRIBRAD\n       (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"ftp://airscal2u.ecs.nasa.gov/ftp/data/s4pa/Aqua_AIRS_Level1/AIRIBRAD.005/doc/README.AIRIBRAD.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"ftp://discnrt2.ecs.nasa.gov/ftp/data/s4pa//Aqua_AIRS_NRT/AIRIBRAD_NRT.005/doc/README.AIRIBRAD.pdf"}]}],"facets":[{"field":"project","value-counts":[["AQUA",1],["EOSDIS",1],["ESIP",1],["OPENDAP",1]]},{"field":"sensor","value-counts":[["AIRS",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"DUST/ASH/SMOKE"}],"count":1,"value":"AEROSOLS"},{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":1,"value":"SULFUR
+        COMPOUNDS"}],"count":1,"value":"ATMOSPHERIC CHEMISTRY"}],"count":1,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"INFRARED
+        RADIANCE"}],"count":1,"value":"INFRARED WAVELENGTHS"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+74504191ad11fd34f5b3ae16c8251057f97594d0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:12 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '35932'
+      cmr-took:
+      - '4090'
+      cmr-request-id:
+      - cb87d737-f78e-442a-9f9b-f0fd1cf1bcba
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: ASCII-8BIT
+      string: '{"feed":{"updated":"2016-03-27T03:02:15.962Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["43 -135 82 -59"],"time_start":"1975-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSBAPMN"],"version_id":"Not
+        provided","updated":"2005-03-14T00:00:00.000Z","dataset_id":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","data_center":"FTP_DIRECT","short_name":"CANEMRCCRSBAPMN","organizations":["CA/EC/MSC"],"title":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","coordinate_system":"CARTESIAN","summary":"This
+        dataset includes measurements of greenhouse gases. Variables: CO2\n(all),
+        CH4, CFC''s, N2O (Alert). The data covers the West Coast-Estevan Point,\nthe
+        East Coast-Sable Island, and Arctic-Alert.\n\n         This data is currently
+        applied to the analysis of temporal trends in\ngreenhouse gases and atmospheric
+        processes related to sources and sinks to\nbetter predict climate impacts
+        and changes.\n\nSpatial Data Organization Information -\n\n    Indirect Spatial
+        Reference:\n    Direct Spatial Reference: Point (Lat./Long. Coordinates)\nSpatial
+        Reference Information -\nHorizontal Coordinate System Definition -\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1212765606-FTP_DIRECT","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["43
+        -135 82 -59"],"time_start":"1975-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSBAPMN"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","data_center":"GCMDTEST","short_name":"CANEMRCCRSBAPMN","organizations":["CA/EC/MSC"],"title":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","coordinate_system":"CARTESIAN","summary":"This
+        dataset includes measurements of greenhouse gases. Variables: CO2\n(all),
+        CH4, CFC''s, N2O (Alert). The data covers the West Coast-Estevan Point,\nthe
+        East Coast-Sable Island, and Arctic-Alert.\n\n         This data is currently
+        applied to the analysis of temporal trends in\ngreenhouse gases and atmospheric
+        processes related to sources and sinks to\nbetter predict climate impacts
+        and changes.\n\nSpatial Data Organization Information -\n\n    Indirect Spatial
+        Reference:\n    Direct Spatial Reference: Point (Lat./Long. Coordinates)\nSpatial
+        Reference Information -\nHorizontal Coordinate System Definition -\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204499940-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["41
+        -70 84 -50"],"time_start":"1984-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSCAN-AM"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Bow
+        Drill3 CAN-AM Data for Various Drilling Locations off the Canadian East Coast         ","data_center":"GCMDTEST","short_name":"CANEMRCCRSCAN-AM","organizations":["CA/EC/MSC"],"title":"           Bow
+        Drill3 CAN-AM Data for Various Drilling Locations off the Canadian East Coast         ","coordinate_system":"CARTESIAN","summary":"This
+        data set contains CAN-AM environmental monitoring network\ninformation for
+        various drilling locations off the Canadian East Coast. Normal\nand intensive
+        synoptic mode observations include wind, air temperature and\nbarometric pressure,
+        sea temperature, wave height, and rig heading and rig\nheave, pitch and roll
+        for the years 1984 to 1987.\n\nSpatial Data Organization Information -\n\n    Indirect
+        Spatial Reference:\n    Direct Spatial Reference: Point (Lat./Long. Coordinates)\nSpatial
+        Reference Information -\nHorizontal Coordinate System Definition -\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"time_end":"1987-11-01T00:00:00.000Z","orbit_parameters":{},"id":"C1204531810-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["44
+        -95 61 -52"],"time_start":"1907-01-02T00:00:00.000Z","dif_ids":["Canada_CFS_NatlForestPhotos"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Canadian
+        National Forestry Photograph Collection - Atlantic and Petawawa Components         ","data_center":"GCMDTEST","short_name":"Canada_CFS_NatlForestPhotos","organizations":["CA/NRCAN/CFS/AFC"],"title":"           Canadian
+        National Forestry Photograph Collection - Atlantic and Petawawa Components         ","coordinate_system":"CARTESIAN","summary":"Forestry
+        photographs of experimental trials, properties, and prominent\nhistorical
+        figures.  The collection consists of several thousand photos of\nhistorical
+        significance, most in good condition.\n\n         To document significant
+        locations, tree species, insect and disease\nconditions, and people in the
+        Canadian forestry domain.\n\nSpatial Data Organization Information -\n\n    Indirect
+        Spatial Reference:\n    Direct Spatial Reference:\nSpatial Reference Information
+        -\n     Horizontal Coordinate System Definition -\n\nPlanar -\n\n\n\n\n    Planar
+        Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:\n\nFees: Please consult distributor.  Professional photographic
+        reproduction\nfees apply.","has_granules":false,"time_end":"1952-08-11T00:00:00.000Z","orbit_parameters":{},"id":"C1204554731-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["30
+        -70 70 -15"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["DFO_BIO_NB_LS_ATLAS"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Computer
+        Oceanographic Atlas of Newfoundland Basin and Labrador Sea         ","data_center":"GCMDTEST","short_name":"DFO_BIO_NB_LS_ATLAS","organizations":["CA/DFO/MR/SB/OSD"],"title":"           Computer
+        Oceanographic Atlas of Newfoundland Basin and Labrador Sea         ","coordinate_system":"CARTESIAN","summary":"The
+        Computer Atlas of the Newfoundland Basin and Labrador Sea was\n      designed
+        to make simple, fast and reliable access to large volumes of\n      historical
+        and real time oceanographic data. The choice of the Newfoundland\n      Basin
+        and Labrador Sea was motivated by their importance in the entire North\n      Atlantic
+        circulation and water mass formation, the existence of various water\n      masses
+        and sharp fronts, indications of significant temporal and spatial\n      changes
+        in the water mass properties, intense air-sea interaction and dense\n      coverage
+        with oceanographic data of various types.\n      \n               The Atlas
+        operates with different types of oceanographic data:\n      conductivity-temperature-depth
+        (CTD), water bottle, expendable bathythermograph\n      (XBT), current meter,
+        floats, etc. The sources of the data are: - Bedford\n      Institute of Oceanography
+        (BIO) cruises, - World Ocean Circulation Experiment\n      (WOCE) cruises,
+        - Russian SECTIONS program carried by State Oceanographic\n      Institute,
+        and P.P. Shirshov Institute of Oceanology (SOI, PPS, Moscow,\n      Russia),\n      -
+        Obninsk World Data Center (WDC, Obninsk, Russia), - NOAA National\n      Oceanographic
+        Data Center (NODC, Washington, USA), - Marine Environmental Data\n      Service
+        (MEDS, Ottawa, Canada).\n      \n               The Atlas integrates the advantages
+        of databases and paper atlases,\n      allowing the user to solve complex
+        tasks (such as, T-S or time series analysis\n      for specified regions,
+        sections or points) in a simple way avoiding complex\n      queries for data
+        and algorithms. It performs data selection, processing,\n      analysis and
+        visualization in different oceanographic coordinates. The Atlas\n      locates
+        data from a simple query, produces plots (field, section, etc.), and\n      runs
+        different statistical and oceanographic applications. It offers an\n      optional
+        selection of procedures for objective analysis, interpolation,\n      averaging,
+        smoothing and subsampling of data and results. Scale-independence is\n      one
+        of its features, allowing users to work on different spatial and temporal\n      scales,
+        and adjust the working environment for their own needs and\n      requirements.
+        Users can easily load other data sets, change regions and attach\n      their
+        own procedures.\n      \n               The Atlas has been used for data analysis,
+        preparation of fields to\n      initialize hydrodynamic models and various
+        comparisons of property\n      distributions based on ''real'' data and results
+        of modeling.\n      \n      Spatial Data Organization Information -\n      \n          Indirect
+        Spatial Reference:\n          Direct Spatial Reference:\n      Spatial Reference
+        Information -\n           Horizontal Coordinate System Definition -\n      \n      Planar
+        -\n      \n          Planar Coordinate Encoding Method:\n          Coordinate
+        Representation:\n           Abscissa Resolution:\n           Ordinate Resolution:\n          Distance
+        and Bearing Representation:\n           Distance Resolution:\n           Bearing
+        Resolution:\n           Bearing Units:\n           Bearing Reference Direction:\n           Bearing
+        Reference Meridian:\n          Planar Distance Units:\n      \n         Geodetic
+        Model:\n           Horizontal Datum Name:\n          Ellipsoid Name:\n          Semi-major
+        Axis:\n          Denominator of Flattening Ratio:","has_granules":false,"time_end":"1995-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1204578031-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["41.5
+        -141 84 -52"],"time_start":"1996-01-01T00:00:00.000Z","dif_ids":["Canada_AAFC_Eco"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Ecozones,
+        Ecoprovinces, Ecoregions, and Ecodistricts of Canada         ","data_center":"GCMDTEST","short_name":"Canada_AAFC_Eco","organizations":["CA/AGR/ECORC"],"title":"           Ecozones,
+        Ecoprovinces, Ecoregions, and Ecodistricts of Canada         ","coordinate_system":"CARTESIAN","summary":"In
+        1991 a collaborative project was undertaken by a number of federal\nagencies
+        in cooperation with provincial and territorial governments, all under\nthe
+        auspices of the Ecological Stratification Working Group, to revise previous\nwork
+        and establish a common ecological framework for Canada. The working group\nfocused
+        on three priority levels of stratification, namely ecozones,\necoregions,
+        and ecodistricts.  The resulting national report \"A National\nEcological
+        Framework for Canada\" was released by the Ecological Stratification\nWorking
+        Group in 1996.   This dataset is the product of that work, as well as\nthe
+        intermediate ecoprovinces framework, and represents the official definition\nof
+        those boundaries for Canada.\n\n         The national ecological framework
+        provides a consistent, national\nspatial context within which ecosystems at
+        various levels of generalization can\nbe described, monitored, and reported
+        on. The use of such a framework of\nstandard ecological units provides for
+        common communication and reporting\nbetween different jurisdictions and disciplines,
+        and provides a common ground\nto report on the state of the environment and
+        the sustainability of ecosystems\nin Canada.\n\nSpatial Data Organization
+        Information -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:\nSpatial
+        Reference Information -\n     Horizontal Coordinate System Definition -\n\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"time_end":"2002-03-25T00:00:00.000Z","orbit_parameters":{},"id":"C1204585615-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["48
+        -139 60 -114"],"time_start":"1909-01-01T00:00:00.000Z","dif_ids":["Canada_PFC_FHNABCPestData"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Forest
+        Health Network Archives - Pest Data for British Columbia, Canada         ","data_center":"GCMDTEST","short_name":"Canada_PFC_FHNABCPestData","organizations":["CA/NRCAN/CFS/PFC"],"title":"           Forest
+        Health Network Archives - Pest Data for British Columbia, Canada         ","coordinate_system":"CARTESIAN","summary":"Aerial
+        detection surveys are intended to detect new activity, to\n      monitor the
+        trend of ongoing activity, to provide general location information,\n      and
+        to subjectively rate levels of defoliation.  Manually mapping such activity\n      has
+        quantitative and locator accuracy limitations and does not maintain the\n      accuracy
+        standards as most data found in GIS databases.\n      \n               Aerial
+        detection pest surveys are generally carried out from fixed\n      wing aircraft
+        where observers manually sketch each infestation site onto\n      1:100000
+        to 1:250000 scale basemaps. The observers sketch infestation sites by\n      drawing
+        polygons around the outer perimeter of the infested area on the map. \n      Ground
+        checks and other sampling methods are carried out to evaluate the\n      subjective
+        ratings.\n      \n               Data acquisition is conducted by Provincial
+        governments and data is\n      passed to the Pacific Forestry Centre for archiveing.
+        New coverages are added\n      as available.\n      \n               To detect
+        and monitor annual, visible vegetation damage primarily\n      caused by insects.\n      \n      Spatial
+        Data Organization Information -\n      \n          Indirect Spatial Reference:\n          Direct
+        Spatial Reference:\n      Spatial Reference Information -\n           Horizontal
+        Coordinate System Definition -\n      \n      Planar -\n      \n      \n      \n      \n          Planar
+        Coordinate Encoding Method:\n          Coordinate Representation:\n           Abscissa
+        Resolution:\n           Ordinate Resolution:\n          Distance and Bearing
+        Representation:\n           Distance Resolution:\n           Bearing Resolution:\n           Bearing
+        Units:\n           Bearing Reference Direction:\n           Bearing Reference
+        Meridian:\n          Planar Distance Units:\n      \n         Geodetic Model:\n           Horizontal
+        Datum Name:\n          Ellipsoid Name:\n          Semi-major Axis:\n          Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204566756-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://cfs.nrcan.gc.ca/regions/pfc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["41
+        -95 56 -75"],"time_start":"1950-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSFIDSONT"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Forest
+        Insect and Disease Survey of Canada - Ontario Region Infobase         ","data_center":"GCMDTEST","short_name":"CANEMRCCRSFIDSONT","organizations":["CA/NRCAN/CFS/GLFC"],"title":"           Forest
+        Insect and Disease Survey of Canada - Ontario Region Infobase         ","coordinate_system":"CARTESIAN","summary":"The
+        dataset includes insect and disease damage - defoliation\n                  histories,
+        incidence of insect and/or disease.  Forest health - drought damage,\n                  regions
+        of decline (mapped), and acid precipitation damage.  Value added\n                  thematic
+        data obtained by field measurements and aerial mapping (manual).\n                  \n                           This
+        data is applied to accumulate historical information on\n                  occurrence
+        and damage caused by forest insects and disease; accumulate\n                  information
+        on forest health on an annual basis.  Potential applications:\n                  prediction
+        of insect/disease outbreaks; assessment of impact on forest yield.\n                  \n                  Spatial
+        Data Organization Information -\n                  \n                      Indirect
+        Spatial Reference: Administrative Units\n                      Direct Spatial
+        Reference: Point (Latitude / Longitude and Rectangular Grid)\n                  Spatial
+        Reference Information -\n                  Horizontal Coordinate System Definition
+        -\n                  Planar -\n                  \n                        Map
+        Projection Name: Lambert Conformal Conic\n                  \n                  \n                  \n                      Planar
+        Coordinate Encoding Method:\n                      Coordinate Representation:\n                       Abscissa
+        Resolution:\n                       Ordinate Resolution:\n                      Distance
+        and Bearing Representation:\n                       Distance Resolution:\n                       Bearing
+        Resolution:\n                       Bearing Units:\n                       Bearing
+        Reference Direction:\n                       Bearing Reference Meridian:\n                      Planar
+        Distance Units:\n                  \n                     Geodetic Model:\n                       Horizontal
+        Datum Name:\n                      Ellipsoid Name:\n                      Semi-major
+        Axis:\n                      Denominator of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204576109-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["52
+        -95 65 -75"],"time_start":"1969-08-07T00:00:00.000Z","dif_ids":["Canada_NEB_FrontWellHudsonBay"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Frontier
+        Well Data for Hudson Bay - National Energy Board, Canada         ","data_center":"GCMDTEST","short_name":"Canada_NEB_FrontWellHudsonBay","organizations":["CA/NEB"],"title":"           Frontier
+        Well Data for Hudson Bay - National Energy Board, Canada         ","coordinate_system":"CARTESIAN","summary":"This
+        data set contains information on the location of wells drilled in\nthe Hudson
+        Bay Frontier areas regulated by the National Energy Board for which\nreports
+        and data are no longer privileged. The information is supplied by\nindustry
+        pursuant to the Canada Oil and Gas Operations Act. Associated\ninformation
+        may include well history reports, well logs, petrologic reports,\nvelocity
+        surveys, micropaleontological reports, well test reports, core\nanalysis and
+        so on.\n\n         The information is provided publicly, pursuant to the Canada
+        Petroleum\nResources Act to promote safety of workers, protection of the environment,\nconservation
+        of the hydrocarbon resources and to increase scientific knowledge\nand efficient
+        utilization of hydrocarbon resources. The principle uses are\nexpected to
+        be the planning of hydrocarbon exploration programs and\nproduction operations,
+        and scientific research, particularly geological\nstratigraphy and tectonics.\n\nSpatial
+        Data Organization Information -\n\n    Indirect Spatial Reference:\n    Direct
+        Spatial Reference:\nSpatial Reference Information -\n     Horizontal Coordinate
+        System Definition -\n\nPlanar -\n\n    Planar Coordinate Encoding Method:\n    Coordinate
+        Representation:\n     Abscissa Resolution:\n     Ordinate Resolution:\n    Distance
+        and Bearing Representation:\n     Distance Resolution:\n     Bearing Resolution:\n     Bearing
+        Units:\n     Bearing Reference Direction:\n     Bearing Reference Meridian:\n    Planar
+        Distance Units:\n\n   Geodetic Model:\n     Horizontal Datum Name:\n    Ellipsoid
+        Name:\n    Semi-major Axis:\n    Denominator of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204569547-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -135 55 -125"],"time_start":"1967-06-11T00:00:00.000Z","dif_ids":["Canada_NEB_FrontWellOffWCoast"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Frontier
+        Well Data for Offshore West Coast - National Energy Board, Canada         ","data_center":"GCMDTEST","short_name":"Canada_NEB_FrontWellOffWCoast","organizations":["CA/NEB"],"title":"           Frontier
+        Well Data for Offshore West Coast - National Energy Board, Canada         ","coordinate_system":"CARTESIAN","summary":"This
+        data set contains information on the location of wells drilled in\nthe Offshore
+        West Coast Frontier areas regulated by the National Energy Board\nfor which
+        reports and data are no longer privileged. The information is\nsupplied by
+        industry pursuant to the Canada Oil and Gas Operations Act.\nAssociated information
+        may include well history reports, well logs, petrologic\nreports, velocity
+        surveys, micropaleontological reports, well test reports,\ncore analysis and
+        so on.\n\n         The information is provided publicly, pursuant to the Canada
+        Petroleum\nResources Act to promote safety of workers, protection of the environment,\nconservation
+        of the hydrocarbon resources and to increase scientific knowledge\nand efficient
+        utilization of hydrocarbon resources. The principle uses are\nexpected to
+        be the planning of hydrocarbon exploration programs and\nproduction operations,
+        and scientific research, particularly geological\nstratigraphy and tectonics.\n\nSpatial
+        Data Organization Information -\n\n    Indirect Spatial Reference:\n    Direct
+        Spatial Reference:\nSpatial Reference Information -\n     Horizontal Coordinate
+        System Definition -\n\nPlanar -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate
+        Representation:\n     Abscissa Resolution:\n     Ordinate Resolution:\n    Distance
+        and Bearing Representation:\n     Distance Resolution:\n     Bearing Resolution:\n     Bearing
+        Units:\n     Bearing Reference Direction:\n     Bearing Reference Meridian:\n    Planar
+        Distance Units:\n\n   Geodetic Model:\n     Horizontal Datum Name:\n    Ellipsoid
+        Name:\n    Semi-major Axis:\n    Denominator of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204569576-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["45
+        -68 49 -64"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSGRWATER"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Ground
+        Water Levels at Selected Sites in New Brunswick, Canada         ","data_center":"GCMDTEST","short_name":"CANEMRCCRSGRWATER","organizations":["CA/NB/ELG"],"title":"           Ground
+        Water Levels at Selected Sites in New Brunswick, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        purpose of this database is to measure fluctuations in groundwater\nlevels
+        at selected sites in New Brunswick. The water level information\nindicates
+        depth below ground level and elevation of water level referenced to\ngeodetic
+        datum.\n\n         Data is available monthly for a 12-year period ending April
+        1, 1992,\nwhen the program was discontinued due to a budget reduction measure.
+        Data\ncollection is now (2001) being reinstated, with two monitoring stations
+        now\noperating.\n\n         Thirty-seven monitoring stations in New Brunswick
+        provided water\nlevels measured using chart recorders and data loggers with
+        the data directly\ndownloaded via modems to the office. The baseline stations
+        monitoring the\ngroundwater provided data reflecting natural fluctuations
+        with respect to\nclimate, topography and geology. The water management stations
+        data reflected\nthe pumping activity in municipal wellfields.\n\n         The
+        purpose of this database is to measure fluctuations in groundwater\nlevels
+        at selected sites in New Brunswick.\n\nSpatial Data Organization Information
+        -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:\nSpatial
+        Reference Information -\nHorizontal Coordinate System Definition -\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204529135-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["48.8
+        -57.5 49.08 -57.23"],"time_start":"1993-03-01T00:00:00.000Z","dif_ids":["Canada_CFS_InFER-Nfld"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Inter-disciplinary
+        Forest Ecosystem Research (InFER), Newfoundland, Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_InFER-Nfld","organizations":["CA/NRCAN/CFS/AFC"],"title":"           Inter-disciplinary
+        Forest Ecosystem Research (InFER), Newfoundland, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        Inter-disciplinary Forest Ecosystem Research (InFER) project was\nestablished
+        in 1993 to determine the effects of harvesting and silvicultural\npractices
+        on boreal forest ecosystems.  The inter-disciplinary nature of the\nproject
+        promotes sharing of resources and common environmental data, as well as\ncoordinated
+        documentation of ecosystem parameters.\n\n         The InFER research project
+        is located at Horseshoe Brook which was\nburned in 1998, and Glide Lake which
+        was burned and planted in 1993.  Both\nlocations are found in Western Newfoundland.\n\n         Collaborators
+        in the InFER Project are:\n\n         Natural Resources Canada, Canadian Forest
+        Service, Atlantic Forestry\nCentre\n         University of Helsinki, Helsinki,
+        Finland\n         Finnish Forest Research Institute, Vantaa, Finland\n         Technische
+        Universitat Dresden, Tharandt, Germany\n         Nipissing University, Ontario\n         Newfoundland
+        Forest Service, Department of Forestry and Agrifoods\n         Corner Brook
+        Pulp and Paper Company Limited\n         Memorial University of Newfoundland\n\n         The
+        InFER project is part of the Forest Ecosystem Research Network of\nSites (FERNS)
+        and is one of eight sites representing the Boreal Shield Ecozone.\n It should
+        be noted that the InFER project is listed under the title Glide Lake\n(Western
+        Newfoundland) for FERNS.\n\n         This integrated approach to ecosystem
+        research will contribute\nsignificantly to our understanding of forest ecosystems
+        and facilitate the\ncreation of sound forest ecosystem practices that will
+        enhance our efforts in\nrealizing the goal of forest ecosystem sustainability
+        in Canada.\n\nSpatial Data Organization Information -\n\n    Indirect Spatial
+        Reference:\n    Direct Spatial Reference:\nSpatial Reference Information -\n     Horizontal
+        Coordinate System Definition -\n\nPlanar -\n\n\n\n\n    Planar Coordinate
+        Encoding Method:\n    Coordinate Representation:\n     Abscissa Resolution:\n     Ordinate
+        Resolution:\n    Distance and Bearing Representation:\n     Distance Resolution:\n     Bearing
+        Resolution:\n     Bearing Units:\n     Bearing Reference Direction:\n     Bearing
+        Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic Model:\n     Horizontal
+        Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator of
+        Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204567816-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["48.4
+        -131.3 55.3 -116.5"],"time_start":"1984-07-17T00:00:00.000Z","dif_ids":["Canada_CFS_LandsatImages"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           LANDSAT
+        5 Thematic Mapper Imagery from SEIDAM, British Columbia, Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_LandsatImages","organizations":["CA/NRCAN/CFS/PFC"],"title":"           LANDSAT
+        5 Thematic Mapper Imagery from SEIDAM, British Columbia, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        LANDSAT 5 sensor was launched on March 1, 1984. A full Thematic\nMapper (TM)  scene
+        covers about 185 by 174 kilometers in seven channels, with a\nnominal resolution
+        of 30 meters (120 by 120 meters for thermal channel 6).\n\n         The SEIDAM
+        Project, through which the LANDSAT 5 Thematic Mapper\nImagery is channelled,
+        commenced in October 1991 at the Pacific Forestry Centre\nunder the sponsorship
+        of the NASA Applied Information Systems Research Program\n(AISRP).  The objective
+        of SEIDAM is: to create a System of Experts for\nIntelligent Data Management
+        (SEIDAM) which will integrate remote sensing data\nfrom satellites and aircraft
+        with geographic information systems and manage\nlarge archives of remotely
+        sensed data for dynamic selection of data sources\nand sensor characteristics
+        for query-based recognition of forest objects\nappropriate for environmental
+        forest monitoring.\n\nSpatial Data Organization Information -\n\n    Indirect
+        Spatial Reference:\n    Direct Spatial Reference: Raster\nSpatial Reference
+        Information -\n     Horizontal Coordinate System Definition -\n\nPlanar -\n\n\n\n\n    Planar
+        Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"time_end":"1995-07-16T00:00:00.000Z","orbit_parameters":{},"id":"C1204565745-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["39.38824
+        -71.324554 73.959496 -39.19807"],"time_start":"1929-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRS_MARINE_CHEM"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Marine
+        Chemistry Data from the Northwest Atlantic and Maritimes Region of Canada         ","data_center":"GCMDTEST","short_name":"CANEMRCCRS_MARINE_CHEM","organizations":["CA/DFO"],"title":"           Marine
+        Chemistry Data from the Northwest Atlantic and Maritimes Region of Canada         ","coordinate_system":"CARTESIAN","summary":"These
+        data are contained in either the Regional BioChem or National\nNCIS databases\n\n         This
+        dataset includes data related to contaminants in fish and in fish\nhabitat
+        collected by the Marine Chemistry Division.\n\n         Geographical Coverage/Scale:
+        DFO Maritimes Region; Atlantic Provinces\n- offshore and coastal areas including
+        the region from George''s Bank to the\nLabrador Shelf.\n\n         Period
+        of Record/Update Frequency: 1929 to present/Variable.\n\n         Data Types/Parameters
+        Measured: Physical, Chemical/ Dissolved oxygen,\nsalinity, temperature; trace
+        metals, radionuclides, organic matter, petroleum\nhydrocarbons, nutrients.\n\n         Sampling
+        Procedures: Oceanographic Cruises - water column samplers,\ngrab samplers
+        for sediments. Coastal and freshwater survey results (water and\nsediments).
+        Coring for geochronological measurements.\n\n         Program Type: Research,
+        monitoring and survey.\n\n         Good baseline data for offshore areas,
+        radionuclide data collected\nnear the Pt. Lepreau Nuclear Power Station; Contaminant
+        investigations at\nselected impacted sites.\n\nSpatial Data Organization Information
+        -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:\nSpatial
+        Reference Information -\n     Horizontal Coordinate System Definition -\n\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204495682-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["45.25
+        -116.04 50.59 -114.57"],"time_start":"1991-09-01T00:00:00.000Z","dif_ids":["Canada_CFS_LodgepolePineBC"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Mature
+        Lodgepole Pine Management Study, British Columbia, Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_LodgepolePineBC","organizations":["CA/NRCAN/CFS/PFC"],"title":"           Mature
+        Lodgepole Pine Management Study, British Columbia, Canada         ","coordinate_system":"CARTESIAN","summary":"Lodgepole
+        pine stands make up an important part of the forest cover in\nthe interior
+        of British Columbia, consistently providing nearly 25% of total\nforest product
+        values produced annually in the province, and dominating\nlandscapes important
+        for many values and to many users. Because of the current\nage-class distribution
+        and history of heavy mortality to mountain pine beetle\nepidemics in overmature
+        stands, it is important to develop silvicultural\napproaches, such as commercial
+        thinning and fertilization, to manage maturing\nlodgepole pine stands.\n\n         Partial-cutting
+        and fertilization of 70 to 100 year old stands may\nreduce stand susceptibility
+        to epidemic attack by mountain pine beetle and\nprovide access to fibre while
+        allowing maintenance of mature forest cover in\ncritical wildlife habitat,
+        community watersheds and viewsheds that will benefit\nmany users.\n\n         This
+        study, in the East Kootenays of British Columbia, is a\nmulti-disciplinary,
+        long-term research study of 20 years which is designed to\nevaluate the effects
+        of partial-cutting and fertilization of lodgepole pine on\nresidual stand
+        condition and growth, insect activity, regeneration processes,\nand non-timber
+        values.\n\n         Partners in the Mature Lodgepole Pine Management Study
+        are:\n\n         Canadian Forest Service, Natural Resources Canada\n         Crestbrook
+        Forest Industries Ltd.\n         Forest Engineering Research Institute of
+        Canada\n         Forest Renewal B.C.\n         Galloway Lumber Company Ltd.\n         Ministry
+        of Forests, Province of British Columbia\n\n         The overall objectives
+        of the Mature Lodgepole Pine Management Study\nare to determine:\n\n         1.
+        if fibre recovery is economically feasible with current technology;\n         2.
+        how tree and stand susceptibility to attack by mountain pine beetle\nand other
+        insects is affected;\n         3. if residual stand growth responses will
+        increase yield or value at\nthe end of this rotation;\n         4. how wildlife
+        habitat and domestic forage values are affected;\n         5. if conversion
+        to mixed species shelterwood management is possible\nthrough release of advanced
+        regeneration or underplanting thinned stands.\n\nSpatial Data Organization
+        Information -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:\nSpatial
+        Reference Information -\n     Horizontal Coordinate System Definition -\n\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204567806-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["60.184
+        -123.18 60.195 -123.15"],"time_start":"1994-02-01T00:00:00.000Z","dif_ids":["Canada_CFS_MuskegRiverForest"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Muskeg
+        River Forest Demonstration Area, Fort Liard, Northwest Territories, Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_MuskegRiverForest","organizations":["CA/NRCAN/CFS/NOFC"],"title":"           Muskeg
+        River Forest Demonstration Area, Fort Liard, Northwest Territories, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        Muskeg River Forest Demonstration Area was established as a\n            co-operative
+        venture with the local Acho Dene Koe and Band; the Northwest\n            Territories
+        Department of Resources, Wildlife, and Economic Development; and\n            Natural
+        Resources Canada as represented by the Canadian Forest Service.\n            \n                     The
+        demonstration area is comprised of eight various clear-cut and\n            partial-cut
+        silviculture systems in a total of 18 blocks which profile\n            conventional
+        harvest technology in both conventional and innovative partial\n            harvest
+        systems.  A total of 58 permanent sample plots have been established\n            within
+        the various blocks.  These are presently being monitored to evaluate\n            growth
+        response of the various treatments which include site preparation,\n            regeneration,
+        and vegetation management techniques.  The 11.5 kms of\n            interpretive
+        trails emphasize the ecological aspects of the sites, as well as\n            the
+        applied research studies and traditional uses of the land.\n            \n                     The
+        Muskeg River Forest Demonstration Area has also been designated a\n            Forest
+        Ecosystem Research Network (FERN) site.\n            \n                     The
+        primary objective of this project is to demonstrate for the local\n            community
+        and forest managers, the displaying and monitoring of traditional use\n            and
+        advanced level commercial forest management applications.\n            \n                     The
+        secondary objective is the creation of an information and\n            interpretive
+        trail system through the various forest stands and silviculture\n            treatments,
+        for the long term use of all interested groups.\n            \n            Spatial
+        Data Organization Information -\n            \n                Indirect Spatial
+        Reference:\n                Direct Spatial Reference:\n            Spatial
+        Reference Information -\n                 Horizontal Coordinate System Definition
+        -\n            \n            Planar -\n            \n            \n            \n            \n                Planar
+        Coordinate Encoding Method:\n                Coordinate Representation:\n                 Abscissa
+        Resolution:\n                 Ordinate Resolution:\n                Distance
+        and Bearing Representation:\n                 Distance Resolution:\n                 Bearing
+        Resolution:\n                 Bearing Units:\n                 Bearing Reference
+        Direction:\n                 Bearing Reference Meridian:\n                Planar
+        Distance Units:\n            \n               Geodetic Model:\n                 Horizontal
+        Datum Name:\n                Ellipsoid Name:\n                Semi-major Axis:\n                Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204567817-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["43
+        -69 62 -45"],"time_start":"1972-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRS_ORGANOCHL_SEALS"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Organochlorine
+        Contaminant Residues and Transfers from Mother to Young in Seals, Canada         ","data_center":"GCMDTEST","short_name":"CANEMRCCRS_ORGANOCHL_SEALS","organizations":["CA/DFO"],"title":"           Organochlorine
+        Contaminant Residues and Transfers from Mother to Young in Seals, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        data is available from 1972 to the present. Samples are collected\n      in
+        the field with an annual growth of 30 records per site per year.\n      \n               The
+        area of coverage includes the Eastern Canadian Offshore, Sable\n      Island,
+        Gulf of St. Lawrence, Scotian Shelf and the Arctic.\n      \n               Parameters
+        measured include: Chemical, DDT, PCB, Mixed-Function\n      Oxidase - enzyme
+        activity in organs such as liver as a result of contaminant\n      exposure.\n      \n               Comments:
+        Confidence in data is high. Contaminant body burdens also\n      related to
+        age and sex of individuals in each species. Research on physiology,\n      energetics
+        and biomechanics of marine mammals and their role in understanding\n      the
+        accumulation, processing, and transfer of contaminants.\n      \n               Archived
+        in DFOs National NCIS database\n      \n               The purpose of this
+        database is to examine the degree that body\n      burdens reflect background
+        levels of contaminants and to study extent to which\n      plasma and mammary
+        tissue acts as a barrier to the transfer of contaminants.\n      \n      Spatial
+        Data Organization Information -\n      \n          Indirect Spatial Reference:\n          Direct
+        Spatial Reference:\n      Spatial Reference Information -\n           Horizontal
+        Coordinate System Definition -\n      \n      Planar -\n      \n      \n      \n      \n          Planar
+        Coordinate Encoding Method:\n          Coordinate Representation:\n           Abscissa
+        Resolution:\n           Ordinate Resolution:\n          Distance and Bearing
+        Representation:\n           Distance Resolution:\n           Bearing Resolution:\n           Bearing
+        Units:\n           Bearing Reference Direction:\n           Bearing Reference
+        Meridian:\n          Planar Distance Units:\n      \n         Geodetic Model:\n           Horizontal
+        Datum Name:\n          Ellipsoid Name:\n          Semi-major Axis:\n          Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204421218-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["48
+        -139 60 -114"],"time_start":"1901-08-15T00:00:00.000Z","dif_ids":["Canada_CFS_PathologyHerbarium"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Pacific
+        Forestry Centre Forest Pathology Herbarium Collections Database, British Columbia,
+        Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_PathologyHerbarium","organizations":["CA/NRCAN/CFS/PFC"],"title":"           Pacific
+        Forestry Centre Forest Pathology Herbarium Collections Database, British Columbia,
+        Canada         ","coordinate_system":"CARTESIAN","summary":"This database
+        currently holds over 21,000 records for the 35,300\n            specimens
+        housed at Pacific Forestry Centre''s Forest Pathology Herbarium\n            (abbreviated
+        as DAVFP), and may be searched by several different parameters.\n            The
+        data are organized under such fields as \"Fungus,\" \"Host,\" \"Determiner\"\n            (person
+        making the identification), or \"Collector\", as well as other\n            categories.  Clicking
+        a radio button designating the first letter of the\n            subject further
+        narrows these fields.  This executes a search of the database,\n            which
+        returns an updated short list of names to choose from.  One of these\n            names
+        may then be selected to obtain data on individual specimens matching\n            these
+        criteria.  Currently, synonyms (outdated Latin binomials) are not linked,\n            so
+        the searcher should be aware of the taxonomic and nomenclatural history of\n            the
+        species he or she is interested in.  If there is geographic (UTM,\n            Latitude/Longitude)
+        information available for the record, the searcher can\n            click
+        on a link which will draw a map showing the collection location.  A\n            distribution
+        map of all of the collection locations in a particular search may\n            also
+        be generated, by scrolling to the end of the list and clicking the\n            \"submit\"
+        button there.  Searches may also be conducted on \"Locality\" (nearest\n            town
+        or drainage division), DAVFP number, or year of collection.\n            \n                     This
+        database is used to manage the 35,300 specimens of forest\n            diseases
+        and fungi stored in Pacific Forestry Centre''s Forest Pathology\n            Herbarium.  These
+        35,300 specimens include healthy plant specimens (for\n            reference
+        purposes) as well as surplus specimens and those available for\n            exchange.   One
+        of the primary uses of DAVFP is for depositing voucher\n            collections
+        of new disease distribution records.  These specimens provide\n            current
+        and future researchers with the material to confirm published\n            host-fungus
+        distribution records or reexamine them in the context of new\n            taxonomic
+        information and research techniques.  Over 140 type specimens are\n            also
+        deposited in DAVFP.  Systematists, naturalists, foresters, and other\n            interested
+        individuals can browse the database to rapidly determine which\n            species
+        of fungi are housed in the herbarium, and when and where they were\n            collected.\n            \n            Spatial
+        Data Organization Information -\n            \n                Indirect Spatial
+        Reference:\n                Direct Spatial Reference:\n            Spatial
+        Reference Information -\n                 Horizontal Coordinate System Definition
+        -\n            \n            Planar -\n            \n            \n            \n            \n                Planar
+        Coordinate Encoding Method:\n                Coordinate Representation:\n                 Abscissa
+        Resolution:\n                 Ordinate Resolution:\n                Distance
+        and Bearing Representation:\n                 Distance Resolution:\n                 Bearing
+        Resolution:\n                 Bearing Units:\n                 Bearing Reference
+        Direction:\n                 Bearing Reference Meridian:\n                Planar
+        Distance Units:\n            \n               Geodetic Model:\n                 Horizontal
+        Datum Name:\n                Ellipsoid Name:\n                Semi-major Axis:\n                Denominator
+        of Flattening Ratio:\n            \n            There is no cost for searching
+        the Herbarium database through the\n            network resource address.   Please
+        contact distributor(s) for associated fees\n            when seeking database
+        access using alternative formats.","has_granules":false,"orbit_parameters":{},"id":"C1204566644-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://cfs.nrcan.gc.ca/regions/pfc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -67.7 60 -52"],"time_start":"1991-01-01T00:00:00.000Z","dif_ids":["Canada_NfldLab_ProvAgriAtlas"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Provincial
+        Agricultural Atlas, 1:250,000, Newfoundland and Labrador, Canada         ","data_center":"GCMDTEST","short_name":"Canada_NfldLab_ProvAgriAtlas","organizations":["CA/NFLD/FRA/SOIL"],"title":"           Provincial
+        Agricultural Atlas, 1:250,000, Newfoundland and Labrador, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        Provincial Agricultural Atlas provides the locations, boundaries,\nland uses,
+        soil types and other details of farms in Newfoundland and Labrador.\nThe Atlas
+        provides information on berry management units, agricultural\ndevelopment
+        sites, pastures, Christmas tree farms, fur farms, and more, at a\n1:250,000
+        scale.\n\n         The Provincial Agricultural Atlas provides an overview
+        of agricultural\nactivities in Newfoundland and Labrador.\n\nSpatial Data
+        Organization Information -\n\n    Indirect Spatial Reference:\n    Direct
+        Spatial Reference: Vector\nSpatial Reference Information -\n     Horizontal
+        Coordinate System Definition -\n\nPlanar -\n\n\n\n\n    Planar Coordinate
+        Encoding Method:\n    Coordinate Representation:\n     Abscissa Resolution:\n     Ordinate
+        Resolution:\n    Distance and Bearing Representation:\n     Distance Resolution:\n     Bearing
+        Resolution:\n     Bearing Units:\n     Bearing Reference Direction:\n     Bearing
+        Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic Model:\n     Horizontal
+        Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator of
+        Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204582829-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -67.7 60 -52"],"time_start":"1984-12-31T00:00:00.000Z","dif_ids":["Canada_NfldLab_ForestInventory"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Provincial
+        Forest Inventory, Newfoundland and Labrador, Canada         ","data_center":"GCMDTEST","short_name":"Canada_NfldLab_ForestInventory","organizations":["CA/NFLD/FRA/FB"],"title":"           Provincial
+        Forest Inventory, Newfoundland and Labrador, Canada         ","coordinate_system":"CARTESIAN","summary":"This
+        database contains vegetation information for both forested and\nnon-forested
+        areas. For forested areas this includes tree species, height, age,\ncrown
+        density, and site. For non-forested areas it includes hydrology,\nwetlands,
+        barren, scrub, cleared areas, and residential.\n\n         This database is
+        currently available for approximately 85% of the\nisland of Newfoundland (generally
+        the south coast is not available) and 30% of\nLabrador (generally the north
+        is not available).\n\n         The forest inventory database is used by the
+        department, pulp and\npaper companies, and the sawmill industry to manage
+        the forests of the province\nin a sustainable manner.\n\nSpatial Data Organization
+        Information -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:
+        Vector\nSpatial Reference Information -\n     Horizontal Coordinate System
+        Definition -\n\nPlanar -\n\n      Map Projection Name: Transverse Mercator\n\n\n\n    Planar
+        Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name: NAD 83\n    Ellipsoid Name: GRS 80\n    Semi-major
+        Axis:\n    Denominator of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204576948-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]}],"facets":[{"field":"project","value-counts":[["AMBS",375],["AQUA",209],["AURA",162],["BOREAS",702],["CALIPSO",158],["CAML",176],["CERES",347],["COML",537],["CWIC",1528],["DART",245],["DODS",327],["EBA",313],["EOS",456],["EOSDIS",6218],["ESIP",1257],["ESIP_TS",6449],["ESSP",119],["FIFE",306],["FIRE",267],["GLOBEC",207]]},{"field":"sensor","value-counts":[["2.3um
+        Radiometer",54],["2.4um Radiometer",54],["4.7um Radiometer",54],["AA",325],["AF",324],["AN",324],["ANALYSIS",493],["ANEMOMETER",97],["AVHRR",133],["BA",324],["BAROMETER",68],["BF",324],["CA",324],["CCD",55],["CERES
+        SCANNER",94],["CF",324],["CHEMILUMINESCENCE",51],["DA",325],["DF",324],["DIGITIZER",58]]},{"field":"two_d_coordinate_system_name","value-counts":[["MODIS
+        Tile SIN",247],["CALIPSO",55],["MISR",45],["WELD CONUS Tile",18],["WELD Alaska
+        Tile",15],["WRS-2",9],["MODIS Tile EASE",8],["WRS-1",2],["CARTESIAN",1],["Tiling
+        System Name",1]]},{"field":"processing_level_id","value-counts":[["3",2892],["2",874],["1B",234],["4",163],["1",147],["0",72],["2G",64],["1T",30],["1A",26],["NA",8],["L1T",6],["Level
+        1",4],["Level 2",4],["2B",1],["Level 0",1],["Level 4",1]]},{"field":"detailed_variable","value-counts":[["AEROSOL
+        OPTICAL THICKNESS",53],["AEROSOL REFLECTANCE",51],["ALGAE",84],["ATMOSPHERE
+        ABSORBED",38],["BIOMASS CARBON",20],["CFC-11",23],["CHLOROPHYLL-A",60],["CONTINENTAL
+        SHELVES",31],["CORALS",56],["COUNTRY PROFILE MAP",89],["DELTA 180",22],["DENSITY",28],["DIFFUSE
+        ATTENUATION COEFFICIENT",51],["DISSOLVED OXYGEN",142],["ENSO",63],["GREENHOUSE
+        GASES",39],["HALOCARBONS",36],["HUMIDITY",243],["INSOLATION",30],["LATENT
+        HEAT FLUX",25]]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"count":1,"value":"AIR
+        TEMPERATURE"},{"count":1,"value":"DEGREE DAYS"},{"count":1,"value":"MAXIMUM/MINIMUM
+        TEMPERATURE"},{"count":1,"value":"SURFACE AIR TEMPERATURE"},{"count":1,"value":"TEMPERATURE
+        ANOMALIES"}],"count":1,"value":"ATMOSPHERIC TEMPERATURE"},{"subfields":["term"],"term":[{"count":1,"value":"PRECIPITATION
+        AMOUNT"},{"count":1,"value":"PRECIPITATION ANOMALIES"}],"count":1,"value":"PRECIPITATION"}],"count":1,"value":"ATMOSPHERE"},{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"count":1,"value":"TERM"}],"count":1,"value":"TOPIC"}],"count":1,"value":"CATEGORY"},{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":15,"value":"SOIL
+        MOISTURE ACTIVE AND PASSIVE OBSERVATORY"}],"count":15,"value":"SMAP"}],"count":15,"value":"NASA
+        DECADAL SURVEY"}],"count":15,"value":"EARTH OBSERVATION SATELLITES"},{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":15,"value":"SMAP
+        L-BAND RADAR"}],"count":15,"value":"IMAGING RADARS"}],"count":15,"value":"ACTIVE
+        REMOTE SENSING"}],"count":15,"value":"EARTH REMOTE SENSING INSTRUMENTS"},{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":5,"value":"AQUACULTURE"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":174,"value":"FISHERIES"},{"count":38,"value":"TEST
+        AQUACULTURE"}],"count":200,"value":"AGRICULTURAL AQUATIC SCIENCES"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":133,"value":"FERTILIZERS"},{"count":134,"value":"PESTICIDES"}],"count":245,"value":"AGRICULTURAL
+        CHEMICALS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":26,"value":"AGRICULTURAL
+        EQUIPMENT"},{"count":20,"value":"FARM STRUCTURES"}],"count":65,"value":"AGRICULTURAL
+        ENGINEERING"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ABOVEGROUND
+        BIOMASS"},{"count":234,"value":"CROP/PLANT YIELDS"},{"count":118,"value":"CROPPING
+        SYSTEMS"},{"count":61,"value":"IRRIGATION"},{"count":40,"value":"PLANT BREEDING
+        AND GENETICS"}],"count":470,"value":"AGRICULTURAL PLANT SCIENCE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":55,"value":"DAIRY
+        PRODUCTS"},{"count":81,"value":"LIVESTOCK PRODUCTS"},{"count":60,"value":"POULTRY
+        PRODUCTS"}],"count":111,"value":"ANIMAL COMMODITIES"}],"count":1963,"value":"AGRICULTURE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":164,"value":"AEROSOL
+        BACKSCATTER"},{"count":227,"value":"AEROSOL EXTINCTION"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":242,"value":"AEROSOL
+        OPTICAL DEPTH/THICKNESS"},{"count":191,"value":"AEROSOL PARTICLE PROPERTIES"},{"count":153,"value":"AEROSOL
+        RADIANCE"}],"count":918,"value":"AEROSOLS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ANGSTROM
+        EXPONENT"}],"count":1,"value":"AEROSOLS/AEROSOL OPTICAL DEPTH/THICKNESS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":2,"value":"AIR
+        TEMPERATURE"},{"count":158,"value":"CARBON MONOXIDE"},{"count":226,"value":"EMISSIONS"},{"count":11,"value":"LEAD"},{"count":144,"value":"NITROGEN
+        OXIDES"}],"count":1058,"value":"AIR QUALITY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":288,"value":"BAROMETRIC
+        ALTITUDE"},{"count":690,"value":"GEOPOTENTIAL HEIGHT"},{"count":43,"value":"MESOPAUSE"},{"count":233,"value":"PLANETARY
+        BOUNDARY LAYER HEIGHT"},{"count":85,"value":"STATION HEIGHT"}],"count":1023,"value":"ALTITUDE"},{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":769,"value":"CARBON
+        AND HYDROCARBON COMPOUNDS"},{"count":116,"value":"CARBON DIOXIDE"},{"count":4,"value":"CARBON
+        DIOXIDE FLUX"},{"count":5,"value":"CARBON MONOXIDE"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":184,"value":"HALOCARBONS
+        AND HALOGENS"}],"count":1807,"value":"ATMOSPHERIC CHEMISTRY"}],"count":9623,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LONGWAVE
+        RADIATION"},{"count":1,"value":"SHORTWAVE RADIATION"},{"count":1,"value":"WIND
+        PROFILES"}],"count":1,"value":"TERRESTRIAL ECOSYSTEMS"}],"count":1,"value":"ATMOSPHERE-BIOSPHERE
+        INTERACTIONS"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":9,"value":"ACORN
+        WORMS"},{"count":43,"value":"ARROW WORMS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":678,"value":"ARTHROPODS"},{"count":50,"value":"BRYOZOANS/MOSS
+        ANIMALS"},{"count":17,"value":"BURROWS/SPOON WORMS"}],"count":1277,"value":"ANIMALS/INVERTEBRATES"},{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":82,"value":"AMPHIBIANS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":773,"value":"BIRDS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":795,"value":"FISH"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":839,"value":"MAMMALS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":129,"value":"REPTILES"}],"count":2221,"value":"ANIMALS/VERTEBRATES"},{"count":9,"value":"ANIMALSX/INVERTEBRATES"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":72,"value":"CYANOBACTERIA
+        (BLUE-GREEN ALGAE)"}],"count":333,"value":"BACTERIA/ARCHAEA"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":131,"value":"LICHENS"},{"count":11,"value":"MUSHROOMS"},{"count":12,"value":"SLIME
+        MOLDS"},{"count":11,"value":"YEASTS/TRUFFLES"}],"count":191,"value":"FUNGI"}],"count":4143,"value":"BIOLOGICAL
+        CLASSIFICATION"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":2,"value":"DIAMETER
+        AT BREAST HEIGHT"}],"count":2,"value":"ALLOMETRY"}],"count":2,"value":"BIOMASS"}],"count":34923,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+4d1a3c45653d9941909886530f12e5b9a243bbbf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:19 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '41'
+      cmr-request-id:
+      - 2425932d-f0a3-433b-b6a2-f1b1f0cd022a
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:19.086Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026keyword=C1204449891-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":["edsc.renderers.cwic","edsc.datasource.cwic"],"boxes":["-83.85
+        -180 83.1 180"],"time_start":"2001-03-16T00:00:00.000Z","dif_ids":["USGS_EDC_EO1_ALI"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"EO-1 (Earth Observing-1)
+        Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data","data_center":"GCMDTEST","short_name":"USGS_EDC_EO1_ALI","organizations":["DOI/USGS/EROS"],"title":"EO-1
+        (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level
+        1Gs, Level 1Gst Data","coordinate_system":"CARTESIAN","summary":"Advanced
+        Land Imager (ALI) provides image data from ten spectral bands (band designations).
+        The instrument operates in a pushbroom fashion, with a spatial resolution
+        of 30 meters for the multispectral bands and 10 meters for the panchromatic
+        band. The standard scene width is 37 kilometers. Standard scene length is
+        42 kilometers, with an optional increased scene length of 185 kilometers (additional
+        information).\n                  \nFor Advanced Land Imager (ALI) data, the
+        following levels of correction are available:\n                  \nLevel 1R
+        radiometrically corrected with no geometric correction applied. The image
+        data are provided in 16-bit radiance values. The data are available in Hierarchical
+        Data Format (HDF) and are distributed on CD-ROM, DVD, and File Transfer Protocol
+        (FTP).\n                  \nLevel 1Gs is geometrically corrected and will
+        be provided as a single \"stitched\" file. The image data are provided in
+        16-bit radiance values. The data are available in Hierarchical Data Format
+        (HDF) or Geographic Tagged Image-File Format (GeoTIFF) and are distributed
+        on DVD and File Transfer Protocol (FTP).\n                   \nLevel 1Gst
+        is terrain corrected and will be provided as a single \"stitched\" file. The
+        image data are provided in 16-bit radiance values. The data are available
+        in Hierarchical Data Format (HDF) or Geographic Tagged Image-File Format (GeoTIFF)
+        and are distributed on DVD and File Transfer Protocol (FTP). \n                  \n[Source:
+        USGS/EDC Homepage]","has_granules":false,"orbit_parameters":{},"id":"C1204449891-GCMDTEST","score":0.5,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Earth Explorer.\n      ","hreflang":"en-US","href":"http://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Global Visualizer (GLOVIS).\n      ","hreflang":"en-US","href":"http://glovis.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         EO-1
+        Project homepage at NASA''s Goddard Space Flight Center.\n      ","hreflang":"en-US","href":"http://eo1.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         NASA''s
+        New Millennium Project homepage.\n      ","hreflang":"en-US","href":"http://nmp.nasa.gov/"}]}],"facets":[{"field":"project","value-counts":[["CWIC",1],["NMP",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[["NEAR
+        INFRARED",1]]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"count":1,"value":"SURFACE
+        RADIATIVE PROPERTIES"}],"count":1,"value":"LAND SURFACE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"INFRARED
+        IMAGERY"},{"count":1,"value":"INFRARED RADIANCE"}],"count":1,"value":"INFRARED
+        WAVELENGTHS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"VISIBLE
+        IMAGERY"},{"count":1,"value":"VISIBLE RADIANCE"}],"count":1,"value":"VISIBLE
+        WAVELENGTHS"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 098810e70f5eac7093183f7dd571f1e3e4a0ad7e:
   response:
     status:
@@ -8647,6 +9637,71 @@ c63d84899ddd74613e992b2a473a94a0088c8f8f:
         FIELD"},{"count":1,"value":"MAGNETIC FIELD"}],"count":1,"value":"GEOMAGNETISM"}],"count":1,"value":"SOLID
         EARTH"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"RADIO
         WAVE FLUX"}],"count":1,"value":"RADIO WAVE"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+fde3fec9cd97d08e86af031aec6673148f9e2823:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:20 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '59'
+      cmr-request-id:
+      - dfecf8d2-f413-419d-9a95-7ff3763ae280
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:20.381Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026keyword=C43947-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2012-09-25T00:00:00.000Z","dif_ids":["GES_DISC_AIRIBRAD_NRT_V005"],"version_id":"005","updated":"2012-10-02T13:55:25.000Z","dataset_id":"AIRS/Aqua
+        Near Real Time (NRT) Level 1B Infrared (IR) geolocated and calibrated radiances
+        V005","data_center":"GSFCS4PA","short_name":"AIRIBRAD_NRT","organizations":["GESDISC","GES
+        DAAC"],"title":"AIRS/Aqua Near Real Time (NRT) Level 1B Infrared (IR) geolocated
+        and calibrated radiances V005","coordinate_system":"CARTESIAN","summary":"The
+        AIRS Infrared (IR) level 1B data set contains AIRS infrared calibrated and
+        geolocated radiances in milliWatts/m^2/cm^-1/steradian. This data set is generated
+        from AIRS level 1A digital numbers (DN), including 2378 infrared channels
+        in the 3.74 to 15.4 micron region of the spectrum. A day\u0026apos;s worth
+        of AIRS data is divided into 240 scenes each of 6 minute duration. For the
+        AIRS infrared measurements, an individual scene consists of 135 scanlines
+        containing 90 cross-track footprints; thus there is a total of 135 x 90 =
+        12,150 footprints per AIRS IR scene.","has_granules":true,"orbit_parameters":{},"id":"C43947-GSFCS4PA","score":0.5,"original_format":"ECHO10","granule_count":259,"archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"ftp
+        site for AIRIBRAD_NRT.   User registration is required.    Register for a
+        username and password at the Land Atmosphere Near real-time Capability for
+        EOS (LANCE) web site (http://lance.nasa.gov/).\n       (GET DATA)","hreflang":"en-US","href":"ftp://discnrt1u.ecs.nasa.gov/ftp/data/Aqua_NRT/AIRIBRAD_NRT.005"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        home page at NASA/JPL. General information on the AIRS instrument suite, algorithms,
+        and other AIRS-related activities can be found. The Atmospheric Infrared Sounder
+        (AIRS) instrument suite is designed to measure the Earth''s atmospheric water
+        vapor and temperature profiles on a global scale. It is comprised of a space-based
+        hyperspectral infrared instrument (AIRS) and two multichannel microwave instruments,
+        the Advanced Microwave Sounding Unit\n                                    (AMSU-A)
+        and the Humidity Sounder for Brazil (HSB).\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://www-airs.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        data support home page at Goddard Earth Sciences Data Information and Service
+        Center/Distributed Active Archive Center (GES DISC). Online documentation,
+        software to read, visualize and analyze AIRS data and data access information
+        are available from this web site.\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://disc.gsfc.nasa.gov/AIRS/index.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRIBRAD_NRT
+        information page\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/nrt/data-holdings/AIRS/data-holdings/by-data-product/AIRIB_Rad_NRT.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        NRT page\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/nrt/data-holdings/airs-nrt-products"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"README
+        Document for AIRIBRAD\n       (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"ftp://airscal2u.ecs.nasa.gov/ftp/data/s4pa/Aqua_AIRS_Level1/AIRIBRAD.005/doc/README.AIRIBRAD.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"ftp://discnrt2.ecs.nasa.gov/ftp/data/s4pa//Aqua_AIRS_NRT/AIRIBRAD_NRT.005/doc/README.AIRIBRAD.pdf"}]}],"facets":[{"field":"project","value-counts":[["AQUA",1],["EOSDIS",1],["ESIP",1],["OPENDAP",1]]},{"field":"sensor","value-counts":[["AIRS",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"DUST/ASH/SMOKE"}],"count":1,"value":"AEROSOLS"},{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":1,"value":"SULFUR
+        COMPOUNDS"}],"count":1,"value":"ATMOSPHERIC CHEMISTRY"}],"count":1,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"INFRARED
+        RADIANCE"}],"count":1,"value":"INFRARED WAVELENGTHS"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":1,"value":"EARTH
         SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
@@ -9266,6 +10321,778 @@ c63d84899ddd74613e992b2a473a94a0088c8f8f:
         CHROMATOGRAPHS",168],["GMI",189],["GPS",584]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
     http_version: 
     reduced: true
+315b2a1e456cb3c76de855c6d28e344313c7319a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:48 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '48'
+      cmr-request-id:
+      - eabbe5bb-4642-4f18-af8d-3b0936ae0a92
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:48.625Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C1204449891-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"data_center","value-counts":[]},{"field":"archive_center","value-counts":[]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[]},{"field":"instrument","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
+671626f7a7110653ce315c27a55aff6f547c3735:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:36 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '43'
+      cmr-request-id:
+      - 04dff0c5-aea2-47bc-a002-4c63561d8661
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:36.586Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C43947-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2012-09-25T00:00:00.000Z","dif_ids":["GES_DISC_AIRIBRAD_NRT_V005"],"version_id":"005","updated":"2012-10-02T13:55:25.000Z","dataset_id":"AIRS/Aqua
+        Near Real Time (NRT) Level 1B Infrared (IR) geolocated and calibrated radiances
+        V005","data_center":"GSFCS4PA","short_name":"AIRIBRAD_NRT","organizations":["GESDISC","GES
+        DAAC"],"title":"AIRS/Aqua Near Real Time (NRT) Level 1B Infrared (IR) geolocated
+        and calibrated radiances V005","coordinate_system":"CARTESIAN","summary":"The
+        AIRS Infrared (IR) level 1B data set contains AIRS infrared calibrated and
+        geolocated radiances in milliWatts/m^2/cm^-1/steradian. This data set is generated
+        from AIRS level 1A digital numbers (DN), including 2378 infrared channels
+        in the 3.74 to 15.4 micron region of the spectrum. A day\u0026apos;s worth
+        of AIRS data is divided into 240 scenes each of 6 minute duration. For the
+        AIRS infrared measurements, an individual scene consists of 135 scanlines
+        containing 90 cross-track footprints; thus there is a total of 135 x 90 =
+        12,150 footprints per AIRS IR scene.","has_granules":true,"orbit_parameters":{},"id":"C43947-GSFCS4PA","score":0.5,"original_format":"ECHO10","granule_count":259,"archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"ftp
+        site for AIRIBRAD_NRT.   User registration is required.    Register for a
+        username and password at the Land Atmosphere Near real-time Capability for
+        EOS (LANCE) web site (http://lance.nasa.gov/).\n       (GET DATA)","hreflang":"en-US","href":"ftp://discnrt1u.ecs.nasa.gov/ftp/data/Aqua_NRT/AIRIBRAD_NRT.005"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        home page at NASA/JPL. General information on the AIRS instrument suite, algorithms,
+        and other AIRS-related activities can be found. The Atmospheric Infrared Sounder
+        (AIRS) instrument suite is designed to measure the Earth''s atmospheric water
+        vapor and temperature profiles on a global scale. It is comprised of a space-based
+        hyperspectral infrared instrument (AIRS) and two multichannel microwave instruments,
+        the Advanced Microwave Sounding Unit\n                                    (AMSU-A)
+        and the Humidity Sounder for Brazil (HSB).\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://www-airs.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        data support home page at Goddard Earth Sciences Data Information and Service
+        Center/Distributed Active Archive Center (GES DISC). Online documentation,
+        software to read, visualize and analyze AIRS data and data access information
+        are available from this web site.\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://disc.gsfc.nasa.gov/AIRS/index.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRIBRAD_NRT
+        information page\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/nrt/data-holdings/AIRS/data-holdings/by-data-product/AIRIB_Rad_NRT.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        NRT page\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/nrt/data-holdings/airs-nrt-products"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"README
+        Document for AIRIBRAD\n       (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"ftp://airscal2u.ecs.nasa.gov/ftp/data/s4pa/Aqua_AIRS_Level1/AIRIBRAD.005/doc/README.AIRIBRAD.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"ftp://discnrt2.ecs.nasa.gov/ftp/data/s4pa//Aqua_AIRS_NRT/AIRIBRAD_NRT.005/doc/README.AIRIBRAD.pdf"}]}],"facets":[{"field":"data_center","value-counts":[["GES
+        DAAC",1],["GESDISC",1]]},{"field":"archive_center","value-counts":[["GESDISC",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["AQUA",1]]},{"field":"instrument","value-counts":[["AIRS",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
+abae3972d59005dbd7865ea4239cdd5a61bd602d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:16 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '35932'
+      cmr-took:
+      - '301'
+      cmr-request-id:
+      - b99e30d2-1287-48e3-857e-16e675247422
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: ASCII-8BIT
+      string: '{"feed":{"updated":"2016-03-27T03:02:17.227Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["43 -135 82 -59"],"time_start":"1975-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSBAPMN"],"version_id":"Not
+        provided","updated":"2005-03-14T00:00:00.000Z","dataset_id":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","data_center":"FTP_DIRECT","short_name":"CANEMRCCRSBAPMN","organizations":["CA/EC/MSC"],"title":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","coordinate_system":"CARTESIAN","summary":"This
+        dataset includes measurements of greenhouse gases. Variables: CO2\n(all),
+        CH4, CFC''s, N2O (Alert). The data covers the West Coast-Estevan Point,\nthe
+        East Coast-Sable Island, and Arctic-Alert.\n\n         This data is currently
+        applied to the analysis of temporal trends in\ngreenhouse gases and atmospheric
+        processes related to sources and sinks to\nbetter predict climate impacts
+        and changes.\n\nSpatial Data Organization Information -\n\n    Indirect Spatial
+        Reference:\n    Direct Spatial Reference: Point (Lat./Long. Coordinates)\nSpatial
+        Reference Information -\nHorizontal Coordinate System Definition -\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1212765606-FTP_DIRECT","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["43
+        -135 82 -59"],"time_start":"1975-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSBAPMN"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","data_center":"GCMDTEST","short_name":"CANEMRCCRSBAPMN","organizations":["CA/EC/MSC"],"title":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","coordinate_system":"CARTESIAN","summary":"This
+        dataset includes measurements of greenhouse gases. Variables: CO2\n(all),
+        CH4, CFC''s, N2O (Alert). The data covers the West Coast-Estevan Point,\nthe
+        East Coast-Sable Island, and Arctic-Alert.\n\n         This data is currently
+        applied to the analysis of temporal trends in\ngreenhouse gases and atmospheric
+        processes related to sources and sinks to\nbetter predict climate impacts
+        and changes.\n\nSpatial Data Organization Information -\n\n    Indirect Spatial
+        Reference:\n    Direct Spatial Reference: Point (Lat./Long. Coordinates)\nSpatial
+        Reference Information -\nHorizontal Coordinate System Definition -\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204499940-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["41
+        -70 84 -50"],"time_start":"1984-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSCAN-AM"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Bow
+        Drill3 CAN-AM Data for Various Drilling Locations off the Canadian East Coast         ","data_center":"GCMDTEST","short_name":"CANEMRCCRSCAN-AM","organizations":["CA/EC/MSC"],"title":"           Bow
+        Drill3 CAN-AM Data for Various Drilling Locations off the Canadian East Coast         ","coordinate_system":"CARTESIAN","summary":"This
+        data set contains CAN-AM environmental monitoring network\ninformation for
+        various drilling locations off the Canadian East Coast. Normal\nand intensive
+        synoptic mode observations include wind, air temperature and\nbarometric pressure,
+        sea temperature, wave height, and rig heading and rig\nheave, pitch and roll
+        for the years 1984 to 1987.\n\nSpatial Data Organization Information -\n\n    Indirect
+        Spatial Reference:\n    Direct Spatial Reference: Point (Lat./Long. Coordinates)\nSpatial
+        Reference Information -\nHorizontal Coordinate System Definition -\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"time_end":"1987-11-01T00:00:00.000Z","orbit_parameters":{},"id":"C1204531810-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["44
+        -95 61 -52"],"time_start":"1907-01-02T00:00:00.000Z","dif_ids":["Canada_CFS_NatlForestPhotos"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Canadian
+        National Forestry Photograph Collection - Atlantic and Petawawa Components         ","data_center":"GCMDTEST","short_name":"Canada_CFS_NatlForestPhotos","organizations":["CA/NRCAN/CFS/AFC"],"title":"           Canadian
+        National Forestry Photograph Collection - Atlantic and Petawawa Components         ","coordinate_system":"CARTESIAN","summary":"Forestry
+        photographs of experimental trials, properties, and prominent\nhistorical
+        figures.  The collection consists of several thousand photos of\nhistorical
+        significance, most in good condition.\n\n         To document significant
+        locations, tree species, insect and disease\nconditions, and people in the
+        Canadian forestry domain.\n\nSpatial Data Organization Information -\n\n    Indirect
+        Spatial Reference:\n    Direct Spatial Reference:\nSpatial Reference Information
+        -\n     Horizontal Coordinate System Definition -\n\nPlanar -\n\n\n\n\n    Planar
+        Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:\n\nFees: Please consult distributor.  Professional photographic
+        reproduction\nfees apply.","has_granules":false,"time_end":"1952-08-11T00:00:00.000Z","orbit_parameters":{},"id":"C1204554731-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["30
+        -70 70 -15"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["DFO_BIO_NB_LS_ATLAS"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Computer
+        Oceanographic Atlas of Newfoundland Basin and Labrador Sea         ","data_center":"GCMDTEST","short_name":"DFO_BIO_NB_LS_ATLAS","organizations":["CA/DFO/MR/SB/OSD"],"title":"           Computer
+        Oceanographic Atlas of Newfoundland Basin and Labrador Sea         ","coordinate_system":"CARTESIAN","summary":"The
+        Computer Atlas of the Newfoundland Basin and Labrador Sea was\n      designed
+        to make simple, fast and reliable access to large volumes of\n      historical
+        and real time oceanographic data. The choice of the Newfoundland\n      Basin
+        and Labrador Sea was motivated by their importance in the entire North\n      Atlantic
+        circulation and water mass formation, the existence of various water\n      masses
+        and sharp fronts, indications of significant temporal and spatial\n      changes
+        in the water mass properties, intense air-sea interaction and dense\n      coverage
+        with oceanographic data of various types.\n      \n               The Atlas
+        operates with different types of oceanographic data:\n      conductivity-temperature-depth
+        (CTD), water bottle, expendable bathythermograph\n      (XBT), current meter,
+        floats, etc. The sources of the data are: - Bedford\n      Institute of Oceanography
+        (BIO) cruises, - World Ocean Circulation Experiment\n      (WOCE) cruises,
+        - Russian SECTIONS program carried by State Oceanographic\n      Institute,
+        and P.P. Shirshov Institute of Oceanology (SOI, PPS, Moscow,\n      Russia),\n      -
+        Obninsk World Data Center (WDC, Obninsk, Russia), - NOAA National\n      Oceanographic
+        Data Center (NODC, Washington, USA), - Marine Environmental Data\n      Service
+        (MEDS, Ottawa, Canada).\n      \n               The Atlas integrates the advantages
+        of databases and paper atlases,\n      allowing the user to solve complex
+        tasks (such as, T-S or time series analysis\n      for specified regions,
+        sections or points) in a simple way avoiding complex\n      queries for data
+        and algorithms. It performs data selection, processing,\n      analysis and
+        visualization in different oceanographic coordinates. The Atlas\n      locates
+        data from a simple query, produces plots (field, section, etc.), and\n      runs
+        different statistical and oceanographic applications. It offers an\n      optional
+        selection of procedures for objective analysis, interpolation,\n      averaging,
+        smoothing and subsampling of data and results. Scale-independence is\n      one
+        of its features, allowing users to work on different spatial and temporal\n      scales,
+        and adjust the working environment for their own needs and\n      requirements.
+        Users can easily load other data sets, change regions and attach\n      their
+        own procedures.\n      \n               The Atlas has been used for data analysis,
+        preparation of fields to\n      initialize hydrodynamic models and various
+        comparisons of property\n      distributions based on ''real'' data and results
+        of modeling.\n      \n      Spatial Data Organization Information -\n      \n          Indirect
+        Spatial Reference:\n          Direct Spatial Reference:\n      Spatial Reference
+        Information -\n           Horizontal Coordinate System Definition -\n      \n      Planar
+        -\n      \n          Planar Coordinate Encoding Method:\n          Coordinate
+        Representation:\n           Abscissa Resolution:\n           Ordinate Resolution:\n          Distance
+        and Bearing Representation:\n           Distance Resolution:\n           Bearing
+        Resolution:\n           Bearing Units:\n           Bearing Reference Direction:\n           Bearing
+        Reference Meridian:\n          Planar Distance Units:\n      \n         Geodetic
+        Model:\n           Horizontal Datum Name:\n          Ellipsoid Name:\n          Semi-major
+        Axis:\n          Denominator of Flattening Ratio:","has_granules":false,"time_end":"1995-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1204578031-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["41.5
+        -141 84 -52"],"time_start":"1996-01-01T00:00:00.000Z","dif_ids":["Canada_AAFC_Eco"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Ecozones,
+        Ecoprovinces, Ecoregions, and Ecodistricts of Canada         ","data_center":"GCMDTEST","short_name":"Canada_AAFC_Eco","organizations":["CA/AGR/ECORC"],"title":"           Ecozones,
+        Ecoprovinces, Ecoregions, and Ecodistricts of Canada         ","coordinate_system":"CARTESIAN","summary":"In
+        1991 a collaborative project was undertaken by a number of federal\nagencies
+        in cooperation with provincial and territorial governments, all under\nthe
+        auspices of the Ecological Stratification Working Group, to revise previous\nwork
+        and establish a common ecological framework for Canada. The working group\nfocused
+        on three priority levels of stratification, namely ecozones,\necoregions,
+        and ecodistricts.  The resulting national report \"A National\nEcological
+        Framework for Canada\" was released by the Ecological Stratification\nWorking
+        Group in 1996.   This dataset is the product of that work, as well as\nthe
+        intermediate ecoprovinces framework, and represents the official definition\nof
+        those boundaries for Canada.\n\n         The national ecological framework
+        provides a consistent, national\nspatial context within which ecosystems at
+        various levels of generalization can\nbe described, monitored, and reported
+        on. The use of such a framework of\nstandard ecological units provides for
+        common communication and reporting\nbetween different jurisdictions and disciplines,
+        and provides a common ground\nto report on the state of the environment and
+        the sustainability of ecosystems\nin Canada.\n\nSpatial Data Organization
+        Information -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:\nSpatial
+        Reference Information -\n     Horizontal Coordinate System Definition -\n\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"time_end":"2002-03-25T00:00:00.000Z","orbit_parameters":{},"id":"C1204585615-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["48
+        -139 60 -114"],"time_start":"1909-01-01T00:00:00.000Z","dif_ids":["Canada_PFC_FHNABCPestData"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Forest
+        Health Network Archives - Pest Data for British Columbia, Canada         ","data_center":"GCMDTEST","short_name":"Canada_PFC_FHNABCPestData","organizations":["CA/NRCAN/CFS/PFC"],"title":"           Forest
+        Health Network Archives - Pest Data for British Columbia, Canada         ","coordinate_system":"CARTESIAN","summary":"Aerial
+        detection surveys are intended to detect new activity, to\n      monitor the
+        trend of ongoing activity, to provide general location information,\n      and
+        to subjectively rate levels of defoliation.  Manually mapping such activity\n      has
+        quantitative and locator accuracy limitations and does not maintain the\n      accuracy
+        standards as most data found in GIS databases.\n      \n               Aerial
+        detection pest surveys are generally carried out from fixed\n      wing aircraft
+        where observers manually sketch each infestation site onto\n      1:100000
+        to 1:250000 scale basemaps. The observers sketch infestation sites by\n      drawing
+        polygons around the outer perimeter of the infested area on the map. \n      Ground
+        checks and other sampling methods are carried out to evaluate the\n      subjective
+        ratings.\n      \n               Data acquisition is conducted by Provincial
+        governments and data is\n      passed to the Pacific Forestry Centre for archiveing.
+        New coverages are added\n      as available.\n      \n               To detect
+        and monitor annual, visible vegetation damage primarily\n      caused by insects.\n      \n      Spatial
+        Data Organization Information -\n      \n          Indirect Spatial Reference:\n          Direct
+        Spatial Reference:\n      Spatial Reference Information -\n           Horizontal
+        Coordinate System Definition -\n      \n      Planar -\n      \n      \n      \n      \n          Planar
+        Coordinate Encoding Method:\n          Coordinate Representation:\n           Abscissa
+        Resolution:\n           Ordinate Resolution:\n          Distance and Bearing
+        Representation:\n           Distance Resolution:\n           Bearing Resolution:\n           Bearing
+        Units:\n           Bearing Reference Direction:\n           Bearing Reference
+        Meridian:\n          Planar Distance Units:\n      \n         Geodetic Model:\n           Horizontal
+        Datum Name:\n          Ellipsoid Name:\n          Semi-major Axis:\n          Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204566756-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://cfs.nrcan.gc.ca/regions/pfc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["41
+        -95 56 -75"],"time_start":"1950-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSFIDSONT"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Forest
+        Insect and Disease Survey of Canada - Ontario Region Infobase         ","data_center":"GCMDTEST","short_name":"CANEMRCCRSFIDSONT","organizations":["CA/NRCAN/CFS/GLFC"],"title":"           Forest
+        Insect and Disease Survey of Canada - Ontario Region Infobase         ","coordinate_system":"CARTESIAN","summary":"The
+        dataset includes insect and disease damage - defoliation\n                  histories,
+        incidence of insect and/or disease.  Forest health - drought damage,\n                  regions
+        of decline (mapped), and acid precipitation damage.  Value added\n                  thematic
+        data obtained by field measurements and aerial mapping (manual).\n                  \n                           This
+        data is applied to accumulate historical information on\n                  occurrence
+        and damage caused by forest insects and disease; accumulate\n                  information
+        on forest health on an annual basis.  Potential applications:\n                  prediction
+        of insect/disease outbreaks; assessment of impact on forest yield.\n                  \n                  Spatial
+        Data Organization Information -\n                  \n                      Indirect
+        Spatial Reference: Administrative Units\n                      Direct Spatial
+        Reference: Point (Latitude / Longitude and Rectangular Grid)\n                  Spatial
+        Reference Information -\n                  Horizontal Coordinate System Definition
+        -\n                  Planar -\n                  \n                        Map
+        Projection Name: Lambert Conformal Conic\n                  \n                  \n                  \n                      Planar
+        Coordinate Encoding Method:\n                      Coordinate Representation:\n                       Abscissa
+        Resolution:\n                       Ordinate Resolution:\n                      Distance
+        and Bearing Representation:\n                       Distance Resolution:\n                       Bearing
+        Resolution:\n                       Bearing Units:\n                       Bearing
+        Reference Direction:\n                       Bearing Reference Meridian:\n                      Planar
+        Distance Units:\n                  \n                     Geodetic Model:\n                       Horizontal
+        Datum Name:\n                      Ellipsoid Name:\n                      Semi-major
+        Axis:\n                      Denominator of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204576109-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["52
+        -95 65 -75"],"time_start":"1969-08-07T00:00:00.000Z","dif_ids":["Canada_NEB_FrontWellHudsonBay"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Frontier
+        Well Data for Hudson Bay - National Energy Board, Canada         ","data_center":"GCMDTEST","short_name":"Canada_NEB_FrontWellHudsonBay","organizations":["CA/NEB"],"title":"           Frontier
+        Well Data for Hudson Bay - National Energy Board, Canada         ","coordinate_system":"CARTESIAN","summary":"This
+        data set contains information on the location of wells drilled in\nthe Hudson
+        Bay Frontier areas regulated by the National Energy Board for which\nreports
+        and data are no longer privileged. The information is supplied by\nindustry
+        pursuant to the Canada Oil and Gas Operations Act. Associated\ninformation
+        may include well history reports, well logs, petrologic reports,\nvelocity
+        surveys, micropaleontological reports, well test reports, core\nanalysis and
+        so on.\n\n         The information is provided publicly, pursuant to the Canada
+        Petroleum\nResources Act to promote safety of workers, protection of the environment,\nconservation
+        of the hydrocarbon resources and to increase scientific knowledge\nand efficient
+        utilization of hydrocarbon resources. The principle uses are\nexpected to
+        be the planning of hydrocarbon exploration programs and\nproduction operations,
+        and scientific research, particularly geological\nstratigraphy and tectonics.\n\nSpatial
+        Data Organization Information -\n\n    Indirect Spatial Reference:\n    Direct
+        Spatial Reference:\nSpatial Reference Information -\n     Horizontal Coordinate
+        System Definition -\n\nPlanar -\n\n    Planar Coordinate Encoding Method:\n    Coordinate
+        Representation:\n     Abscissa Resolution:\n     Ordinate Resolution:\n    Distance
+        and Bearing Representation:\n     Distance Resolution:\n     Bearing Resolution:\n     Bearing
+        Units:\n     Bearing Reference Direction:\n     Bearing Reference Meridian:\n    Planar
+        Distance Units:\n\n   Geodetic Model:\n     Horizontal Datum Name:\n    Ellipsoid
+        Name:\n    Semi-major Axis:\n    Denominator of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204569547-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -135 55 -125"],"time_start":"1967-06-11T00:00:00.000Z","dif_ids":["Canada_NEB_FrontWellOffWCoast"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Frontier
+        Well Data for Offshore West Coast - National Energy Board, Canada         ","data_center":"GCMDTEST","short_name":"Canada_NEB_FrontWellOffWCoast","organizations":["CA/NEB"],"title":"           Frontier
+        Well Data for Offshore West Coast - National Energy Board, Canada         ","coordinate_system":"CARTESIAN","summary":"This
+        data set contains information on the location of wells drilled in\nthe Offshore
+        West Coast Frontier areas regulated by the National Energy Board\nfor which
+        reports and data are no longer privileged. The information is\nsupplied by
+        industry pursuant to the Canada Oil and Gas Operations Act.\nAssociated information
+        may include well history reports, well logs, petrologic\nreports, velocity
+        surveys, micropaleontological reports, well test reports,\ncore analysis and
+        so on.\n\n         The information is provided publicly, pursuant to the Canada
+        Petroleum\nResources Act to promote safety of workers, protection of the environment,\nconservation
+        of the hydrocarbon resources and to increase scientific knowledge\nand efficient
+        utilization of hydrocarbon resources. The principle uses are\nexpected to
+        be the planning of hydrocarbon exploration programs and\nproduction operations,
+        and scientific research, particularly geological\nstratigraphy and tectonics.\n\nSpatial
+        Data Organization Information -\n\n    Indirect Spatial Reference:\n    Direct
+        Spatial Reference:\nSpatial Reference Information -\n     Horizontal Coordinate
+        System Definition -\n\nPlanar -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate
+        Representation:\n     Abscissa Resolution:\n     Ordinate Resolution:\n    Distance
+        and Bearing Representation:\n     Distance Resolution:\n     Bearing Resolution:\n     Bearing
+        Units:\n     Bearing Reference Direction:\n     Bearing Reference Meridian:\n    Planar
+        Distance Units:\n\n   Geodetic Model:\n     Horizontal Datum Name:\n    Ellipsoid
+        Name:\n    Semi-major Axis:\n    Denominator of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204569576-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["45
+        -68 49 -64"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSGRWATER"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Ground
+        Water Levels at Selected Sites in New Brunswick, Canada         ","data_center":"GCMDTEST","short_name":"CANEMRCCRSGRWATER","organizations":["CA/NB/ELG"],"title":"           Ground
+        Water Levels at Selected Sites in New Brunswick, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        purpose of this database is to measure fluctuations in groundwater\nlevels
+        at selected sites in New Brunswick. The water level information\nindicates
+        depth below ground level and elevation of water level referenced to\ngeodetic
+        datum.\n\n         Data is available monthly for a 12-year period ending April
+        1, 1992,\nwhen the program was discontinued due to a budget reduction measure.
+        Data\ncollection is now (2001) being reinstated, with two monitoring stations
+        now\noperating.\n\n         Thirty-seven monitoring stations in New Brunswick
+        provided water\nlevels measured using chart recorders and data loggers with
+        the data directly\ndownloaded via modems to the office. The baseline stations
+        monitoring the\ngroundwater provided data reflecting natural fluctuations
+        with respect to\nclimate, topography and geology. The water management stations
+        data reflected\nthe pumping activity in municipal wellfields.\n\n         The
+        purpose of this database is to measure fluctuations in groundwater\nlevels
+        at selected sites in New Brunswick.\n\nSpatial Data Organization Information
+        -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:\nSpatial
+        Reference Information -\nHorizontal Coordinate System Definition -\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204529135-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["48.8
+        -57.5 49.08 -57.23"],"time_start":"1993-03-01T00:00:00.000Z","dif_ids":["Canada_CFS_InFER-Nfld"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Inter-disciplinary
+        Forest Ecosystem Research (InFER), Newfoundland, Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_InFER-Nfld","organizations":["CA/NRCAN/CFS/AFC"],"title":"           Inter-disciplinary
+        Forest Ecosystem Research (InFER), Newfoundland, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        Inter-disciplinary Forest Ecosystem Research (InFER) project was\nestablished
+        in 1993 to determine the effects of harvesting and silvicultural\npractices
+        on boreal forest ecosystems.  The inter-disciplinary nature of the\nproject
+        promotes sharing of resources and common environmental data, as well as\ncoordinated
+        documentation of ecosystem parameters.\n\n         The InFER research project
+        is located at Horseshoe Brook which was\nburned in 1998, and Glide Lake which
+        was burned and planted in 1993.  Both\nlocations are found in Western Newfoundland.\n\n         Collaborators
+        in the InFER Project are:\n\n         Natural Resources Canada, Canadian Forest
+        Service, Atlantic Forestry\nCentre\n         University of Helsinki, Helsinki,
+        Finland\n         Finnish Forest Research Institute, Vantaa, Finland\n         Technische
+        Universitat Dresden, Tharandt, Germany\n         Nipissing University, Ontario\n         Newfoundland
+        Forest Service, Department of Forestry and Agrifoods\n         Corner Brook
+        Pulp and Paper Company Limited\n         Memorial University of Newfoundland\n\n         The
+        InFER project is part of the Forest Ecosystem Research Network of\nSites (FERNS)
+        and is one of eight sites representing the Boreal Shield Ecozone.\n It should
+        be noted that the InFER project is listed under the title Glide Lake\n(Western
+        Newfoundland) for FERNS.\n\n         This integrated approach to ecosystem
+        research will contribute\nsignificantly to our understanding of forest ecosystems
+        and facilitate the\ncreation of sound forest ecosystem practices that will
+        enhance our efforts in\nrealizing the goal of forest ecosystem sustainability
+        in Canada.\n\nSpatial Data Organization Information -\n\n    Indirect Spatial
+        Reference:\n    Direct Spatial Reference:\nSpatial Reference Information -\n     Horizontal
+        Coordinate System Definition -\n\nPlanar -\n\n\n\n\n    Planar Coordinate
+        Encoding Method:\n    Coordinate Representation:\n     Abscissa Resolution:\n     Ordinate
+        Resolution:\n    Distance and Bearing Representation:\n     Distance Resolution:\n     Bearing
+        Resolution:\n     Bearing Units:\n     Bearing Reference Direction:\n     Bearing
+        Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic Model:\n     Horizontal
+        Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator of
+        Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204567816-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["48.4
+        -131.3 55.3 -116.5"],"time_start":"1984-07-17T00:00:00.000Z","dif_ids":["Canada_CFS_LandsatImages"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           LANDSAT
+        5 Thematic Mapper Imagery from SEIDAM, British Columbia, Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_LandsatImages","organizations":["CA/NRCAN/CFS/PFC"],"title":"           LANDSAT
+        5 Thematic Mapper Imagery from SEIDAM, British Columbia, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        LANDSAT 5 sensor was launched on March 1, 1984. A full Thematic\nMapper (TM)  scene
+        covers about 185 by 174 kilometers in seven channels, with a\nnominal resolution
+        of 30 meters (120 by 120 meters for thermal channel 6).\n\n         The SEIDAM
+        Project, through which the LANDSAT 5 Thematic Mapper\nImagery is channelled,
+        commenced in October 1991 at the Pacific Forestry Centre\nunder the sponsorship
+        of the NASA Applied Information Systems Research Program\n(AISRP).  The objective
+        of SEIDAM is: to create a System of Experts for\nIntelligent Data Management
+        (SEIDAM) which will integrate remote sensing data\nfrom satellites and aircraft
+        with geographic information systems and manage\nlarge archives of remotely
+        sensed data for dynamic selection of data sources\nand sensor characteristics
+        for query-based recognition of forest objects\nappropriate for environmental
+        forest monitoring.\n\nSpatial Data Organization Information -\n\n    Indirect
+        Spatial Reference:\n    Direct Spatial Reference: Raster\nSpatial Reference
+        Information -\n     Horizontal Coordinate System Definition -\n\nPlanar -\n\n\n\n\n    Planar
+        Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"time_end":"1995-07-16T00:00:00.000Z","orbit_parameters":{},"id":"C1204565745-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["39.38824
+        -71.324554 73.959496 -39.19807"],"time_start":"1929-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRS_MARINE_CHEM"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Marine
+        Chemistry Data from the Northwest Atlantic and Maritimes Region of Canada         ","data_center":"GCMDTEST","short_name":"CANEMRCCRS_MARINE_CHEM","organizations":["CA/DFO"],"title":"           Marine
+        Chemistry Data from the Northwest Atlantic and Maritimes Region of Canada         ","coordinate_system":"CARTESIAN","summary":"These
+        data are contained in either the Regional BioChem or National\nNCIS databases\n\n         This
+        dataset includes data related to contaminants in fish and in fish\nhabitat
+        collected by the Marine Chemistry Division.\n\n         Geographical Coverage/Scale:
+        DFO Maritimes Region; Atlantic Provinces\n- offshore and coastal areas including
+        the region from George''s Bank to the\nLabrador Shelf.\n\n         Period
+        of Record/Update Frequency: 1929 to present/Variable.\n\n         Data Types/Parameters
+        Measured: Physical, Chemical/ Dissolved oxygen,\nsalinity, temperature; trace
+        metals, radionuclides, organic matter, petroleum\nhydrocarbons, nutrients.\n\n         Sampling
+        Procedures: Oceanographic Cruises - water column samplers,\ngrab samplers
+        for sediments. Coastal and freshwater survey results (water and\nsediments).
+        Coring for geochronological measurements.\n\n         Program Type: Research,
+        monitoring and survey.\n\n         Good baseline data for offshore areas,
+        radionuclide data collected\nnear the Pt. Lepreau Nuclear Power Station; Contaminant
+        investigations at\nselected impacted sites.\n\nSpatial Data Organization Information
+        -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:\nSpatial
+        Reference Information -\n     Horizontal Coordinate System Definition -\n\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204495682-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["45.25
+        -116.04 50.59 -114.57"],"time_start":"1991-09-01T00:00:00.000Z","dif_ids":["Canada_CFS_LodgepolePineBC"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Mature
+        Lodgepole Pine Management Study, British Columbia, Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_LodgepolePineBC","organizations":["CA/NRCAN/CFS/PFC"],"title":"           Mature
+        Lodgepole Pine Management Study, British Columbia, Canada         ","coordinate_system":"CARTESIAN","summary":"Lodgepole
+        pine stands make up an important part of the forest cover in\nthe interior
+        of British Columbia, consistently providing nearly 25% of total\nforest product
+        values produced annually in the province, and dominating\nlandscapes important
+        for many values and to many users. Because of the current\nage-class distribution
+        and history of heavy mortality to mountain pine beetle\nepidemics in overmature
+        stands, it is important to develop silvicultural\napproaches, such as commercial
+        thinning and fertilization, to manage maturing\nlodgepole pine stands.\n\n         Partial-cutting
+        and fertilization of 70 to 100 year old stands may\nreduce stand susceptibility
+        to epidemic attack by mountain pine beetle and\nprovide access to fibre while
+        allowing maintenance of mature forest cover in\ncritical wildlife habitat,
+        community watersheds and viewsheds that will benefit\nmany users.\n\n         This
+        study, in the East Kootenays of British Columbia, is a\nmulti-disciplinary,
+        long-term research study of 20 years which is designed to\nevaluate the effects
+        of partial-cutting and fertilization of lodgepole pine on\nresidual stand
+        condition and growth, insect activity, regeneration processes,\nand non-timber
+        values.\n\n         Partners in the Mature Lodgepole Pine Management Study
+        are:\n\n         Canadian Forest Service, Natural Resources Canada\n         Crestbrook
+        Forest Industries Ltd.\n         Forest Engineering Research Institute of
+        Canada\n         Forest Renewal B.C.\n         Galloway Lumber Company Ltd.\n         Ministry
+        of Forests, Province of British Columbia\n\n         The overall objectives
+        of the Mature Lodgepole Pine Management Study\nare to determine:\n\n         1.
+        if fibre recovery is economically feasible with current technology;\n         2.
+        how tree and stand susceptibility to attack by mountain pine beetle\nand other
+        insects is affected;\n         3. if residual stand growth responses will
+        increase yield or value at\nthe end of this rotation;\n         4. how wildlife
+        habitat and domestic forage values are affected;\n         5. if conversion
+        to mixed species shelterwood management is possible\nthrough release of advanced
+        regeneration or underplanting thinned stands.\n\nSpatial Data Organization
+        Information -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:\nSpatial
+        Reference Information -\n     Horizontal Coordinate System Definition -\n\nPlanar
+        -\n\n\n\n\n    Planar Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204567806-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["60.184
+        -123.18 60.195 -123.15"],"time_start":"1994-02-01T00:00:00.000Z","dif_ids":["Canada_CFS_MuskegRiverForest"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Muskeg
+        River Forest Demonstration Area, Fort Liard, Northwest Territories, Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_MuskegRiverForest","organizations":["CA/NRCAN/CFS/NOFC"],"title":"           Muskeg
+        River Forest Demonstration Area, Fort Liard, Northwest Territories, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        Muskeg River Forest Demonstration Area was established as a\n            co-operative
+        venture with the local Acho Dene Koe and Band; the Northwest\n            Territories
+        Department of Resources, Wildlife, and Economic Development; and\n            Natural
+        Resources Canada as represented by the Canadian Forest Service.\n            \n                     The
+        demonstration area is comprised of eight various clear-cut and\n            partial-cut
+        silviculture systems in a total of 18 blocks which profile\n            conventional
+        harvest technology in both conventional and innovative partial\n            harvest
+        systems.  A total of 58 permanent sample plots have been established\n            within
+        the various blocks.  These are presently being monitored to evaluate\n            growth
+        response of the various treatments which include site preparation,\n            regeneration,
+        and vegetation management techniques.  The 11.5 kms of\n            interpretive
+        trails emphasize the ecological aspects of the sites, as well as\n            the
+        applied research studies and traditional uses of the land.\n            \n                     The
+        Muskeg River Forest Demonstration Area has also been designated a\n            Forest
+        Ecosystem Research Network (FERN) site.\n            \n                     The
+        primary objective of this project is to demonstrate for the local\n            community
+        and forest managers, the displaying and monitoring of traditional use\n            and
+        advanced level commercial forest management applications.\n            \n                     The
+        secondary objective is the creation of an information and\n            interpretive
+        trail system through the various forest stands and silviculture\n            treatments,
+        for the long term use of all interested groups.\n            \n            Spatial
+        Data Organization Information -\n            \n                Indirect Spatial
+        Reference:\n                Direct Spatial Reference:\n            Spatial
+        Reference Information -\n                 Horizontal Coordinate System Definition
+        -\n            \n            Planar -\n            \n            \n            \n            \n                Planar
+        Coordinate Encoding Method:\n                Coordinate Representation:\n                 Abscissa
+        Resolution:\n                 Ordinate Resolution:\n                Distance
+        and Bearing Representation:\n                 Distance Resolution:\n                 Bearing
+        Resolution:\n                 Bearing Units:\n                 Bearing Reference
+        Direction:\n                 Bearing Reference Meridian:\n                Planar
+        Distance Units:\n            \n               Geodetic Model:\n                 Horizontal
+        Datum Name:\n                Ellipsoid Name:\n                Semi-major Axis:\n                Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204567817-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["43
+        -69 62 -45"],"time_start":"1972-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRS_ORGANOCHL_SEALS"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Organochlorine
+        Contaminant Residues and Transfers from Mother to Young in Seals, Canada         ","data_center":"GCMDTEST","short_name":"CANEMRCCRS_ORGANOCHL_SEALS","organizations":["CA/DFO"],"title":"           Organochlorine
+        Contaminant Residues and Transfers from Mother to Young in Seals, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        data is available from 1972 to the present. Samples are collected\n      in
+        the field with an annual growth of 30 records per site per year.\n      \n               The
+        area of coverage includes the Eastern Canadian Offshore, Sable\n      Island,
+        Gulf of St. Lawrence, Scotian Shelf and the Arctic.\n      \n               Parameters
+        measured include: Chemical, DDT, PCB, Mixed-Function\n      Oxidase - enzyme
+        activity in organs such as liver as a result of contaminant\n      exposure.\n      \n               Comments:
+        Confidence in data is high. Contaminant body burdens also\n      related to
+        age and sex of individuals in each species. Research on physiology,\n      energetics
+        and biomechanics of marine mammals and their role in understanding\n      the
+        accumulation, processing, and transfer of contaminants.\n      \n               Archived
+        in DFOs National NCIS database\n      \n               The purpose of this
+        database is to examine the degree that body\n      burdens reflect background
+        levels of contaminants and to study extent to which\n      plasma and mammary
+        tissue acts as a barrier to the transfer of contaminants.\n      \n      Spatial
+        Data Organization Information -\n      \n          Indirect Spatial Reference:\n          Direct
+        Spatial Reference:\n      Spatial Reference Information -\n           Horizontal
+        Coordinate System Definition -\n      \n      Planar -\n      \n      \n      \n      \n          Planar
+        Coordinate Encoding Method:\n          Coordinate Representation:\n           Abscissa
+        Resolution:\n           Ordinate Resolution:\n          Distance and Bearing
+        Representation:\n           Distance Resolution:\n           Bearing Resolution:\n           Bearing
+        Units:\n           Bearing Reference Direction:\n           Bearing Reference
+        Meridian:\n          Planar Distance Units:\n      \n         Geodetic Model:\n           Horizontal
+        Datum Name:\n          Ellipsoid Name:\n          Semi-major Axis:\n          Denominator
+        of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204421218-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["48
+        -139 60 -114"],"time_start":"1901-08-15T00:00:00.000Z","dif_ids":["Canada_CFS_PathologyHerbarium"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Pacific
+        Forestry Centre Forest Pathology Herbarium Collections Database, British Columbia,
+        Canada         ","data_center":"GCMDTEST","short_name":"Canada_CFS_PathologyHerbarium","organizations":["CA/NRCAN/CFS/PFC"],"title":"           Pacific
+        Forestry Centre Forest Pathology Herbarium Collections Database, British Columbia,
+        Canada         ","coordinate_system":"CARTESIAN","summary":"This database
+        currently holds over 21,000 records for the 35,300\n            specimens
+        housed at Pacific Forestry Centre''s Forest Pathology Herbarium\n            (abbreviated
+        as DAVFP), and may be searched by several different parameters.\n            The
+        data are organized under such fields as \"Fungus,\" \"Host,\" \"Determiner\"\n            (person
+        making the identification), or \"Collector\", as well as other\n            categories.  Clicking
+        a radio button designating the first letter of the\n            subject further
+        narrows these fields.  This executes a search of the database,\n            which
+        returns an updated short list of names to choose from.  One of these\n            names
+        may then be selected to obtain data on individual specimens matching\n            these
+        criteria.  Currently, synonyms (outdated Latin binomials) are not linked,\n            so
+        the searcher should be aware of the taxonomic and nomenclatural history of\n            the
+        species he or she is interested in.  If there is geographic (UTM,\n            Latitude/Longitude)
+        information available for the record, the searcher can\n            click
+        on a link which will draw a map showing the collection location.  A\n            distribution
+        map of all of the collection locations in a particular search may\n            also
+        be generated, by scrolling to the end of the list and clicking the\n            \"submit\"
+        button there.  Searches may also be conducted on \"Locality\" (nearest\n            town
+        or drainage division), DAVFP number, or year of collection.\n            \n                     This
+        database is used to manage the 35,300 specimens of forest\n            diseases
+        and fungi stored in Pacific Forestry Centre''s Forest Pathology\n            Herbarium.  These
+        35,300 specimens include healthy plant specimens (for\n            reference
+        purposes) as well as surplus specimens and those available for\n            exchange.   One
+        of the primary uses of DAVFP is for depositing voucher\n            collections
+        of new disease distribution records.  These specimens provide\n            current
+        and future researchers with the material to confirm published\n            host-fungus
+        distribution records or reexamine them in the context of new\n            taxonomic
+        information and research techniques.  Over 140 type specimens are\n            also
+        deposited in DAVFP.  Systematists, naturalists, foresters, and other\n            interested
+        individuals can browse the database to rapidly determine which\n            species
+        of fungi are housed in the herbarium, and when and where they were\n            collected.\n            \n            Spatial
+        Data Organization Information -\n            \n                Indirect Spatial
+        Reference:\n                Direct Spatial Reference:\n            Spatial
+        Reference Information -\n                 Horizontal Coordinate System Definition
+        -\n            \n            Planar -\n            \n            \n            \n            \n                Planar
+        Coordinate Encoding Method:\n                Coordinate Representation:\n                 Abscissa
+        Resolution:\n                 Ordinate Resolution:\n                Distance
+        and Bearing Representation:\n                 Distance Resolution:\n                 Bearing
+        Resolution:\n                 Bearing Units:\n                 Bearing Reference
+        Direction:\n                 Bearing Reference Meridian:\n                Planar
+        Distance Units:\n            \n               Geodetic Model:\n                 Horizontal
+        Datum Name:\n                Ellipsoid Name:\n                Semi-major Axis:\n                Denominator
+        of Flattening Ratio:\n            \n            There is no cost for searching
+        the Herbarium database through the\n            network resource address.   Please
+        contact distributor(s) for associated fees\n            when seeking database
+        access using alternative formats.","has_granules":false,"orbit_parameters":{},"id":"C1204566644-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://cfs.nrcan.gc.ca/regions/pfc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -67.7 60 -52"],"time_start":"1991-01-01T00:00:00.000Z","dif_ids":["Canada_NfldLab_ProvAgriAtlas"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Provincial
+        Agricultural Atlas, 1:250,000, Newfoundland and Labrador, Canada         ","data_center":"GCMDTEST","short_name":"Canada_NfldLab_ProvAgriAtlas","organizations":["CA/NFLD/FRA/SOIL"],"title":"           Provincial
+        Agricultural Atlas, 1:250,000, Newfoundland and Labrador, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        Provincial Agricultural Atlas provides the locations, boundaries,\nland uses,
+        soil types and other details of farms in Newfoundland and Labrador.\nThe Atlas
+        provides information on berry management units, agricultural\ndevelopment
+        sites, pastures, Christmas tree farms, fur farms, and more, at a\n1:250,000
+        scale.\n\n         The Provincial Agricultural Atlas provides an overview
+        of agricultural\nactivities in Newfoundland and Labrador.\n\nSpatial Data
+        Organization Information -\n\n    Indirect Spatial Reference:\n    Direct
+        Spatial Reference: Vector\nSpatial Reference Information -\n     Horizontal
+        Coordinate System Definition -\n\nPlanar -\n\n\n\n\n    Planar Coordinate
+        Encoding Method:\n    Coordinate Representation:\n     Abscissa Resolution:\n     Ordinate
+        Resolution:\n    Distance and Bearing Representation:\n     Distance Resolution:\n     Bearing
+        Resolution:\n     Bearing Units:\n     Bearing Reference Direction:\n     Bearing
+        Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic Model:\n     Horizontal
+        Datum Name:\n    Ellipsoid Name:\n    Semi-major Axis:\n    Denominator of
+        Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204582829-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -67.7 60 -52"],"time_start":"1984-12-31T00:00:00.000Z","dif_ids":["Canada_NfldLab_ForestInventory"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"           Provincial
+        Forest Inventory, Newfoundland and Labrador, Canada         ","data_center":"GCMDTEST","short_name":"Canada_NfldLab_ForestInventory","organizations":["CA/NFLD/FRA/FB"],"title":"           Provincial
+        Forest Inventory, Newfoundland and Labrador, Canada         ","coordinate_system":"CARTESIAN","summary":"This
+        database contains vegetation information for both forested and\nnon-forested
+        areas. For forested areas this includes tree species, height, age,\ncrown
+        density, and site. For non-forested areas it includes hydrology,\nwetlands,
+        barren, scrub, cleared areas, and residential.\n\n         This database is
+        currently available for approximately 85% of the\nisland of Newfoundland (generally
+        the south coast is not available) and 30% of\nLabrador (generally the north
+        is not available).\n\n         The forest inventory database is used by the
+        department, pulp and\npaper companies, and the sawmill industry to manage
+        the forests of the province\nin a sustainable manner.\n\nSpatial Data Organization
+        Information -\n\n    Indirect Spatial Reference:\n    Direct Spatial Reference:
+        Vector\nSpatial Reference Information -\n     Horizontal Coordinate System
+        Definition -\n\nPlanar -\n\n      Map Projection Name: Transverse Mercator\n\n\n\n    Planar
+        Coordinate Encoding Method:\n    Coordinate Representation:\n     Abscissa
+        Resolution:\n     Ordinate Resolution:\n    Distance and Bearing Representation:\n     Distance
+        Resolution:\n     Bearing Resolution:\n     Bearing Units:\n     Bearing Reference
+        Direction:\n     Bearing Reference Meridian:\n    Planar Distance Units:\n\n   Geodetic
+        Model:\n     Horizontal Datum Name: NAD 83\n    Ellipsoid Name: GRS 80\n    Semi-major
+        Axis:\n    Denominator of Flattening Ratio:","has_granules":false,"orbit_parameters":{},"id":"C1204576948-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]}],"facets":[{"field":"data_center","value-counts":[["ACADIS",368],["AR/CDA",188],["AU/AADC",2392],["Atmospheric
+        Science Data Center",627],["BCO-DMO",181],["CN/NADC",164],["COLUMBIA/LDEO",253],["COLUMBIA/LDEO/MGDS",382],["DHHS/NIH/NLM/NCBI/GB",275],["DOC/NOAA/NESDIS/NCDC",312],["DOC/NOAA/NESDIS/NCEI",300],["DOC/NOAA/NESDIS/NGDC",4138],["DOC/NOAA/NESDIS/NODC/LISD",158],["DOE/ORNL/ESD/CDIAC",217],["DOI/USGS/EROS",202],["DOI/USGS/GD/PUBS/WR/GEOPUBS",184],["DOI/USGS/SESC/SOFIA",241],["GESDISC",226],["IOBIS",216],["IOBIS/OBIS-SEAMAP",186]]},{"field":"archive_center","value-counts":[["AARHUS-HYDRO",1],["AKITA-U/MINING-C",1],["ANU/ICAM",1],["ASDC",3],["ASF",1],["Alaska
+        Satellite Facility",113],["Atmospheric Science Data Center",627],["CDDIS",29],["CDDIS-GSFC",1],["DOC/NOAA/NESDIS/NCDC
+        \u003e National Climatic Data Center, NESDIS, NOAA, U.S. Department of Commerce",3],["DOC/NOAA/NESDIS/NCEI
+        \u003e National Centers for Environmental Information, NESDIS, NOAA, U.S.
+        Department of Commerce",4],["ECHO10_PT",2],["ECHO_REST",1],["EDF",2],["EDF_DEV04",2],["EDF_DEV08",1],["EU/JRC/IES",2],["FTP_DIRECT",1],["GESDISC",226],["GHRC",12]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["AERIAL
+        PHOTOGRAPHS",157],["AIRCRAFT",184],["AM-1",407],["AURA",263],["Aircraft",383],["Aqua",480],["Aura",420],["BUOYS",237],["CALIPSO",171],["COMPUTER
+        MODEL",277],["DEM",357],["FIELD INVESTIGATION",2739],["FIELD SURVEYS",1603],["FIXED
+        OBSERVATION STATIONS",435],["GOES-7",152],["GOES-8",184],["GPM",200],["GROUND
+        STATIONS",1263],["GROUND-BASED OBSERVATIONS",1329],["LABORATORY",890]]},{"field":"instrument","value-counts":[["ADCP",255],["AMSR-E",158],["ANALYSIS",494],["ANEMOMETERS",367],["ASTER",169],["AVHRR",646],["Acoustic
+        Sounders",630],["BALANCE",167],["BAROMETERS",278],["CERES SCANNER",167],["CERES-FM1",165],["CORING
+        DEVICES",360],["CTD",604],["CURRENT METERS",183],["Cameras",299],["ECHO SOUNDERS",168],["ETM+",198],["FLUOROMETERS",155],["GAS
+        CHROMATOGRAPHS",168],["GMI",189]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
+bbe3e76bb326f85b9557c27ad2ffc494611cf171:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:18 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '39'
+      cmr-request-id:
+      - 053c468f-d410-4ec4-a591-4652f7efa2f3
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:18.647Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026keyword=C1204449891-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":["edsc.renderers.cwic","edsc.datasource.cwic"],"boxes":["-83.85
+        -180 83.1 180"],"time_start":"2001-03-16T00:00:00.000Z","dif_ids":["USGS_EDC_EO1_ALI"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"EO-1 (Earth Observing-1)
+        Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data","data_center":"GCMDTEST","short_name":"USGS_EDC_EO1_ALI","organizations":["DOI/USGS/EROS"],"title":"EO-1
+        (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level
+        1Gs, Level 1Gst Data","coordinate_system":"CARTESIAN","summary":"Advanced
+        Land Imager (ALI) provides image data from ten spectral bands (band designations).
+        The instrument operates in a pushbroom fashion, with a spatial resolution
+        of 30 meters for the multispectral bands and 10 meters for the panchromatic
+        band. The standard scene width is 37 kilometers. Standard scene length is
+        42 kilometers, with an optional increased scene length of 185 kilometers (additional
+        information).\n                  \nFor Advanced Land Imager (ALI) data, the
+        following levels of correction are available:\n                  \nLevel 1R
+        radiometrically corrected with no geometric correction applied. The image
+        data are provided in 16-bit radiance values. The data are available in Hierarchical
+        Data Format (HDF) and are distributed on CD-ROM, DVD, and File Transfer Protocol
+        (FTP).\n                  \nLevel 1Gs is geometrically corrected and will
+        be provided as a single \"stitched\" file. The image data are provided in
+        16-bit radiance values. The data are available in Hierarchical Data Format
+        (HDF) or Geographic Tagged Image-File Format (GeoTIFF) and are distributed
+        on DVD and File Transfer Protocol (FTP).\n                   \nLevel 1Gst
+        is terrain corrected and will be provided as a single \"stitched\" file. The
+        image data are provided in 16-bit radiance values. The data are available
+        in Hierarchical Data Format (HDF) or Geographic Tagged Image-File Format (GeoTIFF)
+        and are distributed on DVD and File Transfer Protocol (FTP). \n                  \n[Source:
+        USGS/EDC Homepage]","has_granules":false,"orbit_parameters":{},"id":"C1204449891-GCMDTEST","score":0.5,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Earth Explorer.\n      ","hreflang":"en-US","href":"http://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Global Visualizer (GLOVIS).\n      ","hreflang":"en-US","href":"http://glovis.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         EO-1
+        Project homepage at NASA''s Goddard Space Flight Center.\n      ","hreflang":"en-US","href":"http://eo1.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         NASA''s
+        New Millennium Project homepage.\n      ","hreflang":"en-US","href":"http://nmp.nasa.gov/"}]}],"facets":[{"field":"data_center","value-counts":[["DOI/USGS/EROS",1]]},{"field":"archive_center","value-counts":[]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["EO-1",1]]},{"field":"instrument","value-counts":[["ALI",1],["HYPERION",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
 0ecf4fd879c53c8f9f4eea8b194bf1db23acb7f4:
   response:
     status:
@@ -9329,5 +11156,68 @@ c63d84899ddd74613e992b2a473a94a0088c8f8f:
         TEST",1]]},{"field":"instrument","value-counts":[["ACCELEROMETERS",1],["DOPS",1],["ELECTRIC
         FIELD MILL",1],["FLUXGATE MAGNETOMETERS",1],["GERDIEN CONDUCTIVITY PROBE",1],["RF
         ANTENNA",1],["SCM",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
+42b9fd305b7ec81e056692d020c25e8b111c4d32:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:02:20 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '48'
+      cmr-request-id:
+      - 0216d391-5365-4d4b-8fe4-02a06f24d42e
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T03:02:20.891Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026keyword=C43947-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2012-09-25T00:00:00.000Z","dif_ids":["GES_DISC_AIRIBRAD_NRT_V005"],"version_id":"005","updated":"2012-10-02T13:55:25.000Z","dataset_id":"AIRS/Aqua
+        Near Real Time (NRT) Level 1B Infrared (IR) geolocated and calibrated radiances
+        V005","data_center":"GSFCS4PA","short_name":"AIRIBRAD_NRT","organizations":["GESDISC","GES
+        DAAC"],"title":"AIRS/Aqua Near Real Time (NRT) Level 1B Infrared (IR) geolocated
+        and calibrated radiances V005","coordinate_system":"CARTESIAN","summary":"The
+        AIRS Infrared (IR) level 1B data set contains AIRS infrared calibrated and
+        geolocated radiances in milliWatts/m^2/cm^-1/steradian. This data set is generated
+        from AIRS level 1A digital numbers (DN), including 2378 infrared channels
+        in the 3.74 to 15.4 micron region of the spectrum. A day\u0026apos;s worth
+        of AIRS data is divided into 240 scenes each of 6 minute duration. For the
+        AIRS infrared measurements, an individual scene consists of 135 scanlines
+        containing 90 cross-track footprints; thus there is a total of 135 x 90 =
+        12,150 footprints per AIRS IR scene.","has_granules":true,"orbit_parameters":{},"id":"C43947-GSFCS4PA","score":0.5,"original_format":"ECHO10","granule_count":259,"archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"ftp
+        site for AIRIBRAD_NRT.   User registration is required.    Register for a
+        username and password at the Land Atmosphere Near real-time Capability for
+        EOS (LANCE) web site (http://lance.nasa.gov/).\n       (GET DATA)","hreflang":"en-US","href":"ftp://discnrt1u.ecs.nasa.gov/ftp/data/Aqua_NRT/AIRIBRAD_NRT.005"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        home page at NASA/JPL. General information on the AIRS instrument suite, algorithms,
+        and other AIRS-related activities can be found. The Atmospheric Infrared Sounder
+        (AIRS) instrument suite is designed to measure the Earth''s atmospheric water
+        vapor and temperature profiles on a global scale. It is comprised of a space-based
+        hyperspectral infrared instrument (AIRS) and two multichannel microwave instruments,
+        the Advanced Microwave Sounding Unit\n                                    (AMSU-A)
+        and the Humidity Sounder for Brazil (HSB).\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://www-airs.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        data support home page at Goddard Earth Sciences Data Information and Service
+        Center/Distributed Active Archive Center (GES DISC). Online documentation,
+        software to read, visualize and analyze AIRS data and data access information
+        are available from this web site.\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://disc.gsfc.nasa.gov/AIRS/index.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRIBRAD_NRT
+        information page\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/nrt/data-holdings/AIRS/data-holdings/by-data-product/AIRIB_Rad_NRT.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AIRS
+        NRT page\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/nrt/data-holdings/airs-nrt-products"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"README
+        Document for AIRIBRAD\n       (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"ftp://airscal2u.ecs.nasa.gov/ftp/data/s4pa/Aqua_AIRS_Level1/AIRIBRAD.005/doc/README.AIRIBRAD.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"ftp://discnrt2.ecs.nasa.gov/ftp/data/s4pa//Aqua_AIRS_NRT/AIRIBRAD_NRT.005/doc/README.AIRIBRAD.pdf"}]}],"facets":[{"field":"data_center","value-counts":[["GES
+        DAAC",1],["GESDISC",1]]},{"field":"archive_center","value-counts":[["GESDISC",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["AQUA",1]]},{"field":"instrument","value-counts":[["AIRS",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
     http_version: 
     reduced: true
