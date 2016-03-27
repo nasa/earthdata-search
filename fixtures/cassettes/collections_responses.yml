@@ -1,4 +1,44 @@
 ---
+02a56d16ee8a2436be9365fba60f66b4aa982744:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:23:39 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '148'
+      cmr-request-id:
+      - 4bde213c-b290-430b-9fbf-5184fd026010
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T02:23:39.335Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C128599377-NSIDC_ECS&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","boxes":["-90 -180 90
+        180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_Land"],"version_id":"2","updated":"2014-05-23T12:27:33.534Z","dataset_id":"AMSR-E/Aqua
+        L2B Surface Soil Moisture, Ancillary Parms, & QC EASE-Grids V002","data_center":"NSIDC_ECS","short_name":"AE_Land","organizations":["NSIDC","AMSR-E
+        SIPS-GHRC"],"title":"AMSR-E/Aqua L2B Surface Soil Moisture, Ancillary Parms,
+        & QC EASE-Grids V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-2B land surface product includes surface soil moisture and vegetation/roughness
+        water content interpretive information on a global 25 km EASE-Grid, generated
+        by the Njoku algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C128599377-NSIDC_ECS","original_format":"ECHO10","granule_count":97580,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_land_l2b_soil_moisture.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}]}}'
+    http_version: 
 af296a4e7b8b65346f0c4b84d8dce1e64978c709:
   response:
     status:
@@ -239,6 +279,86 @@ af296a4e7b8b65346f0c4b84d8dce1e64978c709:
         from natural hazards, specifically tsunamis, earthquakes, and volcanoes.\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/hazardimages/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Keyhole
         Markup Language (KML). Event epicenter and image locations\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/hazard/data/kml/photos/35.kml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
         Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.photos:35"}]}]}}'
+    http_version: 
+ce52abe3067c508cb0b6569a3615790d556ed081:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:23:37 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '126'
+      cmr-request-id:
+      - 881ba25a-fb3d-4517-b10b-2bfadfcfbdc0
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T02:23:37.537Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C179014698-NSIDC_ECS&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"3","boxes":["-90 -180 90
+        180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_5DSno"],"version_id":"2","updated":"2014-05-23T12:27:29.803Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"NSIDC_ECS","short_name":"AE_5DSno","organizations":["NSIDC","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C179014698-NSIDC_ECS","original_format":"ECHO10","granule_count":667,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}]}}'
+    http_version: 
+ae9ba37adc697bdd2d48d5a2bdf8f4c40aa98ec4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:23:22 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '394'
+      cmr-request-id:
+      - 65904e9e-190f-4e20-bd19-4aec15487fa2
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T02:23:22.963Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C179014698-NSIDC_ECS&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"3","boxes":["-90 -180 90
+        180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_5DSno"],"version_id":"2","updated":"2014-05-23T12:27:29.803Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"NSIDC_ECS","short_name":"AE_5DSno","organizations":["NSIDC","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C179014698-NSIDC_ECS","original_format":"ECHO10","granule_count":667,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}]}}'
     http_version: 
 bb9732055f6252effa0ed87d4e79bb5c413f461f:
   response:
