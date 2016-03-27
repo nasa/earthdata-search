@@ -57,6 +57,17 @@ http_interactions:
   digest: a105d9a0885c8e97e8e3de58e36e6a9800e85f69
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/aces1cont/osdd.xml?clientId=edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Sun, 27 Mar 2016 02:03:06 GMT
+  digest: 57e3c525c869a21f2ce56dfce0c7a3ad1be18f32
+- request:
+    method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/datasets/gov.noaa.class.J2-XGDR/osdd.xml?clientId=eed-edsc-dev
     body:
       encoding: US-ASCII
@@ -480,6 +491,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Tue, 01 Mar 2016 16:47:15 GMT
   digest: 1a8ddf7ff800a973eb07df0b85789164ca3e6d82
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=aces1cont&count=20&clientId=edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Sun, 27 Mar 2016 02:03:08 GMT
+  digest: 4ce019ed8297ab05ff1c923a0a6222bc1744d133
 - request:
     method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=gov.noaa.class.J2-XGDR&clientId=edsc-dev&startPage=1&count=20&timeStart=2010-02-02&timeEnd=2010-02-02

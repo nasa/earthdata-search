@@ -153,10 +153,8 @@ describe "CWIC Granule list", reset: false do
   context "for CWIC tagged collections" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
-      login
-      wait_for_xhr
-      view_granule_results("INSAT-3D Imager Level-2P IR WINDS")
+      load_page :search, env: :uat, facets: true, ff: "Int'l / Interagency", q: 'C1204595275-GCMDTEST'
+      view_granule_results("ACES Continuous Data")
     end
 
     it "displays a help button to find out more information about CWIC collections", acceptance: true do
