@@ -1547,6 +1547,44 @@ a8625406c735635e8f0d54555083fa434ca22391:
         Grid</PrimaryCSDT><Implementation>GeoTIFF</Implementation></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>https://lpdaac.usgs.gov/lpdaac/products/aster_product_table</URL><Description>Documents
         page for LP DAAC ASTER Products.</Description><Type>MiscInformation</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>ASTGTM1</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
     http_version: 
+19e44430c2a663ac19d442e82bf85f14fa97b0d7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:12:24 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 94a56820-656e-4559-92e8-e508c34740f5
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"boxes":["-90 -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD02QKM_5"],"version_id":"5","updated":"2016-03-09T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","data_center":"LAADS","short_name":"MYD02QKM","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","NASA/GSFC/SED/ESD/BSL/MCST","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","coordinate_system":"CARTESIAN","summary":"MODIS
+        image data for bands 1 and 2 at 250m (Nadir) resolution, calibrated from\n                  raw
+        counts into physically meaningful radiances and reflectances. Corrections\n                  for
+        knows instrument effects are applied. Also includes quality flags, error\n                  estimates,
+        and 1km latitude and longitude data copied from the MYD03 files.\n                  \n                  More
+        data set information:\n                  http://mcst.gsfc.nasa.gov/\n                  \n                  (The
+        Shortname for this product is MYD02QKM)","orbit_parameters":{},"id":"C90762182-LAADS","collection_data_type":"SCIENCE_QUALITY","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS","hreflang":"en-US","href":"http://modaps.nascom.nasa.gov/services/about/product_descriptions_aqua.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Search
+        and order products from LAADS website.","hreflang":"en-US","href":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD02QKM 5 data set.","hreflang":"en-US","href":"ftp://ladsweb.nascom.nasa.gov/allData/5/MYD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Level 1B Product Information Page at MCST","hreflang":"en-US","href":"http://mcst.gsfc.nasa.gov/l1b/product-information"}]}'
+    http_version: 
 85892f8c99e8741c752c85cba65ba582ef91ac45:
   response:
     status:
