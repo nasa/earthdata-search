@@ -216,6 +216,23 @@ http_interactions:
   digest: 87e19e3c95f1b919e707a2641f07fc0e00b86640
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C90762182-LAADS.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Sun, 27 Mar 2016 02:12:25 GMT
+  digest: 19e44430c2a663ac19d442e82bf85f14fa97b0d7
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/G179111301-ORNL_DAAC.echo10
     body:
       encoding: US-ASCII

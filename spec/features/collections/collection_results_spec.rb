@@ -30,7 +30,7 @@ describe "Collection results", reset: false do
     wait_for_xhr
     page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 10000"
     wait_for_xhr
-    expect(page).to have_css('#collection-results-list .panel-list-item', count: 36)
+    expect(page).to have_css('#collection-results-list .panel-list-item', count: 19)
     expect(page).to have_no_content('Loading collections...')
     page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 0"
   end
