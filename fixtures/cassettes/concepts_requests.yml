@@ -95,6 +95,21 @@ http_interactions:
   digest: 773f1a2581dbf71e513bbff27e62cb5e0b232ccf
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1220111370-NSIDCV0.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Sun, 27 Mar 2016 02:36:31 GMT
+  digest: ad70bb9ab0db24f8845845233c30a86bc62df5fc
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1224520098-NOAA_NCEI.echo10
     body:
       encoding: US-ASCII
@@ -248,6 +263,21 @@ http_interactions:
       - edsc
   recorded_at: Thu, 13 Aug 2015 20:53:31 GMT
   digest: 87e19e3c95f1b919e707a2641f07fc0e00b86640
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C197265171-LPDAAC_ECS.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Sun, 27 Mar 2016 02:36:37 GMT
+  digest: 12935e3e5d37c8c7341024ece51461f628ced043
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C90762182-LAADS.json
