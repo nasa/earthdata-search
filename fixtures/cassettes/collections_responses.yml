@@ -1871,3 +1871,169 @@ fd385b2fec0faf388f788b50e11dcbac00d1e90b:
         SIPS-GHCC",1],["NSIDC",1]]},{"field":"archive_center","value-counts":[["NSIDC",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["Aqua",1]]},{"field":"instrument","value-counts":[["AMSR-E",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
     http_version: 
     reduced: true
+c63d84899ddd74613e992b2a473a94a0088c8f8f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:03:05 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '56'
+      cmr-request-id:
+      - 749fb0d0-6a0e-4e9d-b152-0a6639237255
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T02:03:06.021Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C1204595275-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+098810e70f5eac7093183f7dd571f1e3e4a0ad7e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:03:05 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '64'
+      cmr-request-id:
+      - 77818d6b-f270-4afc-9e85-2197a8f420c8
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T02:03:05.604Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026keyword=C1204595275-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":["edsc.renderers.cwic","edsc.datasource.cwic"],"boxes":["23
+        -85 26 -81"],"time_start":"2002-07-10T00:00:00.000Z","dif_ids":["aces1cont"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"ACES Continuous
+        Data ","data_center":"GCMDTEST","short_name":"aces1cont","organizations":["NASA/MSFC/GHRC"],"title":"ACES
+        Continuous Data ","coordinate_system":"CARTESIAN","summary":"Based at the
+        Naval Air Facility Key West in Florida, ACES researchers in August\n                  2002
+        chased down thunderstorms using an uninhabited aerial vehicle (UAV) -\n                  allowing
+        them to achieve dual goals of gathering weather data safely and\n                  testing
+        new aircraft technology. This marked the first time a UAV was used to\n                  conduct
+        lightning research.\n                  \n                  Aimed at better
+        understanding the causes of an electrical storm''s fury and its\n                  effects
+        on our home planet, this study was a collaboration among the Marshall\n                  Center;
+        the University of Alabama at Huntsville; NASA''s Goddard Space Flight\n                  Center,
+        Greenbelt, Md.; Pennsylvania State University, University Park; and\n                  General
+        Atomics Aeronautical Systems Inc., San Diego.\n                  \n                  The
+        ALTUS Cloud Electrification Study (ACES) was Based at the Naval Air\n                  Facility
+        Key West in Florida. ACES researchers in August 2002 conducted\n                  overflights
+        of thunderstorms over the southwestern corner of Florida. For the\n                  first
+        time in NASA research an uninhabited aerial vehicle (UAV) named ALTUS was\n                  used
+        to collect cloud electrification data. Carrying field mills, optical\n                  sensors,
+        electric field sensors and other instruments, it allowed scientists to\n                  collect
+        cloud electrification data for the first time from above the storm from\n                  it''s
+        birth through dissipation. This experiment allowed scientists to achieve\n                  the
+        dual goals of gathering weather data safely, and testing new aircraft\n                  technology.\n                  \n                  This
+        dataset consists of data collected from seven instruments: the Slow/Fast\n                  antenna,
+        Electric Field Mill, Dual Optical Pulse Sensor, Searchcoil\n                  magnetometer,
+        Accelerometers, Gerdien Conductivity Prove, and the Fluxgate\n                  Magnetometer.\n                  \n                  Data
+        consists of sensor reads at 50HZ throughout the flight from all 64\n                  channels.","has_granules":false,"time_end":"2002-08-30T00:00:00.000Z","orbit_parameters":{},"id":"C1204595275-GCMDTEST","score":0.5,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Refine
+        your granule search with ECHO''s next generation Earth Science discovery tool
+        (Reverb) using information from this record.\n      ","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93\u0026spatial_map=satellite\u0026spatial_type=rectangle\u0026keywords=aces1cont"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         ACES
+        Project Home Page\n      ","hreflang":"en-US","href":"http://aces.msfc.nasa.gov/"}]}],"facets":[{"field":"project","value-counts":[["ACES",1],["CWIC",1],["EOSDIS",1],["ESIP_TS",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ATMOSPHERIC
+        CONDUCTIVITY"},{"count":1,"value":"ELECTRIC FIELD"},{"count":1,"value":"LIGHTNING"}],"count":1,"value":"ATMOSPHERIC
+        ELECTRICITY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"TURBULENCE"}],"count":1,"value":"ATMOSPHERIC
+        WINDS"}],"count":1,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ELECTRICAL
+        FIELD"},{"count":1,"value":"MAGNETIC FIELD"}],"count":1,"value":"GEOMAGNETISM"}],"count":1,"value":"SOLID
+        EARTH"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"RADIO
+        WAVE FLUX"}],"count":1,"value":"RADIO WAVE"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+0ecf4fd879c53c8f9f4eea8b194bf1db23acb7f4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:03:05 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '48'
+      cmr-request-id:
+      - 86b18922-1bfc-4292-9e54-6cee75977242
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T02:03:05.809Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026keyword=C1204595275-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":["edsc.renderers.cwic","edsc.datasource.cwic"],"boxes":["23
+        -85 26 -81"],"time_start":"2002-07-10T00:00:00.000Z","dif_ids":["aces1cont"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"ACES Continuous
+        Data ","data_center":"GCMDTEST","short_name":"aces1cont","organizations":["NASA/MSFC/GHRC"],"title":"ACES
+        Continuous Data ","coordinate_system":"CARTESIAN","summary":"Based at the
+        Naval Air Facility Key West in Florida, ACES researchers in August\n                  2002
+        chased down thunderstorms using an uninhabited aerial vehicle (UAV) -\n                  allowing
+        them to achieve dual goals of gathering weather data safely and\n                  testing
+        new aircraft technology. This marked the first time a UAV was used to\n                  conduct
+        lightning research.\n                  \n                  Aimed at better
+        understanding the causes of an electrical storm''s fury and its\n                  effects
+        on our home planet, this study was a collaboration among the Marshall\n                  Center;
+        the University of Alabama at Huntsville; NASA''s Goddard Space Flight\n                  Center,
+        Greenbelt, Md.; Pennsylvania State University, University Park; and\n                  General
+        Atomics Aeronautical Systems Inc., San Diego.\n                  \n                  The
+        ALTUS Cloud Electrification Study (ACES) was Based at the Naval Air\n                  Facility
+        Key West in Florida. ACES researchers in August 2002 conducted\n                  overflights
+        of thunderstorms over the southwestern corner of Florida. For the\n                  first
+        time in NASA research an uninhabited aerial vehicle (UAV) named ALTUS was\n                  used
+        to collect cloud electrification data. Carrying field mills, optical\n                  sensors,
+        electric field sensors and other instruments, it allowed scientists to\n                  collect
+        cloud electrification data for the first time from above the storm from\n                  it''s
+        birth through dissipation. This experiment allowed scientists to achieve\n                  the
+        dual goals of gathering weather data safely, and testing new aircraft\n                  technology.\n                  \n                  This
+        dataset consists of data collected from seven instruments: the Slow/Fast\n                  antenna,
+        Electric Field Mill, Dual Optical Pulse Sensor, Searchcoil\n                  magnetometer,
+        Accelerometers, Gerdien Conductivity Prove, and the Fluxgate\n                  Magnetometer.\n                  \n                  Data
+        consists of sensor reads at 50HZ throughout the flight from all 64\n                  channels.","has_granules":false,"time_end":"2002-08-30T00:00:00.000Z","orbit_parameters":{},"id":"C1204595275-GCMDTEST","score":0.5,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Refine
+        your granule search with ECHO''s next generation Earth Science discovery tool
+        (Reverb) using information from this record.\n      ","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93\u0026spatial_map=satellite\u0026spatial_type=rectangle\u0026keywords=aces1cont"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         ACES
+        Project Home Page\n      ","hreflang":"en-US","href":"http://aces.msfc.nasa.gov/"}]}],"facets":[{"field":"data_center","value-counts":[["NASA/MSFC/GHRC",1]]},{"field":"archive_center","value-counts":[]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["C-130
+        TEST",1]]},{"field":"instrument","value-counts":[["ACCELEROMETERS",1],["DOPS",1],["ELECTRIC
+        FIELD MILL",1],["FLUXGATE MAGNETOMETERS",1],["GERDIEN CONDUCTIVITY PROBE",1],["RF
+        ANTENNA",1],["SCM",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
