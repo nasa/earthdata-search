@@ -127,7 +127,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Wed, 06 Aug 2014 13:01:33 GMT
   digest: edsc_current
 - request:
@@ -373,7 +373,7 @@ http_interactions:
       Echo-ClientId:
       - edsc-dev
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Tue, 24 Nov 2015 19:26:28 GMT
   digest: 5465c54b75a62eac4512160fe28a6627c96aea19
 - request:
