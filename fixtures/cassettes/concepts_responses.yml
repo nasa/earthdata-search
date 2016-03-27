@@ -727,6 +727,41 @@ b5c7e41c67b053b26b179892814464bd7ec6299a:
                  GeoConnections Discovery Portal. Canada's IDN Node.
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-95</WestBoundingCoordinate><NorthBoundingCoordinate>61</NorthBoundingCoordinate><EastBoundingCoordinate>-52</EastBoundingCoordinate><SouthBoundingCoordinate>44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+ad70bb9ab0db24f8845845233c30a86bc62df5fc:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:36:31 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 736adfbe-819e-41c2-ad86-628bef236d61
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>NSIDC-0026</ShortName><VersionId>1</VersionId><InsertTime>2003-05-15T00:00:00.000Z</InsertTime><LastUpdate>2016-01-04T00:00:00.000Z</LastUpdate><LongName>AVHRR Leads-ARI Polar Gridded Brightness Temperatures</LongName><DataSetId>AVHRR Leads-ARI Polar Gridded Brightness Temperatures</DataSetId><Description>This data set consists of AVHRR imagery selected from hard copy 'quick look' images to provide the best coverage possible over the Arctic approximately every three days for a three-year period. Level-1B data from NOAA/SDSD have been calibrated and mapped to earth locations, then gridded to 1 km pixels on a basin scale to the polar stereographic projection. The projection is similar to that used by NSIDC to produce DMSP SSM/I polar brightness temperature and sea ice products. Each image was ranked for areal coverage of particular seas and for degree of cloud coverage. Passes covering a large area are generally favored over shorter passes with less cloud cover. The data set was developed in support of the Office Of Naval Research Arctic Leads Accelerated Research Initiative (Arctic Leads ARI). The aim of the Initiative was to develop a more thorough understanding of the oceanography, meteorology, and ice dynamics surrounding formation and evolution of leads in sea ice. The leads ARI field experiment took place from March to April 1992.  A spreadsheet containing the image rankings is available in hard copy (NOARL Tech. Note 118, April 1991); paper copies of the spreadsheet are available on request. Data set information is available on-line. Data are available via FTP.</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>Completed</CollectionState><Temporal><RangeDateTime><BeginningDateTime>1988-01-01T00:00:00.000Z</BeginningDateTime><EndingDateTime>1989-12-31T00:00:00.000Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>fetterer@nsidc.org</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>FLORENCE</FirstName><LastName>FETTERER</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>TECHNICAL CONTACT</Role><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><LastName>USER SERVICES</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC RADIATION</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>BRIGHTNESS TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Not provided</ShortName><LongName>Not provided</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName></Instrument></Instruments></Platform><Platform><ShortName>NOAA POES</ShortName><LongName>NOAA Polar Orbiting Environmental Satellites</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-10</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-10</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-11</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-11</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-8</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-8</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-9</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-9</LongName><Type>Not Specified</Type></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>Version Summary</Name><DataType>STRING</DataType><Description></Description></AdditionalAttribute><AdditionalAttribute><Name>Current Version</Name><DataType>INT</DataType><Description></Description><Value>1</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2016-01-25 10:14:52</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>EOSDIS</ShortName><LongName>Earth Observing System Data Information System</LongName></Campaign><Campaign><ShortName>LEADEX</ShortName><LongName>Arctic Leads Experiment</LongName></Campaign><Campaign><ShortName>LEADS ARI</ShortName><LongName>Office of Naval Research Arctic Leads Accelerated Research Initiative</LongName></Campaign><Campaign><ShortName>ESIP</ShortName><LongName>Earth Science Information Partners Program</LongName></Campaign></Campaigns><OnlineAccessURLs><OnlineAccessURL><URL>ftp://sidads.colorado.edu/pub/DATASETS/nsidc0026_avhrr_leads_ari_v01/</URL><URLDescription>
+                 FTP
+              </URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://nsidc.org/data/avhrr/index.html</URL><Description>
+                 AVHRR Data at NSIDC
+              </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/seaice/</URL><Description>
+                 Sea Ice Products at NSIDC
+              </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/docs/daac/nsidc0026_arctic_leads_ari.gd.html</URL><Description>
+                 Documentation
+              </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>60</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
 6ab30dcea4757ad54bcae4d4ab2c577e53d31e56:
   response:
     status:
@@ -1614,6 +1649,161 @@ a8625406c735635e8f0d54555083fa434ca22391:
         Infrared</LongName><Technique>Imaging Radiometry</Technique></Sensor></Sensors><OperationModes><OperationMode>Calibration</OperationMode><OperationMode>Normal</OperationMode></OperationModes></Instrument></Instruments></Platform></Platforms><CSDTDescriptions><CSDTDescription><PrimaryCSDT>Structured
         Grid</PrimaryCSDT><Implementation>GeoTIFF</Implementation></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>https://lpdaac.usgs.gov/lpdaac/products/aster_product_table</URL><Description>Documents
         page for LP DAAC ASTER Products.</Description><Type>MiscInformation</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>ASTGTM1</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
+12935e3e5d37c8c7341024ece51461f628ced043:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:36:37 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 6ef926f7-6e26-451b-80c5-0fc79fe98631
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\"?>\n<Collection>\n  <ShortName>ASTGTM</ShortName>\n
+        \ <VersionId>002</VersionId>\n  <InsertTime>2011-08-24T08:35:32.576Z</InsertTime>\n
+        \ <LastUpdate>2015-09-30T10:42:35.418Z</LastUpdate>\n  <LongName>ASTER Global
+        Digital Elevation Model</LongName>\n  <DataSetId>ASTER Global Digital Elevation
+        Model V002</DataSetId>\n  <Description>The Advanced Spaceborne Thermal Emission
+        and Reflection Radiometer (ASTER) Global Digital Elevation Model (GDEM) was
+        developed jointly by the U.S. National Aeronautics and Space Administration
+        (NASA) and Japan&#x2019;s Ministry of Economy, Trade, and Industry (METI).\n\nASTER
+        is capable of collecting in-track stereo using nadir- and aft-looking near
+        infrared cameras.  Since 2001, these stereo pairs have been used to produce
+        single-scene (60- x 60-kilomenter (km)) digital elevation models (DEM) having
+        vertical (root-mean-squared-error) accuracies generally between 10- and 25-meters
+        (m). \n\nThe methodology used by Japan's Sensor Information Laboratory Corporation
+        (SILC) to produce the ASTER GDEM involves automated processing of the entire
+        ASTER Level-1A archive.  Stereo-correlation is used to produce over one million
+        individual scene-based ASTER DEMs, to which cloud masking is applied to remove
+        cloudy pixels.  All cloud-screened DEMS are stacked and residual bad values
+        and outliers are removed.  Selected data are averaged to create final pixel
+        values, and residual anomalies are corrected before partitioning the data
+        into 1 degree (&#xB0;) x 1&#xB0; tiles.\n\nThe ASTER GDEM covers land surfaces
+        between 83&#xB0;N and 83&#xB0;S and is comprised of 22,702 tiles.  Tiles that
+        contain at least 0.01% land area are included.  The ASTER GDEM is distributed
+        as Geographic Tagged Image File Format (GeoTIFF) files with geographic coordinates
+        (latitude, longitude).  The data are posted on a 1 arc-second (approximately
+        30&#x2013;m at the equator) grid and referenced to the 1984 World Geodetic
+        System (WGS84)/ 1996 Earth Gravitational Model (EGM96) geoid.  \n\nWhile the
+        ASTER GDEM 2 benefits from substantial improvements over GDEM 1, users are
+        nonetheless advised that the products still may contain anomalies and artifacts
+        that will reduce its usability for certain applications, because they can
+        introduce large elevation errors on local scales. The data are provided &#x201C;as
+        is&#x201D; and neither NASA nor METI/ERSDAC will be responsible for any damages
+        resulting from use of the data.\n\nV002 data set release date: 2009-06-28\n\nData
+        Set Characteristics: \nGeographic Extent: Global between 83&#xBA; latitude
+        \nScene Coverage: 1&#xBA; x 1&#xBA; tiles \nImage Dimensions: 3601 x 3601
+        \nTotal Number Tiles: V001: 22,604; V002: 22,702 \nTile Volume: ~25MB, 6.4
+        MB compressed \nCompression Type: zip \nFile Format: GEOTIFF \nMap Projection:
+        Geographic Lat/Lon \nDatum: WGS84/EGM96 \nResolution: 1 arcsecond (30-m horizontal
+        posting at equator)</Description>\n  <Orderable>false</Orderable>\n  <Visible>true</Visible>\n
+        \ <RevisionDate>2015-08-21T00:00:00Z</RevisionDate>\n  <SuggestedUsage>Science
+        Research</SuggestedUsage>\n  <ProcessingCenter>JPL</ProcessingCenter>\n  <ProcessingLevelId>3</ProcessingLevelId>\n
+        \ <ProcessingLevelDescription>GRID</ProcessingLevelDescription>\n  <ArchiveCenter>LPDAAC</ArchiveCenter>\n
+        \ <VersionDescription>Reprocessed global production</VersionDescription>\n
+        \ <CitationForExternalPublication>The ASTER Global DEM was developed jointly
+        by the Ministry of Economy, Trade and Industry of Japan (METI) and the United
+        States National Aeronautics and Space Administration (NASA).</CitationForExternalPublication>\n
+        \ <CollectionState>Completed</CollectionState>\n  <MaintenanceAndUpdateFrequency>None
+        Planned</MaintenanceAndUpdateFrequency>\n  <RestrictionComment>None</RestrictionComment>\n
+        \ <Temporal>\n    <TimeType>UTC</TimeType>\n    <DateType>Gregorian</DateType>\n
+        \   <TemporalRangeType>Continuous Range</TemporalRangeType>\n    <PrecisionOfSeconds>0</PrecisionOfSeconds>\n
+        \   <EndsAtPresentFlag>false</EndsAtPresentFlag>\n    <RangeDateTime>\n      <BeginningDateTime>1999-12-18T00:00:00Z</BeginningDateTime>\n
+        \     <EndingDateTime>2011-02-28T23:59:59Z</EndingDateTime>\n    </RangeDateTime>\n
+        \ </Temporal>\n  <Contacts>\n    <Contact>\n      <Role>Archive</Role>\n      <HoursOfService>M-F,
+        8 a.m. to 4 p.m. Central Time</HoursOfService>\n      <Instructions>None</Instructions>\n
+        \     <OrganizationName>LP DAAC User Services</OrganizationName>\n      <OrganizationAddresses>\n
+        \       <Address>\n          <StreetAddress>U.S. Geological Survey, Earth
+        Resources Observation and Science (EROS) Center</StreetAddress>\n          <City>Sioux
+        Falls</City>\n          <StateProvince>South Dakota</StateProvince>\n          <PostalCode>57198</PostalCode>\n
+        \         <Country>USA</Country>\n        </Address>\n      </OrganizationAddresses>\n
+        \     <OrganizationPhones>\n        <Phone>\n          <Number>605-594-6116</Number>\n
+        \         <Type>phone</Type>\n        </Phone>\n        <Phone>\n          <Number>605-594-6963</Number>\n
+        \         <Type>fax</Type>\n        </Phone>\n      </OrganizationPhones>\n
+        \     <OrganizationEmails>\n        <Email>lpdaac@usgs.gov</Email>\n      </OrganizationEmails>\n
+        \   </Contact>\n  </Contacts>\n  <ScienceKeywords>\n    <ScienceKeyword>\n
+        \     <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>\n      <TopicKeyword>LAND
+        SURFACE</TopicKeyword>\n      <TermKeyword>TOPOGRAPHY</TermKeyword>\n      <VariableLevel1Keyword>\n
+        \       <Value>TERRAIN ELEVATION</Value>\n      </VariableLevel1Keyword>\n
+        \   </ScienceKeyword>\n    <ScienceKeyword>\n      <CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n      <TopicKeyword>LAND SURFACE</TopicKeyword>\n
+        \     <TermKeyword>TOPOGRAPHY</TermKeyword>\n      <VariableLevel1Keyword>\n
+        \       <Value>TOPOGRAPHICAL RELIEF</Value>\n      </VariableLevel1Keyword>\n
+        \   </ScienceKeyword>\n  </ScienceKeywords>\n  <Platforms>\n    <Platform>\n
+        \     <ShortName>Terra</ShortName>\n      <LongName>Earth Observing System,
+        TERRA (AM-1)</LongName>\n      <Type>Spacecraft</Type>\n      <Instruments>\n
+        \       <Instrument>\n          <ShortName>ASTER</ShortName>\n          <LongName>Advanced
+        Spaceborne Thermal Emission and Reflection Radiometer</LongName>\n          <Technique>Imaging
+        Spectrometers/Radiometers</Technique>\n          <Sensors>\n            <Sensor>\n
+        \             <ShortName>TIR</ShortName>\n              <LongName>Thermal
+        Infrared</LongName>\n              <Technique>Imaging Radiometers</Technique>\n
+        \           </Sensor>\n            <Sensor>\n              <ShortName>VNIR</ShortName>\n
+        \             <LongName>Visible Near Infrared</LongName>\n              <Technique>Imaging
+        Radiometers</Technique>\n            </Sensor>\n            <Sensor>\n              <ShortName>SWIR</ShortName>\n
+        \             <LongName>Shortwave Infrared</LongName>\n              <Technique>Imaging
+        Radiometers</Technique>\n            </Sensor>\n          </Sensors>\n          <OperationModes>\n
+        \           <OperationMode>Calibration</OperationMode>\n            <OperationMode>Normal</OperationMode>\n
+        \         </OperationModes>\n        </Instrument>\n      </Instruments>\n
+        \   </Platform>\n  </Platforms>\n  <AdditionalAttributes>\n    <AdditionalAttribute>\n
+        \     <Name>identifier_product_doi</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Digital object identifier that uniquely identifies this
+        data product</Description>\n      <Value>10.5067/ASTER/ASTGTM.002</Value>\n
+        \   </AdditionalAttribute>\n    <AdditionalAttribute>\n      <Name>identifier_product_doi_authority</Name>\n
+        \     <DataType>STRING</DataType>\n      <Description>URL of the digital object
+        identifier resolving authority</Description>\n      <Value>http://dx.doi.org</Value>\n
+        \   </AdditionalAttribute>\n  </AdditionalAttributes>\n  <CSDTDescriptions>\n
+        \   <CSDTDescription>\n      <PrimaryCSDT>Structured Grid</PrimaryCSDT>\n
+        \     <Implementation>GeoTIFF</Implementation>\n    </CSDTDescription>\n  </CSDTDescriptions>\n
+        \ <OnlineResources>\n    <OnlineResource>\n      <URL>http://dx.doi.org/10.5067/ASTER/ASTGTM.002</URL>\n
+        \     <Description>Data set landing page at the LP DAAC</Description>\n      <Type>MiscInformation</Type>\n
+        \   </OnlineResource>\n  <OnlineResource>\n  <URL>http://reverb.echo.nasa.gov/reverb</URL>\n
+        \ <Description>\n         The Land Processes Distributed Active Archive Center
+        (LP DAAC) home page contains information about the LP DAAC, its products,
+        and its services.   The Web site also provides links to ASTGTM access through
+        Reverb and DEMEX.\n      </Description>\n  <Type>Type:GET DATA Subtype:REVERB</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>http://gdex.cr.usgs.gov</URL>\n  <Description>\n         LP DAAC Global
+        Data Explorer (GDEX) provides user the ability to graphically select an area,
+        and download topographic data.\n      </Description>\n  <Type>Type:GET DATA</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>http://earthexplorer.usgs.gov/</URL>\n  <Description>\n         USGS
+        EarthExplorer (EE) provides users the ability to query, search and order archived
+        ASTER and MODIS products available from the LP DAAC.  Registered users of
+        EE have access to additional features than guest users.\n      </Description>\n
+        \ <Type>Type:GET DATA</Type>\n</OnlineResource><OnlineResource>\n  <URL>https://lpdaac.usgs.gov</URL>\n
+        \ <Description>\n         The Land Processes Distributed Active Archive Center
+        (LP DAAC) is one of several discipline-specific data centers within the NASA
+        Earth Observing System Data and Information System (EOSDIS).  The LP DAAC
+        Web page provides information about available data products, services, documentation,
+        order interfaces, and tools.\n      </Description>\n  <Type>Type:VIEW PROJECT
+        HOME PAGE</Type>\n</OnlineResource><OnlineResource>\n  <URL>http://asterweb.jpl.nasa.gov/</URL>\n
+        \ <Description>\n         The ASTER home page is maintained through NASA's
+        Jet Propulsion Laboratory and documents various aspects of the ASTER mission.\n
+        \     </Description>\n  <Type>Type:VIEW PROJECT HOME PAGE</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>https://lpdaac.usgs.gov/products/aster_products_table/astgtm</URL>\n
+        \ <Description>\n         Detailed product descriptions and additional information
+        including links for data access, user guides, and customer support, etc.\n
+        \     </Description>\n  <Type>Type:VIEW RELATED INFORMATION</Type>\n</OnlineResource></OnlineResources>\n
+        \ <Spatial>\n    <SpatialCoverageType>Horizontal</SpatialCoverageType>\n    <HorizontalSpatialDomain>\n
+        \     <Geometry>\n        <CoordinateSystem>CARTESIAN</CoordinateSystem>\n
+        \       <BoundingRectangle>\n          <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>\n
+        \         <NorthBoundingCoordinate>82.0</NorthBoundingCoordinate>\n          <EastBoundingCoordinate>180.0</EastBoundingCoordinate>\n
+        \         <SouthBoundingCoordinate>-83.0</SouthBoundingCoordinate>\n        </BoundingRectangle>\n
+        \     </Geometry>\n    </HorizontalSpatialDomain>\n    <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>\n
+        \ </Spatial>\n</Collection>"
     http_version: 
 19e44430c2a663ac19d442e82bf85f14fa97b0d7:
   response:
