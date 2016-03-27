@@ -1,4 +1,1467 @@
 ---
+bb9732055f6252effa0ed87d4e79bb5c413f461f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:07:28 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '2474'
+      cmr-request-id:
+      - 59b0acaf-7f59-40ce-a721-95b13dbe433e
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T02:07:30.660Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C90757595-LAADS&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","dif_ids":["MOD021KM_5"],"version_id":"5","updated":"2016-03-09T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Calibrated Radiances 5-Min L1B Swath 1km V005","data_center":"LAADS","short_name":"MOD021KM","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","NASA/GSFC/SED/ESD/BSL/MCST","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Terra
+        Calibrated Radiances 5-Min L1B Swath 1km V005","coordinate_system":"CARTESIAN","summary":"The
+        MODIS Level 1B data set contains calibrated and geolocated\t\t\t\t\t  at-aperture
+        radiances for 36 discrete bands located in the 0.4 to 14.4\t\t\t\t\t  micron
+        region of electromagentic spectrum. These data are generated\t\t\t\t\t  from
+        the MODIS Level 1A scans of raw radiance and in the process\t\t\t\t\t  converted
+        to geophysical units of W/(m^2 um sr). In addition, the\t\t\t\t\t  Earth Bi-directional
+        Reflectance Distribution Function (BRDF) may be\t\t\t\t\t  determined for
+        the solar reflective bands (1-19, 26) through knowledge\t\t\t\t\t  of the
+        solar irradiance (e.g., determined from MODIS solar diffuser\t\t\t\t\t  data,
+        and from the target illumination geometry).  Additional data are\t\t\t\t\t  provided
+        including quality flags, error estimates and calibration\t\t\t\t\t  data.\t\t\t\t\t  \t\t\t\t\t  Visible,
+        shortwave infrared, and near infrared measurements are only\t\t\t\t\t  made
+        during the daytime, while radiances for the thermal infrared\t\t\t\t\t  region
+        (bands 20-25, 27-36) are measured continuously.\t\t\t\t\t  \t\t\t\t\t  Channel
+        locations for MODIS are as follows:\t\t\t\t\t  \t\t\t\t\t  Band   Center Wavelength
+        (um)    Primary Use\t\t\t\t\t  ----   ----------------------    -----------\t\t\t\t\t  1          0.620  -
+        0.670        Land/Cloud Boundaries\t\t\t\t\t  2          0.841  - 0.876        Land/Cloud
+        Boundaries\t\t\t\t\t  3          0.459  - 0.479        Land/Cloud Properties\t\t\t\t\t  4          0.545  -
+        0.565        Land/Cloud Properties\t\t\t\t\t  5          1.230  - 1.250        Land/Cloud
+        Properties\t\t\t\t\t  6          1.628  - 1.652        Land/Cloud Properties\t\t\t\t\t  7          2.105  -
+        2.155        Land/Cloud Properties\t\t\t\t\t  8          0.405  - 0.420        Ocean
+        Color/Phytoplankton\t\t\t\t\t  9          0.438  - 0.448        Ocean Color/Phytoplankton\t\t\t\t\t  10         0.483  -
+        0.493        Ocean Color/Phytoplankton\t\t\t\t\t  11         0.526  - 0.536        Ocean
+        Color/Phytoplankton\t\t\t\t\t  12         0.546  - 0.556        Ocean Color/Phytoplankton\t\t\t\t\t  13         0.662  -
+        0.672        Ocean Color/Phytoplankton\t\t\t\t\t  14         0.673  - 0.683        Ocean
+        Color/Phytoplankton\t\t\t\t\t  15         0.743  - 0.753        Ocean Color/Phytoplankton\t\t\t\t\t  16         0.862  -
+        0.877        Ocean Color/Phytoplankton\t\t\t\t\t  17         0.890  - 0.920        Atmospheric
+        Water Vapor\t\t\t\t\t  18         0.931  - 0.941        Atmospheric Water
+        Vapor\t\t\t\t\t  19         0.915  - 0.965        Atmospheric Water Vapor\t\t\t\t\t  20         3.660  -
+        3.840        Surface/Cloud Temperature\t\t\t\t\t  21         3.929  - 3.989        Surface/Cloud
+        Temperature\t\t\t\t\t  22         3.929  - 3.989        Surface/Cloud Temperature\t\t\t\t\t  23         4.020  -
+        4.080        Surface/Cloud Temperature\t\t\t\t\t  24         4.433  - 4.498        Atmospheric
+        Temperature\t\t\t\t\t  25         4.482  - 4.549        Atmospheric Temperature\t\t\t\t\t  26         1.360  -
+        1.390        Cirrus Clouds\t\t\t\t\t  27         6.535  - 6.895        Water
+        Vapor Profile\t\t\t\t\t  28         7.175  - 7.475        Water Vapor Profile\t\t\t\t\t  29         8.400  -
+        8.700        Water Vapor Profile\t\t\t\t\t  30         9.580  - 9.880        Ozone
+        Overburden\t\t\t\t\t  31         10.780 - 11.280       Surface/Cloud Temperature\t\t\t\t\t  32         11.770
+        - 12.270       Surface/Cloud Temperature\t\t\t\t\t  33         13.185 - 13.485       Cloud
+        Top Altitude\t\t\t\t\t  34         13.485 - 13.785       Cloud Top Altitude\t\t\t\t\t  35         13.785
+        - 14.085       Cloud Top Altitude\t\t\t\t\t  36         14.085 - 14.385       Cloud
+        Top Altitude\t\t\t\t\t  \t\t\t\t\t  Channels 1 and 2 have 250 m resolution,
+        channels 3 through 7 have 500\t\t\t\t\t  m resolution, and the rest have 1
+        km resolution. However, for the\t\t\t\t\t  MODIS L1B 1 km product, the 250
+        m and 500 m band radiance data and\t\t\t\t\t  their associated uncertainties
+        have been aggregated to 1 km\t\t\t\t\t  resolution. Thus the entire channel
+        data set is referenced to the same\t\t\t\t\t  spatial and geolocation scales.
+        Separate L1B products are available\t\t\t\t\t  for the 250 m channels (MOD02QKM)
+        and 500 m channels (MOD02HKM) that\t\t\t\t\t  preserve the original resolution
+        of the data.\t\t\t\t\t  \t\t\t\t\t  Spatial resolution for pixels at nadir
+        is 1 km, degrading to 4.8 km in\t\t\t\t\t  the along-scan direction at the
+        scan extremes. However, thanks to the\t\t\t\t\t  overlapping of consecutive
+        swaths and respectively pixels there, the\t\t\t\t\t  resulting resolution
+        at the scan extremes is about 2 km.  A 55 degree\t\t\t\t\t  scanning pattern
+        at the EOS orbit of 705 km results in a 2330 km\t\t\t\t\t  orbital swath width
+        and provides global coverage every one to two\t\t\t\t\t  days. A single MODIS
+        Level 1B granule will nominally contain a scene\t\t\t\t\t  built from 203
+        scans (or swaths) sampled 1354 times in the cross-track\t\t\t\t\t  direction,
+        corresponding to approximately 5 minutes worth of data.\t\t\t\t\t  Since an
+        individual MODIS scan (or swath) will contain 10 along-track\t\t\t\t\t  spatial
+        elements, the scene will be composed of (1354 x 2030) pixels,\t\t\t\t\t  resulting
+        in a spatial coverage of (2330 km x 2030 km).Due to the\t\t\t\t\t  MODIS scan
+        geometry, there will be increasing overlap occurring beyond\t\t\t\t\t  about
+        25 degrees scan angle.\t\t\t\t\t  \t\t\t\t\t  To summarize, the MODIS L1B
+        1 km data product consists of:\t\t\t\t\t  \t\t\t\t\t  1. Calibrated radiances
+        and uncertainties for (2) 250 m reflected\t\t\t\t\t  solar bands aggregated
+        to 1 km resolution\t\t\t\t\t  \t\t\t\t\t  2. Calibrated radiances and uncertainties
+        for (5) 500 m reflected\t\t\t\t\t  solar bands aggregated to 1 km resolution\t\t\t\t\t  \t\t\t\t\t  3.
+        Calibrated radiances and uncertainties for (13) 1 km reflected\t\t\t\t\t  solar
+        bands and (16) infrared emissive bands\t\t\t\t\t  \t\t\t\t\t  4. Geolocation
+        subsampled at every 5th pixel across and along track\t\t\t\t\t  \t\t\t\t\t  5.
+        Satellite and solar angles subsampled at the above frequency\t\t\t\t\t  \t\t\t\t\t  6.
+        Comprehensive set of file-level metadata summarizing the spatial,\t\t\t\t\t  temporal
+        and parameter attributes of the data, as well as auxiliary\t\t\t\t\t  information
+        pertaining to instrument status and data quality\t\t\t\t\t  characterization\t\t\t\t\t  \t\t\t\t\t  Users
+        requiring the full-resolution geolocation and solar/satellite\t\t\t\t\t  geometry
+        can obtain the separate MODIS Level 1 Geolocation product\t\t\t\t\t  (MOD03)
+        from LAADS.\t\t\t\t\t  \t\t\t\t\t  The MODIS L1B data are stored in the Earth
+        Observing System\t\t\t\t\t  Hierarchical Data Format (HDF-EOS) which is an
+        extension of HDF as\t\t\t\t\t  developed by the National Center for Supercomputer
+        Applications (NCSA)\t\t\t\t\t  at the University of Illinois. A typical file
+        size will be\t\t\t\t\t  approximately 260 MB.\t\t\t\t\t  \t\t\t\t\t  Environmental
+        information derived from MODIS L1B measurements will\t\t\t\t\t  offer a comprehensive
+        and unprecedented look at terrestrial,\t\t\t\t\t  atmospheric, and ocean phenomenology
+        for a wide and diverse community\t\t\t\t\t  of users throughout the world.\t\t\t\t\t  \t\t\t\t\t  (The
+        Shortname for this product is MOD021KM)\t\t\t\t\t  \t\t\t\t\t  The V004 Program
+        Executable (PGE), for MODIS Level 1B products, has\t\t\t\t\t  gone through
+        a series of revisions since the initial release of V4.0.0\t\t\t\t\t  in March
+        of 2002. These include revisions to make it\t\t\t\t\t  LINUX-compatible. The
+        current version is V4.0.9, which does not\t\t\t\t\t  contain changes to the
+        code that affect scientific output.\t\t\t\t\t  \t\t\t\t\t  Below is a brief
+        overview of changes that affect scientific output in\t\t\t\t\t  previous versions
+        (V4.0.0 to V4.0.7) of PGE code. The MCST web site,\t\t\t\t\t  listed in the
+        URL section of this DIF, has a more detailed version of\t\t\t\t\t  this information,
+        including revisions that do not affect scientific\t\t\t\t\t  output.\t\t\t\t\t  \t\t\t\t\t  Significant
+        changes to Look Up Tables (LUT) used in Level 1B\t\t\t\t\t  processing have
+        occurred. These include revising the\t\t\t\t\t  Response-versus-Scan Angle
+        (RVS) LUTs from listing the RVS corrections\t\t\t\t\t  to listing the quadratic
+        coefficients used in making the RVS\t\t\t\t\t  correction. The coefficients
+        are now calculated by interpolating on\t\t\t\t\t  the granule collection time
+        and the RVS corrections are then generated\t\t\t\t\t  using the interpolated
+        coefficients. Previously used Emissive and\t\t\t\t\t  Reflective RVS LUT tables
+        were eliminated and new ones introduced.\t\t\t\t\t  \t\t\t\t\t  An incorrect
+        comparison between RVS coefficients for Thermal\t\t\t\t\t  Emissivity Bands
+        (TEB) and Reflective Solar Bands (RSB) was being made\t\t\t\t\t  during the
+        calculation of the RVS coefficients. This was replaced with\t\t\t\t\t  a comparison
+        between TEB coefficients.  This error never resulted in\t\t\t\t\t  an incorrect
+        RVS correction but did lead to re-calculating the\t\t\t\t\t  coefficients
+        for each detector in a thermal band even if the\t\t\t\t\t  coefficients were
+        the same for all 10 detectors.\t\t\t\t\t  \t\t\t\t\t  A destriping algorithm
+        for Band 26 devised by C. Moeller was\t\t\t\t\t  implemented. A new time-dependent
+        LUT was added which gives\t\t\t\t\t  coefficients for a detector-specific
+        cross-talk correction based on\t\t\t\t\t  the aggregated Band 5 radiances.  The
+        Band 26 scaled integers are\t\t\t\t\t  adjusted by the Band 5 correction term,
+        which is the product of the\t\t\t\t\t  Band 5 radiance times the ratio of
+        the Band 5 to Band 26 scaling\t\t\t\t\t  factors times the LUT correction
+        value for that detector.  In addition\t\t\t\t\t  a new LUT which allows for
+        a frame offset with regard to the Band 5\t\t\t\t\t  radiance was added.  A
+        LUT which switches the correction off or on was\t\t\t\t\t  also added.\t\t\t\t\t  \t\t\t\t\t  Data
+        set information:\t\t\t\t\t  \t\t\t\t\t  MODIS Homepage\t\t\t\t\t  http://modis.gsfc.nasa.gov/data/dataprod/\t\t\t\t\t  \t\t\t\t\t  and\t\t\t\t\t  \t\t\t\t\t  MODIS
+        Characterization Support Team\t\t\t\t\t  http://mcst.gsfc.nasa.gov/","has_granules":true,"orbit_parameters":{},"id":"C90757595-LAADS","collection_data_type":"SCIENCE_QUALITY","granule_count":1647358,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS","hreflang":"en-US","href":"http://modaps.nascom.nasa.gov/services/about/product_descriptions_terra.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Search
+        and order products from LAADS website.","hreflang":"en-US","href":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MOD021KM 5 data set.","hreflang":"en-US","href":"ftp://ladsweb.nascom.nasa.gov/allData/5/MOD021KM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Level 1B Product Information Page at MCST","hreflang":"en-US","href":"http://mcst.gsfc.nasa.gov/l1b/product-information"}]}]}}'
+    http_version: 
+4ca54b71eaa4031482a61028b22a1f702b6bf1f9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:10:10 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '1117'
+      cmr-request-id:
+      - d0881028-9503-48cd-aca4-020d1f11de80
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T02:10:11.181Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026bounding_box=0%2C0%2C15%2C15\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","boxes":["-90 -180 90
+        180"],"time_start":"2014-12-25T05:35:00.000Z","dif_ids":["MOD04_L2"],"version_id":"5","updated":"2012-06-18T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005 NRT","data_center":"LANCEMODIS","short_name":"MOD04_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005 NRT","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km","has_granules":false,"orbit_parameters":{},"id":"C1000000019-LANCEMODIS","original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","granule_count":0,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Atmosphere Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MOD04_L2 (Product Info)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/MOD04_L2/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Atmosphere Data Availability Calendar and Validation Level (MiscInformation)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products_calendar.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Known
+        Data Issues (DatasetDisclaimer)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/validation.html"}]},{"processing_level_id":"2","boxes":["-90
+        -180 90 180"],"time_start":"2014-12-25T05:30:00.000Z","dif_ids":["MOD10_L2"],"version_id":"5","updated":"2012-06-19T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Snow Cover 5-Min L2 500m V005 NRT","data_center":"LANCEMODIS","short_name":"MOD10_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Snow Cover 5-Min L2 500m V005 NRT","coordinate_system":"CARTESIAN","summary":"Level
+        2 Snow Cover 5-Min L2 500m...","has_granules":false,"orbit_parameters":{},"id":"C1000000016-LANCEMODIS","original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","granule_count":0,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Land Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-land.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of Surface Reflectance (Product Info)","hreflang":"en-US","href":"http://modis-land.gsfc.nasa.gov/surfrad.html"}]}],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[["MODIS",2]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["2",2]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"AEROSOL
+        EXTINCTION"},{"count":1,"value":"AEROSOL PARTICLE PROPERTIES"},{"count":1,"value":"AEROSOL
+        RADIANCE"},{"count":1,"value":"AEROSOLS OPTICAL DEPTH/THICKNESS"},{"count":1,"value":"CARBONACEOUS
+        AEROSOLS"}],"count":1,"value":"AEROSOLS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"OPTICAL
+        DEPTH/THICKNESS"},{"count":1,"value":"RADIATIVE FLUX"},{"count":1,"value":"REFLECTANCE"}],"count":1,"value":"ATMOSPHERIC
+        RADIATION"}],"count":1,"value":"ATMOSPHERE"}],"count":1,"value":"EARTH SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+5d6780d169bbe5ad0334ce85e291d4cb8b959eb3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:07:30 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '6386'
+      cmr-took:
+      - '11785'
+      cmr-request-id:
+      - 23e7da87-731e-468d-b4da-0c0381f1f702
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: ASCII-8BIT
+      string: '{"feed":{"updated":"2016-03-27T02:07:42.638Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026bounding_box=0%2C0%2C15%2C15\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2006-06-30T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_A_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_A","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) launched by NASA in 2002 on board the Aqua satellite platform
+        (a second series is on the Terra platform) to study global dynamics of the
+        Earths atmosphere, land and oceans. MODIS captures data in 36 spectral bands
+        ranging in wavelength from 0.4 um to 14.4 um and at varying spatial resolutions
+        (2 bands at 250 m, 5 bands at 500 m and 29 bands at 1 km). For the sea surface
+        temperature (SST) products from this radiometer channels in the 4, 11 and
+        12 um spectrum are used. The Aqua platform is in a sun synchronous, near polar
+        orbit at 705 km altitude and the MODIS instrument images the entire Earth
+        every 1 to 2 days. The production of the MODIS L2P SST data as part of the
+        Group for High Resolution Sea Surface Temperature (GHRSST) is a joint collaboration
+        between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean Biology Processing
+        Group (OBPG), and the Rosenstiel School of Marine and Atmospheric Science
+        (RSMAS). RSMAS is responsible for sea surface temperature algorithm development,
+        error statistics and quality flagging, while the OBPG is NASA ground data
+        system for production of daily MODIS ocean products in HDF file format. JPL
+        acquires MODIS ocean granules from the OBPG in near realtime and reformats
+        them to the GHRSST L2P netCDF specification with complete metadata. Data consists
+        of global coverage at 1 km resolution with approximately 300+ five minute
+        observation granules per day. For nighttime data both SST from the 11-12 um,
+        and 4 um bands are available. Ocean chlorophyll a and K490 diffuse attenuation
+        coefficient data are also available for daytime periods as non standard L2P
+        core fields. Note that these ocean color data do not represent the most recent
+        version processed by the OBPG and may not be of research quality.\n","has_granules":false,"orbit_parameters":{},"id":"C1224520058-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_A/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2006-10-01T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_T_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_T","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) launched by NASA in 1999 on board the Terra satellite platform
+        (a second series is on the Aqua platform) to study global dynamics of the
+        Earths atmosphere, land and oceans. MODIS captures data in 36 spectral bands
+        ranging in wavelength from 0.4 um to 14.4 um and at varying spatial resolutions
+        (2 bands at 250 m, 5 bands at 500 m and 29 bands at 1 km). For the sea surface
+        temperature (SST) products from this radiometer channels in the 4, 11 and
+        12 um spectrum are used. The Terra platform is in a sun synchronous, near
+        polar orbit at 705 km altitude and the MODIS instrument images the entire
+        Earth every 1 to 2 days. The production of the MODIS L2P SST data as part
+        of the Group for High Resolution Sea Surface Temperature (GHRSST) is a joint
+        collaboration between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean
+        Biology Processing Group (OBPG), and the Rosenstiel School of Marine and Atmospheric
+        Science (RSMAS). RSMAS is responsible for sea surface temperature algorithm
+        development, error statistics and quality flagging, while the OBPG is NASA
+        ground data system for production of daily MODIS ocean products in HDF file
+        format. JPL acquires MODIS ocean granules from the OBPG in near realtime and
+        reformats them to the GHRSST L2P netCDF specification with complete metadata.
+        Data consists of global coverage at 1 km resolution with approximately 300+
+        five minute observation granules per day. For nighttime data both SST from
+        the 11-12 um, and 4 um bands are available. Ocean chlorophyll a and K490 diffuse
+        attenuation coefficient data are also available for daytime periods as non
+        standard L2P core fields. Note that these ocean color data do not represent
+        the most recent version processed by the OBPG and may not be of research quality.\n","has_granules":false,"orbit_parameters":{},"id":"C1224520120-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_T/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2014-05-20T00:00:00.000Z","dif_ids":["GHRSST-VIIRS_NPP-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging Radiometer
+        Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced Clear-Sky
+        Processor for Ocean (ACSPO) (GDS version 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-VIIRS_NPP-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging
+        Radiometer Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced
+        Clear-Sky Processor for Ocean (ACSPO) (GDS version 2)\n","coordinate_system":"CARTESIAN","summary":"\nJoint
+        Polar Satellite System (JPSS), starting with S-NPP launched on 28 October
+        2011, is the new generation of the US Polar Operational Environmental Satellites
+        (POES). As during the POES era, NOAA is responsible for all JPSS products,
+        including Level 2 Visible Infrared Imaging Radiometer Suite (VIIRS) SST derived
+        using NOAA heritage Advanced Clear-Sky Processor for Ocean (ACSPO) system
+        at the native sensor resolution. VIIRS is a whiskbroom scanning radiometer
+        which takes measurements in the cross-track direction within a field of regard
+        of 112.56 degrees, using 16 detectors and double-side mirror assembly. At
+        a nominal altitude of 829 km, the swath width is 3060 km, providing full daily
+        coverage both in the day and night side of the Earth. VIIRS has 22 spectral
+        bands covering the spectrum from 0.4-12 micrometers, including 16 moderate
+        resolution bands (M-bands). In addition to pixel-level earth locations, Sun-Sensor
+        geometry, and ancillary data from NCEP global weather forecast, ACSPO inputs
+        are 3 brightness temperatures (BTs) in M12 (3.7microns), M15 (11microns),
+        and M16 (12microns), and 2 reflectances in M5 (0.67microns) and M7 (0.87microns)
+        bands, used for cloud identification. ACSPO output files are in netcdf4 format
+        compliant with the GHRSST Data Specification version 2 (GDS2). Each output
+        file (granule) contains 10 minutes of data. In each valid water pixel (defined
+        as ocean, sea, lake or river, up to 5 km inland; fill values are reported
+        in invalid pixels, at \u003e5 km inland), the following layers are reported,
+        among others: BTs in M12, 15, and 16 (original radiances are included for
+        those users interested in direct radiance assimilation, e.g., NOAA NCEP, NASA
+        GMAO); SSTs derived from BTs using multi-channel SST (MCSST; night) and Non-Linear
+        SST (NLSST; day) algorithms (Petrenko et al., 2014); and ACSPO clear-sky mask
+        (ACSM; provided in each pixel as part of l2p_flags) (Petrenko et al., 2010).
+        We only recommend using the ACSM confidently clear pixels (equivalent to GDS2
+        quality level=5, also reported for each pixel). The ACSM also provides day/night,
+        land, ice, twilight, and glint flags. Note that users of ACSPO data have the
+        flexibility to ignore the ACSM, derive their own clear-sky mask, and use BTs
+        and SSTs in those pixels. They may also ignore ACSPO SST, and derive their
+        own SST from the original BTs. ACSPO VIIRS products are monitored and validated
+        against in situ data (Xu and Ignatov, 2014) in SQUAM (Dash et al, 2010) and
+        MICROS (Liang and Ignatov, 2011).\n","has_granules":false,"orbit_parameters":{},"id":"C1224519979-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/VIIRS_NPP/OSPO/\n"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1997-07-01T00:00:00.000Z","dif_ids":["GGP-SG-CORMIN"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":" GGP - Corrected
+        Minute Data","data_center":"SCIOPS","short_name":"GGP-SG-CORMIN","organizations":["DE/GFZ/ISDC"],"title":"
+        GGP - Corrected Minute Data","coordinate_system":"CARTESIAN","summary":"Global
+        Geodynamics Project (GGP) - Earthquake Data","has_granules":false,"orbit_parameters":{},"id":"C1214586854-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        GGP date are available via the ISDC Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/ggp/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Saint
+        Louis University, Department of Earth and Atmospheric Sciences, GGP Homepage.\n      ","hreflang":"en-US","href":"http://www.eas.slu.edu/GGP/ggphome.html"}]},{"boxes":["-5
+        -100 67 18","-60 15 30 150"],"dif_ids":["NOAA_NCDC_PALEO_2001-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":" Late Paleocene
+        Osmium Isotope Data  ","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2001-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Late Paleocene Osmium Isotope Data  ","coordinate_system":"CARTESIAN","summary":"Marine
+        Osmium records during the late Paleocene thermal maximum  interpreted as\nproxies
+        of terrestrial chemical weathering.\n\nCore DSDP-213 Indian Ocean  \nCore
+        DSDP-549 North Atlantic Ocean","has_granules":false,"orbit_parameters":{},"id":"C1215196946-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data files\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Access
+        to documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/readme_ravizza2001.txt"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_93-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"
+        Time Dependent Ice Coverage and Ice Topography Through the Glacial Cycle","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_93-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Time Dependent Ice Coverage and Ice Topography Through
+        the Glacial Cycle","coordinate_system":"CARTESIAN","summary":"Topography and
+        ice cover data files from the ICE-4G model. Data consists of\ntopographical
+        heights at 1 Kyr intervals since the last glacial  maximum.\nTopographical
+        heights are relative to paleo sea level.\n\nThe second data set consists of
+        Ice-cover data at 1 Kyr intervals since the\nlast glacial maximum.","has_granules":false,"orbit_parameters":{},"id":"C1215197136-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to ice topography data\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Ice
+        cover reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/peltice.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Topography
+        reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/pelttopo.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         ice
+        topography data set documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/readme_ice_topography.txt"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1981-01-01T00:00:00.000Z","dif_ids":["GLCF_GLC_1km_1.0"],"version_id":"1.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1
+        Kilometer Land Cover Product from the University of Maryland","data_center":"SCIOPS","short_name":"GLCF_GLC_1km","organizations":["UMD/GLCF"],"title":"1
+        Kilometer Land Cover Product from the University of Maryland","coordinate_system":"CARTESIAN","summary":"This
+        summary is adapted from the One Kilometer Global Land Cover\nProject Document-Data
+        Set Description web page, which may be found at\nthe following URL: \"http://glcf.umiacs.umd.edu/data/landcover/index.shtml\".\n      \n      To
+        develop improved methodologies for global land cover\n      classifications
+        as well as to provide global land cover products for immediate use in global
+        change research, University of Maryland''s\n      Global Land Cover Facility
+        (GLCF) and NASA have employed the\n      NASA/NOAA Pathfinder Land (PAL) data
+        set with a spatial resolution of 1km. This data set has a length of record
+        of 14 years (1981-1994),\n      providing the ability to test the stability
+        of classification\n      algorithms. Furthermore, this data set includes red,
+        infrared, and\n      thermal bands in addition to the Normalized Difference
+        Vegetation\n      Index (NDVI). Inclusion of these additional bands improves\n      discrimination
+        between cover types.\n      \n      To identify the pixels to be used for
+        training of the 1 km AVHRR\n      Pathfinder data, the investigators collected
+        a total of over 200\n      high resolution scenes of which they were confident
+        of which cover type\n      occurs.  Most of the scenes used were acquired
+        by the Landsat\n      Multispectral Scanner System (MSS), and a few by Landsat
+        Thematic\n      Mapper and the LISS (Linear Imaging Self-Scanning Sensor).\n      \n      Of
+        the initial 200 scenes, the investigators considered 156 suitable for\n      interpretation.
+        Scenes were considered unsuitable if haze or poor\n      quality data obscured
+        the scene or if the cover types in the scene\n      could not be visually
+        distinguished. For most scenes, the\n      investigators aimed to identify
+        only one cover type within the\n      scene. It was possible, however, to
+        identify more than one cover type\n      in some scenes if croplands were
+        visually identifiable based on the\n      spatial patterns of fields or if
+        vegetation maps showed the presence\n      of clearly identifiable cover types.\n      \n      The
+        second part of the study involved deriving a global land cover\n      classififcation
+        product. The product was derived by testing several\n      metrics that describe
+        the temporal dynamics of vegetation over an\n      annual cycle. These metrics
+        have the potential to be used as input\n      variables to a global land cover
+        classification. The tested metrics\n      are based on 1) the ratio between
+        surface temperature and NDVI, 2)\n      seasonal metrics derived from the
+        NDVI temporal profile such as length\n      of growing season, 3) a rule-based
+        approach that determines cover type\n      through a series of hierarchical
+        trees based on surface temperature\n      and NDVI values, and 4) annual mean,
+        maximum, minimum, and amplitude\n      values for all optical and thermal
+        channels in the AVHRR Pathfinder\n      Land (PAL) data. These metrics were
+        applied to 1984 PAL data at 8km\n      resolution to derive a global land
+        cover classification product using\n      a decision tree classifier. This
+        method was then applied to AVHRR\n      data from other years and higher spatial
+        resolutions.","has_granules":false,"time_end":"1994-01-01T00:00:00.000Z","orbit_parameters":{},"id":"C1214608509-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"1
+        Kilometer Land Cover Product from the University of Maryland.","hreflang":"en-US","href":"http://glcfapp.umiacs.umd.edu:8080/esdi/index.jsp?productID=6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"1
+        Kilometer Land Cover Product from the University of Maryland.","hreflang":"en-US","href":"http://glcf.umiacs.umd.edu/data/landcover/data.shtml"}]},{"boxes":["-71
+        0 72 -1"],"dif_ids":["gov.noaa.ngdc.mgg.geophysics.G01414_1999 Edition"],"version_id":"1999
+        Edition","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1-deg x 1-deg
+        Terrestrial Mean Free-Air Anomalies","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.geophysics.G01414","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"1-deg
+        x 1-deg Terrestrial Mean Free-Air Anomalies","coordinate_system":"CARTESIAN","summary":"The
+        1x1 degree Terrestrial Mean Free-Air Gravity Anomaly and Geoid Undulations
+        Data Base was compiled and developed by the Ohio State University. This data
+        base was received in March 1993. Principal gravity parameters include mean
+        elevation, mean free-air anomaly and source id. The gravity anomaly computation
+        uses the Geodetic Reference System 1967 (GRS 67) theoretical formula. The
+        data are global in coverage where data are available.","has_granules":false,"orbit_parameters":{},"id":"C1214558130-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/fliers/se-0703.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/gravity/1999/document/html/tablegri.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.geophysics:G01414"}]},{"boxes":["-45.69
+        -63.51 78.87 170.42"],"time_start":"2001-05-28T00:00:00.000Z","dif_ids":["CH-OG-1-GPS-10S_0.0"],"version_id":"0.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"10
+        sec GPS ground tracking data","data_center":"SCIOPS","short_name":"CH-OG-1-GPS-10S","organizations":["DE/GFZ/ISDC"],"title":"10
+        sec GPS ground tracking data","coordinate_system":"CARTESIAN","summary":"This
+        data set comprises GPS ground data of a sample rate of 10 sec, generated\n      by
+        decoding and sampling GPS high  rate ground data. This raw data passed no\n      quality
+        control. The data are given in the Rinex 2.1 format.","has_granules":false,"orbit_parameters":{},"id":"C1214586614-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        CHAMP Rapid Science Orbit dataset are available via the ISDC\n         Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/champ"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GFZ
+        Potsdam, Section 1.2., Gravity Missions and Analysis home page.\n      ","hreflang":"en-US","href":"http://www.gfz-potsdam.de/portal/-"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_2005-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"11,000
+        Year Sunspot Number Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"11,000 Year Sunspot Number Reconstruction","coordinate_system":"CARTESIAN","summary":"From
+        http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html\n\nDirect
+        observations of sunspot numbers are available for the past\nfour centuries,
+        but longer time series are required, for example,\nfor the identification
+        of a possible solar influence on climate and\nfor testing models of the solar
+        dynamo. Here we report a\nreconstruction of the sunspot number covering the
+        past 11,400\nyears, based on dendrochronologically dated radiocarbon concentrations.\nWe
+        combine physics-based models for each of the\nprocesses connecting the radiocarbon
+        concentration with sunspot\nnumber. According to our reconstruction, the level
+        of solar\nactivity during the past 70 years is exceptional, and the previous\nperiod
+        of equally high activity occurred more than 8,000 years\nago. We find that
+        during the past 11,400 years the Sun spent only\nof the order of 10% of the
+        time at a similarly high level of\nmagnetic activity and almost all of the
+        earlier high-activity\nperiods were shorter than the present episode. Although
+        the\nrarity of the current episode of high average sunspot numbers\nmay indicate
+        that the Sun has contributed to the unusual climate\nchange during the twentieth
+        century, we point out that solar\nvariability is unlikely to have been the
+        dominant cause of the\nstrong warming during the past three decades.\n\nThe
+        series of reconstructed 10-yr averaged sunspot numbers with their 68%\nuncertainty.
+        Years are given BP (before present), i.e. the calendar AD year,\nYad, is related
+        to the  BP year, Ybp, as Yc=1950-Ybp. The tabulated years\ncorrespond to centers
+        of the corresponding 10-year intervals. Negative values\nare artifacts and
+        are consistent with zero within the error limits.","has_granules":false,"orbit_parameters":{},"id":"C1215197053-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        and further information on sunspot number reconstruction\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html"}]},{"boxes":["-36.9
+        -157.4 71.3 147.29"],"time_start":"2008-01-16T00:00:00.000Z","dif_ids":["14c_of_soil_co2_from_ipy_itex_cross_site_comparison"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"14C of soil CO2
+        from IPY ITEX Cross Site Comparison","data_center":"SCIOPS","short_name":"14c_of_soil_co2_from_ipy_itex_cross_site_comparison","organizations":["ACADIS"],"title":"14C
+        of soil CO2 from IPY ITEX Cross Site Comparison","coordinate_system":"CARTESIAN","summary":"Study
+        sites: Toolik Lake Field Station Alaska, USA 68.63 N, 149.57 W; Atqasuk, Alaska
+        USA 70.45 N, 157.40 W; Barrow, Alaska, USA 71.30 N, 156.67 W; Latnjajaure,
+        Sweden 68.35 N, 18.50 E; Falls Creek, Australia: Site 2-unburned 36.90 S 147.29
+        E; Site 3-burned 36.89 S 147.28 E. Additional sites will be added summer 2008,
+        but the exact sites are not finalized. Purpose: Collect soil CO2 for analysis
+        of radiocarbon to evaluate the age of the carbon respired in controls and
+        warmed plots from across the ITEX network.  Treatments: control and ITEX OTC
+        warming experiment (1994-2007). Design: 5 replicates of each treatment at
+        dry site and moist site. Sampling frequency: Once per peak season.","has_granules":false,"time_end":"2008-01-21T00:00:00.000Z","orbit_parameters":{},"id":"C1214602443-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Data
+        Center top-level access page for this resource\n      ","hreflang":"en-US","href":"http://www.aoncadis.org/dataset/id/79208243-d496-11de-892a-00c0f03d5b7c.html"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2000-12-07T00:00:00.000Z","dif_ids":["iucn_protected_areas"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1997 UN List
+        of National Protected Areas","data_center":"SCIOPS","short_name":"iucn_protected_areas","organizations":["UNEP/WCMC/PAP"],"title":"1997
+        UN List of National Protected Areas","coordinate_system":"CARTESIAN","summary":"This
+        prototype database has been developed by UNEP-WCMC in\n      collaboration
+        with a number of partners. The IUCN World Commission on\n      Protected Areas
+        and UNEP-WCMC have collaborated since the early 1980s\n      in developing
+        a global protected areas database. More recently,\n      UNEP-WCMC has been
+        working with the European Environment Agency, and\n      its Nature Conservation
+        Topic Centre in the development of a common\n      European Protected Areas
+        Database. The data collected under this joint\n      effort are reflected
+        in the WWW version of the database.","has_granules":false,"orbit_parameters":{},"id":"C1214612993-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false},{"boxes":["-90
+        -180 90 180"],"time_start":"1998-01-17T00:00:00.000Z","dif_ids":["NOAA_BLEACH98"],"version_id":"Not
+        provided","updated":"2015-12-01T00:00:00.000Z","dataset_id":"1998 Animations
+        of Coral Bleaching Hotspots from NOAA/NESDIS","data_center":"SCIOPS","short_name":"NOAA_BLEACH98","organizations":["DOC/NOAA/NESDIS/OSDPD"],"title":"1998
+        Animations of Coral Bleaching Hotspots from NOAA/NESDIS","coordinate_system":"CARTESIAN","summary":"The
+        year of 1998 was a difficult time for the worlds coral reefs, with\nabnormally
+        warm sea surface temperatures (SST''s) causing widespread\ncoral bleaching.
+        The animations and images on this page show the\ndifferences between the climatological
+        maximum monthly mean SST\n(i.e. the expected summer-time maximum) and the
+        satellite-derived\nNOAA/NESDIS night time SST fields. When the night time
+        SST field is\nwarmer than the expected summer-time maximum by 1 degree C,
+        the\nregion is shown in orange as a potential coral bleaching hotspot.\n\nNOAA/NESDIS
+        oceanographer, Dr. Al Strong, has collected reports of\ncoral bleaching from
+        an informal network of coral\nreef researchers and observers. These reports
+        have been overlayed\non the following 1998 animations and images:\n\n\nAnimation
+        of Great Barrier Reef Bleaching Event, El Nino,\n1/17/98-4/17/98, (1.6 mb)\n\nAnimation
+        of Indian Ocean Bleaching Event, El Nino/La Nina transition\nperiod , 3/24/98-7/24/98,
+        (1.0 mb)\n\nAnimation of Bahrain, Red Sea and Eastern Pacific Bleaching Events,\nearly
+        La Nina, 7/4/98-10/27/98, (0.8 mb)\n\nAnimation of Western Hemisphere Bleaching
+        Events, early La Nina,\n6/20/98-11/7 /98, (1.1 mb)\n\nAnimation of HotSpots
+        during El Nino,1/3/98-6/6/98 in the Western\nHemisphere, (2.0 mb)\n\nIndian
+        Ocean Bleaching Event - time series , 3/24/98-8/11/98\n\nWestern Hemisphere
+        Bleaching Event - time series, 6/20/98-9/8/98","has_granules":false,"time_end":"1998-09-08T00:00:00.000Z","orbit_parameters":{},"id":"C1214419724-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         NOAA/NESDIS
+        1998 Coral Bleaching HotSpots\n      ","hreflang":"en-US","href":"http://www.osdpd.noaa.gov/ml/ocean/cb/hotspots_1998anim.html"}]},{"boxes":["-5
+        -45 90 50"],"time_start":"1992-04-01T00:00:00.000Z","dif_ids":["1KM.AVHRR.TOVS.SHARP2A"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1KM NOAA AVHRR
+        and TOVS Digital CCT product in SHARP level 2A format","data_center":"ESA","short_name":"1KM.AVHRR.TOVS.SHARP2A","organizations":["ESA/EARTHNET"],"title":"1KM
+        NOAA AVHRR and TOVS Digital CCT product in SHARP level 2A format","coordinate_system":"CARTESIAN","summary":"The
+        1 km AVHRR Global Land Data set project is an\n      international effort
+        to acquire, archive, process and\n      distribute the data of the entire
+        global land\n      surface observed by the NOAA/AVHRR\n      satellite mission
+        at 1 km resolution, in order to\n      meet the needs of the international\n      science
+        community, (IGBP, 1992). A\n      network of 29 High Resolution Picture\n      Transmission
+        (HRPT) stations, along with data\n      recorded by the NOAA, has been acquiring
+        daily global\n      land coverage from the NOAA-11 satellite since the first
+        of April\n      1992. The continuous flow of data coming from these stations
+        is\n      routinely archived by USGS and ESA. A common archive exists at\n      the
+        EROS data centre of the USGS and at the ESRIN of ESA. The\n      number of
+        pass acquired per year is around 15000. The project\n      intends to process
+        all acquired data to generate\n      for any 10-day period in the project\n      time-span
+        (April 92 - September 94) a land composite\n      product (1444k) covering
+        the whole world surface, as defined by\n      Townsend et al., 1992.\n      AVHRR
+        floating scenes are provided in SHARP\n      format. SHARP is the ESA Earthnet
+        format for\n      AVHRR and TOVS data generated to provide an easy\n      data
+        access for the international Remote sensing user\n      community. SHARP-1
+        consists of two volumes: AVHRR\n      volume and TOVS volume. In addition,
+        with the objective\n      of providing the user with ready-to-use data,\n      a
+        family of higher level products has been proposed\n      by Earthnet: this
+        is SHARP level-2.\n      \n      \n      \n      \n      The SHARP level-2A
+        (Calibrated Product) contains\n      calibrated data from the AVHRR channels
+        (i.e.\n      level 1 data calibrated and converted to\n      measurements
+        of Equivalent Reflectance, spectral\n      Radiance and Brightness Temperature)
+        and a classification of the\n      image.\n      \n      \n      \n      \n      Each
+        pixel contains image data (calibrated), a\n      classification and geographical
+        information\n      (boundaries, coastlines and lat/long grid\n      flags).
+        Each pixel consists of 2 bytes; 10 bits are\n      used for image data, 3
+        bits for the\n      classification and 3 bits for geographical data.\n      The
+        classification includes land, cloud, sea,\n      snow/ice and unclassified
+        pixels.\n      \n      \n      \n      \n      SHARP-2 products are produced
+        from archived SHARP-1\n      day-time data.  SHARP-2 products will not be
+        archived. TOVS data\n      remains the same as for SHARP-1 products.\n      \n      \n      \n      \n      For
+        the Level 2A product, Level 1 raw data is\n      calibrated and classified
+        utilizing state-of-the-art algorithms.\n      The visible channels (1 and
+        2) are converted from raw data to\n      Equivalent Reflectance, while channels
+        4 and 5 (infrared) are\n      converted to Brightness Temperature, corrected
+        by nonlinear\n      effects, and the third infrared channel (3) is converted
+        to Spectral\n      Radiance.\n      \n      \n      \n      \n      Image
+        data in each band of the Level 2A product:\n      \n      ---------------\n      Band
+        1: Channel 1 Equivalent Reflectance\n      Band 2: Channel 2 Equivalent Reflectance\n      Band
+        3: Channel 3 Spectral Radiance\n      Band 4: Channel 4 Brightness Temperature\n      Band
+        5: Channel 5 Brightness Temperature\n      ---------------\n      Note: ''Band''
+        refers to the output data structure of\n      the SHARP products.\n      ''Channel''
+        refers to the input satellite data acquired\n      in different\n      wavelengths.\n      \n      \n      \n      \n      This
+        product can be produced with data from all the\n      operating NOAA satellites;
+        however, if the data is derived from the\n      even-numbered satellites,
+        band 5 is empty.\n      \n      \n      \n      \n      Geometric Correction:\n      Image
+        navigation (location) is carried out during\n      Level 1 data generation,
+        using the orbital model for\n      the satellite location and is tested by
+        an operator who carries out\n      further correction if necessary.  SHARP-2
+        products are in the\n      original spacecraft projection.  A location grid
+        of tie points\n      (lat/long) is given in the suffix data (every 16th image
+        file\n      record).\n      \n      \n      \n      \n      To order data,
+        please see\n      \"http://earth.esa.int/helpandmail/help_order.html\"","has_granules":false,"orbit_parameters":{},"id":"C1214560039-ESA","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         See
+        ''SHARP-2 Technical Specification of Format'' in the NOAA\n         Document
+        Library\n      ","hreflang":"en-US","href":"http://earth.esa.int/esa_doc/doc_tpm.html#_NOA"}]},{"boxes":["-5
+        -45 90 50"],"time_start":"1992-04-01T00:00:00.000Z","dif_ids":["1KM.AVHRR.TOVS.SHARP2B"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1KM NOAA AVHRR
+        and TOVS Digital CCT product in SHARP level 2B format","data_center":"ESA","short_name":"1KM.AVHRR.TOVS.SHARP2B","organizations":["ESA/EARTHNET"],"title":"1KM
+        NOAA AVHRR and TOVS Digital CCT product in SHARP level 2B format","coordinate_system":"CARTESIAN","summary":"The
+        1 km AVHRR Global Land Data set project is an\n                  international
+        effort\n                  to acquire, archive, process and distribute the
+        data\n                  of the entire\n                  global land surface
+        observed by the NOAA/AVHRR\n                  satellite mission at 1\n                  km
+        resolution, in order to meet the needs of the\n                  international
+        science\n                  community, (IGBP, 1992). A network of 29 High\n                  Resolution
+        Picture\n                  Transmission (HRPT) stations, along with data\n                  recorded
+        by the NOAA,\n                  has been acquiring daily global land coverage
+        from\n                  the NOAA-11\n                  satellite since the
+        first of April 1992. The\n                  continuous flow of data\n                  coming
+        from these stations is routinely archived by\n                  USGS and ESA.
+        A\n                  common archive exists at the EROS data centre of the\n                  USGS
+        and at the\n                  ESRIN of ESA. The number of pass acquired per
+        year is\n                  around\n                  15000. The project intends
+        to process all acquired\n                  data to generate\n                  for
+        any 10-days period in the project time-span\n                  (April 92 -
+        September\n                  94) a land composite product (1444k) covering
+        the\n                  whole world surface,\n                  as defined
+        by Townsend et al., 1992.\n                  \n                  \n                  \n                  \n                  AVHRR
+        floating scenes are provided in SHARP format.\n                  SHARP is
+        the ESA Earthnet format for AVHRR and\n                  TOVS data generated
+        to provide an easy\n                  data access for the international Remote
+        sensing user\n                  community.\n                  SHARP-1 consists
+        of two volumes: AVHRR volume and\n                  TOVS volume.  In order
+        to save user time in\n                  extracting from the raw data the useful\n                  quantities
+        needed for the problem at hand, a\n                  family of higher level
+        products has been proposed\n                  by Earthnet: this is SHARP level-2.\n                  \n                  \n                  \n                  \n                  The
+        SHARP level-2A (Geophysical Product) contains\n                  geophysical
+        parameters extracted from AVHRR\n                  raw data (Vegetation Index
+        and Sea\n                  Surface Temperature) as well as calibrated data
+        and a\n                  classification of the image.\n                  \n                  \n                  \n                  \n                  Each
+        pixel contains image data (calibrated), a\n                  classification
+        and geographical information\n                  (boundaries, coastlines and
+        lat/long grid\n                  flags). Each pixel consists of 2 bytes; 10
+        bits are\n                  used for image data, 3 bits for the classification\n                  and
+        3 bits for geographical data.\n                  The classification includes
+        land, cloud, sea,\n                  snow/ice and unclassified pixels.\n                  \n                  \n                  \n                  \n                  SHARP-2
+        products are produced from archived SHARP-1\n                  day-time data.\n                  SHARP-2
+        products will not be archived. TOVS data\n                  remains the same
+        as for SHARP-1 products.\n                  \n                  \n                  \n                  \n                  The
+        SHARP-2B product consists of:\n                  \n                  \n                  -
+        2 bands (1 and 5) containing class depending\n                  geophysical
+        parameters\n                  - 3 bands (2,3 and 4) containing calibrated
+        data\n                  converted in equivalent Reflectance (band 2),\n                  AVHRR
+        channel 3 spectral Radiance (band 3) and\n                  AVHRR channel
+        4 Brightness Temperature (band 4).\n                  \n                  \n                  \n                  \n                  Characteristics
+        of Band 1, Class dependent parameter:\n                  \n                  ---------------\n                  Land:
+        Normalized Difference Vegetation Index (NDVI)\n                  Sea: Equivalent
+        Reflectance from Channel 1\n                  cloud: Equivalent Reflectance
+        from Channel 1\n                  snow/ice: Equivalent Reflectance from Channel
+        1\n                  glint: Equivalent Reflectance from Channel 1\n                  unclass:
+        Equivalent Reflectance from Channel 1\n                  ------------\n                  \n                  Characteristics
+        of other Bands:\n                  \n                  ---------------\n                  Band
+        2: Channel 2 Equivalent Reflectance\n                  Band 3: Channel 3 Spectral
+        Radiance\n                  Band 4: Channel 4 Brightness Temperature\n                  Band
+        5 over sea: Sea Surface Temperature (SST)\n                  Band 5 over other
+        areas: Brightness Temperature from Channel 5\n                  -----------------\n                  \n                  Note:
+        ''Band'' refers to the output data structure of\n                  the SHARP\n                  products;
+        ''Channel'' refers to the input satellite\n                  data acquired\n                  in
+        different wavelengths.\n                  \n                  \n                  \n                  \n                  This
+        product can be produced with data from all the\n                  operating
+        NOAA\n                  satellites; however, if the data is derived from the\n                  even-numbered\n                  satellites,
+        band 5 is empty.\n                  \n                  \n                  \n                  \n                  Geometric
+        Correction:\n                  Image navigation (location) is carried out
+        during\n                  Level 1 data generation, using the orbital model
+        for\n                  the satellite\n                  location and is tested
+        by an operator who carries out\n                  further\n                  correction
+        if necessary.  SHARP-2 products are in the\n                  original\n                  spacecraft
+        projection.  A location grid of tie points\n                  (lat/long) is\n                  given
+        in the suffix data (every 16th image file\n                  record).\n                  \n                  \n                  \n                  \n                  To
+        order data, please see\n                  \"http://earth.esa.int/\"","has_granules":false,"orbit_parameters":{},"id":"C1214559954-ESA","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         See
+        ''SHARP-2 Technical Specification of Format'' in the NOAA\n         Document
+        Library\n      ","hreflang":"en-US","href":"http://earth.esa.int/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"0200-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO2003-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000 Year Hemispheric
+        Multi-proxy Temperature Reconstructions","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO2003-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000 Year Hemispheric Multi-proxy Temperature Reconstructions","coordinate_system":"CARTESIAN","summary":"Two
+        hemispheric multi-proxy temperature reconstructions (based on\nlocal-correlation
+        weighting, and areal weighting as described in Mann\nand Jones 2003). The
+        global mean shown in the paper is the average of\nthe two hemispheric reconstructions,
+        while the interhemispheric\ndifference is just NH-SH.\n\nAll series are anomalies
+        based on 1961-1990 instrumental reference\nperiod.\n\nAbstract (from the online
+        documentation)\nWe present reconstructions of Northern and Southern Hemisphere\nmean
+        surface temperature over the past two millennia based on\nhigh-resolution
+        ''proxy'' temperature data which retain\nmillennial-scale variability. These
+        reconstructions indicate\nthat late 20th century warmth is unprecedented for
+        at least\nroughly the past two millennia for the Northern Hemisphere.\nConclusions
+        for the Southern Hemisphere and global mean\ntemperature are limited by the
+        sparseness of available proxy\ndata in the Southern Hemisphere at present.","has_granules":false,"orbit_parameters":{},"id":"C1215199015-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/mann2003b/"}]},{"boxes":["0
+        -180 90 180"],"time_start":"0001-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO_2005-019"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000-Year Northern
+        Hemisphere Temperature Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-019","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000-Year Northern Hemisphere Temperature Reconstruction","coordinate_system":"CARTESIAN","summary":"A
+        number of reconstructions of millennial-scale climate variability have been\ncarried
+        out in order to understand patterns of natural climate variability, on\ndecade
+        to century timescales, and the role of anthropogenic forcing. These\nreconstructions
+        have mainly used tree-ring data and other data sets of annual\nto decadal
+        resolution. Lake and ocean sediments have a lower time resolution,\nbut provide
+        climate information at multicentennial timescales that may not be\ncaptured
+        by tree-ring data. Here we reconstruct Northern Hemisphere\ntemperatures for
+        the past 2,000 years by combining low-resolution proxies with\ntree-ring data,
+        using a wavelet transform technique to achieve\ntimescale-dependent processing
+        of the data. Our reconstruction shows larger\nmulticentennial variability
+        than most previous multi-proxy reconstructions, but\nagrees well with temperatures
+        reconstructed from borehole measurements and with\ntemperatures obtained with
+        a general circulation model. According to our\nreconstruction, high temperatures
+        - similar to those observed in the twentieth\ncentury before 1990- occurred
+        around AD 1000 to 1100, and minimum temperatures\nthat are about 0.7K below
+        the average of 1961-90 occurred around AD 1600. This\nlarge natural variability
+        in the past suggests an important role of natural\nmulticentennial variability
+        that is likely to continue.\n\nThis data set consists of reconstructed Northern
+        Hemisphere temperatures for\nthe past 2,000 years  calculated by combining
+        low-resolution proxies with\ntree-ring data,  using a wavelet transform technique
+        to achieve\ntimescale-dependent  processing of the data.\n\nAll data are given
+        as temperature anomalies (K) from the Northern Hemisphere\nannual mean  temperature
+        1961-90 average. Lack of data are indicated with\n-9.9999","has_granules":false,"time_end":"1979-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1215197080-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        on  Highly variable Northern Hemisphere temperatures\n         reconstructed
+        from low- and high-resolution proxy data\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/moberg2005/moberg2005.html"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["gov.noaa.ngdc.mgg.dem.301"],"version_id":"Not provided","updated":"2016-02-11T00:00:00.000Z","dataset_id":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.dem.301","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","coordinate_system":"CARTESIAN","summary":"Two-minute
+        gridded global relief for both ocean and land areas are available in the ETOPO2v2
+        (2006) database. ETOPO2v2 replaced ETOPO2 (2001). The historic 2-minute (ETOPO2v2)
+        and 5-minute (ETOPO5) data are deprecated, but still available. Please use
+        the new ETOPO1 Global Gridded Relief Model.","has_granules":false,"orbit_parameters":{},"id":"C1214558324-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         2-minute
+        Gridded Global Relief Data (ETOPO2) v2. Web page for ETOPO2v2 with full descriptions
+        of the data\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/global/etopo2.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.dem:301"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"2000.00","updated":"2015-08-03T00:00:00.000Z","dataset_id":"2000
+        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","organizations":["SEDAC"],"title":"2000
+        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an \n\nindex that measures the ability of a nation''s economy
+        to achieve sustainable development, with the long term goal of finding a single
+        \n\nindicator for environmental sustainability analagous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is \n\na composite
+        measure of the current status of a nation''s environmental systems, pressures
+        on those systems, human vulnerability to \n\nenvironmental change, national
+        capacity to respond, and contributions to global environmental stewardship.
+        The index was unveiled at \n\nthe World Economic Forum''s annual meeting,
+        January 2000, Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration
+        among \n\nthe World Economic Forum (WEF), Yale Center for Environmental Law
+        and Policy (YCELP), and the Columbia University Center for \n\nInternational
+        Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-\n\n2000/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4NK3BZJ"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2001"],"version_id":"2001.00","updated":"2015-08-04T00:00:00.000Z","dataset_id":"2001
+        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2001","organizations":["SEDAC"],"title":"2001
+        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2001 Environmental Sustainability Index (ESI) utilizes a refined methodology
+        based on the 2000 Pilot ESI effort, to construct an index covering \n\n122
+        countries that measures the overall progress towards environmental sustainability.
+        The index is a composite measure of the current status of a nation''s environmental
+        systems, \n\npressures on those systems, human vulnerability to environmental
+        change, national capacity to respond, and contributions to global environmental
+        stewardship. The refinements included the \n\naddition and deletion of indicators,
+        filling gaps in data coverage, new data sets, and the modification of the
+        aggregation scheme. The index was unveiled at the World Economic Forum''s
+        \n\nannual meeting, January 2001, Davos, Switzerland. The 2001 ESI is the
+        result of collaboration among the World Economic Forum (WEF), Yale Center
+        for Environmental Law and Policy (YCELP), \n\nand the Columbia University
+        Center for International Earth Science Information Network (CIESIN)","has_granules":false,"orbit_parameters":{},"id":"C1000000220-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4X34VDM"}]}],"facets":[{"field":"project","value-counts":[["2011_AN_NASA",22],["2011_GR_NASA",23],["2012_GR_NASA",23],["2013_AN_NASA",25],["2013_GR_NASA",25],["2014_AN_NASA",22],["2014_GR_NASA",22],["AQUA",155],["AURA",95],["CALIPSO",52],["CERES",94],["CLIVAR",27],["COML",52],["CWIC",216],["DISCOVER",35],["DODS",181],["EOS",82],["EOSDIS",760],["ERA40",34],["ERBE",35]]},{"field":"sensor","value-counts":[["AA",118],["AF",118],["AIRS",64],["AMSR-E",53],["AN",118],["ANALYSIS",80],["AQUARIUS_RADIOMETER",47],["AQUARIUS_SCATTEROMETER",77],["AVHRR",49],["AVHRR
+        (ADVANCED VERY HIGH RESOLUTION RADIOMETER)",19],["AVHRR-2",49],["AVHRR-3",84],["BA",118],["BF",118],["CA",118],["CD",30],["CERES
+        SCANNER",66],["CERES-FM1",28],["CERES-FM2",19],["CERES-FM3",26]]},{"field":"two_d_coordinate_system_name","value-counts":[["MODIS
+        Tile SIN",86],["CALIPSO",49],["MISR",40],["WRS-2",9],["MODIS Tile EASE",8],["WRS-1",2]]},{"field":"processing_level_id","value-counts":[["3",1083],["2",394],["1B",119],["Level
+        2",78],["4",66],["Level 3",62],["1",60],["2P",36],["1A",22],["2G",12],["Level
+        1",7],["0",6],["L1T",6],["2A",4],["3U",2],["1T",1],["2B",1]]},{"field":"detailed_variable","value-counts":[["3
+        HOUR MAXIMUM TEMPERATURE",16],["3 HOUR MINIMUM TEMPERATURE",13],["AEROSOL
+        OPTICAL THICKNESS",9],["AEROSOL REFLECTANCE",8],["ANGSTROM EXPONENT",6],["BLENDED
+        SEA SURFACE TEMPERATURE",32],["BULK SEA SURFACE TEMPERATURE",25],["CARBON
+        TETRACHLORIDE",7],["CFC-11",17],["CFC-12",14],["CLOUD COVER",9],["CO2",9],["CORALS",25],["DEW
+        POINT TEMPERATURE",8],["ENSO",18],["FOUNDATION SEA SURFACE TEMPERATURE",16],["GLOBAL
+        THREATENED SPECIES",9],["GREENHOUSE GASES",12],["HUMIDITY",51],["LASER REFLECTANCE",10]]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":9,"value":"AQUACULTURE"},{"count":30,"value":"FISHERIES"}],"count":36,"value":"AGRICULTURAL
+        AQUATIC SCIENCES"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":16,"value":"FERTILIZERS"},{"count":13,"value":"PESTICIDES"}],"count":24,"value":"AGRICULTURAL
+        CHEMICALS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":4,"value":"AGRICULTURAL
+        EQUIPMENT"},{"count":3,"value":"FARM STRUCTURES"}],"count":17,"value":"AGRICULTURAL
+        ENGINEERING"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":42,"value":"CROP/PLANT
+        YIELDS"},{"count":19,"value":"CROPPING SYSTEMS"},{"count":20,"value":"IRRIGATION"},{"count":25,"value":"PLANT
+        BREEDING AND GENETICS"},{"count":13,"value":"PLANT DISEASES/DISORDERS/PESTS"}],"count":93,"value":"AGRICULTURAL
+        PLANT SCIENCE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"CROP/PLANT
+        YIELDS"}],"count":1,"value":"AGRICULTURAL PLANT SCIENCES"}],"count":324,"value":"AGRICULTURE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":53,"value":"AEROSOL
+        BACKSCATTER"},{"count":85,"value":"AEROSOL EXTINCTION"},{"count":2,"value":"AEROSOL
+        FORWARD SCATTER"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":81,"value":"AEROSOL
+        OPTICAL DEPTH/THICKNESS"},{"count":69,"value":"AEROSOL PARTICLE PROPERTIES"}],"count":286,"value":"AEROSOLS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":55,"value":"CARBON
+        MONOXIDE"},{"count":67,"value":"EMISSIONS"},{"count":3,"value":"LEAD"},{"count":34,"value":"NITROGEN
+        OXIDES"},{"count":1,"value":"OZONE"}],"count":340,"value":"AIR QUALITY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":113,"value":"BAROMETRIC
+        ALTITUDE"},{"count":330,"value":"GEOPOTENTIAL HEIGHT"},{"count":1,"value":"MESOPAUSE"},{"count":136,"value":"PLANETARY
+        BOUNDARY LAYER HEIGHT"},{"count":7,"value":"STATION HEIGHT"}],"count":380,"value":"ALTITUDE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"AMMONIA"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":283,"value":"CARBON
+        AND HYDROCARBON COMPOUNDS"},{"count":8,"value":"CARBON DIOXIDE"},{"count":1,"value":"CARBON
+        MONOXIDE"},{"count":1,"value":"EMISSIONS"}],"count":641,"value":"ATMOSPHERIC
+        CHEMISTRY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":7,"value":"CARBON
+        DIOXIDE"},{"count":16,"value":"CARBON MONOXIDE"},{"count":1,"value":"FORMALDEHYDE"},{"count":2,"value":"METHANE"},{"count":2,"value":"NON-METHANE
+        HYDROCARBONS"}],"count":23,"value":"ATMOSPHERIC CHEMISTRY/CARBON AND HYDROCARBON
+        COMPOUNDS"}],"count":2447,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":4,"value":"ACORN
+        WORMS"},{"count":10,"value":"ARROW WORMS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":67,"value":"ARTHROPODS"},{"count":5,"value":"BRYOZOANS/MOSS
+        ANIMALS"},{"count":4,"value":"BURROWS/SPOON WORMS"}],"count":108,"value":"ANIMALS/INVERTEBRATES"},{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":29,"value":"AMPHIBIANS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":40,"value":"BIRDS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":57,"value":"FISH"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":34,"value":"MAMMALS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":19,"value":"REPTILES"}],"count":122,"value":"ANIMALS/VERTEBRATES"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":4,"value":"CYANOBACTERIA
+        (BLUE-GREEN ALGAE)"}],"count":11,"value":"BACTERIA/ARCHAEA"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":8,"value":"LICHENS"},{"count":4,"value":"MUSHROOMS"},{"count":4,"value":"SLIME
+        MOLDS"},{"count":5,"value":"YEASTS/TRUFFLES"}],"count":16,"value":"FUNGI"},{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":17,"value":"ANGIOSPERMS
+        (FLOWERING PLANTS)"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":9,"value":"FERNS
+        AND ALLIES"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":7,"value":"GYMNOSPERMS"},{"count":8,"value":"MACROALGAE
+        (SEAWEEDS)"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":19,"value":"MICROALGAE"}],"count":67,"value":"PLANTS"}],"count":238,"value":"BIOLOGICAL
+        CLASSIFICATION"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":2,"value":"SOIL
+        MOISTURE/WATER CONTENT"}],"count":2,"value":"SOILS"}],"count":2,"value":"BIOOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"EMISSIONS"}],"count":1,"value":"AIR
+        QUALITY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":36,"value":"BENTHIC
+        HABITAT"},{"count":28,"value":"COASTAL HABITAT"},{"count":10,"value":"DEMERSAL
+        HABITAT"},{"count":16,"value":"ESTUARINE HABITAT"},{"count":26,"value":"LAKES"}],"count":211,"value":"AQUATIC
+        ECOSYSTEMS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LAKES"},{"count":1,"value":"RIVERS/STREAM
+        HABITAT"}],"count":1,"value":"AQUATIC HABITAT"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":2,"value":"SURFACE
+        WINDS"}],"count":2,"value":"ATMOSPHERIC WINDS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"BIODIVERSITY
+        FUNCTIONS"},{"count":12,"value":"BIOGEOCHEMICAL CYCLES"},{"count":12,"value":"BIOMASS"},{"count":1,"value":"CANOPY
+        CHARACTERISTICS"},{"count":1,"value":"CARBON AND HYDROCARBON COMPOUNDS"}],"count":327,"value":"ECOLOGICAL
+        DYNAMICS"}],"count":879,"value":"BIOSPHERE"}],"count":5958,"value":"EARTH
+        SCIENCE"},{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"DESKTOP
+        GEOGRAPHIC INFORMATION SYSTEMS"},{"count":1,"value":"WEB-BASED GEOGRAPHIC
+        INFORMATION SYSTEMS"}],"count":1,"value":"GEOGRAPHIC INFORMATION SYSTEMS"},{"count":4,"value":"VISUALIZATION/IMAGE
+        PROCESSING"}],"count":5,"value":"DATA ANALYSIS AND VISUALIZATION"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"FLOODS"}],"count":1,"value":"HYDROLOGICAL
+        ADVISORIES"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"SEVERE
+        WEATHER"}],"count":1,"value":"WEATHER/CLIMATE ADVISORIES"}],"count":1,"value":"ENVIRONMENTAL
+        ADVISORIES"},{"subfields":["term"],"term":[{"count":1,"value":"GEOLOGIC/TECTONIC/PALEOCLIMATE
+        MODELS"}],"count":1,"value":"MODELS"},{"subfields":["term"],"term":[{"count":1,"value":"SUBSCRIPTION
+        SERVICES"}],"count":1,"value":"REFERENCE AND INFORMATION SERVICES"}],"count":6,"value":"EARTH
+        SCIENCE SERVICES"},{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"count":42,"value":"OCEAN
+        COLOR"}],"count":42,"value":"OCEAN OPTICS"}],"count":42,"value":"OCEANS"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+05100acd3439cb1281e0ec74e56fdeb14caadced:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:07:43 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '6386'
+      cmr-took:
+      - '10760'
+      cmr-request-id:
+      - a27b70b9-ec3e-4bc3-b80d-3e641c9fda51
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-27T02:07:53.857Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026bounding_box=0%2C0%2C15%2C15\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2006-06-30T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_A_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_A","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) launched by NASA in 2002 on board the Aqua satellite platform
+        (a second series is on the Terra platform) to study global dynamics of the
+        Earths atmosphere, land and oceans. MODIS captures data in 36 spectral bands
+        ranging in wavelength from 0.4 um to 14.4 um and at varying spatial resolutions
+        (2 bands at 250 m, 5 bands at 500 m and 29 bands at 1 km). For the sea surface
+        temperature (SST) products from this radiometer channels in the 4, 11 and
+        12 um spectrum are used. The Aqua platform is in a sun synchronous, near polar
+        orbit at 705 km altitude and the MODIS instrument images the entire Earth
+        every 1 to 2 days. The production of the MODIS L2P SST data as part of the
+        Group for High Resolution Sea Surface Temperature (GHRSST) is a joint collaboration
+        between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean Biology Processing
+        Group (OBPG), and the Rosenstiel School of Marine and Atmospheric Science
+        (RSMAS). RSMAS is responsible for sea surface temperature algorithm development,
+        error statistics and quality flagging, while the OBPG is NASA ground data
+        system for production of daily MODIS ocean products in HDF file format. JPL
+        acquires MODIS ocean granules from the OBPG in near realtime and reformats
+        them to the GHRSST L2P netCDF specification with complete metadata. Data consists
+        of global coverage at 1 km resolution with approximately 300+ five minute
+        observation granules per day. For nighttime data both SST from the 11-12 um,
+        and 4 um bands are available. Ocean chlorophyll a and K490 diffuse attenuation
+        coefficient data are also available for daytime periods as non standard L2P
+        core fields. Note that these ocean color data do not represent the most recent
+        version processed by the OBPG and may not be of research quality.\n","has_granules":false,"orbit_parameters":{},"id":"C1224520058-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_A/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2006-10-01T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_T_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_T","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) launched by NASA in 1999 on board the Terra satellite platform
+        (a second series is on the Aqua platform) to study global dynamics of the
+        Earths atmosphere, land and oceans. MODIS captures data in 36 spectral bands
+        ranging in wavelength from 0.4 um to 14.4 um and at varying spatial resolutions
+        (2 bands at 250 m, 5 bands at 500 m and 29 bands at 1 km). For the sea surface
+        temperature (SST) products from this radiometer channels in the 4, 11 and
+        12 um spectrum are used. The Terra platform is in a sun synchronous, near
+        polar orbit at 705 km altitude and the MODIS instrument images the entire
+        Earth every 1 to 2 days. The production of the MODIS L2P SST data as part
+        of the Group for High Resolution Sea Surface Temperature (GHRSST) is a joint
+        collaboration between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean
+        Biology Processing Group (OBPG), and the Rosenstiel School of Marine and Atmospheric
+        Science (RSMAS). RSMAS is responsible for sea surface temperature algorithm
+        development, error statistics and quality flagging, while the OBPG is NASA
+        ground data system for production of daily MODIS ocean products in HDF file
+        format. JPL acquires MODIS ocean granules from the OBPG in near realtime and
+        reformats them to the GHRSST L2P netCDF specification with complete metadata.
+        Data consists of global coverage at 1 km resolution with approximately 300+
+        five minute observation granules per day. For nighttime data both SST from
+        the 11-12 um, and 4 um bands are available. Ocean chlorophyll a and K490 diffuse
+        attenuation coefficient data are also available for daytime periods as non
+        standard L2P core fields. Note that these ocean color data do not represent
+        the most recent version processed by the OBPG and may not be of research quality.\n","has_granules":false,"orbit_parameters":{},"id":"C1224520120-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_T/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2014-05-20T00:00:00.000Z","dif_ids":["GHRSST-VIIRS_NPP-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging Radiometer
+        Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced Clear-Sky
+        Processor for Ocean (ACSPO) (GDS version 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-VIIRS_NPP-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging
+        Radiometer Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced
+        Clear-Sky Processor for Ocean (ACSPO) (GDS version 2)\n","coordinate_system":"CARTESIAN","summary":"\nJoint
+        Polar Satellite System (JPSS), starting with S-NPP launched on 28 October
+        2011, is the new generation of the US Polar Operational Environmental Satellites
+        (POES). As during the POES era, NOAA is responsible for all JPSS products,
+        including Level 2 Visible Infrared Imaging Radiometer Suite (VIIRS) SST derived
+        using NOAA heritage Advanced Clear-Sky Processor for Ocean (ACSPO) system
+        at the native sensor resolution. VIIRS is a whiskbroom scanning radiometer
+        which takes measurements in the cross-track direction within a field of regard
+        of 112.56 degrees, using 16 detectors and double-side mirror assembly. At
+        a nominal altitude of 829 km, the swath width is 3060 km, providing full daily
+        coverage both in the day and night side of the Earth. VIIRS has 22 spectral
+        bands covering the spectrum from 0.4-12 micrometers, including 16 moderate
+        resolution bands (M-bands). In addition to pixel-level earth locations, Sun-Sensor
+        geometry, and ancillary data from NCEP global weather forecast, ACSPO inputs
+        are 3 brightness temperatures (BTs) in M12 (3.7microns), M15 (11microns),
+        and M16 (12microns), and 2 reflectances in M5 (0.67microns) and M7 (0.87microns)
+        bands, used for cloud identification. ACSPO output files are in netcdf4 format
+        compliant with the GHRSST Data Specification version 2 (GDS2). Each output
+        file (granule) contains 10 minutes of data. In each valid water pixel (defined
+        as ocean, sea, lake or river, up to 5 km inland; fill values are reported
+        in invalid pixels, at \u003e5 km inland), the following layers are reported,
+        among others: BTs in M12, 15, and 16 (original radiances are included for
+        those users interested in direct radiance assimilation, e.g., NOAA NCEP, NASA
+        GMAO); SSTs derived from BTs using multi-channel SST (MCSST; night) and Non-Linear
+        SST (NLSST; day) algorithms (Petrenko et al., 2014); and ACSPO clear-sky mask
+        (ACSM; provided in each pixel as part of l2p_flags) (Petrenko et al., 2010).
+        We only recommend using the ACSM confidently clear pixels (equivalent to GDS2
+        quality level=5, also reported for each pixel). The ACSM also provides day/night,
+        land, ice, twilight, and glint flags. Note that users of ACSPO data have the
+        flexibility to ignore the ACSM, derive their own clear-sky mask, and use BTs
+        and SSTs in those pixels. They may also ignore ACSPO SST, and derive their
+        own SST from the original BTs. ACSPO VIIRS products are monitored and validated
+        against in situ data (Xu and Ignatov, 2014) in SQUAM (Dash et al, 2010) and
+        MICROS (Liang and Ignatov, 2011).\n","has_granules":false,"orbit_parameters":{},"id":"C1224519979-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/VIIRS_NPP/OSPO/\n"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1997-07-01T00:00:00.000Z","dif_ids":["GGP-SG-CORMIN"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":" GGP - Corrected
+        Minute Data","data_center":"SCIOPS","short_name":"GGP-SG-CORMIN","organizations":["DE/GFZ/ISDC"],"title":"
+        GGP - Corrected Minute Data","coordinate_system":"CARTESIAN","summary":"Global
+        Geodynamics Project (GGP) - Earthquake Data","has_granules":false,"orbit_parameters":{},"id":"C1214586854-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        GGP date are available via the ISDC Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/ggp/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Saint
+        Louis University, Department of Earth and Atmospheric Sciences, GGP Homepage.\n      ","hreflang":"en-US","href":"http://www.eas.slu.edu/GGP/ggphome.html"}]},{"boxes":["-5
+        -100 67 18","-60 15 30 150"],"dif_ids":["NOAA_NCDC_PALEO_2001-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":" Late Paleocene
+        Osmium Isotope Data  ","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2001-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Late Paleocene Osmium Isotope Data  ","coordinate_system":"CARTESIAN","summary":"Marine
+        Osmium records during the late Paleocene thermal maximum  interpreted as\nproxies
+        of terrestrial chemical weathering.\n\nCore DSDP-213 Indian Ocean  \nCore
+        DSDP-549 North Atlantic Ocean","has_granules":false,"orbit_parameters":{},"id":"C1215196946-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data files\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Access
+        to documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/readme_ravizza2001.txt"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_93-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"
+        Time Dependent Ice Coverage and Ice Topography Through the Glacial Cycle","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_93-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Time Dependent Ice Coverage and Ice Topography Through
+        the Glacial Cycle","coordinate_system":"CARTESIAN","summary":"Topography and
+        ice cover data files from the ICE-4G model. Data consists of\ntopographical
+        heights at 1 Kyr intervals since the last glacial  maximum.\nTopographical
+        heights are relative to paleo sea level.\n\nThe second data set consists of
+        Ice-cover data at 1 Kyr intervals since the\nlast glacial maximum.","has_granules":false,"orbit_parameters":{},"id":"C1215197136-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to ice topography data\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Ice
+        cover reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/peltice.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Topography
+        reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/pelttopo.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         ice
+        topography data set documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/readme_ice_topography.txt"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1981-01-01T00:00:00.000Z","dif_ids":["GLCF_GLC_1km_1.0"],"version_id":"1.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1
+        Kilometer Land Cover Product from the University of Maryland","data_center":"SCIOPS","short_name":"GLCF_GLC_1km","organizations":["UMD/GLCF"],"title":"1
+        Kilometer Land Cover Product from the University of Maryland","coordinate_system":"CARTESIAN","summary":"This
+        summary is adapted from the One Kilometer Global Land Cover\nProject Document-Data
+        Set Description web page, which may be found at\nthe following URL: \"http://glcf.umiacs.umd.edu/data/landcover/index.shtml\".\n      \n      To
+        develop improved methodologies for global land cover\n      classifications
+        as well as to provide global land cover products for immediate use in global
+        change research, University of Maryland''s\n      Global Land Cover Facility
+        (GLCF) and NASA have employed the\n      NASA/NOAA Pathfinder Land (PAL) data
+        set with a spatial resolution of 1km. This data set has a length of record
+        of 14 years (1981-1994),\n      providing the ability to test the stability
+        of classification\n      algorithms. Furthermore, this data set includes red,
+        infrared, and\n      thermal bands in addition to the Normalized Difference
+        Vegetation\n      Index (NDVI). Inclusion of these additional bands improves\n      discrimination
+        between cover types.\n      \n      To identify the pixels to be used for
+        training of the 1 km AVHRR\n      Pathfinder data, the investigators collected
+        a total of over 200\n      high resolution scenes of which they were confident
+        of which cover type\n      occurs.  Most of the scenes used were acquired
+        by the Landsat\n      Multispectral Scanner System (MSS), and a few by Landsat
+        Thematic\n      Mapper and the LISS (Linear Imaging Self-Scanning Sensor).\n      \n      Of
+        the initial 200 scenes, the investigators considered 156 suitable for\n      interpretation.
+        Scenes were considered unsuitable if haze or poor\n      quality data obscured
+        the scene or if the cover types in the scene\n      could not be visually
+        distinguished. For most scenes, the\n      investigators aimed to identify
+        only one cover type within the\n      scene. It was possible, however, to
+        identify more than one cover type\n      in some scenes if croplands were
+        visually identifiable based on the\n      spatial patterns of fields or if
+        vegetation maps showed the presence\n      of clearly identifiable cover types.\n      \n      The
+        second part of the study involved deriving a global land cover\n      classififcation
+        product. The product was derived by testing several\n      metrics that describe
+        the temporal dynamics of vegetation over an\n      annual cycle. These metrics
+        have the potential to be used as input\n      variables to a global land cover
+        classification. The tested metrics\n      are based on 1) the ratio between
+        surface temperature and NDVI, 2)\n      seasonal metrics derived from the
+        NDVI temporal profile such as length\n      of growing season, 3) a rule-based
+        approach that determines cover type\n      through a series of hierarchical
+        trees based on surface temperature\n      and NDVI values, and 4) annual mean,
+        maximum, minimum, and amplitude\n      values for all optical and thermal
+        channels in the AVHRR Pathfinder\n      Land (PAL) data. These metrics were
+        applied to 1984 PAL data at 8km\n      resolution to derive a global land
+        cover classification product using\n      a decision tree classifier. This
+        method was then applied to AVHRR\n      data from other years and higher spatial
+        resolutions.","has_granules":false,"time_end":"1994-01-01T00:00:00.000Z","orbit_parameters":{},"id":"C1214608509-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"1
+        Kilometer Land Cover Product from the University of Maryland.","hreflang":"en-US","href":"http://glcfapp.umiacs.umd.edu:8080/esdi/index.jsp?productID=6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"1
+        Kilometer Land Cover Product from the University of Maryland.","hreflang":"en-US","href":"http://glcf.umiacs.umd.edu/data/landcover/data.shtml"}]},{"boxes":["-71
+        0 72 -1"],"dif_ids":["gov.noaa.ngdc.mgg.geophysics.G01414_1999 Edition"],"version_id":"1999
+        Edition","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1-deg x 1-deg
+        Terrestrial Mean Free-Air Anomalies","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.geophysics.G01414","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"1-deg
+        x 1-deg Terrestrial Mean Free-Air Anomalies","coordinate_system":"CARTESIAN","summary":"The
+        1x1 degree Terrestrial Mean Free-Air Gravity Anomaly and Geoid Undulations
+        Data Base was compiled and developed by the Ohio State University. This data
+        base was received in March 1993. Principal gravity parameters include mean
+        elevation, mean free-air anomaly and source id. The gravity anomaly computation
+        uses the Geodetic Reference System 1967 (GRS 67) theoretical formula. The
+        data are global in coverage where data are available.","has_granules":false,"orbit_parameters":{},"id":"C1214558130-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/fliers/se-0703.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/gravity/1999/document/html/tablegri.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.geophysics:G01414"}]},{"boxes":["-45.69
+        -63.51 78.87 170.42"],"time_start":"2001-05-28T00:00:00.000Z","dif_ids":["CH-OG-1-GPS-10S_0.0"],"version_id":"0.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"10
+        sec GPS ground tracking data","data_center":"SCIOPS","short_name":"CH-OG-1-GPS-10S","organizations":["DE/GFZ/ISDC"],"title":"10
+        sec GPS ground tracking data","coordinate_system":"CARTESIAN","summary":"This
+        data set comprises GPS ground data of a sample rate of 10 sec, generated\n      by
+        decoding and sampling GPS high  rate ground data. This raw data passed no\n      quality
+        control. The data are given in the Rinex 2.1 format.","has_granules":false,"orbit_parameters":{},"id":"C1214586614-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        CHAMP Rapid Science Orbit dataset are available via the ISDC\n         Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/champ"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GFZ
+        Potsdam, Section 1.2., Gravity Missions and Analysis home page.\n      ","hreflang":"en-US","href":"http://www.gfz-potsdam.de/portal/-"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_2005-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"11,000
+        Year Sunspot Number Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"11,000 Year Sunspot Number Reconstruction","coordinate_system":"CARTESIAN","summary":"From
+        http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html\n\nDirect
+        observations of sunspot numbers are available for the past\nfour centuries,
+        but longer time series are required, for example,\nfor the identification
+        of a possible solar influence on climate and\nfor testing models of the solar
+        dynamo. Here we report a\nreconstruction of the sunspot number covering the
+        past 11,400\nyears, based on dendrochronologically dated radiocarbon concentrations.\nWe
+        combine physics-based models for each of the\nprocesses connecting the radiocarbon
+        concentration with sunspot\nnumber. According to our reconstruction, the level
+        of solar\nactivity during the past 70 years is exceptional, and the previous\nperiod
+        of equally high activity occurred more than 8,000 years\nago. We find that
+        during the past 11,400 years the Sun spent only\nof the order of 10% of the
+        time at a similarly high level of\nmagnetic activity and almost all of the
+        earlier high-activity\nperiods were shorter than the present episode. Although
+        the\nrarity of the current episode of high average sunspot numbers\nmay indicate
+        that the Sun has contributed to the unusual climate\nchange during the twentieth
+        century, we point out that solar\nvariability is unlikely to have been the
+        dominant cause of the\nstrong warming during the past three decades.\n\nThe
+        series of reconstructed 10-yr averaged sunspot numbers with their 68%\nuncertainty.
+        Years are given BP (before present), i.e. the calendar AD year,\nYad, is related
+        to the  BP year, Ybp, as Yc=1950-Ybp. The tabulated years\ncorrespond to centers
+        of the corresponding 10-year intervals. Negative values\nare artifacts and
+        are consistent with zero within the error limits.","has_granules":false,"orbit_parameters":{},"id":"C1215197053-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        and further information on sunspot number reconstruction\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html"}]},{"boxes":["-36.9
+        -157.4 71.3 147.29"],"time_start":"2008-01-16T00:00:00.000Z","dif_ids":["14c_of_soil_co2_from_ipy_itex_cross_site_comparison"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"14C of soil CO2
+        from IPY ITEX Cross Site Comparison","data_center":"SCIOPS","short_name":"14c_of_soil_co2_from_ipy_itex_cross_site_comparison","organizations":["ACADIS"],"title":"14C
+        of soil CO2 from IPY ITEX Cross Site Comparison","coordinate_system":"CARTESIAN","summary":"Study
+        sites: Toolik Lake Field Station Alaska, USA 68.63 N, 149.57 W; Atqasuk, Alaska
+        USA 70.45 N, 157.40 W; Barrow, Alaska, USA 71.30 N, 156.67 W; Latnjajaure,
+        Sweden 68.35 N, 18.50 E; Falls Creek, Australia: Site 2-unburned 36.90 S 147.29
+        E; Site 3-burned 36.89 S 147.28 E. Additional sites will be added summer 2008,
+        but the exact sites are not finalized. Purpose: Collect soil CO2 for analysis
+        of radiocarbon to evaluate the age of the carbon respired in controls and
+        warmed plots from across the ITEX network.  Treatments: control and ITEX OTC
+        warming experiment (1994-2007). Design: 5 replicates of each treatment at
+        dry site and moist site. Sampling frequency: Once per peak season.","has_granules":false,"time_end":"2008-01-21T00:00:00.000Z","orbit_parameters":{},"id":"C1214602443-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Data
+        Center top-level access page for this resource\n      ","hreflang":"en-US","href":"http://www.aoncadis.org/dataset/id/79208243-d496-11de-892a-00c0f03d5b7c.html"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2000-12-07T00:00:00.000Z","dif_ids":["iucn_protected_areas"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1997 UN List
+        of National Protected Areas","data_center":"SCIOPS","short_name":"iucn_protected_areas","organizations":["UNEP/WCMC/PAP"],"title":"1997
+        UN List of National Protected Areas","coordinate_system":"CARTESIAN","summary":"This
+        prototype database has been developed by UNEP-WCMC in\n      collaboration
+        with a number of partners. The IUCN World Commission on\n      Protected Areas
+        and UNEP-WCMC have collaborated since the early 1980s\n      in developing
+        a global protected areas database. More recently,\n      UNEP-WCMC has been
+        working with the European Environment Agency, and\n      its Nature Conservation
+        Topic Centre in the development of a common\n      European Protected Areas
+        Database. The data collected under this joint\n      effort are reflected
+        in the WWW version of the database.","has_granules":false,"orbit_parameters":{},"id":"C1214612993-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false},{"boxes":["-90
+        -180 90 180"],"time_start":"1998-01-17T00:00:00.000Z","dif_ids":["NOAA_BLEACH98"],"version_id":"Not
+        provided","updated":"2015-12-01T00:00:00.000Z","dataset_id":"1998 Animations
+        of Coral Bleaching Hotspots from NOAA/NESDIS","data_center":"SCIOPS","short_name":"NOAA_BLEACH98","organizations":["DOC/NOAA/NESDIS/OSDPD"],"title":"1998
+        Animations of Coral Bleaching Hotspots from NOAA/NESDIS","coordinate_system":"CARTESIAN","summary":"The
+        year of 1998 was a difficult time for the worlds coral reefs, with\nabnormally
+        warm sea surface temperatures (SST''s) causing widespread\ncoral bleaching.
+        The animations and images on this page show the\ndifferences between the climatological
+        maximum monthly mean SST\n(i.e. the expected summer-time maximum) and the
+        satellite-derived\nNOAA/NESDIS night time SST fields. When the night time
+        SST field is\nwarmer than the expected summer-time maximum by 1 degree C,
+        the\nregion is shown in orange as a potential coral bleaching hotspot.\n\nNOAA/NESDIS
+        oceanographer, Dr. Al Strong, has collected reports of\ncoral bleaching from
+        an informal network of coral\nreef researchers and observers. These reports
+        have been overlayed\non the following 1998 animations and images:\n\n\nAnimation
+        of Great Barrier Reef Bleaching Event, El Nino,\n1/17/98-4/17/98, (1.6 mb)\n\nAnimation
+        of Indian Ocean Bleaching Event, El Nino/La Nina transition\nperiod , 3/24/98-7/24/98,
+        (1.0 mb)\n\nAnimation of Bahrain, Red Sea and Eastern Pacific Bleaching Events,\nearly
+        La Nina, 7/4/98-10/27/98, (0.8 mb)\n\nAnimation of Western Hemisphere Bleaching
+        Events, early La Nina,\n6/20/98-11/7 /98, (1.1 mb)\n\nAnimation of HotSpots
+        during El Nino,1/3/98-6/6/98 in the Western\nHemisphere, (2.0 mb)\n\nIndian
+        Ocean Bleaching Event - time series , 3/24/98-8/11/98\n\nWestern Hemisphere
+        Bleaching Event - time series, 6/20/98-9/8/98","has_granules":false,"time_end":"1998-09-08T00:00:00.000Z","orbit_parameters":{},"id":"C1214419724-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         NOAA/NESDIS
+        1998 Coral Bleaching HotSpots\n      ","hreflang":"en-US","href":"http://www.osdpd.noaa.gov/ml/ocean/cb/hotspots_1998anim.html"}]},{"boxes":["-5
+        -45 90 50"],"time_start":"1992-04-01T00:00:00.000Z","dif_ids":["1KM.AVHRR.TOVS.SHARP2A"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1KM NOAA AVHRR
+        and TOVS Digital CCT product in SHARP level 2A format","data_center":"ESA","short_name":"1KM.AVHRR.TOVS.SHARP2A","organizations":["ESA/EARTHNET"],"title":"1KM
+        NOAA AVHRR and TOVS Digital CCT product in SHARP level 2A format","coordinate_system":"CARTESIAN","summary":"The
+        1 km AVHRR Global Land Data set project is an\n      international effort
+        to acquire, archive, process and\n      distribute the data of the entire
+        global land\n      surface observed by the NOAA/AVHRR\n      satellite mission
+        at 1 km resolution, in order to\n      meet the needs of the international\n      science
+        community, (IGBP, 1992). A\n      network of 29 High Resolution Picture\n      Transmission
+        (HRPT) stations, along with data\n      recorded by the NOAA, has been acquiring
+        daily global\n      land coverage from the NOAA-11 satellite since the first
+        of April\n      1992. The continuous flow of data coming from these stations
+        is\n      routinely archived by USGS and ESA. A common archive exists at\n      the
+        EROS data centre of the USGS and at the ESRIN of ESA. The\n      number of
+        pass acquired per year is around 15000. The project\n      intends to process
+        all acquired data to generate\n      for any 10-day period in the project\n      time-span
+        (April 92 - September 94) a land composite\n      product (1444k) covering
+        the whole world surface, as defined by\n      Townsend et al., 1992.\n      AVHRR
+        floating scenes are provided in SHARP\n      format. SHARP is the ESA Earthnet
+        format for\n      AVHRR and TOVS data generated to provide an easy\n      data
+        access for the international Remote sensing user\n      community. SHARP-1
+        consists of two volumes: AVHRR\n      volume and TOVS volume. In addition,
+        with the objective\n      of providing the user with ready-to-use data,\n      a
+        family of higher level products has been proposed\n      by Earthnet: this
+        is SHARP level-2.\n      \n      \n      \n      \n      The SHARP level-2A
+        (Calibrated Product) contains\n      calibrated data from the AVHRR channels
+        (i.e.\n      level 1 data calibrated and converted to\n      measurements
+        of Equivalent Reflectance, spectral\n      Radiance and Brightness Temperature)
+        and a classification of the\n      image.\n      \n      \n      \n      \n      Each
+        pixel contains image data (calibrated), a\n      classification and geographical
+        information\n      (boundaries, coastlines and lat/long grid\n      flags).
+        Each pixel consists of 2 bytes; 10 bits are\n      used for image data, 3
+        bits for the\n      classification and 3 bits for geographical data.\n      The
+        classification includes land, cloud, sea,\n      snow/ice and unclassified
+        pixels.\n      \n      \n      \n      \n      SHARP-2 products are produced
+        from archived SHARP-1\n      day-time data.  SHARP-2 products will not be
+        archived. TOVS data\n      remains the same as for SHARP-1 products.\n      \n      \n      \n      \n      For
+        the Level 2A product, Level 1 raw data is\n      calibrated and classified
+        utilizing state-of-the-art algorithms.\n      The visible channels (1 and
+        2) are converted from raw data to\n      Equivalent Reflectance, while channels
+        4 and 5 (infrared) are\n      converted to Brightness Temperature, corrected
+        by nonlinear\n      effects, and the third infrared channel (3) is converted
+        to Spectral\n      Radiance.\n      \n      \n      \n      \n      Image
+        data in each band of the Level 2A product:\n      \n      ---------------\n      Band
+        1: Channel 1 Equivalent Reflectance\n      Band 2: Channel 2 Equivalent Reflectance\n      Band
+        3: Channel 3 Spectral Radiance\n      Band 4: Channel 4 Brightness Temperature\n      Band
+        5: Channel 5 Brightness Temperature\n      ---------------\n      Note: ''Band''
+        refers to the output data structure of\n      the SHARP products.\n      ''Channel''
+        refers to the input satellite data acquired\n      in different\n      wavelengths.\n      \n      \n      \n      \n      This
+        product can be produced with data from all the\n      operating NOAA satellites;
+        however, if the data is derived from the\n      even-numbered satellites,
+        band 5 is empty.\n      \n      \n      \n      \n      Geometric Correction:\n      Image
+        navigation (location) is carried out during\n      Level 1 data generation,
+        using the orbital model for\n      the satellite location and is tested by
+        an operator who carries out\n      further correction if necessary.  SHARP-2
+        products are in the\n      original spacecraft projection.  A location grid
+        of tie points\n      (lat/long) is given in the suffix data (every 16th image
+        file\n      record).\n      \n      \n      \n      \n      To order data,
+        please see\n      \"http://earth.esa.int/helpandmail/help_order.html\"","has_granules":false,"orbit_parameters":{},"id":"C1214560039-ESA","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         See
+        ''SHARP-2 Technical Specification of Format'' in the NOAA\n         Document
+        Library\n      ","hreflang":"en-US","href":"http://earth.esa.int/esa_doc/doc_tpm.html#_NOA"}]},{"boxes":["-5
+        -45 90 50"],"time_start":"1992-04-01T00:00:00.000Z","dif_ids":["1KM.AVHRR.TOVS.SHARP2B"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1KM NOAA AVHRR
+        and TOVS Digital CCT product in SHARP level 2B format","data_center":"ESA","short_name":"1KM.AVHRR.TOVS.SHARP2B","organizations":["ESA/EARTHNET"],"title":"1KM
+        NOAA AVHRR and TOVS Digital CCT product in SHARP level 2B format","coordinate_system":"CARTESIAN","summary":"The
+        1 km AVHRR Global Land Data set project is an\n                  international
+        effort\n                  to acquire, archive, process and distribute the
+        data\n                  of the entire\n                  global land surface
+        observed by the NOAA/AVHRR\n                  satellite mission at 1\n                  km
+        resolution, in order to meet the needs of the\n                  international
+        science\n                  community, (IGBP, 1992). A network of 29 High\n                  Resolution
+        Picture\n                  Transmission (HRPT) stations, along with data\n                  recorded
+        by the NOAA,\n                  has been acquiring daily global land coverage
+        from\n                  the NOAA-11\n                  satellite since the
+        first of April 1992. The\n                  continuous flow of data\n                  coming
+        from these stations is routinely archived by\n                  USGS and ESA.
+        A\n                  common archive exists at the EROS data centre of the\n                  USGS
+        and at the\n                  ESRIN of ESA. The number of pass acquired per
+        year is\n                  around\n                  15000. The project intends
+        to process all acquired\n                  data to generate\n                  for
+        any 10-days period in the project time-span\n                  (April 92 -
+        September\n                  94) a land composite product (1444k) covering
+        the\n                  whole world surface,\n                  as defined
+        by Townsend et al., 1992.\n                  \n                  \n                  \n                  \n                  AVHRR
+        floating scenes are provided in SHARP format.\n                  SHARP is
+        the ESA Earthnet format for AVHRR and\n                  TOVS data generated
+        to provide an easy\n                  data access for the international Remote
+        sensing user\n                  community.\n                  SHARP-1 consists
+        of two volumes: AVHRR volume and\n                  TOVS volume.  In order
+        to save user time in\n                  extracting from the raw data the useful\n                  quantities
+        needed for the problem at hand, a\n                  family of higher level
+        products has been proposed\n                  by Earthnet: this is SHARP level-2.\n                  \n                  \n                  \n                  \n                  The
+        SHARP level-2A (Geophysical Product) contains\n                  geophysical
+        parameters extracted from AVHRR\n                  raw data (Vegetation Index
+        and Sea\n                  Surface Temperature) as well as calibrated data
+        and a\n                  classification of the image.\n                  \n                  \n                  \n                  \n                  Each
+        pixel contains image data (calibrated), a\n                  classification
+        and geographical information\n                  (boundaries, coastlines and
+        lat/long grid\n                  flags). Each pixel consists of 2 bytes; 10
+        bits are\n                  used for image data, 3 bits for the classification\n                  and
+        3 bits for geographical data.\n                  The classification includes
+        land, cloud, sea,\n                  snow/ice and unclassified pixels.\n                  \n                  \n                  \n                  \n                  SHARP-2
+        products are produced from archived SHARP-1\n                  day-time data.\n                  SHARP-2
+        products will not be archived. TOVS data\n                  remains the same
+        as for SHARP-1 products.\n                  \n                  \n                  \n                  \n                  The
+        SHARP-2B product consists of:\n                  \n                  \n                  -
+        2 bands (1 and 5) containing class depending\n                  geophysical
+        parameters\n                  - 3 bands (2,3 and 4) containing calibrated
+        data\n                  converted in equivalent Reflectance (band 2),\n                  AVHRR
+        channel 3 spectral Radiance (band 3) and\n                  AVHRR channel
+        4 Brightness Temperature (band 4).\n                  \n                  \n                  \n                  \n                  Characteristics
+        of Band 1, Class dependent parameter:\n                  \n                  ---------------\n                  Land:
+        Normalized Difference Vegetation Index (NDVI)\n                  Sea: Equivalent
+        Reflectance from Channel 1\n                  cloud: Equivalent Reflectance
+        from Channel 1\n                  snow/ice: Equivalent Reflectance from Channel
+        1\n                  glint: Equivalent Reflectance from Channel 1\n                  unclass:
+        Equivalent Reflectance from Channel 1\n                  ------------\n                  \n                  Characteristics
+        of other Bands:\n                  \n                  ---------------\n                  Band
+        2: Channel 2 Equivalent Reflectance\n                  Band 3: Channel 3 Spectral
+        Radiance\n                  Band 4: Channel 4 Brightness Temperature\n                  Band
+        5 over sea: Sea Surface Temperature (SST)\n                  Band 5 over other
+        areas: Brightness Temperature from Channel 5\n                  -----------------\n                  \n                  Note:
+        ''Band'' refers to the output data structure of\n                  the SHARP\n                  products;
+        ''Channel'' refers to the input satellite\n                  data acquired\n                  in
+        different wavelengths.\n                  \n                  \n                  \n                  \n                  This
+        product can be produced with data from all the\n                  operating
+        NOAA\n                  satellites; however, if the data is derived from the\n                  even-numbered\n                  satellites,
+        band 5 is empty.\n                  \n                  \n                  \n                  \n                  Geometric
+        Correction:\n                  Image navigation (location) is carried out
+        during\n                  Level 1 data generation, using the orbital model
+        for\n                  the satellite\n                  location and is tested
+        by an operator who carries out\n                  further\n                  correction
+        if necessary.  SHARP-2 products are in the\n                  original\n                  spacecraft
+        projection.  A location grid of tie points\n                  (lat/long) is\n                  given
+        in the suffix data (every 16th image file\n                  record).\n                  \n                  \n                  \n                  \n                  To
+        order data, please see\n                  \"http://earth.esa.int/\"","has_granules":false,"orbit_parameters":{},"id":"C1214559954-ESA","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         See
+        ''SHARP-2 Technical Specification of Format'' in the NOAA\n         Document
+        Library\n      ","hreflang":"en-US","href":"http://earth.esa.int/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"0200-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO2003-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000 Year Hemispheric
+        Multi-proxy Temperature Reconstructions","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO2003-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000 Year Hemispheric Multi-proxy Temperature Reconstructions","coordinate_system":"CARTESIAN","summary":"Two
+        hemispheric multi-proxy temperature reconstructions (based on\nlocal-correlation
+        weighting, and areal weighting as described in Mann\nand Jones 2003). The
+        global mean shown in the paper is the average of\nthe two hemispheric reconstructions,
+        while the interhemispheric\ndifference is just NH-SH.\n\nAll series are anomalies
+        based on 1961-1990 instrumental reference\nperiod.\n\nAbstract (from the online
+        documentation)\nWe present reconstructions of Northern and Southern Hemisphere\nmean
+        surface temperature over the past two millennia based on\nhigh-resolution
+        ''proxy'' temperature data which retain\nmillennial-scale variability. These
+        reconstructions indicate\nthat late 20th century warmth is unprecedented for
+        at least\nroughly the past two millennia for the Northern Hemisphere.\nConclusions
+        for the Southern Hemisphere and global mean\ntemperature are limited by the
+        sparseness of available proxy\ndata in the Southern Hemisphere at present.","has_granules":false,"orbit_parameters":{},"id":"C1215199015-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/mann2003b/"}]},{"boxes":["0
+        -180 90 180"],"time_start":"0001-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO_2005-019"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000-Year Northern
+        Hemisphere Temperature Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-019","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000-Year Northern Hemisphere Temperature Reconstruction","coordinate_system":"CARTESIAN","summary":"A
+        number of reconstructions of millennial-scale climate variability have been\ncarried
+        out in order to understand patterns of natural climate variability, on\ndecade
+        to century timescales, and the role of anthropogenic forcing. These\nreconstructions
+        have mainly used tree-ring data and other data sets of annual\nto decadal
+        resolution. Lake and ocean sediments have a lower time resolution,\nbut provide
+        climate information at multicentennial timescales that may not be\ncaptured
+        by tree-ring data. Here we reconstruct Northern Hemisphere\ntemperatures for
+        the past 2,000 years by combining low-resolution proxies with\ntree-ring data,
+        using a wavelet transform technique to achieve\ntimescale-dependent processing
+        of the data. Our reconstruction shows larger\nmulticentennial variability
+        than most previous multi-proxy reconstructions, but\nagrees well with temperatures
+        reconstructed from borehole measurements and with\ntemperatures obtained with
+        a general circulation model. According to our\nreconstruction, high temperatures
+        - similar to those observed in the twentieth\ncentury before 1990- occurred
+        around AD 1000 to 1100, and minimum temperatures\nthat are about 0.7K below
+        the average of 1961-90 occurred around AD 1600. This\nlarge natural variability
+        in the past suggests an important role of natural\nmulticentennial variability
+        that is likely to continue.\n\nThis data set consists of reconstructed Northern
+        Hemisphere temperatures for\nthe past 2,000 years  calculated by combining
+        low-resolution proxies with\ntree-ring data,  using a wavelet transform technique
+        to achieve\ntimescale-dependent  processing of the data.\n\nAll data are given
+        as temperature anomalies (K) from the Northern Hemisphere\nannual mean  temperature
+        1961-90 average. Lack of data are indicated with\n-9.9999","has_granules":false,"time_end":"1979-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1215197080-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        on  Highly variable Northern Hemisphere temperatures\n         reconstructed
+        from low- and high-resolution proxy data\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/moberg2005/moberg2005.html"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["gov.noaa.ngdc.mgg.dem.301"],"version_id":"Not provided","updated":"2016-02-11T00:00:00.000Z","dataset_id":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.dem.301","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","coordinate_system":"CARTESIAN","summary":"Two-minute
+        gridded global relief for both ocean and land areas are available in the ETOPO2v2
+        (2006) database. ETOPO2v2 replaced ETOPO2 (2001). The historic 2-minute (ETOPO2v2)
+        and 5-minute (ETOPO5) data are deprecated, but still available. Please use
+        the new ETOPO1 Global Gridded Relief Model.","has_granules":false,"orbit_parameters":{},"id":"C1214558324-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         2-minute
+        Gridded Global Relief Data (ETOPO2) v2. Web page for ETOPO2v2 with full descriptions
+        of the data\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/global/etopo2.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.dem:301"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"2000.00","updated":"2015-08-03T00:00:00.000Z","dataset_id":"2000
+        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","organizations":["SEDAC"],"title":"2000
+        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an \n\nindex that measures the ability of a nation''s economy
+        to achieve sustainable development, with the long term goal of finding a single
+        \n\nindicator for environmental sustainability analagous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is \n\na composite
+        measure of the current status of a nation''s environmental systems, pressures
+        on those systems, human vulnerability to \n\nenvironmental change, national
+        capacity to respond, and contributions to global environmental stewardship.
+        The index was unveiled at \n\nthe World Economic Forum''s annual meeting,
+        January 2000, Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration
+        among \n\nthe World Economic Forum (WEF), Yale Center for Environmental Law
+        and Policy (YCELP), and the Columbia University Center for \n\nInternational
+        Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-\n\n2000/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4NK3BZJ"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2001"],"version_id":"2001.00","updated":"2015-08-04T00:00:00.000Z","dataset_id":"2001
+        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2001","organizations":["SEDAC"],"title":"2001
+        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2001 Environmental Sustainability Index (ESI) utilizes a refined methodology
+        based on the 2000 Pilot ESI effort, to construct an index covering \n\n122
+        countries that measures the overall progress towards environmental sustainability.
+        The index is a composite measure of the current status of a nation''s environmental
+        systems, \n\npressures on those systems, human vulnerability to environmental
+        change, national capacity to respond, and contributions to global environmental
+        stewardship. The refinements included the \n\naddition and deletion of indicators,
+        filling gaps in data coverage, new data sets, and the modification of the
+        aggregation scheme. The index was unveiled at the World Economic Forum''s
+        \n\nannual meeting, January 2001, Davos, Switzerland. The 2001 ESI is the
+        result of collaboration among the World Economic Forum (WEF), Yale Center
+        for Environmental Law and Policy (YCELP), \n\nand the Columbia University
+        Center for International Earth Science Information Network (CIESIN)","has_granules":false,"orbit_parameters":{},"id":"C1000000220-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4X34VDM"}]}],"facets":[{"field":"data_center","value-counts":[["ACADIS",62],["ASDC",210],["Alaska
+        Satellite Facility",45],["Aquarius Project NASA/CONAE",70],["Atmospheric Science
+        Data Center",248],["CDDIS",34],["CN/FENGYUN",76],["COLUMBIA/LDEO/IRI/CDL",48],["DE/GFZ/ISDC",46],["DOC/NOAA/NESDIS/NCDC",167],["DOC/NOAA/NESDIS/NCEI",430],["DOC/NOAA/NESDIS/NGDC",232],["DOC/NOAA/NESDIS/OSDPD",29],["DOC/NOAA/OAR/ESRL/PSD/CAB",42],["DOE/ORNL/ESD/CDIAC",74],["DOI/USGS/EROS",69],["ESA/EARTHNET",59],["EUMETSAT",42],["GES
+        DISC",100],["GESDISC",546]]},{"field":"archive_center","value-counts":[["ASDC",210],["Alaska
+        Satellite Facility",45],["Atmospheric Science Data Center",248],["CDDIS",34],["CDDIS-GSFC",1],["GESDISC",546],["GHRC",118],["LAADS",45],["LPDAAC",177],["LTA",6],["LaRC",149],["Landsat",5],["MODAPS",4],["NASA/GSFC/EOS/ESDIS/LANCE
+        MODIS FIRMS",1],["NASA/GSFC/EOS/ESDIS/LANCEMODIS",71],["NASA/GSFC/SED/ESD/GCDC/GESDISC",36],["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS",34],["NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS",6],["NSIDC",164],["OB.DAAC",150]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["ADEOS-I",97],["ADEOS-II",135],["AM-1",134],["AQUA",396],["AQUARIUS_SAC-D",77],["AURA",305],["Aqua",159],["BUOYS",70],["CALIPSO",54],["COMPUTER
+        MODEL",63],["DMSP",48],["ERS-1",66],["ERS-2",66],["FIELD INVESTIGATION",68],["FY-3A",74],["GCOM-W1",49],["GMS-5",45],["GOES-10",52],["GOES-8",51],["GPM",70]]},{"field":"instrument","value-counts":[["AIRS",68],["ALTIMETERS",37],["AMSR",40],["AMSR-E",110],["AMSR2",46],["ANALYSIS",80],["ANEMOMETERS",42],["AQUARIUS_RADIOMETER",47],["AQUARIUS_SCATTEROMETER",77],["AVHRR",162],["AVHRR-2",54],["AVHRR-3",113],["BAROMETERS",39],["CERES
+        SCANNER",66],["CORING DEVICES",42],["CTD",35],["DRIFTING BUOYS",30],["ETM+",30],["GLI",76],["GMI",54]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
 f63923a6c40a53a9c621249a8dae40c6cc7050cb:
   response:
     status:

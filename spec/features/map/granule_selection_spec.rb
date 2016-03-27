@@ -39,7 +39,7 @@ describe "Granule selection", reset: false do
   """
 
   before :all do
-    load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C1000000011-LANCEMODIS'
+    load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C90757595-LAADS'
   end
 
   context "clicking on a granule in the result list" do
