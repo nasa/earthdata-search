@@ -61,7 +61,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
   end
 
   context "for polygon collections" do
-    use_collection 'C1000000011-LANCEMODIS', 'MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m V005 NRT'
+    use_collection 'C1219252422-LANCEMODIS', 'MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m'
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
@@ -69,7 +69,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "visualizing a collection's granules" do
-      hook_granule_results('MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m V005 NRT')
+      hook_granule_results('MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m')
 
       it "draws polygons on the map for granule spatial areas" do
         wait_for_xhr
@@ -103,7 +103,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "removing a visualized collection" do
-      hook_granule_results_back('MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m V005 NRT')
+      hook_granule_results_back('MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m')
 
       it "hides the collection's visualizations" do
         expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')

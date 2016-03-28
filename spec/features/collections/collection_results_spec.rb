@@ -30,7 +30,7 @@ describe "Collection results", reset: false do
     wait_for_xhr
     page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 10000"
     wait_for_xhr
-    expect(page).to have_css('#collection-results-list .panel-list-item', count: 36)
+    expect(page).to have_css('#collection-results-list .panel-list-item', count: 19)
     expect(page).to have_no_content('Loading collections...')
     page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 0"
   end
@@ -52,7 +52,7 @@ describe "Collection results", reset: false do
   it "displays a badge for OPeNDAP-enabled collections" do
     fill_in "keywords", with: "C181553784-GSFCS4PA"
     wait_for_xhr
-    expect(page).to have_css('.badge-opendap')
+    expect(page).to have_css('.badge-subsetting')
   end
 
   it "displays  for collections which have no thumbnail URLs" do

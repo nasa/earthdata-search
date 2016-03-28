@@ -52,7 +52,8 @@ describe "Collection keyword searches", reset: false do
       load_page :search
     end
 
-    it "doesn't show short_name" do
+    # Temporarily excluded the test since we no longer have collections without short_name.
+    xit "doesn't show short_name" do
       # match "#{collection_id} - #{archive_center}"
       expect(first_collection_result.text).to have_text("N/A - NASA/GSFC/SED/ESD/GCDC/GESDISC")
     end

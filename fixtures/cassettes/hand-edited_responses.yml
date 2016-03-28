@@ -344,7 +344,7 @@ edsc_current_testbed:
       - close
     body:
       encoding: UTF-8
-      string: '{"errors":["Token [expired]
+      string: '{"errors":["Token [expired-access]
         has expired."]}'
     http_version:
 invalid_token:
@@ -470,23 +470,7 @@ invalid_collections_logged_out:
       - close
     body:
       encoding: UTF-8
-      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/collections.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
-        "title":"ECHO collection metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
-        AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "summary":"ABSTRACT:
-        Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide,
-        and ozone over the entire BOREAS region to tie together measurements made
-        in both the SSA and the NSA.", "updated":"2000-01-27T00:00:00.000Z", "dataset_id":"BOREAS
-        AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "short_name":"doi:10.3334/ORNLDAAC/495",
-        "version_id":"1", "original_format":"ECHO10", "data_center":"ORNL_DAAC", "archive_center":"ORNL_DAAC",
-        "processing_level_id":"3", "time_start":"1994-05-24T00:00:00.000Z", "time_end":"1994-09-16T00:00:00.000Z",
-        "links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495", "hreflang":"en-US",
-        "rel":"http://esipfed.org/ns/fedsearch/1.1/data#"}, {"href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html",
-        "hreflang":"en-US", "title":"Measurements of the fluxes of momentum, sensible
-        and latent heat, carbon dioxide, and ozone over the entire BOREAS region to
-        tie together measurements made in both the SSA and the NSA. (VIEW RELATED
-        INFORMATION)", "rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}], "boxes":["53.42
-        -106.32 56.25 -97.23"], "dif_ids":["BOREAS_AFM3MW94"], "online_access_flag":"true",
-        "browse_flag":"false", "relevance_score":0.5}]}}'
+      string: '{"feed":{"updated":"2016-03-28T01:29:30.008Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource.cwic&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[{"processing_level_id":"3","boxes":["53.42 -106.32 56.25 -97.23"],"time_start":"1994-05-24T00:00:00.000Z","dif_ids":["BOREAS_AFM3MW94"],"version_id":"1","updated":"2000-01-27T00:00:00.000Z","dataset_id":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/495","organizations":["ORNL_DAAC"],"title":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","coordinate_system":"CARTESIAN","summary":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA.","has_granules":true,"time_end":"1994-09-16T00:00:00.000Z","orbit_parameters":{},"id":"C179002986-ORNL_DAAC","score":0.5,"original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html"}]}],"facets":[{"field":"project","value-counts":[["Boreal Ecosystem-Atmosphere Study",1],["EOSDIS",1],["ESIP",1]]},{"field":"sensor","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",1]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[{"subfields":["level_1"],"level_1":[{"subfields":["level_2"],"level_2":[{"subfields":["level_3"],"level_3":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"THE OAK RIDGE NATIONAL LABORATORY (ORNL) DISTRIBUTED ACTIVE ARCHIVE CENTER (DAAC)"}],"count":1,"value":"ORNL_DAAC"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"NASA"}],"count":1,"value":"GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES"}],"field":"data_centers"},{"subfields":["level_0"],"level_0":[{"subfields":["level_1"],"level_1":[{"subfields":["level_2"],"level_2":[{"subfields":["level_3"],"level_3":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"THE OAK RIDGE NATIONAL LABORATORY (ORNL) DISTRIBUTED ACTIVE ARCHIVE CENTER (DAAC)"}],"count":1,"value":"ORNL_DAAC"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"NASA"}],"count":1,"value":"GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES"}],"field":"archive_centers"},{"subfields":["category"],"category":[{"subfields":["series_entity"],"series_entity":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"NCAR ELECTRA"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Aircraft"}],"field":"platforms"},{"subfields":["category"],"category":[{"subfields":["class"],"class":[{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"GUST PROBE"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"INFRARED THERMOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"MULTIBAND VEGETATION IMAGER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"NET RADIOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PRESSURE TRANSDUCER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PYRANOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PYRGEOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"TEMPERATURE SENSOR"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"},{"subfields":["class"],"class":[{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Infrared Gas Analyzers"}],"count":1,"value":"IRGA"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Chemical Meters/Analyzers"},{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"CHEMILUMINESCENCE"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Spectrometers/Radiometers"}],"count":1,"value":"In Situ/Laboratory Instruments"}],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LONGWAVE RADIATION"},{"count":1,"value":"NET RADIATION"},{"count":1,"value":"SOLAR IRRADIANCE"}],"count":1,"value":"ATMOSPHERIC RADIATION"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"CARBON DIOXIDE"},{"count":1,"value":"OZONE"}],"count":1,"value":"ATMOSPHERIC CHEMISTRY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ATMOSPHERIC PRESSURE MEASUREMENTS"}],"count":1,"value":"ATMOSPHERIC PRESSURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"AIR TEMPERATURE"}],"count":1,"value":"ATMOSPHERIC TEMPERATURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"WATER VAPOR"}],"count":1,"value":"ATMOSPHERIC WATER VAPOR"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"UPPER LEVEL WINDS"}],"count":1,"value":"ATMOSPHERIC WINDS"}],"count":1,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LAND SURFACE TEMPERATURE"}],"count":1,"value":"LAND TEMPERATURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"REFLECTANCE"}],"count":1,"value":"SURFACE RADIATIVE PROPERTIES"}],"count":1,"value":"LAND SURFACE"}],"count":1,"value":"EARTH SCIENCE"}],"field":"science_keywords"}]}}'
     http_version:
 invalid_collections_logged_out_non_hierarchical:
   response:
@@ -524,23 +508,7 @@ invalid_collections_logged_out_non_hierarchical:
       - close
     body:
       encoding: UTF-8
-      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/collections.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
-        "title":"ECHO collection metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
-        AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "summary":"ABSTRACT:
-        Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide,
-        and ozone over the entire BOREAS region to tie together measurements made
-        in both the SSA and the NSA.", "updated":"2000-01-27T00:00:00.000Z", "dataset_id":"BOREAS
-        AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "short_name":"doi:10.3334/ORNLDAAC/495",
-        "version_id":"1", "original_format":"ECHO10", "data_center":"ORNL_DAAC", "archive_center":"ORNL_DAAC",
-        "processing_level_id":"3", "time_start":"1994-05-24T00:00:00.000Z", "time_end":"1994-09-16T00:00:00.000Z",
-        "links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495", "hreflang":"en-US",
-        "rel":"http://esipfed.org/ns/fedsearch/1.1/data#"}, {"href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html",
-        "hreflang":"en-US", "title":"Measurements of the fluxes of momentum, sensible
-        and latent heat, carbon dioxide, and ozone over the entire BOREAS region to
-        tie together measurements made in both the SSA and the NSA. (VIEW RELATED
-        INFORMATION)", "rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}], "boxes":["53.42
-        -106.32 56.25 -97.23"], "dif_ids":["BOREAS_AFM3MW94"], "online_access_flag":"true",
-        "browse_flag":"false", "relevance_score":0.5}]}}'
+      string: '{"feed":{"updated":"2016-03-28T01:30:41.244Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource.cwic&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[{"processing_level_id":"3","boxes":["53.42 -106.32 56.25 -97.23"],"time_start":"1994-05-24T00:00:00.000Z","dif_ids":["BOREAS_AFM3MW94"],"version_id":"1","updated":"2000-01-27T00:00:00.000Z","dataset_id":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/495","organizations":["ORNL_DAAC"],"title":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","coordinate_system":"CARTESIAN","summary":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA.","has_granules":true,"time_end":"1994-09-16T00:00:00.000Z","orbit_parameters":{},"id":"C179002986-ORNL_DAAC","score":0.5,"original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html"}]}],"facets":[{"field":"data_center","value-counts":[["ORNL_DAAC",1]]},{"field":"archive_center","value-counts":[["ORNL_DAAC",1]]},{"field":"project","value-counts":[["Boreal Ecosystem-Atmosphere Study",1],["EOSDIS",1],["ESIP",1]]},{"field":"platform","value-counts":[["NCAR ELECTRA",1]]},{"field":"instrument","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"sensor","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",1]]},{"field":"category","value-counts":[["EARTH SCIENCE",1]]},{"field":"topic","value-counts":[["ATMOSPHERE",1],["LAND SURFACE",1]]},{"field":"term","value-counts":[["ATMOSPHERIC CHEMISTRY",1],["ATMOSPHERIC PRESSURE",1],["ATMOSPHERIC RADIATION",1],["ATMOSPHERIC TEMPERATURE",1],["ATMOSPHERIC WATER VAPOR",1],["ATMOSPHERIC WINDS",1],["LAND TEMPERATURE",1],["SURFACE RADIATIVE PROPERTIES",1]]},{"field":"variable_level_1","value-counts":[["AIR TEMPERATURE",1],["ATMOSPHERIC PRESSURE MEASUREMENTS",1],["CARBON DIOXIDE",1],["LAND SURFACE TEMPERATURE",1],["LONGWAVE RADIATION",1],["NET RADIATION",1],["OZONE",1],["REFLECTANCE",1],["SOLAR IRRADIANCE",1],["UPPER LEVEL WINDS",1],["WATER VAPOR",1]]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
     http_version:
 invalid_but_load_page:
   response:
@@ -811,6 +779,40 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
       encoding: UTF-8
       string: '{"uid":"edsc","first_name":"Earthdata","last_name":"Search","email_address":"patrick+edsc@element84.com","country":"United States","study_area":"OTHER","user_type":"PRODUCTION_USER","affiliation":"OTHER","organization":"EDSC","member_groups":["earthdata_ecc","echo"]}'
     http_version:
+edscbasic_from_urs:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - nginx/1.4.7
+      date:
+      - Tue, 24 Nov 2015 17:33:21 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 9b962bd0-f008-49bb-8008-1da4ab44b713
+      x-runtime:
+      - '0.005167'
+    body:
+      encoding: UTF-8
+      string: '{"uid":"edsc","first_name":"Earthdata","last_name":"Search","email_address":"patrick+edsc@element84.com","country":"United States","study_area":"OTHER","user_type":"PRODUCTION_USER","affiliation":"OTHER","organization":"EDSC","member_groups":["earthdata_ecc","echo"]}'
+    http_version:
 5465c54b75a62eac4512160fe28a6627c96aea19:
   response:
     status:
@@ -842,6 +844,34 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
               "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
               Contact"},"order_notification_level":"NONE"}}'
     http_version:
+edscbasic_preferences:
+  response:
+    status:
+      code: 401
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.229000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":["User does not have the required security identifiers for the requested operation."]}'
+    http_version:
 0a02d564986dee8b88b72b36380ff495d8d4e1c0:
   response:
     status:
@@ -872,6 +902,68 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
     body:
       encoding: UTF-8
       string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+edsc_access_update_preferences_none:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzliNWI2ODZlNWNmYzk2MjIxMzZlYjI3MDU0MDZmMmY%3D--ccab90e99f84e4ef2a742a3ed51d22dc16d545c0;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.192000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:38 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+edsc_access_update_preferences_verbose:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzliNWI2ODZlNWNmYzk2MjIxMzZlYjI3MDU0MDZmMmY%3D--ccab90e99f84e4ef2a742a3ed51d22dc16d545c0;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.192000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:38 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
     http_version:
 78fc022f791584c4b09792c0d1a2d00ad8d4e1c0:
   response:
@@ -930,4 +1022,4 @@ c56886b1aa890251bf223cc01d137a9a50876415:
             <Code>CollectionDisabled</Code>
             <Message>This collection is currently not configured for subagent HEG</Message>
         </eesi:Exception>
-    http_version: 
+    http_version:

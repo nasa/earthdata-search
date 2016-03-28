@@ -104,7 +104,7 @@
       content: 'Your collection results appear here.  This result has a "GIBS" badge, indicating that it
                has advanced visualizations. Click on the collection to preview its data.'
       wait: true
-      element: '.panel-list-item:contains(MOD06_L2 v6NRT)'
+      element: '.panel-list-item:contains(MYD06_L2 v5NRT)'
       positionHook: (positionFn) ->
         positionFn("#collection-results .master-overlay-content")
     }, {
@@ -173,7 +173,7 @@
                 Add this collection to your project now.'
       waitOnAnimate: true
       placement: 'right'
-      element: '.panel-list-item:contains(MOD06_L2 v6NRT) .add-to-project'
+      element: '.panel-list-item:contains(MYD06_L2 v6NRT) .add-to-project'
     }, {
       title: 'Projects'
       content: 'From here, you can start a new search to find additional collections to compare. You may add
