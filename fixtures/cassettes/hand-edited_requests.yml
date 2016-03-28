@@ -127,6 +127,19 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
+      - edsc
+  recorded_at: Tue, 19 Aug 2014 20:12:08 GMT
+  digest: edsc_current
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/users/current.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
       - edsc-access
   recorded_at: Wed, 06 Aug 2014 13:01:33 GMT
   digest: edsc_current
