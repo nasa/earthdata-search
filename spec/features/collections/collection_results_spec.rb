@@ -52,7 +52,7 @@ describe "Collection results", reset: false do
   it "displays a badge for OPeNDAP-enabled collections" do
     fill_in "keywords", with: "C181553784-GSFCS4PA"
     wait_for_xhr
-    expect(page).to have_css('.badge-opendap')
+    expect(page).to have_css('.badge-subsetting')
   end
 
   it "displays  for collections which have no thumbnail URLs" do
