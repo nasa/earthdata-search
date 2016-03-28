@@ -100,6 +100,46 @@
         Africa, East Africa Rainforest and Madagascar - AFR1b\n      ","hreflang":"en-US","href":"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1b/1stpage.htm"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Central
         Africa Rainforest - high flood of Congo River - AFR1c\n      ","hreflang":"en-US","href":"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1c/1stpage.htm"}]}]}}'
     http_version: 
+5f6310e331c32ef8637df740f7f9c927bcaa1d4a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:25:59 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '122'
+      cmr-request-id:
+      - 14f364d5-c94b-4379-9c0f-d0c5e163c085
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:26:00.041Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C128599377-NSIDC_ECS&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","boxes":["-90 -180 90
+        180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_Land"],"version_id":"2","updated":"2014-05-23T12:27:33.534Z","dataset_id":"AMSR-E/Aqua
+        L2B Surface Soil Moisture, Ancillary Parms, & QC EASE-Grids V002","data_center":"NSIDC_ECS","short_name":"AE_Land","organizations":["NSIDC","AMSR-E
+        SIPS-GHRC"],"title":"AMSR-E/Aqua L2B Surface Soil Moisture, Ancillary Parms,
+        & QC EASE-Grids V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-2B land surface product includes surface soil moisture and vegetation/roughness
+        water content interpretive information on a global 25 km EASE-Grid, generated
+        by the Njoku algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C128599377-NSIDC_ECS","original_format":"ECHO10","granule_count":97580,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_land_l2b_soil_moisture.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}]}}'
+    http_version: 
 02a56d16ee8a2436be9365fba60f66b4aa982744:
   response:
     status:
@@ -37821,6 +37861,79 @@ b3dd0059883ce6dc3e348855161fac1d34abbe28:
         dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+04e5c4f26ad57a2d71b4d8d93d190b93de285d2b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:32:13 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '54'
+      cmr-request-id:
+      - 8b93a9d1-eb80-4dec-9f1e-2bd4e2bb6272
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:32:13.764Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C24936-LAADS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+875eca57bee6d83aa7623490e28ee62dc56b1013:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:32:11 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '83'
+      cmr-request-id:
+      - 8e0e6092-1460-4dfe-baaf-841c64632412
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:32:11.750Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C24936-LAADS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","time_start":"1999-12-18T00:00:00.000Z","version_id":"5","updated":"2006-03-17T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005","data_center":"LAADS","short_name":"MOD04_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005","summary":"MODIS/Terra Aerosol 5-Min L2
+        Swath 10km","has_granules":true,"orbit_parameters":{},"id":"C24936-LAADS","score":0.5,"original_format":"ECHO10","granule_count":170,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Atmosphere Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Atmosphere Data Availability Calendar and Validation Level (MiscInformation)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products_calendar.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"NULL
+        (DatasetDisclaimer)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/validation.html"}]}],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[["MODIS",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["2",1]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"AEROSOL
+        PARTICLE PROPERTIES"},{"count":1,"value":"CLOUD CONDENSATION NUCLEI"}],"count":1,"value":"AEROSOLS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"RADIATIVE
+        FLUX"}],"count":1,"value":"ATMOSPHERIC RADIATION"}],"count":1,"value":"ATMOSPHERE"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 aefc25462f157877ff9ead0163ebaa7fd685737f:
   response:
     status:
@@ -37851,6 +37964,44 @@ aefc25462f157877ff9ead0163ebaa7fd685737f:
       encoding: UTF-8
       string: '{"feed":{"updated":"2016-03-27T03:23:52.256Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026keyword=C1000003579-GCMDTEST%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+b8ac50a48e3bb6ff1c61693c20f194907b455a40:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:32:12 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '64'
+      cmr-request-id:
+      - 3150f931-17c8-4bc8-881c-edbcbaa840b5
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:32:12.783Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C24936-LAADS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","time_start":"1999-12-18T00:00:00.000Z","version_id":"5","updated":"2006-03-17T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005","data_center":"LAADS","short_name":"MOD04_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005","summary":"MODIS/Terra Aerosol 5-Min L2
+        Swath 10km","has_granules":true,"orbit_parameters":{},"id":"C24936-LAADS","score":0.5,"original_format":"ECHO10","granule_count":170,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Atmosphere Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Atmosphere Data Availability Calendar and Validation Level (MiscInformation)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products_calendar.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"NULL
+        (DatasetDisclaimer)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/validation.html"}]}],"facets":[{"field":"data_center","value-counts":[["LAADS",1],["MODAPS",1]]},{"field":"archive_center","value-counts":[["LAADS",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["TERRA",1]]},{"field":"instrument","value-counts":[["MODIS",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
     http_version: 
     reduced: true
 460837f3b1ee3f368f455debd5c05c12122fb1f2:
@@ -41472,6 +41623,328 @@ bbe3e76bb326f85b9557c27ad2ffc494611cf171:
     body:
       encoding: UTF-8
       string: '{"feed":{"updated":"2016-03-27T03:23:47.724Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026keyword=USGS_EDC_EO1_ALI%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":["edsc.renderers.cwic","edsc.datasource.cwic"],"boxes":["-83.85
+        -180 83.1 180"],"time_start":"2001-03-16T00:00:00.000Z","dif_ids":["USGS_EDC_EO1_ALI"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"EO-1 (Earth Observing-1)
+        Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data","data_center":"GCMDTEST","short_name":"USGS_EDC_EO1_ALI","organizations":["DOI/USGS/EROS"],"title":"EO-1
+        (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level
+        1Gs, Level 1Gst Data","coordinate_system":"CARTESIAN","summary":"Advanced
+        Land Imager (ALI) provides image data from ten spectral bands (band designations).
+        The instrument operates in a pushbroom fashion, with a spatial resolution
+        of 30 meters for the multispectral bands and 10 meters for the panchromatic
+        band. The standard scene width is 37 kilometers. Standard scene length is
+        42 kilometers, with an optional increased scene length of 185 kilometers (additional
+        information).\n                  \nFor Advanced Land Imager (ALI) data, the
+        following levels of correction are available:\n                  \nLevel 1R
+        radiometrically corrected with no geometric correction applied. The image
+        data are provided in 16-bit radiance values. The data are available in Hierarchical
+        Data Format (HDF) and are distributed on CD-ROM, DVD, and File Transfer Protocol
+        (FTP).\n                  \nLevel 1Gs is geometrically corrected and will
+        be provided as a single \"stitched\" file. The image data are provided in
+        16-bit radiance values. The data are available in Hierarchical Data Format
+        (HDF) or Geographic Tagged Image-File Format (GeoTIFF) and are distributed
+        on DVD and File Transfer Protocol (FTP).\n                   \nLevel 1Gst
+        is terrain corrected and will be provided as a single \"stitched\" file. The
+        image data are provided in 16-bit radiance values. The data are available
+        in Hierarchical Data Format (HDF) or Geographic Tagged Image-File Format (GeoTIFF)
+        and are distributed on DVD and File Transfer Protocol (FTP). \n                  \n[Source:
+        USGS/EDC Homepage]","has_granules":false,"orbit_parameters":{},"id":"C1204449891-GCMDTEST","score":0.7,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Earth Explorer.\n      ","hreflang":"en-US","href":"http://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Global Visualizer (GLOVIS).\n      ","hreflang":"en-US","href":"http://glovis.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         EO-1
+        Project homepage at NASA''s Goddard Space Flight Center.\n      ","hreflang":"en-US","href":"http://eo1.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         NASA''s
+        New Millennium Project homepage.\n      ","hreflang":"en-US","href":"http://nmp.nasa.gov/"}]}],"facets":[{"field":"data_center","value-counts":[["DOI/USGS/EROS",1]]},{"field":"archive_center","value-counts":[]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["EO-1",1]]},{"field":"instrument","value-counts":[["ALI",1],["HYPERION",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
+21e9a7d2d5c3040180ada4b4489a65494d89dd6e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:32:51 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '47'
+      cmr-request-id:
+      - 495e6ca2-de45-4ae8-9a0f-3966dd4e0af0
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:32:51.864Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=2013-12-01T00%3A00%3A00.000Z%2C2013-12-01T23%3A59%3A59.000Z\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=USGS_EDC_EO1_ALI%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+803358a7a06ca317c89b913b49a8b3aeb2841118:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:32:49 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '59'
+      cmr-request-id:
+      - c6bf9415-5f7b-42e9-a846-72bd62acbf7d
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:32:49.767Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=2013-12-01T00%3A00%3A00.000Z%2C2013-12-01T23%3A59%3A59.000Z\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026keyword=USGS_EDC_EO1_ALI%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":["edsc.renderers.cwic","edsc.datasource.cwic"],"boxes":["-83.85
+        -180 83.1 180"],"time_start":"2001-03-16T00:00:00.000Z","dif_ids":["USGS_EDC_EO1_ALI"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"EO-1 (Earth Observing-1)
+        Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data","data_center":"GCMDTEST","short_name":"USGS_EDC_EO1_ALI","organizations":["DOI/USGS/EROS"],"title":"EO-1
+        (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level
+        1Gs, Level 1Gst Data","coordinate_system":"CARTESIAN","summary":"Advanced
+        Land Imager (ALI) provides image data from ten spectral bands (band designations).
+        The instrument operates in a pushbroom fashion, with a spatial resolution
+        of 30 meters for the multispectral bands and 10 meters for the panchromatic
+        band. The standard scene width is 37 kilometers. Standard scene length is
+        42 kilometers, with an optional increased scene length of 185 kilometers (additional
+        information).\n                  \nFor Advanced Land Imager (ALI) data, the
+        following levels of correction are available:\n                  \nLevel 1R
+        radiometrically corrected with no geometric correction applied. The image
+        data are provided in 16-bit radiance values. The data are available in Hierarchical
+        Data Format (HDF) and are distributed on CD-ROM, DVD, and File Transfer Protocol
+        (FTP).\n                  \nLevel 1Gs is geometrically corrected and will
+        be provided as a single \"stitched\" file. The image data are provided in
+        16-bit radiance values. The data are available in Hierarchical Data Format
+        (HDF) or Geographic Tagged Image-File Format (GeoTIFF) and are distributed
+        on DVD and File Transfer Protocol (FTP).\n                   \nLevel 1Gst
+        is terrain corrected and will be provided as a single \"stitched\" file. The
+        image data are provided in 16-bit radiance values. The data are available
+        in Hierarchical Data Format (HDF) or Geographic Tagged Image-File Format (GeoTIFF)
+        and are distributed on DVD and File Transfer Protocol (FTP). \n                  \n[Source:
+        USGS/EDC Homepage]","has_granules":false,"orbit_parameters":{},"id":"C1204449891-GCMDTEST","score":0.7,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Earth Explorer.\n      ","hreflang":"en-US","href":"http://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Global Visualizer (GLOVIS).\n      ","hreflang":"en-US","href":"http://glovis.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         EO-1
+        Project homepage at NASA''s Goddard Space Flight Center.\n      ","hreflang":"en-US","href":"http://eo1.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         NASA''s
+        New Millennium Project homepage.\n      ","hreflang":"en-US","href":"http://nmp.nasa.gov/"}]}],"facets":[{"field":"project","value-counts":[["CWIC",1],["NMP",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[["NEAR
+        INFRARED",1]]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"count":1,"value":"SURFACE
+        RADIATIVE PROPERTIES"}],"count":1,"value":"LAND SURFACE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"INFRARED
+        IMAGERY"},{"count":1,"value":"INFRARED RADIANCE"}],"count":1,"value":"INFRARED
+        WAVELENGTHS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"VISIBLE
+        IMAGERY"},{"count":1,"value":"VISIBLE RADIANCE"}],"count":1,"value":"VISIBLE
+        WAVELENGTHS"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+d3b8cd9ec08e23a161b821305aa9294d939360d0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:32:50 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '49'
+      cmr-request-id:
+      - 0fff843d-8ad3-4f41-b75f-7f16a2510aca
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:32:50.777Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=2013-12-01T00%3A00%3A00.000Z%2C2013-12-01T23%3A59%3A59.000Z\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026keyword=USGS_EDC_EO1_ALI%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":["edsc.renderers.cwic","edsc.datasource.cwic"],"boxes":["-83.85
+        -180 83.1 180"],"time_start":"2001-03-16T00:00:00.000Z","dif_ids":["USGS_EDC_EO1_ALI"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"EO-1 (Earth Observing-1)
+        Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data","data_center":"GCMDTEST","short_name":"USGS_EDC_EO1_ALI","organizations":["DOI/USGS/EROS"],"title":"EO-1
+        (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level
+        1Gs, Level 1Gst Data","coordinate_system":"CARTESIAN","summary":"Advanced
+        Land Imager (ALI) provides image data from ten spectral bands (band designations).
+        The instrument operates in a pushbroom fashion, with a spatial resolution
+        of 30 meters for the multispectral bands and 10 meters for the panchromatic
+        band. The standard scene width is 37 kilometers. Standard scene length is
+        42 kilometers, with an optional increased scene length of 185 kilometers (additional
+        information).\n                  \nFor Advanced Land Imager (ALI) data, the
+        following levels of correction are available:\n                  \nLevel 1R
+        radiometrically corrected with no geometric correction applied. The image
+        data are provided in 16-bit radiance values. The data are available in Hierarchical
+        Data Format (HDF) and are distributed on CD-ROM, DVD, and File Transfer Protocol
+        (FTP).\n                  \nLevel 1Gs is geometrically corrected and will
+        be provided as a single \"stitched\" file. The image data are provided in
+        16-bit radiance values. The data are available in Hierarchical Data Format
+        (HDF) or Geographic Tagged Image-File Format (GeoTIFF) and are distributed
+        on DVD and File Transfer Protocol (FTP).\n                   \nLevel 1Gst
+        is terrain corrected and will be provided as a single \"stitched\" file. The
+        image data are provided in 16-bit radiance values. The data are available
+        in Hierarchical Data Format (HDF) or Geographic Tagged Image-File Format (GeoTIFF)
+        and are distributed on DVD and File Transfer Protocol (FTP). \n                  \n[Source:
+        USGS/EDC Homepage]","has_granules":false,"orbit_parameters":{},"id":"C1204449891-GCMDTEST","score":0.7,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Earth Explorer.\n      ","hreflang":"en-US","href":"http://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Global Visualizer (GLOVIS).\n      ","hreflang":"en-US","href":"http://glovis.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         EO-1
+        Project homepage at NASA''s Goddard Space Flight Center.\n      ","hreflang":"en-US","href":"http://eo1.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         NASA''s
+        New Millennium Project homepage.\n      ","hreflang":"en-US","href":"http://nmp.nasa.gov/"}]}],"facets":[{"field":"data_center","value-counts":[["DOI/USGS/EROS",1]]},{"field":"archive_center","value-counts":[]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["EO-1",1]]},{"field":"instrument","value-counts":[["ALI",1],["HYPERION",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
+ce2c5f3a6e579f5a37fb3d9752c048a271904da0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:32:57 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '54'
+      cmr-request-id:
+      - 10655e19-50a5-49dc-acd8-7917aff30f1f
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:32:57.842Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=2013-12-01T00%3A00%3A00.000Z%2C2014-12-01T23%3A59%3A59.000Z%2C335%2C335\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=USGS_EDC_EO1_ALI%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+35a6b7e5cc1170a02647286d620f623695e7fe2c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:32:55 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '62'
+      cmr-request-id:
+      - 1a74c086-c160-4430-9f35-d5b855ef22d8
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:32:55.729Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=2013-12-01T00%3A00%3A00.000Z%2C2014-12-01T23%3A59%3A59.000Z%2C335%2C335\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026keyword=USGS_EDC_EO1_ALI%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":["edsc.renderers.cwic","edsc.datasource.cwic"],"boxes":["-83.85
+        -180 83.1 180"],"time_start":"2001-03-16T00:00:00.000Z","dif_ids":["USGS_EDC_EO1_ALI"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"EO-1 (Earth Observing-1)
+        Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data","data_center":"GCMDTEST","short_name":"USGS_EDC_EO1_ALI","organizations":["DOI/USGS/EROS"],"title":"EO-1
+        (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level
+        1Gs, Level 1Gst Data","coordinate_system":"CARTESIAN","summary":"Advanced
+        Land Imager (ALI) provides image data from ten spectral bands (band designations).
+        The instrument operates in a pushbroom fashion, with a spatial resolution
+        of 30 meters for the multispectral bands and 10 meters for the panchromatic
+        band. The standard scene width is 37 kilometers. Standard scene length is
+        42 kilometers, with an optional increased scene length of 185 kilometers (additional
+        information).\n                  \nFor Advanced Land Imager (ALI) data, the
+        following levels of correction are available:\n                  \nLevel 1R
+        radiometrically corrected with no geometric correction applied. The image
+        data are provided in 16-bit radiance values. The data are available in Hierarchical
+        Data Format (HDF) and are distributed on CD-ROM, DVD, and File Transfer Protocol
+        (FTP).\n                  \nLevel 1Gs is geometrically corrected and will
+        be provided as a single \"stitched\" file. The image data are provided in
+        16-bit radiance values. The data are available in Hierarchical Data Format
+        (HDF) or Geographic Tagged Image-File Format (GeoTIFF) and are distributed
+        on DVD and File Transfer Protocol (FTP).\n                   \nLevel 1Gst
+        is terrain corrected and will be provided as a single \"stitched\" file. The
+        image data are provided in 16-bit radiance values. The data are available
+        in Hierarchical Data Format (HDF) or Geographic Tagged Image-File Format (GeoTIFF)
+        and are distributed on DVD and File Transfer Protocol (FTP). \n                  \n[Source:
+        USGS/EDC Homepage]","has_granules":false,"orbit_parameters":{},"id":"C1204449891-GCMDTEST","score":0.7,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Earth Explorer.\n      ","hreflang":"en-US","href":"http://earthexplorer.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Search
+        for and order ALI data from the USGS Global Visualizer (GLOVIS).\n      ","hreflang":"en-US","href":"http://glovis.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         EO-1
+        Project homepage at NASA''s Goddard Space Flight Center.\n      ","hreflang":"en-US","href":"http://eo1.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         NASA''s
+        New Millennium Project homepage.\n      ","hreflang":"en-US","href":"http://nmp.nasa.gov/"}]}],"facets":[{"field":"project","value-counts":[["CWIC",1],["NMP",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[["NEAR
+        INFRARED",1]]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"count":1,"value":"SURFACE
+        RADIATIVE PROPERTIES"}],"count":1,"value":"LAND SURFACE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"INFRARED
+        IMAGERY"},{"count":1,"value":"INFRARED RADIANCE"}],"count":1,"value":"INFRARED
+        WAVELENGTHS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"VISIBLE
+        IMAGERY"},{"count":1,"value":"VISIBLE RADIANCE"}],"count":1,"value":"VISIBLE
+        WAVELENGTHS"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+a87bf88d6d3856ce3bbc26b6298d4c22ccf9b984:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:32:56 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '42'
+      cmr-request-id:
+      - 2ff8a8ba-5883-4599-b4be-19130a5f16d4
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:32:56.703Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=2013-12-01T00%3A00%3A00.000Z%2C2014-12-01T23%3A59%3A59.000Z%2C335%2C335\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026keyword=USGS_EDC_EO1_ALI%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[{"tags":["edsc.renderers.cwic","edsc.datasource.cwic"],"boxes":["-83.85
         -180 83.1 180"],"time_start":"2001-03-16T00:00:00.000Z","dif_ids":["USGS_EDC_EO1_ALI"],"version_id":"Not
         provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"EO-1 (Earth Observing-1)
