@@ -29,7 +29,7 @@ describe 'Collection details', reset: false do
       load_page :search
       login
       wait_for_xhr
-      fill_in 'keywords', with: 'C189202233-LPDAAC_ECS'
+      fill_in 'keywords', with: 'C197265171-LPDAAC_ECS'
       wait_for_xhr
     end
 
@@ -41,15 +41,15 @@ describe 'Collection details', reset: false do
       first_collection_result.click_link('View collection details')
       wait_for_xhr
       within('#collection-details') do
-        expect(page).to have_content('ASTER Global Digital Elevation Model V001')
+        expect(page).to have_content('ASTER Global Digital Elevation Model V002')
         expect(page).to have_content('Archive Center: LPDAAC')
         expect(page).to have_content('Processing Center: JPL')
         expect(page).to have_content('Short Name: ASTGTM')
-        expect(page).to have_content('VERSION 1')
-        expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (phone) 605-594-6963 (fax) lpdaac@eos.nasa.gov')
-        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
+        expect(page).to have_content('VERSION 002')
+        expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (phone) 605-594-6963 (fax) lpdaac@usgs.gov')
+        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (82.0°, -180.0°, -83.0°, 180.0°)')
         expect(page).to have_content('Metadata Formats: Native | ATOM | ECHO10 | ISO19115 | DIF')
-        expect(page).to have_content('Temporal Extent: 1999-12-18 to 2008-06-30')
+        expect(page).to have_content('Temporal Extent: 1999-12-18 to 2011-02-28')
         expect(page).to have_content('API Endpoints: CMR OSDD')
         expect(page).to have_content('Science Keywords: Earth ScienceLand SurfaceTopography')
       end
@@ -111,8 +111,8 @@ describe 'Collection details', reset: false do
   context "when selecting a collection with polygon spatial" do
     before :all do
       load_page :search
-      fill_in 'keywords', with: 'NSIDC-0022'
-      expect(page).to have_content('AVHRR Polar 1 Km Level 1B Data Set')
+      fill_in 'keywords', with: 'C1220111370-NSIDCV0'
+      expect(page).to have_content('AVHRR Leads-ARI Polar Gridded Brightness Temperatures')
       first_collection_result.click_link('View collection details')
     end
 
@@ -153,17 +153,17 @@ describe 'Collection details', reset: false do
     end
 
     it 'displays the combined temporal' do
-      expect(page).to have_content('1997-12-07 to 2001-08-06')
+      expect(page).to have_content('1997-12-07 ongoing')
     end
   end
 
   context "when selecting a collection with multiple lines of description" do
     before :all do
-      load_page '/search/collection-details', focus: 'C1029-NSIDCV0'
+      load_page '/search/collection-details', focus: 'C197265171-LPDAAC_ECS'
     end
 
     it "displays carriage returns in the description" do
-      expect(page).to have_content("\nto April 1992.\n\n")
+      expect(page).to have_content(" (METI).\n\nASTER is capable of collecting in-")
     end
   end
 

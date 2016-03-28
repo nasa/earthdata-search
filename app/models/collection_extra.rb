@@ -1,4 +1,5 @@
 class CollectionExtra < ActiveRecord::Base
+
   self.table_name = "dataset_extras"
 
   validates_presence_of :echo_id
@@ -9,6 +10,109 @@ class CollectionExtra < ActiveRecord::Base
 
   def self.build_echo_client(env=(@cmr_env || Rails.configuration.cmr_env))
     Echo::Client.client_for_environment(env, Rails.configuration.services)
+  end
+
+  def self.create_system_token(client)
+    response = client.create_token(ENV['system_user'], ENV['system_user_password'])
+    if response.success? && response.body['token']
+      response.body['token']['id']
+    else
+      nil
+    end
+  end
+
+  def self.sync_opendap(client, token, collection)
+    config = OpendapConfiguration.find(collection, client, token)
+    # TODO: Once CMR supports it, we want the subset_service to be a string data value
+    if config.has_opendap_subsetting?
+      add_extra_tag(collection, 'subset_service.opendap', nil, client, token)
+    elsif !config.has_opendap_subsetting?
+      remove_extra_tag(collection, 'subset_service.opendap', nil, client, token)
+    end
+  end
+
+  def self.sync_esi(client, token, collection)
+    puts "TODO: Sync ESI (EDSC-990)"
+    #service_order_info = client.get_service_order_information(collection['id'], token).body
+    #puts service_order_info.inspect
+  end
+
+  def self.sync_browse(client, token, collection)
+    # TODO: This works, but we need to wait on CMR support for tag data linking to enable it
+    granule = client.get_first_granule(collection, {browse_only: true}, token)
+    if granule
+      add_extra_tag(collection, 'has_browse', true, client, token)
+      add_extra_tag(collection, 'browseable_granule', granule['id'], client, token)
+    else
+      remove_extra_tag(collection, 'has_browse', true, client, token)
+      remove_extra_tag(collection, 'browseable_granule', nil, client, token)
+    end
+  end
+
+  def self.sync_tags
+    client = build_echo_client
+    token = create_system_token(client)
+
+    tags = ['has_browse', 'browseable_granule', 'subset_service.opendap', 'subset_service.esi']
+
+    # Remove stale tags
+    stale_tags = {}
+    tags.each do |tag|
+      stale_tags[tag] = []
+      client.create_tag_if_needed(tag_key(tag), token)
+    end
+
+    each_collection(client, {has_granules: false, tag_key: tag_key('*')}, token) do |collection|
+      stale_tags.each do |tag, collections|
+        collections << collection['id'] if has_tag(collection, tag)
+      end
+    end
+    stale_tags.each do |tag, collections|
+      client.remove_tag(tag, collections, token) if collections.present?
+    end
+
+    # TODO: has_granules doesn't work in ops yet. Re-enable when it does.
+    #each_collection(client, has_granules: true, token) do |collection|
+    each_collection(client, {include_tags: tag_key('*')}, token) do |collection|
+      #sync_browse(client, token, collection) # TODO: Enable once CMR supports data
+      sync_opendap(client, token, collection)
+      #sync_esi(client, token, collection) # TODO: Enable once EDSC-990 is done
+    end
+  end
+
+  def self.add_extra_tag(collection, key, value, client, token)
+    key = tag_key(key)
+    client.add_tag(key, value, collection['id'], token) unless has_tag(collection, key, value)
+  end
+
+  def self.remove_extra_tag(collection, key, value, client, token)
+    key = tag_key(key)
+    client.remove_tag(key, collection['id'], token) if has_tag(collection, key, value)
+  end
+
+  def self.tag_key(tag)
+    ns = Rails.configuration.cmr_tag_namespace
+    tag.start_with?(ns) ? tag : [ns, tag].join('.extra.')
+  end
+
+  def self.tag_value(collection, tag)
+    tag = tag_key(tag)
+    tags = collection['tags']
+    result = nil
+    if tags.is_a?(Hash)
+      result = tags[tag] && tags[tag]['data']
+    elsif tags.is_a?(Array)
+      tagdot = "#{tag}."
+      match = tags.find {|t| t.start_with?(tagdot)}
+      result = match.gsub(/^#{tagdot}/, '') if match.present?
+      result = true if !result.present? && tags.include?(tag)
+    end
+    result
+  end
+
+  def self.has_tag(collection, tag, value=nil)
+    actual = tag_value(collection, tag)
+    (value.nil? && actual != nil) || (!value.nil? && actual == value)
   end
 
   def self.load
@@ -110,13 +214,14 @@ class CollectionExtra < ActiveRecord::Base
     nil
   end
 
-  def self.each_collection(echo_client, extra_params={})
+  def self.each_collection(echo_client, extra_params={}, token=nil)
     params = {page_num: 0, page_size: 2000}
     processed_count = 0
 
+    start = Time.now
     begin
       params[:page_num] += 1
-      response = echo_client.get_collections(params.merge(extra_params))
+      response = echo_client.get_collections(params.merge(extra_params), token)
       body = response.body
       if body['results']
         # ECHO10
@@ -133,9 +238,10 @@ class CollectionExtra < ActiveRecord::Base
       collections.each do |collection|
         yield collection
         processed_count += 1
-        puts "#{processed_count} / #{hits} Collections Processed"
       end
+      puts "#{processed_count} / #{hits} Collections Processed"
     end while processed_count < hits && collections.size > 0
+    puts "#{processed_count} Collections Processed in #{Time.now - start}s"
 
     nil
   end
@@ -251,11 +357,11 @@ class CollectionExtra < ActiveRecord::Base
   end
 
   def decorate_opendap_layers(collection)
-    collection[:opendap] = false
-    opendap_config = Rails.configuration.services['opendap'][collection['id']]
-    if opendap_config.present?
-      collection[:opendap] = opendap_config['granule_url_template'].split('{').first
-    end
+    # Note: this is now decoupled from the tag. Collections can have opendap endpoints
+    # in their metadata surfaced this way without getting the badge
+    # TODO: Once we can remove the legacy config, this can be done in Javascript
+    collection[:opendap_url] = OpendapConfiguration.opendap_root(collection)
+    collection[:opendap] = self.class.has_tag(collection, 'subset_service')
   end
 
   def decorate_modaps_layers(collection)

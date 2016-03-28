@@ -484,6 +484,102 @@ d696def6590ee7ba23a31d5b9a233227eeaefa09:
         CIRES, 449 UCB
         University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>+1 (303) 492-2468</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>NSIDC</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><LastName>User Services</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>BRIGHTNESS TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC RADIATION</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>NOAA-11</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-11</LongName><Type>NOAA-11</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-9</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-9</LongName><Type>NOAA-9</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-8</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-8</LongName><Type>NOAA-8</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-10</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-10</LongName><Type>NOAA-10</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform></Platforms><AdditionalAttributes /><CSDTDescriptions /><CollectionAssociations /><Campaigns /><AlgorithmPackages /><TwoDCoordinateSystems /><OnlineAccessURLs><OnlineAccessURL><URL>http://nsidc.org/data/NSIDC-0026</URL><URLDescription>Data Access</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources /><AssociatedDIFs><DIF><EntryId>NSIDC-0026</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>60</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+5906c20ffe99a18e20fbd65c8e03ac6fc3733147:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 14:05:00 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - d4f35010-8540-4ad8-bbe7-5db0557d67a1
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD29P1DV5"],"version_id":"5","updated":"2014-10-30T13:58:11.657Z","dataset_id":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Day V005","data_center":"NSIDC_ECS","short_name":"MYD29P1D","organizations":["NSIDC","MODAPS"],"title":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Day V005","coordinate_system":"CARTESIAN","summary":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Day","orbit_parameters":{},"id":"C115003855-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Catalog
+        Page for this product at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/MYD29P1D/versions/5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
+        Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}'
+    http_version: 
+ac020667dfb49847cb8af5c9cc672d903a9d9817:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 12:15:36 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 1e46bb96-380c-4055-b5ad-70470a36bb69
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD29P1NV5"],"version_id":"5","updated":"2014-10-30T13:58:14.478Z","dataset_id":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Night V005","data_center":"NSIDC_ECS","short_name":"MYD29P1N","organizations":["NSIDC","MODAPS"],"title":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Night V005","coordinate_system":"CARTESIAN","summary":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Night","orbit_parameters":{},"id":"C115003857-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Catalog
+        Page for this product at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/MYD29P1N/versions/5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
+        Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}'
+    http_version: 
+4ebf4dedd02055a5fbccbe710dcab5ed67847ec3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 13:42:49 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 0abbc0fc-d644-497a-91cf-68ccaf35ebda
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_Rain"],"version_id":"2","updated":"2014-05-23T12:27:36.934Z","dataset_id":"AMSR-E/Aqua
+        L2B Global Swath Rain Rate/Type GSFC Profiling Algorithm V002","data_center":"NSIDC_ECS","short_name":"AE_Rain","organizations":["NSIDC","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua L2B Global Swath Rain Rate/Type GSFC Profiling
+        Algorithm V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-2B rain product includes instantaneous rain rate and rain type over
+        ice-free and snow-free land and ocean between 70 degrees north and south latitudes
+        at 5.4 km, generated by the GPROF algorithm using Level-2A TBs.","time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C119124186-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_rain_l2b.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
+    http_version: 
 77c51a0f2e8c8039dc7a7fd895fc03d89f6a54b9:
   response:
     status:
@@ -727,6 +823,41 @@ b5c7e41c67b053b26b179892814464bd7ec6299a:
                  GeoConnections Discovery Portal. Canada's IDN Node.
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-95</WestBoundingCoordinate><NorthBoundingCoordinate>61</NorthBoundingCoordinate><EastBoundingCoordinate>-52</EastBoundingCoordinate><SouthBoundingCoordinate>44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+ad70bb9ab0db24f8845845233c30a86bc62df5fc:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:36:31 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 736adfbe-819e-41c2-ad86-628bef236d61
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>NSIDC-0026</ShortName><VersionId>1</VersionId><InsertTime>2003-05-15T00:00:00.000Z</InsertTime><LastUpdate>2016-01-04T00:00:00.000Z</LastUpdate><LongName>AVHRR Leads-ARI Polar Gridded Brightness Temperatures</LongName><DataSetId>AVHRR Leads-ARI Polar Gridded Brightness Temperatures</DataSetId><Description>This data set consists of AVHRR imagery selected from hard copy 'quick look' images to provide the best coverage possible over the Arctic approximately every three days for a three-year period. Level-1B data from NOAA/SDSD have been calibrated and mapped to earth locations, then gridded to 1 km pixels on a basin scale to the polar stereographic projection. The projection is similar to that used by NSIDC to produce DMSP SSM/I polar brightness temperature and sea ice products. Each image was ranked for areal coverage of particular seas and for degree of cloud coverage. Passes covering a large area are generally favored over shorter passes with less cloud cover. The data set was developed in support of the Office Of Naval Research Arctic Leads Accelerated Research Initiative (Arctic Leads ARI). The aim of the Initiative was to develop a more thorough understanding of the oceanography, meteorology, and ice dynamics surrounding formation and evolution of leads in sea ice. The leads ARI field experiment took place from March to April 1992.  A spreadsheet containing the image rankings is available in hard copy (NOARL Tech. Note 118, April 1991); paper copies of the spreadsheet are available on request. Data set information is available on-line. Data are available via FTP.</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>Completed</CollectionState><Temporal><RangeDateTime><BeginningDateTime>1988-01-01T00:00:00.000Z</BeginningDateTime><EndingDateTime>1989-12-31T00:00:00.000Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>fetterer@nsidc.org</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>FLORENCE</FirstName><LastName>FETTERER</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>TECHNICAL CONTACT</Role><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><LastName>USER SERVICES</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC RADIATION</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>BRIGHTNESS TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Not provided</ShortName><LongName>Not provided</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName></Instrument></Instruments></Platform><Platform><ShortName>NOAA POES</ShortName><LongName>NOAA Polar Orbiting Environmental Satellites</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-10</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-10</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-11</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-11</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-8</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-8</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-9</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-9</LongName><Type>Not Specified</Type></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>Version Summary</Name><DataType>STRING</DataType><Description></Description></AdditionalAttribute><AdditionalAttribute><Name>Current Version</Name><DataType>INT</DataType><Description></Description><Value>1</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2016-01-25 10:14:52</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>EOSDIS</ShortName><LongName>Earth Observing System Data Information System</LongName></Campaign><Campaign><ShortName>LEADEX</ShortName><LongName>Arctic Leads Experiment</LongName></Campaign><Campaign><ShortName>LEADS ARI</ShortName><LongName>Office of Naval Research Arctic Leads Accelerated Research Initiative</LongName></Campaign><Campaign><ShortName>ESIP</ShortName><LongName>Earth Science Information Partners Program</LongName></Campaign></Campaigns><OnlineAccessURLs><OnlineAccessURL><URL>ftp://sidads.colorado.edu/pub/DATASETS/nsidc0026_avhrr_leads_ari_v01/</URL><URLDescription>
+                 FTP
+              </URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://nsidc.org/data/avhrr/index.html</URL><Description>
+                 AVHRR Data at NSIDC
+              </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/seaice/</URL><Description>
+                 Sea Ice Products at NSIDC
+              </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/docs/daac/nsidc0026_arctic_leads_ari.gd.html</URL><Description>
+                 Documentation
+              </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>60</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
 6ab30dcea4757ad54bcae4d4ab2c577e53d31e56:
   response:
     status:
@@ -775,6 +906,40 @@ b5c7e41c67b053b26b179892814464bd7ec6299a:
         </URL><URLDescription>
         These data are available through the File Transfer Protocol (FTP). The base URL of NODC's FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP client to download these data.
         </URLDescription></OnlineAccessURL></OnlineAccessURLs><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>146</WestBoundingCoordinate><NorthBoundingCoordinate>72</NorthBoundingCoordinate><EastBoundingCoordinate>-105</EastBoundingCoordinate><SouthBoundingCoordinate>-44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
+ac2fc07b8044c9a81e2e812e4f6d5875d35c2ce0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:23:47 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 0fd513a6-2a91-4f5f-bd91-cda661e1e9ed
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_Land"],"version_id":"2","updated":"2014-05-23T12:27:33.534Z","dataset_id":"AMSR-E/Aqua
+        L2B Surface Soil Moisture, Ancillary Parms, & QC EASE-Grids V002","data_center":"NSIDC_ECS","short_name":"AE_Land","organizations":["NSIDC","AMSR-E
+        SIPS-GHRC"],"title":"AMSR-E/Aqua L2B Surface Soil Moisture, Ancillary Parms,
+        & QC EASE-Grids V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-2B land surface product includes surface soil moisture and vegetation/roughness
+        water content interpretive information on a global 25 km EASE-Grid, generated
+        by the Njoku algorithm using Level-2A TBs.","time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C128599377-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_land_l2b_soil_moisture.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
     http_version: 
 a8625406c735635e8f0d54555083fa434ca22391:
   response:
@@ -1120,6 +1285,36 @@ a8625406c735635e8f0d54555083fa434ca22391:
         \         </Geometry>\n        </HorizontalSpatialDomain>\n        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n
         \     </Spatial>\n    </Collection>"
     http_version: 
+d4052720c651abc789e0ffdfca8cc361eca99c82:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 03:25:04 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 28484346-ecfc-4c75-bb27-ec1286b71c75
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["39.08 -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00.000Z","dif_ids":["FIFE_RAIN_30M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/2","organizations":["ORNL_DAAC"],"title":"30
+        Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
+        minute rainfall data for the Konza Prairie","time_end":"1987-10-26T00:00:00.000Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]}'
+    http_version: 
 55bdcbe03a881d71233144fd2e44704efd118082:
   response:
     status:
@@ -1327,6 +1522,110 @@ a8625406c735635e8f0d54555083fa434ca22391:
         \       <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n
         \     </Spatial>\n    </Collection>"
     http_version: 
+fbd46854681f5702d24d49d7f2885a2ca0678e32:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:36:32 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 4dfcb06a-38ab-46fa-adaa-ed1ace5fdd80
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","time_start":"1984-12-25T00:00:00.000Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","organizations":["ORNL_DAAC"],"title":"15
+        Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","time_end":"1988-03-04T00:00:00.000Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}'
+    http_version: 
+9198f2ff4973cbc586e8f3106f065bf783f79c5f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 12:29:27 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 31c237f9-9624-4009-819d-4af8b410a6f0
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1930-01-01T00:00:00.000Z","dif_ids":["CRAMERLEEMANS"],"version_id":"1","updated":"1999-05-05T00:00:00.000Z","dataset_id":"Global
+        30-Year Mean Monthly Climatology, 1930-1960, V[ersion]. 2.1 (Cramer and Leeman","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/416","organizations":["ORNL_DAAC"],"title":"Global
+        30-Year Mean Monthly Climatology, 1930-1960, V[ersion]. 2.1 (Cramer and Leeman","coordinate_system":"CARTESIAN","summary":"This
+        database is a major update of the Leemans & Cramer database.  It currently
+        contains monthly averages of mean temperature, temperature range, precipitation,
+        rain days and sunshine hours for the terrestrial surface of the globe, gridded
+        at 0.5 degree longitude/latitude resolution.  It was generated from a large
+        data base, using the partial thin-plate splining algorithm.","time_end":"1960-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003216-ORNL_DAAC","original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=416"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        database is a major update of the Leemans & Cramer database.  It currently
+        contains monthly averages of mean temperature, temperature range, precipitation,
+        rain days and sunshine hours for the terrestrial surface of the globe, gridded
+        at 0.5 degree longitude/latitude resolution.  It was generated from a large
+        data base, using the partial thin-plate splining algorithm. (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/CLIMATE/guides/cramer_leemans.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/png","title":"(BROWSE)","hreflang":"en-US","href":"http://webmap.ornl.gov/sdat/pimg/416_1.png"}]}'
+    http_version: 
+7dd2568f462fe186915631c2f16a56d2826565e1:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:23:30 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 9dd0a934-805b-4466-a3bb-c7b89dba6d46
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_5DSno"],"version_id":"2","updated":"2014-05-23T12:27:29.803Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"NSIDC_ECS","short_name":"AE_5DSno","organizations":["NSIDC","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C179014698-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
+    http_version: 
 9fcb925ab30c4bfb5e034aa20b2d816cecd4b0ee:
   response:
     status:
@@ -1405,6 +1704,81 @@ a8625406c735635e8f0d54555083fa434ca22391:
         Swath</PrimaryCSDT><Implementation>HDF-EOS</Implementation><CSDTComments>None</CSDTComments><IndirectReference>Source
         Packets</IndirectReference></CSDTDescription></CSDTDescriptions><CollectionAssociations><CollectionAssociation><ShortName>AST_L1B</ShortName><VersionId>3</VersionId><CollectionType>Dependent</CollectionType><CollectionUse>Radiometric
         values computed from the raw instrument counts</CollectionUse></CollectionAssociation></CollectionAssociations><AssociatedDIFs><DIF><EntryId>AST_L1AE3</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>'
+    http_version: 
+630e02049d4ce13f39f1e7d024cbc7d6d93e4bf8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:36:30 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 69f00024-f503-4e4b-8690-4ae9db724dd0
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"boxes":["-90 -180 90 180"],"time_start":"2004-10-01T00:00:00.000Z","dif_ids":["GES_DISC_OMAEROe_V003"],"version_id":"003","updated":"2016-01-20T00:00:00.000Z","dataset_id":"OMI/Aura
+        Multi-wavelength Aerosol Optical Depth and Single Scattering Albedo Daily
+        L3 Global 0.25x0.25 deg Lat/Lon Grid V003","data_center":"GSFCS4PA","short_name":"OMAEROe","organizations":["GESDISC"],"title":"OMI/Aura
+        Multi-wavelength Aerosol Optical Depth and Single Scattering Albedo Daily
+        L3 Global 0.25x0.25 deg Lat/Lon Grid V003","coordinate_system":"CARTESIAN","summary":"The
+        OMI science team produces two Level-3 Aura/OMI Global Aerosol Data Products
+        OMAERUVd (1deg Lat/Lon grids) and OMAEROe (0.25deg Lat/Lon grids). The OMAERUVd
+        product is based on the Level-2 OMAERUV product that uses the near-UV algorithm
+        whereas the OMAERO product is based on the multi-wavelength algorithm that
+        uses up to 20 wavelength bands between 331 nm and 500 nm. OMAERO retrieval
+        algorithm is developed by the KNMI OMI Team Scientists. Drs. Deborah Stein-Zweers,
+        Martin Sneep and Pepijn Veefkind are now the key investigators of this product.
+        \n  \n  (The shortname for this Level-3 Global Gridded Aerosol Product is
+        OMAEROe_V003) \n \n The Level-3 OMAEROe product selects best aerosol value
+        from the Leve2G good quality data that are reported in each grid. The selection
+        criteria is based on the shortest optical path length (=Secant of solar zenith
+        angle+Secant of view zenith angle).       \nOMAEROe files are stored in EOS
+        Hierarchical Data Format (HDF-EOS5). Each file contains daily data from approximately
+        15 orbits. The maximum file size for the OMAEROe data product is about 7 Mbytes.","orbit_parameters":{},"id":"C181553784-GSFCS4PA","original_format":"ECHO10","archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Access
+        the OMI Level-3 global 0.25x0.25 deg Aerosol Product (OMAEROe) by FTP.\n       (GET
+        DATA : ON-LINE ARCHIVE)","hreflang":"en-US","href":"ftp://acdisc.gsfc.nasa.gov/data/s4pa/Aura_OMI_Level3/OMAEROe.003/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Direct
+        Access to OMI Level-3 global 0.25x0.25 deg Aerosol Product (OMAEROe) from
+        the GES DISC Mirador fast search and download system\n       (GET DATA : MIRADOR)","hreflang":"en-US","href":"http://mirador.gsfc.nasa.gov/cgi-bin/mirador/homepageAlt.pl?keyword=OMAEROe"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Access
+        the OMI Level-3 global 0.25x0.25 deg Aerosol Product (OMAEROe) using Simple
+        Subset Wizard (Search and subset by date and spatial region).\n       (GET
+        DATA : SSW)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/SSW/#keywords=OMAEROe
+        003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Search
+        OMI Level-3 global 0.25x0.25 deg Aerosol Product (OMAEROe) using ECHO''s next
+        generation Earth Science discovery tool (Reverb).\n       (GET DATA : ECHO)","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&spatial_map=satellite&spatial_type=rectangle&keywords=GES_DISC_OMAEROe_V003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Get
+        map from GES DISC WMS for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW,
+        SingleScatteringAlbedoMW\n       (GET SERVICE : GET WEB MAP SERVICE (WMS))","hreflang":"en-US","href":"http://disc1.sci.gsfc.nasa.gov/daac-bin/wms_omi?version=1.1.1&service=WMS&request=GetMap&SRS=EPSG:4326&WIDTH=600&HEIGHT=300&LAYERS=OMAEROe_AerosolOpticalThicknessMW&TRANSPARENT=TRUE&FORMAT=image/png&bbox=-180,-90,180,90&time=2013-09-02"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Get
+        map from GES DISC WMS for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW,
+        SingleScatteringAlbedoMW\n       (GET SERVICE : GET WEB MAP SERVICE (WMS))","hreflang":"en-US","href":"http://disc1.sci.gsfc.nasa.gov/daac-bin/wms_omi?version=1.1.1&service=WMS&request=GetMap&SRS=EPSG:4326&WIDTH=600&HEIGHT=300&LAYERS=OMAEROe_AbsorbingAerosolOpticalThicknessMW&TRANSPARENT=TRUE&FORMAT=image/png&bbox=-180,-90,180,90&time=2013-09-02"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Get
+        map from GES DISC WMS for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW,
+        SingleScatteringAlbedoMW\n       (GET SERVICE : GET WEB MAP SERVICE (WMS))","hreflang":"en-US","href":"http://disc1.sci.gsfc.nasa.gov/daac-bin/wms_omi?version=1.1.1&service=WMS&request=GetMap&SRS=EPSG:4326&WIDTH=600&HEIGHT=300&LAYERS=OMAEROe_SingleScatteringAlbedoMW&TRANSPARENT=TRUE&FORMAT=image/png&bbox=-180,-90,180,90&time=2013-09-02"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"WCS
+        for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW, SingleScatteringAlbedoMW\n       (GET
+        SERVICE : GET WEB COVERAGE SERVICE (WCS))","hreflang":"en-US","href":"http://acdisc.sci.gsfc.nasa.gov/daac-bin/wcsL3?service=WCS&version=1.0.0&request=getCoverage&CRS=CRS:84&format=netCDF&resx=0.25&resy=0.25&bbox=-179.875,-89.875,179.875,89.875&coverage=OMAEROe:ColumnAmountAerosol:AbsorbingAerosolOpticalThicknessMW"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"WCS
+        for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW, SingleScatteringAlbedoMW\n       (GET
+        SERVICE : GET WEB COVERAGE SERVICE (WCS))","hreflang":"en-US","href":"http://acdisc.sci.gsfc.nasa.gov/daac-bin/wcsL3?service=WCS&version=1.0.0&request=getCoverage&CRS=CRS:84&format=netCDF&resx=0.25&resy=0.25&bbox=-179.875,-89.875,179.875,89.875&coverage=OMAEROe:ColumnAmountAerosol:AerosolOpticalThicknessMW"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"WCS
+        for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW, SingleScatteringAlbedoMW\n       (GET
+        SERVICE : GET WEB COVERAGE SERVICE (WCS))","hreflang":"en-US","href":"http://acdisc.sci.gsfc.nasa.gov/daac-bin/wcsL3?service=WCS&version=1.0.0&request=getCoverage&CRS=CRS:84&format=netCDF&resx=0.25&resy=0.25&bbox=-179.875,-89.875,179.875,89.875&coverage=OMAEROe:ColumnAmountAerosol:SingleScatteringAlbedoMW"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AURA
+        OMI Atmospheric Chemistry home page.\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://aura.gsfc.nasa.gov/instruments/omi.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://aura.gsfc.nasa.gov/instruments/omi/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://www.knmi.nl/omi/research/documents/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/acdisc/TOMS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.gsfc.nasa.gov/Aura/OMI/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.gsfc.nasa.gov/Aura/OMI/omaeroe_v003.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"http://acdisc.gesdisc.eosdis.nasa.gov/data/s4pa//Aura_OMI_Level3/OMAEROe.003/doc/README.OMI_DUG.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"ReadMe
+        for OMAEROe_V003\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/Aura/data-holdings/OMI/documents/v003/OMAEROe_OSIPS_README_V003.doc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"FileSpec
+        for OMAEROe_V003\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/Aura/data-holdings/OMI/documents/v003/OMAEROe_FileSpec_V003.txt"}]}'
     http_version: 
 24d1f087ca6a550f99e4402261aa64c0fc4553ca:
   response:
@@ -1546,6 +1920,296 @@ a8625406c735635e8f0d54555083fa434ca22391:
         Infrared</LongName><Technique>Imaging Radiometry</Technique></Sensor></Sensors><OperationModes><OperationMode>Calibration</OperationMode><OperationMode>Normal</OperationMode></OperationModes></Instrument></Instruments></Platform></Platforms><CSDTDescriptions><CSDTDescription><PrimaryCSDT>Structured
         Grid</PrimaryCSDT><Implementation>GeoTIFF</Implementation></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>https://lpdaac.usgs.gov/lpdaac/products/aster_product_table</URL><Description>Documents
         page for LP DAAC ASTER Products.</Description><Type>MiscInformation</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>ASTGTM1</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
+12935e3e5d37c8c7341024ece51461f628ced043:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:36:37 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 6ef926f7-6e26-451b-80c5-0fc79fe98631
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\"?>\n<Collection>\n  <ShortName>ASTGTM</ShortName>\n
+        \ <VersionId>002</VersionId>\n  <InsertTime>2011-08-24T08:35:32.576Z</InsertTime>\n
+        \ <LastUpdate>2015-09-30T10:42:35.418Z</LastUpdate>\n  <LongName>ASTER Global
+        Digital Elevation Model</LongName>\n  <DataSetId>ASTER Global Digital Elevation
+        Model V002</DataSetId>\n  <Description>The Advanced Spaceborne Thermal Emission
+        and Reflection Radiometer (ASTER) Global Digital Elevation Model (GDEM) was
+        developed jointly by the U.S. National Aeronautics and Space Administration
+        (NASA) and Japan&#x2019;s Ministry of Economy, Trade, and Industry (METI).\n\nASTER
+        is capable of collecting in-track stereo using nadir- and aft-looking near
+        infrared cameras.  Since 2001, these stereo pairs have been used to produce
+        single-scene (60- x 60-kilomenter (km)) digital elevation models (DEM) having
+        vertical (root-mean-squared-error) accuracies generally between 10- and 25-meters
+        (m). \n\nThe methodology used by Japan's Sensor Information Laboratory Corporation
+        (SILC) to produce the ASTER GDEM involves automated processing of the entire
+        ASTER Level-1A archive.  Stereo-correlation is used to produce over one million
+        individual scene-based ASTER DEMs, to which cloud masking is applied to remove
+        cloudy pixels.  All cloud-screened DEMS are stacked and residual bad values
+        and outliers are removed.  Selected data are averaged to create final pixel
+        values, and residual anomalies are corrected before partitioning the data
+        into 1 degree (&#xB0;) x 1&#xB0; tiles.\n\nThe ASTER GDEM covers land surfaces
+        between 83&#xB0;N and 83&#xB0;S and is comprised of 22,702 tiles.  Tiles that
+        contain at least 0.01% land area are included.  The ASTER GDEM is distributed
+        as Geographic Tagged Image File Format (GeoTIFF) files with geographic coordinates
+        (latitude, longitude).  The data are posted on a 1 arc-second (approximately
+        30&#x2013;m at the equator) grid and referenced to the 1984 World Geodetic
+        System (WGS84)/ 1996 Earth Gravitational Model (EGM96) geoid.  \n\nWhile the
+        ASTER GDEM 2 benefits from substantial improvements over GDEM 1, users are
+        nonetheless advised that the products still may contain anomalies and artifacts
+        that will reduce its usability for certain applications, because they can
+        introduce large elevation errors on local scales. The data are provided &#x201C;as
+        is&#x201D; and neither NASA nor METI/ERSDAC will be responsible for any damages
+        resulting from use of the data.\n\nV002 data set release date: 2009-06-28\n\nData
+        Set Characteristics: \nGeographic Extent: Global between 83&#xBA; latitude
+        \nScene Coverage: 1&#xBA; x 1&#xBA; tiles \nImage Dimensions: 3601 x 3601
+        \nTotal Number Tiles: V001: 22,604; V002: 22,702 \nTile Volume: ~25MB, 6.4
+        MB compressed \nCompression Type: zip \nFile Format: GEOTIFF \nMap Projection:
+        Geographic Lat/Lon \nDatum: WGS84/EGM96 \nResolution: 1 arcsecond (30-m horizontal
+        posting at equator)</Description>\n  <Orderable>false</Orderable>\n  <Visible>true</Visible>\n
+        \ <RevisionDate>2015-08-21T00:00:00Z</RevisionDate>\n  <SuggestedUsage>Science
+        Research</SuggestedUsage>\n  <ProcessingCenter>JPL</ProcessingCenter>\n  <ProcessingLevelId>3</ProcessingLevelId>\n
+        \ <ProcessingLevelDescription>GRID</ProcessingLevelDescription>\n  <ArchiveCenter>LPDAAC</ArchiveCenter>\n
+        \ <VersionDescription>Reprocessed global production</VersionDescription>\n
+        \ <CitationForExternalPublication>The ASTER Global DEM was developed jointly
+        by the Ministry of Economy, Trade and Industry of Japan (METI) and the United
+        States National Aeronautics and Space Administration (NASA).</CitationForExternalPublication>\n
+        \ <CollectionState>Completed</CollectionState>\n  <MaintenanceAndUpdateFrequency>None
+        Planned</MaintenanceAndUpdateFrequency>\n  <RestrictionComment>None</RestrictionComment>\n
+        \ <Temporal>\n    <TimeType>UTC</TimeType>\n    <DateType>Gregorian</DateType>\n
+        \   <TemporalRangeType>Continuous Range</TemporalRangeType>\n    <PrecisionOfSeconds>0</PrecisionOfSeconds>\n
+        \   <EndsAtPresentFlag>false</EndsAtPresentFlag>\n    <RangeDateTime>\n      <BeginningDateTime>1999-12-18T00:00:00Z</BeginningDateTime>\n
+        \     <EndingDateTime>2011-02-28T23:59:59Z</EndingDateTime>\n    </RangeDateTime>\n
+        \ </Temporal>\n  <Contacts>\n    <Contact>\n      <Role>Archive</Role>\n      <HoursOfService>M-F,
+        8 a.m. to 4 p.m. Central Time</HoursOfService>\n      <Instructions>None</Instructions>\n
+        \     <OrganizationName>LP DAAC User Services</OrganizationName>\n      <OrganizationAddresses>\n
+        \       <Address>\n          <StreetAddress>U.S. Geological Survey, Earth
+        Resources Observation and Science (EROS) Center</StreetAddress>\n          <City>Sioux
+        Falls</City>\n          <StateProvince>South Dakota</StateProvince>\n          <PostalCode>57198</PostalCode>\n
+        \         <Country>USA</Country>\n        </Address>\n      </OrganizationAddresses>\n
+        \     <OrganizationPhones>\n        <Phone>\n          <Number>605-594-6116</Number>\n
+        \         <Type>phone</Type>\n        </Phone>\n        <Phone>\n          <Number>605-594-6963</Number>\n
+        \         <Type>fax</Type>\n        </Phone>\n      </OrganizationPhones>\n
+        \     <OrganizationEmails>\n        <Email>lpdaac@usgs.gov</Email>\n      </OrganizationEmails>\n
+        \   </Contact>\n  </Contacts>\n  <ScienceKeywords>\n    <ScienceKeyword>\n
+        \     <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>\n      <TopicKeyword>LAND
+        SURFACE</TopicKeyword>\n      <TermKeyword>TOPOGRAPHY</TermKeyword>\n      <VariableLevel1Keyword>\n
+        \       <Value>TERRAIN ELEVATION</Value>\n      </VariableLevel1Keyword>\n
+        \   </ScienceKeyword>\n    <ScienceKeyword>\n      <CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n      <TopicKeyword>LAND SURFACE</TopicKeyword>\n
+        \     <TermKeyword>TOPOGRAPHY</TermKeyword>\n      <VariableLevel1Keyword>\n
+        \       <Value>TOPOGRAPHICAL RELIEF</Value>\n      </VariableLevel1Keyword>\n
+        \   </ScienceKeyword>\n  </ScienceKeywords>\n  <Platforms>\n    <Platform>\n
+        \     <ShortName>Terra</ShortName>\n      <LongName>Earth Observing System,
+        TERRA (AM-1)</LongName>\n      <Type>Spacecraft</Type>\n      <Instruments>\n
+        \       <Instrument>\n          <ShortName>ASTER</ShortName>\n          <LongName>Advanced
+        Spaceborne Thermal Emission and Reflection Radiometer</LongName>\n          <Technique>Imaging
+        Spectrometers/Radiometers</Technique>\n          <Sensors>\n            <Sensor>\n
+        \             <ShortName>TIR</ShortName>\n              <LongName>Thermal
+        Infrared</LongName>\n              <Technique>Imaging Radiometers</Technique>\n
+        \           </Sensor>\n            <Sensor>\n              <ShortName>VNIR</ShortName>\n
+        \             <LongName>Visible Near Infrared</LongName>\n              <Technique>Imaging
+        Radiometers</Technique>\n            </Sensor>\n            <Sensor>\n              <ShortName>SWIR</ShortName>\n
+        \             <LongName>Shortwave Infrared</LongName>\n              <Technique>Imaging
+        Radiometers</Technique>\n            </Sensor>\n          </Sensors>\n          <OperationModes>\n
+        \           <OperationMode>Calibration</OperationMode>\n            <OperationMode>Normal</OperationMode>\n
+        \         </OperationModes>\n        </Instrument>\n      </Instruments>\n
+        \   </Platform>\n  </Platforms>\n  <AdditionalAttributes>\n    <AdditionalAttribute>\n
+        \     <Name>identifier_product_doi</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Digital object identifier that uniquely identifies this
+        data product</Description>\n      <Value>10.5067/ASTER/ASTGTM.002</Value>\n
+        \   </AdditionalAttribute>\n    <AdditionalAttribute>\n      <Name>identifier_product_doi_authority</Name>\n
+        \     <DataType>STRING</DataType>\n      <Description>URL of the digital object
+        identifier resolving authority</Description>\n      <Value>http://dx.doi.org</Value>\n
+        \   </AdditionalAttribute>\n  </AdditionalAttributes>\n  <CSDTDescriptions>\n
+        \   <CSDTDescription>\n      <PrimaryCSDT>Structured Grid</PrimaryCSDT>\n
+        \     <Implementation>GeoTIFF</Implementation>\n    </CSDTDescription>\n  </CSDTDescriptions>\n
+        \ <OnlineResources>\n    <OnlineResource>\n      <URL>http://dx.doi.org/10.5067/ASTER/ASTGTM.002</URL>\n
+        \     <Description>Data set landing page at the LP DAAC</Description>\n      <Type>MiscInformation</Type>\n
+        \   </OnlineResource>\n  <OnlineResource>\n  <URL>http://reverb.echo.nasa.gov/reverb</URL>\n
+        \ <Description>\n         The Land Processes Distributed Active Archive Center
+        (LP DAAC) home page contains information about the LP DAAC, its products,
+        and its services.   The Web site also provides links to ASTGTM access through
+        Reverb and DEMEX.\n      </Description>\n  <Type>Type:GET DATA Subtype:REVERB</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>http://gdex.cr.usgs.gov</URL>\n  <Description>\n         LP DAAC Global
+        Data Explorer (GDEX) provides user the ability to graphically select an area,
+        and download topographic data.\n      </Description>\n  <Type>Type:GET DATA</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>http://earthexplorer.usgs.gov/</URL>\n  <Description>\n         USGS
+        EarthExplorer (EE) provides users the ability to query, search and order archived
+        ASTER and MODIS products available from the LP DAAC.  Registered users of
+        EE have access to additional features than guest users.\n      </Description>\n
+        \ <Type>Type:GET DATA</Type>\n</OnlineResource><OnlineResource>\n  <URL>https://lpdaac.usgs.gov</URL>\n
+        \ <Description>\n         The Land Processes Distributed Active Archive Center
+        (LP DAAC) is one of several discipline-specific data centers within the NASA
+        Earth Observing System Data and Information System (EOSDIS).  The LP DAAC
+        Web page provides information about available data products, services, documentation,
+        order interfaces, and tools.\n      </Description>\n  <Type>Type:VIEW PROJECT
+        HOME PAGE</Type>\n</OnlineResource><OnlineResource>\n  <URL>http://asterweb.jpl.nasa.gov/</URL>\n
+        \ <Description>\n         The ASTER home page is maintained through NASA's
+        Jet Propulsion Laboratory and documents various aspects of the ASTER mission.\n
+        \     </Description>\n  <Type>Type:VIEW PROJECT HOME PAGE</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>https://lpdaac.usgs.gov/products/aster_products_table/astgtm</URL>\n
+        \ <Description>\n         Detailed product descriptions and additional information
+        including links for data access, user guides, and customer support, etc.\n
+        \     </Description>\n  <Type>Type:VIEW RELATED INFORMATION</Type>\n</OnlineResource></OnlineResources>\n
+        \ <Spatial>\n    <SpatialCoverageType>Horizontal</SpatialCoverageType>\n    <HorizontalSpatialDomain>\n
+        \     <Geometry>\n        <CoordinateSystem>CARTESIAN</CoordinateSystem>\n
+        \       <BoundingRectangle>\n          <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>\n
+        \         <NorthBoundingCoordinate>82.0</NorthBoundingCoordinate>\n          <EastBoundingCoordinate>180.0</EastBoundingCoordinate>\n
+        \         <SouthBoundingCoordinate>-83.0</SouthBoundingCoordinate>\n        </BoundingRectangle>\n
+        \     </Geometry>\n    </HorizontalSpatialDomain>\n    <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>\n
+        \ </Spatial>\n</Collection>"
+    http_version: 
+5afcff0fd9d01f574656288164e531d19088e639:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:36:35 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 5a8942ee-b840-49bb-8275-9513a9a04691
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2002-06-01T00:00:00.000Z","version_id":"1","updated":"2012-01-26T22:15:23.132Z","dataset_id":"AMSRE_L3_SST_1DEG_1MO:1","data_center":"PODAAC","short_name":"AMSRE_L3_SST_1DEG_1MO","organizations":["PO.DAAC","REMSS"],"title":"AMSRE_L3_SST_1DEG_1MO:1","coordinate_system":"CARTESIAN","summary":"This
+        data set contains sea surface temperature (SST) data on a monthly 1 degree
+        grid from the Advanced Microwave Scanning Radiometer (AMSR-E) aboard NASA''s
+        Aqua spacecraft. The data were produced by Remote Sensing Systems in support
+        of the CMIP5 (Coupled Model Intercomparison Project Phase 5) under the World
+        Climate Research Program (WCRP).   Along with this dataset, two additional
+        ancillary data files are included in the same directory which contain the
+        number of observations and standard error co-located on the same 1 degree
+        grids.  AMSR-E, a passive-microwave radiometer launched on the Aqua platform
+        on 4 May 2002, was provided by the National Space Development Agency (NASDA)
+        of Japan to NASA as an indispensable part of Aqua''s global hydrology mission.
+        Over the oceans, AMSR-E is measuring a number of important geophysical parameters,
+        including SST, wind speed, atmospheric water vapor, cloud water, and rain
+        rate. A key feature of AMSR-E is its capability to see through clouds, thereby
+        providing an uninterrupted view of global SST and surface wind fields.","time_end":"2010-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C2930962-PODAAC","original_format":"ECHO10","archive_center":"PO.DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"The
+        OPeNDAP base directory location for the collection.","hreflang":"en-US","href":"http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"The
+        FTP base directory location for the collection.","hreflang":"en-US","href":"ftp://podaac-ftp.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Live
+        Access Server (PORTAL_DA_TOOLS_AND_SERVICES)","hreflang":"en-US","href":"http://thredds.jpl.nasa.gov/las/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://thredds.jpl.nasa.gov/thredds/catalog/ncml_aggregation/OceanTemperature/amsre/catalog.html?dataset=ncml_aggregation/OceanTemperature/amsre/aggregate__AMSRE_L3_SST_1DEG_1MO.ncml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Link
+        to JPL Earth System Grid (JPL ESG Link)","hreflang":"en-US","href":"http://esg-gateway.jpl.nasa.gov/home.htm"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Search
+        Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-SST00-1D1M1&apidoc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E
+        Technical Note (PDF)","hreflang":"en-US","href":"ftp://podaac.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo/docs/tosTechNote_AMSRE_L3_v7_200206-201012.pdf"}]}'
+    http_version: 
+9da136a866c23a02357fd7eef9a41af573d19df3:
+  response:
+    status:
+      code: 401
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:53:48 GMT
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 9ebac737-4e8c-44f5-9e52-5061d8c2fa9f
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Token edsc-access does not exist"]}'
+    http_version: 
+65e24dcf4c941f35c6bdcc4626834151c6d6b01b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:36:28 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - bea64e06-c8b5-41ab-b982-25f4b3b796aa
+      content-length:
+      - '699'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"4","boxes":["-90 -180 90 180"],"time_start":"2000-03-01T00:00:00.000Z","dif_ids":["CERES_EBAF"],"version_id":"2.8","updated":"2016-02-18T00:00:00.000Z","dataset_id":"CERES_EBAF-TOA_Edition2.8","data_center":"LARC_ASDC","short_name":"CERES_EBAF-TOA_Edition2.8","organizations":["Atmospheric
+        Science Data Center"],"title":"CERES_EBAF-TOA_Edition2.8","coordinate_system":"CARTESIAN","summary":"CERES
+        Energy Balanced and Filled(EBAF) TOA Monthly means data in netCDF","time_end":"2015-10-31T23:59:59.000Z","orbit_parameters":{},"id":"C7085910-LARC_ASDC","original_format":"ECHO10","archive_center":"Atmospheric
+        Science Data Center","browse_flag":false,"online_access_flag":false}'
+    http_version: 
+19e44430c2a663ac19d442e82bf85f14fa97b0d7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 27 Mar 2016 02:12:24 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 94a56820-656e-4559-92e8-e508c34740f5
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"boxes":["-90 -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD02QKM_5"],"version_id":"5","updated":"2016-03-09T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","data_center":"LAADS","short_name":"MYD02QKM","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","NASA/GSFC/SED/ESD/BSL/MCST","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","coordinate_system":"CARTESIAN","summary":"MODIS
+        image data for bands 1 and 2 at 250m (Nadir) resolution, calibrated from\n                  raw
+        counts into physically meaningful radiances and reflectances. Corrections\n                  for
+        knows instrument effects are applied. Also includes quality flags, error\n                  estimates,
+        and 1km latitude and longitude data copied from the MYD03 files.\n                  \n                  More
+        data set information:\n                  http://mcst.gsfc.nasa.gov/\n                  \n                  (The
+        Shortname for this product is MYD02QKM)","orbit_parameters":{},"id":"C90762182-LAADS","collection_data_type":"SCIENCE_QUALITY","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS","hreflang":"en-US","href":"http://modaps.nascom.nasa.gov/services/about/product_descriptions_aqua.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Search
+        and order products from LAADS website.","hreflang":"en-US","href":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD02QKM 5 data set.","hreflang":"en-US","href":"ftp://ladsweb.nascom.nasa.gov/allData/5/MYD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Level 1B Product Information Page at MCST","hreflang":"en-US","href":"http://mcst.gsfc.nasa.gov/l1b/product-information"}]}'
     http_version: 
 85892f8c99e8741c752c85cba65ba582ef91ac45:
   response:

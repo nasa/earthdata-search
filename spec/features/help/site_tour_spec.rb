@@ -42,7 +42,7 @@ describe "Site tour", reset: true do
       wait_for_xhr
 
       expect(page).to have_popover('Collection Results')
-      third_collection_result.click
+      second_collection_result.click
       wait_for_xhr
 
       expect(page).to have_popover('Matching Granules')
@@ -68,7 +68,7 @@ describe "Site tour", reset: true do
       granule_list.click_on 'Back to Collections'
 
       expect(page).to have_popover('Comparing Multiple Collections')
-      third_collection_result.find('.add-to-project').click
+      nth_collection_result(4).find('.add-to-project').click
 
       expect(page).to have_popover('Projects')
       click_on 'View Project'
