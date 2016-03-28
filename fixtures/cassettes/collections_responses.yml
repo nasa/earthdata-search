@@ -1,4 +1,49 @@
 ---
+f75e07c3bebeedc5bf3251d8e4b2b6a83253a8a0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 01:51:49 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '33'
+      cmr-request-id:
+      - 2835ba70-91ec-41ac-bcf6-27782dae93f7
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:51:49.540Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","boxes":["-90 -180 90
+        180"],"time_start":"2014-12-25T05:35:00.000Z","dif_ids":["MOD04_L2"],"version_id":"5","updated":"2012-06-18T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005 NRT","data_center":"LANCEMODIS","short_name":"MOD04_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005 NRT","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km","has_granules":false,"orbit_parameters":{},"id":"C1000000019-LANCEMODIS","original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","granule_count":0,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Atmosphere Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MOD04_L2 (Product Info)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/MOD04_L2/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Atmosphere Data Availability Calendar and Validation Level (MiscInformation)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products_calendar.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Known
+        Data Issues (DatasetDisclaimer)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/validation.html"}]},{"processing_level_id":"2","boxes":["-90
+        -180 90 180"],"time_start":"2014-12-25T05:30:00.000Z","dif_ids":["MOD10_L2"],"version_id":"5","updated":"2012-06-19T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Snow Cover 5-Min L2 500m V005 NRT","data_center":"LANCEMODIS","short_name":"MOD10_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Snow Cover 5-Min L2 500m V005 NRT","coordinate_system":"CARTESIAN","summary":"Level
+        2 Snow Cover 5-Min L2 500m...","has_granules":false,"orbit_parameters":{},"id":"C1000000016-LANCEMODIS","original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","granule_count":0,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Land Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-land.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of Surface Reflectance (Product Info)","hreflang":"en-US","href":"http://modis-land.gsfc.nasa.gov/surfrad.html"}]}]}}'
+    http_version: 
 477281d8a38889cf232523a4ff630fa2290e852b:
   response:
     status:
