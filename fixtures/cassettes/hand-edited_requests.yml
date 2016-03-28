@@ -166,7 +166,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
-      - expired_token
+      - expired-access
   recorded_at: Tue, 19 Aug 2014 21:00:49 GMT
   digest: 365deea9191426660df70c9dce859bda79ab9e9d
 - request:
