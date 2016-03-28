@@ -31,10 +31,28 @@ class CollectionExtra < ActiveRecord::Base
     end
   end
 
-  def self.sync_esi(client, token, collection)
-    puts "TODO: Sync ESI (EDSC-990)"
-    #service_order_info = client.get_service_order_information(collection['id'], token).body
-    #puts service_order_info.inspect
+  def self.sync_esi(client, token)
+    option_response = client.get_all_service_order_information(token)
+
+    if option_response.success?
+      ids = option_response.body.map {|option| option['service_option_assignment']['catalog_item_id']}
+
+      puts ids.inspect
+      each_collection(client, {tag_key: tag_key('subset_service.esi')}, token) do |collection|
+        # Remove tags which are no longer applicable
+        unless ids.include?(collection['id'])
+          remove_extra_tag(collection, 'subset_service.esi', nil, client, token)
+        end
+        # Ensure all the ids need the tag
+        ids.delete(collection['id'])
+      end
+
+      if ids.present?
+        key = tag_key('subset_service.esi')
+        client.add_tag(key, nil, ids, token)
+      end
+    end
+    nil
   end
 
   def self.sync_browse(client, token, collection)
@@ -76,8 +94,9 @@ class CollectionExtra < ActiveRecord::Base
     each_collection(client, {include_tags: tag_key('*')}, token) do |collection|
       #sync_browse(client, token, collection) # TODO: Enable once CMR supports data
       sync_opendap(client, token, collection)
-      #sync_esi(client, token, collection) # TODO: Enable once EDSC-990 is done
     end
+
+    sync_esi(client, token)
   end
 
   def self.add_extra_tag(collection, key, value, client, token)
