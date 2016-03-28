@@ -5,9 +5,7 @@ describe "CWIC-enabled collection details", reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    load_page :search, env: :sit, facets: true
-    login
-    wait_for_xhr
+    load_page :search, env: :uat, facets: true
     cwic_feature_facet.click
   end
 
@@ -16,7 +14,7 @@ describe "CWIC-enabled collection details", reset: false do
   end
 
   context "viewing the collection details for a CWIC-tagged collection" do
-    use_collection 'C1000003579-GCMDTEST', '3DIMG_L2P_IRW'
+    use_collection 'C1204449891-GCMDTEST', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
 
     before :all do
       first_collection_result.click_link('View collection details')
@@ -29,7 +27,7 @@ describe "CWIC-enabled collection details", reset: false do
 
     it "displays links to the collection's CWIC OpenSearch API endpoint", acceptance: true do
       expect(collection_details).to have_link('OSDD')
-      url = "http://cwic.wgiss.ceos.org/opensearch/datasets/3DIMG_L2P_IRW/osdd.xml"
+      url = "http://cwic.wgiss.ceos.org/opensearch/datasets/USGS_EDC_EO1_ALI/osdd.xml&clientId=edsc-dev"
       expect(collection_details.find_link('OSDD')['href']).to start_with(url)
     end
 

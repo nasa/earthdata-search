@@ -4,6 +4,30 @@ module Echo
       get("/echo-rest/availability.json")
     end
 
+    def create_token(username, password)
+      auth = {
+        username: username,
+        password: password,
+        client_id: client_id,
+        user_ip_address: '127.0.0.1'
+      }
+      post("/echo-rest/tokens.json", {token: auth}.to_json)
+    end
+
+    def get_services(token)
+      #tags = get('/echo-rest/tags', {token: token, :tag_group_id => 'DATASET'})
+      #tags = get('/echo-rest/tag_groups')
+      #tags = get('/echo-rest/tags/', {token: token, :tag_group_id => 'SERVICE-INTERFACE'})
+      #tags = get('/echo-rest/tags')
+      #tags = get('/echo-rest/service_entries', {tag_group: 'SERVICE-INTERFACE'})
+      #tags = get('/echo-rest/service_entries/EA74C60A-CB9F-2659-E558-72F76E1EB236/service_entry_tags')
+
+      #puts JSON.pretty_generate(tags.body)
+
+      #service_entries = Array.wrap(ServiceEntry.all(:params => {:tag_group => "DATASET"}))
+      puts "TODO: EchoClient#get_services(token)"
+    end
+
     def get_opensearch_availability
       get("/opensearch")
     end
@@ -99,6 +123,10 @@ module Echo
       get("/echo-rest/service_option_assignments.json", {catalog_item_id: id}, token_header(token))
     end
 
+    def get_all_service_order_information(token)
+      get("/echo-rest/service_option_assignments.json", nil, token_header(token))
+    end
+
     def get_service_option_definition(id, token)
       get("/echo-rest/service_option_definitions/#{id}.json", {}, token_header(token))
     end
@@ -112,7 +140,7 @@ module Echo
     end
 
     def delete_order(order_id, token)
-      delete("/echo-rest/orders/#{order_id}", {}, token_header(token))
+      delete("/echo-rest/orders/#{order_id}", {}, nil, token_header(token))
     end
 
     def get_option_names(option_def_refs)

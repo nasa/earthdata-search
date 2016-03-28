@@ -163,7 +163,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   @include retina-image(gibs, 22px 22px, png, null, '@2x', true);
 }
 
-.badge-opendap {
+.badge-subsetting {
   @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
 }
 

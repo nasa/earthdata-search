@@ -18,7 +18,7 @@ describe "Collection Facets", reset: false do
   context "facet listing" do
     it "shows facets in a case insensitive order" do
       find("h3.facet-title", text: 'Platform').click
-      expect(page.text).to match("AQUA\\s*\\d*\\s*Aqua")
+      expect(page.text).to match("Aqua\\s*\\d*\\s*AQUA")
       find("h3.facet-title", text: 'Platform').click
     end
 
@@ -338,35 +338,35 @@ describe "Collection Facets", reset: false do
     end
   end
 
-  context "when applying facets containing trailing whitespace" do
-    before :all do
-      find("h3.facet-title", text: 'Platform').click
-      find(".facets-item", text: "AQUARIUS_SAC-D ").click
-      wait_for_xhr
-    end
-
-    after :all do
-      reset_search
-      find("h3.facet-title", text: 'Platform').click
-    end
-
-    it "displays correct count on collection list pane" do
-      facet_count = 0
-      collection_count = -1
-
-      # get count from facet list
-      within '#master-overlay-parent' do
-        facet_count = find('h3', text: 'Platform').parent.parent.find('p.facets-item.selected').find('span.facet-item-collection-count').text
-      end
-
-      # get count from collection list pane
-      within '#collection-results' do
-        collection_count = find('header').find('h2').find('strong').text
-      end
-
-      expect(facet_count).to eq(collection_count)
-    end
-  end
+  # context "when applying facets containing trailing whitespace" do
+  #   before :all do
+  #     find("h3.facet-title", text: 'Platform').click
+  #     find(".facets-item", text: "AQUARIUS_SAC-D ").click
+  #     wait_for_xhr
+  #   end
+  #
+  #   after :all do
+  #     reset_search
+  #     find("h3.facet-title", text: 'Platform').click
+  #   end
+  #
+  #   it "displays correct count on collection list pane" do
+  #     facet_count = 0
+  #     collection_count = -1
+  #
+  #     # get count from facet list
+  #     within '#master-overlay-parent' do
+  #       facet_count = find('h3', text: 'Platform').parent.parent.find('p.facets-item.selected').find('span.facet-item-collection-count').text
+  #     end
+  #
+  #     # get count from collection list pane
+  #     within '#collection-results' do
+  #       collection_count = find('header').find('h2').find('strong').text
+  #     end
+  #
+  #     expect(facet_count).to eq(collection_count)
+  #   end
+  # end
 
   context "when selecting a topic keyword" do
     before :all do

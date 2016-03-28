@@ -7,13 +7,13 @@ require "spec_helper"
 
 describe "Collection GIBS visualizations", reset: false do
 
-  gibs_collection_id = 'C1000000019-LANCEMODIS'
+  gibs_collection_id = 'C119124186-NSIDC_ECS'
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
 
   before :all do
     load_page :search
     fill_in "keywords", with: gibs_collection_id
-    expect(page).to have_content('MOD04_L2')
+    expect(page).to have_content('AE_Rain')
   end
 
   after :all do
@@ -23,17 +23,17 @@ describe "Collection GIBS visualizations", reset: false do
 
   context "when viewing a GIBS-enabled collection in the results list" do
     it "indicates that the collection has GIBS visualizations" do
-      expect(first_featured_collection).to have_css('.badge-gibs')
+      expect(first_collection_result).to have_css('.badge-gibs')
     end
   end
 
   context "when visualizing a GIBS-enabled collection" do
     before :all do
-      first_featured_collection.click_link "View collection"
+      first_collection_result.click_link "View collection"
     end
 
     after :all do
-      first_featured_collection.click_link "Hide collection"
+      first_collection_result.click_link "Hide collection"
     end
 
     it "displays composite GIBS imagery corresponding to the first 20 granule results on an HTML canvas" do
@@ -45,9 +45,9 @@ describe "Collection GIBS visualizations", reset: false do
 
   context "when turning off visualizations for a GIBS-enabled collection" do
     before :all do
-      first_featured_collection.click_link "View collection"
+      first_collection_result.click_link "View collection"
       page.should have_css(gibs_tile_layer)
-      first_featured_collection.click_link "Hide collection"
+      first_collection_result.click_link "Hide collection"
     end
 
     it "removes the collection's GIBS tiles from the map" do

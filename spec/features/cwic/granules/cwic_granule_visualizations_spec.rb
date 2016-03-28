@@ -6,15 +6,14 @@ describe "CWIC-enabled granule visualizations", reset: false do
   context do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
-      login
+      load_page :search, env: :uat, facets: true, ff: "Int'l / Interagency", q: 'C1204449891-GCMDTEST'
     end
 
-    hook_granule_results("INSAT-3D Imager Level-2P IR WINDS")
+    hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     context "viewing CWIC granule results with available browse imagery" do
       it "displays browse thumbnails for each granule with browse", acceptance: true do
-        expect(granule_list).to have_css('a.panel-list-thumbnail-container img[src*="/preview_thumb/"]')
+        expect(granule_list).to have_css('a.panel-list-thumbnail-container img[src*="/browse/eo-1/ali/"]')
       end
     end
 
@@ -28,14 +27,14 @@ describe "CWIC-enabled granule visualizations", reset: false do
       end
 
       it "displays a larger preview of the browse data", acceptance: true do
-        expect(page).to have_css('#map .granule-browse a img[src*="preview"]', visible: false)
+        expect(page).to have_css('#map .granule-browse a img[src*="/browse/eo-1/ali/"]', visible: false)
       end
 
       context "clicking on the browse preview" do
         it "opens the full-size browse in a new tab", acceptance: true do
           link = find('#map .granule-browse a')
 
-          expect(link['href']).to match(/.*\/preview\/.*/)
+          expect(link['href']).to match(/.*\/browse\/eo-1\/ali\/.*/)
           expect(link['target']).to eq("_blank")
         end
       end

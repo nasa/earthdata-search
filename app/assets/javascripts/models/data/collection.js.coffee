@@ -250,7 +250,7 @@ ns.Collection = do (ko
 
     getValueForTag: (key) ->
       if @tags()
-        prefix = "#{config.cmrTagNamespace}#{key}."
+        prefix = "#{config.cmrTagNamespace}.#{key}."
         len = prefix.length
         for tag in @tags()
           tag = tag.join('.') if tag.constructor is Array
@@ -274,6 +274,7 @@ ns.Collection = do (ko
       @hasAtomData(jsonObj.short_name?)
       @_setObservable('gibs', jsonObj)
       @_setObservable('opendap', jsonObj)
+      @_setObservable('opendap_url', jsonObj)
       @_setObservable('modaps', jsonObj)
       @_setObservable('osdd_url', jsonObj)
       @_setObservable('tags', jsonObj)

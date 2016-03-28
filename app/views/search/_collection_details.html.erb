@@ -65,8 +65,8 @@
                 <a class="endpoint-label" data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a>
               <!-- /ko -->
 
-              <!-- ko if: opendap() -->
-                <a class="endpoint-label" data-bind="attr: {href: opendap()}" target="_blank">OPeNDAP</a>
+              <!-- ko if: opendap_url() -->
+                <a class="endpoint-label" data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a>
               <!-- /ko -->
 
               <!-- ko if: modaps() -->

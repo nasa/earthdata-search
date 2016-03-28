@@ -31,7 +31,9 @@ module Echo
     end
 
     def token_header(token)
-      token.present? ? {'Echo-Token' => "#{token}:#{@urs_client_id}"} : {}
+      # Token is a URS token, as opposed to an ECHO token
+      token = "#{token}:#{@urs_client_id}" if token.present? && !token.include?('-')
+      token.present? ? {'Echo-Token' => "#{token}"} : {}
     end
 
     def request(method, url, params, body, headers, options)
@@ -56,8 +58,8 @@ module Echo
       request(:get, url, params, nil, headers, options)
     end
 
-    def delete(url, params={}, headers={}, options={})
-      request(:delete, url, params, nil, headers, options)
+    def delete(url, params={}, body=nil, headers={}, options={})
+      request(:delete, url, params, body, headers, options)
     end
 
     def post(url, body, headers={}, options={})
