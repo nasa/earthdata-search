@@ -3115,6 +3115,28 @@ eda13058464b2da8bfae9c008b914afd64be82db:
       encoding: UTF-8
       string: '[{"concept-id":"C190033217-LARC","intervals":[[1330387200,1330905600,6],[1332028800,1364169600,374],[1365206400,1395619200,352],[1396483200,1396828800,4],[1397001600,1425254400,327]]}]'
     http_version: 
+481234622f42f8d8c42500dd004099496c5b054b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 16:03:50 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - cba1b931-2ca7-4426-a3ee-0e335c340e2f
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 83790123c126eb2c21befc2fa9d34b4ffd54962a:
   response:
     status:
