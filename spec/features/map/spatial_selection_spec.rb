@@ -106,7 +106,7 @@ describe "Spatial" do
       create_point(0, 0)
       wait_for_xhr
       expect(page).to have_no_content("Background Air Pollution Monitoring")
-      expect(page).to have_content("Two-Level, Seasonal SOx/NOx ")
+      expect(page).to have_content("6202 Matching Collections")
     end
 
     context "changing the point selection" do
@@ -118,7 +118,7 @@ describe "Spatial" do
       end
 
       it "updates the collection filters using the new point selection" do
-        expect(page).to have_content("IGBP/IGAC/GEIA Canada_CGEIC_2levSOxNOxGlobeEmm")
+        expect(page).to have_content("6321 Matching Collections")
       end
     end
 
@@ -153,7 +153,7 @@ describe "Spatial" do
       end
 
       it "updates the collection filters using the new bounding box selection" do
-        expect(page).to have_content("IGBP/IGAC/GEIA Canada_CGEIC_2levSOxNOxGlobeEmm")
+        expect(page).to have_content("GHRSST Level 2P Global Skin Sea Surface Temperature")
       end
     end
 
