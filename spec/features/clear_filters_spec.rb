@@ -19,11 +19,11 @@ describe "'Clear Filters' button", reset: false do
   it "clears spatial" do
     create_point(0, 0)
     expect(page).to have_no_content("Background Air Pollution Monitoring Network")
-    expect(page).to have_content("Two-Level, Seasonal SOx/NOx Global Emissions")
+    expect(page).to have_content("GGP - Corrected Minute Data")
 
     click_link "Clear Filters"
     expect(page).to have_content("Background Air Pollution Monitoring Network")
-    expect(page).to have_no_content("Two-Level, Seasonal SOx/NOx Global Emissions")
+    expect(page).to have_no_content("GGP - Corrected Minute Data")
   end
 
   context "clears temporal" do

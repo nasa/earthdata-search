@@ -2905,6 +2905,38 @@ f63923a6c40a53a9c621249a8dae40c6cc7050cb:
         dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+121e26115fd2934fffbba38df4ca2d1abd592e9c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:14:36 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '1334'
+      cmr-request-id:
+      - d8362a8d-1cde-4d6d-83c5-423d59fb9d1d
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:14:38.220Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=AST_L1A%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 3e812d567812dea00f2c231d47ffe3bf137a0eb0:
   response:
     status:
@@ -4807,6 +4839,282 @@ d573efc78b1e0a7dad10bff14eda93fdc5450bf3:
         Validation Analysis, Product Specifications, etc (PORTAL_DOC_PROJECT_MATERIALS)","hreflang":"en-US","href":"ftp://podaac-ftp.jpl.nasa.gov/allData/aquarius/docs/v4/"}]}],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[["AQUARIUS_SCATTEROMETER",19],["AQUARIUS_RADIOMETER",10]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",19]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":9,"value":"SURFACE
         WINDS"}],"count":9,"value":"OCEAN WINDS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":10,"value":"SALINITY"}],"count":10,"value":"SALINITY/DENSITY"}],"count":19,"value":"OCEANS"}],"count":19,"value":"EARTH
         SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+6fbae3b9f42ea607df29e5bd9e01567906238404:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:14:33 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '240'
+      cmr-request-id:
+      - 3b433bcf-c3a6-4d07-92c3-8d4c07342c5a
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJmZWVkIjp7InVwZGF0ZWQiOiIyMDE2LTAzLTI4VDAyOjE0OjM0LjA2MVoi
+        LCJpZCI6Imh0dHBzOi8vY21yLmVhcnRoZGF0YS5uYXNhLmdvdjo0NDMvc2Vh
+        cmNoL2NvbGxlY3Rpb25zLmpzb24/aW5jbHVkZV9mYWNldHM9dHJ1ZVx1MDAy
+        NnBhZ2Vfc2l6ZT0yMFx1MDAyNnBhZ2VfbnVtPTFcdTAwMjZoaWVyYXJjaGlj
+        YWxfZmFjZXRzPXRydWVcdTAwMjZpbmNsdWRlX3RhZ3M9ZWRzYy4lMkFcdTAw
+        MjZleGNsdWRlJTVCdGFnX2tleSU1RD1lZHNjLmRhdGFzb3VyY2UuY3dpY1x1
+        MDAyNmtleXdvcmQ9QVNUX0wxQSUyQVx1MDAyNmluY2x1ZGVfaGFzX2dyYW51
+        bGVzPXRydWVcdTAwMjZpbmNsdWRlX2dyYW51bGVfY291bnRzPXRydWUiLCJ0
+        aXRsZSI6IkVDSE8gZGF0YXNldCBtZXRhZGF0YSIsImVudHJ5IjpbeyJwcm9j
+        ZXNzaW5nX2xldmVsX2lkIjoiMUEiLCJib3hlcyI6WyItOTAgLTE4MCA5MCAx
+        ODAiXSwidGltZV9zdGFydCI6IjE5OTktMTItMThUMDA6MDA6MDAuMDAwWiIs
+        ImRpZl9pZHMiOlsiQVNUX0wxQTMiXSwidmVyc2lvbl9pZCI6IjAwMyIsInVw
+        ZGF0ZWQiOiIyMDE1LTA5LTMwVDEwOjQwOjIzLjQ4OVoiLCJkYXRhc2V0X2lk
+        IjoiQVNURVIgTDFBIFJlY29uc3RydWN0ZWQgVW5wcm9jZXNzZWQgSW5zdHJ1
+        bWVudCBEYXRhIFYwMDMiLCJkYXRhX2NlbnRlciI6IkxQREFBQ19FQ1MiLCJz
+        aG9ydF9uYW1lIjoiQVNUX0wxQSIsIm9yZ2FuaXphdGlvbnMiOlsiTFBEQUFD
+        IiwiR0RTIl0sInRpdGxlIjoiQVNURVIgTDFBIFJlY29uc3RydWN0ZWQgVW5w
+        cm9jZXNzZWQgSW5zdHJ1bWVudCBEYXRhIFYwMDMiLCJjb29yZGluYXRlX3N5
+        c3RlbSI6IkNBUlRFU0lBTiIsInN1bW1hcnkiOiJUaGUgQVNURVIgaW5zdHJ1
+        bWVudCBhYm9hcmQgdGhlIFRlcnJhIHNhdGVsbGl0ZSBoYXMgYSBjb21wbGVt
+        ZW50IG9mIHRocmVlIGRpZmZlcmVudCB0ZWxlc2NvcGVzIHdpdGggdmFyeWlu
+        ZyBwb2ludGluZyBjYXBhYmlsaXRpZXMuIEFTVEVSIGRhdGEgYXJlIHByaW1h
+        cmlseSBhY3F1aXJlZCBhbmQgcHJvY2Vzc2VkIGluIHN1cHBvcnQgb2YgYSBn
+        bG9iYWwgbWFwcGluZyBtaXNzaW9uLCBhbmQgYmFzZWQgb24gRGF0YSBBY3F1
+        aXNpdGlvbiBSZXF1ZXN0cyAoREFScykgZnJvbSBhdXRob3JpemVkIHVzZXJz
+        LiBBU1RFUiBMZXZlbC0xIGRhdGEgYXJlIHByb2R1Y2VkIGF0IHRoZSBHcm91
+        bmQgRGF0YSBTeXN0ZW0gKEdEUykgZmFjaWxpdHkgb2YgSmFwYW4gU3BhY2Ug
+        U3lzdGVtcyBpbiBUb2t5bywgSmFwYW4sIGFuZCBzdWJzZXF1ZW50bHkgc2Vu
+        dCB0byB0aGUgTGFuZCBQcm9jZXNzZXMgKExQKSBEaXN0cmlidXRlZCBBY3Rp
+        dmUgQXJjaGl2ZSBDZW50ZXIgKERBQUMpIGZvciBhcmNoaXZpbmcsIGRpc3Ry
+        aWJ1dGlvbiwgYW5kIGhpZ2hlci1sZXZlbCBwcm9kdWN0IGdlbmVyYXRpb24u
+        IFRoZSBBU1RFUiBMZXZlbC0xQSBkYXRhIHNldCBjb250YWlucyByZWNvbnN0
+        cnVjdGVkLCBpbnN0cnVtZW50IGRpZ2l0YWwgbnVtYmVycyAoRE5zKSBkZXJp
+        dmVkIGZyb20gdGhlIHRlbGVtZXRyeSBzdHJlYW1zIG9mIHRoZSAzIHRlbGVz
+        Y29wZXM6IFZpc2libGUgTmVhciBJbmZyYXJlZCAoVk5JUiksIFNob3J0d2F2
+        ZSBJbmZyYXJlZCAoU1dJUiksIGFuZCBUaGVybWFsIEluZnJhcmVkIChUSVIp
+        LiBUaGUgTGV2ZWwtMUEgZGF0YSBjb250YWlucyBkZXBhY2tldGl6ZWQsIGRl
+        bXVsdGlwbGV4ZWQsIGFuZCByZWFsaWduZWQgaW5zdHJ1bWVudCBpbWFnZSBk
+        YXRhIHdpdGggdGhlaXIgZ2VvbWV0cmljIGNvcnJlY3Rpb24gY29lZmZpY2ll
+        bnRzIGFuZCByYWRpb21ldHJpYyBjYWxpYnJhdGlvbiBjb2VmZmljaWVudHMg
+        Y2FsY3VsYXRlZCBhbmQgYXBwZW5kZWQgYnV0IG5vdCBhcHBsaWVkLiBJdCBh
+        bHNvIGluY2x1ZGVzIGNvcnJlY3Rpb25zIGZvciB0aGUgU1dJUiBwYXJhbGxh
+        eCwgYW5kIGludHJhLSBhbmQgaW50ZXItdGVsZXNjb3BlIHJlZ2lzdHJhdGlv
+        biBpbmZvcm1hdGlvbi4gXG5cblVzZXJzIGFyZSBhZHZpc2VkIHRoYXQgQVNU
+        RVIgU1dJUiBkYXRhIGFjcXVpcmVkIGZyb20gbGF0ZSBBcHJpbCAyMDA4IHRv
+        IHRoZSBwcmVzZW50IGV4aGliaXQgYW5vbWFsb3VzIHNhdHVyYXRpb24gb2Yg
+        dmFsdWVzIGFuZCBhbm9tYWxvdXMgc3RyaXBpbmcuIFRoaXMgZWZmZWN0IGlz
+        IGFsc28gcHJlc2VudCBmb3Igc29tZSBwcmlvciBhY3F1aXNpdGlvbiBwZXJp
+        b2RzLiBQbGVhc2UgcmVmZXIgdG8gdGhlIEFTVEVSIFNXSVIgVXNlciBBZHZp
+        c29yeSBEb2N1bWVudCBhdCBodHRwczovL2xwZGFhYy51c2dzLmdvdi9zaXRl
+        cy9kZWZhdWx0L2ZpbGVzL3B1YmxpYy9hc3Rlci9kb2NzL0FTVEVSX1NXSVJf
+        VXNlcl9BZHZpc29yeV9KdWx5JTIwMThfMDgucGRmIGZvciBtb3JlIGRldGFp
+        bHMuXG5cblYwMDMgZGF0YSBzZXQgcmVsZWFzZSBkYXRlOiAyMDAyLTA1LTAz
+        XG5cbkRhdGEgU2V0IENoYXJhY3RlcmlzdGljczogXG5BcmVhOiB+NjBrbSB4
+        IDYwa20gXG5JbWFnZSBEaW1lbnNpb25zOiBcbiAgVk5JUjogNDIwMCByb3dz
+        IHggNDEwMCBjb2x1bW5zIFxuICBWTklSICgzQik6IDU0MDAgcm93cyB4IDUw
+        MDAgY29sdW1ucyBcbiAgU1dJUjogMjEwMCByb3dzIHggMjA0OCBjb2x1bW5z
+        IFxuICBUSVI6IDcwMCByb3dzIHggNzAwIGNvbHVtbnMgXG5GaWxlIFNpemU6
+        IFxuICBWTklSICgxLDIsM04pOiB+NTAgTUIgXG4gIFZOSVIgKDNCKTogMzAg
+        TUIgXG4gIFNXSVIgKDQtOSk6IH4yNSBNQiBcbiAgVElSICgxMC0xNCk6IH41
+        IE1CXG4gIFRvdGFsOiAxMTAgTWVnYWJ5dGVzXG5TcGF0aWFsIFJlc29sdXRp
+        b246XG4gIFZOSVI6IDE1bVxuICBTV0lSOiAzMG1cbiAgVElSOiA5MG0gXG5V
+        bml0czogRGlnaXRhbCBjb3VudHNcblByb2plY3Rpb246IFVuaXZlcnNhbCBU
+        cmFuc3ZlcnNlIE1lcmNhdG9yIChVVE0pXG5EYXRhIEZvcm1hdDogSERGLUVP
+        UywgR2VvVElGRlxuVmdyb3VwIERhdGEgRmllbGRzOiAxNSIsImhhc19ncmFu
+        dWxlcyI6dHJ1ZSwib3JiaXRfcGFyYW1ldGVycyI6e30sImlkIjoiQzE0NzU4
+        MjUwLUxQREFBQ19FQ1MiLCJzY29yZSI6MC43LCJvcmlnaW5hbF9mb3JtYXQi
+        OiJFQ0hPMTAiLCJncmFudWxlX2NvdW50IjoyNzg5NTg1LCJhcmNoaXZlX2Nl
+        bnRlciI6IkxQREFBQyIsImJyb3dzZV9mbGFnIjpmYWxzZSwib25saW5lX2Fj
+        Y2Vzc19mbGFnIjpmYWxzZSwibGlua3MiOlt7InJlbCI6Imh0dHA6Ly9lc2lw
+        ZmVkLm9yZy9ucy9mZWRzZWFyY2gvMS4xL21ldGFkYXRhIyIsInRpdGxlIjoi
+        RGF0YSBzZXQgbGFuZGluZyBwYWdlIGF0IHRoZSBMUCBEQUFDIChNaXNjSW5m
+        b3JtYXRpb24pIiwiaHJlZmxhbmciOiJlbi1VUyIsImhyZWYiOiJodHRwOi8v
+        ZHguZG9pLm9yZy8xMC41MDY3L0FTVEVSL0FTVF9MMUEuMDAzIn0seyJyZWwi
+        OiJodHRwOi8vZXNpcGZlZC5vcmcvbnMvZmVkc2VhcmNoLzEuMS9tZXRhZGF0
+        YSMiLCJ0aXRsZSI6IkludGVyZmFjZSB0byBzZWFyY2gsIGRpc2NvdmVyLCBh
+        bmQgYWNjZXNzIEVPUyBkYXRhIHByb2R1Y3RzLCBhbmQgaW52b2tlIGF2YWls
+        YWJsZSBkYXRhIHNlcnZpY2VzLlxuICAgICAgIChUeXBlOkdFVCBEQVRBIFN1
+        YnR5cGU6UkVWRVJCKSIsImhyZWZsYW5nIjoiZW4tVVMiLCJocmVmIjoiaHR0
+        cDovL3JldmVyYi5lY2hvLm5hc2EuZ292L3JldmVyYi8ifSx7InJlbCI6Imh0
+        dHA6Ly9lc2lwZmVkLm9yZy9ucy9mZWRzZWFyY2gvMS4xL21ldGFkYXRhIyIs
+        InRpdGxlIjoiVGhlIFVTR1MgR2xvYmFsIFZpc3VhbGl6YXRpb24gVmlld2Vy
+        IChHbG9WaXMpIGlzIGFuIG9ubGluZSBzZWFyY2ggYW5kIG9yZGVyIHRvb2wg
+        ZHJpdmVuIGJ5IGJyb3dzZSBpbWFnZXMuICBVc2VycyBtYXkgc2VsZWN0IGFu
+        eSBnZW9ncmFwaGljYWwgYXJlYSBvZiBpbnRlcmVzdCAoZm9yIGFueSBnaXZl
+        biBwcm9kdWN0KSBhbmQgdmlldyBhbGwgYXZhaWxhYmxlIGJyb3dzZSBpbWFn
+        ZXMgZm9yIHRoYXQgYXJlYSBiZWZvcmUgZGVjaWRpbmcgdG8gb3JkZXIgdGhv
+        c2UgcHJvZHVjdHMuXG4gICAgICAgKFR5cGU6R0VUIERBVEEpIiwiaHJlZmxh
+        bmciOiJlbi1VUyIsImhyZWYiOiJodHRwOi8vZ2xvdmlzLnVzZ3MuZ292In0s
+        eyJyZWwiOiJodHRwOi8vZXNpcGZlZC5vcmcvbnMvZmVkc2VhcmNoLzEuMS9t
+        ZXRhZGF0YSMiLCJ0aXRsZSI6IlRoZSBMYW5kIFByb2Nlc3NlcyBEaXN0cmli
+        dXRlZCBBY3RpdmUgQXJjaGl2ZSBDZW50ZXIgKExQIERBQUMpIGlzIG9uZSBv
+        ZiBzZXZlcmFsIGRpc2NpcGxpbmUtc3BlY2lmaWMgZGF0YSBjZW50ZXJzIHdp
+        dGhpbiB0aGUgTkFTQSBFYXJ0aCBPYnNlcnZpbmcgU3lzdGVtIERhdGEgYW5k
+        IEluZm9ybWF0aW9uIFN5c3RlbSAoRU9TRElTKS4gIFRoZSBMUCBEQUFDIFdl
+        YiBwYWdlIHByb3ZpZGVzIGluZm9ybWF0aW9uIGFib3V0IGF2YWlsYWJsZSBk
+        YXRhIHByb2R1Y3RzLCBzZXJ2aWNlcywgZG9jdW1lbnRhdGlvbiwgb3JkZXIg
+        aW50ZXJmYWNlcywgYW5kIHRvb2xzLlxuICAgICAgIChUeXBlOlZJRVcgUFJP
+        SkVDVCBIT01FIFBBR0UpIiwiaHJlZmxhbmciOiJlbi1VUyIsImhyZWYiOiJo
+        dHRwczovL2xwZGFhYy51c2dzLmdvdiJ9LHsicmVsIjoiaHR0cDovL2VzaXBm
+        ZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRhdGEjIiwidGl0bGUiOiJU
+        aGUgQVNURVIgaG9tZSBwYWdlIGlzIG1haW50YWluZWQgdGhyb3VnaCBOQVNB
+        J3MgSmV0IFByb3B1bHNpb24gTGFib3JhdG9yeSBhbmQgZG9jdW1lbnRzIHZh
+        cmlvdXMgYXNwZWN0cyBvZiB0aGUgQVNURVIgbWlzc2lvbi5cbiAgICAgICAo
+        VHlwZTpWSUVXIFBST0pFQ1QgSE9NRSBQQUdFKSIsImhyZWZsYW5nIjoiZW4t
+        VVMiLCJocmVmIjoiaHR0cDovL2FzdGVyd2ViLmpwbC5uYXNhLmdvdi8ifV19
+        LHsicHJvY2Vzc2luZ19sZXZlbF9pZCI6IjFBIiwiYm94ZXMiOlsiLTkwIC0x
+        ODAgOTAgMTgwIl0sInRpbWVfc3RhcnQiOiIxOTk5LTEyLTE4VDAwOjAwOjAw
+        LjAwMFoiLCJkaWZfaWRzIjpbIkFTVF9MMUFFMyJdLCJ2ZXJzaW9uX2lkIjoi
+        MDAzIiwidXBkYXRlZCI6IjIwMTUtMDktMTRUMDk6NTA6MjMuMDI2WiIsImRh
+        dGFzZXRfaWQiOiJBU1RFUiBFeHBlZGl0ZWQgTDFBIFJlY29uc3RydWN0ZWQg
+        VW5wcm9jZXNzZWQgSW5zdHJ1bWVudCBEYXRhIFYwMDMiLCJkYXRhX2NlbnRl
+        ciI6IkxQREFBQ19FQ1MiLCJzaG9ydF9uYW1lIjoiQVNUX0wxQUUiLCJvcmdh
+        bml6YXRpb25zIjpbIkxQREFBQyJdLCJ0aXRsZSI6IkFTVEVSIEV4cGVkaXRl
+        ZCBMMUEgUmVjb25zdHJ1Y3RlZCBVbnByb2Nlc3NlZCBJbnN0cnVtZW50IERh
+        dGEgVjAwMyIsImNvb3JkaW5hdGVfc3lzdGVtIjoiQ0FSVEVTSUFOIiwic3Vt
+        bWFyeSI6IlRoZSBBU1RFUiBFeHBlZGl0ZWQgTDFBIFJlY29uc3RydWN0ZWQg
+        VW5wcm9jZXNzZWQgSW5zdHJ1bWVudCBEYXRhIGlzIHByb2R1Y2VkIHdpdGgg
+        dGhlIGV4cHJlc3MgcHVycG9zZSBvZiBwcm92aWRpbmcgdGhlIEFTVEVSIFNj
+        aWVuY2UgVGVhbSBtZW1iZXJzIGFuZCBvdGhlcnMsIGRhdGEgb2YgdGhlaXIg
+        cGFydGljdWxhciBpbnRlcmVzdCBpbiBxdWljayB0dXJuLWFyb3VuZCB0aW1l
+        IGZyb20gdGhlIG1vbWVudCB0aGUgZGF0YSBhcmUgYWNxdWlyZWQuIFRoaXMg
+        aXMgdXN1YWxseSBkb25lIHRvIHN1cHBvcnQgb24tZ29pbmcgZmllbGQgY2Fs
+        aWJyYXRpb24gYW5kIHZhbGlkYXRpb24gZWZmb3J0cyBvciB0byBzdXBwb3J0
+        IGVtZXJnZW5jeSByZXNwb25zZSB0byBuYXR1cmFsIGRpc2FzdGVycyB3aGVu
+        IHByb2Nlc3NlZCBMZXZlbC0xIGRhdGEgd2l0aCBtaW5pbXVtIHR1cm4tYXJv
+        dW5kIHRpbWUgd291bGQgcHJvdmUgYmVuZWZpY2lhbCBpbiBpbml0aWFsIGRh
+        bWFnZSBvciBpbXBhY3QgYXNzZXNzbWVudHMuIFRoaXMgZGF0YSBzZXQgaXMg
+        ZXhwZWN0ZWQgdG8gYmUgcHVibGljbHkgYXZhaWxhYmxlIGZvciBhIHBlcmlv
+        ZCBvZiAzMCBkYXlzIGFmdGVyIHdoaWNoIHRpbWUgaXQgd2lsbCBiZSByZW1v
+        dmVkIGZyb20gdGhlIGFyY2hpdmUuIFRoaXMgaXMgZG9uZSBiZWNhdXNlIHRo
+        ZSByb3V0aW5lbHkgcHJvY2Vzc2VkIChQcm9kdWN0aW9uIERhdGEgU2V0IG9y
+        IFBEUykgdmVyc2lvbiBvZiB0aGlzIGRhdGEgc2V0IHdpbGwgYmUgYXZhaWxh
+        YmxlIGZyb20gSmFwYW4gaW4gZHVlIGNvdXJzZSBhbmQgYXZhaWxhYmxlIGZv
+        ciBzZWFyY2ggYW5kIG9yZGVyIGZyb20gdGhlIExQIERBQUMgYXJjaGl2ZXMu
+        IEFTVEVSIEV4cGVkaXRlZCBEYXRhIFNldHMgKEVEUykgc2VydmUgdGhlIHNo
+        b3J0LXRlcm0gcmVxdWlyZW1lbnRzIG9mIGEgc21hbGwgZ3JvdXAgb2Ygc2Np
+        ZW50aXN0cyBhbmQgZnVsZmlsbCBpbW1lZGlhdGUgaW1hZ2VyeSBuZWVkcyBk
+        dXJpbmcgdGltZXMgb2YgbmF0dXJhbCBkaXNhc3RlcnMuXG5cblRoZSBnZW5l
+        cmFsIHByb2R1Y3QgZGVzY3JpcHRpb24gZGV0YWlscyBhcyBkZXNjcmliZWQg
+        Zm9yIHRoZSBBU1RFUiBMZXZlbCAxQSBEYXRhIFNldCAtIFJlY29uc3RydWN0
+        ZWQsIHVucHJvY2Vzc2VkIEluc3RydW1lbnQgRGF0YSBhcHBseSB0byB0aGUg
+        ZXhwZWRpdGVkIGRhdGEgc2V0IHdpdGggYSBmZXcgbm90YWJsZSBleGNlcHRp
+        b25zLiBUaGVzZSBpbmNsdWRlOlxuXG7igKIgICAgICAgVGhlIEV4cGVkaXRl
+        ZCBMZXZlbC0xQSBkYXRhIHNldCBkb2VzIG5vdCBjb250YWluIHRoZSBWTklS
+        IDNCICAoYWZ0LXZpZXdpbmcpIGJhbmRcbuKAoiAgICAgICBUaGlzIGRhdGEg
+        c2V0IGRvZXMgbm90IGhhdmUgc2hvcnQtdGVybSBjYWxpYnJhdGlvbiBmb3Ig
+        dGhlIFRoZXJtYWwgSW5mcmFyZWQgKFRJUikgc2Vuc29yXG7igKIgICAgICAg
+        VGhlIHJlZ2lzdHJhdGlvbiBxdWFsaXR5IG9mIHRoaXMgZGF0YSBzZXQgaXMg
+        bGlrZWx5IHRvIGJlIGxvd2VyLCBhbmQgYWxzbyB2YXJ5IGZyb20gc2NlbmUg
+        dG8gc2NlbmUgXG5cblRoZSBMZXZlbC0wIGRhdGEgZG93bmxpbmsgZnJvbSB0
+        aGUgVHJhY2tpbmcgRGF0YSBSZWxheSBTYXRlbGxpdGUgU3lzdGVtIChURFJT
+        UykgYXQgV2hpdGUgU2FuZHMsIE5NIGlzIHJlY2VpdmVkIGF0IHRoZSBFT1Mg
+        RGF0YSBPcGVyYXRpb25zIFN5c3RlbSAoRURPUykgZmFjaWxpdHkgYXQgdGhl
+        IEdvZGRhcmQgU3BhY2UgRmxpZ2h0IENlbnRlciAoR1NGQykuIEZvbGxvd2lu
+        ZyBzb21lIHByZS1wcm9jZXNzaW5nLCBFRE9TIGRpcmVjdGx5IHRyYW5zbWl0
+        cyB0aGF0IGRhdGEgKHZpYSB0aGUgR1NGQyBEQUFDKSB0byBMUCBEQUFDIHdo
+        ZXJlIHRoZSBkYXRhIGFyZSBwcm9jZXNzZWQgYW5kIHRoZSBsZXZlbC0xIEVE
+        UyBpcyBwcm9kdWNlZC4gVGhlIEFTVEVSIExldmVsLTFBRSBwcm9kdWN0IGNv
+        bnRhaW5zIHJlY29uc3RydWN0ZWQsIHVucHJvY2Vzc2VkIGluc3RydW1lbnQg
+        ZGlnaXRhbCBkYXRhIGRlcml2ZWQgZnJvbSB0aGUgdGVsZW1ldHJ5IHN0cmVh
+        bXMgb2YgdGhlIDMgdGVsZXNjb3BlcyBhdCB0aGVpciByZXNwZWN0aXZlIGdy
+        b3VuZCByZXNvbHV0aW9uczogVmlzaWJsZSBOZWFyIEluZnJhcmVkIChWTklS
+        KSwgMTUgbSwgU2hvcnR3YXZlIEluZnJhcmVkIChTV0lSKSwgMzAgbSwgYW5k
+        IFRoZXJtYWwgSW5mcmFyZWQgKFRJUiksIDkwIG0uIFRoZXJlIGlzIG5vIGJy
+        b3dzZSBwcm9kdWN0IHByb3ZpZGVkIGZvciB0aGUgZXhwZWRpdGVkIEwxQSBk
+        YXRhIHNldC5cblxuVXNlcnMgYXJlIGFkdmlzZWQgdGhhdCBBU1RFUiBTV0lS
+        IGRhdGEgYWNxdWlyZWQgZnJvbSBsYXRlIEFwcmlsIDIwMDggdG8gdGhlIHBy
+        ZXNlbnQgZXhoaWJpdCBhbm9tYWxvdXMgc2F0dXJhdGlvbiBvZiB2YWx1ZXMg
+        YW5kIGFub21hbG91cyBzdHJpcGluZy4gVGhpcyBlZmZlY3QgaXMgYWxzbyBw
+        cmVzZW50IGZvciBzb21lIHByaW9yIGFjcXVpc2l0aW9uIHBlcmlvZHMuIFBs
+        ZWFzZSByZWZlciB0byB0aGUgQVNURVIgU1dJUiBVc2VyIEFkdmlzb3J5IERv
+        Y3VtZW50IGF0IGh0dHBzOi8vbHBkYWFjLnVzZ3MuZ292L3NpdGVzL2RlZmF1
+        bHQvZmlsZXMvcHVibGljL2FzdGVyL2RvY3MvQVNURVJfU1dJUl9Vc2VyX0Fk
+        dmlzb3J5X0p1bHklMjAxOF8wOC5wZGYgZm9yIG1vcmUgZGV0YWlscy5cblxu
+        VjAwMyBkYXRhIHNldCByZWxlYXNlIGRhdGU6IDIwMDItMDUtMDNcblxuRGF0
+        YSBTZXQgQ2hhcmFjdGVyaXN0aWNzOiBcbkFyZWE6IH42MGttIHggNjBrbSBc
+        bkltYWdlIERpbWVuc2lvbnM6IFxuICBWTklSOiA0MjAwIHJvd3MgeCA0MTAw
+        IGNvbHVtbnMgXG4gIFNXSVI6IDIxMDAgcm93cyB4IDIwNDggY29sdW1ucyBc
+        biAgVElSOiA3MDAgcm93cyB4IDcwMCBjb2x1bW5zIFxuRmlsZSBTaXplOiBc
+        biAgVk5JUiAoMSwgMiwgM04pOiB+NDkuMyBNQiBcbiAgU1dJUiAoNCB0aHJv
+        dWdoIDkpOiB+MjUgTUIgXG4gIFRJUiAoMTAgdGhyb3VnaCAxNCk6IH40Ljcg
+        TUIgXG4gIFRvdGFsOiA4NSBNZWdhYnl0ZXMgXG5TcGF0aWFsIFJlc29sdXRp
+        b246XG4gIFZOSVI6IDE1bVxuICBTV0lSOiAzMG1cbiAgVElSOiA5MG1cblVu
+        aXRzOiBEaWdpdGFsIGNvdW50XG5Qcm9qZWN0aW9uOiBVbml2ZXJzYWwgVHJh
+        bnN2ZXJzZSBNZXJjYXRvciAoVVRNKVxuRGF0YSBGb3JtYXQ6IEhERi1FT1Mg
+        b3IgR2VvVElGRiBcblZncm91cCBEYXRhIEZpZWxkczogMTRcbiIsImhhc19n
+        cmFudWxlcyI6dHJ1ZSwib3JiaXRfcGFyYW1ldGVycyI6e30sImlkIjoiQzE3
+        OTQ2MDQwNS1MUERBQUNfRUNTIiwic2NvcmUiOjAuNywib3JpZ2luYWxfZm9y
+        bWF0IjoiRUNITzEwIiwiZ3JhbnVsZV9jb3VudCI6ODUsImFyY2hpdmVfY2Vu
+        dGVyIjoiTFBEQUFDIiwiYnJvd3NlX2ZsYWciOmZhbHNlLCJvbmxpbmVfYWNj
+        ZXNzX2ZsYWciOmZhbHNlLCJsaW5rcyI6W3sicmVsIjoiaHR0cDovL2VzaXBm
+        ZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRhdGEjIiwidGl0bGUiOiJE
+        YXRhIHNldCBsYW5kaW5nIHBhZ2UgYXQgdGhlIExQIERBQUMgKE1pc2NJbmZv
+        cm1hdGlvbikiLCJocmVmbGFuZyI6ImVuLVVTIiwiaHJlZiI6Imh0dHA6Ly9k
+        eC5kb2kub3JnLzEwLjUwNjcvQVNURVIvQVNUX0wxQUUuMDAzIn0seyJyZWwi
+        OiJodHRwOi8vZXNpcGZlZC5vcmcvbnMvZmVkc2VhcmNoLzEuMS9tZXRhZGF0
+        YSMiLCJ0aXRsZSI6IkludGVyZmFjZSBmb3IgZGlzY292ZXJpbmcsIGFjY2Vz
+        c2luZywgYW5kIGludm9raW5nIEVPUyBkYXRhIHByb2R1Y3RzIGFuZCBzZXJ2
+        aWNlcy5cbiAgICAgICAoVHlwZTpHRVQgREFUQSBTdWJ0eXBlOlJFVkVSQiki
+        LCJocmVmbGFuZyI6ImVuLVVTIiwiaHJlZiI6Imh0dHA6Ly9yZXZlcmIuZWNo
+        by5uYXNhLmdvdi9yZXZlcmIvI3V0Zjg9JUUyJTlDJTkzXHUwMDI2c3BhdGlh
+        bF9tYXA9c2F0ZWxsaXRlXHUwMDI2c3BhdGlhbF90eXBlPXJlY3RhbmdsZVx1
+        MDAyNmtleXdvcmRzPUFTVF9MMUFFMyJ9LHsicmVsIjoiaHR0cDovL2VzaXBm
+        ZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRhdGEjIiwidGl0bGUiOiJM
+        UCBEQUFDIERhdGEgUG9vbCBwcm92aWRlcyBkaXJlY3QgYWNjZXNzIHRvIGFs
+        bCBjdXJyZW50bHkgYXZhaWxhYmxlIHByb2R1Y3RzIGFuZCB0aGUgYWJpbGl0
+        eSB0byBkb3dubG9hZCB0aGVtIHZpYSBIVFRQLlxuICAgICAgIChUeXBlOkdF
+        VCBEQVRBIFN1YnR5cGU6T04tTElORSBBUkNISVZFKSIsImhyZWZsYW5nIjoi
+        ZW4tVVMiLCJocmVmIjoiaHR0cHM6Ly9scGRhYWMudXNncy5nb3YvZGF0YV9h
+        Y2Nlc3MvZGF0YV9wb29sLyJ9LHsicmVsIjoiaHR0cDovL2VzaXBmZWQub3Jn
+        L25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRhdGEjIiwidGl0bGUiOiJUaGUgTGFu
+        ZCBQcm9jZXNzZXMgRGlzdHJpYnV0ZWQgQWN0aXZlIEFyY2hpdmUgQ2VudGVy
+        IChMUCBEQUFDKSBpcyBvbmUgb2Ygc2V2ZXJhbCBkaXNjaXBsaW5lLXNwZWNp
+        ZmljIGRhdGEgY2VudGVycyB3aXRoaW4gdGhlIE5BU0EgRWFydGggT2JzZXJ2
+        aW5nIFN5c3RlbSBEYXRhIGFuZCBJbmZvcm1hdGlvbiBTeXN0ZW0gKEVPU0RJ
+        UykuICBUaGUgTFAgREFBQyBXZWIgcGFnZSBwcm92aWRlcyBpbmZvcm1hdGlv
+        biBhYm91dCBhdmFpbGFibGUgZGF0YSBwcm9kdWN0cywgc2VydmljZXMsIG9y
+        ZGVyIGludGVyZmFjZXMsIGFuZCB0b29scy5cbiAgICAgICAoVHlwZTpWSUVX
+        IFBST0pFQ1QgSE9NRSBQQUdFKSIsImhyZWZsYW5nIjoiZW4tVVMiLCJocmVm
+        IjoiaHR0cHM6Ly9scGRhYWMudXNncy5nb3YvIn1dfV0sImZhY2V0cyI6W3si
+        ZmllbGQiOiJwcm9qZWN0IiwidmFsdWUtY291bnRzIjpbXX0seyJmaWVsZCI6
+        InNlbnNvciIsInZhbHVlLWNvdW50cyI6W1siU1dJUiIsMl0sWyJUSVIiLDJd
+        LFsiVk5JUiIsMl1dfSx7ImZpZWxkIjoidHdvX2RfY29vcmRpbmF0ZV9zeXN0
+        ZW1fbmFtZSIsInZhbHVlLWNvdW50cyI6W119LHsiZmllbGQiOiJwcm9jZXNz
+        aW5nX2xldmVsX2lkIiwidmFsdWUtY291bnRzIjpbWyIxQSIsMl1dfSx7ImZp
+        ZWxkIjoiZGV0YWlsZWRfdmFyaWFibGUiLCJ2YWx1ZS1jb3VudHMiOltdfSx7
+        InN1YmZpZWxkcyI6WyJsZXZlbF8wIl0sImxldmVsXzAiOltdLCJmaWVsZCI6
+        ImRhdGFfY2VudGVycyJ9LHsic3ViZmllbGRzIjpbImxldmVsXzAiXSwibGV2
+        ZWxfMCI6W10sImZpZWxkIjoiYXJjaGl2ZV9jZW50ZXJzIn0seyJzdWJmaWVs
+        ZHMiOlsiY2F0ZWdvcnkiXSwiY2F0ZWdvcnkiOltdLCJmaWVsZCI6InBsYXRm
+        b3JtcyJ9LHsic3ViZmllbGRzIjpbImNhdGVnb3J5Il0sImNhdGVnb3J5Ijpb
+        XSwiZmllbGQiOiJpbnN0cnVtZW50cyJ9LHsic3ViZmllbGRzIjpbImNhdGVn
+        b3J5Il0sImNhdGVnb3J5IjpbeyJzdWJmaWVsZHMiOlsidG9waWMiXSwidG9w
+        aWMiOlt7InN1YmZpZWxkcyI6WyJ0ZXJtIl0sInRlcm0iOlt7InN1YmZpZWxk
+        cyI6WyJ2YXJpYWJsZV9sZXZlbF8xIl0sInZhcmlhYmxlX2xldmVsXzEiOlt7
+        ImNvdW50IjoyLCJ2YWx1ZSI6IlJFRkxFQ1RFRCBJTkZSQVJFRCJ9LHsiY291
+        bnQiOjIsInZhbHVlIjoiVEhFUk1BTCBJTkZSQVJFRCJ9XSwiY291bnQiOjIs
+        InZhbHVlIjoiSU5GUkFSRUQgV0FWRUxFTkdUSFMifSx7InN1YmZpZWxkcyI6
+        WyJ2YXJpYWJsZV9sZXZlbF8xIl0sInZhcmlhYmxlX2xldmVsXzEiOlt7ImNv
+        dW50IjoyLCJ2YWx1ZSI6IlZJU0lCTEUgSU1BR0VSWSJ9XSwiY291bnQiOjIs
+        InZhbHVlIjoiVklTSUJMRSBXQVZFTEVOR1RIUyJ9XSwiY291bnQiOjIsInZh
+        bHVlIjoiU1BFQ1RSQUwvRU5HSU5FRVJJTkcifV0sImNvdW50IjoyLCJ2YWx1
+        ZSI6IkVBUlRIIFNDSUVOQ0UifV0sImZpZWxkIjoic2NpZW5jZV9rZXl3b3Jk
+        cyJ9XSwicmVkdWNlZCI6dHJ1ZX19
     http_version: 
     reduced: true
 5ad8e6de2f89caaae8604ccb860c65bf906929f4:
@@ -7642,6 +7950,274 @@ f11dcc369c3ec23aa8e312382b1e03eb399b949f:
         on observatory maneuvers, anomalies and other events (PORTAL_DOC_KNOWN_ISSUES)","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/sdpscgi/public/aquarius_report.cgi"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"ATBD,
         Validation Analysis, Product Specifications, etc (PORTAL_DOC_PROJECT_MATERIALS)","hreflang":"en-US","href":"ftp://podaac-ftp.jpl.nasa.gov/allData/aquarius/docs/v4/"}]}],"facets":[{"field":"data_center","value-counts":[["Aquarius
         Project NASA/CONAE",19],["PO.DAAC",19]]},{"field":"archive_center","value-counts":[["PO.DAAC",19]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["AQUARIUS_SAC-D",19]]},{"field":"instrument","value-counts":[["AQUARIUS_SCATTEROMETER",19],["AQUARIUS_RADIOMETER",10]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
+da3bf0104cd27dbc6bbeba392a59fc7b6f242463:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:14:35 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '638'
+      cmr-request-id:
+      - 7c0d550a-40fc-4817-91bb-8c34b5b34b98
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJmZWVkIjp7InVwZGF0ZWQiOiIyMDE2LTAzLTI4VDAyOjE0OjM1Ljg5NFoi
+        LCJpZCI6Imh0dHBzOi8vY21yLmVhcnRoZGF0YS5uYXNhLmdvdjo0NDMvc2Vh
+        cmNoL2NvbGxlY3Rpb25zLmpzb24/aW5jbHVkZV9mYWNldHM9dHJ1ZVx1MDAy
+        NnBhZ2Vfc2l6ZT0yMFx1MDAyNnBhZ2VfbnVtPTFcdTAwMjZpbmNsdWRlX3Rh
+        Z3M9ZWRzYy4lMkFcdTAwMjZleGNsdWRlJTVCdGFnX2tleSU1RD1lZHNjLmRh
+        dGFzb3VyY2UuY3dpY1x1MDAyNmtleXdvcmQ9QVNUX0wxQSUyQVx1MDAyNmlu
+        Y2x1ZGVfaGFzX2dyYW51bGVzPXRydWVcdTAwMjZpbmNsdWRlX2dyYW51bGVf
+        Y291bnRzPXRydWUiLCJ0aXRsZSI6IkVDSE8gZGF0YXNldCBtZXRhZGF0YSIs
+        ImVudHJ5IjpbeyJwcm9jZXNzaW5nX2xldmVsX2lkIjoiMUEiLCJib3hlcyI6
+        WyItOTAgLTE4MCA5MCAxODAiXSwidGltZV9zdGFydCI6IjE5OTktMTItMThU
+        MDA6MDA6MDAuMDAwWiIsImRpZl9pZHMiOlsiQVNUX0wxQTMiXSwidmVyc2lv
+        bl9pZCI6IjAwMyIsInVwZGF0ZWQiOiIyMDE1LTA5LTMwVDEwOjQwOjIzLjQ4
+        OVoiLCJkYXRhc2V0X2lkIjoiQVNURVIgTDFBIFJlY29uc3RydWN0ZWQgVW5w
+        cm9jZXNzZWQgSW5zdHJ1bWVudCBEYXRhIFYwMDMiLCJkYXRhX2NlbnRlciI6
+        IkxQREFBQ19FQ1MiLCJzaG9ydF9uYW1lIjoiQVNUX0wxQSIsIm9yZ2FuaXph
+        dGlvbnMiOlsiTFBEQUFDIiwiR0RTIl0sInRpdGxlIjoiQVNURVIgTDFBIFJl
+        Y29uc3RydWN0ZWQgVW5wcm9jZXNzZWQgSW5zdHJ1bWVudCBEYXRhIFYwMDMi
+        LCJjb29yZGluYXRlX3N5c3RlbSI6IkNBUlRFU0lBTiIsInN1bW1hcnkiOiJU
+        aGUgQVNURVIgaW5zdHJ1bWVudCBhYm9hcmQgdGhlIFRlcnJhIHNhdGVsbGl0
+        ZSBoYXMgYSBjb21wbGVtZW50IG9mIHRocmVlIGRpZmZlcmVudCB0ZWxlc2Nv
+        cGVzIHdpdGggdmFyeWluZyBwb2ludGluZyBjYXBhYmlsaXRpZXMuIEFTVEVS
+        IGRhdGEgYXJlIHByaW1hcmlseSBhY3F1aXJlZCBhbmQgcHJvY2Vzc2VkIGlu
+        IHN1cHBvcnQgb2YgYSBnbG9iYWwgbWFwcGluZyBtaXNzaW9uLCBhbmQgYmFz
+        ZWQgb24gRGF0YSBBY3F1aXNpdGlvbiBSZXF1ZXN0cyAoREFScykgZnJvbSBh
+        dXRob3JpemVkIHVzZXJzLiBBU1RFUiBMZXZlbC0xIGRhdGEgYXJlIHByb2R1
+        Y2VkIGF0IHRoZSBHcm91bmQgRGF0YSBTeXN0ZW0gKEdEUykgZmFjaWxpdHkg
+        b2YgSmFwYW4gU3BhY2UgU3lzdGVtcyBpbiBUb2t5bywgSmFwYW4sIGFuZCBz
+        dWJzZXF1ZW50bHkgc2VudCB0byB0aGUgTGFuZCBQcm9jZXNzZXMgKExQKSBE
+        aXN0cmlidXRlZCBBY3RpdmUgQXJjaGl2ZSBDZW50ZXIgKERBQUMpIGZvciBh
+        cmNoaXZpbmcsIGRpc3RyaWJ1dGlvbiwgYW5kIGhpZ2hlci1sZXZlbCBwcm9k
+        dWN0IGdlbmVyYXRpb24uIFRoZSBBU1RFUiBMZXZlbC0xQSBkYXRhIHNldCBj
+        b250YWlucyByZWNvbnN0cnVjdGVkLCBpbnN0cnVtZW50IGRpZ2l0YWwgbnVt
+        YmVycyAoRE5zKSBkZXJpdmVkIGZyb20gdGhlIHRlbGVtZXRyeSBzdHJlYW1z
+        IG9mIHRoZSAzIHRlbGVzY29wZXM6IFZpc2libGUgTmVhciBJbmZyYXJlZCAo
+        Vk5JUiksIFNob3J0d2F2ZSBJbmZyYXJlZCAoU1dJUiksIGFuZCBUaGVybWFs
+        IEluZnJhcmVkIChUSVIpLiBUaGUgTGV2ZWwtMUEgZGF0YSBjb250YWlucyBk
+        ZXBhY2tldGl6ZWQsIGRlbXVsdGlwbGV4ZWQsIGFuZCByZWFsaWduZWQgaW5z
+        dHJ1bWVudCBpbWFnZSBkYXRhIHdpdGggdGhlaXIgZ2VvbWV0cmljIGNvcnJl
+        Y3Rpb24gY29lZmZpY2llbnRzIGFuZCByYWRpb21ldHJpYyBjYWxpYnJhdGlv
+        biBjb2VmZmljaWVudHMgY2FsY3VsYXRlZCBhbmQgYXBwZW5kZWQgYnV0IG5v
+        dCBhcHBsaWVkLiBJdCBhbHNvIGluY2x1ZGVzIGNvcnJlY3Rpb25zIGZvciB0
+        aGUgU1dJUiBwYXJhbGxheCwgYW5kIGludHJhLSBhbmQgaW50ZXItdGVsZXNj
+        b3BlIHJlZ2lzdHJhdGlvbiBpbmZvcm1hdGlvbi4gXG5cblVzZXJzIGFyZSBh
+        ZHZpc2VkIHRoYXQgQVNURVIgU1dJUiBkYXRhIGFjcXVpcmVkIGZyb20gbGF0
+        ZSBBcHJpbCAyMDA4IHRvIHRoZSBwcmVzZW50IGV4aGliaXQgYW5vbWFsb3Vz
+        IHNhdHVyYXRpb24gb2YgdmFsdWVzIGFuZCBhbm9tYWxvdXMgc3RyaXBpbmcu
+        IFRoaXMgZWZmZWN0IGlzIGFsc28gcHJlc2VudCBmb3Igc29tZSBwcmlvciBh
+        Y3F1aXNpdGlvbiBwZXJpb2RzLiBQbGVhc2UgcmVmZXIgdG8gdGhlIEFTVEVS
+        IFNXSVIgVXNlciBBZHZpc29yeSBEb2N1bWVudCBhdCBodHRwczovL2xwZGFh
+        Yy51c2dzLmdvdi9zaXRlcy9kZWZhdWx0L2ZpbGVzL3B1YmxpYy9hc3Rlci9k
+        b2NzL0FTVEVSX1NXSVJfVXNlcl9BZHZpc29yeV9KdWx5JTIwMThfMDgucGRm
+        IGZvciBtb3JlIGRldGFpbHMuXG5cblYwMDMgZGF0YSBzZXQgcmVsZWFzZSBk
+        YXRlOiAyMDAyLTA1LTAzXG5cbkRhdGEgU2V0IENoYXJhY3RlcmlzdGljczog
+        XG5BcmVhOiB+NjBrbSB4IDYwa20gXG5JbWFnZSBEaW1lbnNpb25zOiBcbiAg
+        Vk5JUjogNDIwMCByb3dzIHggNDEwMCBjb2x1bW5zIFxuICBWTklSICgzQik6
+        IDU0MDAgcm93cyB4IDUwMDAgY29sdW1ucyBcbiAgU1dJUjogMjEwMCByb3dz
+        IHggMjA0OCBjb2x1bW5zIFxuICBUSVI6IDcwMCByb3dzIHggNzAwIGNvbHVt
+        bnMgXG5GaWxlIFNpemU6IFxuICBWTklSICgxLDIsM04pOiB+NTAgTUIgXG4g
+        IFZOSVIgKDNCKTogMzAgTUIgXG4gIFNXSVIgKDQtOSk6IH4yNSBNQiBcbiAg
+        VElSICgxMC0xNCk6IH41IE1CXG4gIFRvdGFsOiAxMTAgTWVnYWJ5dGVzXG5T
+        cGF0aWFsIFJlc29sdXRpb246XG4gIFZOSVI6IDE1bVxuICBTV0lSOiAzMG1c
+        biAgVElSOiA5MG0gXG5Vbml0czogRGlnaXRhbCBjb3VudHNcblByb2plY3Rp
+        b246IFVuaXZlcnNhbCBUcmFuc3ZlcnNlIE1lcmNhdG9yIChVVE0pXG5EYXRh
+        IEZvcm1hdDogSERGLUVPUywgR2VvVElGRlxuVmdyb3VwIERhdGEgRmllbGRz
+        OiAxNSIsImhhc19ncmFudWxlcyI6dHJ1ZSwib3JiaXRfcGFyYW1ldGVycyI6
+        e30sImlkIjoiQzE0NzU4MjUwLUxQREFBQ19FQ1MiLCJzY29yZSI6MC43LCJv
+        cmlnaW5hbF9mb3JtYXQiOiJFQ0hPMTAiLCJncmFudWxlX2NvdW50IjoyNzg5
+        NTg1LCJhcmNoaXZlX2NlbnRlciI6IkxQREFBQyIsImJyb3dzZV9mbGFnIjpm
+        YWxzZSwib25saW5lX2FjY2Vzc19mbGFnIjpmYWxzZSwibGlua3MiOlt7InJl
+        bCI6Imh0dHA6Ly9lc2lwZmVkLm9yZy9ucy9mZWRzZWFyY2gvMS4xL21ldGFk
+        YXRhIyIsInRpdGxlIjoiRGF0YSBzZXQgbGFuZGluZyBwYWdlIGF0IHRoZSBM
+        UCBEQUFDIChNaXNjSW5mb3JtYXRpb24pIiwiaHJlZmxhbmciOiJlbi1VUyIs
+        ImhyZWYiOiJodHRwOi8vZHguZG9pLm9yZy8xMC41MDY3L0FTVEVSL0FTVF9M
+        MUEuMDAzIn0seyJyZWwiOiJodHRwOi8vZXNpcGZlZC5vcmcvbnMvZmVkc2Vh
+        cmNoLzEuMS9tZXRhZGF0YSMiLCJ0aXRsZSI6IkludGVyZmFjZSB0byBzZWFy
+        Y2gsIGRpc2NvdmVyLCBhbmQgYWNjZXNzIEVPUyBkYXRhIHByb2R1Y3RzLCBh
+        bmQgaW52b2tlIGF2YWlsYWJsZSBkYXRhIHNlcnZpY2VzLlxuICAgICAgIChU
+        eXBlOkdFVCBEQVRBIFN1YnR5cGU6UkVWRVJCKSIsImhyZWZsYW5nIjoiZW4t
+        VVMiLCJocmVmIjoiaHR0cDovL3JldmVyYi5lY2hvLm5hc2EuZ292L3JldmVy
+        Yi8ifSx7InJlbCI6Imh0dHA6Ly9lc2lwZmVkLm9yZy9ucy9mZWRzZWFyY2gv
+        MS4xL21ldGFkYXRhIyIsInRpdGxlIjoiVGhlIFVTR1MgR2xvYmFsIFZpc3Vh
+        bGl6YXRpb24gVmlld2VyIChHbG9WaXMpIGlzIGFuIG9ubGluZSBzZWFyY2gg
+        YW5kIG9yZGVyIHRvb2wgZHJpdmVuIGJ5IGJyb3dzZSBpbWFnZXMuICBVc2Vy
+        cyBtYXkgc2VsZWN0IGFueSBnZW9ncmFwaGljYWwgYXJlYSBvZiBpbnRlcmVz
+        dCAoZm9yIGFueSBnaXZlbiBwcm9kdWN0KSBhbmQgdmlldyBhbGwgYXZhaWxh
+        YmxlIGJyb3dzZSBpbWFnZXMgZm9yIHRoYXQgYXJlYSBiZWZvcmUgZGVjaWRp
+        bmcgdG8gb3JkZXIgdGhvc2UgcHJvZHVjdHMuXG4gICAgICAgKFR5cGU6R0VU
+        IERBVEEpIiwiaHJlZmxhbmciOiJlbi1VUyIsImhyZWYiOiJodHRwOi8vZ2xv
+        dmlzLnVzZ3MuZ292In0seyJyZWwiOiJodHRwOi8vZXNpcGZlZC5vcmcvbnMv
+        ZmVkc2VhcmNoLzEuMS9tZXRhZGF0YSMiLCJ0aXRsZSI6IlRoZSBMYW5kIFBy
+        b2Nlc3NlcyBEaXN0cmlidXRlZCBBY3RpdmUgQXJjaGl2ZSBDZW50ZXIgKExQ
+        IERBQUMpIGlzIG9uZSBvZiBzZXZlcmFsIGRpc2NpcGxpbmUtc3BlY2lmaWMg
+        ZGF0YSBjZW50ZXJzIHdpdGhpbiB0aGUgTkFTQSBFYXJ0aCBPYnNlcnZpbmcg
+        U3lzdGVtIERhdGEgYW5kIEluZm9ybWF0aW9uIFN5c3RlbSAoRU9TRElTKS4g
+        IFRoZSBMUCBEQUFDIFdlYiBwYWdlIHByb3ZpZGVzIGluZm9ybWF0aW9uIGFi
+        b3V0IGF2YWlsYWJsZSBkYXRhIHByb2R1Y3RzLCBzZXJ2aWNlcywgZG9jdW1l
+        bnRhdGlvbiwgb3JkZXIgaW50ZXJmYWNlcywgYW5kIHRvb2xzLlxuICAgICAg
+        IChUeXBlOlZJRVcgUFJPSkVDVCBIT01FIFBBR0UpIiwiaHJlZmxhbmciOiJl
+        bi1VUyIsImhyZWYiOiJodHRwczovL2xwZGFhYy51c2dzLmdvdiJ9LHsicmVs
+        IjoiaHR0cDovL2VzaXBmZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRh
+        dGEjIiwidGl0bGUiOiJUaGUgQVNURVIgaG9tZSBwYWdlIGlzIG1haW50YWlu
+        ZWQgdGhyb3VnaCBOQVNBJ3MgSmV0IFByb3B1bHNpb24gTGFib3JhdG9yeSBh
+        bmQgZG9jdW1lbnRzIHZhcmlvdXMgYXNwZWN0cyBvZiB0aGUgQVNURVIgbWlz
+        c2lvbi5cbiAgICAgICAoVHlwZTpWSUVXIFBST0pFQ1QgSE9NRSBQQUdFKSIs
+        ImhyZWZsYW5nIjoiZW4tVVMiLCJocmVmIjoiaHR0cDovL2FzdGVyd2ViLmpw
+        bC5uYXNhLmdvdi8ifV19LHsicHJvY2Vzc2luZ19sZXZlbF9pZCI6IjFBIiwi
+        Ym94ZXMiOlsiLTkwIC0xODAgOTAgMTgwIl0sInRpbWVfc3RhcnQiOiIxOTk5
+        LTEyLTE4VDAwOjAwOjAwLjAwMFoiLCJkaWZfaWRzIjpbIkFTVF9MMUFFMyJd
+        LCJ2ZXJzaW9uX2lkIjoiMDAzIiwidXBkYXRlZCI6IjIwMTUtMDktMTRUMDk6
+        NTA6MjMuMDI2WiIsImRhdGFzZXRfaWQiOiJBU1RFUiBFeHBlZGl0ZWQgTDFB
+        IFJlY29uc3RydWN0ZWQgVW5wcm9jZXNzZWQgSW5zdHJ1bWVudCBEYXRhIFYw
+        MDMiLCJkYXRhX2NlbnRlciI6IkxQREFBQ19FQ1MiLCJzaG9ydF9uYW1lIjoi
+        QVNUX0wxQUUiLCJvcmdhbml6YXRpb25zIjpbIkxQREFBQyJdLCJ0aXRsZSI6
+        IkFTVEVSIEV4cGVkaXRlZCBMMUEgUmVjb25zdHJ1Y3RlZCBVbnByb2Nlc3Nl
+        ZCBJbnN0cnVtZW50IERhdGEgVjAwMyIsImNvb3JkaW5hdGVfc3lzdGVtIjoi
+        Q0FSVEVTSUFOIiwic3VtbWFyeSI6IlRoZSBBU1RFUiBFeHBlZGl0ZWQgTDFB
+        IFJlY29uc3RydWN0ZWQgVW5wcm9jZXNzZWQgSW5zdHJ1bWVudCBEYXRhIGlz
+        IHByb2R1Y2VkIHdpdGggdGhlIGV4cHJlc3MgcHVycG9zZSBvZiBwcm92aWRp
+        bmcgdGhlIEFTVEVSIFNjaWVuY2UgVGVhbSBtZW1iZXJzIGFuZCBvdGhlcnMs
+        IGRhdGEgb2YgdGhlaXIgcGFydGljdWxhciBpbnRlcmVzdCBpbiBxdWljayB0
+        dXJuLWFyb3VuZCB0aW1lIGZyb20gdGhlIG1vbWVudCB0aGUgZGF0YSBhcmUg
+        YWNxdWlyZWQuIFRoaXMgaXMgdXN1YWxseSBkb25lIHRvIHN1cHBvcnQgb24t
+        Z29pbmcgZmllbGQgY2FsaWJyYXRpb24gYW5kIHZhbGlkYXRpb24gZWZmb3J0
+        cyBvciB0byBzdXBwb3J0IGVtZXJnZW5jeSByZXNwb25zZSB0byBuYXR1cmFs
+        IGRpc2FzdGVycyB3aGVuIHByb2Nlc3NlZCBMZXZlbC0xIGRhdGEgd2l0aCBt
+        aW5pbXVtIHR1cm4tYXJvdW5kIHRpbWUgd291bGQgcHJvdmUgYmVuZWZpY2lh
+        bCBpbiBpbml0aWFsIGRhbWFnZSBvciBpbXBhY3QgYXNzZXNzbWVudHMuIFRo
+        aXMgZGF0YSBzZXQgaXMgZXhwZWN0ZWQgdG8gYmUgcHVibGljbHkgYXZhaWxh
+        YmxlIGZvciBhIHBlcmlvZCBvZiAzMCBkYXlzIGFmdGVyIHdoaWNoIHRpbWUg
+        aXQgd2lsbCBiZSByZW1vdmVkIGZyb20gdGhlIGFyY2hpdmUuIFRoaXMgaXMg
+        ZG9uZSBiZWNhdXNlIHRoZSByb3V0aW5lbHkgcHJvY2Vzc2VkIChQcm9kdWN0
+        aW9uIERhdGEgU2V0IG9yIFBEUykgdmVyc2lvbiBvZiB0aGlzIGRhdGEgc2V0
+        IHdpbGwgYmUgYXZhaWxhYmxlIGZyb20gSmFwYW4gaW4gZHVlIGNvdXJzZSBh
+        bmQgYXZhaWxhYmxlIGZvciBzZWFyY2ggYW5kIG9yZGVyIGZyb20gdGhlIExQ
+        IERBQUMgYXJjaGl2ZXMuIEFTVEVSIEV4cGVkaXRlZCBEYXRhIFNldHMgKEVE
+        Uykgc2VydmUgdGhlIHNob3J0LXRlcm0gcmVxdWlyZW1lbnRzIG9mIGEgc21h
+        bGwgZ3JvdXAgb2Ygc2NpZW50aXN0cyBhbmQgZnVsZmlsbCBpbW1lZGlhdGUg
+        aW1hZ2VyeSBuZWVkcyBkdXJpbmcgdGltZXMgb2YgbmF0dXJhbCBkaXNhc3Rl
+        cnMuXG5cblRoZSBnZW5lcmFsIHByb2R1Y3QgZGVzY3JpcHRpb24gZGV0YWls
+        cyBhcyBkZXNjcmliZWQgZm9yIHRoZSBBU1RFUiBMZXZlbCAxQSBEYXRhIFNl
+        dCAtIFJlY29uc3RydWN0ZWQsIHVucHJvY2Vzc2VkIEluc3RydW1lbnQgRGF0
+        YSBhcHBseSB0byB0aGUgZXhwZWRpdGVkIGRhdGEgc2V0IHdpdGggYSBmZXcg
+        bm90YWJsZSBleGNlcHRpb25zLiBUaGVzZSBpbmNsdWRlOlxuXG7igKIgICAg
+        ICAgVGhlIEV4cGVkaXRlZCBMZXZlbC0xQSBkYXRhIHNldCBkb2VzIG5vdCBj
+        b250YWluIHRoZSBWTklSIDNCICAoYWZ0LXZpZXdpbmcpIGJhbmRcbuKAoiAg
+        ICAgICBUaGlzIGRhdGEgc2V0IGRvZXMgbm90IGhhdmUgc2hvcnQtdGVybSBj
+        YWxpYnJhdGlvbiBmb3IgdGhlIFRoZXJtYWwgSW5mcmFyZWQgKFRJUikgc2Vu
+        c29yXG7igKIgICAgICAgVGhlIHJlZ2lzdHJhdGlvbiBxdWFsaXR5IG9mIHRo
+        aXMgZGF0YSBzZXQgaXMgbGlrZWx5IHRvIGJlIGxvd2VyLCBhbmQgYWxzbyB2
+        YXJ5IGZyb20gc2NlbmUgdG8gc2NlbmUgXG5cblRoZSBMZXZlbC0wIGRhdGEg
+        ZG93bmxpbmsgZnJvbSB0aGUgVHJhY2tpbmcgRGF0YSBSZWxheSBTYXRlbGxp
+        dGUgU3lzdGVtIChURFJTUykgYXQgV2hpdGUgU2FuZHMsIE5NIGlzIHJlY2Vp
+        dmVkIGF0IHRoZSBFT1MgRGF0YSBPcGVyYXRpb25zIFN5c3RlbSAoRURPUykg
+        ZmFjaWxpdHkgYXQgdGhlIEdvZGRhcmQgU3BhY2UgRmxpZ2h0IENlbnRlciAo
+        R1NGQykuIEZvbGxvd2luZyBzb21lIHByZS1wcm9jZXNzaW5nLCBFRE9TIGRp
+        cmVjdGx5IHRyYW5zbWl0cyB0aGF0IGRhdGEgKHZpYSB0aGUgR1NGQyBEQUFD
+        KSB0byBMUCBEQUFDIHdoZXJlIHRoZSBkYXRhIGFyZSBwcm9jZXNzZWQgYW5k
+        IHRoZSBsZXZlbC0xIEVEUyBpcyBwcm9kdWNlZC4gVGhlIEFTVEVSIExldmVs
+        LTFBRSBwcm9kdWN0IGNvbnRhaW5zIHJlY29uc3RydWN0ZWQsIHVucHJvY2Vz
+        c2VkIGluc3RydW1lbnQgZGlnaXRhbCBkYXRhIGRlcml2ZWQgZnJvbSB0aGUg
+        dGVsZW1ldHJ5IHN0cmVhbXMgb2YgdGhlIDMgdGVsZXNjb3BlcyBhdCB0aGVp
+        ciByZXNwZWN0aXZlIGdyb3VuZCByZXNvbHV0aW9uczogVmlzaWJsZSBOZWFy
+        IEluZnJhcmVkIChWTklSKSwgMTUgbSwgU2hvcnR3YXZlIEluZnJhcmVkIChT
+        V0lSKSwgMzAgbSwgYW5kIFRoZXJtYWwgSW5mcmFyZWQgKFRJUiksIDkwIG0u
+        IFRoZXJlIGlzIG5vIGJyb3dzZSBwcm9kdWN0IHByb3ZpZGVkIGZvciB0aGUg
+        ZXhwZWRpdGVkIEwxQSBkYXRhIHNldC5cblxuVXNlcnMgYXJlIGFkdmlzZWQg
+        dGhhdCBBU1RFUiBTV0lSIGRhdGEgYWNxdWlyZWQgZnJvbSBsYXRlIEFwcmls
+        IDIwMDggdG8gdGhlIHByZXNlbnQgZXhoaWJpdCBhbm9tYWxvdXMgc2F0dXJh
+        dGlvbiBvZiB2YWx1ZXMgYW5kIGFub21hbG91cyBzdHJpcGluZy4gVGhpcyBl
+        ZmZlY3QgaXMgYWxzbyBwcmVzZW50IGZvciBzb21lIHByaW9yIGFjcXVpc2l0
+        aW9uIHBlcmlvZHMuIFBsZWFzZSByZWZlciB0byB0aGUgQVNURVIgU1dJUiBV
+        c2VyIEFkdmlzb3J5IERvY3VtZW50IGF0IGh0dHBzOi8vbHBkYWFjLnVzZ3Mu
+        Z292L3NpdGVzL2RlZmF1bHQvZmlsZXMvcHVibGljL2FzdGVyL2RvY3MvQVNU
+        RVJfU1dJUl9Vc2VyX0Fkdmlzb3J5X0p1bHklMjAxOF8wOC5wZGYgZm9yIG1v
+        cmUgZGV0YWlscy5cblxuVjAwMyBkYXRhIHNldCByZWxlYXNlIGRhdGU6IDIw
+        MDItMDUtMDNcblxuRGF0YSBTZXQgQ2hhcmFjdGVyaXN0aWNzOiBcbkFyZWE6
+        IH42MGttIHggNjBrbSBcbkltYWdlIERpbWVuc2lvbnM6IFxuICBWTklSOiA0
+        MjAwIHJvd3MgeCA0MTAwIGNvbHVtbnMgXG4gIFNXSVI6IDIxMDAgcm93cyB4
+        IDIwNDggY29sdW1ucyBcbiAgVElSOiA3MDAgcm93cyB4IDcwMCBjb2x1bW5z
+        IFxuRmlsZSBTaXplOiBcbiAgVk5JUiAoMSwgMiwgM04pOiB+NDkuMyBNQiBc
+        biAgU1dJUiAoNCB0aHJvdWdoIDkpOiB+MjUgTUIgXG4gIFRJUiAoMTAgdGhy
+        b3VnaCAxNCk6IH40LjcgTUIgXG4gIFRvdGFsOiA4NSBNZWdhYnl0ZXMgXG5T
+        cGF0aWFsIFJlc29sdXRpb246XG4gIFZOSVI6IDE1bVxuICBTV0lSOiAzMG1c
+        biAgVElSOiA5MG1cblVuaXRzOiBEaWdpdGFsIGNvdW50XG5Qcm9qZWN0aW9u
+        OiBVbml2ZXJzYWwgVHJhbnN2ZXJzZSBNZXJjYXRvciAoVVRNKVxuRGF0YSBG
+        b3JtYXQ6IEhERi1FT1Mgb3IgR2VvVElGRiBcblZncm91cCBEYXRhIEZpZWxk
+        czogMTRcbiIsImhhc19ncmFudWxlcyI6dHJ1ZSwib3JiaXRfcGFyYW1ldGVy
+        cyI6e30sImlkIjoiQzE3OTQ2MDQwNS1MUERBQUNfRUNTIiwic2NvcmUiOjAu
+        Nywib3JpZ2luYWxfZm9ybWF0IjoiRUNITzEwIiwiZ3JhbnVsZV9jb3VudCI6
+        ODUsImFyY2hpdmVfY2VudGVyIjoiTFBEQUFDIiwiYnJvd3NlX2ZsYWciOmZh
+        bHNlLCJvbmxpbmVfYWNjZXNzX2ZsYWciOmZhbHNlLCJsaW5rcyI6W3sicmVs
+        IjoiaHR0cDovL2VzaXBmZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRh
+        dGEjIiwidGl0bGUiOiJEYXRhIHNldCBsYW5kaW5nIHBhZ2UgYXQgdGhlIExQ
+        IERBQUMgKE1pc2NJbmZvcm1hdGlvbikiLCJocmVmbGFuZyI6ImVuLVVTIiwi
+        aHJlZiI6Imh0dHA6Ly9keC5kb2kub3JnLzEwLjUwNjcvQVNURVIvQVNUX0wx
+        QUUuMDAzIn0seyJyZWwiOiJodHRwOi8vZXNpcGZlZC5vcmcvbnMvZmVkc2Vh
+        cmNoLzEuMS9tZXRhZGF0YSMiLCJ0aXRsZSI6IkludGVyZmFjZSBmb3IgZGlz
+        Y292ZXJpbmcsIGFjY2Vzc2luZywgYW5kIGludm9raW5nIEVPUyBkYXRhIHBy
+        b2R1Y3RzIGFuZCBzZXJ2aWNlcy5cbiAgICAgICAoVHlwZTpHRVQgREFUQSBT
+        dWJ0eXBlOlJFVkVSQikiLCJocmVmbGFuZyI6ImVuLVVTIiwiaHJlZiI6Imh0
+        dHA6Ly9yZXZlcmIuZWNoby5uYXNhLmdvdi9yZXZlcmIvI3V0Zjg9JUUyJTlD
+        JTkzXHUwMDI2c3BhdGlhbF9tYXA9c2F0ZWxsaXRlXHUwMDI2c3BhdGlhbF90
+        eXBlPXJlY3RhbmdsZVx1MDAyNmtleXdvcmRzPUFTVF9MMUFFMyJ9LHsicmVs
+        IjoiaHR0cDovL2VzaXBmZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRh
+        dGEjIiwidGl0bGUiOiJMUCBEQUFDIERhdGEgUG9vbCBwcm92aWRlcyBkaXJl
+        Y3QgYWNjZXNzIHRvIGFsbCBjdXJyZW50bHkgYXZhaWxhYmxlIHByb2R1Y3Rz
+        IGFuZCB0aGUgYWJpbGl0eSB0byBkb3dubG9hZCB0aGVtIHZpYSBIVFRQLlxu
+        ICAgICAgIChUeXBlOkdFVCBEQVRBIFN1YnR5cGU6T04tTElORSBBUkNISVZF
+        KSIsImhyZWZsYW5nIjoiZW4tVVMiLCJocmVmIjoiaHR0cHM6Ly9scGRhYWMu
+        dXNncy5nb3YvZGF0YV9hY2Nlc3MvZGF0YV9wb29sLyJ9LHsicmVsIjoiaHR0
+        cDovL2VzaXBmZWQub3JnL25zL2ZlZHNlYXJjaC8xLjEvbWV0YWRhdGEjIiwi
+        dGl0bGUiOiJUaGUgTGFuZCBQcm9jZXNzZXMgRGlzdHJpYnV0ZWQgQWN0aXZl
+        IEFyY2hpdmUgQ2VudGVyIChMUCBEQUFDKSBpcyBvbmUgb2Ygc2V2ZXJhbCBk
+        aXNjaXBsaW5lLXNwZWNpZmljIGRhdGEgY2VudGVycyB3aXRoaW4gdGhlIE5B
+        U0EgRWFydGggT2JzZXJ2aW5nIFN5c3RlbSBEYXRhIGFuZCBJbmZvcm1hdGlv
+        biBTeXN0ZW0gKEVPU0RJUykuICBUaGUgTFAgREFBQyBXZWIgcGFnZSBwcm92
+        aWRlcyBpbmZvcm1hdGlvbiBhYm91dCBhdmFpbGFibGUgZGF0YSBwcm9kdWN0
+        cywgc2VydmljZXMsIG9yZGVyIGludGVyZmFjZXMsIGFuZCB0b29scy5cbiAg
+        ICAgICAoVHlwZTpWSUVXIFBST0pFQ1QgSE9NRSBQQUdFKSIsImhyZWZsYW5n
+        IjoiZW4tVVMiLCJocmVmIjoiaHR0cHM6Ly9scGRhYWMudXNncy5nb3YvIn1d
+        fV0sImZhY2V0cyI6W3siZmllbGQiOiJkYXRhX2NlbnRlciIsInZhbHVlLWNv
+        dW50cyI6W1siTFBEQUFDIiwyXSxbIkdEUyIsMV1dfSx7ImZpZWxkIjoiYXJj
+        aGl2ZV9jZW50ZXIiLCJ2YWx1ZS1jb3VudHMiOltbIkxQREFBQyIsMl1dfSx7
+        ImZpZWxkIjoicHJvamVjdCIsInZhbHVlLWNvdW50cyI6W119LHsiZmllbGQi
+        OiJwbGF0Zm9ybSIsInZhbHVlLWNvdW50cyI6W1siQU0tMSIsMl1dfSx7ImZp
+        ZWxkIjoiaW5zdHJ1bWVudCIsInZhbHVlLWNvdW50cyI6W1siQVNURVIiLDJd
+        XX0seyJmaWVsZCI6InNlbnNvciIsInZhbHVlLWNvdW50cyI6W119LHsiZmll
+        bGQiOiJ0d29fZF9jb29yZGluYXRlX3N5c3RlbV9uYW1lIiwidmFsdWUtY291
+        bnRzIjpbXX0seyJmaWVsZCI6InByb2Nlc3NpbmdfbGV2ZWxfaWQiLCJ2YWx1
+        ZS1jb3VudHMiOltdfSx7ImZpZWxkIjoiY2F0ZWdvcnkiLCJ2YWx1ZS1jb3Vu
+        dHMiOltdfSx7ImZpZWxkIjoidG9waWMiLCJ2YWx1ZS1jb3VudHMiOltdfSx7
+        ImZpZWxkIjoidGVybSIsInZhbHVlLWNvdW50cyI6W119LHsiZmllbGQiOiJ2
+        YXJpYWJsZV9sZXZlbF8xIiwidmFsdWUtY291bnRzIjpbXX0seyJmaWVsZCI6
+        InZhcmlhYmxlX2xldmVsXzIiLCJ2YWx1ZS1jb3VudHMiOltdfSx7ImZpZWxk
+        IjoidmFyaWFibGVfbGV2ZWxfMyIsInZhbHVlLWNvdW50cyI6W119LHsiZmll
+        bGQiOiJkZXRhaWxlZF92YXJpYWJsZSIsInZhbHVlLWNvdW50cyI6W119XSwi
+        cmVkdWNlZCI6dHJ1ZX19
     http_version: 
     reduced: true
 e531a1e6c800fbbf685d710502acf6660931df61:
@@ -11914,6 +12490,1314 @@ fce6772776feb4ebd9a2759fc676d680746fbeef:
         XzIiLCJ2YWx1ZS1jb3VudHMiOltdfSx7ImZpZWxkIjoidmFyaWFibGVfbGV2
         ZWxfMyIsInZhbHVlLWNvdW50cyI6W119LHsiZmllbGQiOiJkZXRhaWxlZF92
         YXJpYWJsZSIsInZhbHVlLWNvdW50cyI6W119XSwicmVkdWNlZCI6dHJ1ZX19
+    http_version: 
+    reduced: true
+d03411c38c4184473b91c4d0ead57f73d0354124:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:14:31 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '208'
+      cmr-request-id:
+      - cbce8bcf-17af-43d2-bdd9-f61efe84b58c
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:14:31.328Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026point=0%2C0\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","boxes":["-90 -180 90
+        180"],"time_start":"2014-12-25T05:35:00.000Z","dif_ids":["MOD04_L2"],"version_id":"5","updated":"2012-06-18T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005 NRT","data_center":"LANCEMODIS","short_name":"MOD04_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005 NRT","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km","has_granules":false,"orbit_parameters":{},"id":"C1000000019-LANCEMODIS","original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","granule_count":0,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Atmosphere Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MOD04_L2 (Product Info)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/MOD04_L2/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Atmosphere Data Availability Calendar and Validation Level (MiscInformation)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products_calendar.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Known
+        Data Issues (DatasetDisclaimer)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/validation.html"}]},{"processing_level_id":"2","boxes":["-90
+        -180 90 180"],"time_start":"2014-12-25T05:30:00.000Z","dif_ids":["MOD10_L2"],"version_id":"5","updated":"2012-06-19T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Snow Cover 5-Min L2 500m V005 NRT","data_center":"LANCEMODIS","short_name":"MOD10_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Snow Cover 5-Min L2 500m V005 NRT","coordinate_system":"CARTESIAN","summary":"Level
+        2 Snow Cover 5-Min L2 500m...","has_granules":false,"orbit_parameters":{},"id":"C1000000016-LANCEMODIS","original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","granule_count":0,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Land Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-land.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of Surface Reflectance (Product Info)","hreflang":"en-US","href":"http://modis-land.gsfc.nasa.gov/surfrad.html"}]}],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[["MODIS",2]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["2",2]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"AEROSOL
+        EXTINCTION"},{"count":1,"value":"AEROSOL PARTICLE PROPERTIES"},{"count":1,"value":"AEROSOL
+        RADIANCE"},{"count":1,"value":"AEROSOLS OPTICAL DEPTH/THICKNESS"},{"count":1,"value":"CARBONACEOUS
+        AEROSOLS"}],"count":1,"value":"AEROSOLS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"OPTICAL
+        DEPTH/THICKNESS"},{"count":1,"value":"RADIATIVE FLUX"},{"count":1,"value":"REFLECTANCE"}],"count":1,"value":"ATMOSPHERIC
+        RADIATION"}],"count":1,"value":"ATMOSPHERE"}],"count":1,"value":"EARTH SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+3d84095b3337b6345340696d7085977cf956c8d0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:14:26 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '6202'
+      cmr-took:
+      - '1695'
+      cmr-request-id:
+      - 093fe298-5f02-4212-8d2e-e56807f25c6c
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: ASCII-8BIT
+      string: '{"feed":{"updated":"2016-03-28T02:14:27.943Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026point=0%2C0\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2006-06-30T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_A_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_A","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) launched by NASA in 2002 on board the Aqua satellite platform
+        (a second series is on the Terra platform) to study global dynamics of the
+        Earths atmosphere, land and oceans. MODIS captures data in 36 spectral bands
+        ranging in wavelength from 0.4 um to 14.4 um and at varying spatial resolutions
+        (2 bands at 250 m, 5 bands at 500 m and 29 bands at 1 km). For the sea surface
+        temperature (SST) products from this radiometer channels in the 4, 11 and
+        12 um spectrum are used. The Aqua platform is in a sun synchronous, near polar
+        orbit at 705 km altitude and the MODIS instrument images the entire Earth
+        every 1 to 2 days. The production of the MODIS L2P SST data as part of the
+        Group for High Resolution Sea Surface Temperature (GHRSST) is a joint collaboration
+        between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean Biology Processing
+        Group (OBPG), and the Rosenstiel School of Marine and Atmospheric Science
+        (RSMAS). RSMAS is responsible for sea surface temperature algorithm development,
+        error statistics and quality flagging, while the OBPG is NASA ground data
+        system for production of daily MODIS ocean products in HDF file format. JPL
+        acquires MODIS ocean granules from the OBPG in near realtime and reformats
+        them to the GHRSST L2P netCDF specification with complete metadata. Data consists
+        of global coverage at 1 km resolution with approximately 300+ five minute
+        observation granules per day. For nighttime data both SST from the 11-12 um,
+        and 4 um bands are available. Ocean chlorophyll a and K490 diffuse attenuation
+        coefficient data are also available for daytime periods as non standard L2P
+        core fields. Note that these ocean color data do not represent the most recent
+        version processed by the OBPG and may not be of research quality.\n","has_granules":false,"orbit_parameters":{},"id":"C1224520058-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_A/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2006-10-01T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_T_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_T","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) launched by NASA in 1999 on board the Terra satellite platform
+        (a second series is on the Aqua platform) to study global dynamics of the
+        Earths atmosphere, land and oceans. MODIS captures data in 36 spectral bands
+        ranging in wavelength from 0.4 um to 14.4 um and at varying spatial resolutions
+        (2 bands at 250 m, 5 bands at 500 m and 29 bands at 1 km). For the sea surface
+        temperature (SST) products from this radiometer channels in the 4, 11 and
+        12 um spectrum are used. The Terra platform is in a sun synchronous, near
+        polar orbit at 705 km altitude and the MODIS instrument images the entire
+        Earth every 1 to 2 days. The production of the MODIS L2P SST data as part
+        of the Group for High Resolution Sea Surface Temperature (GHRSST) is a joint
+        collaboration between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean
+        Biology Processing Group (OBPG), and the Rosenstiel School of Marine and Atmospheric
+        Science (RSMAS). RSMAS is responsible for sea surface temperature algorithm
+        development, error statistics and quality flagging, while the OBPG is NASA
+        ground data system for production of daily MODIS ocean products in HDF file
+        format. JPL acquires MODIS ocean granules from the OBPG in near realtime and
+        reformats them to the GHRSST L2P netCDF specification with complete metadata.
+        Data consists of global coverage at 1 km resolution with approximately 300+
+        five minute observation granules per day. For nighttime data both SST from
+        the 11-12 um, and 4 um bands are available. Ocean chlorophyll a and K490 diffuse
+        attenuation coefficient data are also available for daytime periods as non
+        standard L2P core fields. Note that these ocean color data do not represent
+        the most recent version processed by the OBPG and may not be of research quality.\n","has_granules":false,"orbit_parameters":{},"id":"C1224520120-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_T/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2014-05-20T00:00:00.000Z","dif_ids":["GHRSST-VIIRS_NPP-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging Radiometer
+        Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced Clear-Sky
+        Processor for Ocean (ACSPO) (GDS version 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-VIIRS_NPP-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging
+        Radiometer Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced
+        Clear-Sky Processor for Ocean (ACSPO) (GDS version 2)\n","coordinate_system":"CARTESIAN","summary":"\nJoint
+        Polar Satellite System (JPSS), starting with S-NPP launched on 28 October
+        2011, is the new generation of the US Polar Operational Environmental Satellites
+        (POES). As during the POES era, NOAA is responsible for all JPSS products,
+        including Level 2 Visible Infrared Imaging Radiometer Suite (VIIRS) SST derived
+        using NOAA heritage Advanced Clear-Sky Processor for Ocean (ACSPO) system
+        at the native sensor resolution. VIIRS is a whiskbroom scanning radiometer
+        which takes measurements in the cross-track direction within a field of regard
+        of 112.56 degrees, using 16 detectors and double-side mirror assembly. At
+        a nominal altitude of 829 km, the swath width is 3060 km, providing full daily
+        coverage both in the day and night side of the Earth. VIIRS has 22 spectral
+        bands covering the spectrum from 0.4-12 micrometers, including 16 moderate
+        resolution bands (M-bands). In addition to pixel-level earth locations, Sun-Sensor
+        geometry, and ancillary data from NCEP global weather forecast, ACSPO inputs
+        are 3 brightness temperatures (BTs) in M12 (3.7microns), M15 (11microns),
+        and M16 (12microns), and 2 reflectances in M5 (0.67microns) and M7 (0.87microns)
+        bands, used for cloud identification. ACSPO output files are in netcdf4 format
+        compliant with the GHRSST Data Specification version 2 (GDS2). Each output
+        file (granule) contains 10 minutes of data. In each valid water pixel (defined
+        as ocean, sea, lake or river, up to 5 km inland; fill values are reported
+        in invalid pixels, at \u003e5 km inland), the following layers are reported,
+        among others: BTs in M12, 15, and 16 (original radiances are included for
+        those users interested in direct radiance assimilation, e.g., NOAA NCEP, NASA
+        GMAO); SSTs derived from BTs using multi-channel SST (MCSST; night) and Non-Linear
+        SST (NLSST; day) algorithms (Petrenko et al., 2014); and ACSPO clear-sky mask
+        (ACSM; provided in each pixel as part of l2p_flags) (Petrenko et al., 2010).
+        We only recommend using the ACSM confidently clear pixels (equivalent to GDS2
+        quality level=5, also reported for each pixel). The ACSM also provides day/night,
+        land, ice, twilight, and glint flags. Note that users of ACSPO data have the
+        flexibility to ignore the ACSM, derive their own clear-sky mask, and use BTs
+        and SSTs in those pixels. They may also ignore ACSPO SST, and derive their
+        own SST from the original BTs. ACSPO VIIRS products are monitored and validated
+        against in situ data (Xu and Ignatov, 2014) in SQUAM (Dash et al, 2010) and
+        MICROS (Liang and Ignatov, 2011).\n","has_granules":false,"orbit_parameters":{},"id":"C1224519979-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/VIIRS_NPP/OSPO/\n"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1997-07-01T00:00:00.000Z","dif_ids":["GGP-SG-CORMIN"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":" GGP - Corrected
+        Minute Data","data_center":"SCIOPS","short_name":"GGP-SG-CORMIN","organizations":["DE/GFZ/ISDC"],"title":"
+        GGP - Corrected Minute Data","coordinate_system":"CARTESIAN","summary":"Global
+        Geodynamics Project (GGP) - Earthquake Data","has_granules":false,"orbit_parameters":{},"id":"C1214586854-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        GGP date are available via the ISDC Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/ggp/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Saint
+        Louis University, Department of Earth and Atmospheric Sciences, GGP Homepage.\n      ","hreflang":"en-US","href":"http://www.eas.slu.edu/GGP/ggphome.html"}]},{"boxes":["-5
+        -100 67 18","-60 15 30 150"],"dif_ids":["NOAA_NCDC_PALEO_2001-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":" Late Paleocene
+        Osmium Isotope Data  ","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2001-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Late Paleocene Osmium Isotope Data  ","coordinate_system":"CARTESIAN","summary":"Marine
+        Osmium records during the late Paleocene thermal maximum  interpreted as\nproxies
+        of terrestrial chemical weathering.\n\nCore DSDP-213 Indian Ocean  \nCore
+        DSDP-549 North Atlantic Ocean","has_granules":false,"orbit_parameters":{},"id":"C1215196946-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data files\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Access
+        to documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/readme_ravizza2001.txt"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_93-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"
+        Time Dependent Ice Coverage and Ice Topography Through the Glacial Cycle","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_93-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Time Dependent Ice Coverage and Ice Topography Through
+        the Glacial Cycle","coordinate_system":"CARTESIAN","summary":"Topography and
+        ice cover data files from the ICE-4G model. Data consists of\ntopographical
+        heights at 1 Kyr intervals since the last glacial  maximum.\nTopographical
+        heights are relative to paleo sea level.\n\nThe second data set consists of
+        Ice-cover data at 1 Kyr intervals since the\nlast glacial maximum.","has_granules":false,"orbit_parameters":{},"id":"C1215197136-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to ice topography data\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Ice
+        cover reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/peltice.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Topography
+        reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/pelttopo.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         ice
+        topography data set documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/readme_ice_topography.txt"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1981-01-01T00:00:00.000Z","dif_ids":["GLCF_GLC_1km_1.0"],"version_id":"1.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1
+        Kilometer Land Cover Product from the University of Maryland","data_center":"SCIOPS","short_name":"GLCF_GLC_1km","organizations":["UMD/GLCF"],"title":"1
+        Kilometer Land Cover Product from the University of Maryland","coordinate_system":"CARTESIAN","summary":"This
+        summary is adapted from the One Kilometer Global Land Cover\nProject Document-Data
+        Set Description web page, which may be found at\nthe following URL: \"http://glcf.umiacs.umd.edu/data/landcover/index.shtml\".\n      \n      To
+        develop improved methodologies for global land cover\n      classifications
+        as well as to provide global land cover products for immediate use in global
+        change research, University of Maryland''s\n      Global Land Cover Facility
+        (GLCF) and NASA have employed the\n      NASA/NOAA Pathfinder Land (PAL) data
+        set with a spatial resolution of 1km. This data set has a length of record
+        of 14 years (1981-1994),\n      providing the ability to test the stability
+        of classification\n      algorithms. Furthermore, this data set includes red,
+        infrared, and\n      thermal bands in addition to the Normalized Difference
+        Vegetation\n      Index (NDVI). Inclusion of these additional bands improves\n      discrimination
+        between cover types.\n      \n      To identify the pixels to be used for
+        training of the 1 km AVHRR\n      Pathfinder data, the investigators collected
+        a total of over 200\n      high resolution scenes of which they were confident
+        of which cover type\n      occurs.  Most of the scenes used were acquired
+        by the Landsat\n      Multispectral Scanner System (MSS), and a few by Landsat
+        Thematic\n      Mapper and the LISS (Linear Imaging Self-Scanning Sensor).\n      \n      Of
+        the initial 200 scenes, the investigators considered 156 suitable for\n      interpretation.
+        Scenes were considered unsuitable if haze or poor\n      quality data obscured
+        the scene or if the cover types in the scene\n      could not be visually
+        distinguished. For most scenes, the\n      investigators aimed to identify
+        only one cover type within the\n      scene. It was possible, however, to
+        identify more than one cover type\n      in some scenes if croplands were
+        visually identifiable based on the\n      spatial patterns of fields or if
+        vegetation maps showed the presence\n      of clearly identifiable cover types.\n      \n      The
+        second part of the study involved deriving a global land cover\n      classififcation
+        product. The product was derived by testing several\n      metrics that describe
+        the temporal dynamics of vegetation over an\n      annual cycle. These metrics
+        have the potential to be used as input\n      variables to a global land cover
+        classification. The tested metrics\n      are based on 1) the ratio between
+        surface temperature and NDVI, 2)\n      seasonal metrics derived from the
+        NDVI temporal profile such as length\n      of growing season, 3) a rule-based
+        approach that determines cover type\n      through a series of hierarchical
+        trees based on surface temperature\n      and NDVI values, and 4) annual mean,
+        maximum, minimum, and amplitude\n      values for all optical and thermal
+        channels in the AVHRR Pathfinder\n      Land (PAL) data. These metrics were
+        applied to 1984 PAL data at 8km\n      resolution to derive a global land
+        cover classification product using\n      a decision tree classifier. This
+        method was then applied to AVHRR\n      data from other years and higher spatial
+        resolutions.","has_granules":false,"time_end":"1994-01-01T00:00:00.000Z","orbit_parameters":{},"id":"C1214608509-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"1
+        Kilometer Land Cover Product from the University of Maryland.","hreflang":"en-US","href":"http://glcfapp.umiacs.umd.edu:8080/esdi/index.jsp?productID=6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"1
+        Kilometer Land Cover Product from the University of Maryland.","hreflang":"en-US","href":"http://glcf.umiacs.umd.edu/data/landcover/data.shtml"}]},{"boxes":["-71
+        0 72 -1"],"dif_ids":["gov.noaa.ngdc.mgg.geophysics.G01414_1999 Edition"],"version_id":"1999
+        Edition","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1-deg x 1-deg
+        Terrestrial Mean Free-Air Anomalies","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.geophysics.G01414","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"1-deg
+        x 1-deg Terrestrial Mean Free-Air Anomalies","coordinate_system":"CARTESIAN","summary":"The
+        1x1 degree Terrestrial Mean Free-Air Gravity Anomaly and Geoid Undulations
+        Data Base was compiled and developed by the Ohio State University. This data
+        base was received in March 1993. Principal gravity parameters include mean
+        elevation, mean free-air anomaly and source id. The gravity anomaly computation
+        uses the Geodetic Reference System 1967 (GRS 67) theoretical formula. The
+        data are global in coverage where data are available.","has_granules":false,"orbit_parameters":{},"id":"C1214558130-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/fliers/se-0703.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/gravity/1999/document/html/tablegri.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.geophysics:G01414"}]},{"boxes":["-45.69
+        -63.51 78.87 170.42"],"time_start":"2001-05-28T00:00:00.000Z","dif_ids":["CH-OG-1-GPS-10S_0.0"],"version_id":"0.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"10
+        sec GPS ground tracking data","data_center":"SCIOPS","short_name":"CH-OG-1-GPS-10S","organizations":["DE/GFZ/ISDC"],"title":"10
+        sec GPS ground tracking data","coordinate_system":"CARTESIAN","summary":"This
+        data set comprises GPS ground data of a sample rate of 10 sec, generated\n      by
+        decoding and sampling GPS high  rate ground data. This raw data passed no\n      quality
+        control. The data are given in the Rinex 2.1 format.","has_granules":false,"orbit_parameters":{},"id":"C1214586614-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        CHAMP Rapid Science Orbit dataset are available via the ISDC\n         Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/champ"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GFZ
+        Potsdam, Section 1.2., Gravity Missions and Analysis home page.\n      ","hreflang":"en-US","href":"http://www.gfz-potsdam.de/portal/-"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_2005-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"11,000
+        Year Sunspot Number Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"11,000 Year Sunspot Number Reconstruction","coordinate_system":"CARTESIAN","summary":"From
+        http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html\n\nDirect
+        observations of sunspot numbers are available for the past\nfour centuries,
+        but longer time series are required, for example,\nfor the identification
+        of a possible solar influence on climate and\nfor testing models of the solar
+        dynamo. Here we report a\nreconstruction of the sunspot number covering the
+        past 11,400\nyears, based on dendrochronologically dated radiocarbon concentrations.\nWe
+        combine physics-based models for each of the\nprocesses connecting the radiocarbon
+        concentration with sunspot\nnumber. According to our reconstruction, the level
+        of solar\nactivity during the past 70 years is exceptional, and the previous\nperiod
+        of equally high activity occurred more than 8,000 years\nago. We find that
+        during the past 11,400 years the Sun spent only\nof the order of 10% of the
+        time at a similarly high level of\nmagnetic activity and almost all of the
+        earlier high-activity\nperiods were shorter than the present episode. Although
+        the\nrarity of the current episode of high average sunspot numbers\nmay indicate
+        that the Sun has contributed to the unusual climate\nchange during the twentieth
+        century, we point out that solar\nvariability is unlikely to have been the
+        dominant cause of the\nstrong warming during the past three decades.\n\nThe
+        series of reconstructed 10-yr averaged sunspot numbers with their 68%\nuncertainty.
+        Years are given BP (before present), i.e. the calendar AD year,\nYad, is related
+        to the  BP year, Ybp, as Yc=1950-Ybp. The tabulated years\ncorrespond to centers
+        of the corresponding 10-year intervals. Negative values\nare artifacts and
+        are consistent with zero within the error limits.","has_granules":false,"orbit_parameters":{},"id":"C1215197053-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        and further information on sunspot number reconstruction\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html"}]},{"boxes":["-36.9
+        -157.4 71.3 147.29"],"time_start":"2008-01-16T00:00:00.000Z","dif_ids":["14c_of_soil_co2_from_ipy_itex_cross_site_comparison"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"14C of soil CO2
+        from IPY ITEX Cross Site Comparison","data_center":"SCIOPS","short_name":"14c_of_soil_co2_from_ipy_itex_cross_site_comparison","organizations":["ACADIS"],"title":"14C
+        of soil CO2 from IPY ITEX Cross Site Comparison","coordinate_system":"CARTESIAN","summary":"Study
+        sites: Toolik Lake Field Station Alaska, USA 68.63 N, 149.57 W; Atqasuk, Alaska
+        USA 70.45 N, 157.40 W; Barrow, Alaska, USA 71.30 N, 156.67 W; Latnjajaure,
+        Sweden 68.35 N, 18.50 E; Falls Creek, Australia: Site 2-unburned 36.90 S 147.29
+        E; Site 3-burned 36.89 S 147.28 E. Additional sites will be added summer 2008,
+        but the exact sites are not finalized. Purpose: Collect soil CO2 for analysis
+        of radiocarbon to evaluate the age of the carbon respired in controls and
+        warmed plots from across the ITEX network.  Treatments: control and ITEX OTC
+        warming experiment (1994-2007). Design: 5 replicates of each treatment at
+        dry site and moist site. Sampling frequency: Once per peak season.","has_granules":false,"time_end":"2008-01-21T00:00:00.000Z","orbit_parameters":{},"id":"C1214602443-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Data
+        Center top-level access page for this resource\n      ","hreflang":"en-US","href":"http://www.aoncadis.org/dataset/id/79208243-d496-11de-892a-00c0f03d5b7c.html"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2000-12-07T00:00:00.000Z","dif_ids":["iucn_protected_areas"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1997 UN List
+        of National Protected Areas","data_center":"SCIOPS","short_name":"iucn_protected_areas","organizations":["UNEP/WCMC/PAP"],"title":"1997
+        UN List of National Protected Areas","coordinate_system":"CARTESIAN","summary":"This
+        prototype database has been developed by UNEP-WCMC in\n      collaboration
+        with a number of partners. The IUCN World Commission on\n      Protected Areas
+        and UNEP-WCMC have collaborated since the early 1980s\n      in developing
+        a global protected areas database. More recently,\n      UNEP-WCMC has been
+        working with the European Environment Agency, and\n      its Nature Conservation
+        Topic Centre in the development of a common\n      European Protected Areas
+        Database. The data collected under this joint\n      effort are reflected
+        in the WWW version of the database.","has_granules":false,"orbit_parameters":{},"id":"C1214612993-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false},{"boxes":["-90
+        -180 90 180"],"time_start":"1998-01-17T00:00:00.000Z","dif_ids":["NOAA_BLEACH98"],"version_id":"Not
+        provided","updated":"2015-12-01T00:00:00.000Z","dataset_id":"1998 Animations
+        of Coral Bleaching Hotspots from NOAA/NESDIS","data_center":"SCIOPS","short_name":"NOAA_BLEACH98","organizations":["DOC/NOAA/NESDIS/OSDPD"],"title":"1998
+        Animations of Coral Bleaching Hotspots from NOAA/NESDIS","coordinate_system":"CARTESIAN","summary":"The
+        year of 1998 was a difficult time for the worlds coral reefs, with\nabnormally
+        warm sea surface temperatures (SST''s) causing widespread\ncoral bleaching.
+        The animations and images on this page show the\ndifferences between the climatological
+        maximum monthly mean SST\n(i.e. the expected summer-time maximum) and the
+        satellite-derived\nNOAA/NESDIS night time SST fields. When the night time
+        SST field is\nwarmer than the expected summer-time maximum by 1 degree C,
+        the\nregion is shown in orange as a potential coral bleaching hotspot.\n\nNOAA/NESDIS
+        oceanographer, Dr. Al Strong, has collected reports of\ncoral bleaching from
+        an informal network of coral\nreef researchers and observers. These reports
+        have been overlayed\non the following 1998 animations and images:\n\n\nAnimation
+        of Great Barrier Reef Bleaching Event, El Nino,\n1/17/98-4/17/98, (1.6 mb)\n\nAnimation
+        of Indian Ocean Bleaching Event, El Nino/La Nina transition\nperiod , 3/24/98-7/24/98,
+        (1.0 mb)\n\nAnimation of Bahrain, Red Sea and Eastern Pacific Bleaching Events,\nearly
+        La Nina, 7/4/98-10/27/98, (0.8 mb)\n\nAnimation of Western Hemisphere Bleaching
+        Events, early La Nina,\n6/20/98-11/7 /98, (1.1 mb)\n\nAnimation of HotSpots
+        during El Nino,1/3/98-6/6/98 in the Western\nHemisphere, (2.0 mb)\n\nIndian
+        Ocean Bleaching Event - time series , 3/24/98-8/11/98\n\nWestern Hemisphere
+        Bleaching Event - time series, 6/20/98-9/8/98","has_granules":false,"time_end":"1998-09-08T00:00:00.000Z","orbit_parameters":{},"id":"C1214419724-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         NOAA/NESDIS
+        1998 Coral Bleaching HotSpots\n      ","hreflang":"en-US","href":"http://www.osdpd.noaa.gov/ml/ocean/cb/hotspots_1998anim.html"}]},{"boxes":["-5
+        -45 90 50"],"time_start":"1992-04-01T00:00:00.000Z","dif_ids":["1KM.AVHRR.TOVS.SHARP2A"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1KM NOAA AVHRR
+        and TOVS Digital CCT product in SHARP level 2A format","data_center":"ESA","short_name":"1KM.AVHRR.TOVS.SHARP2A","organizations":["ESA/EARTHNET"],"title":"1KM
+        NOAA AVHRR and TOVS Digital CCT product in SHARP level 2A format","coordinate_system":"CARTESIAN","summary":"The
+        1 km AVHRR Global Land Data set project is an\n      international effort
+        to acquire, archive, process and\n      distribute the data of the entire
+        global land\n      surface observed by the NOAA/AVHRR\n      satellite mission
+        at 1 km resolution, in order to\n      meet the needs of the international\n      science
+        community, (IGBP, 1992). A\n      network of 29 High Resolution Picture\n      Transmission
+        (HRPT) stations, along with data\n      recorded by the NOAA, has been acquiring
+        daily global\n      land coverage from the NOAA-11 satellite since the first
+        of April\n      1992. The continuous flow of data coming from these stations
+        is\n      routinely archived by USGS and ESA. A common archive exists at\n      the
+        EROS data centre of the USGS and at the ESRIN of ESA. The\n      number of
+        pass acquired per year is around 15000. The project\n      intends to process
+        all acquired data to generate\n      for any 10-day period in the project\n      time-span
+        (April 92 - September 94) a land composite\n      product (1444k) covering
+        the whole world surface, as defined by\n      Townsend et al., 1992.\n      AVHRR
+        floating scenes are provided in SHARP\n      format. SHARP is the ESA Earthnet
+        format for\n      AVHRR and TOVS data generated to provide an easy\n      data
+        access for the international Remote sensing user\n      community. SHARP-1
+        consists of two volumes: AVHRR\n      volume and TOVS volume. In addition,
+        with the objective\n      of providing the user with ready-to-use data,\n      a
+        family of higher level products has been proposed\n      by Earthnet: this
+        is SHARP level-2.\n      \n      \n      \n      \n      The SHARP level-2A
+        (Calibrated Product) contains\n      calibrated data from the AVHRR channels
+        (i.e.\n      level 1 data calibrated and converted to\n      measurements
+        of Equivalent Reflectance, spectral\n      Radiance and Brightness Temperature)
+        and a classification of the\n      image.\n      \n      \n      \n      \n      Each
+        pixel contains image data (calibrated), a\n      classification and geographical
+        information\n      (boundaries, coastlines and lat/long grid\n      flags).
+        Each pixel consists of 2 bytes; 10 bits are\n      used for image data, 3
+        bits for the\n      classification and 3 bits for geographical data.\n      The
+        classification includes land, cloud, sea,\n      snow/ice and unclassified
+        pixels.\n      \n      \n      \n      \n      SHARP-2 products are produced
+        from archived SHARP-1\n      day-time data.  SHARP-2 products will not be
+        archived. TOVS data\n      remains the same as for SHARP-1 products.\n      \n      \n      \n      \n      For
+        the Level 2A product, Level 1 raw data is\n      calibrated and classified
+        utilizing state-of-the-art algorithms.\n      The visible channels (1 and
+        2) are converted from raw data to\n      Equivalent Reflectance, while channels
+        4 and 5 (infrared) are\n      converted to Brightness Temperature, corrected
+        by nonlinear\n      effects, and the third infrared channel (3) is converted
+        to Spectral\n      Radiance.\n      \n      \n      \n      \n      Image
+        data in each band of the Level 2A product:\n      \n      ---------------\n      Band
+        1: Channel 1 Equivalent Reflectance\n      Band 2: Channel 2 Equivalent Reflectance\n      Band
+        3: Channel 3 Spectral Radiance\n      Band 4: Channel 4 Brightness Temperature\n      Band
+        5: Channel 5 Brightness Temperature\n      ---------------\n      Note: ''Band''
+        refers to the output data structure of\n      the SHARP products.\n      ''Channel''
+        refers to the input satellite data acquired\n      in different\n      wavelengths.\n      \n      \n      \n      \n      This
+        product can be produced with data from all the\n      operating NOAA satellites;
+        however, if the data is derived from the\n      even-numbered satellites,
+        band 5 is empty.\n      \n      \n      \n      \n      Geometric Correction:\n      Image
+        navigation (location) is carried out during\n      Level 1 data generation,
+        using the orbital model for\n      the satellite location and is tested by
+        an operator who carries out\n      further correction if necessary.  SHARP-2
+        products are in the\n      original spacecraft projection.  A location grid
+        of tie points\n      (lat/long) is given in the suffix data (every 16th image
+        file\n      record).\n      \n      \n      \n      \n      To order data,
+        please see\n      \"http://earth.esa.int/helpandmail/help_order.html\"","has_granules":false,"orbit_parameters":{},"id":"C1214560039-ESA","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         See
+        ''SHARP-2 Technical Specification of Format'' in the NOAA\n         Document
+        Library\n      ","hreflang":"en-US","href":"http://earth.esa.int/esa_doc/doc_tpm.html#_NOA"}]},{"boxes":["-5
+        -45 90 50"],"time_start":"1992-04-01T00:00:00.000Z","dif_ids":["1KM.AVHRR.TOVS.SHARP2B"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1KM NOAA AVHRR
+        and TOVS Digital CCT product in SHARP level 2B format","data_center":"ESA","short_name":"1KM.AVHRR.TOVS.SHARP2B","organizations":["ESA/EARTHNET"],"title":"1KM
+        NOAA AVHRR and TOVS Digital CCT product in SHARP level 2B format","coordinate_system":"CARTESIAN","summary":"The
+        1 km AVHRR Global Land Data set project is an\n                  international
+        effort\n                  to acquire, archive, process and distribute the
+        data\n                  of the entire\n                  global land surface
+        observed by the NOAA/AVHRR\n                  satellite mission at 1\n                  km
+        resolution, in order to meet the needs of the\n                  international
+        science\n                  community, (IGBP, 1992). A network of 29 High\n                  Resolution
+        Picture\n                  Transmission (HRPT) stations, along with data\n                  recorded
+        by the NOAA,\n                  has been acquiring daily global land coverage
+        from\n                  the NOAA-11\n                  satellite since the
+        first of April 1992. The\n                  continuous flow of data\n                  coming
+        from these stations is routinely archived by\n                  USGS and ESA.
+        A\n                  common archive exists at the EROS data centre of the\n                  USGS
+        and at the\n                  ESRIN of ESA. The number of pass acquired per
+        year is\n                  around\n                  15000. The project intends
+        to process all acquired\n                  data to generate\n                  for
+        any 10-days period in the project time-span\n                  (April 92 -
+        September\n                  94) a land composite product (1444k) covering
+        the\n                  whole world surface,\n                  as defined
+        by Townsend et al., 1992.\n                  \n                  \n                  \n                  \n                  AVHRR
+        floating scenes are provided in SHARP format.\n                  SHARP is
+        the ESA Earthnet format for AVHRR and\n                  TOVS data generated
+        to provide an easy\n                  data access for the international Remote
+        sensing user\n                  community.\n                  SHARP-1 consists
+        of two volumes: AVHRR volume and\n                  TOVS volume.  In order
+        to save user time in\n                  extracting from the raw data the useful\n                  quantities
+        needed for the problem at hand, a\n                  family of higher level
+        products has been proposed\n                  by Earthnet: this is SHARP level-2.\n                  \n                  \n                  \n                  \n                  The
+        SHARP level-2A (Geophysical Product) contains\n                  geophysical
+        parameters extracted from AVHRR\n                  raw data (Vegetation Index
+        and Sea\n                  Surface Temperature) as well as calibrated data
+        and a\n                  classification of the image.\n                  \n                  \n                  \n                  \n                  Each
+        pixel contains image data (calibrated), a\n                  classification
+        and geographical information\n                  (boundaries, coastlines and
+        lat/long grid\n                  flags). Each pixel consists of 2 bytes; 10
+        bits are\n                  used for image data, 3 bits for the classification\n                  and
+        3 bits for geographical data.\n                  The classification includes
+        land, cloud, sea,\n                  snow/ice and unclassified pixels.\n                  \n                  \n                  \n                  \n                  SHARP-2
+        products are produced from archived SHARP-1\n                  day-time data.\n                  SHARP-2
+        products will not be archived. TOVS data\n                  remains the same
+        as for SHARP-1 products.\n                  \n                  \n                  \n                  \n                  The
+        SHARP-2B product consists of:\n                  \n                  \n                  -
+        2 bands (1 and 5) containing class depending\n                  geophysical
+        parameters\n                  - 3 bands (2,3 and 4) containing calibrated
+        data\n                  converted in equivalent Reflectance (band 2),\n                  AVHRR
+        channel 3 spectral Radiance (band 3) and\n                  AVHRR channel
+        4 Brightness Temperature (band 4).\n                  \n                  \n                  \n                  \n                  Characteristics
+        of Band 1, Class dependent parameter:\n                  \n                  ---------------\n                  Land:
+        Normalized Difference Vegetation Index (NDVI)\n                  Sea: Equivalent
+        Reflectance from Channel 1\n                  cloud: Equivalent Reflectance
+        from Channel 1\n                  snow/ice: Equivalent Reflectance from Channel
+        1\n                  glint: Equivalent Reflectance from Channel 1\n                  unclass:
+        Equivalent Reflectance from Channel 1\n                  ------------\n                  \n                  Characteristics
+        of other Bands:\n                  \n                  ---------------\n                  Band
+        2: Channel 2 Equivalent Reflectance\n                  Band 3: Channel 3 Spectral
+        Radiance\n                  Band 4: Channel 4 Brightness Temperature\n                  Band
+        5 over sea: Sea Surface Temperature (SST)\n                  Band 5 over other
+        areas: Brightness Temperature from Channel 5\n                  -----------------\n                  \n                  Note:
+        ''Band'' refers to the output data structure of\n                  the SHARP\n                  products;
+        ''Channel'' refers to the input satellite\n                  data acquired\n                  in
+        different wavelengths.\n                  \n                  \n                  \n                  \n                  This
+        product can be produced with data from all the\n                  operating
+        NOAA\n                  satellites; however, if the data is derived from the\n                  even-numbered\n                  satellites,
+        band 5 is empty.\n                  \n                  \n                  \n                  \n                  Geometric
+        Correction:\n                  Image navigation (location) is carried out
+        during\n                  Level 1 data generation, using the orbital model
+        for\n                  the satellite\n                  location and is tested
+        by an operator who carries out\n                  further\n                  correction
+        if necessary.  SHARP-2 products are in the\n                  original\n                  spacecraft
+        projection.  A location grid of tie points\n                  (lat/long) is\n                  given
+        in the suffix data (every 16th image file\n                  record).\n                  \n                  \n                  \n                  \n                  To
+        order data, please see\n                  \"http://earth.esa.int/\"","has_granules":false,"orbit_parameters":{},"id":"C1214559954-ESA","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         See
+        ''SHARP-2 Technical Specification of Format'' in the NOAA\n         Document
+        Library\n      ","hreflang":"en-US","href":"http://earth.esa.int/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"0200-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO2003-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000 Year Hemispheric
+        Multi-proxy Temperature Reconstructions","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO2003-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000 Year Hemispheric Multi-proxy Temperature Reconstructions","coordinate_system":"CARTESIAN","summary":"Two
+        hemispheric multi-proxy temperature reconstructions (based on\nlocal-correlation
+        weighting, and areal weighting as described in Mann\nand Jones 2003). The
+        global mean shown in the paper is the average of\nthe two hemispheric reconstructions,
+        while the interhemispheric\ndifference is just NH-SH.\n\nAll series are anomalies
+        based on 1961-1990 instrumental reference\nperiod.\n\nAbstract (from the online
+        documentation)\nWe present reconstructions of Northern and Southern Hemisphere\nmean
+        surface temperature over the past two millennia based on\nhigh-resolution
+        ''proxy'' temperature data which retain\nmillennial-scale variability. These
+        reconstructions indicate\nthat late 20th century warmth is unprecedented for
+        at least\nroughly the past two millennia for the Northern Hemisphere.\nConclusions
+        for the Southern Hemisphere and global mean\ntemperature are limited by the
+        sparseness of available proxy\ndata in the Southern Hemisphere at present.","has_granules":false,"orbit_parameters":{},"id":"C1215199015-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/mann2003b/"}]},{"boxes":["0
+        -180 90 180"],"time_start":"0001-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO_2005-019"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000-Year Northern
+        Hemisphere Temperature Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-019","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000-Year Northern Hemisphere Temperature Reconstruction","coordinate_system":"CARTESIAN","summary":"A
+        number of reconstructions of millennial-scale climate variability have been\ncarried
+        out in order to understand patterns of natural climate variability, on\ndecade
+        to century timescales, and the role of anthropogenic forcing. These\nreconstructions
+        have mainly used tree-ring data and other data sets of annual\nto decadal
+        resolution. Lake and ocean sediments have a lower time resolution,\nbut provide
+        climate information at multicentennial timescales that may not be\ncaptured
+        by tree-ring data. Here we reconstruct Northern Hemisphere\ntemperatures for
+        the past 2,000 years by combining low-resolution proxies with\ntree-ring data,
+        using a wavelet transform technique to achieve\ntimescale-dependent processing
+        of the data. Our reconstruction shows larger\nmulticentennial variability
+        than most previous multi-proxy reconstructions, but\nagrees well with temperatures
+        reconstructed from borehole measurements and with\ntemperatures obtained with
+        a general circulation model. According to our\nreconstruction, high temperatures
+        - similar to those observed in the twentieth\ncentury before 1990- occurred
+        around AD 1000 to 1100, and minimum temperatures\nthat are about 0.7K below
+        the average of 1961-90 occurred around AD 1600. This\nlarge natural variability
+        in the past suggests an important role of natural\nmulticentennial variability
+        that is likely to continue.\n\nThis data set consists of reconstructed Northern
+        Hemisphere temperatures for\nthe past 2,000 years  calculated by combining
+        low-resolution proxies with\ntree-ring data,  using a wavelet transform technique
+        to achieve\ntimescale-dependent  processing of the data.\n\nAll data are given
+        as temperature anomalies (K) from the Northern Hemisphere\nannual mean  temperature
+        1961-90 average. Lack of data are indicated with\n-9.9999","has_granules":false,"time_end":"1979-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1215197080-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        on  Highly variable Northern Hemisphere temperatures\n         reconstructed
+        from low- and high-resolution proxy data\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/moberg2005/moberg2005.html"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["gov.noaa.ngdc.mgg.dem.301"],"version_id":"Not provided","updated":"2016-02-11T00:00:00.000Z","dataset_id":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.dem.301","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","coordinate_system":"CARTESIAN","summary":"Two-minute
+        gridded global relief for both ocean and land areas are available in the ETOPO2v2
+        (2006) database. ETOPO2v2 replaced ETOPO2 (2001). The historic 2-minute (ETOPO2v2)
+        and 5-minute (ETOPO5) data are deprecated, but still available. Please use
+        the new ETOPO1 Global Gridded Relief Model.","has_granules":false,"orbit_parameters":{},"id":"C1214558324-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         2-minute
+        Gridded Global Relief Data (ETOPO2) v2. Web page for ETOPO2v2 with full descriptions
+        of the data\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/global/etopo2.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.dem:301"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"2000.00","updated":"2015-08-03T00:00:00.000Z","dataset_id":"2000
+        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","organizations":["SEDAC"],"title":"2000
+        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an \n\nindex that measures the ability of a nation''s economy
+        to achieve sustainable development, with the long term goal of finding a single
+        \n\nindicator for environmental sustainability analagous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is \n\na composite
+        measure of the current status of a nation''s environmental systems, pressures
+        on those systems, human vulnerability to \n\nenvironmental change, national
+        capacity to respond, and contributions to global environmental stewardship.
+        The index was unveiled at \n\nthe World Economic Forum''s annual meeting,
+        January 2000, Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration
+        among \n\nthe World Economic Forum (WEF), Yale Center for Environmental Law
+        and Policy (YCELP), and the Columbia University Center for \n\nInternational
+        Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-\n\n2000/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4NK3BZJ"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2001"],"version_id":"2001.00","updated":"2015-08-04T00:00:00.000Z","dataset_id":"2001
+        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2001","organizations":["SEDAC"],"title":"2001
+        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2001 Environmental Sustainability Index (ESI) utilizes a refined methodology
+        based on the 2000 Pilot ESI effort, to construct an index covering \n\n122
+        countries that measures the overall progress towards environmental sustainability.
+        The index is a composite measure of the current status of a nation''s environmental
+        systems, \n\npressures on those systems, human vulnerability to environmental
+        change, national capacity to respond, and contributions to global environmental
+        stewardship. The refinements included the \n\naddition and deletion of indicators,
+        filling gaps in data coverage, new data sets, and the modification of the
+        aggregation scheme. The index was unveiled at the World Economic Forum''s
+        \n\nannual meeting, January 2001, Davos, Switzerland. The 2001 ESI is the
+        result of collaboration among the World Economic Forum (WEF), Yale Center
+        for Environmental Law and Policy (YCELP), \n\nand the Columbia University
+        Center for International Earth Science Information Network (CIESIN)","has_granules":false,"orbit_parameters":{},"id":"C1000000220-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4X34VDM"}]}],"facets":[{"field":"project","value-counts":[["2011_AN_NASA",22],["2011_GR_NASA",23],["2012_GR_NASA",23],["2013_AN_NASA",25],["2013_GR_NASA",25],["2014_AN_NASA",22],["2014_GR_NASA",22],["2015_AN_NASA",22],["AQUA",155],["AURA",95],["CALIPSO",52],["CERES",94],["CLIVAR",27],["COML",48],["CWIC",209],["DISCOVER",35],["DODS",179],["EOS",80],["EOSDIS",720],["ERA40",34]]},{"field":"sensor","value-counts":[["AA",118],["AF",118],["AIRS",64],["AMSR-E",53],["AN",118],["ANALYSIS",62],["AQUARIUS_RADIOMETER",47],["AQUARIUS_SCATTEROMETER",77],["AVHRR",45],["AVHRR
+        (ADVANCED VERY HIGH RESOLUTION RADIOMETER)",19],["AVHRR-2",49],["AVHRR-3",84],["BA",118],["BF",118],["CA",118],["CD",30],["CERES
+        SCANNER",66],["CERES-FM1",28],["CERES-FM2",19],["CERES-FM3",26]]},{"field":"two_d_coordinate_system_name","value-counts":[["MODIS
+        Tile SIN",86],["CALIPSO",49],["MISR",40],["WRS-2",9],["MODIS Tile EASE",8],["WRS-1",2]]},{"field":"processing_level_id","value-counts":[["3",1043],["2",394],["1B",119],["Level
+        2",77],["4",66],["Level 3",62],["1",60],["2P",36],["1A",22],["2G",12],["Level
+        1",7],["0",6],["L1T",6],["2A",4],["3U",2],["1T",1],["2B",1]]},{"field":"detailed_variable","value-counts":[["3
+        HOUR MAXIMUM TEMPERATURE",16],["3 HOUR MINIMUM TEMPERATURE",13],["AEROSOL
+        OPTICAL THICKNESS",9],["AEROSOL REFLECTANCE",8],["ANGSTROM EXPONENT",6],["BLENDED
+        SEA SURFACE TEMPERATURE",32],["BULK SEA SURFACE TEMPERATURE",25],["CARBON
+        TETRACHLORIDE",6],["CFC-11",16],["CFC-12",13],["CLOUD COVER",9],["CO2",9],["CONTINENTAL
+        SHELVES",6],["CORALS",25],["DEW POINT TEMPERATURE",7],["ENSO",18],["FOUNDATION
+        SEA SURFACE TEMPERATURE",16],["GLOBAL THREATENED SPECIES",9],["GREENHOUSE
+        GASES",12],["HUMIDITY",48]]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":9,"value":"AQUACULTURE"},{"count":30,"value":"FISHERIES"}],"count":36,"value":"AGRICULTURAL
+        AQUATIC SCIENCES"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":14,"value":"FERTILIZERS"},{"count":12,"value":"PESTICIDES"}],"count":22,"value":"AGRICULTURAL
+        CHEMICALS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":4,"value":"AGRICULTURAL
+        EQUIPMENT"},{"count":3,"value":"FARM STRUCTURES"}],"count":17,"value":"AGRICULTURAL
+        ENGINEERING"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":40,"value":"CROP/PLANT
+        YIELDS"},{"count":18,"value":"CROPPING SYSTEMS"},{"count":19,"value":"IRRIGATION"},{"count":25,"value":"PLANT
+        BREEDING AND GENETICS"},{"count":12,"value":"PLANT DISEASES/DISORDERS/PESTS"}],"count":91,"value":"AGRICULTURAL
+        PLANT SCIENCE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"CROP/PLANT
+        YIELDS"}],"count":1,"value":"AGRICULTURAL PLANT SCIENCES"}],"count":309,"value":"AGRICULTURE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":52,"value":"AEROSOL
+        BACKSCATTER"},{"count":82,"value":"AEROSOL EXTINCTION"},{"count":2,"value":"AEROSOL
+        FORWARD SCATTER"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":79,"value":"AEROSOL
+        OPTICAL DEPTH/THICKNESS"},{"count":67,"value":"AEROSOL PARTICLE PROPERTIES"}],"count":281,"value":"AEROSOLS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":55,"value":"CARBON
+        MONOXIDE"},{"count":66,"value":"EMISSIONS"},{"count":3,"value":"LEAD"},{"count":34,"value":"NITROGEN
+        OXIDES"},{"count":1,"value":"OZONE"}],"count":337,"value":"AIR QUALITY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":113,"value":"BAROMETRIC
+        ALTITUDE"},{"count":325,"value":"GEOPOTENTIAL HEIGHT"},{"count":1,"value":"MESOPAUSE"},{"count":135,"value":"PLANETARY
+        BOUNDARY LAYER HEIGHT"},{"count":7,"value":"STATION HEIGHT"}],"count":375,"value":"ALTITUDE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"AMMONIA"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":282,"value":"CARBON
+        AND HYDROCARBON COMPOUNDS"},{"count":7,"value":"CARBON DIOXIDE"},{"count":1,"value":"EMISSIONS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":90,"value":"HALOCARBONS
+        AND HALOGENS"}],"count":633,"value":"ATMOSPHERIC CHEMISTRY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":6,"value":"CARBON
+        DIOXIDE"},{"count":13,"value":"CARBON MONOXIDE"},{"count":1,"value":"FORMALDEHYDE"},{"count":1,"value":"METHANE"},{"count":2,"value":"NON-METHANE
+        HYDROCARBONS"}],"count":19,"value":"ATMOSPHERIC CHEMISTRY/CARBON AND HYDROCARBON
+        COMPOUNDS"}],"count":2377,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":3,"value":"ACORN
+        WORMS"},{"count":8,"value":"ARROW WORMS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":65,"value":"ARTHROPODS"},{"count":4,"value":"BRYOZOANS/MOSS
+        ANIMALS"},{"count":4,"value":"BURROWS/SPOON WORMS"}],"count":105,"value":"ANIMALS/INVERTEBRATES"},{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":29,"value":"AMPHIBIANS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":39,"value":"BIRDS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":55,"value":"FISH"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":33,"value":"MAMMALS"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":19,"value":"REPTILES"}],"count":118,"value":"ANIMALS/VERTEBRATES"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":4,"value":"CYANOBACTERIA
+        (BLUE-GREEN ALGAE)"}],"count":10,"value":"BACTERIA/ARCHAEA"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":8,"value":"LICHENS"},{"count":4,"value":"MUSHROOMS"},{"count":4,"value":"SLIME
+        MOLDS"},{"count":5,"value":"YEASTS/TRUFFLES"}],"count":16,"value":"FUNGI"},{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[],"count":17,"value":"ANGIOSPERMS
+        (FLOWERING PLANTS)"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":9,"value":"FERNS
+        AND ALLIES"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":7,"value":"GYMNOSPERMS"},{"count":8,"value":"MACROALGAE
+        (SEAWEEDS)"},{"subfields":["variable_level_2"],"variable_level_2":[],"count":16,"value":"MICROALGAE"}],"count":63,"value":"PLANTS"}],"count":230,"value":"BIOLOGICAL
+        CLASSIFICATION"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":2,"value":"SOIL
+        MOISTURE/WATER CONTENT"}],"count":2,"value":"SOILS"}],"count":2,"value":"BIOOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"EMISSIONS"}],"count":1,"value":"AIR
+        QUALITY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":35,"value":"BENTHIC
+        HABITAT"},{"count":28,"value":"COASTAL HABITAT"},{"count":10,"value":"DEMERSAL
+        HABITAT"},{"count":16,"value":"ESTUARINE HABITAT"},{"count":22,"value":"LAKES"}],"count":203,"value":"AQUATIC
+        ECOSYSTEMS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":2,"value":"SURFACE
+        WINDS"}],"count":2,"value":"ATMOSPHERIC WINDS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"BIODIVERSITY
+        FUNCTIONS"},{"count":12,"value":"BIOGEOCHEMICAL CYCLES"},{"count":10,"value":"BIOMASS"},{"count":1,"value":"CANOPY
+        CHARACTERISTICS"},{"count":1,"value":"CARBON AND HYDROCARBON COMPOUNDS"}],"count":306,"value":"ECOLOGICAL
+        DYNAMICS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"NUCLEAR
+        RADIATION"}],"count":1,"value":"ENVIRONMENTAL IMPACT"}],"count":818,"value":"BIOSPHERE"}],"count":5774,"value":"EARTH
+        SCIENCE"},{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"DESKTOP
+        GEOGRAPHIC INFORMATION SYSTEMS"},{"count":1,"value":"WEB-BASED GEOGRAPHIC
+        INFORMATION SYSTEMS"}],"count":1,"value":"GEOGRAPHIC INFORMATION SYSTEMS"},{"count":4,"value":"VISUALIZATION/IMAGE
+        PROCESSING"}],"count":5,"value":"DATA ANALYSIS AND VISUALIZATION"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"FLOODS"}],"count":1,"value":"HYDROLOGICAL
+        ADVISORIES"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"SEVERE
+        WEATHER"}],"count":1,"value":"WEATHER/CLIMATE ADVISORIES"}],"count":1,"value":"ENVIRONMENTAL
+        ADVISORIES"},{"subfields":["term"],"term":[{"count":1,"value":"GEOLOGIC/TECTONIC/PALEOCLIMATE
+        MODELS"}],"count":1,"value":"MODELS"},{"subfields":["term"],"term":[{"count":1,"value":"SUBSCRIPTION
+        SERVICES"}],"count":1,"value":"REFERENCE AND INFORMATION SERVICES"}],"count":6,"value":"EARTH
+        SCIENCE SERVICES"},{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"count":42,"value":"OCEAN
+        COLOR"}],"count":42,"value":"OCEAN OPTICS"}],"count":42,"value":"OCEANS"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+df73fb8ade26e591042ed48bca461a7ff4fd1c18:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:14:29 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '6202'
+      cmr-took:
+      - '758'
+      cmr-request-id:
+      - 48e7c87c-7d73-4c4d-a9af-7908a0f6bfe5
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:14:30.009Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026point=0%2C0\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2006-06-30T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_A_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_A","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) launched by NASA in 2002 on board the Aqua satellite platform
+        (a second series is on the Terra platform) to study global dynamics of the
+        Earths atmosphere, land and oceans. MODIS captures data in 36 spectral bands
+        ranging in wavelength from 0.4 um to 14.4 um and at varying spatial resolutions
+        (2 bands at 250 m, 5 bands at 500 m and 29 bands at 1 km). For the sea surface
+        temperature (SST) products from this radiometer channels in the 4, 11 and
+        12 um spectrum are used. The Aqua platform is in a sun synchronous, near polar
+        orbit at 705 km altitude and the MODIS instrument images the entire Earth
+        every 1 to 2 days. The production of the MODIS L2P SST data as part of the
+        Group for High Resolution Sea Surface Temperature (GHRSST) is a joint collaboration
+        between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean Biology Processing
+        Group (OBPG), and the Rosenstiel School of Marine and Atmospheric Science
+        (RSMAS). RSMAS is responsible for sea surface temperature algorithm development,
+        error statistics and quality flagging, while the OBPG is NASA ground data
+        system for production of daily MODIS ocean products in HDF file format. JPL
+        acquires MODIS ocean granules from the OBPG in near realtime and reformats
+        them to the GHRSST L2P netCDF specification with complete metadata. Data consists
+        of global coverage at 1 km resolution with approximately 300+ five minute
+        observation granules per day. For nighttime data both SST from the 11-12 um,
+        and 4 um bands are available. Ocean chlorophyll a and K490 diffuse attenuation
+        coefficient data are also available for daytime periods as non standard L2P
+        core fields. Note that these ocean color data do not represent the most recent
+        version processed by the OBPG and may not be of research quality.\n","has_granules":false,"orbit_parameters":{},"id":"C1224520058-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_A/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2006-10-01T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_T_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_T","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) launched by NASA in 1999 on board the Terra satellite platform
+        (a second series is on the Aqua platform) to study global dynamics of the
+        Earths atmosphere, land and oceans. MODIS captures data in 36 spectral bands
+        ranging in wavelength from 0.4 um to 14.4 um and at varying spatial resolutions
+        (2 bands at 250 m, 5 bands at 500 m and 29 bands at 1 km). For the sea surface
+        temperature (SST) products from this radiometer channels in the 4, 11 and
+        12 um spectrum are used. The Terra platform is in a sun synchronous, near
+        polar orbit at 705 km altitude and the MODIS instrument images the entire
+        Earth every 1 to 2 days. The production of the MODIS L2P SST data as part
+        of the Group for High Resolution Sea Surface Temperature (GHRSST) is a joint
+        collaboration between the NASA Jet Propulsion Laboratory (JPL), the NASA Ocean
+        Biology Processing Group (OBPG), and the Rosenstiel School of Marine and Atmospheric
+        Science (RSMAS). RSMAS is responsible for sea surface temperature algorithm
+        development, error statistics and quality flagging, while the OBPG is NASA
+        ground data system for production of daily MODIS ocean products in HDF file
+        format. JPL acquires MODIS ocean granules from the OBPG in near realtime and
+        reformats them to the GHRSST L2P netCDF specification with complete metadata.
+        Data consists of global coverage at 1 km resolution with approximately 300+
+        five minute observation granules per day. For nighttime data both SST from
+        the 11-12 um, and 4 um bands are available. Ocean chlorophyll a and K490 diffuse
+        attenuation coefficient data are also available for daytime periods as non
+        standard L2P core fields. Note that these ocean color data do not represent
+        the most recent version processed by the OBPG and may not be of research quality.\n","has_granules":false,"orbit_parameters":{},"id":"C1224520120-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_T/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2014-05-20T00:00:00.000Z","dif_ids":["GHRSST-VIIRS_NPP-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging Radiometer
+        Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced Clear-Sky
+        Processor for Ocean (ACSPO) (GDS version 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-VIIRS_NPP-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging
+        Radiometer Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced
+        Clear-Sky Processor for Ocean (ACSPO) (GDS version 2)\n","coordinate_system":"CARTESIAN","summary":"\nJoint
+        Polar Satellite System (JPSS), starting with S-NPP launched on 28 October
+        2011, is the new generation of the US Polar Operational Environmental Satellites
+        (POES). As during the POES era, NOAA is responsible for all JPSS products,
+        including Level 2 Visible Infrared Imaging Radiometer Suite (VIIRS) SST derived
+        using NOAA heritage Advanced Clear-Sky Processor for Ocean (ACSPO) system
+        at the native sensor resolution. VIIRS is a whiskbroom scanning radiometer
+        which takes measurements in the cross-track direction within a field of regard
+        of 112.56 degrees, using 16 detectors and double-side mirror assembly. At
+        a nominal altitude of 829 km, the swath width is 3060 km, providing full daily
+        coverage both in the day and night side of the Earth. VIIRS has 22 spectral
+        bands covering the spectrum from 0.4-12 micrometers, including 16 moderate
+        resolution bands (M-bands). In addition to pixel-level earth locations, Sun-Sensor
+        geometry, and ancillary data from NCEP global weather forecast, ACSPO inputs
+        are 3 brightness temperatures (BTs) in M12 (3.7microns), M15 (11microns),
+        and M16 (12microns), and 2 reflectances in M5 (0.67microns) and M7 (0.87microns)
+        bands, used for cloud identification. ACSPO output files are in netcdf4 format
+        compliant with the GHRSST Data Specification version 2 (GDS2). Each output
+        file (granule) contains 10 minutes of data. In each valid water pixel (defined
+        as ocean, sea, lake or river, up to 5 km inland; fill values are reported
+        in invalid pixels, at \u003e5 km inland), the following layers are reported,
+        among others: BTs in M12, 15, and 16 (original radiances are included for
+        those users interested in direct radiance assimilation, e.g., NOAA NCEP, NASA
+        GMAO); SSTs derived from BTs using multi-channel SST (MCSST; night) and Non-Linear
+        SST (NLSST; day) algorithms (Petrenko et al., 2014); and ACSPO clear-sky mask
+        (ACSM; provided in each pixel as part of l2p_flags) (Petrenko et al., 2010).
+        We only recommend using the ACSM confidently clear pixels (equivalent to GDS2
+        quality level=5, also reported for each pixel). The ACSM also provides day/night,
+        land, ice, twilight, and glint flags. Note that users of ACSPO data have the
+        flexibility to ignore the ACSM, derive their own clear-sky mask, and use BTs
+        and SSTs in those pixels. They may also ignore ACSPO SST, and derive their
+        own SST from the original BTs. ACSPO VIIRS products are monitored and validated
+        against in situ data (Xu and Ignatov, 2014) in SQUAM (Dash et al, 2010) and
+        MICROS (Liang and Ignatov, 2011).\n","has_granules":false,"orbit_parameters":{},"id":"C1224519979-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/VIIRS_NPP/OSPO/\n"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1997-07-01T00:00:00.000Z","dif_ids":["GGP-SG-CORMIN"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":" GGP - Corrected
+        Minute Data","data_center":"SCIOPS","short_name":"GGP-SG-CORMIN","organizations":["DE/GFZ/ISDC"],"title":"
+        GGP - Corrected Minute Data","coordinate_system":"CARTESIAN","summary":"Global
+        Geodynamics Project (GGP) - Earthquake Data","has_granules":false,"orbit_parameters":{},"id":"C1214586854-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        GGP date are available via the ISDC Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/ggp/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Saint
+        Louis University, Department of Earth and Atmospheric Sciences, GGP Homepage.\n      ","hreflang":"en-US","href":"http://www.eas.slu.edu/GGP/ggphome.html"}]},{"boxes":["-5
+        -100 67 18","-60 15 30 150"],"dif_ids":["NOAA_NCDC_PALEO_2001-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":" Late Paleocene
+        Osmium Isotope Data  ","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2001-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Late Paleocene Osmium Isotope Data  ","coordinate_system":"CARTESIAN","summary":"Marine
+        Osmium records during the late Paleocene thermal maximum  interpreted as\nproxies
+        of terrestrial chemical weathering.\n\nCore DSDP-213 Indian Ocean  \nCore
+        DSDP-549 North Atlantic Ocean","has_granules":false,"orbit_parameters":{},"id":"C1215196946-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data files\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Access
+        to documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/readme_ravizza2001.txt"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_93-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"
+        Time Dependent Ice Coverage and Ice Topography Through the Glacial Cycle","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_93-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Time Dependent Ice Coverage and Ice Topography Through
+        the Glacial Cycle","coordinate_system":"CARTESIAN","summary":"Topography and
+        ice cover data files from the ICE-4G model. Data consists of\ntopographical
+        heights at 1 Kyr intervals since the last glacial  maximum.\nTopographical
+        heights are relative to paleo sea level.\n\nThe second data set consists of
+        Ice-cover data at 1 Kyr intervals since the\nlast glacial maximum.","has_granules":false,"orbit_parameters":{},"id":"C1215197136-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to ice topography data\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Ice
+        cover reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/peltice.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Topography
+        reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/pelttopo.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         ice
+        topography data set documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/readme_ice_topography.txt"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1981-01-01T00:00:00.000Z","dif_ids":["GLCF_GLC_1km_1.0"],"version_id":"1.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1
+        Kilometer Land Cover Product from the University of Maryland","data_center":"SCIOPS","short_name":"GLCF_GLC_1km","organizations":["UMD/GLCF"],"title":"1
+        Kilometer Land Cover Product from the University of Maryland","coordinate_system":"CARTESIAN","summary":"This
+        summary is adapted from the One Kilometer Global Land Cover\nProject Document-Data
+        Set Description web page, which may be found at\nthe following URL: \"http://glcf.umiacs.umd.edu/data/landcover/index.shtml\".\n      \n      To
+        develop improved methodologies for global land cover\n      classifications
+        as well as to provide global land cover products for immediate use in global
+        change research, University of Maryland''s\n      Global Land Cover Facility
+        (GLCF) and NASA have employed the\n      NASA/NOAA Pathfinder Land (PAL) data
+        set with a spatial resolution of 1km. This data set has a length of record
+        of 14 years (1981-1994),\n      providing the ability to test the stability
+        of classification\n      algorithms. Furthermore, this data set includes red,
+        infrared, and\n      thermal bands in addition to the Normalized Difference
+        Vegetation\n      Index (NDVI). Inclusion of these additional bands improves\n      discrimination
+        between cover types.\n      \n      To identify the pixels to be used for
+        training of the 1 km AVHRR\n      Pathfinder data, the investigators collected
+        a total of over 200\n      high resolution scenes of which they were confident
+        of which cover type\n      occurs.  Most of the scenes used were acquired
+        by the Landsat\n      Multispectral Scanner System (MSS), and a few by Landsat
+        Thematic\n      Mapper and the LISS (Linear Imaging Self-Scanning Sensor).\n      \n      Of
+        the initial 200 scenes, the investigators considered 156 suitable for\n      interpretation.
+        Scenes were considered unsuitable if haze or poor\n      quality data obscured
+        the scene or if the cover types in the scene\n      could not be visually
+        distinguished. For most scenes, the\n      investigators aimed to identify
+        only one cover type within the\n      scene. It was possible, however, to
+        identify more than one cover type\n      in some scenes if croplands were
+        visually identifiable based on the\n      spatial patterns of fields or if
+        vegetation maps showed the presence\n      of clearly identifiable cover types.\n      \n      The
+        second part of the study involved deriving a global land cover\n      classififcation
+        product. The product was derived by testing several\n      metrics that describe
+        the temporal dynamics of vegetation over an\n      annual cycle. These metrics
+        have the potential to be used as input\n      variables to a global land cover
+        classification. The tested metrics\n      are based on 1) the ratio between
+        surface temperature and NDVI, 2)\n      seasonal metrics derived from the
+        NDVI temporal profile such as length\n      of growing season, 3) a rule-based
+        approach that determines cover type\n      through a series of hierarchical
+        trees based on surface temperature\n      and NDVI values, and 4) annual mean,
+        maximum, minimum, and amplitude\n      values for all optical and thermal
+        channels in the AVHRR Pathfinder\n      Land (PAL) data. These metrics were
+        applied to 1984 PAL data at 8km\n      resolution to derive a global land
+        cover classification product using\n      a decision tree classifier. This
+        method was then applied to AVHRR\n      data from other years and higher spatial
+        resolutions.","has_granules":false,"time_end":"1994-01-01T00:00:00.000Z","orbit_parameters":{},"id":"C1214608509-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"1
+        Kilometer Land Cover Product from the University of Maryland.","hreflang":"en-US","href":"http://glcfapp.umiacs.umd.edu:8080/esdi/index.jsp?productID=6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"1
+        Kilometer Land Cover Product from the University of Maryland.","hreflang":"en-US","href":"http://glcf.umiacs.umd.edu/data/landcover/data.shtml"}]},{"boxes":["-71
+        0 72 -1"],"dif_ids":["gov.noaa.ngdc.mgg.geophysics.G01414_1999 Edition"],"version_id":"1999
+        Edition","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1-deg x 1-deg
+        Terrestrial Mean Free-Air Anomalies","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.geophysics.G01414","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"1-deg
+        x 1-deg Terrestrial Mean Free-Air Anomalies","coordinate_system":"CARTESIAN","summary":"The
+        1x1 degree Terrestrial Mean Free-Air Gravity Anomaly and Geoid Undulations
+        Data Base was compiled and developed by the Ohio State University. This data
+        base was received in March 1993. Principal gravity parameters include mean
+        elevation, mean free-air anomaly and source id. The gravity anomaly computation
+        uses the Geodetic Reference System 1967 (GRS 67) theoretical formula. The
+        data are global in coverage where data are available.","has_granules":false,"orbit_parameters":{},"id":"C1214558130-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/fliers/se-0703.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/gravity/1999/document/html/tablegri.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.geophysics:G01414"}]},{"boxes":["-45.69
+        -63.51 78.87 170.42"],"time_start":"2001-05-28T00:00:00.000Z","dif_ids":["CH-OG-1-GPS-10S_0.0"],"version_id":"0.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"10
+        sec GPS ground tracking data","data_center":"SCIOPS","short_name":"CH-OG-1-GPS-10S","organizations":["DE/GFZ/ISDC"],"title":"10
+        sec GPS ground tracking data","coordinate_system":"CARTESIAN","summary":"This
+        data set comprises GPS ground data of a sample rate of 10 sec, generated\n      by
+        decoding and sampling GPS high  rate ground data. This raw data passed no\n      quality
+        control. The data are given in the Rinex 2.1 format.","has_granules":false,"orbit_parameters":{},"id":"C1214586614-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        CHAMP Rapid Science Orbit dataset are available via the ISDC\n         Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/champ"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GFZ
+        Potsdam, Section 1.2., Gravity Missions and Analysis home page.\n      ","hreflang":"en-US","href":"http://www.gfz-potsdam.de/portal/-"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_2005-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"11,000
+        Year Sunspot Number Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"11,000 Year Sunspot Number Reconstruction","coordinate_system":"CARTESIAN","summary":"From
+        http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html\n\nDirect
+        observations of sunspot numbers are available for the past\nfour centuries,
+        but longer time series are required, for example,\nfor the identification
+        of a possible solar influence on climate and\nfor testing models of the solar
+        dynamo. Here we report a\nreconstruction of the sunspot number covering the
+        past 11,400\nyears, based on dendrochronologically dated radiocarbon concentrations.\nWe
+        combine physics-based models for each of the\nprocesses connecting the radiocarbon
+        concentration with sunspot\nnumber. According to our reconstruction, the level
+        of solar\nactivity during the past 70 years is exceptional, and the previous\nperiod
+        of equally high activity occurred more than 8,000 years\nago. We find that
+        during the past 11,400 years the Sun spent only\nof the order of 10% of the
+        time at a similarly high level of\nmagnetic activity and almost all of the
+        earlier high-activity\nperiods were shorter than the present episode. Although
+        the\nrarity of the current episode of high average sunspot numbers\nmay indicate
+        that the Sun has contributed to the unusual climate\nchange during the twentieth
+        century, we point out that solar\nvariability is unlikely to have been the
+        dominant cause of the\nstrong warming during the past three decades.\n\nThe
+        series of reconstructed 10-yr averaged sunspot numbers with their 68%\nuncertainty.
+        Years are given BP (before present), i.e. the calendar AD year,\nYad, is related
+        to the  BP year, Ybp, as Yc=1950-Ybp. The tabulated years\ncorrespond to centers
+        of the corresponding 10-year intervals. Negative values\nare artifacts and
+        are consistent with zero within the error limits.","has_granules":false,"orbit_parameters":{},"id":"C1215197053-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        and further information on sunspot number reconstruction\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html"}]},{"boxes":["-36.9
+        -157.4 71.3 147.29"],"time_start":"2008-01-16T00:00:00.000Z","dif_ids":["14c_of_soil_co2_from_ipy_itex_cross_site_comparison"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"14C of soil CO2
+        from IPY ITEX Cross Site Comparison","data_center":"SCIOPS","short_name":"14c_of_soil_co2_from_ipy_itex_cross_site_comparison","organizations":["ACADIS"],"title":"14C
+        of soil CO2 from IPY ITEX Cross Site Comparison","coordinate_system":"CARTESIAN","summary":"Study
+        sites: Toolik Lake Field Station Alaska, USA 68.63 N, 149.57 W; Atqasuk, Alaska
+        USA 70.45 N, 157.40 W; Barrow, Alaska, USA 71.30 N, 156.67 W; Latnjajaure,
+        Sweden 68.35 N, 18.50 E; Falls Creek, Australia: Site 2-unburned 36.90 S 147.29
+        E; Site 3-burned 36.89 S 147.28 E. Additional sites will be added summer 2008,
+        but the exact sites are not finalized. Purpose: Collect soil CO2 for analysis
+        of radiocarbon to evaluate the age of the carbon respired in controls and
+        warmed plots from across the ITEX network.  Treatments: control and ITEX OTC
+        warming experiment (1994-2007). Design: 5 replicates of each treatment at
+        dry site and moist site. Sampling frequency: Once per peak season.","has_granules":false,"time_end":"2008-01-21T00:00:00.000Z","orbit_parameters":{},"id":"C1214602443-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Data
+        Center top-level access page for this resource\n      ","hreflang":"en-US","href":"http://www.aoncadis.org/dataset/id/79208243-d496-11de-892a-00c0f03d5b7c.html"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2000-12-07T00:00:00.000Z","dif_ids":["iucn_protected_areas"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1997 UN List
+        of National Protected Areas","data_center":"SCIOPS","short_name":"iucn_protected_areas","organizations":["UNEP/WCMC/PAP"],"title":"1997
+        UN List of National Protected Areas","coordinate_system":"CARTESIAN","summary":"This
+        prototype database has been developed by UNEP-WCMC in\n      collaboration
+        with a number of partners. The IUCN World Commission on\n      Protected Areas
+        and UNEP-WCMC have collaborated since the early 1980s\n      in developing
+        a global protected areas database. More recently,\n      UNEP-WCMC has been
+        working with the European Environment Agency, and\n      its Nature Conservation
+        Topic Centre in the development of a common\n      European Protected Areas
+        Database. The data collected under this joint\n      effort are reflected
+        in the WWW version of the database.","has_granules":false,"orbit_parameters":{},"id":"C1214612993-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false},{"boxes":["-90
+        -180 90 180"],"time_start":"1998-01-17T00:00:00.000Z","dif_ids":["NOAA_BLEACH98"],"version_id":"Not
+        provided","updated":"2015-12-01T00:00:00.000Z","dataset_id":"1998 Animations
+        of Coral Bleaching Hotspots from NOAA/NESDIS","data_center":"SCIOPS","short_name":"NOAA_BLEACH98","organizations":["DOC/NOAA/NESDIS/OSDPD"],"title":"1998
+        Animations of Coral Bleaching Hotspots from NOAA/NESDIS","coordinate_system":"CARTESIAN","summary":"The
+        year of 1998 was a difficult time for the worlds coral reefs, with\nabnormally
+        warm sea surface temperatures (SST''s) causing widespread\ncoral bleaching.
+        The animations and images on this page show the\ndifferences between the climatological
+        maximum monthly mean SST\n(i.e. the expected summer-time maximum) and the
+        satellite-derived\nNOAA/NESDIS night time SST fields. When the night time
+        SST field is\nwarmer than the expected summer-time maximum by 1 degree C,
+        the\nregion is shown in orange as a potential coral bleaching hotspot.\n\nNOAA/NESDIS
+        oceanographer, Dr. Al Strong, has collected reports of\ncoral bleaching from
+        an informal network of coral\nreef researchers and observers. These reports
+        have been overlayed\non the following 1998 animations and images:\n\n\nAnimation
+        of Great Barrier Reef Bleaching Event, El Nino,\n1/17/98-4/17/98, (1.6 mb)\n\nAnimation
+        of Indian Ocean Bleaching Event, El Nino/La Nina transition\nperiod , 3/24/98-7/24/98,
+        (1.0 mb)\n\nAnimation of Bahrain, Red Sea and Eastern Pacific Bleaching Events,\nearly
+        La Nina, 7/4/98-10/27/98, (0.8 mb)\n\nAnimation of Western Hemisphere Bleaching
+        Events, early La Nina,\n6/20/98-11/7 /98, (1.1 mb)\n\nAnimation of HotSpots
+        during El Nino,1/3/98-6/6/98 in the Western\nHemisphere, (2.0 mb)\n\nIndian
+        Ocean Bleaching Event - time series , 3/24/98-8/11/98\n\nWestern Hemisphere
+        Bleaching Event - time series, 6/20/98-9/8/98","has_granules":false,"time_end":"1998-09-08T00:00:00.000Z","orbit_parameters":{},"id":"C1214419724-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         NOAA/NESDIS
+        1998 Coral Bleaching HotSpots\n      ","hreflang":"en-US","href":"http://www.osdpd.noaa.gov/ml/ocean/cb/hotspots_1998anim.html"}]},{"boxes":["-5
+        -45 90 50"],"time_start":"1992-04-01T00:00:00.000Z","dif_ids":["1KM.AVHRR.TOVS.SHARP2A"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1KM NOAA AVHRR
+        and TOVS Digital CCT product in SHARP level 2A format","data_center":"ESA","short_name":"1KM.AVHRR.TOVS.SHARP2A","organizations":["ESA/EARTHNET"],"title":"1KM
+        NOAA AVHRR and TOVS Digital CCT product in SHARP level 2A format","coordinate_system":"CARTESIAN","summary":"The
+        1 km AVHRR Global Land Data set project is an\n      international effort
+        to acquire, archive, process and\n      distribute the data of the entire
+        global land\n      surface observed by the NOAA/AVHRR\n      satellite mission
+        at 1 km resolution, in order to\n      meet the needs of the international\n      science
+        community, (IGBP, 1992). A\n      network of 29 High Resolution Picture\n      Transmission
+        (HRPT) stations, along with data\n      recorded by the NOAA, has been acquiring
+        daily global\n      land coverage from the NOAA-11 satellite since the first
+        of April\n      1992. The continuous flow of data coming from these stations
+        is\n      routinely archived by USGS and ESA. A common archive exists at\n      the
+        EROS data centre of the USGS and at the ESRIN of ESA. The\n      number of
+        pass acquired per year is around 15000. The project\n      intends to process
+        all acquired data to generate\n      for any 10-day period in the project\n      time-span
+        (April 92 - September 94) a land composite\n      product (1444k) covering
+        the whole world surface, as defined by\n      Townsend et al., 1992.\n      AVHRR
+        floating scenes are provided in SHARP\n      format. SHARP is the ESA Earthnet
+        format for\n      AVHRR and TOVS data generated to provide an easy\n      data
+        access for the international Remote sensing user\n      community. SHARP-1
+        consists of two volumes: AVHRR\n      volume and TOVS volume. In addition,
+        with the objective\n      of providing the user with ready-to-use data,\n      a
+        family of higher level products has been proposed\n      by Earthnet: this
+        is SHARP level-2.\n      \n      \n      \n      \n      The SHARP level-2A
+        (Calibrated Product) contains\n      calibrated data from the AVHRR channels
+        (i.e.\n      level 1 data calibrated and converted to\n      measurements
+        of Equivalent Reflectance, spectral\n      Radiance and Brightness Temperature)
+        and a classification of the\n      image.\n      \n      \n      \n      \n      Each
+        pixel contains image data (calibrated), a\n      classification and geographical
+        information\n      (boundaries, coastlines and lat/long grid\n      flags).
+        Each pixel consists of 2 bytes; 10 bits are\n      used for image data, 3
+        bits for the\n      classification and 3 bits for geographical data.\n      The
+        classification includes land, cloud, sea,\n      snow/ice and unclassified
+        pixels.\n      \n      \n      \n      \n      SHARP-2 products are produced
+        from archived SHARP-1\n      day-time data.  SHARP-2 products will not be
+        archived. TOVS data\n      remains the same as for SHARP-1 products.\n      \n      \n      \n      \n      For
+        the Level 2A product, Level 1 raw data is\n      calibrated and classified
+        utilizing state-of-the-art algorithms.\n      The visible channels (1 and
+        2) are converted from raw data to\n      Equivalent Reflectance, while channels
+        4 and 5 (infrared) are\n      converted to Brightness Temperature, corrected
+        by nonlinear\n      effects, and the third infrared channel (3) is converted
+        to Spectral\n      Radiance.\n      \n      \n      \n      \n      Image
+        data in each band of the Level 2A product:\n      \n      ---------------\n      Band
+        1: Channel 1 Equivalent Reflectance\n      Band 2: Channel 2 Equivalent Reflectance\n      Band
+        3: Channel 3 Spectral Radiance\n      Band 4: Channel 4 Brightness Temperature\n      Band
+        5: Channel 5 Brightness Temperature\n      ---------------\n      Note: ''Band''
+        refers to the output data structure of\n      the SHARP products.\n      ''Channel''
+        refers to the input satellite data acquired\n      in different\n      wavelengths.\n      \n      \n      \n      \n      This
+        product can be produced with data from all the\n      operating NOAA satellites;
+        however, if the data is derived from the\n      even-numbered satellites,
+        band 5 is empty.\n      \n      \n      \n      \n      Geometric Correction:\n      Image
+        navigation (location) is carried out during\n      Level 1 data generation,
+        using the orbital model for\n      the satellite location and is tested by
+        an operator who carries out\n      further correction if necessary.  SHARP-2
+        products are in the\n      original spacecraft projection.  A location grid
+        of tie points\n      (lat/long) is given in the suffix data (every 16th image
+        file\n      record).\n      \n      \n      \n      \n      To order data,
+        please see\n      \"http://earth.esa.int/helpandmail/help_order.html\"","has_granules":false,"orbit_parameters":{},"id":"C1214560039-ESA","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         See
+        ''SHARP-2 Technical Specification of Format'' in the NOAA\n         Document
+        Library\n      ","hreflang":"en-US","href":"http://earth.esa.int/esa_doc/doc_tpm.html#_NOA"}]},{"boxes":["-5
+        -45 90 50"],"time_start":"1992-04-01T00:00:00.000Z","dif_ids":["1KM.AVHRR.TOVS.SHARP2B"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1KM NOAA AVHRR
+        and TOVS Digital CCT product in SHARP level 2B format","data_center":"ESA","short_name":"1KM.AVHRR.TOVS.SHARP2B","organizations":["ESA/EARTHNET"],"title":"1KM
+        NOAA AVHRR and TOVS Digital CCT product in SHARP level 2B format","coordinate_system":"CARTESIAN","summary":"The
+        1 km AVHRR Global Land Data set project is an\n                  international
+        effort\n                  to acquire, archive, process and distribute the
+        data\n                  of the entire\n                  global land surface
+        observed by the NOAA/AVHRR\n                  satellite mission at 1\n                  km
+        resolution, in order to meet the needs of the\n                  international
+        science\n                  community, (IGBP, 1992). A network of 29 High\n                  Resolution
+        Picture\n                  Transmission (HRPT) stations, along with data\n                  recorded
+        by the NOAA,\n                  has been acquiring daily global land coverage
+        from\n                  the NOAA-11\n                  satellite since the
+        first of April 1992. The\n                  continuous flow of data\n                  coming
+        from these stations is routinely archived by\n                  USGS and ESA.
+        A\n                  common archive exists at the EROS data centre of the\n                  USGS
+        and at the\n                  ESRIN of ESA. The number of pass acquired per
+        year is\n                  around\n                  15000. The project intends
+        to process all acquired\n                  data to generate\n                  for
+        any 10-days period in the project time-span\n                  (April 92 -
+        September\n                  94) a land composite product (1444k) covering
+        the\n                  whole world surface,\n                  as defined
+        by Townsend et al., 1992.\n                  \n                  \n                  \n                  \n                  AVHRR
+        floating scenes are provided in SHARP format.\n                  SHARP is
+        the ESA Earthnet format for AVHRR and\n                  TOVS data generated
+        to provide an easy\n                  data access for the international Remote
+        sensing user\n                  community.\n                  SHARP-1 consists
+        of two volumes: AVHRR volume and\n                  TOVS volume.  In order
+        to save user time in\n                  extracting from the raw data the useful\n                  quantities
+        needed for the problem at hand, a\n                  family of higher level
+        products has been proposed\n                  by Earthnet: this is SHARP level-2.\n                  \n                  \n                  \n                  \n                  The
+        SHARP level-2A (Geophysical Product) contains\n                  geophysical
+        parameters extracted from AVHRR\n                  raw data (Vegetation Index
+        and Sea\n                  Surface Temperature) as well as calibrated data
+        and a\n                  classification of the image.\n                  \n                  \n                  \n                  \n                  Each
+        pixel contains image data (calibrated), a\n                  classification
+        and geographical information\n                  (boundaries, coastlines and
+        lat/long grid\n                  flags). Each pixel consists of 2 bytes; 10
+        bits are\n                  used for image data, 3 bits for the classification\n                  and
+        3 bits for geographical data.\n                  The classification includes
+        land, cloud, sea,\n                  snow/ice and unclassified pixels.\n                  \n                  \n                  \n                  \n                  SHARP-2
+        products are produced from archived SHARP-1\n                  day-time data.\n                  SHARP-2
+        products will not be archived. TOVS data\n                  remains the same
+        as for SHARP-1 products.\n                  \n                  \n                  \n                  \n                  The
+        SHARP-2B product consists of:\n                  \n                  \n                  -
+        2 bands (1 and 5) containing class depending\n                  geophysical
+        parameters\n                  - 3 bands (2,3 and 4) containing calibrated
+        data\n                  converted in equivalent Reflectance (band 2),\n                  AVHRR
+        channel 3 spectral Radiance (band 3) and\n                  AVHRR channel
+        4 Brightness Temperature (band 4).\n                  \n                  \n                  \n                  \n                  Characteristics
+        of Band 1, Class dependent parameter:\n                  \n                  ---------------\n                  Land:
+        Normalized Difference Vegetation Index (NDVI)\n                  Sea: Equivalent
+        Reflectance from Channel 1\n                  cloud: Equivalent Reflectance
+        from Channel 1\n                  snow/ice: Equivalent Reflectance from Channel
+        1\n                  glint: Equivalent Reflectance from Channel 1\n                  unclass:
+        Equivalent Reflectance from Channel 1\n                  ------------\n                  \n                  Characteristics
+        of other Bands:\n                  \n                  ---------------\n                  Band
+        2: Channel 2 Equivalent Reflectance\n                  Band 3: Channel 3 Spectral
+        Radiance\n                  Band 4: Channel 4 Brightness Temperature\n                  Band
+        5 over sea: Sea Surface Temperature (SST)\n                  Band 5 over other
+        areas: Brightness Temperature from Channel 5\n                  -----------------\n                  \n                  Note:
+        ''Band'' refers to the output data structure of\n                  the SHARP\n                  products;
+        ''Channel'' refers to the input satellite\n                  data acquired\n                  in
+        different wavelengths.\n                  \n                  \n                  \n                  \n                  This
+        product can be produced with data from all the\n                  operating
+        NOAA\n                  satellites; however, if the data is derived from the\n                  even-numbered\n                  satellites,
+        band 5 is empty.\n                  \n                  \n                  \n                  \n                  Geometric
+        Correction:\n                  Image navigation (location) is carried out
+        during\n                  Level 1 data generation, using the orbital model
+        for\n                  the satellite\n                  location and is tested
+        by an operator who carries out\n                  further\n                  correction
+        if necessary.  SHARP-2 products are in the\n                  original\n                  spacecraft
+        projection.  A location grid of tie points\n                  (lat/long) is\n                  given
+        in the suffix data (every 16th image file\n                  record).\n                  \n                  \n                  \n                  \n                  To
+        order data, please see\n                  \"http://earth.esa.int/\"","has_granules":false,"orbit_parameters":{},"id":"C1214559954-ESA","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         See
+        ''SHARP-2 Technical Specification of Format'' in the NOAA\n         Document
+        Library\n      ","hreflang":"en-US","href":"http://earth.esa.int/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"0200-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO2003-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000 Year Hemispheric
+        Multi-proxy Temperature Reconstructions","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO2003-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000 Year Hemispheric Multi-proxy Temperature Reconstructions","coordinate_system":"CARTESIAN","summary":"Two
+        hemispheric multi-proxy temperature reconstructions (based on\nlocal-correlation
+        weighting, and areal weighting as described in Mann\nand Jones 2003). The
+        global mean shown in the paper is the average of\nthe two hemispheric reconstructions,
+        while the interhemispheric\ndifference is just NH-SH.\n\nAll series are anomalies
+        based on 1961-1990 instrumental reference\nperiod.\n\nAbstract (from the online
+        documentation)\nWe present reconstructions of Northern and Southern Hemisphere\nmean
+        surface temperature over the past two millennia based on\nhigh-resolution
+        ''proxy'' temperature data which retain\nmillennial-scale variability. These
+        reconstructions indicate\nthat late 20th century warmth is unprecedented for
+        at least\nroughly the past two millennia for the Northern Hemisphere.\nConclusions
+        for the Southern Hemisphere and global mean\ntemperature are limited by the
+        sparseness of available proxy\ndata in the Southern Hemisphere at present.","has_granules":false,"orbit_parameters":{},"id":"C1215199015-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/mann2003b/"}]},{"boxes":["0
+        -180 90 180"],"time_start":"0001-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO_2005-019"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000-Year Northern
+        Hemisphere Temperature Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-019","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000-Year Northern Hemisphere Temperature Reconstruction","coordinate_system":"CARTESIAN","summary":"A
+        number of reconstructions of millennial-scale climate variability have been\ncarried
+        out in order to understand patterns of natural climate variability, on\ndecade
+        to century timescales, and the role of anthropogenic forcing. These\nreconstructions
+        have mainly used tree-ring data and other data sets of annual\nto decadal
+        resolution. Lake and ocean sediments have a lower time resolution,\nbut provide
+        climate information at multicentennial timescales that may not be\ncaptured
+        by tree-ring data. Here we reconstruct Northern Hemisphere\ntemperatures for
+        the past 2,000 years by combining low-resolution proxies with\ntree-ring data,
+        using a wavelet transform technique to achieve\ntimescale-dependent processing
+        of the data. Our reconstruction shows larger\nmulticentennial variability
+        than most previous multi-proxy reconstructions, but\nagrees well with temperatures
+        reconstructed from borehole measurements and with\ntemperatures obtained with
+        a general circulation model. According to our\nreconstruction, high temperatures
+        - similar to those observed in the twentieth\ncentury before 1990- occurred
+        around AD 1000 to 1100, and minimum temperatures\nthat are about 0.7K below
+        the average of 1961-90 occurred around AD 1600. This\nlarge natural variability
+        in the past suggests an important role of natural\nmulticentennial variability
+        that is likely to continue.\n\nThis data set consists of reconstructed Northern
+        Hemisphere temperatures for\nthe past 2,000 years  calculated by combining
+        low-resolution proxies with\ntree-ring data,  using a wavelet transform technique
+        to achieve\ntimescale-dependent  processing of the data.\n\nAll data are given
+        as temperature anomalies (K) from the Northern Hemisphere\nannual mean  temperature
+        1961-90 average. Lack of data are indicated with\n-9.9999","has_granules":false,"time_end":"1979-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1215197080-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        on  Highly variable Northern Hemisphere temperatures\n         reconstructed
+        from low- and high-resolution proxy data\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/moberg2005/moberg2005.html"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["gov.noaa.ngdc.mgg.dem.301"],"version_id":"Not provided","updated":"2016-02-11T00:00:00.000Z","dataset_id":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.dem.301","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","coordinate_system":"CARTESIAN","summary":"Two-minute
+        gridded global relief for both ocean and land areas are available in the ETOPO2v2
+        (2006) database. ETOPO2v2 replaced ETOPO2 (2001). The historic 2-minute (ETOPO2v2)
+        and 5-minute (ETOPO5) data are deprecated, but still available. Please use
+        the new ETOPO1 Global Gridded Relief Model.","has_granules":false,"orbit_parameters":{},"id":"C1214558324-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         2-minute
+        Gridded Global Relief Data (ETOPO2) v2. Web page for ETOPO2v2 with full descriptions
+        of the data\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/global/etopo2.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.dem:301"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"2000.00","updated":"2015-08-03T00:00:00.000Z","dataset_id":"2000
+        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","organizations":["SEDAC"],"title":"2000
+        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an \n\nindex that measures the ability of a nation''s economy
+        to achieve sustainable development, with the long term goal of finding a single
+        \n\nindicator for environmental sustainability analagous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is \n\na composite
+        measure of the current status of a nation''s environmental systems, pressures
+        on those systems, human vulnerability to \n\nenvironmental change, national
+        capacity to respond, and contributions to global environmental stewardship.
+        The index was unveiled at \n\nthe World Economic Forum''s annual meeting,
+        January 2000, Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration
+        among \n\nthe World Economic Forum (WEF), Yale Center for Environmental Law
+        and Policy (YCELP), and the Columbia University Center for \n\nInternational
+        Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-\n\n2000/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4NK3BZJ"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2001"],"version_id":"2001.00","updated":"2015-08-04T00:00:00.000Z","dataset_id":"2001
+        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2001","organizations":["SEDAC"],"title":"2001
+        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2001 Environmental Sustainability Index (ESI) utilizes a refined methodology
+        based on the 2000 Pilot ESI effort, to construct an index covering \n\n122
+        countries that measures the overall progress towards environmental sustainability.
+        The index is a composite measure of the current status of a nation''s environmental
+        systems, \n\npressures on those systems, human vulnerability to environmental
+        change, national capacity to respond, and contributions to global environmental
+        stewardship. The refinements included the \n\naddition and deletion of indicators,
+        filling gaps in data coverage, new data sets, and the modification of the
+        aggregation scheme. The index was unveiled at the World Economic Forum''s
+        \n\nannual meeting, January 2001, Davos, Switzerland. The 2001 ESI is the
+        result of collaboration among the World Economic Forum (WEF), Yale Center
+        for Environmental Law and Policy (YCELP), \n\nand the Columbia University
+        Center for International Earth Science Information Network (CIESIN)","has_granules":false,"orbit_parameters":{},"id":"C1000000220-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4X34VDM"}]}],"facets":[{"field":"data_center","value-counts":[["ACADIS",61],["ASDC",210],["Alaska
+        Satellite Facility",45],["Aquarius Project NASA/CONAE",70],["Atmospheric Science
+        Data Center",248],["CDDIS",34],["CN/FENGYUN",76],["COLUMBIA/LDEO/IRI/CDL",47],["DE/GFZ/ISDC",46],["DOC/NOAA/NESDIS/NCDC",167],["DOC/NOAA/NESDIS/NCEI",428],["DOC/NOAA/NESDIS/NGDC",228],["DOC/NOAA/NESDIS/OSDPD",29],["DOC/NOAA/OAR/ESRL/PSD/CAB",41],["DOE/ORNL/ESD/CDIAC",72],["DOI/USGS/EROS",65],["ESA/EARTHNET",58],["EUMETSAT",42],["GES
+        DISC",100],["GESDISC",538]]},{"field":"archive_center","value-counts":[["ASDC",210],["Alaska
+        Satellite Facility",45],["Atmospheric Science Data Center",248],["CDDIS",34],["CDDIS-GSFC",1],["GESDISC",538],["GHRC",117],["LAADS",45],["LPDAAC",177],["LTA",6],["LaRC",149],["Landsat",5],["MODAPS",4],["NASA/GSFC/EOS/ESDIS/LANCE
+        MODIS FIRMS",1],["NASA/GSFC/EOS/ESDIS/LANCEMODIS",71],["NASA/GSFC/SED/ESD/GCDC/GESDISC",36],["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS",34],["NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS",6],["NSIDC",164],["OB.DAAC",150]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["ADEOS-I",97],["ADEOS-II",135],["AM-1",134],["AQUA",395],["AQUARIUS_SAC-D",77],["AURA",305],["Aqua",159],["BUOYS",67],["CALIPSO",54],["COMPUTER
+        MODEL",55],["DMSP",48],["ERS-1",63],["ERS-2",65],["FIELD INVESTIGATION",60],["FY-3A",74],["GCOM-W1",49],["GMS-5",45],["GOES-10",52],["GOES-8",51],["GPM",70]]},{"field":"instrument","value-counts":[["AIRS",68],["ALTIMETERS",37],["AMSR",40],["AMSR-E",110],["AMSR2",46],["ANALYSIS",62],["ANEMOMETERS",39],["AQUARIUS_RADIOMETER",47],["AQUARIUS_SCATTEROMETER",77],["AVHRR",153],["AVHRR-2",54],["AVHRR-3",113],["BAROMETERS",36],["CERES
+        SCANNER",66],["CERES-FM1",29],["CORING DEVICES",42],["CTD",32],["DRIFTING
+        BUOYS",30],["ERBE-NONSCANNER",29],["GLAS",30]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
     http_version: 
     reduced: true
 222c87d9f43faed5d7601da971d87ef8c67ccab7:
