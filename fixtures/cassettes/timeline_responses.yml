@@ -209,6 +209,28 @@ ee6ed3e2f2b32c8b9c39fddfde28a5d1d9a1f488:
       encoding: UTF-8
       string: "[]"
     http_version: 
+88beb52c23801ee054372ab8beed325b37bc994f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:08:12 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 6a0132a0-ac45-480f-82ca-0deef16ed5df
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 bb5dad56860f2ed5d92b212f0df57247742b9075:
   response:
     status:
