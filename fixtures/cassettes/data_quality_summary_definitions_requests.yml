@@ -240,6 +240,23 @@ http_interactions:
   digest: 3fb6085c8bd6fb99c88d4ca6b4afad49a70e64d5
 - request:
     method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C2930962-PODAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 28 Mar 2016 02:36:39 GMT
+  digest: ac567b725b94c3e1af3a1fd6ccd6827abced7cc8
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C4543622-LARC_ASDC
     body:
       encoding: US-ASCII

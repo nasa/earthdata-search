@@ -746,6 +746,25 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G3015864-PODAAC
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 28 Mar 2016 02:36:42 GMT
+  digest: c4df4d7edce3f3f541fd65b8529c872b92ee76bc
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G7085956-LARC_ASDC&catalog_item_id%5B%5D=G7110652-LARC_ASDC&catalog_item_id%5B%5D=G7201928-LARC_ASDC&catalog_item_id%5B%5D=G7600153-LARC_ASDC&catalog_item_id%5B%5D=G7856044-LARC_ASDC&catalog_item_id%5B%5D=G1000003582-LARC_ASDC&catalog_item_id%5B%5D=G1000433521-LARC_ASDC&catalog_item_id%5B%5D=G1000518426-LARC_ASDC&catalog_item_id%5B%5D=G1000590946-LARC_ASDC&catalog_item_id%5B%5D=G1000760193-LARC_ASDC
     headers:
       User-Agent:

@@ -1921,6 +1921,306 @@ b2427c09a1088c260bfe07d32831bf58070088f6:
         <?xml version="1.0" encoding="UTF-8"?>
         <feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/" xmlns:georss="http://www.georss.org/georss/10" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/" xmlns:cwic="http://cwic.wgiss.ceos.org/opensearch/extensions/1.0/" xmlns:esipdiscover="http://commons.esipfed.org/ns/discovery/1.2/"><title>CWIC OpenSearch Response</title><updated>2016-03-01T10:33:04Z</updated><author><name>CEOS WGISS Integrated Catalog (CWIC) - CWIC Contact - Email: cwic-help@wgiss.ceos.org - Web: http://wgiss.ceos.org/cwic</name><email>cwic-help@wgiss.ceos.org</email></author><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=USGS_EDC_EO1_ALI:EO1A1321972016056110KF_AK3_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=USGS_EDC_EO1_ALI:EO1A1321972016056110KF_AK3_01</dc:identifier><opensearch:totalResults>1</opensearch:totalResults><opensearch:startIndex>1</opensearch:startIndex><opensearch:itemsPerPage>1</opensearch:itemsPerPage><link rel="self" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1321972016056110KF_AK3_01" title="This Request"/><link rel="search" type="application/opensearchdescription+xml" href="http://cwic.wgiss.ceos.org/opensearch/datasets/USGS_EDC_EO1_ALI/osdd.xml" title="Search this resource"/><link rel="first" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&amp;count=null&amp;startIndex=1" title="First result"/><link rel="last" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&amp;count=null&amp;startIndex=1" title="Last result"/><opensearch:Query role="request" cwic:datasetId="USGS_EDC_EO1_ALI" uid="USGS_EDC_EO1_ALI:EO1A1321972016056110KF_AK3_01"/><!-- Remote search completed in 0.965 seconds. --><entry><title>Entity ID: EO1A1321972016056110KF_AK3_01, Acquisition Date: 25-FEB-16, Target Path: 132, Target Row: 197</title><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1321972016056110KF_AK3_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1321972016056110KF_AK3_01</dc:identifier><updated>2016-02-27T13:18:07Z</updated><author><name>EROS DATA CENTER - TECHNICAL CONTACT - Customer Services; U.S. Geological Survey; EROS Data Center; 47914 252nd Street;  Sioux Falls, SD 57198-0001; USA - Email: custserv@usgs.gov - Phone: 605-594-6151 - FAX: 605-594-6589</name><email>custserv@usgs.gov</email></author><georss:box>19.010702 -104.039941 19.805512 -103.491001</georss:box><georss:polygon>19.805512 -103.648932 19.047734 -103.491001 19.010702 -103.880196 19.768416 -104.039941 19.805512 -103.648932</georss:polygon><dc:date>2016-02-25T03:17:17Z/2016-02-25T03:17:30Z</dc:date><link title="Original source metadata" rel="via" type="text/xml" href="http://earthexplorer.usgs.gov/metadata/xml/1852/EO1A1321972016056110KF_AK3_01/"/><link title="Alternate metadata URL" rel="alternate" type="text/xml" href="http://earthexplorer.usgs.gov/metadata/xml/1852/EO1A1321972016056110KF_AK3_01/"/><link title="Browse image URL" rel="icon" type="image/jpeg" href="http://earthexplorer.usgs.gov/browse/eo-1/ali/132/197/2016/EO11321972016056110KF_AK3_01.jpeg"/><link title="Granule ordering URL" rel="alternate" type="text/html" href="http://earthexplorer.usgs.gov/order/process?dataset_name=EO1_ALI_PUB&amp;ordered=EO1A1321972016056110KF_AK3_01&amp;node=INVSVC"/><link title="Granule download URL" rel="enclosure" type="text/html" href="http://earthexplorer.usgs.gov/download/external/options/EO1_ALI_PUB/EO1A1321972016056110KF_AK3_01/INVSVC/"/><summary type="text">Granule metadata for Entity ID: EO1A1321972016056110KF_AK3_01, Acquisition Date: 25-FEB-16, Target Path: 132, Target Row: 197</summary></entry><!-- Atom response generation completed in 0ms. --></feed><!-- OpenSearch response completed in 972ms. -->
     http_version: 
+0e8549fedfd2acd1f27c75ae90708d51ee6a3120:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:36:37 GMT
+      x-frame-options:
+      - DENY
+      last-modified:
+      - Wed, 25 Apr 2012 11:50:51 GMT
+      xdods-server:
+      - dods/3.2
+      xopendap-server:
+      - bes/3.13.2, csv_handler/1.0.4, dap-server/ascii/4.1.6, dap-server/usage/4.1.6,
+        dap-server/www/4.1.6, fileout_netcdf/1.2.4, freeform_handler/3.8.8, gateway_module/1.1.2,
+        gdal_handler/0.9.4, hdf4_handler/3.11.6, hdf5_handler/2.2.3, libdap/3.13.3,
+        netcdf_handler/3.10.4, xml_data_handler/1.0.5
+      x-dap:
+      - '3.2'
+      content-description:
+      - dods_ddx
+      content-type:
+      - text/xml
+      vary:
+      - Accept-Encoding,User-Agent
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="ISO-8859-1"?>
+        <Dataset name="tos_AMSRE_L3_v7_200206-201012.nc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.opendap.org/ns/DAP/3.2# http://xml.opendap.org/dap/dap3.2.xsd" xmlns:grddl="http://www.w3.org/2003/g/data-view#" grddl:transformation="http://xml.opendap.org/transforms/ddxToRdfTriples.xsl" xmlns="http://xml.opendap.org/ns/DAP/3.2#" xmlns:dap="http://xml.opendap.org/ns/DAP/3.2#" dapVersion="3.2" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:base="http://podaac-opendap.jpl.nasa.gov:80/opendap/allData/amsre/L3/sst_1deg_1mo/tos_AMSRE_L3_v7_200206-201012.nc">
+            <Attribute name="NC_GLOBAL" type="Container">
+                <Attribute name="institution" type="String">
+                    <value>Remote Sensing Systems</value>
+                </Attribute>
+                <Attribute name="institute_id" type="String">
+                    <value>REMSS</value>
+                </Attribute>
+                <Attribute name="experiment_id" type="String">
+                    <value>obs</value>
+                </Attribute>
+                <Attribute name="source" type="String">
+                    <value>Sea Surface Temperature from AMSR-E onboard AQUA.</value>
+                </Attribute>
+                <Attribute name="model_id" type="String">
+                    <value>Obs-AMSRE</value>
+                </Attribute>
+                <Attribute name="contact" type="String">
+                    <value>support@remss.com</value>
+                </Attribute>
+                <Attribute name="tracking_id" type="String">
+                    <value>2e41e817-3a79-485a-8336-7993544aee62</value>
+                </Attribute>
+                <Attribute name="instrument" type="String">
+                    <value>AMSRE</value>
+                </Attribute>
+                <Attribute name="obs_project" type="String">
+                    <value>AMSRE</value>
+                </Attribute>
+                <Attribute name="source_type" type="String">
+                    <value>satellite_retrieval</value>
+                </Attribute>
+                <Attribute name="data_structure" type="String">
+                    <value>grid</value>
+                </Attribute>
+                <Attribute name="processing_level" type="String">
+                    <value>L3</value>
+                </Attribute>
+                <Attribute name="processing_version" type="String">
+                    <value>v7</value>
+                </Attribute>
+                <Attribute name="mip_specs" type="String">
+                    <value>CMIP5</value>
+                </Attribute>
+                <Attribute name="realm" type="String">
+                    <value>ocean</value>
+                </Attribute>
+                <Attribute name="source_id" type="String">
+                    <value>AMSRE</value>
+                </Attribute>
+                <Attribute name="product" type="String">
+                    <value>observations</value>
+                </Attribute>
+                <Attribute name="frequency" type="String">
+                    <value>mon</value>
+                </Attribute>
+                <Attribute name="creation_date" type="String">
+                    <value>2011-10-25T18:51:27Z</value>
+                </Attribute>
+                <Attribute name="history" type="String">
+                    <value>2011-10-25T18:51:27Z CMOR rewrote data to comply with CF standards and obs4MIPs requirements.</value>
+                </Attribute>
+                <Attribute name="Conventions" type="String">
+                    <value>CF-1.4</value>
+                </Attribute>
+                <Attribute name="project_id" type="String">
+                    <value>obs4MIPs</value>
+                </Attribute>
+                <Attribute name="table_id" type="String">
+                    <value>Table Omon_obs (31 January 2011) 3852a2b3aff8bddd40fa764d07bb2bdb</value>
+                </Attribute>
+                <Attribute name="title" type="String">
+                    <value>Obs-AMSRE model output prepared for obs4MIPs NASA-JPL observation</value>
+                </Attribute>
+                <Attribute name="modeling_realm" type="String">
+                    <value>ocean</value>
+                </Attribute>
+                <Attribute name="cmor_version" type="String">
+                    <value>2.5.3</value>
+                </Attribute>
+            </Attribute>
+            <Attribute name="DODS_EXTRA" type="Container">
+                <Attribute name="Unlimited_Dimension" type="String">
+                    <value>time</value>
+                </Attribute>
+            </Attribute>
+            <Array name="time">
+                <Attribute name="bounds" type="String">
+                    <value>time_bnds</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>days since 2002-01-01</value>
+                </Attribute>
+                <Attribute name="calendar" type="String">
+                    <value>standard</value>
+                </Attribute>
+                <Attribute name="axis" type="String">
+                    <value>T</value>
+                </Attribute>
+                <Attribute name="long_name" type="String">
+                    <value>time</value>
+                </Attribute>
+                <Attribute name="standard_name" type="String">
+                    <value>time</value>
+                </Attribute>
+                <Float64/>
+                <dimension name="time" size="103"/>
+            </Array>
+            <Array name="time_bnds">
+                <Float64/>
+                <dimension name="time" size="103"/>
+                <dimension name="bnds" size="2"/>
+            </Array>
+            <Array name="lat">
+                <Attribute name="bounds" type="String">
+                    <value>lat_bnds</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>degrees_north</value>
+                </Attribute>
+                <Attribute name="axis" type="String">
+                    <value>Y</value>
+                </Attribute>
+                <Attribute name="long_name" type="String">
+                    <value>latitude</value>
+                </Attribute>
+                <Attribute name="standard_name" type="String">
+                    <value>latitude</value>
+                </Attribute>
+                <Float64/>
+                <dimension name="lat" size="180"/>
+            </Array>
+            <Array name="lat_bnds">
+                <Float64/>
+                <dimension name="lat" size="180"/>
+                <dimension name="bnds" size="2"/>
+            </Array>
+            <Array name="lon">
+                <Attribute name="bounds" type="String">
+                    <value>lon_bnds</value>
+                </Attribute>
+                <Attribute name="units" type="String">
+                    <value>degrees_east</value>
+                </Attribute>
+                <Attribute name="axis" type="String">
+                    <value>X</value>
+                </Attribute>
+                <Attribute name="long_name" type="String">
+                    <value>longitude</value>
+                </Attribute>
+                <Attribute name="standard_name" type="String">
+                    <value>longitude</value>
+                </Attribute>
+                <Float64/>
+                <dimension name="lon" size="360"/>
+            </Array>
+            <Array name="lon_bnds">
+                <Float64/>
+                <dimension name="lon" size="360"/>
+                <dimension name="bnds" size="2"/>
+            </Array>
+            <Grid name="tos">
+                <Array name="tos">
+                    <Attribute name="standard_name" type="String">
+                        <value>sea_surface_temperature</value>
+                    </Attribute>
+                    <Attribute name="long_name" type="String">
+                        <value>Sea Surface Temperature</value>
+                    </Attribute>
+                    <Attribute name="comment" type="String">
+                        <value>\&quot;this may differ from \&quot;\&quot;surface temperature\&quot;\&quot; in regions of sea ice.\&quot;</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>K</value>
+                    </Attribute>
+                    <Attribute name="original_name" type="String">
+                        <value>sea_surface_temperature</value>
+                    </Attribute>
+                    <Attribute name="cell_methods" type="String">
+                        <value>time: mean</value>
+                    </Attribute>
+                    <Attribute name="cell_measures" type="String">
+                        <value>area: areacello</value>
+                    </Attribute>
+                    <Attribute name="missing_value" type="Float32">
+                        <value>1.00000002e+20</value>
+                    </Attribute>
+                    <Attribute name="_FillValue" type="Float32">
+                        <value>1.00000002e+20</value>
+                    </Attribute>
+                    <Attribute name="history" type="String">
+                        <value>2011-10-25T18:51:27Z altered by CMOR: Converted type from 'd' to 'f'.</value>
+                    </Attribute>
+                    <Attribute name="associated_files" type="String">
+                        <value>baseURL: http://cmip-pcmdi.llnl.gov/CMIP5/dataLocation gridspecFile: gridspec_ocean_fx_Obs-AMSRE_obs_r0i0p0.nc areacello: areacello_fx_Obs-AMSRE_obs_r0i0p0.nc</value>
+                    </Attribute>
+                    <Float32/>
+                    <dimension name="time" size="103"/>
+                    <dimension name="lat" size="180"/>
+                    <dimension name="lon" size="360"/>
+                </Array>
+                <Map name="time">
+                    <Attribute name="bounds" type="String">
+                        <value>time_bnds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>days since 2002-01-01</value>
+                    </Attribute>
+                    <Attribute name="calendar" type="String">
+                        <value>standard</value>
+                    </Attribute>
+                    <Attribute name="axis" type="String">
+                        <value>T</value>
+                    </Attribute>
+                    <Attribute name="long_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>time</value>
+                    </Attribute>
+                    <Float64/>
+                    <dimension name="time" size="103"/>
+                </Map>
+                <Map name="lat">
+                    <Attribute name="bounds" type="String">
+                        <value>lat_bnds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_north</value>
+                    </Attribute>
+                    <Attribute name="axis" type="String">
+                        <value>Y</value>
+                    </Attribute>
+                    <Attribute name="long_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>latitude</value>
+                    </Attribute>
+                    <Float64/>
+                    <dimension name="lat" size="180"/>
+                </Map>
+                <Map name="lon">
+                    <Attribute name="bounds" type="String">
+                        <value>lon_bnds</value>
+                    </Attribute>
+                    <Attribute name="units" type="String">
+                        <value>degrees_east</value>
+                    </Attribute>
+                    <Attribute name="axis" type="String">
+                        <value>X</value>
+                    </Attribute>
+                    <Attribute name="long_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Attribute name="standard_name" type="String">
+                        <value>longitude</value>
+                    </Attribute>
+                    <Float64/>
+                    <dimension name="lon" size="360"/>
+                </Map>
+            </Grid>
+            <blob href="cid:"/>
+        </Dataset>
+    http_version: 
 d9b715ca78067fa784c5f4d12c2583edab525706:
   response:
     status:
