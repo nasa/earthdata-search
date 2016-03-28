@@ -779,6 +779,40 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
       encoding: UTF-8
       string: '{"uid":"edsc","first_name":"Earthdata","last_name":"Search","email_address":"patrick+edsc@element84.com","country":"United States","study_area":"OTHER","user_type":"PRODUCTION_USER","affiliation":"OTHER","organization":"EDSC","member_groups":["earthdata_ecc","echo"]}'
     http_version:
+edscbasic_from_urs:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - nginx/1.4.7
+      date:
+      - Tue, 24 Nov 2015 17:33:21 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 9b962bd0-f008-49bb-8008-1da4ab44b713
+      x-runtime:
+      - '0.005167'
+    body:
+      encoding: UTF-8
+      string: '{"uid":"edsc","first_name":"Earthdata","last_name":"Search","email_address":"patrick+edsc@element84.com","country":"United States","study_area":"OTHER","user_type":"PRODUCTION_USER","affiliation":"OTHER","organization":"EDSC","member_groups":["earthdata_ecc","echo"]}'
+    http_version:
 5465c54b75a62eac4512160fe28a6627c96aea19:
   response:
     status:
@@ -809,6 +843,34 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
               "email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},
               "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
               Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+edscbasic_preferences:
+  response:
+    status:
+      code: 401
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.229000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":["User does not have the required security identifiers for the requested operation."]}'
     http_version:
 0a02d564986dee8b88b72b36380ff495d8d4e1c0:
   response:
