@@ -92,11 +92,11 @@ describe "CWIC-enabled polygon searches", reset: false do
   context "viewing non-CWIC granule results" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, q: 'C179003030-ORNL_DAAC'
+      load_page :search, q: 'C190033217-LARC'
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
     end
 
-    hook_granule_results("15 Minute Stream Flow Data: USGS (FIFE)")
+    hook_granule_results("MOPITT Derived CO (Thermal Infrared Radiances) V005")
 
     it "does not display an indication that the search has been reduced to its minimum bounding rectangle", acceptance: true do
       expect(page).not_to have_selector('path[stroke-dasharray="2, 10"][stroke="#ff0000"]')
