@@ -47,7 +47,7 @@ describe 'Collection details', reset: false do
         expect(page).to have_content('Short Name: ASTGTM')
         expect(page).to have_content('VERSION 002')
         expect(page).to have_content('Contacts: LP DAAC User Services 605-594-6116 (phone) 605-594-6963 (fax) lpdaac@usgs.gov')
-        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)')
+        expect(page).to have_content('Spatial Coordinates: Bounding Rectangle: (82.0°, -180.0°, -83.0°, 180.0°)')
         expect(page).to have_content('Metadata Formats: Native | ATOM | ECHO10 | ISO19115 | DIF')
         expect(page).to have_content('Temporal Extent: 1999-12-18 to 2011-02-28')
         expect(page).to have_content('API Endpoints: CMR OSDD')

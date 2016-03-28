@@ -58,7 +58,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Wed, 07 May 2014 17:59:34 GMT
   digest: single_order
 - request:
@@ -171,8 +171,7 @@ http_interactions:
   digest: invalid_token
 - request:
     method: get
-#    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=edsc.%2A&include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource.cwic&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -187,8 +186,7 @@ http_interactions:
   digest: invalid_collections_logged_in
 - request:
     method: get
-#    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=edsc.%2A&include_facets=true&page_size=20&page_num=1&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource.cwic&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -203,7 +201,7 @@ http_interactions:
   digest: invalid_collections_logged_in_non_hierarchical
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=edsc.%2A&include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource.cwic&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -216,7 +214,7 @@ http_interactions:
   digest: invalid_collections_logged_out
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=edsc.%2A&include_facets=true&page_size=20&page_num=1&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource.cwic&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -322,7 +320,7 @@ http_interactions:
       Echo-ClientId:
       - EDSC
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Thu, 15 Jan 2015 21:08:30 GMT
   digest: acab3c43996bb7f51d50e4301fe55418086eadbd
 - request:

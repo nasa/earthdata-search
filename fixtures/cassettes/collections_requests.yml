@@ -32,6 +32,21 @@ http_interactions:
   digest: 06bc2fd3affb09e3ba0abac76153a7adfd93b798
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C128599377-NSIDC_ECS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:26:04 GMT
+  digest: 5f6310e331c32ef8637df740f7f9c927bcaa1d4a
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C128599377-NSIDC_ECS&page_num=1&include_tags=edsc.%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2285,6 +2300,36 @@ http_interactions:
   digest: 48d4b2a45bcdc78c7234a74b45a4cb9b708e77fd
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource.cwic&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C24936-LAADS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:32:17 GMT
+  digest: 04e5c4f26ad57a2d71b4d8d93d190b93de285d2b
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource.cwic&keyword=C24936-LAADS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:32:15 GMT
+  digest: 875eca57bee6d83aa7623490e28ee62dc56b1013
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=C1000003579-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -2298,6 +2343,21 @@ http_interactions:
       - edsc-dev
   recorded_at: Sun, 27 Mar 2016 03:23:52 GMT
   digest: aefc25462f157877ff9ead0163ebaa7fd685737f
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource.cwic&keyword=C24936-LAADS%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:32:16 GMT
+  digest: b8ac50a48e3bb6ff1c61693c20f194907b455a40
 - request:
     method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=C1000003579-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
@@ -2703,4 +2763,94 @@ http_interactions:
       - edsc-dev
   recorded_at: Sun, 27 Mar 2016 03:23:47 GMT
   digest: 1642bcdd5ab7363f3014f410c9dbbfbf11972c29
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2013-12-01T00%3A00%3A00.000Z%2C2013-12-01T23%3A59%3A59.000Z&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=USGS_EDC_EO1_ALI%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:32:55 GMT
+  digest: 21e9a7d2d5c3040180ada4b4489a65494d89dd6e
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2013-12-01T00%3A00%3A00.000Z%2C2013-12-01T23%3A59%3A59.000Z&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=USGS_EDC_EO1_ALI%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:32:53 GMT
+  digest: 803358a7a06ca317c89b913b49a8b3aeb2841118
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2013-12-01T00%3A00%3A00.000Z%2C2013-12-01T23%3A59%3A59.000Z&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=USGS_EDC_EO1_ALI%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:32:54 GMT
+  digest: d3b8cd9ec08e23a161b821305aa9294d939360d0
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2013-12-01T00%3A00%3A00.000Z%2C2014-12-01T23%3A59%3A59.000Z%2C335%2C335&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=USGS_EDC_EO1_ALI%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:33:01 GMT
+  digest: ce2c5f3a6e579f5a37fb3d9752c048a271904da0
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2013-12-01T00%3A00%3A00.000Z%2C2014-12-01T23%3A59%3A59.000Z%2C335%2C335&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&keyword=USGS_EDC_EO1_ALI%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:32:59 GMT
+  digest: 35a6b7e5cc1170a02647286d620f623695e7fe2c
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&temporal=2013-12-01T00%3A00%3A00.000Z%2C2014-12-01T23%3A59%3A59.000Z%2C335%2C335&page_size=20&page_num=1&include_tags=edsc.%2A&keyword=USGS_EDC_EO1_ALI%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Mon, 28 Mar 2016 01:33:00 GMT
+  digest: a87bf88d6d3856ce3bbc26b6298d4c22ccf9b984
 recorded_with: VCR 2.6.0
