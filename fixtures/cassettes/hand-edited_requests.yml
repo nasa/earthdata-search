@@ -446,6 +446,44 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
     body:
       encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
+  digest: edsc_access_update_preferences_none
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
+  digest: edsc_access_update_preferences_verbose
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: UTF-8
       string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
     headers:
       User-Agent:
