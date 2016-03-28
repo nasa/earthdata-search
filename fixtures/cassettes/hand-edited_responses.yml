@@ -344,7 +344,7 @@ edsc_current_testbed:
       - close
     body:
       encoding: UTF-8
-      string: '{"errors":["Token [expired]
+      string: '{"errors":["Token [expired-access]
         has expired."]}'
     http_version:
 invalid_token:
