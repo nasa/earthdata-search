@@ -1218,6 +1218,70 @@ a08435af2b49fc42a5c7949c7270f1b7b46da49b:
         RADIATION"}],"count":1,"value":"ATMOSPHERE"}],"count":1,"value":"EARTH SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+e2fcc1d35f96869b1c9a0347bf2be019a1291a55:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:08:09 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '289'
+      cmr-request-id:
+      - 0b4e6595-3fcc-4527-ae9e-f857e2a01e6e
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:08:09.890Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026bounding_box=0%2C0%2C15%2C15\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C1219252422-LANCEMODIS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+7e74801093ff0fe61c5f82f60b7f73d9f81ff398:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:07:48 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '795'
+      cmr-request-id:
+      - 7b48cac4-b8f7-4278-9be3-e838bb1a2385
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:07:49.678Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026bounding_box=0%2C0%2C15%2C15\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C204200619-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 5d6780d169bbe5ad0334ce85e291d4cb8b959eb3:
   response:
     status:
@@ -1873,6 +1937,150 @@ a08435af2b49fc42a5c7949c7270f1b7b46da49b:
         COLOR"}],"count":42,"value":"OCEAN OPTICS"}],"count":42,"value":"OCEANS"}],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+366c75e462f3bfb32f492de5c1a7ab8f8cd338a4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:08:07 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '203'
+      cmr-request-id:
+      - 453c9bb2-7334-4744-a46a-82e91a48a586
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:08:07.547Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026bounding_box=0%2C0%2C15%2C15\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C1219252422-LANCEMODIS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MOD02QKM_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m","data_center":"LANCEMODIS","short_name":"MOD02QKM","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Terra
+        Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m","coordinate_system":"CARTESIAN","summary":"The
+        250 meter MODIS Level 1B Near Real Time (NRT) data set contains calibrated
+        and geolocated  at-aperture radiances for 2 discrete bands located in the
+        0.62 to 0.88 micron  region of the electromagnetic spectrum. These data are
+        generated from the MODIS  Level 1A scans of raw radiance and in the process
+        converted to geophysical  units of W / (m^2 um sr). In addition, the Earth
+        Bi-directional Reflectance Distribution Function (BRDF) may be determined
+        for these solar reflective bands  through knowledge of the solar irradiance
+        (e.g., determined from MODIS solar  diffuser data, and from the target illumination
+        geometry).  Additional data are  provided including quality flags, error estimates
+        and calibration data. Channel locations for the MODIS 250 meter data are as
+        follows:  Band   Center Wavelength (um)    Primary Use ----   ----------------------    -----------
+        1          0.620  - 0.670        Land/Cloud Boundaries 2          0.841  -
+        0.876        Land/Cloud Boundaries  Separate L1B products are available for
+        the five 500 m resolution channels (MOD02HKM) and the twenty-nine 1 km resolution
+        channels (MOD021KM). For the 500 m product, there are actually seven channels
+        available since the data from the two 250 m channels have been aggregated
+        to 500 m resolution.  Similarly, for the 1 km product, all 36 MODIS channels
+        are available since the data from the two 250 m and five 500 m channels have
+        been aggregated into equivalent 1 km pixel values.  Spatial resolution for
+        pixels at nadir is 250 m, degrading to 1.2 km in the along-scan direction
+        and 0.5 km in the along-track direction for pixels located at the scan extremes.
+        A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330
+        km orbital swath width and provides global coverage every one to two days.
+        A single MODIS Level 1B 250 m granule will contain a scene built from 203
+        scans sampled 5416 times in the cross-track direction, corresponding to approximately
+        5 minutes worth of data; thus 288 granules will be produced per day. Since
+        an individual MODIS scan will contain 40 along-track spatial elements for
+        the 250 m channels, the scene will be composed of (5416 x 8120) pixels, resulting
+        in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry,
+        there will be increasing scan overlap beyond about 17 degrees scan angle.
+        To summarize, the MODIS L1B 250 m data product consists of:  1. Calibrated
+        radiances and uncertainties for (2) 250 m reflected solar bands  2. Subsampled
+        geolocation at every 4th 250 m pixel across and along track, i.e., a geolocation
+        point every kilometer  3. Satellite and solar angles subsampled at the above
+        frequency  4. Calibration data for all channels (scale and offset)  5. Comprehensive
+        set of file-level metadata summarizing the spatial, temporal and parameter
+        attributes of the data, as well as auxiliary information pertaining to instrument
+        status and data quality characterization  The MODIS L1B 250 m data are stored
+        in the Earth Observing System Hierarchical Data Format (HDF-EOS) which is
+        an extension of HDF as developed by the National Center for Supercomputer
+        Applications (NCSA) at the University of Illinois. A typical file size will
+        be approximately 170 MB.  Environmental information derived from MODIS L1B
+        measurements will offer a comprehensive and unprecedented look at terrestrial,
+        atmospheric, and ocean phenomenology for a wide and diverse community of users
+        throughout the world. The Shortname for this product is MOD02QKM","has_granules":true,"orbit_parameters":{},"id":"C1219252422-LANCEMODIS","score":0.5,"collection_data_type":"NEAR_REAL_TIME","granule_count":29,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MOD02QKM 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MOD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]}],"facets":[{"field":"project","value-counts":[["DODS",1],["EOSDIS",1],["ESIP",1],["OPENDAP",1],["TERRA",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"INFRARED
+        RADIANCE"},{"count":1,"value":"REFLECTED INFRARED"}],"count":1,"value":"INFRARED
+        WAVELENGTHS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"VISIBLE
+        RADIANCE"}],"count":1,"value":"VISIBLE WAVELENGTHS"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+388254e27306f821d3f3423f3511662595d299bc:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:07:46 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '155'
+      cmr-request-id:
+      - 8f860323-3710-4d61-876c-354d147bdbd2
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:07:46.715Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026bounding_box=0%2C0%2C15%2C15\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C204200619-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2006-06-15T00:00:00.000Z","dif_ids":["GES_DISC_AIRS_CPR_IND_V3.1"],"version_id":"3.1","updated":"2016-01-20T00:00:00.000Z","dataset_id":"AIRS-CloudSat
+        cloud mask and radar reflectivities collocation indexes V3.1","data_center":"GSFCS4PA","short_name":"AIRS_CPR_IND","organizations":["GESDISC","GES
+        DISC"],"title":"AIRS-CloudSat cloud mask and radar reflectivities collocation
+        indexes V3.1","coordinate_system":"CARTESIAN","summary":"This is AIRS-AMSU-CloudSat
+        collocation indexes, in ASCII format. These data map CloudSat profile indexes
+        to the collocated AMSU field of views, and AIRS IR footprints, per AIRS 6-min
+        granule time. Hence it can be considered as Level 1. These data are created
+        within the frames of the MEaSUREs project.\n\nThe basic task is to bring together
+        retrievals of water vapor and cloud properties from multiple \"A-train\" instruments
+        (AIRS, AMSR-E, MODIS, AMSU, MLS, \u0026 CloudSat), classify each \"scene\"
+        (instrument look) using the cloud information, and develop a merged, multi-sensor
+        climatology of atmospheric water vapor as a function of altitude, stratified
+        by the cloud classes. This is a large science analysis project that will require
+        the use of SciFlo technologies to discover and organize all of the datasets,
+        move and cache datasets as required, find space/time \"matchups\" between
+        pairs of instruments, and process years of satellite data to produce the climate
+        data records.\n\nThe short name for this collections is AIRS_CPR_IND.","has_granules":true,"time_end":"2012-12-15T23:59:59.000Z","orbit_parameters":{},"id":"C204200619-GSFCS4PA","score":0.5,"original_format":"ECHO10","granule_count":8413,"archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"http://measures.gesdisc.eosdis.nasa.gov/data/s4pa/AIRS_CloudSat/AIRS_CPR_IND.3.1/doc/README.AIRS_CloudSat.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(GET
+        DATA : ON-LINE ARCHIVE)","hreflang":"en-US","href":"ftp://measures.gsfc.nasa.gov/data/s4pa/AIRS_CloudSat/AIRS_CPR_IND.3.1/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Spatial/temporal
+        Search and download\n       (GET DATA : MIRADOR)","hreflang":"en-US","href":"http://mirador.gsfc.nasa.gov/cgi-bin/mirador/homepageAlt.pl?keyword=AIRS_CPR_IND"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Refine
+        your granule search with ECHO''s next generation Earth Science discovery tool
+        (Reverb) using information from this record.\n       (GET DATA : ECHO)","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93\u0026spatial_map=satellite\u0026spatial_type=rectangle\u0026keywords=GES_DISC_AIRS_CPR_IND_V3.1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://earthdata.nasa.gov/our-community/community-data-system-programs/measures-projects"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/daac-bin/DataHoldingsMEASURES.pl?PROGRAM_List=EricFetzer"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/measures/documentation/README.AIRS_CloudSat.pdf"}]}],"facets":[{"field":"project","value-counts":[["EOSDIS",1],["ESIP",1],["MEASURES",1]]},{"field":"sensor","value-counts":[["AIRS",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"count":1,"value":"CLOUDS"}],"count":1,"value":"ATMOSPHERE"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 05100acd3439cb1281e0ec74e56fdeb14caadced:
   response:
     status:
@@ -2474,6 +2682,146 @@ a08435af2b49fc42a5c7949c7270f1b7b46da49b:
         SCANNER",66],["CORING DEVICES",42],["CTD",35],["DRIFTING BUOYS",30],["ETM+",30],["GLI",76],["GMI",54]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
     http_version: 
     reduced: true
+18f33caf65203217b9b7bffea6ccec00893f0f20:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:08:08 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '83'
+      cmr-request-id:
+      - 3b369c06-a4b5-4a7e-a3fe-faa139ad0130
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:08:08.611Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026bounding_box=0%2C0%2C15%2C15\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C1219252422-LANCEMODIS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MOD02QKM_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m","data_center":"LANCEMODIS","short_name":"MOD02QKM","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Terra
+        Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m","coordinate_system":"CARTESIAN","summary":"The
+        250 meter MODIS Level 1B Near Real Time (NRT) data set contains calibrated
+        and geolocated  at-aperture radiances for 2 discrete bands located in the
+        0.62 to 0.88 micron  region of the electromagnetic spectrum. These data are
+        generated from the MODIS  Level 1A scans of raw radiance and in the process
+        converted to geophysical  units of W / (m^2 um sr). In addition, the Earth
+        Bi-directional Reflectance Distribution Function (BRDF) may be determined
+        for these solar reflective bands  through knowledge of the solar irradiance
+        (e.g., determined from MODIS solar  diffuser data, and from the target illumination
+        geometry).  Additional data are  provided including quality flags, error estimates
+        and calibration data. Channel locations for the MODIS 250 meter data are as
+        follows:  Band   Center Wavelength (um)    Primary Use ----   ----------------------    -----------
+        1          0.620  - 0.670        Land/Cloud Boundaries 2          0.841  -
+        0.876        Land/Cloud Boundaries  Separate L1B products are available for
+        the five 500 m resolution channels (MOD02HKM) and the twenty-nine 1 km resolution
+        channels (MOD021KM). For the 500 m product, there are actually seven channels
+        available since the data from the two 250 m channels have been aggregated
+        to 500 m resolution.  Similarly, for the 1 km product, all 36 MODIS channels
+        are available since the data from the two 250 m and five 500 m channels have
+        been aggregated into equivalent 1 km pixel values.  Spatial resolution for
+        pixels at nadir is 250 m, degrading to 1.2 km in the along-scan direction
+        and 0.5 km in the along-track direction for pixels located at the scan extremes.
+        A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330
+        km orbital swath width and provides global coverage every one to two days.
+        A single MODIS Level 1B 250 m granule will contain a scene built from 203
+        scans sampled 5416 times in the cross-track direction, corresponding to approximately
+        5 minutes worth of data; thus 288 granules will be produced per day. Since
+        an individual MODIS scan will contain 40 along-track spatial elements for
+        the 250 m channels, the scene will be composed of (5416 x 8120) pixels, resulting
+        in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry,
+        there will be increasing scan overlap beyond about 17 degrees scan angle.
+        To summarize, the MODIS L1B 250 m data product consists of:  1. Calibrated
+        radiances and uncertainties for (2) 250 m reflected solar bands  2. Subsampled
+        geolocation at every 4th 250 m pixel across and along track, i.e., a geolocation
+        point every kilometer  3. Satellite and solar angles subsampled at the above
+        frequency  4. Calibration data for all channels (scale and offset)  5. Comprehensive
+        set of file-level metadata summarizing the spatial, temporal and parameter
+        attributes of the data, as well as auxiliary information pertaining to instrument
+        status and data quality characterization  The MODIS L1B 250 m data are stored
+        in the Earth Observing System Hierarchical Data Format (HDF-EOS) which is
+        an extension of HDF as developed by the National Center for Supercomputer
+        Applications (NCSA) at the University of Illinois. A typical file size will
+        be approximately 170 MB.  Environmental information derived from MODIS L1B
+        measurements will offer a comprehensive and unprecedented look at terrestrial,
+        atmospheric, and ocean phenomenology for a wide and diverse community of users
+        throughout the world. The Shortname for this product is MOD02QKM","has_granules":true,"orbit_parameters":{},"id":"C1219252422-LANCEMODIS","score":0.5,"collection_data_type":"NEAR_REAL_TIME","granule_count":29,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MOD02QKM 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MOD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]}],"facets":[{"field":"data_center","value-counts":[["NASA/GSFC/EOS/ESDIS/LANCEMODIS",1]]},{"field":"archive_center","value-counts":[["NASA/GSFC/EOS/ESDIS/LANCEMODIS",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["TERRA",1]]},{"field":"instrument","value-counts":[["MODIS",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
+c5faacfe9b2566b62806cc6281bce2db7e3ab650:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:07:47 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '270'
+      cmr-request-id:
+      - 905d2c6a-13b1-468d-b4b0-de0484f5e69b
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:07:47.915Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026bounding_box=0%2C0%2C15%2C15\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C204200619-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2006-06-15T00:00:00.000Z","dif_ids":["GES_DISC_AIRS_CPR_IND_V3.1"],"version_id":"3.1","updated":"2016-01-20T00:00:00.000Z","dataset_id":"AIRS-CloudSat
+        cloud mask and radar reflectivities collocation indexes V3.1","data_center":"GSFCS4PA","short_name":"AIRS_CPR_IND","organizations":["GESDISC","GES
+        DISC"],"title":"AIRS-CloudSat cloud mask and radar reflectivities collocation
+        indexes V3.1","coordinate_system":"CARTESIAN","summary":"This is AIRS-AMSU-CloudSat
+        collocation indexes, in ASCII format. These data map CloudSat profile indexes
+        to the collocated AMSU field of views, and AIRS IR footprints, per AIRS 6-min
+        granule time. Hence it can be considered as Level 1. These data are created
+        within the frames of the MEaSUREs project.\n\nThe basic task is to bring together
+        retrievals of water vapor and cloud properties from multiple \"A-train\" instruments
+        (AIRS, AMSR-E, MODIS, AMSU, MLS, \u0026 CloudSat), classify each \"scene\"
+        (instrument look) using the cloud information, and develop a merged, multi-sensor
+        climatology of atmospheric water vapor as a function of altitude, stratified
+        by the cloud classes. This is a large science analysis project that will require
+        the use of SciFlo technologies to discover and organize all of the datasets,
+        move and cache datasets as required, find space/time \"matchups\" between
+        pairs of instruments, and process years of satellite data to produce the climate
+        data records.\n\nThe short name for this collections is AIRS_CPR_IND.","has_granules":true,"time_end":"2012-12-15T23:59:59.000Z","orbit_parameters":{},"id":"C204200619-GSFCS4PA","score":0.5,"original_format":"ECHO10","granule_count":8413,"archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"http://measures.gesdisc.eosdis.nasa.gov/data/s4pa/AIRS_CloudSat/AIRS_CPR_IND.3.1/doc/README.AIRS_CloudSat.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(GET
+        DATA : ON-LINE ARCHIVE)","hreflang":"en-US","href":"ftp://measures.gsfc.nasa.gov/data/s4pa/AIRS_CloudSat/AIRS_CPR_IND.3.1/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Spatial/temporal
+        Search and download\n       (GET DATA : MIRADOR)","hreflang":"en-US","href":"http://mirador.gsfc.nasa.gov/cgi-bin/mirador/homepageAlt.pl?keyword=AIRS_CPR_IND"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Refine
+        your granule search with ECHO''s next generation Earth Science discovery tool
+        (Reverb) using information from this record.\n       (GET DATA : ECHO)","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93\u0026spatial_map=satellite\u0026spatial_type=rectangle\u0026keywords=GES_DISC_AIRS_CPR_IND_V3.1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://earthdata.nasa.gov/our-community/community-data-system-programs/measures-projects"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/daac-bin/DataHoldingsMEASURES.pl?PROGRAM_List=EricFetzer"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/measures/documentation/README.AIRS_CloudSat.pdf"}]}],"facets":[{"field":"data_center","value-counts":[["GES
+        DISC",1],["GESDISC",1]]},{"field":"archive_center","value-counts":[["GESDISC",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["CLOUDSAT",1]]},{"field":"instrument","value-counts":[["AIRS",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
 f63923a6c40a53a9c621249a8dae40c6cc7050cb:
   response:
     status:
@@ -2759,6 +3107,38 @@ c2108e23d46025efdc5e20c37ab0295adb3e2488:
     body:
       encoding: UTF-8
       string: '{"feed":{"updated":"2016-03-27T03:10:19.571Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C1214606011-SCIOPS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+21ec864102f0fe9e4ffa2cabca2f0194fb126524:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:08:05 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '571'
+      cmr-request-id:
+      - c1453478-f0b5-4ea4-a4c4-280437207150
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:08:05.858Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C1219252422-LANCEMODIS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
@@ -3146,6 +3526,38 @@ f551a319d3fcb694e76fcf427a2432da2dd2148d:
         dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+3ca959b759534d7636b7ca9d816fdba4ac0dcb26:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:07:44 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '840'
+      cmr-request-id:
+      - ef844200-207b-4e76-b346-ccd583add698
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:07:45.016Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C204200619-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 1670650d4b9cd67a1e0a322fd62faa4013d946ce:
   response:
     status:
@@ -3175,6 +3587,38 @@ f551a319d3fcb694e76fcf427a2432da2dd2148d:
     body:
       encoding: UTF-8
       string: '{"feed":{"updated":"2016-03-27T02:14:39.679Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C32000-PODAAC%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+03869f7729caf62bca47bcbd787d80d42c4273cd:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:07:56 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '273'
+      cmr-request-id:
+      - 0929572a-e845-4609-9949-14eeb3c74f0d
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:07:57.133Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026echo_collection_id%5B%5D=C1000000016-LANCEMODIS\u0026echo_collection_id%5B%5D=C1000000019-LANCEMODIS\u0026keyword=C5920490-LARC_ASDC%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
@@ -4795,6 +5239,93 @@ a94e1dc2c4c8e4dedae529b9ceb31db840ba3db9:
         SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+90476bf4fbff9f1300f313cc83cd5c2e7111f8c4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:08:03 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '604'
+      cmr-request-id:
+      - 839685a5-a270-4448-b16f-5eef136978ce
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:08:04.253Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C1219252422-LANCEMODIS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MOD02QKM_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m","data_center":"LANCEMODIS","short_name":"MOD02QKM","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Terra
+        Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m","coordinate_system":"CARTESIAN","summary":"The
+        250 meter MODIS Level 1B Near Real Time (NRT) data set contains calibrated
+        and geolocated  at-aperture radiances for 2 discrete bands located in the
+        0.62 to 0.88 micron  region of the electromagnetic spectrum. These data are
+        generated from the MODIS  Level 1A scans of raw radiance and in the process
+        converted to geophysical  units of W / (m^2 um sr). In addition, the Earth
+        Bi-directional Reflectance Distribution Function (BRDF) may be determined
+        for these solar reflective bands  through knowledge of the solar irradiance
+        (e.g., determined from MODIS solar  diffuser data, and from the target illumination
+        geometry).  Additional data are  provided including quality flags, error estimates
+        and calibration data. Channel locations for the MODIS 250 meter data are as
+        follows:  Band   Center Wavelength (um)    Primary Use ----   ----------------------    -----------
+        1          0.620  - 0.670        Land/Cloud Boundaries 2          0.841  -
+        0.876        Land/Cloud Boundaries  Separate L1B products are available for
+        the five 500 m resolution channels (MOD02HKM) and the twenty-nine 1 km resolution
+        channels (MOD021KM). For the 500 m product, there are actually seven channels
+        available since the data from the two 250 m channels have been aggregated
+        to 500 m resolution.  Similarly, for the 1 km product, all 36 MODIS channels
+        are available since the data from the two 250 m and five 500 m channels have
+        been aggregated into equivalent 1 km pixel values.  Spatial resolution for
+        pixels at nadir is 250 m, degrading to 1.2 km in the along-scan direction
+        and 0.5 km in the along-track direction for pixels located at the scan extremes.
+        A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330
+        km orbital swath width and provides global coverage every one to two days.
+        A single MODIS Level 1B 250 m granule will contain a scene built from 203
+        scans sampled 5416 times in the cross-track direction, corresponding to approximately
+        5 minutes worth of data; thus 288 granules will be produced per day. Since
+        an individual MODIS scan will contain 40 along-track spatial elements for
+        the 250 m channels, the scene will be composed of (5416 x 8120) pixels, resulting
+        in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry,
+        there will be increasing scan overlap beyond about 17 degrees scan angle.
+        To summarize, the MODIS L1B 250 m data product consists of:  1. Calibrated
+        radiances and uncertainties for (2) 250 m reflected solar bands  2. Subsampled
+        geolocation at every 4th 250 m pixel across and along track, i.e., a geolocation
+        point every kilometer  3. Satellite and solar angles subsampled at the above
+        frequency  4. Calibration data for all channels (scale and offset)  5. Comprehensive
+        set of file-level metadata summarizing the spatial, temporal and parameter
+        attributes of the data, as well as auxiliary information pertaining to instrument
+        status and data quality characterization  The MODIS L1B 250 m data are stored
+        in the Earth Observing System Hierarchical Data Format (HDF-EOS) which is
+        an extension of HDF as developed by the National Center for Supercomputer
+        Applications (NCSA) at the University of Illinois. A typical file size will
+        be approximately 170 MB.  Environmental information derived from MODIS L1B
+        measurements will offer a comprehensive and unprecedented look at terrestrial,
+        atmospheric, and ocean phenomenology for a wide and diverse community of users
+        throughout the world. The Shortname for this product is MOD02QKM","has_granules":true,"orbit_parameters":{},"id":"C1219252422-LANCEMODIS","score":0.5,"collection_data_type":"NEAR_REAL_TIME","granule_count":1581,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MOD02QKM 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MOD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]}],"facets":[{"field":"project","value-counts":[["DODS",1],["EOSDIS",1],["ESIP",1],["OPENDAP",1],["TERRA",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"INFRARED
+        RADIANCE"},{"count":1,"value":"REFLECTED INFRARED"}],"count":1,"value":"INFRARED
+        WAVELENGTHS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"VISIBLE
+        RADIANCE"}],"count":1,"value":"VISIBLE WAVELENGTHS"}],"count":1,"value":"SPECTRAL/ENGINEERING"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 fc2a794b4ce4fce77f2340d09af293cdb6750a36:
   response:
     status:
@@ -5794,6 +6325,63 @@ d61c53dfff8e54775680cb0fd0d9dcfae56914e0:
         OiJzY2llbmNlX2tleXdvcmRzIn1dLCJyZWR1Y2VkIjp0cnVlfX0=
     http_version: 
     reduced: true
+b6fa9f6f996286b4748fa1d2c7d31f4337f6503d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:07:43 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '141'
+      cmr-request-id:
+      - 6b3aab7a-ef0c-4da8-8d2e-4bf223197207
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:07:43.220Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C204200619-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2006-06-15T00:00:00.000Z","dif_ids":["GES_DISC_AIRS_CPR_IND_V3.1"],"version_id":"3.1","updated":"2016-01-20T00:00:00.000Z","dataset_id":"AIRS-CloudSat
+        cloud mask and radar reflectivities collocation indexes V3.1","data_center":"GSFCS4PA","short_name":"AIRS_CPR_IND","organizations":["GESDISC","GES
+        DISC"],"title":"AIRS-CloudSat cloud mask and radar reflectivities collocation
+        indexes V3.1","coordinate_system":"CARTESIAN","summary":"This is AIRS-AMSU-CloudSat
+        collocation indexes, in ASCII format. These data map CloudSat profile indexes
+        to the collocated AMSU field of views, and AIRS IR footprints, per AIRS 6-min
+        granule time. Hence it can be considered as Level 1. These data are created
+        within the frames of the MEaSUREs project.\n\nThe basic task is to bring together
+        retrievals of water vapor and cloud properties from multiple \"A-train\" instruments
+        (AIRS, AMSR-E, MODIS, AMSU, MLS, \u0026 CloudSat), classify each \"scene\"
+        (instrument look) using the cloud information, and develop a merged, multi-sensor
+        climatology of atmospheric water vapor as a function of altitude, stratified
+        by the cloud classes. This is a large science analysis project that will require
+        the use of SciFlo technologies to discover and organize all of the datasets,
+        move and cache datasets as required, find space/time \"matchups\" between
+        pairs of instruments, and process years of satellite data to produce the climate
+        data records.\n\nThe short name for this collections is AIRS_CPR_IND.","has_granules":true,"time_end":"2012-12-15T23:59:59.000Z","orbit_parameters":{},"id":"C204200619-GSFCS4PA","score":0.5,"original_format":"ECHO10","granule_count":418740,"archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"http://measures.gesdisc.eosdis.nasa.gov/data/s4pa/AIRS_CloudSat/AIRS_CPR_IND.3.1/doc/README.AIRS_CloudSat.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(GET
+        DATA : ON-LINE ARCHIVE)","hreflang":"en-US","href":"ftp://measures.gsfc.nasa.gov/data/s4pa/AIRS_CloudSat/AIRS_CPR_IND.3.1/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Spatial/temporal
+        Search and download\n       (GET DATA : MIRADOR)","hreflang":"en-US","href":"http://mirador.gsfc.nasa.gov/cgi-bin/mirador/homepageAlt.pl?keyword=AIRS_CPR_IND"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Refine
+        your granule search with ECHO''s next generation Earth Science discovery tool
+        (Reverb) using information from this record.\n       (GET DATA : ECHO)","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93\u0026spatial_map=satellite\u0026spatial_type=rectangle\u0026keywords=GES_DISC_AIRS_CPR_IND_V3.1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://earthdata.nasa.gov/our-community/community-data-system-programs/measures-projects"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/daac-bin/DataHoldingsMEASURES.pl?PROGRAM_List=EricFetzer"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/measures/documentation/README.AIRS_CloudSat.pdf"}]}],"facets":[{"field":"project","value-counts":[["EOSDIS",1],["ESIP",1],["MEASURES",1]]},{"field":"sensor","value-counts":[["AIRS",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"count":1,"value":"CLOUDS"}],"count":1,"value":"ATMOSPHERE"}],"count":1,"value":"EARTH
+        SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 429e6778c2513d3e7c551e231939663f3a985248:
   response:
     status:
@@ -5847,6 +6435,44 @@ d61c53dfff8e54775680cb0fd0d9dcfae56914e0:
         SEA SURFACE TEMPERATURE (SSTFND)",1]]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"SEA
         SURFACE TEMPERATURE"}],"count":1,"value":"OCEAN TEMPERATURE"}],"count":1,"value":"OCEANS"}],"count":1,"value":"EARTH
         SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+622deefabdfb249e3b961d7beb06c962eeda776c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:07:54 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '66'
+      cmr-request-id:
+      - 7decd689-0a63-43e7-a50b-dcc978a033b3
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:07:54.693Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026hierarchical_facets=true\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C5920490-LARC_ASDC%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","boxes":["-90 -180 90
+        180"],"time_start":"1992-12-31T00:00:00.000Z","version_id":"V3-01","updated":"2011-06-14T09:55:00.000Z","dataset_id":"CAL_IIR_L2_Track-Beta-V3-01","data_center":"LARC_ASDC","short_name":"CAL_IIR_L2_Track-Beta-V3-01","organizations":["Atmospheric
+        Science Data Center"],"title":"CAL_IIR_L2_Track-Beta-V3-01","coordinate_system":"CARTESIAN","summary":"CALIPSO
+        Infrared Imaging Radiometer emissivity and cloud particle data related to
+        pixels colocated to the Lidar track","has_granules":true,"time_end":"2011-11-01T23:59:59.000Z","orbit_parameters":{},"id":"C5920490-LARC_ASDC","score":0.5,"original_format":"ECHO10","granule_count":52237,"archive_center":"Atmospheric
+        Science Data Center","browse_flag":false,"online_access_flag":false}],"facets":[{"field":"project","value-counts":[["CALIPSO",1]]},{"field":"sensor","value-counts":[["IMAGING
+        INFRARED RADIOMETER",1]]},{"field":"two_d_coordinate_system_name","value-counts":[["CALIPSO",1]]},{"field":"processing_level_id","value-counts":[["2",1]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[],"field":"platforms"},{"subfields":["category"],"category":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
 341c320ac899e205b616ddd278ad6f7c60956cf2:
@@ -7416,6 +8042,89 @@ b2d9439d926c3dee7c3e7dfa263b5925e8d2b5c4:
         TRAPS",1],["STD",1],["WATER BOTTLES",1],["XBT",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
     http_version: 
     reduced: true
+ee89228a5613c6ee87a5cf7b7ba422bedb2b59df:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:08:02 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '104'
+      cmr-request-id:
+      - a182bbcd-35cf-4aca-a41a-5486d3b928f6
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:08:02.691Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C1219252422-LANCEMODIS%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MOD02QKM_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m","data_center":"LANCEMODIS","short_name":"MOD02QKM","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Terra
+        Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m","coordinate_system":"CARTESIAN","summary":"The
+        250 meter MODIS Level 1B Near Real Time (NRT) data set contains calibrated
+        and geolocated  at-aperture radiances for 2 discrete bands located in the
+        0.62 to 0.88 micron  region of the electromagnetic spectrum. These data are
+        generated from the MODIS  Level 1A scans of raw radiance and in the process
+        converted to geophysical  units of W / (m^2 um sr). In addition, the Earth
+        Bi-directional Reflectance Distribution Function (BRDF) may be determined
+        for these solar reflective bands  through knowledge of the solar irradiance
+        (e.g., determined from MODIS solar  diffuser data, and from the target illumination
+        geometry).  Additional data are  provided including quality flags, error estimates
+        and calibration data. Channel locations for the MODIS 250 meter data are as
+        follows:  Band   Center Wavelength (um)    Primary Use ----   ----------------------    -----------
+        1          0.620  - 0.670        Land/Cloud Boundaries 2          0.841  -
+        0.876        Land/Cloud Boundaries  Separate L1B products are available for
+        the five 500 m resolution channels (MOD02HKM) and the twenty-nine 1 km resolution
+        channels (MOD021KM). For the 500 m product, there are actually seven channels
+        available since the data from the two 250 m channels have been aggregated
+        to 500 m resolution.  Similarly, for the 1 km product, all 36 MODIS channels
+        are available since the data from the two 250 m and five 500 m channels have
+        been aggregated into equivalent 1 km pixel values.  Spatial resolution for
+        pixels at nadir is 250 m, degrading to 1.2 km in the along-scan direction
+        and 0.5 km in the along-track direction for pixels located at the scan extremes.
+        A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330
+        km orbital swath width and provides global coverage every one to two days.
+        A single MODIS Level 1B 250 m granule will contain a scene built from 203
+        scans sampled 5416 times in the cross-track direction, corresponding to approximately
+        5 minutes worth of data; thus 288 granules will be produced per day. Since
+        an individual MODIS scan will contain 40 along-track spatial elements for
+        the 250 m channels, the scene will be composed of (5416 x 8120) pixels, resulting
+        in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry,
+        there will be increasing scan overlap beyond about 17 degrees scan angle.
+        To summarize, the MODIS L1B 250 m data product consists of:  1. Calibrated
+        radiances and uncertainties for (2) 250 m reflected solar bands  2. Subsampled
+        geolocation at every 4th 250 m pixel across and along track, i.e., a geolocation
+        point every kilometer  3. Satellite and solar angles subsampled at the above
+        frequency  4. Calibration data for all channels (scale and offset)  5. Comprehensive
+        set of file-level metadata summarizing the spatial, temporal and parameter
+        attributes of the data, as well as auxiliary information pertaining to instrument
+        status and data quality characterization  The MODIS L1B 250 m data are stored
+        in the Earth Observing System Hierarchical Data Format (HDF-EOS) which is
+        an extension of HDF as developed by the National Center for Supercomputer
+        Applications (NCSA) at the University of Illinois. A typical file size will
+        be approximately 170 MB.  Environmental information derived from MODIS L1B
+        measurements will offer a comprehensive and unprecedented look at terrestrial,
+        atmospheric, and ocean phenomenology for a wide and diverse community of users
+        throughout the world. The Shortname for this product is MOD02QKM","has_granules":true,"orbit_parameters":{},"id":"C1219252422-LANCEMODIS","score":0.5,"collection_data_type":"NEAR_REAL_TIME","granule_count":1581,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MOD02QKM 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MOD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]}],"facets":[{"field":"data_center","value-counts":[["NASA/GSFC/EOS/ESDIS/LANCEMODIS",1]]},{"field":"archive_center","value-counts":[["NASA/GSFC/EOS/ESDIS/LANCEMODIS",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["TERRA",1]]},{"field":"instrument","value-counts":[["MODIS",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
 a057aa6b667076abeab19e29f14f79ae4fa00104:
   response:
     status:
@@ -8356,6 +9065,63 @@ e9b8b750241215936e0f3865de99c7fa36eab4a5:
         ZX19
     http_version: 
     reduced: true
+b5a261a98232409e6a0cc2263b7fc76ebb6acb49:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:07:41 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '142'
+      cmr-request-id:
+      - 7d1215c1-117b-4425-bb56-0eb442946f8e
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:07:42.113Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C204200619-GSFCS4PA%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-90 -180 90 180"],"time_start":"2006-06-15T00:00:00.000Z","dif_ids":["GES_DISC_AIRS_CPR_IND_V3.1"],"version_id":"3.1","updated":"2016-01-20T00:00:00.000Z","dataset_id":"AIRS-CloudSat
+        cloud mask and radar reflectivities collocation indexes V3.1","data_center":"GSFCS4PA","short_name":"AIRS_CPR_IND","organizations":["GESDISC","GES
+        DISC"],"title":"AIRS-CloudSat cloud mask and radar reflectivities collocation
+        indexes V3.1","coordinate_system":"CARTESIAN","summary":"This is AIRS-AMSU-CloudSat
+        collocation indexes, in ASCII format. These data map CloudSat profile indexes
+        to the collocated AMSU field of views, and AIRS IR footprints, per AIRS 6-min
+        granule time. Hence it can be considered as Level 1. These data are created
+        within the frames of the MEaSUREs project.\n\nThe basic task is to bring together
+        retrievals of water vapor and cloud properties from multiple \"A-train\" instruments
+        (AIRS, AMSR-E, MODIS, AMSU, MLS, \u0026 CloudSat), classify each \"scene\"
+        (instrument look) using the cloud information, and develop a merged, multi-sensor
+        climatology of atmospheric water vapor as a function of altitude, stratified
+        by the cloud classes. This is a large science analysis project that will require
+        the use of SciFlo technologies to discover and organize all of the datasets,
+        move and cache datasets as required, find space/time \"matchups\" between
+        pairs of instruments, and process years of satellite data to produce the climate
+        data records.\n\nThe short name for this collections is AIRS_CPR_IND.","has_granules":true,"time_end":"2012-12-15T23:59:59.000Z","orbit_parameters":{},"id":"C204200619-GSFCS4PA","score":0.5,"original_format":"ECHO10","granule_count":418740,"archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"http://measures.gesdisc.eosdis.nasa.gov/data/s4pa/AIRS_CloudSat/AIRS_CPR_IND.3.1/doc/README.AIRS_CloudSat.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(GET
+        DATA : ON-LINE ARCHIVE)","hreflang":"en-US","href":"ftp://measures.gsfc.nasa.gov/data/s4pa/AIRS_CloudSat/AIRS_CPR_IND.3.1/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Spatial/temporal
+        Search and download\n       (GET DATA : MIRADOR)","hreflang":"en-US","href":"http://mirador.gsfc.nasa.gov/cgi-bin/mirador/homepageAlt.pl?keyword=AIRS_CPR_IND"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Refine
+        your granule search with ECHO''s next generation Earth Science discovery tool
+        (Reverb) using information from this record.\n       (GET DATA : ECHO)","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93\u0026spatial_map=satellite\u0026spatial_type=rectangle\u0026keywords=GES_DISC_AIRS_CPR_IND_V3.1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://earthdata.nasa.gov/our-community/community-data-system-programs/measures-projects"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/daac-bin/DataHoldingsMEASURES.pl?PROGRAM_List=EricFetzer"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/measures/documentation/README.AIRS_CloudSat.pdf"}]}],"facets":[{"field":"data_center","value-counts":[["GES
+        DISC",1],["GESDISC",1]]},{"field":"archive_center","value-counts":[["GESDISC",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["CLOUDSAT",1]]},{"field":"instrument","value-counts":[["AIRS",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
 a4bd92b139febc156297b79ff6407ce0343b4dba:
   response:
     status:
@@ -8407,6 +9173,46 @@ a4bd92b139febc156297b79ff6407ce0343b4dba:
         image for Website (Thumbnail)","hreflang":"en-US","href":"/data/export/web/thumbnails"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Full
         details of the MISST Project  (Project Home Page)","hreflang":"en-US","href":"http://www.misst.org"}]}],"facets":[{"field":"data_center","value-counts":[["PO.DAAC",1],["Remote
         Sensing System",1]]},{"field":"archive_center","value-counts":[["PO.DAAC",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["AQUA",1],["TRMM",1]]},{"field":"instrument","value-counts":[["AMSR-E",1],["MODIS",1],["TMI",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
+    http_version: 
+    reduced: true
+a2a72f2ddebe3af3e1969c33de482aba86efabcb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:07:55 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '259'
+      cmr-request-id:
+      - d784ce3a-8531-4d36-a90a-6f54066f9c93
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T02:07:55.912Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A\u0026exclude%5Btag_key%5D=edsc.datasource.cwic\u0026keyword=C5920490-LARC_ASDC%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","boxes":["-90 -180 90
+        180"],"time_start":"1992-12-31T00:00:00.000Z","version_id":"V3-01","updated":"2011-06-14T09:55:00.000Z","dataset_id":"CAL_IIR_L2_Track-Beta-V3-01","data_center":"LARC_ASDC","short_name":"CAL_IIR_L2_Track-Beta-V3-01","organizations":["Atmospheric
+        Science Data Center"],"title":"CAL_IIR_L2_Track-Beta-V3-01","coordinate_system":"CARTESIAN","summary":"CALIPSO
+        Infrared Imaging Radiometer emissivity and cloud particle data related to
+        pixels colocated to the Lidar track","has_granules":true,"time_end":"2011-11-01T23:59:59.000Z","orbit_parameters":{},"id":"C5920490-LARC_ASDC","score":0.5,"original_format":"ECHO10","granule_count":52237,"archive_center":"Atmospheric
+        Science Data Center","browse_flag":false,"online_access_flag":false}],"facets":[{"field":"data_center","value-counts":[["Atmospheric
+        Science Data Center",1]]},{"field":"archive_center","value-counts":[["Atmospheric
+        Science Data Center",1]]},{"field":"project","value-counts":[]},{"field":"platform","value-counts":[["CALIPSO",1]]},{"field":"instrument","value-counts":[["IMAGING
+        INFRARED RADIOMETER",1]]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"category","value-counts":[]},{"field":"topic","value-counts":[]},{"field":"term","value-counts":[]},{"field":"variable_level_1","value-counts":[]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}],"reduced":true}}'
     http_version: 
     reduced: true
 0cf52b642e3f6cdb1ae236a47f42ba1dcbd50b87:
