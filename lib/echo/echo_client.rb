@@ -123,6 +123,10 @@ module Echo
       get("/echo-rest/service_option_assignments.json", {catalog_item_id: id}, token_header(token))
     end
 
+    def get_all_service_order_information(token)
+      get("/echo-rest/service_option_assignments.json", nil, token_header(token))
+    end
+
     def get_service_option_definition(id, token)
       get("/echo-rest/service_option_definitions/#{id}.json", {}, token_header(token))
     end
