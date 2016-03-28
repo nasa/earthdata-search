@@ -1426,6 +1426,37 @@ d4052720c651abc789e0ffdfca8cc361eca99c82:
         \       <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n
         \     </Spatial>\n    </Collection>"
     http_version: 
+fbd46854681f5702d24d49d7f2885a2ca0678e32:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:36:32 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 4dfcb06a-38ab-46fa-adaa-ed1ace5fdd80
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","time_start":"1984-12-25T00:00:00.000Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","organizations":["ORNL_DAAC"],"title":"15
+        Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","time_end":"1988-03-04T00:00:00.000Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}'
+    http_version: 
 7dd2568f462fe186915631c2f16a56d2826565e1:
   response:
     status:
@@ -1538,6 +1569,81 @@ d4052720c651abc789e0ffdfca8cc361eca99c82:
         Swath</PrimaryCSDT><Implementation>HDF-EOS</Implementation><CSDTComments>None</CSDTComments><IndirectReference>Source
         Packets</IndirectReference></CSDTDescription></CSDTDescriptions><CollectionAssociations><CollectionAssociation><ShortName>AST_L1B</ShortName><VersionId>3</VersionId><CollectionType>Dependent</CollectionType><CollectionUse>Radiometric
         values computed from the raw instrument counts</CollectionUse></CollectionAssociation></CollectionAssociations><AssociatedDIFs><DIF><EntryId>AST_L1AE3</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>'
+    http_version: 
+630e02049d4ce13f39f1e7d024cbc7d6d93e4bf8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:36:30 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 69f00024-f503-4e4b-8690-4ae9db724dd0
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"boxes":["-90 -180 90 180"],"time_start":"2004-10-01T00:00:00.000Z","dif_ids":["GES_DISC_OMAEROe_V003"],"version_id":"003","updated":"2016-01-20T00:00:00.000Z","dataset_id":"OMI/Aura
+        Multi-wavelength Aerosol Optical Depth and Single Scattering Albedo Daily
+        L3 Global 0.25x0.25 deg Lat/Lon Grid V003","data_center":"GSFCS4PA","short_name":"OMAEROe","organizations":["GESDISC"],"title":"OMI/Aura
+        Multi-wavelength Aerosol Optical Depth and Single Scattering Albedo Daily
+        L3 Global 0.25x0.25 deg Lat/Lon Grid V003","coordinate_system":"CARTESIAN","summary":"The
+        OMI science team produces two Level-3 Aura/OMI Global Aerosol Data Products
+        OMAERUVd (1deg Lat/Lon grids) and OMAEROe (0.25deg Lat/Lon grids). The OMAERUVd
+        product is based on the Level-2 OMAERUV product that uses the near-UV algorithm
+        whereas the OMAERO product is based on the multi-wavelength algorithm that
+        uses up to 20 wavelength bands between 331 nm and 500 nm. OMAERO retrieval
+        algorithm is developed by the KNMI OMI Team Scientists. Drs. Deborah Stein-Zweers,
+        Martin Sneep and Pepijn Veefkind are now the key investigators of this product.
+        \n  \n  (The shortname for this Level-3 Global Gridded Aerosol Product is
+        OMAEROe_V003) \n \n The Level-3 OMAEROe product selects best aerosol value
+        from the Leve2G good quality data that are reported in each grid. The selection
+        criteria is based on the shortest optical path length (=Secant of solar zenith
+        angle+Secant of view zenith angle).       \nOMAEROe files are stored in EOS
+        Hierarchical Data Format (HDF-EOS5). Each file contains daily data from approximately
+        15 orbits. The maximum file size for the OMAEROe data product is about 7 Mbytes.","orbit_parameters":{},"id":"C181553784-GSFCS4PA","original_format":"ECHO10","archive_center":"GESDISC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Access
+        the OMI Level-3 global 0.25x0.25 deg Aerosol Product (OMAEROe) by FTP.\n       (GET
+        DATA : ON-LINE ARCHIVE)","hreflang":"en-US","href":"ftp://acdisc.gsfc.nasa.gov/data/s4pa/Aura_OMI_Level3/OMAEROe.003/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Direct
+        Access to OMI Level-3 global 0.25x0.25 deg Aerosol Product (OMAEROe) from
+        the GES DISC Mirador fast search and download system\n       (GET DATA : MIRADOR)","hreflang":"en-US","href":"http://mirador.gsfc.nasa.gov/cgi-bin/mirador/homepageAlt.pl?keyword=OMAEROe"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Access
+        the OMI Level-3 global 0.25x0.25 deg Aerosol Product (OMAEROe) using Simple
+        Subset Wizard (Search and subset by date and spatial region).\n       (GET
+        DATA : SSW)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/SSW/#keywords=OMAEROe
+        003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Search
+        OMI Level-3 global 0.25x0.25 deg Aerosol Product (OMAEROe) using ECHO''s next
+        generation Earth Science discovery tool (Reverb).\n       (GET DATA : ECHO)","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&spatial_map=satellite&spatial_type=rectangle&keywords=GES_DISC_OMAEROe_V003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Get
+        map from GES DISC WMS for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW,
+        SingleScatteringAlbedoMW\n       (GET SERVICE : GET WEB MAP SERVICE (WMS))","hreflang":"en-US","href":"http://disc1.sci.gsfc.nasa.gov/daac-bin/wms_omi?version=1.1.1&service=WMS&request=GetMap&SRS=EPSG:4326&WIDTH=600&HEIGHT=300&LAYERS=OMAEROe_AerosolOpticalThicknessMW&TRANSPARENT=TRUE&FORMAT=image/png&bbox=-180,-90,180,90&time=2013-09-02"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Get
+        map from GES DISC WMS for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW,
+        SingleScatteringAlbedoMW\n       (GET SERVICE : GET WEB MAP SERVICE (WMS))","hreflang":"en-US","href":"http://disc1.sci.gsfc.nasa.gov/daac-bin/wms_omi?version=1.1.1&service=WMS&request=GetMap&SRS=EPSG:4326&WIDTH=600&HEIGHT=300&LAYERS=OMAEROe_AbsorbingAerosolOpticalThicknessMW&TRANSPARENT=TRUE&FORMAT=image/png&bbox=-180,-90,180,90&time=2013-09-02"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Get
+        map from GES DISC WMS for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW,
+        SingleScatteringAlbedoMW\n       (GET SERVICE : GET WEB MAP SERVICE (WMS))","hreflang":"en-US","href":"http://disc1.sci.gsfc.nasa.gov/daac-bin/wms_omi?version=1.1.1&service=WMS&request=GetMap&SRS=EPSG:4326&WIDTH=600&HEIGHT=300&LAYERS=OMAEROe_SingleScatteringAlbedoMW&TRANSPARENT=TRUE&FORMAT=image/png&bbox=-180,-90,180,90&time=2013-09-02"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"WCS
+        for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW, SingleScatteringAlbedoMW\n       (GET
+        SERVICE : GET WEB COVERAGE SERVICE (WCS))","hreflang":"en-US","href":"http://acdisc.sci.gsfc.nasa.gov/daac-bin/wcsL3?service=WCS&version=1.0.0&request=getCoverage&CRS=CRS:84&format=netCDF&resx=0.25&resy=0.25&bbox=-179.875,-89.875,179.875,89.875&coverage=OMAEROe:ColumnAmountAerosol:AbsorbingAerosolOpticalThicknessMW"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"WCS
+        for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW, SingleScatteringAlbedoMW\n       (GET
+        SERVICE : GET WEB COVERAGE SERVICE (WCS))","hreflang":"en-US","href":"http://acdisc.sci.gsfc.nasa.gov/daac-bin/wcsL3?service=WCS&version=1.0.0&request=getCoverage&CRS=CRS:84&format=netCDF&resx=0.25&resy=0.25&bbox=-179.875,-89.875,179.875,89.875&coverage=OMAEROe:ColumnAmountAerosol:AerosolOpticalThicknessMW"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"WCS
+        for AbsorbingAerosolOpticalThicknessMW, AerosolOpticalThicknessMW, SingleScatteringAlbedoMW\n       (GET
+        SERVICE : GET WEB COVERAGE SERVICE (WCS))","hreflang":"en-US","href":"http://acdisc.sci.gsfc.nasa.gov/daac-bin/wcsL3?service=WCS&version=1.0.0&request=getCoverage&CRS=CRS:84&format=netCDF&resx=0.25&resy=0.25&bbox=-179.875,-89.875,179.875,89.875&coverage=OMAEROe:ColumnAmountAerosol:SingleScatteringAlbedoMW"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AURA
+        OMI Atmospheric Chemistry home page.\n       (VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"http://aura.gsfc.nasa.gov/instruments/omi.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://aura.gsfc.nasa.gov/instruments/omi/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://www.knmi.nl/omi/research/documents/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/acdisc/TOMS"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.gsfc.nasa.gov/Aura/OMI/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.gsfc.nasa.gov/Aura/OMI/omaeroe_v003.shtml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"product
+        README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"http://acdisc.gesdisc.eosdis.nasa.gov/data/s4pa//Aura_OMI_Level3/OMAEROe.003/doc/README.OMI_DUG.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"ReadMe
+        for OMAEROe_V003\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/Aura/data-holdings/OMI/documents/v003/OMAEROe_OSIPS_README_V003.doc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"FileSpec
+        for OMAEROe_V003\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/Aura/data-holdings/OMI/documents/v003/OMAEROe_FileSpec_V003.txt"}]}'
     http_version: 
 24d1f087ca6a550f99e4402261aa64c0fc4553ca:
   response:
@@ -1834,6 +1940,81 @@ d4052720c651abc789e0ffdfca8cc361eca99c82:
         \         <SouthBoundingCoordinate>-83.0</SouthBoundingCoordinate>\n        </BoundingRectangle>\n
         \     </Geometry>\n    </HorizontalSpatialDomain>\n    <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>\n
         \ </Spatial>\n</Collection>"
+    http_version: 
+5afcff0fd9d01f574656288164e531d19088e639:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:36:35 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 5a8942ee-b840-49bb-8275-9513a9a04691
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2002-06-01T00:00:00.000Z","version_id":"1","updated":"2012-01-26T22:15:23.132Z","dataset_id":"AMSRE_L3_SST_1DEG_1MO:1","data_center":"PODAAC","short_name":"AMSRE_L3_SST_1DEG_1MO","organizations":["PO.DAAC","REMSS"],"title":"AMSRE_L3_SST_1DEG_1MO:1","coordinate_system":"CARTESIAN","summary":"This
+        data set contains sea surface temperature (SST) data on a monthly 1 degree
+        grid from the Advanced Microwave Scanning Radiometer (AMSR-E) aboard NASA''s
+        Aqua spacecraft. The data were produced by Remote Sensing Systems in support
+        of the CMIP5 (Coupled Model Intercomparison Project Phase 5) under the World
+        Climate Research Program (WCRP).   Along with this dataset, two additional
+        ancillary data files are included in the same directory which contain the
+        number of observations and standard error co-located on the same 1 degree
+        grids.  AMSR-E, a passive-microwave radiometer launched on the Aqua platform
+        on 4 May 2002, was provided by the National Space Development Agency (NASDA)
+        of Japan to NASA as an indispensable part of Aqua''s global hydrology mission.
+        Over the oceans, AMSR-E is measuring a number of important geophysical parameters,
+        including SST, wind speed, atmospheric water vapor, cloud water, and rain
+        rate. A key feature of AMSR-E is its capability to see through clouds, thereby
+        providing an uninterrupted view of global SST and surface wind fields.","time_end":"2010-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C2930962-PODAAC","original_format":"ECHO10","archive_center":"PO.DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"The
+        OPeNDAP base directory location for the collection.","hreflang":"en-US","href":"http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"The
+        FTP base directory location for the collection.","hreflang":"en-US","href":"ftp://podaac-ftp.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Live
+        Access Server (PORTAL_DA_TOOLS_AND_SERVICES)","hreflang":"en-US","href":"http://thredds.jpl.nasa.gov/las/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://thredds.jpl.nasa.gov/thredds/catalog/ncml_aggregation/OceanTemperature/amsre/catalog.html?dataset=ncml_aggregation/OceanTemperature/amsre/aggregate__AMSRE_L3_SST_1DEG_1MO.ncml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Link
+        to JPL Earth System Grid (JPL ESG Link)","hreflang":"en-US","href":"http://esg-gateway.jpl.nasa.gov/home.htm"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Search
+        Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-SST00-1D1M1&apidoc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E
+        Technical Note (PDF)","hreflang":"en-US","href":"ftp://podaac.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo/docs/tosTechNote_AMSRE_L3_v7_200206-201012.pdf"}]}'
+    http_version: 
+65e24dcf4c941f35c6bdcc4626834151c6d6b01b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 28 Mar 2016 02:36:28 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - bea64e06-c8b5-41ab-b982-25f4b3b796aa
+      content-length:
+      - '699'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"4","boxes":["-90 -180 90 180"],"time_start":"2000-03-01T00:00:00.000Z","dif_ids":["CERES_EBAF"],"version_id":"2.8","updated":"2016-02-18T00:00:00.000Z","dataset_id":"CERES_EBAF-TOA_Edition2.8","data_center":"LARC_ASDC","short_name":"CERES_EBAF-TOA_Edition2.8","organizations":["Atmospheric
+        Science Data Center"],"title":"CERES_EBAF-TOA_Edition2.8","coordinate_system":"CARTESIAN","summary":"CERES
+        Energy Balanced and Filled(EBAF) TOA Monthly means data in netCDF","time_end":"2015-10-31T23:59:59.000Z","orbit_parameters":{},"id":"C7085910-LARC_ASDC","original_format":"ECHO10","archive_center":"Atmospheric
+        Science Data Center","browse_flag":false,"online_access_flag":false}'
     http_version: 
 19e44430c2a663ac19d442e82bf85f14fa97b0d7:
   response:
