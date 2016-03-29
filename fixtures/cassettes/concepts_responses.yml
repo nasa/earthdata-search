@@ -941,6 +941,28 @@ ac2fc07b8044c9a81e2e812e4f6d5875d35c2ce0:
         Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_land_l2b_soil_moisture.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
         Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
     http_version: 
+cd22b259dedf88a6f27a7f058f5f3b541df9316e:
+  response:
+    status:
+      code: 401
+      message: 
+    headers:
+      date:
+      - Tue, 29 Mar 2016 18:57:53 GMT
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - eb77042a-a91c-4c1a-a918-bf87e0e7b079
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Token edsc-access does not exist"]}'
+    http_version: 
 a8625406c735635e8f0d54555083fa434ca22391:
   response:
     status:
