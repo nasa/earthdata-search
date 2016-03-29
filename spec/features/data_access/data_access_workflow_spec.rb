@@ -30,6 +30,7 @@ describe "Data Access workflow", reset: false do
       Capybara.reset_sessions!
       load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
       wait_for_xhr
+      expect(page).to have_link('Earthdata Login', href: '/login')
       click_link "Retrieve project data"
       wait_for_xhr
     end
@@ -39,10 +40,13 @@ describe "Data Access workflow", reset: false do
     end
 
     it "forces the user to login before showing data access page", intermittent: true do
-      screenshot_path = "./tmp/screenshots/debug-#{Time.now.to_i}.png"
-      expect(page).to have_content('EOSDIS Earthdata Login'), lambda {
-        "Expect to see 'EOSDIS Earthdata Login' on the page. #{page.save_screenshot(screenshot_path)}"
-        Rails.logger.info Base64.encode64(File.open(screenshot_path, "rb").read)}
+      unless page.has_content?('EOSDIS Earthdata Login')
+        expect(page).to have_link('Manage user account')
+      end
+      # screenshot_path = "./tmp/screenshots/debug-#{Time.now.to_i}.png"
+      # expect(page).to have_content('EOSDIS Earthdata Login'), lambda {
+      #   "Expect to see 'EOSDIS Earthdata Login' on the page. #{page.save_screenshot(screenshot_path)}"
+      #   Rails.logger.info Base64.encode64(File.open(screenshot_path, "rb").read)}
     end
   end
 
