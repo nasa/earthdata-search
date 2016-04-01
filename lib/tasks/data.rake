@@ -14,18 +14,26 @@ namespace :data do
       end
     end
 
+    desc "Record the last run of task 'data:load' by touching a file in ./tmp dir"
+    task :log_dataload do
+      Dir.mkdir Rails.root.join('tmp') unless Dir.exist? Rails.root.join('tmp')
+      Dir.glob(Rails.root.join('tmp', "data_load_*")).each do |f|
+        File.delete(f)
+      end
+
+      FileUtils.touch Rails.root.join('tmp', "data_load_ok")
+    end
+
     def log_error(&block)
       begin
         yield
       rescue
-        CronJobHistory.delete_all task_name: 'data:load'
-        job = CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'failed', message: "#{error.inspect}")
-        job.save!
+        Dir.mkdir Rails.root.join('tmp') unless Dir.exist? Rails.root.join('tmp')
+        Dir.glob(Rails.root.join('tmp', "data_load_*")).each do |f|
+          File.delete(f)
+        end
+        open (Rails.root.join('tmp', "data_load_failed")) {|f| f.puts "#{error.inspect}"}
         exit 1
-      else
-        CronJobHistory.delete_all task_name: 'data:load'
-        job = CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'succeeded')
-        job.save!
       end
     end
 
@@ -34,7 +42,7 @@ namespace :data do
   desc "Load data from ECHO"
   task :load
 
-  Rake::Task['data:load'].enhance(['data:load:echo10', 'data:load:granules'])
+  Rake::Task['data:load'].enhance(['data:load:echo10', 'data:load:granules', 'data:load:log_dataload'])
 
   namespace :dump do
     # Only dump the CollectionExtra model
