@@ -29,11 +29,11 @@ class Health
   end
 
   def data_load_status
-    check_cron_job('data_load', 1.hour)
+    check_cron_job('data:load', 1.hour)
   end
 
   def colormap_load_status
-    check_cron_job('colormaps_load', 1.day)
+    check_cron_job('colormaps:load', 1.day)
   end
 
   def echo_status(echo_client)
@@ -67,29 +67,27 @@ class Health
 
   private
 
-  def check_cron_job(job, interval)
-    # After deployment, the tmp folder will contain nothing and data:load won't be run until 1 hour passed.
-    # To stop sending false negative to prod, we need to check the created time of the tmp folder to 'detect' a new
-    # deployment. And give it 3 * 1hour grace period before reporting @ok = false.
-    #
-    # i.e. Report cron_jobs healthy for 3 hours after a new deployment.
-    if File.ctime(Rails.root.join('README.md')) > 3.hours.ago
-      return {ok?: true, info: "Suspend cron job checks for 3 hours after new deployment."}
+  def check_cron_job(task_name, interval)
+    task = CronJobHistory.find_by(task_name: task_name)
+
+    if task.nil?
+      @ok = false
+      return {ok?: false, error: "Cron job '#{task_name}' has never been run."}
     end
 
-    Dir.glob(Rails.root.join('tmp', "#{job}_*")).each do |f|
-      if File.mtime(f) < Time.now - interval * 3
+    if task.status == 'succeeded'
+      if task.last_run < Time.now - interval && task.last_run > Time.now - 3 * interval
+        return {ok?: true, info: "Suspend cron job checks for #{interval.to_i / 3600} hours after a new deployment. Last task execution was #{task.status} at #{task.last_run}."}
+      elsif task.last_run < Time.now - 3 * interval
         @ok = false
-        return {ok?: false, error: "Cron job '#{job.split('_').join(':')}' hasn't been run since #{File.mtime(f)}."}
-      elsif f.match /_failed$/
-        @ok = false
-        return {ok?: false, error: "Cron job '#{job.split('_').join(':')}' failed in last run at #{File.mtime(f)} with message '#{File.read(f)}'."}
+        return {ok?: false, error: "Cron job '#{task_name}' hasn't been run since #{task.last_run}."}
       else
         return {ok?: true}
       end
+    else
+      @ok = false
+      {ok?: false, error: "Cron job '#{task_name}' failed in last run at #{task.last_run} with message '#{task.message}'."}
     end
-    @ok = false
-    {ok?: false, error: "Cron job '#{job.split('_').join(':')}' has never been run."}
   end
 
   def ok?(response, condition=nil)
