@@ -13,30 +13,21 @@ describe HealthController, type: :controller do
       @retrieval.created_at = Time.now - 1.minute
     end
 
-    # before :each do
-    #   Dir.glob(Rails.root.join('tmp', "data_load_*")).each { |f| File.delete(f) }
-    #   Dir.glob(Rails.root.join('tmp', "colormaps_load_*")).each { |f| File.delete(f) }
-    #
-    #   FileUtils.touch Rails.root.join('tmp', "data_load_#{Time.now.to_i}")
-    #   FileUtils.touch Rails.root.join('tmp', "colormaps_load_#{Time.now.to_i}")
-    #   allow(File).to receive(:ctime).with(Rails.root.join('README.md')).and_return(Time.now - 5.days)
-    # end
-    #
-    # after :each do
-    #   Dir.glob(Rails.root.join('tmp', "data_load_*")).each { |f| File.delete(f) }
-    #   Dir.glob(Rails.root.join('tmp', "colormaps_load_*")).each { |f| File.delete(f) }
-    # end
+    before :each do
+      Dir.glob(Rails.root.join('tmp', "data_load_*")).each { |f| File.delete(f) }
+      Dir.glob(Rails.root.join('tmp', "colormaps_load_*")).each { |f| File.delete(f) }
+
+      FileUtils.touch Rails.root.join('tmp', "data_load_#{Time.now.to_i}")
+      FileUtils.touch Rails.root.join('tmp', "colormaps_load_#{Time.now.to_i}")
+      allow(File).to receive(:ctime).with(Rails.root.join('README.md')).and_return(Time.now - 5.days)
+    end
+
+    after :each do
+      Dir.glob(Rails.root.join('tmp', "data_load_*")).each { |f| File.delete(f) }
+      Dir.glob(Rails.root.join('tmp', "colormaps_load_*")).each { |f| File.delete(f) }
+    end
 
     context "when everything is up" do
-      before :all do
-        CronJobHistory.new(task_name: 'data:load', last_run: Time.now - 1.minute, status: 'succeeded').save!
-        CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now - 1.minute, status: 'succeeded').save!
-      end
-
-      after :all do
-        CronJobHistory.delete_all
-      end
-
       it "returns a json response indicating the system is ok" do
 
         get :index, format: 'json'
@@ -55,15 +46,6 @@ describe HealthController, type: :controller do
     end
 
     context "when one of the dependencies is down" do
-      before :all do
-        CronJobHistory.new(task_name: 'data:load', last_run: Time.now - 1.minute, status: 'succeeded').save!
-        CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now - 1.minute, status: 'succeeded').save!
-      end
-
-      after :all do
-        CronJobHistory.delete_all
-      end
-
       it "returns a json response indicating edsc is not ok" do
         mock_client = Object.new
         expect(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
@@ -92,15 +74,12 @@ describe HealthController, type: :controller do
     end
 
     context "when one of the cron job hasn't been run for a while" do
-      before :all do
-        CronJobHistory.new(task_name: 'data:load', last_run: Time.now - 4.hours, status: 'succeeded').save!
-      end
-
-      after :all do
-        CronJobHistory.delete_all
-      end
-
       it "returns a json response indicating edsc is not ok" do
+        Dir.glob(Rails.root.join('tmp', "data_load_*")).each { |f| File.delete(f) }
+        Dir.glob(Rails.root.join('tmp', "colormaps_load_*")).each { |f| File.delete(f) }
+
+        open(Rails.root.join('tmp', "data_load_failed"), 'w') {|f| f.puts "test error message: data"}
+        open(Rails.root.join('tmp', "colormaps_load_failed"), 'w') {|f| f.puts "test error message: colormaps"}
 
         get :index, format: 'json'
 
@@ -112,25 +91,8 @@ describe HealthController, type: :controller do
         expect(json['dependencies']['opensearch']).to eq({"ok?"=>true})
         expect(json['dependencies']['browse_scaler']).to eq({"ok?"=>true})
         expect(json['background_jobs']['delayed_job']).to eq({"ok?"=>true})
-        expect(json['background_jobs']['data_load'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load' hasn't been run since .*/)
-      end
-    end
-
-    context "when one of the cron job failed with an error" do
-      before :all do
-        CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'failed', message: 'error text').save!
-      end
-
-      after :all do
-        CronJobHistory.delete_all
-      end
-
-      it "returns a json response indicating edsc is not ok with the error message" do
-        get :index, format: 'json'
-
-        json = JSON.parse response.body
-        expect(json['edsc']).to eq({"ok?"=>false})
-        expect(json['background_jobs']['data_load'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load' failed in last run at .* with message 'error text'\.\"/)
+        expect(json['background_jobs']['data_load'].to_json).to match(/"ok\?":false,"error":"Cron job 'data:load' failed in last run at .* with message 'test error message: data\\n'/)
+        expect(json['background_jobs']['colormaps_load'].to_json).to match(/"ok\?":false,"error":"Cron job 'colormaps:load' failed in last run at .* with message 'test error message: colormaps\\n'/)
       end
     end
   end
