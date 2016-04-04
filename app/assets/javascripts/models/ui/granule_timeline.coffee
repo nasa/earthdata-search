@@ -27,6 +27,15 @@ ns.GranuleTimeline = do (ko
       # Start computing, but avoid introducing a dependency on results in the caller
       @results.peek()
 
+    refreshData: (start, end, resolution) ->
+      return if !@isLoading.peek()
+      $('#timeline').timeline 'data', @collection.id,
+        start: start,
+        end: end,
+        resolution: resolution
+        intervals: @results.peek()
+        color: @color
+
     _computeParams: =>
       [start, end, interval] = @range()
       timelineParams =
@@ -83,6 +92,43 @@ ns.GranuleTimeline = do (ko
         intervals: intervals
         color: @color
       intervals
+
+  class IndeterminateGranuleTimelineData extends KnockoutModel
+    constructor: (@collection, @range, @color) ->
+      @params = @computed(@_computeParams)
+
+      $timeline = $('#timeline')
+
+      intervals = []
+      if @collection.time_start || @collection.time_end
+        start = @collection.time_start ? 0
+        end = @collection.time_end ? config.present()
+
+        intervals.push([new Date(start).getTime() / 1000, new Date(end).getTime() / 1000])
+
+      @intervals = intervals
+      @results = ko.observable(intervals)
+
+      # setTimeout ensures it renders on the first load
+      setTimeout(@refreshData, 0)
+
+      $timeline.on 'rowtemporalchange.timeline', (e, rowId, start, stop) =>
+        if rowId == @collection.id
+          @collection.granuleDatasource()?.setTemporal?(startDate: start, endDate: stop, recurring: false)
+
+    refreshData: (start, end, resolution) =>
+      $('#timeline').timeline 'data', @collection.id,
+        intervals: @intervals
+        color: @color
+        indeterminate: true
+
+    _computeParams: =>
+      temporal = @collection.granuleDatasource()?.getTemporal?()
+      ranges = dateUtil.computeRanges(temporal) if temporal
+      $timeline = $('#timeline')
+      if $timeline.timeline('getRowTemporal', @collection.id)?.toString() != ranges?.toString()
+        $timeline.timeline('setRowTemporal', @collection.id, ranges)
+
 
   class GranuleTimeline extends KnockoutModel
     constructor: (@collectionsList, @projectList) ->
@@ -215,24 +261,20 @@ ns.GranuleTimeline = do (ko
           newTimelines[id] = currentTimelines[id]
           delete currentTimelines[id]
         else
-          # TODO: Future CWIC issues need to deal with the CWIC timeline and should clean this up
-          if collection.granuleDatasourceName() == 'cmr'
+          if collection.granuleDatasource()?.hasCapability('timeline')
             data = new GranuleTimelineData(collection, range, project.colorForCollection(collection))
-            newTimelines[id] = data
+          else
+            data = new IndeterminateGranuleTimelineData(collection, range, project.colorForCollection(collection))
+          newTimelines[id] = data
 
       for own k, v of currentTimelines
         v.dispose()
 
       @_collectionsToTimelines = newTimelines
 
-      for own key, data of newTimelines when !data.isLoading.peek()
-        [start, end, resolution] = range()
-        $timeline.timeline 'data', data.collection.id,
-          start: start,
-          end: end,
-          resolution: resolution
-          intervals: data.results.peek()
-          color: data.color
+      for own key, data of newTimelines
+        console.log data
+        data.refreshData(range()...)
 
       result
 
