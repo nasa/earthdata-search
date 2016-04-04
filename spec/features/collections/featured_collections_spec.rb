@@ -8,8 +8,8 @@ describe "Featured collections", reset: false do
 
   context "when no collection filters have been applied" do
     it "shows featured collections" do
-      expect(featured_collection_results).to have_content('MOD04_L2')
-      expect(featured_collection_results).to have_content('MOD10_L2')
+      expect(featured_collection_results).to have_content('MYD04_L2')
+      expect(featured_collection_results).to have_content('MYD10_L2')
     end
 
     it "shows a section heading for featured collections" do
@@ -33,11 +33,11 @@ describe "Featured collections", reset: false do
     end
 
     it "shows featured collections matching the filters" do
-      expect(featured_collection_results).to have_content('MOD10_L2')
+      expect(featured_collection_results).to have_content('MYD10_L2')
     end
 
     it "hides featured collections not matching the filters" do
-      expect(featured_collection_results).to have_no_content('MOD04_L2')
+      expect(featured_collection_results).to have_no_content('MYD04_L2')
     end
 
     it "shows a section heading for featured collections" do
@@ -61,8 +61,8 @@ describe "Featured collections", reset: false do
     end
 
     it "shows no featured collections" do
-      expect(page).to have_no_content('MOD04_L2')
-      expect(page).to have_no_content('MOD10_L2')
+      expect(page).to have_no_content('MYD04_L2')
+      expect(page).to have_no_content('MYD10_L2')
     end
 
     it "shows no section heading for featured collections" do
@@ -138,8 +138,8 @@ describe "Featured collections", reset: false do
       end
 
       it "shows no featured collections" do
-        expect(page).to have_no_content('MOD04_L2')
-        expect(page).to have_no_content('MOD10_L2')
+        expect(page).to have_no_content('MYD04_L2')
+        expect(page).to have_no_content('MYD10_L2')
       end
 
       context "when filtering the first collection's granules" do

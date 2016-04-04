@@ -276,7 +276,7 @@ class CollectionExtra < ActiveRecord::Base
   end
 
   def self.featured_ids
-    ['C1000000016-LANCEMODIS', 'C1000000019-LANCEMODIS']
+    ['C1229626387-LANCEMODIS', 'C1219032686-LANCEMODIS']
   end
 
   def decorate(collection)
