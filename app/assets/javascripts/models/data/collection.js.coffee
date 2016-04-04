@@ -167,6 +167,7 @@ ns.Collection = do (ko
     granuleRendererNames: ->
       renderers = @getValueForTag('renderers')
       if renderers
+        return renderers if renderers.constructor is Array
         return renderers.split(',')
       else if @has_granules
         return ["cmr"]
@@ -249,13 +250,16 @@ ns.Collection = do (ko
         @_datasourceListeners.push(callback)
 
     getValueForTag: (key) ->
-      if @tags()
+      tags = @tags()
+      if tags && tags.constructor is Array
         prefix = "#{config.cmrTagNamespace}.#{key}."
         len = prefix.length
-        for tag in @tags()
+        for tag in tags
           tag = tag.join('.') if tag.constructor is Array
           return tag.substr(len) if tag.substr(0, len) == prefix
-      null
+      else
+        key = "#{config.cmrTagNamespace}.#{key}"
+        tags?[key]?.data
 
     canFocus: ->
       @hasAtomData() && @granuleDatasourceName()?

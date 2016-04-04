@@ -16,7 +16,8 @@ export default class CwicDatasourcePlugin {
     };
 
     this.capabilities = {
-      excludeGranules: false
+      excludeGranules: false,
+      timeline: false
     };
   }
 
