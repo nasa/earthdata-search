@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1000000019-LANCEMODIS.echo10
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1219032686-LANCEMODIS.echo10
     body:
       encoding: US-ASCII
       string: ''
