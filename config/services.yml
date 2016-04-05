@@ -674,6 +674,8 @@ modaps:
     short_name: MYD03
   C1000000003-LANCEMODIS:
     short_name: MYD04_L2
+  C1219032686-LANCEMODIS:
+    short_name: MYD04_L2
   C1000000028-LANCEMODIS:
     short_name: MYD05_L2
   C1000000030-LANCEMODIS:
