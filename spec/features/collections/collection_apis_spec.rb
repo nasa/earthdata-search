@@ -24,14 +24,14 @@ describe 'Collection API Endpoints', reset: false do
   context 'when viewing the collection details for a collection with GIBS' do
     before :all do
       load_page :search
-      fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
+      fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
       wait_for_xhr
       click_link "View collection details"
       wait_for_xhr
     end
 
     it 'provides the path to the GIBS endpoint' do
-      expect(collection_details).to have_css('a[href="http://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Terra_Aerosol/default/{Time}/EPSG4326_2km/{ZoomLevel}/{TileRow}/{TileCol}.png"]')
+      expect(collection_details).to have_css('a[href="http://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Aqua_Aerosol/default/{Time}/EPSG4326_2km/{ZoomLevel}/{TileRow}/{TileCol}.png"]')
     end
   end
 
@@ -52,14 +52,14 @@ describe 'Collection API Endpoints', reset: false do
   context 'when viewing the collection details for a collection with MODAPS WCS' do
     before :all do
       load_page :search
-      fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
+      fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
       wait_for_xhr
       click_link "View collection details"
       wait_for_xhr
     end
 
     it 'provides the path to the MODAPS WCS endpoint' do
-      expect(collection_details).to have_css('a[href="http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/MOD04_L2/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities"]')
+      expect(collection_details).to have_css('a[href="http://modwebsrv.modaps.eosdis.nasa.gov/wcs/5/MYD04_L2/getCapabilities?service=WCS&version=1.0.0&request=GetCapabilities"]')
     end
   end
 
