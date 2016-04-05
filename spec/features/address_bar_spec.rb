@@ -24,11 +24,11 @@ describe 'Address bar', reset: false do
     before(:all) do
       visit '/search/map'
       wait_for_xhr
-      fill_in "keywords", with: 'C1000000019-LANCEMODIS'
+      fill_in "keywords", with: 'C1219032686-LANCEMODIS'
     end
 
     it 'saves the keyword condition in the address bar' do
-      expect(page).to have_query_string('q=C1000000019-LANCEMODIS')
+      expect(page).to have_query_string('q=C1219032686-LANCEMODIS')
     end
 
     context 'clearing filters' do
@@ -41,14 +41,14 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/collections?q=C1000000019-LANCEMODIS' }
+    before(:all) { visit '/search/collections?q=C1219032686-LANCEMODIS' }
 
     it 'loads the condition into the keywords field' do
-      expect(page).to have_field('keywords', with: 'C1000000019-LANCEMODIS')
+      expect(page).to have_field('keywords', with: 'C1219032686-LANCEMODIS')
     end
 
     it 'filters collections using the condition' do
-      expect(page).to have_content('MOD04_L2')
+      expect(page).to have_content('MYD04_L2')
     end
   end
 
