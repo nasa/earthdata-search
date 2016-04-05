@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'json'
 require 'colormaps/xml_to_json'
+require 'socket'
 
 
 namespace :colormaps do
@@ -34,13 +35,12 @@ namespace :colormaps do
 
     puts "#{error_count} error(s), #{file_count} file(s)"
 
-    CronJobHistory.delete_all task_name: 'colormaps:load'
     if error_count > 0
-      job = CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now, status: 'failed', message: "#{error_count} error(s), #{file_count} file(s)")
+      job = CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now, status: 'failed', message: "#{error_count} error(s), #{file_count} file(s)", host: Socket.gethostname)
       job.save!
       exit 1
     else
-      job = CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now, status: 'succeeded')
+      job = CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
       job.save!
     end
   end

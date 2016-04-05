@@ -1,3 +1,5 @@
+require 'socket'
+
 namespace :data do
   namespace :load do
     desc "Cache data contained in the ECHO 10 format to return with granule results"
@@ -18,13 +20,11 @@ namespace :data do
       begin
         yield
       rescue
-        CronJobHistory.delete_all task_name: 'data:load'
-        job = CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'failed', message: "#{error.inspect}")
+        job = CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'failed', message: "#{error.inspect}", host: Socket.gethostname)
         job.save!
         exit 1
       else
-        CronJobHistory.delete_all task_name: 'data:load'
-        job = CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'succeeded')
+        job = CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
         job.save!
       end
     end
