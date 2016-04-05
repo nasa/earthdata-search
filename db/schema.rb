@@ -28,7 +28,10 @@ ActiveRecord::Schema.define(version: 20160331144208) do
     t.datetime "last_run"
     t.string   "status"
     t.text     "message"
+    t.string   "host"
   end
+
+  add_index "cron_job_histories", ["task_name", "last_run"], name: "index_cron_job_histories_on_task_name_and_last_run"
 
   create_table "dataset_extras", force: true do |t|
     t.string   "echo_id",                 null: false

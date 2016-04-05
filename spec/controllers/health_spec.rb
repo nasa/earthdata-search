@@ -29,8 +29,8 @@ describe HealthController, type: :controller do
 
     context "when everything is up" do
       before :all do
-        CronJobHistory.new(task_name: 'data:load', last_run: Time.now - 1.minute, status: 'succeeded').save!
-        CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now - 1.minute, status: 'succeeded').save!
+        CronJobHistory.new(task_name: 'data:load', last_run: Time.now - 1.minute, status: 'succeeded', host: 'host1').save!
+        CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now - 1.minute, status: 'succeeded', host: 'host1').save!
       end
 
       after :all do
@@ -56,8 +56,8 @@ describe HealthController, type: :controller do
 
     context "when one of the dependencies is down" do
       before :all do
-        CronJobHistory.new(task_name: 'data:load', last_run: Time.now - 1.minute, status: 'succeeded').save!
-        CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now - 1.minute, status: 'succeeded').save!
+        CronJobHistory.new(task_name: 'data:load', last_run: Time.now - 1.minute, status: 'succeeded', host: 'host1').save!
+        CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now - 1.minute, status: 'succeeded', host: 'host1').save!
       end
 
       after :all do
@@ -93,7 +93,7 @@ describe HealthController, type: :controller do
 
     context "when one of the cron job hasn't been run for a while" do
       before :all do
-        CronJobHistory.new(task_name: 'data:load', last_run: Time.now - 4.hours, status: 'succeeded').save!
+        CronJobHistory.new(task_name: 'data:load', last_run: Time.now - 4.hours, status: 'succeeded', host: 'host1').save!
       end
 
       after :all do
@@ -112,13 +112,13 @@ describe HealthController, type: :controller do
         expect(json['dependencies']['opensearch']).to eq({"ok?"=>true})
         expect(json['dependencies']['browse_scaler']).to eq({"ok?"=>true})
         expect(json['background_jobs']['delayed_job']).to eq({"ok?"=>true})
-        expect(json['background_jobs']['data_load'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load' hasn't been run since .*/)
+        expect(json['background_jobs']['data_load'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load' hasn't been run in the past 10800 seconds/)
       end
     end
 
     context "when one of the cron job failed with an error" do
       before :all do
-        CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'failed', message: 'error text').save!
+        CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'failed', message: 'error text', host: 'host1').save!
       end
 
       after :all do
@@ -130,7 +130,7 @@ describe HealthController, type: :controller do
 
         json = JSON.parse response.body
         expect(json['edsc']).to eq({"ok?"=>false})
-        expect(json['background_jobs']['data_load'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load' failed in last run at .* with message 'error text'\.\"/)
+        expect(json['background_jobs']['data_load'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load' failed in last run at .* with message 'error text' on host .*\.\"/)
       end
     end
   end

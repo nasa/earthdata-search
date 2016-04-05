@@ -5,6 +5,9 @@ class CronJobHistories < ActiveRecord::Migration
       t.datetime :last_run
       t.string :status
       t.text :message
+      t.string :host
     end
+
+    add_index :cron_job_histories, [:task_name, :last_run]
   end
 end
