@@ -317,7 +317,7 @@ class CollectionsController < ApplicationController
     params['include_tags'] = "#{Rails.configuration.cmr_tag_namespace}.*"
     unless ['prod'].include?(cmr_env) && !Rails.env.test?
       unless cwic || request.query_parameters['echo_collection_id']
-        params['exclude[tag_key]'] = "#{Rails.configuration.cmr_tag_namespace}.datasource.cwic"
+        params['exclude[tag_key]'] = "#{Rails.configuration.cmr_tag_namespace}.datasource"
       end
     end
 
