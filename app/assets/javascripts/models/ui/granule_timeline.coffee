@@ -28,7 +28,7 @@ ns.GranuleTimeline = do (ko
       @results.peek()
 
     refreshData: (start, end, resolution) ->
-      return if !@isLoading.peek()
+      return if @isLoading.peek()
       $('#timeline').timeline 'data', @collection.id,
         start: start,
         end: end,
@@ -273,7 +273,6 @@ ns.GranuleTimeline = do (ko
       @_collectionsToTimelines = newTimelines
 
       for own key, data of newTimelines
-        console.log data
         data.refreshData(range()...)
 
       result
