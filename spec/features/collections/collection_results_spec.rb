@@ -79,7 +79,7 @@ describe "Collection results", reset: false do
   end
 
   it "indicates if a collection's data collection is ongoing" do
-    fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
+    fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
     wait_for_xhr
     expect(page).to have_content("2014-12-25 ongoing")
   end
