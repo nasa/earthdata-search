@@ -107,17 +107,20 @@ ns.GranuleLayer = do (L
       result = []
       map = @_map
       intersects = @_intersects
-
+      interpolation = if granule.isCartesian() then 'cartesian' else 'geodetic'
       for polygon in granule.getPolygons() ? []
-        interiors = dividePolygon(polygon).interiors
-        @_addIntersections(result, interiors, tileBounds, 'poly', 'geodetic')
+        if granule.isCartesian()
+          interiors = [polygon]
+        else
+          interiors = dividePolygon(polygon).interiors
+        @_addIntersections(result, interiors, tileBounds, 'poly', interpolation)
         # Workaround for EDSC-657
         # Avoid spamming the map with a large number of barely intersecting orbits by only
         # drawing the first orbit. Hovering will continue to draw the full orbit.
         break if granule.orbit
 
       @_addIntersections(result, granule.getRectangles(), tileBounds, 'poly', 'cartesian')
-      @_addIntersections(result, granule.getLines(), tileBounds, 'line', 'geodetic')
+      @_addIntersections(result, granule.getLines(), tileBounds, 'line', interpolation)
 
       for point in granule.getPoints() ? [] when tileBounds.contains(point)
         result.push({point: @_map.latLngToLayerPoint(point)})
