@@ -43,7 +43,7 @@ fi
 if command -v curl >/dev/null 2>&1
 then
     STATUS_CODE=`curl -s -z "$(date)" -w %{http_code} <%= raw @urls.first %> | tail -1`
-    if [ "$STATUS_CODE" -ne "200" ]; then
+    if [ "$STATUS_CODE" -ne "200" || "$STATUS_CODE" -ne "304" ]; then
         # Need URS authentication
         if [ ! -f ~/.netrc ]; then
             echo "\n.netrc file not found. Please configure your username and password for authentication using a .netrc file:\n    > echo 'default login <uid> password <password>' > .netrc\nwhere <uid> is your Earthdata Login username and <password> is your Earthdata Login password."
@@ -73,8 +73,10 @@ then
         echo "\n.netrc file not found. Please configure your username and password for authentication using a .netrc file:\n    > echo 'default login <uid> password <password>' > ~/.netrc\nwhere <uid> is your Earthdata Login username and <password> is your Earthdata Login password."
         exit
     fi
-
-    while read -r line; do wget --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --keep-session-cookies $line; done;
+    
+    fetch_urls() {
+        while read -r line; do wget --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --keep-session-cookies $line; done;
+    }
 else
     fail_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
 fi
