@@ -119,6 +119,10 @@ class ApplicationController < ActionController::Base
     true
   end
 
+  def earthdata_username
+    session[:user_name]
+  end
+
   def clear_session
     store_oauth_token()
     session[:user_id] = nil

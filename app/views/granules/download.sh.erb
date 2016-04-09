@@ -1,87 +1,64 @@
 #!/bin/sh
 
-<% if @urls.first.start_with? 'https://datapool.asf.alaska.edu' %>
-set_cookie ()
-{
-    TOKEN=`curl -s -d "userid=$1&password=$2" https://vertex.daac.asf.alaska.edu/services/authentication -i | grep Set-Cookie | cut -d ' ' -f 2 | cut -d '=' -f 2 | sed 's/;$//'`
-    echo ".alaska.edu	TRUE	/	FALSE	0	datapool	$TOKEN" > ~/.asf_cookies
-    chmod 0600 ~/.asf_cookies
+GREP_OPTIONS=''
+
+cookiejar=$(mktemp cookies.XXXXXXXXXX)
+netrc=$(mktemp netrc.XXXXXXXXXX)
+chmod 0600 "$cookiejar" "$netrc"
+function finish {
+  rm -rf "$cookiejar" "$netrc"
+}
+trap finish EXIT
+WGETRC="$wgetrc"
+
+write_credentials
+
+prompt_credentials() {
+    echo "Enter your Earthdata Login credentials"
+    read -p "Username (<%= @user %>): " username
+    username=${username:-<%= @user %>}
+    read -s -p "Password: " password
+    echo "\nmachine urs.earthdata.nasa.gov\n\tlogin $username\n\tpassword $password" >> $netrc
+    cat $netrc
+    echo
 }
 
-if [ $# -eq 2 ]; then
-    set_cookie $1 $2
-    echo "\n Cookie file has been successfully set in your home directory. Re-run the script without any arguments."
-    exit
-fi
+exit_bad_login() {
+    echo
+    echo "Unable to log in"
+    echo
+    echo "Please ensure that you have entered your username and password correctly and"
+    echo "that you have authorized the remote application by visiting the link below"
+    echo "logging in:"
+    echo
+    echo "<%=raw @urls.first %>"
+    exit 1
+}
 
-if command -v curl >/dev/null 2>&1
-then
-    if [ ! -f ~/.asf_cookies ]; then
-        echo "\n.asf_cookies file not found. Please configure your username and password for authentication using a .asf_cookies file:\n    > $0 <uid> <password>\nwhere <uid> is your Earthdata Login username and <password> is your Earthdata Login password."
-        exit
-    fi
+prompt_credentials
+exit
 
-    fetch_urls() {
-        while read -r line; do curl -b ~/.asf_cookies -Og -L $line; done;
-    }
-elif command -v wget >/dev/null 2>&1
-then
-    if [ ! -f ~/.asf_cookies ]; then
-        echo "\n.asf_cookies file not found. Please configure your username and password for authentication using a .asf_cookies file:\n    > cd ~\n    > wget --keep-session-cookies --save-cookies ~/.asf_cookies --post-data='userid=<uid>&password=<password>' --no-check-certificate https://vertex.daac.asf.alaska.edu/services/authentication\n    > chmod 0600 .asf_cookies\nwhere <uid> is your Earthdata Login username and <password> is your Earthdata Login password."
-        exit
-    fi
-
-    fetch_urls() {
-        while read -r line; do wget --load-cookies ~/.asf_cookies --save-cookies ~/.asf_cookies --keep-session-cookies $line; done;
-    }
-else
-    fail_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
-fi
-
+<% if @urls.first.start_with? 'https://datapool.asf.alaska.edu' %>
+<%= render partial: 'asf_download' %>
 <% else %>
-
-if command -v curl >/dev/null 2>&1
-then
-    STATUS_CODE=`curl -s -z "$(date)" -w %{http_code} <%= raw @urls.first %> | tail -1`
-    if [ "$STATUS_CODE" -ne "200" || "$STATUS_CODE" -ne "304" ]; then
-        # Need URS authentication
-        if [ ! -f ~/.netrc ]; then
-            echo "\n.netrc file not found. Please configure your username and password for authentication using a .netrc file:\n    > echo 'default login <uid> password <password>' > .netrc\nwhere <uid> is your Earthdata Login username and <password> is your Earthdata Login password."
-            exit
-        fi
-
-        APPROVED_STATUS=`curl -s -b ~/.urs_cookies -c ~/.urs_cookies -L --max-redirs 2 -n <%= raw @urls.first %> -w %{http_code} | tail  -1`
-        if [ "$APPROVED_STATUS" -ne "302" ]; then
-            # User didn't approve the app. Direct users to approve the app in URS
-            echo "\nERROR: this is your first time retrieving data from this provider using Earthdata Login credentials. You will need to authorize the provider's web service (application) in Earthdata Login GUI before running this script again."
-            exit
-        else
-            fetch_urls() {
-                while read -r line; do curl -b ~/.urs_cookies -c ~/.urs_cookies -L -n -Og $line; done;
-            }
-        fi
-    else
-        fetch_urls() {
-            while read -r line; do curl -Og $line; done;
-        }
-    fi
-elif command -v wget >/dev/null 2>&1
-then
-    # We can't use wget to poke provider server to get info whether or not URS was integrated without download at least one of the files.
-    echo "\nWARNING: Can't find curl, use wget instead, which may affect data retrieval that authenticates through Earthdata Login."
-    if [ ! -f ~/.netrc ]; then
-        echo "\n.netrc file not found. Please configure your username and password for authentication using a .netrc file:\n    > echo 'default login <uid> password <password>' > ~/.netrc\nwhere <uid> is your Earthdata Login username and <password> is your Earthdata Login password."
-        exit
-    fi
-    
-    fetch_urls() {
-        while read -r line; do wget --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --keep-session-cookies $line; done;
-    }
-else
-    fail_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
-fi
-
+<%= render partial: 'generic_download' %>
 <% end %>
+
+fetch_urls() {
+    if command -v curl >/dev/null 2>&1; then
+        setup_auth_curl
+        while read -r line; do
+            curl -b "$cookie_jar" -c "$cookie_jar" -L -n -Og -- $line
+        done;
+    elif command -v wget >/dev/null 2>&1; then
+        setup_auth_wget
+        while read -r line; do
+        wget --load-cookies "$cookie_jar" --save-cookies "$cookie_jar" --keep-session-cookies -- $line
+        done;
+    else
+        fail_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
+    fi
+}
 
 fetch_urls <<'EDSCEOF'
 <% @urls.each do |url| %><%=raw url%>

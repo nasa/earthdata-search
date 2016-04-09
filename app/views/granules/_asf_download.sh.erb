@@ -1,0 +1,15 @@
+setup_auth_curl() {
+    out=$(curl -b "$cookie_jar" -c "$cookie_jar" -s -i -w "\n%{http_code}\n" \
+               --netrc-file "$netrc" -d "userid=$username&password=$password" \
+               'https://vertex.daac.asf.alaska.edu/services/authentication')
+    status=$(echo "$out" | tail -n 1)
+    if [ "$status" -ne "200" ]; then exit_bad_login; fi
+}
+
+setup_auth_wget() {
+    wget --load-cookies "$cookie_jar" --save-cookies "$cookie_jar" --keep-session-cookies \
+         -S -O- --quiet --post-data "userid=$username&password=$password" --no-check-certificate \
+         'https://vertex.daac.asf.alaska.edu/services/authentication' 2>&1 > /dev/null
+    code=$?
+    if [ $code -ne "0" ]; then exit_bad_login; fi
+}

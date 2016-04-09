@@ -118,6 +118,8 @@ class GranulesController < ApplicationController
     end
 
     @urls = GranuleUrlStreamer.new(query.merge('page_size' => 2000), token, url_mapper, echo_client, url_type)
+
+    @user = earthdata_username
     render stream: true, layout: false
   end
 end
