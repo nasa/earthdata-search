@@ -1,0 +1,20 @@
+setup_auth_curl() {
+    status=$(curl -w "%{http_code}" -XHEAD -s -b "$cookie_jar" -c "$cookie_jar" \
+                  <%= raw @urls.first %>)
+    if [ "$status" -ne "200" && "$status" -ne "304" ]; then
+        status=$(curl -w "%{http_code}" -XHEAD -s -b "$cookie_jar" -c "$cookie_jar" -L \
+                      --max-redirs 2 --netrc-file "$netrc" <%= raw @urls.first %>)
+        if [ "$status" -ne "302" ]; then exit_bad_login; fi
+    fi
+}
+
+setup_auth_wget() {
+    # The safest way to auth via curl is netrc. Note: there's no checking or feedback
+    # if login is unsuccessful
+    touch ~/.netrc
+    chmod 0600 ~/.netrc
+    credentials=$(grep 'machine urs.earthdata.nasa.gov' ~/.netrc)
+    if [ -z "$credentials" ]; then
+        cat "$netrc" >> ~/.netrc
+    fi
+}
