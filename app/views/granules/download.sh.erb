@@ -11,8 +11,6 @@ function finish {
 trap finish EXIT
 WGETRC="$wgetrc"
 
-write_credentials
-
 prompt_credentials() {
     echo "Enter your Earthdata Login credentials"
     read -p "Username (<%= @user %>): " username
@@ -36,7 +34,6 @@ exit_bad_login() {
 }
 
 prompt_credentials
-exit
 
 <% if @urls.first.start_with? 'https://datapool.asf.alaska.edu' %>
 <%= render partial: 'asf_download' %>
@@ -46,6 +43,7 @@ exit
 
 fetch_urls() {
     if command -v curl >/dev/null 2>&1; then
+        detect_user_approval
         setup_auth_curl
         while read -r line; do
             curl -b "$cookie_jar" -c "$cookie_jar" -L -n -Og -- $line

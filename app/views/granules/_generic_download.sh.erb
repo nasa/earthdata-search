@@ -18,3 +18,12 @@ setup_auth_wget() {
         cat "$netrc" >> ~/.netrc
     fi
 }
+
+detect_user_approval() {
+    approved=`curl -s -b ~/.urs_cookies -c ~/.urs_cookies -L --max-redirs 2 -n <%= raw @urls.first %> -w %{http_code} | tail  -1`
+    if [ "$approved" -ne "302" ]; then
+        # User didn't approve the app. Direct users to approve the app in URS
+        echo "\nERROR: this is your first time retrieving data from this provider using Earthdata Login credentials. You will need to authorize the provider's web service (application) in Earthdata Login GUI before running this script again."
+        exit
+    fi
+}
