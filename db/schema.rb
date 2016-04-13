@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111170234) do
+ActiveRecord::Schema.define(version: 20160331144208) do
 
   create_table "access_configurations", force: true do |t|
     t.integer  "user_id"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 20151111170234) do
   end
 
   add_index "access_configurations", ["user_id"], name: "index_access_configurations_on_user_id"
+
+  create_table "cron_job_histories", force: true do |t|
+    t.string   "task_name"
+    t.datetime "last_run"
+    t.string   "status"
+    t.text     "message"
+    t.string   "host"
+  end
+
+  add_index "cron_job_histories", ["task_name", "last_run"], name: "index_cron_job_histories_on_task_name_and_last_run"
 
   create_table "dataset_extras", force: true do |t|
     t.string   "echo_id",                 null: false

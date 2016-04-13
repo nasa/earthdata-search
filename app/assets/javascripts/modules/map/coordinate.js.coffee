@@ -21,6 +21,8 @@ ns.Coordinate = do(L) ->
       cos = Math.cos
       sin = Math.sin
 
+      origTheta = theta
+
       # Normalize phi to the interval [-PI / 2, PI / 2]
       phi -= 2 * PI while phi >= PI
       phi += 2 * PI while phi < PI
@@ -34,6 +36,12 @@ ns.Coordinate = do(L) ->
 
       theta -= 2 * PI while theta >= PI
       theta += 2 * PI while theta < -PI
+
+      # Maintain the same sign as the original when theta is +/- PI
+      theta = PI if theta == -PI && origTheta > 0
+
+      # At the poles, preserve the input longitude
+      theta = origTheta if Math.abs(phi) == PI / 2
 
       x = cos(phi) * cos(theta)
       y = cos(phi) * sin(theta)
@@ -77,7 +85,12 @@ ns.Coordinate = do(L) ->
       Math.acos(@dot(other))
 
     toLatLng: ->
-      new L.LatLng(RAD_TO_DEG * @phi, RAD_TO_DEG * @theta)
+      lat = RAD_TO_DEG * @phi
+      lng = RAD_TO_DEG * @theta
+      if L?
+        new L.LatLng(lat, lng)
+      else
+        {lat: lat, lng: lng}
 
     toString: ->
       latlng = @toLatLng()

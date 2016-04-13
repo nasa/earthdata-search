@@ -155,16 +155,28 @@ button:disabled {
     padding: 4px 8px;
   }
 
+  &.button-float-right {
+    float: right;
+  }
+
   &.button-outline-light {
     @include light-button;
     font-weight: bold;
   }
 }
 
-.modal-button {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+.whats-cwic {
+  @include light-button;
+  color: #fff;
+  font-size: .8em;
+  padding: 10px 11px;
+  margin-left: 2px;
+  line-height: 3em;
+
+  &:hover {
+    color: #2980b9;
+    text-decoration: none;
+  }
 }
 
 .choice {

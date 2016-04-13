@@ -14,11 +14,11 @@
   cmr_env = if match then match[1] else '<%= Rails.configuration.cmr_env %>'
 
   if cmr_env == 'uat'
-    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['uat']['echo_root'] %>/browse-scaler/browse_images"
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['uat']['echo_root'] %>/browse-scaler"
   else if cmr_env == 'sit'
-    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['sit']['echo_root'] %>/browse-scaler/browse_images"
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['sit']['echo_root'] %>/browse-scaler"
   else
-    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['prod']['echo_root'] %>/browse-scaler/browse_images"
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['prod']['echo_root'] %>/browse-scaler"
 
   <% if Rails.env.test? %>
 

@@ -119,6 +119,36 @@ ab342f347c81d276a2fc5ba9dae8fc0166afe9ef:
       encoding: UTF-8
       string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C115003857-NSIDC_ECS","id":"A3A1124D-D253-A81D-DAC6-79C6BA678788","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"07D5B874-EE6A-BB5C-D560-F4A8B09FB125"}}]'
     http_version: 
+0c0cd27f7a37b8c29a84824c8b2999472fedbfab:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"707e97533cfbbdd35b9dd48604b0828c"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.254000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 07 Mar 2016 19:25:37 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C119124186-NSIDC_ECS","id":"E6A841F1-2BAB-961F-9CBC-48189B499E57","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"49421937-64A7-5037-24F5-EC2C62893E2D"}}]'
+    http_version: 
 b108dce30e41961828568538a88831c17a8b794b:
   response:
     status:
@@ -321,6 +351,36 @@ d8e88a80cf90dd466d6ad6f5a491a0c1c297b7ce:
       - Accept-Encoding
       date:
       - Wed, 13 May 2015 14:25:29 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+89d3bc5b96733bca310e3d2a97a18bf81ef93467:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.193000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 28 Mar 2016 02:36:39 GMT
       connection:
       - close
       transfer-encoding:

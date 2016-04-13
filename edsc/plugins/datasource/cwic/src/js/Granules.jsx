@@ -1,5 +1,7 @@
 import extend from './extend.jsx';
 import Granule from './Granule.jsx';
+import * as XmlHelpers from './XmlHelpers.jsx';
+import * as CwicUtils from './CwicUtils.jsx';
 
 let ajax = window.edsc.util.xhr.ajax;
 let clientId = window.edsc.config.cmrClientId;
@@ -21,11 +23,6 @@ let toLocalUrl = function(url) {
   return url;
 };
 
-let arrayWrap = function(obj) {
-  if (obj == null) return [];
-  return Array === obj.constructor ? obj : [obj];
-}
-
 let getLink = function(parent, rel) {
   let node = parent.firstChild;
   while (node) {
@@ -39,52 +36,6 @@ let getLink = function(parent, rel) {
 
 let getRootLink = function(atomData, rel) {
   return getLink(atomData.firstChild, rel);
-};
-
-let elToObj = function(el) {
-  let result;
-
-  let hasChildren = false;
-  let childEl = el.firstChild;
-  while (childEl) {
-    if (childEl.nodeType == Node.ELEMENT_NODE) {
-      hasChildren = true;
-      break;
-    }
-    childEl = childEl.nextSibling;
-  }
-
-  if (hasChildren) {
-    result = {};
-    let child = el.firstChild;
-    while (child) {
-      if (child.nodeType == Node.ELEMENT_NODE) {
-        let prop = child.tagName.replace(/^.*:/g, '');
-        let obj = elToObj(child);
-        if (result.hasOwnProperty(prop)) {
-          result[prop] = arrayWrap(result[prop]);
-          result[prop].push(obj);
-        }
-        else {
-          result[prop] = obj;
-        }
-      }
-      child = child.nextSibling;
-    }
-  }
-  else if (el.attributes.length == 0 || el.textContent && el.textContent.length > 0) {
-    result =  el.textContent;
-  }
-  else {
-    result = {};
-    let attrs = el.attributes;
-    for (let i = 0; i < attrs.length; i++) {
-      let attr = attrs[i];
-      let prop = attr.name.replace(/^.*:/g, '');
-      result[prop] = attr.value;
-    }
-  }
-  return result;
 };
 
 let CwicGranules = (function() {
@@ -111,7 +62,7 @@ let CwicGranules = (function() {
           if (start && start.length > 0) result['time:start'] = start.replace(/\.\d{3}Z$/, 'Z');
           if (end && end.length > 0) result['time:end'] = end.replace(/\.\d{3}Z$/, 'Z');
         }
-        else if (key == 'bounding_box') {
+        else if (key == 'bounding_box' || key == 'mbr') {
           result['geo:box'] = value;
         }
         else if (key == 'point') {
@@ -181,7 +132,7 @@ let CwicGranules = (function() {
         this.stale = false;
         this.isLoaded(true);
         console.log(`Complete (${requestId}): ${url}`);
-        dataObj = elToObj(data);
+        dataObj = XmlHelpers.elToObj(data);
         results = this._toResults(data, dataObj, current, params);
         this.hits(dataObj.feed.totalResults);
         this.nextPageUrl = toLocalUrl(getRootLink(data, 'next'));
@@ -239,13 +190,36 @@ let CwicGranules = (function() {
     ajax(xhrOpts);
   };
 
+  CwicGranules.prototype.transformSpatial = function (granule) {
+    // There's some precedence here because granules with multiple shapes typically
+    // use simpler shapes as a fallback for clients that can't handle complex shapes
+    let source, dest;
+
+    if (granule.polygon) {
+      source = 'polygon';
+    }
+    else if (granule.box) {
+      source = 'box';
+      dest = 'boxes';
+    }
+    else if (granule.point) {
+      source = 'point';
+    }
+
+    if (source) {
+      if (!dest) dest = source + 's';
+      granule[dest] = CwicUtils.arrayWrap(granule[source]);
+      delete granule[source];
+    }
+  };
+
   CwicGranules.prototype._toResults = function (data, dataObj, current, params) {
     let granules = [];
     if (dataObj.feed && dataObj.feed.entry) {
-      let entries = arrayWrap(dataObj.feed.entry);
+      let entries = CwicUtils.arrayWrap(dataObj.feed.entry);
       for (let i = 0; i < entries.length; i++) {
         let granule = entries[i];
-        let links = arrayWrap(granule.link);
+        let links = CwicUtils.arrayWrap(granule.link);
         delete granule.link;
         let hasBrowse = false;
         for (let j = 0; j < links.length; j++) {
@@ -254,6 +228,7 @@ let CwicGranules = (function() {
             break;
           }
         }
+        this.transformSpatial(granule);
         granule.browse_flag = hasBrowse;
         granule.links = links;
         granules.push(new Granule(granule));

@@ -37,7 +37,8 @@ describe "User missing ordering preferences", reset: false do
     end
 
     it "shows the data retrieval page" do
-      expect(page).to have_link("MODIS Level 1B Product Information Page at MCST (MiscInformation)")
+      expect(page).to have_content(collection_title)
+      expect(page).to have_link('View Download Links')
     end
   end
 end

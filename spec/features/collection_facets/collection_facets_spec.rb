@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Collection Facets", reset: false do
   let(:first_project_facet) { "AMBS" }
   let(:first_platform_facet) { "ADEOS-II" }
-  let(:first_instrument_facet) { "ADCP" }
+  let(:first_instrument_facet) { "Acoustic Sounders" }
   let(:first_coordinate_facet) { "CALIPSO" }
   let(:first_processing_level_facet) { "0" }
   let(:eosdis_count) { "505" }
@@ -16,27 +16,33 @@ describe "Collection Facets", reset: false do
   end
 
   context "facet listing" do
+    it "shows facets in a case insensitive order" do
+      find("h3.facet-title", text: 'Platform').click
+      expect(page.text).to match("Aqua\\s*\\d*\\s*AQUA")
+      find("h3.facet-title", text: 'Platform').click
+    end
+
     it "shows the first Project facet" do
       find("h3.facet-title", text: 'Project').click
-      expect(page.text).to match("Project\s*\d* #{first_project_facet}")
+      expect(page.text).to match("Project\\s*\\d* #{first_project_facet}")
       find("h3.facet-title", text: 'Project').click
     end
 
     it "shows the first Platforms facet" do
       find("h3.facet-title", text: 'Platform').click
-      expect(page.text).to match("Platform\s*\d* #{first_platform_facet}")
+      expect(page.text).to match("Platform\\s*\\d* #{first_platform_facet}")
       find("h3.facet-title", text: 'Platform').click
     end
 
     it "shows the first Instruments facet" do
       find("h3.facet-title", text: 'Instrument').click
-      expect(page.text).to match("Instrument\s*\d* #{first_instrument_facet}")
+      expect(page.text).to match("Instrument\\s*\\d* #{first_instrument_facet}")
       find("h3.facet-title", text: 'Instrument').click
     end
 
     it "shows the first 2D Coordinate Name facet" do
       find("h3.facet-title", text: '2D Coordinate Name').click
-      expect(page.text).to match("2D Coordinate Name\s*\d* #{first_coordinate_facet}")
+      expect(page.text).to match("2D Coordinate Name\\s*\\d* #{first_coordinate_facet}")
       find("h3.facet-title", text: '2D Coordinate Name').click
     end
 
@@ -84,7 +90,7 @@ describe "Collection Facets", reset: false do
 
     it "shows the first Processing Level facet" do
       find("h3.facet-title", text: 'Processing level').click
-      expect(page.text).to match("Processing level\s*\d* #{first_processing_level_facet}")
+      expect(page.text).to match("Processing level\\s*\\d* #{first_processing_level_facet}")
       find("h3.facet-title", text: 'Processing level').click
     end
 
@@ -332,35 +338,35 @@ describe "Collection Facets", reset: false do
     end
   end
 
-  context "when applying facets containing trailing whitespace" do
-    before :all do
-      find("h3.facet-title", text: 'Platform').click
-      find(".facets-item", text: "AQUARIUS_SAC-D ").click
-      wait_for_xhr
-    end
-
-    after :all do
-      reset_search
-      find("h3.facet-title", text: 'Platform').click
-    end
-
-    it "displays correct count on collection list pane" do
-      facet_count = 0
-      collection_count = -1
-
-      # get count from facet list
-      within '#master-overlay-parent' do
-        facet_count = find('h3', text: 'Platform').parent.parent.find('p.facets-item.selected').find('span.facet-item-collection-count').text
-      end
-
-      # get count from collection list pane
-      within '#collection-results' do
-        collection_count = find('header').find('h2').find('strong').text
-      end
-
-      expect(facet_count).to eq(collection_count)
-    end
-  end
+  # context "when applying facets containing trailing whitespace" do
+  #   before :all do
+  #     find("h3.facet-title", text: 'Platform').click
+  #     find(".facets-item", text: "AQUARIUS_SAC-D ").click
+  #     wait_for_xhr
+  #   end
+  #
+  #   after :all do
+  #     reset_search
+  #     find("h3.facet-title", text: 'Platform').click
+  #   end
+  #
+  #   it "displays correct count on collection list pane" do
+  #     facet_count = 0
+  #     collection_count = -1
+  #
+  #     # get count from facet list
+  #     within '#master-overlay-parent' do
+  #       facet_count = find('h3', text: 'Platform').parent.parent.find('p.facets-item.selected').find('span.facet-item-collection-count').text
+  #     end
+  #
+  #     # get count from collection list pane
+  #     within '#collection-results' do
+  #       collection_count = find('header').find('h2').find('strong').text
+  #     end
+  #
+  #     expect(facet_count).to eq(collection_count)
+  #   end
+  # end
 
   context "when selecting a topic keyword" do
     before :all do

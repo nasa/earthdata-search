@@ -29,11 +29,11 @@ class Health
   end
 
   def data_load_status
-    check_cron_job('data_load', 1.hour)
+    check_cron_job('data:load', 1.hour)
   end
 
   def colormap_load_status
-    check_cron_job('colormaps_load', 1.day)
+    check_cron_job('colormaps:load', 1.day)
   end
 
   def echo_status(echo_client)
@@ -67,29 +67,51 @@ class Health
 
   private
 
-  def check_cron_job(job, interval)
-    # After deployment, the tmp folder will contain nothing and data:load won't be run until 1 hour passed.
-    # To stop sending false negative to prod, we need to check the created time of the tmp folder to 'detect' a new
-    # deployment. And give it 3 * 1hour grace period before reporting @ok = false.
-    #
-    # i.e. Report cron_jobs healthy for 3 hours after a new deployment.
-    if File.ctime(Rails.root.join('README.md')) > 3.hours.ago
-      return {ok?: true, info: "Suspend cron job checks for 3 hours after new deployment."}
+  def check_cron_job(task_name, interval)
+    tasks = CronJobHistory.where(task_name: task_name).where(last_run: (Time.now - 3 * interval)..Time.now)
+
+    if tasks.size == 0
+      @ok = false
+      return {ok?: false, error: "Cron job '#{task_name}' hasn't been run in the past #{3 * interval} seconds."}
     end
 
-    Dir.glob(Rails.root.join('tmp', "#{job}_*")).each do |f|
-      if File.mtime(f) < Time.now - interval * 3
+    if Rails.env.production?
+      # There are two hosts in production. We need to make sure the rake tasks are run on both of them.
+      task1 = tasks.last
+      status1 = task_status(interval, task1, task_name)
+      task2 = tasks.select {|task| task.host != task1.host}.last
+      if task2.nil?
         @ok = false
-        return {ok?: false, error: "Cron job '#{job.split('_').join(':')}' hasn't been run since #{File.mtime(f)}."}
-      elsif f.match /_failed$/
+        {ok?: false, error: "Cron job '#{task_name}' hasn't been run in the past #{3 * interval} seconds on the other production host (other than #{task1.host}). #{status1[:error]}"}
+      else
+        status2 = task_status(interval, task2, task_name)
+        if status2[:ok?] && status1[:ok?]
+          {ok?: true}
+        else
+          @ok = false
+          {ok?: false, error: "#{status1[:error]} #{status2[:error]}"}
+        end
+      end
+    else
+      task = tasks.last
+      task_status(interval, task, task_name)
+    end
+  end
+
+  def task_status(interval, task, task_name)
+    if task.status == 'succeeded'
+      if task.last_run < Time.now - interval && task.last_run > Time.now - 3 * interval
+        return {ok?: true, info: "Suspend cron job checks for #{interval.to_i / 3600} hours after a new deployment. Last task execution was #{task.status} at #{task.last_run} on host #{task.host}."}
+      elsif task.last_run < Time.now - 3 * interval
         @ok = false
-        return {ok?: false, error: "Cron job '#{job.split('_').join(':')}' failed in last run at #{File.mtime(f)} with message '#{File.read(f)}'."}
+        return {ok?: false, error: "Cron job '#{task_name}' hasn't been run since #{task.last_run} on host #{task.host}."}
       else
         return {ok?: true}
       end
+    else
+      @ok = false
+      {ok?: false, error: "Cron job '#{task_name}' failed in last run at #{task.last_run} with message '#{task.message}' on host #{task.host}."}
     end
-    @ok = false
-    {ok?: false, error: "Cron job '#{job.split('_').join(':')}' has never been run."}
   end
 
   def ok?(response, condition=nil)

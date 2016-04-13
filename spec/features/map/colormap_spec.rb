@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Collection Colormaps', reset: false do
-  gibs_collection_id = 'C1000000016-LANCEMODIS'
+  gibs_collection_id = 'C119124186-NSIDC_ECS'
   non_gibs_collection_id = 'C179003030-ORNL_DAAC'
   gibs_granules_collection_id = 'C187016591-LPDAAC_ECS'
 
@@ -14,8 +14,8 @@ describe 'Collection Colormaps', reset: false do
       # load_page :search
       fill_in 'keywords', with: gibs_collection_id
       wait_for_xhr
-      expect(page).to have_content("MOD10_L2")
-      first_featured_collection.click
+      expect(page).to have_content("AE_Rain")
+      first_collection_result.click
       wait_for_xhr
     end
 

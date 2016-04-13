@@ -32,7 +32,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
-      - edscbasic
+      - edscbasic-access
   recorded_at: Tue, 19 Aug 2014 19:21:43 GMT
   digest: 1cbd4e6a78c1b324003422421b02adfe1c27b6e4
 - request:
@@ -58,7 +58,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Wed, 07 May 2014 17:59:34 GMT
   digest: single_order
 - request:
@@ -76,7 +76,7 @@ http_interactions:
   digest: delete_order
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -91,7 +91,7 @@ http_interactions:
   digest: trigger_500
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -114,7 +114,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
-      - edscbasic
+      - edscbasic-access
   recorded_at: Tue, 19 Aug 2014 20:12:08 GMT
   digest: edscbasic_current
 - request:
@@ -128,6 +128,19 @@ http_interactions:
       - Faraday v0.8.8
       Echo-Token:
       - edsc
+  recorded_at: Tue, 19 Aug 2014 20:12:08 GMT
+  digest: edsc_current
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/users/current.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc-access
   recorded_at: Wed, 06 Aug 2014 13:01:33 GMT
   digest: edsc_current
 - request:
@@ -153,7 +166,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Echo-Token:
-      - expired_token
+      - expired-access
   recorded_at: Tue, 19 Aug 2014 21:00:49 GMT
   digest: 365deea9191426660df70c9dce859bda79ab9e9d
 - request:
@@ -171,8 +184,7 @@ http_interactions:
   digest: invalid_token
 - request:
     method: get
-#    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=edsc.%2A&include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -187,8 +199,7 @@ http_interactions:
   digest: invalid_collections_logged_in
 - request:
     method: get
-#    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=edsc.%2A&include_facets=true&page_size=20&page_num=1&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -203,7 +214,7 @@ http_interactions:
   digest: invalid_collections_logged_in_non_hierarchical
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=edsc.%2A&include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -216,7 +227,7 @@ http_interactions:
   digest: invalid_collections_logged_out
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_tags=edsc.%2A&include_facets=true&page_size=20&page_num=1&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -256,7 +267,7 @@ http_interactions:
   # optional, this fixture is added to prevent stacktraces in the log.
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1000000016-LANCEMODIS&echo_collection_id%5B%5D=C1000000019-LANCEMODIS&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -322,7 +333,7 @@ http_interactions:
       Echo-ClientId:
       - EDSC
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Thu, 15 Jan 2015 21:08:30 GMT
   digest: acab3c43996bb7f51d50e4301fe55418086eadbd
 - request:
@@ -342,6 +353,23 @@ http_interactions:
       - edsc-dev
   recorded_at: Fri, 06 Nov 2015 14:31:36 GMT
   digest: 14a0ec30b17ac928b6678e04f531f842e2a96520
+- request:
+    method: get
+    uri: https://urs.earthdata.nasa.gov/api/users/edscbasic?client_id=Gsk6IBbEfa98sbE5UavsZQ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Authorization:
+      - Bearer edsc-access
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Fri, 06 Nov 2015 14:31:36 GMT
+  digest: edscbasic_from_urs
 - request:
     method: get
     uri: https://uat.urs.earthdata.nasa.gov/api/users/edsc?client_id=e8QKhLdQqhfDzzmSJrBW7g
@@ -373,9 +401,26 @@ http_interactions:
       Echo-ClientId:
       - edsc-dev
       Echo-Token:
-      - edsc
+      - edsc-access
   recorded_at: Tue, 24 Nov 2015 19:26:28 GMT
   digest: 5465c54b75a62eac4512160fe28a6627c96aea19
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/users/69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edscbasic-access
+  recorded_at: Tue, 24 Nov 2015 19:26:28 GMT
+  digest: edscbasic_preferences
 - request:
     method: put
     uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
@@ -396,6 +441,44 @@ http_interactions:
       - edsc
   recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
   digest: 0a02d564986dee8b88b72b36380ff495d8d4e1c0
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
+  digest: edsc_access_update_preferences_none
+- request:
+    method: put
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/json
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc-access
+  recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
+  digest: edsc_access_update_preferences_verbose
 - request:
     method: put
     uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json

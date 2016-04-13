@@ -30,18 +30,19 @@
           <div class="first-col col-md-6 col-sm-12">
             <div id="image-map" class="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
           </div>
-          <div class="second-col col-md-6 col-sm-12">
+          <dl class="second-col col-md-6 col-sm-12">
               <dt>Spatial Coordinates:</dt>
               <dd>
-                <span data-bind="text: $data.spatial[0]"></span>
-                <span data-bind="text: $data.spatial.length > 1 ? ' ...' : ''"></span>
+                <!--ko foreach: $data.spatial -->
+                <span data-bind="text: $data"></span><br/>
+                <!--/ko-->
               </dd>
               <dt>Temporal Extent:</dt>
               <dd data-bind="text: $root.ui.collectionsList.selected().timeRange"></dd>
-          </div>
+          </dl>
         </div>
         <div class="row">
-          <div class="col-md-6 col-sm-12">
+          <dl class="col-md-6 col-sm-12">
             <dt>Metadata Formats:</dt>
             <dd><a data-bind="attr: { href: $data.native_url }">Native</a>
               | <a data-bind="attr: { href: $data.atom_url }">ATOM</a>
@@ -51,8 +52,8 @@
                 | <a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a>
               <!-- /ko -->
               | <a data-bind="attr: { href: $data.dif_url }">DIF</a></dd>
-          </div>
-          <div class="second-col col-md-6 col-sm-12">
+          </dl>
+          <dl class="second-col col-md-6 col-sm-12">
             <dt>API Endpoints:</dt>
             <dd>
             <!-- ko with: $root.ui.collectionsList.selected() -->
@@ -64,8 +65,8 @@
                 <a class="endpoint-label" data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a>
               <!-- /ko -->
 
-              <!-- ko if: opendap() -->
-                <a class="endpoint-label" data-bind="attr: {href: opendap()}" target="_blank">OPeNDAP</a>
+              <!-- ko if: opendap_url() -->
+                <a class="endpoint-label" data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a>
               <!-- /ko -->
 
               <!-- ko if: modaps() -->
@@ -77,7 +78,7 @@
               <!-- /ko -->
             <!-- /ko -->
             </dd>
-          </div>
+          </dl>
         </div>
 
         <div class="row">
@@ -90,15 +91,15 @@
         </div>
 
         <div class="row">
-          <div class="first-col col-md-6 col-sm-12">
+          <dl class="first-col col-md-6 col-sm-12">
             <dt>Processing Center:</dt>
             <dd data-bind="text: $data.processing_center"></dd>
             <dt>Archive Center:</dt>
             <dd data-bind="text: $data.archive_center"></dd>
             <dt>Short Name:</dt>
             <dd data-bind="text: $data.short_name"></dd>
-          </div>
-          <div class="second-col col-md-6 col-sm-12">
+          </dl>
+          <dl class="second-col col-md-6 col-sm-12">
             <dt>Contacts:</dt>
             <dd data-bind="foreach: $data.contacts">
               <div class="contact-content">
@@ -112,11 +113,11 @@
             <!--ko foreach: $data.online_access_urls-->
             <dt><i class="fa fa-arrow-circle-down"></i> <a data-bind="attr: {href: $data.URL}" target="_blank">Download Page</a></dt>
             <!--/ko -->
-          </div>
+          </dl>
         </div>
 
         <div class="row">
-          <div class="col-sm-12">
+          <dl class="col-sm-12">
             <dt>Science Keywords:</dt>
             <!--ko if: $data.science_keywords.length == 0 -->
             <dd>Not Available</dd>
@@ -132,7 +133,7 @@
               </div>
             </dd>
             <!--/ko-->
-          </div>
+          </dl>
         </div>
       </div>
     </div>

@@ -88,10 +88,10 @@ module EarthdataSearchClient
     def self.load_version
       version_file = "#{config.root}/version.txt"
       if File.exist?(version_file)
-        return IO.read(version_file)
+        return IO.read(version_file).strip
       elsif File.exist?('.git/config') && `which git`.size > 0
         version = `git rev-parse --short HEAD`
-        return version
+        return version.strip
       end
       "(unknown)"
     end
@@ -105,7 +105,7 @@ module EarthdataSearchClient
     services = config.services
     config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]
     config.sit_urs_client_id = services['urs'][Rails.env.to_s][services['earthdata']['sit']['urs_root']]
-    config.cmr_tag_namespace = ENV['cmr_tag_namespace'] || 'edsc.'
+    config.cmr_tag_namespace = ENV['cmr_tag_namespace'] || 'edsc'
     config.thumbnail_width = 75
   end
 end

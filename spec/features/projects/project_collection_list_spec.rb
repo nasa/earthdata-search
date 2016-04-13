@@ -10,6 +10,10 @@ describe "Project collection list", reset: true do
     collection_results.click_link "View Project"
   end
 
+  after(:each) do
+    Capybara.reset_sessions!
+  end
+
   it "displays collections that have been added to the project" do
     expect(project_overview).to have_css('.panel-list-item', count: 2)
   end
@@ -65,9 +69,9 @@ describe "Project collection list", reset: true do
 
     it "keeps the selected collection highlighted when returning to the project" do
       click_link "Back to Collection Search"
-      sleep(1) # Wait for sliding transition
+      expect(page).to have_visible_collection_results
       collection_results.click_link "View Project"
-      sleep(1) # Wait for sliding transition
+      expect(page).to have_visible_project_overview
       expect(project_overview).to have_link('Hide collection', count: 1)
     end
 
@@ -95,6 +99,27 @@ describe "Project collection list", reset: true do
     it "un-highlights the View all collections button when hiding an individual collection" do
       first_project_collection.click_link 'Hide collection'
       expect(project_overview). to have_no_link('Hide all collections')
+    end
+  end
+
+  context "when applying a temporal constraint to the second collection in the project" do
+
+    before :each do
+      second_project_collection.click_link "Show granule filters"
+      select 'Day only', from: "day-night-select"
+      click_button "granule-filters-submit"
+      wait_for_xhr
+    end
+
+    after :each do
+      second_project_collection.click_link "Show granule filters"
+      click_button "granule-filters-clear"
+      expect(page).to have_select("day-night-select", selected: "Anytime")
+      click_button "granule-filters-submit"
+    end
+
+    it "doesn't show an empty query param 'pg[]=' in the url" do
+      expect(page).to have_query_string("p=!C179002914-ORNL_DAAC!C179003030-ORNL_DAAC&pg[2][dnf]=DAY&q=Minute+(FIFE)")
     end
   end
 

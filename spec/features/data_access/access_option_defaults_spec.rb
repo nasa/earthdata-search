@@ -79,6 +79,10 @@ describe "Access Option Defaults", reset: true do
       select 'FtpPull', from: 'Distribution Options'
 
       click_on 'Continue'
+      sleep 1
+      within '.modal-footer' do
+        click_on 'Continue' # to dismiss the modal
+      end
       click_on 'Submit'
       wait_for_xhr
       expect(page).to have_content('Not Validated')
@@ -118,6 +122,10 @@ describe "Access Option Defaults", reset: true do
       select 'FtpPull', from: 'Distribution Options'
 
       click_on 'Continue'
+      sleep 1
+      within '.modal-footer' do
+        click_on 'Continue' # to dismiss the modal
+      end
       click_on 'Submit'
       expect(page).to have_content('Not Validated')
 

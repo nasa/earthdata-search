@@ -2,11 +2,12 @@ require 'nokogiri'
 require 'open-uri'
 require 'json'
 require 'colormaps/xml_to_json'
+require 'socket'
 
 
 namespace :colormaps do
   desc "Load colormap data from GIBS"
-  task :load do
+  task :load => :environment do
     puts "Loading GIBS colormap data..."
     output_dir = "#{Rails.root}/public/colormaps"
     FileUtils::mkdir_p(output_dir)
@@ -34,24 +35,14 @@ namespace :colormaps do
 
     puts "#{error_count} error(s), #{file_count} file(s)"
 
-    # explicitly invoke the task here to make sure task colormaps:load completes successfully.
-    Rake::Task['colormaps:log_colormaps_load'].invoke
-
     if error_count > 0
-      FileUtils.remove Rails.root.join('tmp', "colormaps_load_ok")
-      open(Rails.root.join('tmp', "colormaps_load_failed"), 'w') {|f| f.puts "#{error_count} error(s), #{file_count} file(s)"}
+      job = CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now, status: 'failed', message: "#{error_count} error(s), #{file_count} file(s)", host: Socket.gethostname)
+      job.save!
       exit 1
+    else
+      job = CronJobHistory.new(task_name: 'colormaps:load', last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
+      job.save!
     end
-  end
-
-  desc "Record the last run of task 'colormaps:load' by touching a file in ./tmp dir"
-  task :log_colormaps_load do
-    Dir.mkdir Rails.root.join('tmp') unless Dir.exist? Rails.root.join('tmp')
-    Dir.glob(Rails.root.join('tmp', "colormaps_load_*")).each do |f|
-      File.delete(f)
-    end
-
-    FileUtils.touch Rails.root.join('tmp', "colormaps_load_ok")
   end
 end
 

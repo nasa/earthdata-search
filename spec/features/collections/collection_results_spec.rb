@@ -30,7 +30,7 @@ describe "Collection results", reset: false do
     wait_for_xhr
     page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 10000"
     wait_for_xhr
-    expect(page).to have_css('#collection-results-list .panel-list-item', count: 36)
+    expect(page).to have_css('#collection-results-list .panel-list-item', count: 19)
     expect(page).to have_no_content('Loading collections...')
     page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 0"
   end
@@ -52,14 +52,13 @@ describe "Collection results", reset: false do
   it "displays a badge for OPeNDAP-enabled collections" do
     fill_in "keywords", with: "C181553784-GSFCS4PA"
     wait_for_xhr
-    expect(page).to have_css('.badge-opendap')
+    expect(page).to have_css('.badge-subsetting')
   end
 
-  it "displays a placeholder for collections which have no thumbnail URLs" do
+  it "displays  for collections which have no thumbnail URLs" do
     fill_in "keywords", with: 'C179003030-ORNL_DAAC'
     wait_for_xhr
-    expect(page).to have_no_css("img.panel-list-thumbnail")
-    expect(page).to have_text("No image available")
+    expect(find('img.panel-list-thumbnail')['src']).to have_content("image-unavailable.svg")
   end
 
   # EDSC-145: As a user, I want to see how long my collection searches take, so that
@@ -80,7 +79,7 @@ describe "Collection results", reset: false do
   end
 
   it "indicates if a collection's data collection is ongoing" do
-    fill_in 'keywords', with: 'C1000000019-LANCEMODIS'
+    fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
     wait_for_xhr
     expect(page).to have_content("2014-12-25 ongoing")
   end

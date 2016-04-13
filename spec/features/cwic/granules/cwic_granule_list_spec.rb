@@ -150,4 +150,38 @@ describe "CWIC Granule list", reset: false do
     end
   end
 
+  context "for CWIC tagged collections" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, env: :uat, facets: true, ff: "Int'l / Interagency", q: 'C1204595275-GCMDTEST'
+      view_granule_results("ACES Continuous Data")
+    end
+
+    it "displays a help button to find out more information about CWIC collections", acceptance: true do
+      expect(page).to have_link("Learn More ...")
+    end
+
+    context "clicking on the CWIC help button" do
+      before :all do
+        click_on "Learn More ..."
+        sleep 1
+      end
+
+      it "displays additional details about CWIC collections", acceptance: true do
+        expect(page).to have_content "CWIC is short for CEOS WGISS Integrated Catalog"
+      end
+    end
+  end
+
+  context "for non-CWIC collections" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, env: :sit, q: 'C24936-LAADS'
+      view_granule_results("MODIS/Terra Aerosol 5-Min L2 Swath 10km V005")
+    end
+
+    it "does not display a help button to find out more information about CWIC collections", acceptance: true do
+      expect(page).not_to have_link("Learn More ...")
+    end
+  end
 end

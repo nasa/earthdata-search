@@ -242,6 +242,10 @@ describe "Granule search filters", reset: false do
   context "when excluding by granule id" do
     before :all do
       first_project_collection.click
+      wait_for_xhr
+      number_granules = granule_list.text.match /Showing \d+ of \d+ matching granules/
+      before_granule_count = number_granules.to_s.split(" ")[3].to_i
+
       first_granule_list_item.click
       first_granule_list_item.click_link "Exclude this granule"
     end

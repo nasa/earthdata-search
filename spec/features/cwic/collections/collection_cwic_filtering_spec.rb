@@ -6,8 +6,7 @@ describe 'Collection CWIC Filtering', reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    load_page :search, env: :sit, facets: true
-    login
+    load_page :search, env: :uat, facets: true
   end
 
   after :all do
@@ -41,7 +40,7 @@ describe 'Collection CWIC Filtering', reset: false do
     end
 
     it "has its selection state saved in the URL", acceptance: true do
-      expect(page).to have_query_string("cmr_env=sit&ff=Int'l+%2F+Interagency")
+      expect(page).to have_query_string("cmr_env=uat&ff=Int'l+%2F+Interagency")
     end
 
     context 'and de-selecting the CWIC filter' do
@@ -60,25 +59,21 @@ describe 'Collection CWIC Filtering', reset: false do
       end
 
       it 'removes its selection state from the URL', acceptance: true do
-        expect(page).to have_query_string("cmr_env=sit")
+        expect(page).to have_query_string("cmr_env=uat")
       end
     end
   end
 
   context "restoring a search from a URL parameter" do
     before :all do
-      load_page :search, env: :sit, facets: true
-      login
-      wait_for_xhr
+      load_page :search, env: :uat, facets: true
       before_collection_count = collection_results_header.text.match(/\d+ Matching Collections/).to_s.split(" ")[0].to_i
-      load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency"
-      login
-      wait_for_xhr
+      load_page :search, env: :uat, facets: true, ff: "Int'l / Interagency"
       after_collection_count = collection_results_header.text.match(/\d+ Matching Collections/).to_s.split(" ")[0].to_i
     end
 
     after :all do
-      load_page :search, env: :sit, facets: true
+      load_page :search, env: :uat, facets: true
     end
 
     it 'includes CWIC-tagged collections in search results', acceptance: true do

@@ -87,6 +87,36 @@
       encoding: UTF-8
       string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
     http_version: 
+4865828b1361f96921879034222a02c7943cf957:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"4fe3283590e40aaebbf396376e95ae1a"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.709000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 07 Mar 2016 19:25:34 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"7F7F0445-FDFB-5D08-E982-9242C48FC0FB","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/7F7F0445-FDFB-5D08-E982-9242C48FC0FB","name":"AMSR-E"}}]'
+    http_version: 
 98c6bc77e6118a904e3cead1787dea4b41d7cdbf:
   response:
     status:
@@ -373,6 +403,36 @@ b426b6bfd70fc30c9148d4130059a2a0d4b52ce3:
       - Wed, 21 Jan 2015 13:48:53 GMT
       connection:
       - close
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+ac567b725b94c3e1af3a1fd6ccd6827abced7cc8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"d751713988987e9331980363e24189ce"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.131000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 28 Mar 2016 02:36:35 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
     body:
       encoding: UTF-8
       string: "[]"

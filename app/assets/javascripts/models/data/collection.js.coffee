@@ -131,11 +131,11 @@ ns.Collection = do (ko
       granule = @browseable_granule
       collection_id = @id for link in @links when link['rel'].indexOf('browse#') > -1
       if collection_id?
-        "#{scalerUrl}/datasets/#{collection_id}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
+        "#{scalerUrl}/browse_images/datasets/#{collection_id}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
       else if granule?
-        "#{scalerUrl}/granules/#{granule}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
+        "#{scalerUrl}/browse_images/granules/#{granule}?h=#{thumbnailWidth}&w=#{thumbnailWidth}"
       else
-        null
+        "#{scalerUrl}/image-unavailable.svg"
 
     granuleFiltersApplied: ->
       @granuleDatasource()?.hasQueryConfig()
@@ -167,6 +167,7 @@ ns.Collection = do (ko
     granuleRendererNames: ->
       renderers = @getValueForTag('renderers')
       if renderers
+        return renderers if renderers.constructor is Array
         return renderers.split(',')
       else if @has_granules
         return ["cmr"]
@@ -249,13 +250,16 @@ ns.Collection = do (ko
         @_datasourceListeners.push(callback)
 
     getValueForTag: (key) ->
-      if @tags()
-        prefix = "#{config.cmrTagNamespace}#{key}."
+      tags = @tags()
+      if tags && tags.constructor is Array
+        prefix = "#{config.cmrTagNamespace}.#{key}."
         len = prefix.length
-        for tag in @tags()
+        for tag in tags
           tag = tag.join('.') if tag.constructor is Array
           return tag.substr(len) if tag.substr(0, len) == prefix
-      null
+      else
+        key = "#{config.cmrTagNamespace}.#{key}"
+        tags?[key]?.data
 
     canFocus: ->
       @hasAtomData() && @granuleDatasourceName()?
@@ -274,6 +278,7 @@ ns.Collection = do (ko
       @hasAtomData(jsonObj.short_name?)
       @_setObservable('gibs', jsonObj)
       @_setObservable('opendap', jsonObj)
+      @_setObservable('opendap_url', jsonObj)
       @_setObservable('modaps', jsonObj)
       @_setObservable('osdd_url', jsonObj)
       @_setObservable('tags', jsonObj)

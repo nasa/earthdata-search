@@ -1,4 +1,5 @@
 require "spec_helper"
+require 'base64'
 
 describe "Data Access workflow", reset: false do
   downloadable_collection_id = 'C90762182-LAADS'
@@ -8,13 +9,13 @@ describe "Data Access workflow", reset: false do
   non_downloadable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
   context "when a malicious user attempts an XSS attack using the data access back link" do
-    before(:each) do
+    before(:all) do
       load_page :root
       login
       visit "/data/configure?p=!#{downloadable_collection_id}&back=javascript:alert(%27ohai%27)//"
     end
 
-    after :each do
+    after :all do
       Capybara.reset_sessions!
     end
 
@@ -25,24 +26,23 @@ describe "Data Access workflow", reset: false do
   end
 
   context "when the user is not logged in" do
-    before(:each) do
-      # These two lines are not necessary but may help us clean up sessions in case that Capybara.reset_sessions! in
-      # the after block fails to do so.
-      load_page :root
-      expect(page).to have_css("a[href^=\"/login\"]")
-      ###
+    before(:all) do
+      Capybara.reset_sessions!
       load_page :search, project: [downloadable_collection_id, non_downloadable_collection_id], view: :project
       wait_for_xhr
       click_link "Retrieve project data"
       wait_for_xhr
     end
 
-    after :each do
+    after :all do
       Capybara.reset_sessions!
     end
 
-    it "forces the user to login before showing data access page" do
-      expect(page).to have_content('EOSDIS Earthdata Login')
+    it "forces the user to login before showing data access page", intermittent: true do
+      screenshot_path = "./tmp/screenshots/debug-#{Time.now.to_i}.png"
+      expect(page).to have_content('EOSDIS Earthdata Login'), lambda {
+        "Expect to see 'EOSDIS Earthdata Login' on the page. #{page.save_screenshot(screenshot_path)}"
+        Rails.logger.info Base64.encode64(File.open(screenshot_path, "rb").read)}
     end
   end
 

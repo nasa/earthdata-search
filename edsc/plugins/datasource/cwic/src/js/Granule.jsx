@@ -1,4 +1,8 @@
 import extend from './extend.jsx';
+import * as XmlHelpers from './XmlHelpers.jsx';
+import * as CwicUtils from './CwicUtils.jsx';
+
+let ajax = window.edsc.util.xhr.ajax;
 
 let CwicGranule = (function() {
   extend(CwicGranule, window.edsc.models.data.Granule);
@@ -6,6 +10,28 @@ let CwicGranule = (function() {
   function CwicGranule(jsonData) {
     CwicGranule.__super__.constructor.apply(this, Array.prototype.slice.call(arguments));
   }
+
+  CwicGranule.prototype._computeGranuleDetails = function(callback) {
+    var url = '/cwic/edsc_granule/' + encodeURIComponent(this.id);
+    this.detailsLoaded(false);
+    let xhrOpts = {
+      method: 'get',
+      dataType: 'xml',
+      url: url,
+      success: (function(_this) {
+        return function(data) {
+          var dataObj = XmlHelpers.elToObj(data);
+          var serialized = CwicUtils.serializeObj(dataObj.feed);
+          _this.details({xml: serialized, native_url: _this.id});
+          _this.detailsLoaded(true);
+        };
+      })(this),
+      error: function (response, type, reason) {
+        console.log(`Fail (CWIC granule info load) [${reason}]: ${url}`);
+      }
+    };
+    ajax(xhrOpts);
+  };
 
   CwicGranule.prototype.edsc_browse_url = function(w, h) {
     for (var i = 0; i < this.links.length; i ++) {
@@ -46,7 +72,8 @@ let CwicGranule = (function() {
   };
 
   CwicGranule.prototype.getTemporal = function () {
-    return this.date != null ? this.date.replace('/', ' to ') : null;
+    let date = this.date || this.temporal;
+    return date != null ? this.date.replace('/', ' to ') : null;
   };
 
   return CwicGranule;
