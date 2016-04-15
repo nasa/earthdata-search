@@ -1,6 +1,7 @@
 import extend from './extend.jsx';
 
 let Temporal = window.edsc.models.ui.Temporal;
+let ExclusionParam = window.edsc.models.data.query.ExclusionParam;
 
 class GranuleQuery {
   constructor(parentQuery) {
@@ -12,6 +13,47 @@ class GranuleQuery {
       write: this.fromJson,
       deferEvaluation: true,
       owner: this});
+    this.excludedGranules = this.queryComponent(new ExclusionParam('exclude', 'echo_granule_id'), ko.observableArray());
+  }
+
+  //TODO Clean up auto-generated code.
+  queryComponent(obj, observable, options) {
+    if (observable == null) {
+      observable = null;
+    }
+    if (options == null) {
+      options = {};
+    }
+    if (this._all == null) {
+      this._all = [];
+    }
+    if (this._components == null) {
+      this._components = [];
+    }
+    if (this._propagated == null) {
+      this._propagated = [];
+    }
+    if (this._serialized == null) {
+      this._serialized = [];
+    }
+    if (!ko.isObservable(observable)) {
+      obj.defaultValue = observable;
+      observable = ko.observable(observable);
+    }
+    observable = observable.extend({
+      queryable: obj
+    });
+    this._all.push(observable);
+    if (options.query !== false) {
+      this._components.push(observable);
+    }
+    if (options.propagate) {
+      this._propagated.push(observable);
+    }
+    if (!options.ephemeral) {
+      this._serialized.push(observable);
+    }
+    return observable;
   }
 
   fromJson(query) {
@@ -19,6 +61,10 @@ class GranuleQuery {
       this.singleGranuleId(query.sgd);
     }
     this.temporal.applied.queryCondition(query.temporal);
+    if (query.exclude) {
+      this.excludedGranules(query.exclude.echo_granule_id);
+    }
+
   }
 
   mbr() {
@@ -64,6 +110,9 @@ class GranuleQuery {
     }
     if (this.singleGranuleId()) {
       result.sgd = this.singleGranuleId();
+    }
+    if (this.excludedGranules().length > 0) {
+      result.x = this.excludedGranules();
     }
     return result;
   }
