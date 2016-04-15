@@ -47,6 +47,7 @@ let CwicGranules = (function() {
     this.method = 'get';
     this.osddPath = `/cwic/opensearch/datasets/${datasetId}/osdd.xml?clientId=${clientId}`;
     this.osdd = ko.observable(null);
+    this.excludedGranulesList = ko.observableArray(this.query.excludedGranules());
   }
 
   CwicGranules.prototype._edscParamsToOpenSearch = function (params) {

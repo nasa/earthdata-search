@@ -16,7 +16,6 @@ export default class CwicDatasourcePlugin {
     };
 
     this.capabilities = {
-      excludeGranules: false,
       timeline: false
     };
   }
@@ -82,7 +81,7 @@ export default class CwicDatasourcePlugin {
     return result;
   }
   hasQueryConfig() {
-    return this._query !== null && Object.keys(this._query.serialize()).length > 0;
+    return this._query !== null && (Object.keys(this._query.serialize()).length > 0 || (this._query.excludedGranules && this._query.excludedGranules().length > 0));
   }
 
   updateFromCollectionData(collectionData) {
