@@ -13,7 +13,7 @@ class GranuleQuery {
       write: this.fromJson,
       deferEvaluation: true,
       owner: this});
-    this.excludedGranules = this.queryComponent(new ExclusionParam('exclude', 'echo_granule_id'), ko.observableArray());
+    this.excludedGranules = this.queryComponent(new ExclusionParam('exclude', 'cwic_granule_id'), ko.observableArray());
   }
 
   //TODO Clean up auto-generated code.
@@ -62,7 +62,7 @@ class GranuleQuery {
     }
     this.temporal.applied.queryCondition(query.temporal);
     if (query.exclude) {
-      this.excludedGranules(query.exclude.echo_granule_id);
+      this.excludedGranules(query.exclude.cwic_granule_id);
     }
 
   }
@@ -112,7 +112,7 @@ class GranuleQuery {
       result.sgd = this.singleGranuleId();
     }
     if (this.excludedGranules().length > 0) {
-      result.x = this.excludedGranules();
+      result.cx = this.excludedGranules();
     }
     return result;
   }

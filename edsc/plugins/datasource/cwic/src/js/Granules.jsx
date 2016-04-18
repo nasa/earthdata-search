@@ -5,6 +5,7 @@ import * as CwicUtils from './CwicUtils.jsx';
 
 let ajax = window.edsc.util.xhr.ajax;
 let clientId = window.edsc.config.cmrClientId;
+let murmurhash3 = window.edsc.util.murmurhash3;
 
 let xmlNamespaces = {
   os: 'http://a9.com/-/spec/opensearch/1.1/'
@@ -47,7 +48,7 @@ let CwicGranules = (function() {
     this.method = 'get';
     this.osddPath = `/cwic/opensearch/datasets/${datasetId}/osdd.xml?clientId=${clientId}`;
     this.osdd = ko.observable(null);
-    this.excludedGranulesList = ko.observableArray(this.query.excludedGranules());
+    //this.excludedGranulesList = ko.observableArray();
   }
 
   CwicGranules.prototype._edscParamsToOpenSearch = function (params) {
@@ -108,6 +109,20 @@ let CwicGranules = (function() {
     return url;
   };
 
+  CwicGranules.prototype._excludeGranules = function(results) {
+    // TODO: an O(n^2) search and remove. Can be optimized to O(nlogn) by sorting the excludedGranules() array.
+    let excludedIds = this.query.excludedGranules();
+    for (let i = 0; i < excludedIds.length; i ++) {
+      for (let j = 0; j < results.length; j ++) {
+        let hashedId = murmurhash3(results[j].id);
+        if (hashedId == excludedIds[i]) {
+          results.splice(j, 1);
+          j --;
+        }
+      }
+    }
+  };
+
   CwicGranules.prototype._load = function (params, current, callback) {
     if (!this.osdd()) {
       this._loadOsdd(() => this._load(params, current, callback));
@@ -135,6 +150,7 @@ let CwicGranules = (function() {
         console.log(`Complete (${requestId}): ${url}`);
         dataObj = XmlHelpers.elToObj(data);
         results = this._toResults(data, dataObj, current, params);
+        this._excludeGranules(results);
         this.hits(dataObj.feed.totalResults);
         this.nextPageUrl = toLocalUrl(getRootLink(data, 'next'));
         this.hasNextPage(this.nextPageUrl != null);
