@@ -103,6 +103,10 @@ ns.Granules = do (ko,
 
       granule
 
+    clearExclusions: =>
+      @excludedGranulesList([])
+      @query.excludedGranules([])
+
     params: =>
       parentParams = @parentQuery.globalParams()
       params = extend({}, parentParams, @query.params())
