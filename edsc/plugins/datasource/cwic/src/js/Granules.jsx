@@ -48,7 +48,6 @@ let CwicGranules = (function() {
     this.method = 'get';
     this.osddPath = `/cwic/opensearch/datasets/${datasetId}/osdd.xml?clientId=${clientId}`;
     this.osdd = ko.observable(null);
-    //this.excludedGranulesList = ko.observableArray();
   }
 
   CwicGranules.prototype._edscParamsToOpenSearch = function (params) {
@@ -109,7 +108,7 @@ let CwicGranules = (function() {
     return url;
   };
 
-  CwicGranules.prototype._excludeGranules = function(results) {
+  CwicGranules.prototype._spliceGranulesResult = function(results) {
     // TODO: an O(n^2) search and remove. Can be optimized to O(nlogn) by sorting the excludedGranules() array.
     let excludedIds = this.query.excludedGranules();
     for (let i = 0; i < excludedIds.length; i ++) {
@@ -150,7 +149,7 @@ let CwicGranules = (function() {
         console.log(`Complete (${requestId}): ${url}`);
         dataObj = XmlHelpers.elToObj(data);
         results = this._toResults(data, dataObj, current, params);
-        this._excludeGranules(results);
+        this._spliceGranulesResult(results);
         this.hits(dataObj.feed.totalResults);
         this.nextPageUrl = toLocalUrl(getRootLink(data, 'next'));
         this.hasNextPage(this.nextPageUrl != null);
@@ -205,6 +204,15 @@ let CwicGranules = (function() {
       }
     };
     ajax(xhrOpts);
+  };
+
+
+  CwicGranules.prototype.clearExclusions = function (current, callback) {
+    this.query.excludedGranules([]);
+    this.excludedGranulesList([]);
+    this.isLoaded(false);
+    this.results([]);
+    this._load(this.params(), current, this.results);
   };
 
   CwicGranules.prototype.transformSpatial = function (granule) {

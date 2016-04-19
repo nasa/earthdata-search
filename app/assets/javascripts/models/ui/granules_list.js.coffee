@@ -250,9 +250,7 @@ ns.GranulesList = do ($=jQuery, config = @edsc.config)->
     _onRemoveStickyGranule: (e) =>
       @removeGranule(@stickied(), e)
 
-    clearExclusions: =>
-      @granules().excludedGranulesList([])
-      @granules().query.excludedGranules([])
+    clearExclusions: => @granules().clearExclusions()
 
     showGranuleDetails: (granule, event=null) =>
       @_map.fire 'edsc.stickygranule', granule: granule
