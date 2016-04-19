@@ -308,6 +308,7 @@ describe 'Address bar', reset: false do
   context "loading a URL with saved query conditions" do
     before :all do
       visit '/search/project?p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
+      wait_for_xhr
     end
 
     it "restores the granule query conditions" do

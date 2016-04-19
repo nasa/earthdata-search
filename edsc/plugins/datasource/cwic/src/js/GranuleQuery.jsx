@@ -15,8 +15,7 @@ class GranuleQuery {
       owner: this});
     this.excludedGranules = this.queryComponent(new ExclusionParam('exclude', 'cwic_granule_id'), ko.observableArray());
   }
-
-  //TODO Clean up auto-generated code.
+  
   queryComponent(obj, observable, options) {
     if (observable == null) {
       observable = null;
