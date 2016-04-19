@@ -150,7 +150,7 @@ let CwicGranules = (function() {
         dataObj = XmlHelpers.elToObj(data);
         results = this._toResults(data, dataObj, current, params);
         this._spliceGranulesResult(results);
-        this.hits(dataObj.feed.totalResults);
+        this.hits(dataObj.feed.totalResults - this.query.excludedGranules().length);
         this.nextPageUrl = toLocalUrl(getRootLink(data, 'next'));
         this.hasNextPage(this.nextPageUrl != null);
         let timing = ((new Date() - start) / 1000).toFixed(1);

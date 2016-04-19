@@ -105,6 +105,8 @@ this.edsc.util.url = do(window
 
     inflate: (params) ->
       value = params[@key]
+      if value.constructor == Number
+        value = value.toString();
       params[@key] = value.split('!')
 
   # The order here matters
