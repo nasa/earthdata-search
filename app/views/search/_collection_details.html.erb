@@ -26,11 +26,10 @@
     <div class="tab-pane" id="collection-information">
 
       <div class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
+        <!-- first row: mini map | spatial/temporal -->
         <div class="row">
-          <div class="first-col col-md-6 col-sm-12">
-            <div id="image-map" class="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
-          </div>
-          <dl class="second-col col-md-6 col-sm-12">
+          <div class="flex-column" id="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
+          <dl class="flex-column">
               <dt>Spatial Coordinates:</dt>
               <dd>
                 <!--ko foreach: $data.spatial -->
@@ -41,32 +40,35 @@
               <dd data-bind="text: $root.ui.collectionsList.selected().timeRange"></dd>
           </dl>
         </div>
+        <!-- end of first row -->
+
+        <!-- second row: metadata links | api endpionts -->
         <div class="row">
-          <dl class="col-md-6 col-sm-12">
+          <dl class="flex-column">
             <dt>Metadata Formats:</dt>
             <dd><a data-bind="attr: { href: $data.native_url }">Native</a>
               | <a data-bind="attr: { href: $data.atom_url }">ATOM</a>
               | <a data-bind="attr: { href: $data.echo10_url }">ECHO10</a>
               | <a data-bind="attr: { href: $data.iso19115_url }">ISO19115</a>
               <!-- ko if: $data.smap_iso_url -->
-                | <a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a>
+              | <a data-bind="attr: { href: $data.smap_iso_url }">SMAP ISO</a>
               <!-- /ko -->
               | <a data-bind="attr: { href: $data.dif_url }">DIF</a></dd>
           </dl>
-          <dl class="second-col col-md-6 col-sm-12">
+          <dl class="flex-column">
             <dt>API Endpoints:</dt>
             <dd>
-            <!-- ko with: $root.ui.collectionsList.selected() -->
+              <!-- ko with: $root.ui.collectionsList.selected() -->
               <!-- ko if: granuleDatasourceName() == "cmr" -->
-                <a class="endpoint-label" data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a>
+              <a class="endpoint-label" data-bind="attr: {href: echoGranulesUrl}" target="_blank">CMR</a>
               <!-- /ko -->
 
               <!-- ko foreach: gibs() -->
-                <a class="endpoint-label" data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a>
+              <a class="endpoint-label" data-bind="attr: {href: 'http://map1.vis.earthdata.nasa.gov/wmts-geo/' + $data.product + '/default/{Time}/EPSG4326_' + $data.resolution + '/{ZoomLevel}/{TileRow}/{TileCol}.png'}" target="_blank">GIBS</a>
               <!-- /ko -->
 
               <!-- ko if: opendap_url() -->
-                <a class="endpoint-label" data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a>
+              <a class="endpoint-label" data-bind="attr: {href: opendap_url()}" target="_blank">OPeNDAP</a>
               <!-- /ko -->
 
               <!-- ko if: modaps() -->
@@ -76,22 +78,24 @@
               <!-- ko if: osddUrl() -->
               <a class="endpoint-label" data-bind="attr: { href: osddUrl() }" target="_blank">OSDD</a>
               <!-- /ko -->
-            <!-- /ko -->
+              <!-- /ko -->
             </dd>
           </dl>
         </div>
+        <!-- end of second row -->
 
-        <div class="row">
-          <div class="col-sm-12 long-paragraph collapsed" data-bind="text: $data.description"></div>
-          <!--ko if: $root.ui.collectionsList.selected().detailsLoaded -->
-          <div class="description-toggle col-sm-12">
-            <i class="fa fa-chevron-down"></i>
-          </div>
-          <!--/ko-->
+        <!-- description -->
+        <div class="long-paragraph collapsed" data-bind="text: $data.description"></div>
+        <!--ko if: $root.ui.collectionsList.selected().detailsLoaded -->
+        <div class="description-toggle">
+          <i class="fa fa-chevron-down"></i>
         </div>
+        <!--/ko-->
+        <!-- end of description -->
 
+        <!-- third row: misc info -->
         <div class="row">
-          <dl class="first-col col-md-6 col-sm-12">
+          <dl class="flex-column">
             <dt>Processing Center:</dt>
             <dd data-bind="text: $data.processing_center"></dd>
             <dt>Archive Center:</dt>
@@ -99,7 +103,7 @@
             <dt>Short Name:</dt>
             <dd data-bind="text: $data.short_name"></dd>
           </dl>
-          <dl class="second-col col-md-6 col-sm-12">
+          <dl class="flex-column">
             <dt>Contacts:</dt>
             <dd data-bind="foreach: $data.contacts">
               <div class="contact-content">
@@ -115,9 +119,11 @@
             <!--/ko -->
           </dl>
         </div>
+        <!-- end of third row -->
 
+        <!-- fourth row: science keywords -->
         <div class="row">
-          <dl class="col-sm-12">
+          <dl>
             <dt>Science Keywords:</dt>
             <!--ko if: $data.science_keywords.length == 0 -->
             <dd>Not Available</dd>
@@ -135,6 +141,7 @@
             <!--/ko-->
           </dl>
         </div>
+        <!-- end of fourth row -->
       </div>
     </div>
   </div>

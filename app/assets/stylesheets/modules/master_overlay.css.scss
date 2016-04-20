@@ -418,32 +418,13 @@ $parent-width: $parent-split * 0.21;
 }
 
 .row {
-  width: 100%;
-  margin-bottom: 7px;
+  display: flex;
+  flex-flow: row wrap;
 }
 
-.row:after, .row:before {
-  display: table;
-  content: " ";
-  clear: both;
-}
-
-.col-md-6, .col-sm-12 {
-  position: relative;
-  min-height: 1px;
-}
-
-.image-map {
-  background: transparent;
-  width: 270px;
-  height: 134px;
-  border: none;
-}
-
-.col-md-6 {
-  width: 50%;
-  float: left;
-
+.flex-column {
+  flex: 1 0 0;
+  
   dd {
     font-size: 0.9em;
     font-weight: bold;
