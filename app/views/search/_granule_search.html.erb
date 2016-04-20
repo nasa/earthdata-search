@@ -78,7 +78,7 @@
           <span data-bind="visible: !cmrGranuleQuery.validateCloudCoverRange(cmrGranuleQuery.cloudCover.min(),cmrGranuleQuery.cloudCover.max())" class="error">Minimum must be less than Maximum</span>
         </p>
       </dd>
-      <!-- ko if: $root.labs() && searchable_attributes -->
+      <!-- ko if: $root.labs() && searchable_attributes || tags()['<%=Rails.configuration.cmr_tag_namespace.gsub(/\.$/, '')%>.features.attribute_search'] && tags()['<%=Rails.configuration.cmr_tag_namespace.gsub(/\.$/, '')%>.features.attribute_search'].data -->
       <dt>Collection-Specific Attributes</dt>
       <dd>
         <!-- ko foreach: searchable_attributes -->
