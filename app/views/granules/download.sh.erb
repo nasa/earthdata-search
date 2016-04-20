@@ -30,9 +30,9 @@ prompt_credentials() {
     echo
 }
 
-exit_bad_login() {
+exit_with_error() {
     echo
-    echo "Unable to log in"
+    echo "Unable to Retrieve Data"
     echo
     echo $1
     echo
@@ -54,9 +54,9 @@ fetch_urls() {
         setup_auth_curl
         while read -r line; do
             <% if @urls.first.start_with? 'ftp' %>
-            curl -Og --netrc-file "$netrc" $line
+            curl -f -Og --netrc-file "$netrc" $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
             <% else %>
-            curl -b "$cookiejar" -c "$cookiejar" -L -n -Og -- $line
+            curl -f -b "$cookiejar" -c "$cookiejar" -L -n -Og -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
             <% end %>
         done;
     elif command -v wget >/dev/null 2>&1; then
@@ -67,7 +67,7 @@ fetch_urls() {
         echo
         setup_auth_wget
         while read -r line; do
-        wget --load-cookies "$cookiejar" --save-cookies "$cookiejar" --keep-session-cookies -- $line
+        wget --load-cookies "$cookiejar" --save-cookies "$cookiejar" --keep-session-cookies -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
         done;
     else
         fail_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
