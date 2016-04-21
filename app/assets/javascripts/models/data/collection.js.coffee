@@ -299,4 +299,7 @@ ns.Collection = do (ko
       this[prop] ?= ko.observable(undefined)
       this[prop](jsonObj[prop] ? this[prop]())
 
+    has_feature: (namespace, feature_key) ->
+      return @tags()?[namespace + ".features." + feature_key]?.data && @searchable_attributes
+
   exports = Collection
