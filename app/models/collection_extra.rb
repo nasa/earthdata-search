@@ -37,7 +37,6 @@ class CollectionExtra < ActiveRecord::Base
     if option_response.success?
       ids = option_response.body.map {|option| option['service_option_assignment']['catalog_item_id']}
 
-      puts ids.inspect
       each_collection(client, {tag_key: tag_key('subset_service.esi')}, token) do |collection|
         # Remove tags which are no longer applicable
         unless ids.include?(collection['id'])
@@ -181,7 +180,7 @@ class CollectionExtra < ActiveRecord::Base
 
   def self.load_echo10
     each_collection(build_echo_client, format: 'echo10') do |collection|
-      extra = CollectionExtra.find_or_create_by(echo_id: collection['echo_collection_id'])
+      extra = CollectionExtra.find_or_create_by(echo_id: collection['concept_id'])
       collection = collection['Collection']
 
       # Additional attribute definitions
@@ -225,7 +224,6 @@ class CollectionExtra < ActiveRecord::Base
         refs = Array.wrap(order_info).first['order_information']['option_definition_refs']
         if refs
           opts = refs.map {|r| [r['id'], r['name']]}
-          puts "#{collection['id'].inspect} => #{opts.inspect},"
         end
       end
     end
