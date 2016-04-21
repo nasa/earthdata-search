@@ -111,27 +111,24 @@ class CollectionExtra < ActiveRecord::Base
 
   def self.tag_key(tag)
     ns = Rails.configuration.cmr_tag_namespace
-    tag.start_with?(ns) ? tag : [ns, tag].join('.extra.')
+    namespaced = ['org.', 'gov.', ns].any? {|prefix| tag.start_with?(prefix)}
+    namespaced ? tag : [ns, tag].join('.extra.')
   end
 
   def self.tag_value(collection, tag)
     tag = tag_key(tag)
     tags = collection['tags']
-    result = nil
-    if tags.is_a?(Hash)
-      result = tags[tag] && tags[tag]['data']
-    elsif tags.is_a?(Array)
-      tagdot = "#{tag}."
-      match = tags.find {|t| t.start_with?(tagdot)}
-      result = match.gsub(/^#{tagdot}/, '') if match.present?
-      result = true if !result.present? && tags.include?(tag)
-    end
-    result
+    tags && tags[tag] && tags[tag]['data']
   end
 
   def self.has_tag(collection, tag, value=nil)
-    actual = tag_value(collection, tag)
-    (value.nil? && actual != nil) || (!value.nil? && actual == value)
+    tag = tag_key(tag)
+    tags = collection['tags']
+    if value.nil?
+      !tags.nil? && !tags[tag].nil?
+    else
+      value == tag_value(collection, tag)
+    end
   end
 
   def self.load
@@ -288,6 +285,7 @@ class CollectionExtra < ActiveRecord::Base
     decorate_opendap_layers(collection)
     decorate_echo10_attributes(collection)
     decorate_modaps_layers(collection)
+    decorate_tag_mappings(collection)
 
     collection[:links] = Array.wrap(collection[:links]) # Ensure links attribute is present
 
@@ -355,6 +353,18 @@ class CollectionExtra < ActiveRecord::Base
   end
 
   private
+
+  def decorate_tag_mappings(collection)
+    ns = Rails.configuration.cmr_tag_namespace
+
+    if self.class.has_tag(collection, 'org.ceos.wgiss.cwic.granules.prod')
+      ds_tag = "#{ns}.datasource"
+      renderers_tag = "#{ns}.renderers"
+      collection[:tags][ds_tag] = {data: 'cwic'} unless self.class.has_tag(collection, ds_tag)
+      collection[:tags][renderers_tag] = {data: ['cwic']} unless self.class.has_tag(collection, renderers_tag)
+      Rails.logger.info collection['tags']
+    end
+  end
 
   def decorate_echo10_attributes(collection)
     collection[:searchable_attributes] = self.clean_attributes
