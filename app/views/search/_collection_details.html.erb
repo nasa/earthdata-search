@@ -28,7 +28,9 @@
       <div class="master-overlay-content" data-bind="ifnot: $parent.detailsLoaded">
         <!-- first row: mini map | spatial/temporal -->
         <div class="row">
-          <div class="flex-column" id="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
+          <div class="flex-column">
+            <div id="image-map" data-bind="event: {onload: new edsc.map.ImageMap().loadImageMap() }"></div>
+          </div>
           <dl class="flex-column">
               <dt>Spatial Coordinates:</dt>
               <dd>
