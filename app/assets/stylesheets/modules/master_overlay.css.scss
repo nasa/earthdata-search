@@ -418,13 +418,14 @@ $parent-width: $parent-split * 0.21;
 }
 
 .row {
+  -js-display: flex;
   display: flex;
   flex-flow: row wrap;
+  justify-content: flex-start;
 }
 
 .flex-column {
-  flex: 1 0 0;
-  
+  flex: 1 1 270px; //mini-map width is 270px
   dd {
     font-size: 0.9em;
     font-weight: bold;
