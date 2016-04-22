@@ -1,15 +1,19 @@
-$facet-text-width: $facet-overlay-width - 72px;
-$facet-indicator-offset: -$facet-text-width - 24px;
-
 .facets-item {
+  -js-display: flex;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  align-content: center;
   font-size: 0.8em;
   cursor: pointer;
-  padding: 9px 5px 9px 24px;
+  padding: .8em .4em .8em .8em;
   margin: 0;
   vertical-align: middle;
   border-bottom: 1px solid #474A4C;
   overflow: hidden;
   color: #ffffff;
+  border-left: 5px solid transparent;
 
   &:first-child {
     border-top: 1px solid #474A4C;
@@ -19,52 +23,24 @@ $facet-indicator-offset: -$facet-text-width - 24px;
     display: none;
   }
 
-  .active-indicator {
-    border-left: 5px solid transparent;
-    z-index: 1000;
-    padding: 10px 0 14px 7px;
-    margin-left: $facet-indicator-offset;
-  }
-
   &:hover {
-    .active-indicator {
-      border-color: #30AB62;
-    }
+    border-left-color: #30AB62;
   }
 }
 
 .cwic-facet {
-  font-size: 0.8em;
-  cursor: pointer;
-  padding: 9px 5px 9px 24px;
-  margin: 0;
-  vertical-align: middle;
-  border-bottom: 1px solid #474A4C;
-  overflow: hidden;
-  color: #ffffff;
-
-  i.fa-square-o {
-    display: inline;
-    float: left;
-    padding-top: 3px;
-    padding-right: 5px;
-    margin-left: -12px;
+  &:hover {
+    border-left-color: transparent;
   }
-
-  i.fa-check-square-o {
-    display: inline;
-    float: left;
-    padding-top: 3px;
-    padding-right: 5px;
-    margin-left: -12px;
+  & > i {
+    margin-right: .2em;
   }
 }
 
 .facet-item-collection-count {
   font-size: .9em;
-  padding: 2px 2px;
+  padding-left: .2em;
   color: #949597;
-  float: right;
 }
 
 .features-facet {
@@ -74,14 +50,10 @@ $facet-indicator-offset: -$facet-text-width - 24px;
 
 .facets-item.selected {
   cursor: pointer;
-
-  .active-indicator {
-    border-color: #30AB62;
-  }
+  border-left-color: #30AB62;
 
   i.fa-times {
     display: inline;
-    float: right;
     padding: 3px;
   }
 }
@@ -156,7 +128,6 @@ $facet-indicator-offset: -$facet-text-width - 24px;
 
 .facet-badge {
   display: block;
-  float: right;
   border-radius: 2px;
   margin-left: 2px;
   background-repeat: no-repeat;
@@ -165,8 +136,8 @@ $facet-indicator-offset: -$facet-text-width - 24px;
 }
 
 .facet-term {
-  width: $facet-text-width;
-  float: left;
+  -ms-flex: 1;
+  flex-grow: 1;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow-x: hidden;
