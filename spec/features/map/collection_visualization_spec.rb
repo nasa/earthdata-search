@@ -75,13 +75,13 @@ describe "Collection visualizations", reset: false do
         wait_for_xhr
       end
 
-      it "displays a position marker on both mini map and the map layer" do
+      it "displays a position marker on the mini map but not the map layer" do
         within "#collection-details" do
           expect(page).to have_css('.leaflet-marker-icon')
         end
 
         within "#map" do
-          expect(page).to have_css('.leaflet-marker-icon')
+          expect(page).to have_no_css('.leaflet-marker-icon')
         end
       end
 
