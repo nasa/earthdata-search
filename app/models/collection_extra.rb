@@ -118,16 +118,26 @@ class CollectionExtra < ActiveRecord::Base
   def self.tag_value(collection, tag)
     tag = tag_key(tag)
     tags = collection['tags']
-    tags && tags[tag] && tags[tag]['data']
+    result = nil
+    if tags.is_a?(Hash)
+      result = tags[tag] && tags[tag]['data']
+    elsif tags.is_a?(Array)
+      tagdot = "#{tag}."
+      match = tags.find {|t| t.start_with?(tagdot)}
+      result = match.gsub(/^#{tagdot}/, '') if match.present?
+      result = true if !result.present? && tags.include?(tag)
+    end
+    result
   end
 
   def self.has_tag(collection, tag, value=nil)
     tag = tag_key(tag)
     tags = collection['tags']
-    if value.nil?
-      !tags.nil? && !tags[tag].nil?
+    actual = tag_value(collection, tag)
+    if tags.is_a?(Array) || !value.nil?
+      (value.nil? && actual != nil) || (!value.nil? && actual == value)
     else
-      value == tag_value(collection, tag)
+      !tags.nil? && !tags[tag].nil?
     end
   end
 
