@@ -8,7 +8,6 @@ require "spec_helper"
 describe "Collection GIBS visualizations", reset: false do
 
   gibs_collection_id = 'C119124186-NSIDC_ECS'
-  gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
 
   before :all do
     load_page :search
@@ -37,21 +36,19 @@ describe "Collection GIBS visualizations", reset: false do
     end
 
     it "displays composite GIBS imagery corresponding to the first 20 granule results on an HTML canvas" do
-      within gibs_tile_layer do
-        expect(page).to have_selector('canvas')
-      end
+      expect(page).to have_granule_visualizations(gibs_collection_id)
     end
   end
 
   context "when turning off visualizations for a GIBS-enabled collection" do
     before :all do
       first_collection_result.click_link "View collection"
-      page.should have_css(gibs_tile_layer)
+      expect(page).to have_granule_visualizations(gibs_collection_id)
       first_collection_result.click_link "Hide collection"
     end
 
     it "removes the collection's GIBS tiles from the map" do
-      page.should have_no_css(gibs_tile_layer)
+      expect(page).to have_no_granule_visualizations(gibs_collection_id)
     end
   end
 end
