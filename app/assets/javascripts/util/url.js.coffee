@@ -102,9 +102,6 @@ this.edsc.util.url = do(window
     new ParamNameCompressor('line', 'sl')
     new ParamNameCompressor('line', 'sg')
 
-    new ParamFlattener(['two_d_coordinate_system', 'name'], 's2n')
-    new ParamFlattener(['two_d_coordinate_system', 'coordinates'], 's2c')
-
     new ArrayJoiner('features', 'ff')
     new ArrayJoiner('data_center', 'fdc')
     new ArrayJoiner('project', 'fpj')

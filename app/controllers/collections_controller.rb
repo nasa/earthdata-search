@@ -109,8 +109,6 @@ class CollectionsController < ApplicationController
     facets = Array.wrap(response.body['feed']['facets'])
 
     fields_to_params = {
-      'two_d_coordinate_system_name' => ['2D Coordinate Name', 'two_d_coordinate_system_name[]'],
-      # 'category' => ['Category Keyword', 'science_keywords[0][category][]'],
       'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
       'term' => ['Term Keyword', 'science_keywords[0][term][]'],
       'data_center' => ['Organization', 'data_center[]'],
