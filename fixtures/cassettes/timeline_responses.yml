@@ -911,6 +911,28 @@ d2488ecacdee111ddc95ad253e3ac42abfbcd4ba:
       encoding: UTF-8
       string: "[]"
     http_version: 
+a7b6781f04429d60953b9b3ec3a36b03094626cf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 22 Apr 2016 19:26:31 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 9dd124da-f865-4e94-8110-0b687469dce1
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
 428a19a2a7343a6b3f3fa5f2e8aacb224f3d893d:
   response:
     status:
@@ -2954,6 +2976,28 @@ f7ca94bf50f8ce4e1130c43809e56bffdfbda043:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C179003380-ORNL_DAAC","intervals":[[1198972800,1262304000,2]]}]'
+    http_version: 
+5a27c91e67b46c4e4044a5df60c90a1ed125b99d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 22 Apr 2016 19:24:30 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 52d74ce6-7c3a-4502-90d5-239cf19ae7b0
+      content-length:
+      - '80'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179014698-NSIDC_ECS","intervals":[[1312416000,1317686400,12]]}]'
     http_version: 
 a341c3e1f1a027cd678609328440db69ce12506b:
   response:
