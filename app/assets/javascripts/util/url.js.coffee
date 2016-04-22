@@ -127,8 +127,8 @@ this.edsc.util.url = do(window
     new ChildCompressor('pg', new ParamNameCompressor('browse_only', 'bo'))
     new ChildCompressor('pg', new ParamNameCompressor('online_only', 'oo'))
     new ChildCompressor('pg', new ParamNameCompressor('cloud_cover', 'cc'))
-    new ChildCompressor('pg', new ArrayJoiner('granule_ur', 'ur'))
-    new ChildCompressor('pg', new ArrayJoiner('produer_granule_id', 'id'))
+    new ChildCompressor('pg', new ArrayJoiner('readable_granule_name', 'id'))
+    new ChildCompressor('pg', new ArrayJoiner('readable_granule_name', 'ur'))
     new ChildCompressor('pg', new ParamFlattener(['exclude', 'echo_granule_id'], 'x'))
     new ChildCompressor('pg', new GranuleIdListCompressor('x'))
   ]

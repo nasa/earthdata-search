@@ -6,6 +6,7 @@ module Echo
 
         load_freetext_query(query)
         and_query(query)
+        pattern_query(query)
 
         query
       end
@@ -52,6 +53,14 @@ module Echo
           value.map {|v| catalog_escape(v)}
         elsif !value.is_a?(TrueClass) && !value.is_a?(FalseClass) && !value.is_a?(Numeric)
           Rails.logger.warn("Unrecognized value type for #{value} (#{value.class})")
+        end
+      end
+
+      def pattern_query(query)
+        if query[:readable_granule_name]
+          query[:options] ||= Hash.new
+          query[:options][:readable_granule_name] = Hash.new
+          query[:options][:readable_granule_name][:pattern] = true
         end
       end
 

@@ -183,14 +183,12 @@ describe "Granule search filters", reset: false do
 
     context "with single granule id field" do
       it "selecting Granule ID filters granules" do
-        choose "Search by Granule UR"
         fill_in "granule_id", with: "%2006227720%"
         click_button "granule-filters-submit"
         expect(project_overview).to filter_granules_from(before_granule_count)
       end
 
       it "clicking the clear button clears granule id field" do
-        choose "Search by Granule UR"
         fill_in "granule_id", with: "%2006227720%"
         click_button "granule-filters-submit"
         expect(project_overview).to filter_granules_from(before_granule_count)
@@ -209,22 +207,13 @@ describe "Granule search filters", reset: false do
         click_link "Search Multiple"
       end
 
-      it "selecting Granule UR filters granules" do
-        choose "Search by Granule UR"
+      it "searching with a pattern filters granules" do
         fill_in "granule_id_field", with: "%2006227720%"
         click_button "granule-filters-submit"
         expect(project_overview).to filter_granules_from(before_granule_count)
       end
 
-      it "selecting Local Granule ID filters granules" do
-        choose "Search by Local Granule ID"
-        fill_in "granule_id_field", with: "%03232002054831%"
-        click_button "granule-filters-submit"
-        expect(project_overview).to filter_granules_from(before_granule_count)
-      end
-
       it "clicking the clear button clears granule id textarea" do
-        choose "Search by Granule UR"
         fill_in "granule_id_field", with: "%2006227720%"
         click_button "granule-filters-submit"
         expect(project_overview).to filter_granules_from(before_granule_count)

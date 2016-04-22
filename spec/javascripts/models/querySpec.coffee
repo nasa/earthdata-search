@@ -219,20 +219,11 @@ describe "query", ->
       @query.params(params)
       expect(param(@query.params())).toEqual(param(params))
 
-    it 'serializes granule_urs', ->
+    it 'serializes readable granule names', ->
       params =
         echo_collection_id: @ds_id
         sort_key: ['-start_date']
-        granule_ur: ['1', '2']
-        page_size: 20
-      @query.params(params)
-      expect(param(@query.params())).toEqual(param(params))
-
-    it 'serializes producer granule ids', ->
-      params =
-        echo_collection_id: @ds_id
-        sort_key: ['-start_date']
-        producer_granule_id: ['1', '2']
+        readable_granule_name: ['1', '2']
         page_size: 20
       @query.params(params)
       expect(param(@query.params())).toEqual(param(params))
