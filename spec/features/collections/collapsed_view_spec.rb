@@ -64,9 +64,9 @@ describe "Collections Collapsed View", reset: false do
         end
       end
 
-      it 'displays a view collection button for collections with granules' do
+      it 'displays no view collection button for collections with granules' do
         for_collapsed_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC' do
-          expect(first_collapsed_collection).to have_link('Preview collection')
+          expect(first_collapsed_collection).to have_no_link('Preview collection')
         end
       end
 
