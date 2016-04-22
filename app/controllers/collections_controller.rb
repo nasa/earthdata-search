@@ -217,8 +217,11 @@ class CollectionsController < ApplicationController
     keyword_facets.sort_by! {|facet| facet['term']}
     results.insert(1, {name: "Keywords", param: nil, values: selected_keywords + keyword_facets})
     # EDSC-698 Dropping sensor as a facet.
+    # EDSC-1023 Dropping 2D Coordinate System
     # FIXME: This may need retouch once CMR drops the sensor facet.
-    results.reject!{|facet| !facet.nil? && facet[:name] == 'Sensor'}
+    results.reject! do |facet|
+      !facet.nil? && ['Sensor', '2D Coordinate Name'].include?(facet[:name])
+    end
     results.compact
   end
 
@@ -305,11 +308,6 @@ class CollectionsController < ApplicationController
 
     nrt = features && features.include?('Near Real Time')
     params = params.merge('collection_data_type' => 'NEAR_REAL_TIME') if nrt
-
-    if params["two_d_coordinate_system"]
-      old = params.delete("two_d_coordinate_system")
-      params["two_d_coordinate_system_name"] = old["name"]
-    end
 
     params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
