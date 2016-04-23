@@ -87,9 +87,12 @@ ns.Project = do (ko,
       options = @serviceOptions.serialize()
       $(document).trigger('dataaccessevent', [@collection.id, options])
 
+      form_data = []
+      form_data.push method.form for method in @granuleAccessOptions().methods
       id: @collection.id
       params: param(@collection.granuleDatasource()?.toQueryParams() ? @collection.query.globalParams())
       serviceOptions: options
+      form: form_data
 
   class Project
     constructor: (@query) ->
