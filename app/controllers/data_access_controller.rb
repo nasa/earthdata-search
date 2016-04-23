@@ -1,4 +1,5 @@
 require 'json'
+require 'digest/sha1'
 
 class DataAccessController < ApplicationController
   include ActionView::Helpers::TextHelper
@@ -146,7 +147,7 @@ class DataAccessController < ApplicationController
         dqs = echo_client.get_data_quality_summary(collection, token)
       end
 
-      defaults = AccessConfiguration.get_default_options(current_user, collection)
+      defaults = AccessConfiguration.get_default_access_config(current_user, collection)
 
       granules = catalog_response.body['feed']['entry']
 
@@ -164,19 +165,23 @@ class DataAccessController < ApplicationController
           units.shift()
         end
 
+        methods = get_downloadable_access_methods(collection, granules, granule_params, hits) + get_order_access_methods(collection, granules, hits) + get_service_access_methods(collection, granules, hits)
+
+        defaults = {service_options: nil} if echo_form_outdated?(defaults, methods)
+
         result = {
           hits: hits,
           dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
-          methods: get_downloadable_access_methods(collection, granules, granule_params, hits) + get_order_access_methods(collection, granules, hits) + get_service_access_methods(collection, granules, hits),
-          defaults: defaults
+          methods: methods,
+          defaults: defaults[:service_options]
         }
       else
         result = {
           hits: 0,
           methods: [],
-          defaults: defaults
+          defaults: defaults[:service_options]
         }
       end
 
@@ -191,6 +196,17 @@ class DataAccessController < ApplicationController
   end
 
   private
+
+  def echo_form_outdated?(access_config, methods)
+    return true if access_config.nil? || access_config.echoform_digest.nil? || methods.nil?
+
+    forms = []
+    methods.each { |method| forms.push method[:form]}
+
+    latest_digest = forms.empty? ? nil : Digest::SHA1.hexdigest(forms.join("\n"))
+    return false if latest_digest == access_config.echoform_digest
+    true
+  end
 
   def get_downloadable_access_methods(collection_id, granules, granule_params, hits)
     result = []
