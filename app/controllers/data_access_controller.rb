@@ -181,7 +181,7 @@ class DataAccessController < ApplicationController
         result = {
           hits: 0,
           methods: [],
-          defaults: defaults[:service_options]
+          defaults: defaults.nil? ? nil : defaults[:service_options]
         }
       end
 
