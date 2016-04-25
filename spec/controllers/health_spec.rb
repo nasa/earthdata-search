@@ -66,7 +66,7 @@ describe HealthController, type: :controller do
 
       it "returns a json response indicating edsc is not ok" do
         mock_client = Object.new
-        expect(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
+        allow(Echo::Client).to receive(:client_for_environment).and_return(mock_client)
 
         res = MockResponse.edsc_dependency({"availability"=>"NO"})
         expect(mock_client).to receive(:get_echo_availability).and_return(res)
