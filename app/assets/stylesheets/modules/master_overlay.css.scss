@@ -418,32 +418,18 @@ $parent-width: $parent-split * 0.21;
 }
 
 .row {
-  width: 100%;
-  margin-bottom: 7px;
+  -js-display: flex;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  -ms-flex-wrap: wrap;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
 }
 
-.row:after, .row:before {
-  display: table;
-  content: " ";
-  clear: both;
-}
-
-.col-md-6, .col-sm-12 {
-  position: relative;
-  min-height: 1px;
-}
-
-.image-map {
-  background: transparent;
-  width: 270px;
-  height: 134px;
-  border: none;
-}
-
-.col-md-6 {
-  width: 50%;
-  float: left;
-
+.flex-column {
+  -ms-flex: 1 1 270px;
+  flex: 1 1 270px; //mini-map width is 270px
   dd {
     font-size: 0.9em;
     font-weight: bold;
