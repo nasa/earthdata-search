@@ -1,0 +1,21 @@
+setup_auth_curl() {
+    # The following request can't set cookie correctly using '-c' option (wget works fine however). It has to be constructed manually.
+    out=$(curl -s -d "userid=$username&password=$password" https://vertex.daac.asf.alaska.edu/services/authentication -i -w "\n%{http_code}\n")
+    token=$(echo "$out" | grep Set-Cookie | cut -d ' ' -f 2 | cut -d '=' -f 2 | sed 's/;$//')
+
+    echo ".alaska.edu\tTRUE\t/\tFALSE\t0\tdatapool\t$token" > $cookiejar
+    status=$(echo "$out" | tail -n 1)
+    if [ "$status" -ne "200" ]; then
+        exit_bad_login "Please ensure that you have entered your username and password correctly and\nthat you have authorized the remote application by visiting the link below"
+    fi
+}
+
+setup_auth_wget() {
+    wget --load-cookies "$cookiejar" --save-cookies "$cookiejar" --keep-session-cookies \
+         -S -O- --quiet --post-data "userid=$username&password=$password" --no-check-certificate \
+         'https://vertex.daac.asf.alaska.edu/services/authentication' 2>&1 > /dev/null
+    code=$?
+    if [ "$status" -ne "200" ]; then
+        exit_bad_login "Please ensure that you have entered your username and password correctly and\nthat you have authorized the remote application by visiting the link below"
+    fi
+}
