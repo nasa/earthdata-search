@@ -28,8 +28,4 @@ ns.SpatialType = do (ko, $=jQuery) ->
       @name('Shape File')
       @icon('fa-file-o')
 
-    selectGrid: =>
-      @name('Grid Coordinates')
-      @icon('edsc-icon-globe')
-
   exports = SpatialType
