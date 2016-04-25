@@ -87,12 +87,23 @@ ns.Project = do (ko,
       options = @serviceOptions.serialize()
       $(document).trigger('dataaccessevent', [@collection.id, options])
 
-      form_data = []
-      form_data.push method.form for method in @granuleAccessOptions().methods
+      form_hashes = []
+      for method in @granuleAccessOptions().methods
+        for accessMethod in options.accessMethod
+          form_hash = {}
+          if accessMethod.id && accessMethod.id == method.id
+            form_hash['id'] = method.id
+            form_hash['form_hash'] = method.form_hash
+            form_hashes.push form_hash
+          else if accessMethod.id == undefined && accessMethod.type == method.type && accessMethod.type == 'download'
+            form_hash['id'] = method.type
+            form_hash['form_hash'] = null
+            form_hashes.push form_hash
+
       id: @collection.id
       params: param(@collection.granuleDatasource()?.toQueryParams() ? @collection.query.globalParams())
       serviceOptions: options
-      form: form_data
+      form_hashes: form_hashes
 
   class Project
     constructor: (@query) ->

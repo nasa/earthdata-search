@@ -197,15 +197,24 @@ class DataAccessController < ApplicationController
 
   private
 
+  # forms in methods are fresh, latest ones.
+  # The digest in access_config may be dirty.
   def echo_form_outdated?(access_config, methods)
     return true if access_config.nil? || access_config.echoform_digest.nil? || methods.nil?
 
-    forms = []
-    methods.each { |method| forms.push method[:form]}
+    form_digest = []
+    methods.each do |method|
+      if method[:type] == 'download'
+        digest = access_config.echoform_digest.select {|digest| digest['id'] == method[:type]}
+      else
+        return true if method[:form].nil?
+        digest = access_config.echoform_digest.select {|digest| digest['id'] == method[:id] && digest['form_hash'] == Digest::SHA1.hexdigest(method[:form])}
+      end
+      form_digest.push digest if digest.present?
+    end
 
-    latest_digest = forms.empty? ? nil : Digest::SHA1.hexdigest(forms.join("\n"))
-    return false if latest_digest == access_config.echoform_digest
-    true
+    return true if form_digest.empty?
+    false
   end
 
   def get_downloadable_access_methods(collection_id, granules, granule_params, hits)
@@ -277,6 +286,7 @@ class DataAccessController < ApplicationController
         config[:id] = option_id
         config[:type] = 'order'
         config[:form] = option_def['form']
+        config[:form_hash] = Digest::SHA1.hexdigest(option_def['form'])
         config[:all] = config[:count] == granules.size
         config[:count] = (hits.to_f * config[:count] / granules.size).round
       end
@@ -290,6 +300,7 @@ class DataAccessController < ApplicationController
       config[:name] = 'Order'
       config[:type] = 'order'
       config[:form] = nil
+      config[:form_hash] = nil
       config[:all] = orderable_count == granules.size
       config[:count] = (hits.to_f * orderable_count / granules.size).round
       defs = [config]
@@ -312,6 +323,7 @@ class DataAccessController < ApplicationController
       config[:id] = option_id
       config[:type] = 'service'
       config[:form] = form
+      config[:form_hash] = Digest::SHA1.hexdigest(form)
       config[:name] = name
       config[:count] = granules.size
       config[:all] = true

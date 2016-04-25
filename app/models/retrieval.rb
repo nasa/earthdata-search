@@ -107,7 +107,7 @@ class Retrieval < ActiveRecord::Base
   def update_access_configurations
     self.collections.each do |collection|
       if collection.key?('serviceOptions') && collection.key?('id')
-        AccessConfiguration.set_default_access_config(self.user, collection['id'], collection['serviceOptions'], collection['form'])
+        AccessConfiguration.set_default_access_config(self.user, collection['id'], collection['serviceOptions'], collection['form_hashes'])
       end
     end
   end
