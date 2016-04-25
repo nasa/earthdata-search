@@ -1,408 +1,4 @@
 ---
-d696def6590ee7ba23a31d5b9a233227eeaefa09:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      date:
-      - Wed, 21 Jan 2015 13:51:21 GMT
-      access-control-allow-origin:
-      - "*"
-      content-type:
-      - application/echo10+xml; charset=utf-8
-      connection:
-      - close
-      server:
-      - Jetty(7.x.y-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: |-
-        <Collection>
-          <ShortName>MOD04_L2</ShortName>
-          <VersionId>5</VersionId>
-          <InsertTime>2006-03-17T00:00:00.000Z</InsertTime>
-          <LastUpdate>2012-06-18T00:00:00.000Z</LastUpdate>
-          <LongName>MODIS/Terra Aerosol 5-Min L2 Swath 10km</LongName>
-          <DataSetId>MODIS/Terra Aerosol 5-Min L2 Swath 10km V005 NRT</DataSetId>
-          <Description>MODIS/Terra Aerosol 5-Min L2 Swath 10km</Description>
-          <CollectionDataType>NEAR_REAL_TIME</CollectionDataType>
-          <Orderable>false</Orderable>
-          <Visible>true</Visible>
-          <RevisionDate>2012-06-18T00:00:00.000Z</RevisionDate>
-          <SuggestedUsage>Science Research </SuggestedUsage>
-          <ProcessingCenter>MODAPS</ProcessingCenter>
-          <ProcessingLevelId>2</ProcessingLevelId>
-          <ProcessingLevelDescription>Sensor Measurements</ProcessingLevelDescription>
-          <ArchiveCenter>LAADS</ArchiveCenter>
-          <VersionDescription>Terra MODIS Version 5 Near Real Time Data Collection</VersionDescription>
-          <CitationForExternalPublication>This data set was provided by the NASA EOS Project.</CitationForExternalPublication>
-          <CollectionState>In Work</CollectionState>
-          <MaintenanceAndUpdateFrequency>As Needed</MaintenanceAndUpdateFrequency>
-          <SpatialKeywords/>
-          <TemporalKeywords/>
-          <Temporal>
-            <TimeType>UTC</TimeType>
-            <DateType>Gregorian</DateType>
-            <TemporalRangeType>Continuous Range</TemporalRangeType>
-            <PrecisionOfSeconds>1</PrecisionOfSeconds>
-            <EndsAtPresentFlag>true</EndsAtPresentFlag>
-            <RangeDateTime>
-              <BeginningDateTime>2014-12-25T05:35:00.000000Z</BeginningDateTime>
-            </RangeDateTime>
-          </Temporal>
-          <Contacts>
-            <Contact>
-              <Role>Producer</Role>
-              <Instructions>Contact for data content concerns</Instructions>
-              <OrganizationName>MODIS Science Data Support Team</OrganizationName>
-              <OrganizationAddresses>
-                <Address>
-                  <StreetAddress>NASA/GSFC Code 619</StreetAddress>
-                  <City>GREENBELT</City>
-                  <StateProvince>MD</StateProvince>
-                  <PostalCode>20771</PostalCode>
-                  <Country>USA</Country>
-                </Address>
-              </OrganizationAddresses>
-              <OrganizationPhones>
-                <Phone>
-                  <Number>301-614-5515</Number>
-                  <Type>phone</Type>
-                </Phone>
-              </OrganizationPhones>
-              <OrganizationEmails>
-                <Email>Edward.J.Masuoka@nasa.gov</Email>
-              </OrganizationEmails>
-              <ContactPersons/>
-            </Contact>
-            <Contact>
-              <Role>Archive</Role>
-              <Instructions>Contact for format/distribution issues.</Instructions>
-              <OrganizationName>MODIS Science Data Support Team</OrganizationName>
-              <OrganizationAddresses>
-                <Address>
-                  <StreetAddress>4801 Forbes Blvd</StreetAddress>
-                  <City>Lanham-Seabrook</City>
-                  <StateProvince>MD</StateProvince>
-                  <PostalCode>20706</PostalCode>
-                  <Country>USA</Country>
-                </Address>
-                <Address>
-                  <StreetAddress>NASA/GSFC Code 619</StreetAddress>
-                  <City>GREENBELT</City>
-                  <StateProvince>MD</StateProvince>
-                  <PostalCode>20771</PostalCode>
-                  <Country>USA</Country>
-                </Address>
-              </OrganizationAddresses>
-              <OrganizationPhones>
-                <Phone>
-                  <Number>301-731-2928</Number>
-                  <Type>phone</Type>
-                </Phone>
-                <Phone>
-                  <Number>301-731-2934</Number>
-                  <Type>phone</Type>
-                </Phone>
-                <Phone>
-                  <Number>866-506-6347</Number>
-                  <Type>phone (Toll-free-US only)</Type>
-                </Phone>
-              </OrganizationPhones>
-              <OrganizationEmails>
-                <Email>modapsuso@sigmaspace.com</Email>
-              </OrganizationEmails>
-              <ContactPersons/>
-            </Contact>
-          </Contacts>
-          <ScienceKeywords>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>AEROSOL PARTICLE PROPERTIES</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>CLOUD CONDENSATION NUCLEI</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-             <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>AEROSOL EXTINCTION</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>AEROSOLS OPTICAL DEPTH/THICKNESS</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>AEROSOL RADIANCE</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>CARBONACEOUS AEROSOLS</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>DUST/ASH/SMOKE</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>NITRATE PARTICLES</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>ORGANIC PARTICLES</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>PARTICULATE MATTER</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-            <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>AEROSOLS</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>SULFATE PARTICLES</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-                <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>ATMOSPHERIC RADIATION</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>RADIATIVE FLUX</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-                <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>ATMOSPHERIC RADIATION</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>REFLECTANCE</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-                <ScienceKeyword>
-              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
-              <TopicKeyword>ATMOSPHERE</TopicKeyword>
-              <TermKeyword>ATMOSPHERIC RADIATION</TermKeyword>
-              <VariableLevel1Keyword>
-                <Value>OPTICAL DEPTH/THICKNESS</Value>
-              </VariableLevel1Keyword>
-            </ScienceKeyword>
-              </ScienceKeywords>
-          <Platforms>
-            <Platform>
-              <ShortName>Terra</ShortName>
-              <LongName>First EOS Polar Orbiting Satellite, 10:30 AM Descending Equator Crossing</LongName>
-              <Type>Spacecraft</Type>
-              <Characteristics>
-                <Characteristic>
-                  <Name>EquatorCrossingTime</Name>
-                  <Description>Local time of the equator crossing and direction (ascending or descending)</Description>
-                  <DataType>varchar</DataType>
-                  <Unit>Local Mean Time</Unit>
-                  <Value>10:30, descending</Value>
-                </Characteristic>
-              </Characteristics>
-              <Instruments>
-                <Instrument>
-                  <ShortName>MODIS</ShortName>
-                  <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
-                  <Technique>Imaging Spectroradiometry</Technique>
-                  <NumberOfSensors>1</NumberOfSensors>
-                  <Characteristics/>
-                  <Sensors>
-                    <Sensor>
-                      <ShortName>MODIS</ShortName>
-                      <LongName>Cross-track Scanning Radiometer</LongName>
-                      <Technique>Radiometry</Technique>
-                      <Characteristics/>
-                    </Sensor>
-                  </Sensors>
-                  <OperationModes/>
-                </Instrument>
-              </Instruments>
-            </Platform>
-          </Platforms>
-          <AdditionalAttributes>
-            <AdditionalAttribute>
-              <Name>SuccessfulRetrievalPct_Ocean</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>SuccessfulRetrievalPct</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>SuccessfulRetrievalPct_Land</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>SCI_STATE</Name>
-              <DataType>INT</DataType>
-              <Description>Flag set (to 0) if science_state, the L1A engineering data flag that indicates the Normal/Test configuration of the MODIS instrument, was set for at least one scan in the granule.</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>SCI_ABNORM</Name>
-              <DataType>INT</DataType>
-              <Description>Flag set (to 0) if science_abnormal, the L1A engineering data ground-set flag thatindicates potentially abnormal science data due to things other than MODIS (such as maneuvers, data link, etc.), was set for at least one scan in the granule.</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>VeryHighConfidentClearPct</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>LowConfidentClearPct</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>HighConfidentClearPct</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>CloudCoverPct250m</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>ClearPct250m</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>SuccessCloudTopPropRtrPct_IR</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>SuccessCloudPhaseRtrPct_IR</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>SuccessCloudOptPropRtrPct_VIS</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>IceCloudDetectedPct_VIS</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>CloudCoverFractionPct_VIS</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>SuccessfulRetrievalPct_NIR</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-            <AdditionalAttribute>
-              <Name>SuccessfulRetrievalPct_IR</Name>
-              <DataType>FLOAT</DataType>
-              <Description>None</Description>
-            </AdditionalAttribute>
-          </AdditionalAttributes>
-          <CSDTDescriptions>
-            <CSDTDescription>
-              <PrimaryCSDT>Simple Swath</PrimaryCSDT>
-              <Implementation>HDF-EOS</Implementation>
-              <CSDTComments>None</CSDTComments>
-              <IndirectReference>N/A</IndirectReference>
-            </CSDTDescription>
-          </CSDTDescriptions>
-          <OnlineResources>
-            <OnlineResource>
-              <URL>http://modis-atmos.gsfc.nasa.gov/products.html</URL>
-              <Description>Overview of MODIS Atmosphere Data Products</Description>
-              <Type>ECSCollGuide</Type>
-            </OnlineResource>
-            <OnlineResource>
-              <URL>http://modis-atmos.gsfc.nasa.gov/MOD04_L2/index.html</URL>
-              <Description>Overview of MOD04_L2</Description>
-              <Type>Product Info</Type>
-            </OnlineResource>
-            <OnlineResource>
-              <URL>http://modis-atmos.gsfc.nasa.gov/products_calendar.html</URL>
-              <Description>MODIS Atmosphere Data Availability Calendar and Validation Level</Description>
-              <Type>MiscInformation</Type>
-            </OnlineResource>
-            <OnlineResource>
-              <URL>http://modis-atmos.gsfc.nasa.gov/validation.html</URL>
-              <Description>Known Data Issues</Description>
-              <Type>DatasetDisclaimer</Type>
-            </OnlineResource>
-          </OnlineResources>
-          <AssociatedDIFs>
-            <DIF>
-              <EntryId>MOD04_L2</EntryId>
-            </DIF>
-          </AssociatedDIFs>
-          <Spatial>
-            <SpatialCoverageType>Horizontal</SpatialCoverageType>
-            <HorizontalSpatialDomain>
-              <Geometry>
-                <CoordinateSystem>CARTESIAN</CoordinateSystem>
-                <BoundingRectangle>
-                  <WestBoundingCoordinate>-180</WestBoundingCoordinate>
-                  <NorthBoundingCoordinate>90</NorthBoundingCoordinate>
-                  <EastBoundingCoordinate>180</EastBoundingCoordinate>
-                  <SouthBoundingCoordinate>-90</SouthBoundingCoordinate>
-                </BoundingRectangle>
-              </Geometry>
-            </HorizontalSpatialDomain>
-            <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>
-          </Spatial>
-        </Collection>
-    http_version: 
 32c36bb8e6afe2ac27954bd8eb6491bf1d6b21f3:
   response:
     status:
@@ -823,6 +419,410 @@ b5c7e41c67b053b26b179892814464bd7ec6299a:
                  GeoConnections Discovery Portal. Canada's IDN Node.
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-95</WestBoundingCoordinate><NorthBoundingCoordinate>61</NorthBoundingCoordinate><EastBoundingCoordinate>-52</EastBoundingCoordinate><SouthBoundingCoordinate>44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+354c97868b9e4bab54b5f506f90948fd3a35b080:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 21 Jan 2015 13:51:21 GMT
+      access-control-allow-origin:
+      - "*"
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |-
+        <Collection>
+          <ShortName>MOD04_L2</ShortName>
+          <VersionId>5</VersionId>
+          <InsertTime>2006-03-17T00:00:00.000Z</InsertTime>
+          <LastUpdate>2012-06-18T00:00:00.000Z</LastUpdate>
+          <LongName>MODIS/Terra Aerosol 5-Min L2 Swath 10km</LongName>
+          <DataSetId>MODIS/Terra Aerosol 5-Min L2 Swath 10km V005 NRT</DataSetId>
+          <Description>MODIS/Terra Aerosol 5-Min L2 Swath 10km</Description>
+          <CollectionDataType>NEAR_REAL_TIME</CollectionDataType>
+          <Orderable>false</Orderable>
+          <Visible>true</Visible>
+          <RevisionDate>2012-06-18T00:00:00.000Z</RevisionDate>
+          <SuggestedUsage>Science Research </SuggestedUsage>
+          <ProcessingCenter>MODAPS</ProcessingCenter>
+          <ProcessingLevelId>2</ProcessingLevelId>
+          <ProcessingLevelDescription>Sensor Measurements</ProcessingLevelDescription>
+          <ArchiveCenter>LAADS</ArchiveCenter>
+          <VersionDescription>Terra MODIS Version 5 Near Real Time Data Collection</VersionDescription>
+          <CitationForExternalPublication>This data set was provided by the NASA EOS Project.</CitationForExternalPublication>
+          <CollectionState>In Work</CollectionState>
+          <MaintenanceAndUpdateFrequency>As Needed</MaintenanceAndUpdateFrequency>
+          <SpatialKeywords/>
+          <TemporalKeywords/>
+          <Temporal>
+            <TimeType>UTC</TimeType>
+            <DateType>Gregorian</DateType>
+            <TemporalRangeType>Continuous Range</TemporalRangeType>
+            <PrecisionOfSeconds>1</PrecisionOfSeconds>
+            <EndsAtPresentFlag>true</EndsAtPresentFlag>
+            <RangeDateTime>
+              <BeginningDateTime>2014-12-25T05:35:00.000000Z</BeginningDateTime>
+            </RangeDateTime>
+          </Temporal>
+          <Contacts>
+            <Contact>
+              <Role>Producer</Role>
+              <Instructions>Contact for data content concerns</Instructions>
+              <OrganizationName>MODIS Science Data Support Team</OrganizationName>
+              <OrganizationAddresses>
+                <Address>
+                  <StreetAddress>NASA/GSFC Code 619</StreetAddress>
+                  <City>GREENBELT</City>
+                  <StateProvince>MD</StateProvince>
+                  <PostalCode>20771</PostalCode>
+                  <Country>USA</Country>
+                </Address>
+              </OrganizationAddresses>
+              <OrganizationPhones>
+                <Phone>
+                  <Number>301-614-5515</Number>
+                  <Type>phone</Type>
+                </Phone>
+              </OrganizationPhones>
+              <OrganizationEmails>
+                <Email>Edward.J.Masuoka@nasa.gov</Email>
+              </OrganizationEmails>
+              <ContactPersons/>
+            </Contact>
+            <Contact>
+              <Role>Archive</Role>
+              <Instructions>Contact for format/distribution issues.</Instructions>
+              <OrganizationName>MODIS Science Data Support Team</OrganizationName>
+              <OrganizationAddresses>
+                <Address>
+                  <StreetAddress>4801 Forbes Blvd</StreetAddress>
+                  <City>Lanham-Seabrook</City>
+                  <StateProvince>MD</StateProvince>
+                  <PostalCode>20706</PostalCode>
+                  <Country>USA</Country>
+                </Address>
+                <Address>
+                  <StreetAddress>NASA/GSFC Code 619</StreetAddress>
+                  <City>GREENBELT</City>
+                  <StateProvince>MD</StateProvince>
+                  <PostalCode>20771</PostalCode>
+                  <Country>USA</Country>
+                </Address>
+              </OrganizationAddresses>
+              <OrganizationPhones>
+                <Phone>
+                  <Number>301-731-2928</Number>
+                  <Type>phone</Type>
+                </Phone>
+                <Phone>
+                  <Number>301-731-2934</Number>
+                  <Type>phone</Type>
+                </Phone>
+                <Phone>
+                  <Number>866-506-6347</Number>
+                  <Type>phone (Toll-free-US only)</Type>
+                </Phone>
+              </OrganizationPhones>
+              <OrganizationEmails>
+                <Email>modapsuso@sigmaspace.com</Email>
+              </OrganizationEmails>
+              <ContactPersons/>
+            </Contact>
+          </Contacts>
+          <ScienceKeywords>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>AEROSOL PARTICLE PROPERTIES</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>CLOUD CONDENSATION NUCLEI</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+             <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>AEROSOL EXTINCTION</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>AEROSOLS OPTICAL DEPTH/THICKNESS</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>AEROSOL RADIANCE</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>CARBONACEOUS AEROSOLS</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>DUST/ASH/SMOKE</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>NITRATE PARTICLES</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>ORGANIC PARTICLES</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>PARTICULATE MATTER</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+            <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>AEROSOLS</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>SULFATE PARTICLES</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+                <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>ATMOSPHERIC RADIATION</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>RADIATIVE FLUX</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+                <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>ATMOSPHERIC RADIATION</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>REFLECTANCE</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+                <ScienceKeyword>
+              <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+              <TopicKeyword>ATMOSPHERE</TopicKeyword>
+              <TermKeyword>ATMOSPHERIC RADIATION</TermKeyword>
+              <VariableLevel1Keyword>
+                <Value>OPTICAL DEPTH/THICKNESS</Value>
+              </VariableLevel1Keyword>
+            </ScienceKeyword>
+              </ScienceKeywords>
+          <Platforms>
+            <Platform>
+              <ShortName>Terra</ShortName>
+              <LongName>First EOS Polar Orbiting Satellite, 10:30 AM Descending Equator Crossing</LongName>
+              <Type>Spacecraft</Type>
+              <Characteristics>
+                <Characteristic>
+                  <Name>EquatorCrossingTime</Name>
+                  <Description>Local time of the equator crossing and direction (ascending or descending)</Description>
+                  <DataType>varchar</DataType>
+                  <Unit>Local Mean Time</Unit>
+                  <Value>10:30, descending</Value>
+                </Characteristic>
+              </Characteristics>
+              <Instruments>
+                <Instrument>
+                  <ShortName>MODIS</ShortName>
+                  <LongName>Moderate-Resolution Imaging Spectroradiometer</LongName>
+                  <Technique>Imaging Spectroradiometry</Technique>
+                  <NumberOfSensors>1</NumberOfSensors>
+                  <Characteristics/>
+                  <Sensors>
+                    <Sensor>
+                      <ShortName>MODIS</ShortName>
+                      <LongName>Cross-track Scanning Radiometer</LongName>
+                      <Technique>Radiometry</Technique>
+                      <Characteristics/>
+                    </Sensor>
+                  </Sensors>
+                  <OperationModes/>
+                </Instrument>
+              </Instruments>
+            </Platform>
+          </Platforms>
+          <AdditionalAttributes>
+            <AdditionalAttribute>
+              <Name>SuccessfulRetrievalPct_Ocean</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>SuccessfulRetrievalPct</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>SuccessfulRetrievalPct_Land</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>SCI_STATE</Name>
+              <DataType>INT</DataType>
+              <Description>Flag set (to 0) if science_state, the L1A engineering data flag that indicates the Normal/Test configuration of the MODIS instrument, was set for at least one scan in the granule.</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>SCI_ABNORM</Name>
+              <DataType>INT</DataType>
+              <Description>Flag set (to 0) if science_abnormal, the L1A engineering data ground-set flag thatindicates potentially abnormal science data due to things other than MODIS (such as maneuvers, data link, etc.), was set for at least one scan in the granule.</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>VeryHighConfidentClearPct</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>LowConfidentClearPct</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>HighConfidentClearPct</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>CloudCoverPct250m</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>ClearPct250m</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>SuccessCloudTopPropRtrPct_IR</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>SuccessCloudPhaseRtrPct_IR</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>SuccessCloudOptPropRtrPct_VIS</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>IceCloudDetectedPct_VIS</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>CloudCoverFractionPct_VIS</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>SuccessfulRetrievalPct_NIR</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+            <AdditionalAttribute>
+              <Name>SuccessfulRetrievalPct_IR</Name>
+              <DataType>FLOAT</DataType>
+              <Description>None</Description>
+            </AdditionalAttribute>
+          </AdditionalAttributes>
+          <CSDTDescriptions>
+            <CSDTDescription>
+              <PrimaryCSDT>Simple Swath</PrimaryCSDT>
+              <Implementation>HDF-EOS</Implementation>
+              <CSDTComments>None</CSDTComments>
+              <IndirectReference>N/A</IndirectReference>
+            </CSDTDescription>
+          </CSDTDescriptions>
+          <OnlineResources>
+            <OnlineResource>
+              <URL>http://modis-atmos.gsfc.nasa.gov/products.html</URL>
+              <Description>Overview of MODIS Atmosphere Data Products</Description>
+              <Type>ECSCollGuide</Type>
+            </OnlineResource>
+            <OnlineResource>
+              <URL>http://modis-atmos.gsfc.nasa.gov/MOD04_L2/index.html</URL>
+              <Description>Overview of MOD04_L2</Description>
+              <Type>Product Info</Type>
+            </OnlineResource>
+            <OnlineResource>
+              <URL>http://modis-atmos.gsfc.nasa.gov/products_calendar.html</URL>
+              <Description>MODIS Atmosphere Data Availability Calendar and Validation Level</Description>
+              <Type>MiscInformation</Type>
+            </OnlineResource>
+            <OnlineResource>
+              <URL>http://modis-atmos.gsfc.nasa.gov/validation.html</URL>
+              <Description>Known Data Issues</Description>
+              <Type>DatasetDisclaimer</Type>
+            </OnlineResource>
+          </OnlineResources>
+          <AssociatedDIFs>
+            <DIF>
+              <EntryId>MOD04_L2</EntryId>
+            </DIF>
+          </AssociatedDIFs>
+          <Spatial>
+            <SpatialCoverageType>Horizontal</SpatialCoverageType>
+            <HorizontalSpatialDomain>
+              <Geometry>
+                <CoordinateSystem>CARTESIAN</CoordinateSystem>
+                <BoundingRectangle>
+                  <WestBoundingCoordinate>-180</WestBoundingCoordinate>
+                  <NorthBoundingCoordinate>90</NorthBoundingCoordinate>
+                  <EastBoundingCoordinate>180</EastBoundingCoordinate>
+                  <SouthBoundingCoordinate>-90</SouthBoundingCoordinate>
+                </BoundingRectangle>
+              </Geometry>
+            </HorizontalSpatialDomain>
+            <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>
+          </Spatial>
+        </Collection>
+    http_version: 
 ad70bb9ab0db24f8845845233c30a86bc62df5fc:
   response:
     status:
@@ -940,6 +940,28 @@ ac2fc07b8044c9a81e2e812e4f6d5875d35c2ce0:
         by the Njoku algorithm using Level-2A TBs.","time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C128599377-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
         Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_land_l2b_soil_moisture.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
         Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
+    http_version: 
+cd22b259dedf88a6f27a7f058f5f3b541df9316e:
+  response:
+    status:
+      code: 401
+      message: 
+    headers:
+      date:
+      - Tue, 19 Apr 2016 18:05:06 GMT
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 8b459c8e-30ef-4ad7-849f-b9441ee38a40
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Token edsc-access does not exist"]}'
     http_version: 
 a8625406c735635e8f0d54555083fa434ca22391:
   response:

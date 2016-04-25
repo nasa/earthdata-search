@@ -9,8 +9,11 @@ describe "Collection GIBS visualizations", reset: false do
   extend Helpers::CollectionHelpers
 
   gibs_collection_id = 'C119124186-NSIDC_ECS'
+<<<<<<< HEAD
   gibs_collection_name = 'AMSR-E/Aqua L2B Global Swath Rain Rate/Type GSFC Profiling Algorithm V002'
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
+=======
+>>>>>>> master
 
   before :all do
     load_page :search
@@ -33,9 +36,7 @@ describe "Collection GIBS visualizations", reset: false do
     hook_granule_results(gibs_collection_name)
 
     it "displays composite GIBS imagery corresponding to the first 20 granule results on an HTML canvas" do
-      within gibs_tile_layer do
-        expect(page).to have_selector('canvas')
-      end
+      expect(page).to have_granule_visualizations(gibs_collection_id)
     end
   end
 
@@ -43,7 +44,7 @@ describe "Collection GIBS visualizations", reset: false do
     hook_granule_results_back(gibs_collection_name)
 
     it "removes the collection's GIBS tiles from the map" do
-      page.should have_no_css(gibs_tile_layer)
+      expect(page).to have_no_granule_visualizations(gibs_collection_id)
     end
   end
 end
