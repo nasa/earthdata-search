@@ -42,6 +42,22 @@ class GranulesController < ApplicationController
       @url_type = url_type
     end
 
+    def first
+      catalog_response = @echo_client.get_granules(@params.merge(page_num: 1), @token)
+      if catalog_response.success?
+        granules = catalog_response.body['feed']['entry']
+
+        granule = granules.first
+        first_info = @url_mapper.info_urls_for(granule).first
+        return first_info if first_info
+
+        @url_mapper.send("#{@url_type}_urls_for", granule).first
+      else
+        @errors = catalog_response.body
+        nil
+      end
+    end
+
     def each
       yielded_info = false
       at_end = false
@@ -102,6 +118,8 @@ class GranulesController < ApplicationController
     end
 
     @urls = GranuleUrlStreamer.new(query.merge('page_size' => 2000), token, url_mapper, echo_client, url_type)
+
+    @user = earthdata_username
     render stream: true, layout: false
   end
 end

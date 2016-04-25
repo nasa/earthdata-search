@@ -249,7 +249,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the selected granule in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!&q=C179003030-ORNL_DAAC')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!0%2C2&q=C179003030-ORNL_DAAC')
     end
   end
 
@@ -308,6 +308,7 @@ describe 'Address bar', reset: false do
   context "loading a URL with saved query conditions" do
     before :all do
       visit '/search/project?p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
+      wait_for_xhr
     end
 
     it "restores the granule query conditions" do
@@ -328,7 +329,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the map state in the query conditions" do
-      expect(page).to have_query_string('m=12!-34!5!1!0!')
+      expect(page).to have_query_string('m=12!-34!5!1!0!0%2C2')
     end
   end
 
@@ -425,7 +426,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-97.72!7!1!0!')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-97.72!7!1!0!0%2C2')
     end
   end
 
@@ -549,7 +550,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the base layer in the url' do
-      expect(page).to have_query_string('m=0!0!2!1!2!')
+      expect(page).to have_query_string('m=0!0!2!1!2!0%2C2')
     end
 
     context 'when refreshing the page' do
@@ -571,18 +572,18 @@ describe 'Address bar', reset: false do
       page.find_link('Layers').trigger(:mouseover)
       within '#map' do
         check 'Borders and Roads'
-        check 'Place Labels'
+        check 'Coastlines'
       end
       wait_for_xhr
     end
 
     it 'saves the applied overlays in the url' do
-      expect(page).to have_query_string('m=0!0!2!1!0!0%2C2')
+      expect(page).to have_query_string('m=0!0!2!1!0!0%2C2%2C1')
     end
 
     context 'when refreshing the page' do
       before :all do
-        visit '/search?m=0!0!2!1!0!0%2C2'
+        visit '/search?m=0!0!2!1!0!0%2C1'
         wait_for_xhr
       end
 
