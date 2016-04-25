@@ -1,4 +1,3 @@
-#= require models/data/grid
 #= require models/data/query
 #= require models/data/collections
 #= require models/data/project

@@ -22,7 +22,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
 
       it "draws a single point on the map representing all of the collection's granules" do
         wait_for_xhr
-        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_granule_visualizations('C179003030-ORNL_DAAC')
       end
 
       context "and mousing over a visualized granule" do
@@ -55,7 +55,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       hook_granule_results_back
 
       it "hides the collection's visualizations" do
-        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_no_granule_visualizations('C179003030-ORNL_DAAC')
       end
     end
   end
@@ -73,7 +73,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
 
       it "draws polygons on the map for granule spatial areas" do
         wait_for_xhr
-        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_granule_visualizations('C1219252422-LANCEMODIS')
       end
 
       context "and mousing over a visualized granule" do
@@ -106,7 +106,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       hook_granule_results_back('MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m')
 
       it "hides the collection's visualizations" do
-        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_no_granule_visualizations('C1219252422-LANCEMODIS')
       end
     end
   end
@@ -119,7 +119,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
 
       it "draws lines on the map for granule spatial areas" do
         wait_for_xhr
-        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_granule_visualizations('C5920490-LARC_ASDC')
       end
 
       context "and mousing over a visualized granule" do
@@ -152,7 +152,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       hook_granule_results_back('CAL_IIR_L2_Track-Beta-V3-01')
 
       it "hides the collection's visualizations" do
-        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_no_granule_visualizations('C5920490-LARC_ASDC')
       end
     end
   end
@@ -170,7 +170,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
 
       it "draws polygons on the map for granule spatial areas" do
         wait_for_xhr
-        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_granule_visualizations('C204200619-GSFCS4PA')
       end
 
       context "and mousing over a visualized granule" do
@@ -203,7 +203,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       hook_granule_results_back('AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1')
 
       it "hides the collection's visualizations" do
-        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_no_granule_visualizations('C204200619-GSFCS4PA')
       end
     end
   end

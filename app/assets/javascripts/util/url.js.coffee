@@ -6,6 +6,7 @@ this.edsc.util.url = do(window
                         extend = jQuery.extend
                         param = jQuery.param
                         deparam = @edsc.util.deparam
+                        murmurhash3 = @edsc.util.murmurhash3
                         config = @edsc.config
                         ajax = @edsc.util.xhr.ajax
                         ) ->
@@ -74,7 +75,7 @@ this.edsc.util.url = do(window
     inflate: (params) -> @eachChild(params, 'inflate')
 
   # Specific compression for granule ids
-  class GranuleIdListCompressor
+  class CmrGranuleIdListCompressor
     constructor: (@key) ->
 
     compress: (params) ->
@@ -92,6 +93,21 @@ this.edsc.util.url = do(window
         provId = values.pop()
         params[@key] = ("G#{v}-#{provId}" for v in values)
 
+  class CwicGranuleIdListCompressor
+    constructor: (@key) ->
+
+    compress: (params) ->
+      values = params[@key]
+      compressedValues = []
+      if values && values.length > 0
+        values.map (v) -> if v.match(/^[0-9]+$/) then compressedValues.push(v) else compressedValues.push(murmurhash3(v))
+        params[@key] = compressedValues.join('!')
+
+    inflate: (params) ->
+      value = params[@key]
+      value = value.toString() if value?.constructor == Number
+      params[@key] = value?.split('!')
+
   # The order here matters
   compressors = [
     new ParamNameCompressor('placename', 'qp')
@@ -102,16 +118,12 @@ this.edsc.util.url = do(window
     new ParamNameCompressor('line', 'sl')
     new ParamNameCompressor('line', 'sg')
 
-    new ParamFlattener(['two_d_coordinate_system', 'name'], 's2n')
-    new ParamFlattener(['two_d_coordinate_system', 'coordinates'], 's2c')
-
     new ArrayJoiner('features', 'ff')
     new ArrayJoiner('data_center', 'fdc')
     new ArrayJoiner('project', 'fpj')
     new ArrayJoiner('platform', 'fp')
     new ArrayJoiner('instrument', 'fi')
     new ArrayJoiner('sensor', 'fs')
-    new ArrayJoiner('two_d_coordinate_system_name', 'f2')
     new ArrayJoiner('processing_level_id', 'fl')
 
     new ParamFlattener(['science_keywords', '0', 'category'], 'fsc', true)
@@ -130,7 +142,9 @@ this.edsc.util.url = do(window
     new ChildCompressor('pg', new ArrayJoiner('granule_ur', 'ur'))
     new ChildCompressor('pg', new ArrayJoiner('produer_granule_id', 'id'))
     new ChildCompressor('pg', new ParamFlattener(['exclude', 'echo_granule_id'], 'x'))
-    new ChildCompressor('pg', new GranuleIdListCompressor('x'))
+    new ChildCompressor('pg', new ParamFlattener(['exclude', 'cwic_granule_id'], 'cx'))
+    new ChildCompressor('pg', new CmrGranuleIdListCompressor('x'))
+    new ChildCompressor('pg', new CwicGranuleIdListCompressor('cx'))
   ]
 
   alter = (params, method) ->
