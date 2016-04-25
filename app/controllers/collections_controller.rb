@@ -218,7 +218,7 @@ class CollectionsController < ApplicationController
     # EDSC-1023 Dropping 2D Coordinate System
     # FIXME: This may need retouch once CMR drops the sensor facet.
     results.reject! do |facet|
-      !facet.nil? && ['Sensor', '2D Coordinate Name'].include?(facet[:name])
+      !facet.nil? && ['Sensor', '2D Coordinate Name', 'Two d coordinate system name'].include?(facet[:name])
     end
     results.compact
   end
