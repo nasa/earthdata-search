@@ -374,7 +374,13 @@ class OpendapConfiguration
   end
 
   def links_for(granule, *rels)
-    links = Array.wrap(granule['links'])
+    # granule could be nil in some special cases. For example, the selected NRT granule may expire *after* user is on the
+    # /data/configure page and *before* submit button is clicked.
+    if granule.nil?
+      links = []
+    else
+      links = Array.wrap(granule['links'])
+    end
     regexp_rels, string_rels = rels.partition {|rel| rel.is_a?(Regexp)}
     links = links.find_all do |link|
       !link['inherited'] && (string_rels.include?(link) || regexp_rels.any? {|rel| link['rel'][rel]})
