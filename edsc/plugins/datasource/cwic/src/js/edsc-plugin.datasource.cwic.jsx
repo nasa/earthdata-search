@@ -59,7 +59,7 @@ export default class CwicDatasourcePlugin {
       methods: [
         {name: 'Download',
          type: 'download',
-         all: true,
+         all: query.excludedGranules().length == 0,
          count: hits,
          defaults: {accessMethod: [{method: 'Download', type: 'download'}]}}
       ]
@@ -75,6 +75,9 @@ export default class CwicDatasourcePlugin {
       let url = granules.cwicUrl({count: 100});
       if (url) {
         let downloadUrl = url.replace(/^\/cwic/, '/cwic/edsc_download');
+        if (granules.query.excludedGranules()) {
+          downloadUrl += "&cx=" + granules.query.excludedGranules().join('!');
+        }
         result.push({title: "View Download Links", url: downloadUrl});
       }
     }

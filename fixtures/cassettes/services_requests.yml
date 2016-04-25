@@ -262,6 +262,17 @@ http_interactions:
   digest: 6b059eeccd69fb9e1c118055a0f5198a2e11deaa
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=100&clientId=edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Mon, 25 Apr 2016 15:24:59 GMT
+  digest: d78cac46e0925fa5f64aa440db3783c9afc6217a
+- request:
+    method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=edsc-dev
     body:
       encoding: US-ASCII

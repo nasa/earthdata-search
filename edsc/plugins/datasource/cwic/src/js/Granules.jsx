@@ -149,6 +149,7 @@ let CwicGranules = (function() {
         console.log(`Complete (${requestId}): ${url}`);
         dataObj = XmlHelpers.elToObj(data);
         results = this._toResults(data, dataObj, current, params);
+        let beforeSplice = results.length;
         this._spliceGranulesResult(results);
         this.hits(dataObj.feed.totalResults - this.query.excludedGranules().length);
         this.nextPageUrl = toLocalUrl(getRootLink(data, 'next'));
@@ -156,6 +157,7 @@ let CwicGranules = (function() {
         let timing = ((new Date() - start) / 1000).toFixed(1);
         this.loadTime(timing);
         if (callback) callback(results);
+        if (beforeSplice != 0 && results.length == 0) this._loadAndSet(this.nextPageUrl, this.results());
       },
       complete: () => {
         this.completedRequestId = requestId;

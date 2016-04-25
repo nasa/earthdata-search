@@ -63,6 +63,9 @@ class GranuleQuery {
     if (query.exclude) {
       this.excludedGranules(query.exclude.cwic_granule_id);
     }
+    if (query.cx) {
+      this.excludedGranules(query.cx);
+    }
 
   }
 
