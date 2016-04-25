@@ -11,7 +11,7 @@ export default class CmrDatasourcePlugin {
     this._collection = collection;
     this._query = null;
     this._dataLoaded = ko.observable(false);
-    Object.defineProperty(collection, 'cmrGranuleQuery', {get: () => {return this.cmrQuery();}});
+    Object.defineProperty(collection, 'granuleQuery', {get: () => {return this.cmrQuery();}});
     Object.defineProperty(collection, 'cmrGranulesModel', {get: () => {return this.data();}});
 
     var self = this;

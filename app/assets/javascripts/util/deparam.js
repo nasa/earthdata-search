@@ -9,7 +9,11 @@ this.edsc.util.deparam = (function(undefined) {
 
     return (+value + '') === value ? +value // Number
       : value in specials ? specials[value] // true, false, null, undefined
-      : value.replace(/\+/g, ' '); // String
+      : value; // String
+  };
+
+  var decode = function(text) {
+    return decodeURIComponent(text);
   };
 
   var deparam = function(text, reviver) {
@@ -21,10 +25,10 @@ this.edsc.util.deparam = (function(undefined) {
 
     for (i = 0; i < pairs.length; i++) {
       kv = pairs[i].split('=');
-      key = decodeURIComponent(kv[0]);
+      key = decode(kv[0]);
       if (!key) { continue; }
 
-      value = reviver(key, decodeURIComponent(kv[1] || ''));
+      value = reviver(key, decode(kv[1] || ''));
 
       // If the key has balanced square-bracket expressions
       if (/^[^\[\]]+(?:\[[^\]]*\])+$/.test(key)) {
