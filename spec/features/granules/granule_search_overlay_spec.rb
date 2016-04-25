@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Granule search overlay", reset: false do
   before(:all) do
     Capybara.reset_sessions!
-    load_page :search, ff: 'Near+Real+Time'
+    load_page :search, ff: 'Near Real Time'
   end
 
   before(:each) do

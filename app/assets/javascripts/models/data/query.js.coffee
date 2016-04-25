@@ -155,7 +155,7 @@ ns.query = do (ko,
         facets = querystr.split('&')
         for facet in facets
           [k, v] = facet.split('=')
-          result.push(param: decodeURIComponent(k), term: decodeURIComponent(v).replace(/\+/g, ' '))
+          result.push(param: decodeURIComponent(k), term: decodeURIComponent(v.replace(/\+/g, ' ')))
       @value(result)
 
   class BooleanParam extends QueryParam
