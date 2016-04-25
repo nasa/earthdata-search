@@ -102,16 +102,12 @@ this.edsc.util.url = do(window
     new ParamNameCompressor('line', 'sl')
     new ParamNameCompressor('line', 'sg')
 
-    new ParamFlattener(['two_d_coordinate_system', 'name'], 's2n')
-    new ParamFlattener(['two_d_coordinate_system', 'coordinates'], 's2c')
-
     new ArrayJoiner('features', 'ff')
     new ArrayJoiner('data_center', 'fdc')
     new ArrayJoiner('project', 'fpj')
     new ArrayJoiner('platform', 'fp')
     new ArrayJoiner('instrument', 'fi')
     new ArrayJoiner('sensor', 'fs')
-    new ArrayJoiner('two_d_coordinate_system_name', 'f2')
     new ArrayJoiner('processing_level_id', 'fl')
 
     new ParamFlattener(['science_keywords', '0', 'category'], 'fsc', true)

@@ -40,10 +40,10 @@ describe "Collection Facets", reset: false do
       find("h3.facet-title", text: 'Instrument').click
     end
 
-    it "shows the first 2D Coordinate Name facet" do
-      find("h3.facet-title", text: '2D Coordinate Name').click
-      expect(page.text).to match("2D Coordinate Name\\s*\\d* #{first_coordinate_facet}")
-      find("h3.facet-title", text: '2D Coordinate Name').click
+    it "does not shows the 2D Coordinate Name facet" do
+      within(:css, '#master-overlay-parent') do
+        expect(page).to have_no_content("2D Coordinate Name")
+      end
     end
 
     it "does not show Sensor facet" do

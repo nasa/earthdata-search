@@ -124,7 +124,9 @@ ns.Collection = do (ko
 
     _computeOsddUrl: ->
       url = @osdd_url() ? @details()?.osdd_url
-      url += "&clientId=#{config.cmrClientId}" if url
+      if url
+        separator = if url.indexOf('?') == -1 then '?' else '&'
+        url += "#{separator}clientId=#{config.cmrClientId}"
       url
 
     thumbnail: ->

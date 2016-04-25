@@ -108,7 +108,7 @@ ns.Map = do (window,
 
       @setProjection(projection)
       @setBaseMap("Blue Marble")
-      @setOverlays([])
+      @setOverlays([OVERLAYS[0], OVERLAYS[2]])
 
       @time = ko.computed(@_computeTime, this)
       @_showCollectionSpatial(page.ui.collectionsList.selected())

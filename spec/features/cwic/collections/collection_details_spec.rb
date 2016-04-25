@@ -27,7 +27,7 @@ describe "CWIC-enabled collection details", reset: false do
 
     it "displays links to the collection's CWIC OpenSearch API endpoint", acceptance: true do
       expect(collection_details).to have_link('OSDD')
-      url = "http://cwic.wgiss.ceos.org/opensearch/datasets/USGS_EDC_EO1_ALI/osdd.xml&clientId=edsc-dev"
+      url = "http://cwic.wgiss.ceos.org/opensearch/datasets/USGS_EDC_EO1_ALI/osdd.xml?clientId="
       expect(collection_details.find_link('OSDD')['href']).to start_with(url)
     end
 

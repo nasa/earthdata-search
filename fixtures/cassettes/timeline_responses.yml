@@ -23,7 +23,7 @@ a86d1a4492e1f112629a17664ba61da399754f77:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 20 Apr 2016 20:49:21 GMT
@@ -40,7 +40,7 @@ a86d1a4492e1f112629a17664ba61da399754f77:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C1000000320-LPDAAC_ECS","intervals":[[1377820800,1377907200,1],[1379980800,1380067200,1]]}]'
-    http_version: 
+    http_version:
 1fb70c6eefc3acec0827b1cf5031a2cba06d86e2:
   response:
     status:
@@ -297,6 +297,28 @@ ee6ed3e2f2b32c8b9c39fddfde28a5d1d9a1f488:
       encoding: UTF-8
       string: "[]"
     http_version: 
+a8d9eddc003dd758fbd42ad45f12763c08c6be8a:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Fri, 22 Apr 2016 20:15:03 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - d1737bb5-387c-42e2-a140-1a6707ff75a6
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version:
 88beb52c23801ee054372ab8beed325b37bc994f:
   response:
     status:
@@ -679,6 +701,8 @@ e4a0e855dbccabed23136cf62612323f0b681b4b:
       - Wed, 02 Dec 2015 20:03:30 GMT
       access-control-allow-origin:
       - "*"
+      cmr-request-id:
+      - fc18d939-7115-4a43-a3ab-703751a80037
       content-length:
       - '164'
       connection:
@@ -693,7 +717,7 @@ e4a0e855dbccabed23136cf62612323f0b681b4b:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 07 Mar 2016 19:25:52 GMT
@@ -710,7 +734,7 @@ e4a0e855dbccabed23136cf62612323f0b681b4b:
     body:
       encoding: UTF-8
       string: '[{"concept-id":"C119124186-NSIDC_ECS","intervals":[[1254466308,1265155200,3584],[1265328000,1317686400,17633]]}]'
-    http_version: 
+    http_version:
 361721ba2b619612bd1229fa04eb4e8d7c872662:
   response:
     status:
