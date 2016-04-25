@@ -50,7 +50,7 @@ EarthdataSearchClient::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += ['search.js', 'data_access.js', 'account.js']
+  config.assets.precompile += ['search.js', 'data_access.js', 'account.js', 'cwic_granule.js']
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
