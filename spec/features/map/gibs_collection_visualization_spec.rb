@@ -9,11 +9,8 @@ describe "Collection GIBS visualizations", reset: false do
   extend Helpers::CollectionHelpers
 
   gibs_collection_id = 'C119124186-NSIDC_ECS'
-<<<<<<< HEAD
   gibs_collection_name = 'AMSR-E/Aqua L2B Global Swath Rain Rate/Type GSFC Profiling Algorithm V002'
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
-=======
->>>>>>> master
 
   before :all do
     load_page :search
