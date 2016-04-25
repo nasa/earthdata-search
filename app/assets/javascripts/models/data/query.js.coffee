@@ -354,3 +354,4 @@ ns.query = do (ko,
   exports =
     CollectionQuery: CollectionQuery
     GranuleQuery: GranuleQuery
+    ExclusionParam: ExclusionParam
