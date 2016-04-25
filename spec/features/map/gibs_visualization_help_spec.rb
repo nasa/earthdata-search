@@ -34,11 +34,11 @@ describe "Collection GIBS help", reset: true do
       within '.popover-navigation' do
         click_on 'Close'
       end
-      page.should have_css(gibs_tile_layer)
+      expect(page).to have_granule_visualizations(gibs_collection_id)
       first_collection_result.click_link "Hide collection"
-      page.should have_no_css(gibs_tile_layer)
+      expect(page).to have_no_granule_visualizations(gibs_collection_id)
       first_collection_result.click_link "View collection"
-      page.should have_css(gibs_tile_layer)
+      expect(page).to have_granule_visualizations(gibs_collection_id)
     end
 
     it "does not display GIBS accuracy information a second time" do

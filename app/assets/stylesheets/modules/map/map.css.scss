@@ -302,36 +302,6 @@ p.map-popup-info {
   left: 50%;
 }
 
-.map-grid-search {
-  color: #fff;
-  background-color: #111;
-  border-radius: 5px;
-  padding:.2em .5em;
-  position: absolute;
-  right: 1em;
-  bottom: 1em;
-  z-index: 80;
-  font-size: .8em;
-
-  input {
-    padding: 0;
-    width:20em;
-    height: 22px;
-  }
-
-  a {
-    color: #fff;
-    padding: 3px 10px;
-  }
-}
-
-.map-grid-hint {
-  display:block;
-  text-align:right;
-  padding-top:.2em;
-}
-
-
 // Overrides to make L.Draw cancel / undo buttons align correctly on touch
 // devices
 .leaflet-touch .leaflet-right .leaflet-draw-actions {
@@ -352,4 +322,5 @@ p.map-popup-info {
 #image-map {
   width: 270px;
   height: 135px;
+  margin-bottom: 10px;
 }
