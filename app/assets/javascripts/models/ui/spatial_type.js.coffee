@@ -10,22 +10,22 @@ ns.SpatialType = do (ko, $=jQuery) ->
 
     selectNone: =>
       @name('Spatial')
-      @icon ('fa-crop')
+      @icon('fa-crop')
 
     selectPoint: =>
       @name('Point')
-      @icon ('fa-map-marker')
+      @icon('fa-map-marker')
 
     selectRectangle: =>
       @name('Rectangle')
-      @icon ('edsc-icon-rect-open')
+      @icon('edsc-icon-rect-open')
 
     selectPolygon: =>
       @name('Polygon')
-      @icon ('edsc-icon-poly-open')
+      @icon('edsc-icon-poly-open')
 
     selectShapefile: =>
       @name('Shape File')
-      @icon ('edsc-icon-file')
+      @icon('fa-file-o')
 
   exports = SpatialType

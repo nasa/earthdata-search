@@ -32,6 +32,36 @@ describe CollectionExtra do
       result = extra.decorate(collection_hash)
       expect(result[:orbit]).to eq({'orbit_param' => 'value'})
     end
+
+    context "CWIC tag conversion" do
+
+      it "adds datasource and renderer tags to CWIC-tagged collections" do
+        collection_hash = {tags: {'org.ceos.wgiss.cwic.granules.prod' => {}}}
+        extra = CollectionExtra.new()
+        result = extra.decorate(collection_hash)
+        expect(result[:tags]).to eq({'org.ceos.wgiss.cwic.granules.prod' => {},
+                                     'edsc.datasource' => {'data' => 'cwic'},
+                                     'edsc.renderers' => {'data' => ['cwic']}})
+      end
+
+      it "does not overwrite already-specified datasource and renderers" do
+        collection_hash = {tags: {'org.ceos.wgiss.cwic.granules.prod' => {},
+                                  'edsc.datasource' => {'data' => 'not_cwic'},
+                                  'edsc.renderers' => {'data' => ['not_cwic']}}}
+        expected = collection_hash[:tags].dup
+        extra = CollectionExtra.new()
+        result = extra.decorate(collection_hash)
+        expect(result[:tags]).to eq(expected)
+      end
+
+      it "does not add datasource and renderer tags to non-CWIC-tagged collections" do
+        collection_hash = {tags: {'org.ceos.not-cwic' => {}}}
+        expected = collection_hash[:tags].dup
+        extra = CollectionExtra.new()
+        result = extra.decorate(collection_hash)
+        expect(result[:tags]).to eq(expected)
+      end
+    end
   end
 
   context "#clean_attributes" do

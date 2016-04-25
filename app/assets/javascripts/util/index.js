@@ -1,5 +1,6 @@
 //= require util/compat
 //= require util/deparam
+//= require util/murmurhash3
 //= require util/string
 //= require util/array
 //= require util/date
