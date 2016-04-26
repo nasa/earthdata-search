@@ -23,7 +23,8 @@ module Echo
       body = options_to_granule_query(options)
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
       query = body.to_query
-      post("/search/granules.#{format}", "#{query}&#{attrs.join("&")}", headers)
+      query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
+      post("/search/granules.#{format}", query, headers)
     end
 
     def get_first_granule(collection, options={}, token=nil)
@@ -57,8 +58,9 @@ module Echo
       options['concept_id'] = options.delete("echo_collection_id")
       format = options.delete(:format) || 'json'
       query = options_to_granule_query(options).to_query
+      query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      post("/search/granules/timeline.#{format}", "#{query}&#{attrs.join("&")}", headers)
+      post("/search/granules/timeline.#{format}", query, headers)
     end
 
     def add_tag(key, value, condition, token)
@@ -126,12 +128,15 @@ module Echo
     def translate_attr_params(options)
       # TODO this translation can be removed once CMR fixed CMR-2755
       attrs = []
-      options.delete('attribute').each do |attr_opt|
-        if attr_opt
-          if attr_opt['value']
-            attrs.push "attribute[]=#{attr_opt['type']},#{CGI.escape(attr_opt['name'].gsub(/,/, '\,'))},#{CGI.escape(attr_opt['value'])}"
-          else
-            attrs.push "attribute[]=#{attr_opt['type']},#{CGI.escape(attr_opt['name'].gsub(/,/, '\,'))},#{CGI.escape(attr_opt['minValue'])},#{CGI.escape(attr_opt['maxValue'])}"
+      attr_opts = options['attribute']
+      if attr_opts.present?
+        attr_opts.each do |attr_opt|
+          if attr_opt
+            if attr_opt['value']
+              attrs.push "attribute[]=#{attr_opt['type']},#{CGI.escape(attr_opt['name'].gsub(/,/, '\,'))},#{CGI.escape(attr_opt['value'])}"
+            else
+              attrs.push "attribute[]=#{attr_opt['type']},#{CGI.escape(attr_opt['name'].gsub(/,/, '\,'))},#{CGI.escape(attr_opt['minValue'])},#{CGI.escape(attr_opt['maxValue'])}"
+            end
           end
         end
       end
