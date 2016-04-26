@@ -52,17 +52,6 @@ describe "query", ->
         @query.params(params)
         expect(param(@query.params())).toEqual(param(params))
 
-    describe 'grids', ->
-      it 'serializes grid names', ->
-        params = {two_d_coordinate_system: {name: 'MISR'}, page_size: 20}
-        @query.params(params)
-        expect(param(@query.params())).toEqual(param(params))
-
-      it 'serializes grid values', ->
-        params = {two_d_coordinate_system: {name: 'MISR', coordinates: '1-1:2-2'}, page_size: 20}
-        @query.params(params)
-        expect(param(@query.params())).toEqual(param(params))
-
     it "serializes collection facets", ->
       # This is intentionally a little different.  We don't deserialize facets
       params = {campaign: ['campaign1', 'campaign2'], sensor: ['sensor1'], page_size: 20}
@@ -93,7 +82,6 @@ describe "query", ->
         line: '1,2,3,4'
         polygon: '1,2,3,4,5,6,1,2'
         bounding_box: '1,2,3,4'
-        two_d_coordinate_system: {name: 'MISR'}
         free_text: 'modis'
         page_size: 20
 
@@ -135,16 +123,6 @@ describe "query", ->
           sort_key: ['-start_date']
           page_size: 20
         @query.params(params)
-        expect(param(@query.params())).toEqual(param(params))
-
-      it "inherits the parent query's grid condition", ->
-        parentParams = {two_d_coordinate_system: {name: 'MISR', coordinates: '1-1:2-2'}, page_size: 20}
-        @parent.params(parentParams)
-        params =
-          two_d_coordinate_system: {name: 'MISR', coordinates: '1-1:2-2'}
-          echo_collection_id: @ds_id
-          sort_key: ['-start_date']
-          page_size: 20
         expect(param(@query.params())).toEqual(param(params))
 
       it "inherits the parent query's spatial condition", ->

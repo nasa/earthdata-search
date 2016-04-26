@@ -1,25 +1,25 @@
 <!-- ko with: project.searchGranulesCollection() -->
 <div class="master-overlay-content" data-master-overlay-pad="50">
-  <!--ko ifnot: cwic()-->
-  <!-- ko if: cmrGranuleQuery.excludedGranules().length == 1 -->
+
+  <!-- ko if: granuleQuery.excludedGranules().length == 1 -->
   <p class="message message-warning">
     1 granule has been removed from your results.
     <a data-bind="click: $root.ui.collectionsList.focused().clearExclusions" href="#">Add it back</a>
   </p>
   <!-- /ko -->
-    <!-- ko if: cmrGranuleQuery.excludedGranules().length > 1 -->
+    <!-- ko if: granuleQuery.excludedGranules().length > 1 -->
     <p class="message message-warning">
-      <span data-bind="text: cmrGranuleQuery.excludedGranules().length"></span> granules have been removed from your results.
+      <span data-bind="text: granuleQuery.excludedGranules().length"></span> granules have been removed from your results.
       <a data-bind="click: $root.ui.collectionsList.focused().clearExclusions" href="#">Add them back</a>
     </p>
     <!-- /ko -->
-  <!-- /ko -->
+
   <dl>
     <!--ko ifnot: cwic()-->
       <dt>Granule ID</dt>
       <dd class="granule-id-search search-single">
         <section class="single-granule-id-search">
-          <input data-bind="value: cmrGranuleQuery.granuleIds" id="granule_id" type="text" placeholder="Search Granule IDs..." />
+          <input data-bind="value: granuleQuery.granuleIds" id="granule_id" type="text" placeholder="Search Granule IDs..." />
           or
           <a href="#" class="search-granules-multiple button-small button-outline-light">
             Search Multiple <i class="fa fa-arrow-circle-o-right"></i>
@@ -34,9 +34,9 @@
           </p>
           <p class="instructions">
             Enter one ID or pattern per line.
+            * (asterisk) will match any number of characters, and . (period) will match exactly one character.
           </p>
-          <textarea data-bind="value: cmrGranuleQuery.granuleIds" id="granule_id_field" name="Text1" cols="60" rows="5" ></textarea>
-          <p class="instructions">* (asterisk) will match any number of characters, and . (period) will match exactly one character.</p>
+          <textarea data-bind="value: granuleQuery.granuleIds" id="granule_id_field" name="Text1" cols="60" rows="5" ></textarea>
         </section>
 
       </dd>
@@ -51,28 +51,28 @@
       <dt>Day / Night Flag</dt>
       <dd>
         <p>Find granules captured during the day, night or anytime.</p>
-        <select id="day-night-select" data-bind="options: cmrGranuleQuery.dayNightFlagOptions, optionsText: 'name', optionsValue: 'value', value: cmrGranuleQuery.dayNightFlag"></select>
+        <select id="day-night-select" data-bind="options: granuleQuery.dayNightFlagOptions, optionsText: 'name', optionsValue: 'value', value: granuleQuery.dayNightFlag"></select>
       </dd>
       <dt>Data Access</dt>
       <dd>
         <p>
-          <input data-bind="checked: cmrGranuleQuery.browseOnly" type="checkbox" id="browse_only" value="browse_only" /> <label for="browse_only">Find only granules that have browse images.</label>
+          <input data-bind="checked: granuleQuery.browseOnly" type="checkbox" id="browse_only" value="browse_only" /> <label for="browse_only">Find only granules that have browse images.</label>
         </p>
         <p>
-          <input data-bind="checked: cmrGranuleQuery.onlineOnly" type="checkbox" id="online_only" value="online_only" /> <label for="online_only">Find only granules that are available online.</label>
+          <input data-bind="checked: granuleQuery.onlineOnly" type="checkbox" id="online_only" value="online_only" /> <label for="online_only">Find only granules that are available online.</label>
         </p>
       </dd>
       <dt>Cloud Cover</dt>
       <dd>
         <p>Find granules by cloud cover percentage.</p>
         <p>
-          <label for="cloud-cover-min">Minimum:</label><input id="cloud-cover-min" data-bind="value: cmrGranuleQuery.cloudCover.min" type="text" placeholder="Example: 1.2">
-          <span data-bind="visible: !cmrGranuleQuery.validateCloudCoverValue(cmrGranuleQuery.cloudCover.min())" class="error">Value must be between 0.0 and 100.0</span>
+          <label for="cloud-cover-min">Minimum:</label><input id="cloud-cover-min" data-bind="value: granuleQuery.cloudCover.min" type="text" placeholder="Example: 10">
+          <span data-bind="visible: !granuleQuery.validateCloudCoverValue(granuleQuery.cloudCover.min())" class="error">Value must be between 0.0 and 100.0</span>
         </p>
         <p>
-          <label for="cloud-cover-max">Maximum:</label><input id="cloud-cover-max" data-bind="value: cmrGranuleQuery.cloudCover.max" type="text" placeholder="Example: 4.2">
-          <span data-bind="visible: !cmrGranuleQuery.validateCloudCoverValue(cmrGranuleQuery.cloudCover.max())" class="error">Value must be between 0.0 and 100.0</span>
-          <span data-bind="visible: !cmrGranuleQuery.validateCloudCoverRange(cmrGranuleQuery.cloudCover.min(),cmrGranuleQuery.cloudCover.max())" class="error">Minimum must be less than Maximum</span>
+          <label for="cloud-cover-max">Maximum:</label><input id="cloud-cover-max" data-bind="value: granuleQuery.cloudCover.max" type="text" placeholder="Example: 50">
+          <span data-bind="visible: !granuleQuery.validateCloudCoverValue(granuleQuery.cloudCover.max())" class="error">Value must be between 0.0 and 100.0</span>
+          <span data-bind="visible: !granuleQuery.validateCloudCoverRange(granuleQuery.cloudCover.min(),granuleQuery.cloudCover.max())" class="error">Minimum must be less than Maximum</span>
         </p>
       </dd>
       <!-- ko if: $root.labs() && searchable_attributes -->
