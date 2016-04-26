@@ -3,6 +3,8 @@
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
   font-size: 0.8em;
@@ -41,6 +43,7 @@
   font-size: .9em;
   padding-left: .2em;
   color: #949597;
+  display: block;
 }
 
 .features-facet {
