@@ -6410,8 +6410,8 @@ http_interactions:
       Echo-ClientId:
       - edsc-dev
       Echo-Token:
-      - e85926436d2e97eee5e4ee1f0b6385a4b3f90f94a5d0502307517f8c7c745d46:e8QKhLdQqhfDzzmSJrBW7g
-  recorded_at: Tue, 26 Apr 2016 15:38:31 GMT
+      - edsc-access
+  recorded_at: Tue, 26 Apr 2016 15:50:47 GMT
   digest: b6324e979fcbb9732a65c45b1b1b991ad5a7d581
 - request:
     method: get
@@ -6516,7 +6516,7 @@ http_interactions:
       - edsc-dev
       Echo-ClientId:
       - edsc-dev
-  recorded_at: Tue, 26 Apr 2016 15:38:25 GMT
+  recorded_at: Tue, 26 Apr 2016 15:50:41 GMT
   digest: c828bf9af842748f549911e6a68449fa33a82142
 - request:
     method: get
@@ -6726,7 +6726,7 @@ http_interactions:
       - edsc-dev
       Echo-ClientId:
       - edsc-dev
-  recorded_at: Tue, 26 Apr 2016 15:38:20 GMT
+  recorded_at: Tue, 26 Apr 2016 15:50:36 GMT
   digest: ba524fdaee300dc06fe57f45a2d590ff737667dc
 - request:
     method: get
@@ -6876,7 +6876,7 @@ http_interactions:
       - edsc-dev
       Echo-ClientId:
       - edsc-dev
-  recorded_at: Tue, 26 Apr 2016 15:38:23 GMT
+  recorded_at: Tue, 26 Apr 2016 15:50:39 GMT
   digest: a8f2956b88c5b03a570587d26b41b2c1f73782ae
 - request:
     method: get
