@@ -204,10 +204,9 @@ class DataAccessController < ApplicationController
 
     form_digest = []
     methods.each do |method|
-      if method[:type] == 'download'
+      if method[:type] == 'download' || method[:form].nil?
         digest = access_config.echoform_digest.select {|digest| digest['id'] == method[:type]}
       else
-        return true if method[:form].nil?
         digest = access_config.echoform_digest.select {|digest| digest['id'] == method[:id] && digest['form_hash'] == Digest::SHA1.hexdigest(method[:form])}
       end
       form_digest.push digest if digest.present?

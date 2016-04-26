@@ -91,13 +91,12 @@ ns.Project = do (ko,
       for method in @granuleAccessOptions().methods
         for accessMethod in options.accessMethod
           form_hash = {}
-          if accessMethod.id && accessMethod.id == method.id
-            form_hash['id'] = method.id
+          if ((method.id == null || method.id == undefined ) || accessMethod.id == method.id) && accessMethod.type == method.type
+            if method.id?
+              form_hash['id'] = method.id
+            else
+              form_hash['id'] = accessMethod.type
             form_hash['form_hash'] = method.form_hash
-            form_hashes.push form_hash
-          else if accessMethod.id == undefined && accessMethod.type == method.type && accessMethod.type == 'download'
-            form_hash['id'] = method.type
-            form_hash['form_hash'] = null
             form_hashes.push form_hash
 
       id: @collection.id

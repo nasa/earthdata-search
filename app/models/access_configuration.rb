@@ -7,7 +7,7 @@ class AccessConfiguration < ActiveRecord::Base
 
   def self.get_default_access_config(user, cmr_concept_id)
     access_config = self.find_by(user: user, dataset_id: cmr_concept_id)
-    access_config.echoform_digest = JSON.parse(access_config.echoform_digest) if access_config.present?
+    access_config.echoform_digest = JSON.parse(access_config.echoform_digest) if access_config.present? && access_config.echoform_digest.present?
     access_config
   end
 
