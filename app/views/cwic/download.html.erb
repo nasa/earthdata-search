@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Earthdata Search - Downloads</title>
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
+    <%= javascript_include_tag "cwic_granule" %>
   </head>
   <body>
     <ul id="links">
@@ -16,10 +17,11 @@
       (function() {
 
         var el = document.getElementById('links');
+        var hashedIds = [];
 
         function getDownloadLinks(entry) {
           var node = entry.firstChild;
-          var result = []
+          var result = [];
           while (node) {
             if (node.nodeType == Node.ELEMENT_NODE && node.tagName == 'link') {
               var a = document.createElement('A');
@@ -77,6 +79,10 @@
           var entries = doc.getElementsByTagName('entry');
           for (var i = 0; i < entries.length; i++) {
             var entry = entries[i];
+            var hashedId = window.edsc.util.murmurhash3(entry.getElementsByTagName('id')[0].textContent);
+            if (hashedIds.indexOf(hashedId.toString()) != -1) {
+              continue;
+            }
             var title = entry.getElementsByTagName('title')[0];
             renderEntry(title.textContent, getDownloadLinks(entries[i]));
           }
@@ -102,12 +108,18 @@
           url = toLocalUrl(url);
 
           var request = new XMLHttpRequest();
+          console.log("----- url: " + url);
+          var hashedIdsStr = url.split('&').pop().split('cx=', 2);
+          if (hashedIdsStr.length == 2) {
+            hashedIds = hashedIdsStr[1].split('!');
+          }
+          url = url.split('&cx=')[0];
           request.open('GET', url, true);
           request.send(null);
 
           request.addEventListener("load", onLoad, false);
           request.addEventListener("error", onError, false);
-          request.addEventListener("abort", finish, false);
+          request.addEventListener("abort", onAbort, false);
         }
 
         fetchLinks("<%=raw @url %>")

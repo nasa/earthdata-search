@@ -50,7 +50,7 @@ describe "CWIC-enabled granule visualizations", reset: false do
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     it "displays spatial footprints for the granules", acceptance: true do
-      expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      expect(page).to have_granule_visualizations('C1204449891-GCMDTEST')
     end
 
     context "clicking on a granule in the list" do

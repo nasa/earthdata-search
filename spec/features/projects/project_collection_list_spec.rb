@@ -40,44 +40,11 @@ describe "Project collection list", reset: true do
 
   context 'when clicking the "Remove" button' do
     before(:each) do
-      first_project_collection.click_link "View collection"
       first_project_collection.click_link "Remove collection from the current project"
     end
 
     it "removes the selected collection from the project list" do
       expect(project_overview).to have_css('.panel-list-item', count: 1)
-    end
-
-    it "removes the selected collection's visualizations" do
-      expect(project_overview).to have_no_link('Hide collection')
-    end
-  end
-
-  context "when clicking the 'View collection' button" do
-    before(:each) do
-      first_project_collection.click_link "View collection"
-    end
-
-    it "highlights the selected collection" do
-      expect(project_overview).to have_link('Hide collection', count: 1)
-    end
-
-    it "un-highlights the selected collection when clicking the button again" do
-      first_project_collection.click_link "Hide collection"
-      expect(project_overview).to have_no_link('Hide collection')
-    end
-
-    it "keeps the selected collection highlighted when returning to the project" do
-      click_link "Back to Collection Search"
-      expect(page).to have_visible_collection_results
-      collection_results.click_link "View Project"
-      expect(page).to have_visible_project_overview
-      expect(project_overview).to have_link('Hide collection', count: 1)
-    end
-
-    it "highlights the View all collections button when individually showing all collections" do
-      second_project_collection.click_link 'View collection'
-      expect(project_overview).to have_link 'Hide all collections'
     end
   end
 
@@ -88,16 +55,10 @@ describe "Project collection list", reset: true do
 
     it "highlights all project collections" do
       expect(project_overview).to have_css('.master-overlay-global-actions a.button-active', count: 1)
-      expect(project_overview).to have_link('Hide collection', count: 2)
     end
 
     it "un-highlights all project collections when clicking the button again" do
       click_link 'Hide all collections'
-      expect(project_overview).to have_no_link('Hide collection')
-    end
-
-    it "un-highlights the View all collections button when hiding an individual collection" do
-      first_project_collection.click_link 'Hide collection'
       expect(project_overview). to have_no_link('Hide all collections')
     end
   end
