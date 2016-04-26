@@ -51,7 +51,7 @@ describe 'deparam', ->
   deparam 'allows custom revivers', "a=x", {a: '(a=x)'}, (key, value) -> "(#{key}=#{value})"
 
   reviver 'does not decode urls', 'x%3Ay', 'x%3Ay'
-  reviver 'replaces plus with space', 'x+y', 'x y'
+  reviver 'does not replace pluses', 'x+y', 'x+y'
   reviver 'deserializes strings by default', 'str', 'str'
   reviver 'deserializes empty strings', '', ''
   reviver 'parses valid positive integers', '1234', 1234

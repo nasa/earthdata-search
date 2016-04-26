@@ -46,7 +46,6 @@
       <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle" title="Select Rectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
       <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint" title="Select Point"><i class="fa fa-map-marker"></i> Point</a></li>
       <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile" title="Select Shapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
-      <li><a href="#" class="dropdown-link select-grid" data-bind="click: selectGrid" title="Select Grid Coordinates"><i class="edsc-icon-globe-grid"></i> Grid Coordinates</a></li>
     </ul>
   </div>
   <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear filters"><i class="fa fa-eraser"></i> <span class="button-value">Clear Filters</span></a>
@@ -216,69 +215,6 @@
   <!-- /ko -->
   <!-- /ko -->
   <!-- /ko -->
-  <%#
-  <!-- ko stopBinding: true -->
-  <div id="granule-info" class="granule-info map-tooltip" data-bind="if: granules() && isCurrent()">
-    <div class="map-tooltip-content">
-      <!-- ko if: !granules().isLoaded() -->
-      <p class="busy">Loading granules...</p>
-      <!-- /ko -->
-      <!-- ko if: granules().isLoaded() -->
-      <p>
-        <span data-bind="text: granules().hits() == 1 ? '1 Granule' : granules().hits() + ' Granules'"></span>
-        at this location
-      </p>
-      <!-- ko if: granules().hits() > 0 -->
-      <p class="map-tooltip-action">Click map for details</p>
-      <!-- /ko -->
-      <!-- /ko -->
-    </div>
-  </div>
-  <!-- /ko -->
-   %>
-  <%# Container lets leaflet move this around the DOM without messing up knockout bindings %>
-  <%#
-  <script id="granule-details-template" type="text/html">
-    <div id="map-granule-details" class="granule-details" data-bind="if: granules()">
-      <!-- ko if: !granules().isLoaded() -->
-      <p class="busy">Loading granules...</p>
-      <!-- /ko -->
-      <!-- ko if: granules().isLoaded() && granules().results().length > 0 -->
-      <p class="map-popup-info">
-        <span data-bind="text: granules().hits() == 1 ? '1 Granule' : granules().hits() + ' Granules'"></span>
-        at this location
-      </p>
-      <ul class="map-popup-pane map-popup-pane-x" data-bind="event: {scroll: scrolled}">
-        <!-- ko foreach: granules().results() -->
-        <li class="map-popup-pane-item">
-          <p class="map-popup-pane-label">
-            <span data-bind="text: time_start"></span>
-            <span data-bind="text: time_end"></span>
-          </p>
-          <!-- ko if: browse_flag === "true" || browse_flag === true -->
-          <img class="browse-thumbnail" data-bind="attr: {src: edsc_browse_url(), title: title}">
-          <!-- /ko -->
-          <!-- ko if: browse_flag !== "true" && browse_flag !== true -->
-          <div class="browse-thumbnail browse-thumbnail-none">
-            No browse imagery
-          </div>
-          <!-- /ko -->
-        </li>
-        <!-- /ko -->
-        <!-- ko if: granules().hasNextPage() -->
-        <li class="busy map-popup-pane-item map-popup-pane-more">
-          Loading...
-        </li>
-        <!-- /ko -->
-      </ul>
-      <!-- /ko -->
-      <!-- ko if: granules().isLoaded() && granules().results().length == 0 -->
-      <p>No Granules</p>
-      <!-- /ko -->
-    </div>
-  </script>
-  %>
-
   <div class="geojson-help">
     <div class="geojson-help-dropzone">
       <h1>Search by Shape File</h1>
@@ -299,18 +235,6 @@
               class="button text-button" type="button">Cancel</button>
     </div>
   </div>
-</div>
-
-<div class="map-grid-search" data-bind="with: query.grid, visible: ui.spatialType.name() == 'Grid Coordinates' || query.grid.selected(), css: { 'knockout-template': !bindingsLoaded }">
-  <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
-  <label for="map-grid-system">
-    <i class="edsc-icon-globe-grid"></i> Grid Coordinates
-  </label>
-  <select id="map-grid-system" name="map-grid-system" data-bind="value: selected, options: available, optionsText: 'label', optionsCaption: 'Coordinate System...'">
-  </select>
-  <input type="text" id="map-grid-coordinates" name="map-grid-coordinates" data-bind="value: coordinates" placeholder="Coordinates...">
-  <a href="#" class="button text-button">Set</a>
-  <label for="map-grid-coordinates" class="map-grid-hint" data-bind="text: hint"></label>
 </div>
 
 <div id="temporal-query" data-bind="with: query.temporal.applied">

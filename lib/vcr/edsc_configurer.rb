@@ -79,12 +79,11 @@ module VCR
           elsif uri.include? '/convert'
             cassette = 'ogre'
           elsif (request.method == :delete ||
-                 (request.uri.include?('/orders.json') && (request.method == :get || request.method == :post)) ||
-                 (request.uri.include?('/echo-rest/calendar_events') && !request.uri.include?('testbed')) ||
+                 (uri.include?('/orders.json') && (request.method == :get || request.method == :post)) ||
+                 (uri.include?('/echo-rest/calendar_events') && !uri.include?('testbed')) ||
                  uri.include?('users/current.json') ||
                  uri.include?('/echo-rest/users.json') ||
-                 request.uri.include?('4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json') ||
-                 request.uri.include?('69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences.json') ||
+                 uri.include?('/preferences.json') ||
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('invalid')) ||
                  uri.include?('C179002986-ORNL') ||

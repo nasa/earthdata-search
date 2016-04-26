@@ -1,5 +1,4 @@
 #= require models/data/granule
-#= require models/data/grid
 #= require models/data/xhr_model
 
 ns = @edsc.models.data
@@ -102,6 +101,10 @@ ns.Granules = do (ko,
       @_prevQuery = param(@params()) if @_prevQuery == currentQuery
 
       granule
+
+    clearExclusions: =>
+      @excludedGranulesList([])
+      @query.excludedGranules([])
 
     params: =>
       parentParams = @parentQuery.globalParams()
