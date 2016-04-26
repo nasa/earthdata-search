@@ -63,7 +63,6 @@ describe 'Background jobs ordering', reset: false do
 
     after :all do
       Delayed::Worker.delay_jobs = false
-      run_stop_task
     end
 
     it 'indicates current order status' do
