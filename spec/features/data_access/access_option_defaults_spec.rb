@@ -85,7 +85,7 @@ describe "Access Option Defaults", reset: true do
       end
       click_on 'Submit'
       wait_for_xhr
-      expect(page).to have_content('Not Validated')
+      expect(page).to have_content('The following collections are being processed')
       expect(page).to have_content(collection_title)
 
       load_page 'data/configure', project: [collection_id]
@@ -127,7 +127,7 @@ describe "Access Option Defaults", reset: true do
         click_on 'Continue' # to dismiss the modal
       end
       click_on 'Submit'
-      expect(page).to have_content('Not Validated')
+      expect(page).to have_content('The following collections are being processed')
 
       load_page 'data/configure', project: [collection_id]
       wait_for_xhr
@@ -139,7 +139,7 @@ describe "Access Option Defaults", reset: true do
       click_on 'Submit'
       wait_for_xhr
       expect(page).to have_link('View Download Links')
-      expect(page).to have_no_link('Not Validated')
+      expect(page).to have_no_content('The following collections are being processed')
 
       load_page 'data/configure', project: [collection_id]
       wait_for_xhr
