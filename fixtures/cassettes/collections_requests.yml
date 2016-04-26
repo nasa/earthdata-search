@@ -6398,6 +6398,23 @@ http_interactions:
   digest: 713ffd9e1bc48947cd7fc71fa276e1138bb34908
 - request:
     method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1204461918-GCMDTEST&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - e85926436d2e97eee5e4ee1f0b6385a4b3f90f94a5d0502307517f8c7c745d46:e8QKhLdQqhfDzzmSJrBW7g
+  recorded_at: Tue, 26 Apr 2016 15:38:31 GMT
+  digest: b6324e979fcbb9732a65c45b1b1b991ad5a7d581
+- request:
+    method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C1204482909-GCMDTEST&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -6486,6 +6503,21 @@ http_interactions:
       - edsc-dev
   recorded_at: Sun, 27 Mar 2016 03:02:19 GMT
   digest: c8669b723ff334aacd6a4756a38ad370017cb51b
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1204461918-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Tue, 26 Apr 2016 15:38:25 GMT
+  digest: c828bf9af842748f549911e6a68449fa33a82142
 - request:
     method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1204595275-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
@@ -6683,6 +6715,21 @@ http_interactions:
   digest: d1ac88e844389a9f21d13b6f0aadbf752760208c
 - request:
     method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=C1204461918-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Tue, 26 Apr 2016 15:38:20 GMT
+  digest: ba524fdaee300dc06fe57f45a2d590ff737667dc
+- request:
+    method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=C1204595275-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -6816,6 +6863,21 @@ http_interactions:
       - edsc-dev
   recorded_at: Sun, 27 Mar 2016 03:02:18 GMT
   digest: 2af658faa5974ecdafff8d899ad5769284ba3123
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=C1204461918-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Tue, 26 Apr 2016 15:38:23 GMT
+  digest: a8f2956b88c5b03a570587d26b41b2c1f73782ae
 - request:
     method: get
     uri: https://cmr.uat.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=C1204595275-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true
