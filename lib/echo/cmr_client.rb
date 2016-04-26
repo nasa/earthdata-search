@@ -24,7 +24,10 @@ module Echo
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
       query = body.to_query
       query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
-      post("/search/granules.#{format}", query, headers)
+      Rails.logger.info "----- query: #{query}"
+      resp = post("/search/granules.#{format}", query, headers)
+      Rails.logger.info "----- resp: #{resp.body}"
+      resp
     end
 
     def get_first_granule(collection, options={}, token=nil)
@@ -60,7 +63,10 @@ module Echo
       query = options_to_granule_query(options).to_query
       query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      post("/search/granules/timeline.#{format}", query, headers)
+      Rails.logger.info "----- query: #{query}"
+      resp = post("/search/granules/timeline.#{format}", query, headers)
+      Rails.logger.info "----- resp: #{resp.body}"
+      resp
     end
 
     def add_tag(key, value, condition, token)
@@ -128,7 +134,7 @@ module Echo
     def translate_attr_params(options)
       # TODO this translation can be removed once CMR fixed CMR-2755
       attrs = []
-      attr_opts = options['attribute']
+      attr_opts = options.delete('attribute')
       if attr_opts.present?
         attr_opts.each do |attr_opt|
           if attr_opt
