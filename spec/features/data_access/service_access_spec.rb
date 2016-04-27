@@ -61,7 +61,7 @@ describe 'Services Access', reset: false do
         expect(page).to have_content('Reformat Output (Optional)')
       end
 
-      context 'when submitting a service request', pq: true do
+      context 'when submitting a service request' do
         before :all do
           fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
           click_on 'Continue'
