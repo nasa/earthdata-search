@@ -1,10 +1,11 @@
 class ProjectsController < ApplicationController
   def index
     if current_user.present?
+      # TODO PQ EDSC-1038: Include portal information here
       user_id = current_user.id
       @projects = Project.where("user_id = ? AND name != ?", user_id, '')
     else
-      redirect_to root_url
+      redirect_to edsc_path(root_url)
     end
   end
 
@@ -33,6 +34,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
+    # TODO PQ EDSC-1038: Save portal information here
     id = params[:id].presence
     begin
       project = Project.find(params[:id]) if id

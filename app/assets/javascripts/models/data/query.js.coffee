@@ -242,8 +242,10 @@ ns.query = do (ko,
         component.params(query)
 
     fromJson: (query) => @_readComponents(@_serialized, query)
-    clearFilters: (query) => @_readComponents(@_all, {})
+    clearFilters: (query) => @_readComponents(@_all, @_persistentQuery())
     _readParams: (query) => @_readComponents(@_components, query)
+
+    _persistentQuery: -> {}
 
     _writeComponents: (components, inheritedParams) ->
       inheritedParams ?= @parentQuery?.globalParams() ? {}
@@ -266,6 +268,7 @@ ns.query = do (ko,
       @focusedInterval = ko.observable(null)
       @temporal = new Temporal()
 
+      @portal = @queryComponent(new QueryParam('portal'), '')
       @placename = @queryComponent(new QueryParam('placename'), '', query: false)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
@@ -281,6 +284,12 @@ ns.query = do (ko,
       @focusedInterval(null)
       @placename("")
       super()
+
+    _persistentQuery: ->
+      result = super()
+      portal = @portal()
+      result.portal = portal if portal && portal.length > 0
+      result
 
     _computeScienceKeywordFacets: =>
       facet for facet in @facets() when facet.param.indexOf('sci') == 0

@@ -2,13 +2,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :refresh_urs_if_needed, except: [:logout, :refresh_token]
+  before_filter :validate_portal
 
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
 
   def redirect_from_urs
     last_point = session[:last_point]
     session[:last_point] = nil
-    last_point || root_url
+    last_point || edsc_path(root_url)
   end
 
   protected
@@ -183,4 +184,38 @@ class ApplicationController < ActionController::Base
   end
   helper_method :script_session_expires_in
 
+  def portal_id
+    @portal_id ||= params[:portal].presence
+  end
+  helper_method :portal_id
+
+  def portal
+    Rails.configuration.portals[portal_id] unless portal_id.nil?
+  end
+  helper_method :portal
+
+  def portal_scripts
+    (portal? && portal[:scripts]) || []
+  end
+  helper_method :portal_scripts
+
+  def portal?
+    portal.present?
+  end
+  helper_method :portal?
+
+  def validate_portal
+    if portal_id && !portal?
+      raise ActionController::RoutingError.new("Portal \"#{portal_id}\" not found")
+    end
+  end
+
+  def edsc_path(path)
+    if portal?
+      separator = path.include?('?') ? '&' : '?'
+      path = path + separator + "portal=" + URI.encode(portal_id)
+    end
+    path
+  end
+  helper_method :edsc_path
 end
