@@ -5,8 +5,10 @@
 require "spec_helper"
 
 describe "Collection GIBS help", reset: true do
+  extend Helpers::CollectionHelpers
 
   gibs_collection_id = 'C119124186-NSIDC_ECS'
+  gibs_collection_name = 'AMSR-E/Aqua L2B Global Swath Rain Rate/Type GSFC Profiling Algorithm V002'
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
 
   before :each do
@@ -16,9 +18,7 @@ describe "Collection GIBS help", reset: true do
   end
 
   context "when visualizing a GIBS-enabled collection" do
-    before :each do
-      first_collection_result.click_link "View collection"
-    end
+    hook_granule_results(gibs_collection_name, :each)
 
     it "displays information on the source and accuracy of GIBS browse" do
       expect(page).to have_popover('Approximate Granule Imagery')
@@ -30,14 +30,14 @@ describe "Collection GIBS help", reset: true do
 
   context "when visualizing a GIBS-enabled collection a second time" do
     before :each do
-      first_collection_result.click_link "View collection"
+      view_granule_results(gibs_collection_name)
       within '.popover-navigation' do
         click_on 'Close'
       end
       expect(page).to have_granule_visualizations(gibs_collection_id)
-      first_collection_result.click_link "Hide collection"
+      leave_granule_results
       expect(page).to have_no_granule_visualizations(gibs_collection_id)
-      first_collection_result.click_link "View collection"
+      view_granule_results(gibs_collection_name)
       expect(page).to have_granule_visualizations(gibs_collection_id)
     end
 

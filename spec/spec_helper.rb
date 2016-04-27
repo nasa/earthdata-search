@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 require 'headless'
+require 'helpers/instrumentation'
 
 # Un-comment to truncate the test log to only the most recent execution
 #File.truncate(Rails.root.join("log/test.log"), 0)
@@ -168,6 +169,10 @@ RSpec.configure do |config|
     puts "Slowest specs"
     puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3fs - #{k}" % v}.join("\n"))
     puts
+  end
+
+  config.after :suite do
+    Helpers::Instrumentation.report_performance
   end
 
   config.after :each do

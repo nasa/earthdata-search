@@ -34,7 +34,7 @@ describe "Granule search filters", reset: false do
       expect(project_overview).to reset_granules_to(before_granule_count)
     end
 
-    it "selecting day returns day granules", pq: true do
+    it "selecting day returns day granules" do
       select 'Day only', from: "day-night-select"
       click_button "granule-filters-submit"
       expect(project_overview).to filter_granules_from(before_granule_count)
@@ -256,7 +256,7 @@ describe "Granule search filters", reset: false do
       expect(page).to have_css('#granule-list .panel-list-item', count: 38)
     end
 
-    it "updates the page's hits count", pq: true do
+    it "updates the page's hits count" do
       # 38 = (page size - 1) * 2. Because of the browser height
       # removing a granule immediately loads the next page.
       expect(granule_list).to have_content("Showing 38 of #{before_granule_count.to_i - 1} matching granules")
@@ -292,7 +292,7 @@ describe "Granule search filters", reset: false do
       expect(project_overview).to reset_granules_to(before_granule_count)
     end
 
-    it "selecting temporal range filters granules", pq: true do
+    it "selecting temporal range filters granules" do
       fill_in "Start", with: "2013-12-01 00:00:00\t"
       fill_in "End", with: "2013-12-31 00:00:00\t"
       js_click_apply ".master-overlay-content"
@@ -300,7 +300,7 @@ describe "Granule search filters", reset: false do
       expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
-    it "selecting temporal recurring filters granules", pq: true do
+    it "selecting temporal recurring filters granules" do
       js_check_recurring 'granule'
       fill_in "Start", with: "12-01 00:00:00\t"
       fill_in "End", with: "12-31 00:00:00\t"

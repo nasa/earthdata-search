@@ -1,17 +1,10 @@
 module Helpers
   module PageHelpers
     def wait_for_xhr
-      #@waiting ||= 0
-      synchronize(30) do
-        #message = lambda do |time, value|
-        #  @waiting += time
-        #  puts "window.edsc.util.xhr.hasPending() -> %.3f #{value.inspect}.  Total: %.3f" % [time, @waiting]
-        #end
-        #result = Echo::Util.time(::Logger.new(STDOUT), message) do
-        #  page.evaluate_script('window.edsc.util.xhr.hasPending()')
-        #end
-
-        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
+      ActiveSupport::Notifications.instrument "edsc.performance.wait_for_xhr" do
+        synchronize(30) do
+          expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
+        end
       end
     end
 

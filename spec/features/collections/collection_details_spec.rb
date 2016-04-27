@@ -74,19 +74,8 @@ describe 'Collection details', reset: false do
       first_collection_result.click_link('View collection details')
     end
 
-    it "displays the collection's spatial bounds on the map" do
-      expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
-    end
-
-    context "and returning to the collections list" do
-      before :all do
-        wait_for_xhr
-        click_link "Back to Collections"
-      end
-
-      it "removes the collection's spatial bounds from the map" do
-        expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
-      end
+    it "does not display the collection's spatial bounds on the map" do
+      expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
     end
   end
 
@@ -98,13 +87,8 @@ describe 'Collection details', reset: false do
       first_collection_result.click_link('View collection details')
     end
 
-    it "displays the collection's spatial bounds on the map" do
-      expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
-    end
-
-    it "splits the spatial bounds across the antimeridian as necessary" do
-      # Draws two paths because it is split
-      expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path', count: 2)
+    it "does not display the collection's spatial bounds on the map" do
+      expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
     end
   end
 
@@ -116,8 +100,8 @@ describe 'Collection details', reset: false do
       first_collection_result.click_link('View collection details')
     end
 
-    it "displays the collection's spatial bounds on the map" do
-      expect(page).to have_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
+    it "does not display the collection's spatial bounds on the map" do
+      expect(page).to have_no_css('#map .leaflet-overlay-pane svg.leaflet-zoom-animated path')
     end
   end
 

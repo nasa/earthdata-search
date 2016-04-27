@@ -22,9 +22,9 @@ describe "Access Option Defaults", reset: true do
     before :each do
       user = User.find_or_create_by(echo_id: echo_id)
       options = {
-        accessMethod: [{method: 'stale', model: '<broken/>', rawModel: '<broken/>', type: 'order'}]
+        'accessMethod' => [{'method' => 'stale', 'model' => '<broken/>', 'rawModel' => '<broken/>', 'type' => 'order'}]
       }
-      AccessConfiguration.set_default_options(user, collection_id, options)
+      AccessConfiguration.set_default_access_config(user, collection_id, options, nil)
       load_page 'data/configure', project: [collection_id]
     end
 
@@ -39,16 +39,31 @@ describe "Access Option Defaults", reset: true do
     before :each do
       user = User.find_or_create_by(echo_id: echo_id)
       options = {
-        accessMethod: [{method: 'FtpPushPull', model: '<broken/>', rawModel: '<broken/>', type: 'order'}]
+        'accessMethod' => [{'method' => 'stale', 'model' => '<broken/>', 'rawModel' => '<broken/>', 'type' => 'order'}]
       }
-      AccessConfiguration.set_default_options(user, collection_id, options)
+      AccessConfiguration.set_default_access_config(user, collection_id, options, [{'id' => 'test', 'form_hash' => 'stale'}])
       load_page 'data/configure', project: [collection_id]
     end
 
     it "presents default options for the order" do
       expect(page).to have_unchecked_field('Download')
-      expect(page).to have_checked_field('FtpPushPull')
-      expect(page).to have_text('Ftp Pull Information')
+      expect(page).to have_unchecked_field('FtpPushPull')
+    end
+  end
+
+  context "accessing a collection with order preferences that are changed" do
+    before :each do
+      user = User.find_or_create_by(echo_id: echo_id)
+      options = {
+          'accessMethod' => [{'method' => 'stale', 'model' => '<broken/>', 'rawModel' => '<broken/>', 'type' => 'order'}]
+      }
+      AccessConfiguration.set_default_access_config(user, collection_id, options, [{'id' => '7E65A0BF-6A43-1891-1A2E-D6D8CBF01768', 'form_hash' => 'original_hash'}])
+      load_page 'data/configure', project: [collection_id]
+    end
+
+    it "presents default options for the order" do
+      expect(page).to have_unchecked_field('Download')
+      expect(page).to have_unchecked_field('FtpPushPull')
     end
   end
 
