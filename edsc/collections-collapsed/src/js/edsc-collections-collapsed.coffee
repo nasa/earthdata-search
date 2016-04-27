@@ -30,7 +30,6 @@ class CollectionsCollapsedModel extends KnockoutComponentModel
       @_scrollParent.addEventListener('scroll', async.throttled(@_alignFlyouts))
 
   # These methods should be factored out eventually, as well as master-overlay actions
-  toggleVisibleCollection: (args...) => @page.collections.toggleVisibleCollection(args...)
   hasCollection: (args...) => @page.project.hasCollection(args...)
   toggleCollection: (args...) => @page.ui.projectList.toggleCollection(args...)
   accessCollection: (args...) => @page.ui.projectList.loginAndDownloadCollection(args...)

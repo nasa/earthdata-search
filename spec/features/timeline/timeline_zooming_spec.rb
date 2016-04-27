@@ -64,7 +64,7 @@ describe "Timeline zooming", reset: false do
   end
 
 
-  context "when zooming out on the timeline", pq: true do
+  context "when zooming out on the timeline" do
     before(:all) { click_timeline_zoom_out }
     after(:all) { click_timeline_zoom_in }
 

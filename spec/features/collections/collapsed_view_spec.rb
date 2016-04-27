@@ -64,9 +64,9 @@ describe "Collections Collapsed View", reset: false do
         end
       end
 
-      it 'displays a view collection button for collections with granules' do
+      it 'displays no view collection button for collections with granules' do
         for_collapsed_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC' do
-          expect(first_collapsed_collection).to have_link('Preview collection')
+          expect(first_collapsed_collection).to have_no_link('Preview collection')
         end
       end
 
@@ -304,38 +304,6 @@ describe "Collections Collapsed View", reset: false do
 
           it "does not highlight the spatial query button" do
             expect(first_collapsed_collection).to have_no_css('a.button-active .fa-map-marker')
-          end
-        end
-      end
-
-      context "and clicking a collection's view collection button" do
-        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
-
-        before :all do
-          first_collapsed_collection.click_link 'Preview collection'
-        end
-
-        it "displays a hide collection button" do
-          expect(first_collapsed_collection).to have_link('Hide collection')
-          expect(first_collapsed_collection).to have_no_link('Preview collection')
-        end
-
-        it "displays the collection's spatial extent on the map" do
-          expect(page).to have_selector('.leaflet-layer[id^="granule-vis-"] canvas')
-        end
-
-        context "followed by its hide collection button" do
-          before :all do
-            first_collapsed_collection.click_link 'Hide collection'
-          end
-
-          it "displays a view collection button" do
-            expect(first_collapsed_collection).to have_link('Preview collection')
-            expect(first_collapsed_collection).to have_no_link('Hide collection')
-          end
-
-          it "hides the collection's spatial extent from the map" do
-            expect(page).to have_no_selector('.leaflet-layer[id^="granule-vis-"] canvas')
           end
         end
       end
