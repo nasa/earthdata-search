@@ -1,0 +1,9 @@
+defaults: &defaults
+  cwic:
+    params:
+      tag_key:
+        - org.ceos.wgiss.cwic.granules.prod
+      features:
+        - Int'l / Interagency
+    #scripts:
+    #  - edsc.portal.cwic.js
