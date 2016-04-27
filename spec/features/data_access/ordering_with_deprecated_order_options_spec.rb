@@ -40,7 +40,6 @@ describe 'Ordering with deprecated order options', reset: false do
 
     after :all do
       Delayed::Worker.delay_jobs = false
-      run_stop_task
     end
 
     it "completes the order without dropping any granules" do
