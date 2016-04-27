@@ -24,10 +24,7 @@ module Echo
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
       query = body.to_query
       query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
-      Rails.logger.info "----- query: #{query}"
-      resp = post("/search/granules.#{format}", query, headers)
-      Rails.logger.info "----- resp: #{resp.body}"
-      resp
+      post("/search/granules.#{format}", query, headers)
     end
 
     def get_first_granule(collection, options={}, token=nil)
@@ -63,10 +60,7 @@ module Echo
       query = options_to_granule_query(options).to_query
       query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      Rails.logger.info "----- query: #{query}"
-      resp = post("/search/granules/timeline.#{format}", query, headers)
-      Rails.logger.info "----- resp: #{resp.body}"
-      resp
+      post("/search/granules/timeline.#{format}", query, headers)
     end
 
     def add_tag(key, value, condition, token)
