@@ -3,7 +3,7 @@
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 21 Jan 2015 13:51:35 GMT
@@ -26,12 +26,12 @@
         University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>+1 (303) 492-6199</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><LastName>USER SERVICES</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>Investigator</Role><OrganizationName>University of Colorado</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center
         CIRES,  449 UCB
         </StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>Undefined</Country></Address></OrganizationAddresses><OrganizationPhones /><OrganizationEmails><Email>scambos@nsidc.org</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>Ted</FirstName><LastName>Scambos</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>THERMAL INFRARED</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>SENSOR COUNTS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>VISIBLE WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>VISIBLE IMAGERY</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>REFLECTED INFRARED</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>INFRARED IMAGERY</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>NOAA-11</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-11</LongName><Type>NOAA-11</Type><Characteristics /><Instruments /></Platform><Platform><ShortName>NOAA-10</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-10</LongName><Type>NOAA-10</Type><Characteristics /><Instruments /></Platform><Platform><ShortName>NOAA POES</ShortName><LongName>NOAA Polar Orbiting Environmental Satellites</LongName><Type>NOAA POES</Type><Characteristics /><Instruments /></Platform><Platform><ShortName>NOAA-12</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-12</LongName><Type>NOAA-12</Type><Characteristics /><Instruments /></Platform><Platform><ShortName>N/A</ShortName><LongName>Not Applicable</LongName><Type>N/A</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform></Platforms><OnlineAccessURLs><OnlineAccessURL><URL>http://nsidc.org/data/nsidc-0022.html</URL><URLDescription>Data Access</URLDescription></OnlineAccessURL></OnlineAccessURLs><AssociatedDIFs><DIF><EntryId>NSIDC-0022</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><GPolygon><Boundary><Point><PointLongitude>-180</PointLongitude><PointLatitude>-50</PointLatitude></Point><Point><PointLongitude>180</PointLongitude><PointLatitude>-50</PointLatitude></Point><Point><PointLongitude>180</PointLongitude><PointLatitude>-89</PointLatitude></Point><Point><PointLongitude>-180</PointLongitude><PointLatitude>-89</PointLatitude></Point></Boundary></GPolygon><GPolygon><Boundary><Point><PointLongitude>-180</PointLongitude><PointLatitude>89</PointLatitude></Point><Point><PointLongitude>180</PointLongitude><PointLatitude>89</PointLatitude></Point><Point><PointLongitude>180</PointLongitude><PointLatitude>50</PointLatitude></Point><Point><PointLongitude>-180</PointLongitude><PointLatitude>50</PointLatitude></Point></Boundary></GPolygon></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>
-    http_version: 
+    http_version:
 0c831e5e5b5f612a812d70ab50dbda15aa01f0cb:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Thu, 07 Jan 2016 16:31:35 GMT
@@ -79,12 +79,12 @@
         University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>+1 (303) 492-2468</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails /><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><LastName>User Services</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>archiving data center</Role><OrganizationName>NSIDC</OrganizationName><OrganizationAddresses><Address><StreetAddress>National Snow and Ice Data Center
         CIRES, 449 UCB
         University of Colorado</StreetAddress><City>Boulder</City><StateProvince>CO</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>+1 (303) 492-2468</Number><Type>Telephone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>NSIDC</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><LastName>User Services</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>BRIGHTNESS TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC RADIATION</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>NOAA-11</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-11</LongName><Type>NOAA-11</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-9</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-9</LongName><Type>NOAA-9</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-8</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-8</LongName><Type>NOAA-8</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform><Platform><ShortName>NOAA-10</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-10</LongName><Type>NOAA-10</Type><Characteristics /><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName><Characteristics /><Sensors /><OperationModes /></Instrument></Instruments></Platform></Platforms><AdditionalAttributes /><CSDTDescriptions /><CollectionAssociations /><Campaigns /><AlgorithmPackages /><TwoDCoordinateSystems /><OnlineAccessURLs><OnlineAccessURL><URL>http://nsidc.org/data/NSIDC-0026</URL><URLDescription>Data Access</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources /><AssociatedDIFs><DIF><EntryId>NSIDC-0026</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>60</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>
-    http_version: 
+    http_version:
 5906c20ffe99a18e20fbd65c8e03ac6fc3733147:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 28 Mar 2016 14:05:00 GMT
@@ -110,12 +110,12 @@
         Sea Ice Extent Daily L3 Global 1km EASE-Grid Day","orbit_parameters":{},"id":"C115003855-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Catalog
         Page for this product at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/MYD29P1D/versions/5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
         Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}'
-    http_version: 
+    http_version:
 ac020667dfb49847cb8af5c9cc672d903a9d9817:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 28 Mar 2016 12:15:36 GMT
@@ -141,12 +141,12 @@ ac020667dfb49847cb8af5c9cc672d903a9d9817:
         Sea Ice Extent Daily L3 Global 1km EASE-Grid Night","orbit_parameters":{},"id":"C115003857-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Catalog
         Page for this product at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/MYD29P1N/versions/5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
         Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}'
-    http_version: 
+    http_version:
 4ebf4dedd02055a5fbccbe710dcab5ed67847ec3:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 28 Mar 2016 13:42:49 GMT
@@ -175,12 +175,12 @@ ac020667dfb49847cb8af5c9cc672d903a9d9817:
         at 5.4 km, generated by the GPROF algorithm using Level-2A TBs.","time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C119124186-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
         Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_rain_l2b.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
         Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
-    http_version: 
+    http_version:
 77c51a0f2e8c8039dc7a7fd895fc03d89f6a54b9:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Thu, 03 Mar 2016 01:47:11 GMT
@@ -264,12 +264,12 @@ ac020667dfb49847cb8af5c9cc672d903a9d9817:
         SUPPORT</Type></OnlineResource><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1c/1stpage.htm</URL><Description>\n
         \        Central Africa Rainforest - high flood of Congo River - AFR1c\n      </Description><Type>USER
         SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-96</WestBoundingCoordinate><NorthBoundingCoordinate>22</NorthBoundingCoordinate><EastBoundingCoordinate>-48</EastBoundingCoordinate><SouthBoundingCoordinate>-20</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-14</WestBoundingCoordinate><NorthBoundingCoordinate>10</NorthBoundingCoordinate><EastBoundingCoordinate>34</EastBoundingCoordinate><SouthBoundingCoordinate>-9</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>92</WestBoundingCoordinate><NorthBoundingCoordinate>27</NorthBoundingCoordinate><EastBoundingCoordinate>151</EastBoundingCoordinate><SouthBoundingCoordinate>-20</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
-    http_version: 
+    http_version:
 9ac93877927dc4b4872ae99d24c79079cf293162:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Tue, 15 Dec 2015 16:31:59 GMT
@@ -295,12 +295,12 @@ ac020667dfb49847cb8af5c9cc672d903a9d9817:
         TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>AQUA</ShortName><LongName>Earth
         Observing System, AQUA</LongName><Type>Not Specified</Type></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>miura.satoko@jaxa.jp</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>a91fd035-c9cf-4a8f-81da-bec73581a8dc</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-01
         16:32:49</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><OnlineAccessURLs><OnlineAccessURL><URL>http://www.eorc.jaxa.jp/en/about/distribution/index.html</URL></OnlineAccessURL></OnlineAccessURLs><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
-    http_version: 
+    http_version:
 b5c7e41c67b053b26b179892814464bd7ec6299a:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 13 Jan 2016 18:59:27 GMT
@@ -355,12 +355,12 @@ b5c7e41c67b053b26b179892814464bd7ec6299a:
             Denominator of Flattening Ratio:</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In Work</CollectionState><Temporal><RangeDateTime><BeginningDateTime>1975-01-01T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>TECHNICAL CONTACT</Role><OrganizationEmails><Email>kaz.higuchi@ec.gc.ca</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>KAZ</FirstName><LastName>HIGUCHI</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AIR QUALITY</TermKeyword><VariableLevel1Keyword><Value>TROPOSPHERIC OZONE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC CHEMISTRY</TermKeyword><VariableLevel1Keyword><Value>TRACE GASES/TRACE SPECIES</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><AdditionalAttributes><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-02 12:24:59</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><OnlineResources><OnlineResource><URL>http://geodiscover.cgdi.ca/</URL><Description>
                  GeoConnections Discovery Portal. Canada's IDN Node.
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-135</WestBoundingCoordinate><NorthBoundingCoordinate>82</NorthBoundingCoordinate><EastBoundingCoordinate>-59</EastBoundingCoordinate><SouthBoundingCoordinate>43</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
-    http_version: 
+    http_version:
 773f1a2581dbf71e513bbff27e62cb5e0b232ccf:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 13 Jan 2016 19:04:09 GMT
@@ -418,12 +418,12 @@ b5c7e41c67b053b26b179892814464bd7ec6299a:
         fees apply.</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In Work</CollectionState><Temporal><RangeDateTime><BeginningDateTime>1907-01-02T00:00:00.000Z</BeginningDateTime><EndingDateTime>1952-08-11T00:00:00.000Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>DIF AUTHOR</Role><OrganizationEmails><Email>csimpson@nrcan.gc.ca</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>CAROLINE</FirstName><LastName>SIMPSON</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>BIOSPHERE</TopicKeyword><TermKeyword>TERRESTRIAL ECOSYSTEMS</TermKeyword><VariableLevel1Keyword><Value>FORESTS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>HUMAN DIMENSIONS</TopicKeyword><TermKeyword>ENVIRONMENTAL GOVERNANCE/MANAGEMENT</TermKeyword><VariableLevel1Keyword><Value>LAND MANAGEMENT</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND USE/LAND COVER CLASSIFICATION</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND PRODUCTIVITY</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND RESOURCES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND USE CLASSES</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><AdditionalAttributes><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-02 12:29:47</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><OnlineResources><OnlineResource><URL>http://geodiscover.cgdi.ca/</URL><Description>
                  GeoConnections Discovery Portal. Canada's IDN Node.
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-95</WestBoundingCoordinate><NorthBoundingCoordinate>61</NorthBoundingCoordinate><EastBoundingCoordinate>-52</EastBoundingCoordinate><SouthBoundingCoordinate>44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
-    http_version: 
+    http_version:
 354c97868b9e4bab54b5f506f90948fd3a35b080:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 21 Jan 2015 13:51:21 GMT
@@ -822,12 +822,12 @@ b5c7e41c67b053b26b179892814464bd7ec6299a:
             <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>
           </Spatial>
         </Collection>
-    http_version: 
+    http_version:
 ad70bb9ab0db24f8845845233c30a86bc62df5fc:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Sun, 27 Mar 2016 02:36:31 GMT
@@ -857,12 +857,12 @@ ad70bb9ab0db24f8845845233c30a86bc62df5fc:
               </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/docs/daac/nsidc0026_arctic_leads_ari.gd.html</URL><Description>
                  Documentation
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>60</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
-    http_version: 
+    http_version:
 6ab30dcea4757ad54bcae4d4ab2c577e53d31e56:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Thu, 10 Mar 2016 19:26:22 GMT
@@ -906,12 +906,12 @@ ad70bb9ab0db24f8845845233c30a86bc62df5fc:
         </URL><URLDescription>
         These data are available through the File Transfer Protocol (FTP). The base URL of NODC's FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP client to download these data.
         </URLDescription></OnlineAccessURL></OnlineAccessURLs><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>146</WestBoundingCoordinate><NorthBoundingCoordinate>72</NorthBoundingCoordinate><EastBoundingCoordinate>-105</EastBoundingCoordinate><SouthBoundingCoordinate>-44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
-    http_version: 
+    http_version:
 ac2fc07b8044c9a81e2e812e4f6d5875d35c2ce0:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Sun, 27 Mar 2016 02:23:47 GMT
@@ -940,34 +940,81 @@ ac2fc07b8044c9a81e2e812e4f6d5875d35c2ce0:
         by the Njoku algorithm using Level-2A TBs.","time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C128599377-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
         Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_land_l2b_soil_moisture.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
         Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
-    http_version: 
+    http_version:
 cd22b259dedf88a6f27a7f058f5f3b541df9316e:
   response:
     status:
-      code: 401
-      message: 
+      code: 200
+      message:
     headers:
       date:
-      - Tue, 19 Apr 2016 18:05:06 GMT
+      - Fri, 22 Apr 2016 19:26:37 GMT
       content-type:
-      - application/json
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 8b459c8e-30ef-4ad7-849f-b9441ee38a40
+      - 4ebb90c9-a093-40c0-8763-27eaf973ed90
+      vary:
+      - Accept-Encoding, User-Agent
       connection:
       - close
       server:
       - Jetty(9.2.z-SNAPSHOT)
     body:
       encoding: UTF-8
-      string: '{"errors":["Token edsc-access does not exist"]}'
-    http_version: 
+      string: '{"processing_level_id":"1A","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","dif_ids":["AST_L1A3"],"version_id":"003","updated":"2015-09-30T10:40:23.489Z","dataset_id":"ASTER
+        L1A Reconstructed Unprocessed Instrument Data V003","data_center":"LPDAAC_ECS","short_name":"AST_L1A","organizations":["LPDAAC","GDS"],"title":"ASTER
+        L1A Reconstructed Unprocessed Instrument Data V003","coordinate_system":"CARTESIAN","summary":"The
+        ASTER instrument aboard the Terra satellite has a complement of three different
+        telescopes with varying pointing capabilities. ASTER data are primarily acquired
+        and processed in support of a global mapping mission, and based on Data Acquisition
+        Requests (DARs) from authorized users. ASTER Level-1 data are produced at
+        the Ground Data System (GDS) facility of Japan Space Systems in Tokyo, Japan,
+        and subsequently sent to the Land Processes (LP) Distributed Active Archive
+        Center (DAAC) for archiving, distribution, and higher-level product generation.
+        The ASTER Level-1A data set contains reconstructed, instrument digital numbers
+        (DNs) derived from the telemetry streams of the 3 telescopes: Visible Near
+        Infrared (VNIR), Shortwave Infrared (SWIR), and Thermal Infrared (TIR). The
+        Level-1A data contains depacketized, demultiplexed, and realigned instrument
+        image data with their geometric correction coefficients and radiometric calibration
+        coefficients calculated and appended but not applied. It also includes corrections
+        for the SWIR parallax, and intra- and inter-telescope registration information.
+        \n\nUsers are advised that ASTER SWIR data acquired from late April 2008 to
+        the present exhibit anomalous saturation of values and anomalous striping.
+        This effect is also present for some prior acquisition periods. Please refer
+        to the ASTER SWIR User Advisory Document at https://lpdaac.usgs.gov/sites/default/files/public/aster/docs/ASTER_SWIR_User_Advisory_July%2018_08.pdf
+        for more details.\n\nV003 data set release date: 2002-05-03\n\nData Set Characteristics:
+        \nArea: ~60km x 60km \nImage Dimensions: \n  VNIR: 4200 rows x 4100 columns
+        \n  VNIR (3B): 5400 rows x 5000 columns \n  SWIR: 2100 rows x 2048 columns
+        \n  TIR: 700 rows x 700 columns \nFile Size: \n  VNIR (1,2,3N): ~50 MB \n  VNIR
+        (3B): 30 MB \n  SWIR (4-9): ~25 MB \n  TIR (10-14): ~5 MB\n  Total: 110 Megabytes\nSpatial
+        Resolution:\n  VNIR: 15m\n  SWIR: 30m\n  TIR: 90m \nUnits: Digital counts\nProjection:
+        Universal Transverse Mercator (UTM)\nData Format: HDF-EOS, GeoTIFF\nVgroup
+        Data Fields: 15","orbit_parameters":{},"id":"C14758250-LPDAAC_ECS","original_format":"ECHO10","archive_center":"LPDAAC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Data
+        set landing page at the LP DAAC (MiscInformation)","hreflang":"en-US","href":"http://dx.doi.org/10.5067/ASTER/AST_L1A.003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Interface
+        to search, discover, and access EOS data products, and invoke available data
+        services.\n       (Type:GET DATA Subtype:REVERB)","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"The
+        USGS Global Visualization Viewer (GloVis) is an online search and order tool
+        driven by browse images.  Users may select any geographical area of interest
+        (for any given product) and view all available browse images for that area
+        before deciding to order those products.\n       (Type:GET DATA)","hreflang":"en-US","href":"http://glovis.usgs.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"The
+        Land Processes Distributed Active Archive Center (LP DAAC) is one of several
+        discipline-specific data centers within the NASA Earth Observing System Data
+        and Information System (EOSDIS).  The LP DAAC Web page provides information
+        about available data products, services, documentation, order interfaces,
+        and tools.\n       (Type:VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"https://lpdaac.usgs.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"The
+        ASTER home page is maintained through NASA''s Jet Propulsion Laboratory and
+        documents various aspects of the ASTER mission.\n       (Type:VIEW PROJECT
+        HOME PAGE)","hreflang":"en-US","href":"http://asterweb.jpl.nasa.gov/"}]}'
+    http_version:
 a8625406c735635e8f0d54555083fa434ca22391:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 21 Jan 2015 13:51:39 GMT
@@ -1039,12 +1086,12 @@ a8625406c735635e8f0d54555083fa434ca22391:
         SIZER</ShortName><LongName>AEROSOL/CLOUD PARTICLE SIZER</LongName><Characteristics
         /><Sensors /><OperationModes /></Instrument></Instruments></Platform></Platforms><OnlineResources><OnlineResource><URL>http://nsidc.org/data/nsidc-0239.html</URL><Description>Data
         Access</Description><Type>Data Access</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>NSIDC-0239</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><Line><Point><PointLongitude>-93</PointLongitude><PointLatitude>41</PointLatitude></Point><Point><PointLongitude>-93</PointLongitude><PointLatitude>56</PointLatitude></Point></Line></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>"
-    http_version: 
+    http_version:
 63e6a16ffb2a1b7f0ebd8b1ec4d863a89b47dc94:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 21 Jan 2015 13:51:16 GMT
@@ -1229,12 +1276,12 @@ a8625406c735635e8f0d54555083fa434ca22391:
         \n\t\t\t\t<HorizontalSpatialDomain>\n\t\t\t\t\t<Geometry>\n\t\t\t\t\t\t<CoordinateSystem>CARTESIAN</CoordinateSystem>\n\t\t\t\t\t\t<BoundingRectangle>\n\t\t\t\t\t\t\t<WestBoundingCoordinate>-180</WestBoundingCoordinate>
         \n\t\t\t\t\t\t\t<NorthBoundingCoordinate>90</NorthBoundingCoordinate> \n\t\t\t\t\t\t\t<EastBoundingCoordinate>180</EastBoundingCoordinate>
         \n\t\t\t\t\t\t\t<SouthBoundingCoordinate>-55</SouthBoundingCoordinate> \n\t\t\t\t\t\t</BoundingRectangle>\n\t\t\t\t\t</Geometry>\n\t\t\t\t</HorizontalSpatialDomain>\n\t\t\t\t<GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n\t\t\t</Spatial>\n\t\t</Collection>"
-    http_version: 
+    http_version:
 62d69a3c2cec87d3b6e90d31814b5785bafc9710:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Fri, 07 Aug 2015 23:38:20 GMT
@@ -1306,12 +1353,12 @@ a8625406c735635e8f0d54555083fa434ca22391:
         \             <SouthBoundingCoordinate>39.08</SouthBoundingCoordinate>\n            </BoundingRectangle>\n
         \         </Geometry>\n        </HorizontalSpatialDomain>\n        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n
         \     </Spatial>\n    </Collection>"
-    http_version: 
+    http_version:
 d4052720c651abc789e0ffdfca8cc361eca99c82:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Sun, 27 Mar 2016 03:25:04 GMT
@@ -1336,12 +1383,12 @@ d4052720c651abc789e0ffdfca8cc361eca99c82:
         Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
         minute rainfall data for the Konza Prairie","time_end":"1987-10-26T00:00:00.000Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
         minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]}'
-    http_version: 
+    http_version:
 55bdcbe03a881d71233144fd2e44704efd118082:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 21 Jan 2015 13:51:32 GMT
@@ -1462,12 +1509,12 @@ d4052720c651abc789e0ffdfca8cc361eca99c82:
         \             <SouthBoundingCoordinate>7.71</SouthBoundingCoordinate>\n            </BoundingRectangle>\n
         \         </Geometry>\n        </HorizontalSpatialDomain>\n        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n
         \     </Spatial>\n    </Collection>"
-    http_version: 
+    http_version:
 1992aff66cd33220943ac7c465ba5cb8ef2e0513:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 21 Jan 2015 13:51:12 GMT
@@ -1543,12 +1590,12 @@ d4052720c651abc789e0ffdfca8cc361eca99c82:
         \           </Point>\n          </Geometry>\n        </HorizontalSpatialDomain>\n
         \       <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n
         \     </Spatial>\n    </Collection>"
-    http_version: 
+    http_version:
 fbd46854681f5702d24d49d7f2885a2ca0678e32:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 28 Mar 2016 02:36:32 GMT
@@ -1574,12 +1621,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         15 minute stream flow data for Kings Creek on the Konza Prairie","time_end":"1988-03-04T00:00:00.000Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
         15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
         INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}'
-    http_version: 
+    http_version:
 9198f2ff4973cbc586e8f3106f065bf783f79c5f:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 28 Mar 2016 12:29:27 GMT
@@ -1613,12 +1660,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         at 0.5 degree longitude/latitude resolution.  It was generated from a large
         data base, using the partial thin-plate splining algorithm. (VIEW RELATED
         INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/CLIMATE/guides/cramer_leemans.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/png","title":"(BROWSE)","hreflang":"en-US","href":"http://webmap.ornl.gov/sdat/pimg/416_1.png"}]}'
-    http_version: 
+    http_version:
 7dd2568f462fe186915631c2f16a56d2826565e1:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Sun, 27 Mar 2016 02:23:30 GMT
@@ -1647,12 +1694,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         using Level-2A TBs.","time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C179014698-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
         Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
         Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}'
-    http_version: 
+    http_version:
 9fcb925ab30c4bfb5e034aa20b2d816cecd4b0ee:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 21 Jan 2015 13:51:10 GMT
@@ -1726,12 +1773,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         Swath</PrimaryCSDT><Implementation>HDF-EOS</Implementation><CSDTComments>None</CSDTComments><IndirectReference>Source
         Packets</IndirectReference></CSDTDescription></CSDTDescriptions><CollectionAssociations><CollectionAssociation><ShortName>AST_L1B</ShortName><VersionId>3</VersionId><CollectionType>Dependent</CollectionType><CollectionUse>Radiometric
         values computed from the raw instrument counts</CollectionUse></CollectionAssociation></CollectionAssociations><AssociatedDIFs><DIF><EntryId>AST_L1AE3</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>'
-    http_version: 
+    http_version:
 630e02049d4ce13f39f1e7d024cbc7d6d93e4bf8:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 28 Mar 2016 02:36:30 GMT
@@ -1801,12 +1848,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         README file (VIEW RELATED INFORMATION : USER''S GUIDE)","hreflang":"en-US","href":"http://acdisc.gesdisc.eosdis.nasa.gov/data/s4pa//Aura_OMI_Level3/OMAEROe.003/doc/README.OMI_DUG.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"ReadMe
         for OMAEROe_V003\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/Aura/data-holdings/OMI/documents/v003/OMAEROe_OSIPS_README_V003.doc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"FileSpec
         for OMAEROe_V003\n       (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/Aura/data-holdings/OMI/documents/v003/OMAEROe_FileSpec_V003.txt"}]}'
-    http_version: 
+    http_version:
 24d1f087ca6a550f99e4402261aa64c0fc4553ca:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 21 Jan 2015 13:51:18 GMT
@@ -1893,12 +1940,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         access information are available from this web site.\n      </Description><Type>VIEW
         RELATED INFORMATION</Type></OnlineResource><OnlineResource><URL>ftp://acdisc.gsfc.nasa.gov/data/s4pa//Aqua_AIRS_Level3/AIRX3C28.005/doc/AIRS_V5_Tropospheric_CO2_Products.pdf</URL><Description>product
         README file</Description><Type>VIEW RELATED INFORMATION : USER'S GUIDE</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>GES_DISC_AIRX3C28_V005</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-60.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>"
-    http_version: 
+    http_version:
 87e19e3c95f1b919e707a2641f07fc0e00b86640:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Thu, 13 Aug 2015 20:53:27 GMT
@@ -1942,12 +1989,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         Infrared</LongName><Technique>Imaging Radiometry</Technique></Sensor></Sensors><OperationModes><OperationMode>Calibration</OperationMode><OperationMode>Normal</OperationMode></OperationModes></Instrument></Instruments></Platform></Platforms><CSDTDescriptions><CSDTDescription><PrimaryCSDT>Structured
         Grid</PrimaryCSDT><Implementation>GeoTIFF</Implementation></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>https://lpdaac.usgs.gov/lpdaac/products/aster_product_table</URL><Description>Documents
         page for LP DAAC ASTER Products.</Description><Type>MiscInformation</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>ASTGTM1</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
-    http_version: 
+    http_version:
 12935e3e5d37c8c7341024ece51461f628ced043:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Sun, 27 Mar 2016 02:36:37 GMT
@@ -2097,12 +2144,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         \         <SouthBoundingCoordinate>-83.0</SouthBoundingCoordinate>\n        </BoundingRectangle>\n
         \     </Geometry>\n    </HorizontalSpatialDomain>\n    <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>\n
         \ </Spatial>\n</Collection>"
-    http_version: 
+    http_version:
 5afcff0fd9d01f574656288164e531d19088e639:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 28 Mar 2016 02:36:35 GMT
@@ -2143,12 +2190,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         to JPL Earth System Grid (JPL ESG Link)","hreflang":"en-US","href":"http://esg-gateway.jpl.nasa.gov/home.htm"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Search
         Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-SST00-1D1M1&apidoc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E
         Technical Note (PDF)","hreflang":"en-US","href":"ftp://podaac.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo/docs/tosTechNote_AMSRE_L3_v7_200206-201012.pdf"}]}'
-    http_version: 
+    http_version:
 9da136a866c23a02357fd7eef9a41af573d19df3:
   response:
     status:
       code: 401
-      message: 
+      message:
     headers:
       date:
       - Mon, 28 Mar 2016 02:53:48 GMT
@@ -2165,12 +2212,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
     body:
       encoding: UTF-8
       string: '{"errors":["Token edsc-access does not exist"]}'
-    http_version: 
+    http_version:
 65e24dcf4c941f35c6bdcc4626834151c6d6b01b:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 28 Mar 2016 02:36:28 GMT
@@ -2194,12 +2241,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         Science Data Center"],"title":"CERES_EBAF-TOA_Edition2.8","coordinate_system":"CARTESIAN","summary":"CERES
         Energy Balanced and Filled(EBAF) TOA Monthly means data in netCDF","time_end":"2015-10-31T23:59:59.000Z","orbit_parameters":{},"id":"C7085910-LARC_ASDC","original_format":"ECHO10","archive_center":"Atmospheric
         Science Data Center","browse_flag":false,"online_access_flag":false}'
-    http_version: 
+    http_version:
 19e44430c2a663ac19d442e82bf85f14fa97b0d7:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Sun, 27 Mar 2016 02:12:24 GMT
@@ -2232,12 +2279,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         and order products from LAADS website.","hreflang":"en-US","href":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
         access to the ftp site and directory hosting the MYD02QKM 5 data set.","hreflang":"en-US","href":"ftp://ladsweb.nascom.nasa.gov/allData/5/MYD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
         Level 1B Product Information Page at MCST","hreflang":"en-US","href":"http://mcst.gsfc.nasa.gov/l1b/product-information"}]}'
-    http_version: 
+    http_version:
 85892f8c99e8741c752c85cba65ba582ef91ac45:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 21 Jan 2015 13:53:46 GMT
@@ -2277,12 +2324,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         \         <URLDescription>USGS 15 minute stream flow data for Kings Creek
         on the Konza Prairie</URLDescription>\n        </OnlineAccessURL>\n      </OnlineAccessURLs>\n
         \     <Orderable>false</Orderable>\n      <DataFormat>txt</DataFormat>\n    </Granule>"
-    http_version: 
+    http_version:
 013c6817f5992501315f8a22d003da836cd8de71:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Wed, 11 Nov 2015 18:40:22 GMT
@@ -2313,12 +2360,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         3D Meteorological Data Processing System (IMDPS)</LongName></Campaign><Campaign><ShortName>CWIC</ShortName><LongName>CEOS
         WGISS Integrated Catalog</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>www.mosdac.gov.in</URL><Type>USER
         SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>20</WestBoundingCoordinate><NorthBoundingCoordinate>50</NorthBoundingCoordinate><EastBoundingCoordinate>130</EastBoundingCoordinate><SouthBoundingCoordinate>-50</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
-    http_version: 
+    http_version:
 3600219aef95c98ed6c15a9bcca628aff7c53b79:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Tue, 02 Feb 2016 15:34:01 GMT
@@ -2378,12 +2425,12 @@ fbd46854681f5702d24d49d7f2885a2ca0678e32:
         14:21:06</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>EOSDIS</ShortName><LongName>Earth
         Observing System Data Information System</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>http://www.eorc.jaxa.jp/TRMM/index_e.htm</URL><Description>\n
         \        TRMM web site operated by JAXA\n      </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>36</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-36</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>36</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-36</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
-    http_version: 
+    http_version:
 de6787e2295388fd7f01fd36c8e274e3bf4b0bba:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Mon, 29 Feb 2016 17:13:52 GMT
@@ -2456,12 +2503,12 @@ de6787e2295388fd7f01fd36c8e274e3bf4b0bba:
         SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nmp.nasa.gov/</URL><Description>\n
         \        NASA's New Millennium Project homepage.\n      </Description><Type>USER
         SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>83.1</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-83.85</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
-    http_version: 
+    http_version:
 4cfd759907f259bb6f4fc610b9295313769946d7:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       date:
       - Tue, 05 Jan 2016 15:08:44 GMT
@@ -2495,4 +2542,4 @@ de6787e2295388fd7f01fd36c8e274e3bf4b0bba:
               </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://www.nasa.gov/mission_pages/calipso/main/</URL><Description>
                  NASA CALIPSO Mission Portal
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
-    http_version: 
+    http_version:
