@@ -1,4 +1,5 @@
 defaults: &defaults
+  example:
   cwic:
     params:
       tag_key:
@@ -9,5 +10,13 @@ defaults: &defaults
     #  - edsc.portal.cwic.js
 
 
-test:
+test: &test
   <<: *defaults
+
+  simple:
+    params:
+      echo_collection_id:
+        - C1219032686-LANCEMODIS
+
+development:
+  <<: *test

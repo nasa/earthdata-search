@@ -190,7 +190,7 @@ class ApplicationController < ActionController::Base
   helper_method :portal_id
 
   def portal
-    Rails.configuration.portals[portal_id] unless portal_id.nil?
+    Rails.configuration.portals[portal_id] || {} if portal?
   end
   helper_method :portal
 
@@ -200,12 +200,12 @@ class ApplicationController < ActionController::Base
   helper_method :portal_scripts
 
   def portal?
-    portal.present?
+    portal_id.present? && Rails.configuration.portals.key?(portal_id)
   end
   helper_method :portal?
 
   def validate_portal
-    if portal_id && !portal?
+    if portal_id.present? && !Rails.configuration.portals.key?(portal_id)
       raise ActionController::RoutingError.new("Portal \"#{portal_id}\" not found")
     end
   end
