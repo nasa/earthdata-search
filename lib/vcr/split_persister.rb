@@ -32,11 +32,13 @@ module VCR
         if k == 'http_interactions'
           v.each do |interaction|
             response = responses[interaction.delete('digest')]
-            interaction.merge!(response)
-            normalizers.each do |normalizer|
-              normalizer.reverse(interaction)
+            unless response.nil?
+              interaction.merge!(response)
+              normalizers.each do |normalizer|
+                normalizer.reverse(interaction)
+              end
+              obj[k] << interaction
             end
-            obj[k] << interaction
           end
         else
           obj[k] = v
