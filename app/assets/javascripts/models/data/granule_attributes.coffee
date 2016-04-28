@@ -29,7 +29,11 @@
 
     _writeQueryCondition: (conditions) ->
       return unless @_definitions()
-      conditions = [] unless conditions
+      unless conditions
+        conditions = []
+        for def in @_definitions()
+          def.error(null)
+          def.value(null)
 
       for condition, i in conditions
         condition = []
