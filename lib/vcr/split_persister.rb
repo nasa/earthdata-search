@@ -10,6 +10,7 @@ module VCR
       @persister = persister
       @storage = {}
       @normalizers = []
+      @reduced = {}
     end
 
     def [](name)
@@ -109,13 +110,20 @@ module VCR
                               response['response']['headers'].present? &&
                               response['response']['headers']['content-type'].present? &&
                               response['response']['headers']['content-type'][0].start_with?('application/json'))
-      body = ActiveSupport::JSON.decode(response['response']['body']['string'])
-      if body && body['feed'] && body['feed']['facets'] && !body['feed']['reduced']
-        before = response['response']['body']['string'].size
-        Echo::ClientMiddleware::FacetCullingMiddleware.cull(body)
-        response['response']['body']['string'] = body.to_json
-        after = response['response']['body']['string'].size
-        puts "Reduced: #{before} -> #{after}"
+      body_config = response['response']['body']
+      digest = Digest::SHA1.hexdigest(body_config['string'])
+      if @reduced[digest]
+        body_config['string'] = @reduced[digest]
+      else
+        body = ActiveSupport::JSON.decode(body_config['string'])
+        if body && body['feed'] && body['feed']['facets'] && !body['feed']['reduced']
+          before = response['response']['body']['string'].size
+          Echo::ClientMiddleware::FacetCullingMiddleware.cull(body)
+          @reduced[digest] = response['response']['body']['string'] = body.to_json
+          after = @reduced[digest].size
+
+          puts "Reduced: #{before} -> #{after}"
+        end
       end
       response['response']['reduced'] = true
       response

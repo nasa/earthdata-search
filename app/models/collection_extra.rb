@@ -55,23 +55,18 @@ class CollectionExtra < ActiveRecord::Base
     nil
   end
 
-  def self.sync_browse(client, token, collection)
-    # TODO: This works, but we need to wait on CMR support for tag data linking to enable it
-    granule = client.get_first_granule(collection, {browse_only: true}, token)
-    if granule
-      add_extra_tag(collection, 'has_browse', true, client, token)
-      add_extra_tag(collection, 'browseable_granule', granule['id'], client, token)
-    else
-      remove_extra_tag(collection, 'has_browse', true, client, token)
-      remove_extra_tag(collection, 'browseable_granule', nil, client, token)
-    end
+  def self.sync_gibs(client, token)
+    GibsConfiguration.new.sync_tags!(tag_key('gibs'), client, token)
   end
 
   def self.sync_tags
     client = build_echo_client
     token = create_system_token(client)
-
-    tags = ['has_browse', 'browseable_granule', 'subset_service.opendap', 'subset_service.esi']
+    tags = [
+      'subset_service.opendap',
+      'subset_service.esi',
+      'gibs'
+    ]
 
     # Remove stale tags
     stale_tags = {}
@@ -89,14 +84,12 @@ class CollectionExtra < ActiveRecord::Base
       client.remove_tag(tag, collections, token) if collections.present?
     end
 
-    # TODO: has_granules doesn't work in ops yet. Re-enable when it does.
-    #each_collection(client, has_granules: true, token) do |collection|
-    each_collection(client, {include_tags: tag_key('*')}, token) do |collection|
-      #sync_browse(client, token, collection) # TODO: Enable once CMR supports data
+    each_collection(client, {has_granules: true}, token) do |collection|
       sync_opendap(client, token, collection)
     end
 
     sync_esi(client, token)
+    sync_gibs(client, token)
   end
 
   def self.add_extra_tag(collection, key, value, client, token)
@@ -291,7 +284,6 @@ class CollectionExtra < ActiveRecord::Base
 
     decorate_browseable_granule(collection)
     decorate_granule_information(collection)
-    decorate_gibs_layers(collection)
     decorate_opendap_layers(collection)
     decorate_echo10_attributes(collection)
     decorate_modaps_layers(collection)
@@ -387,12 +379,6 @@ class CollectionExtra < ActiveRecord::Base
 
   def decorate_granule_information(collection)
     collection[:has_granules] = self.has_granules unless collection.key?(:has_granules)
-  end
-
-  def decorate_gibs_layers(collection)
-    key = [collection['data_center'], collection['short_name']].join('___')
-    gibs_config = Rails.configuration.gibs[key]
-    collection[:gibs] = gibs_config unless gibs_config.nil?
   end
 
   def decorate_opendap_layers(collection)

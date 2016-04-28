@@ -288,32 +288,30 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params_for_request(request, hierarchical=true)
-    features = request.query_parameters['features']
-    use_opendap = features && features.include?('Subsetting Services')
     params = request.query_parameters.except('features')
-    if use_opendap
+
+    features = Hash[Array.wrap(request.query_parameters['features']).map {|f| [f, true]}]
+    if features['Subsetting Services']
       params['tag_key'] = Array.wrap(params['tag_key'])
       params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"
     end
 
-    gibs_keys = Rails.configuration.gibs.keys
-    providers = gibs_keys.map{|key| key.split('___').first}
-    short_names = gibs_keys.map{|key| key.split('___').last}
+    if features['Map Imagery']
+      params['tag_key'] = Array.wrap(params['tag_key'])
+      params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.gibs"
+    end
 
-    use_gibs = features && features.include?('Map Imagery')
-    params = params.merge('provider' => providers) if use_gibs
-    params = params.merge('short_name' => short_names) if use_gibs
+    if features['Near Real Time']
+      params = params.merge('collection_data_type' => 'NEAR_REAL_TIME')
+    end
 
-    nrt = features && features.include?('Near Real Time')
-    params = params.merge('collection_data_type' => 'NEAR_REAL_TIME') if nrt
-
-    params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
-
-    cwic = features && features.include?("Int'l / Interagency")
-    params['include_tags'] = ["#{Rails.configuration.cmr_tag_namespace}.*", "org.ceos.wgiss.cwic.granules.prod"].join(',')
-    unless cwic || request.query_parameters['echo_collection_id']
+    unless features["Int'l / Interagency"] || request.query_parameters['echo_collection_id']
       params['exclude[tag_key]'] = "org.ceos.wgiss.cwic.granules.prod"
     end
+
+    params['include_tags'] = ["#{Rails.configuration.cmr_tag_namespace}.*",
+                              "org.ceos.wgiss.cwic.granules.prod"].join(',')
+    params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
     params
   end

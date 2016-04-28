@@ -137,6 +137,7 @@ module VCR
             opts[:match_requests_on] << :token
           end
 
+          record = :all if ENV['record'] && ENV['record'].split(',').include?(cassette)
           opts[:record] = record
 
           ActiveSupport::Notifications.instrument "edsc.performance", activity: "HTTP Request (#{cassette})", cassette: cassette do
