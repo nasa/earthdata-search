@@ -29,6 +29,7 @@
 
     _writeQueryCondition: (conditions) ->
       return unless @_definitions()
+      conditions = [] unless conditions
 
       for condition, i in conditions
         condition = []
