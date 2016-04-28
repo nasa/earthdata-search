@@ -7,27 +7,17 @@
   <div class="master-overlay-content panel-group">
     <!-- ko if: collections.facets.isRelevant() -->
     <!-- ko foreach: collections.facets.results -->
-      <% unless Rails.env.production? %>
       <!--ko if: name == 'Features'-->
         <!--ko foreach: values-->
           <!--ko if: term == "Int'l / Interagency"-->
-            <p class="cwic-facet" data-bind="click: $root.collections.facets.toggleFacet, attr: {title: term}">
-              <span>
-              <!--ko ifnot: isSelected()-->
-                <i class="fa fa-square-o"></i>
-              <!--/ko-->
-              <!--ko if: isSelected()-->
-                <i class="fa fa-check-square-o"></i>
-              <!--/ko-->
-              </span>
-              <span class="active-indicator"></span>
+            <p class="facets-item cwic-facet" data-bind="click: $root.collections.facets.toggleFacet, attr: {title: term}">
+              <i class="fa" data-bind="css: {'fa-square-o': !isSelected(), 'fa-check-square-o': isSelected()}"></i>
               <span class="facet-term">Include <!-- ko text: term --><!-- /ko --> Data</span>
               <span class="facet-badge badge-cwic"></span>
             </p>
           <!--/ko-->
         <!--/ko-->
       <!--/ko-->
-      <% end %>
     <!-- # Temporarily filter out 'Category Keyword' facet. Once CMR-1923 is implemented, the changes can be reverted. -->
     <!-- ko if: values().length > 0 && name != "Category Keyword" -->
     <div data-bind="css: class_name" class="panel panel-default">
@@ -42,12 +32,12 @@
           <!-- ko foreach: values -->
           <!--ko if: term !== "Int'l / Interagency"-->
           <p class="facets-item" data-bind="click: $root.collections.facets.toggleFacet, css: {selected: isSelected(), 'facets-child': isChild(), 'facets-ancestor': isAncestor(), 'facets-parent': isParent()}, attr: {title: term}">
-            <span class="active-indicator"></span>
             <!--ko if: isAncestor() && !isParent() -->
               <i class="fa fa-chevron-left"></i>
             <!--/ko-->
 
             <span data-bind="text: term" class="facet-term"></span>
+            <i class="fa fa-times"></i>
             <!-- ko ifnot: $parent.name == 'Features' || isAncestor() -->
             <span class="facet-item-collection-count" data-bind="text: count"></span>
             <!-- /ko -->
@@ -60,7 +50,6 @@
             <!-- ko if: term == 'Near Real Time' -->
             <span class="facet-badge badge-nrt"></span>
             <!-- /ko -->
-            <i class="fa fa-times"></i>
           </p>
           <!--/ko-->
           <!-- /ko -->

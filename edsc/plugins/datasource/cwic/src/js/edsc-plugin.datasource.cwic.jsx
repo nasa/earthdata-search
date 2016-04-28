@@ -9,6 +9,7 @@ export default class CwicDatasourcePlugin {
     this._dataLoaded = ko.observable(false);
     let short_name = collection.json.short_name;
     let osdd_url = `http://cwic.wgiss.ceos.org/opensearch/datasets/${short_name}/osdd.xml`;
+    Object.defineProperty(collection, 'granuleQuery', {get: () => {return this.cwicQuery();}});
     collection.osdd_url(osdd_url);
 
     this.clearFilters = () => {
@@ -16,7 +17,6 @@ export default class CwicDatasourcePlugin {
     };
 
     this.capabilities = {
-      excludeGranules: false,
       timeline: false
     };
   }
@@ -59,7 +59,7 @@ export default class CwicDatasourcePlugin {
       methods: [
         {name: 'Download',
          type: 'download',
-         all: true,
+         all: query.excludedGranules().length == 0,
          count: hits,
          defaults: {accessMethod: [{method: 'Download', type: 'download'}]}}
       ]
@@ -75,6 +75,9 @@ export default class CwicDatasourcePlugin {
       let url = granules.cwicUrl({count: 100});
       if (url) {
         let downloadUrl = url.replace(/^\/cwic/, '/cwic/edsc_download');
+        if (granules.query.excludedGranules()) {
+          downloadUrl += "&cx=" + granules.query.excludedGranules().join('!');
+        }
         result.push({title: "View Download Links", url: downloadUrl});
       }
     }
@@ -82,7 +85,7 @@ export default class CwicDatasourcePlugin {
     return result;
   }
   hasQueryConfig() {
-    return this._query !== null && Object.keys(this._query.serialize()).length > 0;
+    return this._query !== null && (Object.keys(this._query.serialize()).length > 0 || (this._query.excludedGranules && this._query.excludedGranules().length > 0));
   }
 
   updateFromCollectionData(collectionData) {

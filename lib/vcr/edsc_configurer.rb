@@ -17,6 +17,28 @@ module VCR
     end
   end
 
+  def insert_cached_cassette(name, options={})
+    options = options.merge(allow_playback_repeats: true) unless options.key?(:allow_playback_repeats)
+    @cassette_cache ||= {}
+    key = "#{name}/#{options.to_json}"
+    cassette = @cassette_cache[key]
+    if cassette && turned_on? && !cassettes.any? {|c| c.name == name}
+      cassettes.push(cassette)
+    else
+      @cassette_cache[key] = cassette = insert_cassette(name, options)
+    end
+    cassette
+  end
+
+  def use_cached_cassette(name, options={}, &block)
+    cassette = insert_cached_cassette(name, options)
+    begin
+      call_block(block, cassette)
+    ensure
+      eject_cassette
+    end
+  end
+
   module EDSCConfigurer
     def self.compare_uris(r1, r2)
       return true if r1.uri == r2.uri
@@ -79,12 +101,11 @@ module VCR
           elsif uri.include? '/convert'
             cassette = 'ogre'
           elsif (request.method == :delete ||
-                 (request.uri.include?('/orders.json') && (request.method == :get || request.method == :post)) ||
-                 (request.uri.include?('/echo-rest/calendar_events') && !request.uri.include?('testbed')) ||
+                 (uri.include?('/orders.json') && (request.method == :get || request.method == :post)) ||
+                 (uri.include?('/echo-rest/calendar_events') && !uri.include?('testbed')) ||
                  uri.include?('users/current.json') ||
                  uri.include?('/echo-rest/users.json') ||
-                 request.uri.include?('4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json') ||
-                 request.uri.include?('69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences.json') ||
+                 uri.include?('/preferences.json') ||
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('invalid')) ||
                  uri.include?('C179002986-ORNL') ||
@@ -118,7 +139,9 @@ module VCR
 
           opts[:record] = record
 
-          VCR.use_cassette(cassette, opts, &request)
+          ActiveSupport::Notifications.instrument "edsc.performance", activity: "HTTP Request (#{cassette})", cassette: cassette do
+              VCR.use_cached_cassette(cassette, opts, &request)
+            end
         end
       end
     end

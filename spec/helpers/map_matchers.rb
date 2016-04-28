@@ -9,6 +9,18 @@ module MapUtil
   end
 end
 
+RSpec::Matchers.define :have_granule_visualizations do |collection_id|
+  match do |selector|
+    expect(selector).to have_selector("#granule-vis-#{collection_id} canvas")
+  end
+end
+
+RSpec::Matchers.define :have_no_granule_visualizations do |collection_id|
+  match do |selector|
+    expect(selector).to have_no_selector("#granule-vis-#{collection_id} canvas")
+  end
+end
+
 RSpec::Matchers.define :have_tiles_with_projection do |expected|
   match do |selector|
     MapUtil.tiles(Capybara.current_session, selector).any? do |img|
@@ -28,7 +40,6 @@ end
 RSpec::Matchers.define :have_tiles_with_date do |expected|
   match do |selector|
     MapUtil.tiles(Capybara.current_session, selector).any? do |img|
-      puts "#{img['src']} vs #{expected}" unless img['src'] =~ /TIME=#{expected}/
       img['src'] =~ /TIME=#{expected}/
     end
   end
