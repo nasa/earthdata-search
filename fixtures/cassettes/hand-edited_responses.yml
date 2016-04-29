@@ -844,6 +844,37 @@ edscbasic_from_urs:
               "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
               Contact"},"order_notification_level":"NONE"}}'
     http_version:
+edsc_user_prefs:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.229000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search",
+              "email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},
+              "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+              Contact"},"order_notification_level":"NONE"}}'
+    http_version:
 edscbasic_preferences:
   response:
     status:
