@@ -20,6 +20,25 @@ RSpec::Matchers.define :have_query_string do |string|
   end
 end
 
+RSpec::Matchers.define :have_query_param do |params|
+  def query(page)
+    URI.parse(page.current_url).query
+  end
+
+  match do |page|
+    synchronize do
+      # Test one at a time to be order-independent
+      params.each do |k, v|
+        expect(query(page).include?({k => v}.to_param)).to be_true
+      end
+    end
+  end
+
+  failure_message_for_should do |page|
+    "expected page to have query params #{params.to_param}, got #{query(page).inspect}"
+  end
+end
+
 RSpec::Matchers.define :have_path do |string|
   def path(page)
     URI.parse(page.current_url).path

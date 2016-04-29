@@ -29,7 +29,7 @@
         <% @retrievals.each do |retrieval| %>
         <tr class="<%= cycle("odd", "even") -%>">
           <td>
-            <a href="/data/remove?retrieval_id=<%= retrieval.to_param %>" title="Remove Retrieval"
+            <a href="<%=edsc_path "/data/remove?retrieval_id=#{retrieval.to_param}" %>" title="Remove Retrieval"
                title="remove"
                data-method="post"
                data-confirm="Are you sure you want to remove this data retrieval?  This action cannot be undone."

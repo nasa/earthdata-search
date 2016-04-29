@@ -98,10 +98,7 @@ ns.ProjectList = do (ko
         singleGranuleParam = if singleGranuleId? then "&sgd=#{encodeURIComponent(singleGranuleId)}" else ""
         backParam = "&back=#{encodeURIComponent(urlUtil.cleanPath().split('?')[0])}"
         path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr + backParam
-        if window.tokenExpiresIn?
-          window.location.href = path
-        else
-          window.location.href = "/login?next_point=#{encodeURIComponent(path)}"
+        window.location.href = path
 
     _sortOutTemporalMalarkey: (callback) ->
       querystr = urlUtil.currentQuery()
