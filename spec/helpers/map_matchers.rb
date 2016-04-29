@@ -40,7 +40,6 @@ end
 RSpec::Matchers.define :have_tiles_with_date do |expected|
   match do |selector|
     MapUtil.tiles(Capybara.current_session, selector).any? do |img|
-      puts "#{img['src']} vs #{expected}" unless img['src'] =~ /TIME=#{expected}/
       img['src'] =~ /TIME=#{expected}/
     end
   end

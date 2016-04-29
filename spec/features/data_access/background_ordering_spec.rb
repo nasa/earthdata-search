@@ -14,7 +14,6 @@ describe 'Background jobs ordering', reset: false do
       login
       first_project_collection.click_link "Show granule filters"
       click_link "Search Multiple"
-      choose "Search by Local Granule ID"
       fill_in "granule_id_field", with: "AST_L1A#00311092015232127_11102015081255.hdf\nAST_L1A#00311092015223445_11102015075930.hdf"
       click_button "granule-filters-submit"
       wait_for_xhr
@@ -63,7 +62,6 @@ describe 'Background jobs ordering', reset: false do
 
     after :all do
       Delayed::Worker.delay_jobs = false
-      run_stop_task
     end
 
     it 'indicates current order status' do

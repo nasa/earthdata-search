@@ -18,10 +18,13 @@ module Echo
 
     def get_granules(options={}, token=nil)
       options = options.dup
+      attrs = translate_attr_params(options)
       format = options.delete(:format) || 'json'
       body = options_to_granule_query(options)
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      post("/search/granules.#{format}", body.to_query, headers)
+      query = body.to_query
+      query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
+      post("/search/granules.#{format}", query, headers)
     end
 
     def get_first_granule(collection, options={}, token=nil)
@@ -51,11 +54,13 @@ module Echo
 
     def post_timeline(options={}, token=nil)
       options = options.dup
+      attrs = translate_attr_params(options)
       options['concept_id'] = options.delete("echo_collection_id")
       format = options.delete(:format) || 'json'
-      query = options_to_granule_query(options)
+      query = options_to_granule_query(options).to_query
+      query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
-      post("/search/granules/timeline.#{format}", query.to_query, headers)
+      post("/search/granules/timeline.#{format}", query, headers)
     end
 
     def add_tag(key, value, condition, token)
@@ -119,6 +124,24 @@ module Echo
     end
 
     protected
+
+    def translate_attr_params(options)
+      # TODO this translation can be removed once CMR fixed CMR-2755
+      attrs = []
+      attr_opts = options.delete('attribute')
+      if attr_opts.present?
+        attr_opts.each do |attr_opt|
+          if attr_opt
+            if attr_opt['value']
+              attrs.push "attribute[]=#{attr_opt['type']},#{CGI.escape(attr_opt['name'].gsub(/,/, '\,'))},#{CGI.escape(attr_opt['value'])}"
+            else
+              attrs.push "attribute[]=#{attr_opt['type']},#{CGI.escape(attr_opt['name'].gsub(/,/, '\,'))},#{CGI.escape(attr_opt['minValue'])},#{CGI.escape(attr_opt['maxValue'])}"
+            end
+          end
+        end
+      end
+      attrs
+    end
 
     def tag_condition_to_query(condition)
       if condition.is_a?(String) || condition.is_a?(Array)

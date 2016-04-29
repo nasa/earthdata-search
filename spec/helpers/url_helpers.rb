@@ -82,7 +82,9 @@ module Helpers
     end
 
     def load_page(url, options={})
-      visit QueryBuilder.new.add_to(url, options)
+      ActiveSupport::Notifications.instrument "edsc.performance", activity: "Page load" do
+        visit QueryBuilder.new.add_to(url, options)
+      end
       wait_for_xhr
     end
   end
