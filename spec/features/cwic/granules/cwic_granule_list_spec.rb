@@ -6,7 +6,7 @@ describe "CWIC Granule list", reset: false do
   context "for all collections with granules" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
+      load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
     end
 
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
@@ -80,7 +80,7 @@ describe "CWIC Granule list", reset: false do
 
         after :all do
           Capybara.reset_sessions!
-          load_page :search, env: :sit, facets: true, ff: "Int'l / Interagency", q: 'C1000003579-GCMDTEST'
+          load_page :search, env: :sit, facets: true, q: 'C1000003579-GCMDTEST'
           login
           wait_for_xhr
           view_granule_results("INSAT-3D Imager Level-2P IR WINDS")
@@ -120,7 +120,7 @@ describe "CWIC Granule list", reset: false do
   context "for collections with many granule results" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
+      load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
     end
 
     context "clicking on a collection result" do
@@ -138,7 +138,7 @@ describe "CWIC Granule list", reset: false do
   context "for collections that have granules with temporal fields" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
+      load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
     end
 
     context "clicking on a collection result" do
@@ -153,7 +153,7 @@ describe "CWIC Granule list", reset: false do
   context "for CWIC tagged collections" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :uat, facets: true, ff: "Int'l / Interagency", q: 'C1204595275-GCMDTEST'
+      load_page :search, env: :uat, facets: true, q: 'C1204595275-GCMDTEST'
       view_granule_results("ACES Continuous Data")
     end
 

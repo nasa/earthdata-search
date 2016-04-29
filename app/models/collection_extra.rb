@@ -367,7 +367,7 @@ class CollectionExtra < ActiveRecord::Base
   def decorate_tag_mappings(collection)
     ns = Rails.configuration.cmr_tag_namespace
 
-    if self.class.has_tag(collection, 'org.ceos.wgiss.cwic.granules.prod')
+    if self.class.has_tag(collection, 'org.ceos.wgiss.cwic.granules.prod') && !collection[:has_granules]
       ds_tag = "#{ns}.datasource"
       renderers_tag = "#{ns}.renderers"
       collection[:tags][ds_tag] = {data: 'cwic'} unless self.class.has_tag(collection, ds_tag)

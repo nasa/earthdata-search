@@ -8,7 +8,7 @@ describe "CWIC-enabled polygon searches", reset: false do
   context "when a polygon search condition has been applied" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
+      load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
     end
 
@@ -30,7 +30,7 @@ describe "CWIC-enabled polygon searches", reset: false do
     context "viewing CWIC granule results for the first time" do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
+        load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
 
         view_granule_results(cwic_collection_name)
@@ -51,7 +51,7 @@ describe "CWIC-enabled polygon searches", reset: false do
     context "viewing CWIC granule results after the first time" do
       before :all do
         Capybara.reset_sessions!
-        load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
+        load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
 
         view_granule_results(cwic_collection_name)
