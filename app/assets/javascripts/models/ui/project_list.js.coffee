@@ -67,12 +67,13 @@ ns.ProjectList = do (ko
       $(document).ready(@_onReady)
 
     _syncHitsCounts: =>
-        for collection in @project.collections()
-          found = false
-          for result in @collectionResults.results() when result.id == collection.id
-            found = true
-            break
-          collection.granuleDatasource()?.data() unless found
+      return unless @collectionResults.results().length > 0
+      for collection in @project.collections()
+        found = false
+        for result in @collectionResults.results() when result.id == collection.id
+          found = true
+          break
+        collection.granuleDatasource()?.data() unless found
 
     _onReady: =>
       sortable('#project-collections-list')
