@@ -7,8 +7,20 @@ class DataAccessController < ApplicationController
   respond_to :json
 
   before_filter :require_login
+  prepend_before_filter :metric_retrieval, only: [:configure]
+
+  # This is a before filter to detect users lost to URS
+  def metric_retrieval
+    metrics_event('retrieve', {step: 'pre-configure'})
+    collections = params[:p]
+    if collections.present?
+      collections = collections.split('!').map(&:presence).compact
+      metrics_event('access', {collections: collections})
+    end
+  end
 
   def configure
+    metrics_event('retrieve', {step: 'configure'})
     @back_path = request.query_parameters['back']
     if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
       @back_path = '/search/collections'
@@ -21,6 +33,8 @@ class DataAccessController < ApplicationController
       render file: 'public/401.html', status: :unauthorized
       return
     end
+
+    metrics_event('retrieve', {step: 'complete'})
 
     project = JSON.parse(params[:project])
 
