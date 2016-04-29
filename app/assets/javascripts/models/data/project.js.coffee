@@ -60,12 +60,17 @@ ns.Project = do (ko,
 
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
       @serviceOptions = new ServiceOptionsModel(@granuleAccessOptions)
+      @_granulesUpdater = ko.computed(@_loadGranules, this)
 
     dispose: ->
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
       @collection.dispose()
       @serviceOptions.dispose()
       @granuleAccessOptions.dispose()
+      @_granulesUpdater.dispose()
+
+    _loadGranules: ->
+      @collection.granuleDatasource()?.data()
 
     _loadGranuleAccessOptions: ->
       dataSource = @collection.granuleDatasource()
@@ -245,7 +250,7 @@ ns.Project = do (ko,
               queries[i + start] = query
               break
         for q, index in queries
-          queries[index] = {} if q == undefined 
+          queries[index] = {} if q == undefined
         result.pg = queries if queries.length > 0
       result
 

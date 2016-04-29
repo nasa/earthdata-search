@@ -94,10 +94,7 @@ export default class CmrDatasourcePlugin {
   // Implement only if row-specific temporal is supported
   setTemporal(values) {
     let temporal = this.temporal();
-    console.log("setTemporal: " + temporal);
-    console.log("values: " + values);
     if (temporal) {
-      console.log("setTemporalInner");
       let start = temporal.start,
           end = temporal.stop;
       if (values.hasOwnProperty('recurring')) {
@@ -141,7 +138,7 @@ export default class CmrDatasourcePlugin {
   }
 
   granuleDescription() {
-    let hits = (this._dataLoaded() && this.hasQueryConfig()) ?
+    let hits = this._dataLoaded() ?
           this.data().hits() :
           this._collection.granuleCount(),
         result;
