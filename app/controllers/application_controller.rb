@@ -184,8 +184,9 @@ class ApplicationController < ActionController::Base
   helper_method :script_session_expires_in
 
   def metrics_event(type, data, other_data={})
-    Rails.logger.tagged('metrics', session.id) do
-      Rails.logger.info({event: type, data: data}.merge(other_data).to_json)
+    Rails.logger.tagged('metrics') do
+      timestamp = (Time.now.to_f * 1000).to_i
+      Rails.logger.info({event: type, data: data, session: session.id, timestamp: timestamp}.merge(other_data).to_json)
     end
   end
 
