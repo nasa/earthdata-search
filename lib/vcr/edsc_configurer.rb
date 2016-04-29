@@ -89,6 +89,11 @@ module VCR
       default_record_mode = options[:record] || :new_episodes
 
       lock = Mutex.new
+
+      c.ignore_request do |request|
+        request.uri.include?('/echo-rest/tokens.json')
+      end
+
       c.around_http_request do |request|
         lock.synchronize do
           opts = options.deep_dup
