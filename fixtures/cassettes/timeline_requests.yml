@@ -705,7 +705,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 27 Apr 2016 15:21:14 GMT
+  recorded_at: Wed, 27 Apr 2016 15:21:20 GMT
   digest: a9ceb9b1a749e5fd6283d3a7472716a2393f06f4
 - request:
     method: post
@@ -756,7 +756,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 27 Apr 2016 15:21:20 GMT
+  recorded_at: Wed, 27 Apr 2016 15:21:14 GMT
   digest: a9ceb9b1a749e5fd6283d3a7472716a2393f06f4
 - request:
     method: post
@@ -1824,7 +1824,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 27 Apr 2016 15:19:39 GMT
+  recorded_at: Wed, 27 Apr 2016 15:19:25 GMT
   digest: 7dd403403b9ad3fc341f41ed11cba3762baff134
 - request:
     method: post
@@ -1841,7 +1841,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 27 Apr 2016 15:19:25 GMT
+  recorded_at: Wed, 27 Apr 2016 15:19:39 GMT
   digest: 7dd403403b9ad3fc341f41ed11cba3762baff134
 - request:
     method: post
@@ -2547,6 +2547,23 @@ http_interactions:
       - edsc-dev
   recorded_at: Sat, 05 Dec 2015 03:00:34 GMT
   digest: 406ed8a02ea131bf03ea68f8fd59ea1cbcb59cff
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C187016591-LPDAAC_ECS&end_date=2012-10-04T06%3A51%3A48.000Z&interval=day&start_date=2009-10-02T06%3A51%3A48.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 29 Apr 2016 14:06:52 GMT
+  digest: 18672a8125e54e9315886b3201b53b48a4a0c187
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
