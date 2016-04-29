@@ -61,16 +61,6 @@ class CollectionsController < ApplicationController
     render :json => result, status: :ok
   end
 
-  def facets
-    response = echo_client.get_facets(collection_params_for_request(request), token)
-
-    if response.success?
-      respond_with(facet_results(request, response), status: response.status)
-    else
-      respond_with(response.body, status: response.status)
-    end
-  end
-
   private
 
   def execute_search(hierarchical, non_hierarchical)
@@ -297,9 +287,21 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params_for_request(request, hierarchical=true)
-    features = request.query_parameters['features']
+    params = request.query_parameters.dup
+
+    params.delete(:portal)
+    if portal? && portal[:params]
+      params.deep_merge!(portal[:params]) do |key, v1, v2|
+        if v1.is_a?(Array) && v2.is_a?(Array)
+          v1 + v2
+        else
+          v2
+        end
+      end
+    end
+
+    features = params.delete(:features)
     use_opendap = features && features.include?('Subsetting Services')
-    params = request.query_parameters.except('features')
     if use_opendap
       params['tag_key'] = Array.wrap(params['tag_key'])
       params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"

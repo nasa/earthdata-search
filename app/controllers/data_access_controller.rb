@@ -28,6 +28,7 @@ class DataAccessController < ApplicationController
   end
 
   def retrieve
+    # TODO PQ EDSC-1039: Store portal information here
     user = current_user
     unless user
       render file: 'public/401.html', status: :unauthorized
@@ -49,6 +50,7 @@ class DataAccessController < ApplicationController
   end
 
   def retrieval
+    # TODO PQ EDSC-1039: Include portal information here
     id = Retrieval.deobfuscate_id params[:id].to_i
     @retrieval = Retrieval.find_by_id id
     render file: "#{Rails.root}/public/404.html", status: :not_found and return if @retrieval.nil?
@@ -127,6 +129,7 @@ class DataAccessController < ApplicationController
   end
 
   def status
+    # TODO PQ EDSC-1039: Include portal information here
     if current_user
       @retrievals = current_user.retrievals
     else

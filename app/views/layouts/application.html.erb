@@ -29,6 +29,9 @@
     </script>
     <% end %>
     <%= yield :javascript %>
+    <% portal_scripts.each do |script| %>
+    <%= javascript_include_tag script %>
+    <% end %>
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
     <!--[if lt IE 10]> <%= javascript_include_tag "flexibility" %> <![endif]-->
 </head>
@@ -36,7 +39,7 @@
     <div class="wrap">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
-      <h1><a class="logo" href="<%= root_path %>" title="Earthdata Search">Search</a><% unless Rails.configuration.logo_name.blank? %> <span class="version-badge"><%= Rails.configuration.logo_name %></span><% end %></h1>
+      <h1><a class="logo" href="<%=edsc_path root_path %>" title="Earthdata Search">Search</a><% unless Rails.configuration.logo_name.blank? %> <span class="version-badge"><%= Rails.configuration.logo_name %></span><% end %></h1>
       <div class="toolbar-content">
         <div class="toolbar-secondary">
           <%= yield :toolbar_secondary %>
