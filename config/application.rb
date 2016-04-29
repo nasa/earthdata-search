@@ -99,6 +99,9 @@ module EarthdataSearchClient
     config.version = load_version
     config.feedback_url = nil
 
+    portals = YAML.load_file(Rails.root.join('config/portals.yml'))
+    config.portals = (portals[Rails.env.to_s] || portals['defaults']).with_indifferent_access
+
     config.services = YAML.load_file(Rails.root.join('config/services.yml'))
     config.gibs = JSON.parse(IO.read(Rails.root.join('config/gibs.json')))
     config.cmr_env = 'prod'
