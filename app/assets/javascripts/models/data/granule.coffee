@@ -10,6 +10,7 @@
       extend(this, jsonData)
       @details = @asyncComputed({}, 100, @_computeGranuleDetails, this)
       @detailsLoaded = ko.observable(false)
+      @browseError = ko.observable(false)
 
     edsc_browse_url: (w, h) ->
       w ?= 170
@@ -21,7 +22,8 @@
         return link.href if link.rel.indexOf('browse') != -1
       null
 
-    onThumbLoad: =>
+    onThumbError: (granule) ->
+      @browseError(true)
 
     getTemporal: ->
       time_end = @_normalizeTime(@time_end)
