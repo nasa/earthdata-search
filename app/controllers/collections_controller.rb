@@ -300,9 +300,8 @@ class CollectionsController < ApplicationController
       end
     end
 
-    features = params.delete(:features)
-    use_opendap = features && features.include?('Subsetting Services')
-    if use_opendap
+    features = Hash[Array.wrap(params.delete(:features)).map {|f| [f, true]}]
+    if features['Subsetting Services']
       params['tag_key'] = Array.wrap(params['tag_key'])
       params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"
     end
