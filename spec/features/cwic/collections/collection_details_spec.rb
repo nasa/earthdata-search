@@ -6,7 +6,6 @@ describe "CWIC-enabled collection details", reset: false do
   before :all do
     Capybara.reset_sessions!
     load_page :search, env: :uat, facets: true
-    cwic_feature_facet.click
   end
 
   after :all do

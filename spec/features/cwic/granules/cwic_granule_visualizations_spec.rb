@@ -6,7 +6,7 @@ describe "CWIC-enabled granule visualizations", reset: false do
   context do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :uat, facets: true, ff: "Int'l / Interagency", q: 'C1204449891-GCMDTEST'
+      load_page :search, env: :uat, facets: true, q: 'C1204449891-GCMDTEST'
     end
 
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
@@ -44,7 +44,7 @@ describe "CWIC-enabled granule visualizations", reset: false do
   context "when viewing CWIC granule results" do
     before :all do
       Capybara.reset_sessions!
-      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
+      load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
     end
 
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
