@@ -4,7 +4,9 @@ class GranulesController < ApplicationController
   respond_to :json
 
   def create
-    catalog_response = echo_client.get_granules(granule_params_for_request(request), token)
+    granule_params = granule_params_for_request(request)
+    catalog_response = echo_client.get_granules(granule_params, token)
+    metrics_event('filter', granule_params)
 
     if catalog_response.success?
       catalog_response.headers.each do |key, value|
