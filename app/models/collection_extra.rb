@@ -372,7 +372,6 @@ class CollectionExtra < ActiveRecord::Base
       renderers_tag = "#{ns}.renderers"
       collection[:tags][ds_tag] = {data: 'cwic'} unless self.class.has_tag(collection, ds_tag)
       collection[:tags][renderers_tag] = {data: ['cwic']} unless self.class.has_tag(collection, renderers_tag)
-      Rails.logger.info collection['tags']
     end
   end
 

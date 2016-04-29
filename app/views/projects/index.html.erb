@@ -41,7 +41,7 @@
             </td>
             <td>
               <a href="javascript:void(0)" title="Share Project" class="share-project"><i class="fa fa-share-square-o"></i></a>
-              <a href="/projects/remove?project_id=<%= project.to_param %>" title="Remove Project"
+              <a href="<%=edsc_path "/projects/remove?project_id=#{project.to_param}" %>" title="Remove Project"
                  data-remote="true"
                  data-method="post"
                  data-confirm="Are you sure you want to remove this project?  This action cannot be undone."

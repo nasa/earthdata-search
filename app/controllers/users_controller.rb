@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     clear_session
 
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to edsc_path(root_url) }
       format.json { render json: nil, status: :ok }
     end
   end

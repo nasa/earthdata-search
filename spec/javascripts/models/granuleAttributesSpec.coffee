@@ -37,12 +37,12 @@ describe "GranuleAttributes", ->
 
       it "reads a single condition when a condition is set", ->
         attrs = makeAttrsWithValue('myvalue', {})
-        expect(attrs.queryCondition()).toEqual([{name: 'attr0', type: 'string', value: 'myvalue'}])
+        expect(attrs.queryCondition()).toEqual(['string,attr0,myvalue'])
 
       it "reads multiple conditions when multiple conditions are set", ->
         attrs = makeAttrsWithValue('myvalue', {}, {}, {})
         attrs._definitions()[1].value(null)
-        expect(attrs.queryCondition()).toEqual([{name: 'attr0', type: 'string', value: 'myvalue'}, {name: 'attr2', type: 'string', value: 'myvalue'}])
+        expect(attrs.queryCondition()).toEqual(['string,attr0,myvalue','string,attr2,myvalue'])
 
 
     describe "writing", ->
@@ -53,12 +53,12 @@ describe "GranuleAttributes", ->
 
       it "writes a single condition when a condition is present in the query", ->
         attrs = makeAttrs({})
-        attrs.queryCondition([{name: 'attr0', value: 'myvalue'}])
+        attrs.queryCondition(['STRING,attr0,myvalue'])
         expect(attrs._definitions()[0].value()).toBe('myvalue')
 
       it "writes multiple conditions when multiple conditions are present in the query", ->
         attrs = makeAttrs({}, {}, {})
-        attrs.queryCondition([{name: 'attr0', value: 'myvalue'}, {name: 'attr2', value: 'myothervalue'}, ])
+        attrs.queryCondition(['STRING,attr0,myvalue', 'STRING,attr2,myothervalue', ])
         expect(attrs._definitions()[0].value()).toBe('myvalue')
         expect(attrs._definitions()[1].value()).toBe(null)
         expect(attrs._definitions()[2].value()).toBe('myothervalue')
@@ -69,28 +69,28 @@ describe "GranuleAttributes", ->
       attrs._toQuery(attrs._definitions()[0])
 
     it "ignores empty strings", ->
-      expect(getToQueryValue('')).toEqual(null)
+      expect(getToQueryValue('')).toEqual([])
 
     it "ignores blank strings", ->
-      expect(getToQueryValue('  ')).toEqual(null)
+      expect(getToQueryValue('  ')).toEqual([])
 
     it "ignores null values", ->
-      expect(getToQueryValue(null)).toEqual(null)
+      expect(getToQueryValue(null)).toEqual([])
 
     it "parses values separated by space-dash-space into ranges", ->
-      expect(getToQueryValue('1 - 2')).toEqual(name: 'attr0', type: 'int', minValue: 1, maxValue: 2)
+      expect(getToQueryValue('1 - 2')).toEqual(['int','attr0',1,2])
 
     it "parses values beginning with dash-space into ranges with no minValue", ->
-      expect(getToQueryValue('- 2')).toEqual(name: 'attr0', type: 'int', maxValue: 2)
+      expect(getToQueryValue('- 2')).toEqual(['int','attr0',null,2])
 
     it "parses values ending with space-dash into ranges with no maxValue", ->
-      expect(getToQueryValue('1 -')).toEqual(name: 'attr0', type: 'int', minValue: 1)
+      expect(getToQueryValue('1 -')).toEqual(['int','attr0',1,null])
 
     it "parses negative number values without creating inappropriate ranges", ->
-      expect(getToQueryValue('-1')).toEqual(name: 'attr0', type: 'int', value: -1)
+      expect(getToQueryValue('-1')).toEqual(['int','attr0',-1])
 
     it "parses negative number values contained in ranges", ->
-      expect(getToQueryValue('-2 - -1')).toEqual(name: 'attr0', type: 'int', minValue: -2, maxValue: -1)
+      expect(getToQueryValue('-2 - -1')).toEqual(['int','attr0',-2,-1])
 
   describe '#_fromQuery', ->
     getFromQueryValue = (conditions, type="INT") ->
@@ -98,56 +98,56 @@ describe "GranuleAttributes", ->
       attrs._fromQuery(attrs._definitions()[0], conditions)
 
     it "reads range values into space-dash-space separated strings", ->
-      expect(getFromQueryValue([{name: 'attr0', type: "int", minValue: '1', maxValue: '2'}])).toEqual('1 - 2')
+      expect(getFromQueryValue(['int', 'attr0', 1, 2])).toEqual('1 - 2')
 
     it "reads range values with no minimum into strings beginning with dash-space", ->
-      expect(getFromQueryValue([{name: 'attr0', type: "int", maxValue: '2'}])).toEqual('- 2')
+      expect(getFromQueryValue(['int', 'attr0', null, 2])).toEqual('- 2')
 
     it "reads range values with no maximum into strings ending with space-dash", ->
-      expect(getFromQueryValue([{name: 'attr0', type: "int", minValue: '1'}])).toEqual('1 -')
+      expect(getFromQueryValue(['int', 'attr0', 1, null])).toEqual('1 -')
 
   describe "#_errorFor", ->
-    getErrorForAttrs = (attrs, type, begin, end) ->
-      def = {type: type}
+    getErrorForAttrs = (condition, begin, end) ->
+      def = {type: condition[0]}
       def.begin = begin if begin
       def.end = end if end
-      makeAttrs(def)._errorFor(def, attrs)
+      makeAttrs(def)._errorFor(def, condition)
 
     fieldValidationSpecs = (fieldName) ->
-      getErrorFor = (value, type, begin, end) ->
-        attrs = {}
-        attrs[fieldName] = value
-        getErrorForAttrs(attrs, type, begin, end)
+      getErrorFor = (condition, begin, end) ->
+#        attrs = {}
+#        attrs[fieldName] = condition[2]
+        getErrorForAttrs(condition, begin, end)
 
       it "produces an error for invalid integers", ->
-        expect(getErrorFor('123asdf', 'INT')).toEqual('Invalid integer: 123asdf')
+        expect(getErrorFor(['INT', 'attr0', '123asdf'])).toEqual('Invalid integer: 123asdf')
 
       it "produces no error for valid integers", ->
-        expect(getErrorFor('123', 'INT')).toEqual(null)
+        expect(getErrorFor(['INT', 'attr0', '123')).toEqual(null)
 
       it "produces an error for invalid floats", ->
-        expect(getErrorFor('123asdf', 'FLOAT')).toEqual('Invalid float: 123asdf')
+        expect(getErrorFor(['FLOAT', 'attr0', '123asdf'])).toEqual('Invalid float: 123asdf')
 
       it "produces no error for valid floats", ->
-        expect(getErrorFor('123.4', 'FLOAT')).toEqual(null)
+        expect(getErrorFor(['FLOAT', 'attr0', '123.4'])).toEqual(null)
 
       it "produces an error for invalid dates", ->
-        expect(getErrorFor('123asdf', 'DATE')).toEqual('Invalid date: 123asdf')
+        expect(getErrorFor(['DATE', 'attr0', '123asdf'])).toEqual('Invalid date: 123asdf')
 
       it "produces no error for valid dates", ->
-        expect(getErrorFor('2014-01-01', 'DATE')).toEqual(null)
+        expect(getErrorFor(['DATE', 'attr0', '2014-01-01'])).toEqual(null)
 
       it "produces an error for invalid times", ->
-        expect(getErrorFor('123asdf', 'TIME')).toEqual('Invalid time: 123asdf')
+        expect(getErrorFor('TIME', 'attr0', '123asdf'])).toEqual('Invalid time: 123asdf')
 
       it "produces no error for valid times", ->
-        expect(getErrorFor('00:00:00', 'TIME')).toEqual(null)
+        expect(getErrorFor('TIME', 'attr0', '00:00:00'])).toEqual(null)
 
       it "produces an error for invalid date/times", ->
-        expect(getErrorFor('123asdf', 'DATETIME')).toEqual('Invalid date/time: 123asdf')
+        expect(getErrorFor(['DATETIME', 'attr0', '123asdf'])).toEqual('Invalid date/time: 123asdf')
 
       it "produces no error for valid date/times", ->
-        expect(getErrorFor('2014-01-01T00:00:00', 'DATETIME')).toEqual(null)
+        expect(getErrorFor(['DATETIME', 'attr0', '2014-01-01T00:00:00'])).toEqual(null)
 
       it "produces an error when values are below the allowable minimum", ->
         expect(getErrorFor('0', 'INT', 1)).toEqual('Values must be greater than 1')

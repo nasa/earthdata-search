@@ -7,8 +7,20 @@ class DataAccessController < ApplicationController
   respond_to :json
 
   before_filter :require_login
+  prepend_before_filter :metric_retrieval, only: [:configure]
+
+  # This is a before filter to detect users lost to URS
+  def metric_retrieval
+    metrics_event('retrieve', {step: 'pre-configure'})
+    collections = params[:p]
+    if collections.present?
+      collections = collections.split('!').map(&:presence).compact
+      metrics_event('access', {collections: collections})
+    end
+  end
 
   def configure
+    metrics_event('retrieve', {step: 'configure'})
     @back_path = request.query_parameters['back']
     if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
       @back_path = '/search/collections'
@@ -16,11 +28,14 @@ class DataAccessController < ApplicationController
   end
 
   def retrieve
+    # TODO PQ EDSC-1039: Store portal information here
     user = current_user
     unless user
       render file: 'public/401.html', status: :unauthorized
       return
     end
+
+    metrics_event('retrieve', {step: 'complete'})
 
     project = JSON.parse(params[:project])
 
@@ -35,6 +50,7 @@ class DataAccessController < ApplicationController
   end
 
   def retrieval
+    # TODO PQ EDSC-1039: Include portal information here
     id = Retrieval.deobfuscate_id params[:id].to_i
     @retrieval = Retrieval.find_by_id id
     render file: "#{Rails.root}/public/404.html", status: :not_found and return if @retrieval.nil?
@@ -113,6 +129,7 @@ class DataAccessController < ApplicationController
   end
 
   def status
+    # TODO PQ EDSC-1039: Include portal information here
     if current_user
       @retrievals = current_user.retrievals
     else
