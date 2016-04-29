@@ -5,6 +5,8 @@ class CollectionsController < ApplicationController
   SCIENCE_KEYWORDS = ['topic', 'term', 'variable_level_1', 'variable_level_2', 'variable_level_3']
   KEYWORD_CHILD = {'topic' => 'term', 'term' => 'variable_level_1', 'variable_level_1' => 'variable_level_2', 'variable_level_2' => 'variable_level_3', 'variable_level_3' => nil}
 
+  UNLOGGED_PARAMS = ['include_facets', 'hierarchical_facets', 'include_tags', 'include_granule_counts']
+
   def index
     # FIXME Termporary workaround for CMR-2038 and CMR-2049
     # Fire two requests to CMR. One to retrieve hierarchical facets, the other to get non-hierarchical facets, in parallel.
@@ -13,8 +15,13 @@ class CollectionsController < ApplicationController
     urs_client_id = service_configs['urs'][Rails.env.to_s][service_config['urs_root']]
     h_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
     nh_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
+
+    hierarchical_params = collection_params_for_request(request)
+    unless params['echo_collection_id']
+      metrics_event('search', hierarchical_params.except(*UNLOGGED_PARAMS))
+    end
     hierarchical_search = lambda do
-      h_client.get_collections(collection_params_for_request(request), token)
+      h_client.get_collections(hierarchical_params, token)
     end
     non_hierarchical_search = lambda do
       nh_client.get_collections(collection_params_for_request(request, false), token)
@@ -36,6 +43,7 @@ class CollectionsController < ApplicationController
   end
 
   def show
+    metrics_event('details', {collections: [params[:id]]})
     response = echo_client.get_collection(params[:id], token)
 
     use_collection(params[:id])
@@ -48,18 +56,9 @@ class CollectionsController < ApplicationController
   end
 
   def use
+    metrics_event('view', {collections: [params[:id]]})
     result = use_collection(params[:id])
     render :json => result, status: :ok
-  end
-
-  def facets
-    response = echo_client.get_facets(collection_params_for_request(request), token)
-
-    if response.success?
-      respond_with(facet_results(request, response), status: response.status)
-    else
-      respond_with(response.body, status: response.status)
-    end
   end
 
   private
@@ -288,10 +287,22 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params_for_request(request, hierarchical=true)
-    params = request.query_parameters.except('features')
+    params = request.query_parameters.dup
 
-    features = Hash[Array.wrap(request.query_parameters['features']).map {|f| [f, true]}]
-    if features['Subsetting Services']
+    params.delete(:portal)
+    if portal? && portal[:params]
+      params.deep_merge!(portal[:params]) do |key, v1, v2|
+        if v1.is_a?(Array) && v2.is_a?(Array)
+          v1 + v2
+        else
+          v2
+        end
+      end
+    end
+
+    features = params.delete(:features)
+    use_opendap = features && features.include?('Subsetting Services')
+    if use_opendap
       params['tag_key'] = Array.wrap(params['tag_key'])
       params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"
     end
