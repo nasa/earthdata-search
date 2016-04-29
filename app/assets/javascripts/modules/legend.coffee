@@ -17,8 +17,9 @@
   refresh: ->
     scale = @scale
     @container.style.display = if scale? then '' else 'none'
-
-    return unless scale?
+    unless scale?
+      console.log "No legend scale"
+      return
 
     bar = @bar
     {labels, colors} = scale
