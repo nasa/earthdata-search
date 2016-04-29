@@ -17,6 +17,28 @@ module VCR
     end
   end
 
+  def insert_cached_cassette(name, options={})
+    options = options.merge(allow_playback_repeats: true) unless options.key?(:allow_playback_repeats)
+    @cassette_cache ||= {}
+    key = "#{name}/#{options.to_json}"
+    cassette = @cassette_cache[key]
+    if cassette && turned_on? && !cassettes.any? {|c| c.name == name}
+      cassettes.push(cassette)
+    else
+      @cassette_cache[key] = cassette = insert_cassette(name, options)
+    end
+    cassette
+  end
+
+  def use_cached_cassette(name, options={}, &block)
+    cassette = insert_cached_cassette(name, options)
+    begin
+      call_block(block, cassette)
+    ensure
+      eject_cassette
+    end
+  end
+
   module EDSCConfigurer
     def self.compare_uris(r1, r2)
       return true if r1.uri == r2.uri
@@ -117,7 +139,9 @@ module VCR
 
           opts[:record] = record
 
-          VCR.use_cassette(cassette, opts, &request)
+          ActiveSupport::Notifications.instrument "edsc.performance", activity: "HTTP Request (#{cassette})", cassette: cassette do
+              VCR.use_cached_cassette(cassette, opts, &request)
+            end
         end
       end
     end

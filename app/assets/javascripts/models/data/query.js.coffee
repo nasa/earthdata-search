@@ -308,8 +308,6 @@ ns.query = do (ko,
 
   class GranuleQuery extends Query
     constructor: (collectionId, parentQuery, attributes) ->
-      @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
-      @granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
       @dayNightFlagOptions = [{name: "Anytime", value: null},
                               {name: "Day only", value: "DAY"},
                               {name: "Night only", value: "NIGHT"},
@@ -332,7 +330,7 @@ ns.query = do (ko,
       @browseOnly = @queryComponent(new BooleanParam('browse_only'), false)
       @onlineOnly = @queryComponent(new BooleanParam('online_only'), false)
       @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
-      @granuleIds = @queryComponent(new DelimitedParam(@granuleIdsSelectedOptionValue), '')
+      @granuleIds = @queryComponent(new DelimitedParam('readable_granule_name'), '')
       @excludedGranules = @queryComponent(new ExclusionParam('exclude', 'echo_granule_id'), ko.observableArray())
       @attributeFilters = @queryComponent(new QueryParam('attribute'), @attributes.queryCondition)
 
@@ -340,12 +338,6 @@ ns.query = do (ko,
 
       @singleGranuleId = ko.observable(null)
       super(parentQuery)
-
-    fromJson: (query) =>
-      granule_option = 'granule_ur'
-      granule_option = 'producer_granule_id' if query.producer_granule_id
-      @granuleIdsSelectedOptionValue(granule_option)
-      super(query)
 
     _computeIsValid: =>
       (@attributes.isValid() &&

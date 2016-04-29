@@ -193,6 +193,7 @@ ns.Map = do (window,
           url: path
           retry: => @_addLegend(collection)
           success: (data) =>
+            console.log "Adding legend: #{name}"
             @legendControl.setData(name, data)
         null
 

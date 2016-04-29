@@ -1,6 +1,7 @@
 require 'digest/sha1'
 module VCR
   class SplitPersister
+
     attr_reader :normalizers
 
     def initialize(source_serializer, destination_serializer, persister)
@@ -13,6 +14,9 @@ module VCR
 
     def [](name)
       return @storage[name.to_s] if @storage[name.to_s].present?
+
+      requests_name = file_name(name, 'requests')
+      responses_name = file_name(name, 'responses')
 
       persisted_requests = @persister[file_name(name, 'requests')]
       persisted_responses = @persister[file_name(name, 'responses')]
@@ -28,11 +32,13 @@ module VCR
         if k == 'http_interactions'
           v.each do |interaction|
             response = responses[interaction.delete('digest')]
-            interaction.merge!(response)
-            normalizers.each do |normalizer|
-              normalizer.reverse(interaction)
+            unless response.nil?
+              interaction.merge!(response)
+              normalizers.each do |normalizer|
+                normalizer.reverse(interaction)
+              end
+              obj[k] << interaction
             end
-            obj[k] << interaction
           end
         else
           obj[k] = v
@@ -70,6 +76,7 @@ module VCR
           requests[k] = v
         end
       end
+
 
       @persister[file_name(name, 'requests')] = @destination_serializer.serialize(requests)
       @persister[file_name(name, 'responses')] = @destination_serializer.serialize(responses)
