@@ -10,6 +10,7 @@
     @container.parentNode?.removeChild(@container)
 
   setData: (name, data) ->
+    console.log "Set legend data: #{name} -> #{JSON.stringify(data)}"
     @scale = data.scale
     @label.innerText = name
     @refresh()
