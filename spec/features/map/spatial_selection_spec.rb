@@ -106,7 +106,7 @@ describe "Spatial" do
       create_point(0, 0)
       wait_for_xhr
       expect(page).to have_no_content("Background Air Pollution Monitoring")
-      expect(page).to have_content("6202 Matching Collections")
+      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
     end
 
     context "changing the point selection" do
@@ -118,7 +118,7 @@ describe "Spatial" do
       end
 
       it "updates the collection filters using the new point selection" do
-        expect(page).to have_content("6321 Matching Collections")
+        expect(page).to have_no_content("2000 Pilot Environmental Sustainability Index")
       end
     end
 

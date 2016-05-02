@@ -166,6 +166,34 @@ single_order:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"reverb-10.76.6-ops","created_at":"2014-05-05T16:26:34Z","id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[],"state":"NOT_VALIDATED","updated_at":"2014-05-05T16:26:34Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version:
+edsc_order:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"cb9cf9f9d68fe41ba4f6be498917ef7c"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.406000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '864'
+      date:
+      - Wed, 07 May 2014 17:59:34 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '[{"order":{"client_identity":"reverb-10.76.6-ops","created_at":"2014-05-05T16:26:34Z","id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[],"state":"NOT_VALIDATED","updated_at":"2014-05-05T16:26:34Z","user_domain":"OTHER","user_region":"USA"}}]'
+    http_version:
 1f91afed9d58f2fad47c150fe1b735e9828c71ca:
   response:
     status:
