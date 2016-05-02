@@ -5,7 +5,7 @@ describe "CWIC-enabled collection details", reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    load_page :search, env: :uat, facets: true
+    load_page :search
   end
 
   after :all do
@@ -13,7 +13,7 @@ describe "CWIC-enabled collection details", reset: false do
   end
 
   context "viewing the collection details for a CWIC-tagged collection" do
-    use_collection 'C1204449891-GCMDTEST', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
+    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
 
     before :all do
       first_collection_result.click_link('View collection details')

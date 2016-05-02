@@ -32,7 +32,7 @@ module VCR
       requests.each do |k, v|
         if k == 'http_interactions'
           v.each do |interaction|
-            response = responses[interaction.delete('digest')]
+            response = responses.delete(interaction.delete('digest'))
             unless response.nil?
               interaction.merge!(response)
               normalizers.each do |normalizer|
@@ -58,12 +58,14 @@ module VCR
 
       obj.each do |k, v|
         if k == 'http_interactions'
-          v = v.sort_by {|interaction| unique_key(interaction)}
           v.each do |interaction|
-            response = interaction.extract!('response')
             normalizers.each do |normalizer|
               normalizer.forward(interaction)
             end
+          end
+          v = v.sort_by {|interaction| unique_key(interaction)}
+          v.each do |interaction|
+            response = interaction.extract!('response')
             digest = Digest::SHA1.hexdigest(unique_key(interaction))
             interaction['digest'] = digest
             requests[k] << interaction
@@ -78,9 +80,9 @@ module VCR
         end
       end
 
-
       @persister[file_name(name, 'requests')] = @destination_serializer.serialize(requests)
       @persister[file_name(name, 'responses')] = @destination_serializer.serialize(responses)
+      @storage[name.to_s] = content
       content
     end
 
@@ -92,7 +94,7 @@ module VCR
 
     def unique_key(interaction)
       req = interaction['request']
-      "#{req['uri']}::#{req['method']}::#{req['body']['string']}"
+      "#{req['uri']}::#{req['method']}::#{req['body']['string']}::#{req['headers']['Echo-Token']}"
     end
 
     def file_name(root, type)

@@ -4,10 +4,7 @@ describe "CWIC-enabled granule results", reset: false do
   extend Helpers::CollectionHelpers
 
   context "for CWIC-tagged collections" do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
-    end
+    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
 
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 

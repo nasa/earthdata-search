@@ -1,32 +1,4 @@
 ---
-0ce2fe576ebcdd5e8cc9f34b5a14d8460feca223:
-  response:
-    status:
-      code: 401
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.029000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Mon, 28 Mar 2016 17:20:39 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"errors":["Token [edsc-access] does not exist"]}'
-    http_version: 
 06f57afec45b734fc975b6fd35f65961b08077af:
   response:
     status:
@@ -82,90 +54,55 @@
           </addresses>
         </user>
     http_version: 
-1cf2af81db386d8a7a625f5b42b37901968e6bfc:
+62e63dbd42b136061507c74c30df510c1d255402:
   response:
     status:
-      code: 401
+      code: 200
       message: 
     headers:
       server:
       - Apache-Coyote/1.1
+      etag:
+      - '"1f05addd57cb3f3122b07a96e192ba9e"'
       cache-control:
-      - no-cache
+      - max-age=0, private, must-revalidate
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.976000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Thu, 14 Jan 2016 16:00:17 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"errors":["Token [02752abd6f14b9e943dcaa988d78cbe724a11f4b584f24d4c9742b739113c4f6:Gsk6IBbEfa98sbE5UavsZQ]
-        is not a valid URS token"]}'
-    http_version: 
-b9bdd35d4686ceac31f60d5952112afdc8d3153a:
-  response:
-    status:
-      code: 401
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '1.481000'
+      - '0.321000'
       content-type:
       - application/xml;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 14 Jan 2016 16:00:23 GMT
+      - Mon, 02 May 2016 17:24:52 GMT
       connection:
       - close
       transfer-encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: "<errors><error>Token [02752abd6f14b9e943dcaa988d78cbe724a11f4b584f24d4c9742b739113c4f6:Gsk6IBbEfa98sbE5UavsZQ]
-        is not a valid URS token</error></errors>"
-    http_version: 
-7f053cde77e4067238e2c12bc32097af017e0892:
-  response:
-    status:
-      code: 401
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.672000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Mon, 29 Feb 2016 17:17:55 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '{"errors":["Token [83e7aaa9985c0e439f8a18dbeeba6bc9dd79c3e12f90fef1863ecd892a2f26ee:mUM6VJvn6dXjZfhdeSeBbA]
-        is not a valid URS token"]}'
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <user>
+          <id>69BEF8E4-7C1A-59C3-7C46-18D788AC64B4</id>
+          <user_domain>OTHER</user_domain>
+          <user_region>USA</user_region>
+          <primary_study_area>OTHER</primary_study_area>
+          <user_type>PUBLIC_USER</user_type>
+          <username>edscbasic</username>
+          <first_name>edsc</first_name>
+          <last_name>basic</last_name>
+          <email>patrick+edscbasic@element84.com</email>
+          <opt_in type="boolean">false</opt_in>
+          <organization_name>EDSC</organization_name>
+          <creation_date type="datetime">2014-06-25T14:15:23Z</creation_date>
+          <addresses type="array">
+            <address>
+              <id>7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906</id>
+              <us_format type="boolean">false</us_format>
+              <country>United States</country>
+            </address>
+          </addresses>
+        </user>
     http_version: 

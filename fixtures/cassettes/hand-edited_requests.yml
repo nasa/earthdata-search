@@ -62,6 +62,19 @@ http_interactions:
   recorded_at: Wed, 07 May 2014 17:59:34 GMT
   digest: single_order
 - request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/orders.json?id%5B%5D=B83E748F-BEEF-528A-0265-CA6DDA7A8A78
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 07 May 2014 17:59:34 GMT
+  digest: edsc_order
+- request:
     method: delete
     uri: https://api.echo.nasa.gov/echo-rest/orders/E806E9C6-615E-2161-97D9-905D96D2F832
     body:

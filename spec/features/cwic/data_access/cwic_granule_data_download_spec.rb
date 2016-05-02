@@ -6,7 +6,6 @@ describe "CWIC-enabled data access", reset: false do
 
   dataset_id = "EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data"
   search_params = {
-    env: :uat,
     q: 'USGS_EDC_EO1_ALI',
     temporal: ['2016-01-21T00:00:00Z', '2016-01-21T23:59:59Z']
   }

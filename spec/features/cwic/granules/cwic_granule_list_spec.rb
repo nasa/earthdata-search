@@ -4,10 +4,7 @@ describe "CWIC Granule list", reset: false do
   extend Helpers::CollectionHelpers
 
   context "for all collections with granules" do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
-    end
+    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
 
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
@@ -80,7 +77,7 @@ describe "CWIC Granule list", reset: false do
 
         after :all do
           Capybara.reset_sessions!
-          load_page :search, env: :sit, facets: true, q: 'C1000003579-GCMDTEST'
+          load_page :search, q: 'C1214622580-ISRO'
           login
           wait_for_xhr
           view_granule_results("INSAT-3D Imager Level-2P IR WINDS")
@@ -118,10 +115,7 @@ describe "CWIC Granule list", reset: false do
   end
 
   context "for collections with many granule results" do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
-    end
+    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
 
     context "clicking on a collection result" do
       hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
@@ -136,13 +130,10 @@ describe "CWIC Granule list", reset: false do
   end
 
   context "for collections that have granules with temporal fields" do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :uat, q: 'USGS_EDC_EO1_ALI'
-    end
+    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
 
     context "clicking on a collection result" do
-      hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
+      hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
       it "displays temporal information on the granule list" do
         expect(granule_list.text).to match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z to \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/)
@@ -151,11 +142,8 @@ describe "CWIC Granule list", reset: false do
   end
 
   context "for CWIC tagged collections" do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :uat, facets: true, q: 'C1204595275-GCMDTEST'
-      view_granule_results("ACES Continuous Data")
-    end
+    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
+    hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
     it "displays a help button to find out more information about CWIC collections", acceptance: true do
       expect(page).to have_link("Learn More ...")
@@ -164,7 +152,6 @@ describe "CWIC Granule list", reset: false do
     context "clicking on the CWIC help button" do
       before :all do
         click_on "Learn More ..."
-        sleep 1
       end
 
       it "displays additional details about CWIC collections", acceptance: true do
@@ -174,11 +161,8 @@ describe "CWIC Granule list", reset: false do
   end
 
   context "for non-CWIC collections" do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :sit, q: 'C24936-LAADS'
-      view_granule_results("MODIS/Terra Aerosol 5-Min L2 Swath 10km V005")
-    end
+    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+    hook_granule_results
 
     it "does not display a help button to find out more information about CWIC collections", acceptance: true do
       expect(page).not_to have_link("Learn More ...")

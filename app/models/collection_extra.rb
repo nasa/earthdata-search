@@ -385,7 +385,7 @@ class CollectionExtra < ActiveRecord::Base
     # in their metadata surfaced this way without getting the badge
     # TODO: Once we can remove the legacy config, this can be done in Javascript
     collection[:opendap_url] = OpendapConfiguration.opendap_root(collection)
-    collection[:opendap] = self.class.has_tag(collection, 'subset_service')
+    collection[:opendap] = self.class.has_tag(collection, 'subset_service.opendap') || self.class.has_tag(collection, 'subset_service.esi')
   end
 
   def decorate_modaps_layers(collection)
