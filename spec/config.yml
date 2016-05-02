@@ -1,6 +1,9 @@
 token_defaults: &token_defaults
   expires_in: 3600
 
+token_user_username: <%= ENV['test_echo_token_username'] %>
+token_user_password: <%= ENV['test_echo_token_password'] %>
+
 urs_tokens:
   edsc:
     <<: *token_defaults

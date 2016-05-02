@@ -13,7 +13,7 @@ describe 'Collection GIBS Filtering', reset: false do
     end
 
     it 'shows only GIBS enabled collections' do
-      expect(page).to have_css('.badge-gibs', count: 22)
+      expect(page).to have_css('.badge-gibs', count: 23)
     end
 
     context 'when un-selecting the GIBS filter' do

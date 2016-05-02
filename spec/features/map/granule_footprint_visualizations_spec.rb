@@ -111,52 +111,6 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
   end
 
-  context "for line collections" do
-    use_collection 'C5920490-LARC_ASDC', 'CAL_IIR_L2_Track-Beta-V3-01'
-
-    context "visualizing a collection's granules" do
-      hook_granule_results('CAL_IIR_L2_Track-Beta-V3-01')
-
-      it "draws lines on the map for granule spatial areas" do
-        wait_for_xhr
-        expect(page).to have_granule_visualizations('C5920490-LARC_ASDC')
-      end
-
-      context "and mousing over a visualized granule" do
-        before :all do
-          first_granule_list_item.trigger(:mouseover)
-        end
-
-        after :all do
-          first_granule_list_item.trigger(:mouseout)
-        end
-
-        it "draws the granule's footprint" do
-          expect(page).to have_selector('.leaflet-overlay-pane path')
-        end
-      end
-
-      context "and mousing off of a visualized granule" do
-        before :all do
-          first_granule_list_item.trigger(:mouseover)
-          first_granule_list_item.trigger(:mouseout)
-        end
-
-        it "hides the granule's footprint" do
-          expect(page).to have_no_selector('.leaflet-overlay-pane path')
-        end
-      end
-    end
-
-    context "removing a visualized collection" do
-      hook_granule_results_back('CAL_IIR_L2_Track-Beta-V3-01')
-
-      it "hides the collection's visualizations" do
-        expect(page).to have_no_granule_visualizations('C5920490-LARC_ASDC')
-      end
-    end
-  end
-
   context "for bounding box collections" do
     use_collection 'C204200619-GSFCS4PA', 'AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1'
 

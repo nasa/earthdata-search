@@ -3,12 +3,11 @@ require "spec_helper"
 describe "CWIC-enabled granule visualizations", reset: false do
   extend Helpers::CollectionHelpers
 
-  context do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :uat, facets: true, ff: "Int'l / Interagency", q: 'C1204449891-GCMDTEST'
-    end
+  before :all do
+    load_page :search, q: 'C1220566654-USGS_LTA'
+  end
 
+  context do
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     context "viewing CWIC granule results with available browse imagery" do
@@ -42,15 +41,10 @@ describe "CWIC-enabled granule visualizations", reset: false do
   end
 
   context "when viewing CWIC granule results" do
-    before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
-    end
-
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     it "displays spatial footprints for the granules", acceptance: true do
-      expect(page).to have_granule_visualizations('C1204449891-GCMDTEST')
+      expect(page).to have_granule_visualizations('C1220566654-USGS_LTA')
     end
 
     context "clicking on a granule in the list" do

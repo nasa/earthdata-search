@@ -62,6 +62,8 @@
                   <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
                     <i class="fa fa-edit"></i>
                   </a>
+                  <!-- ko if: $root.project.isSearchingGranules($data) -->HIDE Granule FILTERS!<!-- /ko -->
+                  <!-- ko if: !$root.project.isSearchingGranules($data) -->SHOW Granule FILTERS!<!-- /ko -->
                   <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
                     <i class="fa fa-edit"></i>
                   </a>
