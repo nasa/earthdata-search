@@ -3,9 +3,11 @@ require "spec_helper"
 describe "CWIC-enabled granule results", reset: false do
   extend Helpers::CollectionHelpers
 
-  context "for CWIC-tagged collections" do
-    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
+  before :all do
+    load_page :search, q: 'C1220566654-USGS_LTA'
+  end
 
+  context "for CWIC-tagged collections" do
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     context "performing a temporal search" do
