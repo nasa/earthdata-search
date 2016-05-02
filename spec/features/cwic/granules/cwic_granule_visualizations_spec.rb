@@ -3,9 +3,11 @@ require "spec_helper"
 describe "CWIC-enabled granule visualizations", reset: false do
   extend Helpers::CollectionHelpers
 
-  context do
-    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
+  before :all do
+    load_page :search, q: 'C1220566654-USGS_LTA'
+  end
 
+  context do
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     context "viewing CWIC granule results with available browse imagery" do
@@ -39,7 +41,6 @@ describe "CWIC-enabled granule visualizations", reset: false do
   end
 
   context "when viewing CWIC granule results" do
-    use_collection 'C1220566654-USGS_LTA', 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
     hook_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
 
     it "displays spatial footprints for the granules", acceptance: true do
