@@ -1,4 +1,26 @@
 ---
+b8d47d4588ce1a7331e7c5da731ad8eaf134cb25:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 29 Apr 2016 21:58:53 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - f98d759a-9102-49b7-a108-eae229e595ea
+      content-length:
+      - '144'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C14758250-LPDAAC_ECS","intervals":[[1330387200,1383004800,147046],[1383091200,1383609600,1357],[1383696000,1425254400,118352]]}]'
+    http_version: 
 1fb70c6eefc3acec0827b1cf5031a2cba06d86e2:
   response:
     status:

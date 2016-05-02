@@ -5,6 +5,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: attribute%5B%5D=int%2CLowerLeftQuadCloudCoverage%2C50%2C100&concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 29 Apr 2016 21:58:54 GMT
+  digest: b8d47d4588ce1a7331e7c5da731ad8eaf134cb25
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: bounding_box=0%2C0%2C10%2C10&concept_id=C1000000047-LANCEMODIS&end_date=2013-10-15T12%3A00%3A00.000Z&interval=hour&start_date=2013-07-14T12%3A00%3A00.000Z
     headers:
       User-Agent:
@@ -705,6 +722,23 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
+  recorded_at: Wed, 27 Apr 2016 15:21:14 GMT
+  digest: a9ceb9b1a749e5fd6283d3a7472716a2393f06f4
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=%2A2006227720%2A&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
   recorded_at: Wed, 27 Apr 2016 15:21:20 GMT
   digest: a9ceb9b1a749e5fd6283d3a7472716a2393f06f4
 - request:
@@ -740,23 +774,6 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
   recorded_at: Wed, 27 Apr 2016 15:21:04 GMT
-  digest: a9ceb9b1a749e5fd6283d3a7472716a2393f06f4
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C14758250-LPDAAC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=%2A2006227720%2A&start_date=2012-02-28T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Wed, 27 Apr 2016 15:21:14 GMT
   digest: a9ceb9b1a749e5fd6283d3a7472716a2393f06f4
 - request:
     method: post
@@ -1788,23 +1805,6 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 27 Apr 2016 15:19:33 GMT
-  digest: 7dd403403b9ad3fc341f41ed11cba3762baff134
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
-    body:
-      encoding: US-ASCII
-      string: concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=FIFE_STRM_15M.80611715.s15&start_date=1986-03-03T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
       Echo-Token:
       - edsc
   recorded_at: Wed, 27 Apr 2016 15:19:44 GMT
@@ -1842,6 +1842,23 @@ http_interactions:
       Echo-ClientId:
       - eed-edsc-dev
   recorded_at: Wed, 27 Apr 2016 15:19:39 GMT
+  digest: 7dd403403b9ad3fc341f41ed11cba3762baff134
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C179003030-ORNL_DAAC&end_date=1989-03-05T00%3A00%3A00.000Z&interval=day&options%5Breadable_granule_name%5D%5Bpattern%5D=true&readable_granule_name%5B%5D=FIFE_STRM_15M.80611715.s15&start_date=1986-03-03T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 27 Apr 2016 15:19:33 GMT
   digest: 7dd403403b9ad3fc341f41ed11cba3762baff134
 - request:
     method: post

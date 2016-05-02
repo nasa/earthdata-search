@@ -81,7 +81,7 @@ describe "Collection results", reset: false do
   it "indicates if a collection's data collection is ongoing" do
     fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
     wait_for_xhr
-    expect(page).to have_content("2014-12-25 ongoing")
+    expect(page).to have_content("2015-12-06 ongoing")
   end
 
   # Can't really test this feature - the browse scaler root url is set to a constant /assets/gibs-example.jpeg in test
