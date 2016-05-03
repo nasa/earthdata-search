@@ -1,26 +1,53 @@
-defaults: &defaults
+portals: &portals
+  carve:
+    title: CARVE
+    params:
+      project:
+        - CARVE
+    logos:
+      - image: https://daac.ornl.gov/graphics/daac_logo.jpg
+        link: https://daac.ornl.gov
+    nav:
+      - title: CARVE Home
+        link: https://carve.ornl.gov/
+
+  airmoss:
+    title: AirMOSS
+    params:
+      project:
+        - AirMOSS
+    logos:
+      - image: https://daac.ornl.gov/graphics/daac_logo.jpg
+        link: https://daac.ornl.gov
+    nav:
+      - title: AirMOSS Home
+        link: https://airmoss.ornl.gov
+
+examples: &examples
   example:
-  cwic:
-    params:
-      tag_key:
-        - org.ceos.wgiss.cwic.granules.prod
-      features:
-        - Int'l / Interagency
-  ornl_example:
-    params:
-      provider:
-        - ORNL_DAAC
-    #scripts:
-    #  - edsc.portal.cwic.js
-
-
-test: &test
-  <<: *defaults
 
   simple:
     params:
       echo_collection_id:
         - C1219032686-LANCEMODIS
 
-development:
-  <<: *test
+  complex:
+    title: Complex
+    params:
+      echo_collection_id:
+        - C1219032686-LANCEMODIS
+    logos:
+      - image: http://placehold.it/75x50
+        link: https://example.com/logo
+    nav:
+      - title: Example Link
+        link: https://example.com/1
+      - title: Another Example
+        link: https://example.com/1
+
+defaults:
+  <<: *examples
+  <<: *portals
+
+production:
+  <<: *portals
