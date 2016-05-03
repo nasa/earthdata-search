@@ -28,6 +28,7 @@ group :test do
   gem 'fuubar'
   gem "rack_session_access"
   gem 'headless'
+  gem 'atomic'
 end
 
 group :development do
