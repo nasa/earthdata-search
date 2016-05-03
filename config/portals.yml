@@ -44,6 +44,8 @@ examples: &examples
         link: https://example.com/1
       - title: Another Example
         link: https://example.com/1
+    scripts:
+      - edsc-portal.example.min.js
 
 defaults:
   <<: *examples
