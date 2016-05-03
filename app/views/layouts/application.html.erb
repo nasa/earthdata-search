@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><%= Rails.configuration.env_name %> Earthdata Search</title>
+    <title><%= site_page_title %></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=1280,user-scalable=no">
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
@@ -39,7 +39,14 @@
     <div class="wrap">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
-      <h1><a class="logo" href="<%=edsc_path root_path %>" title="Earthdata Search">Search</a><% unless Rails.configuration.logo_name.blank? %> <span class="version-badge"><%= Rails.configuration.logo_name %></span><% end %></h1>
+      <h1>
+        <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search"></a>
+        <%= portal_logo %>
+        <a class="site-logo" href="<%=edsc_path root_path %>"><%= site_logo_title %></a>
+        <% unless Rails.configuration.logo_name.blank? %>
+          <span class="version-badge"><%= Rails.configuration.logo_name %></span>
+        <% end %>
+      </h1>
       <div class="toolbar-content">
         <div class="toolbar-secondary">
           <%= yield :toolbar_secondary %>
@@ -47,6 +54,9 @@
         <%= yield :toolbar %>
       </div>
     </header>
+    <% if portal_nav? %>
+    <nav class="main-nav portal-nav"><%= portal_nav %></nav>
+    <% end %>
     <section class="main-content">
       <%= yield %>
     </section>
