@@ -245,7 +245,7 @@ ns.Project = do (ko,
               queries[i + start] = query
               break
         for q, index in queries
-          queries[index] = {} if q == undefined 
+          queries[index] = {} if q == undefined
         result.pg = queries if queries.length > 0
       result
 
