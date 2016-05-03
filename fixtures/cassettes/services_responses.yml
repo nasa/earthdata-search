@@ -2251,6 +2251,28 @@ fcdf16139134f974b012aff0368d3d8e74b9cd49:
         - Web: http://wgiss.ceos.org/cwic</name>\n\t\t<email>cwic-help@wgiss.ceos.org</email>\n\t</author>\n\t<id>http://cwic.wgiss.ceos.org/opensearch/granules.atom</id>\n\t<link
         title=\"self\" rel=\"self\" type=\"application/atom+xml\" href=\"http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=gov.noaa.class.J2-XGDR&amp;count=20&amp;timeStart=2010-02-02T00%3A00%3A00Z&amp;timeEnd=2010-02-02T23%3A59%3A59Z&amp;clientId=eed-edsc-dev&amp;startPage=1\"/>\n\t<opensearch:totalResults>0</opensearch:totalResults>\n</feed>\n"
     http_version: 
+270752783cf39a1e4a1e279741f985ad424fbb3a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 03 May 2016 15:47:12 GMT
+      server:
+      - Apache
+      content-type:
+      - application/atom+xml;charset=UTF-8
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:georss="http://www.georss.org/georss/10" xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/" xmlns:cwic="http://cwic.wgiss.ceos.org/opensearch/extensions/1.0/" xmlns:esipdiscover="http://commons.esipfed.org/ns/discovery/1.2/"><title>CWIC OpenSearch Response</title><updated>2016-05-03T10:47:12Z</updated><author><name>CEOS WGISS Integrated Catalog (CWIC) - CWIC Contact - Email: cwic-help@wgiss.ceos.org - Web: http://wgiss.ceos.org/cwic</name><email>cwic-help@wgiss.ceos.org</email></author><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=GHRSST-GOES15-OSPO-L2P:v1.0.20140722000000-OSPO-L2P_GHRSST-SSTskin-GOES15-North-v02.0-fv01.0.nc</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=GHRSST-GOES15-OSPO-L2P:v1.0.20140722000000-OSPO-L2P_GHRSST-SSTskin-GOES15-North-v02.0-fv01.0.nc</dc:identifier><link title="Search this resource" rel="search" type="application/opensearchdescription+xml" href="http://cwic.wgiss.ceos.org/opensearch/datasets/GHRSST-GOES15-OSPO-L2P/osdd.xml"/><link title="self" rel="self" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=GHRSST-GOES15-OSPO-L2P:v1.0.20140722000000-OSPO-L2P_GHRSST-SSTskin-GOES15-North-v02.0-fv01.0.nc"/><opensearch:totalResults>0</opensearch:totalResults><!-- Remote search completed in 1.203 seconds. --><opensearch:Query role="request" uid="GHRSST-GOES15-OSPO-L2P:v1.0.20140722000000-OSPO-L2P_GHRSST-SSTskin-GOES15-North-v02.0-fv01.0.nc"></opensearch:Query><!-- Atom response generation completed in 3.583 ms. --></feed>
+    http_version: 
 d204b91c248d4f6680b7a7b8c1beeb1d566dbd36:
   response:
     status:

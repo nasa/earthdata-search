@@ -67,7 +67,7 @@ ns.ProjectList = do (ko
       $(document).ready(@_onReady)
 
     _syncHitsCounts: =>
-      return unless @collectionResults? && @collectionResults.results().length > 0
+      return unless @collectionResults? && @collectionResults.loadTime()?
       for collection in @project.collections()
         found = false
         for result in @collectionResults.results() when result.id == collection.id
