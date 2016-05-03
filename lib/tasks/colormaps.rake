@@ -26,7 +26,7 @@ namespace :colormaps do
       url = layer.xpath("./ows:Metadata/@xlink:href").to_s
       url = url.gsub(/^https/, 'http') # Avoid SSL errors in CI
 
-      unless id.empty? || url.empty?
+      unless id.empty? || url.empty? || !url.start_with?('http')
         file_count += 1
         result = Colormaps.xml_to_json(id, url, output_dir)
         error_count += 1 unless result

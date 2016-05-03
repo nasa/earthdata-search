@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'rake'
 
 describe 'Background jobs ordering', reset: false do
+  #pending "FIXME: This is commented out due to abysmally bad orders/hand-edited fixtures. Needs fixes"
+
   orderable_collection_id = 'C90762182-LAADS'
   orderable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
   aster_collection_id = 'C14758250-LPDAAC_ECS'
@@ -38,6 +40,7 @@ describe 'Background jobs ordering', reset: false do
 
   context "ordering non-ASTER data" do
     before :all do
+
       Delayed::Worker.delay_jobs = true
 
       load_page :search, overlay: false

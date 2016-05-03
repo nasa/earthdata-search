@@ -3,44 +3,38 @@
 require "spec_helper"
 
 describe "Collection Facets", reset: false do
-  let(:first_project_facet) { "AMBS" }
-  let(:first_platform_facet) { "ADEOS-II" }
-  let(:first_instrument_facet) { "Acoustic Sounders" }
-  let(:first_coordinate_facet) { "CALIPSO" }
-  let(:first_processing_level_facet) { "0" }
-  let(:eosdis_count) { "505" }
-
   before :all do
     Capybara.reset_sessions!
     load_page :search, facets: true
   end
 
   context "facet listing" do
-    it "shows facets in a case insensitive order" do
-      find("h3.facet-title", text: 'Platform').click
-      expect(page.text).to match("Aqua\\s*\\d*\\s*AQUA")
-      find("h3.facet-title", text: 'Platform').click
-    end
+    # CMR has been fixed here
+    #it "shows facets in a case insensitive order" do
+    #  find("h3.facet-title", text: 'Platform').click
+    #  expect(page.text).to match("Aqua\\s*\\d*\\s*AQUA")
+    #  find("h3.facet-title", text: 'Platform').click
+    #end
 
     it "shows the first Project facet" do
       find("h3.facet-title", text: 'Project').click
-      expect(page.text).to match("Project\\s*\\d* #{first_project_facet}")
+      expect(page).to have_css('.panel.project .facets-item', visible: true)
       find("h3.facet-title", text: 'Project').click
     end
 
     it "shows the first Platforms facet" do
       find("h3.facet-title", text: 'Platform').click
-      expect(page.text).to match("Platform\\s*\\d* #{first_platform_facet}")
+      expect(page).to have_css('.panel.platform .facets-item', visible: true)
       find("h3.facet-title", text: 'Platform').click
     end
 
     it "shows the first Instruments facet" do
       find("h3.facet-title", text: 'Instrument').click
-      expect(page.text).to match("Instrument\\s*\\d* #{first_instrument_facet}")
+      expect(page).to have_css('.panel.instrument .facets-item', visible: true)
       find("h3.facet-title", text: 'Instrument').click
     end
 
-    it "does not shows the 2D Coordinate Name facet" do
+    it "does not show the 2D Coordinate Name facet" do
       within(:css, '#master-overlay-parent') do
         expect(page).to have_no_content("2D Coordinate Name")
       end
@@ -90,7 +84,7 @@ describe "Collection Facets", reset: false do
 
     it "shows the first Processing Level facet" do
       find("h3.facet-title", text: 'Processing level').click
-      expect(page.text).to match("Processing level\\s*\\d* #{first_processing_level_facet}")
+      expect(page).to have_css('.panel.processing-level .facets-item', visible: true)
       find("h3.facet-title", text: 'Processing level').click
     end
 
@@ -158,7 +152,7 @@ describe "Collection Facets", reset: false do
       find(".facets-item", text: "ESIP").click
       wait_for_xhr
       within(:css, '.project') do
-        expect(page).to have_content("EOSDIS #{eosdis_count}")
+        expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
       expect(page).to have_css("p.facets-item.selected")
