@@ -46,6 +46,83 @@ http_interactions:
   digest: c7df3f8b8a6bb9d726c6ace8088d38fbd8ea82f8
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/FIFE_AF_RAW_G/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:17 GMT
+  digest: e0bc3f4f246b03300a956db97b9932093e17a2ec
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/FIFE_AF_RAW_G/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:40 GMT
+  digest: e0bc3f4f246b03300a956db97b9932093e17a2ec
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/FIFE_AF_RAW_G/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:37 GMT
+  digest: e0bc3f4f246b03300a956db97b9932093e17a2ec
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/FIFE_AF_RAW_G/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:33 GMT
+  digest: e0bc3f4f246b03300a956db97b9932093e17a2ec
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/FIFE_AF_RAW_G/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:24 GMT
+  digest: e0bc3f4f246b03300a956db97b9932093e17a2ec
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/FIFE_AF_RAW_G/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:31 GMT
+  digest: e0bc3f4f246b03300a956db97b9932093e17a2ec
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/FIFE_AF_RAW_G/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:28 GMT
+  digest: e0bc3f4f246b03300a956db97b9932093e17a2ec
+- request:
+    method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/datasets/USGS_EDC_EO1_ALI/osdd.xml?clientId=edsc-dev
     body:
       encoding: US-ASCII
@@ -77,6 +154,17 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Sun, 27 Mar 2016 02:03:06 GMT
   digest: 57e3c525c869a21f2ce56dfce0c7a3ad1be18f32
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/datasets/aces1cont/osdd.xml?clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:02:27 GMT
+  digest: f3b8a11b6f5b4a186d5b661163d8dcf95d031130
 - request:
     method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/datasets/gov.noaa.class.J2-XGDR/osdd.xml?clientId=eed-edsc-dev
@@ -273,6 +361,17 @@ http_interactions:
   digest: d78cac46e0925fa5f64aa440db3783c9afc6217a
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=100&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:35 GMT
+  digest: 116d89aa60bbd177a881d6bd2a8d920d3d670e29
+- request:
+    method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=edsc-dev
     body:
       encoding: US-ASCII
@@ -282,6 +381,171 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Tue, 19 Apr 2016 17:16:46 GMT
   digest: f43968d87d1675d130272181d075ec3279b20c1f
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:19 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:42 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:41 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:19 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:38 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:38 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:21 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:25 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:34 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:34 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:25 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:32 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:29 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:29 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=FIFE_AF_RAW_G&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:03:31 GMT
+  digest: 04f8181c97bf236dc5fbfa71babcc2d28cbc2f8d
 - request:
     method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&count=100&clientId=eed-edsc-dev
@@ -546,6 +810,28 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Sun, 27 Mar 2016 02:03:08 GMT
   digest: 4ce019ed8297ab05ff1c923a0a6222bc1744d133
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=aces1cont&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:02:28 GMT
+  digest: 87560afcb65485755e8df4df9b78e908d78f2a5c
+- request:
+    method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=aces1cont&count=20&clientId=eed-edsc-dev
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Fri, 29 Apr 2016 18:02:29 GMT
+  digest: 87560afcb65485755e8df4df9b78e908d78f2a5c
 - request:
     method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=gov.noaa.class.J2-XGDR&clientId=edsc-dev&startPage=1&count=20&timeStart=2010-02-02&timeEnd=2010-02-02

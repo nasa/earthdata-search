@@ -118,10 +118,8 @@ RSpec.configure do |config|
     # Avoid recording tokens
     ['edsc', 'edscbasic', 'expired_token'].each do |token_key|
       token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key]['access_token']
-      access_token = "#{token}:#{Rails.configuration.urs_client_id}"
-      normalizers << VCR::HeaderNormalizer.new('Echo-Token', access_token, token_key)
-      access_token = "#{token}:#{Rails.configuration.sit_urs_client_id}"
-      normalizers << VCR::HeaderNormalizer.new('Echo-Token', access_token, token_key)
+      token = "#{token}:#{Rails.configuration.urs_client_id}" unless token.include? '-'
+      normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, token_key)
     end
 
     normalizers << VCR::HeaderNormalizer.new('Echo-Token', "invalid:#{Rails.configuration.urs_client_id}", 'invalid')

@@ -166,6 +166,34 @@ single_order:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"reverb-10.76.6-ops","created_at":"2014-05-05T16:26:34Z","id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[],"state":"NOT_VALIDATED","updated_at":"2014-05-05T16:26:34Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version:
+edsc_order:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"cb9cf9f9d68fe41ba4f6be498917ef7c"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.406000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '864'
+      date:
+      - Wed, 07 May 2014 17:59:34 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '[{"order":{"client_identity":"reverb-10.76.6-ops","created_at":"2014-05-05T16:26:34Z","id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[],"state":"NOT_VALIDATED","updated_at":"2014-05-05T16:26:34Z","user_domain":"OTHER","user_region":"USA"}}]'
+    http_version:
 1f91afed9d58f2fad47c150fe1b735e9828c71ca:
   response:
     status:
@@ -814,6 +842,37 @@ edscbasic_from_urs:
       string: '{"uid":"edsc","first_name":"Earthdata","last_name":"Search","email_address":"patrick+edsc@element84.com","country":"United States","study_area":"OTHER","user_type":"PRODUCTION_USER","affiliation":"OTHER","organization":"EDSC","member_groups":["earthdata_ecc","echo"]}'
     http_version:
 5465c54b75a62eac4512160fe28a6627c96aea19:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.229000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search",
+              "email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},
+              "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+              Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+edsc_user_prefs:
   response:
     status:
       code: 200

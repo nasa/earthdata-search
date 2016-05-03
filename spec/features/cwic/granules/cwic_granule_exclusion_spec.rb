@@ -4,7 +4,7 @@ describe "CWIC-enabled granule results", reset: false do
   extend Helpers::CollectionHelpers
   before :all do
     Capybara.reset_sessions!
-    load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'C1204461918-GCMDTEST'
+    load_page :search, env: :uat, q: 'C1204461918-GCMDTEST'
   end
 
   context "when viewing granule results for a CWIC-enabled collection" do
