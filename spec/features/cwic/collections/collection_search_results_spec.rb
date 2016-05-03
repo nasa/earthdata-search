@@ -13,19 +13,8 @@ describe "CWIC-capable collection search results", reset: false do
   end
 
   context "in the collection results list" do
-
-    context "when CWIC feature is not selected" do
-      it "does not show CIWC-tagged items", acceptance: true do
-        fill_in "keywords", with: 'C1204449891-GCMDTEST'
-        wait_for_xhr
-        expect(page).to have_content('0 Matching Collections')
-      end
-    end
-
-    context "when CWIC feature is selected" do
+    context "when viewing a CWIC collection" do
       before :all do
-        cwic_feature_facet.click
-        wait_for_xhr
         fill_in "keywords", with: 'C1204449891-GCMDTEST'
         wait_for_xhr
       end
@@ -48,7 +37,7 @@ describe "CWIC-capable collection search results", reset: false do
     end
 
     context "a non-CWIC-tagged item" do
-      use_collection 'C43947-GSFCS4PA', 'AIRIBRAD_NRT'
+      use_collection 'C1000000316-LARC_ASDC', 'FIRE_CI2_ER2_MAS'
 
       it "shows a granule count", acceptance: true do
         expect(first_collection_result).to have_text('Granules')
@@ -70,8 +59,6 @@ describe "CWIC-capable collection search results", reset: false do
 
       context "a CWIC-tagged item" do
         before :all do
-          cwic_feature_facet.click
-          wait_for_xhr
           fill_in "keywords", with: 'C1204449891-GCMDTEST'
           wait_for_xhr
           first_collapsed_collection.click_link('Toggle details')
@@ -91,7 +78,7 @@ describe "CWIC-capable collection search results", reset: false do
       end
 
       context "a non-CWIC-tagged item" do
-        use_collection 'C43947-GSFCS4PA', 'AIRIBRAD_NRT'
+        use_collection 'C1000000316-LARC_ASDC', 'FIRE_CI2_ER2_MAS'
 
         before :all do
           first_collapsed_collection.click_link('Toggle details')

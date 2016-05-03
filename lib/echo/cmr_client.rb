@@ -10,6 +10,11 @@ module Echo
       get("/search/collections.#{format}", query, token_header(token))
     end
 
+    def json_query_collections(query, token=nil, options={})
+      format = options.delete(:format) || 'json'
+      post("/search/collections.#{format}?#{options.to_param}", query.to_json, token_header(token))
+    end
+
     def get_collection(id, token=nil, format='echo10')
       response = get("/search/concepts/#{id}.#{format}", {}, token_header(token))
       response.body[0].granule_url = @root + "/search/granules.json" if response.body.is_a?(Array) && response.body.first.respond_to?(:granule_url)
@@ -18,12 +23,10 @@ module Echo
 
     def get_granules(options={}, token=nil)
       options = options.dup
-      attrs = translate_attr_params(options)
       format = options.delete(:format) || 'json'
       body = options_to_granule_query(options)
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
       query = body.to_query
-      query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
       post("/search/granules.#{format}", query, headers)
     end
 
@@ -54,57 +57,56 @@ module Echo
 
     def post_timeline(options={}, token=nil)
       options = options.dup
-      attrs = translate_attr_params(options)
       options['concept_id'] = options.delete("echo_collection_id")
       format = options.delete(:format) || 'json'
       query = options_to_granule_query(options).to_query
-      query = "#{query}&#{attrs.join('&')}" if attrs.size > 0
       headers = token_header(token).merge('Content-Type' => 'application/x-www-form-urlencoded')
       post("/search/granules/timeline.#{format}", query, headers)
     end
 
-    def add_tag(key, value, condition, token)
-      return add_tag_legacy(key, value, condition, token) if @use_legacy_tag_api
+    # Add a tag with the given key and data value to all collections matching the
+    # query condition. If append is true, this method will append the value to any
+    # existing data (if not already present), rather than overwriting it. The optional
+    # block gets passed Array#uniq to determine whether a piece of data is already
+    # present in the tag. Newer versions of data will overwrite older ones.
+    def add_tag(key, value, condition, token, append=false, only_granules=true, &block)
       query = tag_condition_to_query(condition)
-      response = post("/search/tags/#{key}/associations/by_query", query.to_json, token_header(token))
-      unless response.success? || !key.present?
-        response = add_tag_legacy(key, value, condition, token)
-        @use_legacy_tag_api = true if response.success?
-      end
-      response
-    end
+      # https://bugs.earthdata.nasa.gov/browse/CMR-2855 will fix the need for some of this logic
+      # https://bugs.earthdata.nasa.gov/browse/CMR-2609 as well
+      if value.present? || only_granules
+        query_params = {include_tags: key, include_has_granules: true}
+        response = json_query_collections(condition, token, query_params)
+        return response unless response.success? && response.body['feed']['entry'].present?
 
-    def add_tag_legacy(key, value, condition, token)
-      query = tag_condition_to_query(condition)
-      tag_response = get_tag(key, token)
-      response = nil
-      if tag_response.success? && tag_response.body['items'].size == 1
-        key = tag_response.body['items'].first['concept-id']
+        entries = response.body['feed']['entry']
+        entries = entries.select {|entry| entry['has_granules']} if only_granules
+        assoc_data = nil
+        if append
+          data = Array.wrap(value)
+          assoc_data = entries.map do |entry|
+            tags = entry['tags']
+            data = Array.wrap(tags[key]['data']) + data if tags && tags[key]
+            # Ensure no duplicate values and that newer values overwrite older ones
+            data = data.reverse.uniq(&block).reverse
+            {'concept-id' => entry['id'], 'data' => data}
+          end
+        elsif value.present?
+          assoc_data = entries.map { |entry| {'concept-id' => entry['id'], 'data' => value} }
+        else
+          assoc_data = entries.map { |entry| {'concept-id' => entry['id']} }
+        end
+        if assoc_data.present?
+          response = post("/search/tags/#{key}/associations", assoc_data.to_json, token_header(token))
+        end
+      else
         response = post("/search/tags/#{key}/associations/by_query", query.to_json, token_header(token))
       end
-      response || tag_response
+      response
     end
 
     def remove_tag(key, condition, token)
-      return remove_tag_legacy(key, condition, token) if @use_legacy_tag_api
       query = tag_condition_to_query(condition)
-      response = delete("/search/tags/#{key}/associations/by_query", {}, query.to_json, token_header(token))
-      unless response.success? || !key.present?
-        response = remove_tag_legacy(key, condition, token)
-        @use_legacy_tag_api = true if response.success?
-      end
-      response
-    end
-
-    def remove_tag_legacy(key, condition, token)
-      query = tag_condition_to_query(condition)
-      tag_response = get_tag(key, token)
-      response = nil
-      if tag_response.success? && tag_response.body['items'].size == 1
-        key = tag_response.body['items'].first['concept-id']
-        response = delete("/search/tags/#{key}/associations/by_query", {}, query.to_json, token_header(token))
-      end
-      response || tag_response
+      delete("/search/tags/#{key}/associations/by_query", {}, query.to_json, token_header(token))
     end
 
     def get_tag(key, token)
@@ -125,30 +127,15 @@ module Echo
 
     protected
 
-    def translate_attr_params(options)
-      # TODO this translation can be removed once CMR fixed CMR-2755
-      attrs = []
-      attr_opts = options.delete('attribute')
-      if attr_opts.present?
-        attr_opts.each do |attr_opt|
-          if attr_opt
-            if attr_opt['value']
-              attrs.push "attribute[]=#{attr_opt['type']},#{CGI.escape(attr_opt['name'].gsub(/,/, '\,'))},#{CGI.escape(attr_opt['value'])}"
-            else
-              attrs.push "attribute[]=#{attr_opt['type']},#{CGI.escape(attr_opt['name'].gsub(/,/, '\,'))},#{CGI.escape(attr_opt['minValue'])},#{CGI.escape(attr_opt['maxValue'])}"
-            end
-          end
-        end
-      end
-      attrs
-    end
-
     def tag_condition_to_query(condition)
       if condition.is_a?(String) || condition.is_a?(Array)
         id_conditions = Array.wrap(condition).map { |c| {:concept_id => c} }
         condition = {or: id_conditions}
       end
-      {condition: condition}
+      unless condition.key?('condition') || condition.key?(:condition)
+        condition = {condition: condition}
+      end
+      condition
     end
 
     def default_headers

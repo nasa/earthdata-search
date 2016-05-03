@@ -6,6 +6,10 @@ defaults: &defaults
         - org.ceos.wgiss.cwic.granules.prod
       features:
         - Int'l / Interagency
+  ornl_example:
+    params:
+      provider:
+        - ORNL_DAAC
     #scripts:
     #  - edsc.portal.cwic.js
 
