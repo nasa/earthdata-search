@@ -73,6 +73,19 @@ RSpec::Matchers.define :have_spatial_constraint do |expected|
   end
 end
 
+RSpec::Matchers.define :have_no_spatial_constraint do |expected|
+  match do |page|
+    synchronize do
+      expect(MapUtil.spatial(page)).to_not eql(expected)
+    end
+    true
+  end
+
+  failure_message_for_should do |page|
+    "expected page to not have spatial constraint #{expected}"
+  end
+end
+
 RSpec::Matchers.define :have_map_center do |expected_lat, expected_lng, expected_zoom|
 
   def map_params(page)

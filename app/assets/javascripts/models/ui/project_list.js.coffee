@@ -61,7 +61,19 @@ ns.ProjectList = do (ko
 
       @allCollectionsVisible = ko.computed(@_computeAllCollectionsVisible, this, deferEvaluation: true)
 
+      # Ensure
+      ko.computed(@_syncHitsCounts, this)
+
       $(document).ready(@_onReady)
+
+    _syncHitsCounts: =>
+      return unless @collectionResults? && @collectionResults.loadTime()?
+      for collection in @project.collections()
+        found = false
+        for result in @collectionResults.results() when result.id == collection.id
+          found = true
+          break
+        collection.granuleDatasource()?.data() unless found
 
     _onReady: =>
       sortable('#project-collections-list')
