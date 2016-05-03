@@ -61,7 +61,7 @@ module EarthdataSearchClient
     config.assets.precompile << Proc.new do |path|
       !%w(.js .css .map).include?(File.extname(path)) ||
         config.is_plugin.call(path) ||
-        File.basename(path).start_with?('edsc-portal.')
+        (File.basename(path).start_with?('edsc-portal.') && File.extname(path) == 'js')
     end
 
     config.log_tags = [:uuid]
