@@ -4,6 +4,7 @@ describe "CWIC Granule list", reset: false do
   extend Helpers::CollectionHelpers
 
   before :all do
+    page.driver.resize_window(1280, 1024)
     load_page :search, q: 'C1220566654-USGS_LTA'
   end
 
@@ -35,13 +36,11 @@ describe "CWIC Granule list", reset: false do
       end
 
       it "displays the collection details", acceptance: true do
-        page.execute_script("console.log(' --- AND ---');")
         expect(page).to have_visible_collection_details
         expect(page).to have_content('lta@usgs.gov')
       end
 
       it "displays back navigation with the appropriate text", acceptance: true do
-        page.execute_script("console.log(' --- AND ---');")
         expect(collection_details).to have_link('Back to Granules')
       end
     end
@@ -155,6 +154,10 @@ describe "CWIC Granule list", reset: false do
     context "clicking on the CWIC help button" do
       before :all do
         click_on "Learn More ..."
+      end
+
+      after :all do
+        click_on "Close"
       end
 
       it "displays additional details about CWIC collections", acceptance: true do
