@@ -47,6 +47,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
+    atomic (1.1.16)
     bourbon (3.2.1)
       sass (~> 3.2)
       thor
@@ -250,6 +251,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  atomic
   bourbon
   capybara
   capybara-screenshot
@@ -295,3 +297,6 @@ DEPENDENCIES
   unicorn
   vcr
   whenever
+
+BUNDLED WITH
+   1.11.2

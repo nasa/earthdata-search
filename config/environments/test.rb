@@ -45,6 +45,7 @@ EarthdataSearchClient::Application.configure do
   config.url_limit = 130
 
   config.middleware.use RackSessionAccess::Middleware
+  config.middleware.use Middleware::RackRequestBlocker
 
   # This is also the client ID sent to OpenSearch. It is kept the same since the OpenSearch endpoint ultimately
   # talks to ECHO/CMR.
