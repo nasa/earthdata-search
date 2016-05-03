@@ -44,7 +44,7 @@ describe "Place name autocomplete" do
   it "does not apply placename spatial when tabbing after a keyword search without 'place:'" do
     fill_in "keywords", with: "Texas\t"
     expect(page).to have_no_field('keywords', with: 'modis place:"Texas, United States"')
-    expect(page).to_not have_spatial_constraint(texas_constraint)
+    expect(page).to have_no_spatial_constraint(texas_constraint)
   end
 
   it "displays nothing when the query string is very short" do
