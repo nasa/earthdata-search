@@ -677,6 +677,17 @@ http_interactions:
   digest: 9cc276683c3345bc2f450ca1421b9ec92cb89c14
 - request:
     method: get
+    uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=GHRSST-GOES15-OSPO-L2P%3Av1.0.20140722000000-OSPO-L2P_GHRSST-SSTskin-GOES15-North-v02.0-fv01.0.nc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 03 May 2016 15:47:12 GMT
+  digest: 270752783cf39a1e4a1e279741f985ad424fbb3a
+- request:
+    method: get
     uri: http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI%3AEO1A0460282016021110PW_AK3_01
     body:
       encoding: US-ASCII
