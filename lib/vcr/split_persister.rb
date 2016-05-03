@@ -10,6 +10,7 @@ module VCR
       @persister = persister
       @storage = {}
       @normalizers = []
+      @reduced = {}
     end
 
     def [](name)
@@ -31,7 +32,7 @@ module VCR
       requests.each do |k, v|
         if k == 'http_interactions'
           v.each do |interaction|
-            response = responses[interaction.delete('digest')]
+            response = responses.delete(interaction.delete('digest'))
             unless response.nil?
               interaction.merge!(response)
               normalizers.each do |normalizer|
@@ -57,12 +58,14 @@ module VCR
 
       obj.each do |k, v|
         if k == 'http_interactions'
-          v = v.sort_by {|interaction| unique_key(interaction)}
           v.each do |interaction|
-            response = interaction.extract!('response')
             normalizers.each do |normalizer|
               normalizer.forward(interaction)
             end
+          end
+          v = v.sort_by {|interaction| unique_key(interaction)}
+          v.each do |interaction|
+            response = interaction.extract!('response')
             digest = Digest::SHA1.hexdigest(unique_key(interaction))
             interaction['digest'] = digest
             requests[k] << interaction
@@ -77,9 +80,9 @@ module VCR
         end
       end
 
-
       @persister[file_name(name, 'requests')] = @destination_serializer.serialize(requests)
       @persister[file_name(name, 'responses')] = @destination_serializer.serialize(responses)
+      @storage[name.to_s] = content
       content
     end
 
@@ -91,7 +94,7 @@ module VCR
 
     def unique_key(interaction)
       req = interaction['request']
-      "#{req['uri']}::#{req['method']}::#{req['body']['string']}"
+      "#{req['uri']}::#{req['method']}::#{req['body']['string']}::#{req['headers']['Echo-Token']}"
     end
 
     def file_name(root, type)
@@ -109,13 +112,20 @@ module VCR
                               response['response']['headers'].present? &&
                               response['response']['headers']['content-type'].present? &&
                               response['response']['headers']['content-type'][0].start_with?('application/json'))
-      body = ActiveSupport::JSON.decode(response['response']['body']['string'])
-      if body && body['feed'] && body['feed']['facets'] && !body['feed']['reduced']
-        before = response['response']['body']['string'].size
-        Echo::ClientMiddleware::FacetCullingMiddleware.cull(body)
-        response['response']['body']['string'] = body.to_json
-        after = response['response']['body']['string'].size
-        puts "Reduced: #{before} -> #{after}"
+      body_config = response['response']['body']
+      digest = Digest::SHA1.hexdigest(body_config['string'])
+      if @reduced[digest]
+        body_config['string'] = @reduced[digest]
+      else
+        body = ActiveSupport::JSON.decode(body_config['string'])
+        if body && body['feed'] && body['feed']['facets'] && !body['feed']['reduced']
+          before = response['response']['body']['string'].size
+          Echo::ClientMiddleware::FacetCullingMiddleware.cull(body)
+          @reduced[digest] = response['response']['body']['string'] = body.to_json
+          after = @reduced[digest].size
+
+          puts "Reduced: #{before} -> #{after}"
+        end
       end
       response['response']['reduced'] = true
       response

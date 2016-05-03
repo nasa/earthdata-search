@@ -117,7 +117,7 @@ class CollectionsController < ApplicationController
       'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
     }
 
-    features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0], ["Int'l / Interagency", 0]]}]
+    features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
     facets.unshift(features).flatten!
 
     # CMR-1722 Temporarily filter out detailed_variable keywords
@@ -300,31 +300,24 @@ class CollectionsController < ApplicationController
       end
     end
 
-    features = params.delete(:features)
-    use_opendap = features && features.include?('Subsetting Services')
-    if use_opendap
+    features = Hash[Array.wrap(params.delete(:features)).map {|f| [f, true]}]
+    if features['Subsetting Services']
       params['tag_key'] = Array.wrap(params['tag_key'])
       params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"
     end
 
-    gibs_keys = Rails.configuration.gibs.keys
-    providers = gibs_keys.map{|key| key.split('___').first}
-    short_names = gibs_keys.map{|key| key.split('___').last}
-
-    use_gibs = features && features.include?('Map Imagery')
-    params = params.merge('provider' => providers) if use_gibs
-    params = params.merge('short_name' => short_names) if use_gibs
-
-    nrt = features && features.include?('Near Real Time')
-    params = params.merge('collection_data_type' => 'NEAR_REAL_TIME') if nrt
-
-    params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
-
-    cwic = features && features.include?("Int'l / Interagency")
-    params['include_tags'] = ["#{Rails.configuration.cmr_tag_namespace}.*", "org.ceos.wgiss.cwic.granules.prod"].join(',')
-    unless cwic || request.query_parameters['echo_collection_id']
-      params['exclude[tag_key]'] = "org.ceos.wgiss.cwic.granules.prod"
+    if features['Map Imagery']
+      params['tag_key'] = Array.wrap(params['tag_key'])
+      params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.gibs"
     end
+
+    if features['Near Real Time']
+      params = params.merge('collection_data_type' => 'NEAR_REAL_TIME')
+    end
+
+    params['include_tags'] = ["#{Rails.configuration.cmr_tag_namespace}.*",
+                              "org.ceos.wgiss.cwic.granules.prod"].join(',')
+    params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
     params
   end
