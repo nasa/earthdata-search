@@ -66,6 +66,14 @@ module EarthdataSearchClient
 
     config.log_tags = [:uuid]
 
+    config.middleware.insert(0, Rack::Rewrite) do
+      rewrite(%r{^/portal/(\w+)(.*)$}, lambda { |match, rack_env|
+        prefix = match[2].start_with?('/') ? '' : '/'
+        separator = match[2].include?('?') ? '&' : '?'
+        "#{prefix}#{match[2]}#{separator}portal=#{match[1]}"
+      })
+    end
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
