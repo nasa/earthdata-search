@@ -12,6 +12,17 @@ class ApplicationController < ActionController::Base
     last_point || edsc_path(root_url)
   end
 
+
+  # DELETE ME: Portal debug
+  before_filter :refresh_portals
+  def refresh_portals
+    if Rails.env.development?
+      portals = YAML.load_file(Rails.root.join('config/portals.yml'))
+      Rails.configuration.portals = (portals[Rails.env.to_s] || portals['defaults']).with_indifferent_access
+      Rails.logger.info "REFRESH -> #{Rails.configuration.portals}.inspect"
+    end
+  end
+
   protected
 
   RECENT_DATASET_COUNT = 2
@@ -185,7 +196,10 @@ class ApplicationController < ActionController::Base
   helper_method :script_session_expires_in
 
   def portal_id
-    @portal_id ||= params[:portal].presence
+    return @portal_id if @portal_id
+    portal_id = params[:portal].presence
+    portal_id = portal_id.downcase unless portal_id.nil?
+    @portal_id = portal_id
   end
   helper_method :portal_id
 

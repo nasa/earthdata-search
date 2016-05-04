@@ -3,31 +3,23 @@ var webpack = require("webpack"),
     pkg = JSON.parse(fs.readFileSync('./package.json')),
     license;
 
-license = fs.readFileSync('./LICENSE')
+license = fs.readFileSync('../../../LICENSE')
   .toString()
   .split(/\s+---\s+/, 1)[0];
 
 module.exports = {
-  context: __dirname + '/..',
-  entry: {
-    "edsc-search": "./edsc/search.js",
-    "edsc-access": "./edsc/access.js",
-    "edsc-plugin.datasource.cwic": "./edsc/plugins/datasource/cwic/src/js/edsc-plugin.datasource.cwic.jsx",
-    "edsc-plugin.renderer.cwic": "./edsc/plugins/renderer/cwic/src/js/edsc-plugin.renderer.cwic.jsx",
-    "edsc-plugin.datasource.cmr": "./edsc/plugins/datasource/cmr/src/js/edsc-plugin.datasource.cmr.jsx",
-    "edsc-plugin.renderer.cmr": "./edsc/plugins/renderer/cmr/src/js/edsc-plugin.renderer.cmr.jsx",
-    "edsc-portal.example": "./edsc/portals/example/src/js/edsc-portal.example.jsx"
-  },
+  context: __dirname,
+  entry: "./src/js/" + pkg.name + ".jsx",
   output: {
-    path: "./edsc/dist",
-    filename: "[name].min.js"
+    path: __dirname + "/dist",
+    filename: pkg.name + ".min.js"
   },
   module: {
     loaders: [
-      { test: /\.useable\.css$/, loader: "style/useable!css" },
-      { test: /\.useable\.less$/, loader: "style/useable!css!less" },
-      { test: /\.css$/, exclude: /\.useable\.css$/, loader: "style!css" },
-      { test: /\.less$/, exclude: /\.useable\.less$/, loader: "style!css!less" },
+      { test: /\.use\.css$/, loader: "style/useable!css" },
+      { test: /\.use\.less$/, loader: "style/useable!css!less" },
+      { test: /\.css$/, exclude: /\.use\.css$/, loader: "style!css" },
+      { test: /\.less$/, exclude: /\.use\.less$/, loader: "style!css!less" },
       { test: /\.coffee$/, loader: "coffee" },
       { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee?literate" },
       { test: /\.jsx$/, exclude: /(node_modules|bower_components)/, loader: 'babel?presets[]=es2015' },
@@ -39,6 +31,7 @@ module.exports = {
   },
   devtool: '#sourcemap',
   externals: {
+    "edscplugin": "edscplugin",
     "jquery": "jQuery",
     "window": "window",
     "ko": "ko"
