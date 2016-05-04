@@ -32,7 +32,7 @@ describe 'Ordering without order options', reset: false do
     expect(page).to have_text('Not Validated')
   end
 
-  xit "provides a link to cancel the order", pending_fixtures: true do do
+  xit "provides a link to cancel the order", pending_fixtures: true do
     expect(page).to have_link("Cancel")
   end
 
