@@ -16,6 +16,7 @@
       window.tokenExpiresIn = <%= logged_in? ? script_session_expires_in : 'null' %>;
       window.tokenLoadTime = +new Date();
       window.echoEnv = "<%= cmr_env %>";
+      window.edscportal = "<%= portal_id %>";
     </script>
     <% if Rails.configuration.respond_to?(:analytics_id) %>
     <script>
