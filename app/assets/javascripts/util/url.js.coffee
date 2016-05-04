@@ -178,7 +178,8 @@ this.edsc.util.url = do(window
     path = path.replace(/^\/portal\/[\w]+/, '')
     path = path.replace(/([?&])portal=[^&]*&?/g, '$1')
     path = path.replace(/\?$/, '')
-    portalPrefix = window.location.pathname.match(/^\/portal\/[\w]+/)?[0] || ''
+    portalPrefix = window.location.pathname.match(/^\/?portal\/[\w]+/)?[0] || ''
+    portalPrefix = '/' + portalPrefix if portalPrefix.length > 0 && portalPrefix.indexOf('/') != 0
     "#{portalPrefix}#{path}".replace(/\/\//g, '/')
 
   fetchId = (id, params) ->

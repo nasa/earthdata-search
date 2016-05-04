@@ -18,7 +18,7 @@ ns.query = do (ko,
   # intent when they set a temporal constraint and a timeline focus.
   # We need to do it here to avoid inordinate pauses waiting for URL
   # updates, project saving, etc, when clicking the "download all button."
-  if urlUtil.cleanPath() == '/data/configure'
+  if window.location.href.indexOf('/data/configure') != -1
     href = window.location.href
     overrideTemporalParam = href.match(/[?&]ot=([^&$]+)/)
     if overrideTemporalParam?
