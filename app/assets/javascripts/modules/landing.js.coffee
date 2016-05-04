@@ -69,17 +69,16 @@ do ($=jQuery
 
     $(window).on 'edsc.pagechange', updateLandingPageState
 
+    goToSearch = ->
+      urlUtil.pushPath("/search")
+
     preferences.onload ->
       if preferences.showTour()
         # Let the DOM finish any refresh operations before showing the tour
         setTimeout((-> help.startTour() if uiModel.isLandingPage()), 0)
 
     $('.landing-area').on 'keypress', '#keywords', (e) ->
-      urlUtil.pushPath('/search') if e.which == 13
-
-    $('.landing-area').on 'submit', 'form', -> urlUtil.pushPath('/search')
-
-    $('.landing-area').on 'click', '.submit, .master-overlay-show', -> urlUtil.pushPath('/search')
-
-    $('.landing-area').on 'click', '.spatial-selection a',
-      -> urlUtil.pushPath('/search')
+      goToSearch() if e.which == 13
+    $('.landing-area').on 'submit', 'form', goToSearch
+    $('.landing-area').on 'click', '.submit, .master-overlay-show', goToSearch
+    $('.landing-area').on 'click', '.spatial-selection a', goToSearch

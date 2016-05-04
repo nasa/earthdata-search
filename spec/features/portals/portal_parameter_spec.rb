@@ -3,14 +3,14 @@ require "spec_helper"
 describe "Portal parameters", reset: true do
   include Helpers::CollectionHelpers
 
-  it "Visiting Earthdata Search with a ?portal=<portal-id> parameter displays an error if no portal is configured", acceptance: true do
+  it "Visiting Earthdata Search with /portal/<portal-id> displays an error if no portal is configured", acceptance: true do
     expect{
       visit "/?portal=does-not-exist"
       Capybara.reset_sessions! # Ensures the errors are raised
     }.to raise_error( ActionController::RoutingError)
   end
 
-  it "Visiting Earthdata Search with a ?portal=<portal-id> parameter preserves the portal=<portal-id> filter across page and query transitions", acceptance: true do
+  it "Visiting Earthdata Search with /portal/<portal-id> parameter preserves the portal filter across page and query transitions", acceptance: true do
     load_page :search, portal: 'simple'
     expect(page.status_code).to eq(200)
     expect(page).to have_text("1 Matching Collection")
@@ -22,10 +22,10 @@ describe "Portal parameters", reset: true do
     fill_in "keywords", with: 'MODIS'
     wait_for_xhr
     expect(page).to have_text("1 Matching Collection")
-    expect(page).to have_query_param(portal: 'simple')
+    expect(page).to have_path_prefix("/portal/simple/")
 
-    click_link "Search"
-    expect(page).to have_query_string('portal=simple')
+    click_link "Simple"
+    expect(page).to have_path('/portal/simple/')
 
   end
 
@@ -41,7 +41,7 @@ describe "Portal parameters", reset: true do
         click_link 'Contact Information'
       end
       it "carries the portal parameter to the next page" do
-        expect(page).to have_query_param(portal: 'simple')
+        expect(page).to have_path_prefix("/portal/simple/")
       end
     end
 
@@ -51,7 +51,7 @@ describe "Portal parameters", reset: true do
         click_link 'Recent Retrievals'
       end
       it "carries the portal parameter to the next page" do
-        expect(page).to have_query_param(portal: 'simple')
+        expect(page).to have_path_prefix("/portal/simple/")
       end
     end
 
@@ -61,7 +61,7 @@ describe "Portal parameters", reset: true do
         click_link 'Saved Projects'
       end
       it "carries the portal parameter to the next page" do
-        expect(page).to have_query_param(portal: 'simple')
+        expect(page).to have_path_prefix("/portal/simple/")
       end
     end
 
@@ -71,7 +71,7 @@ describe "Portal parameters", reset: true do
         click_link 'Logout'
       end
       it "carries the portal parameter to the next page" do
-        expect(page).to have_query_param(portal: 'simple')
+        expect(page).to have_path_prefix("/portal/simple/")
       end
     end
 
@@ -83,16 +83,16 @@ describe "Portal parameters", reset: true do
       end
 
       it "carries the portal parameter to the next page" do
-        expect(page).to have_query_param(portal: 'simple')
+        expect(page).to have_path_prefix("/portal/simple/")
       end
     end
 
     context "and clicking the home page link" do
       before :each do
-        click_link 'Search'
+        click_link 'Simple'
       end
       it "carries the portal parameter to the next page" do
-        expect(page).to have_query_param(portal: 'simple')
+        expect(page).to have_path_prefix("/portal/simple/")
       end
     end
   end

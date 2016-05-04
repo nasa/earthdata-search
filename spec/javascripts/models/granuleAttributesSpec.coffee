@@ -108,10 +108,14 @@ describe "GranuleAttributes", ->
 
   describe "#_errorFor", ->
     getErrorForAttrs = (condition, begin, end) ->
-      def = {type: condition[0]}
-      def.begin = begin if begin
-      def.end = end if end
-      makeAttrs(def)._errorFor(def, condition)
+      if condition instanceof Array
+        def = {type: condition[0]}
+        def.begin = begin if begin
+        def.end = end if end
+      else
+        def = {type: begin || 'STRING'}
+        condition = [begin || 'STRING', 'attr0', condition.minValue, condition.maxValue]
+      makeAttrs([])._errorFor(def, condition)
 
     fieldValidationSpecs = (fieldName) ->
       getErrorFor = (condition, begin, end) ->
@@ -123,7 +127,7 @@ describe "GranuleAttributes", ->
         expect(getErrorFor(['INT', 'attr0', '123asdf'])).toEqual('Invalid integer: 123asdf')
 
       it "produces no error for valid integers", ->
-        expect(getErrorFor(['INT', 'attr0', '123')).toEqual(null)
+        expect(getErrorFor(['INT', 'attr0', '123'])).toEqual(null)
 
       it "produces an error for invalid floats", ->
         expect(getErrorFor(['FLOAT', 'attr0', '123asdf'])).toEqual('Invalid float: 123asdf')
@@ -138,10 +142,10 @@ describe "GranuleAttributes", ->
         expect(getErrorFor(['DATE', 'attr0', '2014-01-01'])).toEqual(null)
 
       it "produces an error for invalid times", ->
-        expect(getErrorFor('TIME', 'attr0', '123asdf'])).toEqual('Invalid time: 123asdf')
+        expect(getErrorFor(['TIME', 'attr0', '123asdf'])).toEqual('Invalid time: 123asdf')
 
       it "produces no error for valid times", ->
-        expect(getErrorFor('TIME', 'attr0', '00:00:00'])).toEqual(null)
+        expect(getErrorFor(['TIME', 'attr0', '00:00:00'])).toEqual(null)
 
       it "produces an error for invalid date/times", ->
         expect(getErrorFor(['DATETIME', 'attr0', '123asdf'])).toEqual('Invalid date/time: 123asdf')
@@ -150,22 +154,22 @@ describe "GranuleAttributes", ->
         expect(getErrorFor(['DATETIME', 'attr0', '2014-01-01T00:00:00'])).toEqual(null)
 
       it "produces an error when values are below the allowable minimum", ->
-        expect(getErrorFor('0', 'INT', 1)).toEqual('Values must be greater than 1')
+        expect(getErrorFor(['INT', 'attr0', '0'], 1)).toEqual('Values must be greater than 1')
 
       it "produces no error when values are at the allowable minimum", ->
-        expect(getErrorFor('1', 'INT', 1)).toEqual(null)
+        expect(getErrorFor(['INT', 'attr0', '1'], 1)).toEqual(null)
 
       it "produces no error when values are above the allowable minimum", ->
-        expect(getErrorFor('2', 'INT', 1)).toEqual(null)
+        expect(getErrorFor(['INT', 'attr0', '2'], 1)).toEqual(null)
 
       it "produces an error when values are above the allowable maximum", ->
-        expect(getErrorFor('2', 'INT', null, 1)).toEqual('Values must be less than 1')
+        expect(getErrorFor(['INT', 'attr0', '2'], null, 1)).toEqual('Values must be less than 1')
 
       it "produces no error when values are at the allowable maximum", ->
-        expect(getErrorFor('1', 'INT', null, 1)).toEqual(null)
+        expect(getErrorFor(['INT', 'attr0', '1'], null, 1)).toEqual(null)
 
       it "produces no error when values are below the allowable maximum", ->
-        expect(getErrorFor('0', 'INT', null, 1)).toEqual(null)
+        expect(getErrorFor(['INT', 'attr0', '0'], null, 1)).toEqual(null)
 
     describe "for value fields", -> fieldValidationSpecs('value')
     describe "for minValue fields", -> fieldValidationSpecs('minValue')
