@@ -14,14 +14,14 @@ class ApplicationController < ActionController::Base
 
 
   # DELETE ME: Portal debug
-  before_filter :refresh_portals
-  def refresh_portals
-    if Rails.env.development?
-      portals = YAML.load_file(Rails.root.join('config/portals.yml'))
-      Rails.configuration.portals = (portals[Rails.env.to_s] || portals['defaults']).with_indifferent_access
-      Rails.logger.info "REFRESH -> #{Rails.configuration.portals}.inspect"
-    end
-  end
+  #before_filter :refresh_portals
+  #def refresh_portals
+  #  if Rails.env.development?
+  #    portals = YAML.load_file(Rails.root.join('config/portals.yml'))
+  #    Rails.configuration.portals = (portals[Rails.env.to_s] || portals['defaults']).with_indifferent_access
+  #    Rails.logger.info "REFRESH -> #{Rails.configuration.portals}.inspect"
+  #  end
+  #end
 
   protected
 
@@ -226,8 +226,14 @@ class ApplicationController < ActionController::Base
 
   def edsc_path(path)
     if portal?
-      separator = path.include?('?') ? '&' : '?'
-      path = path + separator + "portal=" + URI.encode(portal_id)
+      id = URI.encode(portal_id)
+      if path.start_with?('http')
+        # Full URL
+        path = path.gsub(/^[^\/]*\/\/[^\/]*/, "\0/portal/#{id}")
+      elsif path.start_with?('/')
+        # Absolute
+        path = "/portal/#{id}" + path
+      end
     end
     path
   end
