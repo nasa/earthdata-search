@@ -78,8 +78,9 @@ RSpec::Matchers.define :have_no_path_prefix do |string|
 
   match do |page|
     synchronize do
-      expect(path(page)).to_not start_with(string)
+      expect(path(page)).not_to start_with(string)
     end
+    true
   end
 
   failure_message_for_should do |page|
