@@ -1,6 +1,7 @@
 let GranuleQuery = window.edsc.models.data.query.GranuleQuery,
     Granules = window.edsc.models.data.Granules,
-    ajax = window.edsc.util.xhr.ajax;
+    ajax = window.edsc.util.xhr.ajax,
+    urlUtil = window.edsc.util.url;
 
 export default class CmrDatasourcePlugin {
 
@@ -70,7 +71,7 @@ export default class CmrDatasourcePlugin {
   }
   downloadLinks(projectId) {
     let collection = this._collection;
-    let base = `/granules/download.html?project=${projectId}&collection=${collection.id}`;
+    let base = urlUtil.fullPath(`/granules/download.html?project=${projectId}&collection=${collection.id}`);
     var result = [
       {title: "View Download Links", url: base},
       {title: "Download Access Script", url: base.replace('.html', '.sh')}

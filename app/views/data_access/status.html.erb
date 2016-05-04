@@ -36,7 +36,12 @@
                rel="nofollow"><i class="fa fa-times-circle"></i></a>
           </td>
           <td>
-            <a href="/data/retrieve/<%= retrieval.to_param %>"><%= retrieval.description %></a>
+            <a href="<%= retrieval.path %>">
+              <% if retrieval.portal %>
+                <span class="portal-title">[<%= retrieval.portal_title %>]</span>
+              <% end %>
+              <%= retrieval.description %>
+            </a>
           </td>
           <td class="data-retrieval-time-ago">
             <%= time_ago_in_words(retrieval.created_at, include_seconds: true).capitalize %> ago

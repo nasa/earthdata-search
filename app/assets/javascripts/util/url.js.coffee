@@ -173,6 +173,15 @@ this.edsc.util.url = do(window
   getProjectName = ->
     savedName
 
+  fullPath = (path) ->
+    return '' unless path?
+    path = path.replace(/^\/portal\/[\w]+/, '')
+    path = path.replace(/([?&])portal=[^&]*&?/g, '$1')
+    path = path.replace(/\?$/, '')
+    portalPrefix = window.location.pathname.match(/^\/?portal\/[\w]+/)?[0] || ''
+    portalPrefix = '/' + portalPrefix if portalPrefix.length > 0 && portalPrefix.indexOf('/') != 0
+    "#{portalPrefix}#{path}".replace(/\/\//g, '/')
+
   fetchId = (id, params) ->
     return if savedId == id
     console.log "Fetching project #{id}"
@@ -189,7 +198,7 @@ this.edsc.util.url = do(window
 
         if data.new_id?
           savedId = data.new_id
-          History.pushState('', '', "/#{data.path.split('?')[0]}?projectId=#{savedId}");
+          History.pushState('', '', "/#{data.path.split('?')[0]}?projectId=#{savedId}")
 
         if data.user_id? && data.user_id == -1
           History.pushState('', '', data.path)
@@ -207,7 +216,7 @@ this.edsc.util.url = do(window
     console.log "Saving project #{id}"
     console.log "Path: #{path}"
     console.log "Workspace Name: #{workspaceName}"
-    data = {path: path, workspace_name: workspaceName}
+    data = {path: fullPath(path), workspace_name: workspaceName}
     ajax
       method: 'post'
       dataType: 'text'
@@ -217,10 +226,11 @@ this.edsc.util.url = do(window
         console.log "Saved project #{id}"
         console.log "Path: #{path}"
         savedId = data
-        History.pushState(state, document.title, "/#{path.split('?')[0]}?projectId=#{savedId}")
+        History.pushState(state, document.title, fullPath("/#{path.split('?')[0]}?projectId=#{savedId}"))
         $(document).trigger('edsc.saved') if workspaceName?
 
-  cleanPath = ->
+
+  cleanPathWithPortal = ->
     path = realPath()
     if path.indexOf("projectId=") != -1
       params = deparam(path.split('?')[1])
@@ -235,12 +245,16 @@ this.edsc.util.url = do(window
     result = result.replace(/^\/#/, '/') if result? # IE 9 bug with URL hashes
     result
 
+  cleanPath = ->
+    path = cleanPathWithPortal()
+    path.replace(/^\/portal\/[\w]+/, '') if path
+
   pushPath = (path, title=document.title, data=null) ->
     clean = cleanPath()
     if clean?
       # Replace everything before the first ?
       path = cleanPath().replace(/^[^\?]*/, path)
-      History.pushState(data, title, path)
+      History.pushState(data, title, fullPath(path))
 
   saveState = (path, state, push = false, workspaceName = null) ->
     paramStr = param(compress(state)).replace(/%5B/g, '[').replace(/%5D/g, ']')
@@ -267,9 +281,9 @@ this.edsc.util.url = do(window
       savedPath = path
       savedId = null
       if push
-        History.pushState(state, document.title, path)
+        History.pushState(state, document.title, fullPath(path))
       else
-        History.replaceState(state, document.title, path)
+        History.replaceState(state, document.title, fullPath(path))
       true
     else
       false
@@ -281,7 +295,15 @@ this.edsc.util.url = do(window
       savedPath = cleanPath()
 
   currentQuery = ->
-    cleanPath()?.split('?')[1] ? ''
+    path = cleanPathWithPortal()?.split('?')
+    return '' unless path?
+    portal = path[0].match(/^\/portal\/([\w]+)/)?[1]
+    result = path[1] ? ''
+    if portal
+      portalParam = "portal=#{portal}"
+      portalParam = "&#{portalParam}" if result.length > 0
+      result += portalParam
+    result
 
   currentParams = ->
     inflate(deparam(currentQuery()))
@@ -294,3 +316,4 @@ this.edsc.util.url = do(window
     cleanPath: cleanPath
     currentParams: currentParams
     currentQuery: currentQuery
+    fullPath: fullPath

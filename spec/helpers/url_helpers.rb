@@ -24,6 +24,7 @@ module Helpers
           url = '/search' if options[:facets]
           url = "/search/granules" if options[:focus]
         end
+        url = "/portal/#{options[:portal]}#{url}" if options[:portal]
         url
       end
 
@@ -54,7 +55,7 @@ module Helpers
           end
         end
 
-        [:labs, :portal].each do |direct_param|
+        [:labs].each do |direct_param|
           params[direct_param.to_s] = options[direct_param] if options.key?(direct_param)
         end
 

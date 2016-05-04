@@ -49,9 +49,9 @@ describe "Portal assets", reset: false do
       expect(page).to have_no_css('.main-nav')
     end
 
-    it "has a logo title of 'Search'" do
+    it "has a logo title the same as the portal id" do
       within '.site-logo' do
-        expect(page).to have_content('Search')
+        expect(page).to have_content('Simple')
       end
     end
 
