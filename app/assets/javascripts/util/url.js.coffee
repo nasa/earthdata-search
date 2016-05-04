@@ -179,7 +179,7 @@ this.edsc.util.url = do(window
     path = path.replace(/([?&])portal=[^&]*&?/g, '$1')
     path = path.replace(/\?$/, '')
     portalPrefix = window.location.pathname.match(/^\/portal\/[\w]+/)?[0] || ''
-    "#{portalPrefix}#{path}"
+    "#{portalPrefix}#{path}".replace(/\/\//g, '/')
 
   fetchId = (id, params) ->
     return if savedId == id
@@ -197,10 +197,10 @@ this.edsc.util.url = do(window
 
         if data.new_id?
           savedId = data.new_id
-          History.pushState('', '', fullPath("/#{data.path.split('?')[0]}?projectId=#{savedId}"))
+          History.pushState('', '', "/#{data.path.split('?')[0]}?projectId=#{savedId}")
 
         if data.user_id? && data.user_id == -1
-          History.pushState('', '', fullPath(data.path))
+          History.pushState('', '', data.path)
 
         savedPath = data.path
         savedName = data.name
@@ -215,7 +215,7 @@ this.edsc.util.url = do(window
     console.log "Saving project #{id}"
     console.log "Path: #{path}"
     console.log "Workspace Name: #{workspaceName}"
-    data = {path: path, workspace_name: workspaceName}
+    data = {path: fullPath(path), workspace_name: workspaceName}
     ajax
       method: 'post'
       dataType: 'text'
@@ -245,7 +245,8 @@ this.edsc.util.url = do(window
     result
 
   cleanPath = ->
-    cleanPathWithPortal().replace(/^\/portal\/[\w]+/, '')
+    path = cleanPathWithPortal()
+    path.replace(/^\/portal\/[\w]+/, '') if path
 
   pushPath = (path, title=document.title, data=null) ->
     clean = cleanPath()
