@@ -184,7 +184,7 @@
     </li>
     <!-- /ko -->
   </ol>
-  <form id="data-access" method="POST" action="/data/retrieve" style="display:none;">
+  <form id="data-access" method="POST" action="<%=edsc_path "/data/retrieve"%>" style="display:none;">
     <div>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
       <input id="data-access-project" name="project" type="hidden">

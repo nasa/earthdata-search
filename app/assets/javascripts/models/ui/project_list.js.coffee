@@ -97,7 +97,7 @@ ns.ProjectList = do (ko
     configureProject: (singleGranuleId=null) ->
       @_sortOutTemporalMalarkey (optionStr) ->
         singleGranuleParam = if singleGranuleId? then "&sgd=#{encodeURIComponent(singleGranuleId)}" else ""
-        backParam = "&back=#{encodeURIComponent(urlUtil.cleanPath().split('?')[0])}"
+        backParam = "&back=#{encodeURIComponent(urlUtil.fullPath(urlUtil.cleanPath().split('?')[0]))}"
         path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr + backParam
         window.location.href = urlUtil.fullPath(path)
 
