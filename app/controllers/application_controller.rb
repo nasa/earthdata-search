@@ -161,7 +161,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     unless get_user_id
-      session[:last_point] = request.fullpath
+      session[:last_point] = edsc_path(request.fullpath)
 
       redirect_to echo_client.urs_login_path
     end
