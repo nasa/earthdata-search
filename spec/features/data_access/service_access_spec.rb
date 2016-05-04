@@ -23,7 +23,7 @@ describe 'Services Access', reset: false do
       end
 
       # Cannot reliably display a progress bar using recordings
-      it 'displays an error message' do
+      xit 'displays an error message', pending_fixtures: true do
         sleep 10
         expect(page).to have_content('Error: CollectionDisabled')
         expect(page).to have_content('Message: This collection is currently not configured for subagent HEG')
@@ -67,7 +67,7 @@ describe 'Services Access', reset: false do
           click_on 'Submit'
         end
 
-        it 'displays a progress bar while the service is processing' do
+        xit 'displays a progress bar while the service is processing', pending_fixtures: true do
           synchronize(120) do
             expect(page).to have_content("Processing") unless page.has_content?("Complete")
           end
@@ -80,7 +80,7 @@ describe 'Services Access', reset: false do
             wait_for_xhr
           end
 
-          it 'displays download urls' do
+          xit 'displays download urls', pending_fixtures: true do
             expect(page).to have_content('Complete')
           end
         end
