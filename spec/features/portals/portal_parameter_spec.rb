@@ -24,7 +24,7 @@ describe "Portal parameters", reset: true do
     expect(page).to have_text("1 Matching Collection")
     expect(page).to have_query_param(portal: 'simple')
 
-    click_link "Earthdata Search"
+    click_link "Search"
     expect(page).to have_query_string('portal=simple')
 
   end
@@ -89,7 +89,7 @@ describe "Portal parameters", reset: true do
 
     context "and clicking the home page link" do
       before :each do
-        click_link 'Earthdata Search'
+        click_link 'Search'
       end
       it "carries the portal parameter to the next page" do
         expect(page).to have_query_param(portal: 'simple')

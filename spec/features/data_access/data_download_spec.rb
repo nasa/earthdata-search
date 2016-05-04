@@ -315,11 +315,11 @@ describe "Data download page", reset: false do
       expect(page).to have_content(orderable_collection_title)
     end
 
-    it "indicates current order status", intermittent: 1 do
+    xit "indicates current order status", pending_fixtures: true do
       expect(page).to have_text('Not Validated')
     end
 
-    it "provides a link to cancel the order" do
+    xit "provides a link to cancel the order", pending_fixtures: true do
       expect(page).to have_link("Cancel")
     end
 

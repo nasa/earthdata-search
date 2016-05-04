@@ -14,6 +14,8 @@ gem 'whenever', :require => false
 
 gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'a89da600f389c53c88362ce5133d8d3945776464'
 
+gem 'atomic'
+
 group :test do
   gem 'database_cleaner'
   gem 'factory_girl'
@@ -28,7 +30,6 @@ group :test do
   gem 'fuubar'
   gem "rack_session_access"
   gem 'headless'
-  gem 'atomic'
 end
 
 group :development do
