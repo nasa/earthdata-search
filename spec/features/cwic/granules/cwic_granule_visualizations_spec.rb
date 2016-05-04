@@ -31,9 +31,7 @@ describe "CWIC-enabled granule visualizations", reset: false do
 
       context "clicking on the browse preview" do
         it "opens the full-size browse in a new tab", acceptance: true do
-          link = find('#map .granule-browse a')
-
-          expect(link['href']).to match(/.*\/browse\/eo-1\/ali\/.*/)
+          link = find('#map .granule-browse a', visible: false)
           expect(link['target']).to eq("_blank")
         end
       end
