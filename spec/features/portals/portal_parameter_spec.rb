@@ -24,7 +24,7 @@ describe "Portal parameters", reset: true do
     expect(page).to have_text("1 Matching Collection")
     expect(page).to have_path_prefix("/portal/simple/")
 
-    click_link "Search"
+    click_link "Simple"
     expect(page).to have_path('/portal/simple/')
 
   end
@@ -89,7 +89,7 @@ describe "Portal parameters", reset: true do
 
     context "and clicking the home page link" do
       before :each do
-        click_link 'Search'
+        click_link 'Simple'
       end
       it "carries the portal parameter to the next page" do
         expect(page).to have_path_prefix("/portal/simple/")

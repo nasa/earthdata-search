@@ -3,7 +3,7 @@ module PortalHelper
   def site_page_title(subpage=nil)
     result = "Earthdata Search"
     result = "#{Rails.configuration.env_name} #{result}" if Rails.configuration.env_name.present?
-    result += "- #{subpage}" if subpage.present?
+    result += " - #{subpage}" if subpage.present?
     result += " :: #{site_name}" if portal?
     result
   end
