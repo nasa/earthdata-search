@@ -72,10 +72,13 @@ do ($=jQuery
     goToSearch = ->
       urlUtil.pushPath("/search")
 
+    startTourDefault = ->
+      help.startTour() if !window.edscportal && uiModel.isLandingPage()
+
     preferences.onload ->
-      if preferences.showTour()
+      if preferences.showTour() || window.location.href.indexOf('?tour=true') != -1
         # Let the DOM finish any refresh operations before showing the tour
-        setTimeout((-> help.startTour() if uiModel.isLandingPage()), 0)
+        setTimeout(startTourDefault, 0)
 
     $('.landing-area').on 'keypress', '#keywords', (e) ->
       goToSearch() if e.which == 13

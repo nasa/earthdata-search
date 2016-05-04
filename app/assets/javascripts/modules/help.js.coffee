@@ -311,8 +311,9 @@
       close()
 
   $(document).on 'click', '.show-tour', (e) ->
-    e.preventDefault()
-    startTour()
+    unless window.edscportal
+      e.preventDefault()
+      startTour()
 
   add = (key, options={}) ->
     unless tourRunning

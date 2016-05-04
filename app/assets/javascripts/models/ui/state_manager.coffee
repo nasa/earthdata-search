@@ -16,6 +16,7 @@
       @loaded = false
       @cmr_env = null
       @portal = null
+      @tour = null
       @lastKeywords = null
 
       $(window).on 'edsc.save_workspace', =>
@@ -37,6 +38,7 @@
       result.labs = page.labs() if page.labs()
       result.cmr_env = @cmr_env if @cmr_env
       result.portal = @portal if @portal
+      result.tour = @tour if @tour
 
       result = extend(result, page.project.serialized(), ui.collectionsList.serialized())
 
@@ -69,6 +71,7 @@
       page.labs(params.labs)
       @cmr_env = params.cmr_env
       @portal = params.portal
+      @tour = params.tour
       page.project.serialized(params)
 
       unless @loaded
