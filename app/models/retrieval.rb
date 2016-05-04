@@ -7,6 +7,20 @@ class Retrieval < ActiveRecord::Base
 
   obfuscate_id spin: 53465485
 
+  def portal
+    return @portal if @portal
+    if jsondata && jsondata['query']
+      query = Rack::Utils.parse_nested_query(jsondata['query'])
+      @portal = query['portal']
+    end
+    @portal
+  end
+
+  def path
+    prefix = portal ? "/portal/#{portal}" : ""
+    "#{portal}/data/retrieve/#{to_param}"
+  end
+
   def description
     @description ||= jsondata['description']
     unless @description
