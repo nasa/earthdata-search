@@ -30,6 +30,10 @@ ns.CollectionsList = do ($=jQuery, document, config = @edsc.config, CollectionsM
         owner: this
         deferEvaluation: true
 
+    escapePortal: (data, event) ->
+      href = window.location.href.replace(/\/portal\/[\w]+/, '')
+      window.location.href = href
+
     scrolled: (data, event) =>
       elem = event.target
       if @collections.isRelevant() && (elem.scrollTop > (elem.scrollHeight - elem.offsetHeight - 40))

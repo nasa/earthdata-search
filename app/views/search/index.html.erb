@@ -127,6 +127,12 @@
             <p class="panel-list-load-more" data-bind="visible: collections.isLoading">
               Loading collections...
             </p>
+            <% if portal? %>
+            <p class="portal-escape" data-bind="visible: !collections.isLoading()">
+              Looking for more collections?
+              <a href="#" data-bind="click: ui.collectionsList.escapePortal" class="portal-escape-link">Leave the <%= site_name %></a>
+            </p>
+            <% end %>
           </div>
         </div>
       </section>
