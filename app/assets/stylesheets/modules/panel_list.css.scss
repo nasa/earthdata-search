@@ -280,3 +280,18 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   padding: 0 .5em .2em;
   color: #c9c9c9
 }
+
+.portal-escape {
+  color: #c9c9c9;
+  margin-top: 2em;
+  padding: 1em .5em .5em;
+  border-top: 1px solid #888;
+}
+
+.portal-escape a {
+  color: #c9c9c9;
+  text-decoration: underline;
+  &:link, &:visited {
+    color: #c9c9c9;
+  }
+}
