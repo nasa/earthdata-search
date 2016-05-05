@@ -23,7 +23,7 @@ describe "User missing ordering preferences", reset: false do
     end
   end
 
-  context "when accessing downloadable data" do
+  xit "when accessing downloadable data", pending_fixtures: true do
     before :all do
       load_page :search, project: [collection_id], view: :project
       wait_for_xhr
@@ -36,7 +36,7 @@ describe "User missing ordering preferences", reset: false do
       click_button 'Submit'
     end
 
-    it "shows the data retrieval page" do
+    it "shows the data retrieval page", pending_fixtures: true do
       expect(page).to have_content(collection_title)
       expect(page).to have_link('View Download Links')
     end
