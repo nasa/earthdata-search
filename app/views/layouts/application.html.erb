@@ -43,7 +43,10 @@
       <h1>
         <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search"></a>
         <%= portal_logo %>
-        <a class="site-logo" href="<%=edsc_path root_path %>"><%= site_logo_title %></a>
+        <a class="site-logo" href="<%=edsc_path root_path %>">
+          <span class="site-logo-org"><%= site_logo_org %></span>
+          <%= site_logo_title %>
+        </a>
         <% unless Rails.configuration.logo_name.blank? %>
           <span class="version-badge"><%= Rails.configuration.logo_name %></span>
         <% end %>

@@ -16,7 +16,8 @@ module.exports = {
     "edsc-plugin.renderer.cwic": "./edsc/plugins/renderer/cwic/src/js/edsc-plugin.renderer.cwic.jsx",
     "edsc-plugin.datasource.cmr": "./edsc/plugins/datasource/cmr/src/js/edsc-plugin.datasource.cmr.jsx",
     "edsc-plugin.renderer.cmr": "./edsc/plugins/renderer/cmr/src/js/edsc-plugin.renderer.cmr.jsx",
-    "edsc-portal.example": "./edsc/portals/example/src/js/edsc-portal.example.jsx"
+    "edsc-portal.example": "./edsc/portals/example/src/js/edsc-portal.example.jsx",
+    "edsc-portal.ornl": "./edsc/portals/ornl/src/js/edsc-portal.ornl.jsx"
   },
   output: {
     path: "./edsc/dist",
@@ -48,6 +49,7 @@ module.exports = {
     modulesDirectories: ['edsc', 'node_modules']
   },
   plugins: [
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
     new webpack.BannerPlugin(license),
     new webpack.ProvidePlugin({
       $: "jquery",
