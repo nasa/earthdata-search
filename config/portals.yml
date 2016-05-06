@@ -1,27 +1,31 @@
 portals: &portals
   carve:
+    org: ORNL DAAC
     title: CARVE
     params:
       project:
         - CARVE
     logos:
-      - image: https://daac.ornl.gov/graphics/daac_logo.jpg
-        link: https://daac.ornl.gov
-    nav:
-      - title: CARVE Home
+      - id: ornl-daac-logo
+        image: /images/portals/ornl/ornl-daac-logo-mono.png
         link: https://carve.ornl.gov/
+        title: ORNL DAAC CARVE Home
+    scripts:
+      - edsc-portal.ornl.min.js
 
   airmoss:
+    org: ORNL DAAC
     title: AirMOSS
     params:
       project:
         - AirMOSS
     logos:
-      - image: https://daac.ornl.gov/graphics/daac_logo.jpg
-        link: https://daac.ornl.gov
-    nav:
-      - title: AirMOSS Home
+      - id: ornl-daac-logo
+        image: /images/portals/ornl/ornl-daac-logo-mono.png
         link: https://airmoss.ornl.gov
+        title: ORNL DAAC AirMOSS Home
+    scripts:
+      - edsc-portal.ornl.min.js
 
 examples: &examples
   example:

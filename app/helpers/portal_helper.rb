@@ -8,6 +8,10 @@ module PortalHelper
     result
   end
 
+  def site_logo_org
+    (portal && portal['org']) || 'Earthdata'
+  end
+
   def site_logo_title
     if portal?
       portal['title'] || portal_id.titleize
