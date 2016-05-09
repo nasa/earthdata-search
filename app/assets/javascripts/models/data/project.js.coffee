@@ -87,9 +87,22 @@ ns.Project = do (ko,
       options = @serviceOptions.serialize()
       $(document).trigger('dataaccessevent', [@collection.id, options])
 
+      form_hashes = []
+      for method in @granuleAccessOptions().methods
+        for accessMethod in options.accessMethod
+          form_hash = {}
+          if ((method.id == null || method.id == undefined ) || accessMethod.id == method.id) && accessMethod.type == method.type
+            if method.id?
+              form_hash['id'] = method.id
+            else
+              form_hash['id'] = accessMethod.type
+            form_hash['form_hash'] = method.form_hash
+            form_hashes.push form_hash
+
       id: @collection.id
       params: param(@collection.granuleDatasource()?.toQueryParams() ? @collection.query.globalParams())
       serviceOptions: options
+      form_hashes: form_hashes
 
   class Project
     constructor: (@query) ->
@@ -232,7 +245,7 @@ ns.Project = do (ko,
               queries[i + start] = query
               break
         for q, index in queries
-          queries[index] = {} if q == undefined 
+          queries[index] = {} if q == undefined
         result.pg = queries if queries.length > 0
       result
 

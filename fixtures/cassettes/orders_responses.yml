@@ -1,5 +1,5 @@
 ---
-acab3c43996bb7f51d50e4301fe55418086eadbd:
+4c0355b9ef6afd0be082c8cb8391bb9868e4f534:
   response:
     status:
       code: 201
@@ -30,7 +30,35 @@ acab3c43996bb7f51d50e4301fe55418086eadbd:
       encoding: UTF-8
       string: '{"order":{"id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","provider_orders":[]}}'
     http_version: 
-d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
+278cf03cbc07dbf9212badead6d75f6fffc7501d:
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.166000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 02 May 2016 19:08:31 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78]."]}'
+    http_version: 
+34794632db18fe8f707eb493e2c358ee87e49d8d:
   response:
     status:
       code: 404
@@ -61,7 +89,7 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
-07819583163554fb8646f33d6003fb54e7c2ec35:
+adce617beac4ac7df0a1876ee8ea6ac83b809e3e:
   response:
     status:
       code: 404
@@ -92,7 +120,7 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
-3c35b37665f77aca5c51a613fb7e3dfc55de9464:
+9efc4a61b50012287dcdcc0f24fd31dde40a8ae0:
   response:
     status:
       code: 404
@@ -123,7 +151,7 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
-6032ff93412b49137f0094cb99bcda43c57589ae:
+babf3d6e6c8c449e5bce94c65673483b5b8291da:
   response:
     status:
       code: 404
@@ -154,7 +182,7 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
-39a0c2d0a26838756cded942aaafa01146536c60:
+e9b0024570b4967527ee182fc4c712dd507904ce:
   response:
     status:
       code: 404
@@ -185,7 +213,7 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
-8e5df437a803a1c898cd8037c730d6a8ed8f0e0f:
+a0b07a5a0c4c2b3a847d0bcde91fbca556e672e8:
   response:
     status:
       code: 404
@@ -216,7 +244,7 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
-6a350797bd129196a4f83d9f237799cf5a097f11:
+06327608719a524a7b50997b5702cb5bfb8a1d91:
   response:
     status:
       code: 200
@@ -245,7 +273,7 @@ d0c2a1b2a0fd3078fcb7492bc2ea067cd82834e8:
       encoding: UTF-8
       string: " "
     http_version: 
-ae82d2a1dc8801714b10b5ddc4152532641556d8:
+af575148af42a1e442f9e9bebe0c232e39239b9e:
   response:
     status:
       code: 404
@@ -276,7 +304,7 @@ ae82d2a1dc8801714b10b5ddc4152532641556d8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
-765fe82055de19ac1de4854e6cbc513820f8761e:
+2e1bf971b6a13a5f5fcc63c3daa834e157eabe22:
   response:
     status:
       code: 404
@@ -307,7 +335,7 @@ ae82d2a1dc8801714b10b5ddc4152532641556d8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
-4cc3e62a1df809811f43e4880997b66b959c221d:
+d75d4d295db5b9ff0091b6f0c4f4aad18d36afc0:
   response:
     status:
       code: 404
@@ -338,7 +366,7 @@ ae82d2a1dc8801714b10b5ddc4152532641556d8:
       encoding: UTF-8
       string: "<errors><error>Could not find order with guid [B83E748F-BEEF-528A-0265-CA6DDA7A8A78].</error></errors>"
     http_version: 
-e8a5589d2ff2055ca1341127f5c403c1363024ec:
+11c6017eb67a2ad89a8d11259f1e7c940603269d:
   response:
     status:
       code: 204
@@ -363,7 +391,7 @@ e8a5589d2ff2055ca1341127f5c403c1363024ec:
       encoding: US-ASCII
       string: ''
     http_version: 
-d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
+d0e34017973dba45b79243dd6b19d5e3cdfa7e4f:
   response:
     status:
       code: 200
@@ -491,7 +519,7 @@ d4ee7b5d25a6164f380fbc2f660cf1f6f0c9bb17:
           <user_region>USA</user_region>
         </user_information>
     http_version: 
-283d50ee42309ef1e15a8b270d5422dcae3aa875:
+5ba1613df87101554be808dbbb40847a07bd5825:
   response:
     status:
       code: 404

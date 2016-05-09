@@ -24,6 +24,7 @@ module Helpers
           url = '/search' if options[:facets]
           url = "/search/granules" if options[:focus]
         end
+        url = "/portal/#{options[:portal]}#{url}" if options[:portal]
         url
       end
 
@@ -54,7 +55,9 @@ module Helpers
           end
         end
 
-        params['labs'] = options[:labs] if options[:labs]
+        [:labs].each do |direct_param|
+          params[direct_param.to_s] = options[direct_param] if options.key?(direct_param)
+        end
 
         result = []
         params.each do |k, v|
@@ -80,7 +83,9 @@ module Helpers
     end
 
     def load_page(url, options={})
-      visit QueryBuilder.new.add_to(url, options)
+      ActiveSupport::Notifications.instrument "edsc.performance", activity: "Page load" do
+        visit QueryBuilder.new.add_to(url, options)
+      end
       wait_for_xhr
     end
   end

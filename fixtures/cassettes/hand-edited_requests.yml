@@ -62,6 +62,19 @@ http_interactions:
   recorded_at: Wed, 07 May 2014 17:59:34 GMT
   digest: single_order
 - request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/orders.json?id%5B%5D=B83E748F-BEEF-528A-0265-CA6DDA7A8A78
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Echo-Token:
+      - edsc
+  recorded_at: Wed, 07 May 2014 17:59:34 GMT
+  digest: edsc_order
+- request:
     method: delete
     uri: https://api.echo.nasa.gov/echo-rest/orders/E806E9C6-615E-2161-97D9-905D96D2F832
     body:
@@ -76,7 +89,7 @@ http_interactions:
   digest: delete_order
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&exclude%5Btag_key%5D=org.ceos.wgiss.cwic.granules.prod&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -91,7 +104,7 @@ http_interactions:
   digest: trigger_500
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&exclude%5Btag_key%5D=org.ceos.wgiss.cwic.granules.prod&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=trigger500%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -184,7 +197,7 @@ http_interactions:
   digest: invalid_token
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&exclude%5Btag_key%5D=org.ceos.wgiss.cwic.granules.prod&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -199,7 +212,7 @@ http_interactions:
   digest: invalid_collections_logged_in
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&exclude%5Btag_key%5D=org.ceos.wgiss.cwic.granules.prod&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -214,7 +227,7 @@ http_interactions:
   digest: invalid_collections_logged_in_non_hierarchical
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&exclude%5Btag_key%5D=org.ceos.wgiss.cwic.granules.prod&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -227,7 +240,7 @@ http_interactions:
   digest: invalid_collections_logged_out
 - request:
     method: get
-    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&exclude%5Btag_key%5D=org.ceos.wgiss.cwic.granules.prod&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
       string: ''
@@ -406,6 +419,23 @@ http_interactions:
   digest: 5465c54b75a62eac4512160fe28a6627c96aea19
 - request:
     method: get
+    uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 24 Nov 2015 19:26:28 GMT
+  digest: edsc_user_prefs
+- request:
+    method: get
     uri: https://api.echo.nasa.gov/echo-rest/users/69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences.json
     body:
       encoding: US-ASCII
@@ -457,7 +487,7 @@ http_interactions:
       Echo-ClientId:
       - edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
   recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
   digest: edsc_access_update_preferences_none
 - request:
@@ -476,7 +506,7 @@ http_interactions:
       Echo-ClientId:
       - edsc-dev
       Echo-Token:
-      - edsc-access
+      - edsc
   recorded_at: Tue, 24 Nov 2015 19:26:38 GMT
   digest: edsc_access_update_preferences_verbose
 - request:

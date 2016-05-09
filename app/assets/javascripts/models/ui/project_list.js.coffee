@@ -61,7 +61,19 @@ ns.ProjectList = do (ko
 
       @allCollectionsVisible = ko.computed(@_computeAllCollectionsVisible, this, deferEvaluation: true)
 
+      # Ensure
+      ko.computed(@_syncHitsCounts, this)
+
       $(document).ready(@_onReady)
+
+    _syncHitsCounts: =>
+      return unless @collectionResults? && @collectionResults.loadTime()?
+      for collection in @project.collections()
+        found = false
+        for result in @collectionResults.results() when result.id == collection.id
+          found = true
+          break
+        collection.granuleDatasource()?.data() unless found
 
     _onReady: =>
       sortable('#project-collections-list')
@@ -85,12 +97,9 @@ ns.ProjectList = do (ko
     configureProject: (singleGranuleId=null) ->
       @_sortOutTemporalMalarkey (optionStr) ->
         singleGranuleParam = if singleGranuleId? then "&sgd=#{encodeURIComponent(singleGranuleId)}" else ""
-        backParam = "&back=#{encodeURIComponent(urlUtil.cleanPath().split('?')[0])}"
+        backParam = "&back=#{encodeURIComponent(urlUtil.fullPath(urlUtil.cleanPath().split('?')[0]))}"
         path = '/data/configure?' + urlUtil.realQuery() + singleGranuleParam + optionStr + backParam
-        if window.tokenExpiresIn?
-          window.location.href = path
-        else
-          window.location.href = "/login?next_point=#{encodeURIComponent(path)}"
+        window.location.href = urlUtil.fullPath(path)
 
     _sortOutTemporalMalarkey: (callback) ->
       querystr = urlUtil.currentQuery()
@@ -170,9 +179,9 @@ ns.ProjectList = do (ko
             dataset_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
-            cancel_link: "/data/remove?order_id=#{m.orderId}" if canCancel
+            cancel_link: urlUtil.fullPath("/data/remove?order_id=#{m.orderId}") if canCancel
             dropped_granules: m.droppedGranules
-            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
+            downloadBrowseUrl: has_browse && urlUtil.fullPath("/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}")
             method_name: m.method()
       orders
 
@@ -210,7 +219,7 @@ ns.ProjectList = do (ko
             total_number: m.serviceOptions.total_number
             percent_done: percent_done
             percent_done_str: percent_done + '%'
-            downloadBrowseUrl: has_browse && "/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}"
+            downloadBrowseUrl: has_browse && urlUtil.fullPath("/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}")
             error_code: m.errorCode
             error_message: m.errorMessage
       console.log("(DEBUG) Service Orders: #{JSON.stringify(serviceOrders)}")

@@ -6,8 +6,11 @@
 require "spec_helper"
 
 describe "Collection GIBS visualizations", reset: false do
+  extend Helpers::CollectionHelpers
 
   gibs_collection_id = 'C119124186-NSIDC_ECS'
+  gibs_collection_name = 'AMSR-E/Aqua L2B Global Swath Rain Rate/Type GSFC Profiling Algorithm V002'
+  gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
 
   before :all do
     load_page :search
@@ -27,13 +30,7 @@ describe "Collection GIBS visualizations", reset: false do
   end
 
   context "when visualizing a GIBS-enabled collection" do
-    before :all do
-      first_collection_result.click_link "View collection"
-    end
-
-    after :all do
-      first_collection_result.click_link "Hide collection"
-    end
+    hook_granule_results(gibs_collection_name)
 
     it "displays composite GIBS imagery corresponding to the first 20 granule results on an HTML canvas" do
       expect(page).to have_granule_visualizations(gibs_collection_id)
@@ -41,11 +38,7 @@ describe "Collection GIBS visualizations", reset: false do
   end
 
   context "when turning off visualizations for a GIBS-enabled collection" do
-    before :all do
-      first_collection_result.click_link "View collection"
-      expect(page).to have_granule_visualizations(gibs_collection_id)
-      first_collection_result.click_link "Hide collection"
-    end
+    hook_granule_results_back(gibs_collection_name)
 
     it "removes the collection's GIBS tiles from the map" do
       expect(page).to have_no_granule_visualizations(gibs_collection_id)

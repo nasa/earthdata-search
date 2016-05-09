@@ -1,6 +1,8 @@
 import Granules from './Granules.jsx';
 import GranuleQuery from './GranuleQuery.jsx';
 
+let urlUtil = window.edsc.util.url;
+
 export default class CwicDatasourcePlugin {
   constructor(edsc, collection) {
     this._edsc = edsc;
@@ -78,7 +80,7 @@ export default class CwicDatasourcePlugin {
         if (granules.query.excludedGranules()) {
           downloadUrl += "&cx=" + granules.query.excludedGranules().join('!');
         }
-        result.push({title: "View Download Links", url: downloadUrl});
+        result.push({title: "View Download Links", url: urlUtil.fullPath(downloadUrl)});
       }
     }
 

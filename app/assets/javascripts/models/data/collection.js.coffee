@@ -62,6 +62,7 @@ ns.Collection = do (ko
 
       @details = @asyncComputed({}, 100, @_computeCollectionDetails, this)
       @detailsLoaded = ko.observable(false)
+      @gibs = ko.observable(null)
 
       @spatial = @computed(@_computeSpatial, this, deferEvaluation: true)
       @timeRange = @computed(@_computeTimeRange, this, deferEvaluation: true)
@@ -278,12 +279,13 @@ ns.Collection = do (ko
       if jsonObj.short_name? then @short_name = ko.observable(jsonObj.short_name) else @short_name = ko.observable('N/A')
 
       @hasAtomData(jsonObj.short_name?)
-      @_setObservable('gibs', jsonObj)
+
       @_setObservable('opendap', jsonObj)
       @_setObservable('opendap_url', jsonObj)
       @_setObservable('modaps', jsonObj)
       @_setObservable('osdd_url', jsonObj)
       @_setObservable('tags', jsonObj)
+      @gibs(@getValueForTag('extra.gibs'))
 
       @nrt = jsonObj.collection_data_type == "NEAR_REAL_TIME"
       @granuleCount(jsonObj.granule_count)
@@ -293,6 +295,7 @@ ns.Collection = do (ko
 
       @_loadDatasource()
       @granuleDatasource()?.updateFromCollectionData?(jsonObj)
+
 
       if @granuleDatasourceName() && @granuleDatasourceName() != 'cmr'
         @has_granules = @canFocus()

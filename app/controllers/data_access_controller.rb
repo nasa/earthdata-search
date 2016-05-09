@@ -1,4 +1,5 @@
 require 'json'
+require 'digest/sha1'
 
 class DataAccessController < ApplicationController
   include ActionView::Helpers::TextHelper
@@ -6,8 +7,20 @@ class DataAccessController < ApplicationController
   respond_to :json
 
   before_filter :require_login
+  prepend_before_filter :metric_retrieval, only: [:configure]
+
+  # This is a before filter to detect users lost to URS
+  def metric_retrieval
+    metrics_event('retrieve', {step: 'pre-configure'})
+    collections = params[:p]
+    if collections.present?
+      collections = collections.split('!').map(&:presence).compact
+      metrics_event('access', {collections: collections})
+    end
+  end
 
   def configure
+    metrics_event('retrieve', {step: 'configure'})
     @back_path = request.query_parameters['back']
     if !@back_path || ! %r{^/[\w/]*$}.match(@back_path)
       @back_path = '/search/collections'
@@ -15,11 +28,14 @@ class DataAccessController < ApplicationController
   end
 
   def retrieve
+    # TODO PQ EDSC-1039: Store portal information here
     user = current_user
     unless user
       render file: 'public/401.html', status: :unauthorized
       return
     end
+
+    metrics_event('retrieve', {step: 'complete'})
 
     project = JSON.parse(params[:project])
 
@@ -28,12 +44,13 @@ class DataAccessController < ApplicationController
     retrieval.project = project
     retrieval.save!
 
-    Retrieval.delay.process(retrieval.id, token, cmr_env, request.base_url, session[:access_token])
+    Retrieval.delay.process(retrieval.id, token, cmr_env, edsc_path(request.base_url + '/'), session[:access_token])
 
-    redirect_to action: 'retrieval', id: retrieval.to_param
+    redirect_to edsc_path("/data/retrieve/#{retrieval.to_param}")
   end
 
   def retrieval
+    # TODO PQ EDSC-1039: Include portal information here
     id = Retrieval.deobfuscate_id params[:id].to_i
     @retrieval = Retrieval.find_by_id id
     render file: "#{Rails.root}/public/404.html", status: :not_found and return if @retrieval.nil?
@@ -112,6 +129,7 @@ class DataAccessController < ApplicationController
   end
 
   def status
+    # TODO PQ EDSC-1039: Include portal information here
     if current_user
       @retrievals = current_user.retrievals
     else
@@ -146,7 +164,7 @@ class DataAccessController < ApplicationController
         dqs = echo_client.get_data_quality_summary(collection, token)
       end
 
-      defaults = AccessConfiguration.get_default_options(current_user, collection)
+      defaults = AccessConfiguration.get_default_access_config(current_user, collection)
 
       granules = catalog_response.body['feed']['entry']
 
@@ -164,19 +182,23 @@ class DataAccessController < ApplicationController
           units.shift()
         end
 
+        methods = get_downloadable_access_methods(collection, granules, granule_params, hits) + get_order_access_methods(collection, granules, hits) + get_service_access_methods(collection, granules, hits)
+
+        defaults = {service_options: nil} if echo_form_outdated?(defaults, methods)
+
         result = {
           hits: hits,
           dqs: dqs,
           size: size.round(1),
           sizeUnit: units.first,
-          methods: get_downloadable_access_methods(collection, granules, granule_params, hits) + get_order_access_methods(collection, granules, hits) + get_service_access_methods(collection, granules, hits),
-          defaults: defaults
+          methods: methods,
+          defaults: defaults[:service_options]
         }
       else
         result = {
           hits: 0,
           methods: [],
-          defaults: defaults
+          defaults: defaults.nil? ? nil : defaults[:service_options]
         }
       end
 
@@ -191,6 +213,25 @@ class DataAccessController < ApplicationController
   end
 
   private
+
+  # forms in methods are fresh, latest ones.
+  # The digest in access_config may be dirty.
+  def echo_form_outdated?(access_config, methods)
+    return true if access_config.nil? || access_config.echoform_digest.nil? || methods.nil?
+
+    form_digest = []
+    methods.each do |method|
+      if method[:type] == 'download' || method[:form].nil?
+        digest = access_config.echoform_digest.select {|digest| digest['id'] == method[:type]}
+      else
+        digest = access_config.echoform_digest.select {|digest| digest['id'] == method[:id] && digest['form_hash'] == Digest::SHA1.hexdigest(method[:form])}
+      end
+      form_digest.push digest if digest.present?
+    end
+
+    return true if form_digest.empty?
+    false
+  end
 
   def get_downloadable_access_methods(collection_id, granules, granule_params, hits)
     result = []
@@ -261,6 +302,7 @@ class DataAccessController < ApplicationController
         config[:id] = option_id
         config[:type] = 'order'
         config[:form] = option_def['form']
+        config[:form_hash] = Digest::SHA1.hexdigest(option_def['form'])
         config[:all] = config[:count] == granules.size
         config[:count] = (hits.to_f * config[:count] / granules.size).round
       end
@@ -274,6 +316,7 @@ class DataAccessController < ApplicationController
       config[:name] = 'Order'
       config[:type] = 'order'
       config[:form] = nil
+      config[:form_hash] = nil
       config[:all] = orderable_count == granules.size
       config[:count] = (hits.to_f * orderable_count / granules.size).round
       defs = [config]
@@ -296,6 +339,7 @@ class DataAccessController < ApplicationController
       config[:id] = option_id
       config[:type] = 'service'
       config[:form] = form
+      config[:form_hash] = Digest::SHA1.hexdigest(form)
       config[:name] = name
       config[:count] = granules.size
       config[:all] = true
