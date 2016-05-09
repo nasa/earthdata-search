@@ -304,4 +304,7 @@ ns.Collection = do (ko
       this[prop] ?= ko.observable(undefined)
       this[prop](jsonObj[prop] ? this[prop]())
 
+    has_feature: (key) ->
+      @getValueForTag("features.#{key}")
+
   exports = Collection
