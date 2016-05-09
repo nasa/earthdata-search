@@ -85,7 +85,7 @@
 
               <!-- ko if: browse_flag === 'true' || browse_flag === true -->
                 <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
-                  <img class="panel-list-thumbnail" data-bind="event: {load: onThumbLoad}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
+                  <img class="panel-list-thumbnail" data-bind="event: {error: onThumbError}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
                 </a>
                 <!-- /ko -->
                 <!-- ko if: $parent.canRemoveGranules() -->

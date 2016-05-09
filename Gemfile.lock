@@ -47,6 +47,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
+    atomic (1.1.16)
     bourbon (3.2.1)
       sass (~> 3.2)
       thor
@@ -151,6 +152,7 @@ GEM
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.5)
+    rack-rewrite (1.5.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rack_session_access (0.1.1)
@@ -250,6 +252,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  atomic
   bourbon
   capybara
   capybara-screenshot
@@ -281,6 +284,7 @@ DEPENDENCIES
   pg
   poltergeist
   quiet_assets
+  rack-rewrite
   rack_session_access
   rails (~> 4.1.14.2)
   rspec-rails
@@ -295,3 +299,6 @@ DEPENDENCIES
   unicorn
   vcr
   whenever
+
+BUNDLED WITH
+   1.11.2

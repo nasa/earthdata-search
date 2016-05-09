@@ -81,26 +81,7 @@ describe "Collection results", reset: false do
   it "indicates if a collection's data collection is ongoing" do
     fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
     wait_for_xhr
-    expect(page).to have_content("2014-12-25 ongoing")
-  end
-
-  context 'when clicking the "View collection" button' do
-    before(:each) do
-      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
-      target_collection_result.click_link "View collection"
-    end
-
-    it 'highlights the "View collection" button' do
-      expect(page).to have_css('#collection-results a[title="Hide collection"].button-active', count: 1)
-    end
-
-    context 'and clicking back' do
-      before(:each) { target_collection_result.click_link "Hide collection" }
-
-      it "un-highlights the selected collection" do
-        expect(page).to have_no_css('#collection-results a[title="Hide collection"].button-active')
-      end
-    end
+    expect(page).to have_content("2015-12-06 ongoing")
   end
 
   # Can't really test this feature - the browse scaler root url is set to a constant /assets/gibs-example.jpeg in test

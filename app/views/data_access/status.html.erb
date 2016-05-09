@@ -29,14 +29,19 @@
         <% @retrievals.each do |retrieval| %>
         <tr class="<%= cycle("odd", "even") -%>">
           <td>
-            <a href="/data/remove?retrieval_id=<%= retrieval.to_param %>" title="Remove Retrieval"
+            <a href="<%=edsc_path "/data/remove?retrieval_id=#{retrieval.to_param}" %>" title="Remove Retrieval"
                title="remove"
                data-method="post"
                data-confirm="Are you sure you want to remove this data retrieval?  This action cannot be undone."
                rel="nofollow"><i class="fa fa-times-circle"></i></a>
           </td>
           <td>
-            <a href="/data/retrieve/<%= retrieval.to_param %>"><%= retrieval.description %></a>
+            <a href="<%= retrieval.path %>">
+              <% if retrieval.portal %>
+                <span class="portal-title">[<%= retrieval.portal_title %>]</span>
+              <% end %>
+              <%= retrieval.description %>
+            </a>
           </td>
           <td class="data-retrieval-time-ago">
             <%= time_ago_in_words(retrieval.created_at, include_seconds: true).capitalize %> ago

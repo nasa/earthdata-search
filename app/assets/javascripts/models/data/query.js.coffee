@@ -10,6 +10,7 @@ ns.query = do (ko,
                Temporal=@edsc.models.ui.Temporal
                deparam=@edsc.util.deparam
                mbr=@edsc.map.mbr
+               urlUtil=@edsc.util.url
                extend=$.extend) ->
 
   # This is a little gross, but we're allowing an override of temporal
@@ -17,7 +18,7 @@ ns.query = do (ko,
   # intent when they set a temporal constraint and a timeline focus.
   # We need to do it here to avoid inordinate pauses waiting for URL
   # updates, project saving, etc, when clicking the "download all button."
-  if window.location.pathname == '/data/configure'
+  if window.location.href.indexOf('/data/configure') != -1
     href = window.location.href
     overrideTemporalParam = href.match(/[?&]ot=([^&$]+)/)
     if overrideTemporalParam?
@@ -242,8 +243,10 @@ ns.query = do (ko,
         component.params(query)
 
     fromJson: (query) => @_readComponents(@_serialized, query)
-    clearFilters: (query) => @_readComponents(@_all, {})
+    clearFilters: (query) => @_readComponents(@_all, @_persistentQuery())
     _readParams: (query) => @_readComponents(@_components, query)
+
+    _persistentQuery: -> {}
 
     _writeComponents: (components, inheritedParams) ->
       inheritedParams ?= @parentQuery?.globalParams() ? {}
@@ -266,6 +269,7 @@ ns.query = do (ko,
       @focusedInterval = ko.observable(null)
       @temporal = new Temporal()
 
+      @portal = @queryComponent(new QueryParam('portal'), '')
       @placename = @queryComponent(new QueryParam('placename'), '', query: false)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
@@ -281,6 +285,12 @@ ns.query = do (ko,
       @focusedInterval(null)
       @placename("")
       super()
+
+    _persistentQuery: ->
+      result = super()
+      portal = @portal()
+      result.portal = portal if portal && portal.length > 0
+      result
 
     _computeScienceKeywordFacets: =>
       facet for facet in @facets() when facet.param.indexOf('sci') == 0
@@ -299,8 +309,6 @@ ns.query = do (ko,
 
   class GranuleQuery extends Query
     constructor: (collectionId, parentQuery, attributes) ->
-      @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
-      @granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
       @dayNightFlagOptions = [{name: "Anytime", value: null},
                               {name: "Day only", value: "DAY"},
                               {name: "Night only", value: "NIGHT"},
@@ -323,7 +331,7 @@ ns.query = do (ko,
       @browseOnly = @queryComponent(new BooleanParam('browse_only'), false)
       @onlineOnly = @queryComponent(new BooleanParam('online_only'), false)
       @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
-      @granuleIds = @queryComponent(new DelimitedParam(@granuleIdsSelectedOptionValue), '')
+      @granuleIds = @queryComponent(new DelimitedParam('readable_granule_name'), '')
       @excludedGranules = @queryComponent(new ExclusionParam('exclude', 'echo_granule_id'), ko.observableArray())
       @attributeFilters = @queryComponent(new QueryParam('attribute'), @attributes.queryCondition)
 
@@ -331,12 +339,6 @@ ns.query = do (ko,
 
       @singleGranuleId = ko.observable(null)
       super(parentQuery)
-
-    fromJson: (query) =>
-      granule_option = 'granule_ur'
-      granule_option = 'producer_granule_id' if query.producer_granule_id
-      @granuleIdsSelectedOptionValue(granule_option)
-      super(query)
 
     _computeIsValid: =>
       (@attributes.isValid() &&

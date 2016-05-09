@@ -1,8 +1,7 @@
 <!-- ko if: window.tokenExpiresIn === null -->
-<a href="/login" class="button user-info sign-in"><i class="fa fa-lock"></i> Earthdata Login</a>
+<a href="<%=edsc_path '/login' %>" class="button user-info sign-in"><i class="fa fa-lock"></i> Earthdata Login</a>
 <!-- /ko -->
 <!-- ko if: window.tokenExpiresIn !== null -->
-
 <div class="dropdown user-info">
   <a href="#" data-toggle="dropdown" class="toolbar-button" title="Manage user account">
     <%# Gravatar support #>
@@ -12,16 +11,16 @@
   </a>
   <ul class="dropdown-menu dropdown-menu-right">
     <li>
-      <a href="/contact_info" class="dropdown-link dropdown-link-contact-info">Contact Information</a>
+      <a href="<%=edsc_path '/contact_info' %>" class="dropdown-link dropdown-link-contact-info">Contact Information</a>
     </li>
     <li>
-      <a href="/data/status" class="dropdown-link dropdown-link-contact-info">Recent Retrievals</a>
+      <a href="<%=edsc_path '/data/status' %>" class="dropdown-link dropdown-link-contact-info">Recent Retrievals</a>
     </li>
     <li>
-      <a href="/projects" class="dropdown-link dropdown-link-projects">Saved Projects</a>
+      <a href="<%=edsc_path '/projects' %>" class="dropdown-link dropdown-link-projects">Saved Projects</a>
     </li>
     <li>
-      <a href="/logout" class="dropdown-link dropdown-link-logout">Logout</a>
+      <a href="<%=edsc_path '/logout' %>" class="dropdown-link dropdown-link-logout">Logout</a>
     </li>
   </ul>
 </div>

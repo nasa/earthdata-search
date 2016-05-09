@@ -7,6 +7,27 @@ class Retrieval < ActiveRecord::Base
 
   obfuscate_id spin: 53465485
 
+  def portal
+    return @portal if @portal
+    if jsondata && jsondata['query']
+      query = Rack::Utils.parse_nested_query(jsondata['query'])
+      @portal = query['portal'] if Rails.configuration.portals.key?(query['portal'])
+    end
+    @portal
+  end
+
+  def portal_title
+    return nil unless portal.present?
+
+    config = Rails.configuration.portals[portal] || {}
+    "#{config['title'] || portal.titleize} Portal"
+  end
+
+  def path
+    prefix = portal ? "/portal/#{portal}" : ""
+    "#{prefix}/data/retrieve/#{to_param}"
+  end
+
   def description
     @description ||= jsondata['description']
     unless @description
@@ -107,7 +128,7 @@ class Retrieval < ActiveRecord::Base
   def update_access_configurations
     self.collections.each do |collection|
       if collection.key?('serviceOptions') && collection.key?('id')
-        AccessConfiguration.set_default_options(self.user, collection['id'], collection['serviceOptions'])
+        AccessConfiguration.set_default_access_config(self.user, collection['id'], collection['serviceOptions'], collection['form_hashes'])
       end
     end
   end

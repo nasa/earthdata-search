@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 
 require 'headless'
+require 'helpers/instrumentation'
 
 # Un-comment to truncate the test log to only the most recent execution
 #File.truncate(Rails.root.join("log/test.log"), 0)
@@ -117,10 +118,8 @@ RSpec.configure do |config|
     # Avoid recording tokens
     ['edsc', 'edscbasic', 'expired_token'].each do |token_key|
       token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key]['access_token']
-      access_token = "#{token}:#{Rails.configuration.urs_client_id}"
-      normalizers << VCR::HeaderNormalizer.new('Echo-Token', access_token, token_key)
-      access_token = "#{token}:#{Rails.configuration.sit_urs_client_id}"
-      normalizers << VCR::HeaderNormalizer.new('Echo-Token', access_token, token_key)
+      token = "#{token}:#{Rails.configuration.urs_client_id}" unless token.include? '-'
+      normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, token_key)
     end
 
     normalizers << VCR::HeaderNormalizer.new('Echo-Token', "invalid:#{Rails.configuration.urs_client_id}", 'invalid')
@@ -168,6 +167,10 @@ RSpec.configure do |config|
     puts "Slowest specs"
     puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3fs - #{k}" % v}.join("\n"))
     puts
+  end
+
+  config.after :suite do
+    Helpers::Instrumentation.report_performance
   end
 
   config.after :each do

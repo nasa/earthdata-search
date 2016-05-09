@@ -3,12 +3,13 @@ require "spec_helper"
 describe "CWIC-enabled granule visualizations", reset: false do
   extend Helpers::CollectionHelpers
 
-  context "viewing CWIC granule results" do
+  before :all do
+    load_page :search, q: 'C1220566654-USGS_LTA'
+  end
 
+  context "viewing CWIC granule results" do
     before :all do
-      Capybara.reset_sessions!
-      load_page :search, env: :uat, ff: "Int'l / Interagency", q: 'USGS_EDC_EO1_ALI'
-      view_granule_results("EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data")
+      view_granule_results 'EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data'
       first_granule_list_item.click_link('View granule details')
       wait_for_xhr
     end

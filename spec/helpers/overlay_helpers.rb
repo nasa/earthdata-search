@@ -25,10 +25,6 @@ module Helpers
       have_css('.is-master-overlay-parent-hidden')
     end
 
-    def cwic_feature_facet
-      page.find('#master-overlay-parent .cwic-facet')
-    end
-
     def collection_results
       page.find('#collection-results')
     end

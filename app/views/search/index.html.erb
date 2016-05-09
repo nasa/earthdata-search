@@ -127,6 +127,12 @@
             <p class="panel-list-load-more" data-bind="visible: collections.isLoading">
               Loading collections...
             </p>
+            <% if portal? %>
+            <p class="portal-escape" data-bind="visible: !collections.isLoading()">
+              Looking for more collections?
+              <a href="#" data-bind="click: ui.collectionsList.escapePortal" class="portal-escape-link">Leave the <%= site_name %></a>
+            </p>
+            <% end %>
           </div>
         </div>
       </section>
@@ -206,7 +212,7 @@
   <div id="map-center"></div>
   <!-- ko if: ui.collectionsList.focused() -->
   <!-- ko with: ui.collectionsList.focused() -->
-  <!-- ko if: stickied() && (stickied().browse_flag === 'true' || stickied().browse_flag === true) -->
+  <!-- ko if: stickied() && (stickied().browse_flag === 'true' || stickied().browse_flag === true) && !stickied().browseError() -->
   <div class="granule-browse" data-bind="css: {busy: loadingBrowse()}">
     <a data-bind="attr: {href: stickied().edsc_full_browse_url()}" target="_blank" title="View full image">
       <img data-bind="attr: {src: stickied().edsc_browse_url(256)}, event: {load: finishLoad}" alt="Browse preview" title="View full image">
@@ -259,7 +265,7 @@
 
   <div class="landing-dialog">
     <div class="noscript no-js">
-      <h3>Earthdata Search Client uses JavaScript</h3>
+      <h3><%= site_name %> uses JavaScript</h3>
       <ul>
         <li>Please use a JavaScript-aware browser.
         <li>Make sure that JavaScript is enabled.
@@ -268,7 +274,7 @@
 
     <div class="old-ie">
       <h1>Your browser is out of date</h1>
-      <p>In order to use Earthdata Search Client, you must upgrade your web browser. Alternatively, you can use <a href="http://reverb.echo.nasa.gov/">Reverb</a></p>
+      <p>In order to use <%= site_name %>, you must upgrade your web browser. Alternatively, you can use <a href="http://reverb.echo.nasa.gov/">Reverb</a></p>
       <p>To upgrade your browser, click on the icons below to go to the download page</p>
       <ul>
         <li>
@@ -305,7 +311,7 @@
     </div>
 
     <div class="landing-dialog-header">
-      <a href="#" class="show-tour" data-bind="visible: !preferences.showTour()">Take a Tour</a>
+      <a href="/?tour=true" class="show-tour" target="_blank" data-bind="visible: window.edscportal || !preferences.showTour()">Take a Tour</a>
       <h2>Discover Earth Science Data</h2>
       <p>Search NASA Earth Science data by keyword and filter by <i class="fa fa-clock-o"></i> <strong>time</strong> or <i class="fa fa-crop"></i> <strong>space</strong>.</p>
     </div>

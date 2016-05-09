@@ -108,7 +108,10 @@ describe "Add to project", reset: false do
 
       context 'when collections remain in the project' do
         before(:all) do
+          fill_in :keywords, with: 'C179003030-ORNL_DAAC'
+          wait_for_xhr
           target_collection_result.click_link "Add collection to the current project"
+          wait_for_xhr
           fill_in :keywords, with: ' '
           within first_featured_collection do
             click_link "Add collection to the current project"
@@ -119,6 +122,7 @@ describe "Add to project", reset: false do
         after(:all) do
           fill_in :keywords, with: 'C179003030-ORNL_DAAC'
           reset_project
+          wait_for_xhr
         end
 
         it 'updates the summary of the collections in the project' do

@@ -59,10 +59,20 @@ module EarthdataSearchClient
     # Precompile application.js, application.css, and any file that's not
     config.assets.precompile += ['application.js', 'application.css', 'splash.css', 'search.js', 'data_access.js', 'account.js']
     config.assets.precompile << Proc.new do |path|
-      !%w(.js .css .map).include?(File.extname(path)) || config.is_plugin.call(path)
+      !%w(.js .css .map).include?(File.extname(path)) ||
+        config.is_plugin.call(path) ||
+        File.basename(path).start_with?('edsc-portal.') && File.extname(path) == '.js'
     end
 
     config.log_tags = [:uuid]
+
+    config.middleware.insert(0, Rack::Rewrite) do
+      rewrite(%r{^/portal/(\w+)(.*)$}, lambda { |match, rack_env|
+        prefix = match[2].start_with?('/') ? '' : '/'
+        separator = match[2].include?('?') ? '&' : '?'
+        "#{prefix}#{match[2]}#{separator}portal=#{match[1]}"
+      })
+    end
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
@@ -99,8 +109,10 @@ module EarthdataSearchClient
     config.version = load_version
     config.feedback_url = nil
 
+    portals = YAML.load_file(Rails.root.join('config/portals.yml'))
+    config.portals = (portals[Rails.env.to_s] || portals['defaults']).with_indifferent_access
+
     config.services = YAML.load_file(Rails.root.join('config/services.yml'))
-    config.gibs = JSON.parse(IO.read(Rails.root.join('config/gibs.json')))
     config.cmr_env = 'prod'
     services = config.services
     config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]

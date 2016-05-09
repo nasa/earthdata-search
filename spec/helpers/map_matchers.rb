@@ -40,7 +40,6 @@ end
 RSpec::Matchers.define :have_tiles_with_date do |expected|
   match do |selector|
     MapUtil.tiles(Capybara.current_session, selector).any? do |img|
-      puts "#{img['src']} vs #{expected}" unless img['src'] =~ /TIME=#{expected}/
       img['src'] =~ /TIME=#{expected}/
     end
   end
@@ -71,6 +70,19 @@ RSpec::Matchers.define :have_spatial_constraint do |expected|
 
   failure_message_for_should do |page|
     "expected page to have spatial constraint #{expected}, got #{MapUtil.spatial(page)}"
+  end
+end
+
+RSpec::Matchers.define :have_no_spatial_constraint do |expected|
+  match do |page|
+    synchronize do
+      expect(MapUtil.spatial(page)).to_not eql(expected)
+    end
+    true
+  end
+
+  failure_message_for_should do |page|
+    "expected page to not have spatial constraint #{expected}"
   end
 end
 

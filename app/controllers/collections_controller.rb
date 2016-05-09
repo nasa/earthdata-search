@@ -5,6 +5,8 @@ class CollectionsController < ApplicationController
   SCIENCE_KEYWORDS = ['topic', 'term', 'variable_level_1', 'variable_level_2', 'variable_level_3']
   KEYWORD_CHILD = {'topic' => 'term', 'term' => 'variable_level_1', 'variable_level_1' => 'variable_level_2', 'variable_level_2' => 'variable_level_3', 'variable_level_3' => nil}
 
+  UNLOGGED_PARAMS = ['include_facets', 'hierarchical_facets', 'include_tags', 'include_granule_counts']
+
   def index
     # FIXME Termporary workaround for CMR-2038 and CMR-2049
     # Fire two requests to CMR. One to retrieve hierarchical facets, the other to get non-hierarchical facets, in parallel.
@@ -13,8 +15,13 @@ class CollectionsController < ApplicationController
     urs_client_id = service_configs['urs'][Rails.env.to_s][service_config['urs_root']]
     h_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
     nh_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
+
+    hierarchical_params = collection_params_for_request(request)
+    unless params['echo_collection_id']
+      metrics_event('search', hierarchical_params.except(*UNLOGGED_PARAMS))
+    end
     hierarchical_search = lambda do
-      h_client.get_collections(collection_params_for_request(request), token)
+      h_client.get_collections(hierarchical_params, token)
     end
     non_hierarchical_search = lambda do
       nh_client.get_collections(collection_params_for_request(request, false), token)
@@ -36,6 +43,7 @@ class CollectionsController < ApplicationController
   end
 
   def show
+    metrics_event('details', {collections: [params[:id]]})
     response = echo_client.get_collection(params[:id], token)
 
     use_collection(params[:id])
@@ -48,18 +56,9 @@ class CollectionsController < ApplicationController
   end
 
   def use
+    metrics_event('view', {collections: [params[:id]]})
     result = use_collection(params[:id])
     render :json => result, status: :ok
-  end
-
-  def facets
-    response = echo_client.get_facets(collection_params_for_request(request), token)
-
-    if response.success?
-      respond_with(facet_results(request, response), status: response.status)
-    else
-      respond_with(response.body, status: response.status)
-    end
   end
 
   private
@@ -118,7 +117,7 @@ class CollectionsController < ApplicationController
       'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
     }
 
-    features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0], ["Int'l / Interagency", 0]]}]
+    features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
     facets.unshift(features).flatten!
 
     # CMR-1722 Temporarily filter out detailed_variable keywords
@@ -288,32 +287,37 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params_for_request(request, hierarchical=true)
-    features = request.query_parameters['features']
-    use_opendap = features && features.include?('Subsetting Services')
-    params = request.query_parameters.except('features')
-    if use_opendap
+    params = request.query_parameters.dup
+
+    params.delete(:portal)
+    if portal? && portal[:params]
+      params.deep_merge!(portal[:params]) do |key, v1, v2|
+        if v1.is_a?(Array) && v2.is_a?(Array)
+          v1 + v2
+        else
+          v2
+        end
+      end
+    end
+
+    features = Hash[Array.wrap(params.delete(:features)).map {|f| [f, true]}]
+    if features['Subsetting Services']
       params['tag_key'] = Array.wrap(params['tag_key'])
       params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.subset_service*"
     end
 
-    gibs_keys = Rails.configuration.gibs.keys
-    providers = gibs_keys.map{|key| key.split('___').first}
-    short_names = gibs_keys.map{|key| key.split('___').last}
-
-    use_gibs = features && features.include?('Map Imagery')
-    params = params.merge('provider' => providers) if use_gibs
-    params = params.merge('short_name' => short_names) if use_gibs
-
-    nrt = features && features.include?('Near Real Time')
-    params = params.merge('collection_data_type' => 'NEAR_REAL_TIME') if nrt
-
-    params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
-
-    cwic = features && features.include?("Int'l / Interagency")
-    params['include_tags'] = ["#{Rails.configuration.cmr_tag_namespace}.*", "org.ceos.wgiss.cwic.granules.prod"].join(',')
-    unless cwic || request.query_parameters['echo_collection_id']
-      params['exclude[tag_key]'] = "org.ceos.wgiss.cwic.granules.prod"
+    if features['Map Imagery']
+      params['tag_key'] = Array.wrap(params['tag_key'])
+      params['tag_key'] << "#{Rails.configuration.cmr_tag_namespace}.extra.gibs"
     end
+
+    if features['Near Real Time']
+      params = params.merge('collection_data_type' => 'NEAR_REAL_TIME')
+    end
+
+    params['include_tags'] = ["#{Rails.configuration.cmr_tag_namespace}.*",
+                              "org.ceos.wgiss.cwic.granules.prod"].join(',')
+    params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
     params
   end

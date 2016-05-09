@@ -42,24 +42,65 @@ hgroup {
 header {
   h1 {
     margin: 0;
+
+    >a {
+      margin-top: 10px;
+    }
   }
 
-  .logo {
-    @include retina-image('app-logo', $toolbar-logo-width 40px, png, null, '_2x', true);
+  .site-logo-org {
+    font-family: 'Open Sans', sans-serif;
+    content: 'Earthdata';
+    display: block;
+    font-size: .475em;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1em;
+  }
+
+  .site-logo {
     height: 40px;
-    width: $toolbar-logo-container-width;
     float: left;
-    background-repeat: no-repeat;
-    text-indent: inherit;
-    padding-left: 56px;
-    padding-top: 10px;
+    line-height: 1.1em;
     font-weight: 300;
     font-size: 0.8em;
     @include transition(background 0.2s ease-in-out);
   }
 
-  .logo:hover {
+  .nasa-logo {
+    @include retina-image('app-logo', $toolbar-logo-width 40px, png, null, '_2x', true);
+    height: 40px;
+    width: 40px;
+    margin-left: 10px;
+    float: left;
+    background-repeat: no-repeat;
+    text-indent: inherit;
+    padding-left: 56px;
+    padding-top: 10px;
+    line-height: 1.1em;
+    font-weight: 300;
+    font-size: 0.8em;
+    @include transition(background 0.2s ease-in-out);
+  }
+
+  .nasa-logo:hover {
     @include retina-image('app-logo_hover', $toolbar-logo-width 40px, png, null, '_2x', true);
+  }
+
+  .portal-logo {
+    display: block;
+    float: left;
+    background-repeat: no-repeat;
+    background-size: auto 50px;
+    height: 50px;
+    text-indent: inherit;
+    margin: 5px 5px 0 0;
+    @include transition(background 0.2s ease-in-out);
+
+    img {
+      display: block;
+      height: 50px;
+    }
   }
 
   .version-badge {
@@ -67,7 +108,7 @@ header {
     float: left;
     background: darken($ocean-blue, 10%);
     padding: 0.2em 0.6em;
-    margin: 30px 0 0 0;
+    margin: 30px 5px 0;
     border-radius: 4px;
   }
 }

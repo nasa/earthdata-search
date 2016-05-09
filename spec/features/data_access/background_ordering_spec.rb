@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'rake'
 
 describe 'Background jobs ordering', reset: false do
+  #pending "FIXME: This is commented out due to abysmally bad orders/hand-edited fixtures. Needs fixes"
+
   orderable_collection_id = 'C90762182-LAADS'
   orderable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
   aster_collection_id = 'C14758250-LPDAAC_ECS'
@@ -14,7 +16,6 @@ describe 'Background jobs ordering', reset: false do
       login
       first_project_collection.click_link "Show granule filters"
       click_link "Search Multiple"
-      choose "Search by Local Granule ID"
       fill_in "granule_id_field", with: "AST_L1A#00311092015232127_11102015081255.hdf\nAST_L1A#00311092015223445_11102015075930.hdf"
       click_button "granule-filters-submit"
       wait_for_xhr
@@ -39,6 +40,7 @@ describe 'Background jobs ordering', reset: false do
 
   context "ordering non-ASTER data" do
     before :all do
+
       Delayed::Worker.delay_jobs = true
 
       load_page :search, overlay: false
@@ -63,7 +65,6 @@ describe 'Background jobs ordering', reset: false do
 
     after :all do
       Delayed::Worker.delay_jobs = false
-      run_stop_task
     end
 
     it 'indicates current order status' do

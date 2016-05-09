@@ -77,6 +77,24 @@ footer, .toolbar {
   }
 }
 
+nav.main-nav {
+  background: #2c3e50;
+  border-bottom: 1px solid #242424;
+
+  a {
+    display: inline-block;
+    padding: .5em 1em .5em;
+  }
+
+  a:link, a:visited {
+    color: #fff;
+  }
+  a:hover {
+    color: #eee;
+    text-decoration: underline;
+  }
+}
+
 .toolbar-secondary {
   float: right;
 }

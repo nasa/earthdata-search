@@ -14,6 +14,7 @@ src_files:
   - assets/leaflet-0.7/leaflet-src
   - assets/jquery.js
   - assets/knockout.js
+  - assets/history.js-1.8.6/jquery.history.js
   - edsc/dist/edsc-search.min.js
   - assets/namespaces.js.coffee
   - assets/config.js.coffee
@@ -21,12 +22,12 @@ src_files:
   - assets/util/string.js.coffee
   - assets/util/date.js.coffee
   - assets/util/xhr.js.coffee
+  - assets/util/url.js.coffee
   - assets/modules/map/coordinate.js.coffee
   - assets/modules/map/arc.js.coffee
   - assets/modules/map/geoutil.js.coffee
   - assets/modules/map/mbr.coffee
   - assets/models/knockout_model.js.coffee
-  - assets/models/data/grid.coffee
   - assets/models/data/query.js.coffee
   - assets/models/data/granule_attributes.coffee
 

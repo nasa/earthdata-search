@@ -2,14 +2,26 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :refresh_urs_if_needed, except: [:logout, :refresh_token]
+  before_filter :validate_portal
 
   rescue_from Faraday::Error::TimeoutError, with: :handle_timeout
 
   def redirect_from_urs
     last_point = session[:last_point]
     session[:last_point] = nil
-    last_point || root_url
+    last_point || edsc_path(root_url)
   end
+
+
+  # DELETE ME: Portal debug
+  #before_filter :refresh_portals
+  #def refresh_portals
+  #  if Rails.env.development?
+  #    portals = YAML.load_file(Rails.root.join('config/portals.yml'))
+  #    Rails.configuration.portals = (portals[Rails.env.to_s] || portals['defaults']).with_indifferent_access
+  #    Rails.logger.info "REFRESH -> #{Rails.configuration.portals}.inspect"
+  #  end
+  #end
 
   protected
 
@@ -149,7 +161,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     unless get_user_id
-      session[:last_point] = request.fullpath
+      session[:last_point] = edsc_path(request.fullpath)
 
       redirect_to echo_client.urs_login_path
     end
@@ -182,5 +194,56 @@ class ApplicationController < ActionController::Base
     logged_in? ? 1000 * (expires_in - SCRIPT_EXPIRATION_OFFSET_S).to_i : 0
   end
   helper_method :script_session_expires_in
+
+  def portal_id
+    return @portal_id if @portal_id
+    portal_id = params[:portal].presence
+    portal_id = portal_id.downcase unless portal_id.nil?
+    @portal_id = portal_id
+  end
+  helper_method :portal_id
+
+  def portal
+    Rails.configuration.portals[portal_id] || {} if portal?
+  end
+  helper_method :portal
+
+  def portal_scripts
+    (portal? && portal[:scripts]) || []
+  end
+  helper_method :portal_scripts
+
+  def portal?
+    portal_id.present? && Rails.configuration.portals.key?(portal_id)
+  end
+  helper_method :portal?
+
+  def validate_portal
+    if portal_id.present? && !Rails.configuration.portals.key?(portal_id)
+      raise ActionController::RoutingError.new("Portal \"#{portal_id}\" not found")
+    end
+  end
+
+  def edsc_path(path)
+    if portal?
+      id = URI.encode(portal_id)
+      if path.start_with?('http')
+        # Full URL
+        path = path.gsub(/^[^\/]*\/\/[^\/]*/, "\0/portal/#{id}")
+      elsif path.start_with?('/')
+        # Absolute
+        path = "/portal/#{id}" + path
+      end
+    end
+    path
+  end
+  helper_method :edsc_path
+
+  def metrics_event(type, data, other_data={})
+    Rails.logger.tagged('metrics') do
+      timestamp = (Time.now.to_f * 1000).to_i
+      Rails.logger.info({event: type, data: data, session: session.id, timestamp: timestamp}.merge(other_data).to_json)
+    end
+  end
 
 end
