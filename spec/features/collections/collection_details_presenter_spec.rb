@@ -74,6 +74,18 @@ describe CollectionDetailsPresenter do
     @collection.contacts.should eq([{:name=>"PLEASE CONTACT ORNL DAAC User Services", :phones=>["(865) 241-3952 (Direct Line)", "(865) 574-4665 (Fax)"], :email=>"ornldaac@ornl.gov"}])
   end
 
+  it "ignores 'unknown' value for first/last name in contacts" do
+    contacts = [{"OrganizationPhones"=>{"Phone"=>[{"Number"=>"(865) 241-3952", "Type"=>"Direct Line"}, {"Number"=>"(865) 574-4665", "Type"=>"Fax"}]}, "OrganizationEmails"=>{"Email"=>"ornldaac@ornl.gov"}, "ContactPersons"=>{"ContactPerson"=>{"FirstName"=>"unknown", "LastName"=>"ORNL DAAC User Services"}}}]
+    @collection.contacts = contacts
+    presenter = CollectionDetailsPresenter.new(@collection)
+    @collection.contacts.should eq([{:name=>"ORNL DAAC User Services", :phones=>["(865) 241-3952 (Direct Line)", "(865) 574-4665 (Fax)"], :email=>"ornldaac@ornl.gov"}])
+
+    contacts = [{"OrganizationPhones"=>{"Phone"=>[{"Number"=>"(865) 241-3952", "Type"=>"Direct Line"}, {"Number"=>"(865) 574-4665", "Type"=>"Fax"}]}, "OrganizationEmails"=>{"Email"=>"ornldaac@ornl.gov"}, "ContactPersons"=>{"ContactPerson"=>{"FirstName"=>"PLEASE CONTACT", "LastName"=>"unknown"}}}]
+    @collection.contacts = contacts
+    presenter = CollectionDetailsPresenter.new(@collection)
+    @collection.contacts.should eq([{:name=>"PLEASE CONTACT", :phones=>["(865) 241-3952 (Direct Line)", "(865) 574-4665 (Fax)"], :email=>"ornldaac@ornl.gov"}])
+  end
+
   it "uses the Online Access URL as description if no description exists" do
     online_access_urls = [{"URL"=>"http://www.example.com"}]
     @collection.online_access_urls = online_access_urls
