@@ -236,6 +236,9 @@ let CwicGranules = (function() {
     if (source) {
       if (!dest) dest = source + 's';
       granule[dest] = CwicUtils.arrayWrap(granule[source]);
+      if (dest === 'polygons') {
+        granule[dest] = [granule[dest]];
+      }
       delete granule[source];
     }
   };
