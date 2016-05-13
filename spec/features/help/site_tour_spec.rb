@@ -68,7 +68,7 @@ describe "Site tour", reset: true do
       granule_list.click_on 'Back to Collections'
 
       expect(page).to have_popover('Comparing Multiple Collections')
-      nth_collection_result(4).find('.add-to-project').click
+      nth_collection_result(3).find('.add-to-project').click
 
       expect(page).to have_popover('Projects')
       click_on 'View Project'
