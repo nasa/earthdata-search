@@ -25,6 +25,34 @@ describe "Collection results", reset: false do
     load_page :search
   end
 
+  context "when scrolling to load a new page" do
+    before :all do
+      page.execute_script "$('#collection-results .master-overlay-content')[0].scrollTop = 10000"
+      wait_for_xhr
+    end
+
+    after :all do
+      load_page :search
+    end
+
+    it "maintains the scroll position" do
+      pos = page.evaluate_script "$('#collection-results .master-overlay-content')[0].scrollTop"
+      expect(pos).to be > 0
+    end
+
+    context "and updating the query" do
+      before :all do
+        fill_in "keywords", with: "A"
+        wait_for_xhr
+      end
+
+      it "scrolls to the top of the list" do
+        pos = page.evaluate_script "$('#collection-results .master-overlay-content')[0].scrollTop"
+        expect(pos).to equal 0
+      end
+    end
+  end
+
   it "does not load additional results after all results have been loaded" do
     fill_in "keywords", with: "AQUARIUS_SAC-D as"
     wait_for_xhr
