@@ -321,6 +321,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: bounding_box=0%2C0%2C15%2C15&concept_id=C90757595-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1224285563-LAADS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 13 May 2016 20:32:52 GMT
+  digest: c870d4db2e9e6ffbc7cd05aebaf83b6d7f13321f
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: bounding_box=0%2C0%2C15%2C15&concept_id=C90757595-LAADS&end_date=2015-03-02T00%3A00%3A00.000Z&exclude%5Becho_granule_id%5D%5B%5D=G1226048733-LAADS&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
     headers:
       User-Agent:

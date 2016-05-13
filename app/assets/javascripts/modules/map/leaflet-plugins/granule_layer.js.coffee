@@ -110,8 +110,7 @@ ns.GranuleLayer = do (L
       interpolation = if granule.isCartesian() then 'cartesian' else 'geodetic'
       for polygon in granule.getPolygons() ? []
         if granule.isCartesian()
-          interiors = [polygon]
-          @_addIntersections(result, interiors, tileBounds, 'poly', interpolation)
+          @_addIntersections(result, polygon, tileBounds, 'poly', interpolation)
         else
           # Handle holes
           polygon = [polygon] unless Array.isArray(polygon[0])
@@ -229,7 +228,7 @@ ns.GranuleLayer = do (L
       setTimeout((=> @_drawOutlines(canvas, paths, nwPoint)), 0)
       setTimeout((=> @_drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint, imageryCallback)), 0)
       setTimeout((=> @_drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)), 0)
-      setTimeout((=> @_drawFullBackTile(back, boundary, pathsWithHoles, nwPoint)), 0)
+      setTimeout((=> @_drawFullBackTile(back, boundary, pathsWithHoles.concat().reverse(), nwPoint)), 0)
 
       if paths.length > 0 && config.debug
         console.log "#{paths.length} Overlapping Granules [(#{bounds.getNorth()}, #{bounds.getWest()}), (#{bounds.getSouth()}, #{bounds.getEast()})]"
