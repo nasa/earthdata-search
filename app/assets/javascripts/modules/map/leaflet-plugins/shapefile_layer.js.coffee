@@ -32,6 +32,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
     paramName: 'upload'
     clickable: '.geojson-dropzone-link'
     createImageThumbnails: false
+    acceptedFiles: ".zip,.kml,.kmz,.json,.geojson,.rss,.georss,.xml"
     fallback: -> # If the browser can't support the necessary features
       $('.select-shapefile').parent().hide()
     parallelUploads: 1

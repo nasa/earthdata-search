@@ -8,6 +8,21 @@ describe "Shapefile search", reset: false, wait: 30 do
     load_page :search
   end
 
+  context "when uploading a file which format is not supported" do
+    before :all do
+      upload_shapefile('doc/example-data/shapefiles/invalid_format.mp4')
+    end
+
+    after :all do
+      clear_shapefile
+    end
+
+    it "displays an error icon and an error message" do
+      expect(page).to have_css('.dz-error-message')
+      expect(page).to have_css('.dz-error-mark')
+    end
+  end
+
   context "when uploading a shapefile containing multiple features" do
     before :all do
       upload_shapefile('doc/example-data/shapefiles/complex.geojson')
