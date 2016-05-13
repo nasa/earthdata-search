@@ -30,6 +30,16 @@ ns.CollectionsList = do ($=jQuery, document, config = @edsc.config, CollectionsM
         owner: this
         deferEvaluation: true
 
+      @resetScrollOnUpdate()
+
+    resetScrollOnUpdate: ->
+      id = -1
+      ko.computed =>
+        collections = @collections
+        if !collections.isLoading() && id != collections.completedRequestId && collections.page == 1
+          id = collections.completedRequestId
+          document.getElementById('collection-scroll-pane')?.scrollTop = 0
+
     escapePortal: (data, event) ->
       href = window.location.href.replace(/\/portal\/[\w]+/, '')
       window.location.href = href
