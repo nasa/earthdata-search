@@ -101,7 +101,7 @@
             <% end %>
           </p>
         </div>
-        <div class="master-overlay-content" data-bind="event: {scroll: ui.collectionsList.scrolled}">
+        <div id="collection-scroll-pane" class="master-overlay-content" data-bind="event: {scroll: ui.collectionsList.scrolled}">
           <!-- ko if: collections.featured().length > 0 -->
           <h3 class="panel-list-title">Recent and Featured</h3>
           <div class="panel-list">
