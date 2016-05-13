@@ -121,6 +121,10 @@ module Helpers
       nth_panel(granule_list, 2)
     end
 
+    def third_granule_list_item
+      nth_panel(granule_list, 3)
+    end
+
     def nth_granule_list_item(n)
       nth_panel(granule_list, n)
     end
