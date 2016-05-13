@@ -86,7 +86,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
 
     show: ->
       $('.dz-preview').show()
-      @map.addLayer(@_jsonLayer) if @_jsonLayer?
+#      @map.addLayer(@_jsonLayer) if @_jsonLayer?
 
     remove: ->
       @_dropzone.removeFile(@_file) if @_file?
@@ -120,7 +120,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       @_file = file
       @_jsonLayer = jsonLayer
 
-      @map.addLayer(jsonLayer)
+#      @map.addLayer(jsonLayer)
       @map.fire 'shapefile:start'
       @map.fitBounds(jsonLayer.getBounds())
 
