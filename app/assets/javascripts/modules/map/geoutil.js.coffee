@@ -305,7 +305,7 @@ ns.geoutil = do (L, Coordinate = ns.Coordinate, Arc = ns.Arc, config = @edsc.con
     if latlngs && latlngs[0] && latlngs[0].constructor is Array && typeof latlngs[0][0] != 'number'
       for hole in latlngs[1..]
         hole = convertLatLngs(hole)
-        denormalizePath(hole)
+        hole = makeCounterclockwise(hole)
         holes.push(hole)
       latlngs = latlngs[0]
 
