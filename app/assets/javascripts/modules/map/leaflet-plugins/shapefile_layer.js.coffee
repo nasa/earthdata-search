@@ -53,6 +53,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       dropzone = new Dropzone(container, dropzoneOptions)
       dropzone.on 'success', @_geoJsonResponse
       dropzone.on 'removedfile', @_removeFile
+      dropzone.on 'error', @_displayError
       @_dropzone = dropzone
       L.DomUtil.addClass(container, 'dropzone')
 
@@ -134,6 +135,16 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
         help.add('shapefile_multiple', element: el)
       else if children.length == 1
         @_setConstraint(children[0])
+
+    _displayError: (file, response) =>
+      if file.name.match('.*shp')
+        errorMessage = 'To use an ESRI Shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+        errorDiv = document.createElement('div')
+        errorDiv.appendChild(document.createTextNode(errorMessage))
+        errorDiv.className += 'edsc-dz-error'
+        previewElement = file.previewElement
+        previewElement.getElementsByClassName('dz-details')[0].appendChild(errorDiv)
+        previewElement.querySelector('[data-dz-errormessage]').textContent = errorMessage
 
     _clickLayer: (e) =>
       @_setConstraint(e.chain[0])
