@@ -15,9 +15,9 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
       @setLatLngs(latlngs)
 
     setLatLngs: (latlngs) ->
+      holes = []
       if latlngs[0] && Array.isArray(latlngs[0]) && latlngs[0].length > 2
-        # Don't deal with holes
-        console.warn "Polygon with hole detected.  Ignoring." if config.warn
+        holes = latlngs[1...]
         latlngs = latlngs[0]
       latlngs = (L.latLng(latlng) for latlng in latlngs)
 
@@ -32,14 +32,19 @@ ns.L.sphericalPolygon = do (L, geoutil=ns.geoutil, Arc=ns.Arc, Coordinate=ns.Coo
         else
           latlngs.push(latlngs[0])
 
-      divided = geoutil.dividePolygon(latlngs)
+      {boundaries, interiors} = geoutil.dividePolygon(latlngs)
+
+      for hole in holes
+        dividedHole = geoutil.dividePolygon(hole)
+        boundaries = boundaries.concat(dividedHole.boundaries)
+        interiors = boundaries.concat(dividedHole.interiors)
 
       if @_boundaries
-        @_interiors.setLatLngs(divided.interiors)
-        @_boundaries.setLatLngs(divided.boundaries)
+        @_interiors.setLatLngs(interiors)
+        @_boundaries.setLatLngs(boundaries)
       else
-        @_interiors = L.polygon(divided.interiors, L.extend({}, @_options, stroke: false))
-        @_boundaries = L.multiPolyline(divided.boundaries, L.extend({}, @_options, fill: false))
+        @_interiors = L.polygon(interiors, L.extend({}, @_options, stroke: false))
+        @_boundaries = L.multiPolyline(boundaries, L.extend({}, @_options, fill: false))
         @addLayer(@_interiors)
         @addLayer(@_boundaries)
 

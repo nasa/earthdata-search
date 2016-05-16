@@ -110,10 +110,13 @@ ns.GranuleLayer = do (L
       interpolation = if granule.isCartesian() then 'cartesian' else 'geodetic'
       for polygon in granule.getPolygons() ? []
         if granule.isCartesian()
-          interiors = [polygon]
+          @_addIntersections(result, polygon, tileBounds, 'poly', interpolation)
         else
-          interiors = dividePolygon(polygon).interiors
-        @_addIntersections(result, interiors, tileBounds, 'poly', interpolation)
+          # Handle holes
+          polygon = [polygon] unless Array.isArray(polygon[0])
+          for shape in polygon
+            interiors = dividePolygon(shape).interiors
+            @_addIntersections(result, interiors, tileBounds, 'poly', interpolation)
         # Workaround for EDSC-657
         # Avoid spamming the map with a large number of barely intersecting orbits by only
         # drawing the first orbit. Hovering will continue to draw the full orbit.
@@ -197,19 +200,22 @@ ns.GranuleLayer = do (L
 
       date = null
       paths = []
+      pathsWithHoles = []
 
       for granule, i in @_results
         overlaps = @_granulePathsOverlappingTile(granule, bounds)
 
         if overlaps.length > 0
           url = @getTileUrl(tilePoint, granule)
-          for path in overlaps
+          for path, j in overlaps
             path.index = i
             path.url = url
             path.granule = granule
-            path.poly.reverse() if path.poly? && isClockwise(path.poly)
-
-        paths = paths.concat(overlaps)
+            if path.poly?
+              reverse = (j == 0) == isClockwise(path.poly)
+              path.poly.reverse() if reverse
+          pathsWithHoles.push(overlaps)
+          paths = paths.concat(overlaps)
 
       # Marks the tile as drawn.  As a callback to _drawClippedPaths, the user
       # gets faster feedback.  As a callback to _drawClippedImagery, the feedback
@@ -220,9 +226,9 @@ ns.GranuleLayer = do (L
         @tileDrawn(canvas)
 
       setTimeout((=> @_drawOutlines(canvas, paths, nwPoint)), 0)
-      setTimeout((=> @_drawClippedPaths(canvas, boundary, paths, nwPoint, imageryCallback)), 0)
+      setTimeout((=> @_drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint, imageryCallback)), 0)
       setTimeout((=> @_drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)), 0)
-      setTimeout((=> @_drawFullBackTile(back, paths.concat().reverse(), nwPoint)), 0)
+      setTimeout((=> @_drawFullBackTile(back, boundary, pathsWithHoles.concat().reverse(), nwPoint)), 0)
 
       if paths.length > 0 && config.debug
         console.log "#{paths.length} Overlapping Granules [(#{bounds.getNorth()}, #{bounds.getWest()}), (#{bounds.getSouth()}, #{bounds.getEast()})]"
@@ -242,15 +248,19 @@ ns.GranuleLayer = do (L
       ctx.restore()
       null
 
-    _drawClippedPaths: (canvas, boundary, paths, nwPoint, callback) ->
+    _drawClippedPaths: (canvas, boundary, pathsWithHoles, nwPoint, callback) ->
       ctx = canvas.getContext('2d')
       ctx.save()
       ctx.translate(-nwPoint.x, -nwPoint.y)
       ctx.strokeStyle = @options.color
 
-      for path in paths
+      for pathWithHoles in pathsWithHoles
+        [path, holes...] = pathWithHoles
+
         ctx.beginPath()
         addPath(ctx, path)
+        for hole in holes
+          addPath(ctx, {poly: hole.poly.concat().reverse()})
         ctx.stroke()
         addPath(ctx, boundary)
         ctx.clip()
@@ -344,15 +354,19 @@ ns.GranuleLayer = do (L
       null
 
 
-    _drawFullBackTile: (canvas, paths, nwPoint) ->
+    _drawFullBackTile: (canvas, boundary, pathsWithHoles, nwPoint) ->
       ctx = canvas.getContext('2d')
 
       ctx.save()
       ctx.translate(-nwPoint.x, -nwPoint.y)
-      for path in paths
+      for pathWithHoles in pathsWithHoles
+        [path, holes...] = pathWithHoles
+
         ctx.strokeStyle = ctx.fillStyle = '#' + (path.index + 0x1000000).toString(16).substr(-6)
         ctx.beginPath()
         addPath(ctx, path)
+        for hole in holes
+          addPath(ctx, hole)
         if path.line?
           ctx.lineWidth = 4
           ctx.stroke()
