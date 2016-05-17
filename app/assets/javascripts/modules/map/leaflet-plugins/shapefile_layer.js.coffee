@@ -54,11 +54,13 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       dropzone.on 'removedfile', @_removeFile
       @_dropzone = dropzone
       L.DomUtil.addClass(container, 'dropzone')
+      @_isAdded = true
 
     onRemove: (map) ->
       @remove()
       @map = null
       @_jsonLayer = null
+      @_isAdded = false
 
     activate: (showHelp=true) ->
       @_isActive = true
@@ -82,11 +84,13 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
 
     hide: ->
       $('.dz-preview').hide()
-      @map.removeLayer(@_jsonLayer) if @_jsonLayer?
+      @map.removeLayer(@_jsonLayer) if @_jsonLayer? && @_isAdded
+      @_isAdded = false
 
     show: ->
       $('.dz-preview').show()
-      @map.addLayer(@_jsonLayer) if @_jsonLayer?
+      @map.addLayer(@_jsonLayer) if @_jsonLayer? && !@_isAdded
+      @_isAdded = true if @_jsonLayer?
 
     remove: ->
       @_dropzone.removeFile(@_file) if @_file?
@@ -145,7 +149,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
         originalLatLngs = sourceLayer.getLatLngs()
         latlngs = @_simplifyPoints(originalLatLngs)
 
-        if latlngs.length != originalLatLngs.length
+        if originalLatLngs.length > MAX_POLYGON_SIZE && latlngs.length != originalLatLngs.length
           help.add('shapefile_reduction', element: '.leaflet-draw-edit-edit')
 
         layer = L.sphericalPolygon(latlngs, @options.selection)
