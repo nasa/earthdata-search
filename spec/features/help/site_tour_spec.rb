@@ -68,7 +68,8 @@ describe "Site tour", reset: true do
       granule_list.click_on 'Back to Collections'
 
       expect(page).to have_popover('Comparing Multiple Collections')
-      nth_collection_result(3).find('.add-to-project').click
+      collection_container = find('h3', text: /\AMODIS\/Aqua Near Real Time \(NRT\) Clouds 5-Min L2 Swath 1km and 5km\z/).find(:xpath, '..')
+      collection_container.find('.add-to-project').click
 
       expect(page).to have_popover('Projects')
       click_on 'View Project'
