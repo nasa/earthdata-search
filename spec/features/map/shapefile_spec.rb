@@ -45,6 +45,24 @@ describe "Shapefile search", reset: false, wait: 30 do
     end
   end
 
+  context "when uploading a simple shapefile which points can be simplified" do
+    before :all do
+      upload_shapefile('doc/example-data/shapefiles/shape_with_redundancies.zip')
+      # TODO This sleep is here because specs for centering and zooming
+      # would not give consistent results without the sleep
+      sleep 1
+    end
+
+    after :all do
+      clear_shapefile
+      clear_spatial
+    end
+
+    it "doesn't display a help message explaining the point reduction" do
+      expect(page).not_to have_popover('Shape file has too many points')
+    end
+  end
+
   context "when uploading a shapefile containing a single feature" do
     before :all do
       upload_shapefile('doc/example-data/shapefiles/simple.geojson')
@@ -56,6 +74,30 @@ describe "Shapefile search", reset: false, wait: 30 do
     after :all do
       clear_shapefile
       clear_spatial
+    end
+
+    context "removing the file and uploading another one" do
+      before :all do
+        click_link "Remove file"
+        upload_shapefile('doc/example-data/shapefiles/shape_with_redundancies.zip')
+        # TODO This sleep is here because specs for centering and zooming
+        # would not give consistent results without the sleep
+        sleep 1
+      end
+
+      after :all do
+        clear_shapefile
+        clear_spatial
+
+        upload_shapefile('doc/example-data/shapefiles/simple.geojson')
+        # TODO This sleep is here because specs for centering and zooming
+        # would not give consistent results without the sleep
+        sleep 1
+      end
+
+      it "keeps the latest shape file on map" do
+        expect(page).to have_css('.geojson-svg', count: 1)
+      end
     end
 
     it "sets the feature as the current search constraint" do
