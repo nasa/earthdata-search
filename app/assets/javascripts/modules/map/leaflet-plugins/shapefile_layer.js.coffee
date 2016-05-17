@@ -144,7 +144,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
         errorDiv.className += 'edsc-dz-error'
         previewElement = file.previewElement
         previewElement.getElementsByClassName('dz-details')[0].appendChild(errorDiv)
-        previewElement.querySelector('[data-dz-errormessage]').textContent = errorMessage
+        previewElement.removeChild(previewElement.querySelector('.dz-error-message'))
 
     _clickLayer: (e) =>
       @_setConstraint(e.chain[0])
