@@ -6727,7 +6727,7 @@ http_interactions:
       - edsc-dev
       Echo-ClientId:
       - edsc-dev
-  recorded_at: Mon, 16 May 2016 19:58:21 GMT
+  recorded_at: Thu, 12 May 2016 15:19:40 GMT
   digest: 6a185c657a0524b1fd0335f054dd7b198e2133ff
 - request:
     method: get
@@ -6742,7 +6742,7 @@ http_interactions:
       - edsc-dev
       Echo-ClientId:
       - edsc-dev
-  recorded_at: Mon, 16 May 2016 19:58:17 GMT
+  recorded_at: Thu, 12 May 2016 15:19:36 GMT
   digest: 7c34a2dd5d2b707ace9015078f96c50b1a307bdd
 - request:
     method: get
@@ -6757,7 +6757,7 @@ http_interactions:
       - edsc-dev
       Echo-ClientId:
       - edsc-dev
-  recorded_at: Mon, 16 May 2016 19:58:19 GMT
+  recorded_at: Thu, 12 May 2016 15:19:38 GMT
   digest: bfaf8eedddfee84a1a8eea0a27bfb4722fd13d23
 - request:
     method: get

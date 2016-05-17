@@ -198,6 +198,7 @@ ns.SpatialSelection = do (window,
     _onSpatialErrorChange: (newValue) =>
       if newValue?
         if @_layer?
+          toastr.options = {'timeOut': 10000}
           toastr.error(newValue, "Spatial Query Error")
           @_layer.setStyle?(@_errorOptions)
       else
