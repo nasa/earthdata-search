@@ -33,7 +33,6 @@ describe "Shapefile search", reset: false, wait: 30 do
     end
 
     it "displays an error icon and a custom error message" do
-      expect(page).to have_css('.dz-error-message')
       expect(page).to have_css('.dz-error-mark')
       expect(page).to have_text('To use an ESRI Shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')
     end
