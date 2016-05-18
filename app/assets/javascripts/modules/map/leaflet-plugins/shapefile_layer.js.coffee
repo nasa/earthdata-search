@@ -32,6 +32,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
     paramName: 'upload'
     clickable: '.geojson-dropzone-link'
     createImageThumbnails: false
+    acceptedFiles: ".zip,.kml,.kmz,.json,.geojson,.rss,.georss,.xml"
     fallback: -> # If the browser can't support the necessary features
       $('.select-shapefile').parent().hide()
     parallelUploads: 1
@@ -52,6 +53,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       dropzone = new Dropzone(container, dropzoneOptions)
       dropzone.on 'success', @_geoJsonResponse
       dropzone.on 'removedfile', @_removeFile
+      dropzone.on 'error', @_displayError
       @_dropzone = dropzone
       L.DomUtil.addClass(container, 'dropzone')
       @_isAdded = true
@@ -137,6 +139,16 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
         help.add('shapefile_multiple', element: el)
       else if children.length == 1
         @_setConstraint(children[0])
+
+    _displayError: (file, response) =>
+      if file.name.match('.*shp')
+        errorMessage = 'To use an ESRI Shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+        errorDiv = document.createElement('div')
+        errorDiv.appendChild(document.createTextNode(errorMessage))
+        errorDiv.className += 'edsc-dz-error'
+        previewElement = file.previewElement
+        previewElement.getElementsByClassName('dz-details')[0].appendChild(errorDiv)
+        previewElement.removeChild(previewElement.querySelector('.dz-error-message'))
 
     _clickLayer: (e) =>
       @_setConstraint(e.chain[0])
