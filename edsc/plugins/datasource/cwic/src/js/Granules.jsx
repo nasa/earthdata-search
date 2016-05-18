@@ -264,7 +264,7 @@ let CwicGranules = (function() {
         granules.push(new Granule(granule));
       }
     }
-    if (getRootLink(data, 'previous')) {
+    if (getRootLink(data, 'previous') && dataObj.feed && dataObj.feed.totalResults > 0) {
       return current.concat(granules);
     }
     else {
