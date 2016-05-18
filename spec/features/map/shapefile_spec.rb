@@ -8,6 +8,36 @@ describe "Shapefile search", reset: false, wait: 30 do
     load_page :search
   end
 
+  context "when uploading a file which format is not supported" do
+    before :all do
+      upload_shapefile('doc/example-data/shapefiles/invalid_format.mp4')
+    end
+
+    after :all do
+      clear_shapefile
+    end
+
+    it "displays an error icon and an error message" do
+      expect(page).to have_css('.dz-error-message')
+      expect(page).to have_css('.dz-error-mark')
+    end
+  end
+
+  context "when uploading a single .shp file as ESRI Shapefile" do
+    before :all do
+      upload_shapefile('doc/example-data/shapefiles/single_shp.shp')
+    end
+
+    after :all do
+      clear_shapefile
+    end
+
+    it "displays an error icon and a custom error message" do
+      expect(page).to have_css('.dz-error-mark')
+      expect(page).to have_text('To use an ESRI Shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')
+    end
+  end
+
   context "when uploading a shapefile containing multiple features" do
     before :all do
       upload_shapefile('doc/example-data/shapefiles/complex.geojson')
