@@ -69,8 +69,8 @@ module VCR
             digest = Digest::SHA1.hexdigest(unique_key(interaction))
             interaction['digest'] = digest
             requests[k] << interaction
-            if interaction['request']['uri'].include?('include_facets=true')
-              responses[digest] = reduce_facet_size(response)
+            if interaction['request']['uri'].include?('collections.json')
+              responses[digest] = reduce_fixture_size(response)
             else
               responses[digest] = response
             end
@@ -106,9 +106,10 @@ module VCR
     # fix the need for this with upcoming facet changes.
     # This method ensures that there are no more than 5 facets of any type returned
     # and that the hierarchy doesn't go below variable_level_1
-    def reduce_facet_size(response)
+    def reduce_fixture_size(response)
       return response unless (response.present? &&
                               response['response'].present? &&
+                              !response['response']['reduced'] &&
                               response['response']['headers'].present? &&
                               response['response']['headers']['content-type'].present? &&
                               response['response']['headers']['content-type'][0].start_with?('application/json'))
@@ -118,14 +119,25 @@ module VCR
         body_config['string'] = @reduced[digest]
       else
         body = ActiveSupport::JSON.decode(body_config['string'])
+        reduced = false
+        before = response['response']['body']['string'].size
         if body && body['feed'] && body['feed']['facets'] && !body['feed']['reduced']
           before = response['response']['body']['string'].size
           Echo::ClientMiddleware::FacetCullingMiddleware.cull(body)
+          reduced = true
+        end
+        if body && body['feed'] && body['feed']['entry']
+          Array.wrap(body['feed']['entry']).each do |entry|
+            entry['summary'] = entry['summary'][0...100] if entry['summary']
+          end
+          reduced = true
+        end
+        if reduced
           @reduced[digest] = response['response']['body']['string'] = body.to_json
           after = @reduced[digest].size
-
-          puts "Reduced: #{before} -> #{after}"
+          puts "Reduced: #{before} -> #{after}" unless before == after
         end
+
       end
       response['response']['reduced'] = true
       response

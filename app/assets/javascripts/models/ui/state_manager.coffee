@@ -14,9 +14,12 @@
       @path = ko.computed(read: @_readPath, write: @_writePath, deferEvaluation: true, owner: this)
       @historyChanged = false
       @loaded = false
-      @cmr_env = null
-      @portal = null
-      @tour = null
+      @preservedParams = {
+        cmr_env: null
+        portal: null
+        tour: null
+        test_facets: null
+      }
       @lastKeywords = null
 
       $(window).on 'edsc.save_workspace', =>
@@ -36,9 +39,8 @@
       ui = page.ui
       result = {}
       result.labs = page.labs() if page.labs()
-      result.cmr_env = @cmr_env if @cmr_env
-      result.portal = @portal if @portal
-      result.tour = @tour if @tour
+
+      result[k] = v for k, v of @preservedParams when v?
 
       result = extend(result, page.project.serialized(), ui.collectionsList.serialized())
 
@@ -69,9 +71,8 @@
         @_timelineParams = params.tl
 
       page.labs(params.labs)
-      @cmr_env = params.cmr_env
-      @portal = params.portal
-      @tour = params.tour
+      @preservedParams[k] = params[k] for k, _ of @preservedParams
+
       page.project.serialized(params)
 
       unless @loaded

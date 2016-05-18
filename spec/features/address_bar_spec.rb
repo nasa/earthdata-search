@@ -141,27 +141,27 @@ describe 'Address bar', reset: false do
 
   context 'when searching by facets' do
     before(:all) do
-      visit '/search'
+      visit '/search?test_facets=true'
       find("h3.facet-title", text: 'Project').click
       find(".facets-item", text: "EOSDIS").click
       wait_for_xhr
     end
 
     it 'saves the facet condition in the address bar' do
-      expect(page).to have_query_string('fpj=EOSDIS')
+      expect(page).to have_query_string('test_facets=true&fpj=EOSDIS')
     end
 
     context 'clearing filters' do
       before(:all) { click_link "Clear Filters" }
 
       it 'removes the facet condition from the address bar' do
-        expect(page).to have_query_string(nil)
+        expect(page).to have_query_string('test_facets=true')
       end
     end
   end
 
   context 'when loading a url containing a facet condition' do
-    before(:all) { visit '/search?fpj=EOSDIS' }
+    before(:all) { visit '/search?test_facets=true&fpj=EOSDIS' }
 
     it 'displays the selected facet condition' do
       within(:css, '#collapse2 .panel-body.facets') do

@@ -14,7 +14,7 @@ describe "Site tour", reset: true do
   context "on the landing page" do
     before :each do
       Capybara.reset_sessions!
-      visit "/" # Load the root url with no extra params
+      visit "/?test_facets=true" # Load the root url with facets and no extra params
       wait_for_xhr
     end
 
@@ -42,7 +42,7 @@ describe "Site tour", reset: true do
       wait_for_xhr
 
       expect(page).to have_popover('Collection Results')
-      second_collection_result.click
+      nth_collection_result(4).click
       wait_for_xhr
 
       expect(page).to have_popover('Matching Granules')

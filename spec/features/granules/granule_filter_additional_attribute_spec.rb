@@ -3,6 +3,8 @@ require "spec_helper"
 describe "Granule search filters by additional attributes", reset: false do
   before_granule_count = 0
 
+  xit "searching AST_L1T by CorrectionAchieved - additional attributes are no longer available"
+  <<-eos
   before :all do
     page.driver.resize_window(2000, 3000) # Avoid having to scroll to click
 
@@ -30,4 +32,6 @@ describe "Granule search filters by additional attributes", reset: false do
       expect(project_overview).to filter_granules_from(before_granule_count)
     end
   end
+eos
+
 end
