@@ -63,4 +63,30 @@ describe "CWIC Granule list", reset: false do
       end
     end
   end
+
+  # The EO-1 collection used in acceptance testing doesn't have this issue. This is the only collection so far that shows
+  # non-zero granule counts when granules are all filtered out due to an issue in the CWIC response "previous" link.
+  # The link has an invalid negative "startIndex" query param when there is no granule results returned.
+  context "Filtering out all granules of a CWIC collection" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, q: 'C1204461918-GCMDTEST', env: :uat
+    end
+
+    hook_granule_results('AIRCRAFT FLUX-RAW: UNIV. COL. (FIFE)')
+
+    before :all do
+      expect(page).to have_text("Showing 15 of 15 matching granules")
+      granule_list.find('.master-overlay-global-actions').click_link('Filter granules')
+      fill_in "Start", with: "1960-02-02 00:00:00\t"
+      fill_in "End", with: "1960-02-02 23:59:59\t"
+      js_click_apply ".master-overlay-content"
+      click_button "granule-filters-submit"
+      wait_for_xhr
+    end
+
+    it "shows 0 of 0 matching granules" do
+      expect(page).to have_text("Showing 0 of 0 matching granules")
+    end
+  end
 end
