@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "'Clear Filters' button", reset: false do
   before :all do
-    load_page :search
+    load_page :search, facets: true
   end
 
   it "clears keywords" do
@@ -79,7 +79,6 @@ describe "'Clear Filters' button", reset: false do
   end
 
   it "clears facets" do
-    click_on 'Browse Collections'
     find("h3.facet-title", text: 'Project').click
     find(".facets-item", text: "EOSDIS").click
     within(:css, '#collapse2 .panel-body.facets') do

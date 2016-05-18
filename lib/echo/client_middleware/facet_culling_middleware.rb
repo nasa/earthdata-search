@@ -1,23 +1,19 @@
 module Echo
   module ClientMiddleware
     class FacetCullingMiddleware < FaradayMiddleware::ResponseMiddleware
+      COUNT_THRESHOLD = 100
+
       def self.cull(body)
-        hierarchical = body['feed']['id'].include?('hierarchical_facets=true')
-        body['feed']['facets'].each do |facet|
-          if !hierarchical && !['archive_center', 'data_center', 'platform', 'instrument'].include?(facet['field'])
-            facet['value-counts'] = []
+        if Array.wrap(body['feed']['entry']).size > 1
+          body['feed']['facets'].reject! do |facet|
+            ['detailed_variable', 'sensor', 'archive_center'].include?(facet['field'])
           end
-          if facet['value-counts'] && facet['value-counts'].size > 20
-            facet['value-counts'] = facet['value-counts'][0...50].sort[0...20]
-          end
-          if facet['subfields']
-            if facet['field'] == 'science_keywords'
+          body['feed']['facets'].each do |facet|
+            if facet['subfields']
               reduce_facet_subtrees(facet)
-            else
-              # Remove all non-science keyword facets
-              facet['subfields'].each do |field|
-                facet[field] = []
-              end
+            end
+            if facet['value-counts']
+              facet['value-counts'] = facet['value-counts'].reject { |value, count| count < COUNT_THRESHOLD }
             end
           end
         end
@@ -27,12 +23,10 @@ module Echo
       def self.reduce_facet_subtrees(facet)
         if facet['subfields']
           facet['subfields'].each do |field|
-            if ['variable_level_2', 'variable_level_3', 'detailed_variable'].include?(field)
+            if ['variable_level_2', 'variable_level_3', 'detailed_variable', 'long_name'].include?(field)
               facet[field] = []
-            else
-              facet[field] = facet[field][0...50] if facet[field].size > 50
-              facet[field] = facet[field].sort_by {|f| f['value']}
-              facet[field] = facet[field][0...5] if facet[field].size > 5
+            elsif !['category', 'topic'].include?(field) # Always keep first couple levels of science keywords
+              facet[field] = facet[field].reject { |f| f.key?('count') && f['count'] < COUNT_THRESHOLD }
               facet[field].each do |facetfield|
                 reduce_facet_subtrees(facetfield)
               end

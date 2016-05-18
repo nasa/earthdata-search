@@ -269,6 +269,7 @@ ns.query = do (ko,
       @focusedInterval = ko.observable(null)
       @temporal = new Temporal()
 
+      @testFacets = @queryComponent(new QueryParam('test_facets'), '')
       @portal = @queryComponent(new QueryParam('portal'), '')
       @placename = @queryComponent(new QueryParam('placename'), '', query: false)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
@@ -284,7 +285,10 @@ ns.query = do (ko,
       @focusedTemporal(null)
       @focusedInterval(null)
       @placename("")
-      super()
+      testFacets = @testFacets()
+      result = super()
+      @testFacets(testFacets)
+      result
 
     _persistentQuery: ->
       result = super()
