@@ -44,7 +44,6 @@ class FlatFacetPresenter
 
   def insert_applied(counts, query)
     counts = counts.dup
-    Rails.logger.info(query)
     Array.wrap(query[@param]).each do |value|
       term = URI.unescape(value.gsub('+', ' '))
       counts << [term, 0] unless counts.any? {|value, count| value == term}
