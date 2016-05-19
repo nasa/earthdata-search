@@ -16387,6 +16387,142 @@ b51909194fa247268410753e6f40cdd0e78ff7ff:
         SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+6a185c657a0524b1fd0335f054dd7b198e2133ff:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 19 May 2016 15:52:51 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '245'
+      cmr-request-id:
+      - 97db9448-864f-4c53-b097-78ffcf28af93
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-19T15:52:52.056Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=2016-02-24T12%3A51%3A10.588Z%2C2016-02-25T06%3A10%3A35.294Z\u0026bounding_box=0%2C0%2C10%2C10\u0026science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE\u0026page_size=20\u0026page_num=1\u0026collection_data_type=NEAR_REAL_TIME\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026hierarchical_facets=true\u0026echo_collection_id%5B%5D=C1229626387-LANCEMODIS\u0026echo_collection_id%5B%5D=C1219032686-LANCEMODIS\u0026keyword=snow%2A+cover%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+7c34a2dd5d2b707ace9015078f96c50b1a307bdd:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 19 May 2016 15:52:49 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '4'
+      cmr-took:
+      - '546'
+      cmr-request-id:
+      - edbc7775-3488-4cc6-b01c-dab7fe4ccb5b
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-19T15:52:49.679Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=2016-02-24T12%3A51%3A10.588Z%2C2016-02-25T06%3A10%3A35.294Z\u0026bounding_box=0%2C0%2C10%2C10\u0026science_keywords%5B0%5D%5Btopic%5D%5B%5D=ATMOSPHERE\u0026page_size=20\u0026page_num=1\u0026collection_data_type=NEAR_REAL_TIME\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026hierarchical_facets=true\u0026keyword=snow%2A+cover%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Temperature (Day)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Temp_Day","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}},{"format":"png","antarctic":false,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Day)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Pressure_Day","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}},{"format":"png","antarctic":false,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Night)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Pressure_Night","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"NIGHT"}},{"format":"png","antarctic":false,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Temperature (Night)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Temp_Night","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"NIGHT"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MOD06_L2_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km","data_center":"LANCEMODIS","short_name":"MOD06_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Terra
+        Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km","coordinate_system":"CARTESIAN","summary":"The
+        level-2 MODIS cloud product consists of cloud optical and physical parameters.
+        These parameters ","has_granules":true,"orbit_parameters":{},"id":"C1219032640-LANCEMODIS","score":0.5,"collection_data_type":"NEAR_REAL_TIME","granule_count":0,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MOD06_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MOD06_L2/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Temperature (Day)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Temp_Day","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}},{"format":"png","antarctic":false,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Day)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Pressure_Day","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}},{"format":"png","antarctic":false,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Night)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Pressure_Night","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"NIGHT"}},{"format":"png","antarctic":false,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Temperature (Night)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Temp_Night","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"NIGHT"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","dif_ids":["MOD06_L2_5NRT"],"version_id":"5NRT","updated":"2016-03-10T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km (Collection 004 and
+        005)","data_center":"LANCEMODIS","short_name":"MOD06_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Terra
+        Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km (Collection 004 and
+        005)","coordinate_system":"CARTESIAN","summary":"MODIS was launched aboard
+        the Terra satellite on December 18, 1999                              (10:","has_granules":true,"orbit_parameters":{},"id":"C1219032597-LANCEMODIS","score":0.5,"collection_data_type":"NEAR_REAL_TIME","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 5 descriptions and data sets from the MODAPS LANCE-MODIS page(FTP
+        server).","hreflang":"en-US","href":"http://lance.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MOD06_L2 5NRT data set.","hreflang":"en-US","href":"ftp://nrt1.modaps.eosdis.nasa.gov/allData/1/MOD06_L2/"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Cloud Top Temperature (Night)","resolution":"2km","product":"MODIS_Aqua_Cloud_Top_Temp_Night","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"NIGHT"}},{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Cloud Top Temperature (Day)","resolution":"2km","product":"MODIS_Aqua_Cloud_Top_Temp_Day","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}},{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Night)","resolution":"2km","product":"MODIS_Aqua_Cloud_Top_Pressure_Night","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"NIGHT"}},{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Day)","resolution":"2km","product":"MODIS_Aqua_Cloud_Top_Pressure_Day","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MYD06_L2_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km","data_center":"LANCEMODIS","short_name":"MYD06_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km","coordinate_system":"CARTESIAN","summary":"The
+        level-2 MODIS cloud product consists of cloud optical and physical parameters.
+        These parameters ","has_granules":true,"orbit_parameters":{},"id":"C1219032688-LANCEMODIS","score":0.5,"collection_data_type":"NEAR_REAL_TIME","granule_count":0,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD06_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD06_L2/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Cloud Top Temperature (Night)","resolution":"2km","product":"MODIS_Aqua_Cloud_Top_Temp_Night","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"NIGHT"}},{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Cloud Top Temperature (Day)","resolution":"2km","product":"MODIS_Aqua_Cloud_Top_Temp_Day","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}},{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Night)","resolution":"2km","product":"MODIS_Aqua_Cloud_Top_Pressure_Night","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"NIGHT"}},{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Day)","resolution":"2km","product":"MODIS_Aqua_Cloud_Top_Pressure_Day","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD06_L2_5NRT"],"version_id":"5NRT","updated":"2016-03-10T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km (Collection 005)","data_center":"LANCEMODIS","short_name":"MYD06_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km (Collection 005)","coordinate_system":"CARTESIAN","summary":"MODIS
+        was launched aboard the Aqua satellite on May 04, 2002                              (1:30
+        pm e","has_granules":true,"orbit_parameters":{},"id":"C1219032607-LANCEMODIS","score":0.5,"collection_data_type":"NEAR_REAL_TIME","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 5 descriptions and data sets from the MODAPS LANCE-MODIS page(FTP
+        server).","hreflang":"en-US","href":"http://lance.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD06_L2 5NRT data set.","hreflang":"en-US","href":"ftp://nrt1.modaps.eosdis.nasa.gov/allData/1/MYD06_L2/"}]}],"facets":[{"field":"project","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"subfields":["level_0"],"level_0":[],"field":"data_centers"},{"subfields":["level_0"],"level_0":[],"field":"archive_centers"},{"subfields":["category"],"category":[{"subfields":["series_entity"],"series_entity":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":2,"value":"Earth
+        Observing System, AQUA"}],"count":2,"value":"AQUA"},{"subfields":["long_name"],"long_name":[{"count":2,"value":"Earth
+        Observing System, TERRA (AM-1)"}],"count":2,"value":"TERRA"}],"count":4,"value":"Not
+        Provided"}],"count":4,"value":"Earth Observation Satellites"}],"field":"platforms"},{"subfields":["category"],"category":[{"subfields":["class"],"class":[{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":4,"value":"Moderate-Resolution
+        Imaging Spectroradiometer"}],"count":4,"value":"MODIS"}],"count":4,"value":"Imaging
+        Spectrometers/Radiometers"}],"count":4,"value":"Spectrometers/Radiometers"}],"count":4,"value":"Passive
+        Remote Sensing"}],"count":4,"value":"Earth Remote Sensing Instruments"}],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"subfields":["variable_level_2"],"variable_level_2":[{"count":4,"value":"CLOUD
+        ASYMMETRY"},{"count":4,"value":"CLOUD CEILING"},{"count":4,"value":"CLOUD
+        FREQUENCY"},{"count":4,"value":"CLOUD HEIGHT"},{"count":4,"value":"CLOUD TOP
+        PRESSURE"},{"count":4,"value":"CLOUD TOP TEMPERATURE"},{"count":4,"value":"CLOUD
+        VERTICAL DISTRIBUTION"}],"count":4,"value":"CLOUD PROPERTIES"},{"subfields":["variable_level_2"],"variable_level_2":[{"count":4,"value":"CLOUD
+        CONDENSATION NUCLEI"},{"count":4,"value":"CLOUD DROPLET CONCENTRATION/SIZE"},{"count":4,"value":"CLOUD
+        LIQUID WATER/ICE"},{"count":4,"value":"CLOUD OPTICAL DEPTH/THICKNESS"},{"count":4,"value":"CLOUD
+        PRECIPITABLE WATER"}],"count":4,"value":"CLOUD MICROPHYSICS"},{"subfields":["variable_level_2"],"variable_level_2":[{"count":4,"value":"CLOUD
+        EMISSIVITY"},{"count":4,"value":"CLOUD RADIATIVE FORCING"},{"count":4,"value":"CLOUD
+        REFLECTANCE"}],"count":4,"value":"CLOUD RADIATIVE TRANSFER"},{"count":4,"value":"CLOUD
+        TYPES"}],"count":4,"value":"CLOUDS"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":4,"value":"ATMOSPHERIC
+        EMITTED RADIATION"},{"count":4,"value":"EMISSIVITY"},{"count":4,"value":"OPTICAL
+        DEPTH/THICKNESS"},{"count":4,"value":"RADIATIVE FLUX"},{"count":4,"value":"REFLECTANCE"},{"count":4,"value":"TRANSMITTANCE"}],"count":4,"value":"ATMOSPHERIC
+        RADIATION"}],"count":4,"value":"ATMOSPHERE"}],"count":4,"value":"EARTH SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 d1dae13559799861aac7fc5b8f17a76d1e1a5e91:
   response:
     status:
