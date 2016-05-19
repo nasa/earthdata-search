@@ -28,7 +28,7 @@ describe "Collection Facets", reset: false do
       find("h3.facet-title", text: 'Platform').click
     end
 
-    it "shows the first Instruments facet" do
+    it "shows the first Instrument facet" do
       find("h3.facet-title", text: 'Instrument').click
       expect(page).to have_css('.panel.instrument .facets-item', visible: true)
       find("h3.facet-title", text: 'Instrument').click
@@ -203,12 +203,12 @@ describe "Collection Facets", reset: false do
     end
 
     it "updates the collection results" do
-      expect(page).to have_no_content("AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005")
+      expect(page).to have_no_content("AIRABRAD_NRT")
 
       find("h3.facet-title", text: 'Project').click
       find(".project .facets-item", text: "AQUA").click
 
-      expect(page).to have_content("AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005")
+      expect(page).to have_content("AIRABRAD_NRT")
 
       find("h3.facet-title", text: 'Project').click
     end
@@ -253,7 +253,7 @@ describe "Collection Facets", reset: false do
 
   context "when applied one science keyword facets and search terms filter the collections list to no results" do
     before(:all) do
-      find(".facets-item", text: "BIOSPHERE").click
+      find(".facets-item", text: "ATMOSPHERE", match: :prefer_exact).click
       fill_in :keywords, with: "somestringthatmatchesnocollections"
       wait_for_xhr
     end
@@ -265,7 +265,7 @@ describe "Collection Facets", reset: false do
 
     it "continues to display applied facets" do
       within(:css, '#collapse1 .panel-body.facets') do
-        expect(page).to have_content("BIOSPHERE")
+        expect(page).to have_content("ATMOSPHERE")
       end
     end
   end
@@ -388,7 +388,7 @@ describe "Collection Facets", reset: false do
       end
 
       it "displays variable_level_1 keywords" do
-        expect(page).to have_content("AEROSOL BACKSCATTER")
+        expect(page).to have_content("AEROSOL EXTINCTION")
       end
     end
 
@@ -396,7 +396,7 @@ describe "Collection Facets", reset: false do
       before :all do
         first(".facet-term", text: /\AAEROSOLS\z/).click
         wait_for_xhr
-        find(".facets-item", text: "AEROSOL BACKSCATTER").click
+        find(".facets-item", text: "AEROSOL EXTINCTION").click
         wait_for_xhr
         find(".facet-term", text: /\AATMOSPHERE\z/).click
         wait_for_xhr
@@ -410,7 +410,7 @@ describe "Collection Facets", reset: false do
 
       it "removes the children keywords" do
         expect(page).to have_no_content("AEROSOLS")
-        expect(page).to have_no_content("AEROSOL BACKSCATTER")
+        expect(page).to have_no_content("AEROSOL EXTINCTION")
       end
     end
   end

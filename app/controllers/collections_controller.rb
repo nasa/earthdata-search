@@ -1,36 +1,19 @@
 class CollectionsController < ApplicationController
   respond_to :json
 
-  # Order matters in SCIENCE_KEYWORDS
-  SCIENCE_KEYWORDS = ['topic', 'term', 'variable_level_1', 'variable_level_2', 'variable_level_3']
-  KEYWORD_CHILD = {'topic' => 'term', 'term' => 'variable_level_1', 'variable_level_1' => 'variable_level_2', 'variable_level_2' => 'variable_level_3', 'variable_level_3' => nil}
-
   UNLOGGED_PARAMS = ['include_facets', 'hierarchical_facets', 'include_tags', 'include_granule_counts']
 
   def index
-    # FIXME Termporary workaround for CMR-2038 and CMR-2049
-    # Fire two requests to CMR. One to retrieve hierarchical facets, the other to get non-hierarchical facets, in parallel.
-    service_configs = Rails.configuration.services
-    service_config = service_configs['earthdata'][cmr_env]
-    urs_client_id = service_configs['urs'][Rails.env.to_s][service_config['urs_root']]
-    h_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
-    nh_client = Echo::CmrClient.new(service_config['cmr_root'], urs_client_id)
-
-    hierarchical_params = collection_params_for_request(request)
+    collection_params = collection_params_for_request(request)
     unless params['echo_collection_id']
-      metrics_event('search', hierarchical_params.except(*UNLOGGED_PARAMS))
+      metrics_event('search', collection_params.except(*UNLOGGED_PARAMS))
     end
-    hierarchical_search = lambda do
-      h_client.get_collections(hierarchical_params, token)
-    end
-    non_hierarchical_search = lambda do
-      nh_client.get_collections(collection_params_for_request(request, false), token)
-    end
-    catalog_response = execute_search(hierarchical_search, non_hierarchical_search)
+    catalog_response = echo_client.get_collections(collection_params, token)
 
     if catalog_response.success?
-      add_featured_collections!(collection_params_for_request(request), token, catalog_response.body)
-      catalog_response.body['feed']['facets'] = facet_results(request, catalog_response)
+      add_featured_collections!(collection_params, token, catalog_response.body)
+      catalog_response.body['feed']['facets'] =
+        FacetsPresenter.new(catalog_response.body['feed']['facets'], request.query_string).as_json
 
       CollectionExtra.decorate_all(catalog_response.body['feed']['entry'])
 
@@ -100,145 +83,6 @@ class CollectionsController < ApplicationController
     h_response
   end
 
-  def facet_results(request, response)
-    # Hash of parameters to values where hashes and arrays in parameter names are not interpreted
-    query = request.query_string.gsub('%5B', '[').gsub('%5D', ']').split('&').map {|kv| kv.split('=')}.group_by(&:first)
-
-    # CMR Facets
-    facets = Array.wrap(response.body['feed']['facets'])
-
-    fields_to_params = {
-      'topic' => ['Topic Keyword', 'science_keywords[0][topic][]'],
-      'term' => ['Term Keyword', 'science_keywords[0][term][]'],
-      'data_center' => ['Organization', 'data_center[]'],
-      'variable_level_1' => ['Variable Level 1 Keyword', 'science_keywords[0][variable_level_1][]'],
-      'variable_level_2' => ['Variable Level 2 Keyword', 'science_keywords[0][variable_level_2][]'],
-      'variable_level_3' => ['Variable Level 3 Keyword', 'science_keywords[0][variable_level_3][]'],
-      'detailed_variable' => ['Detailed Variable Keyword', 'science_keywords[0][detailed_variable][]']
-    }
-
-    features = [{'field' => 'features', 'value-counts' => [['Map Imagery', 0], ['Subsetting Services', 0], ['Near Real Time', 0]]}]
-    facets.unshift(features).flatten!
-
-    # CMR-1722 Temporarily filter out detailed_variable keywords
-    # FIXME: The proposed fix to CMR-1722 may break our facets
-    facets = facets.reject {|facet| facet['field'] == 'detailed_variable'}
-
-    science_keywords_facets = facets.find {|facet| facet['field'] == 'science_keywords'}
-    facets.delete(science_keywords_facets)
-
-    # find all science_keywords query params
-    keyword_query_params = {}
-    query.each {|k, v| keyword_query_params[k[/science_keywords\[0\]\[(.*)\]\[\]/, 1]] = v[0][1].gsub('+', ' ') if k.match(/science_keywords\[0\]/) }
-
-    # add child param to the hash
-    cutoff_key = nil
-    KEYWORD_CHILD.keys.each do |key|
-      keyword_query_params.except!(key) if cutoff_key && keyword_query_params[key]
-      if keyword_query_params[key].nil?
-        unless cutoff_key
-          keyword_query_params[key] = '--ALL--'
-          cutoff_key = key
-        end
-        next
-      end
-    end
-
-    selected_keywords = []
-    keyword_facets = []
-
-    facet_tree = nil
-    unless science_keywords_facets.nil? || science_keywords_facets['category'].nil?
-      earth_science_keywords = science_keywords_facets['category'].find do |facet|
-        facet['value'] == 'EARTH SCIENCE'
-      end || science_keywords_facets['category'].first
-      facet_tree = earth_science_keywords['topic'] unless earth_science_keywords.nil?
-    end
-    if facet_tree.nil?
-      keyword_query_params.each do |k, v|
-        selected_keywords.insert(SCIENCE_KEYWORDS.index(k), {'term' => URI.unescape(v), 'count' => 0, 'param' => fields_to_params[k].last, 'index' => nil}) unless v == '--ALL--'
-      end
-      selected_keywords.compact!
-    else
-      KEYWORD_CHILD.keys.each do |keyword|
-        rtn_hash = parse_hierarchical_keywords(facet_tree, keyword, keyword_query_params)
-        facets << rtn_hash[:value]
-        break if rtn_hash[:facet_tree].nil?
-        facet_tree = rtn_hash[:facet_tree]
-      end
-    end
-
-    results = facets.map.with_index do |facet, index|
-      if facet['value-counts'].blank?
-        items = []
-      else
-        items = facet['value-counts'].map do |term, count|
-          {'term' => term, 'count' => count}
-        end
-      end
-
-      field = facet['field']
-      params = fields_to_params[field]
-      unless params
-        params = [field.humanize.capitalize, field + '[]']
-      end
-
-      previous_applied = false
-      if ['topic', 'term', 'variable_level_1', 'variable_level_2', 'variable_level_3'].include? facet['field']
-        if items.size > 0 # FIXME if no items are returned, doesn't show any selected facets
-          previous_param = fields_to_params[facets[index-1]['field']]
-          previous_applied = true if previous_param && query[previous_param.last]
-
-          if query[params.last] # if current keyword param has applied facet
-            selected_keyword = URI.unescape(query[params.last].flatten.last.gsub('+', ' '))
-            selected_item = items.select{|facet| facet['term'] == selected_keyword}.first
-            selected_item['param'] = params.last
-            selected_item['term'] = selected_item['term']
-            selected_item['index'] = index
-            selected_keywords += [selected_item]
-          elsif facet['field'] == 'topic' || previous_applied # if previous keyword param has applied facet
-            keyword_facets += items.map do |item|
-              item['param'] = params.last
-              item
-            end
-          else # other keywords without previously applied keywords
-            nil
-          end
-        end
-        nil
-      else
-        facet_response(query, items, params.first, params.last)
-      end
-    end
-
-    keyword_facets.sort_by! {|facet| facet['term']}
-    results.insert(1, {name: "Keywords", param: nil, values: selected_keywords + keyword_facets})
-    # EDSC-698 Dropping sensor as a facet.
-    # EDSC-1023 Dropping 2D Coordinate System
-    # FIXME: This may need retouch once CMR drops the sensor facet.
-    results.reject! do |facet|
-      !facet.nil? && ['Sensor', '2D Coordinate Name', 'Two d coordinate system name'].include?(facet[:name])
-    end
-    results.compact
-  end
-
-  def facet_response(query, items, name, param)
-    items = items[0...50]
-    applied = []
-    Array.wrap(query[param]).each do |param_term|
-      term = param_term.last
-      term = URI.unescape(term.gsub('+', ' '))
-      unless items.any? {|item| item['term'] == term}
-        applied << {'term' => term, 'count' => 0}
-      end
-    end
-
-    items += applied
-
-    items.sort_by! {|facet| facet['term'].downcase}
-    {name: name, param: param, values: items}
-  end
-
   def get_featured_ids
     featured_ids = CollectionExtra.featured_ids
 
@@ -259,7 +103,7 @@ class CollectionsController < ApplicationController
     # Only fetch if the user is requesting the first page
     if base_query['page_num'] == "1" && base_query['echo_collection_id'].nil?
       begin
-        featured_query = collection_params_for_request(request).merge('echo_collection_id' => featured_ids)
+        featured_query = base_query.merge('echo_collection_id' => featured_ids)
         featured_response = echo_client.get_collections(featured_query, token)
         featured = featured_response.body['feed']['entry'] if featured_response.success?
       rescue => e
@@ -300,6 +144,11 @@ class CollectionsController < ApplicationController
       end
     end
 
+    test_facets = params.delete(:test_facets)
+    if Rails.env.test? && !test_facets
+      params = params.except('include_facets')
+    end
+
     features = Hash[Array.wrap(params.delete(:features)).map {|f| [f, true]}]
     if features['Subsetting Services']
       params['tag_key'] = Array.wrap(params['tag_key'])
@@ -320,39 +169,6 @@ class CollectionsController < ApplicationController
     params['hierarchical_facets'] = 'true' if params['include_facets'] == 'true' && hierarchical
 
     params
-  end
-
-  def parse_hierarchical_keywords(facets, parent, params)
-    facets = [facets] if facets.is_a? Hash
-    KEYWORD_CHILD.keys.each do |key|
-      if key == parent
-        if params[key]
-          if params[key] == '--ALL--'
-            # add all, don't trim
-            items = []
-            facets.each do |facet|
-              items << [facet['value'], facet['count']]
-            end
-            rtn = {:value => {'field' => key, 'value-counts' => items}, :facet_tree => facets}
-            return rtn
-          else
-            # for every facet in this level
-            facets.each do |facet|
-              if facet['value'] == URI.unescape(params[key])
-                # find the right one and trim facets tree
-                tmp1 = {'field' => key, 'value-counts' => [[facet['value'], facet['count']]]}
-                tmp2 =  (facet.is_a? Hash) && !facet['subfields'].nil? ? facet[facet['subfields'][0]] : nil
-                rtn = {:value => tmp1, :facet_tree => tmp2}
-                return rtn
-              end
-            end
-          end
-        else
-          # this is not gonna happen if the facets tree is trimmed correctly
-          return {:value => {'field' => key, 'value-counts' => []}, :facet_tree => facets}
-        end
-      end
-    end
   end
 
 end
