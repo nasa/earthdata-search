@@ -2901,6 +2901,45 @@ c0aeae2f98ec1f8839d7cdb09c9e1e6be86bb42d:
         information on 3DP from SSL\n      ","hreflang":"en-US","href":"http://sprg.ssl.berkeley.edu/wind3dp/esahome.html"}]}]}}'
     http_version: 
     reduced: true
+c33a227ab23ddfc664f596ea39e720ee82c70ec7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 19 May 2016 15:18:11 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '23'
+      cmr-request-id:
+      - 8cd58e47-92e7-4048-bd09-83ed7386d8f6
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-19T15:18:11.030Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C1000000300-NSIDC_ECS\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"4","boxes":["-90 -180 90
+        180"],"time_start":"1993-01-01T00:00:00.000Z","dif_ids":["IGBTH4"],"version_id":"001","updated":"2015-07-02T15:42:41.192Z","dataset_id":"IceBridge
+        Sander AIRGrav L4 Bathymetry V001","data_center":"NSIDC_ECS","short_name":"IGBTH4","organizations":["NSIDC","LDEO"],"title":"IceBridge
+        Sander AIRGrav L4 Bathymetry V001","coordinate_system":"CARTESIAN","summary":"This
+        data set contains bathymetry of Arctic fjords and Antarctic ice shelves based
+        on measurements f","has_granules":true,"orbit_parameters":{},"id":"C1000000300-NSIDC_ECS","original_format":"ECHO10","granule_count":3,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Data
+        set documentation at the NASA NSIDC DAAC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/icebridge/igbth4/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Data
+        set landing page at the NASA NSIDC DAAC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/igbth4/versions/1"}]}]}}'
+    http_version: 
+    reduced: true
 ac1ccb27b909477cf758a983ece3f65deb8512e4:
   response:
     status:
