@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'Ordering without order options', reset: false do
   orderable_collection_id = 'C4543622-LARC_ASDC'
   orderable_collection_title = 'CER_SSF_Terra-FM1-MODIS_Edition3A'
-  granule_id = 'G1000343094-LARC_ASDC'
 
   before :all do
     Capybara.reset_sessions!
@@ -28,11 +27,11 @@ describe 'Ordering without order options', reset: false do
     expect(page).to have_content(orderable_collection_title)
   end
 
-  xit "indicates current order status", pending_fixtures: true do
-    expect(page).to have_text('Not Validated')
+  it "indicates current order status", pending_fixtures: true do
+    expect(page).to have_text('Submitting')
   end
 
-  xit "provides a link to cancel the order", pending_fixtures: true do
+  it "provides a link to cancel the order", pending_fixtures: true do
     expect(page).to have_link("Cancel")
   end
 

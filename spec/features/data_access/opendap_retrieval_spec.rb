@@ -159,17 +159,18 @@ describe 'OPeNDAP Retrieval', reset: false do
   context 'configuring an OPeNDAP collection which uses <Grid> elements' do
     before(:all) do
       load_page('data/configure', project: [grid_opendap_collection])
-      choose 'Download'
-      choose 'ASCII'
     end
 
     it "presents parameters exposed by <Grid> elements" do
+      pending "This collection no longer has opendap online access URLs"
+      choose 'Download'
+      choose 'ASCII'
       expect(page).to have_checked_field('toa_sw_all_mon')
       expect(page).to have_text('Top of The Atmosphere Shortwave Flux, Monthly Means, All-Sky conditions')
     end
   end
 
-  xit 'downloading an auto-discovered OPeNDAP collection with subsetting options', pending_fixtures: true do
+  context 'downloading an auto-discovered OPeNDAP collection with subsetting options', pending_fixtures: true do
     before(:all) do
       load_page('data/configure',
                 project: [autodiscovered_opendap_collection],
@@ -217,7 +218,7 @@ describe 'OPeNDAP Retrieval', reset: false do
   end
 
 
-  xit 'downloading a manually-configured OPeNDAP collection with subsetting options', pending_fixtures: true do
+  context 'downloading a manually-configured OPeNDAP collection with subsetting options', pending_fixtures: true do
     before(:all) do
       load_page('data/configure',
                 project: [opendap_collection],

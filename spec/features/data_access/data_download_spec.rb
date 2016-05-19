@@ -286,20 +286,14 @@ describe "Data download page", reset: false do
 
   context "when collections have been selected for asynchronous access" do
     before :all do
-      load_page 'data/configure', project: [orderable_collection_id, non_orderable_collection_id]
+      load_page 'data/configure', project: [orderable_collection_id, non_orderable_collection_id], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']
       wait_for_xhr
 
       choose 'FtpPushPull'
-      select 'FtpPull', from: 'Distribution Options'
       click_on 'Continue'
-      # wait for modal
-      sleep 1
-      within '.modal-footer' do
-        click_on 'Continue'
-      end
-
       # No actions available on the second, continue
       click_on 'Continue'
+
       # Confirm address
       click_on 'Submit'
       wait_for_xhr
@@ -307,7 +301,6 @@ describe "Data download page", reset: false do
 
     it "displays a link to return to search results" do
       expect(page).to have_link("Back to Data Access Options")
-      expect(page).to have_css("a[href^=\"/data/configure?p=%21#{downloadable_collection_id}\"]")
     end
 
     it "displays information on obtaining data asynchronously" do
@@ -315,11 +308,11 @@ describe "Data download page", reset: false do
       expect(page).to have_content(orderable_collection_title)
     end
 
-    xit "indicates current order status", pending_fixtures: true do
-      expect(page).to have_text('Not Validated')
+    it "indicates current order status", pending_fixtures: true do
+      expect(page).to have_text('Submitting')
     end
 
-    xit "provides a link to cancel the order", pending_fixtures: true do
+    it "provides a link to cancel the order", pending_fixtures: true do
       expect(page).to have_link("Cancel")
     end
 
