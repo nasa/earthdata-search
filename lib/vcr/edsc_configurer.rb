@@ -126,11 +126,9 @@ module VCR
             cassette = 'geonames'
           elsif uri.include? '/convert'
             cassette = 'ogre'
-          elsif request.method == :post && uri.include?('/orders.json')
+          elsif uri.include?('/echo-rest/orders')
             cassette = 'orders'
-            record = :none
-          elsif request.method == :get && uri.include?('/orders.json')
-            cassette = 'hand-edited'
+            opts[:match_requests_on] << :token
             record = :none
           elsif (request.method == :delete ||
                  (uri.include?('/echo-rest/calendar_events') && !uri.include?('testbed')) ||
@@ -163,7 +161,6 @@ module VCR
 
           if uri.include?('users/current.json') ||
               uri.include?('preferences.json') ||
-              uri.include?('orders.json') ||
               uri.include?('C179002986-ORNL')
             opts[:match_requests_on] << :token
           end

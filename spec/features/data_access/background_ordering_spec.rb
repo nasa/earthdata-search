@@ -33,6 +33,12 @@ describe 'Background jobs ordering', reset: false do
       expect(Delayed::Worker.new.work_off).to  eq([1, 0])
       load_page "data/retrieve/#{Retrieval.last.to_param}"
     end
+
+    after :all do
+      Delayed::Worker.delay_jobs = false
+    end
+
+
     it "displays dropped granules that don't have the specified access method" do
       expect(page).to have_text('The following granules will not be processed because they do not support the AST_07XT access method')
     end
@@ -45,18 +51,12 @@ describe 'Background jobs ordering', reset: false do
 
       load_page :search, overlay: false
       login
-      load_page 'data/configure', project: [orderable_collection_id]
+      load_page 'data/configure', project: [orderable_collection_id], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']
       wait_for_xhr
 
       choose 'FtpPushPull'
       select 'FtpPull', from: 'Distribution Options'
       click_on 'Continue'
-
-      # wait for modal
-      sleep 1
-      within '.modal-footer' do
-        click_on 'Continue'
-      end
 
       # Confirm address
       click_on 'Submit'
@@ -78,7 +78,7 @@ describe 'Background jobs ordering', reset: false do
       end
 
       it 'indicates current order status' do
-        expect(page).to have_text('Not Validated')
+        expect(page).to have_text('Submitting')
       end
     end
   end

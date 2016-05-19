@@ -150,6 +150,7 @@ RSpec.configure do |config|
 
   config.after :all do
     Capybara.default_wait_time = wait_time
+    Delayed::Worker.delay_jobs = false
     timings[self.class.display_name] = Time.now - file_time
     index += 1
     puts " (Suite #{index} of #{count})"

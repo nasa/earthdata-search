@@ -6,6 +6,8 @@ describe "Access Option Defaults", reset: true do
   collection_id = 'C90762182-LAADS'
   collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
+  page_options = {project: [collection_id], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']}
+
   let(:echo_id) { "4C0390AF-BEE1-32C0-4606-66CAFDD4131D" }
 
   before :each do
@@ -25,7 +27,7 @@ describe "Access Option Defaults", reset: true do
         'accessMethod' => [{'method' => 'stale', 'model' => '<broken/>', 'rawModel' => '<broken/>', 'type' => 'order'}]
       }
       AccessConfiguration.set_default_access_config(user, collection_id, options, nil)
-      load_page 'data/configure', project: [collection_id]
+      load_page 'data/configure', page_options
     end
 
     it "presents default options" do
@@ -42,7 +44,7 @@ describe "Access Option Defaults", reset: true do
         'accessMethod' => [{'method' => 'stale', 'model' => '<broken/>', 'rawModel' => '<broken/>', 'type' => 'order'}]
       }
       AccessConfiguration.set_default_access_config(user, collection_id, options, [{'id' => 'test', 'form_hash' => 'stale'}])
-      load_page 'data/configure', project: [collection_id]
+      load_page 'data/configure', page_options
     end
 
     it "presents default options for the order" do
@@ -58,7 +60,7 @@ describe "Access Option Defaults", reset: true do
           'accessMethod' => [{'method' => 'stale', 'model' => '<broken/>', 'rawModel' => '<broken/>', 'type' => 'order'}]
       }
       AccessConfiguration.set_default_access_config(user, collection_id, options, [{'id' => '7E65A0BF-6A43-1891-1A2E-D6D8CBF01768', 'form_hash' => 'original_hash'}])
-      load_page 'data/configure', project: [collection_id]
+      load_page 'data/configure', page_options
     end
 
     it "presents default options for the order" do
@@ -69,7 +71,7 @@ describe "Access Option Defaults", reset: true do
 
   context "accessing a collection for the first time" do
     before :each do
-      load_page 'data/configure', project: [collection_id]
+      load_page 'data/configure', page_options
       wait_for_xhr
     end
 
@@ -81,7 +83,7 @@ describe "Access Option Defaults", reset: true do
 
   context "accessing a collection for a second time" do
     before :each do
-      load_page 'data/configure', project: [collection_id]
+      load_page 'data/configure', page_options
       wait_for_xhr
 
       choose 'Download'
@@ -94,16 +96,12 @@ describe "Access Option Defaults", reset: true do
       select 'FtpPull', from: 'Distribution Options'
 
       click_on 'Continue'
-      sleep 1
-      within '.modal-footer' do
-        click_on 'Continue' # to dismiss the modal
-      end
       click_on 'Submit'
       wait_for_xhr
       expect(page).to have_content('The following collections are being processed')
       expect(page).to have_content(collection_title)
 
-      load_page 'data/configure', project: [collection_id]
+      load_page 'data/configure', page_options
       wait_for_xhr
     end
 
@@ -124,7 +122,7 @@ describe "Access Option Defaults", reset: true do
 
   context "accessing a collection for the third time" do
     before :each do
-      load_page 'data/configure', project: [collection_id]
+      load_page 'data/configure', page_options
       wait_for_xhr
 
       choose 'Download'
@@ -137,14 +135,10 @@ describe "Access Option Defaults", reset: true do
       select 'FtpPull', from: 'Distribution Options'
 
       click_on 'Continue'
-      sleep 1
-      within '.modal-footer' do
-        click_on 'Continue' # to dismiss the modal
-      end
       click_on 'Submit'
       expect(page).to have_content('The following collections are being processed')
 
-      load_page 'data/configure', project: [collection_id]
+      load_page 'data/configure', page_options
       wait_for_xhr
 
       within '.access-item-selection:nth-child(4)' do
@@ -156,7 +150,7 @@ describe "Access Option Defaults", reset: true do
       expect(page).to have_link('View Download Links')
       expect(page).to have_no_content('The following collections are being processed')
 
-      load_page 'data/configure', project: [collection_id]
+      load_page 'data/configure', page_options
       wait_for_xhr
     end
 

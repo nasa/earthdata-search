@@ -23,7 +23,7 @@ describe "User missing ordering preferences", reset: false do
     end
   end
 
-  xit "when accessing downloadable data", pending_fixtures: true do
+  context "when accessing downloadable data", pending_fixtures: true do
     before :all do
       load_page :search, project: [collection_id], view: :project
       wait_for_xhr

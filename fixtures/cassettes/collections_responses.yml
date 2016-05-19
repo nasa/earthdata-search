@@ -16387,6 +16387,70 @@ b51909194fa247268410753e6f40cdd0e78ff7ff:
         SCIENCE"}],"field":"science_keywords"}],"reduced":true}}'
     http_version: 
     reduced: true
+58f6806b47b9bbef7bd61077d0b7bda33b851dd5:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 19 May 2016 16:37:49 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '921'
+      cmr-request-id:
+      - 4f6dabd6-dbbd-4e0a-9f3f-2b2d3107bd04
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-19T16:37:50.129Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=1978-12-01T00%3A00%3A00.000Z%2C1979-12-01T00%3A00%3A00.000Z\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026hierarchical_facets=true\u0026echo_collection_id%5B%5D=C1229626387-LANCEMODIS\u0026echo_collection_id%5B%5D=C1219032686-LANCEMODIS\u0026keyword=C179003030-ORNL_DAAC%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
+3c7cd703a94cc74fb37685c01ce6cb43148e03ef:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 19 May 2016 16:37:45 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '1058'
+      cmr-request-id:
+      - 76af1efb-3542-4e3b-b914-71737dca00c4
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-19T16:37:46.826Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true\u0026temporal=1978-12-01T00%3A00%3A00.000Z%2C1979-12-01T00%3A00%3A00.000Z\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026hierarchical_facets=true\u0026keyword=C179003030-ORNL_DAAC%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}],"reduced":true}}'
+    http_version: 
+    reduced: true
 6a185c657a0524b1fd0335f054dd7b198e2133ff:
   response:
     status:
@@ -17314,6 +17378,92 @@ ca273d820dcf3e9aa8b85bd619452eca3af834f4:
       encoding: UTF-8
       string: '{"feed":{"updated":"2016-05-18T17:44:43.272Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026echo_collection_id%5B%5D=C1229626387-LANCEMODIS\u0026echo_collection_id%5B%5D=C1219032686-LANCEMODIS\u0026echo_collection_id%5B%5D=C1224520058-NOAA_NCEI\u0026echo_collection_id%5B%5D=C1224520120-NOAA_NCEI\u0026keyword=AST_L1AE%2A\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[]}}'
+    http_version: 
+    reduced: true
+bcf86cd81485aaedecc524bd5be73d2121921b44:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 19 May 2016 18:44:30 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '3'
+      cmr-took:
+      - '34'
+      cmr-request-id:
+      - 8b907fed-1c82-4581-a79c-32835013f7fb
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-19T18:44:30.605Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026echo_collection_id%5B%5D=C1229626387-LANCEMODIS\u0026echo_collection_id%5B%5D=C1219032686-LANCEMODIS\u0026echo_collection_id%5B%5D=C1224520120-NOAA_NCEI\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2006-10-01T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_T_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_T","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) l","has_granules":false,"orbit_parameters":{},"id":"C1224520120-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_T/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Aerosol Optical Depth","resolution":"2km","product":"MODIS_Aqua_Aerosol","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-06-22"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MYD04_L2_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","data_center":"LANCEMODIS","short_name":"MYD04_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","coordinate_system":"CARTESIAN","summary":"The
+        MODIS level-2 atmospheric aerosol product (MYD04_L2) continues to provide
+        full global coverage o","has_granules":true,"orbit_parameters":{},"id":"C1219032686-LANCEMODIS","collection_data_type":"NEAR_REAL_TIME","granule_count":1527,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD04_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD04_L2/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":true,"geo":true,"source":"Aqua
+        / MODIS","arctic":true,"title":"Snow Cover","resolution":"500m","product":"MODIS_Aqua_Snow_Cover","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD10_L2_6NRT"],"version_id":"6NRT","updated":"2016-03-18T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","data_center":"LANCEMODIS","short_name":"MYD10_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","coordinate_system":"CARTESIAN","summary":"The
+        MODIS/Aqua Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m (MYD10_L2)
+        data set contains snow","has_granules":true,"orbit_parameters":{},"id":"C1229626387-LANCEMODIS","collection_data_type":"NEAR_REAL_TIME","granule_count":1573,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 descriptions and data sets from the MODAPS LANCE-MODIS page(FTP
+        server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD10_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD10_L2/"}]}]}}'
     http_version: 
     reduced: true
 a1091e86662b109aaf658ca1432d3d9b39769eae:
