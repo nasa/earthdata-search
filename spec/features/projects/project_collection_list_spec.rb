@@ -80,7 +80,7 @@ describe "Project collection list", reset: true do
     end
 
     it "doesn't show an empty query param 'pg[]=' in the url" do
-      expect(page).to have_query_string("p=!C179002914-ORNL_DAAC!C179003030-ORNL_DAAC&pg[2][dnf]=DAY&q=Minute+(FIFE)")
+      expect(page).to have_query_string("p=!C179003030-ORNL_DAAC!C179003615-ORNL_DAAC&pg[2][dnf]=DAY&q=Minute+(FIFE)")
     end
   end
 

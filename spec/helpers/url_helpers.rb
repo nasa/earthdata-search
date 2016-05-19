@@ -18,10 +18,9 @@ module Helpers
 
       def path_from_options(url, options)
         if url == '/search'
-          url = '/search/collections'
+          url = '/search/collections' unless options[:facets]
           url = '/search/map' if options[:overlay] == false
           url = '/search/project' if options[:view] == :project
-          url = '/search' if options[:facets]
           url = "/search/granules" if options[:focus]
         end
         url = "/portal/#{options[:portal]}#{url}" if options[:portal]
@@ -42,6 +41,7 @@ module Helpers
         params['sgd'] = options[:granule_id] if options[:granule_id]
         params['q'] = options[:q] if options[:q]
         params['ff'] = options[:ff] if options[:ff]
+        params['test_facets'] = true if options[:facets]
 
         p = ([options[:focus]] + Array.wrap(options[:project])).join('!')
         params['p'] = p if p.present?

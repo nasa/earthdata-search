@@ -5,7 +5,7 @@ describe "CWIC-capable collection search results", reset: false do
 
   before :all do
     Capybara.reset_sessions!
-    load_page :search, env: :uat, facets: true
+    load_page :search, env: :uat
   end
 
   after :all do
@@ -20,7 +20,7 @@ describe "CWIC-capable collection search results", reset: false do
       end
 
       after :all do
-        load_page :search, env: :uat, facets: true
+        load_page :search, env: :uat
       end
 
       it "shows the CWIC tagged collection", acceptance: true do
@@ -54,7 +54,7 @@ describe "CWIC-capable collection search results", reset: false do
       end
 
       after :all do
-        load_page :search, env: :uat, facets: true
+        load_page :search, env: :uat
       end
 
       context "a CWIC-tagged item" do
