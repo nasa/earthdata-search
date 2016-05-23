@@ -8,7 +8,6 @@ class HierarchicalFacetPresenter
       facet = descend_one_level(facet, options[:root][:subfield], options[:root][:value])
     end
     @facet = descend_into_query(facet, query)
-    Rails.logger.info self.as_json
   end
 
   def as_json

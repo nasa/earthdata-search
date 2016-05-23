@@ -168,7 +168,8 @@ module Echo
       granules = granules_by_id.except(*excluded_granule_ids).values
       dropped_granules = granules_by_id.values_at(*excluded_granule_ids).map {|g| {id: g['id'], name: g['producer_granule_id'].nil? ? g['title'] : g['producer_granule_id']}}
 
-      order_response = post("/echo-rest/orders.json", {order: {}}.to_json, token_header(token))
+      digest = Digest::SHA1.hexdigest(granule_query.to_json + user_id)
+      order_response = post("/echo-rest/orders.json", {order: {}, digest: digest}.to_json, token_header(token))
       id = order_response.body['order']['id']
       Rails.logger.info "Response: #{order_response.body.inspect}"
 
