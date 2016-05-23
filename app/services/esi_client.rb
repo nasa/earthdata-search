@@ -1,7 +1,15 @@
 class ESIClient
   Faraday.register_middleware(:response, :logging => Echo::ClientMiddleware::LoggingMiddleware)
 
-  def self.submit_esi_request(collection_id, params, method, request_url, client, token)
+  def self.submit_esi_request(*args)
+    new.submit_esi_request(*args)
+  end
+
+  def self.get_esi_request(*args)
+    new.get_esi_request(*args)
+  end
+
+  def submit_esi_request(collection_id, params, method, request_url, client, token)
     service_url = get_service_url(collection_id, client, token)
 
     # FILE_IDS is a comma seperated list of granule_ur's
@@ -23,26 +31,26 @@ class ESIClient
     post(service_url, options)
   end
 
-  def self.get_esi_request(collection_id, service_order_id, client, token, header_value)
+  def get_esi_request(collection_id, service_order_id, client, token, header_value)
     service_url = get_service_url(collection_id, client, token)
     get(service_url + '/' + service_order_id.to_s, {}, header_value)
   end
 
-  def self.connection
-    Thread.current[:esi_connection] || self.build_connection
+  def connection
+    @connection ||= build_connection
   end
 
   private
 
-  def self.post(url, params={})
+  def post(url, params={})
     connection.post(url, params)
   end
 
-  def self.get(url, params={}, header_value=nil)
+  def get(url, params={}, header_value=nil)
     connection.get(url, params, {'X-EDSC-REQUEST' => header_value})
   end
 
-  def self.build_connection
+  def build_connection
     Faraday.new do |conn|
       conn.request :url_encoded
       conn.response :logging
@@ -51,7 +59,7 @@ class ESIClient
     end
   end
 
-  def self.get_service_url(collection_id, client, token)
+  def get_service_url(collection_id, client, token)
       service_option_assignment = client.get_service_order_information(collection_id, token).body
 
       service_entry_id = service_option_assignment[0]['service_option_assignment']['service_entry_id']
@@ -59,11 +67,11 @@ class ESIClient
       service_url = client.get_service_entry(service_entry_id, token).body['service_entry']['url']
   end
 
-  def self.esi_fields
+  def esi_fields
     @esi_fields ||= {}
   end
 
-  def self.build_params
+  def build_params
     add_top_level_fields
 
     add_switch_field(:INCLUDE_META)
@@ -79,16 +87,16 @@ class ESIClient
     esi_fields
   end
 
-  def self.add_parameter(field_symbol, value)
+  def add_parameter(field_symbol, value)
     # send "#{field_symbol}=", value if !value.blank?
     esi_fields[field_symbol.to_s] = value if !value.blank?
   end
 
-  def self.find_field_element(field_symbol, data_type = 'ecs')
+  def find_field_element(field_symbol, data_type = 'ecs')
     find_by_xpath("//#{data_type}:#{field_symbol.to_s}")
   end
 
-  def self.find_by_xpath(xpath)
+  def find_by_xpath(xpath)
     @model.xpath(xpath,
         'xmlns' => 'http://echo.nasa.gov/v9/echoforms',
         #'eesi' => "http://eosdis.nasa.gov/esi/req/e",
@@ -96,7 +104,7 @@ class ESIClient
         'info' => "http://eosdis.nasa.gov/esi/info")
   end
 
-  def self.add_top_level_fields
+  def add_top_level_fields
     [
         :INTERPOLATION,
         :FORMAT,
@@ -129,11 +137,11 @@ class ESIClient
       'N' => 'N'
   }
 
-  def self.add_switch_field(field_symbol)
+  def add_switch_field(field_symbol)
     add_parameter(field_symbol, TRANSLATE[find_field_element(field_symbol).text.strip]  )
   end
 
-  def self.add_name_value_pairs_for_projections(field_symbol)
+  def add_name_value_pairs_for_projections(field_symbol)
     field_element = find_field_element(field_symbol)
     projections = compact_nodes(field_element)
     items = projections.map do |projection|
@@ -147,12 +155,12 @@ class ESIClient
     add_parameter(field_symbol, items)
   end
 
-  def self.add_name_value_pairs_for_resample(field_symbol)
+  def add_name_value_pairs_for_resample(field_symbol)
     sub_field_values = find_field_element(field_symbol).children
     add_parameter(field_symbol, build_resample_pairs(sub_field_values))
   end
 
-  def self.build_resample_pairs(sub_field_values)
+  def build_resample_pairs(sub_field_values)
     sub_fields = Hash[compact_nodes(sub_field_values).map do |nd|
       [nd.name, nd.text && nd.text.strip]
     end]
@@ -164,17 +172,17 @@ class ESIClient
     end
   end
 
-  def self.add_subset_data_layers
+  def add_subset_data_layers
     data_layers = collect_subset_data_layers
 
     add_parameter(:SUBSET_DATA_LAYERS, data_layers)
   end
 
-  def self.collect_subset_data_layers
+  def collect_subset_data_layers
     find_subset_banding.join(',')
   end
 
-  def self.find_subset_banding()
+  def find_subset_banding()
     objects = find_by_xpath(
         "//ecs:SUBSET_DATA_LAYERS/*[ecs:subtreeSelected='true' and ecs:subtreeSelected='true']/@value"
     ).to_a
@@ -196,7 +204,7 @@ class ESIClient
     objects + fields + bands + tree_style_bands
   end
 
-  def self.add_bounding_box
+  def add_bounding_box
     bbox = {}
     find_field_element("boundingbox").children.each do |item|
       text = item.text.strip
@@ -210,7 +218,7 @@ class ESIClient
     end
   end
 
-  def self.compact_nodes(node_set)
+  def compact_nodes(node_set)
     node_set.select { |sub_field_value| !sub_field_value.blank? }
   end
 
