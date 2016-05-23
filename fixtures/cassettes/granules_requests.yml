@@ -15,25 +15,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 29 Apr 2016 21:58:55 GMT
+  recorded_at: Thu, 19 May 2016 16:20:00 GMT
   digest: 53345d4a1e77167426258eef0cb332a7d75e5528
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&echo_collection_id=C1219032597-LANCEMODIS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Wed, 18 May 2016 18:55:53 GMT
-  digest: 4be556d0746829885351a9dda97142a611be239d
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -46,10 +29,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 03:30:01 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:26:44 GMT
   digest: 58a467a738985ffb0f3040d29f7381cf899bf09a
 - request:
     method: post
@@ -63,10 +46,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 17:11:29 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 19:38:48 GMT
   digest: bc912da42cf6c6d09aecf70a94f3ccbcfe8ef86a
 - request:
     method: post
@@ -80,10 +63,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 03:30:11 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:26:46 GMT
   digest: 7a39f4223ea3a10cc9cbc05c726ffb1da01c79d7
 - request:
     method: post
@@ -97,118 +80,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 03:29:57 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:26:40 GMT
   digest: 7ea4176e21ba17bf888ab53ba5ae6d3809432f55
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&echo_collection_id=C1219032640-LANCEMODIS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=2013-08-24T00%3A00%3A00.000Z%2C2013-08-24T23%3A59%3A59.999Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 18:04:03 GMT
-  digest: 8694d8756d59826afb586b67a127e4a12b9d8ec4
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&echo_collection_id=C1219032640-LANCEMODIS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=2014-08-22T23%3A37%3A47.532Z%2C2015-08-24T23%3A27%3A16.363Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 18:04:17 GMT
-  digest: b7d5f4501e7b7e0d50d844e794cb5cef61c94c49
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&echo_collection_id=C1219032640-LANCEMODIS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=2016-02-24T12%3A51%3A10.588Z%2C2016-02-25T06%3A10%3A35.294Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-  recorded_at: Fri, 11 Mar 2016 01:17:53 GMT
-  digest: 64e131c36d4e66772a7db32c858264f03a5bc4b9
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&echo_collection_id=C1219032640-LANCEMODIS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=2016-02-24T12%3A52%3A35.844Z%2C2016-02-25T06%3A23%3A22.597Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 18:08:19 GMT
-  digest: c9ddb13e94975719dfa051a7aa71beaef9d3fb6c
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&echo_collection_id=C1219032640-LANCEMODIS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 18:03:57 GMT
-  digest: 3d26a4335cc03192327c4fa42fda0ce637780aad
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C10%2C10&echo_collection_id=C1219032688-LANCEMODIS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Mon, 29 Feb 2016 17:45:22 GMT
-  digest: 89dbfbf31cfced8338f391ffa393a56f1b73d919
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C15%2C15&echo_collection_id=C1000000011-LANCEMODIS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:45:50 GMT
-  digest: 083e3bcceea3cac9e8be3874c1098fbbf0214498
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -221,10 +97,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 02:08:15 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:23:22 GMT
   digest: 440450f08016ccde84dd51bc7649d852908b2297
 - request:
     method: post
@@ -238,26 +114,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:47:26 GMT
-  digest: c8ea2f5fd1cb6f59b18841d7420daa392073dfad
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C15%2C15&echo_collection_id=C90757595-LAADS&exclude%5Becho_granule_id%5D%5B%5D=G1224285563-LAADS&page_num=2&page_size=19&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 13 May 2016 20:32:51 GMT
-  digest: 37b752a7ec4809a2c5314437f7a3cd51eb768844
+  recorded_at: Thu, 19 May 2016 16:23:27 GMT
+  digest: c8ea2f5fd1cb6f59b18841d7420daa392073dfad
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -270,28 +131,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Sun, 27 Mar 2016 02:10:12 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:26:25 GMT
   digest: a4fb8f5448feec3338a6cc49867f1b1a83ecf23d
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C0%2C2%2C2&echo_collection_id=C181553784-GSFCS4PA&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=2014-07-23T00%3A00%3A00.000Z%2C2014-08-02T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 19:55:07 GMT
-  digest: a3595f1ad05a1d4895cf32b36e0787110d574269
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -304,10 +148,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 19:55:10 GMT
+  recorded_at: Thu, 19 May 2016 16:31:54 GMT
   digest: ec86af4a5fb6d31df2e404aea412c7cfb6ee1cc7
 - request:
     method: post
@@ -321,10 +167,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:42:05 GMT
+  recorded_at: Thu, 19 May 2016 16:31:50 GMT
   digest: ddde91495e1702eb66ad5f6b5c4900ac179d22c5
 - request:
     method: post
@@ -338,12 +186,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 28 Mar 2016 02:37:01 GMT
+  recorded_at: Thu, 19 May 2016 18:13:43 GMT
   digest: f9347c37fd4b4bec4a86214be72408d883afc127
 - request:
     method: post
@@ -357,30 +205,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 28 Mar 2016 02:36:38 GMT
+  recorded_at: Thu, 19 May 2016 16:31:45 GMT
   digest: 669f8a4df35a549e5b6b11ad9956c5c68f42a808
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C10%2C10%2C80&echo_collection_id=C115003855-NSIDC_ECS&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:03:08 GMT
-  digest: 8d01955e65be7842308a605381b0b61cc27b1a66
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -398,7 +229,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Tue, 03 May 2016 16:20:56 GMT
+  recorded_at: Thu, 19 May 2016 16:23:02 GMT
   digest: 953246dbaae014e0041b93f0f53f88a915b06999
 - request:
     method: post
@@ -412,28 +243,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 01:56:07 GMT
+  recorded_at: Thu, 19 May 2016 16:23:04 GMT
   digest: 352b5620cdff2efc508e7644bdfbdc33281a1ff2
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: bounding_box=0%2C80%2C10%2C85&echo_collection_id=C115003855-NSIDC_ECS&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:02:45 GMT
-  digest: ab7af7e79ac6d10996bd279406472bb644a37175
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -451,7 +267,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Tue, 03 May 2016 16:21:00 GMT
+  recorded_at: Thu, 19 May 2016 16:22:46 GMT
   digest: 6eaa209ab918d0e0945c45af5b89093fea174460
 - request:
     method: post
@@ -465,10 +281,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 01:55:57 GMT
+  recorded_at: Thu, 19 May 2016 16:22:49 GMT
   digest: 7e649f668d2dd5309698a0b3e21711c3d9fd043f
 - request:
     method: post
@@ -482,10 +300,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:59 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:37 GMT
   digest: 72988fe87c97cc5ffedfbc7322fdbef47b7c3bdd
 - request:
     method: post
@@ -499,10 +317,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:56 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:34 GMT
   digest: 6e73864a0befbe6a28b6b36f3d7ca8aeeb334a20
 - request:
     method: post
@@ -516,8 +334,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:18:40 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:42:31 GMT
   digest: d6a6969cf020c19874888cc73a2147008b7e71fb
 - request:
     method: post
@@ -531,8 +351,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:06:56 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:17:43 GMT
   digest: 8cd835e3047b3f0f68549e1e8fcb0b760ac97b4b
 - request:
     method: post
@@ -546,10 +368,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:18 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:20:08 GMT
   digest: 6884afe88daf268d5b91d7c469ee220569cda5a7
 - request:
     method: post
@@ -563,10 +385,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:11 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:20:05 GMT
   digest: e43ee5e4ef132c24a58ab325fc606f289b0bacb3
 - request:
     method: post
@@ -580,10 +402,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:14 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:20:01 GMT
   digest: 7d9161b2868f0bd2592784903ffd91a683e3b245
 - request:
     method: post
@@ -597,26 +419,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:21:09 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:31 GMT
   digest: a908724135683c44bf61c05c6175a8f5c9c27ef6
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: day_night_flag=DAY&echo_collection_id=C14758250-LPDAAC_ECS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=1960-12-01T00%3A00%3A00.000Z%2C2015-12-31T00%3A00%3A00.000Z%2C335%2C365
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 22:47:05 GMT
-  digest: c813f934478d9c5d82557b823249d14c75f38fa8
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -629,10 +436,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:21:06 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:28 GMT
   digest: 0a5d9688cbb758d5d19aea85bfd6dd5589f9d866
 - request:
     method: post
@@ -646,26 +453,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Sat, 05 Dec 2015 02:28:32 GMT
-  digest: 21aeca90b1b45879ee2ae9aad75db9bfeb9c7cb1
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: day_night_flag=DAY&echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Wed, 16 Mar 2016 13:17:29 GMT
-  digest: 0e728808f49e3986019ecd983a3025c798aa435b
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:35:57 GMT
+  digest: 21aeca90b1b45879ee2ae9aad75db9bfeb9c7cb1
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -681,7 +473,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 18 May 2016 17:55:01 GMT
+  recorded_at: Thu, 19 May 2016 16:38:24 GMT
   digest: 640ad52ac860b2a3b2f09a71d9fe8bfd06b53d70
 - request:
     method: post
@@ -695,10 +487,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:21:03 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:30 GMT
   digest: 6a4102e6384db4ddd75e497fcbb8e3d0324dffb1
 - request:
     method: post
@@ -712,26 +504,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 02:36:40 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:31:45 GMT
   digest: 490e81fb605269f9b0b9cf8390118e18ebf53692
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C1000000011-LANCEMODIS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:47:18 GMT
-  digest: aabc72c3134b8468aab664e8e85e778a53f3bd18
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -747,76 +524,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Fri, 13 May 2016 18:22:11 GMT
+  recorded_at: Thu, 19 May 2016 16:22:15 GMT
   digest: 0164163187194d7bf3e8bc05c1a8c246551a8b38
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C1000000320-LPDAAC_ECS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=1999-12-01T00%3A00%3A00.000Z%2C2015-01-01T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Wed, 18 May 2016 17:42:58 GMT
-  digest: 09215523c75184577eb392922cc181473416a019
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C1000000320-LPDAAC_ECS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Wed, 18 May 2016 17:42:54 GMT
-  digest: 29c8573d1c7c3f100158da38bb9ef9c052153fed
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C115003855-NSIDC_ECS&page_num=1&page_size=150&point=10%2C-80&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:03:38 GMT
-  digest: 9ae6f08786358fb75edb06e9689b1b385841233f
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C115003855-NSIDC_ECS&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 19:48:51 GMT
-  digest: 779ef715d1abc0b66aa7b0e30b447d7bad99f824
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -834,7 +543,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Tue, 03 May 2016 16:20:52 GMT
+  recorded_at: Thu, 19 May 2016 16:22:56 GMT
   digest: e8db248fcdb59a0dc19671cb191bcefd0ce5402f
 - request:
     method: post
@@ -848,10 +557,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 01:56:15 GMT
+  recorded_at: Thu, 19 May 2016 16:22:57 GMT
   digest: a657206f4122c710b09e9d210cf04ed984113d3f
 - request:
     method: post
@@ -865,28 +576,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:15:08 GMT
+  recorded_at: Thu, 19 May 2016 16:37:56 GMT
   digest: 798c47de384d9e1bf52471bf6cce39c6d8c215a3
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C115003857-NSIDC_ECS&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=2015-01-01T00%3A00%3A00.000Z%2C2015-01-01T00%3A00%3A01.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:00:09 GMT
-  digest: ce7760513011d4e805b8aca89bb5e63e94ed5f19
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -899,10 +595,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 20:00:12 GMT
+  recorded_at: Thu, 19 May 2016 16:32:18 GMT
   digest: 7452fd3e2995f64beab51b08a99329808d5e20b1
 - request:
     method: post
@@ -916,10 +614,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:36:53 GMT
+  recorded_at: Thu, 19 May 2016 16:32:15 GMT
   digest: e54c740b53e1cdd001d914c04fda163073af22f0
 - request:
     method: post
@@ -933,12 +633,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 07 Mar 2016 19:25:54 GMT
+  recorded_at: Thu, 19 May 2016 16:37:00 GMT
   digest: 046a003d9a8eb7429596238e7374eed613b29e45
 - request:
     method: post
@@ -952,10 +652,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Sun, 27 Mar 2016 01:57:12 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:27:49 GMT
   digest: 5b42a5644a4171f18de9df798e671c22eef7c357
 - request:
     method: post
@@ -969,12 +669,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 07 Mar 2016 19:25:57 GMT
+  recorded_at: Thu, 19 May 2016 16:37:03 GMT
   digest: 681ea05ff2409e63cace02081c8ea00de70eaaea
 - request:
     method: post
@@ -988,32 +688,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 07 Mar 2016 19:25:31 GMT
+  recorded_at: Thu, 19 May 2016 16:36:47 GMT
   digest: a197be7dbcd18b050972a693087d30fe03274e6b
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C1219032686-LANCEMODIS&echo_granule_id=G1010780625-LANCEMODIS&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 04 May 2016 19:08:07 GMT
-  digest: 6760bf40796dd7766e8674d13dd4bf66e8069a9f
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1026,8 +707,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:54:46 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:22 GMT
   digest: d67c73b34704af2292330e65039b6d05cd711355
 - request:
     method: post
@@ -1041,10 +724,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 02:08:20 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:23:25 GMT
   digest: 405e83fa96df1638f875ba67444296970f952419
 - request:
     method: post
@@ -1058,26 +741,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:56:21 GMT
-  digest: 37860ae8894f23d5820ea9da25c9d2190f909eaa
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C128599377-NSIDC_ECS&echo_granule_id=G186622287-NSIDC_ECS&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 27 Jan 2016 01:20:45 GMT
-  digest: 92a86ea35c8b1aad6381efc98e59b2ad7b2d6a1f
+  recorded_at: Thu, 19 May 2016 16:22:13 GMT
+  digest: 64fa71d57e8e80e61fec548f60cceed520c5d9c6
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1090,10 +760,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 27 Jan 2016 01:20:52 GMT
+  recorded_at: Thu, 19 May 2016 17:03:34 GMT
   digest: a0bc15394a91e5352a52596f6e44655b642371ec
 - request:
     method: post
@@ -1107,10 +779,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 15:39:56 GMT
+  recorded_at: Thu, 19 May 2016 16:17:56 GMT
   digest: dc7b852e7633eb669e9dac2dfd85425f966a2b58
 - request:
     method: post
@@ -1124,8 +798,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 27 Jan 2016 01:20:34 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:17:49 GMT
   digest: cd7dd03a6200ba6fd79cd1865341a88b35708db0
 - request:
     method: post
@@ -1139,28 +815,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:07:57 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:20:20 GMT
   digest: a0631bb147f785276a2fc37b2fcbe0184958520c
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C14758250-LPDAAC_ECS&granule_ur%5B%5D=%252006227720%25&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=1999-12-01T00%3A00%3A00.000Z%2C2015-01-01T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:25 GMT
-  digest: 65b0d7bdc673fe535958326d60cd9e6a63a12440
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1173,45 +832,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:53 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:35 GMT
   digest: 2345513699c6a6ae4dc1e2e42a71310e9f59557a
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C14758250-LPDAAC_ECS&options%5Breadable_granule_name%5D%5Bpattern%5D=true&page_num=1&page_size=150&readable_granule_name%5B%5D=AST_L1A%2300311092015232127_11102015081255.hdf&readable_granule_name%5B%5D=AST_L1A%2300311092015223445_11102015075930.hdf&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Sat, 05 Dec 2015 03:03:02 GMT
-  digest: a57cf9447c65cf0c78447024c134846a9dbdc0d8
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C14758250-LPDAAC_ECS&options%5Breadable_granule_name%5D%5Bpattern%5D=true&page_num=1&page_size=20&readable_granule_name%5B%5D=%2503232002054831%25&sort_key%5B%5D=-start_date&temporal=1999-12-01T00%3A00%3A00.000Z%2C2015-01-01T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:30 GMT
-  digest: e9751dadf85d61aef8682779c64f62d6ddd33cbc
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1227,7 +852,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 27 Apr 2016 15:21:05 GMT
+  recorded_at: Thu, 19 May 2016 16:19:46 GMT
   digest: f8569e52d8b3d4c2afecfbe9372e4e32ed3cac46
 - request:
     method: post
@@ -1241,10 +866,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Sat, 05 Dec 2015 03:02:59 GMT
+  recorded_at: Thu, 19 May 2016 16:26:59 GMT
   digest: 0395e4534df67fc7c13b496e6b9c7784dcb5ec31
 - request:
     method: post
@@ -1258,10 +885,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Sat, 05 Dec 2015 03:03:06 GMT
+  recorded_at: Thu, 19 May 2016 16:27:06 GMT
   digest: 3b77fc1ee82d49213e33104534bdd9059a112ef3
 - request:
     method: post
@@ -1275,10 +904,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 15:41:57 GMT
+  recorded_at: Thu, 19 May 2016 16:27:00 GMT
   digest: 571d44819212ce022af1bca8beef71c7dab93ab2
 - request:
     method: post
@@ -1292,28 +923,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:05 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:43 GMT
   digest: 6f2cc204478cf0317b4ea754485c79ac093bfc80
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C14758250-LPDAAC_ECS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=1999-12-01T00%3A00%3A00.000Z%2C2015-01-01T00%3A00%3A00.000Z&attribute[]=int,LowerLeftQuadCloudCoverage,50,100
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-  recorded_at: Tue, 26 Apr 2016 22:06:57 GMT
-  digest: ce376dc59b954593f97156d59d9a457f4664001f
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1326,10 +940,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:07:53 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:27 GMT
   digest: 7c9fc566d33eac3184b9bbf1abf5dc0831e9deb0
 - request:
     method: post
@@ -1343,8 +957,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 22:50:54 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:20:16 GMT
   digest: 19923c929c83f88345512a0d91f1faa9a284fe37
 - request:
     method: post
@@ -1358,8 +974,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:30:21 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:20:13 GMT
   digest: 5e70a6b53920cef65a0e3a96d599c08d29c62e2b
 - request:
     method: post
@@ -1373,8 +991,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:57:20 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:26 GMT
   digest: 033d3b29fea66e0c698319f3540ccc06f9dc5348
 - request:
     method: post
@@ -1388,10 +1008,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:20:02 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:42 GMT
   digest: 82168c779f35510936f2120ae12e7e7ebee7182c
 - request:
     method: post
@@ -1405,28 +1025,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:19:58 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:19:40 GMT
   digest: 44391507a558f7e8133c16260efd0b3e24aa3cdb
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179002914-ORNL_DAAC&echo_granule_id=G179106792-ORNL_DAAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:20:36 GMT
-  digest: 2acd096786c334915b9695ac0dfe9867958cd496
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1439,10 +1042,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 20:20:49 GMT
+  recorded_at: Thu, 19 May 2016 16:20:52 GMT
   digest: 003f84534504d2ae9dfcb26903ddb0847272fd93
 - request:
     method: post
@@ -1456,28 +1061,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:28:04 GMT
+  recorded_at: Thu, 19 May 2016 16:20:50 GMT
   digest: 4433c0bc9baf8589c6c8f3a9478753962b6149bf
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179002914-ORNL_DAAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:25:44 GMT
-  digest: 70b022a25b03a0913bff94fb6195b9121a93b260
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1493,7 +1083,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:24:13 GMT
+  recorded_at: Thu, 19 May 2016 16:40:14 GMT
   digest: 34b0fbc608d4f1171c4e095e53992372083f30b9
 - request:
     method: post
@@ -1510,7 +1100,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:22:11 GMT
+  recorded_at: Thu, 19 May 2016 16:34:43 GMT
   digest: 373929c8d7da9041d4b0fbf0d230db1515d74048
 - request:
     method: post
@@ -1527,7 +1117,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:22:14 GMT
+  recorded_at: Thu, 19 May 2016 16:34:47 GMT
   digest: 5f6ddb994442012d02d3e568165fb367a995a782
 - request:
     method: post
@@ -1544,7 +1134,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:22:00 GMT
+  recorded_at: Thu, 19 May 2016 16:34:32 GMT
   digest: 5200664130f487d4bafe1d00145b4b430d70a032
 - request:
     method: post
@@ -1561,7 +1151,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:22:02 GMT
+  recorded_at: Thu, 19 May 2016 16:34:42 GMT
   digest: a55d318ffccb8440083748e1fc56fa0ade5dbb9b
 - request:
     method: post
@@ -1578,7 +1168,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:24:05 GMT
+  recorded_at: Thu, 19 May 2016 16:40:08 GMT
   digest: a8b245e1aeb48c0aa21dc81c65891b68dac34a21
 - request:
     method: post
@@ -1595,7 +1185,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:24:07 GMT
+  recorded_at: Thu, 19 May 2016 16:40:11 GMT
   digest: 0f7d2103468ac20273de4a15f59c4be504bbc53e
 - request:
     method: post
@@ -1612,7 +1202,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:24:11 GMT
+  recorded_at: Thu, 19 May 2016 16:40:06 GMT
   digest: 61d9379800fc01d20c74869e2464e9c8b0d3d892
 - request:
     method: post
@@ -1629,7 +1219,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:24:09 GMT
+  recorded_at: Thu, 19 May 2016 16:40:12 GMT
   digest: bda8c9aeaf99a1477ad70cf2d133fd3f75a6d2b3
 - request:
     method: post
@@ -1643,8 +1233,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:57:36 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:18:43 GMT
   digest: 7a41dd31b621ce17bd4fa1795ba121b39f17fb3d
 - request:
     method: post
@@ -1658,10 +1250,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Sat, 05 Dec 2015 02:31:31 GMT
+  recorded_at: Thu, 19 May 2016 16:35:04 GMT
   digest: d2644d2920fa543617237f4b0df80d55c54bd24a
 - request:
     method: post
@@ -1675,8 +1269,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:19:29 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:42:38 GMT
   digest: 7cf1f258c23b0affdde33afabbe138d7608b57e3
 - request:
     method: post
@@ -1690,10 +1286,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 01:52:10 GMT
+  recorded_at: Thu, 19 May 2016 16:34:51 GMT
   digest: 5201dddaeb0d99822717f49b38550c2c5aaa4029
 - request:
     method: post
@@ -1707,8 +1305,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:18:59 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:42:25 GMT
   digest: 0015b220ea56c1e6dabe63887609ac882e7b207a
 - request:
     method: post
@@ -1722,24 +1322,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:18:54 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:42:20 GMT
   digest: 85a6ce5835f0377d005b0a882a1f6f2f9f75fefc
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003030-ORNL_DAAC&granule_ur%5B%5D=FIFE_STRM_15M.80611715.s15&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:57:44 GMT
-  digest: 4ae2d3306429d23bbdd5171b8fc0f01028d73abc
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1755,125 +1342,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 27 Apr 2016 15:19:40 GMT
+  recorded_at: Thu, 19 May 2016 16:25:25 GMT
   digest: 14986576e29f2ae355c7999a124da7268bc77d3e
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=1986-12-31T23%3A59%3A59.999Z%2C1987-12-31T23%3A59%3A59.999Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:25:09 GMT
-  digest: 90012e23c590603df8e1f9a99b7df5a06df93c63
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=1987-01-01T00%3A00%3A00.000Z%2C1987-12-31T23%3A59%3A59.999Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Sat, 05 Dec 2015 02:35:13 GMT
-  digest: 243625c3e6f183c74fc92f328df2c43302b77ccf
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:24:51 GMT
-  digest: e0ffaed5eb21c99820c448b77848a9913b7c3105
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=2014-07-10T00%3A00%3A00.000Z%2C2014-07-10T03%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 19:49:18 GMT
-  digest: a29f24872d32ad2d7503c4e5b018773cb6c289b5
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 19:48:57 GMT
-  digest: babe2a346291280853de6b892e5f87e5b1d87054
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=20&point=-96.6%2C39.1&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:51:56 GMT
-  digest: a388c25d3282f8961eda7a97ebc00597b65702f2
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=20&polygon=10%2C10%2C-10%2C10%2C-10%2C-10%2C10%2C-10%2C10%2C10&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-  recorded_at: Wed, 09 Mar 2016 20:47:25 GMT
-  digest: c4fb6948d86e3f2bab0ae70b318da26b1f1f8a80
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1889,7 +1359,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:24:14 GMT
+  recorded_at: Thu, 19 May 2016 16:40:16 GMT
   digest: 60b116ae7b4f482870e0423506a9d08f0a768e68
 - request:
     method: post
@@ -1906,7 +1376,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:22:06 GMT
+  recorded_at: Thu, 19 May 2016 16:34:37 GMT
   digest: d9655b57a66e1551ca11cd9e289511d260d2c618
 - request:
     method: post
@@ -1923,7 +1393,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:22:09 GMT
+  recorded_at: Thu, 19 May 2016 16:34:45 GMT
   digest: b9d548e3142d1679544279fa1e6536ba0622ffff
 - request:
     method: post
@@ -1937,8 +1407,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:51:28 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:29:44 GMT
   digest: faaa20029bb7ca4f8e49b3f20111759626e6f932
 - request:
     method: post
@@ -1952,10 +1424,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 20:24:44 GMT
+  recorded_at: Thu, 19 May 2016 16:18:58 GMT
   digest: ccf403360bad0edc1f148f55f1261d7d762a4085
 - request:
     method: post
@@ -1969,8 +1443,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:51:19 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:30:02 GMT
   digest: 3ddd4d55fa266b7a41496270093cde1813b7b79c
 - request:
     method: post
@@ -1984,9 +1460,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:51:04 GMT
-  digest: 221cab54218127af1ecbe8fb7ed786695ffeb92b
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:19:06 GMT
+  digest: d0a012826bc9092220b1692e395e982f0ff55239
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -1999,8 +1479,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:04:31 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:36:12 GMT
   digest: 8658c47b476456a64ae46d3274344c35eb3933fe
 - request:
     method: post
@@ -2014,9 +1496,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:50:56 GMT
-  digest: 7fbcc3f340503182e6d08a03a05425be0195a3e6
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:18:50 GMT
+  digest: 51e40c14c5a2352e5052ff61d20c30fbe0548fb3
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2029,8 +1515,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:51:18 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:30:00 GMT
   digest: f43742159f846f5d2965ce75e593391735295e87
 - request:
     method: post
@@ -2044,8 +1532,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:51:21 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:30:04 GMT
   digest: 2d9453d72de03bdd7f28e658715980ffbf2148bf
 - request:
     method: post
@@ -2059,8 +1549,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:05:11 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:35:30 GMT
   digest: 5739e0e3af5942d768729c7bbe15a52d6c9d2f42
 - request:
     method: post
@@ -2074,8 +1566,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:51:12 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:29:49 GMT
   digest: a9f53387291657374777e47540c9191b6592f13a
 - request:
     method: post
@@ -2092,7 +1586,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:22:04 GMT
+  recorded_at: Thu, 19 May 2016 16:34:34 GMT
   digest: d9e9015f561bd85c4b66c583fc0b3d1bc115bbfc
 - request:
     method: post
@@ -2109,7 +1603,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:24:04 GMT
+  recorded_at: Thu, 19 May 2016 16:40:09 GMT
   digest: d5f89e7f8b650757b7816d0d975dc0756b43be4a
 - request:
     method: post
@@ -2123,8 +1617,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:58:00 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:25:36 GMT
   digest: 6064c8a15db985e08d526ebd4c2ba7ae9212bb5b
 - request:
     method: post
@@ -2138,8 +1634,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:58:28 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:24:31 GMT
   digest: 6fdbe36153e0b849fd0c3a2aa68a57dd9ad3d5c5
 - request:
     method: post
@@ -2153,8 +1651,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:58:15 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:25:43 GMT
   digest: 0a123303a156372c93610c9dd7098e0e792ca5db
 - request:
     method: post
@@ -2168,8 +1668,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:58:36 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:25:46 GMT
   digest: 8152bec2d2a3a7af24a6aa6d3991c38ead57a2cc
 - request:
     method: post
@@ -2188,7 +1690,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Tue, 03 May 2016 16:25:28 GMT
+  recorded_at: Thu, 19 May 2016 16:38:57 GMT
   digest: e600fdd9c849d0774ce8c92cf75de5c2f3671c94
 - request:
     method: post
@@ -2202,8 +1704,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:46:05 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:17:45 GMT
   digest: 6af8799b9f17bb946d8508cdf3966d5f54f97807
 - request:
     method: post
@@ -2217,10 +1721,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 20:00:15 GMT
+  recorded_at: Thu, 19 May 2016 16:33:42 GMT
   digest: d6519c293d78aa34cec0d52160eeae6b7509e606
 - request:
     method: post
@@ -2234,28 +1740,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:39:26 GMT
+  recorded_at: Thu, 19 May 2016 16:19:00 GMT
   digest: 28a72d56297a2bc9619ecdbb8358d09a4f3d2754
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003030-ORNL_DAAC&page_size=20&sort_key%5B%5D=-start_date&temporal=1987-01-01T00%3A00%3A00.000Z%2C1987-12-31T23%3A59%3A59.999Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Mon, 01 Feb 2016 17:29:05 GMT
-  digest: 465872e5950b8710346427ed10f2ffa58fa1e8ec
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2268,10 +1759,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:39:13 GMT
+  recorded_at: Thu, 19 May 2016 16:18:51 GMT
   digest: 2a71b78520a5cce22ec0c23ee65bba59c1dea897
 - request:
     method: post
@@ -2285,10 +1778,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:28:53 GMT
+  recorded_at: Thu, 19 May 2016 16:38:58 GMT
   digest: 46aaf466044fd02f3bcccbd8e3f44d1cc3f624df
 - request:
     method: post
@@ -2302,28 +1797,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:15:14 GMT
+  recorded_at: Thu, 19 May 2016 16:21:00 GMT
   digest: 6f7f9453663f650b5543cfaa4829f3a784ab378f
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179003216-ORNL_DAAC&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:00:22 GMT
-  digest: 1928e53825e4af0f080b1c4b182b98bb95e63989
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2336,11 +1816,32 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 20:00:24 GMT
+  recorded_at: Thu, 19 May 2016 16:32:45 GMT
   digest: 4374387fe1dcfb9921848eb582c921ecf9361747
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C179003216-ORNL_DAAC&page_size=20&sort_key%5B%5D=-start_date&temporal=2016-01-21T00%3A00%3A00.000Z%2C2016-01-21T00%3A00%3A01.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 18:26:34 GMT
+  digest: ee0e6a6ef54d2e665037a5cd074c5f4354f5474e
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2353,10 +1854,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:36:48 GMT
+  recorded_at: Thu, 19 May 2016 16:32:42 GMT
   digest: abc4e3b5ad36aaa29014688e7a4fb2aaf2c79bd8
 - request:
     method: post
@@ -2370,8 +1873,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:19:21 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:42:42 GMT
   digest: d7aa15237486625a0b77ab1cdb6331630a21994c
 - request:
     method: post
@@ -2388,59 +1893,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Wed, 18 May 2016 17:54:54 GMT
+  recorded_at: Thu, 19 May 2016 16:38:17 GMT
   digest: bede24d2eb3d8d641e355e3ccd27fedd36f46271
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179014698-NSIDC_ECS&echo_granule_id=G186650779-NSIDC_ECS&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:26:03 GMT
-  digest: 2458132afb10fc64087e82d26785b56b81e1f5f0
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179014698-NSIDC_ECS&echo_granule_id=G186650779-NSIDC_ECS&page_num=1&page_size=2000&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:26:05 GMT
-  digest: b85b753338392ab0bb9220d1d8749a468e1e2e88
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179014698-NSIDC_ECS&options%5Breadable_granule_name%5D%5Bpattern%5D=true&page_num=1&page_size=150&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110928.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110923.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110918.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110913.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110908.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110903.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110829.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110824.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110819.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110814.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110809.hdf&readable_granule_name%5B%5D=AMSR_E_L3_5DaySnow_V10_20110804.hdf&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Tue, 26 Jan 2016 23:35:00 GMT
-  digest: c6c9bf0d2fd723f585088a68d75b379f40e11ae8
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2458,7 +1912,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Fri, 22 Apr 2016 19:24:28 GMT
+  recorded_at: Thu, 19 May 2016 16:18:14 GMT
   digest: d8f3ef21a77b7ebfd2a1196c0c8107f618483c52
 - request:
     method: post
@@ -2472,10 +1926,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Tue, 26 Jan 2016 23:35:04 GMT
+  recorded_at: Thu, 19 May 2016 16:18:19 GMT
   digest: b13d713a63a7067ee6126b7b4ba6b60ee854d7c6
 - request:
     method: post
@@ -2494,25 +1950,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Fri, 22 Apr 2016 19:25:29 GMT
+  recorded_at: Thu, 19 May 2016 16:18:15 GMT
   digest: 523632c6e7cf268dc178527e15bf2e97fcd573a0
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179014698-NSIDC_ECS&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 20 Jan 2016 02:47:40 GMT
-  digest: 85726d52463b15be740fde97f95f87de921976fd
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2525,26 +1964,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 20:25:53 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:18:09 GMT
   digest: 9648c1aabaa66c4e9e668c4bb5c1ebcbfd1f0e79
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179014698-NSIDC_ECS&page_num=1&page_size=2000&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 20 Jan 2016 02:47:47 GMT
-  digest: 93297ff354a1fe941a6a79ff5c59063ec8ab3d09
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2557,10 +1981,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 20:27:15 GMT
+  recorded_at: Thu, 19 May 2016 16:42:55 GMT
   digest: a43683d61568331d017d6f1bdcd37184888dc629
 - request:
     method: post
@@ -2574,56 +2000,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 20:27:05 GMT
+  recorded_at: Thu, 19 May 2016 16:42:54 GMT
   digest: 4307119ab2b3d83bbebcf5dcf49b42c9575d25c7
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179872798-USGS_EROS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&two_d_coordinate_system%5Bcoordinates%5D=111-111%3A111-111&two_d_coordinate_system%5Bname%5D=WRS-1
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:54:37 GMT
-  digest: 6b9e070237d8408e1069a48596b0ff582db50160
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179872798-USGS_EROS&page_num=1&page_size=20&sort_key%5B%5D=-start_date&two_d_coordinate_system%5Bname%5D=WRS-1
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:54:32 GMT
-  digest: 98d5f905eecbac2d4b2cfb41af93b3c658694f25
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C179872798-USGS_EROS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:54:42 GMT
-  digest: 1290ad90d7d42b881f00806476cef160a730ef62
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2636,8 +2019,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:56:11 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:39:20 GMT
   digest: 2c9b299c6280428beffc20817f939bbed96b2e05
 - request:
     method: post
@@ -2654,7 +2039,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 03 May 2016 16:22:59 GMT
+  recorded_at: Thu, 19 May 2016 16:23:37 GMT
   digest: d40ccf746939d0ceefd01b76b2ad0ddf65e32a36
 - request:
     method: post
@@ -2668,28 +2053,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 15:44:37 GMT
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:38:48 GMT
   digest: 7f8cb6d5257eccaf83525fc53f12378e7939671e
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C199387969-GSFCS4PA&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-ClientId:
-      - edsc-dev
-  recorded_at: Mon, 28 Mar 2016 16:03:59 GMT
-  digest: ae8a357f746cedafc98e5547f695e8fa8ed47d69
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2702,26 +2070,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:47:29 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:23:29 GMT
   digest: 78d5456205f061141a2eb33fab73ea9de46b209b
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C4543622-LARC_ASDC&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=2014-10-01T00%3A00%3A00.000Z%2C2014-10-02T00%3A00%3A01.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:03:59 GMT
-  digest: 1d309f3f240b86e69a55bade54861399ff8e47d8
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2734,8 +2087,10 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:59:03 GMT
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:22:28 GMT
   digest: 189a3de92255cf8ba7af156ff83ad4eebd28c1c8
 - request:
     method: post
@@ -2749,10 +2104,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 20:04:01 GMT
+  recorded_at: Thu, 19 May 2016 16:30:55 GMT
   digest: 54cb244f5033facb4cfd161ce6b07039426c0434
 - request:
     method: post
@@ -2766,43 +2123,13 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:40:31 GMT
+  recorded_at: Thu, 19 May 2016 16:30:52 GMT
   digest: 7d222a4fa23b00becf5d086514cebf23b01a6c99
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C5920490-LARC_ASDC&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-  recorded_at: Wed, 02 Dec 2015 19:47:05 GMT
-  digest: 6a41c44cad54331d6fbe8229b324b53c124d28f9
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C7085910-LARC_ASDC&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 27 Jan 2016 20:02:44 GMT
-  digest: 9ecb1fd8b8bf7211704d0bfa83bcc1c160fb1665
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2815,17 +2142,19 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Mon, 01 Feb 2016 15:40:28 GMT
+  recorded_at: Thu, 19 May 2016 16:31:57 GMT
   digest: 474b55f6070b4910d98400d041437ecf0f0f598f
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
-      string: echo_collection_id=C90762182-LAADS&echo_granule_id=G1241718253-LAADS&page_size=20&sort_key%5B%5D=-start_date
+      string: echo_collection_id=C90762182-LAADS&echo_granule_id=G1254759728-LAADS&page_size=20&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -2837,42 +2166,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 04 May 2016 20:05:39 GMT
-  digest: 02881d3b585b68edb38b52804997af541ac4237c
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C90762182-LAADS&page_num=1&page_size=150&sort_key%5B%5D=-start_date&temporal=2014-07-10T00%3A00%3A00.000Z%2C2014-07-10T03%3A59%3A59.000Z
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:01:19 GMT
-  digest: 45810e49905f3e6db67c96c4b9a038ca09fe0ee8
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C90762182-LAADS&page_num=1&page_size=150&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 19:49:03 GMT
-  digest: 599b6e5070680556344c224b1d6c7511dedeec55
+  recorded_at: Thu, 19 May 2016 16:30:25 GMT
+  digest: 3f2daaa574a590a353c447e6bd28e9ddda479ecc
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2885,11 +2180,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Wed, 02 Dec 2015 20:19:49 GMT
-  digest: c2bf8efebfa6298eab7567b513b1e8354e2abbcd
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 19 May 2016 16:24:46 GMT
+  digest: 90247987047eff613fcd95ccbe30bc288ad00518
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2905,10 +2200,8 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Tue, 03 May 2016 15:15:43 GMT
-  digest: 421085915efe7ee12c45a5e0e05bbbf8cda4e241
+  recorded_at: Thu, 19 May 2016 16:24:43 GMT
+  digest: 05f3d79ab5048166eb9f1505ead4f1c20608289e
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2921,11 +2214,32 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Sat, 05 Dec 2015 02:56:07 GMT
+  recorded_at: Thu, 19 May 2016 16:32:47 GMT
   digest: 697a24d86bc745ad680a6aeded7f7a3c38683968
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C90762182-LAADS&page_num=1&page_size=2000&sort_key%5B%5D=-start_date&temporal=2016-01-21T00%3A00%3A00.000Z%2C2016-01-21T00%3A00%3A01.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 18:33:37 GMT
+  digest: dbc53eae93bf9017432c1fcc0df5fdc3f58d182f
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2938,10 +2252,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 19:53:34 GMT
+  recorded_at: Thu, 19 May 2016 16:27:11 GMT
   digest: 6acc65e73210f4f3ab1e9ca4e7e41ba22c14fce7
 - request:
     method: post
@@ -2955,10 +2271,12 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 02 Dec 2015 20:19:50 GMT
+  recorded_at: Thu, 19 May 2016 16:24:51 GMT
   digest: c952f08d7827ae2b1daf1c5ce1c40d893939e92e
 - request:
     method: post
@@ -2972,11 +2290,32 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Thu, 28 Jan 2016 14:16:31 GMT
+  recorded_at: Thu, 19 May 2016 16:24:49 GMT
   digest: 769cfa9aa145ce70a6e273da6c18add180b93076
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C90762182-LAADS&page_size=20&sort_key%5B%5D=-start_date&temporal=2016-01-21T00%3A00%3A00.000Z%2C2016-01-21T00%3A00%3A01.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 18:27:42 GMT
+  digest: 03288610a43708e36ab390b4ce3b6d44bab00d79
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2989,43 +2328,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Thu, 28 Jan 2016 14:13:44 GMT
-  digest: 5cb8001d40dedad8ddb01160f9a1443f51219a95
-- request:
-    method: post
-    uri: https://cmr.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: page_num=1&page_size=150
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Fri, 04 Dec 2015 22:43:53 GMT
-  digest: d3192eb2a508d78702515cf9f2db8234eee57751
-- request:
-    method: post
-    uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
-    body:
-      encoding: US-ASCII
-      string: echo_collection_id=C24936-LAADS&page_num=1&page_size=20&sort_key%5B%5D=-start_date
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - edsc-dev
+      - eed-edsc-dev
       Echo-ClientId:
-      - edsc-dev
-  recorded_at: Wed, 09 Mar 2016 15:09:53 GMT
-  digest: 68a1aca5adafd5a5ff6d376777df2fca7363fd96
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:24:38 GMT
+  digest: 5cb8001d40dedad8ddb01160f9a1443f51219a95
 recorded_with: VCR 2.6.0

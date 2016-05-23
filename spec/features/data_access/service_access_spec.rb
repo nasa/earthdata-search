@@ -17,14 +17,15 @@ describe 'Services Access', reset: false do
     context 'and submitting an ESI service request' do
       before :all do
         choose 'AE_Land.2 ESI Service'
-        fill_in 'Email address', with: "patrick+edsc@element84.com\t"
+        wait_for_xhr
+        fill_in 'Email Address', with: "patrick+edsc@element84.com\t"
         click_on 'Continue'
         click_on 'Submit'
       end
 
       # Cannot reliably display a progress bar using recordings
-      xit 'displays an error message', pending_fixtures: true do
-        sleep 10
+      it 'displays an error message', pending_fixtures: true do
+        wait_for_xhr
         expect(page).to have_content('Error: CollectionDisabled')
         expect(page).to have_content('Message: This collection is currently not configured for subagent HEG')
       end
@@ -67,7 +68,7 @@ describe 'Services Access', reset: false do
           click_on 'Submit'
         end
 
-        xit 'displays a progress bar while the service is processing', pending_fixtures: true do
+        it 'displays a progress bar while the service is processing', pending_fixtures: true do
           synchronize(120) do
             expect(page).to have_content("Processing") unless page.has_content?("Complete")
           end
@@ -80,7 +81,7 @@ describe 'Services Access', reset: false do
             wait_for_xhr
           end
 
-          xit 'displays download urls', pending_fixtures: true do
+          it 'displays download urls', pending_fixtures: true do
             expect(page).to have_content('Complete')
           end
         end

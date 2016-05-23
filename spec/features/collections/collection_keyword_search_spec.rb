@@ -40,25 +40,6 @@ describe "Collection keyword searches", reset: false do
     expect(page).to have_no_css('#collection-results .panel-list-item')
   end
 
-  context "a collection without short_name" do
-    before :all do
-      load_page :search, env: :sit
-      fill_in "keywords", with: 'C1200018712-GCMDTEST'
-      wait_for_xhr
-    end
-
-    after :all do
-      Capybara.reset_sessions!
-      load_page :search
-    end
-
-    # Temporarily excluded the test since we no longer have collections without short_name.
-    xit "doesn't show short_name" do
-      # match "#{collection_id} - #{archive_center}"
-      expect(first_collection_result.text).to have_text("N/A - NASA/GSFC/SED/ESD/GCDC/GESDISC")
-    end
-  end
-
   context "returning to the collection results list" do
     context "after navigating to a project sub-page" do
       use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'

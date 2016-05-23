@@ -46,7 +46,7 @@ describe 'Ordering with deprecated order options', reset: false do
       expect(Delayed::Worker.new.work_off).to  eq([1, 0])
       load_page "data/retrieve/#{Retrieval.last.to_param}"
 
-      expect(page).to have_text('Not Validated')
+      expect(page).to have_text('Submitting')
       expect(page).to have_no_text('The following granules will not be processed')
     end
   end
