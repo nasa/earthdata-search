@@ -146,5 +146,10 @@ module Helpers
     def nth_ccol(root, n)
       root.find(".ccol:nth-child(#{n})")
     end
+
+    def manual_close_facet_list
+      page.find('#master-overlay-parent a.master-overlay-close').click
+      sleep 0.5 # wait for animation
+    end
   end
 end
