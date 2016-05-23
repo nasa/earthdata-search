@@ -131,6 +131,7 @@
     _readPath: ->
       state = @overlayState()
       path = @_pathForState(state)
+      @overlayState(state)
       @_onPathChange(path)
 
       path
@@ -142,15 +143,25 @@
 
       root = '/search'
 
-      return root if state.parent && state.current != 'collection-details'
+      if state.parent && state.current != 'collection-details'
+        if state.current == 'granule-list' || state.current == 'project-overview'
+          state.parent = false
+        else
+          return root
       return "#{root}/map" unless state.visible
-      return "#{root}/collections" if state.current == 'collection-results'
+      if state.current == 'collection-results'
+        state.parent = state.manualShowParent
+        return "#{root}/collections"
 
       root += '/project' if state.children.indexOf('project-overview') != -1
-      return root if state.current == 'project-overview'
+      if state.current == 'project-overview'
+        state.parent = false
+        return root
 
       root += "/granules" if state.children.indexOf('granule-list') != -1
-      return root if state.current == 'granule-list'
+      if state.current == 'granule-list'
+        state.parent = false
+        return root
       return "#{root}/collection-details" if state.current == 'collection-details'
       return "#{root}/granule-details" if state.current == 'granule-details'
 
@@ -166,6 +177,7 @@
         visible: true
         parent: true
         secondary: false
+        manualShowParent: true
         children: null
         current: 'collection-results'
 
@@ -177,7 +189,7 @@
       component = components.shift()
 
       state.visible = component != 'map'
-      state.parent = !component
+      state.parent = state.manualShowParent
       state.current = 'collection-results' if component == 'collections' || state.parent
 
       if component == 'project'
