@@ -149,9 +149,7 @@
         else
           return root
       return "#{root}/map" unless state.visible
-      if state.current == 'collection-results'
-        state.parent = state.manualShowParent
-        return "#{root}/collections"
+      return "#{root}/collections" if state.current == 'collection-results'
 
       root += '/project' if state.children.indexOf('project-overview') != -1
       if state.current == 'project-overview'
@@ -189,7 +187,10 @@
       component = components.shift()
 
       state.visible = component != 'map'
-      state.parent = state.manualShowParent
+      if component == 'collections'
+        state.parent = false
+      else
+        state.parent = state.manualShowParent
       state.current = 'collection-results' if component == 'collections' || state.parent
 
       if component == 'project'
