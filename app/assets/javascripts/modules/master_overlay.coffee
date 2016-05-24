@@ -84,7 +84,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
     toggleParent: (show = @root.hasClass(@scope('is-parent-hidden')), event=true) ->
       @root.toggleClass(@scope('is-parent-hidden'), !show)
       @contentHeightChanged()
-      @_triggerStateChange() if event || @state().manualShowParent
+      @_triggerStateChange() if event
 
     toggleSecondary: (show = @root.hasClass(@scope('is-secondary-hidden')), event=true) ->
       @root.toggleClass(@scope('is-secondary-hidden'), !show)
