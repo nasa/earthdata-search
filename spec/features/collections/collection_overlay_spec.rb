@@ -41,7 +41,7 @@ describe 'Collections overlay', :reset => false do
 
   context "clicking to close facet list and adding collections to a project" do
     before :all do
-      load_page :search
+      load_page :search, facets: true
       manual_close_facet_list
 
       first_collection_result.click_link "Add collection to the current project"
