@@ -144,7 +144,7 @@
       root = '/search'
 
       if state.parent && state.current != 'collection-details'
-        if state.current == 'granule-list' || state.current == 'project-overview'
+        if state.current == 'granule-list' || state.current == 'project-overview' || state.current == 'granule-details'
           state.parent = false
         else
           return root
