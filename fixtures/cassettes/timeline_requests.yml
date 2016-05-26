@@ -22,6 +22,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII
+      string: bounding_box=0%2C0%2C10%2C10&concept_id=C1219032597-LANCEMODIS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 26 May 2016 13:44:47 GMT
+  digest: d2d8bb4ae724b2b445e0a8000c95591af2b6bec5
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
       string: bounding_box=0%2C0%2C10%2C10&concept_id=C1219032607-LANCEMODIS&end_date=2013-10-15T12%3A00%3A00.000Z&interval=hour&start_date=2013-07-14T12%3A00%3A00.000Z
     headers:
       User-Agent:
@@ -414,6 +431,23 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 19 May 2016 16:19:21 GMT
   digest: 065ba436e1393a7f44f233b084543806c7755103
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C1234044598-GES_DISC&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Thu, 26 May 2016 13:32:27 GMT
+  digest: 6b22aeef611cf79154716028fb0d359d1e919a61
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
