@@ -7,7 +7,6 @@ module Echo
         load_freetext_query(query)
         and_query(query)
         pattern_query(query)
-        relevancy_query(query)
 
         query
       end
@@ -87,32 +86,6 @@ module Echo
           query[:options] ||= Hash.new
           query[:options][:sensor] = Hash.new
           query[:options][:sensor][:and] = true
-        end
-      end
-
-      # When a collection search has one of these fields:
-      #   keyword
-      #   platform
-      #   instrument
-      #   sensor
-      #   two_d_coordinate_system_name
-      #   science_keywords
-      #   project
-      #   processing_level_id
-      #   data_center
-      #   archive_center
-      # We should sort collection results by: sort_key[]=has_granules&sort_key[]=score
-      # Otherwise, we should sort collection results by: sort_key[]=has_granules&sort_key[]=entry_title
-      def relevancy_query(query)
-        query[:sort_key] = Array.wrap('has_granules')
-        # sensor, archive_center and two_d_coordinate_system_name were removed from the available facets but it doesn't
-        # hurt to list them here though.
-        relevancy_capable_fields = [:keyword, :platform, :instrument, :sensor, :two_d_coordinate_system_name,
-                                    :science_keywords, :project, :processing_level_id, :data_center, :archive_center]
-        if (query.keys & relevancy_capable_fields).empty?
-          query[:sort_key].push 'entry_title'
-        else
-          query[:sort_key].push 'score'
         end
       end
   end
