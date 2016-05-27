@@ -103,10 +103,10 @@ describe "Spatial" do
 
   context "point selection" do
     it "filters collections using the selected point" do
-      create_point(0, 0)
+      create_point(67, -155)
       wait_for_xhr
-      expect(page).to have_no_content("Background Air Pollution Monitoring")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
+      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
     end
 
     context "changing the point selection" do
@@ -131,7 +131,7 @@ describe "Spatial" do
       end
 
       it "removes the spatial point collection filter" do
-        expect(page).to have_content("Background Air Pollution Monitoring")
+        expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
       end
     end
   end
@@ -141,19 +141,19 @@ describe "Spatial" do
       create_bounding_box(0, 0, 10, 10)
       wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_content("A Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus Data")
     end
 
     context "changing the bounding box selection" do
       before(:each) do
         create_bounding_box(0, 0, 10, 10)
         wait_for_xhr
-        create_bounding_box(-75, 40, -74, 41)
+        create_bounding_box(-174, 69, -171, 72)
         wait_for_xhr
       end
 
       it "updates the collection filters using the new bounding box selection" do
-        expect(page).to have_content("GHRSST Level 2P Global Skin Sea Surface Temperature")
+        expect(page).to have_content("ACOS GOSAT/TANSO-FTS Level 2 Full Physics Standard Product V3.3")
       end
     end
 
@@ -166,7 +166,7 @@ describe "Spatial" do
       end
 
       it "removes the spatial bounding box collection filter" do
-        expect(page).to have_content("Background Air Pollution Monitoring")
+        expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       end
     end
 
@@ -206,7 +206,7 @@ describe "Spatial" do
       create_arctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_content("A Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf Area")
     end
 
     it "filters collections using south polar bounding boxes in the south polar projection" do
@@ -214,7 +214,7 @@ describe "Spatial" do
       create_antarctic_rectangle([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_content("A Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf Area")
     end
   end
 
@@ -223,7 +223,7 @@ describe "Spatial" do
       create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
       wait_for_xhr
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_content("A Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf Area")
     end
 
     it "displays errors for invalid polygons", intermittent: 1 do
@@ -236,13 +236,13 @@ describe "Spatial" do
       before(:each) do
         create_polygon([10, 10], [10, -10], [-10, -10], [-10, 10])
         wait_for_xhr
-        expect(page).to have_no_content("2004 Snapshot of bird species in the Antarctic - data from World Bird Database")
-        create_polygon([-87, -176], [-87, -166], [-79, -168], [-79, -179])
+        expect(page).to have_content("A Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf Area")
+        create_polygon([77, -165], [72, -173], [67, -168], [69, -159])
         wait_for_xhr
       end
 
       it "updates the collection filters using the new bounding box selection" do
-        expect(page).to have_content("2004 Snapshot of bird species in the Antarctic - data from World Bird Database")
+        expect(page).to have_no_content("A Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf Area")
       end
     end
 
