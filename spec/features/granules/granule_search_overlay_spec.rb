@@ -7,8 +7,9 @@ describe "Granule search overlay", reset: false do
   end
 
   before(:each) do
-    first_featured_collection.click_link "Add collection to the current project"
-    first_collection_result.click_link "Add collection to the current project"
+    load_page :search, q: 'MODIS/Aqua Near Real Time (NRT) Geolocation Angles'
+    target_collection_result('MODIS/Aqua Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 1km').click_link "Add collection to the current project"
+    target_collection_result('MODIS/Aqua Near Real Time (NRT) Geolocation Angles Daily L2G Global 1km SIN Grid Day V005').click_link "Add collection to the current project"
 
     collection_results.click_link "View Project"
   end

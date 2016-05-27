@@ -2424,6 +2424,21 @@ http_interactions:
   digest: 619de0b2543e8531a08c3a9e2023cc1d00c69f34
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=MODIS%2FAqua%2A+Near%2A+Real%2A+Time%2A+%28NRT%29%2A+Geolocation%2A+Angles%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 27 May 2016 13:24:34 GMT
+  digest: c5dcb36d1faafb350e2df381b9b70da62e54bfb5
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=Minute%2A+%28FIFE%29%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3232,6 +3247,21 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 26 May 2016 13:18:26 GMT
   digest: 4c77638350645c57634d8e5cac512c540d57c243
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&keyword=MODIS%2FAqua%2A+Near%2A+Real%2A+Time%2A+%28NRT%29%2A+Geolocation%2A+Angles%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 27 May 2016 13:24:31 GMT
+  digest: bdff710513ecb3de16984acc77c613dd84a58604
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&keyword=Minute%2A+%28FIFE%29%2A&include_has_granules=true&include_granule_counts=true
