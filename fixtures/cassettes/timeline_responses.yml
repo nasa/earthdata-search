@@ -3057,6 +3057,28 @@ b2e40bddbd0e949eb26f60064ec13a8f953d2ecd:
       encoding: UTF-8
       string: "[]"
     http_version: 
+b0b9798e9797611ffca3e1e7be3466c364003168:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 27 May 2016 02:21:58 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 3b253826-4135-442f-a4fa-47c926e66197
+      content-length:
+      - '211'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C185174201-USGS_EROS","intervals":[[1362700800,1362787200,3],[1363910400,1363996800,5],[1364428800,1364515200,4],[1364860800,1365120000,10],[1365206400,1365292800,5],[1365379200,1365638400,11]]}]'
+    http_version: 
 32a958ef1e834c6c8d490d3020a867fdfe6b4807:
   response:
     status:
