@@ -102,7 +102,7 @@ describe 'Address bar', reset: false do
 
     it 'filters collections using the condition' do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("Background Air Pollution")
+      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
     end
   end
 
@@ -135,7 +135,7 @@ describe 'Address bar', reset: false do
 
     it 'filters collections using the condition' do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_content("A Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus Data")
     end
   end
 
