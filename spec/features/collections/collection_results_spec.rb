@@ -97,7 +97,7 @@ describe "Collection results", reset: false do
   end
 
   it "shows the temporal extent of collections whose data collection ended in the past" do
-    expect(page).to have_content("1907-01-02 to 1952-08-11")
+    expect(page).to have_content("1984-12-25 to 1988-03-04")
   end
 
   it "doesn't' show version_id for collections that don't have one" do
