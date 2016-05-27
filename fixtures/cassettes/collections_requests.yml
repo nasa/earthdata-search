@@ -674,6 +674,23 @@ http_interactions:
   digest: 91bef25e17ade4ecf6e2fa361657838d4e0409fd
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C4543622-LARC_ASDC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 27 May 2016 02:30:26 GMT
+  digest: 4f0ce98e0d445f870b2bee3a7741ab9ab331470c
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?echo_collection_id%5B%5D=C7085910-LARC_ASDC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -1771,6 +1788,40 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 26 May 2016 13:30:37 GMT
   digest: ffd0248b9cc7aa7b3b62eb51965e6bdaa37df98a
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&echo_collection_id%5B%5D=C179002914-ORNL_DAAC&echo_collection_id%5B%5D=C1000000000-ORNL_DAAC&keyword=AST_L1AE%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 27 May 2016 02:32:36 GMT
+  digest: 696397fcab2bf27497139db7ce3d5be3ce5c00b4
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&echo_collection_id%5B%5D=C179460405-LPDAAC_ECS&echo_collection_id%5B%5D=C179002914-ORNL_DAAC&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 27 May 2016 02:32:42 GMT
+  digest: 2af13800225068840b9bd1e6754b214abeea32c5
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&include_has_granules=true&include_granule_counts=true
@@ -3468,6 +3519,23 @@ http_interactions:
   digest: 0d9e8c4fc62910c54ba7198f2b7f810c35e4c25a
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?point=0%2C0&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&echo_collection_id%5B%5D=C179460405-LPDAAC_ECS&echo_collection_id%5B%5D=C179002914-ORNL_DAAC&keyword=AST_L1AE%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 27 May 2016 02:32:41 GMT
+  digest: 31bacd58f44c49de0e82e09adf32c7844df50a8b
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?point=0%2C0&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -3526,6 +3594,23 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 26 May 2016 13:13:20 GMT
   digest: d7601116deaf16bc744c75cb1d02b691eefd8365
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?point=0%2C0&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&keyword=AST_L1AE%2A&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 27 May 2016 02:32:40 GMT
+  digest: 6be1c0d3eaea94a82f84854d4a18fafefbdf0e8f
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?point=0%2C0&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&keyword=C1220566654-USGS_LTA%2A&include_has_granules=true&include_granule_counts=true
@@ -3993,6 +4078,23 @@ http_interactions:
   digest: 11f1f95fb7d4f575aaef39b8cb118ab32b087371
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 27 May 2016 02:29:09 GMT
+  digest: 133604d55d7b9cc98f3b09b12129169ad7731ced
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C179003030-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
     body:
       encoding: US-ASCII
@@ -4006,6 +4108,23 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 26 May 2016 13:46:57 GMT
   digest: 3c0a43e44b11604e5e4e08c35210e02d3954e440
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/collections.json?temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Fri, 27 May 2016 02:29:06 GMT
+  digest: c4e1ff417af2710d2c3823f4b821aef1c61ea5a2
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/collections.json?temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&keyword=C179003030-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true
