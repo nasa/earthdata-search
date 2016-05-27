@@ -255,7 +255,7 @@ describe "Spatial" do
       end
 
       it "removes the spatial bounding box collection filter" do
-        expect(page).to have_content("Background Air Pollution Monitoring")
+        expect(page).to have_content("A Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf Area")
       end
     end
   end
