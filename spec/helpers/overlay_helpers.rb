@@ -148,8 +148,9 @@ module Helpers
     end
 
     def manual_close_facet_list
-      page.find('#master-overlay-parent a.master-overlay-close').click
-      sleep 0.5 # wait for animation
+      synchronize do
+        page.find('#master-overlay-parent a.master-overlay-close').click
+      end
     end
   end
 end

@@ -149,7 +149,12 @@
         else
           return root
       return "#{root}/map" unless state.visible
-      return "#{root}/collections" if state.current == 'collection-results'
+      if state.current == 'collection-results'
+        state.parent = state.manualShowParent
+        if state.parent
+          return root
+        else
+          return "#{root}/collections"
 
       root += '/project' if state.children.indexOf('project-overview') != -1
       if state.current == 'project-overview'
