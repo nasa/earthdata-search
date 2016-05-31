@@ -26160,6 +26160,413 @@ b1d5d5ef65cecc77decbd882941280687b1ac6ec:
         information on 3DP from SSL\n      ","hreflang":"en-US","href":"http://sprg.ssl.berkeley.edu/wind3dp/esahome.html"}]}]}}'
     http_version: 
     reduced: true
+1b244e087891b9935011249e13283db4a07e6f56:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 31 May 2016 16:01:00 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '58'
+      cmr-request-id:
+      - 46cf033d-2abb-429b-9f82-9656fd4eb953
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-31T16:01:00.469Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?polygon=-114.0556640625%2C37.08984375%2C-114.0380859375%2C41.994140625%2C-119.9970703125%2C41.994140625%2C-119.9970703125%2C38.9970703125%2C-118.5732421875%2C38.00390625%2C-117.1318359375%2C36.94921875%2C-115.8486328125%2C35.9736328125%2C-114.6357421875%2C34.998046875%2C-114.6005859375%2C35.0771484375%2C-114.64453125%2C35.103515625%2C-114.57421875%2C35.138671875%2C-114.5654296875%2C35.1826171875%2C-114.6005859375%2C35.349609375%2C-114.6796875%2C35.4990234375%2C-114.6533203125%2C35.595703125%2C-114.7060546875%2C35.7099609375%2C-114.7060546875%2C35.8154296875%2C-114.6796875%2C35.8857421875%2C-114.732421875%2C35.9384765625%2C-114.732421875%2C36.052734375%2C-114.7587890625%2C36.0791015625%2C-114.6357421875%2C36.140625%2C-114.4423828125%2C36.123046875%2C-114.4072265625%2C36.1494140625%2C-114.328125%2C36.10546875%2C-114.2666015625%2C36.0263671875%2C-114.15234375%2C36.0263671875%2C-114.046875%2C36.193359375%2C-114.046875%2C37.001953125%2C-114.0556640625%2C37.08984375\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026echo_collection_id%5B%5D=C1229626387-LANCEMODIS\u0026echo_collection_id%5B%5D=C1219032686-LANCEMODIS\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Aerosol Optical Depth","resolution":"2km","product":"MODIS_Aqua_Aerosol","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-06-22"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MYD04_L2_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","data_center":"LANCEMODIS","short_name":"MYD04_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","coordinate_system":"CARTESIAN","summary":"The
+        MODIS level-2 atmospheric aerosol product (MYD04_L2) continues to provide
+        full global coverage o","has_granules":true,"orbit_parameters":{},"id":"C1219032686-LANCEMODIS","collection_data_type":"NEAR_REAL_TIME","granule_count":18,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD04_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD04_L2/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":true,"geo":true,"source":"Aqua
+        / MODIS","arctic":true,"title":"Snow Cover","resolution":"500m","product":"MODIS_Aqua_Snow_Cover","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD10_L2_6NRT"],"version_id":"6NRT","updated":"2016-03-18T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","data_center":"LANCEMODIS","short_name":"MYD10_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","coordinate_system":"CARTESIAN","summary":"The
+        MODIS/Aqua Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m (MYD10_L2)
+        data set contains snow","has_granules":true,"orbit_parameters":{},"id":"C1229626387-LANCEMODIS","collection_data_type":"NEAR_REAL_TIME","granule_count":18,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 descriptions and data sets from the MODAPS LANCE-MODIS page(FTP
+        server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD10_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD10_L2/"}]}]}}'
+    http_version: 
+    reduced: true
+df42b924c95206a84685e031b4ae7d18be030452:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 31 May 2016 16:00:59 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '7924'
+      cmr-took:
+      - '165'
+      cmr-request-id:
+      - 09831538-4e27-425d-b857-c3f3abd17b50
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-31T16:00:59.343Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?polygon=-114.0556640625%2C37.08984375%2C-114.0380859375%2C41.994140625%2C-119.9970703125%2C41.994140625%2C-119.9970703125%2C38.9970703125%2C-118.5732421875%2C38.00390625%2C-117.1318359375%2C36.94921875%2C-115.8486328125%2C35.9736328125%2C-114.6357421875%2C34.998046875%2C-114.6005859375%2C35.0771484375%2C-114.64453125%2C35.103515625%2C-114.57421875%2C35.138671875%2C-114.5654296875%2C35.1826171875%2C-114.6005859375%2C35.349609375%2C-114.6796875%2C35.4990234375%2C-114.6533203125%2C35.595703125%2C-114.7060546875%2C35.7099609375%2C-114.7060546875%2C35.8154296875%2C-114.6796875%2C35.8857421875%2C-114.732421875%2C35.9384765625%2C-114.732421875%2C36.052734375%2C-114.7587890625%2C36.0791015625%2C-114.6357421875%2C36.140625%2C-114.4423828125%2C36.123046875%2C-114.4072265625%2C36.1494140625%2C-114.328125%2C36.10546875%2C-114.2666015625%2C36.0263671875%2C-114.15234375%2C36.0263671875%2C-114.046875%2C36.193359375%2C-114.046875%2C37.001953125%2C-114.0556640625%2C37.08984375\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-44
+        146 72 -105"],"time_start":"2012-03-08T00:00:00.000Z","dif_ids":["GHRSST-GOES15-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary
+        Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite
+        (GDS versions 1 and 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-GOES15-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary
+        Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite
+        (GDS versions 1 and 2)\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Geostationary Operational Environmental Satellites (GOES) operated by the
+        United States Nationa","has_granules":false,"orbit_parameters":{},"id":"C1224520098-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/GOES15/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/GOES15/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/GOES15/OSPO/\n"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2006-06-30T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_A_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_A","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) l","has_granules":false,"orbit_parameters":{},"id":"C1224520058-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_A/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2006-10-01T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_T_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_T","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) l","has_granules":false,"orbit_parameters":{},"id":"C1224520120-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_T/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2014-05-20T00:00:00.000Z","dif_ids":["GHRSST-VIIRS_NPP-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging Radiometer
+        Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced Clear-Sky
+        Processor for Ocean (ACSPO) (GDS version 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-VIIRS_NPP-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging
+        Radiometer Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced
+        Clear-Sky Processor for Ocean (ACSPO) (GDS version 2)\n","coordinate_system":"CARTESIAN","summary":"\nJoint
+        Polar Satellite System (JPSS), starting with S-NPP launched on 28 October
+        2011, is the new ge","has_granules":false,"orbit_parameters":{},"id":"C1224519979-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/VIIRS_NPP/OSPO/\n"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-20
+        -165 62 -30"],"time_start":"2010-09-27T00:00:00.000Z","dif_ids":["JPL-L4UHblend-NCAMERICA-RTO_SST_Ad_1"],"version_id":"1","updated":"2013-01-16T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 4 RTO Aqua MODIS-AMSRE Day North America Regional Blended Sea Surface
+        Temperature Analysis\n","data_center":"NOAA_NCEI","short_name":"JPL-L4UHblend-NCAMERICA-RTO_SST_Ad","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 4 RTO Aqua MODIS-AMSRE Day North America Regional Blended Sea Surface
+        Temperature Analysis\n","coordinate_system":"CARTESIAN","summary":"\nA Group
+        for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature
+        analys","has_granules":false,"orbit_parameters":{},"id":"C1224520059-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Ad/catalog.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Ad/contents.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Ad/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Ad/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-20
+        -165 62 -30"],"time_start":"2010-09-27T00:00:00.000Z","dif_ids":["JPL-L4UHblend-NCAMERICA-RTO_SST_An_1"],"version_id":"1","updated":"2013-01-16T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 4 RTO Aqua MODIS-AMSRE Night North America Regional Blended Sea Surface
+        Temperature Analysis\n","data_center":"NOAA_NCEI","short_name":"JPL-L4UHblend-NCAMERICA-RTO_SST_An","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 4 RTO Aqua MODIS-AMSRE Night North America Regional Blended Sea Surface
+        Temperature Analysis\n","coordinate_system":"CARTESIAN","summary":"\nA Group
+        for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature
+        analys","has_granules":false,"orbit_parameters":{},"id":"C1224520123-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L4/NCAMERICA/JPL/RTO_SST_An/catalog.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L4/NCAMERICA/JPL/RTO_SST_An/contents.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L4/NCAMERICA/JPL/RTO_SST_An/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/ghrsst/L4/NCAMERICA/JPL/RTO_SST_An/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-20
+        -165 62 -30"],"time_start":"2010-09-27T00:00:00.000Z","dif_ids":["JPL-L4UHblend-NCAMERICA-RTO_SST_Td_1"],"version_id":"1","updated":"2013-01-16T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 4 RTO Terra MODIS-AMSRE Day North America Regional Blended Sea Surface
+        Temperature Analysis\n","data_center":"NOAA_NCEI","short_name":"JPL-L4UHblend-NCAMERICA-RTO_SST_Td","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 4 RTO Terra MODIS-AMSRE Day North America Regional Blended Sea Surface
+        Temperature Analysis\n","coordinate_system":"CARTESIAN","summary":"\nA Group
+        for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature
+        analys","has_granules":false,"orbit_parameters":{},"id":"C1224520107-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Td/catalog.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Td/contents.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Td/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Td/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-20
+        -165 62 -30"],"time_start":"2010-09-27T00:00:00.000Z","dif_ids":["JPL-L4UHblend-NCAMERICA-RTO_SST_Tn_1"],"version_id":"1","updated":"2013-01-16T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 4 RTO Terra MODIS-AMSRE Night North America Regional Blended Sea Surface
+        Temperature Analysis\n","data_center":"NOAA_NCEI","short_name":"JPL-L4UHblend-NCAMERICA-RTO_SST_Tn","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 4 RTO Terra MODIS-AMSRE Night North America Regional Blended Sea Surface
+        Temperature Analysis\n","coordinate_system":"CARTESIAN","summary":"\nA Group
+        for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature
+        analys","has_granules":false,"orbit_parameters":{},"id":"C1224520111-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Tn/catalog.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Tn/contents.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Tn/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Tn/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"}]},{"boxes":["41.5
+        -141 84 -52"],"time_start":"1996-01-01T00:00:00.000Z","dif_ids":["Canada_AAFC_Eco"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Ecozones,
+        Ecoprovinces, Ecoregions, and Ecodistricts of Canada         ","data_center":"SCIOPS","short_name":"Canada_AAFC_Eco","organizations":["CA/AGR/ECORC"],"title":"           Ecozones,
+        Ecoprovinces, Ecoregions, and Ecodistricts of Canada         ","coordinate_system":"CARTESIAN","summary":"In
+        1991 a collaborative project was undertaken by a number of federal\nagencies
+        in cooperation with p","has_granules":false,"time_end":"2002-03-25T23:59:59.000Z","orbit_parameters":{},"id":"C1214612442-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["30
+        -138 80 -25"],"time_start":"1960-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRS_OCEAN_CURRENT"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"      Ocean Current
+        Data from the Canadian East Coast and Eastern Arctic, 1960 to the present     ","data_center":"SCIOPS","short_name":"CANEMRCCRS_OCEAN_CURRENT","organizations":["CA/DFO/MR/SB"],"title":"      Ocean
+        Current Data from the Canadian East Coast and Eastern Arctic, 1960 to the
+        present     ","coordinate_system":"CARTESIAN","summary":"The Ocean Data Inventory
+        database is an inventory of all of the\noceanographic time series data held
+        ","has_granules":false,"orbit_parameters":{},"id":"C1214607005-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1997-07-01T00:00:00.000Z","dif_ids":["GGP-SG-CORMIN"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":" GGP - Corrected
+        Minute Data","data_center":"SCIOPS","short_name":"GGP-SG-CORMIN","organizations":["DE/GFZ/ISDC"],"title":"
+        GGP - Corrected Minute Data","coordinate_system":"CARTESIAN","summary":"Global
+        Geodynamics Project (GGP) - Earthquake Data","has_granules":false,"orbit_parameters":{},"id":"C1214586854-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        GGP date are available via the ISDC Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/ggp/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Saint
+        Louis University, Department of Earth and Atmospheric Sciences, GGP Homepage.\n      ","hreflang":"en-US","href":"http://www.eas.slu.edu/GGP/ggphome.html"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_93-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"
+        Time Dependent Ice Coverage and Ice Topography Through the Glacial Cycle","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_93-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Time Dependent Ice Coverage and Ice Topography Through
+        the Glacial Cycle","coordinate_system":"CARTESIAN","summary":"Topography and
+        ice cover data files from the ICE-4G model. Data consists of\ntopographical
+        heights at","has_granules":false,"orbit_parameters":{},"id":"C1215197136-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to ice topography data\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Ice
+        cover reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/peltice.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Topography
+        reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/pelttopo.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         ice
+        topography data set documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/readme_ice_topography.txt"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1981-01-01T00:00:00.000Z","dif_ids":["GLCF_GLC_1km_1.0"],"version_id":"1.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1
+        Kilometer Land Cover Product from the University of Maryland","data_center":"SCIOPS","short_name":"GLCF_GLC_1km","organizations":["UMD/GLCF"],"title":"1
+        Kilometer Land Cover Product from the University of Maryland","coordinate_system":"CARTESIAN","summary":"Over
+        the past several years, researchers have increasingly turned to remotely sensed
+        data to improve","has_granules":false,"time_end":"1994-01-01T23:59:59.000Z","orbit_parameters":{},"id":"C1214608509-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Download
+        the Land Cover Product.","hreflang":"en-US","href":"http://glcf.umd.edu/data/landcover/data.shtml"}]},{"boxes":["41
+        -141 70 -52"],"time_start":"1991-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSMANCANMAP"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1 Km Resolution
+        Land Cover Map of Canada","data_center":"SCIOPS","short_name":"CANEMRCCRSMANCANMAP","organizations":["CA/MB/MC/GEO/MRSC"],"title":"1
+        Km Resolution Land Cover Map of Canada","coordinate_system":"CARTESIAN","summary":"Thirteen
+        land cover classes are covered using 1 km resolution data.\n\n      The land
+        cover classes in","has_granules":false,"time_end":"1993-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C1214607073-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["-71
+        0 72 -1"],"dif_ids":["gov.noaa.ngdc.mgg.geophysics.G01414_1999 Edition"],"version_id":"1999
+        Edition","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1-deg x 1-deg
+        Terrestrial Mean Free-Air Anomalies","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.geophysics.G01414","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"1-deg
+        x 1-deg Terrestrial Mean Free-Air Anomalies","coordinate_system":"CARTESIAN","summary":"The
+        1x1 degree Terrestrial Mean Free-Air Gravity Anomaly and Geoid Undulations
+        Data Base was compile","has_granules":false,"orbit_parameters":{},"id":"C1214558130-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/fliers/se-0703.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/gravity/1999/document/html/tablegri.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.geophysics:G01414"}]},{"boxes":["41.5
+        -141 84 -52"],"dif_ids":["Canada_GeoGratis_1kmWatFracNTDB"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1-km Water Fraction
+        From National Topographic Data Base Maps, Canada","data_center":"SCIOPS","short_name":"Canada_GeoGratis_1kmWatFracNTDB","organizations":["CA/NRCAN/ESS/GC/CCRS/GEO"],"title":"1-km
+        Water Fraction From National Topographic Data Base Maps, Canada","coordinate_system":"CARTESIAN","summary":"This
+        product is a raster coverage representing the fraction of area within each\n      1km
+        grid cell ","has_granules":false,"orbit_parameters":{},"id":"C1214615490-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_2005-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"11,000
+        Year Sunspot Number Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"11,000 Year Sunspot Number Reconstruction","coordinate_system":"CARTESIAN","summary":"From
+        http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html\n\nDirect
+        observations of sunspo","has_granules":false,"orbit_parameters":{},"id":"C1215197053-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        and further information on sunspot number reconstruction\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html"}]},{"boxes":["-36.9
+        -157.4 71.3 147.29"],"time_start":"2008-01-16T00:00:00.000Z","dif_ids":["14c_of_soil_co2_from_ipy_itex_cross_site_comparison"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"14C of soil CO2
+        from IPY ITEX Cross Site Comparison","data_center":"SCIOPS","short_name":"14c_of_soil_co2_from_ipy_itex_cross_site_comparison","organizations":["ACADIS"],"title":"14C
+        of soil CO2 from IPY ITEX Cross Site Comparison","coordinate_system":"CARTESIAN","summary":"Study
+        sites: Toolik Lake Field Station Alaska, USA 68.63 N, 149.57 W; Atqasuk, Alaska
+        USA 70.45 N, 1","has_granules":false,"time_end":"2008-01-21T23:59:59.000Z","orbit_parameters":{},"id":"C1214602443-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Data
+        Center top-level access page for this resource\n      ","hreflang":"en-US","href":"http://www.aoncadis.org/dataset/id/79208243-d496-11de-892a-00c0f03d5b7c.html"}]},{"boxes":["40.5
+        -117.5 40.5 -117.5"],"dif_ids":["gov.noaa.ngdc.mgg.photos.40"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1915 Pleasant
+        Valley, USA Images","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.photos.40","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"1915
+        Pleasant Valley, USA Images","coordinate_system":"CARTESIAN","summary":"Oblique-slip
+        fault produced during the 7.7 magnitude earthquake of 1915, Pleasant Valley,
+        Nevada.","has_granules":false,"orbit_parameters":{},"id":"C1214558054-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Event
+        Description. Natural hazard event (tsunami, earthquake, volcanic eruption
+        or other geological hazard) description, image thumbnails, map, links to metadata
+        and details from the NGDC Hazards databases\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/hazardimages/event/show/40"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Natural
+        Hazards Image Database. Collection of damage and geological images resulting
+        from natural hazards, specifically tsunamis, earthquakes, and volcanoes.\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/hazardimages/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Keyhole
+        Markup Language (KML). Event epicenter and image locations\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/hazard/data/kml/photos/40.kml"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.photos:40"}]},{"boxes":["13.71
+        -177.1 76.63 -61.48"],"time_start":"1991-01-01T00:00:00.000Z","dif_ids":["USDA0295"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1982 Commodity
+        Output by State and Input-Output Sector","data_center":"SCIOPS","short_name":"USDA0295","organizations":["USDA/ERS"],"title":"1982
+        Commodity Output by State and Input-Output Sector","coordinate_system":"CARTESIAN","summary":"The
+        \"1982 Commodity Output by State and Input-Output Sector\"\ndataset presents
+        estimates of agricultu","has_granules":false,"time_end":"1992-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C1214610401-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false}]}}'
+    http_version: 
+    reduced: true
 bceb5929a58f3604475b8828fdc861917d386763:
   response:
     status:
@@ -26453,6 +26860,406 @@ bceb5929a58f3604475b8828fdc861917d386763:
         Meteosat archive. I","has_granules":false,"time_end":"1991-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C1214559909-ESA","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"The
         ESA Meteosat CD-ROMs are available directly from this web site, against\n         pre-payment
         of DM 20. Special conditions are available for orders in quantities.","hreflang":"en-US","href":"http://www.ares.esa.int/index.php/meteosat"}]}]}}'
+    http_version: 
+    reduced: true
+7adc75635a2ae9318eb609db869d854b9638764a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 31 May 2016 16:00:53 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '119'
+      cmr-request-id:
+      - bd6e6639-8e60-4290-a7de-5131df6030c6
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-31T16:00:54.049Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?polygon=-54.79606867946356%2C54.394109717072354%2C-29.255528115136542%2C54.394109717072354%2C-30.648648509554363%2C72.50467484450424%2C-46.90171977776248%2C74.36216870372802%2C-59.43980332752301%2C68.32531366125072%2C-54.79606867946356%2C54.394109717072354\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026echo_collection_id%5B%5D=C1229626387-LANCEMODIS\u0026echo_collection_id%5B%5D=C1219032686-LANCEMODIS\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Aerosol Optical Depth","resolution":"2km","product":"MODIS_Aqua_Aerosol","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-06-22"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MYD04_L2_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","data_center":"LANCEMODIS","short_name":"MYD04_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","coordinate_system":"CARTESIAN","summary":"The
+        MODIS level-2 atmospheric aerosol product (MYD04_L2) continues to provide
+        full global coverage o","has_granules":true,"orbit_parameters":{},"id":"C1219032686-LANCEMODIS","collection_data_type":"NEAR_REAL_TIME","granule_count":154,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD04_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD04_L2/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":true,"geo":true,"source":"Aqua
+        / MODIS","arctic":true,"title":"Snow Cover","resolution":"500m","product":"MODIS_Aqua_Snow_Cover","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD10_L2_6NRT"],"version_id":"6NRT","updated":"2016-03-18T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","data_center":"LANCEMODIS","short_name":"MYD10_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","coordinate_system":"CARTESIAN","summary":"The
+        MODIS/Aqua Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m (MYD10_L2)
+        data set contains snow","has_granules":true,"orbit_parameters":{},"id":"C1229626387-LANCEMODIS","collection_data_type":"NEAR_REAL_TIME","granule_count":159,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 descriptions and data sets from the MODAPS LANCE-MODIS page(FTP
+        server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD10_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD10_L2/"}]}]}}'
+    http_version: 
+    reduced: true
+2ca3d7053257a1256e75ae492655f6d445e0f7d1:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 31 May 2016 16:00:51 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '7000'
+      cmr-took:
+      - '1799'
+      cmr-request-id:
+      - e03627fc-6acd-4867-8ff3-70971a7ce8b0
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-31T16:00:53.038Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?polygon=-54.79606867946356%2C54.394109717072354%2C-29.255528115136542%2C54.394109717072354%2C-30.648648509554363%2C72.50467484450424%2C-46.90171977776248%2C74.36216870372802%2C-59.43980332752301%2C68.32531366125072%2C-54.79606867946356%2C54.394109717072354\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2006-06-30T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_A_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_A","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) l","has_granules":false,"orbit_parameters":{},"id":"C1224520058-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_A/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2006-10-01T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_T_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_T","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) l","has_granules":false,"orbit_parameters":{},"id":"C1224520120-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_T/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2014-05-20T00:00:00.000Z","dif_ids":["GHRSST-VIIRS_NPP-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging Radiometer
+        Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced Clear-Sky
+        Processor for Ocean (ACSPO) (GDS version 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-VIIRS_NPP-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging
+        Radiometer Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced
+        Clear-Sky Processor for Ocean (ACSPO) (GDS version 2)\n","coordinate_system":"CARTESIAN","summary":"\nJoint
+        Polar Satellite System (JPSS), starting with S-NPP launched on 28 October
+        2011, is the new ge","has_granules":false,"orbit_parameters":{},"id":"C1224519979-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/VIIRS_NPP/OSPO/\n"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["50
+        -135 65 -30"],"time_start":"2010-06-21T00:00:00.000Z","dif_ids":["GHRSST-GOES13-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Western Atlantic Regional Skin Sea Surface Temperature from the Geostationary
+        Operational Environmental Satellites (GOES) Imager on the GOES-13 satellite
+        (GDS versions 1 and 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-GOES13-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Western Atlantic Regional Skin Sea Surface Temperature from the Geostationary
+        Operational Environmental Satellites (GOES) Imager on the GOES-13 satellite
+        (GDS versions 1 and 2)\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Geostationary Operational Environmental Satellites (GOES) operated by the
+        United States Nationa","has_granules":false,"orbit_parameters":{},"id":"C1224520097-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/GOES13/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/GOES13/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/GOES13/OSPO/\n"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-20
+        -165 62 -30"],"time_start":"2010-09-27T00:00:00.000Z","dif_ids":["JPL-L4UHblend-NCAMERICA-RTO_SST_Ad_1"],"version_id":"1","updated":"2013-01-16T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 4 RTO Aqua MODIS-AMSRE Day North America Regional Blended Sea Surface
+        Temperature Analysis\n","data_center":"NOAA_NCEI","short_name":"JPL-L4UHblend-NCAMERICA-RTO_SST_Ad","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 4 RTO Aqua MODIS-AMSRE Day North America Regional Blended Sea Surface
+        Temperature Analysis\n","coordinate_system":"CARTESIAN","summary":"\nA Group
+        for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature
+        analys","has_granules":false,"orbit_parameters":{},"id":"C1224520059-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Ad/catalog.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Ad/contents.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Ad/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Ad/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-20
+        -165 62 -30"],"time_start":"2010-09-27T00:00:00.000Z","dif_ids":["JPL-L4UHblend-NCAMERICA-RTO_SST_An_1"],"version_id":"1","updated":"2013-01-16T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 4 RTO Aqua MODIS-AMSRE Night North America Regional Blended Sea Surface
+        Temperature Analysis\n","data_center":"NOAA_NCEI","short_name":"JPL-L4UHblend-NCAMERICA-RTO_SST_An","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 4 RTO Aqua MODIS-AMSRE Night North America Regional Blended Sea Surface
+        Temperature Analysis\n","coordinate_system":"CARTESIAN","summary":"\nA Group
+        for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature
+        analys","has_granules":false,"orbit_parameters":{},"id":"C1224520123-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L4/NCAMERICA/JPL/RTO_SST_An/catalog.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L4/NCAMERICA/JPL/RTO_SST_An/contents.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L4/NCAMERICA/JPL/RTO_SST_An/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/ghrsst/L4/NCAMERICA/JPL/RTO_SST_An/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-20
+        -165 62 -30"],"time_start":"2010-09-27T00:00:00.000Z","dif_ids":["JPL-L4UHblend-NCAMERICA-RTO_SST_Td_1"],"version_id":"1","updated":"2013-01-16T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 4 RTO Terra MODIS-AMSRE Day North America Regional Blended Sea Surface
+        Temperature Analysis\n","data_center":"NOAA_NCEI","short_name":"JPL-L4UHblend-NCAMERICA-RTO_SST_Td","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 4 RTO Terra MODIS-AMSRE Day North America Regional Blended Sea Surface
+        Temperature Analysis\n","coordinate_system":"CARTESIAN","summary":"\nA Group
+        for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature
+        analys","has_granules":false,"orbit_parameters":{},"id":"C1224520107-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Td/catalog.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Td/contents.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Td/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Td/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-20
+        -165 62 -30"],"time_start":"2010-09-27T00:00:00.000Z","dif_ids":["JPL-L4UHblend-NCAMERICA-RTO_SST_Tn_1"],"version_id":"1","updated":"2013-01-16T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 4 RTO Terra MODIS-AMSRE Night North America Regional Blended Sea Surface
+        Temperature Analysis\n","data_center":"NOAA_NCEI","short_name":"JPL-L4UHblend-NCAMERICA-RTO_SST_Tn","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 4 RTO Terra MODIS-AMSRE Night North America Regional Blended Sea Surface
+        Temperature Analysis\n","coordinate_system":"CARTESIAN","summary":"\nA Group
+        for High Resolution Sea Surface Temperature (GHRSST) Level 4 sea surface temperature
+        analys","has_granules":false,"orbit_parameters":{},"id":"C1224520111-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Tn/catalog.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Tn/contents.html\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Tn/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/ghrsst/L4/NCAMERICA/JPL/RTO_SST_Tn/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"}]},{"boxes":["43
+        -135 82 -59"],"time_start":"1975-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSBAPMN"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","data_center":"SCIOPS","short_name":"CANEMRCCRSBAPMN","organizations":["CA/EC/MSC"],"title":"           Background
+        Air Pollution Monitoring Network - Measurements of Greenhouse Gases (Canada)         ","coordinate_system":"CARTESIAN","summary":"This
+        dataset includes measurements of greenhouse gases. Variables: CO2\n(all),
+        CH4, CFC''s, N2O (Alert","has_granules":false,"orbit_parameters":{},"id":"C1214605943-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["44
+        -95 61 -52"],"time_start":"1907-01-02T00:00:00.000Z","dif_ids":["Canada_CFS_NatlForestPhotos"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Canadian
+        National Forestry Photograph Collection - Atlantic and Petawawa Components         ","data_center":"SCIOPS","short_name":"Canada_CFS_NatlForestPhotos","organizations":["CA/NRCAN/CFS/AFC"],"title":"           Canadian
+        National Forestry Photograph Collection - Atlantic and Petawawa Components         ","coordinate_system":"CARTESIAN","summary":"Forestry
+        photographs of experimental trials, properties, and prominent\nhistorical
+        figures.  The coll","has_granules":false,"time_end":"1952-08-11T23:59:59.000Z","orbit_parameters":{},"id":"C1214607533-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["30
+        -70 70 -15"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["DFO_BIO_NB_LS_ATLAS"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Computer
+        Oceanographic Atlas of Newfoundland Basin and Labrador Sea         ","data_center":"SCIOPS","short_name":"DFO_BIO_NB_LS_ATLAS","organizations":["CA/DFO/MR/SB/OSD"],"title":"           Computer
+        Oceanographic Atlas of Newfoundland Basin and Labrador Sea         ","coordinate_system":"CARTESIAN","summary":"The
+        Computer Atlas of the Newfoundland Basin and Labrador Sea was\n      designed
+        to make simple, fas","has_granules":false,"time_end":"1995-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C1214611011-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["41.5
+        -141 84 -52"],"time_start":"1996-01-01T00:00:00.000Z","dif_ids":["Canada_AAFC_Eco"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Ecozones,
+        Ecoprovinces, Ecoregions, and Ecodistricts of Canada         ","data_center":"SCIOPS","short_name":"Canada_AAFC_Eco","organizations":["CA/AGR/ECORC"],"title":"           Ecozones,
+        Ecoprovinces, Ecoregions, and Ecodistricts of Canada         ","coordinate_system":"CARTESIAN","summary":"In
+        1991 a collaborative project was undertaken by a number of federal\nagencies
+        in cooperation with p","has_granules":false,"time_end":"2002-03-25T23:59:59.000Z","orbit_parameters":{},"id":"C1214612442-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["60
+        -141 90 -46"],"time_start":"1920-04-01T00:00:00.000Z","dif_ids":["Canada_NEB_FrontWellN60"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Frontier
+        Well Data for North of 60 - National Energy Board, Canada         ","data_center":"SCIOPS","short_name":"Canada_NEB_FrontWellN60","organizations":["CA/NEB"],"title":"           Frontier
+        Well Data for North of 60 - National Energy Board, Canada         ","coordinate_system":"CARTESIAN","summary":"This
+        data set contains information on the location of wells drilled in\n      the
+        Northern Frontier a","has_granules":false,"orbit_parameters":{},"id":"C1214608638-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["39.38824
+        -71.324554 73.959496 -39.19807"],"time_start":"1929-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRS_MARINE_CHEM"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Marine
+        Chemistry Data from the Northwest Atlantic and Maritimes Region of Canada         ","data_center":"SCIOPS","short_name":"CANEMRCCRS_MARINE_CHEM","organizations":["CA/DFO"],"title":"           Marine
+        Chemistry Data from the Northwest Atlantic and Maritimes Region of Canada         ","coordinate_system":"CARTESIAN","summary":"These
+        data are contained in either the Regional BioChem or National\nNCIS databases\n\n         This
+        da","has_granules":false,"orbit_parameters":{},"id":"C1214605537-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["43
+        -69 62 -45"],"time_start":"1972-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRS_ORGANOCHL_SEALS"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Organochlorine
+        Contaminant Residues and Transfers from Mother to Young in Seals, Canada         ","data_center":"SCIOPS","short_name":"CANEMRCCRS_ORGANOCHL_SEALS","organizations":["CA/DFO"],"title":"           Organochlorine
+        Contaminant Residues and Transfers from Mother to Young in Seals, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        data is available from 1972 to the present. Samples are collected\n      in
+        the field with an ann","has_granules":false,"orbit_parameters":{},"id":"C1214584684-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -67.7 60 -52"],"time_start":"1991-01-01T00:00:00.000Z","dif_ids":["Canada_NfldLab_ProvAgriAtlas"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Provincial
+        Agricultural Atlas, 1:250,000, Newfoundland and Labrador, Canada         ","data_center":"SCIOPS","short_name":"Canada_NfldLab_ProvAgriAtlas","organizations":["CA/NFLD/FRA/SOIL"],"title":"           Provincial
+        Agricultural Atlas, 1:250,000, Newfoundland and Labrador, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        Provincial Agricultural Atlas provides the locations, boundaries,\nland uses,
+        soil types and othe","has_granules":false,"orbit_parameters":{},"id":"C1214611968-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -67.7 60 -52"],"time_start":"1984-12-31T00:00:00.000Z","dif_ids":["Canada_NfldLab_ForestInventory"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Provincial
+        Forest Inventory, Newfoundland and Labrador, Canada         ","data_center":"SCIOPS","short_name":"Canada_NfldLab_ForestInventory","organizations":["CA/NFLD/FRA/FB"],"title":"           Provincial
+        Forest Inventory, Newfoundland and Labrador, Canada         ","coordinate_system":"CARTESIAN","summary":"This
+        database contains vegetation information for both forested and\nnon-forested
+        areas. For forested","has_granules":false,"orbit_parameters":{},"id":"C1214610843-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["60
+        -141 90 -10"],"time_start":"1973-01-01T00:00:00.000Z","dif_ids":["CANEMRCCRSARCTIC"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Surface
+        Synoptic Reports for Various Locations in the Canadian High Arctic         ","data_center":"SCIOPS","short_name":"CANEMRCCRSARCTIC","organizations":["CA/EC/MSC/CCRM"],"title":"           Surface
+        Synoptic Reports for Various Locations in the Canadian High Arctic         ","coordinate_system":"CARTESIAN","summary":"This
+        data is surface synoptic reports for various locations\n         in the high
+        arctic in conjuncti","has_granules":false,"time_end":"1989-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C1214606940-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -67.7 60 -52"],"time_start":"2000-01-01T00:00:00.000Z","dif_ids":["Canada_NfldLab_WaterQuality"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Water
+        Resources Data - Drinking Water Quality, Newfoundland and Labrador, Canada         ","data_center":"SCIOPS","short_name":"Canada_NfldLab_WaterQuality","organizations":["CA/NFLD/ENV/WRM"],"title":"           Water
+        Resources Data - Drinking Water Quality, Newfoundland and Labrador, Canada         ","coordinate_system":"CARTESIAN","summary":"The
+        Department of Environment, in partnership with municipal\ngovernments, monitor
+        source and tap wat","has_granules":false,"orbit_parameters":{},"id":"C1214612162-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://www.gov.nf.ca/env/env/waterres/Surfacewater/Drinking/DrinkingWater.asp"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]},{"boxes":["47
+        -67.7 60 -52"],"time_start":"1983-01-01T00:00:00.000Z","dif_ids":["Canada_NfldLab_FloodRiskMaps"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"           Water
+        Resources Data - Flood Risk Maps, Newfoundland and Labrador, Canada         ","data_center":"SCIOPS","short_name":"Canada_NfldLab_FloodRiskMaps","organizations":["CA/NFLD/ENV/WRM"],"title":"           Water
+        Resources Data - Flood Risk Maps, Newfoundland and Labrador, Canada         ","coordinate_system":"CARTESIAN","summary":"Flood
+        Risk Maps have been prepared for about 40 communities in the\nprovince of
+        Newfoundland and Labr","has_granules":false,"orbit_parameters":{},"id":"C1214612139-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GeoConnections
+        Discovery Portal. Canada''s IDN Node.\n      ","hreflang":"en-US","href":"http://geodiscover.cgdi.ca/"}]}]}}'
     http_version: 
     reduced: true
 ae161e0fde4b0fd911784004ca846fcd83e11834:
@@ -26919,6 +27726,317 @@ b09030ce049179204fa2671da0d10a3cd0fde886:
         for and order ALI data from the USGS Global Visualizer (GLOVIS).\n      ","hreflang":"en-US","href":"http://glovis.usgs.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         EO-1
         Project homepage at NASA''s Goddard Space Flight Center.\n      ","hreflang":"en-US","href":"http://eo1.gsfc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         NASA''s
         New Millennium Project homepage.\n      ","hreflang":"en-US","href":"http://nmp.nasa.gov/"}]}]}}'
+    http_version: 
+    reduced: true
+2bb039dce18443e125757fac57e311062591fa76:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 31 May 2016 16:00:48 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '43'
+      cmr-request-id:
+      - dc7992d3-61c9-464d-ab95-ce35cb4a908a
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-31T16:00:48.600Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?polygon=100%2C0%2C101%2C0%2C101%2C1%2C100%2C1%2C100%2C0\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026echo_collection_id%5B%5D=C1229626387-LANCEMODIS\u0026echo_collection_id%5B%5D=C1219032686-LANCEMODIS\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Aerosol Optical Depth","resolution":"2km","product":"MODIS_Aqua_Aerosol","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-06-22"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MYD04_L2_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","data_center":"LANCEMODIS","short_name":"MYD04_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","coordinate_system":"CARTESIAN","summary":"The
+        MODIS level-2 atmospheric aerosol product (MYD04_L2) continues to provide
+        full global coverage o","has_granules":true,"orbit_parameters":{},"id":"C1219032686-LANCEMODIS","collection_data_type":"NEAR_REAL_TIME","granule_count":9,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD04_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD04_L2/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":true,"geo":true,"source":"Aqua
+        / MODIS","arctic":true,"title":"Snow Cover","resolution":"500m","product":"MODIS_Aqua_Snow_Cover","maxNativeZoom":5,"match":{"time_start":"\u003e=2012-05-08","day_night_flag":"DAY"}}]}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD10_L2_6NRT"],"version_id":"6NRT","updated":"2016-03-18T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","data_center":"LANCEMODIS","short_name":"MYD10_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","coordinate_system":"CARTESIAN","summary":"The
+        MODIS/Aqua Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m (MYD10_L2)
+        data set contains snow","has_granules":true,"orbit_parameters":{},"id":"C1229626387-LANCEMODIS","collection_data_type":"NEAR_REAL_TIME","granule_count":9,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 descriptions and data sets from the MODAPS LANCE-MODIS page(FTP
+        server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD10_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD10_L2/"}]}]}}'
+    http_version: 
+    reduced: true
+c1f6b3465e1c284f18f7bb480693f0d3e3f4753b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 31 May 2016 16:00:46 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '5889'
+      cmr-took:
+      - '287'
+      cmr-request-id:
+      - 309e09aa-030f-4645-960f-59d9732af2d0
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-05-31T16:00:46.535Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?polygon=100%2C0%2C101%2C0%2C101%2C1%2C100%2C1%2C100%2C0\u0026page_size=20\u0026page_num=1\u0026include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod\u0026include_has_granules=true\u0026include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2006-06-30T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_A_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_A","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Aqua satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) l","has_granules":false,"orbit_parameters":{},"id":"C1224520058-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_A/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_A/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2006-10-01T00:00:00.000Z","dif_ids":["JPL-L2P-MODIS_T_1.0"],"version_id":"1.0","updated":"2013-09-10T00:00:00.000Z","dataset_id":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","data_center":"NOAA_NCEI","short_name":"JPL-L2P-MODIS_T","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Moderate Resolution
+        Imaging Spectroradiometer (MODIS) on the NASA Terra satellite\n","coordinate_system":"CARTESIAN","summary":"\nThe
+        Moderate-resolution Imaging Spectroradiometer (MODIS) is a scientific instrument
+        (radiometer) l","has_granules":false,"orbit_parameters":{},"id":"C1224520120-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded from the NODC via the THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) server at the URL listed in this
+        metadata record. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are also served using OPeNDAP (formerly DODS) server. The base URL is:
+        http://data.nodc.noaa.gov/opendap/ghrsst/. For more information see the NODC
+        GHRSST project web site: URL:http://ghrsst.nodc.noaa.gov/. For a listing of
+        OPeNDAP clients which may be used to access OPeNDAP-enabled data sets, please
+        see the OPeNDAP web site at URL: http://opendap.org/\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nDirect
+        FTP access: Navigate to ftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst using
+        any FTP client to begin downloading data. For more information see the NODC
+        GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MODIS_T/JPL/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nSimple
+        Web access: Using any web browser, navigate to URL: http://data.nodc.noaa.gov/ghrsst
+        and begin browsing through the file hierarchy. Clicking on any of the files
+        will prompt you to download that file or will launch any application associated
+        with netCDF files. For more information see the NODC GHRSST project web site:
+        URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://data.nodc.noaa.gov/ghrsst/L2P/MODIS_T/JPL/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nData
+        may be directly downloaded through the NODC Ocean Archive System at: URL:
+        http://www.nodc.noaa.gov/Archive/Search/. NODC can be contacted directly for
+        custom orders. (When requesting data from the NODC, a data set may be referred
+        to by a 7-digit accession number assigned to individual data sets, see the
+        NODC Ocean Archive System at http://www.nodc.noaa.gov/Archive/Search/.) For
+        more information see the NODC GHRSST project web site: URL: http://ghrsst.nodc.noaa.gov/\n","hreflang":"en-US","href":"http://www.nodc.noaa.gov/Archive/Search/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"\nhttp://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\nInformation
+        on the the MODIS SST algorithm can be found in the following documents: http://modis.gsfc.nasa.gov/data/atbd/atbd_mod25.pdf
+        and http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/\n","hreflang":"en-US","href":"http://oceancolor.gsfc.nasa.gov/DOCS/modis_sst/"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2014-05-20T00:00:00.000Z","dif_ids":["GHRSST-VIIRS_NPP-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging Radiometer
+        Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced Clear-Sky
+        Processor for Ocean (ACSPO) (GDS version 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-VIIRS_NPP-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Global Skin Sea Surface Temperature from the Visible Infrared Imaging
+        Radiometer Suite (VIIRS) on the Suomi NPP satellite created by the NOAA Advanced
+        Clear-Sky Processor for Ocean (ACSPO) (GDS version 2)\n","coordinate_system":"CARTESIAN","summary":"\nJoint
+        Polar Satellite System (JPSS), starting with S-NPP launched on 28 October
+        2011, is the new ge","has_granules":false,"orbit_parameters":{},"id":"C1224519979-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/VIIRS_NPP/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/VIIRS_NPP/OSPO/\n"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-80
+        64 79 -134"],"time_start":"2010-09-01T00:00:00.000Z","dif_ids":["GHRSST-MTSAT2-OSPO-L2P"],"version_id":"Not
+        provided","updated":"2015-10-08T00:00:00.000Z","dataset_id":"\nGHRSST Level
+        2P Western Pacific Regional Skin Sea Surface Temperature from the Multifunctional
+        Transport Satellite 2 (MTSAT-2) (GDS versions 1 and 2)\n","data_center":"NOAA_NCEI","short_name":"GHRSST-MTSAT2-OSPO-L2P","organizations":["DOC/NOAA/NESDIS/NCEI","NASA/JPL/PODAAC"],"title":"\nGHRSST
+        Level 2P Western Pacific Regional Skin Sea Surface Temperature from the Multifunctional
+        Transport Satellite 2 (MTSAT-2) (GDS versions 1 and 2)\n","coordinate_system":"CARTESIAN","summary":"\nMulti-functional
+        Transport Satellites (MTSAT) are a series of geostationary weather satellites
+        oper","has_granules":false,"orbit_parameters":{},"id":"C1224520099-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through a variety of services via a THREDDS (Thematic Real-time
+        Environmental Distributed Data Services) Data Server (TDS). The base URL of
+        NODC''s TDS is http://data.nodc.noaa.gov/thredds. Depending on the dataset,
+        the TDS can provide WMS, WCS, DAP, HTTP, and other data access and metadata
+        services as well. For more information on the TDS, see http://www.unidata.ucar.edu/software/thredds/current/tds/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/thredds/catalog/ghrsst/L2P/MTSAT2/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the Data Access Protocol (DAP) via an OPeNDAP Hyrax
+        server. The base URL of NODC''s Hyrax server is http://data.nodc.noaa.gov/opendap/.
+        For a listing of OPeNDAP clients which may be used to access OPeNDAP-enabled
+        data sets, please see the OPeNDAP web site at http://opendap.org/.\n","hreflang":"en-US","href":"\nhttp://data.nodc.noaa.gov/opendap/ghrsst/L2P/MTSAT2/OSPO/\n"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\nThese
+        data are available through the File Transfer Protocol (FTP). The base URL
+        of NODC''s FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP
+        client to download these data.\n","hreflang":"en-US","href":"\nftp://ftp.nodc.noaa.gov/pub/data.nodc/ghrsst/L2P/MTSAT2/OSPO/\n"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1997-07-01T00:00:00.000Z","dif_ids":["GGP-SG-CORMIN"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":" GGP - Corrected
+        Minute Data","data_center":"SCIOPS","short_name":"GGP-SG-CORMIN","organizations":["DE/GFZ/ISDC"],"title":"
+        GGP - Corrected Minute Data","coordinate_system":"CARTESIAN","summary":"Global
+        Geodynamics Project (GGP) - Earthquake Data","has_granules":false,"orbit_parameters":{},"id":"C1214586854-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        GGP date are available via the ISDC Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/ggp/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Saint
+        Louis University, Department of Earth and Atmospheric Sciences, GGP Homepage.\n      ","hreflang":"en-US","href":"http://www.eas.slu.edu/GGP/ggphome.html"}]},{"boxes":["-5
+        -100 67 18","-60 15 30 150"],"dif_ids":["NOAA_NCDC_PALEO_2001-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":" Late Paleocene
+        Osmium Isotope Data  ","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2001-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Late Paleocene Osmium Isotope Data  ","coordinate_system":"CARTESIAN","summary":"Marine
+        Osmium records during the late Paleocene thermal maximum  interpreted as\nproxies
+        of terrestri","has_granules":false,"orbit_parameters":{},"id":"C1215196946-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data files\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Access
+        to documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/ravizza2001/readme_ravizza2001.txt"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_93-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"
+        Time Dependent Ice Coverage and Ice Topography Through the Glacial Cycle","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_93-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":" Time Dependent Ice Coverage and Ice Topography Through
+        the Glacial Cycle","coordinate_system":"CARTESIAN","summary":"Topography and
+        ice cover data files from the ICE-4G model. Data consists of\ntopographical
+        heights at","has_granules":false,"orbit_parameters":{},"id":"C1215197136-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to ice topography data\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Ice
+        cover reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/peltice.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Topography
+        reconstruction maps at 1 Kyr intervals\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/cgi-bin/paleo/pelttopo.pl"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         ice
+        topography data set documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/ice_topo/readme_ice_topography.txt"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"1981-01-01T00:00:00.000Z","dif_ids":["GLCF_GLC_1km_1.0"],"version_id":"1.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1
+        Kilometer Land Cover Product from the University of Maryland","data_center":"SCIOPS","short_name":"GLCF_GLC_1km","organizations":["UMD/GLCF"],"title":"1
+        Kilometer Land Cover Product from the University of Maryland","coordinate_system":"CARTESIAN","summary":"Over
+        the past several years, researchers have increasingly turned to remotely sensed
+        data to improve","has_granules":false,"time_end":"1994-01-01T23:59:59.000Z","orbit_parameters":{},"id":"C1214608509-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Download
+        the Land Cover Product.","hreflang":"en-US","href":"http://glcf.umd.edu/data/landcover/data.shtml"}]},{"boxes":["-71
+        0 72 -1"],"dif_ids":["gov.noaa.ngdc.mgg.geophysics.G01414_1999 Edition"],"version_id":"1999
+        Edition","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1-deg x 1-deg
+        Terrestrial Mean Free-Air Anomalies","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.geophysics.G01414","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"1-deg
+        x 1-deg Terrestrial Mean Free-Air Anomalies","coordinate_system":"CARTESIAN","summary":"The
+        1x1 degree Terrestrial Mean Free-Air Gravity Anomaly and Geoid Undulations
+        Data Base was compile","has_granules":false,"orbit_parameters":{},"id":"C1214558130-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/fliers/se-0703.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/gravity/1999/document/html/tablegri.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.geophysics:G01414"}]},{"boxes":["-45.69
+        -63.51 78.87 170.42"],"time_start":"2001-05-28T00:00:00.000Z","dif_ids":["CH-OG-1-GPS-10S_0.0"],"version_id":"0.0","updated":"2015-12-02T00:00:00.000Z","dataset_id":"10
+        sec GPS ground tracking data","data_center":"SCIOPS","short_name":"CH-OG-1-GPS-10S","organizations":["DE/GFZ/ISDC"],"title":"10
+        sec GPS ground tracking data","coordinate_system":"CARTESIAN","summary":"This
+        data set comprises GPS ground data of a sample rate of 10 sec, generated\n      by
+        decoding and ","has_granules":false,"orbit_parameters":{},"id":"C1214586614-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         The
+        CHAMP Rapid Science Orbit dataset are available via the ISDC\n         Homepage.\n      ","hreflang":"en-US","href":"http://isdc.gfz-potsdam.de/champ"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         GFZ
+        Potsdam, Section 1.2., Gravity Missions and Analysis home page.\n      ","hreflang":"en-US","href":"http://www.gfz-potsdam.de/portal/-"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["NOAA_NCDC_PALEO_2005-015"],"version_id":"Not provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"11,000
+        Year Sunspot Number Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-015","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"11,000 Year Sunspot Number Reconstruction","coordinate_system":"CARTESIAN","summary":"From
+        http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html\n\nDirect
+        observations of sunspo","has_granules":false,"orbit_parameters":{},"id":"C1215197053-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        and further information on sunspot number reconstruction\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/solanki2004/solanki2004.html"}]},{"boxes":["-36.9
+        -157.4 71.3 147.29"],"time_start":"2008-01-16T00:00:00.000Z","dif_ids":["14c_of_soil_co2_from_ipy_itex_cross_site_comparison"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"14C of soil CO2
+        from IPY ITEX Cross Site Comparison","data_center":"SCIOPS","short_name":"14c_of_soil_co2_from_ipy_itex_cross_site_comparison","organizations":["ACADIS"],"title":"14C
+        of soil CO2 from IPY ITEX Cross Site Comparison","coordinate_system":"CARTESIAN","summary":"Study
+        sites: Toolik Lake Field Station Alaska, USA 68.63 N, 149.57 W; Atqasuk, Alaska
+        USA 70.45 N, 1","has_granules":false,"time_end":"2008-01-21T23:59:59.000Z","orbit_parameters":{},"id":"C1214602443-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Data
+        Center top-level access page for this resource\n      ","hreflang":"en-US","href":"http://www.aoncadis.org/dataset/id/79208243-d496-11de-892a-00c0f03d5b7c.html"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2000-12-07T00:00:00.000Z","dif_ids":["iucn_protected_areas"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1997 UN List
+        of National Protected Areas","data_center":"SCIOPS","short_name":"iucn_protected_areas","organizations":["UNEP/WCMC/PAP"],"title":"1997
+        UN List of National Protected Areas","coordinate_system":"CARTESIAN","summary":"This
+        prototype database has been developed by UNEP-WCMC in\n      collaboration
+        with a number of part","has_granules":false,"orbit_parameters":{},"id":"C1214612993-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false},{"boxes":["-90
+        -180 90 180"],"time_start":"1998-01-17T00:00:00.000Z","dif_ids":["NOAA_BLEACH98"],"version_id":"Not
+        provided","updated":"2015-12-01T00:00:00.000Z","dataset_id":"1998 Animations
+        of Coral Bleaching Hotspots from NOAA/NESDIS","data_center":"SCIOPS","short_name":"NOAA_BLEACH98","organizations":["DOC/NOAA/NESDIS/OSDPD"],"title":"1998
+        Animations of Coral Bleaching Hotspots from NOAA/NESDIS","coordinate_system":"CARTESIAN","summary":"The
+        year of 1998 was a difficult time for the worlds coral reefs, with\nabnormally
+        warm sea surface t","has_granules":false,"time_end":"1998-09-08T23:59:59.000Z","orbit_parameters":{},"id":"C1214419724-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         NOAA/NESDIS
+        1998 Coral Bleaching HotSpots\n      ","hreflang":"en-US","href":"http://www.osdpd.noaa.gov/ml/ocean/cb/hotspots_1998anim.html"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"0200-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO2003-051"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000 Year Hemispheric
+        Multi-proxy Temperature Reconstructions","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO2003-051","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000 Year Hemispheric Multi-proxy Temperature Reconstructions","coordinate_system":"CARTESIAN","summary":"Two
+        hemispheric multi-proxy temperature reconstructions (based on\nlocal-correlation
+        weighting, and a","has_granules":false,"orbit_parameters":{},"id":"C1215199015-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/mann2003b/"}]},{"boxes":["0
+        -180 90 180"],"time_start":"0001-01-01T00:00:00.000Z","dif_ids":["NOAA_NCDC_PALEO_2005-019"],"version_id":"Not
+        provided","updated":"2015-12-10T00:00:00.000Z","dataset_id":"2,000-Year Northern
+        Hemisphere Temperature Reconstruction","data_center":"NOAA_NCEI","short_name":"NOAA_NCDC_PALEO_2005-019","organizations":["WDC/PALEOCLIMATOLOGY,
+        BOULDER"],"title":"2,000-Year Northern Hemisphere Temperature Reconstruction","coordinate_system":"CARTESIAN","summary":"A
+        number of reconstructions of millennial-scale climate variability have been\ncarried
+        out in order t","has_granules":false,"time_end":"1979-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C1215197080-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Access
+        to data and documentation\n      ","hreflang":"en-US","href":"ftp://ftp.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Documentation
+        on  Highly variable Northern Hemisphere temperatures\n         reconstructed
+        from low- and high-resolution proxy data\n      ","hreflang":"en-US","href":"http://www.ncdc.noaa.gov/paleo/pubs/moberg2005/moberg2005.html"}]},{"boxes":["-90
+        -180 90 180"],"dif_ids":["gov.noaa.ngdc.mgg.dem.301"],"version_id":"Not provided","updated":"2016-02-11T00:00:00.000Z","dataset_id":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","data_center":"NOAA_NCEI","short_name":"gov.noaa.ngdc.mgg.dem.301","organizations":["DOC/NOAA/NESDIS/NCEI","DOC/NOAA/NESDIS/NGDC"],"title":"2-minute
+        Gridded Global Relief Data (ETOPO2) v2","coordinate_system":"CARTESIAN","summary":"Two-minute
+        gridded global relief for both ocean and land areas are available in the ETOPO2v2
+        (2006) ","has_granules":false,"orbit_parameters":{},"id":"C1214558324-NOAA_NCEI","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         2-minute
+        Gridded Global Relief Data (ETOPO2) v2. Web page for ETOPO2v2 with full descriptions
+        of the data\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/mgg/global/etopo2.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         View
+        Source Metadata\n      ","hreflang":"en-US","href":"http://www.ngdc.noaa.gov/nmmrview/xmls/xml-to-text.jsp?id=gov.noaa.ngdc.mgg.dem:301"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"2000.00","updated":"2015-08-03T00:00:00.000Z","dataset_id":"2000
+        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","organizations":["SEDAC"],"title":"2000
+        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an \n\ni","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-\n\n2000/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4NK3BZJ"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2001"],"version_id":"2001.00","updated":"2015-08-04T00:00:00.000Z","dataset_id":"2001
+        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2001","organizations":["SEDAC"],"title":"2001
+        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2001 Environmental Sustainability Index (ESI) utilizes a refined methodology
+        based on the 2000 P","has_granules":false,"orbit_parameters":{},"id":"C1000000220-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4X34VDM"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2002"],"version_id":"2002.00","updated":"2015-08-04T00:00:00.000Z","dataset_id":"2002
+        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2002","organizations":["SEDAC"],"title":"2002
+        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2002 Environmental Sustainability Index (ESI) measures overall progress toward
+        environmental sus","has_granules":false,"orbit_parameters":{},"id":"C179001967-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"maps
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/maps"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H40V89R6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/esi/esi-environmental-sustainability-index-2002/2002_ESI_Scores_by_Country.pdf"}]}]}}'
     http_version: 
     reduced: true
 8ac5aec24a6fb8206f59f7ec27c72296450fcfe2:
