@@ -4,8 +4,8 @@ describe "Project collection list", reset: true do
 
   before(:each) do
     load_page :search, q: 'Minute (FIFE)'
-    first_collection_result.click_link "Add collection to the current project"
-    second_collection_result.click_link "Add collection to the current project"
+    target_collection_result.click_link "Add collection to the current project"
+    target_collection_result('30 Minute Rainfall Data (FIFE)').click_link "Add collection to the current project"
 
     collection_results.click_link "View Project"
   end
@@ -80,7 +80,7 @@ describe "Project collection list", reset: true do
     end
 
     it "doesn't show an empty query param 'pg[]=' in the url" do
-      expect(page).to have_query_string("p=!C179003030-ORNL_DAAC!C179003615-ORNL_DAAC&pg[2][dnf]=DAY&q=Minute+(FIFE)")
+      expect(page).to have_query_string("p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[2][dnf]=DAY&q=Minute+(FIFE)")
     end
   end
 

@@ -139,7 +139,7 @@
                 Progress: <span data-bind="text: number_processed"></span> of <span data-bind="text: total_number"></span> items processed (<span data-bind="text: (number_processed / total_number * 100).toFixed(2)"></span>%)
               </p>
               <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-bind="attr { 'aria-valuenow': percent_done, style: { width: percent_done_str }">
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-bind="attr: { 'aria-valuenow': percent_done}, style: { width: percent_done + '%' }">
                 </div>
               </div>
             </div>

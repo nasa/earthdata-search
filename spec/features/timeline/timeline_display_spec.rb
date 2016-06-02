@@ -30,8 +30,8 @@ describe "Timeline display", reset: false do
       # 4 collections with granules
       add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
       add_collection_to_project('C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)')
-      add_collection_to_project('C189399410-GSFCS4PA', 'AIRS/Aqua Level 1B AMSU (A1/A2) geolocated and calibrated brightness temperatures V005')
-      add_collection_to_project('C191370861-GSFCS4PA', 'AIRS/Aqua Level 1B Calibration subset V005')
+      add_collection_to_project('C1000000000-ORNL_DAAC', 'A Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus Data')
+      add_collection_to_project('C1234044620-GES_DISC', 'MLS/Aura Near-Real-Time L2 Nitric Acid (HNO3) Mixing Ratio V003 (ML2HNO3_NRT) at GES DISC')
 
       collection_results.click_link "View Project"
 
@@ -47,7 +47,7 @@ describe "Timeline display", reset: false do
       timeline = page.find('#timeline svg')
       expect(timeline).to have_selector('.C179002914-ORNL_DAAC')
       expect(timeline).to have_selector('.C179003030-ORNL_DAAC')
-      expect(timeline).to have_selector('.C189399410-GSFCS4PA')
+      expect(timeline).to have_selector('.C1000000000-ORNL_DAAC')
     end
 
     it 'does not display collections without granules' do
