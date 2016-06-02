@@ -87,6 +87,12 @@ ns.SearchPage = do (ko
                               e.indexOf('point') != -1)
       null
 
+    hideParent: =>
+      $('.master-overlay').masterOverlay('manualHideParent')
+
+    showParent: =>
+      $('.master-overlay').masterOverlay('manualShowParent')
+
   current = new SearchPage()
   setCurrent(current)
 

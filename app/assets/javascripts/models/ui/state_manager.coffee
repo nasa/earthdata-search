@@ -143,7 +143,9 @@
       root = '/search'
 
       return root if state.parent && state.current != 'collection-details'
+
       return "#{root}/map" unless state.visible
+
       return "#{root}/collections" if state.current == 'collection-results'
 
       root += '/project' if state.children.indexOf('project-overview') != -1
@@ -166,6 +168,7 @@
         visible: true
         parent: true
         secondary: false
+        manualShowParent: true
         children: null
         current: 'collection-results'
 

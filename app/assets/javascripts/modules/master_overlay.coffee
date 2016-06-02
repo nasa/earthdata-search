@@ -5,6 +5,7 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       super(root, namespace, options)
       $(window).on 'load resize', @contentHeightChanged
       @_minimized = false
+      @_manualShowParent = true
 
     destroy: ->
       super()
@@ -33,6 +34,12 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
       tmp = @_minimized
       @_minimized = false
       @_triggerStateChange() if tmp
+
+    manualShowParent: ->
+      @_manualShowParent = true
+
+    manualHideParent: ->
+      @_manualShowParent = false
 
     showParent: -> @toggleParent(true)
 
@@ -144,7 +151,8 @@ do (document, window, $=jQuery, config=@edsc.config, plugin=@edsc.util.plugin, p
         {
           minimized: @_minimized
           visible: !@root.hasClass('is-hidden')
-          parent: !@root.hasClass(@scope('is-parent-hidden'))
+          parent: if children[@level()] == 'collection-results' then @_manualShowParent else false
+          manualShowParent: @_manualShowParent
           secondary: !@root.hasClass(@scope('is-secondary-hidden'))
           children: children
           current: children[@level()]
