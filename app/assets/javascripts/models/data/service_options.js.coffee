@@ -1,6 +1,6 @@
 ns = @edsc.models.data
 
-ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend = $.extend) ->
+ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutModel, extend = $.extend) ->
 
   class SubsetOptions
     constructor: (@config) ->
@@ -34,6 +34,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
       @isValid = ko.observable(true)
 
       @subsetOptions = ko.observable(null)
+      @prepopulatedFields = ko.computed(@_computePrepopulatedFields, this, deferEvaluation: true)
 
       @options = ko.computed =>
         m = @method()
@@ -47,6 +48,13 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
         else
           @subsetOptions(null)
         result
+
+    _computePrepopulatedFields: ->
+      result = {}
+      mbr = edsc.page.query?.mbr()
+      if mbr
+        [result.BBOX_SOUTH, result.BBOX_WEST, result.BBOX_NORTH, result.BBOX_EAST] = mbr
+      result
 
     serialize: ->
       method = @method()
