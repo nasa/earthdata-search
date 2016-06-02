@@ -18,8 +18,8 @@ describe "Temporal" do
       fill_in "Start", with: "2013-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("Canadian National Forestry Photograph Collection")
-      expect(page).to have_content("GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)")
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
+      expect(page).to have_content("ABoVE: Burn Severity, Fire Progression, Landcover and Field Data, NWT, Canada, 2014")
     end
 
     it "allows the user to search up to the end date time" do
@@ -27,7 +27,7 @@ describe "Temporal" do
       fill_in "End", with: "1970-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)")
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
       expect(page).to have_content("Stop 1970-12-01 00:00:00")
     end
@@ -38,7 +38,7 @@ describe "Temporal" do
       fill_in "End", with: "1975-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)")
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
       expect(page).to have_content("Start 1975-12-01 00:00:00")
       expect(page).to have_content("Stop 1975-12-01 00:00:00")
@@ -50,13 +50,13 @@ describe "Temporal" do
       fill_in "End", with: "1979-12-01 00:00:00\t"
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)")
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
       js_click_temporal
       js_click_clear
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_content("GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)")
+      expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
       expect(page).to have_no_content("Start 1978-12-01 00:00:00")
       expect(page).to have_no_content("Stop 1979-12-01 00:00:00")
@@ -82,7 +82,7 @@ describe "Temporal" do
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)")
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
       expect(page).to have_content("Start 12-01 00:00:00")
       expect(page).to have_content("Stop 12-31 00:00:00")
@@ -98,7 +98,7 @@ describe "Temporal" do
       page.execute_script(script)
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)")
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
       expect(page).to have_content("Start 12-01 00:00:00")
       expect(page).to have_content("Stop 12-31 00:00:00")
@@ -108,7 +108,7 @@ describe "Temporal" do
       js_click_clear
       js_click_apply ".temporal-dropdown"
 
-      expect(page).to have_no_content("GHRSST Level 2P Central Pacific Regional Skin Sea Surface Temperature from the Geostationary Operational Environmental Satellites (GOES) Imager on the GOES-15 satellite (GDS versions 1 and 2)")
+      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
       expect(page).to have_no_content("Start 12-01 00:00:00")
       expect(page).to have_no_content("Stop 12-31 00:00:00")
