@@ -61,7 +61,7 @@
         <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-angle-double-left"></i></a>
         <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-angle-double-right"></i></a>
         <nav class="master-overlay-nav master-overlay-when-parent-hidden">
-          <a href="#" class="master-overlay-show-parent">
+          <a href="#" class="master-overlay-show-parent" data-bind="click: showParent">
             <i class="fa fa-search"></i> Browse Collections
             <span class="master-overlay-when-max" data-bind="if: query.facets() && query.facets().length > 0">
                (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
