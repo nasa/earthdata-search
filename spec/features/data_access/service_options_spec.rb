@@ -58,4 +58,40 @@ describe 'Service Options', reset: false do
       expect(page).to have_text('There are no matching granules to access for this collection')
     end
   end
+
+  context "for collections with bounding box prepopulation options" do
+    context "when the project's query has a spatial filter" do
+      before :all do
+        load_page 'data/configure', {project: ['C1000000560-NSIDC_ECS'],
+                                     granule_id: 'G1001048061-NSIDC_ECS',
+                                     bounding_box: [1, 2, 3, 4]}
+      end
+
+      it "prepopulates the options form with the filter's MBR" do
+        choose 'AE_SI12.3 ESI Service'
+        check 'Enter bounding box'
+        expect(page).to have_field('North', with: "3")
+        expect(page).to have_field('South', with: "1")
+        expect(page).to have_field('East', with: "4")
+        expect(page).to have_field('West', with: "2")
+      end
+    end
+
+    context "when the project's query has no spatial filter" do
+      before :all do
+        load_page 'data/configure', {project: ['C1000000560-NSIDC_ECS'],
+                                     granule_id: 'G1001048061-NSIDC_ECS'}
+      end
+
+      it "does not prepopulate the form" do
+        choose 'AE_SI12.3 ESI Service'
+        check 'Enter bounding box'
+        expect(page).to have_field('North', with: "90")
+        expect(page).to have_field('South', with: "-90")
+        expect(page).to have_field('East', with: "180")
+        expect(page).to have_field('West', with: "-180")
+      end
+
+    end
+  end
 end
