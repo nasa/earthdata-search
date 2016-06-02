@@ -17,13 +17,13 @@ describe "'Clear Filters' button", reset: false do
   end
 
   it "clears spatial" do
-    create_point(0, 0)
-    expect(page).to have_no_content("Background Air Pollution Monitoring Network")
-    expect(page).to have_content("GGP - Corrected Minute Data")
+    create_point(67, -155)
+    expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
+    expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
 
     click_link "Clear Filters"
-    expect(page).to have_content("Background Air Pollution Monitoring Network")
-    expect(page).to have_no_content("GGP - Corrected Minute Data")
+    expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
+    expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
   end
 
   context "clears temporal" do

@@ -21,7 +21,7 @@ describe 'Invalid user token', reset: false do
     end
 
     it 'displays search results' do
-      expect(page).to have_content 'BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data'
+      expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)'
     end
   end
 

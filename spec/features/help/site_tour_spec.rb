@@ -42,7 +42,7 @@ describe "Site tour", reset: true do
       wait_for_xhr
 
       expect(page).to have_popover('Collection Results')
-      nth_collection_result(4).click
+      target_collection_result('MODIS/Aqua Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km (Collection 005)').click
       wait_for_xhr
 
       expect(page).to have_popover('Matching Granules')
