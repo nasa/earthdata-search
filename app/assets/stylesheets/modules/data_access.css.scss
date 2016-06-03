@@ -344,11 +344,11 @@ section.data-access-next {
   color: #fff;
   text-transform: capitalize;
 
-  &.processing, &.validated, &.quoted {
+  &.closed, &.complete {
     background: #27ae60;
   }
 
-  &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
+  &.failed, &.canceled, &.cancelling, &.submit_rejected, &.submit_failed, &.quote_rejected, &.quote_failed, &.not_validated {
     background: #e74c3c;
   }
 }

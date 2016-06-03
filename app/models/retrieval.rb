@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class Retrieval < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
   belongs_to :user
@@ -66,26 +68,40 @@ class Retrieval < ActiveRecord::Base
 
         access_methods = collection['serviceOptions']['accessMethod']
         access_methods.each do |method|
-          if method['type'] == 'order'
-            order_response = client.create_order(params,
-                                                 method['id'],
-                                                 method['method'],
-                                                 method['model'],
-                                                 user_id,
-                                                 token,
-                                                 client,
-                                                 access_token)
-            method[:order_id] = order_response[:order_id]
-            method[:dropped_granules] = order_response[:dropped_granules]
-            Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
-          elsif method['type'] == 'service'
-            request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
+          begin
+            if method['type'] == 'order'
+              order_response = client.create_order(params,
+                                                   method['id'],
+                                                   method['method'],
+                                                   method['model'],
+                                                   user_id,
+                                                   token,
+                                                   client,
+                                                   access_token)
+              method[:order_id] = order_response[:order_id]
+              method[:dropped_granules] = order_response[:dropped_granules]
+              Rails.logger.info "Granules dropped from the order: #{order_response[:dropped_granules].map { |dg| dg[:id] }}"
+            elsif method['type'] == 'service'
+              request_url = "#{base_url}/data/retrieve/#{retrieval.to_param}"
 
-            method[:collection_id] = collection['id']
-            service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
-            method[:order_id] = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
-            method[:error_code] = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
-            method[:error_message] = service_response['Exception'].nil? ? nil : service_response['Exception']['Message']
+              method[:collection_id] = collection['id']
+              service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
+              method[:order_id] = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
+              method[:error_code] = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
+              method[:error_message] = service_response['Exception'].nil? ? nil : service_response['Exception']['Message']
+            end
+          rescue => e
+            tag = SecureRandom.hex(8)
+            logger.tagged("retrieval-error") do
+              logger.tagged(tag) do
+                logger.error "Unable to process access method in retrieval #{id}: #{method.to_json}"
+                logger.error e.message
+                e.backtrace.each {|l| logger.error "\t#{l}"}
+                method[:order_status] = 'failed'
+                method[:error_code] = tag
+                method[:error_message] = "Could not submit request for processing. This may be caused by temporary outages. Please try again later, or for additional assistance, please leave feedback with error code #{tag}."
+              end
+            end
           end
         end
       end
@@ -93,6 +109,15 @@ class Retrieval < ActiveRecord::Base
       retrieval.jsondata = project
       retrieval.save!
     end
+  rescue => e
+    logger.tagged("delayed_job version: #{Rails.configuration.version}") do
+      logger.tagged("retrieval-error") do
+        logger.error "Unable to process retrieval #{id}"
+        logger.error e.message
+        e.backtrace.each {|l| logger.error "\t#{l}"}
+      end
+    end
+    raise e
   end
 
   def collections

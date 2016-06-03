@@ -77,21 +77,21 @@ class DataAccessController < ApplicationController
             order['order_status'] = echo_order['state']
           else
             # echo order_id doesn't exist yet
-            order['order_status'] = 'creating'
+            order['order_status'] ||= 'creating'
           end
         end
       end
       # if no order numbers exist yet
       if order_response.nil?
         orders.each do |order|
-          order['order_status'] = 'creating'
+          order['order_status'] ||= 'creating'
         end
       end
     end
 
     if service_orders.size > 0
       service_orders.each do |s|
-        s['order_status'] = 'submitting'
+        s['order_status'] = 'creating'
         s['service_options'] = {}
 
         if !s['error_code'].blank?

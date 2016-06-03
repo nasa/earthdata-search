@@ -12,5 +12,7 @@ ns.Feedback = do (urlUtil = @edsc.util.url
       else
         feedback.showForm({subject: "[Metadata][#{area}]"})
       false
+    submitError: (area, code) =>
+      feedback.showForm({subject: "[Error][#{area}] #{code}"})
 
   exports = Feedback
