@@ -1,5 +1,6 @@
 #= require models/data/granule_attributes
 #= require models/ui/temporal
+#= require models/data/spatial_condition
 
 ns = @edsc.models.data
 
@@ -8,6 +9,7 @@ ns.query = do (ko,
                GranuleAttributes=@edsc.models.data.GranuleAttributes
                KnockoutModel=@edsc.models.KnockoutModel
                Temporal=@edsc.models.ui.Temporal
+               SpatialCondition=@edsc.models.data.SpatialCondition
                deparam=@edsc.util.deparam
                mbr=@edsc.map.mbr
                urlUtil=@edsc.util.url
@@ -94,6 +96,7 @@ ns.query = do (ko,
       if type == 'polygon'
         spatial.push(spatial[0])
 
+      console.log "--====---------- spatialParam writeTo: ", spatial
       query[type] = spatial.join(',')
 
     canReadFrom: (query) ->
@@ -109,6 +112,7 @@ ns.query = do (ko,
 
       # Remove the last point in polygons
       value = value.replace(/:[^:]*$/, '') if type == 'polygon'
+      console.log "--====---------- spatialParam readFrom: #{type}:#{value}"
       @value("#{type}:#{value}")
 
   class KeywordParam extends QueryParam
@@ -267,6 +271,7 @@ ns.query = do (ko,
     constructor: (parentQuery) ->
       @focusedTemporal = ko.observable(null)
       @focusedInterval = ko.observable(null)
+      @coords = ko.observable([])
       @temporal = new Temporal()
 
       @testFacets = @queryComponent(new QueryParam('test_facets'), '')
@@ -274,6 +279,7 @@ ns.query = do (ko,
       @placename = @queryComponent(new QueryParam('placename'), '', query: false)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
+      @spatialCondition = new SpatialCondition(@spatial)
       @mbr = @computed(read: @_computeMbr, owner: this, deferEvaluation: true)
       @facets = @queryComponent(new FacetParam(), ko.observableArray())
       @scienceKeywordFacets = @computed(read: @_computeScienceKeywordFacets, deferEvaluation: true)

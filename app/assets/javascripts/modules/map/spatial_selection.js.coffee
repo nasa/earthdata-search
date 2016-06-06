@@ -135,12 +135,16 @@ ns.SpatialSelection = do (window,
       currentPage.ui.spatialType.name(name)
 
     _onDrawStart: (e) =>
+      console.log '----- draw start!!'
+      # Display manual typing panel
+      container = document.getElementById('manual-coord-entry-container')
       # Remove the old layer
       @_oldLayer = @_layer
       @_oldLayerIsShapefile = @_shapefileLayer.isActive()
       @_removeSpatial()
 
     _onDrawStop: (e) =>
+      console.log '----stopped!!'
       currentPage.ui.spatialType.selectNone()
       # The user cancelled without committing.  Restore the old layer
       @_shapefileLayer.activate(false) if @_oldLayerIsShapefile
@@ -158,6 +162,7 @@ ns.SpatialSelection = do (window,
       @_layer?._path?.setAttribute?('pointer-events', 'stroke')
 
     _onDrawCreated: (e) =>
+      console.log '----- draw created!!'
       @_addLayer(e.target, e.layer, e.layerType)
 
     _onDrawEdited: (e) =>
