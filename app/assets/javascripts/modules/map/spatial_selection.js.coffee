@@ -135,16 +135,14 @@ ns.SpatialSelection = do (window,
       currentPage.ui.spatialType.name(name)
 
     _onDrawStart: (e) =>
-      console.log '----- draw start!!'
       # Display manual typing panel
-      container = document.getElementById('manual-coord-entry-container')
+      @_showManualEntryPanel(e.target, e.layerType)
       # Remove the old layer
       @_oldLayer = @_layer
       @_oldLayerIsShapefile = @_shapefileLayer.isActive()
       @_removeSpatial()
 
     _onDrawStop: (e) =>
-      console.log '----stopped!!'
       currentPage.ui.spatialType.selectNone()
       # The user cancelled without committing.  Restore the old layer
       @_shapefileLayer.activate(false) if @_oldLayerIsShapefile
@@ -152,6 +150,8 @@ ns.SpatialSelection = do (window,
         @_layer = @_oldLayer
         @_oldLayer = null
         @_drawnItems.addLayer(@_layer)
+        currentPage.query.spatialCondition.visible(true)
+        currentPage.query.spatialCondition.spatialType(@_toReadableType(@_layer.type))
 
     _onEditStart: (e) =>
       @_preEditBounds = @_boundsToPoints(@_layer)
@@ -162,7 +162,6 @@ ns.SpatialSelection = do (window,
       @_layer?._path?.setAttribute?('pointer-events', 'stroke')
 
     _onDrawCreated: (e) =>
-      console.log '----- draw created!!'
       @_addLayer(e.target, e.layer, e.layerType)
 
     _onDrawEdited: (e) =>
@@ -179,6 +178,14 @@ ns.SpatialSelection = do (window,
       else
         bounds = layer.getLatLngs()
       points = (@map.latLngToLayerPoint(latLng) for latLng in bounds)
+
+    _showManualEntryPanel: (map, type=@_layer.type) ->
+      currentPage.query.spatialCondition.visible(true)
+      currentPage.query.spatialCondition.spatialType(@_toReadableType(type))
+
+    _toReadableType: (type) ->
+      return 'Point' if type == 'marker'
+      return 'Bounding Box' if type == 'rectangle'
 
     _addLayer: (map, layer=@_layer, type=@_layer.type) ->
       @_oldLayer = null

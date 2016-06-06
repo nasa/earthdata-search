@@ -96,7 +96,6 @@ ns.query = do (ko,
       if type == 'polygon'
         spatial.push(spatial[0])
 
-      console.log "--====---------- spatialParam writeTo: ", spatial
       query[type] = spatial.join(',')
 
     canReadFrom: (query) ->
@@ -112,7 +111,6 @@ ns.query = do (ko,
 
       # Remove the last point in polygons
       value = value.replace(/:[^:]*$/, '') if type == 'polygon'
-      console.log "--====---------- spatialParam readFrom: #{type}:#{value}"
       @value("#{type}:#{value}")
 
   class KeywordParam extends QueryParam

@@ -261,27 +261,7 @@
   </p>
 </div>
 
-<div id="manual-coord-entry-container" class="manual-coord-entry" data-bind="">
-  <p data-bind="visible: !query.spatial()"><i class="fa fa-fw fa-crop"></i></p>
-  <p data-bind="visible: query.spatial(), with: query.spatialCondition">
-    <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
-    <label for="manual-coord-entry" data-bind="text: spatialType"></label>
-    <!-- ko if: spatialType() == 'Point' -->
-      <input type="text" id="manual-coord-entry" name="manual-coord-entry" data-bind="textInput: coordinates" placeholder="lat, lon (e.g. 44.2, 130)">
-    <!--/ko-->
-    <!-- ko if: spatialType() == 'Bounding Box' -->
-      <label for="manual-coord-entry">Bottom Left</label>
-      <input type="text" id="manual-coord-entry" name="manual-coord-entry" data-bind="textInput: coordinates" placeholder="lat, lon (e.g. 44.2, 130)">
-      <label for="manual-coord-entry">Top Right</label>
-      <input type="text" id="manual-coord-entry" name="manual-coord-entry" data-bind="textInput: coordinates" placeholder="lat, lon (e.g. 44.2, 130)">
-    <!--/ko-->
-
-
-
-  </p>
-
-  <span data-bind="visible: " class="error">Value must be between 0.0 and 100.0</span>
-</div>
+<%= render partial: 'spatial_manual_entry'%>
 
 <div class="landing-area landing-visible">
 
