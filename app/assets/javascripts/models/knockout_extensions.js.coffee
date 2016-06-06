@@ -113,14 +113,13 @@ do (ko, $=jQuery) ->
 
           if model? && !options.isReadFromDefaults
             form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
-
           # Handle problems if the underlying form has a breaking change
           try
-            $el.echoforms(form: form)
+            $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
           catch error
             console.log("Error caught rendering saved model, retrying:", error)
             form = originalForm
-            $el.echoforms(form: form)
+            $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
 
           syncModel = ->
             isValid = $(this).echoforms('isValid')
