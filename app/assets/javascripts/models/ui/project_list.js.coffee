@@ -58,6 +58,8 @@ ns.ProjectList = do (ko
       @collectionOnly = ko.computed(@_computeCollectionOnly, this, deferEvaluation: true)
       @submittedOrders = ko.computed(@_computeSubmittedOrders, this, deferEvaluation: true)
       @submittedServiceOrders = ko.computed(@_computeSubmittedServiceOrders, this, deferEvaluation: true)
+      @pollProjectUpdates = ko.computed(@_computeProjectUpdates, this, deferEvaluation: true)
+      @pollingIntervalId = ko.observable(null)
 
       @allCollectionsVisible = ko.computed(@_computeAllCollectionsVisible, this, deferEvaluation: true)
 
@@ -163,6 +165,9 @@ ns.ProjectList = do (ko
           collections.push
             title: title,
             links: collection.granuleDatasource()?.downloadLinks(id)
+            order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
+            error_code: m.errorCode
+            error_message: m.errorMessage
 
       collections
 
@@ -174,16 +179,46 @@ ns.ProjectList = do (ko
         collectionId = collection.id
         has_browse = collection.browseable_granule?
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'order'
+          @pollProjectUpdates()
           canCancel = ['SUBMITTING', 'QUOTED', 'NOT_VALIDATED', 'QUOTED_WITH_EXCEPTIONS', 'VALIDATED'].indexOf(m.orderStatus) != -1
           orders.push
             dataset_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus?.toLowerCase().replace(/_/g, ' ')
             cancel_link: urlUtil.fullPath("/data/remove?order_id=#{m.orderId}") if canCancel
+            is_in_progress: m.orderStatus == 'creating' || m.orderStatus.indexOf('PROCESSING') == 0 || canCancel
             dropped_granules: m.droppedGranules
             downloadBrowseUrl: has_browse && urlUtil.fullPath("/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}")
             method_name: m.method()
+            error_code: m.errorCode
+            error_message: m.errorMessage
       orders
+
+
+    _computeProjectUpdates: ->
+      shouldPoll = false
+      submitted = @submittedOrders().concat(@submittedServiceOrders())
+      for order in submitted when order.is_in_progress || order.order_status == 'creating'
+        shouldPoll = true
+        break
+
+      intervalId = @pollingIntervalId.peek()
+      if !shouldPoll && intervalId
+        clearInterval(intervalId)
+        @pollingIntervalId(null)
+      else if shouldPoll && !intervalId
+        url = window.location.href + '.json'
+        console.log "Loading project data for #{@project.id()}"
+        intervalId = setInterval((=> ajax(
+          dataType: 'json'
+          url: url
+          success: (data, status, xhr) =>
+            console.log "Finished loading project data for #{@project.id()}"
+            @project.fromJson(data)
+          complete: =>
+            @isPollingUpdates(false)
+        )), 5000)
+        @pollingIntervalId(intervalId)
 
     _computeSubmittedServiceOrders: ->
       serviceOrders = []
@@ -193,18 +228,7 @@ ns.ProjectList = do (ko
         collectionId = collection.id
         has_browse = collection.browseable_granule?
         for m in projectCollection.serviceOptions.accessMethod() when m.type == 'service'
-          if m.orderStatus == 'processing' || m.orderStatus == 'submitting'
-            console.log "Loading project data for #{id}"
-            url = window.location.href + '.json'
-            setTimeout((=> ajax
-              dataType: 'json'
-              url: url
-              retry: => @_computeSubmittedServiceOrders()
-              success: (data, status, xhr) =>
-                console.log "Finished loading project data for #{id}"
-                @project.fromJson(data))
-            , 5000)
-
+          @pollProjectUpdates()
           number_processed = m.serviceOptions.number_processed
           total_number = m.serviceOptions.total_number
           percent_done = (number_processed / total_number * 100).toFixed(0)
@@ -213,7 +237,7 @@ ns.ProjectList = do (ko
             dataset_id: collection.dataset_id
             order_id: m.orderId
             order_status: m.orderStatus
-            is_in_progress: m.orderStatus != 'submitting' && m.orderStatus != 'failed' && m.orderStatus != 'complete'
+            is_in_progress: m.orderStatus != 'creating' && m.orderStatus != 'failed' && m.orderStatus != 'complete'
             download_urls: m.serviceOptions.download_urls
             number_processed: m.serviceOptions.number_processed
             total_number: m.serviceOptions.total_number
@@ -222,7 +246,6 @@ ns.ProjectList = do (ko
             downloadBrowseUrl: has_browse && urlUtil.fullPath("/granules/download.html?browse=true&project=#{id}&collection=#{collectionId}")
             error_code: m.errorCode
             error_message: m.errorMessage
-      console.log("(DEBUG) Service Orders: #{JSON.stringify(serviceOrders)}")
       serviceOrders
 
     _computeCollectionOnly: ->
