@@ -358,11 +358,11 @@ e3ae73f0a97dcd0656ff2993f479ce4d570f9bd8:
       message: 
     headers:
       date:
-      - Thu, 02 Jun 2016 20:23:11 GMT
+      - Fri, 03 Jun 2016 18:20:47 GMT
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 3f5e3342-a5ab-45f1-865c-e3025e1a4642
+      - 7b761e32-9f9d-4507-8946-970d55ed2982
       content-length:
       - '2'
       connection:

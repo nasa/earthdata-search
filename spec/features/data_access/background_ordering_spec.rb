@@ -82,4 +82,55 @@ describe 'Background jobs ordering', reset: false do
       end
     end
   end
+
+  context "when submitting an order that will throw an error" do
+    before :all do
+
+      Delayed::Worker.delay_jobs = true
+
+      load_page :search, overlay: false
+      login
+      load_page 'data/configure', project: [orderable_collection_id], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']
+      wait_for_xhr
+
+      choose 'FtpPushPull'
+      select 'FtpPull', from: 'Distribution Options'
+      click_on 'Continue'
+
+      # Confirm address
+      click_on 'Submit'
+      wait_for_xhr
+    end
+
+    after :all do
+      Delayed::Worker.delay_jobs = false
+    end
+
+    it 'initially shows an order in the "Creating" state' do
+      expect(page).to have_text('Creating')
+    end
+
+    context 'after the order throws an error' do
+      before :all do
+        begin
+          RSpec::Mocks.setup(self)
+          allow_any_instance_of(Echo::Client).to receive(:create_order).and_raise("Expected!")
+          Delayed::Worker.new.work_off
+        ensure
+          RSpec::Mocks.teardown()
+        end
+      end
+
+      it 'shows the order in the "Failed" state without reloading the page' do
+        expect(page).to have_no_text('Creating')
+        expect(page).to have_text('Failed')
+      end
+
+      it 'shows an error code with information on reporting the error' do
+        synchronize do
+          expect(page.text).to match(/please leave feedback with error code [a-f0-9]+/)
+        end
+      end
+    end
+  end
 end
