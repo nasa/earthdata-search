@@ -47,7 +47,6 @@ describe "Data download page", reset: false do
       click_on 'Continue'
       choose 'Download'
       click_on 'Submit'
-      wait_for_xhr
     end
 
     it "displays a section for additional resources and documentation", intermittent: 1 do
@@ -276,7 +275,6 @@ describe "Data download page", reset: false do
 
       # Confirm address
       click_on 'Submit'
-      wait_for_xhr
     end
 
     it "displays no information on direct downloads" do
@@ -330,7 +328,6 @@ describe "Data download page", reset: false do
 
       choose 'Download'
       click_on 'Submit'
-      wait_for_xhr
     end
 
     it "displays no information on direct downloads" do
