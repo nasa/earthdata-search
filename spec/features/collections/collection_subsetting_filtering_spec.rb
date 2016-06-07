@@ -17,7 +17,7 @@ describe 'Collection "Subsetting Services" Filtering', reset: false do
 
   context 'when a collection search result has OPeNDAP subsetting' do
     before :all do
-      load_page :search, q: 'C1020-PODAAC'
+      load_page :search, q: 'C128599377-NSIDC_ECS'
     end
 
     it 'displays the subsetting badge on the collection' do
