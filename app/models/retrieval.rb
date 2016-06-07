@@ -99,7 +99,7 @@ class Retrieval < ActiveRecord::Base
                 e.backtrace.each {|l| logger.error "\t#{l}"}
                 method[:order_status] = 'failed'
                 method[:error_code] = tag
-                method[:error_message] = "Could not submit request for processing. This may be caused by temporary outages. Please try again later, or for additional assistance, please leave feedback with error code #{tag}."
+                method[:error_message] = "Could not submit request for processing. Our operations team has been notified of the problem. Please try again later. To provide us additional details, please click the button below."
               end
             end
           end
