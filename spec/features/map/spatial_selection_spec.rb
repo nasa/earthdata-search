@@ -153,7 +153,7 @@ describe "Spatial" do
       end
 
       it "updates the collection filters using the new bounding box selection" do
-        expect(page).to have_content("ACOS GOSAT/TANSO-FTS Level 2 Full Physics Standard Product V3.3")
+        expect(page).to have_content("ACOS GOSAT/TANSO-FTS Level 2 Full Physics Standard Product V3.5 (ACOS_L2S) at GES DISC")
       end
     end
 
