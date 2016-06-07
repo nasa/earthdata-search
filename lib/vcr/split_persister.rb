@@ -22,7 +22,7 @@ module VCR
       persisted_requests = @persister[file_name(name, 'requests')]
       persisted_responses = @persister[file_name(name, 'responses')]
 
-      return nil if persisted_requests.nil? || persisted_responses.nil?
+      return nil if persisted_requests.blank? || persisted_responses.blank?
 
       requests = @destination_serializer.deserialize(persisted_requests)
       responses = @destination_serializer.deserialize(persisted_responses)
