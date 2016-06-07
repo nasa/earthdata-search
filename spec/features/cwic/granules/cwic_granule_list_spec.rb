@@ -67,7 +67,7 @@ describe "CWIC Granule list", reset: false do
       hook_granule_results('EO-1 (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data')
 
       it "displays temporal information on the granule list" do
-        expect(granule_list.text).to match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z to \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/)
+        expect(granule_list.text).to match(/\d{4}-\d{2}-\d{2} to \d{4}-\d{2}-\d{2}/)
       end
     end
   end

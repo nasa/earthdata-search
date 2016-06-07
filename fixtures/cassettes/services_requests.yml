@@ -31,7 +31,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Thu, 19 May 2016 16:20:27 GMT
+  recorded_at: Tue, 07 Jun 2016 05:06:29 GMT
   digest: 69aefe67f0a2fcc8297dc1da1bf5fef5f0b7187c
 - request:
     method: get
@@ -86,7 +86,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Thu, 19 May 2016 16:20:28 GMT
+  recorded_at: Tue, 07 Jun 2016 05:06:30 GMT
   digest: 996e001295472100f39f0a7c38a501d266af6f8c
 - request:
     method: get
@@ -141,7 +141,7 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Thu, 19 May 2016 16:27:30 GMT
+  recorded_at: Tue, 07 Jun 2016 05:06:37 GMT
   digest: 5dd84316f775e88e0120e9cbc0a2218a14976cda
 - request:
     method: get
