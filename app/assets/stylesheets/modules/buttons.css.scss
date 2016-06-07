@@ -202,7 +202,7 @@ button:disabled {
 $feedback-button-color: #315781;
 $feedback-button-hover-color: lighten($feedback-button-color, 10%);
 
-.master-overlay-info a.feedback-button, a.feedback-button {
+.master-overlay-info a.feedback-button, a.feedback-button, a.back-error-button {
   float: none;
   background: $feedback-button-color;
   color: #fff !important;
