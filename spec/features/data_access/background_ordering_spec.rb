@@ -128,7 +128,7 @@ describe 'Background jobs ordering', reset: false do
 
       it 'shows an error code with information on reporting the error' do
         synchronize do
-          expect(page.text).to match(/please leave feedback with error code [a-f0-9]+/)
+          expect(page).to have_text("To provide us additional details, please click the button below.")
         end
       end
     end
