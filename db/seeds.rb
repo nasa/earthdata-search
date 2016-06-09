@@ -4,6 +4,7 @@ load_extra = CollectionExtra.maximum('updated_at').to_i < 1410364487
 load_extra && puts('Loading CollectionExtra seeds')
 load_extra && CollectionExtra.destroy_all
 load_extra && CollectionExtra.create!([
+  {echo_id: "C1219224200-NSIDCV0", has_browseable_granules: false, has_granules: false, browseable_granule: nil, granule: nil, searchable_attributes: {"attributes"=>[{"name"=>"Version Summary", "data_type"=>"STRING"},{"name"=>"Current Version", "data_type"=>"INT", "value"=>1}]}, orbit: {}},
   {echo_id: "C179003030-ORNL_DAAC", has_browseable_granules: false, has_granules: true, browseable_granule: nil, granule: "G179109563-ORNL_DAAC", searchable_attributes: {"attributes"=>[]}, orbit: {}},
   {echo_id: "C179001887-SEDAC", has_browseable_granules: false, has_granules: false, browseable_granule: nil, granule: nil, searchable_attributes: {"attributes"=>[]}, orbit: {}},
   {echo_id: "C1000000220-SEDAC", has_browseable_granules: false, has_granules: false, browseable_granule: nil, granule: nil, searchable_attributes: {"attributes"=>[]}, orbit: {}},

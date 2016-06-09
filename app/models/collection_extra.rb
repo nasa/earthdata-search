@@ -298,10 +298,11 @@ class CollectionExtra < ActiveRecord::Base
       # Delete useless garbage
       name = attr['name']
       description = attr['description']
-      if description == 'None' ||
+      if description.present? &&
+          (description == 'None' ||
           description == name ||
           description.start_with?("The #{name} for this collection") ||
-          description.start_with?("The #{name} attribute for this granule")
+          description.start_with?("The #{name} attribute for this granule"))
 
         attr.delete('description')
       end
