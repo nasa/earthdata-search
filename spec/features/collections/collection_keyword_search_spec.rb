@@ -15,6 +15,12 @@ describe "Collection keyword searches", reset: false do
     reset_search
   end
 
+  # EDSC-1080
+  it "displays the specific collection C1219224200-NSIDCV0" do
+    fill_in 'keywords', with:'C1219224200-NSIDCV0'
+    expect(page).to have_content('Antarctic Peninsula 100 m Digital Elevation Model Derived from ASTER GDEM')
+  end
+
   it "displays the first 20 collection results" do
     fill_in "keywords", with: "A"
     expect(page).to have_css('#collection-results-list .panel-list-item', count: 20)
