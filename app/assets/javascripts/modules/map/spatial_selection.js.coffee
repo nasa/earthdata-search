@@ -135,6 +135,8 @@ ns.SpatialSelection = do (window,
       currentPage.ui.spatialType.name(name)
 
     _onDrawStart: (e) =>
+      # Display manual typing panel
+      @_showManualEntryPanel(e.target, e.layerType)
       # Remove the old layer
       @_oldLayer = @_layer
       @_oldLayerIsShapefile = @_shapefileLayer.isActive()
@@ -148,6 +150,8 @@ ns.SpatialSelection = do (window,
         @_layer = @_oldLayer
         @_oldLayer = null
         @_drawnItems.addLayer(@_layer)
+        currentPage.query.spatialCondition.visible(true)
+        currentPage.query.spatialCondition.spatialType(@_toReadableType(@_layer.type))
 
     _onEditStart: (e) =>
       @_preEditBounds = @_boundsToPoints(@_layer)
@@ -174,6 +178,14 @@ ns.SpatialSelection = do (window,
       else
         bounds = layer.getLatLngs()
       points = (@map.latLngToLayerPoint(latLng) for latLng in bounds)
+
+    _showManualEntryPanel: (map, type=@_layer.type) ->
+      currentPage.query.spatialCondition.visible(true)
+      currentPage.query.spatialCondition.spatialType(@_toReadableType(type))
+
+    _toReadableType: (type) ->
+      return 'Point' if type == 'marker'
+      return 'Bounding Box' if type == 'rectangle'
 
     _addLayer: (map, layer=@_layer, type=@_layer.type) ->
       @_oldLayer = null

@@ -55,7 +55,7 @@ L.drawLocal = {
 			},
 			rectangle: {
 				tooltip: {
-					start: 'Click and drag to draw rectangle.'
+					start: 'Click and drag to draw rectangle. test test.'
 				}
 			},
 			simpleshape: {

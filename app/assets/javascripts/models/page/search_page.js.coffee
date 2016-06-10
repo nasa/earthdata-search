@@ -2,6 +2,7 @@
 #= require models/data/collections
 #= require models/data/project
 #= require models/data/preferences
+#= require models/data/spatial_condition
 #= require models/ui/spatial_type
 #= require models/ui/temporal
 #= require models/ui/collections_list

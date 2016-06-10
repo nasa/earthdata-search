@@ -1,4 +1,5 @@
 #= require models/data/granule
+#= require models/data/spatial_condition
 #= require models/data/xhr_model
 
 ns = @edsc.models.data

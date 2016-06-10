@@ -1,0 +1,16 @@
+<div id="manual-coord-entry-container" class="manual-coord-entry" data-bind="with: query.spatialCondition">
+  <p data-bind="visible: !visible()"><i class="fa fa-fw fa-crop"></i></p>
+  <p data-bind="visible: visible()">
+    <label for="manual-coord-entry"><!-- ko text: spatialType --><!-- /ko -->: </label>
+    <!-- ko if: spatialType() == 'Point' -->
+    <input type="text" id="manual-coord-entry" name="manual-coord-entry" data-bind="value: coordinates, valueUpdate: 'blur'" placeholder="lon, lat (e.g. 130, 44.2)">
+    <!--/ko-->
+    <!-- ko if: spatialType() == 'Bounding Box' -->
+    <label for="manual-coord-entry">Southwest Point</label>
+    <input type="text" id="manual-coord-entry" name="manual-coord-entry" data-bind="value: swPoint, valueUpdate: 'blur'" placeholder="lon, lat (e.g. 130, 44.2)">
+    <label for="manual-coord-entry">Northeast Point</label>
+    <input type="text" id="manual-coord-entry" name="manual-coord-entry" data-bind="value: nePoint, valueUpdate: 'blur'" placeholder="lon, lat (e.g. 130, 44.2)">
+    <!--/ko-->
+    <!-- ko if: error --><span class="error" data-bind="text: error()"></span><!-- /ko -->
+  </p>
+</div>
