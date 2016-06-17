@@ -1,7 +1,7 @@
 <div id="manual-coord-entry-container" class="manual-coord-entry">
   <!--<p data-bind="visible: ui.spatialType.name() != 'Point' && ui.spatialType.name() != 'Rectangle' "><i class="fa fa-fw fa-crop"></i></p>-->
-  <p data-bind="visible: !ui.spatialType.manualEntryVisible() && !spatialEntry.spatialName() "><i class="fa fa-fw fa-crop"></i></p>
-  <p data-bind="visible: ui.spatialType.manualEntryVisible() || spatialEntry.spatialName() ">
+  <p data-bind="visible: !ui.spatialType.manualEntryVisible() && !(ui.spatialType.displaySpatial() == 'Point' || ui.spatialType.displaySpatial() == 'Rectangle')"><i class="fa fa-fw fa-crop"></i></p>
+  <p data-bind="visible: ui.spatialType.manualEntryVisible() || ui.spatialType.displaySpatial() == 'Point' || ui.spatialType.displaySpatial() == 'Rectangle' ">
     <label for="manual-coord-entry-point"><!-- ko text: ui.spatialType.displaySpatial() + ':' --><!-- /ko --></label>
     <!-- ko if: ui.spatialType.displaySpatial() == 'Point' -->
     <input type="text" id="manual-coord-entry-point" name="manual-coord-entry-point" data-bind="value: spatialEntry.point, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 44.2, 130)">
