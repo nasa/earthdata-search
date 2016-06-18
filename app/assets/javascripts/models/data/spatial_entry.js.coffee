@@ -12,13 +12,24 @@ ns.SpatialEntry = do (ko,
       @querySpatial = _spatial
       @spatialName = ko.computed(read: @_getSpatialName, owner: this)
       @inputWidth = ko.observable(0)
-      @point = ko.computed(read: @_getPoint, write: @_setPoint, owner: this, defereEvaluation: true)
+      @point = ko.computed(read: @_getPoint, write: @_setPoint, owner: this, deferEvaluation: true)
       @error = ko.observable('')
+      @computedErr = ko.computed(read: @_readErr, write: @_writeErr, owner: this, deferEvaluation: true)
+
+    _readErr: ->
+      console.log "---- read err: point: " + @point() + ", @swPoint: " + @swPoint() + ", @nePoint: " + @nePoint() + ", coord: ", coordinates()
+
+
+    _writeErr: (value)->
+      console.log "---- write err: " + value
 
     _validateCoordinate: (value) ->
       msg = ''
+      if !value || @spatialName() != @_toReadableName(@querySpatial().split(':')[0])
+        @error('')
+        return ''
       unless value.trim().match(/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/)
-        msg = "Invalid coordinates: #{value}. Please enter a point using 'lat,lon' format."
+        msg = "Invalid coordinates: #{value}. Please enter a point using 'lat,lon' format.\n"
         @error(msg)
         return msg
       lat = value.split(/,\s*/)[0]
@@ -33,7 +44,9 @@ ns.SpatialEntry = do (ko,
       unless state == 'complete'
         setTimeout(@_loadMap, 0)
         return
-      @_map = $('#map')[0]
+      @_map = $('#map')
+      @_map.data('map')?.map.on 'spatialtoolchange', (e) => @error('')
+      @_map = @_map[0]
 
     _getSpatialName: ->
       @_toReadableName(@querySpatial().split(':')[0]) if @querySpatial()?.length > 0
@@ -47,7 +60,6 @@ ns.SpatialEntry = do (ko,
       if @spatialName() == 'Point'
         @_reverseLonLat(@querySpatial?().split(':')[1])
       else if @spatialName() == 'Bounding Box'
-        @error('')
         splits = @querySpatial?().split(':')
         splits.shift()
         [sw, ne] = splits
