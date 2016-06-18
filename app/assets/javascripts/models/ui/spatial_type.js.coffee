@@ -8,6 +8,7 @@ ns.SpatialType = do (ko, $=jQuery) ->
       @icon = ko.observable('fa-crop')
       @name = ko.observable('Spatial')
       @displaySpatial = ko.computed(read: @_getDisplaySpatialName, owner: this, deferEvaluation: true)
+      @mapControlTop = ko.computed(read: @_setMapControlPosition, owner: this)
       @manualEntryVisible = ko.observable(false)
 
     selectNone: =>
@@ -45,5 +46,14 @@ ns.SpatialType = do (ko, $=jQuery) ->
       if @name() == 'Spatial'
         if spatialParam?.length > 0 then return spatialParam else return null
       if spatialParam != @name() then return @name() else return @name()
+
+    _setMapControlPosition: ->
+      value = @displaySpatial()
+      top = '85px'
+      if value == 'Point'
+        top = '160px'
+      else if value == 'Rectangle'
+        top = '230px'
+      document.getElementsByClassName('leaflet-top leaflet-right')?[0]?.style.top = top
 
   exports = SpatialType
