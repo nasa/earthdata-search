@@ -292,7 +292,7 @@ ns.Map = do (window,
       geo:
         crs: ProjExt.epsg4326
         minZoom: 0
-        maxZoom: 7
+        maxZoom: 7 # This should probably go to 11 when we have higher resolution imagery
         zoom: 2
         continuousWorld: false
         noWrap: true # Set this to false when people inevitibly ask us for imagery across the meridian

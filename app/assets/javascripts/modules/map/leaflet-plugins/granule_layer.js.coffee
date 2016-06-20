@@ -149,7 +149,6 @@ ns.GranuleLayer = do (L
       result
 
     _matches: (granule, matcher) ->
-      return true if matcher.sit && config.gibsSitUrl
       operators = ['>=', '<=']
       for own prop, value of matcher
         granuleValue = granule[prop]
@@ -175,14 +174,18 @@ ns.GranuleLayer = do (L
         @options = L.extend({}, @originalOptions, optionSet)
         break
 
+      return unless matched
+
       if @options.granule
         this._originalUrl = this._originalUrl || this._url;
-        this._url = config.gibsSitUrl || this._originalUrl;
+        this._url = config.gibsGranuleUrl || this._originalUrl;
         date = granule.time_start
+        @options.time_start = granule.time_start.replace(/\.\d{3}Z$/, 'Z')
+        L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
       else
         this._url = this._originalUrl || this._url;
+        L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if matched
 
-      L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if matched
 
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0

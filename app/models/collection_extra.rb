@@ -286,6 +286,7 @@ class CollectionExtra < ActiveRecord::Base
     decorate_echo10_attributes(collection)
     decorate_modaps_layers(collection)
     decorate_tag_mappings(collection)
+    decorate_gibs_granule_example(collection)
 
     collection[:links] = Array.wrap(collection[:links]) # Ensure links attribute is present
 
@@ -354,6 +355,37 @@ class CollectionExtra < ActiveRecord::Base
   end
 
   private
+
+  # Example single granule imagery from GIBS UAT for AST_L1T
+  def decorate_gibs_granule_example(collection)
+    if collection['short_name'] == 'AST_L1T'
+      collection[:tags] ||= {}
+      # Example URL:
+      # http://uat.gibs.earthdata.nasa.gov/wmts/epsg4326/std/ASTER_L1T_Radiance_Terrain_Corrected_v3_STD/default/2016-02-17T17:45:56Z/31.25m/7/27/33.png
+      # Template: http://uat.gibs.earthdata.nasa.gov/wmts/{projection}/std/{product}/default/{time_start}/{resolution}/{z}/{y}/{x}.{format}
+      collection[:tags]['edsc.extra.gibs'] = {
+        data: [
+          {
+            granule: true, # Turns on granule browse behavior
+            match: { # Matches the small subset of granules which work
+              time_start: '>=2016-02-17T17:44:27Z',
+              time_end: '<=2016-02-17T17:45:56Z'
+            },
+            projection: 'epsg4326',
+            product: 'ASTER_L1T_Radiance_Terrain_Corrected_v3_STD',
+            resolution: '31.25m',
+            format: 'png',
+            maxNativeZoom: 11,
+            title: "ASTER L1T Full-Resolution Browse",
+            source: "NASA EOSDIS",
+            geo: true,
+            arctic: false,
+            antarctic: false
+          }
+        ]
+      }
+    end
+  end
 
   def decorate_tag_mappings(collection)
     ns = Rails.configuration.cmr_tag_namespace
