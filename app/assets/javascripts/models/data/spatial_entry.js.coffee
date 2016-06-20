@@ -24,7 +24,7 @@ ns.SpatialEntry = do (ko,
         @error('')
         return ''
       unless value.trim().match(/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/)
-        msg = "Invalid coordinates: #{value}. Please enter a point using 'lat,lon' format.\n"
+        msg += "Invalid coordinates: #{value}. Please enter a point using 'lat,lon' format.\n"
         @error(msg)
         return msg
       lat = value.split(/,\s*/)[0]
@@ -111,7 +111,8 @@ ns.SpatialEntry = do (ko,
         @coordinates = ko.observableArray([]) if !@coordinates()? || typeof(@coordinates()) == 'string'
         @coordinates()[1] = value
       else
-        @coordinates(null)
+        if !@coordinates()? || typeof(@coordinates()) == 'string'
+          @coordinates(null)
 
       if @coordinates()?.length == 2
         @querySpatial('bounding_box:' + @_reverseLonLat(@coordinates()[0]) + ':' + @_reverseLonLat(@coordinates()[1]))
