@@ -14,18 +14,13 @@ ns.SpatialEntry = do (ko,
       @inputWidth = ko.observable(0)
       @point = ko.computed(read: @_getPoint, write: @_setPoint, owner: this, deferEvaluation: true)
       @error = ko.observable('')
-      @computedErr = ko.computed(read: @_readErr, write: @_writeErr, owner: this, deferEvaluation: true)
 
-    _readErr: ->
-      console.log "---- read err: point: " + @point() + ", @swPoint: " + @swPoint() + ", @nePoint: " + @nePoint() + ", coord: ", coordinates()
-
-
-    _writeErr: (value)->
-      console.log "---- write err: " + value
+    clearError: ->
+      @error('')
 
     _validateCoordinate: (value) ->
       msg = ''
-      if !value || @spatialName() != @_toReadableName(@querySpatial().split(':')[0])
+      if !value || (@spatialName() && @spatialName() != @_toReadableName(@querySpatial()?.split(':')[0]))
         @error('')
         return ''
       unless value.trim().match(/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/)
