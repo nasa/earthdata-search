@@ -18,7 +18,7 @@ ns.SpatialType = do (ko, $=jQuery) ->
     selectNone: =>
       @name('Spatial')
       @icon('fa-crop')
-      if @displaySpatial() then @manualEntryVisible(true) else @manualEntryVisible(false)
+      if @displaySpatial() == 'Point' || @displaySpatial() == 'Rectangle' then @manualEntryVisible(true) else @manualEntryVisible(false)
 
     selectPoint: =>
       @name('Point')
@@ -51,7 +51,7 @@ ns.SpatialType = do (ko, $=jQuery) ->
         # Order matters
         if spatialParam && @name() != spatialParam && @displaySpatial() != spatialParam && @name() != @displaySpatial()
           # on spatial type changes from one (e.g. point) to another (e.g. rectangle).
-          return @displaySpatial()
+          return spatialParam
         if spatialParam?.length > 0
           @manualEntryVisible(true)
           return spatialParam
