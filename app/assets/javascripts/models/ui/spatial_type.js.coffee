@@ -10,36 +10,34 @@ ns.SpatialType = do (ko, $=jQuery) ->
       @displaySpatial = ko.computed(read: @_getDisplaySpatialName, write: @_clearDisplaySpatialName, owner: this, deferEvaluation: true)
       @querySpatial = ko.computed(read: @_getQuerySpatial, owner: this, deferEvaluation: true)
       @mapControlTop = ko.computed(read: @_setMapControlPosition, owner: this)
-      @manualEntryVisible = ko.observable(false)
+      @manualEntryVisible = ko.computed(read: @_getManualEntryVisibility, owner: this, deferEvaluation: true)
+
+    _getManualEntryVisibility: ->
+      return true if @displaySpatial() == 'Point' || @displaySpatial() == 'Rectangle' || !!@query.spatial()?.split(':')[0]
+      false
 
     clearManualEntry: =>
       @displaySpatial('')
-      @manualEntryVisible(false)
 
     selectNone: =>
       @name('Spatial')
       @icon('fa-crop')
-      if @displaySpatial() then @manualEntryVisible(true) else @manualEntryVisible(false)
 
     selectPoint: =>
       @name('Point')
       @icon('fa-map-marker')
-      @manualEntryVisible(true)
 
     selectRectangle: =>
       @name('Rectangle')
       @icon('edsc-icon-rect-open')
-      @manualEntryVisible(true)
 
     selectPolygon: =>
       @name('Polygon')
       @icon('edsc-icon-poly-open')
-      @manualEntryVisible(false)
 
     selectShapefile: =>
       @name('Shape File')
       @icon('fa-file-o')
-      @manualEntryVisible(false)
 
     _toReadableName: (name)->
       return 'Point' if name == 'point'
