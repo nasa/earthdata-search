@@ -56,7 +56,8 @@ ns.SpatialType = do (ko, $=jQuery) ->
           @manualEntryVisible(true)
           return spatialParam
         return @displaySpatial() if @displaySpatial()
-      if spatialParam then spatialParam else @name()
+#      if spatialParam then spatialParam else @name()
+      @name()
 
     _computeQuerySpatial: ->
       @query.spatial()?.split(':')[0]
