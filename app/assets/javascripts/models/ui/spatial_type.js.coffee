@@ -7,14 +7,19 @@ ns.SpatialType = do (ko, $=jQuery) ->
     constructor: (@query) ->
       @icon = ko.observable('fa-crop')
       @name = ko.observable('Spatial')
-      @displaySpatial = ko.computed(read: @_getDisplaySpatialName, owner: this, deferEvaluation: true)
+      @displaySpatial = ko.computed(read: @_getDisplaySpatialName, write: @_clearDisplaySpatialName, owner: this, deferEvaluation: true)
+      @querySpatial = ko.computed(read: @_getQuerySpatial, owner: this, deferEvaluation: true)
       @mapControlTop = ko.computed(read: @_setMapControlPosition, owner: this)
       @manualEntryVisible = ko.observable(false)
+
+    clearManualEntry: =>
+      @displaySpatial('')
+      @manualEntryVisible(false)
 
     selectNone: =>
       @name('Spatial')
       @icon('fa-crop')
-      @manualEntryVisible(false)
+      if @displaySpatial() then @manualEntryVisible(true) else @manualEntryVisible(false)
 
     selectPoint: =>
       @name('Point')
@@ -41,11 +46,18 @@ ns.SpatialType = do (ko, $=jQuery) ->
       return 'Rectangle' if name == 'bounding_box'
       null
 
-    _getDisplaySpatialName: ->
+    _getDisplaySpatialName: =>
       spatialParam = @_toReadableName(@query.spatial()?.split(':')[0])
       if @name() == 'Spatial'
-        if spatialParam?.length > 0 then return spatialParam else return null
+        return spatialParam if spatialParam?.length > 0
+        return @displaySpatial() if @displaySpatial()
       if spatialParam != @name() then return @name() else return @name()
+
+    _clearDisplaySpatialName: =>
+      ''
+
+    _getQuerySpatial: ->
+      @query.spatial()?.split(':')[0]
 
     _setMapControlPosition: ->
       value = @displaySpatial()
