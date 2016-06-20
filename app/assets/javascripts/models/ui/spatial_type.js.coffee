@@ -55,7 +55,9 @@ ns.SpatialType = do (ko, $=jQuery) ->
 #        else if spatialParam == null && @name() =='Spatial' && (@displaySpatial() == 'Point' || @displaySpatial() == 'Rectangle')
 #           on clearing filters
 #          return @name()
-        return spatialParam if spatialParam?.length > 0
+        if spatialParam?.length > 0
+          @manualEntryVisible(true)
+          return spatialParam
         return @displaySpatial() if @displaySpatial()
 #        return '' if spatialParam == null
 #      if spatialParam != @name() then return @name() else return @name()
