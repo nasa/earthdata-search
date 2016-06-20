@@ -15,8 +15,21 @@ module Helpers
       end
     end
 
+    def manually_create_point(lat=0, lon=0)
+      page.find('a[title="Select spatial"]').click
+      page.find('a[title="Select Point"]').click
+      fill_in 'manual-coord-entry-point', with: "#{lat},#{lon}\t"
+    end
+
     def create_point(lat=0, lon=0)
       create_spatial('point', [lat, lon])
+    end
+
+    def manually_create_bounding_box(swlat=0, swlon=0, nelat=0, nelon=0)
+      page.find('a[title="Select spatial"]').click
+      page.find('a[title="Select Rectangle"]').click
+      fill_in 'manual-coord-entry-swpoint', with: "#{swlat},#{swlon}\t"
+      fill_in 'manual-coord-entry-nepoint', with: "#{nelat},#{nelon}\t"
     end
 
     def create_bounding_box(lat0=0, lon0=0, lat1=10, lon1=10)
