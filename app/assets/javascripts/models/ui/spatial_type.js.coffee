@@ -7,9 +7,9 @@ ns.SpatialType = do (ko, $=jQuery) ->
     constructor: (@query) ->
       @icon = ko.observable('fa-crop')
       @name = ko.observable('Spatial')
-      @displaySpatial = ko.computed(read: @_getDisplaySpatialName, write: @_clearDisplaySpatialName, owner: this, deferEvaluation: true)
-      @querySpatial = ko.computed(read: @_getQuerySpatial, owner: this, deferEvaluation: true)
-      @mapControlTop = ko.computed(read: @_setMapControlPosition, owner: this)
+      @displaySpatial = ko.computed(read: @_computeDisplaySpatialName, owner: this, deferEvaluation: true)
+      @querySpatial = ko.computed(read: @_computeQuerySpatial, owner: this, deferEvaluation: true)
+      @mapControlTop = ko.computed(read: @_computeMapControlPosition, owner: this)
       @manualEntryVisible = ko.observable(false)
 
     clearManualEntry: =>
@@ -45,38 +45,29 @@ ns.SpatialType = do (ko, $=jQuery) ->
       return 'Rectangle' if name == 'bounding_box'
       null
 
-    _getDisplaySpatialName: =>
+    _computeDisplaySpatialName: =>
       spatialParam = @_toReadableName(@query.spatial()?.split(':')[0])
       if @name() == 'Spatial'
         # Order matters
         if spatialParam && @name() != spatialParam && @displaySpatial() != spatialParam && @name() != @displaySpatial()
           # on spatial type changes from one (e.g. point) to another (e.g. rectangle).
           return @displaySpatial()
-#        else if spatialParam == null && @name() =='Spatial' && (@displaySpatial() == 'Point' || @displaySpatial() == 'Rectangle')
-#           on clearing filters
-#          return @name()
         if spatialParam?.length > 0
           @manualEntryVisible(true)
           return spatialParam
         return @displaySpatial() if @displaySpatial()
-#        return '' if spatialParam == null
-#      if spatialParam != @name() then return @name() else return @name()
       if spatialParam then spatialParam else @name()
 
-    _clearDisplaySpatialName: (value) =>
-      console.log "---- #{value}"
-      null
-
-    _getQuerySpatial: ->
+    _computeQuerySpatial: ->
       @query.spatial()?.split(':')[0]
 
-    _setMapControlPosition: ->
+    _computeMapControlPosition: ->
       value = @displaySpatial()
       top = '85px'
       if value == 'Point'
-        top = '160px'
+        top = '90px'
       else if value == 'Rectangle'
-        top = '230px'
+        top = '178px'
       document.getElementsByClassName('leaflet-top leaflet-right')?[0]?.style.top = top
 
   exports = SpatialType
