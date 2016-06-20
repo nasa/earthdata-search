@@ -2,6 +2,7 @@
 #= require models/data/collections
 #= require models/data/project
 #= require models/data/preferences
+#= require models/data/spatial_entry
 #= require models/ui/spatial_type
 #= require models/ui/temporal
 #= require models/ui/collections_list
@@ -21,6 +22,7 @@ ns.SearchPage = do (ko
                     QueryModel = data.query.CollectionQuery
                     CollectionsModel = data.Collections
                     ProjectModel = data.Project
+                    SpatialEntry = data.SpatialEntry
                     SpatialTypeModel = ui.SpatialType
                     CollectionsListModel = ui.CollectionsList
                     ProjectListModel = ui.ProjectList
@@ -41,6 +43,7 @@ ns.SearchPage = do (ko
       @collections = new CollectionsModel(@query)
       @project = new ProjectModel(@query)
       @preferences = new PreferencesModel()
+      @spatialEntry = new SpatialEntry(@query.spatial)
 
       @ui =
         spatialType: new SpatialTypeModel(@query)
@@ -73,6 +76,8 @@ ns.SearchPage = do (ko
     clearFilters: =>
       @query.clearFilters()
       @ui.spatialType.selectNone()
+      @ui.spatialType.clearManualEntry()
+      @spatialEntry.clearError()
 
     pluralize: (value, singular, plural) ->
       word = if value == 1 then singular else plural

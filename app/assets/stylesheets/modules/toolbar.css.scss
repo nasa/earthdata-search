@@ -15,8 +15,31 @@
   margin: 0;
 }
 
+.manual-coord-entry {
+  position: absolute;
+  color: #fff;
+  background: rgba(22,22,22,.9);
+  z-index: 59;
+  padding: 6px 10px;
+  border-radius: 5px;
+  top: 57px;
+  right: 10px;
+  box-shadow: 0 0 10px #424242;
+  font-size: .9em;
+
+  label {
+    min-width: 50px;
+    display: block;
+  }
+
+  input {
+    min-width: 200px;
+    padding: 0;
+  }
+}
+
 .leaflet-top.leaflet-right {
-  top: 50px;
+  top: 85px;
 }
 
 .leaflet-bar.projection-switcher a {
