@@ -6,13 +6,13 @@ ns.SpatialEntry = do (ko,
   class SpatialEntry extends KnockoutModel
     constructor: (_spatial) ->
       @_loadMap()
-      @coordinates = ko.computed(read: @_getCoordinates, write: @_setCoordinates, owner: this, deferEvaluation: true)
-      @swPoint = ko.computed(read: @_getSwPoint, write: @_setSwPoint, owner: this, deferEvaluation: true)
-      @nePoint = ko.computed(read: @_getNePoint, write: @_setNePoint, owner: this, deferEvaluation: true)
+      @coordinates = ko.computed(read: @_readCoordinates, write: @_writeCoordinates, owner: this, deferEvaluation: true)
+      @swPoint = ko.computed(read: @_readSwPoint, write: @_writeSwPoint, owner: this, deferEvaluation: true)
+      @nePoint = ko.computed(read: @_readNePoint, write: @_writeNePoint, owner: this, deferEvaluation: true)
       @querySpatial = _spatial
-      @spatialName = ko.computed(read: @_getSpatialName, owner: this)
+      @spatialName = ko.computed(read: @_computeSpatialName, owner: this)
       @inputWidth = ko.observable(0)
-      @point = ko.computed(read: @_getPoint, write: @_setPoint, owner: this, deferEvaluation: true)
+      @point = ko.computed(read: @_readPoint, write: @_writePoint, owner: this, deferEvaluation: true)
       @error = ko.observable('')
 
     clearError: ->
@@ -43,7 +43,7 @@ ns.SpatialEntry = do (ko,
       @_map.data('map')?.map.on 'spatialtoolchange', (e) => @error('')
       @_map = @_map[0]
 
-    _getSpatialName: ->
+    _computeSpatialName: ->
       @_toReadableName(@querySpatial().split(':')[0]) if @querySpatial()?.length > 0
 
     _toReadableName: (name) ->
@@ -51,7 +51,7 @@ ns.SpatialEntry = do (ko,
       return 'Bounding Box' if name == 'bounding_box'
       null
 
-    _getCoordinates: ->
+    _readCoordinates: ->
       if @spatialName() == 'Point'
         @_reverseLonLat(@querySpatial?().split(':')[1])
       else if @spatialName() == 'Bounding Box'
@@ -60,7 +60,7 @@ ns.SpatialEntry = do (ko,
         [sw, ne] = splits
         [@_reverseLonLat(sw), @_reverseLonLat(ne)]
 
-    _setCoordinates: (value) ->
+    _writeCoordinates: (value) ->
       if value == null || value == ''
         @querySpatial(null)
       else if typeof(value) == 'string'
@@ -71,10 +71,10 @@ ns.SpatialEntry = do (ko,
         else
           null
 
-    _getPoint: ->
+    _readPoint: ->
       @_reverseLonLat(@querySpatial?().split(':')[1]) if @spatialName?() == 'Point'
 
-    _setPoint: (value) ->
+    _writePoint: (value) ->
       @_cancelDrawing()
       return if @_validateCoordinate(value).length > 0
 
@@ -83,11 +83,11 @@ ns.SpatialEntry = do (ko,
       else
         @querySpatial("point:" + @_reverseLonLat(value))
 
-    _getSwPoint: ->
+    _readSwPoint: ->
       if @spatialName?() == 'Bounding Box'
         if @coordinates() == null then null else @coordinates()?[0]
 
-    _setSwPoint: (value) ->
+    _writeSwPoint: (value) ->
       return if @_validateCoordinate(value).length > 0
 
       if !!value
@@ -99,11 +99,11 @@ ns.SpatialEntry = do (ko,
       if @coordinates()?.length == 2
         @querySpatial('bounding_box:' + @_reverseLonLat(@coordinates()[0]) + ':' + @_reverseLonLat(@coordinates()[1]))
 
-    _getNePoint: ->
+    _readNePoint: ->
       if @spatialName?() == 'Bounding Box'
         if @coordinates() == null then null else @coordinates()?[1]
 
-    _setNePoint: (value) ->
+    _writeNePoint: (value) ->
       @_cancelDrawing()
       return if @_validateCoordinate(value).length > 0
 
