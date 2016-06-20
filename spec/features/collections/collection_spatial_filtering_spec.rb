@@ -25,7 +25,8 @@ describe "Spatial manual entry", reset: false do
       end
 
       it "displays an error message when invalid coordinates are entered" do
-        manually_create_point(67, -155)
+        manually_create_point(67, -1155)
+        expect(page).to have_text('Lon [-1155] must be between -180 and 180')
       end
 
       context "changing the point selection" do
@@ -75,6 +76,11 @@ describe "Spatial manual entry", reset: false do
       it "displays bounding box points in the manual entry text boxes" do
         expect(page).not_to have_field('manual-coord-entry-swpoint', with: '0,0')
         expect(page).not_to have_field('manual-coord-entry-nepoint', with: '10,10')
+      end
+
+      it "displays an error message when invalid coordinates are entered" do
+        manually_create_bounding_box(66, 0, 10, -1155)
+        expect(page).to have_text('Lon [-1155] must be between -180 and 180.')
       end
 
       context "changing the bounding box selection" do

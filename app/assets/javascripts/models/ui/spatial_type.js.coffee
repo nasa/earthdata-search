@@ -10,34 +10,35 @@ ns.SpatialType = do (ko, $=jQuery) ->
       @displaySpatial = ko.computed(read: @_getDisplaySpatialName, write: @_clearDisplaySpatialName, owner: this, deferEvaluation: true)
       @querySpatial = ko.computed(read: @_getQuerySpatial, owner: this, deferEvaluation: true)
       @mapControlTop = ko.computed(read: @_setMapControlPosition, owner: this)
-      @manualEntryVisible = ko.computed(read: @_getManualEntryVisibility, owner: this, deferEvaluation: true)
-
-    _getManualEntryVisibility: ->
-      return true if @displaySpatial() == 'Point' || @displaySpatial() == 'Rectangle' || !!@query.spatial()?.split(':')[0]
-      false
+      @manualEntryVisible = ko.observable(false)
 
     clearManualEntry: =>
-      @displaySpatial('')
+      @manualEntryVisible(false)
 
     selectNone: =>
       @name('Spatial')
       @icon('fa-crop')
+      if @displaySpatial() then @manualEntryVisible(true) else @manualEntryVisible(false)
 
     selectPoint: =>
       @name('Point')
       @icon('fa-map-marker')
+      @manualEntryVisible(true)
 
     selectRectangle: =>
       @name('Rectangle')
       @icon('edsc-icon-rect-open')
+      @manualEntryVisible(true)
 
     selectPolygon: =>
       @name('Polygon')
       @icon('edsc-icon-poly-open')
+      @manualEntryVisible(false)
 
     selectShapefile: =>
       @name('Shape File')
       @icon('fa-file-o')
+      @manualEntryVisible(false)
 
     _toReadableName: (name)->
       return 'Point' if name == 'point'
@@ -47,12 +48,22 @@ ns.SpatialType = do (ko, $=jQuery) ->
     _getDisplaySpatialName: =>
       spatialParam = @_toReadableName(@query.spatial()?.split(':')[0])
       if @name() == 'Spatial'
+        # Order matters
+        if spatialParam && @name() != spatialParam && @displaySpatial() != spatialParam && @name() != @displaySpatial()
+          # on spatial type changes from one (e.g. point) to another (e.g. rectangle).
+          return @displaySpatial()
+#        else if spatialParam == null && @name() =='Spatial' && (@displaySpatial() == 'Point' || @displaySpatial() == 'Rectangle')
+#           on clearing filters
+#          return @name()
         return spatialParam if spatialParam?.length > 0
         return @displaySpatial() if @displaySpatial()
-      if spatialParam != @name() then return @name() else return @name()
+#        return '' if spatialParam == null
+#      if spatialParam != @name() then return @name() else return @name()
+      if spatialParam then spatialParam else @name()
 
-    _clearDisplaySpatialName: =>
-      ''
+    _clearDisplaySpatialName: (value) =>
+      console.log "---- #{value}"
+      null
 
     _getQuerySpatial: ->
       @query.spatial()?.split(':')[0]
