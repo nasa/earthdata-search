@@ -55,10 +55,16 @@ ns.SpatialEntry = do (ko,
       if @spatialName() == 'Point'
         @_reverseLonLat(@querySpatial?().split(':')[1])
       else if @spatialName() == 'Bounding Box'
-        splits = @querySpatial?().split(':')
-        splits.shift()
-        [sw, ne] = splits
-        [@_reverseLonLat(sw), @_reverseLonLat(ne)]
+        results = @_getPointsFromRectQuery()
+        @coordinates = ko.observableArray(results)
+        results
+
+    _getPointsFromRectQuery: ->
+      splits = @querySpatial?().split(':')
+      splits.shift()
+      [sw, ne] = splits
+      [@_reverseLonLat(sw), @_reverseLonLat(ne)]
+
 
     _writeCoordinates: (value) ->
       if value == null || value == ''
@@ -72,7 +78,10 @@ ns.SpatialEntry = do (ko,
           null
 
     _readPoint: ->
-      @_reverseLonLat(@querySpatial?().split(':')[1]) if @spatialName?() == 'Point'
+      if @spatialName?() == 'Point'
+        point = @_reverseLonLat(@querySpatial?().split(':')[1])
+        @coordinates(point)
+        point
 
     _writePoint: (value) ->
       @_cancelDrawing()
@@ -85,7 +94,11 @@ ns.SpatialEntry = do (ko,
 
     _readSwPoint: ->
       if @spatialName?() == 'Bounding Box'
-        if @coordinates() == null then null else @coordinates()?[0]
+        return null if @coordinates() == null
+        if typeof(@coordinates()) == 'string'
+          results = @_getPointsFromRectQuery()
+          @coordinates = ko.observableArray(results)
+        @coordinates()?[0]
 
     _writeSwPoint: (value) ->
       return if @_validateCoordinate(value).length > 0
@@ -101,7 +114,11 @@ ns.SpatialEntry = do (ko,
 
     _readNePoint: ->
       if @spatialName?() == 'Bounding Box'
-        if @coordinates() == null then null else @coordinates()?[1]
+        return null if @coordinates() == null
+        if typeof(@coordinates()) == 'string'
+          results = @_getPointsFromRectQuery()
+          @coordinates = ko.observableArray(results)
+        @coordinates()?[1]
 
     _writeNePoint: (value) ->
       @_cancelDrawing()

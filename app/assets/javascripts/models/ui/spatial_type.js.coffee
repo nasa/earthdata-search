@@ -16,7 +16,7 @@ ns.SpatialType = do (ko, $=jQuery) ->
       @manualEntryVisible(false)
 
     selectNone: =>
-      @name('Spatial')
+      @name(@_toReadableName(@query.spatial()?.split(':')[0]))
       @icon('fa-crop')
       if @displaySpatial() == 'Point' || @displaySpatial() == 'Rectangle' then @manualEntryVisible(true) else @manualEntryVisible(false)
 
