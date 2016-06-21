@@ -5,7 +5,7 @@ Visit Earthdata Search at
 
 [![Build Status](https://travis-ci.org/nasa/earthdata-search.svg?branch=master)](https://travis-ci.org/nasa/earthdata-search)
 
-## About
+## About this Project
 Earthdata Search is a web application developed by [NASA](http://nasa.gov) [EOSDIS](https://earthdata.nasa.gov)
 to enable data discovery, search, comparison, visualization, and access across EOSDIS' Earth Science data holdings.
 It builds upon several public-facing services provided by EOSDIS, including
