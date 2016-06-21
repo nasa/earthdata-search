@@ -11,7 +11,6 @@ ns.SpatialEntry = do (ko,
       @nePoint = ko.computed(read: @_readNePoint, write: @_writeNePoint, owner: this, deferEvaluation: true)
       @querySpatial = _spatial
       @spatialName = ko.computed(read: @_computeSpatialName, owner: this)
-      @inputWidth = ko.observable(0)
       @point = ko.computed(read: @_readPoint, write: @_writePoint, owner: this, deferEvaluation: true)
       @error = ko.observable('')
 
@@ -95,10 +94,8 @@ ns.SpatialEntry = do (ko,
     _readSwPoint: ->
       if @spatialName?() == 'Bounding Box'
         return null if @coordinates() == null
-        if typeof(@coordinates()) == 'string'
-          results = @_getPointsFromRectQuery()
-          @coordinates = ko.observableArray(results)
-        @coordinates()?[0]
+        results = @_getPointsFromRectQuery()
+        results[0]
 
     _writeSwPoint: (value) ->
       return if @_validateCoordinate(value).length > 0
@@ -115,10 +112,8 @@ ns.SpatialEntry = do (ko,
     _readNePoint: ->
       if @spatialName?() == 'Bounding Box'
         return null if @coordinates() == null
-        if typeof(@coordinates()) == 'string'
-          results = @_getPointsFromRectQuery()
-          @coordinates = ko.observableArray(results)
-        @coordinates()?[1]
+        results = @_getPointsFromRectQuery()
+        results[1]
 
     _writeNePoint: (value) ->
       @_cancelDrawing()
