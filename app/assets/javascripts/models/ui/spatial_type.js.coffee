@@ -51,6 +51,7 @@ ns.SpatialType = do (ko, $=jQuery) ->
         # Order matters
         if spatialParam && @name() != spatialParam && @displaySpatial() != spatialParam && @name() != @displaySpatial()
           # on spatial type changes from one (e.g. point) to another (e.g. rectangle).
+          return @displaySpatial() if $('#manual-coord-entry-container').find('.error')
           return spatialParam
         if spatialParam?.length > 0
           @manualEntryVisible(true)
