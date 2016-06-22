@@ -16,12 +16,13 @@ do ($=jQuery
     $content = $('.landing-toolbar-content')
     $('.landing-hidden').toggle(!isLandingPage)
     $('.landing-visible').toggle(isLandingPage)
+    hasTimeline = $('#timeline').data('timeline')?
     if isLandingPage
-      $('#timeline').timeline('hide')
+      $('#timeline').timeline('hide') if hasTimeline
       $('.landing-dialog-toolbar').append($content)
       $('#keywords').focus()
     else
-      $('#timeline').timeline('refresh')
+      $('#timeline').timeline('refresh') if hasTimeline
       $('.landing-toolbar-container').append($content)
     $content.css(top: 0, left: 0, position: 'static')
 
@@ -32,7 +33,8 @@ do ($=jQuery
     $('.landing-toolbar-container').append($content)
 
     if isLandingPage
-      $('#timeline').timeline('hide')
+      hasTimeline = $('#timeline').data('timeline')?
+      $('#timeline').timeline('hide') if hasTimeline
       $('.landing-hidden').fadeOut()
       $('.landing-visible').fadeIn
         complete: ->
@@ -41,7 +43,7 @@ do ($=jQuery
     else
       endOffset = $('.landing-toolbar-container').offset()
       endOffset.top += 8
-      endOffset.left += 10
+      endOffset.left += 0
       $content.animate(endOffset,
         complete: ->
           $('.landing-visible').fadeOut()
@@ -67,17 +69,19 @@ do ($=jQuery
 
     $(window).on 'edsc.pagechange', updateLandingPageState
 
+    goToSearch = ->
+      urlUtil.pushPath("/search")
+
+    startTourDefault = ->
+      help.startTour() if !window.edscportal && uiModel.isLandingPage()
+
     preferences.onload ->
-      if preferences.showTour()
+      if preferences.showTour() || window.location.href.indexOf('?tour=true') != -1
         # Let the DOM finish any refresh operations before showing the tour
-        setTimeout((-> help.startTour() if uiModel.isLandingPage()), 0)
+        setTimeout(startTourDefault, 0)
 
     $('.landing-area').on 'keypress', '#keywords', (e) ->
-      urlUtil.pushPath('/search') if e.which == 13
-
-    $('.landing-area').on 'submit', 'form', -> urlUtil.pushPath('/search')
-
-    $('.landing-area').on 'click', '.submit, .master-overlay-show', -> urlUtil.pushPath('/search')
-
-    $('.landing-area').on 'click', '.spatial-selection a',
-      -> urlUtil.pushPath('/search')
+      goToSearch() if e.which == 13
+    $('.landing-area').on 'submit', 'form', goToSearch
+    $('.landing-area').on 'click', '.submit, .master-overlay-show', goToSearch
+    $('.landing-area').on 'click', '.spatial-selection a', goToSearch

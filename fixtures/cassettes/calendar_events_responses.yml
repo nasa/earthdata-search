@@ -1,0 +1,81 @@
+---
+5ad579b9c75edc2392a0d96ef1f08c8e9a49a4cd:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      x-echo-feed-author:
+      - ECHO Operations & Data Provider User Services
+      x-echo-feed-title:
+      - All Provider Events
+      etag:
+      - '"abf988e7632de020e398bbd647d4cfaa"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.066000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 10 Nov 2015 20:13:01 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <calendar_events type="array">
+          <calendar_event>
+            <id>C4F4241B-5495-92DA-C600-3282025E1F0A</id>
+            <title>NSIDC scheduled downtime</title>
+            <message>&lt;p&gt;Regularly scheduled maintenance of the systems at NSIDC will prevent the distribution of AMSR-E, &lt;span class="wikiword"&gt;IceBridge&lt;/span&gt;, &lt;span class="wikiword"&gt;ICESat&lt;/span&gt;/GLAS,   MODIS, and NISE data holdings.  During this downtime period,  retrieving  data will not be possible.  We apologize for any  inconvenience that  this may cause.  Please contact NSIDC User Services  at nsidc@nsidc.org if you  have any questions.&lt;/p&gt;</message>
+            <start_date type="datetime">2011-07-27T15:00:00Z</start_date>
+            <end_date type="datetime">2011-07-27T21:00:00Z</end_date>
+            <owner_provider_id>248ED694-06AA-7DF0-E269-640DE00B628E</owner_provider_id>
+            <severity type="string">ALERT</severity>
+          </calendar_event>
+          <calendar_event>
+            <id>7B935536-46A7-639C-31C7-09E953E364E4</id>
+            <title>Operations Testing of NCR</title>
+            <message>&lt;p&gt;Testing ability of Reverb to pick up new events&lt;/p&gt;</message>
+            <start_date type="datetime">2011-07-18T12:00:00Z</start_date>
+            <end_date type="datetime">2011-07-21T12:00:00Z</end_date>
+            <owner_provider_id>AC2B72A7-A370-C545-038D-F4A53B77CACE</owner_provider_id>
+            <severity type="string">ALERT</severity>
+          </calendar_event>
+          <calendar_event>
+            <id>405EBF8F-8A76-18A7-871B-3F31A2CC0FA9</id>
+            <title>Degraded Service</title>
+            <message>&lt;p&gt;Misc OS patching will see an outage of ECHO-hosted browse access. All other services will remain operational&lt;/p&gt;</message>
+            <start_date type="datetime">2014-04-02T12:00:00Z</start_date>
+            <end_date type="datetime">2014-04-02T16:00:00Z</end_date>
+            <severity type="string">ALERT</severity>
+          </calendar_event>
+          <calendar_event>
+            <id>6140CEAC-A3AC-484A-7DBE-07B3C2FEB801</id>
+            <title>testing ncr</title>
+            <message>&lt;p&gt;ingest will be unavailable&lt;/p&gt;</message>
+            <start_date type="datetime">2011-07-12T09:00:00Z</start_date>
+            <end_date type="datetime">2011-07-13T20:00:00Z</end_date>
+            <owner_provider_id>AC2B72A7-A370-C545-038D-F4A53B77CACE</owner_provider_id>
+            <severity type="string">ALERT</severity>
+          </calendar_event>
+          <calendar_event>
+            <id>3FB16900-5025-24CE-CD3B-79F1530D0443</id>
+            <title>ECHO Outage</title>
+            <message>&lt;p&gt;OS patching will cause an outage of Test Bed.&lt;/p&gt;</message>
+            <start_date type="datetime">2015-10-07T12:00:00Z</start_date>
+            <end_date type="datetime">2015-10-07T16:00:00Z</end_date>
+            <severity type="string">ALERT</severity>
+          </calendar_event>
+        </calendar_events>
+    http_version: 

@@ -107,12 +107,20 @@ do (ko, $=jQuery) ->
           if available.name == methodName
             method = available
             break
-        if available?.form?
-          form = available.form
+        if method? && available?.form?
+          originalForm = form = available.form
           model = options.rawModel
+
           if model? && !options.isReadFromDefaults
             form = form.replace(/(?:<instance>)(?:.|\n)*(?:<\/instance>)/, "<instance>\n#{model}\n</instance>")
-          $el.echoforms(form: form)
+          # Handle problems if the underlying form has a breaking change
+          try
+            $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
+          catch error
+            console.log("Error caught rendering saved model, retrying:", error)
+            form = originalForm
+            $el.echoforms(form: form, prepopulate: options.prepopulatedFields())
+
           syncModel = ->
             isValid = $(this).echoforms('isValid')
             options.isValid(isValid)

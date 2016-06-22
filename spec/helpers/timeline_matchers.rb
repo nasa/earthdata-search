@@ -28,7 +28,7 @@ RSpec::Matchers.define :have_highlighted_selection do |start, stop|
       stop_pos = page.evaluate_script "$('#timeline').timeline('timeToPosition', #{stop_time})"
       width = stop_pos - start_pos
 
-      matches = page.all(".timeline-selection rect[x^=\"#{start_pos.to_s[0, 3]}\"][width^=\"#{width.to_s[0, 3]}\"]")
+      matches = page.all(".timeline-selection rect[x^=\"#{start_pos.to_s[0, 2]}\"][width^=\"#{width.to_s[0, 2]}\"]")
 
       expect(matches.size).to be > 0
     end
@@ -129,7 +129,7 @@ RSpec::Matchers.define :have_focused_time_span do |start, stop|
   end
 end
 
-RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
+RSpec::Matchers.define :have_temporal do |start, stop, range=nil, collection_n=nil|
   match do |page|
     condition = []
     condition << start.to_i
@@ -139,10 +139,10 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
     script = "(function(temporal) {"
     script += "  return temporal.queryCondition();"
 
-    if dataset_n.nil?
+    if collection_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
+      script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
     end
 
     synchronize do
@@ -169,10 +169,10 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
     script = "(function(temporal) {"
     script += "  return temporal.queryCondition();"
 
-    if dataset_n.nil?
+    if collection_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
+      script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
     end
 
     actual = page.evaluate_script(script).split(',').join(' - ')
@@ -182,15 +182,15 @@ RSpec::Matchers.define :have_temporal do |start, stop, range=nil, dataset_n=nil|
 end
 
 
-RSpec::Matchers.define :have_no_temporal do |dataset_n=nil|
+RSpec::Matchers.define :have_no_temporal do |collection_n=nil|
   match do |page|
     script = "(function(temporal) {"
     script += "  return temporal.queryCondition();"
 
-    if dataset_n.nil?
+    if collection_n.nil?
       script += "})(edsc.page.query.temporal.applied);"
     else
-      script += "})(edsc.page.project.datasets()[#{dataset_n}].granulesModel.temporal.applied);"
+      script += "})(edsc.page.project.collections()[#{collection_n}].granuleDatasource().temporal());"
     end
 
     synchronize do

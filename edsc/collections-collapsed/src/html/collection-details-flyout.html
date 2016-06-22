@@ -1,0 +1,29 @@
+<div class="flyout" data-bind="attr:{id: id + '-flyout'}">
+  <div class="flyout-header">
+    <div class="flyout-info" data-bind="ifnot: cwic()">
+      <span class="badge-granule"></span>
+      <span class="granule-count" data-bind="text: granule_count"></span>
+    </div>
+    <div class="flyout-info" data-bind="if: cwic()">
+      <span class="granule-description" data-bind="text: granuleDescription"></span>
+    </div>
+
+  </div>
+  <h4 class="flyout-title" data-bind="text: dataset_id"></h4>
+  <p class="flyout-content">
+    <i class="fa fa-crop"></i>
+    <span data-bind="text: spatial"></span>
+  </p>
+  <p class="flyout-content">
+    <i class="fa fa-clock-o"></i>
+    <span data-bind="text: timeRange"></span>
+  </p>
+  <p class="flyout-content" data-bind="if: $data.archive_center">
+    <span><strong>Archive Center: </strong></span>
+    <span data-bind="text: archive_center"></span>
+  </p>
+  <p class="flyout-content" data-bind="if: $data.data_center">
+    <span><strong>Data Center: </strong></span>
+    <span data-bind="text: data_center"></span>
+  </p>
+</div>

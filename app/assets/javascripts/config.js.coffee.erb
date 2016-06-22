@@ -1,7 +1,24 @@
 # Environment-specific config
-@edsc.config = do (window, env='<%= Rails.env %>') ->
+@edsc.config = do (window, plugin = window.edscplugin, env='<%= Rails.env %>') ->
 
   csrfToken = document.querySelector?('meta[name=csrf-token]')?.content
+
+  <% Rails.application.assets.each_file do |path| %>
+  <% if Rails.configuration.is_plugin.call(path) %>
+  <% name = File.basename(path).gsub(/^edsc-plugin\./, '').gsub(/\.js$/, '') %>
+  plugin.register("<%= name.gsub(/\.min$/, '') %>", "<%= javascript_path(File.basename(path)) %>")
+  <% end %>
+  <% end %>
+  query = window.location.search
+  match = /cmr_env=(\w+)/.exec(query)
+  cmr_env = if match then match[1] else '<%= Rails.configuration.cmr_env %>'
+
+  if cmr_env == 'uat'
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['uat']['echo_root'] %>/browse-scaler"
+  else if cmr_env == 'sit'
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['sit']['echo_root'] %>/browse-scaler"
+  else
+    browse_scaler_url = "<%= Rails.configuration.services['earthdata']['prod']['echo_root'] %>/browse-scaler"
 
   <% if Rails.env.test? %>
 
@@ -22,6 +39,9 @@
     browseScalerUrl: "/assets/gibs-example.jpeg#"
     present: -> Date.UTC(2014, 2, 1)
     animateMap: false
+    cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
+    cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
+    thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
 
   <% elsif Rails.env.development? %>
 
@@ -35,11 +55,14 @@
     csrfToken: csrfToken
     hoverTimeoutMs: 500
     debug: true
-    gibsSitUrl: 'https://sit.gibs.earthdata.nasa.gov/wmts-{lprojection}/wmts.cgi?{timeparam}&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}'
+    gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{projection}/std/{product}/default/{time_start}/{resolution}/{z}/{y}/{x}.{format}'
     gibsUrl: 'https://map1{s}.vis.earthdata.nasa.gov/wmts-{endpoint}/wmts.cgi?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}'
-    browseScalerUrl: "https://api.echo.nasa.gov/browse-scaler/browse_images/granules"
+    browseScalerUrl: browse_scaler_url
     present: -> new Date() - 0
     animateMap: true
+    cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
+    cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
+    thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
 
   <% else %>
   # Production config
@@ -51,9 +74,13 @@
     maxPolygonSize: 50
     csrfToken: csrfToken
     hoverTimeoutMs: 500
+    gibsGranuleUrl: 'http://uat.gibs.earthdata.nasa.gov/wmts/{projection}/std/{product}/default/{time_start}/{resolution}/{z}/{y}/{x}.{format}'
     gibsUrl: 'https://map1{s}.vis.earthdata.nasa.gov/wmts-{endpoint}/wmts.cgi?{timeparam}SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={product}&STYLE=&TILEMATRIXSET={projection}_{resolution}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2F{format}{extra}'
-    browseScalerUrl: "https://api.echo.nasa.gov/browse-scaler/browse_images/granules"
+    browseScalerUrl: browse_scaler_url
     present: -> new Date() - 0
     animateMap: true
+    cmrClientId: "<%= Rails.configuration.cmr_client_id %>"
+    cmrTagNamespace: "<%= Rails.configuration.cmr_tag_namespace %>"
+    thumbnailWidth: <%= Rails.configuration.thumbnail_width %>
 
   <% end %>

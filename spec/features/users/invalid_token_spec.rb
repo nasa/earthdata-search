@@ -11,9 +11,9 @@ describe 'Invalid user token', reset: false do
       page.set_rack_session(access_token: 'invalid')
 
       load_page :search
-      expect(page).to have_no_content 'Earthdata Login'
 
       fill_in 'keywords', with: 'C179002986-ORNL_DAAC'
+      wait_for_xhr
     end
 
     it 'logs out the user' do
@@ -21,7 +21,7 @@ describe 'Invalid user token', reset: false do
     end
 
     it 'displays search results' do
-      expect(page).to have_content 'BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data'
+      expect(page).to have_content '15 Minute Stream Flow Data: USGS (FIFE)'
     end
   end
 

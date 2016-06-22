@@ -4,7 +4,7 @@ ns.GranuleLayer = do (L
                       $ = jQuery
                       GibsTileLayer = ns.GibsTileLayer
                       projectPath=ns.interpolation.projectPath
-                      dividePolygon = ns.sphericalPolygon.dividePolygon
+                      dividePolygon = @edsc.map.geoutil.dividePolygon
                       capitalize = @edsc.util.string.capitalize
                       arrayUtil = @edsc.util.array
                       help = @edsc.help
@@ -107,17 +107,23 @@ ns.GranuleLayer = do (L
       result = []
       map = @_map
       intersects = @_intersects
-
+      interpolation = if granule.isCartesian() then 'cartesian' else 'geodetic'
       for polygon in granule.getPolygons() ? []
-        interiors = dividePolygon(polygon).interiors
-        @_addIntersections(result, interiors, tileBounds, 'poly', 'geodetic')
+        if granule.isCartesian()
+          @_addIntersections(result, polygon, tileBounds, 'poly', interpolation)
+        else
+          # Handle holes
+          polygon = [polygon] unless Array.isArray(polygon[0])
+          for shape in polygon
+            interiors = dividePolygon(shape).interiors
+            @_addIntersections(result, interiors, tileBounds, 'poly', interpolation)
         # Workaround for EDSC-657
         # Avoid spamming the map with a large number of barely intersecting orbits by only
         # drawing the first orbit. Hovering will continue to draw the full orbit.
         break if granule.orbit
 
       @_addIntersections(result, granule.getRectangles(), tileBounds, 'poly', 'cartesian')
-      @_addIntersections(result, granule.getLines(), tileBounds, 'line', 'geodetic')
+      @_addIntersections(result, granule.getLines(), tileBounds, 'line', interpolation)
 
       for point in granule.getPoints() ? [] when tileBounds.contains(point)
         result.push({point: @_map.latLngToLayerPoint(point)})
@@ -143,7 +149,6 @@ ns.GranuleLayer = do (L
       result
 
     _matches: (granule, matcher) ->
-      return true if matcher.sit && config.gibsSitUrl
       operators = ['>=', '<=']
       for own prop, value of matcher
         granuleValue = granule[prop]
@@ -169,14 +174,18 @@ ns.GranuleLayer = do (L
         @options = L.extend({}, @originalOptions, optionSet)
         break
 
+      return unless matched
+
       if @options.granule
         this._originalUrl = this._originalUrl || this._url;
-        this._url = config.gibsSitUrl || this._originalUrl;
+        this._url = config.gibsGranuleUrl || this._originalUrl;
         date = granule.time_start
+        @options.time_start = granule.time_start.replace(/\.\d{3}Z$/, 'Z')
+        L.TileLayer.prototype.getTileUrl.call(this, tilePoint)
       else
         this._url = this._originalUrl || this._url;
+        L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if matched
 
-      L.TileLayer.prototype.getTileUrl.call(this, tilePoint) + "&time=#{date}" if matched
 
     drawTile: (canvas, back, tilePoint) ->
       return unless @_results? && @_results.length > 0
@@ -194,19 +203,22 @@ ns.GranuleLayer = do (L
 
       date = null
       paths = []
+      pathsWithHoles = []
 
       for granule, i in @_results
         overlaps = @_granulePathsOverlappingTile(granule, bounds)
 
         if overlaps.length > 0
           url = @getTileUrl(tilePoint, granule)
-          for path in overlaps
+          for path, j in overlaps
             path.index = i
             path.url = url
             path.granule = granule
-            path.poly.reverse() if path.poly? && isClockwise(path.poly)
-
-        paths = paths.concat(overlaps)
+            if path.poly?
+              reverse = (j == 0) == isClockwise(path.poly)
+              path.poly.reverse() if reverse
+          pathsWithHoles.push(overlaps)
+          paths = paths.concat(overlaps)
 
       # Marks the tile as drawn.  As a callback to _drawClippedPaths, the user
       # gets faster feedback.  As a callback to _drawClippedImagery, the feedback
@@ -217,9 +229,9 @@ ns.GranuleLayer = do (L
         @tileDrawn(canvas)
 
       setTimeout((=> @_drawOutlines(canvas, paths, nwPoint)), 0)
-      setTimeout((=> @_drawClippedPaths(canvas, boundary, paths, nwPoint, imageryCallback)), 0)
+      setTimeout((=> @_drawClippedPaths(canvas, boundary, pathsWithHoles, nwPoint, imageryCallback)), 0)
       setTimeout((=> @_drawClippedImagery(canvas, boundary, paths, nwPoint, tilePoint)), 0)
-      setTimeout((=> @_drawFullBackTile(back, paths.concat().reverse(), nwPoint)), 0)
+      setTimeout((=> @_drawFullBackTile(back, boundary, pathsWithHoles.concat().reverse(), nwPoint)), 0)
 
       if paths.length > 0 && config.debug
         console.log "#{paths.length} Overlapping Granules [(#{bounds.getNorth()}, #{bounds.getWest()}), (#{bounds.getSouth()}, #{bounds.getEast()})]"
@@ -239,15 +251,19 @@ ns.GranuleLayer = do (L
       ctx.restore()
       null
 
-    _drawClippedPaths: (canvas, boundary, paths, nwPoint, callback) ->
+    _drawClippedPaths: (canvas, boundary, pathsWithHoles, nwPoint, callback) ->
       ctx = canvas.getContext('2d')
       ctx.save()
       ctx.translate(-nwPoint.x, -nwPoint.y)
       ctx.strokeStyle = @options.color
 
-      for path in paths
+      for pathWithHoles in pathsWithHoles
+        [path, holes...] = pathWithHoles
+
         ctx.beginPath()
         addPath(ctx, path)
+        for hole in holes
+          addPath(ctx, {poly: hole.poly.concat().reverse()})
         ctx.stroke()
         addPath(ctx, boundary)
         ctx.clip()
@@ -341,15 +357,19 @@ ns.GranuleLayer = do (L
       null
 
 
-    _drawFullBackTile: (canvas, paths, nwPoint) ->
+    _drawFullBackTile: (canvas, boundary, pathsWithHoles, nwPoint) ->
       ctx = canvas.getContext('2d')
 
       ctx.save()
       ctx.translate(-nwPoint.x, -nwPoint.y)
-      for path in paths
+      for pathWithHoles in pathsWithHoles
+        [path, holes...] = pathWithHoles
+
         ctx.strokeStyle = ctx.fillStyle = '#' + (path.index + 0x1000000).toString(16).substr(-6)
         ctx.beginPath()
         addPath(ctx, path)
+        for hole in holes
+          addPath(ctx, hole)
         if path.line?
           ctx.lineWidth = 4
           ctx.stroke()
@@ -364,8 +384,12 @@ ns.GranuleLayer = do (L
       @_tileOnLoad.call(tile)
 
   class GranuleLayer extends GibsTileLayer
-    constructor: (@dataset, color, @multiOptions) ->
-      @granules = @dataset.granulesModel
+    constructor: (@collection, color, @multiOptions) ->
+
+      if @collection.granuleDatasource()
+        @granules = @collection.granuleDatasource().data()
+      else
+        @_datasourceSubscription = @collection.granuleDatasource.subscribe(@_subscribe)
       @_hasGibs = @multiOptions?.length > 0
       @color = color ? '#25c85b';
       super({})
@@ -373,20 +397,31 @@ ns.GranuleLayer = do (L
     onAdd: (map) ->
       super(map)
 
-      @layer._container.setAttribute('id', "granule-vis-#{@dataset.id}")
-      @_handle(map, 'on', 'edsc.focusdataset')
-      @setFocus(map.focusedDataset?.id == @dataset.id)
+      @layer._container.setAttribute('id', "granule-vis-#{@collection.id}")
+      @_handle(map, 'on', 'edsc.focuscollection')
+      @setFocus(map.focusedCollection?.id == @collection.id)
 
-      @_resultsSubscription = @granules.results.subscribe(@_loadResults.bind(this))
-      @_loadResults(@granules.results())
+      @_resultsSubscription = @granules?.results?.subscribe(@_loadResults.bind(this))
+      @_loadResults(@granules?.results())
+      @_added = true
 
     onRemove: (map) ->
       super(map)
+      @_added = false
 
       @setFocus(false, map)
-      @_handle(map, 'off', 'edsc.focusdataset')
-      @_resultsSubscription.dispose()
+      @_handle(map, 'off', 'edsc.focuscollection')
+      @_resultsSubscription?.dispose()
       @_results = null
+
+    _subscribe: ->
+      console.warn 'sub', @collection.granuleDatasource()
+      if @collection.granuleDatasource() && @_added && !@_resultsSubscription
+        granuleDatasource = @collection.granuleDatasource()
+        @granules = granuleDatasource.data()
+        @_resultsSubscription = @granules?.results?.subscribe(@_loadResults.bind(this))
+        @_loadResults(@granules?.results())
+        @_datasourceSubscription?.dispose()
 
     url: ->
       super() if @_hasGibs
@@ -409,8 +444,8 @@ ns.GranuleLayer = do (L
         method = '_on' + event.split('.').map(capitalize).join('')
         obj[onOrOff] event, this[method]
 
-    _onEdscFocusdataset: (e) =>
-      @setFocus(e.dataset?.id == @dataset.id)
+    _onEdscFocuscollection: (e) =>
+      @setFocus(e.collection?.id == @collection.id)
 
     _onEdscMouseout: (e) =>
       if @_granule?
@@ -513,11 +548,12 @@ ns.GranuleLayer = do (L
       layer = granule.buildLayer(fillOpacity: 0, clickable: false, color: @color, fillColor: @color, opacity: 1)
 
       temporal = granule.getTemporal()
+      excludeHtml = ''
+      if @collection.granuleDatasource()?.hasCapability('excludeGranules')
+        excludeHtml = '<a class="panel-list-remove" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>'
       icon = L.divIcon
         className: 'granule-spatial-label',
-        html: '<span class="granule-spatial-label-temporal">' + temporal +
-              '</span>' +
-              '<a class="panel-list-remove" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>'
+        html: "<span class=\"granule-spatial-label-temporal\">#{temporal}</span>#{excludeHtml}"
 
       marker = L.marker([0, 0], clickable: false, icon: icon)
 

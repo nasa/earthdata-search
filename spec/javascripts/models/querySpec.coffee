@@ -3,9 +3,9 @@ describe "query", ->
   param = $.param
   ns = window.edsc.models.data.query
 
-  describe "DatasetQuery", ->
+  describe "CollectionQuery", ->
     beforeEach ->
-      @query = new ns.DatasetQuery()
+      @query = new ns.CollectionQuery()
 
     it "has a page size of 20 by default", ->
       expect(param(@query.params())).toEqual("page_size=20")
@@ -52,18 +52,7 @@ describe "query", ->
         @query.params(params)
         expect(param(@query.params())).toEqual(param(params))
 
-    describe 'grids', ->
-      it 'serializes grid names', ->
-        params = {two_d_coordinate_system: {name: 'MISR'}, page_size: 20}
-        @query.params(params)
-        expect(param(@query.params())).toEqual(param(params))
-
-      it 'serializes grid values', ->
-        params = {two_d_coordinate_system: {name: 'MISR', coordinates: '1-1:2-2'}, page_size: 20}
-        @query.params(params)
-        expect(param(@query.params())).toEqual(param(params))
-
-    it "serializes dataset facets", ->
+    it "serializes collection facets", ->
       # This is intentionally a little different.  We don't deserialize facets
       params = {campaign: ['campaign1', 'campaign2'], sensor: ['sensor1'], page_size: 20}
       @query.facets.push(param: 'campaign', term: 'campaign1')
@@ -71,7 +60,7 @@ describe "query", ->
       @query.facets.push(param: 'sensor', term: 'sensor1')
       expect(param(@query.params())).toEqual(param(params))
 
-    it "does not deserialize dataset facets", ->
+    it "does not deserialize collection facets", ->
       params = {campaign: ['campaign1', 'campaign2'], sensor: ['sensor1'], page_size: 20}
       expect(param(@query.params())).toEqual("page_size=20")
 
@@ -93,7 +82,6 @@ describe "query", ->
         line: '1,2,3,4'
         polygon: '1,2,3,4,5,6,1,2'
         bounding_box: '1,2,3,4'
-        two_d_coordinate_system: {name: 'MISR'}
         free_text: 'modis'
         page_size: 20
 
@@ -109,8 +97,8 @@ describe "query", ->
   describe "GranuleQuery", ->
     beforeEach ->
       @ds_id = 'my_item_id'
-      @parent = new ns.DatasetQuery()
-      @query = new ns.GranuleQuery(@ds_id, @parent)
+      @parent = new ns.CollectionQuery()
+      @query = new ns.GranuleQuery(@ds_id, @parent, null, '')
 
     it 'serializes catalog item id, sort key, and page size by default', ->
       expect(param(@query.params())).toEqual("echo_collection_id=#{@ds_id}&sort_key%5B%5D=-start_date&page_size=20")
@@ -135,16 +123,6 @@ describe "query", ->
           sort_key: ['-start_date']
           page_size: 20
         @query.params(params)
-        expect(param(@query.params())).toEqual(param(params))
-
-      it "inherits the parent query's grid condition", ->
-        parentParams = {two_d_coordinate_system: {name: 'MISR', coordinates: '1-1:2-2'}, page_size: 20}
-        @parent.params(parentParams)
-        params =
-          two_d_coordinate_system: {name: 'MISR', coordinates: '1-1:2-2'}
-          echo_collection_id: @ds_id
-          sort_key: ['-start_date']
-          page_size: 20
         expect(param(@query.params())).toEqual(param(params))
 
       it "inherits the parent query's spatial condition", ->
@@ -219,20 +197,11 @@ describe "query", ->
       @query.params(params)
       expect(param(@query.params())).toEqual(param(params))
 
-    it 'serializes granule_urs', ->
+    it 'serializes readable granule names', ->
       params =
         echo_collection_id: @ds_id
         sort_key: ['-start_date']
-        granule_ur: ['1', '2']
-        page_size: 20
-      @query.params(params)
-      expect(param(@query.params())).toEqual(param(params))
-
-    it 'serializes producer granule ids', ->
-      params =
-        echo_collection_id: @ds_id
-        sort_key: ['-start_date']
-        producer_granule_id: ['1', '2']
+        readable_granule_name: ['1', '2']
         page_size: 20
       @query.params(params)
       expect(param(@query.params())).toEqual(param(params))

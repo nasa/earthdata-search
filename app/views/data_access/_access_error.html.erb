@@ -1,0 +1,15 @@
+<div>
+  <p><strong>Error: </strong> <span data-bind="text: error_code"></span></p>
+  <p><strong>Message: </strong> <span data-bind="text: error_message"></span></p>
+  <% if Rails.configuration.feedback_url.present? %>
+    <p>
+      <a href="#" data-bind="click: $root.ui.feedback.submitError.bind($data, 'Data Access', $data.error_code)" class="button feedback-button">
+        <i class="fa fa-exclamation-circle"></i>
+        Report this error
+      </a>
+      <a href="<%=edsc_path "/data/configure?#{@retrieval.source}"%>" class="button back-error-button" >
+        <i class="fa fa-arrow-circle-o-left"></i> Modify Access Options
+      </a>
+    </p>
+  <% end %>
+</div>

@@ -20,3 +20,4 @@
 //= require modules/map/mouse_events_layer
 //= require modules/map/map
 //= require modules/map/image_map
+//= require modules/map/mbr

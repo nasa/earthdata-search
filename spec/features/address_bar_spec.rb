@@ -7,15 +7,28 @@ describe 'Address bar', reset: false do
     URI.parse(current_url).query
   end
 
+  context 'when loading collection details page from search page' do
+    before :all do
+      visit '/search'
+      wait_for_xhr
+      first_collection_result.click_link('View collection details')
+      wait_for_xhr
+    end
+
+    it 'saves "collection-details" in the address bar' do
+      expect(page).to have_path('/search/collection-details')
+    end
+  end
+
   context 'when searching by keywords' do
     before(:all) do
       visit '/search/map'
       wait_for_xhr
-      fill_in "keywords", with: 'C1000000019-LANCEMODIS'
+      fill_in "keywords", with: 'C1219032686-LANCEMODIS'
     end
 
     it 'saves the keyword condition in the address bar' do
-      expect(page).to have_query_string('q=C1000000019-LANCEMODIS')
+      expect(page).to have_query_string('q=C1219032686-LANCEMODIS')
     end
 
     context 'clearing filters' do
@@ -28,14 +41,14 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/datasets?q=C1000000019-LANCEMODIS' }
+    before(:all) { visit '/search/collections?q=C1219032686-LANCEMODIS' }
 
     it 'loads the condition into the keywords field' do
-      expect(page).to have_field('keywords', with: 'C1000000019-LANCEMODIS')
+      expect(page).to have_field('keywords', with: 'C1219032686-LANCEMODIS')
     end
 
-    it 'filters datasets using the condition' do
-      expect(page).to have_content('MOD04_L2')
+    it 'filters collections using the condition' do
+      expect(page).to have_content('MYD04_L2')
     end
   end
 
@@ -44,11 +57,12 @@ describe 'Address bar', reset: false do
       visit '/search/map'
       wait_for_xhr
       click_link "Temporal"
-      js_check_recurring "dataset"
+      js_check_recurring "collection"
       fill_in "Start", with: "12-01 00:00:00\t"
       fill_in "End", with: "12-31 00:00:00\t"
       script = "edsc.page.query.temporal.pending.years([1970, 1975])"
       page.execute_script(script)
+      wait_for_xhr
       js_click_apply ".temporal-dropdown"
       wait_for_xhr
     end
@@ -70,7 +84,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/datasets?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
+    before(:all) { visit '/search/collections?qt=1970-12-01T00%3A00%3A00.000Z%2C1975-12-31T00%3A00%3A00.000Z%2C335%2C365' }
 
     it 'loads the condition into the temporal fields' do
       click_link "Temporal"
@@ -86,9 +100,9 @@ describe 'Address bar', reset: false do
       expect(page.find('#temporal-query')).to have_text('Start 12-01 00:00:00 Stop 12-31 00:00:00 Range 1970 - 1975')
     end
 
-    it 'filters datasets using the condition' do
+    it 'filters collections using the condition' do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("Amazon River Basin Precipitation, 1972-1992")
+      expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
     end
   end
 
@@ -113,59 +127,59 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a spatial condition' do
-    before(:all) { visit '/search/datasets?sb=0%2C0%2C10%2C10' }
+    before(:all) { visit '/search/collections?sb=0%2C0%2C10%2C10' }
 
     it 'draws the condition on the map' do
       expect(page).to have_selector('#map path', count: 1)
     end
 
-    it 'filters datasets using the condition' do
+    it 'filters collections using the condition' do
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-      expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+      expect(page).to have_content("A Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus Data")
     end
   end
 
   context 'when searching by facets' do
     before(:all) do
-      visit '/search'
+      visit '/search?test_facets=true'
       find("h3.facet-title", text: 'Project').click
       find(".facets-item", text: "EOSDIS").click
       wait_for_xhr
     end
 
     it 'saves the facet condition in the address bar' do
-      expect(page).to have_query_string('fpj=EOSDIS')
+      expect(page).to have_query_string('test_facets=true&fpj=EOSDIS')
     end
 
     context 'clearing filters' do
       before(:all) { click_link "Clear Filters" }
 
       it 'removes the facet condition from the address bar' do
-        expect(page).to have_query_string(nil)
+        expect(page).to have_query_string('test_facets=true')
       end
     end
   end
 
   context 'when loading a url containing a facet condition' do
-    before(:all) { visit '/search?fpj=EOSDIS' }
+    before(:all) { visit '/search?test_facets=true&fpj=EOSDIS' }
 
     it 'displays the selected facet condition' do
-      within(:css, '#collapse3 .panel-body.facets') do
+      within(:css, '#collapse2 .panel-body.facets') do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
     end
 
-    it 'filters datasets using the condition' do
+    it 'filters collections using the condition' do
       expect(page).to have_no_text('2000 Pilot Environmental Sustainability Index (ESI)')
     end
   end
 
-  context 'when adding datasets to a project' do
+  context 'when adding collections to a project' do
     before(:all) do
-      visit '/search/datasets'
-      add_dataset_to_project('C179001887-SEDAC', '2000 Pilot Environmental Sustainability Index (ESI)')
-      add_dataset_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
+      visit '/search/collections'
+      add_collection_to_project('C179001887-SEDAC', '2000 Pilot Environmental Sustainability Index (ESI)')
+      add_collection_to_project('C179002914-ORNL_DAAC', '30 Minute Rainfall Data (FIFE)')
       click_link "Clear Filters"
     end
 
@@ -174,7 +188,7 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context 'when loading a url containing project datasets' do
+  context 'when loading a url containing project collections' do
     before(:all) { visit '/search/project?p=!C179001887-SEDAC!C179002914-ORNL_DAAC' }
 
     it 'restores the project' do
@@ -184,58 +198,58 @@ describe 'Address bar', reset: false do
     end
   end
 
-  context "when viewing a dataset's granules" do
+  context "when viewing a collection's granules" do
     before(:all) do
-      visit '/search/datasets'
+      visit '/search/collections?q=C179003030-ORNL_DAAC'
       view_granule_results
     end
 
-    it 'saves the selected dataset in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC')
+    it 'saves the selected collection in the address bar' do
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&q=C179003030-ORNL_DAAC')
     end
   end
 
-  context "when loading a url containing a dataset's granules" do
+  context "when loading a url containing a collection's granules" do
     before(:all) { visit '/search/granules?p=C179003030-ORNL_DAAC' }
 
-    it 'restores the dataset granules view' do
+    it 'restores the collection granules view' do
       expect(page).to have_visible_granule_list
       expect(granule_list).to have_text('15 Minute Stream Flow')
     end
   end
 
-  context "when viewing a dataset's details" do
+  context "when viewing a collection's details" do
     before(:all) do
-      visit '/search/datasets'
-      first_dataset_result.click_link('View dataset details')
+      visit '/search/collections?q=C179003030-ORNL_DAAC'
+      first_collection_result.click_link('View collection details')
     end
 
-    it 'saves the selected dataset in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC')
+    it 'saves the selected collection in the address bar' do
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&q=C179003030-ORNL_DAAC')
     end
   end
 
-  context "when loading a url containing a dataset's details" do
-    before(:all) { visit '/search/dataset-details?p=C179003030-ORNL_DAAC' }
+  context "when loading a url containing a collection's details" do
+    before(:all) { visit '/search/collection-details?p=C179003030-ORNL_DAAC' }
 
-    it 'restores the dataset details view' do
-      expect(page).to have_visible_dataset_details
-      expect(dataset_details).to have_text('15 Minute Stream Flow')
+    it 'restores the collection details view' do
+      expect(page).to have_visible_collection_details
+      expect(collection_details).to have_text('15 Minute Stream Flow')
     end
   end
 
   context "when viewing a granule's details" do
     before :all do
-      visit '/search/datasets'
+      visit '/search/collections?q=C179003030-ORNL_DAAC'
       wait_for_xhr
-      first_dataset_result.click
+      first_collection_result.click
       wait_for_xhr
       first_granule_list_item.click_link 'View granule details'
       wait_for_xhr
     end
 
     it 'saves the selected granule in the address bar' do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111301-ORNL_DAAC&m=39.1019!-97.72!7!1!0!0%2C2&q=C179003030-ORNL_DAAC')
     end
   end
 
@@ -254,27 +268,27 @@ describe 'Address bar', reset: false do
   context "setting granule query conditions within the project" do
     before(:all) do
       visit '/search/project?p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       check "Find only granules that have browse images."
-      second_project_dataset.click_link "Show granule filters"
+      second_project_collection.click_link "Show granule filters"
       select 'Day only', from: "day-night-select"
-      second_project_dataset.click_link "Hide granule filters"
-      first_project_dataset.click_link "View dataset details"
+      second_project_collection.click_link "Hide granule filters"
+      first_project_collection.click_link "View collection details"
       wait_for_xhr
-      expect(page).to have_visible_dataset_details
+      expect(page).to have_visible_collection_details
     end
 
     it "saves the query conditions in the URL" do
-      expect(page).to have_path('/search/project/dataset-details')
+      expect(page).to have_path('/search/project/collection-details')
       expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY')
     end
 
-    it "does not duplicate the query conditions for the focused dataset" do
+    it "does not duplicate the query conditions for the focused collection" do
       expect(page.current_url).not_to include('pg[0][bo]')
     end
   end
 
-  context "setting granule query conditions when the focused dataset is not the project" do
+  context "setting granule query conditions when the focused collection is not the project" do
     before(:all) do
       visit '/search/granules?p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
       click_link "Filter granules"
@@ -286,7 +300,7 @@ describe 'Address bar', reset: false do
       expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[0][bo]=true')
     end
 
-    it "includes query conditions for the focused dataset" do
+    it "includes query conditions for the focused collection" do
       expect(page.current_url).to include('pg[0][bo]')
     end
   end
@@ -294,12 +308,13 @@ describe 'Address bar', reset: false do
   context "loading a URL with saved query conditions" do
     before :all do
       visit '/search/project?p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
+      wait_for_xhr
     end
 
     it "restores the granule query conditions" do
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       expect(page).to have_checked_field 'Find only granules that have browse images.'
-      second_project_dataset.click_link "Show granule filters"
+      second_project_collection.click_link "Show granule filters"
       expect(page).to have_select 'day-night-select', selected: 'Day only'
     end
   end
@@ -309,11 +324,12 @@ describe 'Address bar', reset: false do
       visit '/search/map'
       wait_for_xhr
       page.execute_script("$('#map').data('map').map.setView(L.latLng(12, -34), 5)")
+      wait_for_zoom_animation(5)
       wait_for_xhr
     end
 
     it "saves the map state in the query conditions" do
-      expect(page).to have_query_string('m=12!-34!5!1!0!')
+      expect(page).to have_query_string('m=12!-34!5!1!0!0%2C2')
     end
   end
 
@@ -410,7 +426,7 @@ describe 'Address bar', reset: false do
     end
 
     it "saves the selected granule in the URL" do
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-97.72!7!1!0!')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC&g=G179111300-ORNL_DAAC&m=39.1019!-97.72!7!1!0!0%2C2')
     end
   end
 
@@ -429,8 +445,8 @@ describe 'Address bar', reset: false do
   end
 
   context "Long URLs" do
-    let(:long_path) { '/search/datasets?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC!C179002107-SEDAC' }
-    let(:longer_path) { long_path + '!C179003030-ORNL_DAAC' }
+    let(:long_path) { '/search/collections?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC&q=C179003030-ORNL_DAAC' }
+    let(:longer_path) { long_path.gsub('&', '!C179003030-ORNL_DAAC&') }
     let(:query_re) { /^projectId=(\d+)$/ }
 
     def query
@@ -446,7 +462,7 @@ describe 'Address bar', reset: false do
       before(:each) do
         visit long_path
         wait_for_xhr
-        first_dataset_result.click_link('Add dataset to the current project')
+        target_collection_result.click_link('Add collection to the current project')
         wait_for_xhr
       end
 
@@ -465,7 +481,7 @@ describe 'Address bar', reset: false do
         end
 
         it "keeps the URL the same but updates the remote store" do
-          expect(Project.find(project_id).path).to eql(longer_path + '&q=AST')
+          expect(Project.find(project_id).path).to eql(longer_path.gsub(/C179003030-ORNL_DAAC$/, 'AST'))
           expect(before_project_id).to eql(project_id)
         end
       end
@@ -477,12 +493,12 @@ describe 'Address bar', reset: false do
         project.path = longer_path
         project.save!
 
-        visit "/search/datasets?projectId=#{project.to_param}"
+        visit "/search/collections?projectId=#{project.to_param}"
         wait_for_xhr
       end
 
       it "restores the persisted long path" do
-        expect(page).to have_text('You have 7 datasets in your project.')
+        expect(page).to have_text('You have 6 collections in your project.')
       end
     end
   end
@@ -496,7 +512,7 @@ describe 'Address bar', reset: false do
       end
 
       it 'shows a section for additional attribute search' do
-        expect(page).to have_text('Dataset-Specific Attributes')
+        expect(page).to have_text('Collection-Specific Attributes')
       end
 
       it 'shows additional attribute search fields' do
@@ -513,7 +529,7 @@ describe 'Address bar', reset: false do
       end
 
       it 'shows no section for additional attribute search' do
-        expect(page).to have_no_text('Dataset-Specific Attributes')
+        expect(page).to have_no_text('Collection-Specific Attributes')
       end
 
       it 'shows no additional attribute search fields' do
@@ -534,7 +550,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the base layer in the url' do
-      expect(page).to have_query_string('m=0!0!2!1!2!')
+      expect(page).to have_query_string('m=0!0!2!1!2!0%2C2')
     end
 
     context 'when refreshing the page' do
@@ -556,18 +572,18 @@ describe 'Address bar', reset: false do
       page.find_link('Layers').trigger(:mouseover)
       within '#map' do
         check 'Borders and Roads'
-        check 'Place Labels'
+        check 'Coastlines'
       end
       wait_for_xhr
     end
 
     it 'saves the applied overlays in the url' do
-      expect(page).to have_query_string('m=0!0!2!1!0!0%2C2')
+      expect(page).to have_query_string('m=0!0!2!1!0!0%2C2%2C1')
     end
 
     context 'when refreshing the page' do
       before :all do
-        visit '/search?m=0!0!2!1!0!0%2C2'
+        visit '/search?m=0!0!2!1!0!0%2C1'
         wait_for_xhr
       end
 

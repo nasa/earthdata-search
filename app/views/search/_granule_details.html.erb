@@ -1,14 +1,14 @@
-<!-- ko if: $root.ui.datasetsList.focused() -->
-<!-- ko if: $root.ui.datasetsList.focused().selected() -->
-<section id="granule-details" class="details">
+<!-- ko if: $root.ui.collectionsList.focused() -->
+<!-- ko if: $root.ui.collectionsList.focused().selected() -->
+<section id="granule-details" class="details master-overlay-no-min">
   <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
   <nav class="master-overlay-nav">
-    <a href="#" class="master-overlay-back" data-bind="click: ui.datasetsList.focused().hideGranuleDetails">
+    <a href="#" class="master-overlay-back" data-bind="click: ui.collectionsList.focused().hideGranuleDetails">
       <i class="fa fa-arrow-circle-left"></i> <span class="master-overlay-breadcrumb">Back to Granules</span>
     </a>
   </nav>
-  <!-- ko if: $root.ui.datasetsList.focused() -->
-  <!-- ko with: $root.ui.datasetsList.focused() -->
+  <!-- ko if: $root.ui.collectionsList.focused() -->
+  <!-- ko with: $root.ui.collectionsList.focused() -->
   <!-- ko if: selected() -->
   <header >
     <h2 data-bind="ifnot: selected().detailsLoaded" class="loading">Details Loading...</h2>
@@ -19,7 +19,7 @@
   <div class="master-overlay-info">
     <p class="panel-list-meta">
     <% if Rails.configuration.feedback_url.present? %>
-      <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Granule Details', $root.ui.datasetsList.focused().selected().id)" class="button feedback-button">
+      <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Granule Details', $root.ui.collectionsList.focused().selected().id)" class="button feedback-button">
         <i class="fa fa-exclamation-circle"></i>
         Report a metadata problem
       </a>
@@ -43,10 +43,10 @@
     <div class="tab-pane" id="granule-metadata">
       <dl class="master-overlay-content">
         <dt>Download Metadata:</dt>
-        <dd><a data-bind="attr: { href: $data.native_url }">Native</a></dd>
-        <dd><a data-bind="attr: { href: $data.atom_url }">ATOM</a></dd>
-        <dd><a data-bind="attr: { href: $data.echo10_url }">ECHO 10</a></dd>
-        <dd><a data-bind="attr: { href: $data.iso19115_url }">ISO 19115</a></dd>
+        <dd><a data-bind="attr: { href: $data.native_url }, visible: $data.native_url">Native</a></dd>
+        <dd><a data-bind="attr: { href: $data.atom_url }, visible: $data.atom_url">ATOM</a></dd>
+        <dd><a data-bind="attr: { href: $data.echo10_url }, visible: $data.echo10_url">ECHO 10</a></dd>
+        <dd><a data-bind="attr: { href: $data.iso19115_url }, visible: $data.iso19115_url">ISO 19115</a></dd>
       </dl>
     </div>
   </div>

@@ -14,13 +14,9 @@ describe "Granule search filters", reset: false do
     set_temporal(temporal_start_date, temporal_stop_date)
     wait_for_xhr
 
-    first_project_dataset.click_link "Show granule filters"
-
-    before_granule_count = 0
-    synchronize do
-      number_granules = expect(page.text).to match /\d+ Granules/
-      before_granule_count = number_granules.to_s.split(" ")[0].to_i
-    end
+    first_project_collection.click_link "Show granule filters"
+    number_granules = project_overview.text.match /\d+ Granules/
+    before_granule_count = number_granules.to_s.split(" ")[0].to_i
   end
 
   after :all do
@@ -33,37 +29,37 @@ describe "Granule search filters", reset: false do
 
   context "when choosing a day/night flag" do
     after :each do
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(project_overview).to reset_granules_to(before_granule_count)
     end
 
     it "selecting day returns day granules" do
       select 'Day only', from: "day-night-select"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "selecting night returns night granules" do
       select 'Night only', from: "day-night-select"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "selecting both returns both day and night granules" do
       select 'Both day and night', from: "day-night-select"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "clicking the clear button selects Anytime" do
       select 'Day only', from: "day-night-select"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
 
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(project_overview).to reset_granules_to(before_granule_count)
 
       expect(page).to have_select("day-night-select", selected: "Anytime")
       click_button "granule-filters-submit"
@@ -72,39 +68,39 @@ describe "Granule search filters", reset: false do
 
   context "when choosing cloud cover" do
     after :each do
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(project_overview).to reset_granules_to(before_granule_count)
     end
 
     it "filters with both min and max" do
       fill_in "Minimum:", with: "2.5"
       fill_in "Maximum:", with: "5.0"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "filters with only min" do
       fill_in "Minimum:", with: "2.5"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "filters with only max" do
       fill_in "Maximum:", with: "5.0"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "clicking the clear button clears minimum and maximum" do
       fill_in "Minimum:", with: "2.5"
       fill_in "Maximum:", with: "5.0"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
 
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(project_overview).to reset_granules_to(before_granule_count)
 
       expect(page).to have_field("Minimum", with: "")
       expect(page).to have_field("Maximum", with: "")
@@ -113,7 +109,7 @@ describe "Granule search filters", reset: false do
 
     context "validates input" do
       after :each do
-        first_project_dataset.click_link "Hide granule filters"
+        first_project_collection.click_link "Hide granule filters"
         wait_for_xhr
       end
 
@@ -145,32 +141,32 @@ describe "Granule search filters", reset: false do
 
   context "when choosing data access options" do
     after :each do
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(project_overview).to reset_granules_to(before_granule_count)
     end
 
     it "selecting browse only loads granules with browse images" do
       check "Find only granules that have browse images."
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "selecting online only loads downloadable granules" do
       check "Find only granules that are available online."
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "clicking the clear button unchecks data access options" do
       check "Find only granules that have browse images."
       check "Find only granules that are available online."
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
 
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(project_overview).to reset_granules_to(before_granule_count)
 
       expect(page).to have_unchecked_field("Find only granules that have browse images.")
       expect(page).to have_unchecked_field("Find only granules that are available online.")
@@ -180,28 +176,26 @@ describe "Granule search filters", reset: false do
 
   context "when searching by granule id" do
     after :each do
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(project_overview).to reset_granules_to(before_granule_count)
     end
 
     context "with single granule id field" do
       it "selecting Granule ID filters granules" do
-        choose "Search by Granule UR"
-        fill_in "granule_id", with: "%2006227720%"
+        fill_in "granule_id", with: "*2006227720*"
         click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
+        expect(project_overview).to filter_granules_from(before_granule_count)
       end
 
       it "clicking the clear button clears granule id field" do
-        choose "Search by Granule UR"
-        fill_in "granule_id", with: "%2006227720%"
+        fill_in "granule_id", with: "*2006227720*"
         click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
+        expect(project_overview).to filter_granules_from(before_granule_count)
 
-        first_project_dataset.click_link "Show granule filters"
+        first_project_collection.click_link "Show granule filters"
         click_button "granule-filters-clear"
-        expect(page).to reset_granules_to(before_granule_count)
+        expect(project_overview).to reset_granules_to(before_granule_count)
 
         expect(page).to have_field("granule_id", with: "")
         click_button "granule-filters-submit"
@@ -213,29 +207,20 @@ describe "Granule search filters", reset: false do
         click_link "Search Multiple"
       end
 
-      it "selecting Granule UR filters granules" do
-        choose "Search by Granule UR"
-        fill_in "granule_id_field", with: "%2006227720%"
+      it "searching with a pattern filters granules" do
+        fill_in "granule_id_field", with: "*2006227720*"
         click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
-      end
-
-      it "selecting Local Granule ID filters granules" do
-        choose "Search by Local Granule ID"
-        fill_in "granule_id_field", with: "%03232002054831%"
-        click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
+        expect(project_overview).to filter_granules_from(before_granule_count)
       end
 
       it "clicking the clear button clears granule id textarea" do
-        choose "Search by Granule UR"
-        fill_in "granule_id_field", with: "%2006227720%"
+        fill_in "granule_id_field", with: "*2006227720*"
         click_button "granule-filters-submit"
-        expect(page).to filter_granules_from(before_granule_count)
+        expect(project_overview).to filter_granules_from(before_granule_count)
 
-        first_project_dataset.click_link "Show granule filters"
+        first_project_collection.click_link "Show granule filters"
         click_button "granule-filters-clear"
-        expect(page).to reset_granules_to(before_granule_count)
+        expect(project_overview).to reset_granules_to(before_granule_count)
 
         expect(page).to have_field("granule_id_field", with: "")
         click_button "granule-filters-submit"
@@ -245,7 +230,11 @@ describe "Granule search filters", reset: false do
 
   context "when excluding by granule id" do
     before :all do
-      first_project_dataset.click
+      first_project_collection.click
+      wait_for_xhr
+      number_granules = granule_list.text.match /Showing \d+ of \d+ matching granules/
+      before_granule_count = number_granules.to_s.split(" ")[3].to_i
+
       first_granule_list_item.click
       first_granule_list_item.click_link "Exclude this granule"
     end
@@ -253,9 +242,9 @@ describe "Granule search filters", reset: false do
     after :all do
       click_button "granule-filters-clear"
       wait_for_xhr
-      granule_list.click_link "Back to Datasets"
+      granule_list.click_link "Back to Collections"
       wait_for_xhr
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       wait_for_xhr
     end
 
@@ -264,11 +253,13 @@ describe "Granule search filters", reset: false do
     end
 
     it "removes the granule from the granule list" do
-      expect(page).to have_css('#granule-list .panel-list-item', count: 19)
+      expect(page).to have_css('#granule-list .panel-list-item', count: 38)
     end
 
     it "updates the page's hits count" do
-      expect(granule_list).to have_content("Showing 19 of #{before_granule_count.to_i - 1} matching granules")
+      # 38 = (page size - 1) * 2. Because of the browser height
+      # removing a granule immediately loads the next page.
+      expect(granule_list).to have_content("Showing 38 of #{before_granule_count.to_i - 1} matching granules")
     end
 
     context "when the user clicks the link to clear removed granules" do
@@ -288,17 +279,17 @@ describe "Granule search filters", reset: false do
       end
 
       it "updates the granule hits count" do
-        expect(granule_list).to have_content("Showing 20 of #{before_granule_count} matching granules")
+        expect(page).to have_content("Showing 20 of #{before_granule_count} matching granules")
       end
     end
   end
 
   context "when searching by temporal" do
     after :each do
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
       js_uncheck_recurring 'granule'
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(project_overview).to reset_granules_to(before_granule_count)
     end
 
     it "selecting temporal range filters granules" do
@@ -306,18 +297,18 @@ describe "Granule search filters", reset: false do
       fill_in "End", with: "2013-12-31 00:00:00\t"
       js_click_apply ".master-overlay-content"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "selecting temporal recurring filters granules" do
       js_check_recurring 'granule'
       fill_in "Start", with: "12-01 00:00:00\t"
       fill_in "End", with: "12-31 00:00:00\t"
-      script = "edsc.page.project.searchGranulesDataset().granulesModel.temporal.pending.years([2005, 2010])"
+      script = "edsc.page.project.searchGranulesCollection().granuleDatasource().cmrQuery().temporal.pending.years([2005, 2010])"
       page.execute_script(script)
       js_click_apply ".master-overlay-content"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     it "clicking the clear button clears temporal fields" do
@@ -325,11 +316,11 @@ describe "Granule search filters", reset: false do
       fill_in "End", with: "2013-12-31 00:00:00\t"
       js_click_apply ".master-overlay-content"
       click_button "granule-filters-submit"
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
 
-      first_project_dataset.click_link "Show granule filters"
+      first_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to reset_granules_to(before_granule_count)
+      expect(project_overview).to reset_granules_to(before_granule_count)
 
       expect(page).to have_field("Start", with: "")
       expect(page).to have_field("End", with: "")
@@ -337,8 +328,8 @@ describe "Granule search filters", reset: false do
     end
   end
 
-  it "shows dataset additional attributes" do
-    expect(page).to have_text('Dataset-Specific Attributes')
+  it "shows collection additional attributes" do
+    expect(page).to have_text('Collection-Specific Attributes')
     expect(page).to have_field('ASTERMapProjection')
   end
 
@@ -351,7 +342,7 @@ describe "Granule search filters", reset: false do
     end
 
     it "filters granules using the additional attribute values" do
-      expect(page).to filter_granules_from(before_granule_count)
+      expect(project_overview).to filter_granules_from(before_granule_count)
     end
 
     context "when clearing the attribute search" do
@@ -365,21 +356,21 @@ describe "Granule search filters", reset: false do
       end
 
       it "resets the granule search" do
-        expect(page).to reset_granules_to(before_granule_count)
+        expect(project_overview).to reset_granules_to(before_granule_count)
       end
     end
   end
 
   context "when sorting granules" do
     before :all do
-      first_project_dataset.click
+      first_project_collection.click
     end
 
     after :all do
       select 'Start Date, Newest first', from: "granule-sort"
       wait_for_xhr
-      granule_list.click_link "Back to Datasets"
-      first_project_dataset.click_link "Show granule filters"
+      granule_list.click_link "Back to Collections"
+      first_project_collection.click_link "Show granule filters"
     end
 
     it "allows sorting by start date ascending" do

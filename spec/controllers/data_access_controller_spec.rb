@@ -37,7 +37,7 @@ describe DataAccessController do
 
       granules_response = MockResponse.atom(granules, {'cmr-hits' => hits.to_s})
       mock_client = Object.new
-      expect(Echo::Client).to receive('client_for_environment').and_return(mock_client)
+      allow(Echo::Client).to receive('client_for_environment').and_return(mock_client)
       expect(mock_client).to receive('get_granules').and_return(granules_response)
 
       if hits > 0
@@ -92,7 +92,7 @@ describe DataAccessController do
 
     let(:access_methods) { body['methods'] }
 
-    context 'when requesting options for a dataset with no matching granules' do
+    context 'when requesting options for a collection with no matching granules' do
       let(:hits) { 0 }
 
       it "returns 0 granule hits" do
@@ -104,7 +104,7 @@ describe DataAccessController do
       end
     end
 
-    context 'when requesting options for a dataset with matching granules' do
+    context 'when requesting options for a collection with matching granules' do
       let(:hits) { 10 }
 
       it "returns a response containing the number of matching granules" do
@@ -263,7 +263,7 @@ describe DataAccessController do
         end
       end
 
-      context 'whose dataset is serviceable' do
+      context 'whose collection is serviceable' do
         let(:serviceable) { 1 }
 
         it 'returns a response containing a service access method' do
@@ -277,7 +277,7 @@ describe DataAccessController do
         end
       end
 
-      context 'whose dataset is not serviceable' do
+      context 'whose collection is not serviceable' do
         let(:serviceable) { 0 }
 
         it 'does not return and service access methods' do
@@ -298,7 +298,7 @@ describe DataAccessController do
         end
       end
 
-      context 'whose granules are downloadable and have order options and have a serviceable dataset' do
+      context 'whose granules are downloadable and have order options and have a serviceable collection' do
         let(:hits) { 10 }
         let(:downloadable) { 10 }
         let(:orderable) { 10 }

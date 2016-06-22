@@ -8,21 +8,21 @@
 require "spec_helper"
 
 describe "Granule footprint visualizations", reset: false, wait: 60 do
-  extend Helpers::DatasetHelpers
+  extend Helpers::CollectionHelpers
 
   before :all do
     load_page :search
   end
 
-  context "for point datasets" do
-    use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data'
+  context "for point collections" do
+    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data'
 
-    context "visualizing a dataset's granules" do
+    context "visualizing a collection's granules" do
       hook_granule_results
 
-      it "draws a single point on the map representing all of the dataset's granules" do
+      it "draws a single point on the map representing all of the collection's granules" do
         wait_for_xhr
-        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_granule_visualizations('C179003030-ORNL_DAAC')
       end
 
       context "and mousing over a visualized granule" do
@@ -51,29 +51,29 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       end
     end
 
-    context "removing a visualized dataset" do
+    context "removing a visualized collection" do
       hook_granule_results_back
 
-      it "hides the dataset's visualizations" do
-        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      it "hides the collection's visualizations" do
+        expect(page).to have_no_granule_visualizations('C179003030-ORNL_DAAC')
       end
     end
   end
 
-  context "for polygon datasets" do
-    use_dataset 'C1000000011-LANCEMODIS', 'MOD02QKM'
+  context "for polygon collections" do
+    use_collection 'C1219252422-LANCEMODIS', 'MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m'
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
       wait_for_xhr
     end
 
-    context "visualizing a dataset's granules" do
-      hook_granule_results
+    context "visualizing a collection's granules" do
+      hook_granule_results('MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m')
 
       it "draws polygons on the map for granule spatial areas" do
         wait_for_xhr
-        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_granule_visualizations('C1219252422-LANCEMODIS')
       end
 
       context "and mousing over a visualized granule" do
@@ -102,75 +102,29 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       end
     end
 
-    context "removing a visualized dataset" do
-      hook_granule_results_back
+    context "removing a visualized collection" do
+      hook_granule_results_back('MODIS/Terra Near Real Time (NRT) Calibrated Radiances 5-Min L1B Swath 250m')
 
-      it "hides the dataset's visualizations" do
-        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      it "hides the collection's visualizations" do
+        expect(page).to have_no_granule_visualizations('C1219252422-LANCEMODIS')
       end
     end
   end
 
-  context "for line datasets" do
-    use_dataset 'C5920490-LARC_ASDC', 'CAL_IIR_L2_Track-Beta-V3-01'
-
-    context "visualizing a dataset's granules" do
-      hook_granule_results
-
-      it "draws lines on the map for granule spatial areas" do
-        wait_for_xhr
-        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
-      end
-
-      context "and mousing over a visualized granule" do
-        before :all do
-          first_granule_list_item.trigger(:mouseover)
-        end
-
-        after :all do
-          first_granule_list_item.trigger(:mouseout)
-        end
-
-        it "draws the granule's footprint" do
-          expect(page).to have_selector('.leaflet-overlay-pane path')
-        end
-      end
-
-      context "and mousing off of a visualized granule" do
-        before :all do
-          first_granule_list_item.trigger(:mouseover)
-          first_granule_list_item.trigger(:mouseout)
-        end
-
-        it "hides the granule's footprint" do
-          expect(page).to have_no_selector('.leaflet-overlay-pane path')
-        end
-      end
-    end
-
-    context "removing a visualized dataset" do
-      hook_granule_results_back
-
-      it "hides the dataset's visualizations" do
-        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
-      end
-    end
-  end
-
-  context "for bounding box datasets" do
-    use_dataset 'C204200619-GSFCS4PA', 'CloudSat'
+  context "for bounding box collections" do
+    use_collection 'C204200619-GSFCS4PA', 'AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1'
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
       wait_for_xhr
     end
 
-    context "visualizing a dataset's granules" do
-      hook_granule_results
+    context "visualizing a collection's granules" do
+      hook_granule_results('AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1')
 
       it "draws polygons on the map for granule spatial areas" do
         wait_for_xhr
-        expect(page).to have_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+        expect(page).to have_granule_visualizations('C204200619-GSFCS4PA')
       end
 
       context "and mousing over a visualized granule" do
@@ -199,11 +153,11 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
       end
     end
 
-    context "removing a visualized dataset" do
-      hook_granule_results_back
+    context "removing a visualized collection" do
+      hook_granule_results_back('AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1')
 
-      it "hides the dataset's visualizations" do
-        expect(page).to have_no_selector('.leaflet-tile-pane .leaflet-layer:nth-child(2) canvas')
+      it "hides the collection's visualizations" do
+        expect(page).to have_no_granule_visualizations('C204200619-GSFCS4PA')
       end
     end
   end

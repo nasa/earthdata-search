@@ -1,0 +1,60 @@
+<ul class="ccols" data-bind="foreach: collections()">
+<li data-bind="click: $component.focusCollection,
+               css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}"
+    class="ccol">
+  <div class="ccol-header">
+    <a href="#" class="ccol-more button icon-button" title="Toggle details"
+       data-flyout="collection-details-flyout"
+       data-bind="click: $component.toggleFlyout">
+      <i class="fa fa-chevron-circle-right"></i><i class="fa fa-chevron-circle-left"></i>
+    </a>
+    <span class="ccol-badge badge-collection"></span>
+    <span class="ccol-title">
+      <span data-bind="text: short_name"></span>
+      <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided'-->
+        <span> - </span><span data-bind="text: version_id"></span>
+      <!-- /ko -->
+    </span>
+  </div>
+  <div class="ccol-mini-map" data-bind="attr: {id: id + '-map'}, divSpatial: $data">
+    <div class="ccol-mini-map-spatial-layer"></div>
+  </div>
+  <div class="ccol-actions-container">
+    <div class="ccol-actions">
+      <a href="#" class="button icon-button add-to-project flyout-tooltip-button"
+         data-pulse="#project-count"
+         data-flyout="add-to-project-flyout"
+         class="button icon-button add-to-project"
+         data-bind="visible: !$component.hasCollection($data),
+                    click: $component.toggleCollection,
+                    event: {mouseover: $component.showFlyout, mouseout: $component.hideFlyout, click: $component.hideFlyout}">
+        <i class="fa fa-plus-circle"></i>
+      </a>
+      <a href="#" class="button icon-button button-active"
+         data-pulse="#project-count"
+         title="Remove collection from the current project"
+         data-bind="visible: $component.hasCollection($data),
+                    click: $component.toggleCollection">
+        <i class="fa fa-minus-circle"></i>
+      </a>
+      <a href="#" class="button icon-button ccol-details-button master-overlay-forward"
+         data-master-overlay-forward="Collections"
+         data-bind="click: $component.showCollectionDetails"
+         title="View collection details">
+        <i class="fa fa-info-circle"></i>
+      </a>
+      <!-- ko if: $component.isProject -->
+        <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $component.accessCollection">
+          <i class="fa fa-download"></i>
+        </a>
+      <!-- /ko -->
+      <!-- ko if: !$component.isProject && $component.canQueryCollectionSpatial($data) -->
+        <a href="#" class="button icon-button" title="Search using this collection's location"
+           data-bind="css: {'button-active': $component.spatialQuery() == spatial_constraint()}, click: $component.toggleQueryCollectionSpatial">
+          <i class="fa fa-map-marker"></i>
+        </a>
+      <!-- /ko -->
+    </div>
+  </div>
+</li>
+</ul>

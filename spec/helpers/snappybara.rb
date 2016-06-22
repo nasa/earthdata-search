@@ -13,6 +13,38 @@ module Snappybara
       end
     end
   end
+
+  def self.wait_for_requests_complete
+    stop_client
+    Middleware::RackRequestBlocker.block_requests!
+    requests = Middleware::RackRequestBlocker.num_active_requests
+    puts "Waiting for #{requests} requests before continuing" unless requests == 0
+    wait_for('pending AJAX requests complete') do
+      Middleware::RackRequestBlocker.num_active_requests == 0
+    end
+  ensure
+    Middleware::RackRequestBlocker.allow_requests!
+  end
+
+  # Navigate away from the current page which will prevent any new requests from being started
+  def self.stop_client
+    Capybara.page.execute_script %Q{
+    window.location = "about:blank";
+  }
+  end
+
+  # Waits until the passed block returns true
+  def self.wait_for(condition_name, max_wait_time: 30, polling_interval: 0.01)
+    wait_until = Time.now + max_wait_time.seconds
+    while true
+      return if yield
+      if Time.now > wait_until
+        raise "Condition not met: #{condition_name}"
+      else
+        sleep(polling_interval)
+      end
+    end
+  end
 end
 
 RSpec.configure do |config|
@@ -47,6 +79,9 @@ RSpec.configure do |config|
 
   # Reset sessions between each top-level describe
   config.after(:all) do
-    Capybara.reset_sessions!
+    if Capybara.page
+      Snappybara.wait_for_requests_complete
+      Capybara.reset_sessions!
+    end
   end
 end

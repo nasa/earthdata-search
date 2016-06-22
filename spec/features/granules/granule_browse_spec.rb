@@ -4,7 +4,7 @@
 require "spec_helper"
 
 describe "Granule browse display", reset: false do
-  extend Helpers::DatasetHelpers
+  extend Helpers::CollectionHelpers
 
   before :all do
     Capybara.reset_sessions!
@@ -12,13 +12,13 @@ describe "Granule browse display", reset: false do
   end
 
   context "for granules with browse" do
-    use_dataset 'C14758250-LPDAAC_ECS', 'AST_L1A'
+    use_collection 'C14758250-LPDAAC_ECS', 'AST_L1A'
 
     context "viewing the granule list" do
-      hook_granule_results
+      hook_granule_results('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
 
       it "displays browse thumbnails for each granule which link to the original browse image" do
-        expect(granule_list).to have_css('a.panel-list-thumbnail-container img[src$="h=65&w=65"]')
+        expect(granule_list).to have_css('a.panel-list-thumbnail-container img[src$="h=75&w=75"]')
       end
 
       context "clicking on a granule result" do
@@ -38,7 +38,7 @@ describe "Granule browse display", reset: false do
 
     context "returning to the search page with granule browse visible on the map" do
       before :all do
-        view_granule_results
+        view_granule_results('ASTER L1A Reconstructed Unprocessed Instrument Data V003')
         first_granule_list_item.click
         leave_granule_results
       end
@@ -50,7 +50,7 @@ describe "Granule browse display", reset: false do
   end
 
   context "for granules with no browse" do
-    use_dataset 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
+    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
 
     context "viewing the granule list" do
       hook_granule_results

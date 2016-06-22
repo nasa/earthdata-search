@@ -32,15 +32,24 @@ EarthdataSearchClient::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
+  config.assets.configure do |env|
+    env.cache = ThreadSafe::Cache.new
+  end
+
   VCR.configure { |c| VCR::EDSCConfigurer.configure(c) }
 
-  config.logo_name = "dev-logo-beta"
+  config.logo_name = "DEV"
   config.env_name = ""
   config.tophat_url = ""
 
   config.url_limit = 130
 
   config.middleware.use RackSessionAccess::Middleware
+  config.middleware.use Middleware::RackRequestBlocker
 
+  # This is also the client ID sent to OpenSearch. It is kept the same since the OpenSearch endpoint ultimately
+  # talks to ECHO/CMR.
   config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-dev'
+
+  config.log_level = :info
 end

@@ -1,0 +1,22 @@
+<div id="manual-coord-entry-container" class="manual-coord-entry">
+  <p data-bind="visible: !ui.spatialType.manualEntryVisible() && ui.spatialType.querySpatial() != 'Point' && ui.spatialType.querySpatial() != 'Rectangle'"><i class="fa fa-fw fa-crop"></i></p>
+  <p data-bind="visible: ui.spatialType.manualEntryVisible() || ui.spatialType.querySpatial() == 'Point' || ui.spatialType.querySpatial() == 'Rectangle'">
+    <label>
+      <!-- ko text: ui.spatialType.displaySpatial() + ':' --><!-- /ko -->
+      <!-- ko if: ui.spatialType.displaySpatial() == 'Point' -->
+        <input type="text" name="manual-coord-entry-point" data-bind="value: spatialEntry.point, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 44.2, 130)">
+      <!--/ko-->
+    </label>
+
+    <p>
+    <!-- ko if: ui.spatialType.displaySpatial() == 'Rectangle' && ui.spatialType.manualEntryVisible() -->
+    <label for="manual-coord-entry-swpoint">Southwest Point</label>
+    <input type="text" id="manual-coord-entry-swpoint" name="manual-coord-entry-swpoint" data-bind="value: spatialEntry.swPoint, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 44.2, 130)">
+    <label for="manual-coord-entry-nepoint">Northeast Point</label>
+    <input type="text" id="manual-coord-entry-nepoint" name="manual-coord-entry-nepoint" data-bind="value: spatialEntry.nePoint, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 50, 133.24)">
+    <!--/ko-->
+
+    </p>
+    <!-- ko if: spatialEntry.error --><span class="error" data-bind="text: spatialEntry.error()"></span><!-- /ko -->
+  </p>
+</div>

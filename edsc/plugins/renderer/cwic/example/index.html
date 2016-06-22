@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Earthdata Search Plugin Example</title>
+    <script src="../../../pluginsupport/dist/edsc-pluginsupport.min.js"></script>
+    <script>
+      edscplugin.register('cwic', '../dist/edsc-plugin-cwic.min.js');
+    </script>
+  </head>
+  <body>
+    <p>
+      <button onclick="(function() { edscplugin.load('cwic'); })()">Load</button>
+    </p>
+    <p>
+      <button onclick="(function() { edscplugin.unload('cwic'); })()">Unload</button>
+    </p>
+  </body>
+</html>

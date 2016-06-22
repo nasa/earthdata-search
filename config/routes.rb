@@ -1,4 +1,5 @@
 EarthdataSearchClient::Application.routes.draw do
+
   mount Cmep::Engine => "/cmep" if defined?(Cmep)
 
   get 'urs_callback' => 'oauth_tokens#urs_callback'
@@ -12,7 +13,7 @@ EarthdataSearchClient::Application.routes.draw do
       post 'username_recall'
       post 'password_reset'
       get 'get_preferences'
-      post 'update_contact_info'
+      post 'update_notification_pref'
       get 'site_preferences' => 'users#get_site_preferences'
       post 'site_preferences' => 'users#set_site_preferences'
     end
@@ -20,8 +21,8 @@ EarthdataSearchClient::Application.routes.draw do
 
   match 'static' => 'static_pages#index', :via => [:get]
 
-  get 'dataset_facets' => 'datasets#facets'
-  resources :datasets, only: [:index, :show], defaults: {format: 'json'} do
+  get 'collection_facets' => 'collections#facets'
+  resources :collections, only: [:index, :show], defaults: {format: 'json'} do
     member do
       post 'use'
     end
@@ -46,7 +47,11 @@ EarthdataSearchClient::Application.routes.draw do
   post 'convert' => 'conversions#convert'
   resources :convert, only: [:create], defaults: {format: 'json'}
 
-  get 'data/options' => 'data_access#options', format: 'json'
+  get 'cwic/edsc_granule(/*cwic_path)' => 'cwic#granule'
+  get 'cwic/edsc_download(/*cwic_path)' => 'cwic#download', format: 'html'
+  get 'cwic(/*cwic_path)' => 'cwic#index'
+
+  match 'data/options' => 'data_access#options', format: 'json', via: [:get, :post]
   post 'data/configure' => 'data_access#configure'
   get 'data/configure' => 'data_access#configure'
   post 'data/retrieve' => 'data_access#retrieve'
@@ -55,6 +60,7 @@ EarthdataSearchClient::Application.routes.draw do
   post 'data/remove' => 'data_access#remove', format: 'json'
 
   get 'search(/*overlay_params)' => 'search#index'
+  get 'health' => 'health#index', format: 'json'
   root :to => 'search#index'
 
 

@@ -55,6 +55,34 @@ trigger_500:
       encoding: UTF-8
       string: '{"errors": {"error": "Some error string"}}'
     http_version:
+trigger_500_non_hierarchical:
+  response:
+    status:
+      code: 500
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"cb9cf9f9d68fe41ba4f6be498917ef7c"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.406000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '0'
+      date:
+      - Wed, 07 May 2014 17:59:34 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"errors": {"error": "Some error string"}}'
+    http_version:
 1cbd4e6a78c1b324003422421b02adfe1c27b6e4:
   response:
     status:
@@ -138,6 +166,34 @@ single_order:
       encoding: UTF-8
       string: '[{"order":{"client_identity":"reverb-10.76.6-ops","created_at":"2014-05-05T16:26:34Z","id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[],"state":"NOT_VALIDATED","updated_at":"2014-05-05T16:26:34Z","user_domain":"OTHER","user_region":"USA"}}]'
     http_version:
+edsc_order:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"cb9cf9f9d68fe41ba4f6be498917ef7c"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.406000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '864'
+      date:
+      - Wed, 07 May 2014 17:59:34 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '[{"order":{"client_identity":"reverb-10.76.6-ops","created_at":"2014-05-05T16:26:34Z","id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","order_price":0.0,"owner_id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","provider_orders":[],"state":"NOT_VALIDATED","updated_at":"2014-05-05T16:26:34Z","user_domain":"OTHER","user_region":"USA"}}]'
+    http_version:
 1f91afed9d58f2fad47c150fe1b735e9828c71ca:
   response:
     status:
@@ -172,93 +228,39 @@ single_order:
       encoding: UTF-8
       string: "<?xml version=\x221.0\x22 encoding=\x22UTF-8\x22?>\n<calendar_events type=\x22array\x22>\n  <calendar_event>\n    <id>EE8C4D92-BDA5-514C-57C8-7A1A9244C3F3</id>\n    <title>ASTER GDEM V2 Tutorial</title>\n    <message>&lt;p&gt;A quick tutorial for ordering ASTER Global DEM V2 data.&amp;nbsp; &lt;br /&gt;&lt;a href=\x22http://www.echo.nasa.gov/reference/reverbastergdem_tutorial.htm\x22 target=\x22_GDEMtutorial\x22&gt;ASTER GDEM V2 Tutorial&lt;/a&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2011-10-17T08:00:00Z</start_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>CC771AB5-4D9A-4CD7-6358-B26DEC212457</id>\n    <title>ASDC Maintenance Event </title>\n    <message>&lt;p&gt;The NASA Langley DAAC (ASDC) will be doing system maintnenace from Monday January 9,2012 through Friday January 13,2012. This will prevent the distribution of CERES, CALIPSO, ISCCP, FLASHFlux, ACRIM, and SRB products. We apologize for any  inconvenience that  this may cause.  Please contact ASDC User Services  at larc-asdc-uds@lists.nasa.gov if you  have any questions.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-01-05T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-01-13T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>8FA581A3-382D-26A5-90CD-1CFC6E85C764</id>\n    <title>ECHO Degraded Service</title>\n    <message>&lt;p&gt;A live push of 10.75 will result in an outage of our non-redundant systems. Those systems are EIAT and FTP ingest&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-04-02T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-04-02T16:00:00Z</end_date>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>01697967-A7C2-190A-EE05-52BDF4E9507F</id>\n    <title>LARC ASDC Maintenance Alert</title>\n    <message>&lt;p&gt;Due to scheduled maintenance Wednesday, August 28th 2013:&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR Order and Browse tools, Reverb, and AMAPS will be unavailable from 8am to 5pm EDT.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-08-28T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-08-28T21:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>205F867D-49CF-7A6C-24A9-B44E7524F619</id>\n    <title>NASA Langley Maintenance Event</title>\n    <message>&lt;p&gt;The NASA Langley DAAC (ASDC) will be doing system maintenance on Wednesday June 20, 2012 from 7:00 am to 5:00 pm. (EST)&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-06-19T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-06-21T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>77F222B8-7472-F42F-978B-9EFD0D4C2FFB</id>\n    <title>ASDC Maintenance Event</title>\n    <message>&lt;p&gt;Downtime event on Wednesday, August 22, 2012, 7:00 am to 5:00 pm EDT:&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable due to maintenance&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-08-22T00:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-08-22T22:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>832C2896-C410-2B26-8EB6-1739DC69824C</id>\n    <title>LARC-ECS Downtime Event</title>\n    <message>&lt;p&gt;Downtime event on Tuesday, October 23, 2012, 12:00 pm GMT to Wednesday 24, 16:00 pm GMT: &lt;br /&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable due to maintenance.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-10-23T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-10-24T16:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>00E75C3A-FEF1-A641-7516-78B9249AB215</id>\n    <title>NASA LaRC Network Outage</title>\n    <message>&lt;p&gt;&lt;strong&gt;Friday, March 21, 2014 to Sunday, March 23, 2014&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;A LaRC Network Outage is scheduled from Friday, March 21 at 4:00pm  through Sunday, March 23 at 6:00pm EDT.&amp;nbsp; Due to this extended period,  please plan your network activities and data orders accordingly.&lt;/p&gt;\n&lt;p&gt;Please Expect:&lt;/p&gt;\n&lt;p&gt;&amp;bull; The data ordering and subsetting tools will be unavailable.&lt;/p&gt;\n&lt;p&gt;&amp;bull; A delay in delivery of data orders prior to, and immediately following the maintenance period.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-03-21T20:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-03-23T22:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>DD91F214-E655-807D-9824-BDFFC85C9E3D</id>\n    <title>CALIPSO in SAFE MODE</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Wednesday, July 18, 2012 due to elevated proton levels resulting from a solar flare. &lt;strong&gt;Science data is not acquired while the payload is in SAFE mode.&lt;/strong&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-18T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-25T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>EC39DA66-2443-4446-DA07-7AF3711930E3</id>\n    <title>CALIPSO in SAFE MODE:</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Thursday, May 17, 2012 due to elevated  proton levels resulting from a solar flare. CNES completed the shutdown of the  entire payload at 8:15 UTC. The payload will be off over the weekend and  recovery will start on Monday, May 21, 2012.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-05-17T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-05-21T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>EFE874E8-917D-0B79-792D-2C3EE9649357</id>\n    <title>ASDC NASA Langley Maintenance Event</title>\n    <message>&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Due to maintenance events between March 2 through March 8, 2012:&lt;/strong&gt; \n&lt;ul&gt;\n&lt;li&gt;The ASDC ordering tools will be unavailable.&lt;/li&gt;\n&lt;li&gt;There will be a delay in delivery of data orders.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;</message>\n    <start_date type=\x22datetime\x22>2012-02-01T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-03-09T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>B215E39B-3E46-3D2C-11F9-431C255DCD09</id>\n    <title>LARC-ECS Maintenance</title>\n    <message>&lt;p&gt;&lt;strong&gt;Scheduled Maintenance: Wednesday, April 23, 2014&lt;/strong&gt;:&lt;/p&gt;\n&lt;p&gt;Time: 7am - 5pm EDST&lt;/p&gt;\n&lt;p&gt;Due to scheduled maintenance Wednesday, April 23, 2014: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; from 7am - 5pm (Eastern Daylight Savings Time) EDST.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-04-21T11:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2034-04-23T21:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>B215E39B-3E46-3D2C-11F9-431C255DCD09-two</id>\n    <title>Second Notification</title>\n    <message>&lt;p&gt;&lt;strong&gt;Scheduled Maintenance: Wednesday, April 23, 2014&lt;/strong&gt;:&lt;/p&gt;\n&lt;p&gt;Time: 7am - 5pm EDST&lt;/p&gt;\n&lt;p&gt;Due to scheduled maintenance Wednesday, April 23, 2014: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; from 7am - 5pm (Eastern Daylight Savings Time) EDST.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-04-21T11:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2034-04-23T21:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>C35075C2-53F0-946C-1AF2-E559897AFE10</id>\n    <title>LARC ASDC Maintenance Alert</title>\n    <message>&lt;p&gt;January 9, 2013: 7:00am to 5pm EST: The Data Pool, MISR order and  browse tools, Reverb,and AMAPS will be unavailable due to maintenance.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-01-08T15:30:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-01-09T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>58751F12-8E15-9BB4-F04A-13DB19630A6E</id>\n    <title>No Landsat processing January 17 to January 21, 2014 ; data downloads unavailable January 18, 2014</title>\n    <message>&lt;p style=\x22font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; color: #444444; font-family: arial, helvetica, sans-serif;\x22&gt;Landsat data processing will be stopped beginning at&lt;span class=\x22Apple-converted-space\x22&gt;&amp;nbsp;&lt;/span&gt;&lt;span class=\x22aBn\x22 style=\x22border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: #cccccc; position: relative; top: -2px; z-index: 0;\x22&gt;&lt;span class=\x22aQJ\x22 style=\x22position: relative; top: 2px; z-index: -1;\x22&gt;3 p.m. CT on January 17, 2014&lt;/span&gt;&lt;/span&gt;, until&amp;nbsp;&lt;span&gt;&lt;span&gt;&lt;span class=\x22aBn\x22 style=\x22border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: #cccccc; position: relative; top: -2px; z-index: 0;\x22&gt;&lt;span class=\x22aQJ\x22 style=\x22position: relative; top: 2px; z-index: -1;\x22&gt;12 p.m. CT January 21, 2014&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&amp;nbsp;for server upgrades.&amp;nbsp;&amp;nbsp;Any on-demand orders placed will be held and the data will be processed when the upgrades are complete.&lt;/p&gt;\n&lt;p style=\x22font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; color: #444444; font-family: arial, helvetica, sans-serif;\x22&gt;Additionally, no Landsat data downloads will be available from&amp;nbsp;&lt;span&gt;&lt;span&gt;&lt;span class=\x22aBn\x22 style=\x22border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: #cccccc; position: relative; top: -2px; z-index: 0;\x22&gt;&lt;span class=\x22aQJ\x22 style=\x22position: relative; top: 2px; z-index: -1;\x22&gt;8:00 a.m. to 4:30 p.m. CT on Saturday, January 18, 2014&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-01-14T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-01-21T12:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>C12BA0D5-DC51-70C0-8F88-A96497B23429</id>\n    <title>LP DAAC System Upgrade</title>\n    <message>&lt;p&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;The LP DAAC will be undergoing a system upgrade beginning 5 AM CST on&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;Dec 2nd until 4 PM CST on Dec 3rd. Users will still be able to search&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;and place orders through Reverb during this time, however they will be&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;placed in a queue to be processed after the upgrade has completed.&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;Note that MRT and HEG services will be unavailable. Please contact LP&lt;/span&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt; DAAC User Services at&lt;span class=\x22Apple-converted-space\x22&gt;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;a style=\x22color: #1155cc; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 href=\x22mailto:lpdaac@usgs.gov\x22&gt;lpdaac@usgs.gov&lt;/a&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;&lt;span class=\x22Apple-converted-space\x22&gt;&amp;nbsp;&lt;/span&gt;with any questions.&lt;/span&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-11-26T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-12-03T16:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>0E9F135D-E243-FE58-684D-0A42D5640451</id>\n    <title>CALIPSO in SAFE MODE</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Wednesday, March 7, 2012 due to elevated 10MeV and 100MeV proton levels resulting from a solar flare.&amp;nbsp;&amp;nbsp;&amp;nbsp; CNES executed the commands to turn off the laser and the Payload Controller at 8:08 UTC.&amp;nbsp;&amp;nbsp; Return-to-service planning will begin once the proton levels return to below threshold levels.&amp;nbsp;&amp;nbsp; At this time, it is anticipated that the payload will remain OFF until early next week.&amp;nbsp;&amp;nbsp; Please check for updates here: http://www-calipso.larc.nasa.gov/&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-03-08T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-03-12T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>1B507A08-C39C-3EEF-6739-C42BD5DA5D99</id>\n    <title>MISR Production Alert</title>\n    <message>&lt;hr /&gt;\n&lt;p class=\x22MsoNormal\x22&gt;&lt;span style=\x22color: black;\x22&gt;MISR  production is currently stopped due to a MISR L1 processing issue  occurring after the addition of a leap second adjustment on June 30,  2012 at 23:59:60 UTC. This caused errors of up to 5km in the  georegistration of the MISR MIL1B2 data product. All higher level data  products from MISR Level 1 retrievals dated after July 1, 2012 (Orbit  66677 or greater) are considered invalid and should not be used. These  products will be reprocessed and re-released once the problem has been  corrected.&lt;/span&gt;&lt;/p&gt;\n&lt;p class=\x22MsoNormal\x22&gt;&lt;span style=\x22color: black;\x22&gt; &lt;/span&gt;&lt;/p&gt;\n&lt;hr /&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-01T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-16T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>92AE7657-9A27-01B1-2F64-6A42457A87BA</id>\n    <title>LaRC Maintenance Event</title>\n    <message>&lt;p&gt;Downtime event on Tuesday, May 22, 2012, 8:00 am to Wednesday, May 23, 2012,  5:00 pm EDT:&amp;nbsp; The MISR order tool, MISR browse tool, AMAPS, and Reverb will  be unavailable during custom code software installation. Order fulfillment will  be delayed.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-05-21T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-05-24T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>D3B1DDC6-E784-EA75-BF8F-2B67C81AF1E5</id>\n    <title>LP DAAC Maintenance</title>\n    <message>&lt;p&gt;The LP DAAC will be undergoing a system upgrade beginning 1 PM CDT on July 9th until 4 PM CDT on July 11th. Users will still be able to search and place orders through Reverb during this time, however they will be placed in a queue to be processed after the upgrade has completed.&amp;nbsp; Please contact LP DAAC User Services at lpdaac@usgs.gov with any questions.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-09T13:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-11T16:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>AE3B5EE1-97C5-5508-CF95-63B3384AEFEC</id>\n    <title>LP DAAC Extended Maintenance</title>\n    <message>&lt;p&gt;&lt;span style=\x22color: #222222; line-height: 115%; font-family: &amp;quot;Arial&amp;quot;,&amp;quot;sans-serif&amp;quot;; font-size: 10pt; mso-fareast-font-family: &amp;quot;Times New Roman&amp;quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;\x22&gt;15Jan2014:  LP DAAC Web access will be intermittent and HTTP download access will  be unavailable between&amp;nbsp;8 a.m. &amp;ndash; 2 p.m. CT&amp;nbsp;(1400 &amp;ndash; 2000 UTC). Please  contact LP DAAC User Services with any questions.&lt;/span&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-01-10T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-01-16T16:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>54882330-B0E3-88EE-6C91-0CFB7D17D785</id>\n    <title>NSIDC Downtime</title>\n    <message>&lt;p&gt;Technical difficultes of the systems at NSIDC will prevent the  distribution of AMSR-E, IceBridge, ICESat/GLAS, MODIS, and NISE data  holdings. During this downtime period, retrieving data will not be  possible. We apologize for any inconvenience that this may cause. Please  contact NSIDC User Services at nsidc@nsidc.org if you have any  questions.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-10-22T20:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-10-23T03:00:00Z</end_date>\n    <owner_provider_id>20604</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>488BEC97-82CC-08E7-E9FD-412798663FA7</id>\n    <title>LaRC ASDC Maintenance Event</title>\n    <message>&lt;p&gt;&lt;strong&gt;Saturday, October 6, 2012&lt;/strong&gt;&lt;strong&gt;, 9:00 am to 3:00 pm EDT: &lt;br /&gt;Connection to the ASDC web site will be unavailable due to maintenance of network hardware.&lt;/strong&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-09-21T00:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-10-07T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>535F88B5-C1B9-B371-6847-B2A92D36737D</id>\n    <title>Data Downloads from LP DAAC</title>\n    <message>&lt;p&gt;&lt;span&gt;LP DAAC Data downloads will be unavailable Wednesday July 3rd, from 8 am to 2 pm  central for an extended planned maintenance period. Contact User  Services with any questions at lpdaac@usgs.gov&lt;/span&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-07-03T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-07-04T12:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>1CF76BEE-51A5-25A4-57ED-2C2462687CE5</id>\n    <title>CALIPSO in SAFE Mode</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Friday, July 13, 2012 due to elevated  proton levels resulting from a solar flare. The payload will be off over the  weekend and recovery will start on Monday, July 16, 2012. &lt;strong&gt;Science data is not  acquired while the payload is in SAFE mode.&lt;/strong&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-13T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-16T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>46575AFE-4261-9723-308D-391552F485F0</id>\n    <title>NASA LaRC Extended Maintenance Event</title>\n    <message>&lt;p&gt;Due to an extended maintenance period, Monday, December 9th 2013 to Wednesday, December 11th 2013. Maintenance Time: Monday, 8:00am to Wednesday, 5:00pm EST.&lt;/p&gt;\n&lt;p&gt;Please expect:&lt;/p&gt;\n&lt;p&gt;- The Data Pool, MISR order and browse tools, Reverb, AMAPS and OPeNDAP will be unavailable during extended maintenance.&lt;br /&gt;- Connection to the ASDC web site will be temporarily unavailable on Wednesday, 12/11 from 9 - 11 am EST.&lt;/p&gt;\n&lt;ul&gt;\n&lt;/ul&gt;</message>\n    <start_date type=\x22datetime\x22>2013-12-09T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-12-11T21:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>3C385EFC-E4CB-5305-5A61-717F2BAF08AF</id>\n    <title>LARC ASDC Extended Maintenance Alert</title>\n    <message>&lt;p&gt;Due to an extended maintenance period beginning Friday, July 12, 2013 at 4pm EST, through Friday, July 19, 2013, at 4:00pm. Please expect: Interruption in availability of the data ordering and subsetting tool, including: the ASDC ordering tools, MISR Order and Customization Tool, CALIPSO, CERES, Reverb, AMAPS, and TES search and subset tools. There will be a delay in delivery of data orders.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-07-08T16:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-07-19T21:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>F4E9FDFD-3BFB-C368-FF98-6D282070ADFB</id>\n    <title>LARC ASDC Maintenance Event</title>\n    <message>&lt;p&gt;The NASA Langley DAAC (ASDC) will be experiencing system maintnenance from March 13, 2013, 7:00am to 5:00 pm EDT: The Data Pool MISR Order Tool, and browse tools, Reverb, and AMAPS will be unavailable during maintenance.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-03-12T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-03-13T22:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>01A7FBF2-F4EA-4D2F-D8C4-83788439FA32</id>\n    <title>LP DAAC to Suspend ASTER and MODIS Distribution During Federal Shutdown</title>\n    <message>&lt;p&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;The Land Processes Distributed Active Archive Center (LP DAAC) has suspended the distribution of ASTER and MODIS data due to the shutdown of the United States Federal government. Users will be unable to receive orders placed through Reverb, Earth Explorer, GloVis, the Global Data Explorer (GDEx), MRTWeb, and TerraLook. Users will also be unable to download data through the LP DAAC Data Pool, ASTER EDS, and HTTP.&lt;/span&gt;&lt;br style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 /&gt;&lt;br style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 /&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;User Services will be unavailable during the United States Federal government shutdown.&lt;/span&gt;&lt;br style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 /&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-10-01T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-10-31T12:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>4F3D0190-24B6-5B78-4A0E-4A17F09100D9</id>\n    <title>ECHO Outage</title>\n    <message>&lt;p&gt;10.71 code push. Torquebox upgrade will require outage&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-01-22T13:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-01-22T17:00:00Z</end_date>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n</calendar_events>\n"
     http_version:
-edscbasic_prefs:
-  response:
-    status:
-      code: 404
-      message:
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.200000'
-      content-type:
-      - application/json;charset=utf-8
-      content-length:
-      - '45'
-      date:
-      - Thu, 26 Jun 2014 19:18:07 GMT
-      connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: '{"errors":["Preferences not found for user"]}'
-    http_version:
-edscbasic_prefs_put:
-  response:
-    status:
-      code: 201
-      message:
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      location:
-      - https://api.echo.nasa.gov/echo-rest/users/69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences?clientId=unknown
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZjViZmY0MjU2OTQ5ZGMyZjZiMDU4NzFmNmJiYjg1NjY%3D--38eed0f9c9cd9dff0cebea15a11c933400e7370c;
-        path=/; HttpOnly
-      x-runtime:
-      - '15.571000'
-      content-type:
-      - application/json;charset=utf-8
-      content-length:
-      - '18'
-      date:
-      - Tue, 09 Sep 2014 19:12:17 GMT
-      connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{}}'
-    http_version:
-edsc_prefs:
+mocked_uat_calendar_events:
   response:
     status:
       code: 200
       message:
     headers:
       server:
-      - Apache-Coyote/1.1
+        - Apache-Coyote/1.1
+      x-echo-feed-author:
+        - "ECHO Operations & Data Provider User Services"
+      x-echo-feed-title:
+        - "All Provider Events"
       etag:
-      - '"ef94f2e22994c59e716c63d9ab6898cb"'
+        - "\x2223337b0b15c244b9865286a6def85634\x22"
       cache-control:
-      - max-age=0, private, must-revalidate
+        - "max-age=0, private, must-revalidate"
       x-ua-compatible:
-      - IE=Edge,chrome=1
+        - "IE=Edge,chrome=1"
       x-runtime:
-      - '0.226000'
+        - "0.344000"
       content-type:
-      - application/json;charset=utf-8
-      content-length:
-      - '661'
+        - "application/xml;charset=utf-8"
+      vary:
+        - Accept-Encoding
       date:
-      - Fri, 06 Jun 2014 01:49:50 GMT
+        - "Tue, 22 Apr 2014 20:34:19 GMT"
       connection:
-      - close
+        - close
+      transfer-encoding:
+        - chunked
     body:
       encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"city":"Alexandria","country":"United
-        States","id":"D80DE72C-7DF9-9E25-F7B0-4928A7F8A1AB","state":"VA","street1":"101
-        N. Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"},"email":"patrick+edsc@element84.com","first_name":"Earthdata","id":"E05C23B0-3193-326F-C651-7153C6A9D024","last_name":"Search","organization":"EDSC","phones":[{"id":"128956E1-6811-E516-2B84-0829DEC46C4A","number":"555-555-5555","phone_number_type":"BUSINESS"},{"id":"E1CFAD31-35D1-E6D5-5AD4-C1ECC079B632","number":"555-555-6666","phone_number_type":"BUSINESS_FAX"}],"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
+      string: "<?xml version=\x221.0\x22 encoding=\x22UTF-8\x22?>\n<calendar_events type=\x22array\x22>\n  <calendar_event>\n    <id>EE8C4D92-BDA5-514C-57C8-7A1A9244C3F3</id>\n    <title>ASTER GDEM V2 Tutorial</title>\n    <message>&lt;p&gt;A quick tutorial for ordering ASTER Global DEM V2 data.&amp;nbsp; &lt;br /&gt;&lt;a href=\x22http://www.echo.nasa.gov/reference/reverbastergdem_tutorial.htm\x22 target=\x22_GDEMtutorial\x22&gt;ASTER GDEM V2 Tutorial&lt;/a&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2011-10-17T08:00:00Z</start_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>CC771AB5-4D9A-4CD7-6358-B26DEC212457</id>\n    <title>ASDC Maintenance Event </title>\n    <message>&lt;p&gt;The NASA Langley DAAC (ASDC) will be doing system maintnenace from Monday January 9,2012 through Friday January 13,2012. This will prevent the distribution of CERES, CALIPSO, ISCCP, FLASHFlux, ACRIM, and SRB products. We apologize for any  inconvenience that  this may cause.  Please contact ASDC User Services  at larc-asdc-uds@lists.nasa.gov if you  have any questions.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-01-05T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-01-13T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>8FA581A3-382D-26A5-90CD-1CFC6E85C764</id>\n    <title>ECHO Degraded Service</title>\n    <message>&lt;p&gt;A live push of 10.75 will result in an outage of our non-redundant systems. Those systems are EIAT and FTP ingest&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-04-02T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-04-02T16:00:00Z</end_date>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>01697967-A7C2-190A-EE05-52BDF4E9507F</id>\n    <title>LARC ASDC Maintenance Alert</title>\n    <message>&lt;p&gt;Due to scheduled maintenance Wednesday, August 28th 2013:&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR Order and Browse tools, Reverb, and AMAPS will be unavailable from 8am to 5pm EDT.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-08-28T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-08-28T21:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>205F867D-49CF-7A6C-24A9-B44E7524F619</id>\n    <title>NASA Langley Maintenance Event</title>\n    <message>&lt;p&gt;The NASA Langley DAAC (ASDC) will be doing system maintenance on Wednesday June 20, 2012 from 7:00 am to 5:00 pm. (EST)&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-06-19T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-06-21T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>77F222B8-7472-F42F-978B-9EFD0D4C2FFB</id>\n    <title>ASDC Maintenance Event</title>\n    <message>&lt;p&gt;Downtime event on Wednesday, August 22, 2012, 7:00 am to 5:00 pm EDT:&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable due to maintenance&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-08-22T00:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-08-22T22:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>832C2896-C410-2B26-8EB6-1739DC69824C</id>\n    <title>LARC-ECS Downtime Event</title>\n    <message>&lt;p&gt;Downtime event on Tuesday, October 23, 2012, 12:00 pm GMT to Wednesday 24, 16:00 pm GMT: &lt;br /&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable due to maintenance.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-10-23T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-10-24T16:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>00E75C3A-FEF1-A641-7516-78B9249AB215</id>\n    <title>NASA LaRC Network Outage</title>\n    <message>&lt;p&gt;&lt;strong&gt;Friday, March 21, 2014 to Sunday, March 23, 2014&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;A LaRC Network Outage is scheduled from Friday, March 21 at 4:00pm  through Sunday, March 23 at 6:00pm EDT.&amp;nbsp; Due to this extended period,  please plan your network activities and data orders accordingly.&lt;/p&gt;\n&lt;p&gt;Please Expect:&lt;/p&gt;\n&lt;p&gt;&amp;bull; The data ordering and subsetting tools will be unavailable.&lt;/p&gt;\n&lt;p&gt;&amp;bull; A delay in delivery of data orders prior to, and immediately following the maintenance period.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-03-21T20:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-03-23T22:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>DD91F214-E655-807D-9824-BDFFC85C9E3D</id>\n    <title>CALIPSO in SAFE MODE</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Wednesday, July 18, 2012 due to elevated proton levels resulting from a solar flare. &lt;strong&gt;Science data is not acquired while the payload is in SAFE mode.&lt;/strong&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-18T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-25T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>EC39DA66-2443-4446-DA07-7AF3711930E3</id>\n    <title>CALIPSO in SAFE MODE:</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Thursday, May 17, 2012 due to elevated  proton levels resulting from a solar flare. CNES completed the shutdown of the  entire payload at 8:15 UTC. The payload will be off over the weekend and  recovery will start on Monday, May 21, 2012.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-05-17T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-05-21T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>EFE874E8-917D-0B79-792D-2C3EE9649357</id>\n    <title>ASDC NASA Langley Maintenance Event</title>\n    <message>&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Due to maintenance events between March 2 through March 8, 2012:&lt;/strong&gt; \n&lt;ul&gt;\n&lt;li&gt;The ASDC ordering tools will be unavailable.&lt;/li&gt;\n&lt;li&gt;There will be a delay in delivery of data orders.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/li&gt;\n&lt;/ul&gt;</message>\n    <start_date type=\x22datetime\x22>2012-02-01T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-03-09T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>B215E39B-3E46-3D2C-11F9-431C255DCD09</id>\n    <title>LARC-ECS Maintenance</title>\n    <message>&lt;p&gt;&lt;strong&gt;Scheduled Maintenance: Wednesday, April 23, 2014&lt;/strong&gt;:&lt;/p&gt;\n&lt;p&gt;Time: 7am - 5pm EDST&lt;/p&gt;\n&lt;p&gt;Due to scheduled maintenance Wednesday, April 23, 2014: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; from 7am - 5pm (Eastern Daylight Savings Time) EDST.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-04-21T11:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2034-04-23T21:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>B215E39B-3E46-3D2C-11F9-431C255DCD09-two</id>\n    <title>Second Notification</title>\n    <message>&lt;p&gt;&lt;strong&gt;Scheduled Maintenance: Wednesday, April 23, 2014&lt;/strong&gt;:&lt;/p&gt;\n&lt;p&gt;Time: 7am - 5pm EDST&lt;/p&gt;\n&lt;p&gt;Due to scheduled maintenance Wednesday, April 23, 2014: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;The Data Pool, MISR order and browse tools, Reverb, and AMAPS will be unavailable &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; from 7am - 5pm (Eastern Daylight Savings Time) EDST.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-04-21T11:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2034-04-23T21:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>C35075C2-53F0-946C-1AF2-E559897AFE10</id>\n    <title>LARC ASDC Maintenance Alert</title>\n    <message>&lt;p&gt;January 9, 2013: 7:00am to 5pm EST: The Data Pool, MISR order and  browse tools, Reverb,and AMAPS will be unavailable due to maintenance.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-01-08T15:30:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-01-09T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>58751F12-8E15-9BB4-F04A-13DB19630A6E</id>\n    <title>No Landsat processing January 17 to January 21, 2014 ; data downloads unavailable January 18, 2014</title>\n    <message>&lt;p style=\x22font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; color: #444444; font-family: arial, helvetica, sans-serif;\x22&gt;Landsat data processing will be stopped beginning at&lt;span class=\x22Apple-converted-space\x22&gt;&amp;nbsp;&lt;/span&gt;&lt;span class=\x22aBn\x22 style=\x22border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: #cccccc; position: relative; top: -2px; z-index: 0;\x22&gt;&lt;span class=\x22aQJ\x22 style=\x22position: relative; top: 2px; z-index: -1;\x22&gt;3 p.m. CT on January 17, 2014&lt;/span&gt;&lt;/span&gt;, until&amp;nbsp;&lt;span&gt;&lt;span&gt;&lt;span class=\x22aBn\x22 style=\x22border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: #cccccc; position: relative; top: -2px; z-index: 0;\x22&gt;&lt;span class=\x22aQJ\x22 style=\x22position: relative; top: 2px; z-index: -1;\x22&gt;12 p.m. CT January 21, 2014&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&amp;nbsp;for server upgrades.&amp;nbsp;&amp;nbsp;Any on-demand orders placed will be held and the data will be processed when the upgrades are complete.&lt;/p&gt;\n&lt;p style=\x22font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; color: #444444; font-family: arial, helvetica, sans-serif;\x22&gt;Additionally, no Landsat data downloads will be available from&amp;nbsp;&lt;span&gt;&lt;span&gt;&lt;span class=\x22aBn\x22 style=\x22border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: #cccccc; position: relative; top: -2px; z-index: 0;\x22&gt;&lt;span class=\x22aQJ\x22 style=\x22position: relative; top: 2px; z-index: -1;\x22&gt;8:00 a.m. to 4:30 p.m. CT on Saturday, January 18, 2014&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-01-14T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-01-21T12:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>C12BA0D5-DC51-70C0-8F88-A96497B23429</id>\n    <title>LP DAAC System Upgrade</title>\n    <message>&lt;p&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;The LP DAAC will be undergoing a system upgrade beginning 5 AM CST on&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;Dec 2nd until 4 PM CST on Dec 3rd. Users will still be able to search&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;and place orders through Reverb during this time, however they will be&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;placed in a queue to be processed after the upgrade has completed.&lt;/span&gt; &lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;Note that MRT and HEG services will be unavailable. Please contact LP&lt;/span&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt; DAAC User Services at&lt;span class=\x22Apple-converted-space\x22&gt;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;a style=\x22color: #1155cc; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 href=\x22mailto:lpdaac@usgs.gov\x22&gt;lpdaac@usgs.gov&lt;/a&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;&lt;span class=\x22Apple-converted-space\x22&gt;&amp;nbsp;&lt;/span&gt;with any questions.&lt;/span&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-11-26T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-12-03T16:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>0E9F135D-E243-FE58-684D-0A42D5640451</id>\n    <title>CALIPSO in SAFE MODE</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Wednesday, March 7, 2012 due to elevated 10MeV and 100MeV proton levels resulting from a solar flare.&amp;nbsp;&amp;nbsp;&amp;nbsp; CNES executed the commands to turn off the laser and the Payload Controller at 8:08 UTC.&amp;nbsp;&amp;nbsp; Return-to-service planning will begin once the proton levels return to below threshold levels.&amp;nbsp;&amp;nbsp; At this time, it is anticipated that the payload will remain OFF until early next week.&amp;nbsp;&amp;nbsp; Please check for updates here: http://www-calipso.larc.nasa.gov/&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-03-08T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-03-12T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>1B507A08-C39C-3EEF-6739-C42BD5DA5D99</id>\n    <title>MISR Production Alert</title>\n    <message>&lt;hr /&gt;\n&lt;p class=\x22MsoNormal\x22&gt;&lt;span style=\x22color: black;\x22&gt;MISR  production is currently stopped due to a MISR L1 processing issue  occurring after the addition of a leap second adjustment on June 30,  2012 at 23:59:60 UTC. This caused errors of up to 5km in the  georegistration of the MISR MIL1B2 data product. All higher level data  products from MISR Level 1 retrievals dated after July 1, 2012 (Orbit  66677 or greater) are considered invalid and should not be used. These  products will be reprocessed and re-released once the problem has been  corrected.&lt;/span&gt;&lt;/p&gt;\n&lt;p class=\x22MsoNormal\x22&gt;&lt;span style=\x22color: black;\x22&gt; &lt;/span&gt;&lt;/p&gt;\n&lt;hr /&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-01T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-16T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>92AE7657-9A27-01B1-2F64-6A42457A87BA</id>\n    <title>LaRC Maintenance Event</title>\n    <message>&lt;p&gt;Downtime event on Tuesday, May 22, 2012, 8:00 am to Wednesday, May 23, 2012,  5:00 pm EDT:&amp;nbsp; The MISR order tool, MISR browse tool, AMAPS, and Reverb will  be unavailable during custom code software installation. Order fulfillment will  be delayed.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-05-21T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-05-24T12:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>D3B1DDC6-E784-EA75-BF8F-2B67C81AF1E5</id>\n    <title>LP DAAC Maintenance</title>\n    <message>&lt;p&gt;The LP DAAC will be undergoing a system upgrade beginning 1 PM CDT on July 9th until 4 PM CDT on July 11th. Users will still be able to search and place orders through Reverb during this time, however they will be placed in a queue to be processed after the upgrade has completed.&amp;nbsp; Please contact LP DAAC User Services at lpdaac@usgs.gov with any questions.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-09T13:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-11T16:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>AE3B5EE1-97C5-5508-CF95-63B3384AEFEC</id>\n    <title>LP DAAC Extended Maintenance</title>\n    <message>&lt;p&gt;&lt;span style=\x22color: #222222; line-height: 115%; font-family: &amp;quot;Arial&amp;quot;,&amp;quot;sans-serif&amp;quot;; font-size: 10pt; mso-fareast-font-family: &amp;quot;Times New Roman&amp;quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;\x22&gt;15Jan2014:  LP DAAC Web access will be intermittent and HTTP download access will  be unavailable between&amp;nbsp;8 a.m. &amp;ndash; 2 p.m. CT&amp;nbsp;(1400 &amp;ndash; 2000 UTC). Please  contact LP DAAC User Services with any questions.&lt;/span&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-01-10T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-01-16T16:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>54882330-B0E3-88EE-6C91-0CFB7D17D785</id>\n    <title>NSIDC Downtime</title>\n    <message>&lt;p&gt;Technical difficultes of the systems at NSIDC will prevent the  distribution of AMSR-E, IceBridge, ICESat/GLAS, MODIS, and NISE data  holdings. During this downtime period, retrieving data will not be  possible. We apologize for any inconvenience that this may cause. Please  contact NSIDC User Services at nsidc@nsidc.org if you have any  questions.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-10-22T20:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-10-23T03:00:00Z</end_date>\n    <owner_provider_id>20604</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>488BEC97-82CC-08E7-E9FD-412798663FA7</id>\n    <title>LaRC ASDC Maintenance Event</title>\n    <message>&lt;p&gt;&lt;strong&gt;Saturday, October 6, 2012&lt;/strong&gt;&lt;strong&gt;, 9:00 am to 3:00 pm EDT: &lt;br /&gt;Connection to the ASDC web site will be unavailable due to maintenance of network hardware.&lt;/strong&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-09-21T00:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-10-07T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>535F88B5-C1B9-B371-6847-B2A92D36737D</id>\n    <title>Data Downloads from LP DAAC</title>\n    <message>&lt;p&gt;&lt;span&gt;LP DAAC Data downloads will be unavailable Wednesday July 3rd, from 8 am to 2 pm  central for an extended planned maintenance period. Contact User  Services with any questions at lpdaac@usgs.gov&lt;/span&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-07-03T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-07-04T12:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>1CF76BEE-51A5-25A4-57ED-2C2462687CE5</id>\n    <title>CALIPSO in SAFE Mode</title>\n    <message>&lt;p&gt;CALIPSO was commanded to SAFE Mode on Friday, July 13, 2012 due to elevated  proton levels resulting from a solar flare. The payload will be off over the  weekend and recovery will start on Monday, July 16, 2012. &lt;strong&gt;Science data is not  acquired while the payload is in SAFE mode.&lt;/strong&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2012-07-13T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2012-07-16T12:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>46575AFE-4261-9723-308D-391552F485F0</id>\n    <title>NASA LaRC Extended Maintenance Event</title>\n    <message>&lt;p&gt;Due to an extended maintenance period, Monday, December 9th 2013 to Wednesday, December 11th 2013. Maintenance Time: Monday, 8:00am to Wednesday, 5:00pm EST.&lt;/p&gt;\n&lt;p&gt;Please expect:&lt;/p&gt;\n&lt;p&gt;- The Data Pool, MISR order and browse tools, Reverb, AMAPS and OPeNDAP will be unavailable during extended maintenance.&lt;br /&gt;- Connection to the ASDC web site will be temporarily unavailable on Wednesday, 12/11 from 9 - 11 am EST.&lt;/p&gt;\n&lt;ul&gt;\n&lt;/ul&gt;</message>\n    <start_date type=\x22datetime\x22>2013-12-09T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-12-11T21:00:00Z</end_date>\n    <owner_provider_id>24652</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>3C385EFC-E4CB-5305-5A61-717F2BAF08AF</id>\n    <title>LARC ASDC Extended Maintenance Alert</title>\n    <message>&lt;p&gt;Due to an extended maintenance period beginning Friday, July 12, 2013 at 4pm EST, through Friday, July 19, 2013, at 4:00pm. Please expect: Interruption in availability of the data ordering and subsetting tool, including: the ASDC ordering tools, MISR Order and Customization Tool, CALIPSO, CERES, Reverb, AMAPS, and TES search and subset tools. There will be a delay in delivery of data orders.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-07-08T16:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-07-19T21:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>F4E9FDFD-3BFB-C368-FF98-6D282070ADFB</id>\n    <title>LARC ASDC Maintenance Event</title>\n    <message>&lt;p&gt;The NASA Langley DAAC (ASDC) will be experiencing system maintnenance from March 13, 2013, 7:00am to 5:00 pm EDT: The Data Pool MISR Order Tool, and browse tools, Reverb, and AMAPS will be unavailable during maintenance.&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-03-12T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-03-13T22:00:00Z</end_date>\n    <owner_provider_id>C9B84A5E-667E-E8BF-64EA-C53222703E16</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>01A7FBF2-F4EA-4D2F-D8C4-83788439FA32</id>\n    <title>LP DAAC to Suspend ASTER and MODIS Distribution During Federal Shutdown</title>\n    <message>&lt;p&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;The Land Processes Distributed Active Archive Center (LP DAAC) has suspended the distribution of ASTER and MODIS data due to the shutdown of the United States Federal government. Users will be unable to receive orders placed through Reverb, Earth Explorer, GloVis, the Global Data Explorer (GDEx), MRTWeb, and TerraLook. Users will also be unable to download data through the LP DAAC Data Pool, ASTER EDS, and HTTP.&lt;/span&gt;&lt;br style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 /&gt;&lt;br style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 /&gt;&lt;span style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; display: inline !important; float: none;\x22&gt;User Services will be unavailable during the United States Federal government shutdown.&lt;/span&gt;&lt;br style=\x22color: #000000; font-family: arial, sans-serif; font-size: 13.333333969116211px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;\x22 /&gt;&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2013-10-01T12:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2013-10-31T12:00:00Z</end_date>\n    <owner_provider_id>12408</owner_provider_id>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n  <calendar_event>\n    <id>4F3D0190-24B6-5B78-4A0E-4A17F09100D9</id>\n    <title>ECHO Outage</title>\n    <message>&lt;p&gt;10.71 code push. Torquebox upgrade will require outage&lt;/p&gt;</message>\n    <start_date type=\x22datetime\x22>2014-01-22T13:00:00Z</start_date>\n    <end_date type=\x22datetime\x22>2014-01-22T17:00:00Z</end_date>\n    <severity type=\x22string\x22>ALERT</severity>\n  </calendar_event>\n</calendar_events>\n"
     http_version:
 edscbasic_current:
   response:
@@ -317,73 +319,34 @@ edsc_current:
       string: '{"user":{"addresses":[{"city":"Alexandria","country":"United States","id":"4029FD6E-AA1A-87A3-209F-C012B8DD9A51","state":"VA","street1":"101
         N. Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"}],"creation_date":"2014-02-04T20:55:34Z","email":"patrick+edsc@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","opt_in":false,"organization_name":"EDSC","primary_study_area":"OTHER","user_domain":"OTHER","user_region":"USA","user_type":"PRODUCTION_USER","username":"edsc"}}'
     http_version:
-526d18465f10028b986afeec4cbd04dea793c924:
+edsc_current_testbed:
   response:
     status:
-      code: 201
+      code: 200
       message:
     headers:
       server:
       - Apache-Coyote/1.1
-      location:
-      - https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences?clientId=unknown
+      etag:
+      - '"2b00373451a8f77db592e8b0e23fc1ea"'
       cache-control:
-      - no-cache
+      - max-age=0, private, must-revalidate
       x-ua-compatible:
       - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMmU1MGMxZjcyYTE1NWY5NmJjODAyODk3NzYyOGI5ZWE%3D--ffd2086ed3164eaf39c2f3ff3d9a1d3330c7cb04;
-        path=/; HttpOnly
       x-runtime:
-      - '0.467000'
+      - '0.179000'
       content-type:
       - application/json;charset=utf-8
       content-length:
-      - '661'
+      - '542'
       date:
-      - Fri, 06 Jun 2014 01:54:08 GMT
+      - Wed, 06 Aug 2014 13:01:30 GMT
       connection:
       - close
     body:
       encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"city":"Alexandria","country":"United
-        States","id":"C683CC30-5EF9-E4DA-1AD7-C13C12D030CD","state":"VA","street1":"101
-        N. Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"},"email":"patrick+edsc@element84.com","first_name":"Earthdata","id":"FB24DE10-937A-560D-A5D2-3DF3FA8B4B98","last_name":"Search","organization":"EDSC","phones":[{"id":"358FF255-556C-3D31-9411-724D260B9625","number":"555-555-5555","phone_number_type":"BUSINESS"},{"id":"0C56B80A-44E3-4265-A1BB-E3BA59C16C6D","number":"555-555-6666","phone_number_type":"BUSINESS_FAX"}],"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
-    http_version:
-b591cfd9f66d9e60549268630de2aa867d7e5c17:
-  response:
-    status:
-      code: 201
-      message:
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      location:
-      - https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences?clientId=unknown
-      cache-control:
-      - no-cache
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      set-cookie:
-      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlMWRjY2MxMmM2ZDYzNzk2NTBhNzBjZmNhNWYwZTE5ZWI%3D--86afd787edb70cf9beaaf8972be01bb53cb5caac;
-        path=/; HttpOnly
-      x-runtime:
-      - '0.452000'
-      content-type:
-      - application/json;charset=utf-8
-      content-length:
-      - '659'
-      date:
-      - Fri, 06 Jun 2014 01:54:06 GMT
-      connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: '{"preferences":{"general_contact":{"address":{"city":"Alexandria","country":"United
-        States","id":"DA261793-AF5A-702F-2A1E-AA00CE42AD7D","state":"VA","street1":"101
-        North Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"},"email":"patrick+edsc@element84.com","first_name":"Edsc","id":"88BA2C2D-5E2F-4B9C-E9E9-5B39056106BF","last_name":"Search","organization":"EDSC","phones":[{"id":"F21AF1B0-35C0-261A-8DD6-17324A1B0654","number":"555-444-4444","phone_number_type":"BUSINESS"},{"id":"0DDFC63B-84B4-AEBA-A705-74432B678795","number":"555-555-6666","phone_number_type":"BUSINESS_FAX"}],"role":"Order
-        Contact"},"order_notification_level":"NONE"}}'
+      string: '{"user":{"addresses":[{"city":"Alexandria","country":"United States","id":"4029FD6E-AA1A-87A3-209F-C012B8DD9A51","state":"VA","street1":"101
+        N. Columbus St.","street2":"Suite 200","us_format":false,"zip":"22314"}],"creation_date":"2014-02-04T20:55:34Z","email":"patrick+edsc@element84.com","first_name":"Earthdata","id":"4C0390AF-BEE1-32C0-4606-66CAFDD4131D","last_name":"Search","opt_in":false,"organization_name":"EDSC","primary_study_area":"OTHER","user_domain":"OTHER","user_region":"USA","user_type":"PRODUCTION_USER","username":"edsc"}}'
     http_version:
 365deea9191426660df70c9dce859bda79ab9e9d:
   response:
@@ -409,7 +372,7 @@ b591cfd9f66d9e60549268630de2aa867d7e5c17:
       - close
     body:
       encoding: UTF-8
-      string: '{"errors":["Token [expired]
+      string: '{"errors":["Token [expired-access]
         has expired."]}'
     http_version:
 invalid_token:
@@ -439,7 +402,7 @@ invalid_token:
       string: '{"errors":["Token [invalid] is not a valid URS
         token"]}'
     http_version:
-invalid_datasets_logged_in:
+invalid_collections_logged_in:
   response:
     status:
       code: 401
@@ -469,7 +432,37 @@ invalid_datasets_logged_in:
       encoding: UTF-8
       string: '{"errors":["Token invalid does not exist"]}'
     http_version:
-invalid_datasets_logged_out:
+invalid_collections_logged_in_non_hierarchical:
+  response:
+    status:
+      code: 401
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 71a0b0ddcce83361e6148d51603b93d0
+      x-runtime:
+      - '0.519000'
+      date:
+      - Mon, 08 Sep 2014 17:55:46 GMT
+      x-rack-cache:
+      - miss
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '35'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Token invalid does not exist"]}'
+    http_version:
+invalid_collections_logged_out:
   response:
     status:
       code: 200
@@ -505,23 +498,45 @@ invalid_datasets_logged_out:
       - close
     body:
       encoding: UTF-8
-      string: '{"feed":{"updated":"2014-09-08T20:32:44.937Z", "id":"https://api.echo.nasa.gov/catalog-rest/echo_catalog/datasets.json?page_size=20&page_num=1&keyword=C179002986-ORNL%5C_DAAC%25",
-        "title":"ECHO dataset metadata", "entry":[{"id":"C179002986-ORNL_DAAC", "title":"BOREAS
-        AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "summary":"ABSTRACT:
-        Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide,
-        and ozone over the entire BOREAS region to tie together measurements made
-        in both the SSA and the NSA.", "updated":"2000-01-27T00:00:00.000Z", "dataset_id":"BOREAS
-        AFM-03 Electra 1994 Aircraft Flux and Moving Window Data", "short_name":"doi:10.3334/ORNLDAAC/495",
-        "version_id":"1", "original_format":"ECHO10", "data_center":"ORNL_DAAC", "archive_center":"ORNL_DAAC",
-        "processing_level_id":"3", "time_start":"1994-05-24T00:00:00.000Z", "time_end":"1994-09-16T00:00:00.000Z",
-        "links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495", "hreflang":"en-US",
-        "rel":"http://esipfed.org/ns/fedsearch/1.1/data#"}, {"href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html",
-        "hreflang":"en-US", "title":"Measurements of the fluxes of momentum, sensible
-        and latent heat, carbon dioxide, and ozone over the entire BOREAS region to
-        tie together measurements made in both the SSA and the NSA. (VIEW RELATED
-        INFORMATION)", "rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}], "boxes":["53.42
-        -106.32 56.25 -97.23"], "dif_ids":["BOREAS_AFM3MW94"], "online_access_flag":"true",
-        "browse_flag":"false", "relevance_score":0.5}]}}'
+      string: '{"feed":{"updated":"2016-03-28T01:29:30.008Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[{"processing_level_id":"3","boxes":["53.42 -106.32 56.25 -97.23"],"time_start":"1994-05-24T00:00:00.000Z","dif_ids":["BOREAS_AFM3MW94"],"version_id":"1","updated":"2000-01-27T00:00:00.000Z","dataset_id":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/495","organizations":["ORNL_DAAC"],"title":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","coordinate_system":"CARTESIAN","summary":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA.","has_granules":true,"time_end":"1994-09-16T00:00:00.000Z","orbit_parameters":{},"id":"C179002986-ORNL_DAAC","score":0.5,"original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html"}]}],"facets":[{"field":"project","value-counts":[["Boreal Ecosystem-Atmosphere Study",1],["EOSDIS",1],["ESIP",1]]},{"field":"sensor","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",1]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[{"subfields":["level_1"],"level_1":[{"subfields":["level_2"],"level_2":[{"subfields":["level_3"],"level_3":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"THE OAK RIDGE NATIONAL LABORATORY (ORNL) DISTRIBUTED ACTIVE ARCHIVE CENTER (DAAC)"}],"count":1,"value":"ORNL_DAAC"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"NASA"}],"count":1,"value":"GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES"}],"field":"data_centers"},{"subfields":["level_0"],"level_0":[{"subfields":["level_1"],"level_1":[{"subfields":["level_2"],"level_2":[{"subfields":["level_3"],"level_3":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"THE OAK RIDGE NATIONAL LABORATORY (ORNL) DISTRIBUTED ACTIVE ARCHIVE CENTER (DAAC)"}],"count":1,"value":"ORNL_DAAC"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"NASA"}],"count":1,"value":"GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES"}],"field":"archive_centers"},{"subfields":["category"],"category":[{"subfields":["series_entity"],"series_entity":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"NCAR ELECTRA"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Aircraft"}],"field":"platforms"},{"subfields":["category"],"category":[{"subfields":["class"],"class":[{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"GUST PROBE"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"INFRARED THERMOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"MULTIBAND VEGETATION IMAGER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"NET RADIOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PRESSURE TRANSDUCER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PYRANOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PYRGEOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"TEMPERATURE SENSOR"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"},{"subfields":["class"],"class":[{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Infrared Gas Analyzers"}],"count":1,"value":"IRGA"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Chemical Meters/Analyzers"},{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"CHEMILUMINESCENCE"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Spectrometers/Radiometers"}],"count":1,"value":"In Situ/Laboratory Instruments"}],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LONGWAVE RADIATION"},{"count":1,"value":"NET RADIATION"},{"count":1,"value":"SOLAR IRRADIANCE"}],"count":1,"value":"ATMOSPHERIC RADIATION"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"CARBON DIOXIDE"},{"count":1,"value":"OZONE"}],"count":1,"value":"ATMOSPHERIC CHEMISTRY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ATMOSPHERIC PRESSURE MEASUREMENTS"}],"count":1,"value":"ATMOSPHERIC PRESSURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"AIR TEMPERATURE"}],"count":1,"value":"ATMOSPHERIC TEMPERATURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"WATER VAPOR"}],"count":1,"value":"ATMOSPHERIC WATER VAPOR"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"UPPER LEVEL WINDS"}],"count":1,"value":"ATMOSPHERIC WINDS"}],"count":1,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LAND SURFACE TEMPERATURE"}],"count":1,"value":"LAND TEMPERATURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"REFLECTANCE"}],"count":1,"value":"SURFACE RADIATIVE PROPERTIES"}],"count":1,"value":"LAND SURFACE"}],"count":1,"value":"EARTH SCIENCE"}],"field":"science_keywords"}]}}'
+    http_version:
+invalid_collections_logged_out_non_hierarchical:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      echo-hits:
+      - '1'
+      echo-hits-estimated:
+      - 'false'
+      echo-cursor-at-end:
+      - 'true'
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      etag:
+      - '"887f69e76214573412fff0d5487cb934"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-request-id:
+      - 004754a61895609924016e314bebfb16
+      x-runtime:
+      - '0.433000'
+      date:
+      - Mon, 08 Sep 2014 20:32:44 GMT
+      x-rack-cache:
+      - miss
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '1560'
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-03-28T01:30:41.244Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&include_tags=edsc.%2A&exclude%5Btag_key%5D=edsc.datasource&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[{"processing_level_id":"3","boxes":["53.42 -106.32 56.25 -97.23"],"time_start":"1994-05-24T00:00:00.000Z","dif_ids":["BOREAS_AFM3MW94"],"version_id":"1","updated":"2000-01-27T00:00:00.000Z","dataset_id":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/495","organizations":["ORNL_DAAC"],"title":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","coordinate_system":"CARTESIAN","summary":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA.","has_granules":true,"time_end":"1994-09-16T00:00:00.000Z","orbit_parameters":{},"id":"C179002986-ORNL_DAAC","score":0.5,"original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html"}]}],"facets":[{"field":"data_center","value-counts":[["ORNL_DAAC",1]]},{"field":"archive_center","value-counts":[["ORNL_DAAC",1]]},{"field":"project","value-counts":[["Boreal Ecosystem-Atmosphere Study",1],["EOSDIS",1],["ESIP",1]]},{"field":"platform","value-counts":[["NCAR ELECTRA",1]]},{"field":"instrument","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"sensor","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",1]]},{"field":"category","value-counts":[["EARTH SCIENCE",1]]},{"field":"topic","value-counts":[["ATMOSPHERE",1],["LAND SURFACE",1]]},{"field":"term","value-counts":[["ATMOSPHERIC CHEMISTRY",1],["ATMOSPHERIC PRESSURE",1],["ATMOSPHERIC RADIATION",1],["ATMOSPHERIC TEMPERATURE",1],["ATMOSPHERIC WATER VAPOR",1],["ATMOSPHERIC WINDS",1],["LAND TEMPERATURE",1],["SURFACE RADIATIVE PROPERTIES",1]]},{"field":"variable_level_1","value-counts":[["AIR TEMPERATURE",1],["ATMOSPHERIC PRESSURE MEASUREMENTS",1],["CARBON DIOXIDE",1],["LAND SURFACE TEMPERATURE",1],["LONGWAVE RADIATION",1],["NET RADIATION",1],["OZONE",1],["REFLECTANCE",1],["SOLAR IRRADIANCE",1],["UPPER LEVEL WINDS",1],["WATER VAPOR",1]]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
     http_version:
 invalid_but_load_page:
   response:
@@ -534,7 +549,7 @@ invalid_but_load_page:
       access-control-allow-origin:
       - "*"
       cmr-hits:
-      - '3872'
+      - '1'
       cmr-took:
       - '55'
       content-type:
@@ -545,475 +560,55 @@ invalid_but_load_page:
       - Jetty(7.x.y-SNAPSHOT)
     body:
       encoding: UTF-8
-      string: '{"feed":{"updated":"2015-01-21T13:47:36.322Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_has_granules=true&include_granule_counts=true","title":"ECHO
-        dataset metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
-        Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","title":"15
-        Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
-        15 minute stream flow data for Kings Creek on the Konza Prairie","has_granules":true,"time_end":"1988-03-04T00:00:00Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","granule_count":39,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html","hreflang":"en-US","title":"USGS
-        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
-        INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2000
-        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","title":"2000
-        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
-        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
-        to construct an index that measures the ability of a nation''s economy to
-        achieve sustainable development, with the long term goal of finding a single
-        indicator for environmental sustainability analagous to that of the Gross
-        Domestic Product (GDP). The index covering 56 countries is a composite measure
-        of the current status of a nation''s environmental systems, pressures on those
-        systems, human vulnerability to environmental change, national capacity to
-        respond, and contributions to global environmental stewardship. The index
-        was unveiled at the World Economic Forum''s annual meeting, January 2000,
-        Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration among
-        the World Economic Forum (WEF), Yale Center for Environmental Law and Policy
-        (YCELP), and the Columbia University Center for International Earth Science
-        Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-2000/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4NK3BZJ","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2001"],"version_id":"2.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2001
-        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2001","title":"2001
-        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
-        2001 Environmental Sustainability Index (ESI) utilizes a refined methodology
-        based on the 2000 Pilot ESI effort, to construct an index covering 122 countries
-        that measures the overall progress towards environmental sustainability. The
-        index is a composite measure of the current status of a nation''s environmental
-        systems, pressures on those systems, human vulnerability to environmental
-        change, national capacity to respond, and contributions to global environmental
-        stewardship. The refinements included the addition and deletion of indicators,
-        filling gaps in data coverage, new data sets, and the modification of the
-        aggregation scheme. The index was unveiled at the World Economic Forum''s
-        annual meeting, January 2001, Davos, Switzerland. The 2001 ESI is the result
-        of collaboration among the World Economic Forum (WEF), Yale Center for Environmental
-        Law and Policy (YCELP), and the Columbia University Center for International
-        Earth Science Information Network (CIESIN)","has_granules":false,"orbit_parameters":{},"id":"C1000000220-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2001/maps","hreflang":"en-US","title":"maps
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4X34VDM","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2002"],"version_id":"3.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2002
-        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2002","title":"2002
-        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
-        2002 Environmental Sustainability Index (ESI) measures overall progress toward
-        environmental sustainability for 142 countries based on environmental systems,
-        stresses, human vulnerability, social and institutional capacity and global
-        stewardship. The addition of a climate change indicator, reduction in number
-        of capacity indicators, and an improved imputation methodology contributed
-        to an improvement from the 2001 ESI. The index was unveiled at the World Economic
-        Forum''s annual meeting, January 2002, New York. The 2002 ESI is the result
-        of collaboration among the World Economic Forum (WEF), Yale Center for Environmental
-        Law and Policy (YCELP), and the Columbia University Center for International
-        Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001967-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H40V89R6","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2002/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1980-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_ESI_2005"],"version_id":"4.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2005
-        Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2005","title":"2005
-        Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
-        2005 Environmental Sustainability Index (ESI) is a measure of overall progress
-        towards environmental sustainability, developed for 146 countries. The index
-        provides a composite profile of national environmental stewardship based on
-        a compilation of 21 indicators derived from 76 underlying datasets. The 2005
-        version of the ESI represents a significant update and improvement on earlier
-        versions; the country ESI scores or rankings should not be compared to earlier
-        versions because of changes to the methodology and underlying data. The index
-        was unveiled at the World Economic Forum''s annual meeting, January 2005,
-        Davos, Switzerland. The 2005 ESI is a joint product of the Yale Center for
-        Environmental Law and Policy (YCELP) and the Columbia University Center for
-        International Earth Science Information Network (CIESIN), in collaboration
-        with the World Economic Forum (WEF) and the Joint Research Centre (JRC), European
-        Commission.","has_granules":false,"orbit_parameters":{},"id":"C179001889-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2005/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H40V89R6","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/esi-environmental-sustainability-index-2005/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1994-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2008"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2008
-        Environmental Performance Index (EPI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_EPI_2008","title":"2008
-        Environmental Performance Index (EPI)","coordinate_system":"CARTESIAN","summary":"The
-        2008 Environmental Performance Index (EPI) centers on two broad environmental
-        protection objectives: (1) reducing environmental stresses on human \n\nhealth,
-        and (2) promoting ecosystem vitality and sound natural resource management.
-        Derived from a careful review of the environmental literature, these twin
-        goals mirror the priorities \n\nexpressed by policymakers. Environmental health
-        and ecosystem vitality are gauged using 25 indicators tracked in six well-established
-        policy categories: Environmental Health \n\n(Environmental Burden of Disease,
-        Water, and Air Pollution), Air Pollution (effects on ecosystems), Water (effects
-        on ecosystems), Biodiversity and Habitat, Productive Natural Resources \n\n(Forestry,
-        Fisheries, and Agriculture), and Climate Change. The 2008 EPI utilizes a proximity-to-target
-        methodology in which performance on each indicator is rated on a 0 to 100
-        scale \n\n(100 represents at target). By identifying specific targets and
-        measuring how close each country comes to them, the EPI provides a foundation
-        for policy analysis and a context for \n\nevaluating performance. Issue-by-issue
-        and aggregate rankings facilitate cross-country comparisons both globally
-        and within relevant peer groups. The 2008 EPI is the result of \n\ncollaboration
-        among the Yale Center for Environmental Law and Policy (YCELP), Columbia University
-        Center for International Earth Science Information Network (CIESIN), World
-        Economic \n\nForum (WEF), and the Joint Research Centre (JRC), European Commission.","has_granules":false,"orbit_parameters":{},"id":"C179001707-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2008/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4HT2M77","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2008/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"2004-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_NRMI_2008"],"version_id":"1.0","updated":"2009-12-01T00:00:00.000Z","dataset_id":"2008
-        Natural Resource Management Index (NRMI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_NRMI_2008","title":"2008
-        Natural Resource Management Index (NRMI)","coordinate_system":"CARTESIAN","summary":"The
-        2008 Natural Resources Management Index (NRMI) is a composite index for 226
-        countries derived from the average of four proximity-to-target scores from
-        eco-region protection, access to improved sanitation, access to improved water
-        and child mortality indicators. The 2008 NRMI includes data for the NRMI for
-        2006, 2007 and 2008. The dataset is produced and distributed by the Columbia
-        University Center for International Earth Science Information Network (CIESIN)
-        in collaboration with the Yale Center for Environmental Law and Policy (YCELP).","has_granules":false,"orbit_parameters":{},"id":"C179002048-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/es/data/NRMI_2008_final-1.xls","hreflang":"en-US","title":"Data
-        in Microsoft Excel (XLS) format","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://sedac.ciesin.columbia.edu/es/mcc.html","hreflang":"en-US","title":"data
-        set homepage (static URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"1994-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2010"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2010
-        Environmental Performance Index (EPI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_EPI_2010","title":"2010
-        Environmental Performance Index (EPI)","coordinate_system":"CARTESIAN","summary":"The
-        2010 Environmental Performance Index (EPI) ranks 163 countries on environmental
-        performance based on twenty-five indicators grouped within ten core policy
-        categories addressing environmental health, air quality, water resource management,
-        biodiversity and habitat, forestry, fisheries, agriculture, and climate change
-        in the context of two broad objectives: environmental health and ecosystem
-        vitality. The EPI?s proximity-to-target methodology facilitates cross-country
-        comparisons among economic and regional peer groups. It was formally released
-        in Davos, Switzerland, at the annual meeting of the World Economic Forum on
-        January 28, 2010. The 2010 EPI is the result of collaboration between the
-        Yale Center for Environmental Law and Policy (YCELP) and the Columbia University
-        Center for International Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179002147-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-2010/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H4D21VHT","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"Level
-        2","boxes":["-55 -180 90 180"],"time_start":"2000-01-01T00:00:00Z","dif_ids":["CIESIN_SEDAC_EPI_2012"],"version_id":"1.0","updated":"2014-05-13T00:00:00.000Z","dataset_id":"2012
-        Environmental Performance Index and Pilot Trend Environmental Performance
-        Index","data_center":"SEDAC","short_name":"CIESIN_SEDAC_EPI_2012","title":"2012
-        Environmental Performance Index and Pilot Trend Environmental Performance
-        Index","coordinate_system":"CARTESIAN","summary":"The 2012 Environmental Performance
-        Index (EPI) ranks 132 countries on 22 performance indicators in the following
-        10 policy categories:  environmental burden of disease, water (effects on
-        human health), air pollution (effects on human health), air pollution (ecosystem
-        effects), water resources (ecosystem effects), biodiversity and habitat, forestry,
-        fisheries, agriculture and climate change. These categories track performance
-        and progress on two broad policy objectives, environmental health and ecosystem
-        vitality. Each indicator has an associated environmental public health or
-        ecosystem sustainability target. The EPI''s proximity-to-target methodology
-        facilitates cross-country comparisons among economic and regional peer groups.\n\nThe
-        Pilot Trend Environmental Performance Index (Trend EPI) ranks countries on
-        the change in their environmental performance over the last decade. As a complement
-        to the EPI, the Trend EPI shows who is improving and who is declining over
-        time. \n\nThe 2012 EPI and Pilot Trend EPI were formally released in Davos,
-        Switzerland, at the annual meeting of the World Economic Forum on January
-        27, 2012. These are the result of collaboration between the Yale Center for
-        Environmental Law and Policy (YCELP) and the Columbia University Center for
-        International Earth Science Information Network (CIESIN). The Interactive
-        Website for the 2012 EPI is at http://epi.yale.edu/.","has_granules":false,"orbit_parameters":{},"id":"C1000000000-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-pilot-trend-2012/data-download","hreflang":"en-US","title":"data
-        download page","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://dx.doi.org/10.7927/H48913SG","hreflang":"en-US","title":"data
-        set DOI and homepage (DOI URL)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://sedac.ciesin.columbia.edu/data/set/epi-environmental-performance-index-pilot-trend-2012/maps","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/browse#"}]},{"processing_level_id":"3","boxes":["39.08
-        -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00Z","dif_ids":["FIFE_RAIN_30M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
-        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/2","title":"30
-        Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
-        minute rainfall data for the Konza Prairie","has_granules":true,"time_end":"1987-10-26T00:00:00Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","original_format":"ECHO10","granule_count":117,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html","hreflang":"en-US","title":"30
-        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-90
-        -180 79 177.9"],"time_start":"1977-11-16T00:00:00Z","dif_ids":["GLOBAL_MICROBIAL_BIOMASS_C_N_P"],"version_id":"1","updated":"2015-01-12T00:00:00.000Z","dataset_id":"A
-        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
-        Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1264","title":"A
-        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
-        Data","coordinate_system":"CARTESIAN","summary":"This data set provides the
-        concentrations of soil microbial biomass carbon (C), nitrogen (N) and phosphorus
-        (P), soil organic carbon, total nitrogen, and total phosphorus at biome and
-        global scales. The data were compiled from a comprehensive survey of publications
-        from the late 1970s to 2012 and include 3,422 data points from 315 papers.
-        These data are from soil samples collected primarily at 0-15 cm depth with
-        some from 0-30 cm. In addition, data were compiled for soil microbial biomass
-        concentrations from soil profile samples to depths of 100 cm. Sampling site
-        latitude and longitude were available for the majority of the samples that
-        enabled assembling additional soil properties, site characteristics, vegetation
-        distributions, biomes, and long-term climate data from several global sources
-        of soil, land-cover, and climate data. These site attributes are included
-        with the microbial biomass data. This data set contains two *.csv files of
-        the soil microbial biomass C, N, P data. The first provides all compiled results
-        emphasizing the full spatial extent of the data, while the second is a subset
-        that provides only data from a series of profile samples emphasizing the vertical
-        distribution of microbial biomass concentrations.There is a companion file,
-        also in .csv format, of the references for the surveyed publications. A reference_number
-        relates the data to the respective publication.The concentrations of soil
-        microbial biomass, in combination with other soil databases, were used to
-        estimate the global storage of soil microbial biomass C and N in 0-30 cm and
-        0-100 cm soil profiles. These storage estimates were combined with a spatial
-        map of 12 major biomes (boreal forest, temperate coniferous forest, temperate
-        broadleaf forest, tropical and subtropical forests, mixed forest, grassland,
-        shrub, tundra, desert, natural wetland, cropland, and pasture) at 0.05-degree
-        by 0.5-degree spatial resolution. The biome map and six estimates of C and
-        N storage and C:N ration in soil microbial biomass are provided in a single
-        netCDF format file. ","has_granules":true,"time_end":"2012-06-01T00:00:00Z","orbit_parameters":{},"id":"C1000000000-ORNL_DAAC","original_format":"ECHO10","granule_count":3,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1264","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/SOILS/guides/Global_Microbial_Biomass_C_N_P.html","hreflang":"en-US","title":"This
-        data set provides the concentrations of soil microbial biomass carbon (C),
-        nitrogen (N) and phosphorus (P), soil organic carbon, total nitrogen, and
-        total phosphorus at biome and global scales. The data were compiled from a
-        comprehensive survey of publications from the late 1970s to 2012 and include
-        3,422 data points from 315 papers. These data are from soil samples collected
-        primarily at 0-15 cm depth with some from 0-30 cm. In addition, data were
-        compiled for soil microbial biomass concentrations from soil profile samples
-        to depths of 100 cm. Sampling site latitude and longitude were available for
-        the majority of the samples that enabled assembling additional soil properties,
-        site characteristics, vegetation distributions, biomes, and long-term climate
-        data from several global sources of soil, land-cover, and climate data. These
-        site attributes are included with the microbial biomass data. This data set
-        contains two *.csv files of the soil microbial biomass C, N, P data. The first
-        provides all compiled results emphasizing the full spatial extent of the data,
-        while the second is a subset that provides only data from a series of profile
-        samples emphasizing the vertical distribution of microbial biomass concentrations.There
-        is a companion file, also in .csv format, of the references for the surveyed
-        publications. A reference_number relates the data to the respective publication.The
-        concentrations of soil microbial biomass, in combination with other soil databases,
-        were used to estimate the global storage of soil microbial biomass C and N
-        in 0-30 cm and 0-100 cm soil profiles. These storage estimates were combined
-        with a spatial map of 12 major biomes (boreal forest, temperate coniferous
-        forest, temperate broadleaf forest, tropical and subtropical forests, mixed
-        forest, grassland, shrub, tundra, desert, natural wetland, cropland, and pasture)
-        at 0.05-degree by 0.5-degree spatial resolution. The biome map and six estimates
-        of C and N storage and C:N ration in soil microbial biomass are provided in
-        a single netCDF format file.  (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-43.2
-        -122.4 58.42 176.13"],"time_start":"1993-01-01T00:00:00Z","dif_ids":["LEAF_PHOTOSYNTHESIS_TRAITS"],"version_id":"1","updated":"2014-06-27T00:00:00.000Z","dataset_id":"A
-        Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf
-        Area","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1224","title":"A
-        Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf
-        Area","coordinate_system":"CARTESIAN","summary":"This global data set of photosynthetic
-        rates and leaf nutrient traits was compiled from a comprehensive literature
-        review. It includes estimates of Vcmax (maximum rate of carboxylation), Jmax
-        (maximum rate of electron transport), leaf nitrogen content (N), leaf phosphorus
-        content (P), and specific leaf area (SLA) data from both experimental and
-        ambient field conditions, for a total of 325 species and treatment combinations.
-        Both the original published Vcmax and Jmax values as well as estimates at
-        standard temperature are reported. The maximum rate of carboxylation (Vcmax)
-        and the maximum rate of electron transport (Jmax) are primary determinants
-        of photosynthetic rates in plants, and modeled carbon fluxes are highly sensitive
-        to these parameters. Previous studies have shown that Vcmax and Jmax correlate
-        with leaf nitrogen across species and regions, and locally across species
-        with leaf phosphorus and specific leaf area, yet no universal relationship
-        suitable for global-scale models is currently available. These data are suitable
-        for exploring the general relationships of Vcmax and Jmax with each other
-        and with leaf N, P and SLA. This data set contains one *.csv file.","has_granules":true,"time_end":"2010-12-31T00:00:00Z","orbit_parameters":{},"id":"C179126725-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1224","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/VEGETATION/guides/Leaf_Photosynthesis_Traits.html","hreflang":"en-US","title":"This
-        global data set of photosynthetic rates and leaf nutrient traits was compiled
-        from a comprehensive literature review. It includes estimates of Vcmax (maximum
-        rate of carboxylation), Jmax (maximum rate of electron transport), leaf nitrogen
-        content (N), leaf phosphorus content (P), and specific leaf area (SLA) data
-        from both experimental and ambient field conditions, for a total of 325 species
-        and treatment combinations. Both the original published Vcmax and Jmax values
-        as well as estimates at standard temperature are reported. The maximum rate
-        of carboxylation (Vcmax) and the maximum rate of electron transport (Jmax)
-        are primary determinants of photosynthetic rates in plants, and modeled carbon
-        fluxes are highly sensitive to these parameters. Previous studies have shown
-        that Vcmax and Jmax correlate with leaf nitrogen across species and regions,
-        and locally across species with leaf phosphorus and specific leaf area, yet
-        no universal relationship suitable for global-scale models is currently available.
-        These data are suitable for exploring the general relationships of Vcmax and
-        Jmax with each other and with leaf N, P and SLA. This data set contains one
-        *.csv file. (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-50
-        -159.7 68.5 176.9"],"time_start":"1970-01-01T00:00:00Z","dif_ids":["LEAF_CARBON_NUTRIENTS"],"version_id":"1","updated":"2012-07-19T00:00:00.000Z","dataset_id":"A
-        Global Database of Carbon and Nutrient Concentrations of Green and Senesced
-        Leaves","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1106","title":"A
-        Global Database of Carbon and Nutrient Concentrations of Green and Senesced
-        Leaves","coordinate_system":"CARTESIAN","summary":"This data set provides
-        carbon (C), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), and
-        magnesium (Mg) concentrations in green and senesced leaves. Vegetation characteristics
-        reported include species growth habit, leaf area, mass, and mass loss with
-        senescence. The data were compiled from 86 selected studies in 31 countries,
-        and resulted in approximately 1,000 data points for both green and senesced
-        leaves from woody and non-woody vegetation as described in Vergutz et al (2012).
-        The studies were conducted from 1970-2009. There are two comma-delimited data
-        files with this data set.","has_granules":true,"time_end":"2009-12-31T00:00:00Z","orbit_parameters":{},"id":"C179003380-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1106","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/VEGETATION/guides/Leaf_carbon_nutrients.html","hreflang":"en-US","title":"This
-        data set provides carbon (C), nitrogen (N), phosphorus (P), potassium (K),
-        calcium (Ca), and magnesium (Mg) concentrations in green and senesced leaves.
-        Vegetation characteristics reported include species growth habit, leaf area,
-        mass, and mass loss with senescence. The data were compiled from 86 selected
-        studies in 31 countries, and resulted in approximately 1,000 data points for
-        both green and senesced leaves from woody and non-woody vegetation as described
-        in Vergutz et al (2012). The studies were conducted from 1970-2009. There
-        are two comma-delimited data files with this data set. (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-54.2
-        -164.78 78.42 175.62"],"time_start":"1932-01-01T00:00:00Z","dif_ids":["LAI_WOODY_PLANTS"],"version_id":"1","updated":"2014-07-22T00:00:00.000Z","dataset_id":"A
-        Global Database of Field-observed Leaf Area Index in Woody Plant Species,
-        1932-2011","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1231","title":"A
-        Global Database of Field-observed Leaf Area Index in Woody Plant Species,
-        1932-2011","coordinate_system":"CARTESIAN","summary":"This data set provides
-        global leaf area index (LAI) values for woody species. The data are a compilation
-        of field-observed data from 1,216 locations obtained from 554 literature sources
-        published between 1932 and 2011. Only site-specific maximum LAI values were
-        included from the sources; values affected by significant artificial treatments
-        (e.g. continuous fertilization and/or irrigation) and LAI values that were
-        low due to drought or disturbance (e.g. intensive thinning, wildfire, or disease),
-        or because vegetation was immature or old/declining, were excluded (Lio et
-        al., 2014). To maximize the generic applicability of the data, original LAI
-        values from source literature and values standardized using the definition
-        of half of total surface area (HSA) are included. Supporting information,
-        such as geographical coordinates of plot, altitude, stand age, name of dominant
-        species, plant functional types, and climate data are also provided in the
-        data file. There is one data file in comma-separated (.csv) format with this
-        data set and one companion file which provides the data sources.","has_granules":true,"time_end":"2011-12-31T00:00:00Z","orbit_parameters":{},"id":"C179130805-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1231","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/VEGETATION/guides/LAI_Woody_Plants.html","hreflang":"en-US","title":"This
-        data set provides global leaf area index (LAI) values for woody species. The
-        data are a compilation of field-observed data from 1,216 locations obtained
-        from 554 literature sources published between 1932 and 2011. Only site-specific
-        maximum LAI values were included from the sources; values affected by significant
-        artificial treatments (e.g. continuous fertilization and/or irrigation) and
-        LAI values that were low due to drought or disturbance (e.g. intensive thinning,
-        wildfire, or disease), or because vegetation was immature or old/declining,
-        were excluded (Lio et al., 2014). To maximize the generic applicability of
-        the data, original LAI values from source literature and values standardized
-        using the definition of half of total surface area (HSA) are included. Supporting
-        information, such as geographical coordinates of plot, altitude, stand age,
-        name of dominant species, plant functional types, and climate data are also
-        provided in the data file. There is one data file in comma-separated (.csv)
-        format with this data set and one companion file which provides the data sources.
-        (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-36.45
-        -149.63 74.5 160.52"],"time_start":"1956-01-01T00:00:00Z","dif_ids":["GLOBAL_RTSG_FLUX_V1"],"version_id":"1","updated":"2012-04-16T00:00:00.000Z","dataset_id":"A
-        Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
-        1.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1078","title":"A
-        Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
-        1.0","coordinate_system":"CARTESIAN","summary":"This database contains information
-        compiled from published studies on gas flux from soil following rewetting
-        or thawing. The resulting database includes 222 field and laboratory observations
-        focused on rewetting of dry soils, and 116 field laboratory observations focused
-        on thawing of frozen soils studies conducted from 1956 to 2010. Fluxes of
-        carbon dioxide, methane, nitrous oxide, nitrogen oxide, and ammonia (CO2,
-        CH4, N2O, NO and NH3) were compiled from the literature and the flux rates
-        were normalized for ease of comparison. Field observations of gas flux following
-        rewetting of dry soils include events caused by natural rainfall, simulated
-        rainfall in natural ecosystems, and irrigation in agricultural lands. Similarly,
-        thawing of frozen soils include field observations of natural thawing, simulated
-        freezing-thawing events (i.e., thawing of simulated frozen soil by snow removal),
-        and thawing of seasonal ice in temperate and high latitude regions (Kim et
-        al., 2012). Reported parameters include experiment type, location, site type,
-        vegetation, climate, soil properties, rainfall, soil moisture, soil gas flux
-        after wetting and thawing, peak soil gas flux properties, and the corresponding
-        study references. There is one comma-delimited data file. ","has_granules":true,"time_end":"2009-12-31T00:00:00Z","orbit_parameters":{},"id":"C179003657-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1078","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/SOILS/guides/global_rtsg_flux_v1.html","hreflang":"en-US","title":"This
-        database contains information compiled from published studies on gas flux
-        from soil following rewetting or thawing. The resulting database includes
-        222 field and laboratory observations focused on rewetting of dry soils, and
-        116 field laboratory observations focused on thawing of frozen soils studies
-        conducted from 1956 to 2010. Fluxes of carbon dioxide, methane, nitrous oxide,
-        nitrogen oxide, and ammonia (CO2, CH4, N2O, NO and NH3) were compiled from
-        the literature and the flux rates were normalized for ease of comparison.
-        Field observations of gas flux following rewetting of dry soils include events
-        caused by natural rainfall, simulated rainfall in natural ecosystems, and
-        irrigation in agricultural lands. Similarly, thawing of frozen soils include
-        field observations of natural thawing, simulated freezing-thawing events (i.e.,
-        thawing of simulated frozen soil by snow removal), and thawing of seasonal
-        ice in temperate and high latitude regions (Kim et al., 2012). Reported parameters
-        include experiment type, location, site type, vegetation, climate, soil properties,
-        rainfall, soil moisture, soil gas flux after wetting and thawing, peak soil
-        gas flux properties, and the corresponding study references. There is one
-        comma-delimited data file.  (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-42.5
-        -117.86 63.23 117.6"],"time_start":"1985-01-01T00:00:00Z","dif_ids":["GLOBAL_PHOSPHORUS_HEDLEY_FRACT"],"version_id":"1","updated":"2014-07-18T00:00:00.000Z","dataset_id":"A
-        Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1230","title":"A
-        Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","coordinate_system":"CARTESIAN","summary":"This
-        data set provides concentrations of soil phosphorus (P) compiled from the
-        peer-reviewed literature that cited the Hedley fractionation method (Hedley
-        and Stewart, 1982). This database contains estimates of different forms of
-        naturally occurring soil phosphorus, including labile inorganic P, organic
-        P, occluded P, secondary mineral P, apatite P, and total P, based on the analyses
-        of the various Hedley soil fractions.The recent literature survey (Yang and
-        Post, 2011) was restricted to studies of natural, unfertilized, and uncultivated
-        soils since 1995. Ninety measurements of soil P fractions were identified.
-        These were added to the 88 values from soils in natural ecosystems that Cross
-        and Schlesinger (1995) had compiled. Cross and Schlesinger provided a comprehensive
-        survey on Hedley P data prior to 1995. Measurement data are provided for studies
-        published from 1985 through 2010. In addition to the Hedley P fraction measurement
-        data Yang and Post (2011) also compiled information on soil order, soil pH,
-        organic carbon and nitrogen content, as well as the geographic location (longitude
-        and latitude) of the measurement sites. ","has_granules":true,"time_end":"2010-12-31T00:00:00Z","orbit_parameters":{},"id":"C179130785-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1230","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/SOILS/guides/Global_Phosphorus_Hedley_Fract.html","hreflang":"en-US","title":"This
-        data set provides concentrations of soil phosphorus (P) compiled from the
-        peer-reviewed literature that cited the Hedley fractionation method (Hedley
-        and Stewart, 1982). This database contains estimates of different forms of
-        naturally occurring soil phosphorus, including labile inorganic P, organic
-        P, occluded P, secondary mineral P, apatite P, and total P, based on the analyses
-        of the various Hedley soil fractions.The recent literature survey (Yang and
-        Post, 2011) was restricted to studies of natural, unfertilized, and uncultivated
-        soils since 1995. Ninety measurements of soil P fractions were identified.
-        These were added to the 88 values from soils in natural ecosystems that Cross
-        and Schlesinger (1995) had compiled. Cross and Schlesinger provided a comprehensive
-        survey on Hedley P data prior to 1995. Measurement data are provided for studies
-        published from 1985 through 2010. In addition to the Hedley P fraction measurement
-        data Yang and Post (2011) also compiled information on soil order, soil pH,
-        organic carbon and nitrogen content, as well as the geographic location (longitude
-        and latitude) of the measurement sites.  (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"3","boxes":["-78.02
-        -162.2 78.17 175.5"],"time_start":"1961-01-01T00:00:00Z","dif_ids":["GLOBAL_SRDB_V3"],"version_id":"1","updated":"2014-08-04T00:00:00.000Z","dataset_id":"A
-        Global Database of Soil Respiration Data, Version 3.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1235","title":"A
-        Global Database of Soil Respiration Data, Version 3.0","coordinate_system":"CARTESIAN","summary":"This
-        data set provides an update of the soil respiration database (SRDB), a near-universal
-        compendium of published soil respiration (RS) data. Soil respiration, the
-        flux of autotrophically- and heterotrophically-generated CO2 from the soil
-        to the atmosphere, remains the least well-constrained component of the terrestrial
-        Carbon cycle. The database encompasses all published studies that report at
-        least one of the following data measured in the field (not laboratory): annual
-        RS, mean seasonal RS, a seasonal or annual partitioning of RS into its sources
-        fluxes, RS temperature response (Q10), or RS at 10 degrees C. The SRDB''s
-        orientation is thus to seasonal and annual fluxes, not shorter-term or chamber-specific
-        measurements, and the database is dominated by temperate, well-drained forest
-        measurement locations. The data set includes a file of RS data and a linked
-        file of study bibliographic data; both files are in comma-separated format.","has_granules":true,"time_end":"2011-12-31T00:00:00Z","orbit_parameters":{},"id":"C179130985-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1235","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://daac.ornl.gov/SOILS/guides/global_srdb_v3.html","hreflang":"en-US","title":"This
-        data set provides an update of the soil respiration database (SRDB), a near-universal
-        compendium of published soil respiration (RS) data. Soil respiration, the
-        flux of autotrophically- and heterotrophically-generated CO2 from the soil
-        to the atmosphere, remains the least well-constrained component of the terrestrial
-        Carbon cycle. The database encompasses all published studies that report at
-        least one of the following data measured in the field (not laboratory): annual
-        RS, mean seasonal RS, a seasonal or annual partitioning of RS into its sources
-        fluxes, RS temperature response (Q10), or RS at 10 degrees C. The SRDB''s
-        orientation is thus to seasonal and annual fluxes, not shorter-term or chamber-specific
-        measurements, and the database is dominated by temperate, well-drained forest
-        measurement locations. The data set includes a file of RS data and a linked
-        file of study bibliographic data; both files are in comma-separated format.
-        (VIEW RELATED INFORMATION)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"boxes":["68
-        -24 90 110","45 -130 90 105"],"time_start":"1953-01-01T01:00:00Z","dif_ids":["NSIDC-0050"],"version_id":"Undefined","updated":"2013-03-12T12:00:00.000Z","dataset_id":"AARI
-        10-Day Arctic Ocean EASE-Grid Sea Ice Observations","data_center":"NSIDCV0","short_name":"NSIDC-0050","title":"AARI
-        10-Day Arctic Ocean EASE-Grid Sea Ice Observations","coordinate_system":"CARTESIAN","summary":"<span
-        style=\"color: red; font-weight: bold;\">NOTE: This data set has been replaced
-        by the <a href=\"http://nsidc.org/data/g02176.html\">Sea Ice Charts of the
-        \nRussian Arctic in Gridded Format, 1933-2006</a> data set.</span>\n\nThese
-        gridded ice charts represent a reformatting of information\ncontained in another
-        data set, the Russian Arctic and Antarctic\nResearch Institute''s (AARI) 10
-        Day Digital Arctic Sea Ice Charts. AARI\ndigitized Arctic sea ice concentration
-        and stage of development charts\nas part of an international data exchange
-        program. The AARI source\ncharts, similar to operational charts distributed
-        by the National Ice\nCenter describing ice type and constitution, were developed
-        from\naircraft and satellite observations for shipping purposes, and provide\nextremely
-        detailed information.  Such data are particularly valued in\nprocess studies
-        tracking the growth and recession of polynyas, or for\nlooking at the preponderance
-        of ice at certain stages of development\nin a particular area. NSIDC does
-        not maintain the operational charts,\nbut archives the AARI digitized version.
-        However, the Arctic and Antarctic Research Institute (AARI) 10 \nDay Digital
-        Arctic Sea Ice\nCharts were encoded in SIGRID (Sea Ice Grid) format, which
-        assigns\nnumerical values to ice parameters and records them at specific\nlat/lon
-        grid points. But due to the difficulties of visualizing, extracting and working
-        with data in SIGRID, \nNSIDC is now providing\nAARI data in NSIDC''s Equal
-        Area SSM/I Earth Grid.\n\nThe EASE-Grid format makes it especially easy to
-        compare observed ice\nconcentrations or ice types with the same parameters
-        derived from\nsatellite data (such as ice concentrations from passive microwave\nsensors).\n\nAARI
-        sea ice data in the EASE-Grid projection are gridded at a 12.5 km\nresolution,
-        for both Western (24W to 110E) and Eastern (105E to 130W)\nsectors . Data
-        extend from 1953 through 1990, and are available via\nftp in compressed tar
-        format. Postscript (.ps) files depicting\ncoverage per year are also provided
-        with the data.","has_granules":false,"time_end":"1990-12-30T23:59:59Z","orbit_parameters":{},"id":"C2821-NSIDCV0","original_format":"ECHO10","granule_count":0,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://nsidc.org/data/g02172.html","hreflang":"en-US","title":"Data
-        Access","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"}]},{"processing_level_id":"1B","boxes":["23
-        -85 26 -81"],"time_start":"2002-07-10T00:00:00Z","dif_ids":["aces1cont"],"version_id":"1","updated":"2011-12-01T11:06:14.000Z","dataset_id":"ACES
-        CONTINUOUS DATA V1","data_center":"GHRC","short_name":"aces1cont","title":"ACES
-        CONTINUOUS DATA V1","coordinate_system":"CARTESIAN","summary":"The ALTUS Cloud
-        Electrification Study (ACES) was Based at the Naval Air Facility Key West
-        in Florida.  ACES researchers in August 2002 conducted overflights of thunderstorms
-        over the southwestern corner of Florida.  For the first time in NASA research
-        an uninhabited aerial vehicle (UAV) named ALTUS was used to collect cloud
-        electrification data.  Carrying field mills, optical sensors, electric field
-        sensors and other instruments, it allowed scientists to collect cloud electrification
-        data for the first time from above the storm from it''s birth through dissipation.
-        This experiment allowed scientists to achieve the dual goals of gathering
-        weather data safely, and testing new aircraft technology. This dataset consists
-        of data collected from seven instruments: the Slow/Fast antenna, Electric
-        Field Mill, Dual Optical Pulse Sensor, Searchcoil magnetometer, Accelerometers,
-        Gerdien Conductivity Prove, and the Fluxgate Magnetometer. Data consists of
-        sensor reads at 50HZ throughout the flight from all 64 channels.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C1020-GHRC","original_format":"ECHO10","granule_count":26,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1cont","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]},{"processing_level_id":"1B","boxes":["23
-        -85 26 -81"],"time_start":"2002-07-10T00:00:00Z","dif_ids":["aces1efm"],"version_id":"1","updated":"2011-12-01T11:09:46.000Z","dataset_id":"ACES
-        ELECTRIC FIELD MILL V1","data_center":"GHRC","short_name":"aces1efm","title":"ACES
-        ELECTRIC FIELD MILL V1","coordinate_system":"CARTESIAN","summary":"The ALTUS
-        Cloud Electrification Study (ACES) was based at the Naval Air Facility Key
-        West in Florida.  ACES researchers in August 2002 conducted overflights of
-        thunderstorms over the southwestern corner of Florida.  For the first time
-        in NASA research an uninhabited aerial vehicle (UAV) named ALTUS was used
-        to collect cloud electrification data.  Carrying field mills, optical sensors,
-        electric field sensors and other instruments, it allowed scientists to collect
-        cloud electrification data for the first time from above the storm from it''s
-        birth through dissipation.  This experiment allowed scientists to achieve
-        the dual goals of gathering weather data safely, and testing new aircraft
-        technology.  This dataset consists of data from the Electric Field Mills which
-        yield information about the atmospheric electrical fields above the instruments.","has_granules":true,"time_end":"2002-08-30T23:59:00Z","orbit_parameters":{},"id":"C194462-GHRC","original_format":"ECHO10","granule_count":14,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"href":"http://ghrc.nsstc.nasa.gov/hydro/details.pl?ds=aces1efm","hreflang":"en-US","rel":"http://esipfed.org/ns/fedsearch/1.1/data#"},{"href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html","hreflang":"en-US","title":"(Guide)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"http://aces.nsstc.nasa.gov/","hreflang":"en-US","title":"(Homepage)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"},{"href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar","hreflang":"en-US","title":"(Software)","rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#"}]}]}}'
+      string: '{"feed":{"updated":"2015-12-28T19:53:08.349Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[{"processing_level_id":"3","boxes":["53.42 -106.32 56.25 -97.23"],"time_start":"1994-05-24T00:00:00.000Z","dif_ids":["BOREAS_AFM3MW94"],"version_id":"1","updated":"2000-01-27T00:00:00.000Z","dataset_id":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/495","title":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","coordinate_system":"CARTESIAN","summary":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA.","has_granules":true,"time_end":"1994-09-16T00:00:00.000Z","orbit_parameters":{},"id":"C179002986-ORNL_DAAC","score":0.5,"original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html"}]}],"facets":[{"field":"project","value-counts":[["Boreal Ecosystem-Atmosphere Study",1],["EOSDIS",1],["ESIP",1]]},{"field":"sensor","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",1]]},{"field":"detailed_variable","value-counts":[]},{"subfields":["level_0"],"level_0":[{"subfields":["level_1"],"level_1":[{"subfields":["level_2"],"level_2":[{"subfields":["level_3"],"level_3":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"THE OAK RIDGE NATIONAL LABORATORY (ORNL) DISTRIBUTED ACTIVE ARCHIVE CENTER (DAAC)"}],"count":1,"value":"ORNL_DAAC"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"NASA"}],"count":1,"value":"GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES"}],"field":"data_centers"},{"subfields":["level_0"],"level_0":[{"subfields":["level_1"],"level_1":[{"subfields":["level_2"],"level_2":[{"subfields":["level_3"],"level_3":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"THE OAK RIDGE NATIONAL LABORATORY (ORNL) DISTRIBUTED ACTIVE ARCHIVE CENTER (DAAC)"}],"count":1,"value":"ORNL_DAAC"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"NASA"}],"count":1,"value":"GOVERNMENT AGENCIES-U.S. FEDERAL AGENCIES"}],"field":"archive_centers"},{"subfields":["category"],"category":[{"subfields":["series_entity"],"series_entity":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"NCAR ELECTRA"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Aircraft"}],"field":"platforms"},{"subfields":["category"],"category":[{"subfields":["class"],"class":[{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"GUST PROBE"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"INFRARED THERMOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"MULTIBAND VEGETATION IMAGER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"NET RADIOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PRESSURE TRANSDUCER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PYRANOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"PYRGEOMETER"},{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"TEMPERATURE SENSOR"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"},{"subfields":["class"],"class":[{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Infrared Gas Analyzers"}],"count":1,"value":"IRGA"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Chemical Meters/Analyzers"},{"subfields":["type"],"type":[{"subfields":["subtype"],"subtype":[{"subfields":["short_name"],"short_name":[{"subfields":["long_name"],"long_name":[{"count":1,"value":"Not Provided"}],"count":1,"value":"CHEMILUMINESCENCE"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Not Provided"}],"count":1,"value":"Spectrometers/Radiometers"}],"count":1,"value":"In Situ/Laboratory Instruments"}],"field":"instruments"},{"subfields":["category"],"category":[{"subfields":["topic"],"topic":[{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LONGWAVE RADIATION"},{"count":1,"value":"NET RADIATION"},{"count":1,"value":"SOLAR IRRADIANCE"}],"count":1,"value":"ATMOSPHERIC RADIATION"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"CARBON DIOXIDE"},{"count":1,"value":"OZONE"}],"count":1,"value":"ATMOSPHERIC CHEMISTRY"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"ATMOSPHERIC PRESSURE MEASUREMENTS"}],"count":1,"value":"ATMOSPHERIC PRESSURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"AIR TEMPERATURE"}],"count":1,"value":"ATMOSPHERIC TEMPERATURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"WATER VAPOR"}],"count":1,"value":"ATMOSPHERIC WATER VAPOR"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"UPPER LEVEL WINDS"}],"count":1,"value":"ATMOSPHERIC WINDS"}],"count":1,"value":"ATMOSPHERE"},{"subfields":["term"],"term":[{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"LAND SURFACE TEMPERATURE"}],"count":1,"value":"LAND TEMPERATURE"},{"subfields":["variable_level_1"],"variable_level_1":[{"count":1,"value":"REFLECTANCE"}],"count":1,"value":"SURFACE RADIATIVE PROPERTIES"}],"count":1,"value":"LAND SURFACE"}],"count":1,"value":"EARTH SCIENCE"}],"field":"science_keywords"}]}}'
+    http_version:
+invalid_but_load_page_none_hierarchical:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Wed, 21 Jan 2015 13:47:36 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '55'
+      content-type:
+      - application/json; charset=utf-8
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2015-12-28T19:57:02.254Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[{"processing_level_id":"3","boxes":["53.42 -106.32 56.25 -97.23"],"time_start":"1994-05-24T00:00:00.000Z","dif_ids":["BOREAS_AFM3MW94"],"version_id":"1","updated":"2000-01-27T00:00:00.000Z","dataset_id":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/495","title":"BOREAS AFM-03 Electra 1994 Aircraft Flux and Moving Window Data","coordinate_system":"CARTESIAN","summary":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA.","has_granules":true,"time_end":"1994-09-16T00:00:00.000Z","orbit_parameters":{},"id":"C179002986-ORNL_DAAC","score":0.5,"original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=495"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurements of the fluxes of momentum, sensible and latent heat, carbon dioxide, and ozone over the entire BOREAS region to tie together measurements made in both the SSA and the NSA. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/BOREAS/guides/AFM03_AC_Flux.html"}]}],"facets":[{"field":"data_center","value-counts":[["ORNL_DAAC",1]]},{"field":"archive_center","value-counts":[["ORNL_DAAC",1]]},{"field":"project","value-counts":[["Boreal Ecosystem-Atmosphere Study",1],["EOSDIS",1],["ESIP",1]]},{"field":"platform","value-counts":[["NCAR ELECTRA",1]]},{"field":"instrument","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"sensor","value-counts":[["CHEMILUMINESCENCE",1],["GUST PROBE",1],["INFRARED THERMOMETER",1],["IRGA",1],["MULTIBAND VEGETATION IMAGER",1],["NET RADIOMETER",1],["PRESSURE TRANSDUCER",1],["PYRANOMETER",1],["PYRGEOMETER",1],["TEMPERATURE SENSOR",1]]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[["3",1]]},{"field":"category","value-counts":[["EARTH SCIENCE",1]]},{"field":"topic","value-counts":[["ATMOSPHERE",1],["LAND SURFACE",1]]},{"field":"term","value-counts":[["ATMOSPHERIC CHEMISTRY",1],["ATMOSPHERIC PRESSURE",1],["ATMOSPHERIC RADIATION",1],["ATMOSPHERIC TEMPERATURE",1],["ATMOSPHERIC WATER VAPOR",1],["ATMOSPHERIC WINDS",1],["LAND TEMPERATURE",1],["SURFACE RADIATIVE PROPERTIES",1]]},{"field":"variable_level_1","value-counts":[["AIR TEMPERATURE",1],["ATMOSPHERIC PRESSURE MEASUREMENTS",1],["CARBON DIOXIDE",1],["LAND SURFACE TEMPERATURE",1],["LONGWAVE RADIATION",1],["NET RADIATION",1],["OZONE",1],["REFLECTANCE",1],["SOLAR IRRADIANCE",1],["UPPER LEVEL WINDS",1],["WATER VAPOR",1]]},{"field":"variable_level_2","value-counts":[]},{"field":"variable_level_3","value-counts":[]},{"field":"detailed_variable","value-counts":[]}]}}'
+    http_version:
+on_collections_loaded_for_invalid_token:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      date:
+      - Wed, 21 Jan 2015 13:47:36 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '55'
+      content-type:
+      - application/json; charset=utf-8
+      connection:
+      - close
+      server:
+      - Jetty(7.x.y-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2015-12-28T20:01:36.278Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?include_facets=true&page_size=20&page_num=1&hierarchical_facets=true&exclude%5Btag_key%5D=edsc.%2A&options%5Btag_key%5D%5Bpattern%5D=true&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C179002986-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO dataset metadata","entry":[],"facets":[{"field":"project","value-counts":[]},{"field":"sensor","value-counts":[]},{"field":"two_d_coordinate_system_name","value-counts":[]},{"field":"processing_level_id","value-counts":[]},{"field":"detailed_variable","value-counts":[]},{"subfields":[],"field":"data_centers"},{"subfields":[],"field":"archive_centers"},{"subfields":[],"field":"platforms"},{"subfields":[],"field":"instruments"},{"subfields":[],"field":"science_keywords"}]}}'
     http_version:
 first_service_request:
   response:
@@ -1146,4 +741,344 @@ second_service_request:
                 <totalNumber>1</totalNumber>
             </requestStatus>
         </eesi:agentResponse>
+    http_version:
+acab3c43996bb7f51d50e4301fe55418086eadbd:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      location:
+      - https://api.echo.nasa.gov/echo-rest/orders/B83E748F-BEEF-528A-0265-CA6DDA7A8A78
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlZTk1YzFiNzkyZjQ1OGUzMjQwYWZmZmZhZTUwOTJhZjE%3D--09127bf89cbc1d57fff11b51d978319ddc52e7a7;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.256000'
+      content-type:
+      - application/json;charset=utf-8
+      content-length:
+      - '76'
+      date:
+      - Thu, 15 Jan 2015 21:08:30 GMT
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"order":{"id":"B83E748F-BEEF-528A-0265-CA6DDA7A8A78","provider_orders":[]}}'
+    http_version:
+14a0ec30b17ac928b6678e04f531f842e2a96520:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - nginx/1.4.7
+      date:
+      - Tue, 24 Nov 2015 17:33:21 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 9b962bd0-f008-49bb-8008-1da4ab44b713
+      x-runtime:
+      - '0.005167'
+    body:
+      encoding: UTF-8
+      string: '{"uid":"edsc","first_name":"Earthdata","last_name":"Search","email_address":"patrick+edsc@element84.com","country":"United States","study_area":"OTHER","user_type":"PRODUCTION_USER","affiliation":"OTHER","organization":"EDSC","member_groups":["earthdata_ecc","echo"]}'
+    http_version:
+edscbasic_from_urs:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - nginx/1.4.7
+      date:
+      - Tue, 24 Nov 2015 17:33:21 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 9b962bd0-f008-49bb-8008-1da4ab44b713
+      x-runtime:
+      - '0.005167'
+    body:
+      encoding: UTF-8
+      string: '{"uid":"edsc","first_name":"Earthdata","last_name":"Search","email_address":"patrick+edsc@element84.com","country":"United States","study_area":"OTHER","user_type":"PRODUCTION_USER","affiliation":"OTHER","organization":"EDSC","member_groups":["earthdata_ecc","echo"]}'
+    http_version:
+5465c54b75a62eac4512160fe28a6627c96aea19:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.229000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search",
+              "email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},
+              "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+              Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+edsc_user_prefs:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.229000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search",
+              "email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},
+              "phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
+              Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+edscbasic_preferences:
+  response:
+    status:
+      code: 401
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.229000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"errors":["User does not have the required security identifiers for the requested operation."]}'
+    http_version:
+0a02d564986dee8b88b72b36380ff495d8d4e1c0:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzliNWI2ODZlNWNmYzk2MjIxMzZlYjI3MDU0MDZmMmY%3D--ccab90e99f84e4ef2a742a3ed51d22dc16d545c0;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.192000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:38 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+edsc_access_update_preferences_none:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzliNWI2ODZlNWNmYzk2MjIxMzZlYjI3MDU0MDZmMmY%3D--ccab90e99f84e4ef2a742a3ed51d22dc16d545c0;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.192000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:38 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"NONE"}}'
+    http_version:
+edsc_access_update_preferences_verbose:
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzliNWI2ODZlNWNmYzk2MjIxMzZlYjI3MDU0MDZmMmY%3D--ccab90e99f84e4ef2a742a3ed51d22dc16d545c0;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.192000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:38 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
+    http_version:
+78fc022f791584c4b09792c0d1a2d00ad8d4e1c0:
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      cache-control:
+      - no-cache
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      set-cookie:
+      - _EchoRestRails_session=BAh7BiIPc2Vzc2lvbl9pZCIlYzliNWI2ODZlNWNmYzk2MjIxMzZlYjI3MDU0MDZmMmY%3D--ccab90e99f84e4ef2a742a3ed51d22dc16d545c0;
+        path=/; HttpOnly
+      x-runtime:
+      - '0.192000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 24 Nov 2015 19:26:38 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"preferences":{"general_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_notification_level":"VERBOSE"}}'
+    http_version:
+c56886b1aa890251bf223cc01d137a9a50876415:
+  response:
+    status:
+      code: 400
+      message:
+    headers:
+      date:
+      - Wed, 27 Jan 2016 01:57:20 GMT
+      server:
+      - Apache
+      x-frame-options:
+      - SAMEORIGIN, SAMEORIGIN
+      content-type:
+      - text/xml
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <eesi:Exception xsi:schemaLocation="http://eosdis.nasa.gov/esi/rsp/e http://newsroom.gsfc.nasa.gov/esi/8.1/schemas/ESIAgentResponseExternal.xsd" xmlns="" xmlns:iesi="http://eosdis.nasa.gov/esi/rsp/i" xmlns:ssw="http://newsroom.gsfc.nasa.gov/esi/rsp/ssw" xmlns:eesi="http://eosdis.nasa.gov/esi/rsp/e" xmlns:esi="http://eosdis.nasa.gov/esi/rsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <Code>CollectionDisabled</Code>
+            <Message>This collection is currently not configured for subagent HEG</Message>
+        </eesi:Exception>
     http_version:

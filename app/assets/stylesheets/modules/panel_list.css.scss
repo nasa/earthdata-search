@@ -1,4 +1,4 @@
-$panel-list-item-height: 85px;
+$panel-list-item-height: 75px;
 $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list {
@@ -7,6 +7,10 @@ $panel-list-thumbnail-size: $panel-list-item-height;
     font-size: 1.2em;
     padding: 7px 10px;
   }
+}
+
+.panel-list .ccols {
+  margin-bottom: 1em;
 }
 
 .panel-list-list {
@@ -18,7 +22,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   background-color: #292929;
   border-left: 10px solid #424242;
   margin: 5px 5px 6px 5px;
-  min-height: $panel-list-thumbnail-size + 20px;
+  min-height: $panel-list-thumbnail-size + 30px;
   padding: 10px 10px 10px 14px;
   font-size: .8em;
   position: relative;
@@ -76,12 +80,30 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   float: left;
   position:relative;
   margin-right: .5em;
+  width: $panel-list-thumbnail-size + 10px;
+  height: $panel-list-thumbnail-size + 10px;
+  background-color: #222;
+  border: 5px solid #111;
+  text-align: center;
+  line-height: $panel-list-thumbnail-size;
+}
+
+.panel-list-thumbnail-onerror {
+  display: block;
+  float: left;
+  position:relative;
+  margin-right: .5em;
+  width: $panel-list-thumbnail-size + 10px;
+  height: $panel-list-thumbnail-size + 10px;
+  background-color: #222;
+  border: 5px solid #323232;
+  text-align: center;
+  overflow: hidden;
 }
 
 .panel-list-thumbnail {
-  height: $panel-list-thumbnail-size;
-  width: $panel-list-thumbnail-size;
-  border: 5px solid #323232;
+  max-width: $panel-list-item-height;
+  max-height: $panel-list-item-height;
 }
 
 .panel-list-thumbnail-placeholder {
@@ -102,8 +124,8 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list-badges {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -5px;
+  left: -5px;
   .tooltip {
     width: $facet-overlay-width;
   }
@@ -141,7 +163,7 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   @include retina-image(gibs, 22px 22px, png, null, '@2x', true);
 }
 
-.badge-opendap {
+.badge-subsetting {
   @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
 }
 
@@ -156,6 +178,22 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   line-height: 22px;
   &:before {
     content: "NRT";
+  }
+  // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
+}
+
+.badge-cwic {
+  border-radius: 2px;
+  background-color: #ccaa00;
+  color: #fff;
+  text-shadow: .5px .5px .5px darken(#ccaa00, 20%);
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  line-height: 22px;
+  font-family: FontAwesome;
+  &:before {
+    content: "\f0ac";
   }
   // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
 }
@@ -192,11 +230,19 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   margin-left: 4px;
 }
 
-.panel-list-item-actions {
-  position: absolute;
-  padding: 1em;
-  right: 0;
-  bottom: 0;
+@media (max-width: 1400px) {
+  .panel-list-item-actions {
+    margin-left: 90px;
+  }
+}
+
+@media (min-width: 1401px) {
+  .panel-list-item-actions {
+    position: absolute;
+    padding: 1em;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 #granule-list:focus, #granule-list.has-focus {
@@ -233,4 +279,19 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   font-size: 1.1em;
   padding: 0 .5em .2em;
   color: #c9c9c9
+}
+
+.portal-escape {
+  color: #c9c9c9;
+  margin-top: 2em;
+  padding: 1em .5em .5em;
+  border-top: 1px solid #888;
+}
+
+.portal-escape a {
+  color: #c9c9c9;
+  text-decoration: underline;
+  &:link, &:visited {
+    color: #c9c9c9;
+  }
 }

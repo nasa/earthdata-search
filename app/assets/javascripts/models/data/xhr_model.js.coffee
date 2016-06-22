@@ -77,7 +77,7 @@ ns.XhrModel = do (ko
       @_prevUrl != url || @isError.peek() || @stale
 
     _queryFor: (params) ->
-      $.param(params)
+      toParam(params)
 
     _load: (params, current, callback) =>
       query = @_queryFor(params)
@@ -117,16 +117,11 @@ ns.XhrModel = do (ko
           console.log("Complete (#{requestId}): #{url}")
           results = @_toResults(data, current, params)
 
-          fetched = results?.length ? 0
-          hits = 0
-          if xhr.getResponseHeader('cmr-hits')
-            hits = parseInt(xhr.getResponseHeader('cmr-hits'), 10)
-            if data.page_size && data.page_num
-              @hasNextPage(data.page_size * data.page_num < hits)
-            else
-              @hasNextPage(fetched < hits)
-            @hitsEstimated(false)
+          @hitsEstimated(false)
 
+          fetched = results?.length ? 0
+          hits = @_responseHits(xhr, data)
+          @hasNextPage(@_responseHasNextPage(xhr, data, results))
           @hits(Math.max(hits, fetched))
 
           timing = ((new Date() - start) / 1000).toFixed(1)
@@ -145,6 +140,17 @@ ns.XhrModel = do (ko
           console.log("Fail (#{requestId}) [#{reason}]: #{url}")
           @_onFailure(response)
         null
+
+    _responseHasNextPage: (xhr, data, results) ->
+      hits = @_responseHits(xhr, data)
+      if data.page_size && data.page_num
+        data.page_size * data.page_num < hits
+      else
+        (results?.length ? 0) < hits
+
+
+    _responseHits: (xhr, data) ->
+      parseInt(xhr.getResponseHeader('cmr-hits') ? data.feed?.totalResults ? '0', 10)
 
     _onFailure: (response) ->
       if response.status == 403

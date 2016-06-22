@@ -1,5 +1,5 @@
 
-do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.models.data.Granule) ->
+do (L, extend = $.extend, Collection = @edsc.models.data.Collection, Granule = @edsc.models.data.Granule) ->
 
   parseSpatial = (str) ->
     str = str[0] if str instanceof Array
@@ -7,7 +7,7 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
     len = coords.length - 1
     new L.LatLng(coords[i], coords[i+1]) for i in [0...len] by 2
 
-  # Mixin for datasets and granules that parses/normalizes their spatial coordinates
+  # Mixin for collections and granules that parses/normalizes their spatial coordinates
   SpatialMixin =
     getPoints: ->
       if !@_points? && @points?
@@ -17,7 +17,7 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
 
     getPolygons: ->
       if !@_polygons? && @polygons?
-        @_polygons = @polygons.map(parseSpatial)
+        @_polygons = (parseSpatial(s) for s in p for p in @polygons)
       @_polygons
 
     getLines: ->
@@ -44,16 +44,36 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
 
       @_rects
 
+    getMbr: ->
+      spatial = (@getPoints() && [@getPoints()]) || @getRectangles() || @getLines() || @getPolygons()
+      return null unless spatial
+      bounds = new L.LatLngBounds()
+      for area in spatial
+        bounds.extend(area)
+      bounds
+
+    isCartesian: ->
+      @coordinate_system == 'CARTESIAN'
+
     buildLayer: (options) ->
       layer = L.featureGroup()
       layer.addLayer(L.circleMarker(point, options)) for point in @getPoints() ? []
+      isCartesian = @isCartesian()
       for poly in @getPolygons() ? []
-        layer.addLayer(L.sphericalPolygon(poly, options))
+        if isCartesian
+          polyLayer = L.polygon(poly, options)
+          polyLayer._interpolationFn = 'cartesian'
+        else
+          polyLayer = L.sphericalPolygon(poly, options)
+        layer.addLayer(polyLayer)
         bounds = L.latLngBounds(poly)
         if bounds.getNorth() - bounds.getSouth() < .5 && bounds.getWest() - bounds.getEast() < .5
           layer.addLayer(L.marker(bounds.getCenter()))
 
-      layer.addLayer(L.polyline(line, options)) for line in @getLines() ? []
+      for line in @getLines() ? []
+        polyLayer = L.polyline(line, options)
+        polyLayer._interpolationFn = 'cartesian' if isCartesian
+        layer.addLayer(polyLayer)
 
       for rect in @getRectangles() ? []
         # granule.getRectanges() returns a path, so it's really a polygon
@@ -66,8 +86,7 @@ do (L, extend = $.extend, Dataset = @edsc.models.data.Dataset, Granule = @edsc.m
 
       layer
 
-
-  extend(Dataset.prototype, SpatialMixin)
+  extend(Collection.prototype, SpatialMixin)
   extend(Granule.prototype, SpatialMixin)
 
   null

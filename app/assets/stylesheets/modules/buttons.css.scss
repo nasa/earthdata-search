@@ -66,13 +66,13 @@
 }
 
 @mixin dark-menu-button {
-  border: 1px solid rgba(10,10,10,.3);
-  background: rgba(10,10,10,.2);
+  border: 1px solid rgba(10,10,10,.2);
+  background: darken($ocean-blue, 10%);
   color: #fff;
   text-shadow: none;
 
   &:hover {
-    background: rgba(10,10,10,.3);
+    background: darken($ocean-blue, 6%);
   }
 }
 
@@ -155,16 +155,28 @@ button:disabled {
     padding: 4px 8px;
   }
 
+  &.button-float-right {
+    float: right;
+  }
+
   &.button-outline-light {
     @include light-button;
     font-weight: bold;
   }
 }
 
-.modal-button {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+.whats-cwic {
+  @include light-button;
+  color: #fff;
+  font-size: .8em;
+  padding: 10px 11px;
+  margin-left: 2px;
+  line-height: 3em;
+
+  &:hover {
+    color: #2980b9;
+    text-decoration: none;
+  }
 }
 
 .choice {
@@ -190,7 +202,7 @@ button:disabled {
 $feedback-button-color: #315781;
 $feedback-button-hover-color: lighten($feedback-button-color, 10%);
 
-.master-overlay-info a.feedback-button, a.feedback-button {
+.master-overlay-info a.feedback-button, a.feedback-button, a.back-error-button {
   float: none;
   background: $feedback-button-color;
   color: #fff !important;

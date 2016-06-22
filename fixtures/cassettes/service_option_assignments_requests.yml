@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C1000000560-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
@@ -10,13 +10,13 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - EDSC
+      - eed-edsc-dev
       Echo-ClientId:
-      - EDSC
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 20 May 2015 16:56:14 GMT
-  digest: e340db9ab0d2434ebcbc26f324e513cf8ec8f25f
+  recorded_at: Thu, 02 Jun 2016 19:11:54 GMT
+  digest: c408d14718216ea365fb41c484938039c102185b
 - request:
     method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C115003855-NSIDC_ECS
@@ -27,13 +27,13 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - EDSC
+      - eed-edsc-dev
       Echo-ClientId:
-      - EDSC
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 13 May 2015 14:23:21 GMT
-  digest: fa959b30b254dbf84b8ff268a261f6c6c0c4b6eb
+  recorded_at: Thu, 19 May 2016 16:22:51 GMT
+  digest: 7f9140d1d50683eb6fac54b4ac85af9d06a4c494
 - request:
     method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C115003857-NSIDC_ECS
@@ -44,13 +44,64 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - EDSC
+      - eed-edsc-dev
       Echo-ClientId:
-      - EDSC
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 13 May 2015 14:34:36 GMT
-  digest: ab342f347c81d276a2fc5ba9dae8fc0166afe9ef
+  recorded_at: Thu, 19 May 2016 16:32:18 GMT
+  digest: a821a12e797488ad29470b886e9251e701d0b9cf
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C119124186-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:36:49 GMT
+  digest: 3f887ffd67f91bcbb4bbd636abcb62bbfee3be54
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C128599377-NSIDC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:17:57 GMT
+  digest: 92572877a3ae82236d6205f41f825027353d7b9a
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C14758250-LPDAAC_ECS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:27:05 GMT
+  digest: aae448bcb7b7f823dfaaf76de094b68e7e7399cb
 - request:
     method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C179002914-ORNL_DAAC
@@ -61,13 +112,13 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - EDSC
+      - eed-edsc-dev
       Echo-ClientId:
-      - EDSC
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 13 May 2015 14:22:21 GMT
-  digest: a7b2b024ee68b45ae086db066b22748faa45dd4c
+  recorded_at: Thu, 19 May 2016 16:20:52 GMT
+  digest: 2451e9e438161649322e3d708667acfa54a64a52
 - request:
     method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C179003030-ORNL_DAAC
@@ -78,13 +129,30 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - EDSC
+      - eed-edsc-dev
       Echo-ClientId:
-      - EDSC
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 13 May 2015 14:22:14 GMT
-  digest: 9f477e45fca8d09217b06abd8bd9b46ac7977e7d
+  recorded_at: Thu, 19 May 2016 16:18:53 GMT
+  digest: f6c2800a9a3f844a58b7c224eb060b847430fe97
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C179003216-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:32:45 GMT
+  digest: b4a96890c3c84c4eb5059cf59ae15c0fafa8b858
 - request:
     method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C179014698-NSIDC_ECS
@@ -95,13 +163,13 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - EDSC
+      - eed-edsc-dev
       Echo-ClientId:
-      - EDSC
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 13 May 2015 14:21:40 GMT
-  digest: ddd4802ffe551b04d87a753b10d4b5864577d28b
+  recorded_at: Thu, 19 May 2016 16:18:18 GMT
+  digest: c984e246bca4c653a1efa6d6077aa8e67c22e4e6
 - request:
     method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C181553784-GSFCS4PA
@@ -112,13 +180,30 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - EDSC
+      - eed-edsc-dev
       Echo-ClientId:
-      - EDSC
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 13 May 2015 14:25:29 GMT
-  digest: d8e88a80cf90dd466d6ad6f5a491a0c1c297b7ce
+  recorded_at: Thu, 19 May 2016 16:31:53 GMT
+  digest: 84d998d916213c1bf830bee246b778a4f210f637
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C2930962-PODAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:31:50 GMT
+  digest: 9da0136fd18283e1b48e0b14d7c5862ff1b60c65
 - request:
     method: get
     uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C4543622-LARC_ASDC
@@ -129,11 +214,45 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - EDSC
+      - eed-edsc-dev
       Echo-ClientId:
-      - EDSC
+      - eed-edsc-dev
       Echo-Token:
       - edsc
-  recorded_at: Wed, 13 May 2015 14:28:41 GMT
-  digest: 84f71ca1ecec0349c09d686b9243ee338b9a6beb
+  recorded_at: Thu, 19 May 2016 16:30:55 GMT
+  digest: c4b587bd86bd7e8491115d2605cf6db077f290ed
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C7085910-LARC_ASDC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:32:01 GMT
+  digest: aef05d6420e2c1c50b0e49cc32326ddd3e403fdd
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/service_option_assignments.json?catalog_item_id=C90762182-LAADS
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Thu, 19 May 2016 16:24:42 GMT
+  digest: 4bb1326d52ca2a9194057d5dda0588026a5b4fd1
 recorded_with: VCR 2.6.0

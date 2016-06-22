@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     clear_session
 
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to edsc_path(root_url) }
       format.json { render json: nil, status: :ok }
     end
   end
@@ -21,15 +21,25 @@ class UsersController < ApplicationController
   end
 
   def get_preferences
-    response = echo_client.get_preferences(get_user_id, token)
-    render json: response.body, status: response.status
+    preferences_response = echo_client.get_preferences(get_user_id, token, echo_client, session[:access_token])
+
+    urs_response = echo_client.get_urs_user(session[:user_name], session[:access_token])
+    if urs_response.status == 200
+      if preferences_response.body['preferences']
+        preferences_response.body['preferences']['general_contact'] = urs_response.body
+      else
+        preferences_response.body['preferences'] = {'general_contact' => urs_response.body}
+      end
+      render json: preferences_response.body, status: 200
+    else
+      render preferences_response.body, status: preferences_response.status
+    end
   end
 
-  def update_contact_info
+  def update_notification_pref
     preferences = {preferences: params.delete('preferences')}
-    user_id = get_user_id
-
-    response = echo_client.update_preferences(user_id, preferences, token)
+    preferences[:preferences]['general_contact']['role'] = "Order Contact"
+    response = echo_client.update_preferences(get_user_id, preferences, token)
     render json: response.body, status: response.status
   end
 

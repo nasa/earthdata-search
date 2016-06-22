@@ -49,7 +49,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
         p2 = points[2].split(',').reverse()
       $('#map').data('map').map.fitBounds([p1,p2])
 
-    $('.autocomplete-placenames').on 'keyup', ->
+    $placenameInputs.on 'keyup', ->
       newValue = $(this).typeahead('val')
       query = currentPage.query
       currentValue = query.keywords()
@@ -83,6 +83,8 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
     currentPage.query.spatial.subscribe readSpatial
 
     $placenameInputs.on 'blur', (e) ->
+      # TODO: blur isn't a good event to listen to. It should get triggered
+      #       when the keyword changes.
       query = this.value
       if !$(e.relatedTarget).hasClass('clear-filters') && query.length > 0 && query.indexOf('place:') != -1
         ajax

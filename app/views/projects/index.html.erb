@@ -34,14 +34,14 @@
               <strong><a href="<%= project.url %>" class="project-url"><%= project.name %></a></strong>
             </td>
             <td>
-              <%= pluralize(project.number_datasets, 'dataset') %>
+              <%= pluralize(project.number_collections, 'collection') %>
             </td>
             <td>
               <%= time_ago_in_words(project.created_at, include_seconds: true).capitalize %> ago
             </td>
             <td>
               <a href="javascript:void(0)" title="Share Project" class="share-project"><i class="fa fa-share-square-o"></i></a>
-              <a href="/projects/remove?project_id=<%= project.to_param %>" title="Remove Project"
+              <a href="<%=edsc_path "/projects/remove?project_id=#{project.to_param}" %>" title="Remove Project"
                  data-remote="true"
                  data-method="post"
                  data-confirm="Are you sure you want to remove this project?  This action cannot be undone."

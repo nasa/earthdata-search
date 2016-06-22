@@ -1,8 +1,14 @@
 language: ruby
-cache: bundler
+cache:
+  bundler: true
+  directories:
+    - node_modules
 sudo: false
 script:
+  - bundle exec bin/setup
   - bundle exec rake travis:ci
+#after_failure:
+#  - cat ./log/test.log
 env:
   global:
     - CI_NODE_TOTAL=4

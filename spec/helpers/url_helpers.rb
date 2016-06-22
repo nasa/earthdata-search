@@ -18,12 +18,12 @@ module Helpers
 
       def path_from_options(url, options)
         if url == '/search'
-          url = '/search/datasets'
+          url = '/search/collections' unless options[:facets]
           url = '/search/map' if options[:overlay] == false
           url = '/search/project' if options[:view] == :project
-          url = '/search' if options[:facets]
           url = "/search/granules" if options[:focus]
         end
+        url = "/portal/#{options[:portal]}#{url}" if options[:portal]
         url
       end
 
@@ -34,26 +34,40 @@ module Helpers
           params[type.to_s] = spatial(options[type]) if options[type]
         end
 
+        envs = {sit: 'sit', uat: 'uat', prod: 'prod'}
+        params['cmr_env'] = envs[options[:env]] if options[:env]
         params['qt'] = temporal(*options[:temporal]) if options[:temporal]
         params['tl'] = "#{options[:timeline].to_i}!4!!" if options[:timeline]
+        params['sgd'] = options[:granule_id] if options[:granule_id]
+        params['q'] = options[:q] if options[:q]
+        params['ff'] = options[:ff] if options[:ff]
+        params['test_facets'] = true if options[:facets]
 
         p = ([options[:focus]] + Array.wrap(options[:project])).join('!')
         params['p'] = p if p.present?
 
         Array.wrap(options[:queries]).each_with_index do |q, i|
           obj = {}
-          if q && q[:browse_only]
-            obj['bo'] = 'true'
-          end
+          obj = q if q
           if obj.keys.present?
             params['pg'] ||= {}
             params['pg'][i] = obj
           end
         end
 
-        params['labs'] = options[:labs] if options[:labs]
+        [:labs].each do |direct_param|
+          params[direct_param.to_s] = options[direct_param] if options.key?(direct_param)
+        end
 
-        params.to_param
+        result = []
+        params.each do |k, v|
+          param = {}
+          param[k] = v
+          result << param.to_param
+        end
+
+        # Ensure sorted order
+        result.join('&')
       end
 
       def temporal(start, stop=nil, range=nil)
@@ -69,7 +83,9 @@ module Helpers
     end
 
     def load_page(url, options={})
-      visit QueryBuilder.new.add_to(url, options)
+      ActiveSupport::Notifications.instrument "edsc.performance", activity: "Page load" do
+        visit QueryBuilder.new.add_to(url, options)
+      end
       wait_for_xhr
     end
   end

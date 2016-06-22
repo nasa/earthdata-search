@@ -1,4 +1,5 @@
 require 'colormaps/xml_to_json'
+require 'socket'
 
 namespace :colormaps do
   desc "Load colormap data from GIBS"
