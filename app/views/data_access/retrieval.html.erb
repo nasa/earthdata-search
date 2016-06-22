@@ -1,6 +1,6 @@
 <% content_for :javascript do %>
   <script>
-    this.edscPageData = <%= raw @retrieval.jsondata.merge(id: @retrieval.to_param).to_json %>;
+    this.edscPageData = <%= raw @retrieval.project.merge(id: @retrieval.to_param).to_json %>;
   </script>
   <%= javascript_include_tag "data_access" %>
 <% end %>
@@ -12,15 +12,15 @@
 
 <section class="data-access data-access-retrieve">
   <nav class="data-access-nav">
-    <a href="/data/configure?<%= @retrieval.jsondata['source'] %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Data Access Options</a>
+    <a href="<%=edsc_path "/data/configure?#{@retrieval.source}" %>"><i class="fa fa-arrow-circle-o-left"></i> Back to Data Access Options</a>
   </nav>
   <header class="data-access-header">
     <h1>Success!</h1>
     <p>Your request has been processed.  See below for information on accessing your data.</p>
   </header>
   <div class="data-access-container">
-    <section class="data-access-content data-access-downloads" data-bind="visible: ui.projectList.datasetsToDownload().length > 0">
-      <h2>The following datasets are available for immediate download</h2>
+    <section class="data-access-content data-access-downloads" data-bind="visible: ui.projectList.collectionsToDownload().length > 0">
+      <h2>The following collections are available for immediate download</h2>
       <p>
         Click the "View Download Links" button to view a page containing links to your data.
         You may bookmark this page for later access.
@@ -28,25 +28,23 @@
         <a class="link" href="https://addons.mozilla.org/en-US/firefox/addon/downthemall/">DownThemAll!</a>
         can assist you in managing a large number of download links.
       </p>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetsToDownload">
-        <li class="data-access-dataset">
-          <p class="data-access-dataset-name" data-bind="text: title"></p>
-          <div class="data-access-dataset-actions">
-            <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadPageUrl}">View Download Links</a>
-            <!-- ko if: downloadBrowseUrl -->
-            <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadBrowseUrl}">View Browse Image Links</a>
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.collectionsToDownload">
+        <li class="data-access-collection">
+          <p class="data-access-collection-name" data-bind="text: title"></p>
+          <div class="data-access-collection-actions">
+            <!-- ko foreach: links -->
+            <a class="button text-button" href="#" target="_blank" data-bind="text: title, attr: {href: url}"></a>
             <!-- /ko -->
-            <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadScriptUrl}">Download Access Script</a>
           </div>
         </li>
       </ul>
     </section>
-    <section class="data-access-content data-access-dataset-only" data-bind="visible: ui.projectList.datasetOnly().length > 0">
-      <h2>The following datasets are available on the provider's website</h2>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetOnly">
-        <li class="data-access-dataset">
-          <p class="data-access-dataset-name" data-bind="text: dataset.dataset_id"></p>
-          <!-- ko foreach: (dataset.hasAtomData() ? dataset.links : []) -->
+    <section class="data-access-content data-access-collection-only" data-bind="visible: ui.projectList.collectionOnly().length > 0">
+      <h2>The following collections are available on the provider's website</h2>
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.collectionOnly">
+        <li class="data-access-collection">
+          <p class="data-access-collection-name" data-bind="text: collection.dataset_id"></p>
+          <!-- ko foreach: (collection.hasAtomData() ? collection.links : []) -->
           <p data-bind="if: $data.rel == 'enclosure' || $data.rel.indexOf('/data') > -1">
             <a class="link" data-bind="attr: {href: $data.href}, text: edsc.util.string.capitalize($data.title)" target="_blank"></a>
           </p>
@@ -55,19 +53,22 @@
       </ul>
     </section>
     <section class="data-access-content data-access-orders" data-bind="visible: ui.projectList.submittedOrders().length > 0">
-      <h2>The following datasets are being processed</h2>
+      <h2>The following collections are being processed</h2>
       <p>
         When the data becomes available, an email containing download links will be sent to the address you provided.
       </p>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.submittedOrders">
-        <li class="data-access-dataset">
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.submittedOrders">
+        <li class="data-access-collection">
           <p>
-            <span class="data-access-dataset-name" data-bind="text: dataset_id"></span>
+            <span class="data-access-collection-name" data-bind="text: dataset_id"></span>
             <!-- ko if: order_status -->
             <span class="order-state" data-bind="css: order_status, text: order_status"></span>
             <!-- /ko -->
           </p>
-          <div class="data-access-dataset-actions">
+          <!-- ko if: order_status == 'failed' -->
+          <%= render partial: 'access_error' %>
+          <!-- /ko -->
+          <div class="data-access-collection-actions">
             <!-- ko if: downloadBrowseUrl -->
             <a class="button text-button" href="#" target="_blank" data-bind="attr: {href: downloadBrowseUrl}">View Browse Image Links</a>
             <!-- /ko -->
@@ -78,25 +79,40 @@
                  data-method="post"
                  data-confirm="Are you sure you want to remove this order?  This action cannot be undone."
                  rel="nofollow">Cancel</a>
-              <!-- /ko -->
+            <!-- /ko -->
+            <!-- ko if: dropped_granules && dropped_granules.length > 0 -->
+              <p>The following granules will not be processed because they do not support the <strong data-bind="text: method_name"></strong> access method:</p>
+              <div class="granule-list">
+                <div>
+                  <ul>
+                  <!--ko foreach: dropped_granules-->
+                    <li>
+                      <h5 data-bind="text: name"></h5>
+                      <span data-bind="text: id"></span>
+                    </li>
+                  <!--/ko-->
+                  </ul>
+                </div>
+              </div>
+            <!-- /ko -->
           </div>
         </li>
       </ul>
     </section>
     <section class="data-access-content data-access-services" data-bind="visible: ui.projectList.submittedServiceOrders().length > 0">
-      <h2>The following datasets are being processed</h2>
+      <h2>The following collections are being processed</h2>
       <p>
         When the data becomes available, an email containing download links will be sent to the address you provided.
       </p>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.submittedServiceOrders">
-        <li class="data-access-dataset">
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.submittedServiceOrders">
+        <li class="data-access-collection">
           <p>
-            <span class="data-access-dataset-name" data-bind="text: dataset_id"></span>
+            <span class="data-access-collection-name" data-bind="text: dataset_id"></span>
             <!-- ko if: order_status -->
             <span class="order-state" data-bind="css: order_status, text: order_status"></span>
             <!-- /ko -->
           </p>
-          <div class="data-access-dataset-actions">
+          <div class="data-access-collection-actions">
             <!-- ko if: order_status == 'complete' -->
             <p>Your request is complete and can be downloaded using the following urls:</p>
             <div>
@@ -105,13 +121,16 @@
               </ul>
             </div>
             <!-- /ko -->
-            <!-- ko if: order_status != 'complete' -->
-            <div data-bind="if: order_status != 'submitting'">
+            <!-- ko if: order_status == 'failed' -->
+            <%= render partial: 'access_error' %>
+            <!-- /ko -->
+            <!-- ko if: is_in_progress -->
+            <div>
               <p>
                 Progress: <span data-bind="text: number_processed"></span> of <span data-bind="text: total_number"></span> items processed (<span data-bind="text: (number_processed / total_number * 100).toFixed(2)"></span>%)
               </p>
               <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-bind="attr { 'aria-valuenow': (number_processed / total_number * 100).toFixed(0) }, style: { width: (number_processed / total_number * 100).toFixed(0) + '%' }">
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-bind="attr: { 'aria-valuenow': percent_done}, style: { width: percent_done + '%' }">
                 </div>
               </div>
             </div>
@@ -126,12 +145,12 @@
         </li>
       </ul>
     </section>
-    <section class="data-access-content data-access-resources" data-bind="visible: ui.projectList.datasetLinks().length > 0">
+    <section class="data-access-content data-access-resources" data-bind="visible: ui.projectList.collectionLinks().length > 0">
       <h2>Additional Resources and Documentation</h2>
-      <ul class="data-access-datasets-list" data-bind="foreach: ui.projectList.datasetLinks">
-        <li class="data-access-dataset">
-          <p class="data-access-dataset-name" data-bind="text: dataset_id"></p>
-          <ul class="data-access-dataset-actions" data-bind="foreach: links">
+      <ul class="data-access-collections-list" data-bind="foreach: ui.projectList.collectionLinks">
+        <li class="data-access-collection">
+          <p class="data-access-collection-name" data-bind="text: dataset_id"></p>
+          <ul class="data-access-collection-actions" data-bind="foreach: links">
             <li><a class="link" data-bind="attr: {href: href}, text: title"></a></li>
           </ul>
         </li>
@@ -141,8 +160,10 @@
   <section class="data-access-next">
     <h2>Next Steps</h2>
     <ul>
-      <li><i class="fa fa-chevron-circle-right"></i> <a class="link" href="/search?<%= @retrieval.jsondata['source'] %>">Back to Earthdata Search Results</a></li>
-      <li><i class="fa fa-chevron-circle-right"></i> <a class="link" href="/">Start a New Earthdata Search Session</a></li>
+      <li>
+        <i class="fa fa-chevron-circle-right"></i>
+        <a class="link" href="<%=edsc_path "/search?#{@retrieval.source}" %>">Back to <%= site_name %> Results</a></li>
+      <li><i class="fa fa-chevron-circle-right"></i> <a class="link" href="<%=edsc_path "/"%>">Start a New <%= site_name %> Session</a></li>
     </ul>
   </section>
 </section>

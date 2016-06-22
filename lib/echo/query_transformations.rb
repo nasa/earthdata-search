@@ -6,16 +6,17 @@ module Echo
 
         load_freetext_query(query)
         and_query(query)
+        pattern_query(query)
 
         query
       end
 
-      def options_to_dataset_query(options={})
+      def options_to_collection_query(options={})
         options_to_item_query(options)
       end
 
       def options_to_facet_query(options={})
-        options_to_dataset_query(options)
+        options_to_collection_query(options)
       end
 
       def options_to_granule_query(options={})
@@ -52,6 +53,14 @@ module Echo
           value.map {|v| catalog_escape(v)}
         elsif !value.is_a?(TrueClass) && !value.is_a?(FalseClass) && !value.is_a?(Numeric)
           Rails.logger.warn("Unrecognized value type for #{value} (#{value.class})")
+        end
+      end
+
+      def pattern_query(query)
+        if query[:readable_granule_name]
+          query[:options] ||= Hash.new
+          query[:options][:readable_granule_name] = Hash.new
+          query[:options][:readable_granule_name][:pattern] = true
         end
       end
 

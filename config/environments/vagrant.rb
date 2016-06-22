@@ -71,7 +71,7 @@ EarthdataSearchClient::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.logo_name = "search-logo"
+  config.logo_name = ""
   config.env_name = ""
   # SIT Tophat
   config.tophat_url = "https://cdn.sit.earthdata.nasa.gov/tophat/tophat.js"

@@ -29,13 +29,16 @@ EarthdataSearchClient::Application.configure do
     VCR.configure { |c| VCR::EDSCConfigurer.configure(c, record: :none) }
   end
 
-  config.logo_name = "dev-logo-beta"
+  config.logo_name = "DEV"
   config.env_name = "[DEV]"
   # SIT Tophat
   config.tophat_url = "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js"
   config.feedback_url = 'https://fbm.uat.earthdata.nasa.gov/for/EdSearch_SIT/feedback.js'
 
-  config.url_limit = 200
+  config.url_limit = 500
+  #config.cmr_env = 'sit'
 
+  # This is also the client ID sent to OpenSearch. It is kept the same since the OpenSearch endpoint ultimately
+  # talks to ECHO/CMR.
   config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-dev'
 end

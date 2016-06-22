@@ -1,5 +1,5 @@
-#= require models/data/datasets
-#= require models/data/dataset
+#= require models/data/collections
+#= require models/data/collection
 
 ns = @edsc.models.data
 
@@ -11,10 +11,10 @@ ns.Project = do (ko,
                  deparam = @edsc.util.deparam
                  ajax = @edsc.util.xhr.ajax
                  urlUtil = @edsc.util.url
-                 QueryModel = ns.query.DatasetQuery,
-                 DatasetsModel = ns.Datasets
+                 QueryModel = ns.query.CollectionQuery,
+                 CollectionsModel = ns.Collections
                  ServiceOptionsModel = ns.ServiceOptions
-                 Dataset = ns.Dataset) ->
+                 Collection = ns.Collection) ->
 
   # Maintains a finite pool of values to be distributed on demand.  Calling
   # next() on the pool returns either an unused value, prioritizing those
@@ -53,9 +53,9 @@ ns.Project = do (ko,
     '#9B59B6'
   ])
 
-  class ProjectDataset
-    constructor: (@dataset, @meta={}) ->
-      @dataset.reference()
+  class ProjectCollection
+    constructor: (@collection, @meta={}) ->
+      @collection.reference()
       @meta.color ?= colorPool.next()
 
       @granuleAccessOptions = ko.asyncComputed({}, 100, @_loadGranuleAccessOptions, this)
@@ -63,51 +63,60 @@ ns.Project = do (ko,
 
     dispose: ->
       colorPool.unuse(@meta.color) if colorPool.has(@meta.color)
-      @dataset.dispose()
+      @collection.dispose()
       @serviceOptions.dispose()
       @granuleAccessOptions.dispose()
 
     _loadGranuleAccessOptions: ->
-      console.log "Loading granule access options for #{@dataset.id}"
-      $(document).trigger('dataaccessevent', [@dataset.id])
-      singleGranuleId = @dataset.granuleQuery.singleGranuleId()
-      if singleGranuleId
-        params = extend(@dataset.granuleQuery.params(), {echo_granule_id: singleGranuleId})
-      else
-        params = @dataset.granuleQuery.params()
-      ajax
-        dataType: 'json'
-        url: '/data/options'
-        data: params
-        retry: => @_loadGranuleAccessOptions()
-        success: (data, status, xhr) =>
-          console.log "Finished loading access options for #{@dataset.id}"
-          @granuleAccessOptions(data)
+      dataSource = @collection.granuleDatasource()
+      unless dataSource
+        @granuleAccessOptions(hits: 0, methods: [])
+        return
+      console.log "Loading granule access options for #{@collection.id}"
+      $(document).trigger('dataaccessevent', [@collection.id])
+      success = (data) =>
+        console.log "Finished loading access options for #{@collection.id}"
+        @granuleAccessOptions(data)
+      retry = => @_loadGranuleAccessOptions
+      dataSource.loadAccessOptions(success, retry)
 
     fromJson: (jsonObj) ->
       @serviceOptions.fromJson(jsonObj.serviceOptions)
 
     serialize: ->
       options = @serviceOptions.serialize()
-      $(document).trigger('dataaccessevent', [@dataset.id, options])
+      $(document).trigger('dataaccessevent', [@collection.id, options])
 
-      id: @dataset.id
-      params: param(@dataset.granuleQuery.params())
+      form_hashes = []
+      for method in @granuleAccessOptions().methods
+        for accessMethod in options.accessMethod
+          form_hash = {}
+          if ((method.id == null || method.id == undefined ) || accessMethod.id == method.id) && accessMethod.type == method.type
+            if method.id?
+              form_hash['id'] = method.id
+            else
+              form_hash['id'] = accessMethod.type
+            form_hash['form_hash'] = method.form_hash
+            form_hashes.push form_hash
+
+      id: @collection.id
+      params: param(@collection.granuleDatasource()?.toQueryParams() ? @collection.query.globalParams())
       serviceOptions: options
+      form_hashes: form_hashes
 
   class Project
-    constructor: (@query, @loadGranulesOnAdd=true) ->
-      @_datasetIds = ko.observableArray()
-      @_datasetsById = {}
+    constructor: (@query) ->
+      @_collectionIds = ko.observableArray()
+      @_collectionsById = {}
 
       @id = ko.observable(null)
-      @datasets = ko.computed(read: @getDatasets, write: @setDatasets, owner: this)
-      @focusedProjectDataset = ko.observable(null)
+      @collections = ko.computed(read: @getCollections, write: @setCollections, owner: this)
+      @focusedProjectCollection = ko.observable(null)
       @focus = ko.computed(read: @_readFocus, write: @_writeFocus, owner: this)
-      @searchGranulesDataset = ko.observable(null)
-      @accessDatasets = ko.computed(read: @_computeAccessDatasets, owner: this, deferEvaluation: true)
+      @searchGranulesCollection = ko.observable(null)
+      @accessCollections = ko.computed(read: @_computeAccessCollections, owner: this, deferEvaluation: true)
       @allReadyToDownload = ko.computed(@_computeAllReadyToDownload, this, deferEvaluation: true)
-      @visibleDatasets = ko.computed(read: @_computeVisibleDatasets, owner: this, deferEvaluation: true)
+      @visibleCollections = ko.computed(read: @_computeVisibleCollections, owner: this, deferEvaluation: true)
 
       @serialized = ko.computed
         read: @_toQuery
@@ -117,164 +126,168 @@ ns.Project = do (ko,
       @_pending = ko.observable(null)
 
     _computeAllReadyToDownload: ->
-      return false for ds in @accessDatasets() when !ds.serviceOptions.readyToDownload()
+      return false for ds in @accessCollections() when !ds.serviceOptions.readyToDownload()
       true
 
-    _computeAccessDatasets: ->
-      focused = @focusedProjectDataset()
+    _computeAccessCollections: ->
+      focused = @focusedProjectCollection()
       if focused
         [focused]
       else
-        @_datasetsById[id] for id in @_datasetIds()
+        @_collectionsById[id] for id in @_collectionIds()
 
-    _readFocus: -> @focusedProjectDataset()?.dataset
-    _writeFocus: (dataset) ->
-      observable = @focusedProjectDataset
+    _readFocus: -> @focusedProjectCollection()?.collection
+    _writeFocus: (collection) ->
+      observable = @focusedProjectCollection
       current = observable()
-      unless current?.dataset == dataset
+      unless current?.collection == collection
         current?.dispose()
-        if dataset?
-          projectDataset = new ProjectDataset(dataset)
-          dataset.makeRecent()
-        observable(projectDataset)
+        if collection?
+          projectCollection = new ProjectCollection(collection)
+          collection.makeRecent()
+        observable(projectCollection)
 
-    getDatasets: ->
-      @_datasetsById[id]?.dataset for id in @_datasetIds()
+    getCollections: ->
+      @_collectionsById[id]?.collection for id in @_collectionIds()
 
-    setDatasets: (datasets) ->
-      datasetIds = []
-      datasetsById = {}
-      for ds, i in datasets
+    setCollections: (collections) ->
+      collectionIds = []
+      collectionsById = {}
+      for ds, i in collections
         id = ds.id
-        datasetIds.push(id)
-        datasetsById[id] = @_datasetsById[id] ? new ProjectDataset(ds)
-      @_datasetsById = datasetsById
-      @_datasetIds(datasetIds)
+        collectionIds.push(id)
+        collectionsById[id] = @_collectionsById[id] ? new ProjectCollection(ds)
+      @_collectionsById = collectionsById
+      @_collectionIds(collectionIds)
       null
 
-    _computeVisibleDatasets: ->
-      datasets = (dataset for dataset in @datasets() when dataset.visible())
+    _computeVisibleCollections: ->
+      collections = (collection for collection in @collections() when collection.visible())
 
       focus = @focus()
-      if focus && focus.visible() && datasets.indexOf(focus) == -1
-        datasets.push(focus)
+      if focus && focus.visible() && collections.indexOf(focus) == -1
+        collections.push(focus)
 
-      # Other visible datasets not controlled by the project
-      for dataset in Dataset.visible()
-        datasets.push(dataset) if datasets.indexOf(dataset) == -1
-      datasets
+      # Other visible collections not controlled by the project
+      for collection in Collection.visible()
+        collections.push(collection) if collections.indexOf(collection) == -1
+      collections
 
     # This seems like a UI concern, but really it's something that spans several
     # views and something we may eventually want to persist with the project or
     # allow the user to alter.
-    colorForDataset: (dataset) ->
-      return null unless @hasDataset(dataset)
+    colorForCollection: (collection) ->
+      return null unless @hasCollection(collection)
 
-      @_datasetsById[dataset.id].meta.color
+      @_collectionsById[collection.id].meta.color
 
     isEmpty: () ->
-      @_datasetIds.isEmpty()
+      @_collectionIds.isEmpty()
 
-    addDataset: (dataset) ->
-      id = dataset.id
+    addCollection: (collection) ->
+      id = collection.id
 
-      @_datasetsById[id] ?= new ProjectDataset(dataset)
-      @_datasetIds.remove(id)
-      @_datasetIds.push(id)
-
-      # Force results to start being calculated
-      dataset.granulesModel.results() if @loadGranulesOnAdd && dataset.has_granules
+      @_collectionsById[id] ?= new ProjectCollection(collection)
+      @_collectionIds.remove(id)
+      @_collectionIds.push(id)
       null
 
-    removeDataset: (dataset) =>
-      id = dataset.id
-      @_datasetsById[id]?.dispose()
-      delete @_datasetsById[id]
-      @_datasetIds.remove(id)
+    removeCollection: (collection) =>
+      id = collection.id
+      @_collectionsById[id]?.dispose()
+      delete @_collectionsById[id]
+      @_collectionIds.remove(id)
       null
 
-    hasDataset: (other) =>
-      @_datasetIds.indexOf(other.id) != -1
+    hasCollection: (other) =>
+      @_collectionIds.indexOf(other.id) != -1
 
-    isSearchingGranules: (dataset) =>
-      @searchGranulesDataset() == dataset
+    isSearchingGranules: (collection) =>
+      @searchGranulesCollection() == collection
 
     fromJson: (jsonObj) ->
-      datasets = null
-      if jsonObj.datasets?
-        datasets = {}
-        datasets[ds.id] = ds for ds in jsonObj.datasets
-      @_pendingAccess = datasets
+      collections = null
+      if jsonObj.collections?
+        collections = {}
+        collections[ds.id] = ds for ds in jsonObj.collections
+      @_pendingAccess = collections
       @serialized(deparam(jsonObj.query))
 
-    serialize: (datasets=@datasets) ->
-      datasets = (ds.serialize() for ds in @accessDatasets())
-      {query: param(@serialized()), datasets: datasets, source: urlUtil.realQuery()}
+    serialize: (collections=@collections) ->
+      collections = (ds.serialize() for ds in @accessCollections())
+      {query: param(@serialized()), collections: collections, source: urlUtil.realQuery()}
 
-    getProjectDataset: (id) ->
-      focus = @focusedProjectDataset()
-      if focus?.dataset.id == id
+    getProjectCollection: (id) ->
+      focus = @focusedProjectCollection()
+      if focus?.collection.id == id
         focus
       else
-        @_datasetsById[id]
+        @_collectionsById[id]
 
     _toQuery: ->
       return @_pending() if @_pending()?
       result = $.extend({}, @query.serialize())
-      datasets = [@focus()].concat(@datasets())
-      ids = (ds?.id ? '' for ds in datasets)
-      if datasets.length > 1 || datasets[0]
+      collections = [@focus()].concat(@collections())
+      ids = (ds?.id ? '' for ds in collections)
+      if collections.length > 1 || collections[0]
         queries = [{}]
         result.p = ids.join('!')
         start = 1
-        start = 0 if @focus() && !@hasDataset(@focus())
-        for dataset, i in datasets[start...]
-          query = dataset.granuleQuery.serialize()
-          query.v = 't' if (i + start) != 0 && dataset.visible()
-          queries[i + start] = query
+        start = 0 if @focus() && !@hasCollection(@focus())
+        for collection, i in collections[start...]
+          datasource = collection.granuleDatasource()
+          if datasource?
+            query = datasource.toBookmarkParams()
+            queries[i + start] = {} if Object.keys(query).length == 0
+            query.v = 't' if (i + start) != 0 && collection.visible()
+            # Avoid inserting an empty map
+            for own k, v of query
+              queries[i + start] = query
+              break
+        for q, index in queries
+          queries[index] = {} if q == undefined
         result.pg = queries if queries.length > 0
       result
 
     _fromQuery: (value) ->
       @query.fromJson(value)
 
-      datasetIdStr = value.p
-      if datasetIdStr
+      collectionIdStr = value.p
+      if collectionIdStr
         singleGranuleId = value.sgd
-        if datasetIdStr != @_datasetIds().join('!')
-          datasetIds = datasetIdStr.split('!')
-          focused = !!datasetIds[0]
-          datasetIds.shift() unless focused
+        if collectionIdStr != @_collectionIds().join('!')
+          collectionIds = collectionIdStr.split('!')
+          focused = !!collectionIds[0]
+          collectionIds.shift() unless focused
           @_pending(value)
           value.pg ?= []
           value.pg[0] ?= {}
 
-          # if focused dataset id is duplicated in params, copy query
+          # if focused collection id is duplicated in params, copy query
           if focused
-            for id, i in datasetIds
-              if i > 0 && id == datasetIds[0]
+            for id, i in collectionIds
+              if i > 0 && id == collectionIds[0]
                 value.pg[0] = value.pg[i]
 
-          DatasetsModel.forIds datasetIds, @query, (datasets) =>
+          CollectionsModel.forIds collectionIds, @query, (collections) =>
             @_pending(null)
             pending = @_pendingAccess ? {}
             offset = 0
             offset = 1 unless focused
             queries = value["pg"] ? []
-            for dataset, i in datasets
+            for collection, i in collections
               query = queries[i + offset]
-              if query?
-                dataset.granuleQuery.fromJson(query)
-                dataset.granuleQuery.singleGranuleId(singleGranuleId) if singleGranuleId?
-                dataset.visible(true) if query.v == 't'
+              if query? && collection.granuleDatasource()?
+                collection.granuleDatasource().fromBookmarkParams(query, value)
+                collection.visible(true) if query.v == 't'
               if i == 0 && focused
-                @focus(dataset)
+                @focus(collection)
               else
-                @addDataset(dataset)
-              dataset.dispose() # forIds ends up incrementing reference count
-              @getProjectDataset(dataset.id).fromJson(pending[dataset.id]) if pending[dataset.id]
+                @addCollection(collection)
+              collection.dispose() # forIds ends up incrementing reference count
+              @getProjectCollection(collection.id).fromJson(pending[collection.id]) if pending[collection.id]
             @_pendingAccess = null
       else
-        @datasets([])
+        @collections([])
 
   exports = Project

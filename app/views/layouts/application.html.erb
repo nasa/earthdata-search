@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><%= Rails.configuration.env_name %> Earthdata Search</title>
+    <title><%= site_page_title %></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=1280,user-scalable=no">
     <link rel="shortcut icon" href="/favicon.ico?v=1.1">
@@ -15,7 +15,8 @@
     <script>
       window.tokenExpiresIn = <%= logged_in? ? script_session_expires_in : 'null' %>;
       window.tokenLoadTime = +new Date();
-      window.echoEnv = "<%= echo_env %>";
+      window.echoEnv = "<%= cmr_env %>";
+      window.edscportal = "<%= portal_id %>";
     </script>
     <% if Rails.configuration.respond_to?(:analytics_id) %>
     <script>
@@ -29,13 +30,27 @@
     </script>
     <% end %>
     <%= yield :javascript %>
+    <% portal_scripts.each do |script| %>
+    <%= javascript_include_tag script %>
+    <% end %>
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
+    <!--[if lt IE 10]> <%= javascript_include_tag "flexibility" %> <![endif]-->
 </head>
-<body class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
+<body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
     <div class="wrap">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
-      <h1><a class="ir" href="<%= root_path %>" title="Earthdata Search Beta">Earthdata Search</a></h1>
+      <h1>
+        <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
+        <%= portal_logo %>
+        <a class="site-logo" href="<%=edsc_path root_path %>">
+          <span class="site-logo-org"><%= site_logo_org %></span>
+          <%= site_logo_title %>
+        </a>
+        <% unless Rails.configuration.logo_name.blank? %>
+          <span class="version-badge"><%= Rails.configuration.logo_name %></span>
+        <% end %>
+      </h1>
       <div class="toolbar-content">
         <div class="toolbar-secondary">
           <%= yield :toolbar_secondary %>
@@ -43,6 +58,9 @@
         <%= yield :toolbar %>
       </div>
     </header>
+    <% if portal_nav? %>
+    <nav class="main-nav portal-nav"><%= portal_nav %></nav>
+    <% end %>
     <section class="main-content">
       <%= yield %>
     </section>

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Granule selection", reset: false do
-  extend Helpers::DatasetHelpers
+  extend Helpers::CollectionHelpers
   Capybara.ignore_hidden_elements = true
 
   is_temporal_ordered_script = """
@@ -39,7 +39,7 @@ describe "Granule selection", reset: false do
   """
 
   before :all do
-    load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C1000000011-LANCEMODIS'
+    load_page :search, bounding_box: [0, 0, 15, 15], focus: 'C90757595-LAADS'
   end
 
   context "clicking on a granule in the result list" do

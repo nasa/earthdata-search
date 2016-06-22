@@ -108,15 +108,13 @@ ns.Map = do (window,
 
       @setProjection(projection)
       @setBaseMap("Blue Marble")
-      @setOverlays([])
+      @setOverlays([OVERLAYS[0], OVERLAYS[2]])
 
       @time = ko.computed(@_computeTime, this)
-      @_showDatasetSpatial(page.ui.datasetsList.selected())
-      @_datasetSubscription = page.ui.datasetsList.selected.subscribe(@_showDatasetSpatial)
 
-      map.fire('edsc.visibledatasetschange', datasets: page.project.visibleDatasets())
-      @_granuleVisualizationSubscription = page.project.visibleDatasets.subscribe (datasets) ->
-        map.fire('edsc.visibledatasetschange', datasets: datasets)
+      map.fire('edsc.visiblecollectionschange', collections: page.project.visibleCollections())
+      @_granuleVisualizationSubscription = page.project.visibleCollections.subscribe (collections) ->
+        map.fire('edsc.visiblecollectionschange', collections: collections)
 
       @_setupStatePersistence()
 
@@ -124,7 +122,6 @@ ns.Map = do (window,
     destroy: ->
       @map.remove()
       @time.dispose()
-      @_datasetSubscription.dispose()
       @_granuleVisualizationSubscription.dispose()
 
     _setupStatePersistence: ->
@@ -173,14 +170,14 @@ ns.Map = do (window,
           if zoom != mapZoom || map.latLngToLayerPoint(mapCenter).distanceTo(map.latLngToLayerPoint(center)) > 10
             map.setView(L.latLng(lat, lng), parseInt(zoom, 10))
 
-    focusDataset: (dataset) ->
-      @_addLegend(dataset)
-      @map.focusedDataset = dataset
-      @map.fire 'edsc.focusdataset', dataset: dataset
+    focusCollection: (collection) ->
+      @_addLegend(collection)
+      @map.focusedCollection = collection
+      @map.fire 'edsc.focuscollection', collection: collection
 
-    _addLegend: (dataset) ->
+    _addLegend: (collection) ->
       @legendControl.setData(null, {})
-      gibs = dataset?.gibs() ? []
+      gibs = collection?.gibs() ? []
       name = null
       for config in gibs
         unless config.match?.sit
@@ -194,8 +191,9 @@ ns.Map = do (window,
         ajax
           dataType: 'json'
           url: path
-          retry: => @_addLegend(dataset)
+          retry: => @_addLegend(collection)
           success: (data) =>
+            console.log "Adding legend: #{name}"
             @legendControl.setData(name, data)
         null
 
@@ -294,7 +292,7 @@ ns.Map = do (window,
       geo:
         crs: ProjExt.epsg4326
         minZoom: 0
-        maxZoom: 7
+        maxZoom: 7 # This should probably go to 11 when we have higher resolution imagery
         zoom: 2
         continuousWorld: false
         noWrap: true # Set this to false when people inevitibly ask us for imagery across the meridian
@@ -351,90 +349,6 @@ ns.Map = do (window,
 
       map._overlays = overlays
       @_rebuildLayers()
-
-    _showDatasetSpatial: (dataset) =>
-      @_hideDatasetSpatial()
-
-      return unless dataset?
-
-      layer = dataset.buildLayer(color: "#ff7800", weight: 1)
-      layer.addTo(@map)
-      @_datasetSpatialLayer = layer
-
-    _hideDatasetSpatial: =>
-      if @_datasetSpatialLayer
-        @map.removeLayer(@_datasetSpatialLayer)
-        @_datasetSpatialLayer = null
-
-    # Debugging spherical polygons
-    #L.sphericalPolygon([
-    #  [-45, 0],
-    #  [45, 45],
-    #  [0, -45]
-    #]).addTo(map).bindopup("I am a generic polygon.")
-
-    #L.sphericalPolygon([
-    #  [0, -45],
-    #  [45, 45],
-    #  [-45, 0]
-    #]).addTo(map).bindPopup("I am a generic polygon specified in a reverse order.")
-
-    #L.sphericalPolygon([[
-    #  [-45, 0],
-    #  [45, 45],
-    #  [0, -45]
-    #], [[-10, 0], [10, 10], [0, -10]]]).addTo(map).bindPopup("I have a hole.")
-
-    #L.sphericalPolygon([
-    #  [-45, 180],
-    #  [45, 120],
-    #  [20, -170],
-    #  [50, 160],
-    #  [0, -120]
-    #]).addTo(map).bindPopup("I cross the antimeridian a few times going clockwise.");
-
-    #L.sphericalPolygon([
-    #  [0, -10],
-    #  [70, -10],
-    #  [70, -100],
-    #  [70, 100],
-    #  [70, 10],
-    #  [0, 10],
-    #  [-70, 10],
-    #  [-70, 100],
-    #  [-70, -100],
-    #  [-70, -10]
-    #]).addTo(map).bindPopup("I contain both poles and cross the antimeridian.");
-
-    #L.sphericalPolygon([
-    #  [0, -170],
-    #  [70, -170],
-    #  [70, 170],
-    #  [0, 170],
-    #  [-70, 170],
-    #  [-70, -170]
-    #]).addTo(map).bindPopup("I contain both poles and cross the antimeridian.");
-
-    #L.sphericalPolygon([
-    #  [-70, -170],
-    #  [ 70, -170],
-    #  [ 70,    0],
-    #  [ 70,  170],
-    #  [-70,  170],
-    #  [-70,    0]
-    #]).addTo(map).bindPopup("I contain both poles and do not cross the antimeridian.");
-
-    #L.sphericalPolygon([
-    #  [60, -120],
-    #  [70, 0],
-    #  [80, 120]
-    #]).addTo(map).bindPopup("I contain the north pole.");
-
-    #L.sphericalPolygon([
-    #  [-60, -120],
-    #  [-70, 0],
-    #  [-80, 120]
-    #]).addTo(map).bindPopup("I contain the south pole.");
 
   # For tests to be able to click
   $.fn.mapClick = ->

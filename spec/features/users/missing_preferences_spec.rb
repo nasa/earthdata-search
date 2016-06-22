@@ -1,32 +1,31 @@
 require 'spec_helper'
 
 describe "User missing ordering preferences", reset: false do
-  dataset_id = 'C179003030-ORNL_DAAC'
-  dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+  collection_id = 'C90762182-LAADS'
+  collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
   context "when configuring a data access request" do
     before :all do
-      load_page :search, project: [dataset_id], view: :project
+      load_page :search, project: [collection_id], view: :project
       wait_for_xhr
 
       login 'edscbasic'
 
       click_link "Retrieve project data"
 
-      choose "Ftp_Pull"
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      choose "FtpPushPull"
+      select 'FtpPull', from: 'Distribution Options'
       click_button "Continue"
     end
 
-    it "does not show an error message" do
+    it "does not show an error message", intermittent: 1 do
       expect(page).to have_no_content('Contact information could not be loaded, please try again later')
     end
   end
 
-  context "when accessing downloadable data" do
+  context "when accessing downloadable data", pending_fixtures: true do
     before :all do
-      load_page :search, project: [dataset_id], view: :project
+      load_page :search, project: [collection_id], view: :project
       wait_for_xhr
 
       login 'edscbasic'
@@ -37,8 +36,9 @@ describe "User missing ordering preferences", reset: false do
       click_button 'Submit'
     end
 
-    it "shows the data retrieval page" do
-      expect(page).to have_link("USGS 15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED INFORMATION)")
+    it "shows the data retrieval page", pending_fixtures: true do
+      expect(page).to have_content(collection_title)
+      expect(page).to have_link('View Download Links')
     end
   end
 end

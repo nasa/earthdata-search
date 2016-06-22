@@ -1,0 +1,18 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - edsc-dev
+      Echo-ClientId:
+      - edsc-dev
+  recorded_at: Tue, 13 Oct 2015 20:31:56 GMT
+  digest: b99e39f70e8bd26011052dc5f647e80655cc9c88
+recorded_with: VCR 2.6.0

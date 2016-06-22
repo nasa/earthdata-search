@@ -2,7 +2,15 @@ class DetailsPresenter
 
   def temporal(hash)
     if hash && hash['RangeDateTime']
-      "#{hash['RangeDateTime']['BeginningDateTime']} to #{hash['RangeDateTime']['EndingDateTime']}"
+      # some collections may have multiple temporal fields when retrieved in echo10 format. CMR returns the date time
+      # from elasticsearch where latest and earliest times are indexed.
+      if hash['RangeDateTime'].is_a? Array
+        start_time = hash['RangeDateTime'].map{|range| DateTime.parse(range['BeginningDateTime']) if range['BeginningDateTime'].present?}.compact.min
+        end_time = hash['RangeDateTime'].map{|range| DateTime.parse(range['EndingDateTime']) if range['EndingDateTime'].present?}.compact.max
+        "#{start_time} to #{end_time}"
+      else
+        "#{hash['RangeDateTime']['BeginningDateTime']} to #{hash['RangeDateTime']['EndingDateTime']}"
+      end
     else
       'Not available'
     end
@@ -32,7 +40,7 @@ class DetailsPresenter
               south = box['SouthBoundingCoordinate']
               east = box['EastBoundingCoordinate']
               west = box['WestBoundingCoordinate']
-              spatial = "Bounding Rectangle: (#{degrees(north)}, #{degrees(west)}, #{degrees(south)}, #{degrees(east)})"
+              spatial << "Bounding Rectangle: (#{degrees(north)}, #{degrees(west)}, #{degrees(south)}, #{degrees(east)})"
             end
           elsif geometry['GPolygon']
             polygons = Array.wrap(geometry['GPolygon'])

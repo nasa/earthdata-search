@@ -1,4 +1,4 @@
-# EDSC-26: As a user, I want to search for datasets by place name so that I may limit my results to my area of interest
+# EDSC-26: As a user, I want to search for collections by place name so that I may limit my results to my area of interest
 
 require "spec_helper"
 
@@ -44,7 +44,7 @@ describe "Place name autocomplete" do
   it "does not apply placename spatial when tabbing after a keyword search without 'place:'" do
     fill_in "keywords", with: "Texas\t"
     expect(page).to have_no_field('keywords', with: 'modis place:"Texas, United States"')
-    expect(page).to_not have_spatial_constraint(texas_constraint)
+    expect(page).to have_no_spatial_constraint(texas_constraint)
   end
 
   it "displays nothing when the query string is very short" do
@@ -124,7 +124,7 @@ describe "Place name autocomplete" do
     end
   end
 
-  context "search for common dataset terms" do
+  context "search for common collection terms" do
     it 'returns no placenames matching "landsat"' do
       fill_in "keywords", with: "landsat"
       wait_for_xhr

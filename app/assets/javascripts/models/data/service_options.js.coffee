@@ -1,6 +1,6 @@
 ns = @edsc.models.data
 
-ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend = $.extend) ->
+ns.ServiceOptions = do (ko, edsc = @edsc, KnockoutModel = @edsc.models.KnockoutModel, extend = $.extend) ->
 
   class SubsetOptions
     constructor: (@config) ->
@@ -34,6 +34,7 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
       @isValid = ko.observable(true)
 
       @subsetOptions = ko.observable(null)
+      @prepopulatedFields = ko.computed(@_computePrepopulatedFields, this, deferEvaluation: true)
 
       @options = ko.computed =>
         m = @method()
@@ -47,6 +48,13 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
         else
           @subsetOptions(null)
         result
+
+    _computePrepopulatedFields: ->
+      result = {}
+      mbr = edsc.page.query?.mbr()
+      if mbr
+        [result.BBOX_SOUTH, result.BBOX_WEST, result.BBOX_NORTH, result.BBOX_EAST] = mbr
+      result
 
     serialize: ->
       method = @method()
@@ -66,6 +74,9 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
       @type = jsonObj.type
       @orderId = jsonObj.order_id
       @orderStatus = jsonObj.order_status
+      @errorCode = jsonObj.error_code
+      @errorMessage = jsonObj.error_message
+      @droppedGranules = jsonObj.dropped_granules
       @subsetOptions()?.fromJson(jsonObj.subset) if jsonObj.subset
       @serviceOptions = jsonObj.service_options
       this
@@ -90,10 +101,14 @@ ns.ServiceOptions = do (ko, KnockoutModel = @edsc.models.KnockoutModel, extend =
       methods = @accessMethod.peek()
       for method in methods
         method.availableMethods = availableMethods
-      if options.defaults
-        @fromJson(options.defaults)
-      else
-        @addAccessMethod() if methods.length == 0 && availableMethods.length > 0
+      validDefaults = []
+      defaultMethods = options.defaults?.accessMethod
+      if defaultMethods
+        for method in defaultMethods
+          for available in availableMethods
+            validDefaults.push(method) if method.method == available.name
+        @fromJson(accessMethod: validDefaults)
+      @addAccessMethod() if methods.length == 0 && availableMethods.length > 0 && validDefaults.length == 0
       @canAddAccessMethod(availableMethods.length > 1 ||
         (availableMethods.length == 1 && availableMethods[0].type != 'download'))
 

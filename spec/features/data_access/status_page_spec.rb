@@ -12,14 +12,14 @@ describe "Data access status page", reset: false do
 
       retrievals = [
         {"query" => "p=C179003030-ORNL_DAAC",
-         "datasets" => [{
+         "collections" => [{
                           "id"=>"C179003030-ORNL_DAAC",
                           "params"=>"echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20",
                           "serviceOptions"=>{"accessMethod"=>[{"method"=>"Download", "type"=>"download"}]}
                         }],
          "source" => "p=C179003030-ORNL_DAAC&m=0.0703125!0!2"},
         {"query" => "p=!C179003030-ORNL_DAAC!C179001887-SEDAC",
-         "datasets" => [{
+         "collections" => [{
                           "id"=>"C179003030-ORNL_DAAC",
                           "params"=>"echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20",
                           "serviceOptions"=>{"accessMethod"=>[{"method"=>"Download", "type"=>"download"}]}
@@ -44,7 +44,7 @@ describe "Data access status page", reset: false do
     end
 
     it "displays a textual summary of recent retrievals" do
-      expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE) and 1 other dataset")
+      expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE) and 1 other collection")
     end
 
     it "displays an indication of how long ago orders were placed" do
@@ -70,7 +70,7 @@ describe "Data access status page", reset: false do
         visit '/data/status'
       end
 
-      it "removes the dataset from the list" do
+      it "removes the collection from the list" do
         expect(page).to have_no_selector('tbody tr:nth-child(2)')
         expect(page).to have_selector('tbody tr', count: 1)
       end
@@ -82,7 +82,7 @@ describe "Data access status page", reset: false do
           end
         end
 
-        it "removes the dataset from the list" do
+        it "removes the collection from the list" do
           expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
         end
 
@@ -97,12 +97,25 @@ describe "Data access status page", reset: false do
     before :all do
       Capybara.reset_sessions!
       load_page :search, overlay: false
-      login 'edscbasic'
+      login
       visit '/data/status'
     end
 
     it "indicates that there are no recent retrievals" do
       expect(page).to have_content("No recent retrievals")
+    end
+  end
+
+  context "when the current user tries to access an invalid retrieval ID" do
+    before :all do
+      Capybara.reset_sessions!
+      load_page :search, overlay: false
+      login
+      visit '/data/retrieve/not_a_valid_retrieval_id'
+    end
+
+    it "displays 404 page" do
+      expect(page).to have_content("The page you were looking for doesn't exist.")
     end
   end
 end

@@ -1,5 +1,13 @@
 @edsc.help = do ($=jQuery, config=@edsc.config, wait = @edsc.util.xhr.wait, page=@edsc.page, preferences = @edsc.page.preferences) ->
 
+  mapViewOptions =
+    title: 'Map View'
+    content: 'On the map view, you may select granules, select alternate base layers or projections
+              and pan and zoom to an area of interest. Select the <strong>Land / Water Map</strong> base
+              layer now to make the data stand out more and zoom or pan the map. Click
+              <strong>Next</strong> when you are ready to continue.'
+  landWaterSelector = '.leaflet-control-layers label:contains("Land / Water") input'
+
   tourOptions =
     shapefile_multiple:
       title: "Choose a Search Constraint"
@@ -14,7 +22,7 @@
     gibs_accuracy:
       once: true
       title: "Approximate Granule Imagery"
-      content: 'This dataset shows approximate full-resolution browse obtained from
+      content: 'This collection shows approximate full-resolution browse obtained from
                 <a href="https://earthdata.nasa.gov/about-eosdis/system-description/global-imagery-browse-services-gibs" target="_blank">GIBS</a>.
                 Imagery may not correspond to the indicated granule in the following circumstances:
                 <ol>
@@ -51,27 +59,33 @@
     }, {
       title: "Keyword Search"
       content: 'Here you can enter search terms to find relevant data. Search terms can be science
-                terms, instrument names, or even dataset IDs. Let\'s start by searching for
-                <em>Snow Cover NRT</em> to find near real-time snow cover data. Type <em>Snow Cover NRT</em> in the
+                terms, instrument names, or even collection IDs. Let\'s start by searching for
+                <em>Snow Cover</em> to find snow cover data. Type <em>Snow Cover</em> in the
                 keywords box and press <strong>Enter.</strong>'
       element: '#keywords'
       advanceHook: (nextFn, closeFn) ->
         $(window).one 'searchready', (e) ->
-          if $.trim($('#keywords').val().toLowerCase()) == 'snow cover nrt'
+          if $.trim($('#keywords').val().toLowerCase()) == 'snow cover'
             nextFn()
           else
             closeFn()
     }, {
-      title: "Browse Datasets"
+      title: "Browse Collections"
       content: 'In addition to searching for keywords, you can narrow your search through this list of
-                terms. Click <strong>Platform</strong> to expand the list of platforms'
+                terms. Click <strong>Near Real Time</strong> to show the list of NRT collections'
       wait: true
-      element: '.facet-title a:contains(Platform)'
+      element: ".facets-item:contains(Near Real Time)"
+      top: null
+      positionHook: (positionFn) ->
+        positionFn("#master-overlay-parent .master-overlay-content")
     }, {
-      title: "Browse Datasets"
-      content: 'Now click <strong>Terra</strong> to select the Terra satellite'
+      title: "Browse Collections"
+      content: 'Now click <strong>ATMOSPHERE</strong> to select the ATMOSPHERE science keyword'
       wait: true
-      element: '.facets-item:contains(Terra)'
+      element: '.facets-item:contains(ATMOSPHERE)'
+      top: null
+      positionHook: (positionFn) ->
+        positionFn("#master-overlay-parent .master-overlay-content")
     }, {
       title: 'Spatial Search'
       content: 'If you are not interested in data covering the whole Earth, you may restrict your search
@@ -86,36 +100,48 @@
             closeFn()
           subscription.dispose()
     }, {
-      title: 'Dataset Results'
-      content: 'Your dataset results appear here.  This result has a "GIBS" badge, indicating that it
-               has advanced visualizations. Click on the dataset to preview its data.'
+      title: 'Collection Results'
+      content: 'Your collection results appear here.  This result has a "GIBS" badge, indicating that it
+               has advanced visualizations. Click on the collection to preview its data.'
       wait: true
-      element: '.panel-list-item:contains(MOD10_L2)'
+      element: '.panel-list-item:contains(MYD06_L2 v5NRT)'
+      positionHook: (positionFn) ->
+        positionFn("#collection-results .master-overlay-content")
     }, {
       title: 'Matching Granules'
       content: 'Here we see a list of data granules with corresponding imagery rendered drawn on the map.
-                Click a granule to bring it to the top of the stack.'
+                Click this granule to bring it to the top of the stack.'
       wait: true
       element: '#granule-list .panel-list-item:nth-child(2)'
-    }, {
-      title: 'Map View'
-      content: 'On the map view, you may select granules, select alternate base layers or projections ( <div class="leaflet-control-layers-toggle-demo"></div> button), and pan and zoom to
-                an area of interest. Select the <strong>Land / Water Map</strong> base layer now to make the data stand
-                out more and zoom or pan the map. Click <strong>Next</strong> when you are ready to continue.'
-      showNext: true
-      element: '.leaflet-control-layers-toggle'
-    }, {
+      top: null
+      positionHook: (positionFn) ->
+        positionFn("#granule-list .master-overlay-content")
+    }, $.extend({}, mapViewOptions,
+        element: '.leaflet-control-layers-toggle'
+        cleanup: (nextFn, closeFn) ->
+          $('.leaflet-control-layers').off 'mouseover', nextFn
+        advanceHook: (nextFn, closeFn) ->
+          $('.leaflet-control-layers').one 'mouseover', nextFn
+
+    ), $.extend({}, mapViewOptions,
+        element: landWaterSelector,
+        cleanup: (nextFn, closeFn) ->
+          $(landWaterSelector).off 'mouseover', nextFn
+        advanceHook: (nextFn, closeFn) ->
+          $(landWaterSelector).one 'change', nextFn
+      wait: true
+    ), {
       title: 'Granule Timeline (Part 1)'
-      content: 'Below the map there is a timeline view showing when this dataset has data. You can pan
+      content: 'Below the map there is a timeline view showing when this collection has data. You can pan
                 and zoom this view to change the period of time and granularity of data it displays. Zoom
                 into a particular day by scrolling over that day. Try panning and zooming the timeline now.'
 
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        $('#timeline').off 'timeline.rangechange', closeFn
+        $('#timeline').off 'rangechange.timeline', closeFn
       advanceHook: (nextFn, closeFn) ->
-        $('#timeline').one 'timeline.rangechange', nextFn
+        $('#timeline').one 'rangechange.timeline', nextFn
     }, {
       title: 'Granule Timeline (Part 2)'
       content: 'You can click on a date on the timeline to focus on granules for that time span.  Note that this
@@ -124,9 +150,9 @@
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        $('#timeline').off 'timeline.focusset', closeFn
+        $('#timeline').off 'focusset.timeline', closeFn
       advanceHook: (nextFn, closeFn) ->
-        $('#timeline').one 'timeline.focusset', nextFn
+        $('#timeline').one 'focusset.timeline', nextFn
     }, {
       title: 'Granule Timeline (Part 3)'
       content: 'You may also restrict your search results to a temporal range by clicking and dragging across
@@ -134,30 +160,30 @@
       element: '#timeline'
       placement: 'top'
       cleanup: (nextFn, closeFn) ->
-        $('#timeline').off 'timeline.temporalchange', closeFn
+        $('#timeline').off 'temporalchange.timeline', closeFn
       advanceHook: (nextFn, closeFn) ->
-        $('#timeline').one 'timeline.temporalchange', nextFn
+        $('#timeline').one 'temporalchange.timeline', nextFn
     }, {
-      title: 'Back to Datasets'
-      content: 'Let\'s go back to our dataset results'
+      title: 'Back to Collections'
+      content: 'Let\'s go back to our collection results'
       element: '#granule-list .master-overlay-back'
     }, {
-      title: 'Comparing Multiple Datasets'
-      content: 'Earthdata Search allows you to visualize and compare two or more datasets using projects.
-                Add this dataset to your project now.'
+      title: 'Comparing Multiple Collections'
+      content: 'Earthdata Search allows you to visualize and compare two or more collections using projects.
+                Add this collection to your project now.'
       waitOnAnimate: true
       placement: 'right'
-      element: '.panel-list-item:contains(MOD10_L2) .add-to-project'
+      element: '.panel-list-item:contains(MYD06_L2 v6NRT) .add-to-project'
     }, {
       title: 'Projects'
-      content: 'From here, you can start a new search to find additional datasets to compare. You may add
-                more datasets to your project now. Click <strong>View Project</strong> when you are ready to continue.'
+      content: 'From here, you can start a new search to find additional collections to compare. You may add
+                more collections to your project now. Click <strong>View Project</strong> when you are ready to continue.'
       element: '#view-project'
     }, {
       title: 'Project (cont.)'
-      content: 'From the project list, you may visualize multiple datasets using the <i class="fa fa-eye"></i>
+      content: 'From the project list, you may visualize multiple collections using the <i class="fa fa-eye"></i>
                 button, view their granule results by clicking on them, set advanced filters using the
-                <i class="fa fa-edit"></i> button or compare datasets on the timeline.
+                <i class="fa fa-edit"></i> button or compare collections on the timeline.
                 When you are satisfied with the data you have selected, you
                 may access the underlying data by clicking on the <i class="fa fa-download"></i>
                 button. For this tour, though, we will stop here. Feel free to keep exploring, or
@@ -223,6 +249,14 @@
     else
       close()
 
+  position = (selector)->
+    $(selector).on 'scroll', (e) ->
+      if index == 2 || index == 3 || index == 5 || index == 6 || index == 13
+        $container = $(this)
+        $tour_popover = $('.popover.tour')
+        queue[index].top = $tour_popover.offset().top unless queue[index].top?
+        $tour_popover.css({top: queue[index].top - $(this).scrollTop()})
+
   showCurrentImmediate = ->
     $('.popover-advance').removeClass('popover-advance')
 
@@ -246,6 +280,7 @@
 
     queue[index].advanceHook?(next, close)
     queue[index].closeHook?(close)
+    queue[index].positionHook?(position)
 
     if tourRunning
       $tip.find('[data-role=end]').text('End Tour')
@@ -276,8 +311,9 @@
       close()
 
   $(document).on 'click', '.show-tour', (e) ->
-    e.preventDefault()
-    startTour()
+    unless window.edscportal
+      e.preventDefault()
+      startTour()
 
   add = (key, options={}) ->
     unless tourRunning
@@ -287,6 +323,12 @@
       unless options.once && shown[key]
         queue.push(options)
         showCurrent()
+
+  remove = (key) ->
+    if queue[0]?.key == key
+      next()
+    else
+      queue = (item for item in queue when item.key != key)
 
   current = ->
     if tourRunning then nil else queue[index]
@@ -303,6 +345,7 @@
 
   exports =
     add: add
+    remove: remove
     current: current
     next: next
     prev: prev

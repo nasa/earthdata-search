@@ -17,6 +17,9 @@ module Echo
       def call(env)
         method = env[:method].upcase
         url = env[:url]
+        if url.path.start_with?('/search/') && method.to_s == 'POST'
+          url = [url, env[:body]].join('?')
+        end
         response_message = lambda do |time, result|
           status_code = env[:status]
           summary = env[:summary]
@@ -28,10 +31,21 @@ module Echo
           end
         end
         info(yellow("#{method} #{url}"))
-        Echo::Util.time(@logger, response_message) { super(env) }
+        time(@logger, response_message) { super(env) }
       end
 
       private
+
+      def time(logger, message, &block)
+        start = Time.now
+        result = yield
+      ensure
+        if message.is_a?(Proc)
+          message.call(Time.now-start, result)
+        else
+          logger.info("#{message} [#{Time.now - start}s]")
+        end
+      end
 
       def green(text)
         color("0;32", text)

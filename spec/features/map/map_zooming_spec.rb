@@ -33,6 +33,7 @@ describe 'Map Zooming', reset: false do
   context 'when zooming with the zoom buttons' do
     context 'and the overlay is visible' do
       before :all do
+        visit '/search'
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
         sleep 0.2 # Allow animations to finish and avoid clickfailed
@@ -49,13 +50,12 @@ describe 'Map Zooming', reset: false do
       end
     end
 
-    context 'and the overlay is hidden' do
+    context 'and the overlay is minimized' do
       before :all do
         within '.master-overlay-main' do
-          find('.master-overlay-close').click
+          find('.master-overlay-minimize').click
         end
-        expect(page).to have_css(".master-overlay.is-hidden")
-
+        wait_for_xhr
         find('.leaflet-control-zoom-in').click
         wait_for_xhr
       end
@@ -64,15 +64,14 @@ describe 'Map Zooming', reset: false do
         synchronize do
           # Synchronize because animations can cause occlusion if execution is very fast
           find('.leaflet-control-zoom-out').click
-          find('.master-overlay-show').click
+          find('.master-overlay-maximize').click
         end
-        expect(page).to have_no_css(".master-overlay.is-hidden")
         wait_for_xhr
         expect(page).to have_map_center(0, 0, 2)
       end
 
       it 'zooms to the center of the visible map' do
-        expect(page).to have_map_center(0, 0, 3)
+        expect(page).to have_map_center(0, 19.6, 3)
       end
     end
   end
@@ -80,6 +79,7 @@ describe 'Map Zooming', reset: false do
   context 'when using the zoom home button' do
     context 'with spatial bounds' do
       before :all do
+        visit '/search'
         script = "$('#map').data('map').map.fitBounds([{lat: -40, lng:0}, {lat: -20, lng: 0}]);"
         page.execute_script(script)
 
@@ -142,6 +142,7 @@ describe 'Map Zooming', reset: false do
   context 'on geo view' do
     context 'at the minimum zoom level' do
       before :all do
+        visit '/search'
         MapUtil.set_zoom(page, 0)
       end
 

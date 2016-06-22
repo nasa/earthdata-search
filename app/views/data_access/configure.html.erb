@@ -17,16 +17,16 @@
     <h1>Data Access</h1>
     <p>Review and select service options for your data prior to download</p>
   </header>
-  <ol class="data-access-content data-access-datasets-config" data-bind="css: { 'knockout-template': !bindingsLoaded }">
-    <!-- ko foreach: project.accessDatasets -->
+  <ol class="data-access-content data-access-collections-config knockout-template" data-bind="css: { 'knockout-template': !bindingsLoaded }">
+    <!-- ko foreach: project.accessCollections -->
     <li class="access-item">
       <div class="access-item-header">
-        <h2 data-bind="text: dataset.dataset_id"></h2>
+        <h2 data-bind="text: collection.dataset_id"></h2>
       </div>
       <div class="access-item-body" data-bind="css: { hidden: $index() != $root.ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
           <h3 data-bind="css: {busy: granuleAccessOptions().hits == null}">Review &amp; Select Service Options</h3>
-          <!-- ko if: granuleAccessOptions().hits != null && dataset.has_granules -->
+          <!-- ko if: granuleAccessOptions().hits != null && collection.has_granules -->
           <div class="access-item-review">
             <h4>Review</h4>
             <p class="summary">
@@ -43,7 +43,7 @@
           </div>
 
           <!-- ko if: granuleAccessOptions().hits == 0 -->
-          <p>There are no matching granules to access for this dataset</p>
+          <p>There are no matching granules to access for this collection</p>
           <!-- /ko -->
           <!-- ko if: granuleAccessOptions().hits > 0 -->
           <div class="granule-list">
@@ -59,7 +59,7 @@
             </p>
             <div data-bind="event: {scroll: $root.ui.serviceOptionsList.scrolled}">
               <ul>
-              <!-- ko foreach: dataset.granulesModel.results() -->
+              <!-- ko foreach: collection.granuleDatasource().data().results() -->
                 <li>
                   <h5 data-bind="text: displayName()"></h5>
                   <span data-bind="text: getTemporal()"></span>
@@ -129,7 +129,7 @@
                 </div>
                 <!-- /ko -->
                 <!-- ko if: serviceOptions.accessMethod().length == 0 -->
-                  <p>Data access is not available for this dataset.</p>
+                  <p>Data access is not available for this collection.</p>
                 <!-- /ko -->
               <!-- /ko -->
               <p class="add-access-item" data-bind="visible: serviceOptions.canAddAccessMethod()">
@@ -140,9 +140,9 @@
           </div>
           <!-- /ko -->
           <!-- /ko -->
-          <!-- ko if: !dataset.has_granules -->
+          <!-- ko if: !collection.has_granules -->
           <div class="access-item-review">
-            <h4>Dataset Only</h4>
+            <h4>Collection Only</h4>
             <div>
               <p class="access-item-selection">
                 <span class="access-method-label">Select Data Access Method:</span>
@@ -158,7 +158,7 @@
 
         <div class="access-item-actions">
           <button data-bind="visible: $index() > 0, click: $root.ui.serviceOptionsList.showPrevious" class="button-back low-priority">Back</button>
-          <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.showNext" class="button-next">Continue</button>
+          <button data-bind="visible: !$root.ui.serviceOptionsList.isLastOption(), enable: serviceOptions.readyToDownload(), click: $root.ui.serviceOptionsList.checkOrderSize" class="button-next">Continue</button>
           <button data-bind="visible: $root.ui.serviceOptionsList.isLastOption(), enable: $root.project.allReadyToDownload(), click: $root.ui.serviceOptionsList.submitRequest" class="button-next access-submit">Submit</button>
         </div>
       </div>
@@ -170,9 +170,9 @@
         <h2>Contact Information &amp; Submit</h2>
       </div>
 
-      <div class="access-item-body" data-bind="css: { hidden: project.accessDatasets().length != ui.serviceOptionsList.activeIndex() }">
+      <div class="access-item-body" data-bind="css: { hidden: project.accessCollections().length != ui.serviceOptionsList.activeIndex() }">
         <div class="access-item-details panel-body">
-          <form data-bind="submit: account.updateContactInformation" class="account-form">
+          <form data-bind="submit: account.updateNotificationPreference" class="account-form">
             <%= render partial: 'users/contact_info_form' %>
           </form>
         </div>
@@ -184,10 +184,35 @@
     </li>
     <!-- /ko -->
   </ol>
-  <form id="data-access" method="POST" action="/data/retrieve" style="display:none;">
+  <form id="data-access" method="POST" action="<%=edsc_path "/data/retrieve"%>" style="display:none;">
     <div>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
       <input id="data-access-project" name="project" type="hidden">
     </div>
   </form>
 </div>
+
+<!--begin modal-->
+<div class="modal fade" id="tooManyGranulesModal" tabindex="-1" role="dialog" aria-labelledby="tooManyGranulesModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" class="close modal-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+        <h4 class="modal-title" id="tooManyGranulesModalLabel">Maximum Granules Exceeded</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          Access methods other than "Download" are limited to the
+          first 2,000 granules.  If you choose to continue, your request
+          may be truncated to the first 2,000 granules or rejected entirely.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <a class="button text-button" href="<%= @back_path %>?<%= request.query_string %>"><i class="fa fa-arrow-circle-left"></i> Refine your search</a>
+        <a class="button text-button" data-dismiss="modal" href="#">Change access methods</a>
+        <a class="button text-button" href="#" data-bind="click: $root.ui.serviceOptionsList.showNext">Continue</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end modal-->

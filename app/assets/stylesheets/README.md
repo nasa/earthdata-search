@@ -1,5 +1,5 @@
-Earthdata Search Client
-=======================
+Earthdata Search
+================
 
 Z Indexes
 ---------

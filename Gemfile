@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
 
-gem 'rails', '~> 4.1.1'
+gem 'rails', '~> 4.1.14.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -16,6 +16,9 @@ gem 'rufus-scheduler'
 gem 'rails_12factor'
 
 gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'a89da600f389c53c88362ce5133d8d3945776464'
+
+gem 'atomic'
+gem 'rack-rewrite'
 
 group :test do
   gem 'database_cleaner'

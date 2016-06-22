@@ -14,7 +14,7 @@ describe "Site tour", reset: true do
   context "on the landing page" do
     before :each do
       Capybara.reset_sessions!
-      visit "/" # Load the root url with no extra params
+      visit "/?test_facets=true" # Load the root url with facets and no extra params
       wait_for_xhr
     end
 
@@ -25,42 +25,51 @@ describe "Site tour", reset: true do
       click_on 'Next'
 
       expect(page).to have_popover('Keyword Search')
-      fill_in 'keywords', with: 'snow cover nrt'
+      fill_in 'keywords', with: 'snow cover'
       click_on 'Browse All Data'
+      wait_for_xhr
 
-      expect(page).to have_popover('Browse Datasets')
-      find_link('Platform').click
+      expect(page).to have_popover('Browse Collections')
+      find('.facets-item', text: 'Near Real Time').click
 
-      expect(page).to have_popover('Browse Datasets')
-      find(".facets-item", text: "Terra").click
+      wait_for_xhr
+      expect(page).to have_popover('Browse Collections')
+      find(".facets-item", text: "ATMOSPHERE").click
       wait_for_xhr
 
       expect(page).to have_popover('Spatial Search')
       create_bounding_box(0, 0, 10, 10)
+      wait_for_xhr
 
-      expect(page).to have_popover('Dataset Results')
-      first_featured_dataset.click
+      expect(page).to have_popover('Collection Results')
+      target_collection_result('MODIS/Aqua Near Real Time (NRT) Clouds 5-Min L2 Swath 1km and 5km (Collection 005)').click
+      wait_for_xhr
 
       expect(page).to have_popover('Matching Granules')
       second_granule_list_item.click
+      wait_for_xhr
 
       expect(page).to have_popover('Map View')
-      click_on 'Next'
+      page.find('.leaflet-control-layers').trigger(:mouseover)
+
+      expect(page).to have_popover('Map View')
+      choose 'Land / Water Map'
 
       expect(page).to have_popover('Granule Timeline (Part 1)')
       find('.timeline-zoom-in').click
 
       expect(page).to have_popover('Granule Timeline (Part 2)')
-      click_timeline_date('24', 'Aug')
+      click_timeline_date('24', 'Feb')
 
       expect(page).to have_popover('Granule Timeline (Part 3)')
-      drag_temporal(DateTime.new(2014, 8, 23, 0, 0, 0, '+0'), DateTime.new(2015, 8, 25, 0, 0, 0, '+0'))
+      drag_temporal(DateTime.new(2016, 2, 24, 13, 17, 8 , '+0'), DateTime.new(2016, 2, 25, 6, 36, 17, '+0'))
 
-      expect(page).to have_popover('Back to Datasets')
-      granule_list.click_on 'Back to Datasets'
+      expect(page).to have_popover('Back to Collections')
+      granule_list.click_on 'Back to Collections'
 
-      expect(page).to have_popover('Comparing Multiple Datasets')
-      first_featured_dataset.find('.add-to-project').click
+      expect(page).to have_popover('Comparing Multiple Collections')
+      collection_container = find('h3', text: /\AMODIS\/Aqua Near Real Time \(NRT\) Clouds 5-Min L2 Swath 1km and 5km\z/).find(:xpath, '..')
+      collection_container.find('.add-to-project').click
 
       expect(page).to have_popover('Projects')
       click_on 'View Project'

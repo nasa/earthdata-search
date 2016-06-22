@@ -32,6 +32,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
     paramName: 'upload'
     clickable: '.geojson-dropzone-link'
     createImageThumbnails: false
+    acceptedFiles: ".zip,.kml,.kmz,.json,.geojson,.rss,.georss,.xml"
     fallback: -> # If the browser can't support the necessary features
       $('.select-shapefile').parent().hide()
     parallelUploads: 1
@@ -52,19 +53,22 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       dropzone = new Dropzone(container, dropzoneOptions)
       dropzone.on 'success', @_geoJsonResponse
       dropzone.on 'removedfile', @_removeFile
+      dropzone.on 'error', @_displayError
       @_dropzone = dropzone
       L.DomUtil.addClass(container, 'dropzone')
+      @_isAdded = true
 
     onRemove: (map) ->
       @remove()
       @map = null
       @_jsonLayer = null
+      @_isAdded = false
 
     activate: (showHelp=true) ->
       @_isActive = true
       @show()
       @showHelp() if showHelp
-      $('#datasets-overlay').masterOverlay('hide')
+      $('#collections-overlay').masterOverlay('hide')
 
     deactivate: ->
       @_isActive = false
@@ -82,11 +86,13 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
 
     hide: ->
       $('.dz-preview').hide()
-      @map.removeLayer(@_jsonLayer) if @_jsonLayer?
+      @map.removeLayer(@_jsonLayer) if @_jsonLayer? && @_isAdded
+      @_isAdded = false
 
     show: ->
       $('.dz-preview').show()
-      @map.addLayer(@_jsonLayer) if @_jsonLayer?
+      @map.addLayer(@_jsonLayer) if @_jsonLayer? && !@_isAdded
+      @_isAdded = true if @_jsonLayer?
 
     remove: ->
       @_dropzone.removeFile(@_file) if @_file?
@@ -134,6 +140,16 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
       else if children.length == 1
         @_setConstraint(children[0])
 
+    _displayError: (file, response) =>
+      if file.name.match('.*shp')
+        errorMessage = 'To use an ESRI Shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+        errorDiv = document.createElement('div')
+        errorDiv.appendChild(document.createTextNode(errorMessage))
+        errorDiv.className += 'edsc-dz-error'
+        previewElement = file.previewElement
+        previewElement.getElementsByClassName('dz-details')[0].appendChild(errorDiv)
+        previewElement.removeChild(previewElement.querySelector('.dz-error-message'))
+
     _clickLayer: (e) =>
       @_setConstraint(e.chain[0])
 
@@ -145,7 +161,7 @@ ns.ShapefileLayer = do (L, Dropzone, config=@edsc.config, help=@edsc.help) ->
         originalLatLngs = sourceLayer.getLatLngs()
         latlngs = @_simplifyPoints(originalLatLngs)
 
-        if latlngs.length != originalLatLngs.length
+        if originalLatLngs.length > MAX_POLYGON_SIZE && latlngs.length != originalLatLngs.length
           help.add('shapefile_reduction', element: '.leaflet-draw-edit-edit')
 
         layer = L.sphericalPolygon(latlngs, @options.selection)

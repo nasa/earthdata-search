@@ -1,20 +1,21 @@
-      <section id="granule-list" data-bind="visible: ui.datasetsList.focused()" tabIndex="2" data-master-overlay-title="Granules">
+      <section id="granule-list" class="master-overlay-no-min" data-bind="visible: ui.collectionsList.focused()" tabIndex="2" data-master-overlay-title="Granules">
         <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
         <nav class="master-overlay-nav">
-          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: function() {ui.projectList.hideFilters(); ui.datasetsList.unfocusDataset(); }">
-            <i class="fa fa-arrow-circle-o-left"></i> Back to Datasets
+          <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: function() {ui.projectList.hideFilters(); ui.collectionsList.unfocusCollection(); }">
+            <i class="fa fa-arrow-circle-o-left"></i> Back to Collections
           </a>
         </nav>
-        <!-- ko if: ui.datasetsList.focused() -->
-        <!-- ko with: ui.datasetsList.focused() -->
+        <!-- ko if: ui.collectionsList.focused() && ui.collectionsList.focused().granules()  -->
+        <!-- ko with: ui.collectionsList.focused() -->
         <header class="with-options">
-          <h2 data-bind="text: dataset.title"></h2>
-          <!-- ko with: dataset -->
+          <h2 data-bind="text: collection.title"></h2>
+          <div id="datasource-caveats"></div>
+          <!-- ko with: collection -->
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button retrieve" title="Retrieve dataset data" data-bind="click: $root.ui.projectList.loginAndDownloadDataset">
-              <i class="fa fa-download"></i> Retrieve Dataset Data
+            <a href="#" class="button retrieve" title="Retrieve collection data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
+              <i class="fa fa-download"></i> Retrieve Collection Data
             </a>
-            <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.datasetsList.showDatasetDetails" title="View dataset details">
+            <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">
               <i class="fa fa-info-circle"></i>
             </a>
             <!-- ko if: has_granules -->
@@ -25,35 +26,35 @@
               <i class="fa fa-edit"></i>
             </a>
             <!-- /ko -->
-            <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add dataset to the current project"
-               data-bind="visible: !$root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
+            <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
+               data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
               <i class="fa fa-plus"></i>
             </a>
-            <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove dataset from the current project"
-               data-bind="visible: $root.project.hasDataset($data), click: $root.ui.projectList.toggleDataset">
+            <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
+               data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
               <i class="fa fa-minus"></i>
             </a>
           </div>
           <!-- /ko -->
         </header>
         <div class="master-overlay-info">
-          <!-- ko if: granules.isLoaded() -->
+          <!-- ko if: granules().isLoaded() -->
           <p>
-            Showing <span data-bind="text: granules.results().length"></span> of
-            <span data-bind="if: granules.hitsEstimated() && granules.hasNextPage()">about</span>
-            <span data-bind="text: granules.hits() == 1 ? '1 matching granule' : granules.hits() + ' matching granules'"></span>
-            <!-- ko if: granules.parentQuery.focusedInterval() -->
-            for the selected <span data-bind="text: granules.parentQuery.focusedInterval"></span>.
+            Showing <span data-bind="text: granules().results().length"></span> of
+            <span data-bind="if: granules().hitsEstimated() && granules().hasNextPage()">about</span>
+            <span data-bind="text: granules().hits() == 1 ? '1 matching granule' : granules().hits() + ' matching granules'"></span>
+            <!-- ko if: granules().parentQuery.focusedInterval() -->
+            for the selected <span data-bind="text: granules().parentQuery.focusedInterval"></span>.
             (<a href="#" data-bind="click: $root.ui.granuleTimeline.clear">Show All</a>)
             <!-- /ko -->
           </p>
 
-          <!-- ko if: granules.excludedGranulesList().length > 0 -->
+          <!-- ko if: granules().excludedGranulesList().length > 0 -->
           <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
           <!-- /ko -->
 
-          <p data-bind="if: granules.loadTime() !== null" class="panel-list-meta">
-            Search Time: <span data-bind="text: granules.loadTime">0.000</span>s
+          <p data-bind="if: granules().loadTime() !== null" class="panel-list-meta">
+            Search Time: <span data-bind="text: granules().loadTime">0.000</span>s
             <% if Rails.configuration.feedback_url.present? %>
               <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Granule Results', $data.id)" class="button feedback-button" title="Leave metadata feedback">
                 <i class="fa fa-exclamation-circle"></i>
@@ -62,36 +63,40 @@
             <% end %>
           </p>
 
-          <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules.query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules.query.sortKey"></select></p>
+          <!--ko ifnot: $data.collection.cwic()-->
+            <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
+          <!--/ko-->
 
           <!-- /ko -->
 
         </div>
-        <div class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
-          <ul class="panel-list-list" data-bind="foreach: granules.results()">
+        <div id="granules-scroll" class="master-overlay-content panel-list" data-bind="event: {scroll: scrolled}">
+          <ul class="panel-list-list" data-bind="foreach: granules().results()">
 
             <li class="panel-list-item" data-bind="css: {'panel-list-item-with-thumb': browse_flag === 'true' || browse_flag === true, 'panel-list-focused': $parent.focused() === $data, 'panel-list-selected': $parent.isStickied($data)}, event: { mouseenter: $parent.onGranuleMouseover, mouseleave: $parent.onGranuleMouseout, click: $parent.toggleStickyFocus}">
               <div class="panel-list-item-actions">
                 <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
                   <i class="fa fa-info-circle"></i>
                 </a>
-                <a href="#" class="button icon-button" title="Retrieve single granule data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.dataset)">
+                <a href="#" class="button icon-button" title="Retrieve single granule data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
                   <i class="fa fa-download"></i>
                 </a>
               </div>
 
               <!-- ko if: browse_flag === 'true' || browse_flag === true -->
                 <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
-                  <img class="panel-list-thumbnail" data-bind="attr: {src: edsc_browse_url(65)}" alt="Browse Image">
+                  <img class="panel-list-thumbnail" data-bind="event: {error: onThumbError}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
                 </a>
-              <!-- /ko -->
-              <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>
+                <!-- /ko -->
+                <!-- ko if: $parent.canRemoveGranules() -->
+                <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>
+                <!-- /ko -->
 
               <h3 data-bind="text: displayName()"></h3>
               <span data-bind="text: getTemporal()"></span>
             </li>
           </ul>
-          <p class="busy panel-list-load-more" data-bind="visible: granules.isLoading()">
+          <p class="busy panel-list-load-more" data-bind="visible: granules().isLoading()">
             Loading granules...
           </p>
         </div>

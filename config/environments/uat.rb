@@ -50,7 +50,7 @@ EarthdataSearchClient::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += ['search.js', 'data_access.js', 'account.js']
+  config.assets.precompile += ['search.js', 'data_access.js', 'account.js', 'cwic_granule.js']
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -71,15 +71,17 @@ EarthdataSearchClient::Application.configure do
 
   config.gather_metrics = true
   config.analytics_id = 'UA-50960810-2'
-  config.logo_name = "uat-logo-beta"
+  config.logo_name = "UAT"
   config.env_name = "[UAT]"
   config.tophat_url = "https://cdn.uat.earthdata.nasa.gov/tophat/tophat.js"
   config.feedback_url = 'https://fbm.uat.earthdata.nasa.gov/for/EdSearch_UAT/feedback.js'
 
   config.url_limit = 2000
-  config.echo_env = 'partnertest'
+  config.cmr_env = 'uat'
   services = config.services
-  config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.echo_env]['urs_root']]
+  config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]
 
+  # This is also the client ID sent to OpenSearch. It is kept the same since the OpenSearch endpoint ultimately
+  # talks to ECHO/CMR.
   config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-prod'
 end

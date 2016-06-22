@@ -1,5 +1,5 @@
 # EDSC-5 As a user, I want to see a simple search interface upon visiting the site
-#        so that I may quickly begin my search for datasets
+#        so that I may quickly begin my search for collections
 
 require 'spec_helper'
 
@@ -56,7 +56,7 @@ describe 'Site landing page' do
   it 'goes back to the landing page when the user clicks the site logo from the search page' do
     load_page :search
     expect(page).to have_link('Clear Filters')
-    click_link 'Earthdata Search'
+    click_link 'Earthdata Search Home'
     expect(page).to have_no_link('Clear Filters')
   end
 

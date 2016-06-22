@@ -4,21 +4,21 @@
 
 require "spec_helper"
 
-describe "Dataset GIBS help", reset: true do
+describe "Collection GIBS help", reset: true do
+  extend Helpers::CollectionHelpers
 
-  gibs_dataset_id = 'C1000000019-LANCEMODIS'
+  gibs_collection_id = 'C119124186-NSIDC_ECS'
+  gibs_collection_name = 'AMSR-E/Aqua L2B Global Swath Rain Rate/Type GSFC Profiling Algorithm V002'
   gibs_tile_layer = '.leaflet-tile-pane .leaflet-layer:nth-child(2)'
 
   before :each do
     load_page :search
-    fill_in "keywords", with: gibs_dataset_id
-    expect(page).to have_content('MOD04_L2')
+    fill_in "keywords", with: gibs_collection_id
+    expect(page).to have_content('AE_Rain')
   end
 
-  context "when visualizing a GIBS-enabled dataset" do
-    before :each do
-      first_featured_dataset.click_link "View dataset"
-    end
+  context "when visualizing a GIBS-enabled collection" do
+    hook_granule_results(gibs_collection_name, :each)
 
     it "displays information on the source and accuracy of GIBS browse" do
       expect(page).to have_popover('Approximate Granule Imagery')
@@ -28,17 +28,17 @@ describe "Dataset GIBS help", reset: true do
     end
   end
 
-  context "when visualizing a GIBS-enabled dataset a second time" do
+  context "when visualizing a GIBS-enabled collection a second time" do
     before :each do
-      first_featured_dataset.click_link "View dataset"
+      view_granule_results(gibs_collection_name)
       within '.popover-navigation' do
         click_on 'Close'
       end
-      page.should have_css(gibs_tile_layer)
-      first_featured_dataset.click_link "Hide dataset"
-      page.should have_no_css(gibs_tile_layer)
-      first_featured_dataset.click_link "View dataset"
-      page.should have_css(gibs_tile_layer)
+      expect(page).to have_granule_visualizations(gibs_collection_id)
+      leave_granule_results
+      expect(page).to have_no_granule_visualizations(gibs_collection_id)
+      view_granule_results(gibs_collection_name)
+      expect(page).to have_granule_visualizations(gibs_collection_id)
     end
 
     it "does not display GIBS accuracy information a second time" do

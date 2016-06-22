@@ -2,9 +2,19 @@
 @media (max-width: 1075px) {
 
 	.toolbar {
-	  .tt-query, .tt-hint {
+	  .tt-query, .tt-hint, .tt-input {
 	    width: $toolbar-search-field-sm-width;
-	    @include transition (width 0.5s ease-in-out);
+	    @include transition(width 0.5s ease-in-out);
+	  }
+	}
+}
+
+/* Toolbar button breakpoint */
+@media (max-width: 1265px) {
+
+	.toolbar {
+	  .dropdown-value, .button-value {
+			display: none;
 	  }
 	}
 }
@@ -16,20 +26,6 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
-
-  .col-sm-12 {
-    width: 100%;
-    dt {
-      margin-bottom: 10px;
-    }
-  }
-
-  .second-col {
-    dt, dd {
-      padding-left: 0px;
-
-    }
-  }
 }
 
 @media (min-width: 1350px) and (max-width: 1440px) {
@@ -39,20 +35,4 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
-
-  .col-md-6 {
-    width: 50%;
-
-    .second-col {
-      dt, dd {
-        padding-left: 40px;
-      }
-    }
-
-    dd {
-      font-size: 0.9em;
-      font-weight: bold;
-      color: #FFFFFF;
-    }
-  }
 }

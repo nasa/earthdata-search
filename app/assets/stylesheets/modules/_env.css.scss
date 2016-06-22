@@ -15,4 +15,10 @@
 
   // Disable CSS transitions to avoid waiting for animations no one will see
   * { transition: none !important; }
+
+  // Fixes ClickFailed errors in the collapsed view caused by capybara's placement of the scrollbar
+  // on the right, contrary to the LTR declaration
+  .is-master-overlay-minimized .master-overlay-main {
+    width: 287px !important;
+  }
 }

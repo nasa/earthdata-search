@@ -52,7 +52,16 @@ module Colormaps
         special_colors = []
         special_labels = []
 
+        # Colormaps 1.0
         entries = xml.xpath("//ColorMap/ColorMapEntry")
+
+        if entries.size == 0
+          # Colormaps 1.2
+          colormaps = xml.xpath("//ColorMaps/ColorMap").find {|map| map.attribute('title').to_s != 'No Data'}
+          return if colormaps.nil?
+
+          entries = colormaps.xpath("//Entries/ColorMapEntry")
+        end
 
         entries.each do |entry|
           r,g,b = entry.attribute("rgb").to_s.split(',')

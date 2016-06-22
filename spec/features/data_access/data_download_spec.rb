@@ -1,30 +1,35 @@
 require "spec_helper"
 
 describe "Data download page", reset: false do
-  downloadable_dataset_id = 'C179003030-ORNL_DAAC'
-  downloadable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+  downloadable_collection_id = 'C90762182-LAADS'
+  downloadable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
-  non_downloadable_dataset_id = 'C179001887-SEDAC'
-  non_downloadable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
+  non_downloadable_collection_id = 'C179001887-SEDAC'
+  non_downloadable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
-  orderable_dataset_id = 'C179003030-ORNL_DAAC'
-  orderable_dataset_title = '15 Minute Stream Flow Data: USGS (FIFE)'
+  orderable_collection_id = 'C90762182-LAADS'
+  orderable_collection_title = 'MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005'
 
-  non_orderable_dataset_id = 'C179001887-SEDAC'
-  non_orderable_dataset_title = '2000 Pilot Environmental Sustainability Index (ESI)'
+  orderable_collection_id_with_no_browseable_granules = 'C179003216-ORNL_DAAC'
 
-  no_resource_dataset_id = 'C2821-NSIDCV0'
-  no_resource_dataset_title = 'AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations'
+  no_direct_download_collection_id = 'C179003030-ORNL_DAAC'
 
-  no_granules_dataset_id = 'C179002107-SEDAC'
-  no_granules_dataset_title = 'Anthropogenic Biomes of the World, Version 1'
+  non_orderable_collection_id = 'C179001887-SEDAC'
+  non_orderable_collection_title = '2000 Pilot Environmental Sustainability Index (ESI)'
 
-  browseable_dataset_id = 'C115003857-NSIDC_ECS'
-  browseable_dataset_title = 'MODIS/Aqua Sea Ice Extent Daily L3 Global 1km EASE-Grid Night V005'
-  browseable_dataset_params = {project: [browseable_dataset_id],
+  no_resource_collection_id = 'C1214614479-SCIOPS'
+  no_resource_collection_title = 'Aeolian Processes in the Dry Valleys'
+
+  no_granules_collection_id = 'C179002107-SEDAC'
+  no_granules_collection_title = 'Anthropogenic Biomes of the World, Version 1'
+
+  browseable_collection_id = 'C115003857-NSIDC_ECS'
+  browseable_collection_title = 'MODIS/Aqua Sea Ice Extent Daily L3 Global 1km EASE-Grid Night V005'
+  browseable_collection_params = {project: [browseable_collection_id],
                                temporal: ['2015-01-01T00:00:00Z', '2015-01-01T00:00:01Z']}
 
   before(:all) do
+    AccessConfiguration.destroy_all
     load_page :search, overlay: false
     login
   end
@@ -34,9 +39,9 @@ describe "Data download page", reset: false do
     AccessConfiguration.destroy_all if page.server.responsive?
   end
 
-  context "when some accessed datasets have additional resource or documentation links" do
+  context "when some accessed collections have additional resource or documentation links" do
     before :all do
-      load_page 'data/configure', project: [downloadable_dataset_id, no_resource_dataset_id]
+      load_page 'data/configure', project: [downloadable_collection_id, no_resource_collection_id]
 
       choose 'Download'
       click_on 'Continue'
@@ -44,31 +49,31 @@ describe "Data download page", reset: false do
       click_on 'Submit'
     end
 
-    it "displays a section for additional resources and documentation" do
+    it "displays a section for additional resources and documentation", intermittent: 1 do
       expect(page).to have_content("Additional Resources and Documentation")
     end
 
-    it "displays links for datasets with additional resources and documentation" do
-      expect(page).to have_link("USGS 15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED INFORMATION)")
+    it "displays links for collections with additional resources and documentation" do
+      expect(page).to have_link("MODIS Level 1B Product Information Page at MCST")
     end
 
-    it "displays titles for datasets with additional resources and documentation" do
+    it "displays titles for collections with additional resources and documentation" do
       within('.data-access-resources') do
-        expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
+        expect(page).to have_content("MODIS/Aqua Calibrated Radiances 5-Min L1B Swath 250m V005")
       end
     end
 
-    it "displays no information for datasets without additional resources and documentation" do
-      expect(page).to have_content("AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations")
+    it "displays no information for collections without additional resources and documentation" do
+      expect(page).to have_content(no_resource_collection_title)
       within('.data-access-resources') do
-        expect(page).to have_no_content("AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations")
+        expect(page).to have_no_content(no_resource_collection_title)
       end
     end
   end
 
-  context "when no accessed datasets have additional resource or documentation links" do
+  context "when no accessed collections have additional resource or documentation links" do
     before :all do
-      load_page 'data/configure', project: [no_resource_dataset_id]
+      load_page 'data/configure', project: [no_resource_collection_id]
 
       choose 'Download'
       click_on 'Submit'
@@ -78,15 +83,15 @@ describe "Data download page", reset: false do
       expect(page).to have_no_content("Additional Resources and Documentation")
     end
 
-    it "displays no information for datasets without additional resources and documentation" do
-      expect(page).to have_content("AARI 10-Day Arctic Ocean EASE-Grid Sea Ice Observations")
+    it "displays no information for collections without additional resources and documentation" do
+      expect(page).to have_content(no_resource_collection_title)
       expect(page).to have_no_selector('.data-access-resources')
     end
   end
 
   context "selecting the direct download option for granules with browse imagery" do
     before :all do
-      load_page 'data/configure', browseable_dataset_params
+      load_page 'data/configure', browseable_collection_params
       wait_for_xhr
 
       choose 'Download'
@@ -113,7 +118,7 @@ describe "Data download page", reset: false do
 
   context "selecting the direct download option for granules without browse imagery" do
     before :all do
-      load_page 'data/configure', project: [downloadable_dataset_id]
+      load_page 'data/configure', project: [no_direct_download_collection_id]
       wait_for_xhr
 
       choose 'Download'
@@ -126,9 +131,9 @@ describe "Data download page", reset: false do
     end
   end
 
-  context "selecting the direct download option for datasets without granules" do
+  context "selecting the direct download option for collections without granules" do
     before :all do
-      load_page 'data/configure', project: [no_granules_dataset_id]
+      load_page 'data/configure', project: [no_granules_collection_id]
       wait_for_xhr
 
       choose 'Download'
@@ -143,7 +148,7 @@ describe "Data download page", reset: false do
 
   context "selecting an asynchronous access option for granules with browse imagery" do
     before :all do
-      load_page 'data/configure', browseable_dataset_params
+      load_page 'data/configure', browseable_collection_params
       wait_for_xhr
 
       choose 'M*D29P1N Order Option'
@@ -151,9 +156,12 @@ describe "Data download page", reset: false do
 
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
     end
 
-    it "displays a link to view browse images" do
+    # The intermittence might be caused by db not cleaned up.
+    # Reproduceable locally only if the db is not clean. The spec will pass after a db:drop/setup.
+    it "displays a link to view browse images", intermittent: 1 do
       expect(page).to have_link('View Browse Image Links')
     end
 
@@ -172,16 +180,15 @@ describe "Data download page", reset: false do
 
   context "selecting an asychronous access option for granules without browse imagery" do
     before :all do
-      load_page 'data/configure', project: [orderable_dataset_id]
+      load_page 'data/configure', project: [orderable_collection_id_with_no_browseable_granules]
       wait_for_xhr
 
-      choose 'Ftp_Pull'
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      choose 'Order'
       click_on 'Continue'
 
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
     end
 
     it "does not display a link to view browse images" do
@@ -189,9 +196,9 @@ describe "Data download page", reset: false do
     end
   end
 
-  context "when datasets have been selected for direct download" do
+  context "when collections have been selected for direct download" do
     before :all do
-      load_page 'data/configure', project: [downloadable_dataset_id, non_downloadable_dataset_id]
+      load_page 'data/configure', {project: [downloadable_collection_id, non_downloadable_collection_id], temporal: ['2014-07-10T00:00:00Z', '2014-07-10T03:59:59Z']}
       wait_for_xhr
 
       # Download the first
@@ -199,43 +206,45 @@ describe "Data download page", reset: false do
       click_on 'Continue'
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
     end
 
     it "displays a link to return to search results" do
       expect(page).to have_link("Back to Data Access Options")
-      expect(page).to have_css("a[href^=\"/data/configure?p=%21#{downloadable_dataset_id}\"]")
+      expect(page).to have_css("a[href^=\"/data/configure?\"]")
     end
 
     it "displays information on using direct download" do
-      expect(page).to have_content('The following datasets are available for immediate download')
-      expect(page).to have_content(downloadable_dataset_title)
+      expect(page).to have_content('The following collections are available for immediate download')
+      expect(page).to have_content(downloadable_collection_title)
     end
 
-    it "displays a link to access a page containing direct download urls for datasets chosen for direct download" do
+    it "displays a link to access a page containing direct download urls for collections chosen for direct download" do
       expect(page).to have_link('View Download Links')
     end
 
-    it "displays a link to access a page containing direct download urls for datasets chosen for direct download" do
+    it "displays a link to access a page containing direct download urls for collections chosen for direct download" do
       expect(page).to have_link('Download Access Script')
     end
 
-    it "displays links for direct downloads for dataset only datasets" do
-      expect(page).to have_content(non_downloadable_dataset_title)
+    it "displays links for direct downloads for collection only collections" do
+      expect(page).to have_content(non_downloadable_collection_title)
       expect(page).to have_content('Data download page')
     end
 
     context 'upon clicking a "View Download Links" button' do
       before :all do
         click_link "View Download Links"
+        wait_for_xhr
       end
 
-      it "displays a page containing direct download hyperlinks for the dataset's granules in a new window" do
+      it "displays a page containing direct download hyperlinks for the collection's granules in a new window" do
         within_last_window do
-          expect(page).to have_link("http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1984/43601715.s15")
+          expect(page).to have_link("ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf")
         end
       end
 
-      it "does not display inherited dataset-level download links" do
+      it "does not display inherited collection-level download links" do
         within_last_window do
           expect(page).to have_no_link("http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1")
         end
@@ -250,20 +259,18 @@ describe "Data download page", reset: false do
       it "downloads a shell script which performs the user's query" do
         within_last_window do
           expect(page).to have_content('#!/bin/sh')
-          expect(page).to have_content('http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80611715.s15')
+          expect(page).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
         end
       end
     end
   end
 
-  context "when no datasets have been selected for direct download" do
+  context "when no collections have been selected for direct download" do
     before :all do
-      load_page 'data/configure', project: [orderable_dataset_id]
+      load_page 'data/configure', project: [no_direct_download_collection_id]
       wait_for_xhr
 
-      choose 'Ftp_Pull'
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      choose 'Order'
       click_on 'Continue'
 
       # Confirm address
@@ -271,54 +278,52 @@ describe "Data download page", reset: false do
     end
 
     it "displays no information on direct downloads" do
-      expect(page).to have_no_content('The following datasets are available for immediate download')
+      expect(page).to have_no_content('The following collections are available for immediate download')
     end
   end
 
-  context "when datasets have been selected for asynchronous access" do
+  context "when collections have been selected for asynchronous access" do
     before :all do
-      load_page 'data/configure', project: [orderable_dataset_id, non_orderable_dataset_id]
+      load_page 'data/configure', project: [orderable_collection_id, non_orderable_collection_id], temporal: ['2016-01-21T00:00:00Z', '2016-01-21T00:00:01Z']
       wait_for_xhr
 
-      choose 'Ftp_Pull'
-      select 'FTP Pull', from: 'Offered Media Delivery Types'
-      select 'Tape Archive Format (TAR)', from: 'Offered Media Format for FTPPULL'
+      choose 'FtpPushPull'
       click_on 'Continue'
-
       # No actions available on the second, continue
       click_on 'Continue'
+
       # Confirm address
       click_on 'Submit'
+      wait_for_xhr
     end
 
     it "displays a link to return to search results" do
       expect(page).to have_link("Back to Data Access Options")
-      expect(page).to have_css("a[href^=\"/data/configure?p=%21#{downloadable_dataset_id}\"]")
     end
 
     it "displays information on obtaining data asynchronously" do
-      expect(page).to have_content('The following datasets are being processed')
-      expect(page).to have_content(orderable_dataset_title)
+      expect(page).to have_content('The following collections are being processed')
+      expect(page).to have_content(orderable_collection_title)
     end
 
-    it "indicates current order status" do
-      expect(page).to have_text('Not Validated')
+    it "indicates current order status", pending_fixtures: true do
+      expect(page).to have_text('Submitting')
     end
 
-    it "provides a link to cancel the order" do
+    it "provides a link to cancel the order", pending_fixtures: true do
       expect(page).to have_link("Cancel")
     end
 
-    it "displays no tracking links for datasets that were not chosen for asychronous access" do
+    it "displays no tracking links for collections that were not chosen for asychronous access" do
       within '.data-access-orders' do
-        expect(page).to have_no_content(non_orderable_dataset_title)
+        expect(page).to have_no_content(non_orderable_collection_title)
       end
     end
   end
 
-  context "when no datasets have been selected for asynchronous access" do
+  context "when no collections have been selected for asynchronous access" do
     before :all do
-      load_page 'data/configure', project: [downloadable_dataset_id]
+      load_page 'data/configure', project: [downloadable_collection_id]
       wait_for_xhr
 
       choose 'Download'
@@ -326,7 +331,7 @@ describe "Data download page", reset: false do
     end
 
     it "displays no information on direct downloads" do
-      expect(page).to have_no_content('The following datasets are being processed')
+      expect(page).to have_no_content('The following collections are being processed')
     end
   end
 end

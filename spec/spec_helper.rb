@@ -1,10 +1,12 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
+ENV["PRECOMPILE_NODE_ASSETS"] ||= 'true'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
 require 'headless'
+require 'helpers/instrumentation'
 
 # Un-comment to truncate the test log to only the most recent execution
 #File.truncate(Rails.root.join("log/test.log"), 0)
@@ -116,8 +118,8 @@ RSpec.configure do |config|
     # Avoid recording tokens
     ['edsc', 'edscbasic', 'expired_token'].each do |token_key|
       token = Class.new.extend(Helpers::SecretsHelpers).urs_tokens[token_key]['access_token']
-      access_token = "#{token}:#{Rails.configuration.urs_client_id}"
-      normalizers << VCR::HeaderNormalizer.new('Echo-Token', access_token, token_key)
+      token = "#{token}:#{Rails.configuration.urs_client_id}" unless token.include? '-'
+      normalizers << VCR::HeaderNormalizer.new('Echo-Token', token, token_key)
     end
 
     normalizers << VCR::HeaderNormalizer.new('Echo-Token', "invalid:#{Rails.configuration.urs_client_id}", 'invalid')
@@ -136,6 +138,10 @@ RSpec.configure do |config|
     Headless.new(:destroy_on_exit => false).start
   end
 
+  config.before :each do
+    Rails.logger.info "Executing test: #{example.metadata[:example_group][:file_path]}:#{example.metadata[:example_group][:line_number]}"
+  end
+
   config.before :all do
     file_time = Time.now
     Capybara.default_wait_time = [(self.class.metadata[:wait] || wait_time), wait_time].max
@@ -144,11 +150,14 @@ RSpec.configure do |config|
 
   config.after :all do
     Capybara.default_wait_time = wait_time
+    Delayed::Worker.delay_jobs = false
     timings[self.class.display_name] = Time.now - file_time
     index += 1
     puts " (Suite #{index} of #{count})"
 
-    models_to_preserve = [DatasetExtra, ActiveRecord::SchemaMigration]
+    # include deprecated 'DatasetExtra' here to prevent an error on model.destroy_all. For more info, see comments in
+    # dataset_extra.rb
+    models_to_preserve = [CollectionExtra, ActiveRecord::SchemaMigration, DatasetExtra]
     ActiveRecord::Base.descendants.each do |model|
       model.destroy_all unless models_to_preserve.include?(model)
     end
@@ -159,6 +168,10 @@ RSpec.configure do |config|
     puts "Slowest specs"
     puts (timings.sort_by(&:reverse).reverse.map {|k, v| "%7.3fs - #{k}" % v}.join("\n"))
     puts
+  end
+
+  config.after :suite do
+    Helpers::Instrumentation.report_performance
   end
 
   config.after :each do
@@ -192,7 +205,7 @@ RSpec.configure do |config|
   config.include Helpers::SpatialHelpers
   config.include Helpers::ProjectHelpers
   config.include Helpers::PageHelpers
-  config.include Helpers::DatasetHelpers
+  config.include Helpers::CollectionHelpers
   config.include Helpers::DefaultTags
   config.include Helpers::TemporalHelpers
   config.include Helpers::UrlHelpers

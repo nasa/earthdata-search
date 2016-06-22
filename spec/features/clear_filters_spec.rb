@@ -1,10 +1,10 @@
-# EDSC-37 As a user, I want to clear my dataset filters so that I may start a new search
+# EDSC-37 As a user, I want to clear my collection filters so that I may start a new search
 
 require 'spec_helper'
 
 describe "'Clear Filters' button", reset: false do
   before :all do
-    load_page :search
+    load_page :search, facets: true
   end
 
   it "clears keywords" do
@@ -17,19 +17,21 @@ describe "'Clear Filters' button", reset: false do
   end
 
   it "clears spatial" do
-    create_point(0, 0)
-    expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
-    expect(page).to have_content("2000 Pilot Environmental Sustainability Index")
+    create_point(67, -155)
+    expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
+    expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
 
     click_link "Clear Filters"
-    expect(page).to have_content("15 Minute Stream Flow Data: USGS")
-    expect(page).to have_no_css('#map .leaflet-marker-icon')
+    expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
+    expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
   end
 
   context "clears temporal" do
     after :each do
       # close temporal dropdown
       click_link "Temporal"
+      click_link "Clear Filters"
+      wait_for_xhr
     end
 
     it "range" do
@@ -39,15 +41,17 @@ describe "'Clear Filters' button", reset: false do
                 temporal.isRecurring(false);
                 null;"
       page.execute_script(script)
+      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
 
       click_link "Clear Filters"
 
+      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       click_link "Temporal"
-      expect(page.find("#dataset-temporal-range-start")).to have_no_text("1978-12-01 00:00:00")
-      expect(page.find("#dataset-temporal-range-stop")).to have_no_text("1979-12-01 00:00:00")
+      expect(page.find("#collection-temporal-range-start")).to have_no_text("1978-12-01 00:00:00")
+      expect(page.find("#collection-temporal-range-stop")).to have_no_text("1979-12-01 00:00:00")
       page.find('body > footer .version').click # Click away from timeline
     end
 
@@ -59,24 +63,25 @@ describe "'Clear Filters' button", reset: false do
                 null;"
       page.execute_script(script)
 
+      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
 
       click_link "Clear Filters"
-
+      wait_for_xhr
+      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
       expect(page).to have_content("15 Minute Stream Flow Data: USGS")
       click_link "Temporal"
-      expect(page.find("#dataset-temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")
-      expect(page.find("#dataset-temporal-recurring-stop")).to have_no_text("1975-12-31 00:00:00")
+      expect(page.find("#collection-temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")
+      expect(page.find("#collection-temporal-recurring-stop")).to have_no_text("1975-12-31 00:00:00")
       expect(page.find(".temporal-recurring-year-range-value")).to have_text("1960 - #{Time.new.year}")
       page.find('body > footer .version').click # Click away from timeline
     end
   end
 
   it "clears facets" do
-    click_on 'Browse Datasets'
     find("h3.facet-title", text: 'Project').click
     find(".facets-item", text: "EOSDIS").click
-    within(:css, '#collapse3 .panel-body.facets') do
+    within(:css, '#collapse2 .panel-body.facets') do
       expect(page).to have_content("EOSDIS")
       expect(page).to have_css(".facets-item.selected")
     end

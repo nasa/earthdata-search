@@ -1,17 +1,10 @@
 module Helpers
   module PageHelpers
     def wait_for_xhr
-      #@waiting ||= 0
-      synchronize(30) do
-        #message = lambda do |time, value|
-        #  @waiting += time
-        #  puts "window.edsc.util.xhr.hasPending() -> %.3f #{value.inspect}.  Total: %.3f" % [time, @waiting]
-        #end
-        #result = Echo::Util.time(::Logger.new(STDOUT), message) do
-        #  page.evaluate_script('window.edsc.util.xhr.hasPending()')
-        #end
-
-        expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
+      ActiveSupport::Notifications.instrument "edsc.performance.wait_for_xhr" do
+        synchronize(30) do
+          expect(page.evaluate_script('window.edsc.util.xhr.hasPending()')).to be_false
+        end
       end
     end
 
@@ -25,6 +18,8 @@ module Helpers
     def synchronize(seconds=Capybara.default_wait_time)
       start_time = Time.now
 
+      count = 0
+
       if @synchronized
         yield
       else
@@ -32,7 +27,9 @@ module Helpers
         begin
           yield
         rescue => e
+          count += 1
           if (Time.now - start_time) >= seconds
+            puts "ERROR: synchronize() timed out after #{Time.now - start_time} seconds and #{count} tries"
             Capybara::Screenshot.screenshot_and_save_page
             raise
           end
@@ -53,7 +50,7 @@ module Helpers
     # Resets the query filters and waits for all the resulting xhr requests to finish.
     def reset_search(wait=true)
       page.execute_script('edsc.page.clearFilters()')
-      wait_for_xhr
+      wait_for_xhr if wait
     end
 
     def logout
@@ -81,6 +78,7 @@ module Helpers
       page.set_rack_session(expires_in: json['expires_in'])
       page.set_rack_session(access_token: json['access_token'])
       page.set_rack_session(refresh_token: json['refresh_token'])
+      page.set_rack_session(user_name: key)
       page.set_rack_session(logged_in_at: Time.now.to_i)
     end
 
@@ -117,8 +115,8 @@ module Helpers
 
     def reset_access_page
       script = "edsc.page.ui.serviceOptionsList.activeIndex(0);
-                edsc.page.project.accessDatasets()[0].serviceOptions.accessMethod.removeAll();
-                edsc.page.project.accessDatasets()[0].serviceOptions.addAccessMethod();"
+                edsc.page.project.accessCollections()[0].serviceOptions.accessMethod.removeAll();
+                edsc.page.project.accessCollections()[0].serviceOptions.addAccessMethod();"
       page.execute_script script
     end
 

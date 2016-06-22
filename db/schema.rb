@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213195321) do
+ActiveRecord::Schema.define(version: 20160422011745) do
 
   create_table "access_configurations", force: true do |t|
     t.integer  "user_id"
@@ -19,9 +19,20 @@ ActiveRecord::Schema.define(version: 20150213195321) do
     t.text     "service_options"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "echoform_digest"
   end
 
   add_index "access_configurations", ["user_id"], name: "index_access_configurations_on_user_id"
+
+  create_table "cron_job_histories", force: true do |t|
+    t.string   "task_name"
+    t.datetime "last_run"
+    t.string   "status"
+    t.text     "message"
+    t.string   "host"
+  end
+
+  add_index "cron_job_histories", ["task_name", "last_run"], name: "index_cron_job_histories_on_task_name_and_last_run"
 
   create_table "dataset_extras", force: true do |t|
     t.string   "echo_id",                 null: false
@@ -51,6 +62,8 @@ ActiveRecord::Schema.define(version: 20150213195321) do
     t.datetime "updated_at"
   end
 
+  add_index "delayed_jobs", ["created_at"], name: "index_delayed_jobs_on_created_at"
+  add_index "delayed_jobs", ["failed_at"], name: "index_delayed_jobs_on_failed_at"
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "projects", force: true do |t|

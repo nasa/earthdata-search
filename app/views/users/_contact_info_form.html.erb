@@ -1,38 +1,78 @@
-<!-- ko if: !ui.accountForm.isEditingAccount() -->
+<!-- ko if: !ui.accountForm.isEditingNotificationPreference() -->
 <!-- ko with: account -->
   <p>
     <span data-bind="text: firstName"></span> <span data-bind="text: lastName"></span> (<span data-bind="text: email"></span>)<br>
     <!-- ko if: organizationName() -->
-    <span data-bind="text: organizationName"></span><br>
+      <span><strong>Organization: </strong> <!-- ko text: organizationName --><!-- /ko --></span><br>
     <!-- /ko -->
-    <span data-bind="text: address.street1"></span><br>
-    <!-- ko if: address.street2() -->
-    <span data-bind="text: address.street2"></span><br>
+    <!-- ko if: country() -->
+    <span><strong>Country: </strong> <!-- ko text: country --><!-- /ko --></span><br>
     <!-- /ko -->
-    <!-- ko if: address.street3() -->
-    <span data-bind="text: address.street3"></span><br>
+    <!-- ko if: affiliation() -->
+    <span><strong>Affiliation: </strong> <!-- ko text: affiliation --><!-- /ko --></span><br>
     <!-- /ko -->
-    <span data-bind="text: address.city"></span>,
-    <!-- ko if: address.country() == 'United States' -->
-    <span data-bind="text: address.state"></span>
+    <!-- ko if: studyArea() -->
+    <span><strong>Study Area: </strong> <!-- ko text: studyArea --><!-- /ko --></span><br>
     <!-- /ko -->
-    <!-- ko if: address.country() != 'United States' -->
-    <span data-bind="text: address.country"></span>
-    <!-- /ko -->
-    <span data-bind="text: address.zip"></span><br>
-    <span data-bind="text: phone.number"></span>
-    <!-- ko if: fax.number() -->
-    (Phone)<br>
-    <span data-bind="text: fax.number()"></span> (Fax)
+    <!-- ko if: userType() -->
+    <span><strong>User Type: </strong> <!-- ko text: userType --><!-- /ko --></span><br>
     <!-- /ko -->
   </p>
+
   <p>
-    <a href="#" data-bind="click: $root.ui.accountForm.editAccount">Edit</a>
+    <a href="<%="#{Rails.configuration.services['earthdata'][Rails.configuration.cmr_env]['urs_root']}/profile/edit" %>" target="_blank" class="button text-button">Edit Profile in Earthdata Login <i class="fa fa-arrow-circle-right"></i></a>
   </p>
 <!-- /ko -->
 <!-- /ko -->
-<!-- ko if: ui.accountForm.isEditingAccount() -->
+
+<!-- ko if: ui.accountForm.isEditingNotificationPreference() -->
 <!-- ko with: account -->
+
+  <ul>
+    <li>
+      <span class="urs-profile-label">First Name</span>
+      <span data-bind="text: firstName"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Last Name</span>
+      <span data-bind="text: lastName"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Email</span>
+      <span data-bind="text: email"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Organization Name</span>
+      <span data-bind="text: organizationName"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Country</span>
+      <span data-bind="text: country"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Affiliation</span>
+      <span data-bind="text: affiliation"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">Study Area</span>
+      <span data-bind="text: studyArea"></span>
+    </li>
+    <li>
+      <span class="urs-profile-label">User Type</span>
+      <span data-bind="text: userType"></span>
+    </li>
+  </ul>
+
+
+  <p>
+    <a href="<%="#{Rails.configuration.services['earthdata'][Rails.configuration.cmr_env]['urs_root']}/profile/edit" %>" target="_blank" class="button text-button">Edit Profile in Earthdata Login <i class="fa fa-arrow-circle-right"></i></a>
+  </p>
+
+  <hr>
+
+  <!-- ko if: message() -->
+  <p class="confirmation-message" data-bind="text: message"></p>
+  <!-- /ko -->
 
   <!-- ko if: errors() -->
   <p data-bind="foreach: errors">
@@ -40,77 +80,11 @@
   </p>
   <!-- /ko -->
 
-  <!-- ko if: message() -->
-  <p class="confirmation-message" data-bind="text: message"></p>
-  <!-- /ko -->
-
-  <p class="required">
-    <label for="firstName">First name</label>
-    <input data-bind="value: firstName" id="firstName" size="30" type="text">
-  </p>
-  <p class="required">
-    <label for="lastName">Last name</label>
-    <input data-bind="value: lastName" id="lastName" size="30" type="text">
-  </p>
-  <p class="required">
-    <label for="email">Email</label>
-    <input data-bind="value: email" id="email" size="30" type="text">
-  </p>
-  <p>
-    <label for="organizationName">Organization name</label>
-    <input data-bind="value: organizationName" id="organizationName" size="30" type="text">
-  </p>
-
-  <h4>Address</h4>
-
-  <p data-bind="css: {required: $root.ui.accountForm.isServiceForm}">
-    <label for="address_street1">Street</label>
-    <input data-bind="value: address.street1" id="address_street1" maxlength="128" size="30" type="text">
-  </p>
-  <p>
-    <label></label>
-    <input data-bind="value: address.street2" id="address_street2" maxlength="128" size="30" type="text">
-  </p>
-  <p>
-    <label></label>
-    <input data-bind="value: address.street3" id="address_street3" maxlength="128" size="30" type="text">
-  </p>
-  <p data-bind="css: {required: $root.ui.accountForm.isServiceForm}">
-    <label for="address_city">City</label>
-    <input data-bind="value: address.city" id="address_city" size="30" type="text">
-  </p>
-  <p data-bind="css: {required: $root.ui.accountForm.isServiceForm}">
-    <label for="address_country">Country</label>
-    <select data-bind="value: address.country" id="address_country">
-      <%= render partial: "users/country_options" %>
-    </select>
-  </p>
-  <!-- ko if: address.country() == 'United States' -->
-  <p data-bind="css: {required: $root.ui.accountForm.isServiceForm}">
-    <label for="address_state">State</label>
-    <select data-bind="value: address.state" id="address_state">
-      <%= render partial: "users/state_options" %>
-    </select>
-  </p>
-  <!-- /ko -->
-  <p data-bind="css: {required: $root.ui.accountForm.isServiceForm}">
-    <label for="address_zip">Zip</label>
-    <input data-bind="value: address.zip" id="address_zip" size="30" type="text">
-  </p>
-
-  <h4>Phone</h4>
-
-  <p data-bind="css: {required: $root.ui.accountForm.isServiceForm}">
-    <label for="phone_number">Phone number</label>
-    <input data-bind="value: phone.number" id="phone_number" size="30" type="text">
-  </p>
-  <p>
-    <label for="fax_number">Fax number</label>
-    <input data-bind="value: fax.number" id="fax_number" size="30" type="text">
-  </p>
+  <h3>Update Notification Preference Level</h3>
 
   <p>
     <label for="notificationLevel">Receive delayed access notifications</label>
+
     <select data-bind="value: notificationLevel" id="notificationLevel">
       <option value="VERBOSE">Always</option>
       <option value="DETAIL">When requests change state</option>

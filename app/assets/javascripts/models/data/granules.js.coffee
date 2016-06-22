@@ -1,5 +1,5 @@
 #= require models/data/granule
-#= require models/data/grid
+#= require models/data/spatial_entry
 #= require models/data/xhr_model
 
 ns = @edsc.models.data
@@ -29,7 +29,7 @@ ns.Granules = do (ko,
       @excludedGranulesList = ko.observableArray()
 
     _toResults: (data, current, params) ->
-      entries = data.feed.entry
+      entries = data.feed.entry || []
       newItems = (new Granule(entry) for entry in entries)
 
       if params.page_num > 1
@@ -103,6 +103,10 @@ ns.Granules = do (ko,
 
       granule
 
+    clearExclusions: =>
+      @excludedGranulesList([])
+      @query.excludedGranules([])
+
     params: =>
       parentParams = @parentQuery.globalParams()
       params = extend({}, parentParams, @query.params())
@@ -110,8 +114,8 @@ ns.Granules = do (ko,
 
       if focusedTemporal?
         granuleTemporal = @query.temporal.applied
-        datasetTemporal = @parentQuery.temporal.applied
-        condition = datasetTemporal
+        collectionTemporal = @parentQuery.temporal.applied
+        condition = collectionTemporal
         condition = granuleTemporal if granuleTemporal.isSet()
 
         focusedTemporal = condition.intersect(focusedTemporal...)

@@ -17,7 +17,39 @@ module VCR
     end
   end
 
+  def insert_cached_cassette(name, options={})
+    options = options.merge(allow_playback_repeats: true) unless options.key?(:allow_playback_repeats)
+    @cassette_cache ||= {}
+    key = "#{name}/#{options.to_json}"
+    cassette = @cassette_cache[key]
+    if cassette && turned_on? && !cassettes.any? {|c| c.name == name}
+      cassettes.push(cassette)
+    else
+      @cassette_cache[key] = cassette = insert_cassette(name, options)
+    end
+    cassette
+  end
+
+  def use_cached_cassette(name, options={}, &block)
+    cassette = insert_cached_cassette(name, options)
+    begin
+      call_block(block, cassette)
+    ensure
+      eject_cassette
+      # Reset cassette internals so newly-recorded fixtures get picked up
+      cassette.instance_exec do
+        @http_interactions = nil
+        @previously_recorded_interactions = merged_interactions
+        @new_recorded_interactions = []
+      end
+    end
+  end
+
   module EDSCConfigurer
+    def self.persister
+      @persister
+    end
+
     def self.compare_uris(r1, r2)
       return true if r1.uri == r2.uri
       p1, q1 = r1.uri.split('?')
@@ -30,7 +62,28 @@ module VCR
     end
 
     def self.compare_tokens(r1, r2)
-      r1.headers['Echo-Token'] == r2.headers['Echo-Token']
+      t1 = r1.headers['Echo-Token']
+      t2 = r2.headers['Echo-Token']
+      t1 = t1.first if t1.is_a?(Array)
+      t2 = t2.first if t2.is_a?(Array)
+      return false unless t1.present? == t1.present?
+      @persister.normalizers.select do |normalizer|
+        if normalizer.is_a?(HeaderNormalizer) && normalizer.header == 'Echo-Token'
+          t1 = normalizer.substitute if t1 == normalizer.value
+          t2 = normalizer.substitute if t2 == normalizer.value
+        end
+      end
+      t1 == t2
+    end
+
+    def self.compare_esi_request_body(r1, r2)
+      query1 = Rack::Utils.parse_nested_query(r1.body)
+      query2 = Rack::Utils.parse_nested_query(r2.body)
+      keys_to_compare = ['FILE_IDS', 'EMAIL']
+      query1.map do |k, v|
+        return false if (keys_to_compare.include? k) && (v != query2[k])
+      end
+      true
     end
 
     def self.register_normalizer(normalizer)
@@ -51,11 +104,17 @@ module VCR
 
       VCR.request_matchers.register(:parsed_uri) { |r1, r2| compare_uris(r1, r2) }
       VCR.request_matchers.register(:token) { |r1, r2| compare_tokens(r1, r2) }
+      VCR.request_matchers.register(:esi_request_body) { |r1, r2| compare_esi_request_body(r1, r2) }
 
       options = {match_requests_on: [:method, :parsed_uri, :body]}.merge(options)
       default_record_mode = options[:record] || :new_episodes
 
       lock = Mutex.new
+
+      c.ignore_request do |request|
+        request.uri.include?('/echo-rest/tokens.json')
+      end
+
       c.around_http_request do |request|
         lock.synchronize do
           opts = options.deep_dup
@@ -67,17 +126,20 @@ module VCR
             cassette = 'geonames'
           elsif uri.include? '/convert'
             cassette = 'ogre'
+          elsif uri.include?('/echo-rest/orders')
+            cassette = 'orders'
+            opts[:match_requests_on] << :token
+            record = :none
           elsif (request.method == :delete ||
-                 (request.uri.include?('/orders.json') && request.method == :get) ||
-                 (request.uri.include?('/echo-rest/calendar_events') && !request.uri.include?('testbed')) ||
+                 (uri.include?('/echo-rest/calendar_events') && !uri.include?('testbed')) ||
                  uri.include?('users/current.json') ||
                  uri.include?('/echo-rest/users.json') ||
-                 request.uri.include?('4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json') ||
-                 request.uri.include?('69BEF8E4-7C1A-59C3-7C46-18D788AC64B4/preferences.json') ||
+                 uri.include?('/preferences.json') ||
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('expired-access')) ||
                  (request.headers['Echo-Token'] && request.headers['Echo-Token'].first.include?('invalid')) ||
                  uri.include?('C179002986-ORNL') ||
-                 (request.uri.include?('trigger500')))
+                 (request.uri.include?('trigger500')) ||
+                 (request.uri.include?('urs.earthdata.nasa.gov/api')))
             cassette = 'hand-edited'
             record = :none
           elsif request.uri.include? '/search/granules/timeline.json'
@@ -91,22 +153,24 @@ module VCR
           elsif request.uri.include? '/echo-rest/'
             parts = request.uri.split('/echo-rest/')[1]
             cassette = parts.split(/\.|\/|\?/).first
-          elsif request.uri.include? 'nsidc.org/ops/egi/request'
-            opts[:match_requests_on] = [:method, :parsed_uri, :headers]
+          elsif (request.uri.include? 'ops/egi/request') && (request.uri.include? 'nsidc.org')
+            opts[:match_requests_on] = [:method, :parsed_uri, :headers, :esi_request_body]
             cassette = "hand-edited"
             record = :none
           end
 
           if uri.include?('users/current.json') ||
               uri.include?('preferences.json') ||
-              uri.include?('orders.json') ||
               uri.include?('C179002986-ORNL')
             opts[:match_requests_on] << :token
           end
 
+          record = :all if ENV['record'] && ENV['record'].split(',').include?(cassette)
           opts[:record] = record
 
-          VCR.use_cassette(cassette, opts, &request)
+          ActiveSupport::Notifications.instrument "edsc.performance", activity: "HTTP Request (#{cassette})", cassette: cassette do
+              VCR.use_cached_cassette(cassette, opts, &request)
+          end
         end
       end
     end

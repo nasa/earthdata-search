@@ -54,3 +54,55 @@
           </addresses>
         </user>
     http_version: 
+62e63dbd42b136061507c74c30df510c1d255402:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"1f05addd57cb3f3122b07a96e192ba9e"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.321000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 02 May 2016 17:24:52 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <user>
+          <id>69BEF8E4-7C1A-59C3-7C46-18D788AC64B4</id>
+          <user_domain>OTHER</user_domain>
+          <user_region>USA</user_region>
+          <primary_study_area>OTHER</primary_study_area>
+          <user_type>PUBLIC_USER</user_type>
+          <username>edscbasic</username>
+          <first_name>edsc</first_name>
+          <last_name>basic</last_name>
+          <email>patrick+edscbasic@element84.com</email>
+          <opt_in type="boolean">false</opt_in>
+          <organization_name>EDSC</organization_name>
+          <creation_date type="datetime">2014-06-25T14:15:23Z</creation_date>
+          <addresses type="array">
+            <address>
+              <id>7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906</id>
+              <us_format type="boolean">false</us_format>
+              <country>United States</country>
+            </address>
+          </addresses>
+        </user>
+    http_version: 

@@ -1,4 +1,3 @@
-#= require models/data/grid
 #= require models/data/granule_attributes
 #= require models/ui/temporal
 
@@ -6,11 +5,12 @@ ns = @edsc.models.data
 
 ns.query = do (ko,
                param = $.param
-               GridCondition=@edsc.models.data.GridCondition
                GranuleAttributes=@edsc.models.data.GranuleAttributes
                KnockoutModel=@edsc.models.KnockoutModel
                Temporal=@edsc.models.ui.Temporal
                deparam=@edsc.util.deparam
+               mbr=@edsc.map.mbr
+               urlUtil=@edsc.util.url
                extend=$.extend) ->
 
   # This is a little gross, but we're allowing an override of temporal
@@ -18,7 +18,7 @@ ns.query = do (ko,
   # intent when they set a temporal constraint and a timeline focus.
   # We need to do it here to avoid inordinate pauses waiting for URL
   # updates, project saving, etc, when clicking the "download all button."
-  if window.location.pathname == '/data/configure'
+  if window.location.href.indexOf('/data/configure') != -1
     href = window.location.href
     overrideTemporalParam = href.match(/[?&]ot=([^&$]+)/)
     if overrideTemporalParam?
@@ -133,7 +133,7 @@ ns.query = do (ko,
 
   class FacetParam extends QueryParam
     names: ->
-      ['features', 'campaign', 'archive_center', 'project', 'platform', 'instrument', 'sensor', 'two_d_coordinate_system_name', 'science_keywords', 'processing_level']
+      ['features', 'campaign', 'data_center', 'project', 'platform', 'instrument', 'science_keywords', 'processing_level_id']
 
     writeTo: (query) ->
       facetParams = {}
@@ -156,7 +156,7 @@ ns.query = do (ko,
         facets = querystr.split('&')
         for facet in facets
           [k, v] = facet.split('=')
-          result.push(param: decodeURIComponent(k), term: decodeURIComponent(v).replace(/\+/g, ' '))
+          result.push(param: decodeURIComponent(k), term: decodeURIComponent(v.replace(/\+/g, ' ')))
       @value(result)
 
   class BooleanParam extends QueryParam
@@ -243,8 +243,10 @@ ns.query = do (ko,
         component.params(query)
 
     fromJson: (query) => @_readComponents(@_serialized, query)
-    clearFilters: (query) => @_readComponents(@_all, {})
+    clearFilters: (query) => @_readComponents(@_all, @_persistentQuery())
     _readParams: (query) => @_readComponents(@_components, query)
+
+    _persistentQuery: -> {}
 
     _writeComponents: (components, inheritedParams) ->
       inheritedParams ?= @parentQuery?.globalParams() ? {}
@@ -261,17 +263,18 @@ ns.query = do (ko,
     _computeGlobalParams: => @_writeComponents(@_propagated)
     _computeOwnParams: => @_writeComponents(@_components, {})
 
-  class DatasetQuery extends Query
+  class CollectionQuery extends Query
     constructor: (parentQuery) ->
       @focusedTemporal = ko.observable(null)
       @focusedInterval = ko.observable(null)
-      @grid = new GridCondition()
       @temporal = new Temporal()
 
+      @testFacets = @queryComponent(new QueryParam('test_facets'), '')
+      @portal = @queryComponent(new QueryParam('portal'), '')
       @placename = @queryComponent(new QueryParam('placename'), '', query: false)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition, propagate: true)
       @spatial = @queryComponent(new SpatialParam(), '', propagate: true)
-      @gridComponent = @queryComponent(new QueryParam('two_d_coordinate_system'), @grid.queryCondition, propagate: true)
+      @mbr = @computed(read: @_computeMbr, owner: this, deferEvaluation: true)
       @facets = @queryComponent(new FacetParam(), ko.observableArray())
       @scienceKeywordFacets = @computed(read: @_computeScienceKeywordFacets, deferEvaluation: true)
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
@@ -282,15 +285,34 @@ ns.query = do (ko,
       @focusedTemporal(null)
       @focusedInterval(null)
       @placename("")
-      super()
+      testFacets = @testFacets()
+      result = super()
+      @testFacets(testFacets)
+      result
+
+    _persistentQuery: ->
+      result = super()
+      portal = @portal()
+      result.portal = portal if portal && portal.length > 0
+      result
 
     _computeScienceKeywordFacets: =>
       facet for facet in @facets() when facet.param.indexOf('sci') == 0
 
+    _computeMbr: ->
+      spatial = @spatial()
+      result = null
+      if spatial
+        [type, shapePoints...] = spatial.split(':')
+        shape = for pointStr in shapePoints
+          latlng = pointStr.split(',').reverse()
+          {lat: +latlng[0], lng: +latlng[1]}
+        result = mbr.mbr(type, shape)
+      result
+
+
   class GranuleQuery extends Query
-    constructor: (datasetId, parentQuery, attributes) ->
-      @granuleIdsSelectedOptionValue = ko.observable("granule_ur")
-      @granuleIdsSelectedOptionValue.validValues = ['granule_ur', 'producer_granule_id']
+    constructor: (collectionId, parentQuery, attributes) ->
       @dayNightFlagOptions = [{name: "Anytime", value: null},
                               {name: "Day only", value: "DAY"},
                               {name: "Night only", value: "NIGHT"},
@@ -305,7 +327,7 @@ ns.query = do (ko,
       @temporal = new Temporal()
       @cloudCover = new Range()
 
-      @queryComponent(new QueryParam('echo_collection_id'), datasetId, ephemeral: true)
+      @queryComponent(new QueryParam('echo_collection_id'), collectionId, ephemeral: true)
       @temporalComponent = @queryComponent(new QueryParam('temporal'), @temporal.applied.queryCondition)
       @sortKey = @queryComponent(new QueryParam('sort_key'), ['-start_date'], ephemeral: true)
 
@@ -313,7 +335,7 @@ ns.query = do (ko,
       @browseOnly = @queryComponent(new BooleanParam('browse_only'), false)
       @onlineOnly = @queryComponent(new BooleanParam('online_only'), false)
       @cloudCoverComponent = @queryComponent(new QueryParam('cloud_cover'), @cloudCover.params)
-      @granuleIds = @queryComponent(new DelimitedParam(@granuleIdsSelectedOptionValue), '')
+      @granuleIds = @queryComponent(new DelimitedParam('readable_granule_name'), '')
       @excludedGranules = @queryComponent(new ExclusionParam('exclude', 'echo_granule_id'), ko.observableArray())
       @attributeFilters = @queryComponent(new QueryParam('attribute'), @attributes.queryCondition)
 
@@ -321,12 +343,6 @@ ns.query = do (ko,
 
       @singleGranuleId = ko.observable(null)
       super(parentQuery)
-
-    fromJson: (query) =>
-      granule_option = 'granule_ur'
-      granule_option = 'producer_granule_id' if query.producer_granule_id
-      @granuleIdsSelectedOptionValue(granule_option)
-      super(query)
 
     _computeIsValid: =>
       (@attributes.isValid() &&
@@ -342,5 +358,6 @@ ns.query = do (ko,
       isNaN(parseFloat(min)) || isNaN(parseFloat(max)) || parseFloat(min) <= parseFloat(max)
 
   exports =
-    DatasetQuery: DatasetQuery
+    CollectionQuery: CollectionQuery
     GranuleQuery: GranuleQuery
+    ExclusionParam: ExclusionParam

@@ -63,7 +63,7 @@ ns.SpatialSelection = do (window,
       map.on 'draw:drawstart', @_onDrawStart
       map.on 'draw:drawstop', @_onDrawStop
       map.on 'draw:editstart', @_onEditStart
-      map.on 'draw:editend', @_onEditEnd
+      map.on 'draw:editstop', @_onEditEnd
       map.on 'draw:created', @_onDrawCreated
       map.on 'draw:edited', @_onDrawEdited
       map.on 'draw:deleted', @_onDrawDeleted
@@ -92,7 +92,7 @@ ns.SpatialSelection = do (window,
       map.off 'draw:drawstart', @_onDrawStart
       map.off 'draw:drawstop', @_onDrawStop
       map.off 'draw:editstart', @_onEditStart
-      map.off 'draw:editend', @_onEditEnd
+      map.off 'draw:editstop', @_onEditEnd
       map.off 'draw:created', @_onDrawCreated
       map.off 'draw:edited', @_onDrawEdited
       map.off 'draw:deleted', @_onDrawDeleted
@@ -198,6 +198,7 @@ ns.SpatialSelection = do (window,
     _onSpatialErrorChange: (newValue) =>
       if newValue?
         if @_layer?
+          toastr.options = {'timeOut': 10000}
           toastr.error(newValue, "Spatial Query Error")
           @_layer.setStyle?(@_errorOptions)
       else

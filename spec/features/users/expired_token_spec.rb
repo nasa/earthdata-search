@@ -43,14 +43,11 @@ describe "Expired user token", reset: true do
         page.execute_script script
 
         fill_in 'keywords', with: 'AST_L1AE'
-        click_link 'Browse All Data'
-        find("h3.facet-title", text: 'Instrument').click
         wait_for_xhr
       end
 
       it 'refreshes the token' do
         expect(page).to have_content('ASTER Expedited L1A')
-        expect(page.text).to match('Instrument\s*\d* ASTER 1')
         expect(page.get_rack_session_key('expires_in')).to eql(3600)
         expect(page.get_rack_session_key('access_token')).to eql(access_token)
       end
