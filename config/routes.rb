@@ -32,7 +32,6 @@ EarthdataSearchClient::Application.routes.draw do
     collection do
       post 'timeline'
       get 'download', defaults: { format: ['html', 'sh'] }
-      get 'fetch_links', defaults: { format: 'json' }
     end
   end
 
