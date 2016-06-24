@@ -1,19 +1,105 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><%= site_page_title('Downloads') %></title>
-    <link rel="shortcut icon" href="/favicon.ico?v=1.1">
-  </head>
-  <body>
-    <ul>
-      <% @urls.each do |url| %>
-      <li><a href="<%= url %>"><%= url %></a></li>
-      <% end %>
-    </ul>
-    <% if  @errors.present? %>
-      <%= @errors %>
-     <% end %>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title><%= site_page_title('Downloads') %></title>
+  <link rel="shortcut icon" href="/favicon.ico?v=1.1">
+</head>
+<body>
+<div id="errors"></div>
+<div id="loading">Loading more...</div>
+<ul id="links">
+</ul>
+
+<script>
+  (function () {
+
+    var browseOnly = <%= @query.delete('browse') %>;
+    var currentPage = <%= @query['page_num'] %>;
+    var cmrHits = -1;
+
+    function getDownloadLinks(entry, browseOnly) {
+      var links = entry.links;
+      var result = [];
+      for (var i = 0; i < links.length; i++) {
+        if (browseOnly && !links[i].inherited && links[i].rel.match(/\/browse/)
+            || !links[i].inherited && links[i].rel.match(/\/data/)) {
+          var a = document.createElement('A');
+          a.setAttribute('href', links[i].href);
+          a.textContent = links[i].href;
+          result.push(a);
+        }
+      }
+      return result;
+    }
+
+    function getLink() {
+      queryPageNum = parseInt(cmrUrl.match(/page_num=(\d+)/)[1]);
+      if (queryPageNum * 2000 > cmrHits) {
+        return null;
+      }
+      currentPage++;
+      cmrUrl = cmrUrl.replace(/page_num=\d+/, 'page_num=' + currentPage);
+      return cmrUrl;
+    }
+
+    function finish() {
+      document.getElementById('loading').style.display = 'none';
+    }
+
+    function renderEntry(links) {
+      var div = document.createElement('div');
+
+      var ul = document.getElementById('links');
+      for (var i = 0; i < links.length; i++) {
+        var li = document.createElement('LI');
+        var link = links[i];
+        li.appendChild(link);
+        ul.appendChild(li);
+      }
+    }
+
+    function onLoad() {
+      cmrHits = parseInt(this.getResponseHeader('CMR-Hits'));
+      document.getElementById('loading').innerHTML = 'Loading more... (parsed ' + (currentPage * 2000 > cmrHits ? cmrHits : (currentPage * 2000))+ ' of ' + cmrHits + ')';
+      var doc = JSON.parse(this.response);
+      console.log(this);
+      var entries = doc.feed.entry;
+      for (var i = 0; i < entries.length; i++) {
+        renderEntry(getDownloadLinks(entries[i], browseOnly));
+      }
+      var next = getLink();
+      if (next) {
+        fetchLinks(next);
+      }
+      else {
+        finish();
+      }
+    }
+
+    function onError() {
+      document.getElementById('loading').textContent = "There was an error loading granules. Refresh this page to try again."
+      finish();
+    }
+
+    function onAbort() {
+      finish();
+    }
+
+    function fetchLinks(url) {
+      var request = new XMLHttpRequest();
+      request.open('GET', url, true);
+      request.send(null);
+
+      request.addEventListener("load", onLoad, false);
+      request.addEventListener("error", onError, false);
+      request.addEventListener("abort", onAbort, false);
+    }
+
+    var cmrUrl = '<%= "#{Rails.configuration.services['earthdata'][cmr_env]['cmr_root']}/search/granules.json?#{@query.to_query.gsub('&amp;', '&')}"%>'.replace(/&amp;/g, '&');
+    fetchLinks(cmrUrl);
+  })();
+</script>
+</body>
 </html>
