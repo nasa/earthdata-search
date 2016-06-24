@@ -112,6 +112,13 @@ class GranulesController < ApplicationController
     url_type = :download
     url_type = :browse if request[:browse] == true || request[:browse] == 'true'
 
+    if request.format == 'html'
+      page_num = params.delete('page_num') || 1
+      @query = query.merge({'page_num' => page_num, 'page_size' => 2000, 'browse' => (url_type.to_s == 'browse')})
+      render stream: true, layout: false
+      return
+    end
+
     url_mapper = OpendapConfiguration.find(collection_id, echo_client, token)
 
     if url_type == :download
