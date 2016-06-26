@@ -105,7 +105,7 @@ class GranulesController < ApplicationController
     end
 
     page_num = params.delete('page_num') || 1
-    browse_only = params.delete('browseOnly')
+    browse_only = params.delete('browse')
     url_type = 'download'
     url_type = 'browse' if browse_only == true || browse_only == 'true'
 
