@@ -77,8 +77,8 @@ class GranulesController < ApplicationController
             unless yielded_info
               @url_mapper.info_urls_for(granule).each do |url|
                 yield url
+                yielded_info = true
               end
-              yielded_info = true
             end
 
             @url_mapper.send("#{@url_type}_urls_for", granule).each do |url|
@@ -95,6 +95,63 @@ class GranulesController < ApplicationController
     end
   end
 
+  def fetch_links
+    retrieval = Retrieval.find(request[:project])
+    collection_id = params[:collection]
+    user = current_user
+    unless user == retrieval.user
+      render file: "#{Rails.root}/public/403.html", status: :forbidden
+      return
+    end
+
+    page_num = params.delete('page_num') || 1
+    browse_only = params.delete('browseOnly')
+    url_type = 'download'
+    url_type = 'browse' if browse_only == true || browse_only == 'true'
+
+    project = retrieval.project
+    collection = Array.wrap(project['collections']).find {|ds| ds['id'] == collection_id}
+
+    query = Rack::Utils.parse_nested_query(collection['params'])
+    catalog_response = echo_client.get_granules(query.merge({page_num: page_num, page_size: 2000, format: :json}), token)
+
+    if catalog_response.success?
+      hits = catalog_response.headers['CMR-Hits'].to_i
+      granules = catalog_response.body['feed']['entry']
+      url_mapper = OpendapConfiguration.find(collection_id, echo_client, token)
+      if url_type == 'download'
+        method = collection['serviceOptions']['accessMethod'].find { |m| m['type'] == 'download' }
+        url_mapper.apply_subsetting(method['subset'])
+      end
+
+      fetched_links = []
+      fetched_info = false
+
+      granules.each do |granule|
+        unless fetched_info
+          url_mapper.info_urls_for(granule).each do |url|
+            fetched_links << url
+          end
+          fetched_info = true
+        end
+
+        url_mapper.send("#{url_type}_urls_for", granule).each do |url|
+          fetched_links << url
+        end
+      end
+      # Set custom header causes local rails server to throw 'socket hang up' error.
+      # response.headers['CMR-Hits'] = hits
+      response_body = {}
+      response_body['CMR-Hits'] = hits
+      response_body['links'] = fetched_links
+      render json: response_body, status: catalog_response.status
+    else
+      render json: catalog_response.body, status: catalog_response.status
+    end
+
+  end
+
+  # def download_script
   def download
     retrieval = Retrieval.find(request[:project])
     collection_id = request[:collection]
@@ -114,7 +171,7 @@ class GranulesController < ApplicationController
 
     if request.format == 'html'
       page_num = params.delete('page_num') || 1
-      @query = query.merge({'page_num' => page_num, 'page_size' => 2000, 'browse' => (url_type.to_s == 'browse')})
+      @query = query.merge({'project' => request[:project], 'page_num' => page_num, 'page_size' => 2000, 'browse' => (url_type.to_s == 'browse'), 'collection' => collection_id})
       render stream: true, layout: false
       return
     end

@@ -17,59 +17,44 @@
 
     var browseOnly = <%= @query.delete('browse') %>;
     var currentPage = <%= @query['page_num'] %>;
+    var project = <%= @query['project'] %>;
+    var collection = '<%= @query['collection'] %>';
     var cmrHits = -1;
 
-    function getDownloadLinks(entry, browseOnly) {
-      var links = entry.links;
-      var result = [];
-      for (var i = 0; i < links.length; i++) {
-        if (browseOnly && !links[i].inherited && links[i].rel.match(/\/browse/)
-            || !links[i].inherited && links[i].rel.match(/\/data/)) {
-          var a = document.createElement('A');
-          a.setAttribute('href', links[i].href);
-          a.textContent = links[i].href;
-          result.push(a);
-        }
-      }
-      return result;
-    }
-
-    function getLink() {
-      queryPageNum = parseInt(cmrUrl.match(/page_num=(\d+)/)[1]);
+    function getNextPageUrl() {
+      queryPageNum = parseInt(url.match(/page_num=(\d+)/)[1]);
       if (queryPageNum * 2000 > cmrHits) {
         return null;
       }
       currentPage++;
-      cmrUrl = cmrUrl.replace(/page_num=\d+/, 'page_num=' + currentPage);
-      return cmrUrl;
+      url = url.replace(/page_num=\d+/, 'page_num=' + currentPage);
+      return url;
     }
 
     function finish() {
       document.getElementById('loading').style.display = 'none';
     }
 
-    function renderEntry(links) {
-      var div = document.createElement('div');
-
+    function renderEntry(link) {
       var ul = document.getElementById('links');
-      for (var i = 0; i < links.length; i++) {
-        var li = document.createElement('LI');
-        var link = links[i];
-        li.appendChild(link);
-        ul.appendChild(li);
-      }
+      var li = document.createElement('LI');
+      var a = document.createElement('A');
+      a.setAttribute('href', link);
+      a.textContent = link;
+      li.appendChild(a);
+      ul.appendChild(li);
     }
 
     function onLoad() {
-      cmrHits = parseInt(this.getResponseHeader('CMR-Hits'));
-      document.getElementById('loading').innerHTML = 'Loading more... (parsed ' + (currentPage * 2000 > cmrHits ? cmrHits : (currentPage * 2000))+ ' of ' + cmrHits + ')';
       var doc = JSON.parse(this.response);
-      console.log(this);
-      var entries = doc.feed.entry;
-      for (var i = 0; i < entries.length; i++) {
-        renderEntry(getDownloadLinks(entries[i], browseOnly));
+      cmrHits = doc['CMR-Hits'];
+      document.getElementById('loading').innerHTML = 'Loading more... (parsed ' + (currentPage * 2000 > cmrHits ? cmrHits : (currentPage * 2000))+ ' of ' + cmrHits + ')';
+      var links = doc.links;
+      console.log(links);
+      for (var i = 0; i < links.length; i++) {
+        renderEntry(links[i]);
       }
-      var next = getLink();
+      var next = getNextPageUrl();
       if (next) {
         fetchLinks(next);
       }
@@ -97,8 +82,8 @@
       request.addEventListener("abort", onAbort, false);
     }
 
-    var cmrUrl = '<%= "#{Rails.configuration.services['earthdata'][cmr_env]['cmr_root']}/search/granules.json?#{@query.to_query.gsub('&amp;', '&')}"%>'.replace(/&amp;/g, '&');
-    fetchLinks(cmrUrl);
+    var url = "/granules/fetch_links.json?page_num=1&browse=" + browseOnly + "&project=" + project + "&collection=" + collection;
+    fetchLinks(url);
   })();
 </script>
 </body>
