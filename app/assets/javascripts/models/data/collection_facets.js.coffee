@@ -4,38 +4,51 @@ ns = @edsc.models.data
 
 ns.CollectionFacets = do (ko) ->
 
-  # Note: This minifies poorly
-  sk_facet_order = [
-#    'science_keywords[0][category][]',
-    'science_keywords[0][topic][]',
-    'science_keywords[0][term][]',
-    'science_keywords[0][variable_level_1][]',
-    'science_keywords[0][variable_level_2][]',
-    'science_keywords[0][variable_level_3][]',
-    'science_keywords[0][detailed_variable][]'
-  ]
+  facet_categories = ['features',
+    'science_keywords[0][category]',
+    'science_keywords[0][topic]',
+    'science_keywords[0][term]',
+    'science_keywords[0][variable_level_1]',
+    'science_keywords[0][variable_level_2]',
+    'science_keywords[0][variable_level_3]',
+    'science_keywords[0][detailed_variable]',
+    'platform',
+    'instrument',
+    'data_center',
+    'project',
+    'processing_level_id']
 
   class Facet
     constructor: (@parent, item) ->
-      @term = item.term
+      @title = item.title
+      @type = item.type
+      @hasChildren = ko.observable(item.has_children)
+      @links = item.links
+      @children = item.children
+      @isSelected = ko.observable(item.applied)
       @count = ko.observable(item.count)
-      @param = item.param || parent.param
+      @param = @_linksToParam(@links)
 
-    isSelected: ->
-      term = @term
-      param = @param
-      for facet in @parent.queryModel.facets()
-        return true if facet.term == term && facet.param == param
-      return false
+    _linksToParam: (links) ->
+      return category for category in facet_categories when links.apply?.replace(/%5B/g, '[').replace(/%5D/g, ']').indexOf(category) > 0
 
     isChild: ->
-      @isHierarchical() && !@isAncestor() && @hierarchyIndex() > 0
+      # applied: true && links: {remove: https://...}
+      @links.remove?.length > 0 && @isSelected()
 
     isParent: ->
-      @isScienceKeywordParent()
+      # applied: true && one of the children has links.remove set
+      hasChild = false
+      for child in @children?
+        if child.links.remove?.length > 0
+          hasChild = true
+          break
+
+      hasChild && @isSelected()
 
     isAncestor: ->
-      @isHierarchical() && @isSelected()
+      # applied: true && links: {apply: https://...}
+      @links.apply?.length > 0 && @isSelected()
 
     isScienceKeyword: ->
       @param.indexOf('sci') == 0
@@ -47,51 +60,48 @@ ns.CollectionFacets = do (ko) ->
     isHierarchical: ->
       @isScienceKeyword()
 
-    hierarchyIndex: ->
-      sk_facet_order.indexOf(@param)
-
     equals: (other) ->
-      other && other.term == @term && other.param == @param
+      other && other.title == @title && other.param == @param
 
   class FacetsListModel
     constructor: (@queryModel, item) ->
-      @name = item.name
-      @class_name = ko.computed => @name.toLowerCase().replace(' ', '-')
+      @title = item.title
+      @class_name = ko.computed => @title.toLowerCase().replace(' ', '-')
       @param = item.param
 
-      values = (new Facet(this, value) for value in item.values)
+      children = (new Facet(this, child) for child in item.children)
 
-      @values = ko.observable(values)
+      @children = ko.observable(children)
       @selectedValues = ko.computed(@_loadSelectedValues)
 
       isDefaultOpened = (@selectedValues().length > 0 ||
-                         item.name == 'Keywords' ||
-                         item.name == 'Features')
+                         item.title == 'Keywords' ||
+                         item.title == 'Features')
       @opened = ko.observable(isDefaultOpened)
       @closed = ko.computed => !@opened()
 
     setValues: (newValues) =>
-      facetsByTerm = {}
-      for facet in @values()
-        facetsByTerm[facet.term] = facet
+      facetsByTitle = {}
+      for facet in @children()
+        facetsByTitle[facet.title] = facet
       values = []
       for newFacetData in newValues
-        oldFacet = facetsByTerm[newFacetData.term]
+        oldFacet = facetsByTitle[newFacetData.title]
         newFacet = new Facet(this, newFacetData)
         if newFacet.equals(oldFacet)
           oldFacet.count(newFacetData.count)
           values.push(oldFacet)
         else
           values.push(newFacet)
-      @values(values)
+      @children(values)
 
     _loadSelectedValues: =>
-      facet for facet in @values() when facet.isSelected()
+      facet for facet in @children() when facet.isSelected()
 
     removeHierarchyBelow: (facet) ->
       index = facet.hierarchyIndex()
-      removed = (v for v in @values() when v.hierarchyIndex() > index)
-      @values(v for v in @values() when v.hierarchyIndex() <= index)
+      removed = (v for v in @children() when v.hierarchyIndex() > index)
+      @children(v for v in @children() when v.hierarchyIndex() <= index)
       removed
 
     toggleList: =>
@@ -111,11 +121,11 @@ ns.CollectionFacets = do (ko) ->
       current = @results.peek()
       for item in data
         found = ko.utils.arrayFirst current, (result) ->
-          result.name == item.name
+          result.title == item.title
         if found
-          values = item.values
-          value.parent = found for value in item.values
-          found.setValues(item.values)
+          children = item.children
+          children.parent = found for child in item.children
+          found.setValues(item.children)
         else
           current.push(new FacetsListModel(@query, item))
 
@@ -128,19 +138,21 @@ ns.CollectionFacets = do (ko) ->
         @_removeSingleFacet(facet)
 
     _removeSingleFacet: (facet) ->
-      term = facet.term
+      title = facet.title
       param = facet.param
       @query.facets.remove (queryFacet) ->
-        queryFacet.term == term && queryFacet.param == param
+        queryFacet.title == title && queryFacet.param == param
 
     addFacet: (facet) =>
       @query.facets([]) unless @query.facets()?
-      @query.facets.push(term: facet.term, param: facet.param)
+      @query.facets.push(title: facet.title, param: facet.param)
 
     toggleFacet: (facet) =>
       if facet.isSelected()
+        facet.isSelected(false)
         @removeFacet(facet)
       else
+        facet.isSelected(true)
         @addFacet(facet)
 
   exports = CollectionFacetsModel

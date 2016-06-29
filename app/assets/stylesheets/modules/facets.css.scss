@@ -138,7 +138,7 @@
   height: 22px;
 }
 
-.facet-term {
+.facet-title {
   -ms-flex: 1;
   flex-grow: 1;
   text-overflow: ellipsis;
@@ -150,7 +150,7 @@
 .facets-item.facets-child {
   background-color: #404346;
 
-  .facet-term {
+  .facet-title {
     padding-left: 20px;
   }
 }
