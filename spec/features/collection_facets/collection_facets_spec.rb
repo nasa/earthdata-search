@@ -315,7 +315,7 @@ describe "Collection Facets", reset: false do
       load_page :search, facets: true
       fill_in :keywords, with: "C1214606011-SCIOPS"
       wait_for_xhr
-      find(".facet-term", text: "SPECTRAL/ENGINEERING").click
+      find(".facet-title", text: "SPECTRAL/ENGINEERING").click
       wait_for_xhr
     end
 
@@ -364,7 +364,7 @@ describe "Collection Facets", reset: false do
 
   context "when selecting a topic keyword" do
     before :all do
-      find(".facet-term", text: /\AATMOSPHERE\z/).click
+      find(".facet-title", text: /\AATMOSPHERE\z/).click
       wait_for_xhr
     end
 
@@ -378,12 +378,12 @@ describe "Collection Facets", reset: false do
 
     context "when selecting a term keyword" do
       before :all do
-        first(".facet-term", text: /\AAEROSOLS\z/).click
+        first(".facet-title", text: /\AAEROSOLS\z/).click
         wait_for_xhr
       end
 
       after :all do
-        first(".facet-term", text: /\AAEROSOLS\z/).click
+        first(".facet-title", text: /\AAEROSOLS\z/).click
         wait_for_xhr
       end
 
@@ -394,17 +394,17 @@ describe "Collection Facets", reset: false do
 
     context "when the top level keyword is unchecked" do
       before :all do
-        first(".facet-term", text: /\AAEROSOLS\z/).click
+        first(".facet-title", text: /\AAEROSOLS\z/).click
         wait_for_xhr
         find(".facets-item", text: "AEROSOL EXTINCTION").click
         wait_for_xhr
-        find(".facet-term", text: /\AATMOSPHERE\z/).click
+        find(".facet-title", text: /\AATMOSPHERE\z/).click
         wait_for_xhr
       end
 
       after :all do
         reset_search
-        find(".facet-term", text: /\AATMOSPHERE\z/).click
+        find(".facet-title", text: /\AATMOSPHERE\z/).click
         wait_for_xhr
       end
 

@@ -7,35 +7,34 @@
   <div class="master-overlay-content panel-group">
     <!-- ko if: collections.facets.isRelevant() -->
     <!-- ko foreach: collections.facets.results -->
-    <!-- # Temporarily filter out 'Category Keyword' facet. Once CMR-1923 is implemented, the changes can be reverted. -->
-    <!-- ko if: values().length > 0 && name != "Category Keyword" -->
+    <!-- ko if: children().length > 0 -->
     <div data-bind="css: class_name" class="panel panel-default">
       <div class="panel-heading">
         <h3 data-bind="click: toggleList" class="panel-title facet-title">
           <i data-bind="css: {'fa-chevron-down': closed(), 'fa-chevron-up': opened()}" class="fa pull-right panel-header-toggle"></i>
-          <a data-bind="text: name, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
+          <a data-bind="text: title, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
         </h3>
       </div>
       <div data-bind="attr: {id: 'collapse'+$index()}, css: {'facets-list-show': opened(), 'facets-list-hide': closed(), 'features-facet': name == 'Features'}">
         <div class="panel-body facets">
-          <!-- ko foreach: values -->
-          <p class="facets-item" data-bind="click: $root.collections.facets.toggleFacet, css: {selected: isSelected(), 'facets-child': isChild(), 'facets-ancestor': isAncestor(), 'facets-parent': isParent()}, attr: {title: term}">
+          <!-- ko foreach: children() -->
+          <p class="facets-item" data-bind="click: $root.collections.facets.toggleFacet, css: {selected: isSelected(), 'facets-child': isChild(), 'facets-ancestor': isAncestor(), 'facets-parent': isParent()}, attr: {title: title}">
             <!--ko if: isAncestor() && !isParent() -->
               <i class="fa fa-chevron-left"></i>
             <!--/ko-->
 
-            <span data-bind="text: term" class="facet-term"></span>
+            <span data-bind="text: title" class="facet-title"></span>
             <i class="fa fa-times"></i>
             <!-- ko ifnot: $parent.name == 'Features' || isAncestor() -->
             <span class="facet-item-collection-count" data-bind="text: count"></span>
             <!-- /ko -->
-            <!-- ko if: term == 'Subsetting Services' -->
+            <!-- ko if: title == 'Subsetting Services' -->
             <span class="facet-badge badge-subsetting"></span>
             <!-- /ko -->
-            <!-- ko if: term == 'Map Imagery' -->
+            <!-- ko if: title == 'Map Imagery' -->
             <span class="facet-badge badge-gibs"></span>
             <!-- /ko -->
-            <!-- ko if: term == 'Near Real Time' -->
+            <!-- ko if: title == 'Near Real Time' -->
             <span class="facet-badge badge-nrt"></span>
             <!-- /ko -->
           </p>
