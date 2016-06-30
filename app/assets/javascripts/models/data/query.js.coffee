@@ -139,8 +139,8 @@ ns.query = do (ko,
       facetParams = {}
       for facet in @value()
         name = facet.param
-        facetParams[name] ?= []
-        facetParams[name].push(facet.title)
+#        facetParams[name] ?= []
+        facetParams[name] = facet.title
       queryStr = param(facetParams)
       extend(true, query, deparam(queryStr))
 
