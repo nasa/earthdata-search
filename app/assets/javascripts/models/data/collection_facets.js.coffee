@@ -5,13 +5,13 @@ ns = @edsc.models.data
 ns.CollectionFacets = do (ko) ->
 
   facet_categories = ['features',
-    'science_keywords[0][category]',
-    'science_keywords[0][topic]',
-    'science_keywords[0][term]',
-    'science_keywords[0][variable_level_1]',
-    'science_keywords[0][variable_level_2]',
-    'science_keywords[0][variable_level_3]',
-    'science_keywords[0][detailed_variable]',
+    'science_keywords\\[\\d*\\]\\[category\\]',
+    'science_keywords\\[\\d*\\]\\[topic\\]',
+    'science_keywords\\[\\d*\\]\\[term\\]',
+    'science_keywords\\[\\d*\\]\\[variable_level_1\\]',
+    'science_keywords\\[\\d*\\]\\[variable_level_2\\]',
+    'science_keywords\\[\\d*\\]\\[variable_level_3\\]',
+    'science_keywords\\[\\d*\\]\\[detailed_variable\\]',
     'platform',
     'instrument',
     'data_center',
@@ -30,7 +30,15 @@ ns.CollectionFacets = do (ko) ->
       @param = @_linksToParam(@links)
 
     _linksToParam: (links) ->
-      return category for category in facet_categories when links.apply?.replace(/%5B/g, '[').replace(/%5D/g, ']').indexOf(category) > 0
+      params = []
+      if links.apply?
+        link = links.apply.replace(/%5B/g, '[').replace(/%5D/g, ']')
+      else
+        link = links.remove.replace(/%5B/g, '[').replace(/%5D/g, ']')
+      for category in facet_categories
+        regex = new RegExp(category, 'g')
+        params.push match for match in link.match(regex) if link?.match(regex)
+      params
 
     isChild: ->
       # applied: true && links: {remove: https://...}
@@ -134,18 +142,18 @@ ns.CollectionFacets = do (ko) ->
 
     removeFacet: (facet) =>
       @_removeSingleFacet(facet)
-      for facet in facet.parent.removeHierarchyBelow(facet) when facet.isSelected()
-        @_removeSingleFacet(facet)
+#      for facet in facet.parent.removeHierarchyBelow(facet) when facet.isSelected()
+#        @_removeSingleFacet(facet)
 
     _removeSingleFacet: (facet) ->
       title = facet.title
       param = facet.param
       @query.facets.remove (queryFacet) ->
-        queryFacet.title == title && queryFacet.param == param
+        queryFacet.title == title
 
     addFacet: (facet) =>
       @query.facets([]) unless @query.facets()?
-      @query.facets.push(title: facet.title, param: facet.param)
+      @query.facets.push(title: facet.title, param: param) for param in facet.param
 
     toggleFacet: (facet) =>
       if facet.isSelected()
