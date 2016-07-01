@@ -4,19 +4,28 @@ ns = @edsc.models.data
 
 ns.CollectionFacets = do (ko) ->
 
-  facet_categories = ['features',
-    'science_keywords\\[\\d*\\]\\[category\\]',
-    'science_keywords\\[\\d*\\]\\[topic\\]',
-    'science_keywords\\[\\d*\\]\\[term\\]',
-    'science_keywords\\[\\d*\\]\\[variable_level_1\\]',
-    'science_keywords\\[\\d*\\]\\[variable_level_2\\]',
-    'science_keywords\\[\\d*\\]\\[variable_level_3\\]',
-    'science_keywords\\[\\d*\\]\\[detailed_variable\\]',
-    'platform',
-    'instrument',
-    'data_center',
-    'project',
-    'processing_level_id']
+  facet_matchers = ['features=[^&]+',
+    'science_keywords\\[\\d*\\]\\[category\\]=[^&]+',
+    'science_keywords\\[\\d*\\]\\[topic\\]=[^&]+',
+    'science_keywords\\[\\d*\\]\\[term\\]=[^&]+',
+    'science_keywords\\[\\d*\\]\\[variable_level_1\\]=[^&]+',
+    'science_keywords\\[\\d*\\]\\[variable_level_2\\]=[^&]+',
+    'science_keywords\\[\\d*\\]\\[variable_level_3\\]=[^&]+',
+    'science_keywords\\[\\d*\\]\\[detailed_variable\\]=[^&]+',
+    'platform\\[\\]=[^&]+',
+    'instrument\\[\\]=[^&]+',
+    'data_center\\[\\]=[^&]+',
+    'project\\[\\]=[^&]+',
+    'processing_level_id\\[\\]=[^&]+']
+
+  facet_param_to_title = {
+    'features': 'Features',
+    'science_keywords': 'Keywords',
+    'platform': 'Platforms',
+    'instrument': 'Instruments',
+    'data_center': 'Organizations',
+    'project': 'Projects',
+    'processing_level_id': 'Processing levels'}
 
   class Facet
     constructor: (@parent, item) ->
@@ -27,32 +36,35 @@ ns.CollectionFacets = do (ko) ->
       @children = item.children
       @isSelected = ko.observable(item.applied)
       @count = ko.observable(item.count)
-      @param = @_linksToParam(@links)
+      @param = @_linksToParam()
 
-    _linksToParam: (links) ->
+    _linksToParam: =>
       params = []
-      if links.apply?
-        link = links.apply.replace(/%5B/g, '[').replace(/%5D/g, ']')
+      if @links.apply?
+        link = @links.apply.replace(/%5B/g, '[').replace(/%5D/g, ']')
       else
-        link = links.remove.replace(/%5B/g, '[').replace(/%5D/g, ']')
-      for category in facet_categories
+        link = @links.remove.replace(/%5B/g, '[').replace(/%5D/g, ']')
+      for category in facet_matchers
         regex = new RegExp(category, 'g')
-        params.push match for match in link.match(regex) if link?.match(regex)
+        if link?.match(regex)
+          for match in link.match(regex)
+            params.push match.split('=')[0] for key of facet_param_to_title when match.indexOf(key) > -1 && match.indexOf(encodeURIComponent(@title).replace(/%20/g, '+')) > -1
       params
 
     isChild: ->
-      # applied: true && links: {remove: https://...}
-      @links.remove?.length > 0 && @isSelected()
+
 
     isParent: ->
+      # applied: true && links: {remove: https://...}
+      @links.remove?.length > 0 && @isSelected()
       # applied: true && one of the children has links.remove set
-      hasChild = false
-      for child in @children?
-        if child.links.remove?.length > 0
-          hasChild = true
-          break
-
-      hasChild && @isSelected()
+#      hasChild = false
+#      for child in @children?
+#        if child.links.remove?.length > 0
+#          hasChild = true
+#          break
+#
+#      hasChild && @isSelected()
 
     isAncestor: ->
       # applied: true && links: {apply: https://...}
@@ -153,14 +165,14 @@ ns.CollectionFacets = do (ko) ->
 
     addFacet: (facet) =>
       @query.facets([]) unless @query.facets()?
-      @query.facets.push(title: facet.title, param: param) for param in facet.param
+      for param in facet.param
+        @query.facets.push(title: facet.title, param: param)
+      @query.facets()
 
     toggleFacet: (facet) =>
       if facet.isSelected()
-        facet.isSelected(false)
         @removeFacet(facet)
       else
-        facet.isSelected(true)
         @addFacet(facet)
 
   exports = CollectionFacetsModel
