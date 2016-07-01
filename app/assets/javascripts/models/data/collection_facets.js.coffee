@@ -62,7 +62,7 @@ ns.CollectionFacets = do (ko) ->
       params
 
     isChild: =>
-      @_isHierarchical() && !@isAncestor() && @_hierarchyIndex() > 0
+      @_isHierarchical() && !@isAncestor() && @hierarchyIndex() > 0
 
     isParent: =>
       @_isScienceKeywordParent()
@@ -75,12 +75,12 @@ ns.CollectionFacets = do (ko) ->
 
     _isScienceKeywordParent: ->
       (@isAncestor() &&
-       @_hierarchyIndex() >= @parent.queryModel.scienceKeywordFacets().length - 1)
+       @hierarchyIndex() >= @parent.queryModel.scienceKeywordFacets().length - 1)
 
     _isHierarchical: ->
       @_isScienceKeyword()
 
-    _hierarchyIndex: ->
+    hierarchyIndex: ->
       sk_facet_order.indexOf(@param)
 
     equals: (other) ->
@@ -93,10 +93,13 @@ ns.CollectionFacets = do (ko) ->
       @param = item.param
 
       children = []
+      ancestors = []
       for child in item.children
-        if child.applied
-          children.push new Facet(this, child)
-          children.push new Facet(this, grandChild) for grandChild in child.children
+        @_findAncestors(ancestors, item)
+        parent = ancestors.slice(-1)[0]
+        if parent
+          children.push new Facet(this, ancestor) for ancestor in ancestors
+          children.push new Facet(this, grandChild) for grandChild in parent.children if parent.children
         else
           children.push new Facet(this, child)
 
@@ -109,6 +112,13 @@ ns.CollectionFacets = do (ko) ->
                          item.title == 'Features')
       @opened = ko.observable(isDefaultOpened)
       @closed = ko.computed => !@opened()
+
+    _findAncestors: (ancestors, item) ->
+      ancestors.push item if item.applied && item.type == 'filter'
+      if item.children
+        for child in item.children
+          if child.applied && child.links.remove?.length > 0
+            @_findAncestors(ancestors, child)
 
     setValues: (newValues) =>
       facetsByTitle = {}
@@ -153,24 +163,34 @@ ns.CollectionFacets = do (ko) ->
         found = ko.utils.arrayFirst current, (result) ->
           result.title == item.title
         if found
-          children = item.children
-          child.parent = found for child in item.children
-          found.setValues(item.children)
-#          child.parent = found for child in item.children
-#          values = []
-#          values.push item
-#          values.push child for child in children
-#          found.setValues(values)
+          values = []
+          ancestors = []
+          for child in item.children
+            @_findAncestors(ancestors, child)
+            parent = ancestors.slice(-1)[0]
+            if parent?
+              values.push ancestor for ancestor in ancestors
+              values.push grandChild for grandChild in parent.children if parent.children
+            else
+              values.push child
+          found.setValues(values)
         else
           current.push(new FacetsListModel(@query, item))
 
       @results(current)
       current
 
+    _findAncestors: (ancestors, item) ->
+      ancestors.push item if item.applied && item.type == 'filter'
+      if item.children
+        for child in item.children
+          if child.applied && child.links.remove?.length > 0
+            @_findAncestors(ancestors, child)
+
     removeFacet: (facet) =>
       @_removeSingleFacet(facet)
-#      for facet in facet.parent.removeHierarchyBelow(facet) when facet.isSelected()
-#        @_removeSingleFacet(facet)
+      for facet in facet.parent.removeHierarchyBelow(facet) when facet.isSelected()
+        @_removeSingleFacet(facet)
 
     _removeSingleFacet: (facet) ->
       title = facet.title
