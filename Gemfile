@@ -57,7 +57,6 @@ group :development, :test do
   gem 'jasmine_junitxml_formatter'
 
   gem 'therubyracer', :require => 'v8'
-  gem 'libv8', '~> 3.11.8.3'
 
 end
 
