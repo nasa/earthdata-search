@@ -5,7 +5,6 @@ module Echo
                               :errors => Echo::ClientMiddleware::ErrorsMiddleware,
                               :echo10_collections => Echo::ClientMiddleware::Echo10CollectionMiddleware,
                               :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware,
-                              :facet_culling => Echo::ClientMiddleware::FacetCullingMiddleware,
                               :events => Echo::ClientMiddleware::EventMiddleware)
 
   class BaseClient

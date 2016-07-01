@@ -101,47 +101,5 @@ module VCR
       "#{root}#{type}.#{@destination_serializer.file_extension}"
     end
 
-    # Big temporary hacks to reduces the size of facets we're recording. Right now if
-    # we record all of them, our collection_responses.yml is about 20MB. The CMR will
-    # fix the need for this with upcoming facet changes.
-    # This method ensures that there are no more than 5 facets of any type returned
-    # and that the hierarchy doesn't go below variable_level_1
-    def reduce_fixture_size(response)
-      return response unless (response.present? &&
-                              response['response'].present? &&
-                              !response['response']['reduced'] &&
-                              response['response']['headers'].present? &&
-                              response['response']['headers']['content-type'].present? &&
-                              response['response']['headers']['content-type'][0].start_with?('application/json'))
-      body_config = response['response']['body']
-      digest = Digest::SHA1.hexdigest(body_config['string'])
-      if @reduced[digest]
-        body_config['string'] = @reduced[digest]
-      else
-        body = ActiveSupport::JSON.decode(body_config['string'])
-        reduced = false
-        before = response['response']['body']['string'].size
-        if body && body['feed'] && body['feed']['facets'] && !body['feed']['reduced']
-          before = response['response']['body']['string'].size
-          Echo::ClientMiddleware::FacetCullingMiddleware.cull(body)
-          reduced = true
-        end
-        if body && body['feed'] && body['feed']['entry']
-          Array.wrap(body['feed']['entry']).each do |entry|
-            entry['summary'] = entry['summary'][0...100] if entry['summary']
-          end
-          reduced = true
-        end
-        if reduced
-          @reduced[digest] = response['response']['body']['string'] = body.to_json
-          after = @reduced[digest].size
-          puts "Reduced: #{before} -> #{after}" unless before == after
-        end
-
-      end
-      response['response']['reduced'] = true
-      response
-    end
-
   end
 end
