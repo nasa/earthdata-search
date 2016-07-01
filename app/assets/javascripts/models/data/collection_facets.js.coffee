@@ -95,11 +95,12 @@ ns.CollectionFacets = do (ko) ->
       children = []
       ancestors = []
       for child in item.children
-        @_findAncestors(ancestors, item)
-        parent = ancestors.slice(-1)[0]
-        if parent
-          children.push new Facet(this, ancestor) for ancestor in ancestors
-          children.push new Facet(this, grandChild) for grandChild in parent.children if parent.children
+        if child.applied
+          @_findAncestors(ancestors, item)
+          parent = ancestors.slice(-1)[0]
+          if parent
+            children.push new Facet(this, ancestor) for ancestor in ancestors
+            children.push new Facet(this, grandChild) for grandChild in parent.children if parent.children
         else
           children.push new Facet(this, child)
 
@@ -138,11 +139,11 @@ ns.CollectionFacets = do (ko) ->
     _loadSelectedValues: =>
       facet for facet in @children() when facet.isSelected()
 
-    removeHierarchyBelow: (facet) ->
-      index = facet.hierarchyIndex()
-      removed = (v for v in @children() when v.hierarchyIndex() > index)
-      @children(v for v in @children() when v.hierarchyIndex() <= index)
-      removed
+#    removeHierarchyBelow: (facet) ->
+#      index = facet.hierarchyIndex()
+#      removed = (v for v in @children() when v.hierarchyIndex() > index)
+#      @children(v for v in @children() when v.hierarchyIndex() <= index)
+#      removed
 
     toggleList: =>
       @opened(!@opened())
@@ -166,11 +167,12 @@ ns.CollectionFacets = do (ko) ->
           values = []
           ancestors = []
           for child in item.children
-            @_findAncestors(ancestors, child)
-            parent = ancestors.slice(-1)[0]
-            if parent?
-              values.push ancestor for ancestor in ancestors
-              values.push grandChild for grandChild in parent.children if parent.children
+            if child.applied
+              @_findAncestors(ancestors, child)
+              parent = ancestors.slice(-1)[0]
+              if parent?
+                values.push ancestor for ancestor in ancestors
+                values.push grandChild for grandChild in parent.children if parent.children
             else
               values.push child
           found.setValues(values)
@@ -189,8 +191,17 @@ ns.CollectionFacets = do (ko) ->
 
     removeFacet: (facet) =>
       @_removeSingleFacet(facet)
-      for facet in facet.parent.removeHierarchyBelow(facet) when facet.isSelected()
-        @_removeSingleFacet(facet)
+      @_removeHierarchicalFacets(facet)
+      
+    _removeHierarchicalFacets: (root) ->
+      if root.children
+        for child in root.children
+          if child.applied
+            title = child.title
+            @query.facets.remove (queryFacet) ->
+              queryFacet.title == title
+            @_removeHierarchicalFacets(child)
+
 
     _removeSingleFacet: (facet) ->
       title = facet.title
