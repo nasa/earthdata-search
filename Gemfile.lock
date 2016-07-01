@@ -219,7 +219,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.9)
-    therubyracer (0.11.4)
+    therubyracer (0.12.2)
       libv8 (~> 3.11.8.12)
       ref
     thin (1.6.1)
@@ -277,7 +277,6 @@ DEPENDENCIES
   jquery-rails
   knapsack
   knockoutjs-rails
-  libv8 (~> 3.11.8.3)
   multi_xml
   nokogiri
   obfuscate_id!
@@ -299,3 +298,6 @@ DEPENDENCIES
   unicorn
   vcr
   whenever
+
+BUNDLED WITH
+   1.12.5
