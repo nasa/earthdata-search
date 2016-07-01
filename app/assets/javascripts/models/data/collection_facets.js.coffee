@@ -4,16 +4,6 @@ ns = @edsc.models.data
 
 ns.CollectionFacets = do (ko) ->
 
-  sk_facet_order = [
-    'science_keywords[0][category]',
-    'science_keywords[0][topic]',
-    'science_keywords[0][term]',
-    'science_keywords[0][variable_level_1]',
-    'science_keywords[0][variable_level_2]',
-    'science_keywords[0][variable_level_3]',
-    'science_keywords[0][detailed_variable]'
-  ]
-
   facet_matchers = ['features=[^&]+',
     'science_keywords\\[\\d*\\]\\[category\\]=[^&]+',
     'science_keywords\\[\\d*\\]\\[topic\\]=[^&]+',
@@ -58,30 +48,32 @@ ns.CollectionFacets = do (ko) ->
         regex = new RegExp(category, 'g')
         if link?.match(regex)
           for match in link.match(regex)
-            params.push match.split('=')[0] for key of facet_param_to_title when match.indexOf(key) > -1 && match.indexOf(encodeURIComponent(@title).replace(/%20/g, '+')) > -1
+            params.push match.split('=')[0] for key of facet_param_to_title when match.indexOf(key) > -1 && match.indexOf(encodeURIComponent(@title).replace(/%20/g, '+').replace(/\(/g, "%28").replace(/\)/g, "%29")) > -1
       params
 
     isChild: =>
-      @_isHierarchical() && !@isAncestor() && @hierarchyIndex() > 0
+      !@isAncestor() && @hierarchyIndex() > 1 && @_scienceKeywordFacet()
 
     isParent: =>
-      @_isScienceKeywordParent()
+      @isAncestor() && @_noChildrenSelected()
 
     isAncestor: =>
-      @_isHierarchical() && @isSelected()
+      @isSelected() && @links.remove?.length > 0
 
-    _isScienceKeyword: ->
-      @param.indexOf('sci') == 0
+    _noChildrenSelected: =>
+      return false for child in @children when child.applied
+      return true
 
-    _isScienceKeywordParent: ->
-      (@isAncestor() &&
-       @hierarchyIndex() >= @parent.queryModel.scienceKeywordFacets().length - 1)
+    hierarchyIndex: =>
+      for matcher, index in facet_matchers
+        queryParamRegex = matcher.split('=')[0]
+        regex = new RegExp(queryParamRegex, 'g')
+        if @param.length > 0 && @param[0].match(regex)
+          return index
+      return -1
 
-    _isHierarchical: ->
-      @_isScienceKeyword()
-
-    hierarchyIndex: ->
-      sk_facet_order.indexOf(@param)
+    _scienceKeywordFacet: =>
+      @param[0].indexOf('science_keywords') > -1
 
     equals: (other) ->
       other && other.title == @title && other.param == @param
@@ -192,7 +184,7 @@ ns.CollectionFacets = do (ko) ->
     removeFacet: (facet) =>
       @_removeSingleFacet(facet)
       @_removeHierarchicalFacets(facet)
-      
+
     _removeHierarchicalFacets: (root) ->
       if root.children
         for child in root.children
