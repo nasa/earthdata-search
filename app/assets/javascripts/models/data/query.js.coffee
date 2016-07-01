@@ -139,8 +139,11 @@ ns.query = do (ko,
       facetParams = {}
       for facet in @value()
         name = facet.param
-#        facetParams[name] ?= []
-        facetParams[name] = facet.title
+        if name.indexOf('science_keywords') > -1
+          facetParams[name] = facet.title
+        else
+          facetParams[name] ?= []
+          facetParams[name].push facet.title
       queryStr = param(facetParams)
       extend(true, query, deparam(queryStr))
 
