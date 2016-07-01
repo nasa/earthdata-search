@@ -13,8 +13,6 @@ class CollectionsController < ApplicationController
     if catalog_response.success?
       add_featured_collections!(collection_params, token, catalog_response.body)
       catalog_response.body['feed']['facets']['children'] = add_fake_json_facets(catalog_response.body['feed']['facets']['children'])
-      # catalog_response.body['feed']['facets'] =
-        # FacetsPresenter.new(catalog_response.body['feed']['facets'], request.query_string).as_json
 
       CollectionExtra.decorate_all(catalog_response.body['feed']['entry'])
 
