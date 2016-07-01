@@ -66,7 +66,7 @@ ns.CollectionFacets = do (ko) ->
       !@isFeature() && @isSelected() && @links.remove?.length > 0
 
     _noChildrenSelected: =>
-      return false for child in @children when child.applied
+      return false for child in @children when child.applied if @children
       return true
 
     hierarchyIndex: =>
