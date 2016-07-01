@@ -40,7 +40,9 @@ ns.CollectionFacets = do (ko) ->
 
     _linksToParam: =>
       params = []
-      if @links.apply?
+      if @parent.title == 'Features'
+        params.push 'features'
+      else if @links.apply?
         link = @links.apply.replace(/%5B/g, '[').replace(/%5D/g, ']')
       else
         link = @links.remove.replace(/%5B/g, '[').replace(/%5D/g, ']')
@@ -51,14 +53,17 @@ ns.CollectionFacets = do (ko) ->
             params.push match.split('=')[0] for key of facet_param_to_title when match.indexOf(key) > -1 && match.indexOf(encodeURIComponent(@title).replace(/%20/g, '+').replace(/\(/g, "%28").replace(/\)/g, "%29")) > -1
       params
 
+    isFeature: =>
+      @parent.title == 'Features'
+
     isChild: =>
-      !@isAncestor() && @hierarchyIndex() > 1 && @_scienceKeywordFacet()
+      !@isFeature() && !@isAncestor() && @hierarchyIndex() > 1 && @_scienceKeywordFacet()
 
     isParent: =>
-      @isAncestor() && @_noChildrenSelected()
+      !@isFeature() && @isAncestor() && @_noChildrenSelected()
 
     isAncestor: =>
-      @isSelected() && @links.remove?.length > 0
+      !@isFeature() && @isSelected() && @links.remove?.length > 0
 
     _noChildrenSelected: =>
       return false for child in @children when child.applied
@@ -87,7 +92,13 @@ ns.CollectionFacets = do (ko) ->
       children = []
       ancestors = []
       for child in item.children
-        if child.applied
+        if item.title == 'Features'
+          featureQuery = @queryModel.facets().find (queryParam) ->
+            child.title == queryParam.title
+          if featureQuery
+            child.applied = true
+          children.push new Facet(this, child)
+        else if child.applied
           @_findAncestors(ancestors, item)
           parent = ancestors.slice(-1)[0]
           if parent
@@ -131,12 +142,6 @@ ns.CollectionFacets = do (ko) ->
     _loadSelectedValues: =>
       facet for facet in @children() when facet.isSelected()
 
-#    removeHierarchyBelow: (facet) ->
-#      index = facet.hierarchyIndex()
-#      removed = (v for v in @children() when v.hierarchyIndex() > index)
-#      @children(v for v in @children() when v.hierarchyIndex() <= index)
-#      removed
-
     toggleList: =>
       @opened(!@opened())
 
@@ -157,16 +162,24 @@ ns.CollectionFacets = do (ko) ->
           result.title == item.title
         if found
           values = []
-          ancestors = []
-          for child in item.children
-            if child.applied
-              @_findAncestors(ancestors, child)
-              parent = ancestors.slice(-1)[0]
-              if parent?
-                values.push ancestor for ancestor in ancestors
-                values.push grandChild for grandChild in parent.children if parent.children
-            else
+          if item.title == 'Features'
+            for child in item.children
+              featureQuery = @query.facets().find (queryParam) ->
+                child.title == queryParam.title
+              if featureQuery
+                child.applied = true
               values.push child
+          else
+            ancestors = []
+            for child in item.children
+              if child.applied
+                @_findAncestors(ancestors, child)
+                parent = ancestors.slice(-1)[0]
+                if parent?
+                  values.push ancestor for ancestor in ancestors
+                  values.push grandChild for grandChild in parent.children if parent.children
+              else
+                values.push child
           found.setValues(values)
         else
           current.push(new FacetsListModel(@query, item))
