@@ -10,7 +10,7 @@
     <!-- ko if: children().length > 0 -->
     <div data-bind="css: class_name" class="panel panel-default">
       <div class="panel-heading">
-        <h3 data-bind="click: toggleList" class="panel-title facet-title">
+        <h3 data-bind="click: toggleList" class="panel-title facet-group-title">
           <i data-bind="css: {'fa-chevron-down': closed(), 'fa-chevron-up': opened()}" class="fa pull-right panel-header-toggle"></i>
           <a data-bind="text: title, attr: {'data-target': '#collapse'+$index()}" href="#" ></a>
         </h3>
@@ -25,7 +25,7 @@
 
             <span data-bind="text: title" class="facet-title"></span>
             <i class="fa fa-times"></i>
-            <!-- ko ifnot: $parent.name == 'Features' || isAncestor() -->
+            <!-- ko ifnot: $parent.title == 'Features' || isSelected() -->
             <span class="facet-item-collection-count" data-bind="text: count"></span>
             <!-- /ko -->
             <!-- ko if: title == 'Subsetting Services' -->

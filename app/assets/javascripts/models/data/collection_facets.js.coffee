@@ -4,6 +4,16 @@ ns = @edsc.models.data
 
 ns.CollectionFacets = do (ko) ->
 
+  sk_facet_order = [
+    'science_keywords[0][category]',
+    'science_keywords[0][topic]',
+    'science_keywords[0][term]',
+    'science_keywords[0][variable_level_1]',
+    'science_keywords[0][variable_level_2]',
+    'science_keywords[0][variable_level_3]',
+    'science_keywords[0][detailed_variable]'
+  ]
+
   facet_matchers = ['features=[^&]+',
     'science_keywords\\[\\d*\\]\\[category\\]=[^&]+',
     'science_keywords\\[\\d*\\]\\[topic\\]=[^&]+',
@@ -51,34 +61,27 @@ ns.CollectionFacets = do (ko) ->
             params.push match.split('=')[0] for key of facet_param_to_title when match.indexOf(key) > -1 && match.indexOf(encodeURIComponent(@title).replace(/%20/g, '+')) > -1
       params
 
-    isChild: ->
+    isChild: =>
+      @_isHierarchical() && !@isAncestor() && @_hierarchyIndex() > 0
 
+    isParent: =>
+      @_isScienceKeywordParent()
 
-    isParent: ->
-      # applied: true && links: {remove: https://...}
-      @links.remove?.length > 0 && @isSelected()
-      # applied: true && one of the children has links.remove set
-#      hasChild = false
-#      for child in @children?
-#        if child.links.remove?.length > 0
-#          hasChild = true
-#          break
-#
-#      hasChild && @isSelected()
+    isAncestor: =>
+      @_isHierarchical() && @isSelected()
 
-    isAncestor: ->
-      # applied: true && links: {apply: https://...}
-      @links.apply?.length > 0 && @isSelected()
-
-    isScienceKeyword: ->
+    _isScienceKeyword: ->
       @param.indexOf('sci') == 0
 
-    isScienceKeywordParent: ->
+    _isScienceKeywordParent: ->
       (@isAncestor() &&
-       @hierarchyIndex() >= @parent.queryModel.scienceKeywordFacets().length - 1)
+       @_hierarchyIndex() >= @parent.queryModel.scienceKeywordFacets().length - 1)
 
-    isHierarchical: ->
-      @isScienceKeyword()
+    _isHierarchical: ->
+      @_isScienceKeyword()
+
+    _hierarchyIndex: ->
+      sk_facet_order.indexOf(@param)
 
     equals: (other) ->
       other && other.title == @title && other.param == @param
@@ -89,7 +92,14 @@ ns.CollectionFacets = do (ko) ->
       @class_name = ko.computed => @title.toLowerCase().replace(' ', '-')
       @param = item.param
 
-      children = (new Facet(this, child) for child in item.children)
+      children = []
+      for child in item.children
+        if child.applied
+          children.push new Facet(this, child)
+          children.push new Facet(this, grandChild) for grandChild in child.children
+        else
+          children.push new Facet(this, child)
+
 
       @children = ko.observable(children)
       @selectedValues = ko.computed(@_loadSelectedValues)
@@ -144,8 +154,13 @@ ns.CollectionFacets = do (ko) ->
           result.title == item.title
         if found
           children = item.children
-          children.parent = found for child in item.children
+          child.parent = found for child in item.children
           found.setValues(item.children)
+#          child.parent = found for child in item.children
+#          values = []
+#          values.push item
+#          values.push child for child in children
+#          found.setValues(values)
         else
           current.push(new FacetsListModel(@query, item))
 
