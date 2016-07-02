@@ -55,9 +55,18 @@
   cursor: pointer;
   border-left-color: #30AB62;
 
+  &:hover {
+    border-left-color: darken(#30AB62, 5%);
+  }
+
   i.fa-times {
     display: inline;
     padding: 3px;
+  }
+
+  .fa-chevron-left {
+    font-size: 0.8em;
+    margin-right: 3px;
   }
 }
 
