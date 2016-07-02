@@ -62,6 +62,10 @@
   i.fa-times {
     display: inline;
     padding: 3px;
+
+    &:hover {
+      color: darken(#fff, 15%);
+    }
   }
 
   .fa-chevron-left {
