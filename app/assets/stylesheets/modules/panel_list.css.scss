@@ -224,7 +224,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 10px;
 .panel-list-comparison-details {
   font-size: .9em;
   padding: 4px 8px;
-  margin-right: 80px;
 }
 
 .panel-list-granule-description {
@@ -233,19 +232,30 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 10px;
   margin-left: 4px;
 }
 
+// for absolute positioning in bottom right corner of panel item
+// but text will not wrap around it properly
+// .panel-list-item-actions {
+//   position: absolute;
+//   padding: 1em;
+//   right: 0;
+//   bottom: 0;
+// }
+
 .panel-list-item-actions {
-  position: absolute;
-  padding: 1em;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  top: 2px;
+  left: 2px;
 }
 
-.panel-list-item-actions-buffer {
+.panel-list-item:after {
+    content: "";
+    display: block;
+    clear: right;
+}
+
+.panel-list-item-actions-container {
   display: block;
   float: right;
-  width: 84px;
-  height: 10px;
-  z-index: -1;
 }
 
 #granule-list:focus, #granule-list.has-focus {
