@@ -232,15 +232,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 10px;
   margin-left: 4px;
 }
 
-// for absolute positioning in bottom right corner of panel item
-// but text will not wrap around it properly
-// .panel-list-item-actions {
-//   position: absolute;
-//   padding: 1em;
-//   right: 0;
-//   bottom: 0;
-// }
-
 .panel-list-item-actions {
   position: relative;
   top: 2px;
