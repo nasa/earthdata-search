@@ -89,6 +89,17 @@ ns.CollectionFacets = do (ko) ->
       @class_name = ko.computed => @title.toLowerCase().replace(' ', '-')
       @param = item.param
 
+      children = @_addAncestorsToFacetsList(item)
+      @children = ko.observable(children)
+      @selectedValues = ko.computed(@_loadSelectedValues)
+
+      isDefaultOpened = (@selectedValues().length > 0 ||
+                         item.title == 'Keywords' ||
+                         item.title == 'Features')
+      @opened = ko.observable(isDefaultOpened)
+      @closed = ko.computed => !@opened()
+
+    _addAncestorsToFacetsList: (item) ->
       children = []
       ancestors = []
       for child in item.children
@@ -106,16 +117,7 @@ ns.CollectionFacets = do (ko) ->
             children.push new Facet(this, grandChild) for grandChild in parent.children if parent.children
         else
           children.push new Facet(this, child)
-
-
-      @children = ko.observable(children)
-      @selectedValues = ko.computed(@_loadSelectedValues)
-
-      isDefaultOpened = (@selectedValues().length > 0 ||
-                         item.title == 'Keywords' ||
-                         item.title == 'Features')
-      @opened = ko.observable(isDefaultOpened)
-      @closed = ko.computed => !@opened()
+      children
 
     _findAncestors: (ancestors, item) ->
       ancestors.push item if item.applied && item.type == 'filter'
@@ -124,16 +126,17 @@ ns.CollectionFacets = do (ko) ->
           if child.applied && child.links.remove?.length > 0
             @_findAncestors(ancestors, child)
 
-    setValues: (newValues) =>
+    setValues: (item) =>
+      newValues = @_addAncestorsToFacetsList(item)
+
       facetsByTitle = {}
       for facet in @children()
         facetsByTitle[facet.title] = facet
       values = []
-      for newFacetData in newValues
-        oldFacet = facetsByTitle[newFacetData.title]
-        newFacet = new Facet(this, newFacetData)
+      for newFacet in newValues
+        oldFacet = facetsByTitle[newFacet.title]
         if newFacet.equals(oldFacet)
-          oldFacet.count(newFacetData.count)
+          oldFacet.count(newFacet.count)
           values.push(oldFacet)
         else
           values.push(newFacet)
@@ -161,26 +164,7 @@ ns.CollectionFacets = do (ko) ->
         found = ko.utils.arrayFirst current, (result) ->
           result.title == item.title
         if found
-          values = []
-          if item.title == 'Features'
-            for child in item.children
-              featureQuery = @query.facets().find (queryParam) ->
-                child.title == queryParam.title
-              if featureQuery
-                child.applied = true
-              values.push child
-          else
-            ancestors = []
-            for child in item.children
-              if child.applied
-                @_findAncestors(ancestors, child)
-                parent = ancestors.slice(-1)[0]
-                if parent?
-                  values.push ancestor for ancestor in ancestors
-                  values.push grandChild for grandChild in parent.children if parent.children
-              else
-                values.push child
-          found.setValues(values)
+          found.setValues(item)
         else
           current.push(new FacetsListModel(@query, item))
 
