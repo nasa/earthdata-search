@@ -5,13 +5,13 @@ ns = @edsc.models.data
 ns.CollectionFacets = do (ko) ->
 
   facet_matchers = ['features=[^&]+',
-    'science_keywords\\[\\d*\\]\\[category\\]=[^&]+',
-    'science_keywords\\[\\d*\\]\\[topic\\]=[^&]+',
-    'science_keywords\\[\\d*\\]\\[term\\]=[^&]+',
-    'science_keywords\\[\\d*\\]\\[variable_level_1\\]=[^&]+',
-    'science_keywords\\[\\d*\\]\\[variable_level_2\\]=[^&]+',
-    'science_keywords\\[\\d*\\]\\[variable_level_3\\]=[^&]+',
-    'science_keywords\\[\\d*\\]\\[detailed_variable\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[category\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[topic\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[term\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[variable_level_1\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[variable_level_2\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[variable_level_3\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[detailed_variable\\]=[^&]+',
     'platform\\[\\]=[^&]+',
     'instrument\\[\\]=[^&]+',
     'data_center\\[\\]=[^&]+',
@@ -20,7 +20,7 @@ ns.CollectionFacets = do (ko) ->
 
   facet_param_to_title = {
     'features': 'Features',
-    'science_keywords': 'Keywords',
+    'science_keywords_h': 'Keywords',
     'platform': 'Platforms',
     'instrument': 'Instruments',
     'data_center': 'Organizations',
