@@ -12,7 +12,7 @@ class CollectionsController < ApplicationController
 
     if catalog_response.success?
       add_featured_collections!(collection_params, token, catalog_response.body)
-      catalog_response.body['feed']['facets']['children'] = add_fake_json_facets(catalog_response.body['feed']['facets']['children'])
+      catalog_response.body['feed']['facets']['children'] = add_fake_json_facets(catalog_response.body['feed']['facets'])
 
       CollectionExtra.decorate_all(catalog_response.body['feed']['entry'])
 
@@ -162,12 +162,17 @@ class CollectionsController < ApplicationController
     end
   end
 
-  def add_fake_json_facets(json_facets)
-    [{'title' => 'Features', 'type' => 'group', 'applied' => false, 'has_children' => true, 'children' => [
+  def add_fake_json_facets(facets)
+    feature_facet = [{'title' => 'Features', 'type' => 'group', 'applied' => false, 'has_children' => true, 'children' => [
         {'title' => 'Map Imagery', 'type' => 'filter', 'applied' => false, 'has_children' => false},
         {'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false},
         {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
-     }] + json_facets
+     }]
+    if facets['children']
+      feature_facet + facets['children']
+    else
+      feature_facet
+    end
   end
 
 end
