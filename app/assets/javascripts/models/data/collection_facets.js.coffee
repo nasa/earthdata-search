@@ -12,20 +12,20 @@ ns.CollectionFacets = do (ko) ->
     'science_keywords_h\\[\\d*\\]\\[variable_level_2\\]=[^&]+',
     'science_keywords_h\\[\\d*\\]\\[variable_level_3\\]=[^&]+',
     'science_keywords_h\\[\\d*\\]\\[detailed_variable\\]=[^&]+',
-    'platform\\[\\]=[^&]+',
-    'instrument\\[\\]=[^&]+',
-    'data_center\\[\\]=[^&]+',
-    'project\\[\\]=[^&]+',
-    'processing_level_id\\[\\]=[^&]+']
+    'platform_h\\[\\]=[^&]+',
+    'instrument_h\\[\\]=[^&]+',
+    'data_center_h\\[\\]=[^&]+',
+    'project_h\\[\\]=[^&]+',
+    'processing_level_id_h\\[\\]=[^&]+']
 
   facet_param_to_title = {
     'features': 'Features',
     'science_keywords_h': 'Keywords',
-    'platform': 'Platforms',
-    'instrument': 'Instruments',
-    'data_center': 'Organizations',
-    'project': 'Projects',
-    'processing_level_id': 'Processing levels'}
+    'platform_h': 'Platforms',
+    'instrument_h': 'Instruments',
+    'data_center_h': 'Organizations',
+    'project_h': 'Projects',
+    'processing_level_id_h': 'Processing levels'}
 
   class Facet
     constructor: (@parent, item) ->

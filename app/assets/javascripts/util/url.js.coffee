@@ -119,12 +119,12 @@ this.edsc.util.url = do(window
     new ParamNameCompressor('line', 'sg')
 
     new ArrayJoiner('features', 'ff')
-    new ArrayJoiner('data_center', 'fdc')
-    new ArrayJoiner('project', 'fpj')
-    new ArrayJoiner('platform', 'fp')
-    new ArrayJoiner('instrument', 'fi')
-    new ArrayJoiner('sensor', 'fs')
-    new ArrayJoiner('processing_level_id', 'fl')
+    new ArrayJoiner('data_center_h', 'fdc')
+    new ArrayJoiner('project_h', 'fpj')
+    new ArrayJoiner('platform_h', 'fp')
+    new ArrayJoiner('instrument_h', 'fi')
+#    new ArrayJoiner('sensor_h', 'fs')
+    new ArrayJoiner('processing_level_id_h', 'fl')
 
     new ParamFlattener(['science_keywords_h', '0', 'category'], 'fsc', false)
     new ParamFlattener(['science_keywords_h', '1', 'topic'], 'fst', false)
