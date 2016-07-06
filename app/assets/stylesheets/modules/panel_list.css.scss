@@ -1,6 +1,6 @@
-$panel-list-item-height: 75px;
+$panel-list-item-height: 81px;
 $panel-list-thumbnail-size: $panel-list-item-height;
-$panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 10px;
+$panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .panel-list {
   .button {
@@ -85,7 +85,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 10px;
   width: $panel-list-thumbnail-container-size;
   height: $panel-list-thumbnail-container-size;
   background-color: #222;
-  border: 5px solid #111;
+  border: 2px solid #3f70a6;
   text-align: center;
   line-height: $panel-list-thumbnail-size;
 }
@@ -126,8 +126,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 10px;
 
 .panel-list-badges {
   position: absolute;
-  top: -5px;
-  left: -5px;
+  top: -1px;
+  left: -1px;
   .tooltip {
     width: $facet-overlay-width;
   }
