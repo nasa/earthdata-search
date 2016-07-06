@@ -87,7 +87,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   background-color: #222;
   border: 2px solid #3f70a6;
   text-align: center;
-  line-height: $panel-list-thumbnail-size;
+  line-height: $panel-list-thumbnail-size - 1px;
 }
 
 .panel-list-thumbnail-onerror {
