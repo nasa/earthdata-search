@@ -50,7 +50,10 @@ ns.CollectionFacets = do (ko) ->
         regex = new RegExp(category, 'g')
         if link?.match(regex)
           for match in link.match(regex)
-            params.push match.split('=')[0] for key of facet_param_to_title when match.indexOf(key) > -1 && match.indexOf(encodeURIComponent(@title).replace(/%20/g, '+').replace(/\(/g, "%28").replace(/\)/g, "%29")) > -1
+            for key of facet_param_to_title
+              [param, value] = match.split('=')
+              if param.indexOf(key) > -1 && value == encodeURIComponent(@title).replace(/%20/g, '+').replace(/\(/g, "%28").replace(/\)/g, "%29")
+                params.push match.split('=')[0]
       params
 
     isFeature: =>
@@ -78,7 +81,7 @@ ns.CollectionFacets = do (ko) ->
       return -1
 
     _scienceKeywordFacet: =>
-      @param[0].indexOf('science_keywords') > -1
+      @param[0].indexOf('science_keywords_h') > -1
 
     equals: (other) ->
       other && other.title == @title && other.param == @param

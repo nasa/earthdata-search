@@ -133,13 +133,13 @@ ns.query = do (ko,
 
   class FacetParam extends QueryParam
     names: ->
-      ['features', 'campaign', 'data_center', 'project', 'platform', 'instrument', 'science_keywords', 'processing_level_id']
+      ['features', 'campaign_h', 'data_center_h', 'project_h', 'platform_h', 'instrument_h', 'science_keywords_h', 'processing_level_id_h']
 
     writeTo: (query) ->
       facetParams = {}
       for facet in @value()
         name = facet.param
-        if name.indexOf('science_keywords') > -1
+        if name.indexOf('science_keywords_h') > -1
           facetParams[name] = facet.title
         else
           facetParams[name] ?= []
