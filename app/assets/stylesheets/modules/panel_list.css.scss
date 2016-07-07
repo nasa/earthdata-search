@@ -236,17 +236,21 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 10px;
   position: relative;
   top: 2px;
   left: 2px;
+  float: right;
+}
+
+.granule-item-actions {
+  @media (min-width: 1150px) {
+    position: relative;
+    top: 25px;
+    left: 25px;
+  }
 }
 
 .panel-list-item:after {
     content: "";
     display: block;
     clear: right;
-}
-
-.panel-list-item-actions-container {
-  display: block;
-  float: right;
 }
 
 #granule-list:focus, #granule-list.has-focus {
