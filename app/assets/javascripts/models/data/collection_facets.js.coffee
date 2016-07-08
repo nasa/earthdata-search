@@ -113,11 +113,14 @@ ns.CollectionFacets = do (ko) ->
             child.applied = true
           children.push new Facet(this, child)
         else if child.applied
-          @_findAncestors(ancestors, item)
-          parent = ancestors.slice(-1)[0]
-          if parent
-            children.push new Facet(this, ancestor) for ancestor in ancestors
-            children.push new Facet(this, grandChild) for grandChild in parent.children if parent.children
+          if item.title == 'Keywords'
+            @_findAncestors(ancestors, item)
+            parent = ancestors.slice(-1)[0]
+            if parent
+              children.push new Facet(this, ancestor) for ancestor in ancestors
+              children.push new Facet(this, grandChild) for grandChild in parent.children if parent.children
+          else
+            children.push new Facet(this, child)
         else
           children.push new Facet(this, child)
       children
