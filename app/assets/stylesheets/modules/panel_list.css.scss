@@ -85,7 +85,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   width: $panel-list-thumbnail-container-size;
   height: $panel-list-thumbnail-container-size;
   background-color: #222;
-  border: 2px solid #3f70a6;
+  border: 1px solid rgb(235, 235, 235);
   text-align: center;
   line-height: $panel-list-thumbnail-size - 1px;
 }
