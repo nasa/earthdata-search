@@ -69,11 +69,7 @@ module VCR
             digest = Digest::SHA1.hexdigest(unique_key(interaction))
             interaction['digest'] = digest
             requests[k] << interaction
-            if interaction['request']['uri'].include?('collections.json')
-              responses[digest] = reduce_fixture_size(response)
-            else
-              responses[digest] = response
-            end
+            responses[digest] = response
           end
         else
           requests[k] = v
