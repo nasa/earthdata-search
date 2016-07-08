@@ -174,10 +174,15 @@ ns.CollectionFacets = do (ko) ->
       # Remove 'current' facetsList that are not returned from CMR (e.g. after 'atmosphere -> cloud -> cloud properties'
       # being applied, CMR will not return 'processing_level_id_h' in facet-v2 since no collections have any process level
       # id info.
-      for currentFacetList in current
+      currentLen = current.length
+      i = 0
+      while i < currentLen
+        currentFacetList = current[i]
         found = ko.utils.arrayFirst data, (result) ->
           result.title == currentFacetList.title
         current.splice(current.indexOf(currentFacetList), 1) unless found
+        currentLen = current.length
+        i++
 
       @results(current)
       current
