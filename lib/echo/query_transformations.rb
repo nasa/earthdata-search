@@ -67,25 +67,30 @@ module Echo
       # If Campaigns, Platforms, Instruments, or Sensors are selected
       # add the option to perform an AND search in the catalog
       def and_query(query)
-        if query[:campaign]
+        if query[:platform_h]
           query[:options] ||= Hash.new
-          query[:options][:campaign] = Hash.new
-          query[:options][:campaign][:and] = true
+          query[:options][:platform_h] = Hash.new
+          query[:options][:platform_h][:and] = true
         end
-        if query[:platform]
+        if query[:instrument_h]
           query[:options] ||= Hash.new
-          query[:options][:platform] = Hash.new
-          query[:options][:platform][:and] = true
+          query[:options][:instrument_h] = Hash.new
+          query[:options][:instrument_h][:and] = true
         end
-        if query[:instrument]
+        if query[:data_center_h]
           query[:options] ||= Hash.new
-          query[:options][:instrument] = Hash.new
-          query[:options][:instrument][:and] = true
+          query[:options][:data_center_h] = Hash.new
+          query[:options][:data_center_h][:and] = true
         end
-        if query[:sensor]
+        if query[:project_h]
           query[:options] ||= Hash.new
-          query[:options][:sensor] = Hash.new
-          query[:options][:sensor][:and] = true
+          query[:options][:project_h] = Hash.new
+          query[:options][:project_h][:and] = true
+        end
+        if query[:processing_level_id_h]
+          query[:options] ||= Hash.new
+          query[:options][:processing_level_id_h] = Hash.new
+          query[:options][:processing_level_id_h][:and] = true
         end
       end
   end
