@@ -69,8 +69,11 @@ ns.CollectionFacets = do (ko) ->
       !@isFeature() && @isSelected() && @links.remove?.length > 0
 
     _noChildrenSelected: =>
-      return false for child in @children when child.applied if @children
-      return true
+      if @children
+        return false for child in @children when child.applied
+        return true
+      else
+        return false
 
     hierarchyIndex: =>
       for matcher, index in facet_matchers
@@ -118,7 +121,10 @@ ns.CollectionFacets = do (ko) ->
             parent = ancestors.slice(-1)[0]
             if parent
               children.push new Facet(this, ancestor) for ancestor in ancestors
-              children.push new Facet(this, grandChild) for grandChild in parent.children if parent.children
+              if parent.children
+                children.push new Facet(this, grandChild) for grandChild in parent.children
+              else
+                break
           else
             children.push new Facet(this, child)
         else
@@ -198,7 +204,7 @@ ns.CollectionFacets = do (ko) ->
             @_findAncestors(ancestors, child)
 
     removeFacet: (facet) =>
-      @_removeSingleFacet(facet)
+#      @_removeSingleFacet(facet)
       @_removeHierarchicalFacets(facet)
 
     _removeHierarchicalFacets: (root) ->
@@ -209,13 +215,18 @@ ns.CollectionFacets = do (ko) ->
             @query.facets.remove (queryFacet) ->
               queryFacet.title == title
             @_removeHierarchicalFacets(child)
-
-
-    _removeSingleFacet: (facet) ->
-      title = facet.title
-      param = facet.param
-      @query.facets.remove (queryFacet) ->
-        queryFacet.title == title
+      else
+        rootLevel = -1
+        for facetParam in @query.facets()
+          if facetParam.title == root.title
+            rootLevel = parseInt(facetParam.param.split(/(?:\]?\[|\]$)/)[1])
+            break;
+        if isNaN(rootLevel)
+          @query.facets.remove (facet) ->
+            facet.title == root.title
+        else
+          @query.facets.remove (facet) ->
+            parseInt(facet.param.split(/(?:\]?\[|\]$)/)[1]) >= rootLevel
 
     addFacet: (facet) =>
       @query.facets([]) unless @query.facets()?
