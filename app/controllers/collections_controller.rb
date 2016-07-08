@@ -12,6 +12,7 @@ class CollectionsController < ApplicationController
 
     if catalog_response.success?
       add_featured_collections!(collection_params, token, catalog_response.body)
+      catalog_response.body['feed']['facets'] = Hash.new if catalog_response.body['feed']['facets'].nil?
       catalog_response.body['feed']['facets']['children'] = add_fake_json_facets(catalog_response.body['feed']['facets'])
 
       CollectionExtra.decorate_all(catalog_response.body['feed']['entry'])
@@ -168,7 +169,7 @@ class CollectionsController < ApplicationController
         {'title' => 'Near Real Time', 'type' => 'filter', 'applied' => false, 'has_children' => false},
         {'title' => 'Subsetting Services', 'type' => 'filter', 'applied' => false, 'has_children' => false}]
      }]
-    if facets['children']
+    if facets.present? && facets['children']
       feature_facet + facets['children']
     else
       feature_facet
