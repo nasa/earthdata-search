@@ -1,5 +1,6 @@
-$panel-list-item-height: 75px;
+$panel-list-item-height: 81px;
 $panel-list-thumbnail-size: $panel-list-item-height;
+$panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .panel-list {
   .button {
@@ -42,7 +43,8 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 }
 
 .panel-list-item > p {
-  margin-left: $panel-list-thumbnail-size;
+  margin-left: $panel-list-thumbnail-container-size;
+  display: table;
 }
 
 // Drag handles instead of borders
@@ -80,12 +82,12 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   float: left;
   position:relative;
   margin-right: .5em;
-  width: $panel-list-thumbnail-size + 10px;
-  height: $panel-list-thumbnail-size + 10px;
+  width: $panel-list-thumbnail-container-size;
+  height: $panel-list-thumbnail-container-size;
   background-color: #222;
-  border: 5px solid #111;
+  border: 1px solid rgb(235, 235, 235);
   text-align: center;
-  line-height: $panel-list-thumbnail-size;
+  line-height: $panel-list-thumbnail-size - 1px;
 }
 
 .panel-list-thumbnail-onerror {
@@ -124,8 +126,8 @@ $panel-list-thumbnail-size: $panel-list-item-height;
 
 .panel-list-badges {
   position: absolute;
-  top: -5px;
-  left: -5px;
+  top: -1px;
+  left: -1px;
   .tooltip {
     width: $facet-overlay-width;
   }
@@ -230,19 +232,25 @@ $panel-list-thumbnail-size: $panel-list-item-height;
   margin-left: 4px;
 }
 
-@media (max-width: 1400px) {
-  .panel-list-item-actions {
-    margin-left: 90px;
+.panel-list-item-actions {
+  position: relative;
+  top: 2px;
+  left: 2px;
+  float: right;
+}
+
+.granule-item-actions {
+  @media (min-width: 1150px) {
+    position: relative;
+    top: 25px;
+    left: 25px;
   }
 }
 
-@media (min-width: 1401px) {
-  .panel-list-item-actions {
-    position: absolute;
-    padding: 1em;
-    right: 0;
-    bottom: 0;
-  }
+.panel-list-item:after {
+    content: "";
+    display: block;
+    clear: right;
 }
 
 #granule-list:focus, #granule-list.has-focus {
