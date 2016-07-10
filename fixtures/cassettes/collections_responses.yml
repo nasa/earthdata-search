@@ -2284,6 +2284,253 @@ a89a108443a059bf8339e654b120d5c384dd4cbb:
         SIPS-GHCC","type":"filter","applied":false,"count":1,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1000000560-DEV08*&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=AMSR-E+SIPS-GHCC"},"has_children":false},{"title":"EDF_DEV08","type":"filter","applied":false,"count":1,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1000000560-DEV08*&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=EDF_DEV08"},"has_children":false}]},{"title":"Processing
         levels","type":"group","applied":false,"has_children":true,"children":[{"title":"3","type":"filter","applied":false,"count":1,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1000000560-DEV08*&include_has_granules=true&include_granule_counts=true&processing_level_id_h%5B%5D=3"},"has_children":false}]}]}}}'
     http_version: 
+bf56b81f6130d5251e62e3d7c691cb368e271e08:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:56:13 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '18'
+      cmr-request-id:
+      - 98d90161-7467-40d8-b089-35623a01ef9c
+      content-length:
+      - '571'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:56:13.777Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[],"facets":{"title":"Browse Collections","type":"group","has_children":false}}}'
+    http_version: 
+0995a161cb9908119b0e1690779cb5a9003754bb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:56:13 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '46'
+      cmr-took:
+      - '45'
+      cmr-request-id:
+      - 3f86ed39-e284-495b-9654-75125774f851
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:56:13.371Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Aerosol Optical Depth","resolution":"2km","product":"MODIS_Terra_Aerosol","match":{"time-start":">=2012-06-22"}}]}},"time_start":"1999-12-18T00:00:00.000Z","version_id":"5","updated":"2006-03-17T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005","data_center":"LAADS","short_name":"MOD04_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005","summary":"MODIS/Terra Aerosol 5-Min L2
+        Swath 10km","has_granules":true,"orbit_parameters":{},"id":"C24936-LAADS","original_format":"ECHO10","granule_count":170,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Atmosphere Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Atmosphere Data Availability Calendar and Validation Level (MiscInformation)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products_calendar.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"NULL
+        (DatasetDisclaimer)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/validation.html"}]},{"processing_level_id":"2","tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Night)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Pressure_Night","match":{"time-start":">=2012-05-08","day-night-flag":"NIGHT"}},{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Temperature (Night)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Temp_Night","match":{"time-start":">=2012-05-08","day-night-flag":"NIGHT"}},{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Cloud Top Pressure (Day)","resolution":"2km","product":"MODIS_Terra_Cloud_Top_Pressure_Day","match":{"time-start":">=2012-05-08","day-night-flag":"DAY"}}]}},"time_start":"1999-12-18T00:00:00.000Z","version_id":"5","updated":"2006-03-17T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Clouds 5-Min L2 Swath 1km and 5km V005","data_center":"LAADS","short_name":"MOD06_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Clouds 5-Min L2 Swath 1km and 5km V005","summary":"Level 2 daily global Cloud
+        particle phase, effective particle radius, and cloud optical thickness derived
+        from VNIR radiances. Cloud top temp, ht., effective emissivity, phase, & cloud
+        fraction produced with IR retrieval methods at 5X5 1-km resolution.","has_granules":true,"orbit_parameters":{},"id":"C24938-LAADS","original_format":"ECHO10","granule_count":356,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Atmosphere Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Atmosphere Data Availability Calendar and Validation Level (MiscInformation)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products_calendar.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"NULL
+        (DatasetDisclaimer)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/validation.html"}]},{"processing_level_id":"2","tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Water Vapor (Day)","resolution":"2km","product":"MODIS_Terra_Water_Vapor_5km_Day","match":{"time-start":">=2012-05-08","day-night-flag":"DAY"}},{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Water Vapor (Night)","resolution":"2km","product":"MODIS_Terra_Water_Vapor_5km_Night","match":{"time-start":">=2012-05-08","day-night-flag":"NIGHT"}}]}},"time_start":"1999-12-18T00:00:00.000Z","version_id":"5","updated":"2006-03-17T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Total Precipitable Water Vapor 5-Min L2 Swath 1km and 5km V005","data_center":"LAADS","short_name":"MOD05_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Total Precipitable Water Vapor 5-Min L2 Swath 1km and 5km V005","summary":"This
+        Level 2 data collection contains derived precipitable column water vapor amounts,
+        during daytime using a near-infrared over clear land areas and above clouds
+        over both land and ocean; water vapor estimates are provided over clear ocean
+        areas.","has_granules":true,"orbit_parameters":{},"id":"C24937-LAADS","original_format":"ECHO10","granule_count":354,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Atmosphere Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Atmosphere Data Availability Calendar and Validation Level (MiscInformation)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products_calendar.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"NULL
+        (DatasetDisclaimer)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/validation.html"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar","arctic":false,"title":"Soil Moisture (L3, Active)","resolution":"2km","product":"SMAP_L3_Active_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-87
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","version_id":"001","updated":"2014-12-03T14:24:32.822Z","dataset_id":"SMAP
+        L3 Radar Global Daily 3 km EASE-Grid Soil Moisture V001","data_center":"EDF_DEV06","short_name":"SPL3SMA","organizations":["EDF_DEV06","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Global Daily 3 km EASE-Grid
+        Soil Moisture V001","coordinate_system":"GEODETIC","summary":"Daily global
+        composite of up-to 15 half-orbit L2_SM_A soil moisture estimates based on
+        radar backscatter measurements acquired by the SMAP radar during descending
+        half-orbits at approximately 6 AM local solar time.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000000303-EDF_DEV06","original_format":"ISO-SMAP","granule_count":3,"archive_center":"EDF_DEV06","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar","arctic":false,"title":"Soil Moisture (L3, Active)","resolution":"2km","product":"SMAP_L3_Active_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-87
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","dif_ids":["SPL3SMA.001"],"version_id":"001","updated":"2015-03-09T13:01:34.719Z","dataset_id":"SMAP
+        L3 Radar Global Daily 3 km EASE-Grid Soil Moisture V001","data_center":"DEV08","short_name":"SPL3SMA","organizations":["DEV08","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Global Daily 3 km EASE-Grid
+        Soil Moisture V001","coordinate_system":"GEODETIC","summary":"Daily global
+        composite of up-to 15 half-orbit L2_SM_A soil moisture estimates based on
+        radar backscatter measurements acquired by the SMAP radar during descending
+        half-orbits at approximately 6 AM local solar time.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000001108-DEV08","original_format":"ISO-SMAP","granule_count":6,"archive_center":"DEV08","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar","arctic":false,"title":"Soil Moisture (L3, Active)","resolution":"2km","product":"SMAP_L3_Active_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-87
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","version_id":"001","updated":"2015-08-21T10:47:15.266Z","dataset_id":"SMAP
+        L3 Radar Global Daily 3 km EASE-Grid Soil Moisture V001","data_center":"DEV07","short_name":"SPL3SMA","organizations":["EDF_DEV07","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Global Daily 3 km EASE-Grid
+        Soil Moisture V001","coordinate_system":"GEODETIC","summary":"Daily global
+        composite of up-to 15 half-orbit L2_SM_A soil moisture estimates based on
+        radar backscatter measurements acquired by the SMAP radar during descending
+        half-orbits at approximately 6 AM local solar time.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000001250-DEV07","original_format":"ISO-SMAP","granule_count":6,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar","arctic":false,"title":"Soil Moisture (L3, Active)","resolution":"2km","product":"SMAP_L3_Active_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-87
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","dif_ids":["SPL3SMA.001"],"version_id":"001","updated":"2015-09-04T13:31:22.148Z","dataset_id":"SMAP
+        L3 Radar Global Daily 3 km EASE-Grid Soil Moisture V001","data_center":"EDF_OPS","short_name":"SPL3SMA","organizations":["EDF_OPS","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Global Daily 3 km EASE-Grid
+        Soil Moisture V001","coordinate_system":"GEODETIC","summary":"Daily global
+        composite of up-to 15 half-orbit L2_SM_A soil moisture estimates based on
+        radar backscatter measurements acquired by the SMAP radar during descending
+        half-orbits at approximately 6 AM local solar time.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000001312-EDF_OPS","original_format":"ISO-SMAP","granule_count":7,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar","arctic":false,"title":"Soil Moisture (L3, Active)","resolution":"2km","product":"SMAP_L3_Active_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-85.0445
+        -180 85.0445 180"],"time_start":"2015-04-13T00:00:00.000Z","dif_ids":["SPL3SMA"],"version_id":"002","updated":"2015-11-25T15:24:12.702Z","dataset_id":"SMAP
+        L3 Radar Global Daily 3 km EASE-Grid Soil Moisture V002","data_center":"EDF_OPS","short_name":"SPL3SMA","organizations":["EDF_OPS","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Global Daily 3 km EASE-Grid
+        Soil Moisture V002","coordinate_system":"GEODETIC","summary":"Daily global
+        composite of up-to 15 half-orbit L2_SM_A soil moisture estimates based on
+        radar backscatter measurements acquired by the SMAP radar during descending
+        half-orbits at approximately 6 AM local solar time.","has_granules":true,"orbit_parameters":{},"id":"C1200055969-EDF_OPS","original_format":"ISO-SMAP","granule_count":3,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar","arctic":false,"title":"Soil Moisture (L3, Active)","resolution":"2km","product":"SMAP_L3_Active_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-85.0445
+        -180 85.0445 180"],"time_start":"2015-04-13T00:00:00.000Z","dif_ids":["SPL3SMA"],"version_id":"002","updated":"2015-11-23T07:46:13.427Z","dataset_id":"SMAP
+        L3 Radar Global Daily 3 km EASE-Grid Soil Moisture V002","data_center":"EDF_DEV06","short_name":"SPL3SMA","organizations":["EDF_DEV06","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Global Daily 3 km EASE-Grid
+        Soil Moisture V002","coordinate_system":"GEODETIC","summary":"Daily global
+        composite of up-to 15 half-orbit L2_SM_A soil moisture estimates based on
+        radar backscatter measurements acquired by the SMAP radar during descending
+        half-orbits at approximately 6 AM local solar time.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1200056078-EDF_DEV06","original_format":"ISO-SMAP","granule_count":3,"archive_center":"EDF_DEV06","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar","arctic":false,"title":"Soil Moisture (L3, Active)","resolution":"2km","product":"SMAP_L3_Active_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-85.0445
+        -180 85.0445 180"],"time_start":"2015-04-13T00:00:00.000Z","dif_ids":["SPL3SMA"],"version_id":"002","updated":"2015-12-03T14:41:47.212Z","dataset_id":"SMAP
+        L3 Radar Global Daily 3 km EASE-Grid Soil Moisture V002","data_center":"DEMO_PROV","short_name":"SPL3SMA","organizations":["NSIDC","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Global Daily 3 km EASE-Grid
+        Soil Moisture V002","coordinate_system":"GEODETIC","summary":"Daily global
+        composite of up-to 15 half-orbit L2_SM_A soil moisture estimates based on
+        radar backscatter measurements acquired by the SMAP radar during descending
+        half-orbits at approximately 6 AM local solar time.","has_granules":true,"orbit_parameters":{},"id":"C1200056610-DEMO_PROV","original_format":"ISO-SMAP","granule_count":1,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar","arctic":false,"title":"Soil Moisture (L3, Active)","resolution":"2km","product":"SMAP_L3_Active_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-85.0445
+        -180 85.0445 180"],"time_start":"2015-04-13T00:00:00.000Z","dif_ids":["SPL3SMA"],"version_id":"002","updated":"2015-10-30T14:37:40.537Z","dataset_id":"SMAP
+        L3 Radar Global Daily 3 km EASE-Grid Soil Moisture V002","data_center":"DEV07","short_name":"SPL3SMA","organizations":["EDF_DEV07","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Global Daily 3 km EASE-Grid
+        Soil Moisture V002","coordinate_system":"GEODETIC","summary":"Daily global
+        composite of up-to 15 half-orbit L2_SM_A soil moisture estimates based on
+        radar backscatter measurements acquired by the SMAP radar during descending
+        half-orbits at approximately 6 AM local solar time.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1200060178-DEV07","original_format":"ISO-SMAP","granule_count":8,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":false,"source":"SMAP
+        / Radar","arctic":true,"title":"Freeze/Thaw (L3, Active, Radar, SMAP)","resolution":"1km","product":"SMAP_L3_Active_AM_Freeze_Thaw","match":{"time-start":">=2015-04-13","time-end":"<=2015-07-07"}}]}},"boxes":["45
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","version_id":"001","updated":"2014-12-04T16:46:17.202Z","dataset_id":"SMAP
+        L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V001","data_center":"EDF_DEV06","short_name":"SPL3FTA","organizations":["EDF_DEV06","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Northern Hemisphere Daily 3
+        km EASE-Grid Freeze/Thaw State V001","coordinate_system":"GEODETIC","summary":"Daily
+        global composite of up-to 30 half-orbit L2_FT_A binary freeze/thaw state based
+        on radar backscatter measurements by the SMAP radar during descending and
+        ascending half-orbits at approximately 6 AM or 6 PM local solar time, respectively.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000000313-EDF_DEV06","original_format":"ISO-SMAP","granule_count":3,"archive_center":"EDF_DEV06","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":false,"source":"SMAP
+        / Radar","arctic":true,"title":"Freeze/Thaw (L3, Active, Radar, SMAP)","resolution":"1km","product":"SMAP_L3_Active_AM_Freeze_Thaw","match":{"time-start":">=2015-04-13","time-end":"<=2015-07-07"}}]}},"boxes":["45
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","dif_ids":["SPL3FTA.001"],"version_id":"001","updated":"2015-03-09T13:01:14.326Z","dataset_id":"SMAP
+        L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V001","data_center":"DEV08","short_name":"SPL3FTA","organizations":["DEV08","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Northern Hemisphere Daily 3
+        km EASE-Grid Freeze/Thaw State V001","coordinate_system":"GEODETIC","summary":"Daily
+        global composite of up-to 30 half-orbit L2_FT_A binary freeze/thaw state based
+        on radar backscatter measurements by the SMAP radar during descending and
+        ascending half-orbits at approximately 6 AM or 6 PM local solar time, respectively.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000001102-DEV08","original_format":"ISO-SMAP","granule_count":9,"archive_center":"DEV08","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":false,"source":"SMAP
+        / Radar","arctic":true,"title":"Freeze/Thaw (L3, Active, Radar, SMAP)","resolution":"1km","product":"SMAP_L3_Active_AM_Freeze_Thaw","match":{"time-start":">=2015-04-13","time-end":"<=2015-07-07"}}]}},"boxes":["45
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","version_id":"001","updated":"2015-08-21T10:46:48.414Z","dataset_id":"SMAP
+        L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V001","data_center":"DEV07","short_name":"SPL3FTA","organizations":["EDF_DEV07","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Northern Hemisphere Daily 3
+        km EASE-Grid Freeze/Thaw State V001","coordinate_system":"GEODETIC","summary":"Daily
+        global composite of up-to 30 half-orbit L2_FT_A binary freeze/thaw state based
+        on radar backscatter measurements by the SMAP radar during descending and
+        ascending half-orbits at approximately 6 AM or 6 PM local solar time, respectively.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000001251-DEV07","original_format":"ISO-SMAP","granule_count":9,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":false,"source":"SMAP
+        / Radar","arctic":true,"title":"Freeze/Thaw (L3, Active, Radar, SMAP)","resolution":"1km","product":"SMAP_L3_Active_AM_Freeze_Thaw","match":{"time-start":">=2015-04-13","time-end":"<=2015-07-07"}}]}},"boxes":["45
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","dif_ids":["SPL3FTA.001"],"version_id":"001","updated":"2015-04-28T17:43:05.642Z","dataset_id":"SMAP
+        L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V001","data_center":"EDF_OPS","short_name":"SPL3FTA","organizations":["EDF_OPS","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Northern Hemisphere Daily 3
+        km EASE-Grid Freeze/Thaw State V001","coordinate_system":"GEODETIC","summary":"Daily
+        global composite of up-to 30 half-orbit L2_FT_A binary freeze/thaw state based
+        on radar backscatter measurements by the SMAP radar during descending and
+        ascending half-orbits at approximately 6 AM or 6 PM local solar time, respectively.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000001303-EDF_OPS","original_format":"ISO-SMAP","granule_count":9,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":false,"source":"SMAP
+        / Radar","arctic":true,"title":"Freeze/Thaw (L3, Active, Radar, SMAP)","resolution":"1km","product":"SMAP_L3_Active_AM_Freeze_Thaw","match":{"time-start":">=2015-04-13","time-end":"<=2015-07-07"}}]}},"boxes":["45
+        -180 85.0445 180"],"time_start":"2015-04-13T00:00:00.000Z","dif_ids":["SPL3FTA"],"version_id":"002","updated":"2015-11-25T15:29:11.447Z","dataset_id":"SMAP
+        L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V002","data_center":"EDF_OPS","short_name":"SPL3FTA","organizations":["EDF_OPS","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Northern Hemisphere Daily 3
+        km EASE-Grid Freeze/Thaw State V002","coordinate_system":"GEODETIC","summary":"Daily
+        global composite of up-to 30 half-orbit L2_FT_A binary freeze/thaw state based
+        on radar backscatter measurements by the SMAP radar during descending and
+        ascending half-orbits at approximately 6 AM or 6 PM local solar time, respectively.","has_granules":true,"orbit_parameters":{},"id":"C1200055962-EDF_OPS","original_format":"ISO-SMAP","granule_count":3,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":false,"source":"SMAP
+        / Radar","arctic":true,"title":"Freeze/Thaw (L3, Active, Radar, SMAP)","resolution":"1km","product":"SMAP_L3_Active_AM_Freeze_Thaw","match":{"time-start":">=2015-04-13","time-end":"<=2015-07-07"}}]}},"boxes":["45
+        -180 85.0445 180"],"time_start":"2015-04-13T00:00:00.000Z","dif_ids":["SPL3FTA"],"version_id":"002","updated":"2015-11-23T07:46:13.424Z","dataset_id":"SMAP
+        L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V002","data_center":"EDF_DEV06","short_name":"SPL3FTA","organizations":["EDF_DEV06","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Northern Hemisphere Daily 3
+        km EASE-Grid Freeze/Thaw State V002","coordinate_system":"GEODETIC","summary":"Daily
+        global composite of up-to 30 half-orbit L2_FT_A binary freeze/thaw state based
+        on radar backscatter measurements by the SMAP radar during descending and
+        ascending half-orbits at approximately 6 AM or 6 PM local solar time, respectively.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1200056073-EDF_DEV06","original_format":"ISO-SMAP","granule_count":3,"archive_center":"EDF_DEV06","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":false,"source":"SMAP
+        / Radar","arctic":true,"title":"Freeze/Thaw (L3, Active, Radar, SMAP)","resolution":"1km","product":"SMAP_L3_Active_AM_Freeze_Thaw","match":{"time-start":">=2015-04-13","time-end":"<=2015-07-07"}}]}},"boxes":["45
+        -180 85.0445 180"],"time_start":"2015-04-13T00:00:00.000Z","dif_ids":["SPL3FTA"],"version_id":"002","updated":"2015-10-30T14:37:00.317Z","dataset_id":"SMAP
+        L3 Radar Northern Hemisphere Daily 3 km EASE-Grid Freeze/Thaw State V002","data_center":"DEV07","short_name":"SPL3FTA","organizations":["EDF_DEV07","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar Northern Hemisphere Daily 3
+        km EASE-Grid Freeze/Thaw State V002","coordinate_system":"GEODETIC","summary":"Daily
+        global composite of up-to 30 half-orbit L2_FT_A binary freeze/thaw state based
+        on radar backscatter measurements by the SMAP radar during descending and
+        ascending half-orbits at approximately 6 AM or 6 PM local solar time, respectively.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1200060176-DEV07","original_format":"ISO-SMAP","granule_count":4,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar + Radiometer","arctic":false,"title":"Disaggregated Brightness Temperature
+        (L3, Active/Passive, V Polarization)","resolution":"2km","product":"SMAP_L3_Active_Passive_Brightness_Temp_V","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}},{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar + Radiometer","arctic":false,"title":"Soil Moisture (L3, Active/Passive)","resolution":"2km","product":"SMAP_L3_Active_Passive_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}},{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar + Radiometer","arctic":false,"title":"Disaggregated Brightness Temperature
+        (L3, Active/Passive, H Polarization)","resolution":"2km","product":"SMAP_L3_Active_Passive_Brightness_Temp_H","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-87
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","version_id":"001","updated":"2014-12-03T14:24:32.822Z","dataset_id":"SMAP
+        L3 Radar/Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001","data_center":"EDF_DEV06","short_name":"SPL3SMAP","organizations":["EDF_DEV06","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar/Radiometer Global Daily 9 km
+        EASE-Grid Soil Moisture V001","coordinate_system":"GEODETIC","summary":"Daily
+        global composite of up-to 15 half-orbit L2_SM_AP soil moisture estimates based
+        on radiometer brightness temperature and radar backscatter measurements acquired
+        by the SMAP radar/radiometer instruments at approximately 6 AM local solar
+        time.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000000305-EDF_DEV06","original_format":"ISO-SMAP","granule_count":3,"archive_center":"EDF_DEV06","browse_flag":false,"online_access_flag":false},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar + Radiometer","arctic":false,"title":"Disaggregated Brightness Temperature
+        (L3, Active/Passive, V Polarization)","resolution":"2km","product":"SMAP_L3_Active_Passive_Brightness_Temp_V","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}},{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar + Radiometer","arctic":false,"title":"Soil Moisture (L3, Active/Passive)","resolution":"2km","product":"SMAP_L3_Active_Passive_Soil_Moisture","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}},{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"SMAP
+        / Radar + Radiometer","arctic":false,"title":"Disaggregated Brightness Temperature
+        (L3, Active/Passive, H Polarization)","resolution":"2km","product":"SMAP_L3_Active_Passive_Brightness_Temp_H","match":{"time-start":">=2015-03-31","time-end":"<=2015-07-07"}}]}},"boxes":["-87
+        -180 87 180"],"time_start":"2013-09-01T00:00:00.000Z","version_id":"001","updated":"2015-08-19T12:18:31.589Z","dataset_id":"SMAP
+        L3 Radar/Radiometer Global Daily 9 km EASE-Grid Soil Moisture V001","data_center":"DEV08","short_name":"SPL3SMAP","organizations":["DEV08","Jet
+        Propulsion Laboratory"],"title":"SMAP L3 Radar/Radiometer Global Daily 9 km
+        EASE-Grid Soil Moisture V001","coordinate_system":"GEODETIC","summary":"Daily
+        global composite of up-to 15 half-orbit L2_SM_AP soil moisture estimates based
+        on radiometer brightness temperature and radar backscatter measurements acquired
+        by the SMAP radar/radiometer instruments at approximately 6 AM local solar
+        time.","has_granules":true,"time_end":"2020-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1000001106-DEV08","original_format":"ISO-SMAP","granule_count":6,"archive_center":"DEV08","browse_flag":false,"online_access_flag":false}],"facets":{"title":"Browse
+        Collections","type":"group","has_children":true,"children":[{"title":"Keywords","type":"group","applied":false,"has_children":true,"children":[{"title":"Land
+        Surface","type":"filter","applied":false,"count":36,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&science_keywords_h%5B0%5D%5Btopic%5D=Land+Surface"},"has_children":true},{"title":"Spectral/Engineering","type":"filter","applied":false,"count":21,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering"},"has_children":true},{"title":"Biosphere","type":"filter","applied":false,"count":22,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&science_keywords_h%5B0%5D%5Btopic%5D=Biosphere"},"has_children":true},{"title":"Terrestrial
+        Hydrosphere","type":"filter","applied":false,"count":21,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&science_keywords_h%5B0%5D%5Btopic%5D=Terrestrial+Hydrosphere"},"has_children":true},{"title":"Climate
+        Indicators","type":"filter","applied":false,"count":22,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&science_keywords_h%5B0%5D%5Btopic%5D=Climate+Indicators"},"has_children":true},{"title":"Cryosphere","type":"filter","applied":false,"count":21,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&science_keywords_h%5B0%5D%5Btopic%5D=Cryosphere"},"has_children":true},{"title":"Atmosphere","type":"filter","applied":false,"count":3,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&science_keywords_h%5B0%5D%5Btopic%5D=Atmosphere"},"has_children":true}]},{"title":"Platforms","type":"group","applied":false,"has_children":true,"children":[{"title":"SMAP","type":"filter","applied":false,"count":43,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&platform_h%5B%5D=SMAP"},"has_children":false},{"title":"Terra","type":"filter","applied":false,"count":3,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&platform_h%5B%5D=Terra"},"has_children":false}]},{"title":"Instruments","type":"group","applied":false,"has_children":true,"children":[{"title":"MODIS","type":"filter","applied":false,"count":3,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&instrument_h%5B%5D=MODIS"},"has_children":false},{"title":"SMAP
+        L-BAND RADAR","type":"filter","applied":false,"count":22,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&instrument_h%5B%5D=SMAP+L-BAND+RADAR"},"has_children":false},{"title":"SMAP
+        L-Band Radar","type":"filter","applied":false,"count":14,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&instrument_h%5B%5D=SMAP+L-Band+Radar"},"has_children":false},{"title":"SMAP
+        L-BAND RADIOMETER","type":"filter","applied":false,"count":14,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&instrument_h%5B%5D=SMAP+L-BAND+RADIOMETER"},"has_children":false}]},{"title":"Organizations","type":"group","applied":false,"has_children":true,"children":[{"title":"DEV08","type":"filter","applied":false,"count":7,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=DEV08"},"has_children":false},{"title":"EDF_DEV06","type":"filter","applied":false,"count":11,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=EDF_DEV06"},"has_children":false},{"title":"EDF_DEV07","type":"filter","applied":false,"count":11,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=EDF_DEV07"},"has_children":false},{"title":"EDF_OPS","type":"filter","applied":false,"count":11,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=EDF_OPS"},"has_children":false},{"title":"EDF_TS2","type":"filter","applied":false,"count":2,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=EDF_TS2"},"has_children":false},{"title":"Global
+        Modeling and Assimilation Office","type":"filter","applied":false,"count":14,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=Global+Modeling+and+Assimilation+Office"},"has_children":false},{"title":"Jet
+        Propulsion Laboratory","type":"filter","applied":false,"count":29,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=Jet+Propulsion+Laboratory"},"has_children":false},{"title":"LAADS","type":"filter","applied":false,"count":3,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=LAADS"},"has_children":false},{"title":"MODAPS","type":"filter","applied":false,"count":3,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=MODAPS"},"has_children":false},{"title":"NSIDC","type":"filter","applied":false,"count":1,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&data_center_h%5B%5D=NSIDC"},"has_children":false}]},{"title":"Processing
+        levels","type":"group","applied":false,"has_children":true,"children":[{"title":"2","type":"filter","applied":false,"count":3,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?include_facets=v2&page_size=20&page_num=1&tag_key%5B%5D=edsc.extra.gibs&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true&processing_level_id_h%5B%5D=2"},"has_children":false}]}]}}}'
+    http_version: 
 e39ab95127a6878056faa9fd82bc7f6e655a3f61:
   response:
     status:
