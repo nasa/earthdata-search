@@ -204,17 +204,19 @@ ns.CollectionFacets = do (ko) ->
             @_findAncestors(ancestors, child)
 
     removeFacet: (facet) =>
-#      @_removeSingleFacet(facet)
       @_removeHierarchicalFacets(facet)
 
     _removeHierarchicalFacets: (root) ->
       if root.children
+        hasAppliedChildren = false
         for child in root.children
           if child.applied
+            hasAppliedChildren = true
             title = child.title
             @query.facets.remove (queryFacet) ->
               queryFacet.title == title
             @_removeHierarchicalFacets(child)
+        @query.facets.remove (queryFacet) -> queryFacet.title == root.title unless hasAppliedChildren
       else
         rootLevel = -1
         for facetParam in @query.facets()
