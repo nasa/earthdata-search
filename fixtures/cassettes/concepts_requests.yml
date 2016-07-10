@@ -1,0 +1,18 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200019403-MMT_2.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:40:18 GMT
+  digest: 100a4ceb11a02d26e70c36dcc024eb3da5729d35
+recorded_with: VCR 2.6.0
