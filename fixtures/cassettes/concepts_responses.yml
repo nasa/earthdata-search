@@ -1,4 +1,474 @@
 ---
+f84e0da7b5c4a33746f52d6353d644f3d1b9d422:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:48 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - e31f3a1f-4b64-4c61-8929-cdf6a85860db
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '<?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>MYD04_L2</ShortName><VersionId>6NRT</VersionId><InsertTime>2015-09-10T00:00:00.000Z</InsertTime><LastUpdate>2015-09-23T00:00:00.000Z</LastUpdate><LongName>MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km</LongName><DataSetId>MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km</DataSetId><Description>The
+        MODIS level-2 atmospheric aerosol product (MYD04_L2) continues to provide
+        full global coverage of aerosol properties from the Dark Target (DT) and Deep
+        Blue (DB) algorithms. The DT algorithm is applied over ocean and dark land
+        (e.g., vegetation), while the DB algorithm now covers the entire land areas
+        including both dark and bright surfaces. Both results are provided on a 10x10
+        pixel scale (10 km at nadir). Each MYD04_L2 product file covers a five-minute
+        time interval. The output grid is 135 pixels in width by 203 pixels in length.
+        Every tenth file has an output grid size of 135 by 204 pixels. MYD04_L2 product
+        files are stored in Hierarchical Data Format (HDF-EOS).Based on C5 validation
+        studies, a number of Science Data Sets (SDSs) have been deleted from the DT
+        product (Angstrom_Exponent_Land, Optical_Depth_Small_Land, etc.) while a number
+        of SDSs have been renamed or added. A number of algorithm changes have lead
+        to significant changes in regional aerosol product statistics (see link above).
+        For C6, the DT algorithm team now provides a new 3 km spatial resolution product
+        intended for the air quality community; this is provided in a separate file
+        (M*D04_3K).In C5, the DB algorithm was limited to only bright targets. With
+        C6, the DB team has expanded coverage to include both bright targets and vegetated
+        regions, using NDVI information in addition to a precalculated surface reflectance
+        database. New DB products for C6 include an estimate on the aerosol retrieval
+        uncertainty to assist with error analyses as well as a best estimate SDS containing
+        the aerosol optical thickness data with quality assurance flags already applied
+        (SDS names Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_Uncertainty
+        and Deep_Blue_Aerosol_Optical_Depth_550_Land_Best_Estimate respectively).
+        In addition to separate DT and DB retrievals, the C6 product now provides
+        a merged (SDS) that combines both types of retrievals (SDS name AOD_550_Dark_Target_Deep_Blue_Combined).
+        This SDS uses a combination of scene NDVI and retrieval Quality Assessment
+        (QA) assignments to select one of the retrievals (if any) or an average of
+        the two retrievals. Ocean retrievals from the DT algorithm are also provided
+        if they have a sufficiently high retrieval QA value.The file consists of following
+        pixel level gridded aerosol parameters. These pixel level gridded aerosol
+        parameters are stored as Scientific Data Sets(SDS) within the file:MODIS Data
+        Category &amp; ParametersSpatial &amp; Temporal Resolution:Longitude, Latitude,
+        Scan_Start_TimeSolar and Sensor Viewing Geometry:Solar_Zenith, Solar_Azimuth,
+        Sensor_Zenith, Sensor_AzimuthAerosol Parameters for Land &amp; Ocean (Combined):Scattering_Angle,
+        Land_sea_Flag, Aerosol_Cldmask_Land_Ocean, Cloud_Pixel_Distance_Land_Ocean,
+        Land_Ocean_Quality_Flag, Optical_Depth_Land_And_Ocean, Image_Optical_Depth_Land_And_Ocean,
+        Average_Cloud_Pixel_Distance_Land_OceanAerosol Parameters from Land Retrieval
+        Algorithm:Aerosol_Type_Land, Fitting_Error_Land, Surface_Reflectance_Land,
+        Corrected_Optical_Depth_Land, Corrected_Optical_Depth_Land_wav2p1, Optical_Depth_Ratio_Small_Land,
+        Number_Pixels_Used_Land, Mean_Reflectance_Land, STD_Reflectance_Land, Mass_Concentration_Land,
+        Aerosol_Cloud_Fraction_Land, Quality_Assurance_Land, Topographic_Altitude_LandAerosol
+        Parameters from Ocean Retrieval Algorithm:Solution_Index_Ocean_Small, Solution_Index_Ocean_Large,
+        Effective_Optical_Depth_Best_Ocean, Effective_Optical_Depth_Average_Ocean,
+        Optical_Depth_Small_Best_Ocean, Optical_Depth_Small_Average_Ocean, Optical_Depth_Large_Best_Ocean,
+        Optical_Depth_Large_Average_Ocean, Mass_Concentration_Ocean, Aerosol_Cloud_Fraction_Ocean,
+        Effective_Radius_Ocean, Effective_Optical_Depth_0p55um_Ocean, PSML003_Ocean,
+        Asymmetry_Factor_Best_Ocean, Asymmetry_Factor_Average_Ocean, Backscattering_Ratio_Best_Ocean,
+        Backscattering_Ratio_Average_Ocean, Angstrom_Exponent_1_Ocean, Angstrom_Exponent_2_Ocean,
+        Least_Squares_Error_Ocean, Optical_Depth_Ratio_Small_Ocean_0.55micron, Optical_Depth_by_models_ocean,
+        Number_Pixels_Used_Ocean, Mean_Reflectance_Ocean;, STD_Reflectance_Ocean,
+        byte Quality_Assurance_Ocean, Glint_Angle, Wind_Speed_Ncep_OceanAerosol Parameters
+        from Deep Blue Retrieval Algorithm:Deep_Blue_Aerosol_Optical_Depth_550_Land,
+        Deep_Blue_Spectral_Aerosol_Optical_Depth_Land, Deep_Blue_Angstrom_Exponent_Land,
+        Deep_Blue_Spectral_Single_Scattering_Albedo_Land, Deep_Blue_Spectral_Surface_Reflectance_Land,
+        Deep_Blue_Spectral_TOA_Reflectance_Land, Deep_Blue_Number_Pixels_Used_550_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_STD, Deep_Blue_Cloud_Fraction_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_QA_Flag, Deep_Blue_Algorithm_Flag_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_Best_Estimate, Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_UncertaintyAerosol
+        Parameters from Dark Target/Deep Blue Combine Algorithm:AOD_550_Dark_Target_Deep_Blue_Combined,
+        AOD_550_Dark_Target_Deep_Blue_Combined_QA_Flag, AOD_550_Dark_Target_Deep_Blue_Combined_Algorithm_FlagThese
+        aerosol parameters are used to study aerosol climatology, sources and sinks
+        of specific aerosol types (e.g. sulfates and biomass burning aerosol), interaction
+        of aerosols with clouds, and atmospheric corrections of remotely sensed surface
+        reflectance over the land. This product will also be used to monitor aerosol
+        mass concentration, aerosol optical properties, and radiative forcing on a
+        global scale.See the MODIS Science Team homepage for more data set information:
+        http://modis.gsfc.nasa.gov/data/dataprod/ or visit the MODIS Atmosphere Team
+        homepage:http://modis-atmos.gsfc.nasa.gov/MOD04_L2/</Description><CollectionDataType>NEAR_REAL_TIME</CollectionDataType><Orderable>true</Orderable><Visible>true</Visible><ArchiveCenter>NASA/GSFC/EOS/ESDIS/LANCEMODIS</ArchiveCenter><CollectionState>In
+        Work</CollectionState><SpatialKeywords><Keyword>SOUTHERN OCEAN</Keyword></SpatialKeywords><TemporalKeywords><Keyword>5-minute</Keyword></TemporalKeywords><Temporal><RangeDateTime><BeginningDateTime>2015-12-06T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>TECHNICAL
+        CONTACT</Role><OrganizationEmails><Email>MODAPSUSO@lists.nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>unknown</FirstName><LastName>MODAPS
+        USER SUPPORT TEAM</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>TECHNICAL
+        CONTACT</Role><ContactPersons><ContactPerson><FirstName>NEAL</FirstName><LastName>DEVINE</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>TECHNICAL
+        CONTACT</Role><ContactPersons><ContactPerson><FirstName>GANG</FirstName><LastName>YE,
+        PH.D</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>METADATA
+        AUTHOR</Role><ContactPersons><ContactPerson><FirstName>ASAD</FirstName><LastName>ULLAH</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL
+        BACKSCATTER</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL
+        EXTINCTION</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL
+        OPTICAL DEPTH/THICKNESS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL
+        OPTICAL DEPTH/THICKNESS</Value><VariableLevel2Keyword><Value>ANGSTROM EXPONENT</Value></VariableLevel2Keyword></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL
+        PARTICLE PROPERTIES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL
+        RADIANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>CARBONACEOUS
+        AEROSOLS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>CLOUD
+        CONDENSATION NUCLEI</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>DUST/ASH/SMOKE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>NITRATE
+        PARTICLES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>ORGANIC
+        PARTICLES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>PARTICULATE
+        MATTER</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>SULFATE
+        PARTICLES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        RADIATION</TermKeyword><VariableLevel1Keyword><Value>OPTICAL DEPTH/THICKNESS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        RADIATION</TermKeyword><VariableLevel1Keyword><Value>RADIATIVE FLUX</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        RADIATION</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>AQUA</ShortName><LongName>Earth
+        Observing System, AQUA</LongName><Type>Earth Observation Satellites</Type><Instruments><Instrument><ShortName>MODIS</ShortName><LongName>Moderate-Resolution
+        Imaging Spectroradiometer</LongName></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>SuccessfulRetrievalPct_Land</Name><DataType>FLOAT</DataType><Description>None</Description><ParameterRangeBegin>0.0</ParameterRangeBegin><ParameterRangeEnd>100.0</ParameterRangeEnd></AdditionalAttribute><AdditionalAttribute><Name>SuccessfulRetrievalPct_Ocean</Name><DataType>FLOAT</DataType><Description>None</Description><ParameterRangeBegin>0.0</ParameterRangeBegin><ParameterRangeEnd>100.0</ParameterRangeEnd></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>DODS</ShortName><LongName>Distributed
+        Oceanographic Data System</LongName></Campaign><Campaign><ShortName>EOSDIS</ShortName><LongName>Earth
+        Observing System Data Information System</LongName></Campaign><Campaign><ShortName>ESIP</ShortName><LongName>Earth
+        Science Information Partners Program</LongName></Campaign><Campaign><ShortName>AQUA</ShortName><LongName>Earth
+        Observing System (EOS), AQUA</LongName></Campaign><Campaign><ShortName>OPENDAP</ShortName><LongName>Open-source
+        Project for a Network Data Access Protocol</LongName></Campaign></Campaigns><OnlineAccessURLs><OnlineAccessURL><URL>https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt</URL><URLDescription>NASA
+        LANCE Near Real Time data set descriptions and access links.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>http://lance3.modaps.eosdis.nasa.gov/data_products/</URL><URLDescription>Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD04_L2/</URL><URLDescription>Direct
+        access to the ftp site and directory hosting the MYD04_L2 6NRT data set.</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://modis.gsfc.nasa.gov/sci_team/</URL><Description>MODIS
+        Science Team</Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>'
+    http_version: 
+122e8b0a31be9c00b5f4f5bb371044312c74630c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:50 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 7fc2ff31-c3cf-4114-b7b9-eec533b6885e
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\"?>\n<Collection>\n\t\t\t<ShortName>CIESIN_SEDAC_ESI_2000</ShortName>
+        \n\t\t\t<VersionId>2000.00</VersionId> \n\t\t\t<InsertTime>2012-12-12T00:00:00Z</InsertTime>
+        \ \n\t\t\t<LastUpdate>2015-08-03T00:00:00Z</LastUpdate>\n\t\t\t<LongName>2000
+        Pilot Environmental Sustainability Index (ESI)</LongName> \n\t\t\t<DataSetId>2000
+        Pilot Environmental Sustainability Index (ESI)</DataSetId> \n\t\t\t<Description>The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an \n\nindex that measures the ability of a nation's economy
+        to achieve sustainable development, with the long term goal of finding a single
+        \n\nindicator for environmental sustainability analagous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is \n\na composite
+        measure of the current status of a nation's environmental systems, pressures
+        on those systems, human vulnerability to \n\nenvironmental change, national
+        capacity to respond, and contributions to global environmental stewardship.
+        The index was unveiled at \n\nthe World Economic Forum's annual meeting, January
+        2000, Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration
+        among \n\nthe World Economic Forum (WEF), Yale Center for Environmental Law
+        and Policy (YCELP), and the Columbia University Center for \n\nInternational
+        Earth Science Information Network (CIESIN).</Description> \n\t\t\t<Orderable>false</Orderable>
+        \n\t\t\t<Visible>true</Visible>\n\t\t\t<SuggestedUsage>To test the feasibility
+        of creating a comparative index of national-level environmental \n\nsustainability.</SuggestedUsage>
+        \n\t\t\t<ProcessingCenter>SEDAC</ProcessingCenter> \n\t\t\t<ProcessingLevelId>Level
+        2</ProcessingLevelId> \n\t\t\t \n\t\t\t<ArchiveCenter>SEDAC</ArchiveCenter>
+        \n\t\t\t \n\t\t\t<CitationForExternalPublication>World Economic Forum - WEF
+        - Global Leaders for Tomorrow Environment Task \n\nForce, Yale Center for
+        Environmental Law and Policy - YCELP - Yale University, and Center for International
+        Earth Science Information \n\nNetwork - CIESIN - Columbia University\n2000.
+        2000 Pilot Environmental Sustainability Index (ESI). Palisades, NY:NASA Socioeconomic
+        Data and Applications Center (SEDAC). \n\nhttp://dx.doi.org/10.7927/H4NK3BZJ</CitationForExternalPublication>
+        \n\t\t\t<CollectionState>Final</CollectionState> \n\t\t\t<MaintenanceAndUpdateFrequency>As
+        needed</MaintenanceAndUpdateFrequency> \n\t\t\t<RestrictionComment>Users are
+        free to use, copy, distribute, transmit, and adapt the work for commercial
+        and \n\nnon-commercial purposes, without restriction, as long as clear attribution
+        of the source is provided.</RestrictionComment> \n\t\t\t<Price>0</Price> \n\t\t\t<DataFormat>PDF</DataFormat>
+        \n\t\t\t<SpatialKeywords>\n<Keyword>Africa</Keyword> \n  <Keyword>Asia</Keyword>
+        \n  <Keyword>Australia</Keyword> \n  <Keyword>Central America</Keyword> \n
+        \ <Keyword>Equatorial</Keyword> \n  <Keyword>Europe</Keyword> \n <Keyword>Global</Keyword>\n
+        \ <Keyword>Middle East</Keyword> \n  <Keyword>Mid-Latitude</Keyword> \n  <Keyword>North
+        America</Keyword> \n  <Keyword>Oceania</Keyword> \n  <Keyword>South America</Keyword>
+        \n  <Keyword>Argentina</Keyword> \n  <Keyword>Australia</Keyword> \n  <Keyword>Austria</Keyword>
+        \n  <Keyword>Belgium</Keyword> \n  <Keyword>Bolivia</Keyword> \n  <Keyword>Brazil</Keyword>
+        \n  <Keyword>Bulgaria</Keyword> \n  <Keyword>Canada</Keyword> \n  <Keyword>Chile</Keyword>
+        \n  <Keyword>China</Keyword> \n  <Keyword>Colombia</Keyword> \n  <Keyword>Costa
+        Rica</Keyword> \n  <Keyword>Czech Republic</Keyword> \n  <Keyword>Denmark</Keyword>
+        \n  <Keyword>Ecuador</Keyword> \n  <Keyword>Egypt</Keyword> \n  <Keyword>El
+        Salvador</Keyword> \n  <Keyword>Finland</Keyword> \n  <Keyword>France</Keyword>
+        \n  <Keyword>Germany</Keyword>\n  <Keyword>Greece</Keyword> \n  <Keyword>Hungary</Keyword>
+        \n  <Keyword>Iceland</Keyword> \n  <Keyword>India</Keyword> \n  <Keyword>Indonesia</Keyword>
+        \n  <Keyword>Ireland</Keyword> \n  <Keyword>Israel</Keyword> \n  <Keyword>Italy</Keyword>
+        \n  <Keyword>Japan</Keyword> \n  <Keyword>Jordan</Keyword> \n  <Keyword>Malaysia</Keyword>
+        \n  <Keyword>Mauritius</Keyword> \n  <Keyword>Mexico</Keyword> \n  <Keyword>Netherlands</Keyword>
+        \n  <Keyword>New Zealand</Keyword> \n  <Keyword>North Korea</Keyword> \n  <Keyword>Norway</Keyword>
+        \n  <Keyword>Peru</Keyword> \n  <Keyword>Philippines</Keyword> \n  <Keyword>Poland</Keyword>
+        \n  <Keyword>Portugal</Keyword> \n  <Keyword>Russia</Keyword> \n  <Keyword>Singapore</Keyword>
+        \n  <Keyword>Slovakia</Keyword> \n  <Keyword>South Africa</Keyword> \n  <Keyword>South
+        Korea</Keyword> \n  <Keyword>Spain</Keyword> \n  <Keyword>Sweden</Keyword>
+        \n  <Keyword>Switzerland</Keyword> \n  <Keyword>Thailand</Keyword> \n  <Keyword>Turkey</Keyword>
+        \n  <Keyword>Ukraine</Keyword> \n  <Keyword>United Kingdom</Keyword> \n  <Keyword>United
+        States</Keyword> \n  <Keyword>Venezuela</Keyword> \n  <Keyword>Vietnam</Keyword>
+        \n  <Keyword>Zimbabwe</Keyword> \n</SpatialKeywords>\n\t\t\t<Temporal>\n\t\t\t\t<TimeType>Universal
+        Time</TimeType> \n\t\t\t\t<DateType>Eastern Daylight</DateType> \n\t\t\t\t<TemporalRangeType>Long
+        Range</TemporalRangeType> \n\t\t\t\t<PrecisionOfSeconds>1</PrecisionOfSeconds>
+        \n\t\t\t\t<EndsAtPresentFlag>true</EndsAtPresentFlag> \n\t\t\t\t<RangeDateTime>\n\t\t\t\t\t<BeginningDateTime>1978-01-01T00:00:00Z</BeginningDateTime>
+        \ \n\t\t\t\t\t<EndingDateTime>1999-12-31T00:00:00Z</EndingDateTime>  \n\t\t\t\t</RangeDateTime>\n\t\t\t</Temporal>\n\t\t\t<Contacts>\n\t\t\t\t<Contact>\n\t\t\t\t\t<Role>Archive</Role>
+        \n\t\t\t\t\t<HoursOfService>9:00 A.M. to 5:00 P.M., Monday to Friday</HoursOfService>
+        \n\t\t\t\t\t<OrganizationName>Socioeconomic Data and Applications Center (SEDAC)</OrganizationName>
+        \n\t\t\t\t\t<OrganizationAddresses>\n\t\t\t\t\t\t<Address>\n\t\t\t\t\t\t\t<StreetAddress>CIESIN,
+        Columbia University, 61 Route 9W, P.O. Box \n\n1000</StreetAddress> \n\t\t\t\t\t\t\t<City>Palisades</City>
+        \n\t\t\t\t\t\t\t<StateProvince>NY</StateProvince> \n\t\t\t\t\t\t\t<PostalCode>10964</PostalCode>
+        \n\t\t\t\t\t\t\t<Country>USA</Country> \n\t\t\t\t\t\t</Address>\n\t\t\t\t\t</OrganizationAddresses>\n\t\t\t\t\t<OrganizationPhones>\n\t\t\t\t\t\t<Phone>\n\t\t\t\t\t\t\t<Number>+1
+        845-365-8920</Number> \n\t\t\t\t\t\t\t<Type>Telephone</Type> \n\t\t\t\t\t\t</Phone>\n\t\t\t\t\t\t<Phone>\n\t\t\t\t\t\t\t<Number>+1
+        845-365-8922</Number> \n\t\t\t\t\t\t\t<Type>Fax</Type> \n\t\t\t\t\t\t</Phone>\n\t\t\t\t\t</OrganizationPhones>\n\t\t\t\t\t<OrganizationEmails>\n\t\t\t\t\t\t<Email>ciesin.info@ciesin.columbia.edu</Email>
+        \n\t\t\t\t\t</OrganizationEmails>\n\t\t\t\t\t<ContactPersons>\n\t\t\t\t\t\t<ContactPerson>\n\t\t\t\t\t\t\t<FirstName>SEDAC</FirstName>
+        \n\t\t\t\t\t\t\t<MiddleName>User</MiddleName> \n\t\t\t\t\t\t\t<LastName>Services</LastName>
+        \n\t\t\t\t\t\t</ContactPerson>\n\t\t\t\t\t</ContactPersons>\n\t\t\t\t</Contact>\n\t\t\t</Contacts>\n\t\t\t<ScienceKeywords>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>AIR
+        QUALITY</TermKeyword>\n<VariableLevel1Keyword><Value>EMISSIONS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>AIR
+        QUALITY</TermKeyword>\n<VariableLevel1Keyword><Value>NITROGEN OXIDES</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>AIR
+        QUALITY</TermKeyword>\n<VariableLevel1Keyword><Value>PARTICULATES</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>AIR
+        QUALITY</TermKeyword>\n<VariableLevel1Keyword><Value>SULFUR OXIDES</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>AIR
+        QUALITY</TermKeyword>\n<VariableLevel1Keyword><Value>VOLATILE ORGANIC COMPOUNDS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>ATMOSPHERIC
+        CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>CARBON AND HYDROCARBON
+        COMPOUNDS</Value>\n<VariableLevel2Keyword><Value>CARBON DIOXIDE</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>ATMOSPHERIC
+        CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>CARBON AND HYDROCARBON
+        COMPOUNDS</Value>\n<VariableLevel2Keyword><Value>NON-METHANE HYDROCARBONS/VOLATILE
+        ORGANIC COMPOUNDS</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>ATMOSPHERIC
+        CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>HALOCARBONS AND HALOGENS</Value>\n<VariableLevel2Keyword><Value>CHLOROFLUOROCARBONS</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>ATMOSPHERIC
+        CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>NITROGEN COMPOUNDS</Value>\n<VariableLevel2Keyword><Value>NITROGEN
+        DIOXIDE</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>ATMOSPHERIC
+        CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>NITROGEN COMPOUNDS</Value>\n<VariableLevel2Keyword><Value>NITROGEN
+        OXIDES</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>ATMOSPHERIC
+        CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>NITROGEN COMPOUNDS</Value>\n<VariableLevel2Keyword><Value>NITROUS
+        OXIDE</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>ATMOSPHERIC
+        CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>OXYGEN COMPOUNDS</Value>\n<VariableLevel2Keyword><Value>MOLECULAR
+        OXYGEN</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>ATMOSPHERIC
+        CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>SULFUR COMPOUNDS</Value>\n<VariableLevel2Keyword><Value>SULFUR
+        DIOXIDE</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>ATMOSPHERE</TopicKeyword>\n<TermKeyword>ATMOSPHERIC
+        CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>SULFUR COMPOUNDS</Value>\n<VariableLevel2Keyword><Value>SULFUR
+        OXIDES</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>BIOLOGICAL CLASSIFICATION</TopicKeyword>\n<TermKeyword>ANIMALS/VERTEBRATES</TermKeyword>\n<VariableLevel1Keyword><Value>BIRDS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>BIOLOGICAL CLASSIFICATION</TopicKeyword>\n<TermKeyword>ANIMALS/VERTEBRATES</TermKeyword>\n<VariableLevel1Keyword><Value>MAMMALS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>BIOSPHERE</TopicKeyword>\n<TermKeyword>ECOLOGICAL
+        DYNAMICS</TermKeyword>\n<VariableLevel1Keyword><Value>SPECIES/POPULATION INTERACTIONS</Value>\n<VariableLevel2Keyword><Value>ENDANGERED
+        SPECIES</Value></VariableLevel2Keyword>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>BIOSPHERE</TopicKeyword>\n<TermKeyword>VEGETATION</TermKeyword>\n<VariableLevel1Keyword><Value>VEGETATION
+        SPECIES</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>\n<TermKeyword>HABITAT
+        CONVERSION/FRAGMENTATION</TermKeyword>\n<VariableLevel1Keyword><Value>Deforestation</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>  \n<TermKeyword>ENVIRONMENTAL
+        IMPACTS</TermKeyword> \n<VariableLevel1Keyword>\n<Value>CONSERVATION</Value>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>\n<TermKeyword>ENVIRONMENTAL
+        IMPACTS</TermKeyword>\n<VariableLevel1Keyword><Value>INDUSTRIAL EMISSIONS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>\n<TermKeyword>ENVIRONMENTAL
+        IMPACTS</TermKeyword>\n<VariableLevel1Keyword><Value>INDUSTRIALIZATION</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>\n<TermKeyword>ENVIRONMENTAL
+        IMPACTS</TermKeyword>\n<VariableLevel1Keyword><Value>URBANIZATION</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>\n<TermKeyword>HUMAN
+        HEALTH</TermKeyword>\n<VariableLevel1Keyword><Value>ANATOMICAL PARAMETERS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>\n<TermKeyword>HUMAN
+        HEALTH</TermKeyword>\n<VariableLevel1Keyword><Value>DISEASES/EPIDEMICS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword>\n<TermKeyword>GROUND
+        WATER</TermKeyword>\n<VariableLevel1Keyword><Value>GROUNDWATER CHEMISTRY</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword>\n<TermKeyword>WATER
+        QUALITY/WATER CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>CONTAMINANTS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword>\n<TermKeyword>WATER
+        QUALITY/WATER CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>DISSOLVED
+        GASES</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword>\n<TermKeyword>WATER
+        QUALITY/WATER CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>DISSOLVED
+        SOLIDS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword>\n<TermKeyword>WATER
+        QUALITY/WATER CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>PHOSPHORUS
+        COMPOUNDS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword>\n<TermKeyword>WATER
+        QUALITY/WATER CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>SUSPENDED
+        SOLIDS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword>\n<TermKeyword>WATER
+        QUALITY/WATER CHEMISTRY</TermKeyword>\n<VariableLevel1Keyword><Value>TOXIC
+        CHEMICALS</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>LAND SURFACE</TopicKeyword>\n<TermKeyword>EROSION/SEDIMENTATION</TermKeyword>\n<VariableLevel1Keyword><Value>DEGRADATION</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>LAND SURFACE</TopicKeyword>\n<TermKeyword>EROSION/SEDIMENTATION</TermKeyword>\n<VariableLevel1Keyword><Value>EROSION</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>LAND SURFACE</TopicKeyword>\n<TermKeyword>LAND
+        USE/LAND COVER</TermKeyword>\n<VariableLevel1Keyword><Value>LAND RESOURCES</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>LAND SURFACE</TopicKeyword>\n<TermKeyword>SOILS</TermKeyword>\n<VariableLevel1Keyword><Value>SOIL
+        STRUCTURE</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>SOLID EARTH</TopicKeyword>\n<TermKeyword>NATURAL
+        RESOURCES</TermKeyword>\n<VariableLevel1Keyword><Value>COAL</Value></VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>  \n<TermKeyword>SUSTAINABILITY</TermKeyword>
+        \n<VariableLevel1Keyword>\n<Value>ENVIRONMENTAL SUSTAINABILITY</Value>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>  \n<TermKeyword>ENVIRONMENTAL
+        GOVERNANCE/MANAGEMENT</TermKeyword>\n<VariableLevel1Keyword>\n<Value>WATER
+        MANAGEMENT</Value>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>  \n<TermKeyword>HABITAT
+        CONVERSION/FRAGMENTATION</TermKeyword> \n<VariableLevel1Keyword>\n<Value>URBANIZATION/URBAN
+        SPRAWL</Value>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>  \n<TermKeyword>PUBLIC
+        HEALTH</TermKeyword> \n<VariableLevel1Keyword>\n<Value>ENVIRONMENTAL HEALTH
+        FACTORS</Value>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n<ScienceKeyword>\n<CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n<TopicKeyword>HUMAN DIMENSIONS</TopicKeyword>  \n<TermKeyword>SOCIOECONOMICS</TermKeyword>
+        \n<VariableLevel1Keyword>\n<Value>INDUSTRIALIZATION</Value>\n</VariableLevel1Keyword>\n</ScienceKeyword>\n\t\t\t</ScienceKeywords>\n\t\t\t<Campaigns>\n\t\t\t\t<Campaign>\n\t\t\t\t\t<ShortName>ESI</ShortName>
+        \n\t\t\t\t\t<LongName>Environmental Sustainability Index</LongName> \n\t\t\t\t</Campaign>\n\t\t\t</Campaigns>\n\t\t\t<SpatialInfo>\n\t\t\t\t<SpatialCoverageType>Horizontal</SpatialCoverageType>
+        \n\t\t\t</SpatialInfo>\n\t\t\t<OnlineAccessURLs>\n\t\t\t\t<OnlineAccessURL>\n\t\t\t\t\t<URL>http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-\n\n2000/data-download</URL>
+        \n\t\t\t\t\t<URLDescription>data download page</URLDescription> \n\t\t\t\t</OnlineAccessURL>\n\t\t\t</OnlineAccessURLs>\n\t\t\t<OnlineResources>\n\t\t\t\t<OnlineResource>\n\t\t\t\t\t<URL>http://dx.doi.org/10.7927/H4NK3BZJ</URL>
+        \n\t\t\t\t\t<Description>data set DOI and homepage</Description> \n\t\t\t\t\t<Type>DOI
+        URL</Type> \n\t\t\t\t</OnlineResource>\n\t\t\t</OnlineResources>\n\t\t\t<AssociatedDIFs>\n\t\t\t\t<DIF>\n\t\t\t\t\t<EntryId>CIESIN_SEDAC_ESI_2000</EntryId>
+        \n\t\t\t\t</DIF>\n\t\t\t</AssociatedDIFs>\n\t\t\t<Spatial>\n\t\t\t\t<SpatialCoverageType>Horizontal</SpatialCoverageType>
+        \n\t\t\t\t<HorizontalSpatialDomain>\n\t\t\t\t\t<Geometry>\n\t\t\t\t\t\t<CoordinateSystem>CARTESIAN</CoordinateSystem>\n\t\t\t\t\t\t<BoundingRectangle>\n\t\t\t\t\t\t\t<WestBoundingCoordinate>-180</WestBoundingCoordinate>
+        \n\t\t\t\t\t\t\t<NorthBoundingCoordinate>90</NorthBoundingCoordinate> \n\t\t\t\t\t\t\t<EastBoundingCoordinate>180</EastBoundingCoordinate>
+        \n\t\t\t\t\t\t\t<SouthBoundingCoordinate>-55</SouthBoundingCoordinate> \n\t\t\t\t\t\t</BoundingRectangle>\n\t\t\t\t\t</Geometry>\n\t\t\t\t</HorizontalSpatialDomain>\n\t\t\t\t<GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n\t\t\t</Spatial>\n\t\t</Collection>"
+    http_version: 
+38abcc1d87c03f96966b83cacc91071898f8b11d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:43 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 58997619-78b9-4a5e-b28c-ec5cce3070c6
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection><ShortName>ALT_TIDE_GAUGE_L4_OST_SLA_US_WEST_COAST</ShortName><VersionId>1</VersionId><InsertTime>2010-08-12T00:51:48.954Z</InsertTime><LastUpdate>2011-01-21T17:10:13.000Z</LastUpdate><LongName>Gridded
+        Altimeter Fields with Enhanced Coastal Coverage</LongName><DataSetId>ALT_TIDE_GAUGE_L4_OST_SLA_US_WEST_COAST:1</DataSetId><Description>This
+        data set contains sea level anomalies and alongshore ocean currents (U and
+        V) derived from satellite altimeters and tide gauge data.  Currents and heights
+        near the coast are calculated using tide</Description><Orderable>false</Orderable><Visible>true</Visible><RevisionDate>2014-07-24T16:32:15.804Z</RevisionDate><ProcessingCenter>Craig
+        Risin and P. Ted Strub</ProcessingCenter><ProcessingLevelId>4</ProcessingLevelId><ArchiveCenter>PO.DAAC</ArchiveCenter><DataFormat>NETCDF</DataFormat><SpatialKeywords><Keyword>Eastern
+        Pacific Ocean</Keyword></SpatialKeywords><TemporalKeywords /><Temporal><RangeDateTime><BeginningDateTime>1992-10-14T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>Archiver</Role><OrganizationName>Physical
+        Oceanography Distributed Active Archive Center, Jet Propulsion Laboratory,
+        NASA</OrganizationName><OrganizationAddresses /><OrganizationPhones><Phone><Number>(818)
+        393-7165</Number><Type>Primary</Type></Phone></OrganizationPhones><OrganizationEmails><Email>podaac@podaac.jpl.nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>User</FirstName><MiddleName>null</MiddleName><LastName>Services</LastName><JobPosition>Technical
+        Contact</JobPosition></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA
+        SURFACE TOPOGRAPHY</TermKeyword><VariableLevel1Keyword><Value>SEA SURFACE
+        HEIGHT</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>OCEAN
+        CIRCULATION</TermKeyword><VariableLevel1Keyword><Value>OCEAN CURRENTS</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>OSTM/Jason-2</ShortName><LongName>Ocean
+        Surface Topography Mission/Jason-2</LongName><Type>unknown</Type><Characteristics
+        /><Instruments><Instrument><ShortName>POSEIDON-3</ShortName><LongName>OSTM/Jason-2
+        RADAR alitmieter</LongName><Characteristics /><Sensors><Sensor><ShortName>POSEIDON-3</ShortName><LongName>OSTM/Jason-2
+        RADAR alitmieter</LongName><Characteristics /></Sensor></Sensors><OperationModes
+        /></Instrument></Instruments></Platform><Platform><ShortName>TOPEX/POSEIDON</ShortName><LongName>Topography
+        Experiment/Poseidon</LongName><Type>spacecraft</Type><Characteristics /><Instruments><Instrument><ShortName>POSEIDON
+        ALTIMETER</ShortName><LongName>POSEIDON ALTIMETER</LongName><Characteristics
+        /><Sensors><Sensor><ShortName>POSEIDON ALTIMETER</ShortName><LongName>POSEIDON
+        ALTIMETER</LongName><Characteristics /></Sensor></Sensors><OperationModes
+        /></Instrument></Instruments></Platform><Platform><ShortName>JASON-1</ShortName><LongName>JASON-1</LongName><Type>spacecraft</Type><Characteristics
+        /><Instruments><Instrument><ShortName>POSEIDON-2</ShortName><LongName>JASON-1
+        RADAR ALTIMETER</LongName><Characteristics /><Sensors><Sensor><ShortName>POSEIDON-2</ShortName><LongName>JASON-1
+        RADAR ALTIMETER</LongName><Characteristics /></Sensor></Sensors><OperationModes
+        /></Instrument></Instruments></Platform></Platforms><AdditionalAttributes
+        /><CSDTDescriptions /><CollectionAssociations /><Campaigns /><AlgorithmPackages
+        /><TwoDCoordinateSystems /><OnlineAccessURLs><OnlineAccessURL><URL>http://podaac-opendap.jpl.nasa.gov/opendap/allData/coastal_alt/preview/L4/OSU_COAS/weekly/</URL><URLDescription>The
+        OPeNDAP base directory location for the collection.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>ftp://podaac-ftp.jpl.nasa.gov/allData/coastal_alt/preview/L4/OSU_COAS/weekly</URL><URLDescription>The
+        FTP base directory location for the collection.</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-USWCO-ALT01&amp;apidoc</URL><Description>(Search
+        Granule)</Description><Type>PORTAL_DA_DIRECT_ACCESS</Type></OnlineResource></OnlineResources><AssociatedDIFs
+        /><Spatial><SpatialCoverageType>HORIZONTAL</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-133.0</WestBoundingCoordinate><NorthBoundingCoordinate>49.0</NorthBoundingCoordinate><EastBoundingCoordinate>-111.0</EastBoundingCoordinate><SouthBoundingCoordinate>35.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
+9bb3738d71894c061dae36c552e702ba256f5673:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:38 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 7d879ee3-6c8e-43f7-a3cc-4b2fb8c56ad5
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Collection><ShortName>ACR3L2DM</ShortName><VersionId>1</VersionId><InsertTime>2005-05-24T07:45:20.000Z</InsertTime><LastUpdate>2012-01-12T09:34:04.000Z</LastUpdate><LongName>ACRIM
+        III Level 2 Daily Mean Data</LongName><DataSetId>ACRIM III Level 2 Daily Mean
+        Data V001</DataSetId><Description>This file contains Level 2 total solar irradiance
+        in the form of daily means gathered by the ACRIM instrument on the ACRIMSAT
+        satellite.</Description><Orderable>false</Orderable><Visible>true</Visible><RevisionDate>2011-12-29T00:00:00Z</RevisionDate><SuggestedUsage>This
+        collection is comprised of processed daily mean data collected by the ACRIMSAT
+        spacecraft. This collection is ACRIM III results of total solar irradiance.</SuggestedUsage><ProcessingCenter>ACRIM
+        SCF</ProcessingCenter><ProcessingLevelId>2</ProcessingLevelId><ProcessingLevelDescription>GEOQUANT</ProcessingLevelDescription><ArchiveCenter>LaRC</ArchiveCenter><VersionDescription>Initial
+        Version</VersionDescription><CitationForExternalPublication>The research producing
+        this EOS/ACRIM III experiment collection was supervised by Dr. Richard C.
+        Willson, Principal Investigator, sponsored by Columbia University and funded
+        by the National Aeronautics and Space Administration under contract NAS5-97164.</CitationForExternalPublication><CollectionState>In
+        Work</CollectionState><MaintenanceAndUpdateFrequency>As Needed</MaintenanceAndUpdateFrequency><SpatialKeywords><Keyword>Global</Keyword></SpatialKeywords><Temporal><TimeType>UTC</TimeType><DateType>Gregorian</DateType><TemporalRangeType>Continuous
+        Range</TemporalRangeType><PrecisionOfSeconds>2</PrecisionOfSeconds><EndsAtPresentFlag>true</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>1999-12-20T00:00:00Z</BeginningDateTime><EndingDateTime>2014-12-20T00:00:00Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>Investigator</Role><HoursOfService>Monday-Friday
+        09:00-16:00 PT</HoursOfService><Instructions>E-mail Dr. Richard C. Willson</Instructions><OrganizationAddresses><Address><StreetAddress>1001
+        B Ave #200</StreetAddress><City>Coronado</City><StateProvince>California</StateProvince><PostalCode>92118</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>619-522-2945</Number><Type>phone</Type></Phone><Phone><Number>619-522-2967</Number><Type>fax</Type></Phone></OrganizationPhones><OrganizationEmails><Email>acrim@acrim.com</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>Dr.
+        Richard</FirstName><MiddleName>C.</MiddleName><LastName>Willson</LastName><JobPosition>Principal
+        Investigator</JobPosition></ContactPerson></ContactPersons></Contact><Contact><Role>Archive</Role><HoursOfService>9
+        AM to 5 PM ET</HoursOfService><Instructions>None</Instructions><OrganizationName>Langley
+        DAAC User Services</OrganizationName><OrganizationAddresses><Address><StreetAddress>NASA
+        Langley Research Center, Mail Stop 157D</StreetAddress><City>Hampton</City><StateProvince>Virginia</StateProvince><PostalCode>23681-2199</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>757-864-8656</Number><Type>phone</Type></Phone><Phone><Number>757-864-8807</Number><Type>fax</Type></Phone></OrganizationPhones><OrganizationEmails><Email>larc-asdc-uds@lists.nasa.gov</Email></OrganizationEmails></Contact><Contact><Role>Producer</Role><HoursOfService>Monday-Friday
+        09:00-16:00 PT</HoursOfService><Instructions>E-mail Dr. Richard C. Willson</Instructions><OrganizationName>ACRIM
+        SCF</OrganizationName><OrganizationAddresses><Address><StreetAddress>1001
+        B Ave #200</StreetAddress><City>Coronado</City><StateProvince>California</StateProvince><PostalCode>92118</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>619-522-2945</Number><Type>phone</Type></Phone><Phone><Number>619-522-2967</Number><Type>fax</Type></Phone></OrganizationPhones><OrganizationEmails><Email>acrim@acrim.com</Email></OrganizationEmails></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>Earth
+        Science</CategoryKeyword><TopicKeyword>Atmosphere</TopicKeyword><TermKeyword>Atmospheric
+        Radiation</TermKeyword><VariableLevel1Keyword><Value>Solar Irradiance</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>Earth
+        Science</CategoryKeyword><TopicKeyword>Sun-Earth Interactions</TopicKeyword><TermKeyword>Solar
+        Activity</TermKeyword><VariableLevel1Keyword><Value>Solar Irradiance</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>ACRIMSAT</ShortName><LongName>Active
+        Cavity Radiometer Irradiance Monitor Satellite</LongName><Type>Spacecraft</Type><Characteristics/><Instruments><Instrument><ShortName>ACRIM</ShortName><LongName>Active
+        Cavity Radiometer Irradiance Monitor</LongName><Technique>Pyrheliometry</Technique><Characteristics/><Sensors><Sensor><ShortName>ACR</ShortName><LongName>Active
+        Cavity Radiometer</LongName><Technique>Active Cavity Radiometry</Technique></Sensor></Sensors><OperationModes><OperationMode>Normal</OperationMode></OperationModes></Instrument></Instruments></Platform></Platforms><CSDTDescriptions><CSDTDescription><PrimaryCSDT>n-Dim
+        Array of Records</PrimaryCSDT><Implementation>HDF</Implementation><CSDTComments>N/A</CSDTComments><IndirectReference>N/A</IndirectReference></CSDTDescription></CSDTDescriptions><Campaigns><Campaign><ShortName>ACRIM</ShortName><LongName>Active
+        Cavity Radiometer Irradiance Monitor</LongName><StartDate>1980-02-14T00:00:00Z</StartDate></Campaign></Campaigns><OnlineResources/><AssociatedDIFs><DIF><EntryId>ACR3L2DM1</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>'
+    http_version: 
 100a4ceb11a02d26e70c36dcc024eb3da5729d35:
   response:
     status:
@@ -74,4 +544,63 @@
               <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
            </Spatial>
         </Collection>
+    http_version: 
+b0372414d3a0e12399bca7fd5acbf30f30b4b8e9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:45 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - aa2a57da-8c3f-4a0f-8ccb-22dd03ab8d57
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection><ShortName>MOD04_L2</ShortName><VersionId>5</VersionId><InsertTime>2006-03-17T00:00:00.000Z</InsertTime><LastUpdate>2006-03-17T00:00:00.000Z</LastUpdate><LongName>MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km</LongName><DataSetId>MODIS/Terra Aerosol 5-Min
+        L2 Swath 10km V005</DataSetId><Description>MODIS/Terra Aerosol 5-Min L2 Swath
+        10km</Description><Orderable>false</Orderable><Visible>true</Visible><RevisionDate>2006-03-17T00:00:00.000Z</RevisionDate><SuggestedUsage>Science
+        Research</SuggestedUsage><ProcessingCenter>MODAPS</ProcessingCenter><ProcessingLevelId>2</ProcessingLevelId><ProcessingLevelDescription>Sensor
+        Measurements</ProcessingLevelDescription><ArchiveCenter>LAADS</ArchiveCenter><VersionDescription>Terra
+        MODIS Version 5 Data Collection, Fourth Atmosphere Reprocessing Campaign</VersionDescription><CitationForExternalPublication>This
+        data set was provided by the NASA EOS Project.</CitationForExternalPublication><CollectionState>In
+        Work</CollectionState><MaintenanceAndUpdateFrequency>As Needed</MaintenanceAndUpdateFrequency><SpatialKeywords
+        /><TemporalKeywords /><Temporal><TimeType>UTC</TimeType><DateType>Gregorian</DateType><TemporalRangeType>Continuous
+        Range</TemporalRangeType><PrecisionOfSeconds>1</PrecisionOfSeconds><EndsAtPresentFlag>true</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>1999-12-18T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>Producer</Role><Instructions>Contact
+        for data content concerns</Instructions><OrganizationName>MODIS Science Data
+        Support Team</OrganizationName><OrganizationAddresses><Address><StreetAddress>NASA/GSFC
+        Code 922</StreetAddress><City>GREENBELT</City><StateProvince>MD</StateProvince><PostalCode>20771</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>301-286-7608</Number><Type>phone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>Edward.J.Masuoka.1@gsfc.nasa.gov</Email></OrganizationEmails><ContactPersons
+        /></Contact><Contact><Role>Archive</Role><Instructions>Contact for format/distribution
+        issues.</Instructions><OrganizationName>MODIS Science Data Support Team</OrganizationName><OrganizationAddresses><Address><StreetAddress>7501
+        Forbes Blvd, Suite 103</StreetAddress><City>Seabrook</City><StateProvince>MD</StateProvince><PostalCode>20706</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>301-352-2144</Number><Type>phone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>laadshelp@listserv.gsfc.nasa.gov</Email></OrganizationEmails><ContactPersons
+        /></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>CLOUD
+        CONDENSATION NUCLEI</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL
+        PARTICLE PROPERTIES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        RADIATION</TermKeyword><VariableLevel1Keyword><Value>RADIATIVE FLUX</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Terra</ShortName><LongName>First
+        EOS Polar Orbiting Satellite, 10:30 AM Descending Equator Crossing</LongName><Type>Spacecraft</Type><Characteristics><Characteristic><Name>EquatorCrossingTime</Name><Description>Local
+        time of the equator crossing and direction (ascending or descending)</Description><DataType>varchar</DataType><Unit>Local
+        Mean Time</Unit><Value>10:30, descending</Value></Characteristic></Characteristics><Instruments><Instrument><ShortName>MODIS</ShortName><LongName>Moderate-Resolution
+        Imaging Spectroradiometer</LongName><Technique>Imaging Spectroradiometry</Technique><NumberOfSensors>1</NumberOfSensors><Characteristics
+        /><Sensors><Sensor><ShortName>MODIS</ShortName><LongName>Cross-track Scanning
+        Radiometer</LongName><Technique>Radiometry</Technique><Characteristics /></Sensor></Sensors><OperationModes
+        /></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>SuccessfulRetrievalPct_Land</Name><DataType>FLOAT</DataType><Description>None</Description></AdditionalAttribute><AdditionalAttribute><Name>SuccessfulRetrievalPct_Ocean</Name><DataType>FLOAT</DataType><Description>None</Description></AdditionalAttribute></AdditionalAttributes><CSDTDescriptions><CSDTDescription><PrimaryCSDT>Simple
+        Swath</PrimaryCSDT><Implementation>HDF-EOS</Implementation><CSDTComments>None</CSDTComments><IndirectReference>N/A</IndirectReference></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>http://modis-atmos.gsfc.nasa.gov/products.html</URL><Description>Overview
+        of MODIS Atmosphere Data Products</Description><Type>ECSCollGuide</Type></OnlineResource><OnlineResource><URL>http://modis-atmos.gsfc.nasa.gov/products_calendar.html</URL><Description>MODIS
+        Atmosphere Data Availability Calendar and Validation Level</Description><Type>MiscInformation</Type></OnlineResource><OnlineResource><URL>http://modis-atmos.gsfc.nasa.gov/validation.html</URL><Description>NULL</Description><Type>DatasetDisclaimer</Type></OnlineResource></OnlineResources><Spatial><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
     http_version: 

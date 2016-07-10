@@ -2,6 +2,66 @@
 http_interactions:
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1219032686-LANCEMODIS.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:50:48 GMT
+  digest: f84e0da7b5c4a33746f52d6353d644f3d1b9d422
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179001887-SEDAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:50:50 GMT
+  digest: 122e8b0a31be9c00b5f4f5bb371044312c74630c
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C2921042-PODAAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:50:43 GMT
+  digest: 38abcc1d87c03f96966b83cacc91071898f8b11d
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000257-DEV07.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:50:38 GMT
+  digest: 9bb3738d71894c061dae36c552e702ba256f5673
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1200019403-MMT_2.echo10
     body:
       encoding: US-ASCII
@@ -15,4 +75,19 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Sun, 10 Jul 2016 19:40:18 GMT
   digest: 100a4ceb11a02d26e70c36dcc024eb3da5729d35
+- request:
+    method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C24936-LAADS.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:50:45 GMT
+  digest: b0372414d3a0e12399bca7fd5acbf30f30b4b8e9
 recorded_with: VCR 2.6.0

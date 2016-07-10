@@ -1,4 +1,805 @@
 ---
+45746cda98164055dd66ee6f785801f0e705aaef:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:41 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '24'
+      cmr-request-id:
+      - fb06bd64-b5d0-4300-ac26-c7f0098f6dc9
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:41.213Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Aerosol Optical Depth","resolution":"2km","product":"MODIS_Aqua_Aerosol","maxNativeZoom":5,"match":{"time_start":">=2012-06-22"}}]},"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MYD04_L2_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","data_center":"LANCEMODIS","short_name":"MYD04_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","coordinate_system":"CARTESIAN","summary":"The
+        MODIS level-2 atmospheric aerosol product (MYD04_L2) continues to provide
+        full global coverage of aerosol properties from the Dark Target (DT) and Deep
+        Blue (DB) algorithms. The DT algorithm is applied over ocean and dark land
+        (e.g., vegetation), while the DB algorithm now covers the entire land areas
+        including both dark and bright surfaces. Both results are provided on a 10x10
+        pixel scale (10 km at nadir). Each MYD04_L2 product file covers a five-minute
+        time interval. The output grid is 135 pixels in width by 203 pixels in length.
+        Every tenth file has an output grid size of 135 by 204 pixels. MYD04_L2 product
+        files are stored in Hierarchical Data Format (HDF-EOS).Based on C5 validation
+        studies, a number of Science Data Sets (SDSs) have been deleted from the DT
+        product (Angstrom_Exponent_Land, Optical_Depth_Small_Land, etc.) while a number
+        of SDSs have been renamed or added. A number of algorithm changes have lead
+        to significant changes in regional aerosol product statistics (see link above).
+        For C6, the DT algorithm team now provides a new 3 km spatial resolution product
+        intended for the air quality community; this is provided in a separate file
+        (M*D04_3K).In C5, the DB algorithm was limited to only bright targets. With
+        C6, the DB team has expanded coverage to include both bright targets and vegetated
+        regions, using NDVI information in addition to a precalculated surface reflectance
+        database. New DB products for C6 include an estimate on the aerosol retrieval
+        uncertainty to assist with error analyses as well as a best estimate SDS containing
+        the aerosol optical thickness data with quality assurance flags already applied
+        (SDS names Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_Uncertainty
+        and Deep_Blue_Aerosol_Optical_Depth_550_Land_Best_Estimate respectively).
+        In addition to separate DT and DB retrievals, the C6 product now provides
+        a merged (SDS) that combines both types of retrievals (SDS name AOD_550_Dark_Target_Deep_Blue_Combined).
+        This SDS uses a combination of scene NDVI and retrieval Quality Assessment
+        (QA) assignments to select one of the retrievals (if any) or an average of
+        the two retrievals. Ocean retrievals from the DT algorithm are also provided
+        if they have a sufficiently high retrieval QA value.The file consists of following
+        pixel level gridded aerosol parameters. These pixel level gridded aerosol
+        parameters are stored as Scientific Data Sets(SDS) within the file:MODIS Data
+        Category & ParametersSpatial & Temporal Resolution:Longitude, Latitude, Scan_Start_TimeSolar
+        and Sensor Viewing Geometry:Solar_Zenith, Solar_Azimuth, Sensor_Zenith, Sensor_AzimuthAerosol
+        Parameters for Land & Ocean (Combined):Scattering_Angle, Land_sea_Flag, Aerosol_Cldmask_Land_Ocean,
+        Cloud_Pixel_Distance_Land_Ocean, Land_Ocean_Quality_Flag, Optical_Depth_Land_And_Ocean,
+        Image_Optical_Depth_Land_And_Ocean, Average_Cloud_Pixel_Distance_Land_OceanAerosol
+        Parameters from Land Retrieval Algorithm:Aerosol_Type_Land, Fitting_Error_Land,
+        Surface_Reflectance_Land, Corrected_Optical_Depth_Land, Corrected_Optical_Depth_Land_wav2p1,
+        Optical_Depth_Ratio_Small_Land, Number_Pixels_Used_Land, Mean_Reflectance_Land,
+        STD_Reflectance_Land, Mass_Concentration_Land, Aerosol_Cloud_Fraction_Land,
+        Quality_Assurance_Land, Topographic_Altitude_LandAerosol Parameters from Ocean
+        Retrieval Algorithm:Solution_Index_Ocean_Small, Solution_Index_Ocean_Large,
+        Effective_Optical_Depth_Best_Ocean, Effective_Optical_Depth_Average_Ocean,
+        Optical_Depth_Small_Best_Ocean, Optical_Depth_Small_Average_Ocean, Optical_Depth_Large_Best_Ocean,
+        Optical_Depth_Large_Average_Ocean, Mass_Concentration_Ocean, Aerosol_Cloud_Fraction_Ocean,
+        Effective_Radius_Ocean, Effective_Optical_Depth_0p55um_Ocean, PSML003_Ocean,
+        Asymmetry_Factor_Best_Ocean, Asymmetry_Factor_Average_Ocean, Backscattering_Ratio_Best_Ocean,
+        Backscattering_Ratio_Average_Ocean, Angstrom_Exponent_1_Ocean, Angstrom_Exponent_2_Ocean,
+        Least_Squares_Error_Ocean, Optical_Depth_Ratio_Small_Ocean_0.55micron, Optical_Depth_by_models_ocean,
+        Number_Pixels_Used_Ocean, Mean_Reflectance_Ocean;, STD_Reflectance_Ocean,
+        byte Quality_Assurance_Ocean, Glint_Angle, Wind_Speed_Ncep_OceanAerosol Parameters
+        from Deep Blue Retrieval Algorithm:Deep_Blue_Aerosol_Optical_Depth_550_Land,
+        Deep_Blue_Spectral_Aerosol_Optical_Depth_Land, Deep_Blue_Angstrom_Exponent_Land,
+        Deep_Blue_Spectral_Single_Scattering_Albedo_Land, Deep_Blue_Spectral_Surface_Reflectance_Land,
+        Deep_Blue_Spectral_TOA_Reflectance_Land, Deep_Blue_Number_Pixels_Used_550_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_STD, Deep_Blue_Cloud_Fraction_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_QA_Flag, Deep_Blue_Algorithm_Flag_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_Best_Estimate, Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_UncertaintyAerosol
+        Parameters from Dark Target/Deep Blue Combine Algorithm:AOD_550_Dark_Target_Deep_Blue_Combined,
+        AOD_550_Dark_Target_Deep_Blue_Combined_QA_Flag, AOD_550_Dark_Target_Deep_Blue_Combined_Algorithm_FlagThese
+        aerosol parameters are used to study aerosol climatology, sources and sinks
+        of specific aerosol types (e.g. sulfates and biomass burning aerosol), interaction
+        of aerosols with clouds, and atmospheric corrections of remotely sensed surface
+        reflectance over the land. This product will also be used to monitor aerosol
+        mass concentration, aerosol optical properties, and radiative forcing on a
+        global scale.See the MODIS Science Team homepage for more data set information:
+        http://modis.gsfc.nasa.gov/data/dataprod/ or visit the MODIS Atmosphere Team
+        homepage:http://modis-atmos.gsfc.nasa.gov/MOD04_L2/","has_granules":true,"orbit_parameters":{},"id":"C1219032686-LANCEMODIS","original_format":"DIF10","collection_data_type":"NEAR_REAL_TIME","granule_count":1522,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD04_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD04_L2/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]},{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":true,"geo":true,"source":"Aqua
+        / MODIS","arctic":true,"title":"Snow Cover","resolution":"500m","product":"MODIS_Aqua_Snow_Cover","maxNativeZoom":5,"match":{"time_start":">=2012-05-08","day_night_flag":"DAY"}}]},"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD10_L2_6NRT"],"version_id":"6NRT","updated":"2016-03-18T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","data_center":"LANCEMODIS","short_name":"MYD10_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m, Version 006","coordinate_system":"CARTESIAN","summary":"The
+        MODIS/Aqua Near Real Time (NRT) Snow Cover 5-Min L2 Swath 500m (MYD10_L2)
+        data set contains snow cover and Quality Assessment (QA) data, latitudes and
+        longitudes in compressed Hierarchical Data Format-Earth Observing System (HDF-EOS)
+        format, and corresponding metadata. Latitude and longitude geolocation fields
+        are at 5 km resolution while all other fields are at 500 m resolution. Version
+        5 (V005), the latest version of the Moderate Resolution Imaging Spectroradiometer
+        (MODIS) data available has two separate snow fields. The first field, snow
+        cover, classifies each cloud-free land or inland water body pixel as snow-covered
+        or snow-free, the second field, fractional snow cover, provides the percent
+        of snow cover within each pixel for land and inland water bodies. MODIS snow
+        cover data are based on a snow mapping algorithm that employs a Normalized
+        Difference Snow Index (NDSI) and other criteria tests.   Data are stored in
+        HDF-EOS format, and are available from 4 July 2002 to present via FTP. Data
+        can also be obtained in GeoTIFF format by ordering the data through the Data
+        Pool.","has_granules":true,"orbit_parameters":{},"id":"C1229626387-LANCEMODIS","original_format":"DIF10","collection_data_type":"NEAR_REAL_TIME","granule_count":1572,"browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","title":"MYD10_L2
+        Version 4 Data, 15 January 2004","hreflang":"en-US","href":"/data/modis/images/myd10_l2.2004015.sample.gif"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 descriptions and data sets from the MODAPS LANCE-MODIS page(FTP
+        server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD10_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD10_L2/"}]}]}}'
+    http_version: 
+bb8137c64aab3457d361a397e6d932505935d7ac:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:40 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '32139'
+      cmr-took:
+      - '42'
+      cmr-request-id:
+      - 4ea7c6b6-aec5-4194-893d-c6f3916d3dcf
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:40.571Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00.000Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","organizations":["ORNL_DAAC"],"title":"15
+        Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","has_granules":true,"time_end":"1988-03-04T00:00:00.000Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","granule_count":39,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"processing_level_id":"3","boxes":["39.08
+        -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00.000Z","dif_ids":["FIFE_RAIN_30M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/2","organizations":["ORNL_DAAC"],"title":"30
+        Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
+        minute rainfall data for the Konza Prairie","has_granules":true,"time_end":"1987-10-26T00:00:00.000Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","original_format":"ECHO10","granule_count":117,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"processing_level_id":"3","boxes":["-90
+        -180 79 177.9"],"time_start":"1977-11-16T00:00:00.000Z","dif_ids":["GLOBAL_MICROBIAL_BIOMASS_C_N_P"],"version_id":"1","updated":"2015-01-12T00:00:00.000Z","dataset_id":"A
+        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
+        Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1264","organizations":["ORNL_DAAC"],"title":"A
+        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
+        Data","coordinate_system":"CARTESIAN","summary":"This data set provides the
+        concentrations of soil microbial biomass carbon (C), nitrogen (N) and phosphorus
+        (P), soil organic carbon, total nitrogen, and total phosphorus at biome and
+        global scales. The data were compiled from a comprehensive survey of publications
+        from the late 1970s to 2012 and include 3,422 data points from 315 papers.
+        These data are from soil samples collected primarily at 0-15 cm depth with
+        some from 0-30 cm. In addition, data were compiled for soil microbial biomass
+        concentrations from soil profile samples to depths of 100 cm. Sampling site
+        latitude and longitude were available for the majority of the samples that
+        enabled assembling additional soil properties, site characteristics, vegetation
+        distributions, biomes, and long-term climate data from several global sources
+        of soil, land-cover, and climate data. These site attributes are included
+        with the microbial biomass data. This data set contains two *.csv files of
+        the soil microbial biomass C, N, P data. The first provides all compiled results
+        emphasizing the full spatial extent of the data, while the second is a subset
+        that provides only data from a series of profile samples emphasizing the vertical
+        distribution of microbial biomass concentrations.There is a companion file,
+        also in .csv format, of the references for the surveyed publications. A reference_number
+        relates the data to the respective publication.The concentrations of soil
+        microbial biomass, in combination with other soil databases, were used to
+        estimate the global storage of soil microbial biomass C and N in 0-30 cm and
+        0-100 cm soil profiles. These storage estimates were combined with a spatial
+        map of 12 major biomes (boreal forest, temperate coniferous forest, temperate
+        broadleaf forest, tropical and subtropical forests, mixed forest, grassland,
+        shrub, tundra, desert, natural wetland, cropland, and pasture) at 0.05-degree
+        by 0.5-degree spatial resolution. The biome map and six estimates of C and
+        N storage and C:N ration in soil microbial biomass are provided in a single
+        netCDF format file. ","has_granules":true,"time_end":"2012-06-01T00:00:00.000Z","orbit_parameters":{},"id":"C1000000000-ORNL_DAAC","original_format":"ECHO10","granule_count":3,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1264"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides the concentrations of soil microbial biomass carbon (C),
+        nitrogen (N) and phosphorus (P), soil organic carbon, total nitrogen, and
+        total phosphorus at biome and global scales. The data were compiled from a
+        comprehensive survey of publications from the late 1970s to 2012 and include
+        3,422 data points from 315 papers. These data are from soil samples collected
+        primarily at 0-15 cm depth with some from 0-30 cm. In addition, data were
+        compiled for soil microbial biomass concentrations from soil profile samples
+        to depths of 100 cm. Sampling site latitude and longitude were available for
+        the majority of the samples that enabled assembling additional soil properties,
+        site characteristics, vegetation distributions, biomes, and long-term climate
+        data from several global sources of soil, land-cover, and climate data. These
+        site attributes are included with the microbial biomass data. This data set
+        contains two *.csv files of the soil microbial biomass C, N, P data. The first
+        provides all compiled results emphasizing the full spatial extent of the data,
+        while the second is a subset that provides only data from a series of profile
+        samples emphasizing the vertical distribution of microbial biomass concentrations.There
+        is a companion file, also in .csv format, of the references for the surveyed
+        publications. A reference_number relates the data to the respective publication.The
+        concentrations of soil microbial biomass, in combination with other soil databases,
+        were used to estimate the global storage of soil microbial biomass C and N
+        in 0-30 cm and 0-100 cm soil profiles. These storage estimates were combined
+        with a spatial map of 12 major biomes (boreal forest, temperate coniferous
+        forest, temperate broadleaf forest, tropical and subtropical forests, mixed
+        forest, grassland, shrub, tundra, desert, natural wetland, cropland, and pasture)
+        at 0.05-degree by 0.5-degree spatial resolution. The biome map and six estimates
+        of C and N storage and C:N ration in soil microbial biomass are provided in
+        a single netCDF format file.  (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/SOILS/guides/Global_Microbial_Biomass_C_N_P.html"}]},{"processing_level_id":"3","boxes":["-43.2
+        -122.4 58.42 176.13"],"time_start":"1993-01-01T00:00:00.000Z","dif_ids":["LEAF_PHOTOSYNTHESIS_TRAITS"],"version_id":"1","updated":"2014-06-27T00:00:00.000Z","dataset_id":"A
+        Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf
+        Area","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1224","organizations":["ORNL_DAAC"],"title":"A
+        Global Data Set of Leaf Photosynthetic Rates, Leaf N and P, and Specific Leaf
+        Area","coordinate_system":"CARTESIAN","summary":"This global data set of photosynthetic
+        rates and leaf nutrient traits was compiled from a comprehensive literature
+        review. It includes estimates of Vcmax (maximum rate of carboxylation), Jmax
+        (maximum rate of electron transport), leaf nitrogen content (N), leaf phosphorus
+        content (P), and specific leaf area (SLA) data from both experimental and
+        ambient field conditions, for a total of 325 species and treatment combinations.
+        Both the original published Vcmax and Jmax values as well as estimates at
+        standard temperature are reported. The maximum rate of carboxylation (Vcmax)
+        and the maximum rate of electron transport (Jmax) are primary determinants
+        of photosynthetic rates in plants, and modeled carbon fluxes are highly sensitive
+        to these parameters. Previous studies have shown that Vcmax and Jmax correlate
+        with leaf nitrogen across species and regions, and locally across species
+        with leaf phosphorus and specific leaf area, yet no universal relationship
+        suitable for global-scale models is currently available. These data are suitable
+        for exploring the general relationships of Vcmax and Jmax with each other
+        and with leaf N, P and SLA. This data set contains one *.csv file.","has_granules":true,"time_end":"2010-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179126725-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1224"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        global data set of photosynthetic rates and leaf nutrient traits was compiled
+        from a comprehensive literature review. It includes estimates of Vcmax (maximum
+        rate of carboxylation), Jmax (maximum rate of electron transport), leaf nitrogen
+        content (N), leaf phosphorus content (P), and specific leaf area (SLA) data
+        from both experimental and ambient field conditions, for a total of 325 species
+        and treatment combinations. Both the original published Vcmax and Jmax values
+        as well as estimates at standard temperature are reported. The maximum rate
+        of carboxylation (Vcmax) and the maximum rate of electron transport (Jmax)
+        are primary determinants of photosynthetic rates in plants, and modeled carbon
+        fluxes are highly sensitive to these parameters. Previous studies have shown
+        that Vcmax and Jmax correlate with leaf nitrogen across species and regions,
+        and locally across species with leaf phosphorus and specific leaf area, yet
+        no universal relationship suitable for global-scale models is currently available.
+        These data are suitable for exploring the general relationships of Vcmax and
+        Jmax with each other and with leaf N, P and SLA. This data set contains one
+        *.csv file. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/VEGETATION/guides/Leaf_Photosynthesis_Traits.html"}]},{"processing_level_id":"3","boxes":["-50
+        -159.7 68.5 176.9"],"time_start":"1970-01-01T00:00:00.000Z","dif_ids":["LEAF_CARBON_NUTRIENTS"],"version_id":"1","updated":"2012-07-19T00:00:00.000Z","dataset_id":"A
+        Global Database of Carbon and Nutrient Concentrations of Green and Senesced
+        Leaves","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1106","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Carbon and Nutrient Concentrations of Green and Senesced
+        Leaves","coordinate_system":"CARTESIAN","summary":"This data set provides
+        carbon (C), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), and
+        magnesium (Mg) concentrations in green and senesced leaves. Vegetation characteristics
+        reported include species growth habit, leaf area, mass, and mass loss with
+        senescence. The data were compiled from 86 selected studies in 31 countries,
+        and resulted in approximately 1,000 data points for both green and senesced
+        leaves from woody and non-woody vegetation as described in Vergutz et al (2012).
+        The studies were conducted from 1970-2009. There are two comma-delimited data
+        files with this data set.","has_granules":true,"time_end":"2009-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003380-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1106"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides carbon (C), nitrogen (N), phosphorus (P), potassium (K),
+        calcium (Ca), and magnesium (Mg) concentrations in green and senesced leaves.
+        Vegetation characteristics reported include species growth habit, leaf area,
+        mass, and mass loss with senescence. The data were compiled from 86 selected
+        studies in 31 countries, and resulted in approximately 1,000 data points for
+        both green and senesced leaves from woody and non-woody vegetation as described
+        in Vergutz et al (2012). The studies were conducted from 1970-2009. There
+        are two comma-delimited data files with this data set. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/VEGETATION/guides/Leaf_carbon_nutrients.html"}]},{"processing_level_id":"3","boxes":["-54.2
+        -164.78 78.42 175.62"],"time_start":"1932-01-01T00:00:00.000Z","dif_ids":["LAI_WOODY_PLANTS"],"version_id":"1","updated":"2014-07-22T00:00:00.000Z","dataset_id":"A
+        Global Database of Field-observed Leaf Area Index in Woody Plant Species,
+        1932-2011","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1231","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Field-observed Leaf Area Index in Woody Plant Species,
+        1932-2011","coordinate_system":"CARTESIAN","summary":"This data set provides
+        global leaf area index (LAI) values for woody species. The data are a compilation
+        of field-observed data from 1,216 locations obtained from 554 literature sources
+        published between 1932 and 2011. Only site-specific maximum LAI values were
+        included from the sources; values affected by significant artificial treatments
+        (e.g. continuous fertilization and/or irrigation) and LAI values that were
+        low due to drought or disturbance (e.g. intensive thinning, wildfire, or disease),
+        or because vegetation was immature or old/declining, were excluded (Lio et
+        al., 2014). To maximize the generic applicability of the data, original LAI
+        values from source literature and values standardized using the definition
+        of half of total surface area (HSA) are included. Supporting information,
+        such as geographical coordinates of plot, altitude, stand age, name of dominant
+        species, plant functional types, and climate data are also provided in the
+        data file. There is one data file in comma-separated (.csv) format with this
+        data set and one companion file which provides the data sources.","has_granules":true,"time_end":"2011-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179130805-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1231"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides global leaf area index (LAI) values for woody species. The
+        data are a compilation of field-observed data from 1,216 locations obtained
+        from 554 literature sources published between 1932 and 2011. Only site-specific
+        maximum LAI values were included from the sources; values affected by significant
+        artificial treatments (e.g. continuous fertilization and/or irrigation) and
+        LAI values that were low due to drought or disturbance (e.g. intensive thinning,
+        wildfire, or disease), or because vegetation was immature or old/declining,
+        were excluded (Lio et al., 2014). To maximize the generic applicability of
+        the data, original LAI values from source literature and values standardized
+        using the definition of half of total surface area (HSA) are included. Supporting
+        information, such as geographical coordinates of plot, altitude, stand age,
+        name of dominant species, plant functional types, and climate data are also
+        provided in the data file. There is one data file in comma-separated (.csv)
+        format with this data set and one companion file which provides the data sources.
+        (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/VEGETATION/guides/LAI_Woody_Plants.html"}]},{"processing_level_id":"3","boxes":["-36.45
+        -149.63 74.5 160.52"],"time_start":"1956-01-01T00:00:00.000Z","dif_ids":["GLOBAL_RTSG_FLUX_V1"],"version_id":"1","updated":"2012-04-16T00:00:00.000Z","dataset_id":"A
+        Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
+        1.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1078","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
+        1.0","coordinate_system":"CARTESIAN","summary":"This database contains information
+        compiled from published studies on gas flux from soil following rewetting
+        or thawing. The resulting database includes 222 field and laboratory observations
+        focused on rewetting of dry soils, and 116 field laboratory observations focused
+        on thawing of frozen soils studies conducted from 1956 to 2010. Fluxes of
+        carbon dioxide, methane, nitrous oxide, nitrogen oxide, and ammonia (CO2,
+        CH4, N2O, NO and NH3) were compiled from the literature and the flux rates
+        were normalized for ease of comparison. Field observations of gas flux following
+        rewetting of dry soils include events caused by natural rainfall, simulated
+        rainfall in natural ecosystems, and irrigation in agricultural lands. Similarly,
+        thawing of frozen soils include field observations of natural thawing, simulated
+        freezing-thawing events (i.e., thawing of simulated frozen soil by snow removal),
+        and thawing of seasonal ice in temperate and high latitude regions (Kim et
+        al., 2012). Reported parameters include experiment type, location, site type,
+        vegetation, climate, soil properties, rainfall, soil moisture, soil gas flux
+        after wetting and thawing, peak soil gas flux properties, and the corresponding
+        study references. There is one comma-delimited data file. ","has_granules":true,"time_end":"2009-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003657-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1078"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        database contains information compiled from published studies on gas flux
+        from soil following rewetting or thawing. The resulting database includes
+        222 field and laboratory observations focused on rewetting of dry soils, and
+        116 field laboratory observations focused on thawing of frozen soils studies
+        conducted from 1956 to 2010. Fluxes of carbon dioxide, methane, nitrous oxide,
+        nitrogen oxide, and ammonia (CO2, CH4, N2O, NO and NH3) were compiled from
+        the literature and the flux rates were normalized for ease of comparison.
+        Field observations of gas flux following rewetting of dry soils include events
+        caused by natural rainfall, simulated rainfall in natural ecosystems, and
+        irrigation in agricultural lands. Similarly, thawing of frozen soils include
+        field observations of natural thawing, simulated freezing-thawing events (i.e.,
+        thawing of simulated frozen soil by snow removal), and thawing of seasonal
+        ice in temperate and high latitude regions (Kim et al., 2012). Reported parameters
+        include experiment type, location, site type, vegetation, climate, soil properties,
+        rainfall, soil moisture, soil gas flux after wetting and thawing, peak soil
+        gas flux properties, and the corresponding study references. There is one
+        comma-delimited data file.  (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/SOILS/guides/global_rtsg_flux_v1.html"}]},{"processing_level_id":"3","boxes":["-54.5
+        -156.7 72.5 176.2"],"time_start":"1827-01-01T00:00:00.000Z","dif_ids":["GLOBAL_LITTER_CARBON_NUTRIENTS"],"version_id":"1","updated":"2015-03-31T00:00:00.000Z","dataset_id":"A
+        Global Database of Litterfall Mass and Litter Pool Carbon and Nutrients","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1244","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Litterfall Mass and Litter Pool Carbon and Nutrients","coordinate_system":"CARTESIAN","summary":"Measurement
+        data of aboveground litterfall and littermass and litter carbon, nitrogen,
+        and nutrient concentrations were extracted from 685 original literature sources
+        and compiled into a comprehensive database to support the analysis of global
+        patterns of carbon and nutrients in litterfall and litter pools. Data are
+        included from sources dating from 1827 to 1997. The reported data include
+        the literature reference, general site information (description, latitude,
+        longitude, and elevation), site climate data (mean annual temperature and
+        precipitation), site vegetation characteristics (management, stand age, ecosystem
+        and vegetation-type codes), annual quantities of litterfall (by class, kg
+        m-2 yr-1), litter pool mass (by class and litter layer, kg m-2), and concentrations
+        of nitrogen (N), phosphorus (P), and base cations for the litterfall (g m-2
+        yr-1) and litter pool components (g m-2).  The investigators intent was to
+        compile a comprehensive data set of individual direct field measurements as
+        reported by researchers. While the primary emphasis was on acquiring C data,
+        measurements of N, P, and base cations were also obtained, although the database
+        is sparse for elements other than C and N. Each of the 1,497 records in the
+        database represents a measurement site. Replicate measurements were averaged
+        according to conventions described in Section 5 and recorded for each site
+        in the database. The sites were at 575 different locations. ","has_granules":true,"time_end":"1997-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1227811476-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1244"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurement
+        data of aboveground litterfall and littermass and litter carbon, nitrogen,
+        and nutrient concentrations were extracted from 685 original literature sources
+        and compiled into a comprehensive database to support the analysis of global
+        patterns of carbon and nutrients in litterfall and litter pools. Data are
+        included from sources dating from 1827 to 1997. The reported data include
+        the literature reference, general site information (description, latitude,
+        longitude, and elevation), site climate data (mean annual temperature and
+        precipitation), site vegetation characteristics (management, stand age, ecosystem
+        and vegetation-type codes), annual quantities of litterfall (by class, kg
+        m-2 yr-1), litter pool mass (by class and litter layer, kg m-2), and concentrations
+        of nitrogen (N), phosphorus (P), and base cations for the litterfall (g m-2
+        yr-1) and litter pool components (g m-2).  The investigators intent was to
+        compile a comprehensive data set of individual direct field measurements as
+        reported by researchers. While the primary emphasis was on acquiring C data,
+        measurements of N, P, and base cations were also obtained, although the database
+        is sparse for elements other than C and N. Each of the 1,497 records in the
+        database represents a measurement site. Replicate measurements were averaged
+        according to conventions described in Section 5 and recorded for each site
+        in the database. The sites were at 575 different locations.  (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/VEGETATION/guides/Global_Litter_Carbon_Nutrients.html"}]},{"processing_level_id":"3","boxes":["-42.5
+        -117.86 63.23 117.6"],"time_start":"1985-01-01T00:00:00.000Z","dif_ids":["GLOBAL_PHOSPHORUS_HEDLEY_FRACT"],"version_id":"1","updated":"2014-07-18T00:00:00.000Z","dataset_id":"A
+        Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1230","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","coordinate_system":"CARTESIAN","summary":"This
+        data set provides concentrations of soil phosphorus (P) compiled from the
+        peer-reviewed literature that cited the Hedley fractionation method (Hedley
+        and Stewart, 1982). This database contains estimates of different forms of
+        naturally occurring soil phosphorus, including labile inorganic P, organic
+        P, occluded P, secondary mineral P, apatite P, and total P, based on the analyses
+        of the various Hedley soil fractions.The recent literature survey (Yang and
+        Post, 2011) was restricted to studies of natural, unfertilized, and uncultivated
+        soils since 1995. Ninety measurements of soil P fractions were identified.
+        These were added to the 88 values from soils in natural ecosystems that Cross
+        and Schlesinger (1995) had compiled. Cross and Schlesinger provided a comprehensive
+        survey on Hedley P data prior to 1995. Measurement data are provided for studies
+        published from 1985 through 2010. In addition to the Hedley P fraction measurement
+        data Yang and Post (2011) also compiled information on soil order, soil pH,
+        organic carbon and nitrogen content, as well as the geographic location (longitude
+        and latitude) of the measurement sites. ","has_granules":true,"time_end":"2010-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179130785-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1230"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides concentrations of soil phosphorus (P) compiled from the
+        peer-reviewed literature that cited the Hedley fractionation method (Hedley
+        and Stewart, 1982). This database contains estimates of different forms of
+        naturally occurring soil phosphorus, including labile inorganic P, organic
+        P, occluded P, secondary mineral P, apatite P, and total P, based on the analyses
+        of the various Hedley soil fractions.The recent literature survey (Yang and
+        Post, 2011) was restricted to studies of natural, unfertilized, and uncultivated
+        soils since 1995. Ninety measurements of soil P fractions were identified.
+        These were added to the 88 values from soils in natural ecosystems that Cross
+        and Schlesinger (1995) had compiled. Cross and Schlesinger provided a comprehensive
+        survey on Hedley P data prior to 1995. Measurement data are provided for studies
+        published from 1985 through 2010. In addition to the Hedley P fraction measurement
+        data Yang and Post (2011) also compiled information on soil order, soil pH,
+        organic carbon and nitrogen content, as well as the geographic location (longitude
+        and latitude) of the measurement sites.  (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/SOILS/guides/Global_Phosphorus_Hedley_Fract.html"}]},{"processing_level_id":"3","boxes":["-78.02
+        -162.2 78.17 175.5"],"time_start":"1961-01-01T00:00:00.000Z","dif_ids":["GLOBAL_SRDB_V3"],"version_id":"1","updated":"2014-08-04T00:00:00.000Z","dataset_id":"A
+        Global Database of Soil Respiration Data, Version 3.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1235","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Soil Respiration Data, Version 3.0","coordinate_system":"CARTESIAN","summary":"This
+        data set provides an update of the soil respiration database (SRDB), a near-universal
+        compendium of published soil respiration (RS) data. Soil respiration, the
+        flux of autotrophically- and heterotrophically-generated CO2 from the soil
+        to the atmosphere, remains the least well-constrained component of the terrestrial
+        Carbon cycle. The database encompasses all published studies that report at
+        least one of the following data measured in the field (not laboratory): annual
+        RS, mean seasonal RS, a seasonal or annual partitioning of RS into its sources
+        fluxes, RS temperature response (Q10), or RS at 10 degrees C. The SRDB''s
+        orientation is thus to seasonal and annual fluxes, not shorter-term or chamber-specific
+        measurements, and the database is dominated by temperate, well-drained forest
+        measurement locations. The data set includes a file of RS data and a linked
+        file of study bibliographic data; both files are in comma-separated format.","has_granules":true,"time_end":"2011-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179130985-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1235"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides an update of the soil respiration database (SRDB), a near-universal
+        compendium of published soil respiration (RS) data. Soil respiration, the
+        flux of autotrophically- and heterotrophically-generated CO2 from the soil
+        to the atmosphere, remains the least well-constrained component of the terrestrial
+        Carbon cycle. The database encompasses all published studies that report at
+        least one of the following data measured in the field (not laboratory): annual
+        RS, mean seasonal RS, a seasonal or annual partitioning of RS into its sources
+        fluxes, RS temperature response (Q10), or RS at 10 degrees C. The SRDB''s
+        orientation is thus to seasonal and annual fluxes, not shorter-term or chamber-specific
+        measurements, and the database is dominated by temperate, well-drained forest
+        measurement locations. The data set includes a file of RS data and a linked
+        file of study bibliographic data; both files are in comma-separated format.
+        (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/SOILS/guides/global_srdb_v3.html"}]},{"processing_level_id":"3","boxes":["60.33
+        -121.6 64.25 -110.68"],"time_start":"1997-07-07T00:00:00.000Z","dif_ids":["Wildfires_2014_NWT_Canada"],"version_id":"1","updated":"2016-05-11T00:00:00.000Z","dataset_id":"ABoVE:
+        Burn Severity, Fire Progression, Landcover and Field Data, NWT, Canada, 2014","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1307","organizations":["ORNL_DAAC"],"title":"ABoVE:
+        Burn Severity, Fire Progression, Landcover and Field Data, NWT, Canada, 2014","coordinate_system":"CARTESIAN","summary":"This
+        data set provides peatland landcover classification maps, fire progression
+        maps, and vegetation community biophysical data collected from areas that
+        were burned by wildfire in 2014 in the Northwest Territories, Canada. The
+        peatland maps include peatland type (bog, fen, marsh, swamp) and level of
+        biomass (open, forested). The fire progression maps enabled an assessment
+        of wildfire progression rates at a daily time scale. Field data, collected
+        in 2015, include an estimate of burn severity, woody seedling/sprouting data,
+        soil moisture, and tree diameter and height of burned sites and similar vegetation
+        characterization at landcover validation sites.","has_granules":true,"time_end":"2015-07-15T00:00:00.000Z","orbit_parameters":{},"id":"C1248454748-ORNL_DAAC","original_format":"ECHO10","granule_count":12,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1307"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides peatland landcover classification maps, fire progression
+        maps, and vegetation community biophysical data collected from areas that
+        were burned by wildfire in 2014 in the Northwest Territories, Canada. The
+        peatland maps include peatland type (bog, fen, marsh, swamp) and level of
+        biomass (open, forested). The fire progression maps enabled an assessment
+        of wildfire progression rates at a daily time scale. Field data, collected
+        in 2015, include an estimate of burn severity, woody seedling/sprouting data,
+        soil moisture, and tree diameter and height of burned sites and similar vegetation
+        characterization at landcover validation sites. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/ABOVE/guides/Wildfires_2014_NWT_Canada.html"}]},{"processing_level_id":"3","boxes":["41.71
+        -177.47 82.37 -53.95"],"time_start":"1990-01-01T00:00:00.000Z","dif_ids":["Decadal_Water_Maps"],"version_id":"1","updated":"2016-06-29T00:00:00.000Z","dataset_id":"ABoVE:
+        Surface Water Extent, Boreal and Tundra Regions, North America, 1991-2011","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1324","organizations":["ORNL_DAAC"],"title":"ABoVE:
+        Surface Water Extent, Boreal and Tundra Regions, North America, 1991-2011","coordinate_system":"CARTESIAN","summary":"This
+        data set provides the location and extent of surface water (open water not
+        including vegetated wetlands) for the entire Boreal and Tundra regions of
+        North America for three epochs, centered on 1991, 2001, and 2011. Each of
+        the products were generated with at least three years of ice-free Landsat
+        imagery. The data are at 30-m resolution and were derived from time series
+        of Landsat 4 and 5 Thematic Mapper (TM) data and Landsat 7 Enhanced Thematic
+        Mapper (ETM+) covering all of Alaska and all provinces of Canada. The overall
+        goal was to generate a map of the nominal extent of water for a given epoch,
+        where nominal is neither the maximum nor the minimum but rather a representative
+        extent for that time period.","has_granules":true,"time_end":"2012-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1281783448-ORNL_DAAC","original_format":"ECHO10","granule_count":78,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1324"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides the location and extent of surface water (open water not
+        including vegetated wetlands) for the entire Boreal and Tundra regions of
+        North America for three epochs, centered on 1991, 2001, and 2011. Each of
+        the products were generated with at least three years of ice-free Landsat
+        imagery. The data are at 30-m resolution and were derived from time series
+        of Landsat 4 and 5 Thematic Mapper (TM) data and Landsat 7 Enhanced Thematic
+        Mapper (ETM+) covering all of Alaska and all provinces of Canada. The overall
+        goal was to generate a map of the nominal extent of water for a given epoch,
+        where nominal is neither the maximum nor the minimum but rather a representative
+        extent for that time period. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/ABOVE/guides/Decadal_Water_Maps.html"}]},{"processing_level_id":"1B","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["23
+        -85 26 -81"],"time_start":"2002-07-10T00:00:00.000Z","dif_ids":["aces1cont"],"version_id":"1","updated":"2016-06-07T16:03:15.000Z","dataset_id":"ACES
+        CONTINUOUS DATA V1","data_center":"GHRC","short_name":"aces1cont","organizations":["GHRC"],"title":"ACES
+        CONTINUOUS DATA V1","coordinate_system":"CARTESIAN","summary":"The ALTUS Cloud
+        Electrification Study (ACES) was based at the Naval Air Facility Key West
+        in Florida. During August, 2002, ACES researchers conducted overflights of
+        thunderstorms over the southwestern corner of Florida. For the first time
+        in NASA research, an uninhabited aerial vehicle (UAV) named ALTUS was used
+        to collect cloud electrification data. Carrying field mills, optical sensors,
+        electric field sensors and other instruments, ALTUS allowed scientists to
+        collect cloud electrification data for the first time from above the storm,
+        from its birth through dissipation. This experiment allowed scientists to
+        achieve the dual goals of gathering weather data safely, and testing new aircraft
+        technology. This dataset consists of data collected from seven instruments:
+        the Slow/Fast antenna, Electric Field Mill, Dual Optical Pulse Sensor, Searchcoil
+        Magnetometer, Accelerometers, Gerdien Conductivity Probe, and the Fluxgate
+        Magnetometer. Data consists of sensor reads at 50HZ throughout the flight
+        from all 64 channels.","has_granules":true,"time_end":"2002-08-30T23:59:00.000Z","orbit_parameters":{},"id":"C1020-GHRC","original_format":"ECHO10","granule_count":26,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/data/aces/continuous/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Guide)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Homepage)","hreflang":"en-US","href":"http://aces.nsstc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Software)","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DOI)","hreflang":"en-US","href":"http://dx.doi.org/10.5067/ACES/MULIPLE/DATA101"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Citing
+        GHRC Data)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/citation.html"}]},{"processing_level_id":"1B","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["23
+        -85 26 -81"],"time_start":"2002-07-10T00:00:00.000Z","dif_ids":["aces1efm"],"version_id":"1","updated":"2016-06-07T16:03:21.000Z","dataset_id":"ACES
+        ELECTRIC FIELD MILL V1","data_center":"GHRC","short_name":"aces1efm","organizations":["GHRC"],"title":"ACES
+        ELECTRIC FIELD MILL V1","coordinate_system":"CARTESIAN","summary":"The ALTUS
+        Cloud Electrification Study (ACES) was based at the Naval Air Facility Key
+        West in Florida.  During August 2002, ACES researchers conducted overflights
+        of thunderstorms over the southwestern corner of Florida. For the first time
+        in NASA research, an uninhabited aerial vehicle (UAV) named ALTUS was used
+        to collect cloud electrification data. Carrying field mills, optical sensors,
+        electric field sensors and other instruments, ALTUS allowed scientists to
+        collect cloud electrification data for the first time from above the storm,
+        from it''s birth through dissipation. This experiment allowed scientists to
+        achieve the dual goals of gathering weather data safely and testing new aircraft
+        technology. This dataset consists of data from Electric Field Mills, which
+        yield information about the atmospheric electrical fields above the instruments.","has_granules":true,"time_end":"2002-08-30T23:59:00.000Z","orbit_parameters":{},"id":"C194462-GHRC","original_format":"ECHO10","granule_count":14,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/data/aces/fieldmill/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Guide)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Homepage)","hreflang":"en-US","href":"http://aces.nsstc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Software)","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DOI)","hreflang":"en-US","href":"http://dx.doi.org/10.5067/ACES/FIELDMILL/DATA101"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Citing
+        GHRC Data)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/citation.html"}]},{"processing_level_id":"1B","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["23
+        -85 26 -81"],"time_start":"2002-07-10T00:00:00.000Z","dif_ids":["aces1log"],"version_id":"1","updated":"2016-06-07T16:03:27.000Z","dataset_id":"ACES
+        LOG DATA V1","data_center":"GHRC","short_name":"aces1log","organizations":["GHRC"],"title":"ACES
+        LOG DATA V1","coordinate_system":"CARTESIAN","summary":"The ALTUS Cloud Electrification
+        Study (ACES) was based at the Naval Air Facility Key West in Florida. During
+        August 2002, ACES researchers conducted overflights of thunderstorms over
+        the southwestern corner of Florida. For the first time in NASA research, an
+        uninhabited aerial vehicle (UAV) named ALTUS was used to collect cloud electrification
+        data. Carrying field mills, optical sensors, electric field sensors and other
+        instruments, ALTUS allowed scientists to collect cloud electrification data
+        for the first time from above the storm, from its birth through dissipation.
+        This experiment allowed scientists to achieve the dual goals of gathering
+        weather data safely and testing new aircraft technology. This dataset consists
+        of log data from each flight, and yields instrument and aircraft status throughout
+        the flight.","has_granules":true,"time_end":"2002-08-30T23:59:00.000Z","orbit_parameters":{},"id":"C1022-GHRC","original_format":"ECHO10","granule_count":27,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/data/aces/log/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Guide)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Homepage)","hreflang":"en-US","href":"http://aces.nsstc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Software)","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DOI)","hreflang":"en-US","href":"http://dx.doi.org/10.5067/ACES/ALTUS/DATA10"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Citing
+        GHRC Data)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/citation.html"}]},{"processing_level_id":"1B","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["23
+        -85 26 -81"],"time_start":"2002-07-10T00:00:00.000Z","dif_ids":["aces1time"],"version_id":"1","updated":"2016-06-07T16:03:31.000Z","dataset_id":"ACES
+        TIMING DATA V1","data_center":"GHRC","short_name":"aces1time","organizations":["GHRC"],"title":"ACES
+        TIMING DATA V1","coordinate_system":"CARTESIAN","summary":"The ALTUS Cloud
+        Electrification Study (ACES) was based at the Naval Air Facility Key West
+        in Florida. During August or 2002, ACES researchers overflights of thunderstorms
+        over the southwestern corner of Florida. For the first time in NASA research,
+        an uninhabited aerial vehicle (UAV) named ALTUS was used to collect cloud
+        electrification data. Carrying field mills, optical sensors, electric field
+        sensors and other instruments, ALTUS allowed scientists to collect cloud electrification
+        data for the first time from above the storm, from its birth through dissipation.
+        This experiment allowed scientists to achieve the dual goals of gathering
+        weather data safely and testing new aircraft technology. This dataset consists
+        of timing data used for the experiment. When used it provides: syncclock_time
+        = time found at the syncclock (VSI-SYnCCLOCK-32) in seconds from first file
+        name, syncclock_m_time = time found at the syncclock (VSI-SYnCCLOCK-32) in
+        Matlab dateform format, system_time = system time in seconds from first file
+        name, system_m_time = system time in dateform format, gps_time = time found
+        at the GPS unit in seconds from first file name, gps_m_time = time found at
+        GPS unit in dateform, cmos_time = time found at the computer CMOS in seconds
+        from first file name, cmos_m_time = time found at the computer CMOS in dateform.","has_granules":true,"time_end":"2002-08-30T23:59:00.000Z","orbit_parameters":{},"id":"C1023-GHRC","original_format":"ECHO10","granule_count":19,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/data/aces/timing/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Guide)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Homepage)","hreflang":"en-US","href":"http://aces.nsstc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Software)","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DOI)","hreflang":"en-US","href":"http://dx.doi.org/10.5067/ACES/CLOCKS/DATA101"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Citing
+        GHRC Data)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/citation.html"}]},{"processing_level_id":"1B","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["23
+        -85 26 -81"],"time_start":"2002-07-10T00:00:00.000Z","dif_ids":["aces1trig"],"version_id":"1","updated":"2016-06-07T16:03:35.000Z","dataset_id":"ACES
+        TRIGGERED DATA V1","data_center":"GHRC","short_name":"aces1trig","organizations":["GHRC"],"title":"ACES
+        TRIGGERED DATA V1","coordinate_system":"CARTESIAN","summary":"The ALTUS Cloud
+        Electrification Study (ACES) was based at the Naval Air Facility Key West
+        in Florida. During August 2002, ACES researchers conducted overflights of
+        thunderstorms over the southwestern corner of Florida. For the first time
+        in NASA research, an uninhabited aerial vehicle (UAV) named ALTUS was used
+        to collect cloud electrification data. Carrying field mills, optical sensors,
+        electric field sensors and other instruments, ALTUS allowed scientists to
+        collect cloud electrification data for the first time from above the storm,
+        from its birth through dissipation. This experiment allowed scientists to
+        achieve the dual goals of gathering weather data safely and testing new aircraft
+        technology. This dataset consists of data collected from seven instruments:
+        the Slow/Fast antenna, Electric Field Mill, two Optical Pulse Sensors, Searchcoil
+        Magnetometer and Accelerometers. These data were collected at 200KHz from
+        the first 16 telemetry items collected on the aircraft, were initiated by
+        an operator selected trigger (e.g. DOPS), and continued collecting for as
+        long as the trigger continued.","has_granules":true,"time_end":"2002-08-30T23:59:00.000Z","orbit_parameters":{},"id":"C1024-GHRC","original_format":"ECHO10","granule_count":21,"archive_center":"GHRC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/data/aces/triggered/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Guide)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/aces/aces1_dataset.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Homepage)","hreflang":"en-US","href":"http://aces.nsstc.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Software)","hreflang":"en-US","href":"https://ghrc.nsstc.nasa.gov/pub/doc/aces/ACES_TOOLKIT.tar"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DOI)","hreflang":"en-US","href":"http://dx.doi.org/10.5067/ACES/MULTIPLE/DATA102"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Citing
+        GHRC Data)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/citation.html"}]},{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2009-03-31T00:00:00.000Z","dif_ids":["ACOS_L2S_3.5"],"version_id":"3.5","updated":"2016-05-11T00:00:00.000Z","dataset_id":"ACOS
+        GOSAT/TANSO-FTS Level 2 Full Physics Standard Product V3.5 (ACOS_L2S) at GES
+        DISC","data_center":"GES_DISC","short_name":"ACOS_L2S","organizations":["NASA/GSFC/SED/ESD/GCDC/GESDISC"],"title":"ACOS
+        GOSAT/TANSO-FTS Level 2 Full Physics Standard Product V3.5 (ACOS_L2S) at GES
+        DISC","coordinate_system":"GEODETIC","summary":"This data set is currently
+        provided by the OCO (Orbiting Carbon Observatory) Project. In expectation
+        of the OCO-2 launch, the algorithm was developed by the Atmospheric CO2 Observations
+        from Space (ACOS) Task as a preparatory project, using GOSAT TANSO-FTS spectra.
+        After the OCO-2 launch,  \"ACOS\" data are still produced and improved, using
+        approaches applied to the OCO-2 spectra.\n\nThe \"ACOS\" data set contains
+        Carbon Dioxide (CO2) column averaged dry air mole fraction for all soundings
+        for which retrieval was attempted. These are the highest-level products made
+        available by the OCO Project, using TANSO-FTS spectral radiances, and algorithm
+        build version 3.5.\n\nThe GOSAT team at JAXA produces GOSAT TANSO-FTS Level
+        1B (L1B) data products for internal use and for distribution to collaborative
+        partners, such as ESA and NASA. These calibrated products are augmented by
+        the OCO Project with additional geolocation information and further corrections.
+        Thus produced Level 1B products (with calibrated radiances and geolocation)
+        are the input to the \"ACOS\" Level 2 production process.\n\nEven though the
+        GES DISC is not publicly distributing Level 1B ACOS products, it should be
+        known that changes in this version are affecting both Level 1B and Level 2
+        data. An important enhancement in Level1B will address the degradation in
+        the number of quality-passed soundings in v2.8. \n\nElimination of many systematic
+        biases, and better agreement with TCCON (Total Carbon Column Observing Network),
+        is expected in Level 2 retrievals. The key changes to the L2 algorithm include
+        scaling the O2-A band spectroscopy (reducing XCO2 bias by 4 or 5 ppm); using
+        interpolation with the instrument lineshape [ ILS ] (reducing XCO2 bias by
+        1.5 ppm); and fitting a zero level offset to the A-band. Users have to also
+        carefully familiarize themselves with the disclaimer in the new documentation.
+        \n\nAn important element to note are the updates on data screening. Although
+        a Master Quality Flag is provided in the data product, further analysis of
+        a larger set of data has allowed the science team to provide an updated set
+        of screening criteria. These are listed in the data user''s guide, and are
+        recommended instead of the Master Quality Flag.\n\n\nLastly, users should
+        continue to carefully observe and weigh information from three important flags:\n
+        \n      \"warn_level\" - Provides a value that summarizes each sounding''s
+        acceptability to a larger set of quality filters. A high warn level predicts
+        that the sounding would fail most data filters applied to it. A low warn level
+        suggests that the sounding would pass most quality filters that might be applied.
+        \n\n      \"sounding_qual_flag\" - quality of input data provided to the retrieval
+        processing    \n\n      \"outcome_flag\" - retrieval quality based upon certain
+        internal thresholds (not thoroughly evaluated)    \n\n      \"master_quality_flag\"
+        - four possible values: \"Good\", \"Caution\" and \"Bad\", and \"Failed\",
+        as determined from other flags in the L2 productThe short name for this data
+        type is ACOS_L2S.","has_granules":true,"orbit_parameters":{},"id":"C1223726607-GES_DISC","original_format":"DIF10","granule_count":26795,"archive_center":"NASA/GSFC/SED/ESD/GCDC/GESDISC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","title":"ACOS
+        xCO2 v3.5, yearly mean for 2013, in part per million in volume","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/OCO-2/images/ACOS.xCO2.2013.v3.5.png"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        the data via HTTP.","hreflang":"en-US","href":"http://oco2.gesdisc.eosdis.nasa.gov/data/GOSAT_TANSO_Level2/ACOS_L2S.3.5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Mirador
+        is a data search interface that allows searching, browsing, and retrieving
+        of Earth science data archived at NASA GES DISC.","hreflang":"en-US","href":"http://mirador.gsfc.nasa.gov/cgi-bin/mirador/collectionlist.pl?keyword=ACOS_L2S"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Use
+        the Earthdata Search Client (EDSC) to find and retrieve data sets across multiple
+        data centers.","hreflang":"en-US","href":"https://search.earthdata.nasa.gov/search?q=ACOS_L2S+3.5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        the data via the OPeNDAP protocol.","hreflang":"en-US","href":"http://oco2.gesdisc.eosdis.nasa.gov/opendap/ACOS_L2S.3.5/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"GOSAT
+        site","hreflang":"en-US","href":"http://www.gosat.nies.go.jp/index_e.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Data
+        User''s Guide","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/OCO-2/documentation/gosat-acos/gosat-acosdoc/ACOS_v3.5_DataUsersGuide.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Algorithm
+        Theoretical Basis Document","hreflang":"en-US","href":"http://disc.sci.gsfc.nasa.gov/acdisc/documentation/OCO-2_L2_FP_ATBD_v1_rev4_Nov10.pdf"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2000-04-05T00:00:00.000Z","dif_ids":["ACR3L2DM_1"],"version_id":"1","updated":"2016-01-13T00:00:00.000Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"LARC","short_name":"ACR3L2DM","organizations":["ASDC"],"title":"ACRIM
+        III Level 2 Daily Mean Data V001","coordinate_system":"CARTESIAN","summary":"Active
+        Cavity Radiometer Irradiance Monitor (ACRIM) III Level 2 Daily Mean Data product
+        consists of Level 2 total solar irradiance in the form of daily means gathered
+        by the ACRIM III instrument on the ACRIMSAT satellite. The daily means are
+        constructed from the shutter cycle results for each day.","has_granules":true,"orbit_parameters":{},"id":"C179031504-LARC","original_format":"DIF10","granule_count":17654,"archive_center":"ASDC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://eosweb.larc.nasa.gov/project/acrimIII/acrimIII_table"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://eospso.gsfc.nasa.gov/atbd-category/36"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://acrim.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&spatial_map=satellite&spatial_type=rectangle&keywords=ACR3L2DM1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"ftp://l5eil01.larc.nasa.gov/ACRIM_III/ACR3L2DM.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&spatial_map=satellite&spatial_type=rectangle&keywords=ACRIM"}]},{"boxes":["-90
+        -180 90 180"],"time_start":"2000-04-05T00:00:00.000Z","dif_ids":["ACR3L2SC_1"],"version_id":"1","updated":"2015-06-04T00:00:00.000Z","dataset_id":"ACRIM
+        III Level 2 Shutter Cycle Data V001","data_center":"LARC","short_name":"ACR3L2SC","organizations":["ASDC"],"title":"ACRIM
+        III Level 2 Shutter Cycle Data V001","coordinate_system":"CARTESIAN","summary":"Active
+        Cavity Radiometer Irradiance Monitor (ACRIM) III Level 2 Shutter Cycle Data
+        product contains Level 2 total solar irradiance in the form of shutter cycles
+        gathered by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C61787524-LARC","original_format":"DIF10","granule_count":25258,"archive_center":"ASDC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://eosweb.larc.nasa.gov/project/acrimIII/acrimIII_table"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://eospso.gsfc.nasa.gov/atbd-category/36"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","hreflang":"en-US","href":"http://acrim.jpl.nasa.gov/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"ftp://l5eil01.larc.nasa.gov/ACRIM_III/ACR3L2SC.001/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&spatial_map=satellite&spatial_type=rectangle&keywords=ACRIM"}]}]}}'
+    http_version: 
+7c7721915fabe001a1ed8f0e2cf04aaa417c28b7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:47 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '45'
+      cmr-request-id:
+      - 7a3e59bb-82e9-46b0-88a9-950dfc915c18
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:47.829Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1219032686-LANCEMODIS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Aerosol Optical Depth","resolution":"2km","product":"MODIS_Aqua_Aerosol","maxNativeZoom":5,"match":{"time_start":">=2012-06-22"}}]},"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MYD04_L2_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","data_center":"LANCEMODIS","short_name":"MYD04_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","coordinate_system":"CARTESIAN","summary":"The
+        MODIS level-2 atmospheric aerosol product (MYD04_L2) continues to provide
+        full global coverage of aerosol properties from the Dark Target (DT) and Deep
+        Blue (DB) algorithms. The DT algorithm is applied over ocean and dark land
+        (e.g., vegetation), while the DB algorithm now covers the entire land areas
+        including both dark and bright surfaces. Both results are provided on a 10x10
+        pixel scale (10 km at nadir). Each MYD04_L2 product file covers a five-minute
+        time interval. The output grid is 135 pixels in width by 203 pixels in length.
+        Every tenth file has an output grid size of 135 by 204 pixels. MYD04_L2 product
+        files are stored in Hierarchical Data Format (HDF-EOS).Based on C5 validation
+        studies, a number of Science Data Sets (SDSs) have been deleted from the DT
+        product (Angstrom_Exponent_Land, Optical_Depth_Small_Land, etc.) while a number
+        of SDSs have been renamed or added. A number of algorithm changes have lead
+        to significant changes in regional aerosol product statistics (see link above).
+        For C6, the DT algorithm team now provides a new 3 km spatial resolution product
+        intended for the air quality community; this is provided in a separate file
+        (M*D04_3K).In C5, the DB algorithm was limited to only bright targets. With
+        C6, the DB team has expanded coverage to include both bright targets and vegetated
+        regions, using NDVI information in addition to a precalculated surface reflectance
+        database. New DB products for C6 include an estimate on the aerosol retrieval
+        uncertainty to assist with error analyses as well as a best estimate SDS containing
+        the aerosol optical thickness data with quality assurance flags already applied
+        (SDS names Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_Uncertainty
+        and Deep_Blue_Aerosol_Optical_Depth_550_Land_Best_Estimate respectively).
+        In addition to separate DT and DB retrievals, the C6 product now provides
+        a merged (SDS) that combines both types of retrievals (SDS name AOD_550_Dark_Target_Deep_Blue_Combined).
+        This SDS uses a combination of scene NDVI and retrieval Quality Assessment
+        (QA) assignments to select one of the retrievals (if any) or an average of
+        the two retrievals. Ocean retrievals from the DT algorithm are also provided
+        if they have a sufficiently high retrieval QA value.The file consists of following
+        pixel level gridded aerosol parameters. These pixel level gridded aerosol
+        parameters are stored as Scientific Data Sets(SDS) within the file:MODIS Data
+        Category & ParametersSpatial & Temporal Resolution:Longitude, Latitude, Scan_Start_TimeSolar
+        and Sensor Viewing Geometry:Solar_Zenith, Solar_Azimuth, Sensor_Zenith, Sensor_AzimuthAerosol
+        Parameters for Land & Ocean (Combined):Scattering_Angle, Land_sea_Flag, Aerosol_Cldmask_Land_Ocean,
+        Cloud_Pixel_Distance_Land_Ocean, Land_Ocean_Quality_Flag, Optical_Depth_Land_And_Ocean,
+        Image_Optical_Depth_Land_And_Ocean, Average_Cloud_Pixel_Distance_Land_OceanAerosol
+        Parameters from Land Retrieval Algorithm:Aerosol_Type_Land, Fitting_Error_Land,
+        Surface_Reflectance_Land, Corrected_Optical_Depth_Land, Corrected_Optical_Depth_Land_wav2p1,
+        Optical_Depth_Ratio_Small_Land, Number_Pixels_Used_Land, Mean_Reflectance_Land,
+        STD_Reflectance_Land, Mass_Concentration_Land, Aerosol_Cloud_Fraction_Land,
+        Quality_Assurance_Land, Topographic_Altitude_LandAerosol Parameters from Ocean
+        Retrieval Algorithm:Solution_Index_Ocean_Small, Solution_Index_Ocean_Large,
+        Effective_Optical_Depth_Best_Ocean, Effective_Optical_Depth_Average_Ocean,
+        Optical_Depth_Small_Best_Ocean, Optical_Depth_Small_Average_Ocean, Optical_Depth_Large_Best_Ocean,
+        Optical_Depth_Large_Average_Ocean, Mass_Concentration_Ocean, Aerosol_Cloud_Fraction_Ocean,
+        Effective_Radius_Ocean, Effective_Optical_Depth_0p55um_Ocean, PSML003_Ocean,
+        Asymmetry_Factor_Best_Ocean, Asymmetry_Factor_Average_Ocean, Backscattering_Ratio_Best_Ocean,
+        Backscattering_Ratio_Average_Ocean, Angstrom_Exponent_1_Ocean, Angstrom_Exponent_2_Ocean,
+        Least_Squares_Error_Ocean, Optical_Depth_Ratio_Small_Ocean_0.55micron, Optical_Depth_by_models_ocean,
+        Number_Pixels_Used_Ocean, Mean_Reflectance_Ocean;, STD_Reflectance_Ocean,
+        byte Quality_Assurance_Ocean, Glint_Angle, Wind_Speed_Ncep_OceanAerosol Parameters
+        from Deep Blue Retrieval Algorithm:Deep_Blue_Aerosol_Optical_Depth_550_Land,
+        Deep_Blue_Spectral_Aerosol_Optical_Depth_Land, Deep_Blue_Angstrom_Exponent_Land,
+        Deep_Blue_Spectral_Single_Scattering_Albedo_Land, Deep_Blue_Spectral_Surface_Reflectance_Land,
+        Deep_Blue_Spectral_TOA_Reflectance_Land, Deep_Blue_Number_Pixels_Used_550_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_STD, Deep_Blue_Cloud_Fraction_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_QA_Flag, Deep_Blue_Algorithm_Flag_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_Best_Estimate, Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_UncertaintyAerosol
+        Parameters from Dark Target/Deep Blue Combine Algorithm:AOD_550_Dark_Target_Deep_Blue_Combined,
+        AOD_550_Dark_Target_Deep_Blue_Combined_QA_Flag, AOD_550_Dark_Target_Deep_Blue_Combined_Algorithm_FlagThese
+        aerosol parameters are used to study aerosol climatology, sources and sinks
+        of specific aerosol types (e.g. sulfates and biomass burning aerosol), interaction
+        of aerosols with clouds, and atmospheric corrections of remotely sensed surface
+        reflectance over the land. This product will also be used to monitor aerosol
+        mass concentration, aerosol optical properties, and radiative forcing on a
+        global scale.See the MODIS Science Team homepage for more data set information:
+        http://modis.gsfc.nasa.gov/data/dataprod/ or visit the MODIS Atmosphere Team
+        homepage:http://modis-atmos.gsfc.nasa.gov/MOD04_L2/","has_granules":true,"orbit_parameters":{},"id":"C1219032686-LANCEMODIS","score":0.5,"original_format":"DIF10","collection_data_type":"NEAR_REAL_TIME","granule_count":1522,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD04_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD04_L2/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]}]}}'
+    http_version: 
+1d8bf44f65be7f6d3525e0137700afd2aed2ffdc:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:50 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '153'
+      cmr-request-id:
+      - 05a08415-4df4-455f-987b-02a676719718
+      content-length:
+      - '465'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:50.356Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C179001887-SEDAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
 e9f9dab696d0927269d99806a46212a0b37ec7b3:
   response:
     status:
@@ -29,6 +830,193 @@ e9f9dab696d0927269d99806a46212a0b37ec7b3:
       encoding: UTF-8
       string: '{"feed":{"updated":"2016-07-10T02:37:42.276Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C179003030-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[]}}'
+    http_version: 
+271c9629333ba1805e3363a5f248d73eabc40d63:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:42 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '318'
+      cmr-request-id:
+      - c86b93c2-e439-4858-acf7-8dd76e7f5bac
+      content-length:
+      - '464'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:43.106Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C2921042-PODAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+b689e3dbb485c7487ab5ca62dac7cc40283b8f37:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:47 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '141'
+      cmr-request-id:
+      - bf32bcfb-f7e7-4228-ba3c-acb8932b74bb
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:47.461Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1219032686-LANCEMODIS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"geo":true,"source":"Aqua
+        / MODIS","arctic":false,"title":"Aerosol Optical Depth","resolution":"2km","product":"MODIS_Aqua_Aerosol","maxNativeZoom":5,"match":{"time_start":">=2012-06-22"}}]},"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2015-12-06T00:00:00.000Z","dif_ids":["MYD04_L2_6NRT"],"version_id":"6NRT","updated":"2015-09-23T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","data_center":"LANCEMODIS","short_name":"MYD04_L2","organizations":["NASA/GSFC/EOS/ESDIS/LANCEMODIS"],"title":"MODIS/Aqua
+        Near Real Time (NRT) Aerosol 5-Min L2 Swath 10km","coordinate_system":"CARTESIAN","summary":"The
+        MODIS level-2 atmospheric aerosol product (MYD04_L2) continues to provide
+        full global coverage of aerosol properties from the Dark Target (DT) and Deep
+        Blue (DB) algorithms. The DT algorithm is applied over ocean and dark land
+        (e.g., vegetation), while the DB algorithm now covers the entire land areas
+        including both dark and bright surfaces. Both results are provided on a 10x10
+        pixel scale (10 km at nadir). Each MYD04_L2 product file covers a five-minute
+        time interval. The output grid is 135 pixels in width by 203 pixels in length.
+        Every tenth file has an output grid size of 135 by 204 pixels. MYD04_L2 product
+        files are stored in Hierarchical Data Format (HDF-EOS).Based on C5 validation
+        studies, a number of Science Data Sets (SDSs) have been deleted from the DT
+        product (Angstrom_Exponent_Land, Optical_Depth_Small_Land, etc.) while a number
+        of SDSs have been renamed or added. A number of algorithm changes have lead
+        to significant changes in regional aerosol product statistics (see link above).
+        For C6, the DT algorithm team now provides a new 3 km spatial resolution product
+        intended for the air quality community; this is provided in a separate file
+        (M*D04_3K).In C5, the DB algorithm was limited to only bright targets. With
+        C6, the DB team has expanded coverage to include both bright targets and vegetated
+        regions, using NDVI information in addition to a precalculated surface reflectance
+        database. New DB products for C6 include an estimate on the aerosol retrieval
+        uncertainty to assist with error analyses as well as a best estimate SDS containing
+        the aerosol optical thickness data with quality assurance flags already applied
+        (SDS names Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_Uncertainty
+        and Deep_Blue_Aerosol_Optical_Depth_550_Land_Best_Estimate respectively).
+        In addition to separate DT and DB retrievals, the C6 product now provides
+        a merged (SDS) that combines both types of retrievals (SDS name AOD_550_Dark_Target_Deep_Blue_Combined).
+        This SDS uses a combination of scene NDVI and retrieval Quality Assessment
+        (QA) assignments to select one of the retrievals (if any) or an average of
+        the two retrievals. Ocean retrievals from the DT algorithm are also provided
+        if they have a sufficiently high retrieval QA value.The file consists of following
+        pixel level gridded aerosol parameters. These pixel level gridded aerosol
+        parameters are stored as Scientific Data Sets(SDS) within the file:MODIS Data
+        Category & ParametersSpatial & Temporal Resolution:Longitude, Latitude, Scan_Start_TimeSolar
+        and Sensor Viewing Geometry:Solar_Zenith, Solar_Azimuth, Sensor_Zenith, Sensor_AzimuthAerosol
+        Parameters for Land & Ocean (Combined):Scattering_Angle, Land_sea_Flag, Aerosol_Cldmask_Land_Ocean,
+        Cloud_Pixel_Distance_Land_Ocean, Land_Ocean_Quality_Flag, Optical_Depth_Land_And_Ocean,
+        Image_Optical_Depth_Land_And_Ocean, Average_Cloud_Pixel_Distance_Land_OceanAerosol
+        Parameters from Land Retrieval Algorithm:Aerosol_Type_Land, Fitting_Error_Land,
+        Surface_Reflectance_Land, Corrected_Optical_Depth_Land, Corrected_Optical_Depth_Land_wav2p1,
+        Optical_Depth_Ratio_Small_Land, Number_Pixels_Used_Land, Mean_Reflectance_Land,
+        STD_Reflectance_Land, Mass_Concentration_Land, Aerosol_Cloud_Fraction_Land,
+        Quality_Assurance_Land, Topographic_Altitude_LandAerosol Parameters from Ocean
+        Retrieval Algorithm:Solution_Index_Ocean_Small, Solution_Index_Ocean_Large,
+        Effective_Optical_Depth_Best_Ocean, Effective_Optical_Depth_Average_Ocean,
+        Optical_Depth_Small_Best_Ocean, Optical_Depth_Small_Average_Ocean, Optical_Depth_Large_Best_Ocean,
+        Optical_Depth_Large_Average_Ocean, Mass_Concentration_Ocean, Aerosol_Cloud_Fraction_Ocean,
+        Effective_Radius_Ocean, Effective_Optical_Depth_0p55um_Ocean, PSML003_Ocean,
+        Asymmetry_Factor_Best_Ocean, Asymmetry_Factor_Average_Ocean, Backscattering_Ratio_Best_Ocean,
+        Backscattering_Ratio_Average_Ocean, Angstrom_Exponent_1_Ocean, Angstrom_Exponent_2_Ocean,
+        Least_Squares_Error_Ocean, Optical_Depth_Ratio_Small_Ocean_0.55micron, Optical_Depth_by_models_ocean,
+        Number_Pixels_Used_Ocean, Mean_Reflectance_Ocean;, STD_Reflectance_Ocean,
+        byte Quality_Assurance_Ocean, Glint_Angle, Wind_Speed_Ncep_OceanAerosol Parameters
+        from Deep Blue Retrieval Algorithm:Deep_Blue_Aerosol_Optical_Depth_550_Land,
+        Deep_Blue_Spectral_Aerosol_Optical_Depth_Land, Deep_Blue_Angstrom_Exponent_Land,
+        Deep_Blue_Spectral_Single_Scattering_Albedo_Land, Deep_Blue_Spectral_Surface_Reflectance_Land,
+        Deep_Blue_Spectral_TOA_Reflectance_Land, Deep_Blue_Number_Pixels_Used_550_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_STD, Deep_Blue_Cloud_Fraction_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_QA_Flag, Deep_Blue_Algorithm_Flag_Land,
+        Deep_Blue_Aerosol_Optical_Depth_550_Land_Best_Estimate, Deep_Blue_Aerosol_Optical_Depth_550_Land_Estimated_UncertaintyAerosol
+        Parameters from Dark Target/Deep Blue Combine Algorithm:AOD_550_Dark_Target_Deep_Blue_Combined,
+        AOD_550_Dark_Target_Deep_Blue_Combined_QA_Flag, AOD_550_Dark_Target_Deep_Blue_Combined_Algorithm_FlagThese
+        aerosol parameters are used to study aerosol climatology, sources and sinks
+        of specific aerosol types (e.g. sulfates and biomass burning aerosol), interaction
+        of aerosols with clouds, and atmospheric corrections of remotely sensed surface
+        reflectance over the land. This product will also be used to monitor aerosol
+        mass concentration, aerosol optical properties, and radiative forcing on a
+        global scale.See the MODIS Science Team homepage for more data set information:
+        http://modis.gsfc.nasa.gov/data/dataprod/ or visit the MODIS Atmosphere Team
+        homepage:http://modis-atmos.gsfc.nasa.gov/MOD04_L2/","has_granules":true,"orbit_parameters":{},"id":"C1219032686-LANCEMODIS","score":0.5,"original_format":"DIF10","collection_data_type":"NEAR_REAL_TIME","granule_count":1522,"archive_center":"NASA/GSFC/EOS/ESDIS/LANCEMODIS","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"NASA
+        LANCE Near Real Time data set descriptions and access links.","hreflang":"en-US","href":"https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Access
+        Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).","hreflang":"en-US","href":"http://lance3.modaps.eosdis.nasa.gov/data_products/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD04_L2 6NRT data set.","hreflang":"en-US","href":"ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD04_L2/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Science Team","hreflang":"en-US","href":"http://modis.gsfc.nasa.gov/sci_team/"}]}]}}'
+    http_version: 
+58c9b65c727a6ee6bf5a30a7d25bab50575dc51a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:49 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '184'
+      cmr-request-id:
+      - bc7da4c1-2f43-4312-b57c-4c618876b22a
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:49.829Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C179001887-SEDAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"Level 2","boxes":["-55
+        -180 90 180"],"time_start":"1978-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"2000.00","updated":"2015-08-03T00:00:00.000Z","dataset_id":"2000
+        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","organizations":["SEDAC"],"title":"2000
+        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an \n\nindex that measures the ability of a nation''s economy
+        to achieve sustainable development, with the long term goal of finding a single
+        \n\nindicator for environmental sustainability analagous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is \n\na composite
+        measure of the current status of a nation''s environmental systems, pressures
+        on those systems, human vulnerability to \n\nenvironmental change, national
+        capacity to respond, and contributions to global environmental stewardship.
+        The index was unveiled at \n\nthe World Economic Forum''s annual meeting,
+        January 2000, Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration
+        among \n\nthe World Economic Forum (WEF), Yale Center for Environmental Law
+        and Policy (YCELP), and the Columbia University Center for \n\nInternational
+        Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","score":0.5,"original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-\n\n2000/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4NK3BZJ"}]}]}}'
     http_version: 
 69667105adc8956df67c691825b5c6c20006878b:
   response:
@@ -65,6 +1053,45 @@ e9f9dab696d0927269d99806a46212a0b37ec7b3:
         15 minute stream flow data for Kings Creek on the Konza Prairie","has_granules":true,"time_end":"1988-03-04T00:00:00.000Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","score":0.5,"original_format":"ECHO10","granule_count":39,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
         15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
         INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}]}}'
+    http_version: 
+a89a108443a059bf8339e654b120d5c384dd4cbb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:42 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '39'
+      cmr-request-id:
+      - 3602c850-ddff-4d8f-b57e-7369a81b8f83
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:42.192Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C2921042-PODAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"4","tags":{"edsc.extra.subset_service.opendap":{}},"boxes":["35
+        -133 49 -111"],"time_start":"1992-10-14T00:00:00.000Z","version_id":"1","updated":"2011-01-21T17:10:13.000Z","dataset_id":"ALT_TIDE_GAUGE_L4_OST_SLA_US_WEST_COAST:1","data_center":"PODAAC","short_name":"ALT_TIDE_GAUGE_L4_OST_SLA_US_WEST_COAST","organizations":["PO.DAAC","Craig
+        Risin and P. Ted Strub"],"title":"ALT_TIDE_GAUGE_L4_OST_SLA_US_WEST_COAST:1","coordinate_system":"CARTESIAN","summary":"This
+        data set contains sea level anomalies and alongshore ocean currents (U and
+        V) derived from satellite altimeters and tide gauge data.  Currents and heights
+        near the coast are calculated using tide","has_granules":true,"orbit_parameters":{},"id":"C2921042-PODAAC","score":0.5,"original_format":"ECHO10","granule_count":21,"archive_center":"PO.DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"The
+        OPeNDAP base directory location for the collection.","hreflang":"en-US","href":"http://podaac-opendap.jpl.nasa.gov/opendap/allData/coastal_alt/preview/L4/OSU_COAS/weekly/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"The
+        FTP base directory location for the collection.","hreflang":"en-US","href":"ftp://podaac-ftp.jpl.nasa.gov/allData/coastal_alt/preview/L4/OSU_COAS/weekly"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Search
+        Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-USWCO-ALT01&apidoc"}]}]}}'
     http_version: 
 266c62bcad120ffe4ade62fd9b9a42f0483d2a10:
   response:
@@ -18607,6 +19634,37 @@ d9b1633c22fdaca3d1a337788d7c13f36291f750:
       string: '{"feed":{"updated":"2016-07-10T19:40:10.797Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1200208323-SCIOPS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[]}}'
     http_version: 
+903c683ac8e209e5ca622e134eb8e8eb20c2254d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:45 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '37'
+      cmr-request-id:
+      - 1ff067e6-4511-44ff-bb5d-85e334c6e5eb
+      content-length:
+      - '465'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:45.405Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C24936-LAADS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
 993163d2d8231d8b8494ca981f8da35a12cad261:
   response:
     status:
@@ -18795,6 +19853,44 @@ d9b1633c22fdaca3d1a337788d7c13f36291f750:
         maintained because of\nlost personnel. This data base would require much work
         before\nany formal release.","has_granules":false,"time_end":"1989-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C1200208323-SCIOPS","score":0.5,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false}]}}'
     http_version: 
+dd65770637606c0e73fb249fe49da799a1e7e5cf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:45 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '48'
+      cmr-request-id:
+      - 6f072bda-9739-46a8-b7d1-3d58e5b526c8
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:45.052Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C24936-LAADS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","tags":{"edsc.extra.gibs":{"data":[{"format":"png","antarctic":false,"max-native-zoom":5,"geo":true,"source":"Terra
+        / MODIS","arctic":false,"title":"Aerosol Optical Depth","resolution":"2km","product":"MODIS_Terra_Aerosol","match":{"time-start":">=2012-06-22"}}]}},"time_start":"1999-12-18T00:00:00.000Z","version_id":"5","updated":"2006-03-17T00:00:00.000Z","dataset_id":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005","data_center":"LAADS","short_name":"MOD04_L2","organizations":["LAADS","MODAPS"],"title":"MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km V005","summary":"MODIS/Terra Aerosol 5-Min L2
+        Swath 10km","has_granules":true,"orbit_parameters":{},"id":"C24936-LAADS","score":0.5,"original_format":"ECHO10","granule_count":170,"archive_center":"LAADS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS Atmosphere Data Products (ECSCollGuide)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Atmosphere Data Availability Calendar and Validation Level (MiscInformation)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/products_calendar.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"NULL
+        (DatasetDisclaimer)","hreflang":"en-US","href":"http://modis-atmos.gsfc.nasa.gov/validation.html"}]}]}}'
+    http_version: 
 c25e63ce64b4a92c659ebb5f219e4a970f3eee55:
   response:
     status:
@@ -18858,6 +19954,283 @@ dfd5ff6897d15a9dc846ca84dc801d04c5ab6561:
         dataset metadata","entry":[{"processing_level_id":"Level 0","time_start":"2015-09-20T00:00:00.000Z","version_id":"2","updated":"2001-01-01T00:00:00.000Z","dataset_id":"Matthew''s
         Test","points":["0 0"],"data_center":"MMT_2","short_name":"Matthew''sTest","title":"Matthew''s
         Test","coordinate_system":"CARTESIAN","summary":"test abstract","has_granules":false,"time_end":"2015-09-20T00:00:00.000Z","orbit_parameters":{},"id":"C1200019403-MMT_2","score":0.5,"original_format":"UMM_JSON","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(UNKNOWN)","hreflang":"en-US","href":"http://youtube.com"}]}]}}'
+    http_version: 
+d9d6f0d00637d3cb6aa0db657d3056c1b3903ca1:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:37 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '20'
+      cmr-request-id:
+      - 2b9d5914-c4f7-4df9-a8a5-0061aae4f6e8
+      content-length:
+      - '488'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:37.298Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?temporal=1985-12-01T00%3A00%3A00.000Z%2C&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+ea59b607b6e535d5999dfb9dcec5f587c346df27:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:36 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '14289'
+      cmr-took:
+      - '62'
+      cmr-request-id:
+      - 55559e95-3369-4ce6-a4c9-2c245ef64046
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:36.934Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?temporal=1985-12-01T00%3A00%3A00.000Z%2C&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","time_start":"1999-12-20T00:00:00.000Z","dif_ids":["ACR3L2DM1"],"version_id":"1","updated":"2012-01-12T09:34:04.000Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"DEV07","short_name":"ACR3L2DM","organizations":["LaRC","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Daily Mean Data V001","summary":"This file
+        contains Level 2 total solar irradiance in the form of daily means gathered
+        by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000257-DEV07","original_format":"ECHO10","granule_count":4,"archive_center":"LaRC","browse_flag":false,"online_access_flag":false},{"processing_level_id":"2","time_start":"1999-10-01T12:00:00.000Z","dif_ids":["ACR3L2DM1"],"version_id":"001","updated":"2015-05-26T14:55:22.387Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","short_name":"ACR3L2DM","organizations":["EDF_OPS","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Daily Mean Data V001","summary":"This file
+        contains Level 2 total solar irradiance in the form of daily means gathered
+        by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000029-EDF_OPS","original_format":"ECHO10","granule_count":52,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"processing_level_id":"2","time_start":"1999-12-20T00:00:00.000Z","version_id":"1","updated":"2013-03-22T09:47:31.000Z","dataset_id":"ACRIM
+        III Level 2 Shutter Cycle Data V001","data_center":"DEV07","short_name":"ACR3L2SC","organizations":["LaRC","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Shutter Cycle Data V001","summary":"This
+        file contains Level 2 total solar irradiance in the form of shutter cycles
+        gathered by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000087-DEV07","original_format":"ECHO10","granule_count":2,"archive_center":"LaRC","browse_flag":false,"online_access_flag":false},{"processing_level_id":"2","time_start":"1999-10-01T12:00:00.000Z","dif_ids":["ACR3L2SC1"],"version_id":"001","updated":"2003-02-04T16:10:02.366Z","dataset_id":"ACRIM
+        III Level 2 Shutter Cycle Data V001","data_center":"EDF_OPS","short_name":"ACR3L2SC","organizations":["EDF_OPS","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Shutter Cycle Data V001","summary":"This
+        file contains Level 2 total solar irradiance in the form of shutter cycles
+        gathered by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000163-EDF_OPS","original_format":"ECHO10","granule_count":1,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"processing_level_id":"2","boxes":["-89
+        -180 89 180"],"time_start":"1999-06-01T00:46:02.000Z","dif_ids":["amsua15sp"],"version_id":"1","updated":"2009-11-05T13:33:23.000Z","dataset_id":"ADVANCED
+        MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-15 V1","data_center":"GHRC","short_name":"amsua15sp","title":"ADVANCED
+        MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-15 V1","coordinate_system":"CARTESIAN","summary":"AMSU-A,the
+        Advanced Microwave Sounding Unit, is a 15-channel passive microwave radiometer
+        used to profile atmospheric temperature and moisture from the earth''s surface
+        to ~45 km (3 millibars).  All orbits beginning in the day (00:00:00 - 23:59:59
+        UTC) are stored in one daily HDF-EOS file.  There are 15 (channel) arrays,
+        as well as corresponding Latitude, Longitude, and Time.  Each daily file is
+        compressed (gzip).","has_granules":true,"orbit_parameters":{},"id":"C1181-GHRC","original_format":"ECHO10","granule_count":30,"browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub2/data/amsu-a/noaa-15/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Software)","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/amsu_a/amsuareader.c"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Homepage)","hreflang":"en-US","href":"http://discover.itsc.uah.edu/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Guide)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/amsu_a/amsu-a_dataset.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","title":"(Browse)","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub/browse/amsu-a/noaa-15/"}]},{"processing_level_id":"2","boxes":["-89
+        -180 89 180"],"time_start":"2001-05-27T00:41:30.000Z","dif_ids":["amsua16sp"],"version_id":"1","updated":"2009-11-05T13:33:23.000Z","dataset_id":"ADVANCED
+        MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-16 V1","data_center":"GHRC","short_name":"amsua16sp","title":"ADVANCED
+        MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-16 V1","coordinate_system":"CARTESIAN","summary":"AMSU-A,the
+        Advanced Microwave Sounding Unit, is a 15-channel passive microwave radiometer
+        used to profile atmospheric temperature and moisture from the earth''s surface
+        to ~45 km (3 millibars).  All orbits beginning in the day (00:00:00 - 23:59:59
+        UTC) are stored in one daily HDF-EOS file.  There are 15 (channel) arrays,
+        as well as corresponding Latitude, Longitude, and Time.  Each daily file is
+        compressed (gzip).","has_granules":true,"time_end":"2008-03-04T00:38:06.000Z","orbit_parameters":{},"id":"C1180-GHRC","original_format":"ECHO10","granule_count":12,"browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub2/data/amsu-a/noaa-16/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Software)","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/amsu_a/amsuareader.c"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Guide)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/amsu_a/amsu-a_dataset.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","title":"(Browse)","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub/browse/amsu-a/noaa-16/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Homepage)","hreflang":"en-US","href":"http://discover.itsc.uah.edu/"}]},{"processing_level_id":"0","time_start":"1997-07-31T00:00:00.000Z","version_id":"1","updated":"2013-10-04T08:49:26.338Z","dataset_id":"AM-1
+        Ancillary APIDx4 V001","data_center":"DEV08","short_name":"AM1ANC","organizations":["EDF_DEV08","EDOS"],"title":"AM-1
+        Ancillary APIDx4 V001","summary":"AM-1 Ancillary APIDx4","has_granules":true,"orbit_parameters":{},"id":"C1000000808-DEV08","original_format":"ECHO10","granule_count":6,"archive_center":"EDF_DEV08","browse_flag":false,"online_access_flag":false},{"processing_level_id":"0","time_start":"1998-06-30T00:00:00.000Z","version_id":"001","updated":"2001-06-05T16:27:43.706Z","dataset_id":"AM-1
+        Ancillary APIDx4 V001","data_center":"EDF_OPS","short_name":"AM1ANC","organizations":["EDF_OPS","EDOS"],"title":"AM-1
+        Ancillary APIDx4 V001","summary":"AM-1 Ancillary APIDx4","has_granules":true,"orbit_parameters":{},"id":"C1000000773-EDF_OPS","original_format":"ECHO10","granule_count":7,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["AE_5DSno"],"version_id":"2","updated":"2010-09-02T15:30:57.960Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"EDF_DEV06","short_name":"AE_5DSno","organizations":["EDF_DEV06","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"orbit_parameters":{},"id":"C1000000085-EDF_DEV06","original_format":"ECHO10","granule_count":8,"archive_center":"EDF_DEV06","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://wwwghcc.msfc.nasa.gov/AMSR/qa.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/AMSR
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_5DSno"],"version_id":"002","updated":"2014-05-14T14:47:05.109Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"EDF_OPS","short_name":"AE_5DSno","organizations":["EDF_OPS","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000411-EDF_OPS","original_format":"ECHO10","granule_count":13,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_5DSno"],"version_id":"002","updated":"2015-06-05T12:38:08.796Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"DEV08","short_name":"AE_5DSno","organizations":["DEV08","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000967-DEV08","original_format":"ECHO10","granule_count":7,"archive_center":"DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_5DSno"],"version_id":"002","updated":"2015-06-05T12:48:01.299Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"DEV07","short_name":"AE_5DSno","organizations":["EDF_DEV07","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000001170-DEV07","original_format":"ECHO10","granule_count":6,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["AE_SI12"],"version_id":"2","updated":"2010-09-02T15:31:18.560Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V002","data_center":"EDF_DEV06","short_name":"AE_SI12","organizations":["EDF_DEV06","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow
+        Depth Polar Grids V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level 3 12.5 km daily sea ice product includes 18.7 - 89.0 GHz TBs, sea ice
+        concentration averages (asc & desc), and 5-day snow depth over sea ice on
+        a 12.5 km polar stereographic grid, generated by the NT2 algorithm using Level-2A
+        TBs.","has_granules":true,"orbit_parameters":{},"id":"C1000000292-EDF_DEV06","original_format":"ECHO10","granule_count":1,"archive_center":"EDF_DEV06","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://wwwghcc.msfc.nasa.gov/AMSR/qa.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si12_12km_tb_sea_ice_and_snow.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/AMSR
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_SI12"],"version_id":"3","updated":"2014-01-27T07:34:34.100Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V003","data_center":"DEV08","short_name":"AE_SI12","organizations":["EDF_DEV08","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow
+        Depth Polar Grids V003","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level 3 12.5 km daily sea ice product includes 18.7 - 89.0 GHz TBs, sea ice
+        concentration averages (asc & desc), and 5-day snow depth over sea ice on
+        a 12.5 km polar stereographic grid, generated by the NT2 algorithm using Level-2A
+        TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000560-DEV08","original_format":"ECHO10","granule_count":27,"archive_center":"EDF_DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si12_12km_tb_sea_ice_and_snow.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_SI12"],"version_id":"003","updated":"2015-08-18T16:35:00.909Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V003","data_center":"DEV07","short_name":"AE_SI12","organizations":["EDF_DEV07","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow
+        Depth Polar Grids V003","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level 3 12.5 km daily sea ice product includes 18.7 - 89.0 GHz TBs, sea ice
+        concentration averages (asc & desc), and 5-day snow depth over sea ice on
+        a 12.5 km polar stereographic grid, generated by the NT2 algorithm using Level-2A
+        TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000001042-DEV07","original_format":"ECHO10","granule_count":7,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si12_12km_tb_sea_ice_and_snow.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_SI25"],"version_id":"002","updated":"2014-05-14T14:47:15.461Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V002","data_center":"EDF_OPS","short_name":"AE_SI25","organizations":["EDF_OPS","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration
+        Polar Grids V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-3 25 km daily sea ice product includes 6.9 - 89.0 GHz TBs and sea ice
+        concentration averages (daily, ascending, and descending) on a 25 km polar
+        stereographic grid, generated by the NT2 algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000001042-EDF_OPS","original_format":"ECHO10","granule_count":2,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si25_25km_tb_and_sea_ice.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","version_id":"3","updated":"2015-01-28T14:01:37.484Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V003","data_center":"EDF_TS2","short_name":"AE_SI25","organizations":["EDF_TS2","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration
+        Polar Grids V003","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-3 25 km daily sea ice product includes 6.9 - 89.0 GHz TBs and sea ice
+        concentration averages (daily, ascending, and descending) on a 25 km polar
+        stereographic grid, generated by the NT2 algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000208-EDF_TS2","original_format":"ECHO10","granule_count":1,"archive_center":"EDF_TS2","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si25_25km_tb_and_sea_ice.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_SI25"],"version_id":"3","updated":"2014-01-27T07:34:40.793Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V003","data_center":"DEV08","short_name":"AE_SI25","organizations":["EDF_DEV08","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration
+        Polar Grids V003","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-3 25 km daily sea ice product includes 6.9 - 89.0 GHz TBs and sea ice
+        concentration averages (daily, ascending, and descending) on a 25 km polar
+        stereographic grid, generated by the NT2 algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000559-DEV08","original_format":"ECHO10","granule_count":17,"archive_center":"EDF_DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si25_25km_tb_and_sea_ice.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_SI25"],"version_id":"3","updated":"2015-01-13T17:25:19.285Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V003","data_center":"DEV07","short_name":"AE_SI25","organizations":["EDF_DEV07","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration
+        Polar Grids V003","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-3 25 km daily sea ice product includes 6.9 - 89.0 GHz TBs and sea ice
+        concentration averages (daily, ascending, and descending) on a 25 km polar
+        stereographic grid, generated by the NT2 algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000001044-DEV07","original_format":"ECHO10","granule_count":5,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si25_25km_tb_and_sea_ice.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_SI25"],"version_id":"003","updated":"2015-01-28T09:42:21.129Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V003","data_center":"EDF_OPS","short_name":"AE_SI25","organizations":["EDF_OPS","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration
+        Polar Grids V003","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-3 25 km daily sea ice product includes 6.9 - 89.0 GHz TBs and sea ice
+        concentration averages (daily, ascending, and descending) on a 25 km polar
+        stereographic grid, generated by the NT2 algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000632-EDF_OPS","original_format":"ECHO10","granule_count":1,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si25_25km_tb_and_sea_ice.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}]}}'
+    http_version: 
+c86afe63b59e42da37ef46569cfff59b7cb3e938:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:38 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '44'
+      cmr-request-id:
+      - 8691efc6-e6b7-4c16-a6d1-f26cf3d22d51
+      content-length:
+      - '511'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:38.212Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?temporal=1985-12-01T00%3A00%3A00.000Z%2C&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1000000257-DEV07%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+520aec8ea6b433bae056cdd31d14f866552d6805:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:50:37 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '42'
+      cmr-request-id:
+      - ee901725-44d3-4505-8d36-274bf28ccdcc
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:50:37.844Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?temporal=1985-12-01T00%3A00%3A00.000Z%2C&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1000000257-DEV07%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","time_start":"1999-12-20T00:00:00.000Z","dif_ids":["ACR3L2DM1"],"version_id":"1","updated":"2012-01-12T09:34:04.000Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"DEV07","short_name":"ACR3L2DM","organizations":["LaRC","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Daily Mean Data V001","summary":"This file
+        contains Level 2 total solar irradiance in the form of daily means gathered
+        by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000257-DEV07","score":0.5,"original_format":"ECHO10","granule_count":4,"archive_center":"LaRC","browse_flag":false,"online_access_flag":false}]}}'
     http_version: 
 01293211b05199adbf7c67b2bed4826c4645a9fb:
   response:
