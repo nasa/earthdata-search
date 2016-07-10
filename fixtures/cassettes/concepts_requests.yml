@@ -2,6 +2,36 @@
 http_interactions:
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560151-JAXA.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:52:32 GMT
+  digest: 067fd0e9c60ab10873c894d28bf3dfe48edadfc0
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560812-JAXA.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:52:43 GMT
+  digest: 55c0baef40b90c655045e5d6a92f61ec89c035a2
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1219032686-LANCEMODIS.echo10
     body:
       encoding: US-ASCII
@@ -17,6 +47,21 @@ http_interactions:
   digest: f84e0da7b5c4a33746f52d6353d644f3d1b9d422
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C1220111370-NSIDCV0.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:52:35 GMT
+  digest: 5ab989b5564cbc266184dc2d6a4b8ac4a0595884
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C179001887-SEDAC.echo10
     body:
       encoding: US-ASCII
@@ -30,6 +75,68 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Sun, 10 Jul 2016 19:50:50 GMT
   digest: 122e8b0a31be9c00b5f4f5bb371044312c74630c
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179002945-ORNL_DAAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:52:40 GMT
+  digest: eaec045ccc13735b698cb225cb0f3190e1f061c3
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179003030-ORNL_DAAC.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:52:48 GMT
+  digest: 10ae641cc814fa818f94738e114f8ba385584b58
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:52:14 GMT
+  digest: 533361cb4b53b9fb2abf820c485d85c2b1d28562
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C197265171-LPDAAC_ECS.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Sun, 10 Jul 2016 19:52:28 GMT
+  digest: cc90714ae2c755ee227355b10a930c9c4a047187
 - request:
     method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C2921042-PODAAC.echo10
@@ -90,4 +197,34 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Sun, 10 Jul 2016 19:50:45 GMT
   digest: b0372414d3a0e12399bca7fd5acbf30f30b4b8e9
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1204424196-GCMDTEST.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:52:46 GMT
+  digest: 94dce8361246627e4a97a3d92becf8e09bc1c198
+- request:
+    method: get
+    uri: https://cmr.uat.earthdata.nasa.gov/search/concepts/C1204482909-GCMDTEST.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Sun, 10 Jul 2016 19:52:37 GMT
+  digest: e2d02db474493c25c398656554a6d7057c11bbf1
 recorded_with: VCR 2.6.0

@@ -1,4 +1,132 @@
 ---
+067fd0e9c60ab10873c894d28bf3dfe48edadfc0:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:52:32 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 72032cc8-b95a-4e97-aced-93d812804906
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Collection><ShortName>GRFM_NASDA_NASA</ShortName><VersionId>Not
+        provided</VersionId><InsertTime></InsertTime><LastUpdate>2015-12-02T00:00:00.000Z</LastUpdate><LongName>Global
+        Rain Forest Mapping (GRFM) CD-ROMs from JAXA and NASA</LongName><DataSetId>Global
+        Rain Forest Mapping (GRFM) CD-ROMs from JAXA and NASA</DataSetId><Description>The
+        Global Rain Forest Mapping Project (GRFM) is an effort led by the\n            Earth
+        Observation Research Center (EORC) of the National Space\n            Development
+        Agency of Japan (NASDA) in cooperation with, among others,\n            NASA's
+        Jet Propulsion Laboratory (JPL), NASA's Alaska SAR Facility\n            (ASF),
+        the Space Applications Institute of the Joint Research Centre\n            of
+        the European Commission (JRC/SAI), the Unversity of California,\n            Santa
+        Barbara (UCSB), the Brazilian National Institute for Space\n            Research
+        (INPE) and the National Institute for Research of the\n            Amazon(INPA).
+        Its goal is to acquire contiguous Synthetic Aperture\n            Radar (SAR)
+        data sets of the Earth's major rain forests using the\n            Japanese
+        Earth Resources Satellite (JERS-1 or FUYO-1).\n            \n            This
+        project is divided into three geographical regions : South and\n            Central
+        America, Central and Western Africa, and South-East Asia and\n            Northern
+        Australia. Each region was observed at least once during a\n            \"single
+        season\" between September 1995 and January 1997.\n            \n            Several
+        CD-ROMs are available or are planned to be available during\n            1999
+        and 2000.  Planned data sets include:\n            AM-1 - Selected scenes
+        from South America (2 CD-ROMs)\n            AM-2 - Scenes from South America,
+        September/December 1995 (2 CD-ROMs)\n            AVAILABLE NOW. See:\n            \"http://southport.jpl.nasa.gov/GRFM/cdrom/2a/1STPAGE.HTM\"\n
+        \           \"http://southport.jpl.nasa.gov/GRFM/cdrom/2b/1STPAGE.HTM\"\n
+        \           AM-3 - Scenes from South America, September/December 1995 and
+        May/July\n                   1996 (4 CD-ROMs)\n            AFR-1 - Selected
+        scenes from Africa January - March 1996 and October -\n            November
+        1996, January 1997(3 CD-ROMs)\n            AVAILABLE NOW. See:\n            \"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1a/1stpage.htm\"\n
+        \           \"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1b/1stpage.htm\"\n
+        \           \"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1c/1stpage.htm\"\n
+        \           AFR-2 - Selected scences from Central/Western Africa January/March\n
+        \                   1996 (2 CD-ROMs)\n            AFR-3 - Selected scences
+        from Central Africa October/November 1996 (1 CD-ROM)\n            SEA-1 -
+        Selected scenes from Southeast Asia (2 CD-ROMs)\n            SEA-2 - Selected
+        scences from Southeast Asia November 1996/February\n                    1997
+        (3 CD-ROMs)\n            \n            Please see the EORC/JAXA web site at:\n
+        \           \"http://www.eorc.jaxa.jp/JERS-1/en/GFMP/index.html\"\n            \n
+        \           or the NASA/JPL web site at:\n            \"http://southport.jpl.nasa.gov/GRFM/\"</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In
+        Work</CollectionState><SpatialKeywords><Keyword>AUSTRALIA</Keyword><Keyword>BRAZIL</Keyword><Keyword>AFRICA</Keyword><Keyword>CENTRAL
+        AFRICA</Keyword><Keyword>EASTERN AFRICA</Keyword><Keyword>WESTERN AFRICA</Keyword><Keyword>EASTERN
+        ASIA</Keyword><Keyword>SOUTHEASTERN ASIA</Keyword><Keyword>SOUTHERN ASIA</Keyword><Keyword>CENTRAL
+        AMERICA</Keyword><Keyword>SOUTH AMERICA</Keyword></SpatialKeywords><TemporalKeywords><Keyword>daily</Keyword></TemporalKeywords><Temporal><RangeDateTime><BeginningDateTime>1995-09-01T00:00:00.000Z</BeginningDateTime><EndingDateTime>1997-01-31T23:59:59.999Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>bruce.chapman@jpl.nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>BRUCE</FirstName><LastName>CHAPMAN</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>ake.rosenqvist@jrc.it</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>AKE</FirstName><LastName>ROSENQVIST</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>victor@eorc.nasda.go.jp</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>VICTOR</FirstName><LastName>TAYLOR</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>BIOSPHERE</TopicKeyword><TermKeyword>VEGETATION</TermKeyword><VariableLevel1Keyword><Value>FOREST
+        COMPOSITION/VEGETATION STRUCTURE</Value></VariableLevel1Keyword><DetailedVariableKeyword>RAIN
+        FORESTS</DetailedVariableKeyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>BIOSPHERE</TopicKeyword><TermKeyword>VEGETATION</TermKeyword><VariableLevel1Keyword><Value>VEGETATION
+        COVER</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>LAND
+        USE/LAND COVER</TermKeyword><VariableLevel1Keyword><Value>LAND USE/LAND COVER
+        CLASSIFICATION</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>RADAR</TermKeyword><VariableLevel1Keyword><Value>RADAR
+        IMAGERY</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>JERS-1</ShortName><LongName>Japanese
+        Earth Resources Satellite-1</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>RADAR</ShortName><LongName>Radio
+        Detection and Ranging</LongName></Instrument><Instrument><ShortName>SAR</ShortName><LongName>Synthetic
+        Aperture Radar</LongName></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>miura.satoko@jaxa.jp</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>92e1eeee-e2c5-45a0-9b02-934b1a7dd7e7</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-01
+        16:31:28</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>GRFM</ShortName><LongName>Global
+        Rain Forest Mapping Project</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/2a/1STPAGE.HTM</URL><Description>\n
+        \        South American Amazon Rainforest - September / December 1995, AM2a\n
+        \     </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/2b/1STPAGE.HTM</URL><Description>\n
+        \        South American Amazon Rainforest - September / December 1995, AM2b\n
+        \     </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1a/1stpage.htm</URL><Description>\n
+        \        Central Africa Rainforest - low flood of Congo River, AFR1a\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1b/1stpage.htm</URL><Description>\n
+        \        West Africa, East Africa Rainforest and Madagascar - AFR1b\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource><OnlineResource><URL>http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1c/1stpage.htm</URL><Description>\n
+        \        Central Africa Rainforest - high flood of Congo River - AFR1c\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-96</WestBoundingCoordinate><NorthBoundingCoordinate>22</NorthBoundingCoordinate><EastBoundingCoordinate>-48</EastBoundingCoordinate><SouthBoundingCoordinate>-20</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-14</WestBoundingCoordinate><NorthBoundingCoordinate>10</NorthBoundingCoordinate><EastBoundingCoordinate>34</EastBoundingCoordinate><SouthBoundingCoordinate>-9</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>92</WestBoundingCoordinate><NorthBoundingCoordinate>27</NorthBoundingCoordinate><EastBoundingCoordinate>151</EastBoundingCoordinate><SouthBoundingCoordinate>-20</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
+55c0baef40b90c655045e5d6a92f61ec89c035a2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:52:43 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 64cdc83f-c785-4df9-a29a-83f88a0c7a03
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>Aqua_AMSR-E_L3_TB_23.8GHz-H</ShortName><VersionId>Latest
+        Version</VersionId><InsertTime>2012-08-21T00:00:00.000Z</InsertTime><LastUpdate>2015-12-02T00:00:00.000Z</LastUpdate><LongName>Aqua
+        AMSR-E Level 3 23.8GHz-H Mean for Brightness Temperature product</LongName><DataSetId>Aqua
+        AMSR-E Level 3 23.8GHz-H Mean for Brightness Temperature product</DataSetId><Description>AMSR-E
+        level 1B data (Brightness Temperature at 23.8GHz-H) is averaged temporarily
+        and spatially, and projected onto global map (EQR or PS).</Description><Orderable>true</Orderable><Visible>true</Visible><SpatialKeywords><Keyword>GLOBAL</Keyword></SpatialKeywords><Temporal><RangeDateTime><BeginningDateTime>2002-06-01T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>MICROWAVE</TermKeyword><VariableLevel1Keyword><Value>BRIGHTNESS
+        TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>AQUA</ShortName><LongName>Earth
+        Observing System, AQUA</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>AMSR-E</ShortName><LongName>Advanced
+        Microwave Scanning Radiometer-EOS</LongName></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>miura.satoko@jaxa.jp</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>a91fd035-c9cf-4a8f-81da-bec73581a8dc</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-12-01
+        16:32:49</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><OnlineAccessURLs><OnlineAccessURL><URL>http://www.eorc.jaxa.jp/en/about/distribution/index.html</URL></OnlineAccessURL></OnlineAccessURLs><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
 f84e0da7b5c4a33746f52d6353d644f3d1b9d422:
   response:
     status:
@@ -143,6 +271,41 @@ f84e0da7b5c4a33746f52d6353d644f3d1b9d422:
         Collection 6 data set from the MODAPS LANCE-MODIS page(FTP server).</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>ftp://nrt3.modaps.eosdis.nasa.gov/allData/6/MYD04_L2/</URL><URLDescription>Direct
         access to the ftp site and directory hosting the MYD04_L2 6NRT data set.</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://modis.gsfc.nasa.gov/sci_team/</URL><Description>MODIS
         Science Team</Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>'
+    http_version: 
+5ab989b5564cbc266184dc2d6a4b8ac4a0595884:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:52:35 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 479e8b4c-c8b8-4970-b4b1-c63b92540fe6
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>NSIDC-0026</ShortName><VersionId>1</VersionId><InsertTime>2003-05-15T00:00:00.000Z</InsertTime><LastUpdate>2016-01-04T00:00:00.000Z</LastUpdate><LongName>AVHRR Leads-ARI Polar Gridded Brightness Temperatures</LongName><DataSetId>AVHRR Leads-ARI Polar Gridded Brightness Temperatures</DataSetId><Description>This data set consists of AVHRR imagery selected from hard copy 'quick look' images to provide the best coverage possible over the Arctic approximately every three days for a three-year period. Level-1B data from NOAA/SDSD have been calibrated and mapped to earth locations, then gridded to 1 km pixels on a basin scale to the polar stereographic projection. The projection is similar to that used by NSIDC to produce DMSP SSM/I polar brightness temperature and sea ice products. Each image was ranked for areal coverage of particular seas and for degree of cloud coverage. Passes covering a large area are generally favored over shorter passes with less cloud cover. The data set was developed in support of the Office Of Naval Research Arctic Leads Accelerated Research Initiative (Arctic Leads ARI). The aim of the Initiative was to develop a more thorough understanding of the oceanography, meteorology, and ice dynamics surrounding formation and evolution of leads in sea ice. The leads ARI field experiment took place from March to April 1992.  A spreadsheet containing the image rankings is available in hard copy (NOARL Tech. Note 118, April 1991); paper copies of the spreadsheet are available on request. Data set information is available on-line. Data are available via FTP.</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>Completed</CollectionState><SpatialKeywords><Keyword>ARCTIC OCEAN</Keyword><Keyword>ATLANTIC OCEAN</Keyword><Keyword>BEAUFORT SEA</Keyword><Keyword>BERING SEA</Keyword><Keyword>CHUKCHI SEA</Keyword><Keyword>NORTH ATLANTIC OCEAN</Keyword><Keyword>ARCTIC</Keyword><Keyword>POLAR</Keyword></SpatialKeywords><Temporal><RangeDateTime><BeginningDateTime>1988-01-01T00:00:00.000Z</BeginningDateTime><EndingDateTime>1989-12-31T23:59:59.999Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>fetterer@nsidc.org</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>FLORENCE</FirstName><LastName>FETTERER</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>TECHNICAL CONTACT</Role><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>NSIDC</FirstName><LastName>USER SERVICES</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC RADIATION</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>TERRESTRIAL HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>BRIGHTNESS TEMPERATURE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>LEADS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA ICE</TermKeyword><VariableLevel1Keyword><Value>REFLECTANCE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Not provided</ShortName><LongName>Not provided</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>AVHRR</ShortName><LongName>Advanced Very High Resolution Radiometer</LongName></Instrument></Instruments></Platform><Platform><ShortName>NOAA POES</ShortName><LongName>NOAA Polar Orbiting Environmental Satellites</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-10</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-10</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-11</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-11</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-8</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-8</LongName><Type>Not Specified</Type></Platform><Platform><ShortName>NOAA-9</ShortName><LongName>National Oceanic &amp; Atmospheric Administration-9</LongName><Type>Not Specified</Type></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>Version Summary</Name><DataType>STRING</DataType><Description></Description></AdditionalAttribute><AdditionalAttribute><Name>Current Version</Name><DataType>INT</DataType><Description></Description><Value>1</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2016-01-25 10:14:52</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>EOSDIS</ShortName><LongName>Earth Observing System Data Information System</LongName></Campaign><Campaign><ShortName>LEADEX</ShortName><LongName>Arctic Leads Experiment</LongName></Campaign><Campaign><ShortName>LEADS ARI</ShortName><LongName>Office of Naval Research Arctic Leads Accelerated Research Initiative</LongName></Campaign><Campaign><ShortName>ESIP</ShortName><LongName>Earth Science Information Partners Program</LongName></Campaign></Campaigns><OnlineAccessURLs><OnlineAccessURL><URL>ftp://sidads.colorado.edu/pub/DATASETS/nsidc0026_avhrr_leads_ari_v01/</URL><URLDescription>
+                 FTP
+              </URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://nsidc.org/data/avhrr/index.html</URL><Description>
+                 AVHRR Data at NSIDC
+              </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/seaice/</URL><Description>
+                 Sea Ice Products at NSIDC
+              </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/docs/daac/nsidc0026_arctic_leads_ari.gd.html</URL><Description>
+                 Documentation
+              </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>60</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
 122e8b0a31be9c00b5f4f5bb371044312c74630c:
   response:
@@ -349,6 +512,620 @@ f84e0da7b5c4a33746f52d6353d644f3d1b9d422:
         \n\t\t\t\t<HorizontalSpatialDomain>\n\t\t\t\t\t<Geometry>\n\t\t\t\t\t\t<CoordinateSystem>CARTESIAN</CoordinateSystem>\n\t\t\t\t\t\t<BoundingRectangle>\n\t\t\t\t\t\t\t<WestBoundingCoordinate>-180</WestBoundingCoordinate>
         \n\t\t\t\t\t\t\t<NorthBoundingCoordinate>90</NorthBoundingCoordinate> \n\t\t\t\t\t\t\t<EastBoundingCoordinate>180</EastBoundingCoordinate>
         \n\t\t\t\t\t\t\t<SouthBoundingCoordinate>-55</SouthBoundingCoordinate> \n\t\t\t\t\t\t</BoundingRectangle>\n\t\t\t\t\t</Geometry>\n\t\t\t\t</HorizontalSpatialDomain>\n\t\t\t\t<GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n\t\t\t</Spatial>\n\t\t</Collection>"
+    http_version: 
+eaec045ccc13735b698cb225cb0f3190e1f061c3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:52:40 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - ebcaef36-0aa0-40cc-87f0-c81e11c6cf90
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection>\n\t\t\t<ShortName>doi:10.3334/ORNLDAAC/1096</ShortName>\t\t\n\t\t\t<VersionId>1</VersionId>\n\t\t\t<InsertTime>2012-06-12T00:00:00Z</InsertTime>\n\t\t\t<LastUpdate>2012-06-12T00:00:00Z</LastUpdate>\n\t\t\t<LongName>NACP
+        Forest Age Maps at 1-km Resolution for Canada (2004) and the U.S.A. (2006)</LongName>\n
+        \     <DataSetId>NACP Forest Age Maps at 1-km Resolution for Canada (2004)
+        and the U.S.A. (2006)</DataSetId>\n\t\t\t<Description>This data set provides
+        forest age map products at 1-km resolution for Canada and the United States
+        (U.S.A.). These continental forest age maps were compiled from forest inventory
+        data, historical fire data, optical satellite data, and the images from the
+        NASA Landsat Ecosystem Disturbance Adaptive Processing System (LEDAPS) project.
+        These input data products have various sources and creation dates as described
+        in the source paper by Pan et al. (2011). Canadian maps were produced with
+        data available through 2004 and U.S.A. maps with data available through 2006.
+        A supplementary map of the standard deviations for age estimates was developed
+        for quantifying uncertainty.Note that the Pan et al. (2011) paper is included
+        as a companion file with this data set and was the source of descriptions
+        in the guide.Forest age, implicitly reflecting the past disturbance legacy,
+        is a simple and direct surrogate for the time since disturbance and may be
+        used in various forest carbon analyses that concern the impact of disturbances.
+        By combining geographic information about forest age with estimated carbon
+        dynamics by forest type, it is possible to conduct a simple but powerful analysis
+        of the net CO2 uptake by forests, and the potential for increasing (or decreasing)
+        this rate as a result of direct human intervention in the disturbance/age
+        status.</Description>\n\t\t\t<Orderable>false</Orderable>\n\t\t\t<Visible>true</Visible>\n\t\t\t<RevisionDate>2012-06-12T00:00:00Z</RevisionDate>\n\t\t\t<ProcessingCenter>ORNL_DAAC</ProcessingCenter>\n\t\t\t<ProcessingLevelId>3</ProcessingLevelId>\n\t\t\t<ProcessingLevelDescription>Data
+        or retrieved environmental variables that have been spatially and/or temporally
+        resampled (i.e., derived from Level 1 or Level 2 data products). Such resampling
+        may include averaging and compositing</ProcessingLevelDescription>\n\t\t\t<ArchiveCenter>ORNL_DAAC</ArchiveCenter>\n\t\t\t<CitationForExternalPublication>Pan,
+        Y., J. M. Chen, R. Birdsey, K. McCullough, L. He, and F. Deng. 2012. NACP
+        Forest Age Maps at 1-km Resolution for Canada (2004) and the U.S.A. (2006).
+        Data set. Available on-line [http://daac.ornl.gov] from ORNL DAAC, Oak Ridge,
+        Tennessee, U.S.A.http://dx.doi.org/10.3334/ORNLDAAC/1096</CitationForExternalPublication>\n\t\t\t<CollectionState>COMPLETED</CollectionState>\n\t\t\t<MaintenanceAndUpdateFrequency>as
+        needed</MaintenanceAndUpdateFrequency>\n\t\t\t<Price>0</Price>\n\t\t\t<Temporal>\n\t\t\t\t<RangeDateTime>\n\t\t\t\t\t<BeginningDateTime>1950-01-01T00:00:00Z</BeginningDateTime>\n\t\t\t\t\t<EndingDateTime>2006-12-31T00:00:00Z</EndingDateTime>\n\t\t\t\t</RangeDateTime>\n\t\t\t</Temporal>\n
+        \     <Contacts>\n        <Contact>\n          <Role>DATA CENTER CONTACT</Role>\n
+        \         <OrganizationAddresses>\n            <Address>\n              <StreetAddress>ORNL
+        DAAC User Services Office, P.O. Box 2008, MS 6407, Oak Ridge National Laboratory</StreetAddress>\n
+        \             <City>Oak Ridge</City>\n              <StateProvince>Tennessee</StateProvince>\n
+        \             <PostalCode>37831-6407</PostalCode>\n              <Country>USA</Country>\n
+        \           </Address>\n          </OrganizationAddresses>\n          <OrganizationPhones>\n
+        \           <Phone>\n              <Number>(865) 241-3952</Number>\n              <Type>Direct
+        Line</Type>\n            </Phone>\n            <Phone>\n              <Number>(865)
+        574-4665</Number>\n              <Type>Fax</Type>\n            </Phone>\n
+        \         </OrganizationPhones>\n          <OrganizationEmails>\n            <Email>ornldaac@ornl.gov</Email>\n
+        \         </OrganizationEmails>\n          <ContactPersons>\n            <ContactPerson>\n
+        \             <FirstName>PLEASE CONTACT</FirstName>\n              <LastName>ORNL
+        DAAC User Services</LastName>\n            </ContactPerson>\n          </ContactPersons>\n
+        \       </Contact>\n      </Contacts>\n\t\t\t<ScienceKeywords>\n        <ScienceKeyword>\n
+        \         <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>\n          <TopicKeyword>AGRICULTURE</TopicKeyword>\n
+        \         <TermKeyword>FOREST SCIENCE</TermKeyword>\n          <VariableLevel1Keyword>\n
+        \           <Value>FOREST MENSURATION</Value>\n          </VariableLevel1Keyword>\n
+        \       </ScienceKeyword>\n        <ScienceKeyword>\n          <CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n          <TopicKeyword>BIOSPHERE</TopicKeyword>\n
+        \         <TermKeyword>TERRESTRIAL ECOSYSTEMS</TermKeyword>\n          <VariableLevel1Keyword>\n
+        \           <Value>FORESTS</Value>\n          </VariableLevel1Keyword>\n        </ScienceKeyword>\n
+        \       <ScienceKeyword>\n          <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>\n
+        \         <TopicKeyword>LAND SURFACE</TopicKeyword>\n          <TermKeyword>LAND
+        USE/LAND COVER</TermKeyword>\n          <VariableLevel1Keyword>\n            <Value>LAND
+        COVER</Value>\n          </VariableLevel1Keyword>\n        </ScienceKeyword>\n\t\t\t</ScienceKeywords>\n\t\t\t<Platforms>\n
+        \       <Platform>\n          <ShortName>LANDSAT-7</ShortName>\n          <LongName>LANDSAT-7</LongName>\n
+        \         <Type>spacecraft</Type>\n          <Instruments>\n\t\t\t\t\t\t<Instrument>\n
+        \             <ShortName>LANDSAT ETM+</ShortName>\n              <LongName>LANDSAT
+        ETM+</LongName>\n              <Sensors>\n                <Sensor>\n                  <ShortName>LANDSAT
+        ETM+</ShortName>\n                </Sensor>\n              </Sensors>\n            </Instrument>\n\t\t\t\t\t\t<Instrument>\n
+        \             <ShortName>LANDSAT TM</ShortName>\n              <LongName>LANDSAT
+        TM</LongName>\n              <Sensors>\n                <Sensor>\n                  <ShortName>LANDSAT
+        TM</ShortName>\n                </Sensor>\n              </Sensors>\n            </Instrument>\n\t\t\t\t\t</Instruments>\n
+        \       </Platform>\n        <Platform>\n          <ShortName>VEGETATION SURVEY</ShortName>\n
+        \         <LongName>VEGETATION SURVEY</LongName>\n          <Type>Ground Based</Type>\n
+        \         <Instruments>\n\t\t\t\t\t\t<Instrument>\n              <ShortName>ANALYSIS</ShortName>\n
+        \             <LongName>ANALYSIS</LongName>\n              <Sensors>\n                <Sensor>\n
+        \                 <ShortName>ANALYSIS</ShortName>\n                </Sensor>\n
+        \             </Sensors>\n            </Instrument>\n\t\t\t\t\t</Instruments>\n
+        \       </Platform>\n      </Platforms>\n      <Campaigns>\n        <Campaign>\n
+        \         <ShortName>North American Carbon Program (NACP)</ShortName>\n          <LongName>North
+        American Carbon Program (NACP)</LongName>\n        </Campaign>\n        <Campaign>\n
+        \         <ShortName>ESIP</ShortName>\n          <LongName>Earth Science Information
+        Partners Program</LongName>\n        </Campaign>\n        <Campaign>\n          <ShortName>EOSDIS</ShortName>\n
+        \         <LongName>Earth Observing System Data Information System</LongName>\n
+        \       </Campaign>\n      </Campaigns>\n      <OnlineAccessURLs>\n        <OnlineAccessURL>\n
+        \         <URL>http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1096</URL>\n
+        \         <URLDescription />\n          <MimeType />\n        </OnlineAccessURL>\n
+        \     </OnlineAccessURLs>\n      <OnlineResources>\n        <OnlineResource>\n
+        \         <URL>http://daac.ornl.gov/NACP/guides/NA_Tree_Age.html</URL>\n\t\t\t\t\t<Description>This
+        data set provides forest age map products at 1-km resolution for Canada and
+        the United States (U.S.A.). These continental forest age maps were compiled
+        from forest inventory data, historical fire data, optical satellite data,
+        and the images from the NASA Landsat Ecosystem Disturbance Adaptive Processing
+        System (LEDAPS) project. These input data products have various sources and
+        creation dates as described in the source paper by Pan et al. (2011). Canadian
+        maps were produced with data available through 2004 and U.S.A. maps with data
+        available through 2006. A supplementary map of the standard deviations for
+        age estimates was developed for quantifying uncertainty.Note that the Pan
+        et al. (2011) paper is included as a companion file with this data set and
+        was the source of descriptions in the guide.Forest age, implicitly reflecting
+        the past disturbance legacy, is a simple and direct surrogate for the time
+        since disturbance and may be used in various forest carbon analyses that concern
+        the impact of disturbances. By combining geographic information about forest
+        age with estimated carbon dynamics by forest type, it is possible to conduct
+        a simple but powerful analysis of the net CO2 uptake by forests, and the potential
+        for increasing (or decreasing) this rate as a result of direct human intervention
+        in the disturbance/age status.</Description>\n          <Type>VIEW RELATED
+        INFORMATION</Type>\n        </OnlineResource>\n        <OnlineResource>\n
+        \         <URL>http://webmap.ornl.gov/sdat/pimg/1096_1_fit.png</URL>\n\t\t\t\t\t<Type>BROWSE</Type>\n
+        \         <MimeType>image/png</MimeType>\n\t\t\t\t</OnlineResource>\n      </OnlineResources>\n
+        \     <AssociatedDIFs>\n        <DIF>\n          <EntryId>NA_TREEAGE</EntryId>\n
+        \       </DIF>\n      </AssociatedDIFs>\n      <Spatial>\n        <SpatialCoverageType>Horizontal</SpatialCoverageType>\n
+        \       <HorizontalSpatialDomain>\n          <Geometry>\n            <CoordinateSystem>CARTESIAN</CoordinateSystem>\n
+        \           <BoundingRectangle>\n              <WestBoundingCoordinate>179.25</WestBoundingCoordinate>\n
+        \             <NorthBoundingCoordinate>67.01</NorthBoundingCoordinate>\n              <EastBoundingCoordinate>-39.87</EastBoundingCoordinate>\n
+        \             <SouthBoundingCoordinate>7.71</SouthBoundingCoordinate>\n            </BoundingRectangle>\n
+        \         </Geometry>\n        </HorizontalSpatialDomain>\n        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n
+        \     </Spatial>\n    </Collection>"
+    http_version: 
+10ae641cc814fa818f94738e114f8ba385584b58:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:52:48 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 92739646-a9f1-458d-b9e3-6f4c5b00951a
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection>\n\t\t\t<ShortName>doi:10.3334/ORNLDAAC/1</ShortName>\t\t\n\t\t\t<VersionId>1</VersionId>\n\t\t\t<InsertTime>2008-12-02T00:00:00Z</InsertTime>\n\t\t\t<LastUpdate>2008-12-02T00:00:00Z</LastUpdate>\n\t\t\t<LongName>15
+        Minute Stream Flow Data: USGS (FIFE)</LongName>\n      <DataSetId>15 Minute
+        Stream Flow Data: USGS (FIFE)</DataSetId>\n\t\t\t<Description>USGS 15 minute
+        stream flow data for Kings Creek on the Konza Prairie</Description>\n\t\t\t<Orderable>false</Orderable>\n\t\t\t<Visible>true</Visible>\n\t\t\t<RevisionDate>2008-12-02T00:00:00Z</RevisionDate>\n\t\t\t<ProcessingCenter>ORNL_DAAC</ProcessingCenter>\n\t\t\t<ProcessingLevelId>3</ProcessingLevelId>\n\t\t\t<ProcessingLevelDescription>Data
+        or retrieved environmental variables that have been spatially and/or temporally
+        resampled (i.e., derived from Level 1 or Level 2 data products). Such resampling
+        may include averaging and compositing</ProcessingLevelDescription>\n\t\t\t<ArchiveCenter>ORNL_DAAC</ArchiveCenter>\n\t\t\t<CitationForExternalPublication>Wood,
+        E. F. 1994. 15 Minute Stream Flow Data: USGS (FIFE). Data set. Available on-line
+        [http://www.daac.ornl.gov] from Oak Ridge National Laboratory Distributed
+        Active Archive Center, Oak Ridge, Tennessee, U.S.A. Also published in D. E.
+        Strebel, D. R. Landis, K. F. Huemmrich, and B. W. Meeson (eds.), Collected
+        Data of the First ISLSCP Field Experiment, Vol. 1: Surface Observations and
+        Non-Image Data Sets. CD-ROM. National Aeronautics and Space Administration,
+        Goddard Space Flight Center, Greenbelt, Maryland, U.S.A. (available from http://www.daac.ornl.gov).
+        doi:10.3334/ORNLDAAC/1</CitationForExternalPublication>\n\t\t\t<CollectionState>COMPLETED</CollectionState>\n\t\t\t<MaintenanceAndUpdateFrequency>as
+        needed</MaintenanceAndUpdateFrequency>\n\t\t\t<Price>0</Price>\n\t\t\t<Temporal>\n\t\t\t\t<RangeDateTime>\n\t\t\t\t\t<BeginningDateTime>1984-12-25T00:00:00Z</BeginningDateTime>\n\t\t\t\t\t<EndingDateTime>1988-03-04T00:00:00Z</EndingDateTime>\n\t\t\t\t</RangeDateTime>\n\t\t\t</Temporal>\n
+        \     <Contacts>\n        <Contact>\n          <Role>DATA CENTER CONTACT</Role>\n
+        \         <OrganizationAddresses>\n            <Address>\n              <StreetAddress>ORNL
+        DAAC User Services Office, P.O. Box 2008, MS 6407, Oak Ridge National Laboratory</StreetAddress>\n
+        \             <City>Oak Ridge</City>\n              <StateProvince>Tennessee</StateProvince>\n
+        \             <PostalCode>37831-6407</PostalCode>\n              <Country>USA</Country>\n
+        \           </Address>\n          </OrganizationAddresses>\n          <OrganizationPhones>\n
+        \           <Phone>\n              <Number>(865) 241-3952</Number>\n              <Type>Direct
+        Line</Type>\n            </Phone>\n            <Phone>\n              <Number>(865)
+        574-4665</Number>\n              <Type>Fax</Type>\n            </Phone>\n
+        \         </OrganizationPhones>\n          <OrganizationEmails>\n            <Email>ornldaac@ornl.gov</Email>\n
+        \         </OrganizationEmails>\n          <ContactPersons>\n            <ContactPerson>\n
+        \             <FirstName>PLEASE CONTACT</FirstName>\n              <LastName>ORNL
+        DAAC User Services</LastName>\n            </ContactPerson>\n          </ContactPersons>\n
+        \       </Contact>\n      </Contacts>\n\t\t\t<ScienceKeywords>\n        <ScienceKeyword>\n
+        \         <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>\n          <TopicKeyword>HYDROSPHERE</TopicKeyword>\n
+        \         <TermKeyword>SURFACE WATER</TermKeyword>\n          <VariableLevel1Keyword>\n
+        \           <Value>DISCHARGE/FLOW</Value>\n          </VariableLevel1Keyword>\n
+        \       </ScienceKeyword>\n        <ScienceKeyword>\n          <CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n          <TopicKeyword>HYDROSPHERE</TopicKeyword>\n
+        \         <TermKeyword>SURFACE WATER</TermKeyword>\n          <VariableLevel1Keyword>\n
+        \           <Value>STAGE HEIGHT</Value>\n          </VariableLevel1Keyword>\n
+        \       </ScienceKeyword>\n\t\t\t</ScienceKeywords>\n\t\t\t<Platforms>\n        <Platform>\n
+        \         <ShortName>SURFACE WATER WEIR</ShortName>\n          <LongName>SURFACE
+        WATER WEIR</LongName>\n          <Type>Ground Based</Type>\n          <Instruments>\n\t\t\t\t\t\t<Instrument>\n
+        \             <ShortName>STILLING WELL</ShortName>\n              <LongName>STILLING
+        WELL</LongName>\n              <Sensors>\n                <Sensor>\n                  <ShortName>STILLING
+        WELL</ShortName>\n                </Sensor>\n              </Sensors>\n            </Instrument>\n\t\t\t\t\t</Instruments>\n
+        \       </Platform>\n      </Platforms>\n      <Campaigns>\n        <Campaign>\n
+        \         <ShortName>First ISLSCP Field Experiment (FIFE)</ShortName>\n          <LongName>First
+        ISLSCP Field Experiment (FIFE)</LongName>\n        </Campaign>\n        <Campaign>\n
+        \         <ShortName>ESIP</ShortName>\n          <LongName>Earth Science Information
+        Partners Program</LongName>\n        </Campaign>\n        <Campaign>\n          <ShortName>EOSDIS</ShortName>\n
+        \         <LongName>Earth Observing System Data Information System</LongName>\n
+        \       </Campaign>\n      </Campaigns>\n      <OnlineAccessURLs>\n        <OnlineAccessURL>\n
+        \         <URL>http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1</URL>\n          <URLDescription
+        />\n          <MimeType />\n        </OnlineAccessURL>\n      </OnlineAccessURLs>\n
+        \     <OnlineResources>\n        <OnlineResource>\n          <URL>http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html</URL>\n\t\t\t\t\t<Description>USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie</Description>\n
+        \         <Type>VIEW RELATED INFORMATION</Type>\n        </OnlineResource>\n
+        \     </OnlineResources>\n      <AssociatedDIFs>\n        <DIF>\n          <EntryId>FIFE_STRM_15M</EntryId>\n
+        \       </DIF>\n      </AssociatedDIFs>\n      <Spatial>\n        <SpatialCoverageType>Horizontal</SpatialCoverageType>\n
+        \       <HorizontalSpatialDomain>\n          <Geometry>\n            <CoordinateSystem>CARTESIAN</CoordinateSystem>\n\t\t\t\t\t\t<Point>\n
+        \             <PointLongitude>-96.60</PointLongitude>\n              <PointLatitude>39.10</PointLatitude>\n
+        \           </Point>\n          </Geometry>\n        </HorizontalSpatialDomain>\n
+        \       <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n
+        \     </Spatial>\n    </Collection>"
+    http_version: 
+533361cb4b53b9fb2abf820c485d85c2b1d28562:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:52:14 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - c778df10-114c-41f6-a943-8ee5034a206d
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\"?>\n<Collection>\n  <ShortName>AST_L1AE</ShortName>\n
+        \ <VersionId>003</VersionId>\n  <InsertTime>2002-03-14T12:49:27.640Z</InsertTime>\n
+        \ <LastUpdate>2015-09-14T09:50:23.026Z</LastUpdate>\n  <LongName>ASTER Expedited
+        L1A Reconstructed Unprocessed Instrument Data</LongName>\n  <DataSetId>ASTER
+        Expedited L1A Reconstructed Unprocessed Instrument Data V003</DataSetId>\n
+        \ <Description>The ASTER Expedited L1A Reconstructed Unprocessed Instrument
+        Data is produced with the express purpose of providing the ASTER Science Team
+        members and others, data of their particular interest in quick turn-around
+        time from the moment the data are acquired. This is usually done to support
+        on-going field calibration and validation efforts or to support emergency
+        response to natural disasters when processed Level-1 data with minimum turn-around
+        time would prove beneficial in initial damage or impact assessments. This
+        data set is expected to be publicly available for a period of 30 days after
+        which time it will be removed from the archive. This is done because the routinely
+        processed (Production Data Set or PDS) version of this data set will be available
+        from Japan in due course and available for search and order from the LP DAAC
+        archives. ASTER Expedited Data Sets (EDS) serve the short-term requirements
+        of a small group of scientists and fulfill immediate imagery needs during
+        times of natural disasters.\n\nThe general product description details as
+        described for the ASTER Level 1A Data Set - Reconstructed, unprocessed Instrument
+        Data apply to the expedited data set with a few notable exceptions. These
+        include:\n\n&#x2022;       The Expedited Level-1A data set does not contain
+        the VNIR 3B  (aft-viewing) band\n&#x2022;       This data set does not have
+        short-term calibration for the Thermal Infrared (TIR) sensor\n&#x2022;       The
+        registration quality of this data set is likely to be lower, and also vary
+        from scene to scene \n\nThe Level-0 data downlink from the Tracking Data Relay
+        Satellite System (TDRSS) at White Sands, NM is received at the EOS Data Operations
+        System (EDOS) facility at the Goddard Space Flight Center (GSFC). Following
+        some pre-processing, EDOS directly transmits that data (via the GSFC DAAC)
+        to LP DAAC where the data are processed and the level-1 EDS is produced. The
+        ASTER Level-1AE product contains reconstructed, unprocessed instrument digital
+        data derived from the telemetry streams of the 3 telescopes at their respective
+        ground resolutions: Visible Near Infrared (VNIR), 15 m, Shortwave Infrared
+        (SWIR), 30 m, and Thermal Infrared (TIR), 90 m. There is no browse product
+        provided for the expedited L1A data set.\n\nUsers are advised that ASTER SWIR
+        data acquired from late April 2008 to the present exhibit anomalous saturation
+        of values and anomalous striping. This effect is also present for some prior
+        acquisition periods. Please refer to the ASTER SWIR User Advisory Document
+        at https://lpdaac.usgs.gov/sites/default/files/public/aster/docs/ASTER_SWIR_User_Advisory_July%2018_08.pdf
+        for more details.\n\nV003 data set release date: 2002-05-03\n\nData Set Characteristics:
+        \nArea: ~60km x 60km \nImage Dimensions: \n  VNIR: 4200 rows x 4100 columns
+        \n  SWIR: 2100 rows x 2048 columns \n  TIR: 700 rows x 700 columns \nFile
+        Size: \n  VNIR (1, 2, 3N): ~49.3 MB \n  SWIR (4 through 9): ~25 MB \n  TIR
+        (10 through 14): ~4.7 MB \n  Total: 85 Megabytes \nSpatial Resolution:\n  VNIR:
+        15m\n  SWIR: 30m\n  TIR: 90m\nUnits: Digital count\nProjection: Universal
+        Transverse Mercator (UTM)\nData Format: HDF-EOS or GeoTIFF \nVgroup Data Fields:
+        14\n</Description>\n  <Orderable>false</Orderable>\n  <Visible>true</Visible>\n
+        \ <RevisionDate>2015-08-21T00:00:00Z</RevisionDate>\n  <ProcessingCenter>LPDAAC</ProcessingCenter>\n
+        \ <ProcessingLevelId>1A</ProcessingLevelId>\n  <ProcessingLevelDescription>Radiometric
+        Counts</ProcessingLevelDescription>\n  <ArchiveCenter>LPDAAC</ArchiveCenter>\n
+        \ <VersionDescription>Added Associated DLL name attribute.</VersionDescription>\n
+        \ <Temporal>\n    <TimeType>UTC</TimeType>\n    <DateType>Gregorian</DateType>\n
+        \   <TemporalRangeType>Continuous Range</TemporalRangeType>\n    <PrecisionOfSeconds>7</PrecisionOfSeconds>\n
+        \   <EndsAtPresentFlag>true</EndsAtPresentFlag>\n    <RangeDateTime>\n      <BeginningDateTime>1999-12-18T00:00:00Z</BeginningDateTime>\n
+        \   </RangeDateTime>\n  </Temporal>\n  <Contacts>\n    <Contact>\n      <Role>Archive</Role>\n
+        \     <HoursOfService>M-F, 8 a.m. to 4 p.m. Central Time</HoursOfService>\n
+        \     <Instructions>None</Instructions>\n      <OrganizationName>LP DAAC User
+        Services</OrganizationName>\n      <OrganizationAddresses>\n        <Address>\n
+        \         <StreetAddress>U.S. Geological Survey, Earth Resources Observation
+        and Science (EROS) Center</StreetAddress>\n          <City>Sioux Falls</City>\n
+        \         <StateProvince>South Dakota</StateProvince>\n          <PostalCode>57198</PostalCode>\n
+        \         <Country>USA</Country>\n        </Address>\n      </OrganizationAddresses>\n
+        \     <OrganizationPhones>\n        <Phone>\n          <Number>605-594-6116</Number>\n
+        \         <Type>phone</Type>\n        </Phone>\n        <Phone>\n          <Number>605-594-6963</Number>\n
+        \         <Type>fax</Type>\n        </Phone>\n      </OrganizationPhones>\n
+        \     <OrganizationEmails>\n        <Email>lpdaac@usgs.gov</Email>\n      </OrganizationEmails>\n
+        \   </Contact>\n  </Contacts>\n  <ScienceKeywords>\n    <ScienceKeyword>\n
+        \     <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>\n      <TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword>\n
+        \     <TermKeyword>INFRARED WAVELENGTHS</TermKeyword>\n      <VariableLevel1Keyword>\n
+        \       <Value>REFLECTED INFRARED</Value>\n      </VariableLevel1Keyword>\n
+        \   </ScienceKeyword>\n    <ScienceKeyword>\n      <CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n      <TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword>\n
+        \     <TermKeyword>INFRARED WAVELENGTHS</TermKeyword>\n      <VariableLevel1Keyword>\n
+        \       <Value>THERMAL INFRARED</Value>\n      </VariableLevel1Keyword>\n
+        \   </ScienceKeyword>\n    <ScienceKeyword>\n      <CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n      <TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword>\n
+        \     <TermKeyword>VISIBLE WAVELENGTHS</TermKeyword>\n      <VariableLevel1Keyword>\n
+        \       <Value>VISIBLE IMAGERY</Value>\n      </VariableLevel1Keyword>\n    </ScienceKeyword>\n
+        \ </ScienceKeywords>\n  <Platforms>\n    <Platform>\n      <ShortName>AM-1</ShortName>\n
+        \     <LongName>Earth Observing System, TERRA (AM-1)</LongName>\n      <Type>Spacecraft</Type>\n
+        \     <Instruments>\n        <Instrument>\n          <ShortName>ASTER</ShortName>\n
+        \         <LongName>Advanced Spaceborne Thermal Emission and Reflection Radiometer</LongName>\n
+        \         <Technique>Imaging Spectrometers/Radiometers</Technique>\n          <Sensors>\n
+        \           <Sensor>\n              <ShortName>SWIR</ShortName>\n              <LongName>Shortwave
+        Infrared</LongName>\n              <Technique>Imaging Radiometers</Technique>\n
+        \           </Sensor>\n            <Sensor>\n              <ShortName>TIR</ShortName>\n
+        \             <LongName>Thermal Infrared</LongName>\n              <Technique>Imaging
+        Radiometers</Technique>\n            </Sensor>\n            <Sensor>\n              <ShortName>VNIR</ShortName>\n
+        \             <LongName>Visible Near Infrared</LongName>\n              <Technique>Imaging
+        Radiometers</Technique>\n            </Sensor>\n          </Sensors>\n        </Instrument>\n
+        \     </Instruments>\n    </Platform>\n  </Platforms>\n  <AdditionalAttributes>\n
+        \   <AdditionalAttribute>\n      <Name>ASTERMapProjection</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>The map projection of the granule</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>GenerationDateandTime</Name>\n      <DataType>DATETIME_STRING</DataType>\n
+        \     <Description>Date and Time granule produced</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>LowerLeftQuadCloudCoverage</Name>\n
+        \     <DataType>INT</DataType>\n      <Description>The percentage of cloud
+        coverage for the lower left quadrant</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>LowerRightQuadCloudCoverage</Name>\n
+        \     <DataType>INT</DataType>\n      <Description>The percentage of cloud
+        coverage for the lower right quadrant</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>SceneCloudCoverage</Name>\n      <DataType>INT</DataType>\n
+        \     <Description>Percentage of cloud coverage for the whole scene</Description>\n
+        \   </AdditionalAttribute>\n    <AdditionalAttribute>\n      <Name>Solar_Azimuth_Angle</Name>\n
+        \     <DataType>FLOAT</DataType>\n      <Description>Angle of the sun clockwise
+        from true North</Description>\n    </AdditionalAttribute>\n    <AdditionalAttribute>\n
+        \     <Name>Solar_Elevation_Angle</Name>\n      <DataType>FLOAT</DataType>\n
+        \     <Description>Angle of the sun above the horizon</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>SWIR_ObservationMode</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Indicates whether the SWIR sensor group is ON or OFF</Description>\n
+        \   </AdditionalAttribute>\n    <AdditionalAttribute>\n      <Name>TIR_ObservationMode</Name>\n
+        \     <DataType>STRING</DataType>\n      <Description>Indicates whether the
+        TIR sensor group is ON or OFF</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>UpperLeftQuadCloudCoverage</Name>\n
+        \     <DataType>INT</DataType>\n      <Description>The percentage of cloud
+        coverage for the upper left quadrant</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>UpperRightQuadCloudCoverage</Name>\n
+        \     <DataType>INT</DataType>\n      <Description>The percentage of cloud
+        coverage for the upper right quadrant</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>VNIR1_ObservationMode</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Indicates whether the VNIR1 sensor group is ON or OFF</Description>\n
+        \   </AdditionalAttribute>\n    <AdditionalAttribute>\n      <Name>VNIR2_ObservationMode</Name>\n
+        \     <DataType>STRING</DataType>\n      <Description>Indicates whether the
+        VNIR2 sensor group is ON or OFF</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band1_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 1 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band2_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 2 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band3B_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 3B - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band3N_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 3N - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band4_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 4 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band5_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 5 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band6_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 6 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band7_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 7 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band8_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 8 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band9_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 9 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band10_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 10 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band11_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 11 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band12_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 12 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band13_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 13 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>Band14_Available</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Identifies the status of Band 14 - [Yes, band is acquired]
+        or [No, band was not acquired]</Description>\n    </AdditionalAttribute>\n
+        \   <AdditionalAttribute>\n      <Name>RadiometricDBVersion</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>The version number of the Radiometric Database used in
+        Level 1 processing.</Description>\n    </AdditionalAttribute>\n    <AdditionalAttribute>\n
+        \     <Name>GeometricDBVersion</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>The version number of the Geometric Database used in Level
+        1 processing.</Description>\n    </AdditionalAttribute>\n    <AdditionalAttribute>\n
+        \     <Name>ASTERGains</Name>\n      <DataType>STRING</DataType>\n      <Description>Identifies
+        the Gain setting for the Bands: HGH, NOR, LO1, LO2, LOW, OFF</Description>\n
+        \   </AdditionalAttribute>\n    <AdditionalAttribute>\n      <Name>identifier_product_doi</Name>\n
+        \     <DataType>STRING</DataType>\n      <Description>Digital object identifier
+        that uniquely identifies this data product</Description>\n      <Value>10.5067/ASTER/AST_L1AE.003</Value>\n
+        \   </AdditionalAttribute>\n    <AdditionalAttribute>\n      <Name>identifier_product_doi_authority</Name>\n
+        \     <DataType>STRING</DataType>\n      <Description>URL of the digital object
+        identifier resolving authority</Description>\n      <Value>http://dx.doi.org</Value>\n
+        \   </AdditionalAttribute>\n  </AdditionalAttributes>\n  <CSDTDescriptions>\n
+        \   <CSDTDescription>\n      <PrimaryCSDT>Simple Swath</PrimaryCSDT>\n      <Implementation>HDF-EOS</Implementation>\n
+        \     <CSDTComments>None</CSDTComments>\n      <IndirectReference>Source Packets</IndirectReference>\n
+        \   </CSDTDescription>\n  </CSDTDescriptions>\n  <CollectionAssociations>\n
+        \   <CollectionAssociation>\n      <ShortName>AST_L1B</ShortName>\n      <VersionId>3</VersionId>\n
+        \     <CollectionType>Dependent</CollectionType>\n      <CollectionUse>Radiometric
+        values computed from the raw instrument counts</CollectionUse>\n    </CollectionAssociation>\n
+        \ </CollectionAssociations>\n  <OnlineResources>\n    <OnlineResource>\n      <URL>http://dx.doi.org/10.5067/ASTER/AST_L1AE.003</URL>\n
+        \     <Description>Data set landing page at the LP DAAC</Description>\n      <Type>MiscInformation</Type>\n
+        \   </OnlineResource>\n  <OnlineResource>\n  <URL>http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&amp;spatial_map=satellite&amp;spatial_type=rectangle&amp;keywords=AST_L1AE3</URL>\n
+        \ <Description>\n         Interface for discovering, accessing, and invoking
+        EOS data products and services.\n      </Description>\n  <Type>Type:GET DATA
+        Subtype:REVERB</Type>\n</OnlineResource><OnlineResource>\n  <URL>https://lpdaac.usgs.gov/data_access/data_pool/</URL>\n
+        \ <Description>\n         LP DAAC Data Pool provides direct access to all
+        currently available products and the ability to download them via HTTP.\n
+        \     </Description>\n  <Type>Type:GET DATA Subtype:ON-LINE ARCHIVE</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>https://lpdaac.usgs.gov/</URL>\n  <Description>\n         The Land
+        Processes Distributed Active Archive Center (LP DAAC) is one of several discipline-specific
+        data centers within the NASA Earth Observing System Data and Information System
+        (EOSDIS).  The LP DAAC Web page provides information about available data
+        products, services, order interfaces, and tools.\n      </Description>\n  <Type>Type:VIEW
+        PROJECT HOME PAGE</Type>\n</OnlineResource></OnlineResources>\n  <AssociatedDIFs>\n
+        \   <DIF>\n      <EntryId>AST_L1AE3</EntryId>\n    </DIF>\n  </AssociatedDIFs>\n
+        \ <Spatial>\n    <SpatialCoverageType>Horizontal</SpatialCoverageType>\n    <HorizontalSpatialDomain>\n
+        \     <Geometry>\n        <CoordinateSystem>CARTESIAN</CoordinateSystem>\n
+        \       <BoundingRectangle>\n          <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>\n
+        \         <NorthBoundingCoordinate>90.0</NorthBoundingCoordinate>\n          <EastBoundingCoordinate>180.0</EastBoundingCoordinate>\n
+        \         <SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate>\n        </BoundingRectangle>\n
+        \     </Geometry>\n    </HorizontalSpatialDomain>\n    <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>\n
+        \ </Spatial>\n</Collection>"
+    http_version: 
+cc90714ae2c755ee227355b10a930c9c4a047187:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:52:28 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 1fcfcf1a-a711-45fd-b7b2-1f7f9506d1e9
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\"?>\n<Collection>\n  <ShortName>ASTGTM</ShortName>\n
+        \ <VersionId>002</VersionId>\n  <InsertTime>2011-08-24T08:35:32.576Z</InsertTime>\n
+        \ <LastUpdate>2015-09-30T10:42:35.418Z</LastUpdate>\n  <LongName>ASTER Global
+        Digital Elevation Model</LongName>\n  <DataSetId>ASTER Global Digital Elevation
+        Model V002</DataSetId>\n  <Description>The Advanced Spaceborne Thermal Emission
+        and Reflection Radiometer (ASTER) Global Digital Elevation Model (GDEM) was
+        developed jointly by the U.S. National Aeronautics and Space Administration
+        (NASA) and Japan&#x2019;s Ministry of Economy, Trade, and Industry (METI).\n\nASTER
+        is capable of collecting in-track stereo using nadir- and aft-looking near
+        infrared cameras.  Since 2001, these stereo pairs have been used to produce
+        single-scene (60- x 60-kilomenter (km)) digital elevation models (DEM) having
+        vertical (root-mean-squared-error) accuracies generally between 10- and 25-meters
+        (m). \n\nThe methodology used by Japan's Sensor Information Laboratory Corporation
+        (SILC) to produce the ASTER GDEM involves automated processing of the entire
+        ASTER Level-1A archive.  Stereo-correlation is used to produce over one million
+        individual scene-based ASTER DEMs, to which cloud masking is applied to remove
+        cloudy pixels.  All cloud-screened DEMS are stacked and residual bad values
+        and outliers are removed.  Selected data are averaged to create final pixel
+        values, and residual anomalies are corrected before partitioning the data
+        into 1 degree (&#xB0;) x 1&#xB0; tiles.\n\nThe ASTER GDEM covers land surfaces
+        between 83&#xB0;N and 83&#xB0;S and is comprised of 22,702 tiles.  Tiles that
+        contain at least 0.01% land area are included.  The ASTER GDEM is distributed
+        as Geographic Tagged Image File Format (GeoTIFF) files with geographic coordinates
+        (latitude, longitude).  The data are posted on a 1 arc-second (approximately
+        30&#x2013;m at the equator) grid and referenced to the 1984 World Geodetic
+        System (WGS84)/ 1996 Earth Gravitational Model (EGM96) geoid.  \n\nWhile the
+        ASTER GDEM 2 benefits from substantial improvements over GDEM 1, users are
+        nonetheless advised that the products still may contain anomalies and artifacts
+        that will reduce its usability for certain applications, because they can
+        introduce large elevation errors on local scales. The data are provided &#x201C;as
+        is&#x201D; and neither NASA nor METI/ERSDAC will be responsible for any damages
+        resulting from use of the data.\n\nV002 data set release date: 2009-06-28\n\nData
+        Set Characteristics: \nGeographic Extent: Global between 83&#xBA; latitude
+        \nScene Coverage: 1&#xBA; x 1&#xBA; tiles \nImage Dimensions: 3601 x 3601
+        \nTotal Number Tiles: V001: 22,604; V002: 22,702 \nTile Volume: ~25MB, 6.4
+        MB compressed \nCompression Type: zip \nFile Format: GEOTIFF \nMap Projection:
+        Geographic Lat/Lon \nDatum: WGS84/EGM96 \nResolution: 1 arcsecond (30-m horizontal
+        posting at equator)</Description>\n  <Orderable>false</Orderable>\n  <Visible>true</Visible>\n
+        \ <RevisionDate>2015-08-21T00:00:00Z</RevisionDate>\n  <SuggestedUsage>Science
+        Research</SuggestedUsage>\n  <ProcessingCenter>JPL</ProcessingCenter>\n  <ProcessingLevelId>3</ProcessingLevelId>\n
+        \ <ProcessingLevelDescription>GRID</ProcessingLevelDescription>\n  <ArchiveCenter>LPDAAC</ArchiveCenter>\n
+        \ <VersionDescription>Reprocessed global production</VersionDescription>\n
+        \ <CitationForExternalPublication>The ASTER Global DEM was developed jointly
+        by the Ministry of Economy, Trade and Industry of Japan (METI) and the United
+        States National Aeronautics and Space Administration (NASA).</CitationForExternalPublication>\n
+        \ <CollectionState>Completed</CollectionState>\n  <MaintenanceAndUpdateFrequency>None
+        Planned</MaintenanceAndUpdateFrequency>\n  <RestrictionComment>None</RestrictionComment>\n
+        \ <Temporal>\n    <TimeType>UTC</TimeType>\n    <DateType>Gregorian</DateType>\n
+        \   <TemporalRangeType>Continuous Range</TemporalRangeType>\n    <PrecisionOfSeconds>0</PrecisionOfSeconds>\n
+        \   <EndsAtPresentFlag>false</EndsAtPresentFlag>\n    <RangeDateTime>\n      <BeginningDateTime>1999-12-18T00:00:00Z</BeginningDateTime>\n
+        \     <EndingDateTime>2011-02-28T23:59:59Z</EndingDateTime>\n    </RangeDateTime>\n
+        \ </Temporal>\n  <Contacts>\n    <Contact>\n      <Role>Archive</Role>\n      <HoursOfService>M-F,
+        8 a.m. to 4 p.m. Central Time</HoursOfService>\n      <Instructions>None</Instructions>\n
+        \     <OrganizationName>LP DAAC User Services</OrganizationName>\n      <OrganizationAddresses>\n
+        \       <Address>\n          <StreetAddress>U.S. Geological Survey, Earth
+        Resources Observation and Science (EROS) Center</StreetAddress>\n          <City>Sioux
+        Falls</City>\n          <StateProvince>South Dakota</StateProvince>\n          <PostalCode>57198</PostalCode>\n
+        \         <Country>USA</Country>\n        </Address>\n      </OrganizationAddresses>\n
+        \     <OrganizationPhones>\n        <Phone>\n          <Number>605-594-6116</Number>\n
+        \         <Type>phone</Type>\n        </Phone>\n        <Phone>\n          <Number>605-594-6963</Number>\n
+        \         <Type>fax</Type>\n        </Phone>\n      </OrganizationPhones>\n
+        \     <OrganizationEmails>\n        <Email>lpdaac@usgs.gov</Email>\n      </OrganizationEmails>\n
+        \   </Contact>\n  </Contacts>\n  <ScienceKeywords>\n    <ScienceKeyword>\n
+        \     <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>\n      <TopicKeyword>LAND
+        SURFACE</TopicKeyword>\n      <TermKeyword>TOPOGRAPHY</TermKeyword>\n      <VariableLevel1Keyword>\n
+        \       <Value>TERRAIN ELEVATION</Value>\n      </VariableLevel1Keyword>\n
+        \   </ScienceKeyword>\n    <ScienceKeyword>\n      <CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword>\n      <TopicKeyword>LAND SURFACE</TopicKeyword>\n
+        \     <TermKeyword>TOPOGRAPHY</TermKeyword>\n      <VariableLevel1Keyword>\n
+        \       <Value>TOPOGRAPHICAL RELIEF</Value>\n      </VariableLevel1Keyword>\n
+        \   </ScienceKeyword>\n  </ScienceKeywords>\n  <Platforms>\n    <Platform>\n
+        \     <ShortName>Terra</ShortName>\n      <LongName>Earth Observing System,
+        TERRA (AM-1)</LongName>\n      <Type>Spacecraft</Type>\n      <Instruments>\n
+        \       <Instrument>\n          <ShortName>ASTER</ShortName>\n          <LongName>Advanced
+        Spaceborne Thermal Emission and Reflection Radiometer</LongName>\n          <Technique>Imaging
+        Spectrometers/Radiometers</Technique>\n          <Sensors>\n            <Sensor>\n
+        \             <ShortName>TIR</ShortName>\n              <LongName>Thermal
+        Infrared</LongName>\n              <Technique>Imaging Radiometers</Technique>\n
+        \           </Sensor>\n            <Sensor>\n              <ShortName>VNIR</ShortName>\n
+        \             <LongName>Visible Near Infrared</LongName>\n              <Technique>Imaging
+        Radiometers</Technique>\n            </Sensor>\n            <Sensor>\n              <ShortName>SWIR</ShortName>\n
+        \             <LongName>Shortwave Infrared</LongName>\n              <Technique>Imaging
+        Radiometers</Technique>\n            </Sensor>\n          </Sensors>\n          <OperationModes>\n
+        \           <OperationMode>Calibration</OperationMode>\n            <OperationMode>Normal</OperationMode>\n
+        \         </OperationModes>\n        </Instrument>\n      </Instruments>\n
+        \   </Platform>\n  </Platforms>\n  <AdditionalAttributes>\n    <AdditionalAttribute>\n
+        \     <Name>identifier_product_doi</Name>\n      <DataType>STRING</DataType>\n
+        \     <Description>Digital object identifier that uniquely identifies this
+        data product</Description>\n      <Value>10.5067/ASTER/ASTGTM.002</Value>\n
+        \   </AdditionalAttribute>\n    <AdditionalAttribute>\n      <Name>identifier_product_doi_authority</Name>\n
+        \     <DataType>STRING</DataType>\n      <Description>URL of the digital object
+        identifier resolving authority</Description>\n      <Value>http://dx.doi.org</Value>\n
+        \   </AdditionalAttribute>\n  </AdditionalAttributes>\n  <CSDTDescriptions>\n
+        \   <CSDTDescription>\n      <PrimaryCSDT>Structured Grid</PrimaryCSDT>\n
+        \     <Implementation>GeoTIFF</Implementation>\n    </CSDTDescription>\n  </CSDTDescriptions>\n
+        \ <OnlineResources>\n    <OnlineResource>\n      <URL>http://dx.doi.org/10.5067/ASTER/ASTGTM.002</URL>\n
+        \     <Description>Data set landing page at the LP DAAC</Description>\n      <Type>MiscInformation</Type>\n
+        \   </OnlineResource>\n  <OnlineResource>\n  <URL>http://reverb.echo.nasa.gov/reverb</URL>\n
+        \ <Description>\n         The Land Processes Distributed Active Archive Center
+        (LP DAAC) home page contains information about the LP DAAC, its products,
+        and its services.   The Web site also provides links to ASTGTM access through
+        Reverb and DEMEX.\n      </Description>\n  <Type>Type:GET DATA Subtype:REVERB</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>http://gdex.cr.usgs.gov</URL>\n  <Description>\n         LP DAAC Global
+        Data Explorer (GDEX) provides user the ability to graphically select an area,
+        and download topographic data.\n      </Description>\n  <Type>Type:GET DATA</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>http://earthexplorer.usgs.gov/</URL>\n  <Description>\n         USGS
+        EarthExplorer (EE) provides users the ability to query, search and order archived
+        ASTER and MODIS products available from the LP DAAC.  Registered users of
+        EE have access to additional features than guest users.\n      </Description>\n
+        \ <Type>Type:GET DATA</Type>\n</OnlineResource><OnlineResource>\n  <URL>https://lpdaac.usgs.gov</URL>\n
+        \ <Description>\n         The Land Processes Distributed Active Archive Center
+        (LP DAAC) is one of several discipline-specific data centers within the NASA
+        Earth Observing System Data and Information System (EOSDIS).  The LP DAAC
+        Web page provides information about available data products, services, documentation,
+        order interfaces, and tools.\n      </Description>\n  <Type>Type:VIEW PROJECT
+        HOME PAGE</Type>\n</OnlineResource><OnlineResource>\n  <URL>http://asterweb.jpl.nasa.gov/</URL>\n
+        \ <Description>\n         The ASTER home page is maintained through NASA's
+        Jet Propulsion Laboratory and documents various aspects of the ASTER mission.\n
+        \     </Description>\n  <Type>Type:VIEW PROJECT HOME PAGE</Type>\n</OnlineResource><OnlineResource>\n
+        \ <URL>https://lpdaac.usgs.gov/products/aster_products_table/astgtm</URL>\n
+        \ <Description>\n         Detailed product descriptions and additional information
+        including links for data access, user guides, and customer support, etc.\n
+        \     </Description>\n  <Type>Type:VIEW RELATED INFORMATION</Type>\n</OnlineResource></OnlineResources>\n
+        \ <Spatial>\n    <SpatialCoverageType>Horizontal</SpatialCoverageType>\n    <HorizontalSpatialDomain>\n
+        \     <Geometry>\n        <CoordinateSystem>CARTESIAN</CoordinateSystem>\n
+        \       <BoundingRectangle>\n          <WestBoundingCoordinate>-180.0</WestBoundingCoordinate>\n
+        \         <NorthBoundingCoordinate>82.0</NorthBoundingCoordinate>\n          <EastBoundingCoordinate>180.0</EastBoundingCoordinate>\n
+        \         <SouthBoundingCoordinate>-83.0</SouthBoundingCoordinate>\n        </BoundingRectangle>\n
+        \     </Geometry>\n    </HorizontalSpatialDomain>\n    <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>\n
+        \ </Spatial>\n</Collection>"
     http_version: 
 38abcc1d87c03f96966b83cacc91071898f8b11d:
   response:
@@ -603,4 +1380,113 @@ b0372414d3a0e12399bca7fd5acbf30f30b4b8e9:
         Swath</PrimaryCSDT><Implementation>HDF-EOS</Implementation><CSDTComments>None</CSDTComments><IndirectReference>N/A</IndirectReference></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>http://modis-atmos.gsfc.nasa.gov/products.html</URL><Description>Overview
         of MODIS Atmosphere Data Products</Description><Type>ECSCollGuide</Type></OnlineResource><OnlineResource><URL>http://modis-atmos.gsfc.nasa.gov/products_calendar.html</URL><Description>MODIS
         Atmosphere Data Availability Calendar and Validation Level</Description><Type>MiscInformation</Type></OnlineResource><OnlineResource><URL>http://modis-atmos.gsfc.nasa.gov/validation.html</URL><Description>NULL</Description><Type>DatasetDisclaimer</Type></OnlineResource></OnlineResources><Spatial><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
+94dce8361246627e4a97a3d92becf8e09bc1c198:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:52:46 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - d39696fc-aa33-480e-a61c-77fcf70c50af
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Collection><ShortName>JAXA_EORC_Tropical_Cyclones_database</ShortName><VersionId>1.0</VersionId><InsertTime>2005-07-06T00:00:00.000Z</InsertTime><LastUpdate>2015-09-22T00:00:00.000Z</LastUpdate><LongName>JAXA/EORC
+        Tropical Cyclones database</LongName><DataSetId>JAXA/EORC Tropical Cyclones
+        database</DataSetId><Description>'Tropical Cyclone Database (Ver. 1.0)' was
+        produced and distribute by the Earth\nObservation Research and application
+        Center(EORC), Japan Aerospace Exploration\nAgency(JAXA).\n\nJAXA/EORC picked
+        up the data that observed typhoons, hurricanes, cyclones and\netc from the
+        data obtained by TRMM/PR, TMI, VIRS, Aqua/AMSR-E and\nMidori-II(ADEOS-II)/AMSR
+        and established this database. \n\nJAXA/EORC also obtained additional data
+        such as positional information, route\nmaps, classification and wind speed
+        of typhoons, hurricanes and cyclones to\nestablish the database. These data
+        are obtained from the University of Hawaii's\n\"Tropical Storms, Worldwide\",
+        Joint Typhoon Warning Center (JTWC), National\nHurricane Center (NHC) and
+        Central Pacific Hurricane Center (CPHC).</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In
+        Work</CollectionState><SpatialKeywords><Keyword>ATLANTIC OCEAN</Keyword><Keyword>INDIAN
+        OCEAN</Keyword><Keyword>PACIFIC OCEAN</Keyword></SpatialKeywords><Temporal><RangeDateTime><BeginningDateTime>1997-12-07T00:00:00.000Z</BeginningDateTime><EndingDateTime>2001-08-06T23:59:59.999Z</EndingDateTime></RangeDateTime><RangeDateTime><BeginningDateTime>2001-08-25T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>DIF
+        AUTHOR</Role><OrganizationEmails><Email>R-rd@restec.or.jp</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>unknown</FirstName><LastName>RESTEC</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        PHENOMENA</TermKeyword><VariableLevel1Keyword><Value>HURRICANES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        PHENOMENA</TermKeyword><VariableLevel1Keyword><Value>STORMS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        PHENOMENA</TermKeyword><VariableLevel1Keyword><Value>TYPHOONS</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        WATER VAPOR</TermKeyword><VariableLevel1Keyword><Value>HUMIDITY</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        WATER VAPOR</TermKeyword><VariableLevel1Keyword><Value>WATER VAPOR</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>CLOUDS</TermKeyword><VariableLevel1Keyword><Value>CLOUD
+        PROPERTIES</Value><VariableLevel2Keyword><Value>CLOUD FREQUENCY</Value></VariableLevel2Keyword></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>PRECIPITATION</TermKeyword><VariableLevel1Keyword><Value>PRECIPITATION
+        AMOUNT</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Not
+        provided</ShortName><LongName>Not provided</LongName><Type>Not provided</Type><Instruments><Instrument><ShortName>PR</ShortName><LongName>TRMM
+        Precipitation Radar</LongName></Instrument><Instrument><ShortName>AMSR</ShortName><LongName>Advanced
+        Microwave Scanning Radiometer</LongName></Instrument><Instrument><ShortName>TMI</ShortName><LongName>TRMM
+        Microwave Imager</LongName></Instrument><Instrument><ShortName>VIRS</ShortName><LongName>TRMM
+        Visible Infrared Scanner</LongName></Instrument><Instrument><ShortName>AMSR-E</ShortName><LongName>Advanced
+        Microwave Scanning Radiometer-EOS</LongName></Instrument></Instruments></Platform><Platform><ShortName>ADEOS-II</ShortName><LongName>Advanced
+        Earth Observing Satellite-II</LongName><Type>Not provided</Type></Platform><Platform><ShortName>TRMM</ShortName><LongName>Tropical
+        Rainfall Measuring Mission</LongName><Type>Not provided</Type></Platform><Platform><ShortName>TEST
+        AQUA</ShortName><LongName>Earth Observing System, AQUA</LongName><Type>Not
+        provided</Type></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>miura.satoko@jaxa.jp</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>36b8692d-7e06-42d4-8273-ada9e4945cc9</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-09-21
+        14:21:06</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>EOSDIS</ShortName><LongName>Earth
+        Observing System Data Information System</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>http://www.eorc.jaxa.jp/TRMM/index_e.htm</URL><Description>\n
+        \        TRMM web site operated by JAXA\n      </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>36</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-36</SouthBoundingCoordinate></BoundingRectangle><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>36</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-36</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
+e2d02db474493c25c398656554a6d7057c11bbf1:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:52:37 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - b0914f32-6002-4e14-af95-99bef736218c
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?><Collection><ShortName>CAL_LID_L2_05kmAPro-Prov-V3-01</ShortName><VersionId>V3-30</VersionId><InsertTime>2010-06-24T00:00:00.000Z</InsertTime><LastUpdate>2015-09-22T00:00:00.000Z</LastUpdate><LongName>CALIPSO Lidar Level 2 5km aerosol profile data V3-01</LongName><DataSetId>CALIPSO Lidar Level 2 5km aerosol profile data V3-01</DataSetId><Description>CAL_LID_L2_05kmAPro-Prov-V3-01 data are CALIPSO Lidar Level 2 aerosol profile data using the CALIPSO Lidar Ratio selection algorithm.
+
+        The Lidar Level 2 Aerosol Profile data products contain averaged aerosol profile data and ancillary data. There are no layer descriptors included in the lidar aerosol profile data products. The spatial distribution of the aerosol layers is instead completely characterized by the aerosol layer fraction and atmospheric volume description parameters.
+
+        The aerosol profile products are generated at a uniform horizontal resolution of 5 km. The aerosol backscatter and extinction coefficients are computed using a lidar ratio selected by the CALIPSO Lidar Ratio selection algorithm.
+
+        Cloud-Aerosol Lidar and Infrared Pathfinder Satellite Observations (CALIPSO) was launched on April 28, 2006 to study the impact of clouds and aerosols on the Earth's radiation budget and climate. It flies in formation with five other satellites in the international "A-Train" (PDF) constellation for coincident Earth observations. The CALIPSO satellite comprises three instruments, the Cloud-Aerosol LIdar with Orthogonal Polarization (CALIOP), the Imaging Infrared Radiometer (IIR), and the Wide Field Camera (WFC). CALIPSO is a joint satellite mission between NASA and the French Agency, CNES.</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>Completed</CollectionState><SpatialKeywords><Keyword>GLOBAL</Keyword></SpatialKeywords><Temporal><RangeDateTime><BeginningDateTime>2006-06-13T00:00:00.000Z</BeginningDateTime><EndingDateTime>2009-02-16T23:59:59.999Z</EndingDateTime></RangeDateTime><RangeDateTime><BeginningDateTime>2009-03-17T00:00:00.000Z</BeginningDateTime><EndingDateTime>2011-10-31T23:59:59.999Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>DIF AUTHOR</Role><OrganizationEmails><Email>support-asdc@earthdata.nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>ASDC</FirstName><LastName>USER SERVICES</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>TECHNICAL CONTACT</Role><OrganizationEmails><Email>Charles.R.Trepte@nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>CHARLES</FirstName><LastName>TREPTE</LastName></ContactPerson></ContactPersons></Contact><Contact><Role>INVESTIGATOR</Role><OrganizationEmails><Email>david.m.winker@nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>DAVID</FirstName><LastName>WINKER</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL BACKSCATTER</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL EXTINCTION</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>LIDAR</TermKeyword><VariableLevel1Keyword><Value>LIDAR DEPOLARIZATION RATIO</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>CALIPSO</ShortName><LongName>Cloud-Aerosol Lidar and Infrared Pathfinder Satellite Observations</LongName><Type>Not provided</Type><Instruments><Instrument><ShortName>CALIOP</ShortName><LongName>Cloud-Aerosol Lidar with Orthogonal Polarization</LongName></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>link_notification.contact</Name><DataType>STRING</DataType><Description></Description><Value>emily.a.northup@nasa.gov</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>560cdb05-9e1c-455e-b7c5-ca90998725a1</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2015-09-21 15:32:18</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>EOS</ShortName><LongName>Earth Observing System</LongName></Campaign><Campaign><ShortName>EOSDIS</ShortName><LongName>Earth Observing System Data Information System</LongName></Campaign><Campaign><ShortName>ESIP_TS</ShortName><LongName>Earth Science Information Partners Program</LongName></Campaign><Campaign><ShortName>CALIPSO</ShortName><LongName>Cloud-Aerosol Lidar and Infrared Pathfinder Satellite Observations</LongName></Campaign><Campaign><ShortName>ESSP</ShortName><LongName>NASA Earth System Science Pathfinder</LongName></Campaign><Campaign><ShortName>CWIC</ShortName><LongName>CEOS WGISS Integrated Catalog</LongName></Campaign></Campaigns><OnlineAccessURLs><OnlineAccessURL><URL>http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&amp;spatial_map=satellite&amp;spatial_type=rectangle&amp;keywords=CALIPSO</URL><URLDescription>
+                 Access CALIPSO data via Reverb
+              </URLDescription></OnlineAccessURL><OnlineAccessURL><URL>https://eosweb.larc.nasa.gov/project/calipso/calipso_table</URL><URLDescription>
+                 Access CALIPSO data and information
+              </URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://www-calipso.larc.nasa.gov/</URL><Description>
+                 CALIPSO Home Page
+              </Description><Type>USER SUPPORT</Type></OnlineResource><OnlineResource><URL>http://www.nasa.gov/mission_pages/calipso/main/</URL><Description>
+                 NASA CALIPSO Mission Portal
+              </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-90</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
