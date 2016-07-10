@@ -21336,6 +21336,74 @@ c86afe63b59e42da37ef46569cfff59b7cb3e938:
         contains Level 2 total solar irradiance in the form of daily means gathered
         by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000257-DEV07","score":0.5,"original_format":"ECHO10","granule_count":4,"archive_center":"LaRC","browse_flag":false,"online_access_flag":false}]}}'
     http_version: 
+85bdd72687f9d461c3e7cc7637389bcdb2eec7b9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 20:12:19 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '49'
+      cmr-request-id:
+      - b7a9db48-9f27-43b7-b314-71026360e6eb
+      content-length:
+      - '510'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T20:12:19.063Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?temporal=2014-12-01T00%3A00%3A00.000Z%2C&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1002-LPDAAC_TBD%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+11a8febdc4577597a76213eafca7e4bf7c7b6ba3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 20:12:18 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '60'
+      cmr-request-id:
+      - 3332b758-5642-4ed7-9e02-61ae2813068a
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T20:12:18.644Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?temporal=2014-12-01T00%3A00%3A00.000Z%2C&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1002-LPDAAC_TBD%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"1A","boxes":["-90 -180
+        90 180"],"time_start":"1999-12-18T00:00:00.000Z","version_id":"3","updated":"2008-09-16T12:44:28.536Z","dataset_id":"ASTER
+        L1A Reconstructed Unprocessed Instrument Data V003","data_center":"LPDAAC_TBD","short_name":"AST_L1A","organizations":["LPDAAC","GDS"],"title":"ASTER
+        L1A Reconstructed Unprocessed Instrument Data V003","coordinate_system":"CARTESIAN","summary":"ASTER
+        level-1A data are the reconstructed, unprocessed instrument digital counts
+        with radiometric and geometric coefficients included.","has_granules":true,"orbit_parameters":{},"id":"C1002-LPDAAC_TBD","score":0.5,"original_format":"ECHO10","granule_count":0,"archive_center":"LPDAAC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Documents
+        page for LP DAAC ASTER Products. (MiscInformation)","hreflang":"en-US","href":"http://lpdaac.usgs.gov/aster/asterdataprod.asp"}]}]}}'
+    http_version: 
 feb5be950912ec7fec63303a48decc06c7e28b33:
   response:
     status:
