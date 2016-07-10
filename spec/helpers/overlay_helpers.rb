@@ -61,6 +61,10 @@ module Helpers
       nth_ccol(featured_collapsed_collection_results, 1)
     end
 
+    def collapsed_collection(col)
+      page.find('.ccol', text: col)
+    end
+
     def first_collapsed_collection
       nth_ccol(unfeatured_collapsed_collection_results, 1)
     end

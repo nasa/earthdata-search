@@ -18259,6 +18259,230 @@ ae6f8353df83c4eb8ae5ed11f4b32114b448b24c:
         SIPS-GHCC","type":"filter","applied":false,"count":1,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&data_center_h%5B%5D=AMSR-E+SIPS-GHCC&keyword=C1000000560-DEV08*&science_keywords_h%5B1%5D%5Btopic%5D=Spectral%2FEngineering&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Bcategory%5D=Earth+Science"},"has_children":false},{"title":"EDF_DEV08","type":"filter","applied":false,"count":1,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&data_center_h%5B%5D=EDF_DEV08&keyword=C1000000560-DEV08*&science_keywords_h%5B1%5D%5Btopic%5D=Spectral%2FEngineering&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Bcategory%5D=Earth+Science"},"has_children":false}]},{"title":"Processing
         levels","type":"group","applied":false,"has_children":true,"children":[{"title":"3","type":"filter","applied":false,"count":1,"links":{"apply":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&processing_level_id_h%5B%5D=3&keyword=C1000000560-DEV08*&science_keywords_h%5B1%5D%5Btopic%5D=Spectral%2FEngineering&include_tags=edsc.*%2Corg.ceos.wgiss.cwic.granules.prod&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Bcategory%5D=Earth+Science"},"has_children":false}]}]}}}'
     http_version: 
+b699d9b46f7dea279e1738ccd961c8eae2707e01:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:07 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '17'
+      cmr-request-id:
+      - b19d3d76-b7ee-432e-b1df-3e1fd65ce2e6
+      content-length:
+      - '447'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:07.510Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+6a4b05902e568437a87e948b027e41b997294f42:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:06 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '19376'
+      cmr-took:
+      - '26'
+      cmr-request-id:
+      - f65e0bb1-8d6a-4817-b652-71d505e982cf
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:06.822Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"dif_ids":["minimal_dif_dataset"],"version_id":"Not
+        provided","updated":"2013-10-22T00:00:00.000Z","dataset_id":"A minimal dif
+        dataset","data_center":"DEMO_PROV","short_name":"minimal_dif_dataset","organizations":["datacenter_short_name"],"title":"A
+        minimal dif dataset","summary":"summary of the dataset","has_granules":true,"orbit_parameters":{},"id":"C1000000083-DEMO_PROV","original_format":"DIF","granule_count":1,"browse_flag":false,"online_access_flag":false},{"processing_level_id":"2","time_start":"1999-12-20T00:00:00.000Z","dif_ids":["ACR3L2DM1"],"version_id":"1","updated":"2012-01-12T09:34:04.000Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"DEV07","short_name":"ACR3L2DM","organizations":["LaRC","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Daily Mean Data V001","summary":"This file
+        contains Level 2 total solar irradiance in the form of daily means gathered
+        by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000257-DEV07","original_format":"ECHO10","granule_count":4,"archive_center":"LaRC","browse_flag":false,"online_access_flag":false},{"processing_level_id":"2","time_start":"1999-10-01T12:00:00.000Z","dif_ids":["ACR3L2DM1"],"version_id":"001","updated":"2015-05-26T14:55:22.387Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","short_name":"ACR3L2DM","organizations":["EDF_OPS","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Daily Mean Data V001","summary":"This file
+        contains Level 2 total solar irradiance in the form of daily means gathered
+        by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000029-EDF_OPS","original_format":"ECHO10","granule_count":52,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"processing_level_id":"2","time_start":"1999-12-20T00:00:00.000Z","version_id":"1","updated":"2013-03-22T09:47:31.000Z","dataset_id":"ACRIM
+        III Level 2 Shutter Cycle Data V001","data_center":"DEV07","short_name":"ACR3L2SC","organizations":["LaRC","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Shutter Cycle Data V001","summary":"This
+        file contains Level 2 total solar irradiance in the form of shutter cycles
+        gathered by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000087-DEV07","original_format":"ECHO10","granule_count":2,"archive_center":"LaRC","browse_flag":false,"online_access_flag":false},{"processing_level_id":"2","time_start":"1999-10-01T12:00:00.000Z","dif_ids":["ACR3L2SC1"],"version_id":"001","updated":"2003-02-04T16:10:02.366Z","dataset_id":"ACRIM
+        III Level 2 Shutter Cycle Data V001","data_center":"EDF_OPS","short_name":"ACR3L2SC","organizations":["EDF_OPS","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Shutter Cycle Data V001","summary":"This
+        file contains Level 2 total solar irradiance in the form of shutter cycles
+        gathered by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000163-EDF_OPS","original_format":"ECHO10","granule_count":1,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"processing_level_id":"2","boxes":["-89
+        -180 89 180"],"time_start":"1999-06-01T00:46:02.000Z","dif_ids":["amsua15sp"],"version_id":"1","updated":"2009-11-05T13:33:23.000Z","dataset_id":"ADVANCED
+        MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-15 V1","data_center":"GHRC","short_name":"amsua15sp","title":"ADVANCED
+        MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-15 V1","coordinate_system":"CARTESIAN","summary":"AMSU-A,the
+        Advanced Microwave Sounding Unit, is a 15-channel passive microwave radiometer
+        used to profile atmospheric temperature and moisture from the earth''s surface
+        to ~45 km (3 millibars).  All orbits beginning in the day (00:00:00 - 23:59:59
+        UTC) are stored in one daily HDF-EOS file.  There are 15 (channel) arrays,
+        as well as corresponding Latitude, Longitude, and Time.  Each daily file is
+        compressed (gzip).","has_granules":true,"orbit_parameters":{},"id":"C1181-GHRC","original_format":"ECHO10","granule_count":30,"browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub2/data/amsu-a/noaa-15/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Software)","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/amsu_a/amsuareader.c"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Homepage)","hreflang":"en-US","href":"http://discover.itsc.uah.edu/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Guide)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/amsu_a/amsu-a_dataset.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","title":"(Browse)","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub/browse/amsu-a/noaa-15/"}]},{"processing_level_id":"2","boxes":["-89
+        -180 89 180"],"time_start":"2001-05-27T00:41:30.000Z","dif_ids":["amsua16sp"],"version_id":"1","updated":"2009-11-05T13:33:23.000Z","dataset_id":"ADVANCED
+        MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-16 V1","data_center":"GHRC","short_name":"amsua16sp","title":"ADVANCED
+        MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-16 V1","coordinate_system":"CARTESIAN","summary":"AMSU-A,the
+        Advanced Microwave Sounding Unit, is a 15-channel passive microwave radiometer
+        used to profile atmospheric temperature and moisture from the earth''s surface
+        to ~45 km (3 millibars).  All orbits beginning in the day (00:00:00 - 23:59:59
+        UTC) are stored in one daily HDF-EOS file.  There are 15 (channel) arrays,
+        as well as corresponding Latitude, Longitude, and Time.  Each daily file is
+        compressed (gzip).","has_granules":true,"time_end":"2008-03-04T00:38:06.000Z","orbit_parameters":{},"id":"C1180-GHRC","original_format":"ECHO10","granule_count":12,"browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub2/data/amsu-a/noaa-16/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Software)","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub/doc/amsu_a/amsuareader.c"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Guide)","hreflang":"en-US","href":"http://ghrc.nsstc.nasa.gov/uso/ds_docs/amsu_a/amsu-a_dataset.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","title":"(Browse)","hreflang":"en-US","href":"ftp://ghrc.nsstc.nasa.gov/pub/browse/amsu-a/noaa-16/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Homepage)","hreflang":"en-US","href":"http://discover.itsc.uah.edu/"}]},{"version_id":"1","updated":"2000-01-01T00:00:00.000Z","dataset_id":"AIRS
+        Sample Near Real Time V1a","data_center":"DEMO_PROV","short_name":"AIRSSampleNearRealTime","organizations":["DEMO_PROV"],"title":"AIRS
+        Sample Near Real Time V1a","summary":"Weapon X Nikki Near Real the Mystic
+        Yrial Hulk 2099a","has_granules":true,"orbit_parameters":{},"id":"C1000000060-DEMO_PROV","original_format":"ECHO10","collection_data_type":"NEAR_REAL_TIME","granule_count":1,"archive_center":"DEMO_PROV","browse_flag":false,"online_access_flag":false},{"processing_level_id":"0","time_start":"1997-07-31T00:00:00.000Z","version_id":"1","updated":"2013-10-04T08:49:26.338Z","dataset_id":"AM-1
+        Ancillary APIDx4 V001","data_center":"DEV08","short_name":"AM1ANC","organizations":["EDF_DEV08","EDOS"],"title":"AM-1
+        Ancillary APIDx4 V001","summary":"AM-1 Ancillary APIDx4","has_granules":true,"orbit_parameters":{},"id":"C1000000808-DEV08","original_format":"ECHO10","granule_count":6,"archive_center":"EDF_DEV08","browse_flag":false,"online_access_flag":false},{"processing_level_id":"0","time_start":"1998-06-30T00:00:00.000Z","version_id":"001","updated":"2001-06-05T16:27:43.706Z","dataset_id":"AM-1
+        Ancillary APIDx4 V001","data_center":"EDF_OPS","short_name":"AM1ANC","organizations":["EDF_OPS","EDOS"],"title":"AM-1
+        Ancillary APIDx4 V001","summary":"AM-1 Ancillary APIDx4","has_granules":true,"orbit_parameters":{},"id":"C1000000773-EDF_OPS","original_format":"ECHO10","granule_count":7,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false},{"processing_level_id":"0","version_id":"1","updated":"2006-11-01T13:28:48.900Z","dataset_id":"AMSR-E
+        Predicted Orbital Events (1-week) V001","data_center":"DEV07","short_name":"AEPOE1W","organizations":["EDF_DEV07","GSFC"],"title":"AMSR-E
+        Predicted Orbital Events (1-week) V001","summary":"AMSR-E Predicted Orbital
+        Events (1-week)","has_granules":true,"orbit_parameters":{},"id":"C1000000127-DEV07","original_format":"ECHO10","granule_count":2,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["AE_5DSno"],"version_id":"2","updated":"2010-09-02T15:30:57.960Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"EDF_DEV06","short_name":"AE_5DSno","organizations":["EDF_DEV06","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"orbit_parameters":{},"id":"C1000000085-EDF_DEV06","original_format":"ECHO10","granule_count":8,"archive_center":"EDF_DEV06","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://wwwghcc.msfc.nasa.gov/AMSR/qa.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/AMSR
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_5DSno"],"version_id":"002","updated":"2014-05-14T14:47:05.109Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"EDF_OPS","short_name":"AE_5DSno","organizations":["EDF_OPS","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000411-EDF_OPS","original_format":"ECHO10","granule_count":13,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_5DSno"],"version_id":"002","updated":"2015-06-05T12:38:08.796Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"DEV08","short_name":"AE_5DSno","organizations":["DEV08","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000967-DEV08","original_format":"ECHO10","granule_count":7,"archive_center":"DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_5DSno"],"version_id":"002","updated":"2015-06-05T12:48:01.299Z","dataset_id":"AMSR-E/Aqua
+        5-Day L3 Global Snow Water Equivalent EASE-Grids V002","data_center":"DEV07","short_name":"AE_5DSno","organizations":["EDF_DEV07","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua 5-Day L3 Global Snow Water Equivalent EASE-Grids
+        V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua Level-3 5-day
+        snow water equivalent (SWE) product includes global 5-day maximum SWE on Northern
+        and Southern Hemisphere 25 km EASE-Grids, generated by the GSFC algorithm
+        using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000001170-DEV07","original_format":"ECHO10","granule_count":6,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_swe_ease-grids.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["AE_SI12"],"version_id":"2","updated":"2010-09-02T15:31:18.560Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V002","data_center":"EDF_DEV06","short_name":"AE_SI12","organizations":["EDF_DEV06","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow
+        Depth Polar Grids V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level 3 12.5 km daily sea ice product includes 18.7 - 89.0 GHz TBs, sea ice
+        concentration averages (asc & desc), and 5-day snow depth over sea ice on
+        a 12.5 km polar stereographic grid, generated by the NT2 algorithm using Level-2A
+        TBs.","has_granules":true,"orbit_parameters":{},"id":"C1000000292-EDF_DEV06","original_format":"ECHO10","granule_count":1,"archive_center":"EDF_DEV06","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://wwwghcc.msfc.nasa.gov/AMSR/qa.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si12_12km_tb_sea_ice_and_snow.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/AMSR
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_SI12"],"version_id":"3","updated":"2014-01-27T07:34:34.100Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V003","data_center":"DEV08","short_name":"AE_SI12","organizations":["EDF_DEV08","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow
+        Depth Polar Grids V003","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level 3 12.5 km daily sea ice product includes 18.7 - 89.0 GHz TBs, sea ice
+        concentration averages (asc & desc), and 5-day snow depth over sea ice on
+        a 12.5 km polar stereographic grid, generated by the NT2 algorithm using Level-2A
+        TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000560-DEV08","original_format":"ECHO10","granule_count":27,"archive_center":"EDF_DEV08","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si12_12km_tb_sea_ice_and_snow.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_SI12"],"version_id":"003","updated":"2015-08-18T16:35:00.909Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 12.5 km Tb, Sea Ice Conc., & Snow Depth Polar Grids V003","data_center":"DEV07","short_name":"AE_SI12","organizations":["EDF_DEV07","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 12.5 km Tb, Sea Ice Conc., & Snow
+        Depth Polar Grids V003","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level 3 12.5 km daily sea ice product includes 18.7 - 89.0 GHz TBs, sea ice
+        concentration averages (asc & desc), and 5-day snow depth over sea ice on
+        a 12.5 km polar stereographic grid, generated by the NT2 algorithm using Level-2A
+        TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000001042-DEV07","original_format":"ECHO10","granule_count":7,"archive_center":"EDF_DEV07","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si12_12km_tb_sea_ice_and_snow.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","dif_ids":["AE_SI25"],"version_id":"002","updated":"2014-05-14T14:47:15.461Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V002","data_center":"EDF_OPS","short_name":"AE_SI25","organizations":["EDF_OPS","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration
+        Polar Grids V002","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-3 25 km daily sea ice product includes 6.9 - 89.0 GHz TBs and sea ice
+        concentration averages (daily, ascending, and descending) on a 25 km polar
+        stereographic grid, generated by the NT2 algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000001042-EDF_OPS","original_format":"ECHO10","granule_count":2,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si25_25km_tb_and_sea_ice.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]},{"processing_level_id":"3","boxes":["-90
+        -180 90 180"],"time_start":"2002-06-01T00:11:22.000Z","version_id":"3","updated":"2015-01-28T14:01:37.484Z","dataset_id":"AMSR-E/Aqua
+        Daily L3 25 km Tb and Sea Ice Concentration Polar Grids V003","data_center":"EDF_TS2","short_name":"AE_SI25","organizations":["EDF_TS2","AMSR-E
+        SIPS-GHCC"],"title":"AMSR-E/Aqua Daily L3 25 km Tb and Sea Ice Concentration
+        Polar Grids V003","coordinate_system":"CARTESIAN","summary":"The AMSR-E/Aqua
+        Level-3 25 km daily sea ice product includes 6.9 - 89.0 GHz TBs and sea ice
+        concentration averages (daily, ascending, and descending) on a 25 km polar
+        stereographic grid, generated by the NT2 algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{},"id":"C1000000208-EDF_TS2","original_format":"ECHO10","granule_count":1,"archive_center":"EDF_TS2","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
+        Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_si25_25km_tb_and_sea_ice.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
+        Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}]}}'
+    http_version: 
+1b0e2d790cc5854256a8c8c430eaa61df87d6adb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:09 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '62'
+      cmr-request-id:
+      - 5fa68a5d-08e7-4742-86c3-28e1d7706ec8
+      content-length:
+      - '474'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:09.509Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1000000083-DEMO_PROV%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
 5e8894a58e91e8a344519eec2f1b271c8aca8afe:
   response:
     status:
@@ -18289,6 +18513,133 @@ ae6f8353df83c4eb8ae5ed11f4b32114b448b24c:
       encoding: UTF-8
       string: '{"feed":{"updated":"2016-07-10T02:37:45.840Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1000000257-DEV07%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[]}}'
+    http_version: 
+d9b1633c22fdaca3d1a337788d7c13f36291f750:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:11 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '46'
+      cmr-request-id:
+      - 7897028e-c38a-43ba-8ca7-aa4968954856
+      content-length:
+      - '469'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:11.943Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1002-LPDAAC_TBD%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+79a8e825ea62b62cb542c4deaa79603577fbe77f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:13 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '77'
+      cmr-request-id:
+      - 6d2664e9-f28d-4c06-8e4f-738a0c241c96
+      content-length:
+      - '470'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:13.259Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1200019403-MMT_2%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+256a28b924f5bad5003e153699b270d87289045c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:10 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '49'
+      cmr-request-id:
+      - 5e327e55-76d4-4c66-8833-2b90b665df74
+      content-length:
+      - '471'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:10.797Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1200208323-SCIOPS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+993163d2d8231d8b8494ca981f8da35a12cad261:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:08 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '74'
+      cmr-request-id:
+      - 95a7ec6e-fe00-4403-b6a6-f82fdb359d07
+      content-length:
+      - '857'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:08.713Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1000000083-DEMO_PROV%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"dif_ids":["minimal_dif_dataset"],"version_id":"Not
+        provided","updated":"2013-10-22T00:00:00.000Z","dataset_id":"A minimal dif
+        dataset","data_center":"DEMO_PROV","short_name":"minimal_dif_dataset","organizations":["datacenter_short_name"],"title":"A
+        minimal dif dataset","summary":"summary of the dataset","has_granules":true,"orbit_parameters":{},"id":"C1000000083-DEMO_PROV","score":0.5,"original_format":"DIF","granule_count":1,"browse_flag":false,"online_access_flag":false}]}}'
     http_version: 
 977ac8d78fe8569cfc114dac5839f1141c2ff2c7:
   response:
@@ -18324,6 +18675,189 @@ ae6f8353df83c4eb8ae5ed11f4b32114b448b24c:
         SCF"],"title":"ACRIM III Level 2 Daily Mean Data V001","summary":"This file
         contains Level 2 total solar irradiance in the form of daily means gathered
         by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000257-DEV07","score":0.5,"original_format":"ECHO10","granule_count":4,"archive_center":"LaRC","browse_flag":false,"online_access_flag":false}]}}'
+    http_version: 
+8f9b6da1d91b7179add19224d40ebf41b2998e62:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:11 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '75'
+      cmr-request-id:
+      - f199c164-656f-4b76-9683-bd396ce3c64d
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:11.615Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1002-LPDAAC_TBD%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"1A","boxes":["-90 -180
+        90 180"],"time_start":"1999-12-18T00:00:00.000Z","version_id":"3","updated":"2008-09-16T12:44:28.536Z","dataset_id":"ASTER
+        L1A Reconstructed Unprocessed Instrument Data V003","data_center":"LPDAAC_TBD","short_name":"AST_L1A","organizations":["LPDAAC","GDS"],"title":"ASTER
+        L1A Reconstructed Unprocessed Instrument Data V003","coordinate_system":"CARTESIAN","summary":"ASTER
+        level-1A data are the reconstructed, unprocessed instrument digital counts
+        with radiometric and geometric coefficients included.","has_granules":true,"orbit_parameters":{},"id":"C1002-LPDAAC_TBD","score":0.5,"original_format":"ECHO10","granule_count":2149,"archive_center":"LPDAAC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Documents
+        page for LP DAAC ASTER Products. (MiscInformation)","hreflang":"en-US","href":"http://lpdaac.usgs.gov/aster/asterdataprod.asp"}]}]}}'
+    http_version: 
+89fbd4cf862dbcbcdc94a0eedbc40af4ac4e7887:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:12 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '45'
+      cmr-request-id:
+      - 6f310d07-1339-4aef-acd0-9a55bcb04abf
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:12.866Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1200019403-MMT_2%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"Level 0","time_start":"2015-09-20T00:00:00.000Z","version_id":"2","updated":"2001-01-01T00:00:00.000Z","dataset_id":"Matthew''s
+        Test","points":["0 0"],"data_center":"MMT_2","short_name":"Matthew''sTest","title":"Matthew''s
+        Test","coordinate_system":"CARTESIAN","summary":"test abstract","has_granules":false,"time_end":"2015-09-20T00:00:00.000Z","orbit_parameters":{},"id":"C1200019403-MMT_2","score":0.5,"original_format":"UMM_JSON","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(UNKNOWN)","hreflang":"en-US","href":"http://youtube.com"}]}]}}'
+    http_version: 
+1a48be8a019af20375d1acec3a980b00d0b58e4d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:10 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '49'
+      cmr-request-id:
+      - c8b6a593-0f2f-4f94-b594-a9f504d71750
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:10.441Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1200208323-SCIOPS%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["13.71 -177.1 76.63 -61.48"],"time_start":"1989-01-01T00:00:00.000Z","dif_ids":["USDA0382"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"1989 Wildlife
+        Assessment Database","data_center":"SCIOPS","short_name":"USDA0382","organizations":["USDA/FS/RMRS"],"title":"1989
+        Wildlife Assessment Database","coordinate_system":"CARTESIAN","summary":"The
+        \"1989 Wildlife Assessment Database\" contains information on\nanimal population
+        and harvest statistics. Its purpose is to\ngather national data supporting
+        analysis of recent historical\ntrends in resource supply and demand for RPA
+        Assessments.\n\n\nCollection Organization: USDA Forest Service\n\nCollection
+        Methodology: N/A\n\nCollection Frequency: Varies from state to state, approximately\n5
+        year intervals.\n\nUpdate Characteristics: N/A\n\n STATISTICAL INFORMATION:\n\nApproximately
+        5 MB.\n LANGUAGE:\n\nEnglish\n ACCESS/AVAILABILITY:\n\nData Center: USDA Forest
+        Service\nDissemination Media: Bernoulli Flexible Disk Cartridge\nFile Format:
+        Raw data from State Wildlife Agencies.  Stored in\ndBase IV.\nAccess Instructions:
+        Contact the data center.\nAccess Restrictions: States provided data under
+        an agreement\nthat the Forest Service would not release state data without\nwritten
+        permission from the state wildlife director. The agency\ncan release regional
+        and national summaries of the data.\nCurrently, this data base is not being
+        maintained because of\nlost personnel. This data base would require much work
+        before\nany formal release.","has_granules":false,"time_end":"1989-12-31T23:59:59.000Z","orbit_parameters":{},"id":"C1200208323-SCIOPS","score":0.5,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false}]}}'
+    http_version: 
+c25e63ce64b4a92c659ebb5f219e4a970f3eee55:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:17 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '49'
+      cmr-request-id:
+      - 93a872df-f512-44d5-8a0b-9f8e9e2b247b
+      content-length:
+      - '482'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:17.203Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?point=0%2C0&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1200019403-MMT_2%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+dfd5ff6897d15a9dc846ca84dc801d04c5ab6561:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:16 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '67'
+      cmr-request-id:
+      - e0b54b7b-a6bb-42d2-97bc-b824aa095a9e
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:16.787Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?point=0%2C0&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1200019403-MMT_2%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"Level 0","time_start":"2015-09-20T00:00:00.000Z","version_id":"2","updated":"2001-01-01T00:00:00.000Z","dataset_id":"Matthew''s
+        Test","points":["0 0"],"data_center":"MMT_2","short_name":"Matthew''sTest","title":"Matthew''s
+        Test","coordinate_system":"CARTESIAN","summary":"test abstract","has_granules":false,"time_end":"2015-09-20T00:00:00.000Z","orbit_parameters":{},"id":"C1200019403-MMT_2","score":0.5,"original_format":"UMM_JSON","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(UNKNOWN)","hreflang":"en-US","href":"http://youtube.com"}]}]}}'
     http_version: 
 01293211b05199adbf7c67b2bed4826c4645a9fb:
   response:

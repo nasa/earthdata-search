@@ -1,0 +1,77 @@
+---
+100a4ceb11a02d26e70c36dcc024eb3da5729d35:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:18 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - dbbf8679-7452-4d80-9ba2-4463667eb0f3
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Collection>
+           <ShortName>Matthew'sTest</ShortName>
+           <VersionId>2</VersionId>
+           <InsertTime>2001-01-01T00:00:00.000Z</InsertTime>
+           <LastUpdate>2001-01-01T00:00:00.000Z</LastUpdate>
+           <LongName>dummy-long-name</LongName>
+           <DataSetId>Matthew's Test</DataSetId>
+           <Description>test abstract</Description>
+           <Orderable>true</Orderable>
+           <Visible>true</Visible>
+           <ProcessingLevelId>Level 0</ProcessingLevelId>
+           <ProcessingLevelDescription>none</ProcessingLevelDescription>
+           <Temporal>
+              <SingleDateTime>2015-09-20T00:00:00.000Z</SingleDateTime>
+           </Temporal>
+           <ScienceKeywords>
+              <ScienceKeyword>
+                 <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>
+                 <TopicKeyword>PALEOCLIMATE</TopicKeyword>
+                 <TermKeyword>OCEAN/LAKE RECORDS</TermKeyword>
+              </ScienceKeyword>
+           </ScienceKeywords>
+           <Platforms>
+              <Platform>
+                 <ShortName>testing</ShortName>
+                 <LongName>testing long name</LongName>
+                 <Type>test type</Type>
+              </Platform>
+           </Platforms>
+           <OnlineResources>
+              <OnlineResource>
+                 <URL>http://youtube.com</URL>
+                 <Type>UNKNOWN</Type>
+              </OnlineResource>
+           </OnlineResources>
+           <Spatial>
+              <SpatialCoverageType>HORIZONTAL</SpatialCoverageType>
+              <HorizontalSpatialDomain>
+                 <Geometry>
+                    <CoordinateSystem>CARTESIAN</CoordinateSystem>
+                    <Point>
+                       <PointLongitude>0.0</PointLongitude>
+                       <PointLatitude>0.0</PointLatitude>
+                    </Point>
+                 </Geometry>
+              </HorizontalSpatialDomain>
+              <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>
+           </Spatial>
+        </Collection>
+    http_version: 

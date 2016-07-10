@@ -1,0 +1,33 @@
+---
+41e678f1b0cf977e2c25661b814d7ffec62dfbb5:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Sun, 10 Jul 2016 19:40:20 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '15'
+      cmr-request-id:
+      - b39324ae-8ddf-4177-b47f-7ebb9e8ee9b5
+      content-length:
+      - '476'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-10T19:40:20.516Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C1000000083-DEMO_PROV&page_num=1&page_size=20&sort_key%5B%5D=-start_date","title":"ECHO
+        granule metadata","entry":[{"updated":"2010-01-05T10:30:30.550Z","dataset_id":"A
+        minimal dif dataset","data_center":"DEMO_PROV","title":"GranuleUR100","id":"G1000000440-DEMO_PROV","original_format":"ECHO10","browse_flag":false,"online_access_flag":false}]}}'
+    http_version: 
