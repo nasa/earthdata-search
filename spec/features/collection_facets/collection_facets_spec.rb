@@ -89,13 +89,13 @@ describe "Collection Facets", reset: false do
     end
 
     it "collapses and expands facet lists by type" do
-      expect(page).to have_css("#collapse5.facets-list-hide")
+      expect(page).to have_css(".panel.projects .facets-list-hide")
 
       find("h3.panel-title", text: "Project").click
-      expect(page).to have_css("#collapse5.facets-list-show")
+      expect(page).to have_css(".panel.projects .facets-list-show")
 
       find("h3.panel-title", text: "Project").click
-      expect(page).to have_css("#collapse5.facets-list-hide")
+      expect(page).to have_css(".panel.projects .facets-list-hide")
     end
   end
 
@@ -265,7 +265,7 @@ describe "Collection Facets", reset: false do
     end
 
     it "continues to display applied facets" do
-      within(:css, '#collapse1 .panel-body.facets') do
+      within(:css, '.panel.keywords .panel-body.facets') do
         expect(page).to have_content("Atmosphere")
       end
     end
