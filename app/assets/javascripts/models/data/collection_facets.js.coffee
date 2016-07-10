@@ -60,7 +60,7 @@ ns.CollectionFacets = do (ko) ->
       @parent.title == 'Features'
 
     isChild: =>
-      !@isFeature() && !@isAncestor() && @hierarchyIndex() > 1 && @_scienceKeywordFacet()
+      !@isFeature() && !@isAncestor() && @hierarchyIndex() > 2 && @_scienceKeywordFacet()
 
     isParent: =>
       !@isFeature() && @isAncestor() && @_noChildrenSelected()
