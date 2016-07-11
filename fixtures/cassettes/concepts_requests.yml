@@ -154,6 +154,23 @@ http_interactions:
   digest: 38abcc1d87c03f96966b83cacc91071898f8b11d
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C4543622-LARC_ASDC.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 11 Jul 2016 16:15:18 GMT
+  digest: 3590d4a3d39fcf403f75acea942bb337a3deaf59
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000257-DEV07.echo10
     body:
       encoding: US-ASCII
