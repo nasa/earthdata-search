@@ -117,6 +117,48 @@ f085ea3c29b348aa041da1fc8bd7ef275145800a:
         type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"19AFC933-5015-F5D6-0D38-C2414CCB520F","name":"M*D29P1D
         Order Option","scope":"PROVIDER"}}'
     http_version: 
+db4b48585584f8241acc7e65cbdca85f83e58d0f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"ace3cde7faddbd040a8fdf397a1b9b42"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.096000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 11 Jul 2016 18:46:45 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":true,"description":"Ftp_Pull","form":"<form
+        xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:echo=\"http://provider_refer_system_must_match_this\"
+        xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"http://for_further_reference\">\n\n<!--
+        ORNL media option example  -->\n\n<import name=\"ECHO_SYSTEM_OPTIONS_V1\"/>\n<model>\n  <instance>\n    <providerOptions
+        xmlns=\"http://schema_verify_provider_instance_and_match_alias\" xmlns:prov=\"http://schema_verify_provider_instance_and_match_alias\"
+        xmlns:sys=\"http://schema_verify_system_instance_and_match_alias\">\n        <mediaOptions>\n          <mediaType/>\n          <mediaFormat/>\n       </mediaOptions>\n    </providerOptions>\n  </instance>\n</model>\n\n<ui>\n  <group
+        label=\"Media Options\" ref=\"prov:mediaOptions\">\n    <selectref idref=\"echo:mediaTypeSelect\"
+        label=\"Offered Media Delivery Types\" ref=\"prov:mediaType\">\n        <item
+        label=\"FTP Pull\" value=\"FTPPULL\"/>\n    </selectref>\n    <selectref idref=\"echo:mediaFormatSelect\"
+        label=\"Offered Media Format for FTPPULL\" ref=\"prov:mediaFormat\" relevant=\"prov:mediaType/prov:value=''FTPPULL''\">\n        <item
+        label=\"Tape Archive Format (TAR)\" value=\"TAR\"/>\n        <item label=\"Gzipped
+        Tape Archive Format (TARGZ)\" value=\"TARGZ\"/>\n        <item label=\"PK/Win
+        Zip Format\" value=\"WINZIP\"/>\n    </selectref>\n  </group>\n\n</ui>\n</form>","id":"5F92533B-A6C8-896F-46D4-7516CE7CDDC4","name":"Ftp_Pull","scope":"PROVIDER"}}'
+    http_version: 
 dd14e77fedc4882c6f9d0e80196735350b635dec:
   response:
     status:
@@ -292,4 +334,172 @@ dd14e77fedc4882c6f9d0e80196735350b635dec:
         label=\"SWE_SouthernPentad\" value=\"SWE_SouthernPentad\"/>\n                    <item
         label=\"Flags_SouthernPentad\" value=\"Flags_SouthernPentad\"/>\n               </select>\n            </group>\t\t\n        </group>\n    </ui>\n</form>","id":"906C81F9-4941-1D4D-2EB5-07B6DBBBBDFA","name":"AE_5DSno
         Order Options","scope":"PROVIDER"}}'
+    http_version: 
+6e5f41bd3563ffc533d86ecfa47b3c6e7f5b39a8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"cbc74e1015164f6fa07b3cec24ab9e56"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.110000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 11 Jul 2016 18:46:58 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"Available order
+        options for MYD29P1N or MOD29P1N","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n\t<model>\n\t\t<instance>\n\t\t\t<ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\">\n\t\t\t\t<!--
+        ECS distribution options example -->\n\t\t\t\t<ecs:distribution>\n\t\t\t\t\t<ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                        <ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                    </ecs:mediaformat>\n\t\t\t\t\t<ecs:ftppush>\n\t\t\t\t\t<ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n\t\t\t\t\t</ecs:ftppush>\n\t\t\t\t</ecs:distribution>               \n\t\t\t\t<ecs:do-processing>false</ecs:do-processing>\n\t\t\t\t<ecs:processing>\n\t\t\t\t\t<!--
+        This must be populated with the subsetter''s endpoint -->\n\t\t\t\t\t<ecs:endpoint>http://n4esl01.nsidcb.ecs.nasa.gov:8000/sam-cgi-bin/poochie</ecs:endpoint>\n\t\t\t\t\t<!--
+        This tag is a constant and is required for the HSA subsetter -->\n\t\t\t\t\t<ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n\t\t\t\t\t<!--
+        One or more of BoundingBox, DateRange, and/or FieldList MUST be specified
+        -->\n\t\t\t\t\t<hsa:SubsettingCriteria>\t\t\t\t\t\n\t\t\t\t\t\t<!-- GranuleSize
+        is required -->\n\t\t\t\t\t\t<hsa:GranuleSize granule-specific=\"true\">1.0</hsa:GranuleSize>\n\t\t\t\t\t\t<!--
+        XYBox is optional, required only for geographic subsetting.  Mutually exclusive
+        with BoundingBox. -->\n\t\t\t\t\t    <hsa:spatial-subsetting granule-specific=\"true\">false</hsa:spatial-subsetting>\n                        <hsa:XYBox>\n                         <hsa:Projection
+        granule-specific=\"true\">\n                         <hsa:Value>North EASE-Grid</hsa:Value>\n                         </hsa:Projection>\n\t\t\t\t\t\t\t<hsa:ULRow>0</hsa:ULRow>\n\t\t\t\t\t\t\t<hsa:ULCol>0</hsa:ULCol>\n\t\t\t\t\t\t\t<hsa:LRRow>0</hsa:LRRow>\n\t\t\t\t\t\t\t<hsa:LRCol>0</hsa:LRCol>\n\t\t\t\t\t\t</hsa:XYBox>\n                        <!--
+        FieldList is optional, required only for parameter subsetting -->\n                        <hsa:parameter-subsetting
+        granule-specific=\"true\">false</hsa:parameter-subsetting>\n                          <hsa:Fields>  \n\t\t\t\t\t\t\t<hsa:FieldList>\n                                <hsa:FieldName>Ice_Surface_Temperature</hsa:FieldName>\n                                <!--
+        Add other field names here -->\n                            </hsa:FieldList>\n\t\t\t\t\t\t  </hsa:Fields>\t    \t\t\t\t\t\n\t\t\t\t\t</hsa:SubsettingCriteria>\n\t\t\t\t</ecs:processing>\n\t\t\t\t<ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
+        \n                <ecs:ancillary>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n\t\t\t</ecs:options>\n\t\t</instance>\n       <!--
+        Required to populate the subsetter''s GranuleSize tag -->\n        <extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n            <auto:expressions>\n                <auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/ecs:processing/hsa:SubsettingCriteria/hsa:GranuleSize\"/>\n            </auto:expressions>\n\t\t</extension>\n\t</model>\n\t<ui>\n        <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
+        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
+        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"FTP Pull\" value=\"FtpPull\"/>\n                <item label=\"FTP
+        Push\" value=\"FtpPush\"/>        \n            </select>\n\n            <group
+        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
+        = ''FtpPush''\">\n                <input label=\"Username\" ref=\"ecs:user\"
+        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <secret
+        label=\"Password\" ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value
+        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"Hostname\"
+        ref=\"ecs:host\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <input
+        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
+        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"User
+        string\" ref=\"ecs:user-string\" type=\"xsd:string\"/>\n            </group>\n          <select
+        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
+        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
+        valueElementName=\"value\">\n           <item label=\"File\" value=\"FILEFORMAT\"/>\n          </select>\n          <select
+        id=\"mediaFormatSelectFTPPUSH\" label=\"Media Format\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\" relevant=\"ecs:mediatype/ecs:value
+        = ''FtpPush''\" required=\"ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"
+        valueElementName=\"value\">\n           <item label=\"File\" value=\"FILEFORMAT\"/>\n          </select>\n        </group>\n        <input
+        id=\"processingSwitch\" label=\"Check here for Subsetting Options\" ref=\"ecs:do-processing\"
+        relevant=\"//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
+        = ''FtpPush''\" type=\"xsd:boolean\">\n                 <constraints>\n                   <constraint>\n                     <xpath>//ecs:do-processing
+        = ''false'' or (//hsa:spatial-subsetting = ''true'' or //hsa:parameter-subsetting
+        = ''true'')</xpath>\n                     <alert>If you require processing,
+        please select either spatial or parameter subsetting or both</alert>\n                   </constraint>\n                 </constraints>\n        </input>\n\n        <group
+        xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\" id=\"subsettingOptionsGroup\"
+        label=\"Subsetting Options\" ref=\"ecs:processing\" relevant=\"//ecs:do-processing
+        = ''true'' and (//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
+        = ''FtpPush'')\">\n          <input id=\"spatialSwitch\" label=\"Spatial Subsetting?\"
+        ref=\"hsa:SubsettingCriteria/hsa:spatial-subsetting\" relevant=\"//ecs:do-processing
+        = ''true''\" type=\"xsd:boolean\">\n          </input>\n\t\t\t   \n        <group
+        id=\"XYBox\" label=\"XY Bounding Box\" ref=\"//hsa:XYBox\" relevant=\"//hsa:spatial-subsetting
+        = ''true''\">\n            <select label=\"Projections\" multiple=\"false\"
+        open=\"false\" ref=\"//hsa:Projection\" relevant=\"false\" type=\"xsd:string\"
+        valueElementName=\"Value\">\n                <item label=\"North EASE-Grid\"
+        value=\"North EASE-Grid\"/>\n                <item label=\"South EASE-Grid\"
+        value=\"South EASE-Grid\"/>  \n\t    </select>\n            <input label=\"Upper
+        Left Row\" ref=\"hsa:ULRow\" type=\"xsd:int\"/>             \n            <input
+        label=\"Upper Left Column\" ref=\"hsa:ULCol\" type=\"xsd:int\"/>              \n            <input
+        label=\"Lower Right Row\" ref=\"hsa:LRRow\" type=\"xsd:int\"/>              \n            <input
+        label=\"Lower Right Column\" ref=\"hsa:LRCol\" type=\"xsd:int\"/>         \n        </group>\n  \n           <input
+        id=\"parameterSwitch\" label=\"Parameter Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:parameter-subsetting\"
+        type=\"xsd:boolean\">\n            </input>                       \n         <group
+        label=\"Parameter Selection\" ref=\"hsa:SubsettingCriteria/hsa:Fields\" relevant=\"hsa:SubsettingCriteria/hsa:parameter-subsetting
+        = ''true''\">\n            <select label=\"Parameters\" multiple=\"true\"
+        open=\"false\" ref=\"hsa:FieldList\" type=\"xsd:string\" valueElementName=\"FieldName\">\n              <constraints>\n                 <constraint>\n                    <xpath>//hsa:FieldName
+        != ''''</xpath>\n                    <alert>If you require parameter subsetting
+        you must select a parameter</alert>\n                 </constraint>\n              </constraints>\n                   <item
+        label=\"Ice_Surface_Temperature\" value=\"Ice_Surface_Temperature\"/>\n\t\t\t\t\t<item
+        label=\"Ice_Surface_Temperature_Spatial_QA\" value=\"Ice_Surface_Temperature_Spatial_QA\"/>\n\t\t\t\t\t<item
+        label=\"Sea_Ice_by_Ice_Surface_Temperature\" value=\"Sea_Ice_by_Ice_Surface_Temperature\"/>\n\t        </select>\n        </group>\t\t\n    </group>\n\t\t<output
+        id=\"subsetWarningOuput\" label=\"\" type=\"xsd:string\" value=\"'' -- Browse
+        products cannot be ordered when subsetting is selected''\"/> \n    \t<input
+        id=\"ancillarySwitch\" label=\"Check here for Browse data options\" ref=\"ecs:do-ancillaryprocessing\"
+        type=\"xsd:boolean\"/>  \n        <group id=\"checkancillaryoptions\" label=\"
+        \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing =   ''true''\">
+        \n           <constraints>\n              <constraint>\n              <xpath>//ecs:do-processing
+        = ''false'' </xpath>\n              <alert>Subsetting option is not allowed
+        with ancillary data options</alert>\n              </constraint>\n          </constraints>\n\t\t    <input
+        label=\"Include associated Browse file in order?\" ref=\"ecs:orderBrowse\"
+        type=\"xsd:boolean\"/>\n       </group>\n  </ui>\n</form>","id":"9940B026-5C7C-BC3E-049B-89F6D2A35AD8","name":"M*D29P1N
+        Order Option","scope":"PROVIDER"}}'
+    http_version: 
+2c130f6ffcb3efdbbb529ab361c04f9275558e3e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"23425487653fb0386bf8aa80fa766245"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.078000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 11 Jul 2016 18:30:39 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"Ftp Push &
+        Pull Delivery Options","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"http://ecsodl.nasa.gov/orderoptions\">\n  <model>\n    <instance>\n      <prov:packageOption
+        xmlns:prov=\"http://ecsodl.nasa.gov/orderoptions\">\n        <!-- Distribution
+        Specification-->\n        <prov:dist>\n          <prov:value>FtpPull</prov:value>\n        </prov:dist>\n\n        <prov:distributionSpecification
+        name=\"FtpPull\">\n          <prov:odl name=\"PROCESSING_OPTIONS\"/>\n        </prov:distributionSpecification>\n        \n        <prov:distributionSpecification
+        name=\"FtpPush\">\n          <prov:odl name=\"HOST_ADDRESS\"/>\n          <prov:odl
+        name=\"USERNAME\"/>\n          <prov:odl name=\"PASSWORD\"/>\n          <prov:odl
+        name=\"FTP_PATH\"> </prov:odl>          \n          <prov:odl name=\"PROCESSING_OPTIONS\">Native
+        Granule</prov:odl>\n        </prov:distributionSpecification>        \n      </prov:packageOption>\n    </instance>\n  </model>\n  <ui>\n\n    <select
+        label=\"Distribution Options\" multiple=\"false\" open=\"false\" ref=\"prov:dist\"
+        required=\"true()\" type=\"xs:string\" valueElementName=\"value\">\n      <item
+        label=\"FtpPull\" value=\"FtpPull\"/>\n      <item label=\"FtpPush\" value=\"FtpPush\"/>\n    </select>\n\n    <group
+        xmlns:prov=\"http://ecsodl.nasa.gov/orderoptions\" label=\"Ftp Pull Information\"
+        ref=\"prov:distributionSpecification[@name = ''FtpPull'']\" relevant=\"//prov:dist[prov:value=''FtpPull'']\">\n      <output
+        label=\"Processing Options:\" ref=\"prov:odl[@name=''PROCESSING_OPTIONS'']\"
+        type=\"xs:string\"/>\n    </group>\n\n    <group xmlns:prov=\"http://ecsodl.nasa.gov/orderoptions\"
+        label=\"Ftp Push Information\" ref=\"prov:distributionSpecification[@name
+        = ''FtpPush'']\" relevant=\"//prov:dist[prov:value=''FtpPush'']\">\n      <input
+        label=\"Host Address:\" ref=\"prov:odl[@name=''HOST_ADDRESS'']\" required=\"true()\"
+        type=\"xs:string\"/>\n      <input label=\"Username:\" ref=\"prov:odl[@name=''USERNAME'']\"
+        required=\"true()\" type=\"xs:string\"/>\n      <secret label=\"Password:\"
+        ref=\"prov:odl[@name=''PASSWORD'']\" required=\"true()\" type=\"xs:string\"/>\n      <input
+        label=\"FTP Path:\" ref=\"prov:odl[@name=''FTP_PATH'']\" type=\"xs:string\"/>\n    </group>\n    \n  </ui>\n</form>","id":"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1","name":"FtpPushPull","scope":"PROVIDER"}}'
     http_version: 

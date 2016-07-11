@@ -1454,6 +1454,43 @@ defb7a928d86dc16a9f76f4d113a6970d1321a65:
         Page for this product at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/MYD29P1D/versions/5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
         Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}]}}'
     http_version: 
+43ef9737eba8ef97bf32f038a9cb18c701e1b606:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:46:55 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '35'
+      cmr-request-id:
+      - f7d11ab6-5aac-475c-8f7e-70c24a7b0cdd
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:46:55.774Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C115003857-NSIDC_ECS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"3","tags":{"edsc.extra.subset_service.esi":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD29P1NV5"],"version_id":"5","updated":"2014-10-30T13:58:14.478Z","dataset_id":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Night V005","data_center":"NSIDC_ECS","short_name":"MYD29P1N","organizations":["NSIDC","MODAPS"],"title":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Night V005","coordinate_system":"CARTESIAN","summary":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Night","has_granules":true,"orbit_parameters":{},"id":"C115003857-NSIDC_ECS","original_format":"ECHO10","granule_count":1034811,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Catalog
+        Page for this product at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/MYD29P1N/versions/5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
+        Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}]}}'
+    http_version: 
 138eccd6e068cf904d65eecb0819c935204a736f:
   response:
     status:
@@ -1524,6 +1561,92 @@ defb7a928d86dc16a9f76f4d113a6970d1321a65:
         Africa, East Africa Rainforest and Madagascar - AFR1b\n      ","hreflang":"en-US","href":"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1b/1stpage.htm"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         Central
         Africa Rainforest - high flood of Congo River - AFR1c\n      ","hreflang":"en-US","href":"http://southport.jpl.nasa.gov/GRFM/cdrom/africa/AFR1/AFR1c/1stpage.htm"}]}]}}'
     http_version: 
+f8840782c04ce2645f929ed871210b36a1e242fb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:46:40 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '194'
+      cmr-request-id:
+      - 77d4d882-5f86-464e-8dd3-c30942f13de3
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:46:40.887Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C1214614479-SCIOPS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"boxes":["-77.36601 162.32004 -77.36601 162.32004","-77.6042
+        163.13045 -77.6042 163.13045","-77.5227 162.00787 -77.5227 162.00787"],"time_start":"2002-01-01T00:00:00.000Z","dif_ids":["Aeolian_Processes_McMurdo"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"Aeolian Processes
+        in the Dry Valleys","data_center":"SCIOPS","short_name":"Aeolian_Processes_McMurdo","organizations":["DRI/DEES"],"title":"Aeolian
+        Processes in the Dry Valleys","coordinate_system":"CARTESIAN","summary":"This
+        dataset contains data collected during studies of boundary layer winds and\n      surface
+        characteristics.  These field experiments were designed to:\n      1.      Understand
+        and quantify the partitioning of wind shear stress between\n      surface
+        and roughness elements on (a) rocky surfaces and (b) surfaces with\n      scatted
+        rocks and intervening sand surface.\n      2.      Test the Raupach et al
+        (1993) shear stress partitioning model to\n      estimate the entrainment
+        threshold on surfaces covered with isolated roughness\n      elements\n      3.      Quantify
+        the spatial distribution of surface shear stress on surfaces\n      with scatted
+        rocks and an intervening sand surface.\n      4.      Understand relations
+        between shear stress partitioning and transport of\n      sand.\n      \n      The
+        dataset includes measurements of:\n      - Boundary Layer winds and surface
+        shear stress\n      - Wind speed at 6 heights above the surface (6.00 m, 3.65
+        m, 2.22 m, 1.35 m,\n      0.82 m, 0.50 m wind direction at 6 m and 0.82 m,
+        temperature at 3.65 m.\n      - Surface shear stress using Irwin sensors (Wyatt
+        and Nickling, 1997)\n      - Sand mass transport rates at the Victoria Valley
+        site with static (Nickling\n      and McKenna Neuman, 1997) and automated
+        sand traps.\n      Saltation intensity with Sensit sensor at the Victoria
+        Valley site (Gillette\n      and Stockton, 1986)\n      - Wind force on simulated
+        roughness elements using the Guelph force balance\n      (Gillies et al.,
+        2000; Grant and Nickling, 1998; Wyatt and Nickling, 1997). \n      \n      Data
+        were sampled every 1 second and averaged for 1, 5, and 10 minute\n      intervals.\n      \n      Derived
+        data include estimates of wind shear velocity (u*), aerodynamic\n      roughness
+        (zo)\n      \n      Surface characterization data: \n      Information on
+        rock cover and roughness element  geometry, and sand grain size\n      and
+        sorting parameters for surface sand and sand in transport in the Victoria\n      Valley
+        is also available.\n      \n      Datasets available:\n      Data were obtained
+        for 2 sites located on the north side of Lake Fryxell and in\n      the Victoria
+        Valley.  There is also Irwin sensor calibration data for 2 sites:\n      Wright
+        Valley and Victoria Lower Glacier, which includes wind profile and\n      temperature
+        measurements.  \n      Data cover the following periods:\n      - Wright Valley:
+        January 11-14, 2002\n      -  Lake Fryxell: January 15 - February 1, 2002;
+        January 15 - February 3, 2003\n      - Victoria Lower Glacier: January 11-13,
+        2003\n      - Victoria Valley: January 15 - 31, 2003.\n      \n      Site
+        locations are:\n      - Lake Fryxell: 77 degrees 36.252 minutes; 163 degrees
+        07.827 minutes\n      - Wright Valley: 77 degrees 31.363 minutes; 162 degrees
+        00.472 minutes\n      - Victoria Valley:  77.366009935 degrees S, 162.320035048
+        degrees E\n      \n      These studies were funded by NSF grant OPP-0088136\n      \n      References
+        cited\n      \n      Gillette, D.A. and Stockton, P.H., 1986. Mass momentum
+        and kinetic energy\n      fluxes of saltating particles. In: W.G. Nickling
+        (Editor), Aeolian\n      Geomorphology. Allen and Unwin, Boston, London, Sydney,
+        pp. 35-56.\n      \n      Gillies, J.A., Lancaster, N., Nickling, W.G. and
+        Crawley, D., 2000. Field\n      determination of drag forces and shear stress
+        partitioning effects for a desert\n      shrub (Sarcobatus vermiculatus, Greasewood).
+        Journal of Geophysical Research,\n      Atmospheres, 105(D20): 24871-24880.\n      \n      Grant,
+        P.F. and Nickling, W.G., 1998. Direct field measurement of wind drag on\n      vegetation
+        for application to windbreak design and monitoring. Land Degradation\n      and
+        Development, 9: 57-66.\n      \n      Nickling, W.G. and McKenna Neuman, C.,
+        1997. Wind tunnel evaluation of a\n      wedge-shaped aeolian sediment trap.
+        Geomorphology, 18(3-4): 333-346. Wyatt,\n      V.E. and Nickling, W.G., 1997.
+        Drag and shear stress partioning in sparse\n      desert creosote communities.
+        Canadian Jornal of Earth Sciences, 34: 1486-1498.","has_granules":false,"time_end":"2003-02-28T23:59:59.000Z","orbit_parameters":{},"id":"C1214614479-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false}]}}'
+    http_version: 
 c9db6d220438e5227e47161f04d5b76201afcc96:
   response:
     status:
@@ -1563,6 +1686,137 @@ c9db6d220438e5227e47161f04d5b76201afcc96:
         by the Njoku algorithm using Level-2A TBs.","has_granules":true,"time_end":"2011-10-04T06:51:48.000Z","orbit_parameters":{"swath_width":"1450.0","period":"98.88","inclination_angle":"98.15","number_of_orbits":"0.5","start_circular_latitude":"-90.0"},"id":"C128599377-NSIDC_ECS","original_format":"ECHO10","granule_count":97580,"archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/data-quality/index.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Guide
         Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_land_l2b_soil_moisture.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
         Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}]}}'
+    http_version: 
+2cffe35b2888a5856d18f1864f4fe0f6b60fe83e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:46:39 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '292'
+      cmr-request-id:
+      - 794d0e61-6005-4514-8d12-729cd80aaf68
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:46:39.471Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C179002107-SEDAC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"Level 3","boxes":["-55.750001
+        -180 83.083332 180"],"dif_ids":["CIESIN_SEDAC_ANTHROMES_v1"],"version_id":"1.0","updated":"2015-08-04T00:00:00.000Z","dataset_id":"Anthropogenic
+        Biomes of the World, Version 1","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ANTHROMES_v1","organizations":["SEDAC"],"title":"Anthropogenic
+        Biomes of the World, Version 1","coordinate_system":"CARTESIAN","summary":"The
+        Anthropogenic Biomes of the World Dataset, Version 1 describes globally-\nsignificant
+        ecological patterns within the terrestrial biosphere caused \n\nby sustained
+        direct human interaction with ecosystems, including agriculture, urbanization,
+        forestry and other land uses. \n\nConventional biomes, such as tropical rainforests
+        or grasslands, \n\nare based on global vegetation patterns related to climate.
+        Now that humans have fundamentally altered global patterns of \n\necosystem
+        form, process, and biodiversity, anthropogenic biomes \n\nprovide a contemporary
+        view of the terrestrial biosphere in its human-altered form. Anthropogenic
+        biomes may also be termed \n\n\"anthromes\" to distinguish them from conventional
+        biome \n\nsystems, or \"human biomes\" (a simpler but less precise term).
+        This dataset is distributed by the Columbia University Center \n\nfor International
+        Earth Science Information Network \n\n(CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179002107-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/anthromes-anthropogenic-biomes-world-v1/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"maps
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/anthromes-anthropogenic-biomes-world-v1/maps"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Web
+        Map Services","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/anthromes-anthropogenic-biomes-world-v1/maps/services"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4H12ZXD"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/anthromes/anthromes-anthropogenic-biomes-world-v1/Global_Anthropogenic_Biomes.pdf"}]}]}}'
+    http_version: 
+ade99948de0a898d921f10b32d5cf6b787df3e4f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:46:46 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '22'
+      cmr-request-id:
+      - 38622c7c-abe7-49ca-a9a3-dfd3085a1ae1
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:46:46.443Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C179003030-ORNL_DAAC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00.000Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","organizations":["ORNL_DAAC"],"title":"15
+        Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","has_granules":true,"time_end":"1988-03-04T00:00:00.000Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","granule_count":39,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}]}}'
+    http_version: 
+555bdb24d7e1012aa51096c558736bd47c79fe01:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:46:42 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '23'
+      cmr-request-id:
+      - 78cccf65-085d-46ad-8f1d-b1d9e9fc951d
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:46:42.219Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C179003216-ORNL_DAAC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"3","boxes":["-90 -180 90
+        180"],"time_start":"1930-01-01T00:00:00.000Z","dif_ids":["CRAMERLEEMANS"],"version_id":"1","updated":"1999-05-05T00:00:00.000Z","dataset_id":"Global
+        30-Year Mean Monthly Climatology, 1930-1960, V[ersion]. 2.1 (Cramer and Leeman","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/416","organizations":["ORNL_DAAC"],"title":"Global
+        30-Year Mean Monthly Climatology, 1930-1960, V[ersion]. 2.1 (Cramer and Leeman","coordinate_system":"CARTESIAN","summary":"This
+        database is a major update of the Leemans & Cramer database.  It currently
+        contains monthly averages of mean temperature, temperature range, precipitation,
+        rain days and sunshine hours for the terrestrial surface of the globe, gridded
+        at 0.5 degree longitude/latitude resolution.  It was generated from a large
+        data base, using the partial thin-plate splining algorithm.","has_granules":true,"time_end":"1960-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003216-ORNL_DAAC","original_format":"ECHO10","granule_count":15,"archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=416"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        database is a major update of the Leemans & Cramer database.  It currently
+        contains monthly averages of mean temperature, temperature range, precipitation,
+        rain days and sunshine hours for the terrestrial surface of the globe, gridded
+        at 0.5 degree longitude/latitude resolution.  It was generated from a large
+        data base, using the partial thin-plate splining algorithm. (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/CLIMATE/guides/cramer_leemans.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/png","title":"(BROWSE)","hreflang":"en-US","href":"http://webmap.ornl.gov/sdat/pimg/416_1_fit.png"}]}]}}'
     http_version: 
 c65dd9e74412719ab37543f010105d6ce466d2c7:
   response:
@@ -1838,6 +2092,212 @@ f2c353b615a5d16f98c65df57e8fc109097d8d00:
         in HDF.","time_end":"2016-03-01T23:59:59.000Z","orbit_parameters":{},"id":"C4543622-LARC_ASDC","original_format":"ECHO10","archive_center":"Atmospheric
         Science Data Center","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Collection
         Quality Summary)","hreflang":"en-US","href":"http://eosweb.larc.nasa.gov/sites/default/files/project/ceres/quality_summaries/CER_SSF_Terra_Edition3A.pdf"}]}]}}'
+    http_version: 
+bcb99e3a4b4a1bfce301870f55c699e4ec8301fb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:46:50 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '32'
+      cmr-request-id:
+      - 630f1f40-c210-486a-a45c-13687ef06f12
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:46:50.625Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C90762182-LAADS&echo_collection_id%5B%5D=C1214614479-SCIOPS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD02QKM_5"],"version_id":"5","updated":"2016-03-09T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","data_center":"LAADS","short_name":"MYD02QKM","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","NASA/GSFC/SED/ESD/BSL/MCST","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","coordinate_system":"CARTESIAN","summary":"MODIS
+        image data for bands 1 and 2 at 250m (Nadir) resolution, calibrated from\n                  raw
+        counts into physically meaningful radiances and reflectances. Corrections\n                  for
+        knows instrument effects are applied. Also includes quality flags, error\n                  estimates,
+        and 1km latitude and longitude data copied from the MYD03 files.\n                  \n                  More
+        data set information:\n                  http://mcst.gsfc.nasa.gov/\n                  \n                  (The
+        Shortname for this product is MYD02QKM)","has_granules":true,"orbit_parameters":{},"id":"C90762182-LAADS","original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","granule_count":800661,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS","hreflang":"en-US","href":"http://modaps.nascom.nasa.gov/services/about/product_descriptions_aqua.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Search
+        and order products from LAADS website.","hreflang":"en-US","href":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD02QKM 5 data set.","hreflang":"en-US","href":"ftp://ladsweb.nascom.nasa.gov/allData/5/MYD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Level 1B Product Information Page at MCST","hreflang":"en-US","href":"http://mcst.gsfc.nasa.gov/l1b/product-information"}]},{"boxes":["-77.36601
+        162.32004 -77.36601 162.32004","-77.6042 163.13045 -77.6042 163.13045","-77.5227
+        162.00787 -77.5227 162.00787"],"time_start":"2002-01-01T00:00:00.000Z","dif_ids":["Aeolian_Processes_McMurdo"],"version_id":"Not
+        provided","updated":"2015-12-02T00:00:00.000Z","dataset_id":"Aeolian Processes
+        in the Dry Valleys","data_center":"SCIOPS","short_name":"Aeolian_Processes_McMurdo","organizations":["DRI/DEES"],"title":"Aeolian
+        Processes in the Dry Valleys","coordinate_system":"CARTESIAN","summary":"This
+        dataset contains data collected during studies of boundary layer winds and\n      surface
+        characteristics.  These field experiments were designed to:\n      1.      Understand
+        and quantify the partitioning of wind shear stress between\n      surface
+        and roughness elements on (a) rocky surfaces and (b) surfaces with\n      scatted
+        rocks and intervening sand surface.\n      2.      Test the Raupach et al
+        (1993) shear stress partitioning model to\n      estimate the entrainment
+        threshold on surfaces covered with isolated roughness\n      elements\n      3.      Quantify
+        the spatial distribution of surface shear stress on surfaces\n      with scatted
+        rocks and an intervening sand surface.\n      4.      Understand relations
+        between shear stress partitioning and transport of\n      sand.\n      \n      The
+        dataset includes measurements of:\n      - Boundary Layer winds and surface
+        shear stress\n      - Wind speed at 6 heights above the surface (6.00 m, 3.65
+        m, 2.22 m, 1.35 m,\n      0.82 m, 0.50 m wind direction at 6 m and 0.82 m,
+        temperature at 3.65 m.\n      - Surface shear stress using Irwin sensors (Wyatt
+        and Nickling, 1997)\n      - Sand mass transport rates at the Victoria Valley
+        site with static (Nickling\n      and McKenna Neuman, 1997) and automated
+        sand traps.\n      Saltation intensity with Sensit sensor at the Victoria
+        Valley site (Gillette\n      and Stockton, 1986)\n      - Wind force on simulated
+        roughness elements using the Guelph force balance\n      (Gillies et al.,
+        2000; Grant and Nickling, 1998; Wyatt and Nickling, 1997). \n      \n      Data
+        were sampled every 1 second and averaged for 1, 5, and 10 minute\n      intervals.\n      \n      Derived
+        data include estimates of wind shear velocity (u*), aerodynamic\n      roughness
+        (zo)\n      \n      Surface characterization data: \n      Information on
+        rock cover and roughness element  geometry, and sand grain size\n      and
+        sorting parameters for surface sand and sand in transport in the Victoria\n      Valley
+        is also available.\n      \n      Datasets available:\n      Data were obtained
+        for 2 sites located on the north side of Lake Fryxell and in\n      the Victoria
+        Valley.  There is also Irwin sensor calibration data for 2 sites:\n      Wright
+        Valley and Victoria Lower Glacier, which includes wind profile and\n      temperature
+        measurements.  \n      Data cover the following periods:\n      - Wright Valley:
+        January 11-14, 2002\n      -  Lake Fryxell: January 15 - February 1, 2002;
+        January 15 - February 3, 2003\n      - Victoria Lower Glacier: January 11-13,
+        2003\n      - Victoria Valley: January 15 - 31, 2003.\n      \n      Site
+        locations are:\n      - Lake Fryxell: 77 degrees 36.252 minutes; 163 degrees
+        07.827 minutes\n      - Wright Valley: 77 degrees 31.363 minutes; 162 degrees
+        00.472 minutes\n      - Victoria Valley:  77.366009935 degrees S, 162.320035048
+        degrees E\n      \n      These studies were funded by NSF grant OPP-0088136\n      \n      References
+        cited\n      \n      Gillette, D.A. and Stockton, P.H., 1986. Mass momentum
+        and kinetic energy\n      fluxes of saltating particles. In: W.G. Nickling
+        (Editor), Aeolian\n      Geomorphology. Allen and Unwin, Boston, London, Sydney,
+        pp. 35-56.\n      \n      Gillies, J.A., Lancaster, N., Nickling, W.G. and
+        Crawley, D., 2000. Field\n      determination of drag forces and shear stress
+        partitioning effects for a desert\n      shrub (Sarcobatus vermiculatus, Greasewood).
+        Journal of Geophysical Research,\n      Atmospheres, 105(D20): 24871-24880.\n      \n      Grant,
+        P.F. and Nickling, W.G., 1998. Direct field measurement of wind drag on\n      vegetation
+        for application to windbreak design and monitoring. Land Degradation\n      and
+        Development, 9: 57-66.\n      \n      Nickling, W.G. and McKenna Neuman, C.,
+        1997. Wind tunnel evaluation of a\n      wedge-shaped aeolian sediment trap.
+        Geomorphology, 18(3-4): 333-346. Wyatt,\n      V.E. and Nickling, W.G., 1997.
+        Drag and shear stress partioning in sparse\n      desert creosote communities.
+        Canadian Jornal of Earth Sciences, 34: 1486-1498.","has_granules":false,"time_end":"2003-02-28T23:59:59.000Z","orbit_parameters":{},"id":"C1214614479-SCIOPS","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false}]}}'
+    http_version: 
+83f281c4d8361f34b5fc2957550b584d031a1f2c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:43:06 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '42'
+      cmr-request-id:
+      - 149fa21b-5272-4549-bb46-126afff4cb0b
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:43:07.011Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C90762182-LAADS&echo_collection_id%5B%5D=C179001887-SEDAC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD02QKM_5"],"version_id":"5","updated":"2016-03-09T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","data_center":"LAADS","short_name":"MYD02QKM","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","NASA/GSFC/SED/ESD/BSL/MCST","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","coordinate_system":"CARTESIAN","summary":"MODIS
+        image data for bands 1 and 2 at 250m (Nadir) resolution, calibrated from\n                  raw
+        counts into physically meaningful radiances and reflectances. Corrections\n                  for
+        knows instrument effects are applied. Also includes quality flags, error\n                  estimates,
+        and 1km latitude and longitude data copied from the MYD03 files.\n                  \n                  More
+        data set information:\n                  http://mcst.gsfc.nasa.gov/\n                  \n                  (The
+        Shortname for this product is MYD02QKM)","has_granules":true,"orbit_parameters":{},"id":"C90762182-LAADS","original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","granule_count":800661,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS","hreflang":"en-US","href":"http://modaps.nascom.nasa.gov/services/about/product_descriptions_aqua.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Search
+        and order products from LAADS website.","hreflang":"en-US","href":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD02QKM 5 data set.","hreflang":"en-US","href":"ftp://ladsweb.nascom.nasa.gov/allData/5/MYD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Level 1B Product Information Page at MCST","hreflang":"en-US","href":"http://mcst.gsfc.nasa.gov/l1b/product-information"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"2000.00","updated":"2015-08-03T00:00:00.000Z","dataset_id":"2000
+        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","organizations":["SEDAC"],"title":"2000
+        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an \n\nindex that measures the ability of a nation''s economy
+        to achieve sustainable development, with the long term goal of finding a single
+        \n\nindicator for environmental sustainability analagous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is \n\na composite
+        measure of the current status of a nation''s environmental systems, pressures
+        on those systems, human vulnerability to \n\nenvironmental change, national
+        capacity to respond, and contributions to global environmental stewardship.
+        The index was unveiled at \n\nthe World Economic Forum''s annual meeting,
+        January 2000, Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration
+        among \n\nthe World Economic Forum (WEF), Yale Center for Environmental Law
+        and Policy (YCELP), and the Columbia University Center for \n\nInternational
+        Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-\n\n2000/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4NK3BZJ"}]}]}}'
+    http_version: 
+4f1298c23ad30e0b306e16c69d1b806ff58cfa2c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:46:54 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '40'
+      cmr-request-id:
+      - 8b691633-7fb2-4da2-927d-eb5a56320f58
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:46:54.475Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C90762182-LAADS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD02QKM_5"],"version_id":"5","updated":"2016-03-09T00:00:00.000Z","dataset_id":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","data_center":"LAADS","short_name":"MYD02QKM","organizations":["NASA/GSFC/SED/ESD/HBSL/BISB/LAADS","NASA/GSFC/SED/ESD/BSL/MCST","NASA/GSFC/SED/ESD/HBSL/BISB/MODAPS"],"title":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","coordinate_system":"CARTESIAN","summary":"MODIS
+        image data for bands 1 and 2 at 250m (Nadir) resolution, calibrated from\n                  raw
+        counts into physically meaningful radiances and reflectances. Corrections\n                  for
+        knows instrument effects are applied. Also includes quality flags, error\n                  estimates,
+        and 1km latitude and longitude data copied from the MYD03 files.\n                  \n                  More
+        data set information:\n                  http://mcst.gsfc.nasa.gov/\n                  \n                  (The
+        Shortname for this product is MYD02QKM)","has_granules":true,"orbit_parameters":{},"id":"C90762182-LAADS","original_format":"DIF10","collection_data_type":"SCIENCE_QUALITY","granule_count":800661,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS","hreflang":"en-US","href":"http://modaps.nascom.nasa.gov/services/about/product_descriptions_aqua.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Search
+        and order products from LAADS website.","hreflang":"en-US","href":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD02QKM 5 data set.","hreflang":"en-US","href":"ftp://ladsweb.nascom.nasa.gov/allData/5/MYD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Level 1B Product Information Page at MCST","hreflang":"en-US","href":"http://mcst.gsfc.nasa.gov/l1b/product-information"}]}]}}'
     http_version: 
 45746cda98164055dd66ee6f785801f0e705aaef:
   response:

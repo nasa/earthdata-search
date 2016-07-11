@@ -271,6 +271,25 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1279955711-LAADS&catalog_item_id%5B%5D=G1279957503-LAADS&catalog_item_id%5B%5D=G1279955673-LAADS&catalog_item_id%5B%5D=G1279955672-LAADS&catalog_item_id%5B%5D=G1279955632-LAADS&catalog_item_id%5B%5D=G1279955671-LAADS&catalog_item_id%5B%5D=G1279955631-LAADS&catalog_item_id%5B%5D=G1279955630-LAADS&catalog_item_id%5B%5D=G1279955645-LAADS&catalog_item_id%5B%5D=G1279933606-LAADS&catalog_item_id%5B%5D=G1279933689-LAADS&catalog_item_id%5B%5D=G1279933688-LAADS&catalog_item_id%5B%5D=G1279933687-LAADS&catalog_item_id%5B%5D=G1279933722-LAADS&catalog_item_id%5B%5D=G1279933658-LAADS&catalog_item_id%5B%5D=G1279933704-LAADS&catalog_item_id%5B%5D=G1279933703-LAADS&catalog_item_id%5B%5D=G1279936033-LAADS&catalog_item_id%5B%5D=G1279935987-LAADS&catalog_item_id%5B%5D=G1279935898-LAADS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 11 Jul 2016 18:46:55 GMT
+  digest: 28d6068da9e63d72b3f5ed067175dfc33564f62b
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G1284058749-NSIDC_ECS&catalog_item_id%5B%5D=G1284058902-NSIDC_ECS&catalog_item_id%5B%5D=G1284062782-NSIDC_ECS&catalog_item_id%5B%5D=G1284062802-NSIDC_ECS&catalog_item_id%5B%5D=G1284058776-NSIDC_ECS&catalog_item_id%5B%5D=G1284058768-NSIDC_ECS&catalog_item_id%5B%5D=G1284062698-NSIDC_ECS&catalog_item_id%5B%5D=G1284062807-NSIDC_ECS&catalog_item_id%5B%5D=G1284062697-NSIDC_ECS&catalog_item_id%5B%5D=G1284062822-NSIDC_ECS&catalog_item_id%5B%5D=G1283427185-NSIDC_ECS&catalog_item_id%5B%5D=G1283421178-NSIDC_ECS&catalog_item_id%5B%5D=G1283421250-NSIDC_ECS&catalog_item_id%5B%5D=G1283421237-NSIDC_ECS&catalog_item_id%5B%5D=G1283421179-NSIDC_ECS&catalog_item_id%5B%5D=G1283421304-NSIDC_ECS&catalog_item_id%5B%5D=G1283427056-NSIDC_ECS&catalog_item_id%5B%5D=G1283427106-NSIDC_ECS&catalog_item_id%5B%5D=G1283427050-NSIDC_ECS&catalog_item_id%5B%5D=G1283427127-NSIDC_ECS
     headers:
       User-Agent:
