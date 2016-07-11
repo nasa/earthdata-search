@@ -4103,6 +4103,44 @@ b13d713a63a7067ee6126b7b4ba6b60ee854d7c6:
         180 90 180"]],"online_access_flag":false,"links":[{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Collection
         Quality Summary)","hreflang":"en-US","href":"http://eosweb.larc.nasa.gov/sites/default/files/project/ceres/quality_summaries/CER_SSF_Terra_Edition3A.pdf"}]}]}}'
     http_version: 
+67a5a43e731f32b5b3d9a528d23a7f87afcdd0a8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:02:35 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '34'
+      cmr-request-id:
+      - d00c1de1-4cb5-444a-bc0c-198a6c6cfc8b
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T19:02:35.891Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C90762182-LAADS&echo_granule_id=G1279955711-LAADS&page_size=20&sort_key%5B%5D=-start_date","title":"ECHO
+        granule metadata","entry":[{"producer_granule_id":"MYD02QKM.A2016175.0855.005.2016175171723.hdf","time_start":"2016-06-23T08:55:00.000Z","updated":"2016-06-23T17:45:26.323Z","dataset_id":"MODIS/Aqua
+        Calibrated Radiances 5-Min L1B Swath 250m V005","data_center":"LAADS","title":"LAADS:2488983212","coordinate_system":"GEODETIC","day_night_flag":"DAY","time_end":"2016-06-23T09:00:00.000Z","id":"G1279955711-LAADS","original_format":"ECHO10","browse_flag":false,"polygons":[["85.49136
+        -143.907575 70.640737 -31.339738 66.227809 18.541283 75.156042 82.184 85.49136
+        -143.907575"]],"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","type":"application/x-hdfeos","hreflang":"en-US","href":"ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2016/175/MYD02QKM.A2016175.0855.005.2016175171723.hdf"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Overview
+        of MODIS","hreflang":"en-US","href":"http://modaps.nascom.nasa.gov/services/about/product_descriptions_aqua.html"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Search
+        and order products from LAADS website.","hreflang":"en-US","href":"https://ladsweb.nascom.nasa.gov/data/search.html"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"Direct
+        access to the ftp site and directory hosting the MYD02QKM 5 data set.","hreflang":"en-US","href":"ftp://ladsweb.nascom.nasa.gov/allData/5/MYD02QKM/"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
+        Level 1B Product Information Page at MCST","hreflang":"en-US","href":"http://mcst.gsfc.nasa.gov/l1b/product-information"}]}]}}'
+    http_version: 
 90247987047eff613fcd95ccbe30bc288ad00518:
   response:
     status:
