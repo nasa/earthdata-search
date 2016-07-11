@@ -2,6 +2,23 @@
 http_interactions:
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C115003855-NSIDC_ECS.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 11 Jul 2016 18:08:38 GMT
+  digest: 5cc022147c7c28dbda3c895322ff1a1cf204d0b8
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C1214560151-JAXA.echo10
     body:
       encoding: US-ASCII

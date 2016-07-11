@@ -2,6 +2,63 @@
 http_interactions:
 - request:
     method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: bounding_box=0%2C10%2C10%2C80&concept_id=C115003855-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 11 Jul 2016 18:09:26 GMT
+  digest: abe1485607c534520cc458d534217ecfdd354174
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: bounding_box=0%2C80%2C10%2C85&concept_id=C115003855-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 11 Jul 2016 18:08:32 GMT
+  digest: 0c9efe9b1de65c1f26b2a38ca5d5c9d29ed99c41
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules/timeline.json
+    body:
+      encoding: US-ASCII
+      string: concept_id=C115003855-NSIDC_ECS&end_date=2015-03-02T00%3A00%3A00.000Z&interval=day&point=10%2C-80&start_date=2012-02-28T00%3A00%3A00.000Z
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 11 Jul 2016 18:09:34 GMT
+  digest: d876fed63e5b5b2050d08c41034fef5d5173dda8
+- request:
+    method: post
     uri: https://cmr.sit.earthdata.nasa.gov/search/granules/timeline.json
     body:
       encoding: US-ASCII

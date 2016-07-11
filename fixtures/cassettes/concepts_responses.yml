@@ -1,4 +1,35 @@
 ---
+5cc022147c7c28dbda3c895322ff1a1cf204d0b8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:08:36 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 851218b3-7005-48c5-baca-8a39c40c7762
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"2002-05-04T00:00:00.000Z","dif_ids":["MYD29P1DV5"],"version_id":"5","updated":"2014-10-30T13:58:11.657Z","dataset_id":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Day V005","data_center":"NSIDC_ECS","short_name":"MYD29P1D","organizations":["NSIDC","MODAPS"],"title":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Day V005","coordinate_system":"CARTESIAN","summary":"MODIS/Aqua
+        Sea Ice Extent Daily L3 Global 1km EASE-Grid Day","orbit_parameters":{},"id":"C115003855-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=aqua&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Catalog
+        Page for this product at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/MYD29P1D/versions/5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
+        Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}'
+    http_version: 
 067fd0e9c60ab10873c894d28bf3dfe48edadfc0:
   response:
     status:
