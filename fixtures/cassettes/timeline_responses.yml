@@ -65,6 +65,72 @@ d876fed63e5b5b2050d08c41034fef5d5173dda8:
       encoding: UTF-8
       string: '[{"concept-id":"C115003855-NSIDC_ECS","intervals":[[1330387200,1334361600,46],[1346112000,1365984000,230],[1377648000,1397520000,230],[1409184000,1425254400,186]]}]'
     http_version: 
+f5801e117ff4523a275fccd3ef6ed5ca040c1e7a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:23:55 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - b8b9ea2a-d93a-4044-829a-717e044e760d
+      content-length:
+      - '112'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C128599377-NSIDC_ECS","intervals":[[1254466308,1265155200,3584],[1265328000,1317686400,17633]]}]'
+    http_version: 
+67633cb5625b2480cc59bab9547f8610fd74a8c2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:24:36 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 153b0351-0317-4f69-8fe6-56ee7aeb7da0
+      content-length:
+      - '80'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179014698-NSIDC_ECS","intervals":[[1312416000,1317686400,12]]}]'
+    http_version: 
+68563019ecbc71428630aabeee802992a7b01d01:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:24:33 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - c0e4f9a9-e4f2-4cc2-88dc-15ab76af681c
+      content-length:
+      - '108'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C179014698-NSIDC_ECS","intervals":[[1254466308,1264982400,25],[1265328000,1317686400,121]]}]'
+    http_version: 
 36734f7f3df3ae9237d932b56268bb8cf1085d4b:
   response:
     status:
