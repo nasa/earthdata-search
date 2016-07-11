@@ -2153,6 +2153,255 @@ d2644d2920fa543617237f4b0df80d55c54bd24a:
         minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid1829/72581829.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
         minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]}]}}'
     http_version: 
+ccf403360bad0edc1f148f55f1261d7d762a4085:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:03:57 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '12'
+      cmr-took:
+      - '36'
+      cmr-request-id:
+      - 1cb9fe7a-2820-427d-84d5-66c91c03d51b
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T19:03:57.464Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=1986-12-31T23%3A59%3A59.999Z%2C1987-12-31T23%3A59%3A59.999Z","title":"ECHO
+        granule metadata","entry":[{"time_start":"1987-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-01-01T00:00:00.000Z","id":"G179111298-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002076","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-11-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73051715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-12-01T00:00:00.000Z","id":"G179111297-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002018","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73051715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-10-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72741715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-11-01T00:00:00.000Z","id":"G179111296-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72741715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-08-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72131715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-15T00:00:00.000Z","id":"G179111295-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.001687","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72131715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-07-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71821715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-01T00:00:00.000Z","id":"G179111294-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71821715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-06-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71521715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-07-01T00:00:00.000Z","id":"G179111293-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.007319","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71521715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-05-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71211715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-06-01T00:00:00.000Z","id":"G179111292-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.009377","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71211715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-04-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70911715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-05-01T00:00:00.000Z","id":"G179111291-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.010222","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70911715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-03-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70601715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-04-01T00:00:00.000Z","id":"G179111290-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.016708","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70601715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-02-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70321715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-03-01T00:00:00.000Z","id":"G179111289-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003641","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70321715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-01-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70011715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-02-01T00:00:00.000Z","id":"G179111288-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002134","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70011715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1986-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.63351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-01-01T00:00:00.000Z","id":"G179111287-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002842","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1986/63351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}]}}'
+    http_version: 
+d0a012826bc9092220b1692e395e982f0ff55239:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:03:49 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '12'
+      cmr-took:
+      - '25'
+      cmr-request-id:
+      - 02ac53be-d659-49ec-83fe-3666bde7a02e
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T19:03:49.976Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=1987-01-01T00%3A00%3A00.000Z%2C1987-12-31T23%3A59%3A59.999Z","title":"ECHO
+        granule metadata","entry":[{"time_start":"1987-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-01-01T00:00:00.000Z","id":"G179111298-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002076","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-11-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73051715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-12-01T00:00:00.000Z","id":"G179111297-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002018","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73051715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-10-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72741715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-11-01T00:00:00.000Z","id":"G179111296-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72741715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-08-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72131715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-15T00:00:00.000Z","id":"G179111295-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.001687","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72131715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-07-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71821715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-01T00:00:00.000Z","id":"G179111294-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71821715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-06-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71521715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-07-01T00:00:00.000Z","id":"G179111293-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.007319","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71521715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-05-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71211715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-06-01T00:00:00.000Z","id":"G179111292-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.009377","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71211715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-04-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70911715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-05-01T00:00:00.000Z","id":"G179111291-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.010222","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70911715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-03-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70601715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-04-01T00:00:00.000Z","id":"G179111290-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.016708","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70601715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-02-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70321715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-03-01T00:00:00.000Z","id":"G179111289-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003641","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70321715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-01-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70011715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-02-01T00:00:00.000Z","id":"G179111288-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002134","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70011715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1986-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.63351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-01-01T00:00:00.000Z","id":"G179111287-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002842","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1986/63351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}]}}'
+    http_version: 
+51e40c14c5a2352e5052ff61d20c30fbe0548fb3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:04:15 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '15'
+      cmr-took:
+      - '28'
+      cmr-request-id:
+      - 2e2b7f30-3f4b-49ab-9f52-70e6b21714e2
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T19:04:15.747Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C179003030-ORNL_DAAC&page_num=1&page_size=20&sort_key%5B%5D=-start_date&temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z","title":"ECHO
+        granule metadata","entry":[{"time_start":"1988-03-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.80611715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-03-04T00:00:00.000Z","id":"G179111301-ORNL_DAAC","original_format":"ECHO10","granule_size":"4.1E-4","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80611715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1988-02-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.80321715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-03-01T00:00:00.000Z","id":"G179111300-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.00196","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80321715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1988-01-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.80011715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-02-01T00:00:00.000Z","id":"G179111299-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002323","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80011715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-01-01T00:00:00.000Z","id":"G179111298-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002076","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-11-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73051715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-12-01T00:00:00.000Z","id":"G179111297-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002018","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73051715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-10-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72741715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-11-01T00:00:00.000Z","id":"G179111296-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72741715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-08-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72131715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-15T00:00:00.000Z","id":"G179111295-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.001687","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72131715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-07-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71821715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-01T00:00:00.000Z","id":"G179111294-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71821715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-06-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71521715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-07-01T00:00:00.000Z","id":"G179111293-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.007319","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71521715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-05-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71211715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-06-01T00:00:00.000Z","id":"G179111292-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.009377","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71211715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-04-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70911715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-05-01T00:00:00.000Z","id":"G179111291-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.010222","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70911715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-03-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70601715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-04-01T00:00:00.000Z","id":"G179111290-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.016708","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70601715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-02-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70321715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-03-01T00:00:00.000Z","id":"G179111289-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003641","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70321715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-01-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70011715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-02-01T00:00:00.000Z","id":"G179111288-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002134","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70011715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1986-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.63351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-01-01T00:00:00.000Z","id":"G179111287-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002842","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1986/63351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}]}}'
+    http_version: 
 9d0d70ae85c8ab65030354149d8fd77160a17d2e:
   response:
     status:
@@ -2448,6 +2697,176 @@ d6519c293d78aa34cec0d52160eeae6b7509e606:
         INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1984-12-25T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
         Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.43601715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1985-01-01T00:00:00.000Z","id":"G179109563-ORNL_DAAC","original_format":"ECHO10","granule_size":"8.89E-4","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
         15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1984/43601715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}]}}'
+    http_version: 
+28a72d56297a2bc9619ecdbb8358d09a4f3d2754:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:04:06 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '12'
+      cmr-took:
+      - '21'
+      cmr-request-id:
+      - a57c0e5a-3364-4189-ace4-0816e14bc635
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T19:04:06.205Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C179003030-ORNL_DAAC&page_size=20&sort_key%5B%5D=-start_date&temporal=1986-12-31T23%3A59%3A59.999Z%2C1987-12-31T23%3A59%3A59.999Z","title":"ECHO
+        granule metadata","entry":[{"time_start":"1987-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-01-01T00:00:00.000Z","id":"G179111298-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002076","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-11-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73051715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-12-01T00:00:00.000Z","id":"G179111297-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002018","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73051715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-10-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72741715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-11-01T00:00:00.000Z","id":"G179111296-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72741715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-08-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72131715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-15T00:00:00.000Z","id":"G179111295-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.001687","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72131715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-07-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71821715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-01T00:00:00.000Z","id":"G179111294-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71821715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-06-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71521715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-07-01T00:00:00.000Z","id":"G179111293-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.007319","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71521715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-05-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71211715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-06-01T00:00:00.000Z","id":"G179111292-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.009377","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71211715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-04-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70911715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-05-01T00:00:00.000Z","id":"G179111291-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.010222","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70911715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-03-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70601715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-04-01T00:00:00.000Z","id":"G179111290-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.016708","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70601715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-02-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70321715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-03-01T00:00:00.000Z","id":"G179111289-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003641","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70321715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-01-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70011715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-02-01T00:00:00.000Z","id":"G179111288-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002134","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70011715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1986-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.63351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-01-01T00:00:00.000Z","id":"G179111287-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002842","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1986/63351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}]}}'
+    http_version: 
+2a71b78520a5cce22ec0c23ee65bba59c1dea897:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:03:59 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '15'
+      cmr-took:
+      - '24'
+      cmr-request-id:
+      - 821e6cd5-8d76-4a83-9a9d-af2bb7d2f520
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T19:03:59.811Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C179003030-ORNL_DAAC&page_size=20&sort_key%5B%5D=-start_date&temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z","title":"ECHO
+        granule metadata","entry":[{"time_start":"1988-03-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.80611715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-03-04T00:00:00.000Z","id":"G179111301-ORNL_DAAC","original_format":"ECHO10","granule_size":"4.1E-4","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80611715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1988-02-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.80321715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-03-01T00:00:00.000Z","id":"G179111300-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.00196","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80321715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1988-01-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.80011715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-02-01T00:00:00.000Z","id":"G179111299-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002323","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1988/80011715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1988-01-01T00:00:00.000Z","id":"G179111298-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002076","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-11-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.73051715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-12-01T00:00:00.000Z","id":"G179111297-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002018","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/73051715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-10-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72741715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-11-01T00:00:00.000Z","id":"G179111296-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72741715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-08-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.72131715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-15T00:00:00.000Z","id":"G179111295-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.001687","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/72131715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-07-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71821715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-08-01T00:00:00.000Z","id":"G179111294-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002077","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71821715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-06-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71521715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-07-01T00:00:00.000Z","id":"G179111293-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.007319","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71521715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-05-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.71211715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-06-01T00:00:00.000Z","id":"G179111292-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.009377","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/71211715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-04-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70911715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-05-01T00:00:00.000Z","id":"G179111291-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.010222","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70911715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-03-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70601715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-04-01T00:00:00.000Z","id":"G179111290-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.016708","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70601715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-02-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70321715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-03-01T00:00:00.000Z","id":"G179111289-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003641","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70321715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1987-01-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.70011715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-02-01T00:00:00.000Z","id":"G179111288-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002134","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1987/70011715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"time_start":"1986-12-01T00:00:00.000Z","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1019 -96.595"],"data_center":"ORNL_DAAC","title":"FIFE_STRM_15M.63351715.s15","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-01-01T00:00:00.000Z","id":"G179111287-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.002842","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/hydrolgy/strm_15m/y1986/63351715.s15"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
         15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
         INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]}]}}'
     http_version: 

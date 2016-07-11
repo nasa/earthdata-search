@@ -4999,6 +4999,403 @@ cecd71a772809b4f89fe44fb3e2665f74e1e9039:
         on NRT vs Standard Product","hreflang":"en-US","href":"http://disc.gsfc.nasa.gov/AIRS/documentation/nrt_memo_v6.pdf"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Summary
         of validation status of products","hreflang":"en-US","href":"http://docserver.gesdisc.eosdis.nasa.gov/repository/Mission/AIRS/3.7_ScienceDataProductValidation/V5_CalVal_Status_Summary.pdf"}]}]}}'
     http_version: 
+133604d55d7b9cc98f3b09b12129169ad7731ced:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:03:52 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '324'
+      cmr-request-id:
+      - 76c7c1ac-c31c-4a7b-a4cd-64f994b34c0a
+      content-length:
+      - '512'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T19:03:52.422Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
+c4e1ff417af2710d2c3823f4b821aef1c61ea5a2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:03:51 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '5822'
+      cmr-took:
+      - '95'
+      cmr-request-id:
+      - 8970dbc9-440a-4708-b2fe-66eb7681652d
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T19:03:51.267Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?temporal=1987-01-01T00%3A00%3A00.000Z%2C1989-01-01T00%3A00%3A00.000Z&page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00.000Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","organizations":["ORNL_DAAC"],"title":"15
+        Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","has_granules":true,"time_end":"1988-03-04T00:00:00.000Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","granule_count":15,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"processing_level_id":"3","boxes":["39.08
+        -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00.000Z","dif_ids":["FIFE_RAIN_30M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/2","organizations":["ORNL_DAAC"],"title":"30
+        Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
+        minute rainfall data for the Konza Prairie","has_granules":true,"time_end":"1987-10-26T00:00:00.000Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","original_format":"ECHO10","granule_count":117,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"processing_level_id":"3","boxes":["-90
+        -180 79 177.9"],"time_start":"1977-11-16T00:00:00.000Z","dif_ids":["GLOBAL_MICROBIAL_BIOMASS_C_N_P"],"version_id":"1","updated":"2015-01-12T00:00:00.000Z","dataset_id":"A
+        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
+        Data","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1264","organizations":["ORNL_DAAC"],"title":"A
+        Compilation of Global Soil Microbial Biomass Carbon, Nitrogen, and Phosphorus
+        Data","coordinate_system":"CARTESIAN","summary":"This data set provides the
+        concentrations of soil microbial biomass carbon (C), nitrogen (N) and phosphorus
+        (P), soil organic carbon, total nitrogen, and total phosphorus at biome and
+        global scales. The data were compiled from a comprehensive survey of publications
+        from the late 1970s to 2012 and include 3,422 data points from 315 papers.
+        These data are from soil samples collected primarily at 0-15 cm depth with
+        some from 0-30 cm. In addition, data were compiled for soil microbial biomass
+        concentrations from soil profile samples to depths of 100 cm. Sampling site
+        latitude and longitude were available for the majority of the samples that
+        enabled assembling additional soil properties, site characteristics, vegetation
+        distributions, biomes, and long-term climate data from several global sources
+        of soil, land-cover, and climate data. These site attributes are included
+        with the microbial biomass data. This data set contains two *.csv files of
+        the soil microbial biomass C, N, P data. The first provides all compiled results
+        emphasizing the full spatial extent of the data, while the second is a subset
+        that provides only data from a series of profile samples emphasizing the vertical
+        distribution of microbial biomass concentrations.There is a companion file,
+        also in .csv format, of the references for the surveyed publications. A reference_number
+        relates the data to the respective publication.The concentrations of soil
+        microbial biomass, in combination with other soil databases, were used to
+        estimate the global storage of soil microbial biomass C and N in 0-30 cm and
+        0-100 cm soil profiles. These storage estimates were combined with a spatial
+        map of 12 major biomes (boreal forest, temperate coniferous forest, temperate
+        broadleaf forest, tropical and subtropical forests, mixed forest, grassland,
+        shrub, tundra, desert, natural wetland, cropland, and pasture) at 0.05-degree
+        by 0.5-degree spatial resolution. The biome map and six estimates of C and
+        N storage and C:N ration in soil microbial biomass are provided in a single
+        netCDF format file. ","has_granules":true,"time_end":"2012-06-01T00:00:00.000Z","orbit_parameters":{},"id":"C1000000000-ORNL_DAAC","original_format":"ECHO10","granule_count":3,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1264"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides the concentrations of soil microbial biomass carbon (C),
+        nitrogen (N) and phosphorus (P), soil organic carbon, total nitrogen, and
+        total phosphorus at biome and global scales. The data were compiled from a
+        comprehensive survey of publications from the late 1970s to 2012 and include
+        3,422 data points from 315 papers. These data are from soil samples collected
+        primarily at 0-15 cm depth with some from 0-30 cm. In addition, data were
+        compiled for soil microbial biomass concentrations from soil profile samples
+        to depths of 100 cm. Sampling site latitude and longitude were available for
+        the majority of the samples that enabled assembling additional soil properties,
+        site characteristics, vegetation distributions, biomes, and long-term climate
+        data from several global sources of soil, land-cover, and climate data. These
+        site attributes are included with the microbial biomass data. This data set
+        contains two *.csv files of the soil microbial biomass C, N, P data. The first
+        provides all compiled results emphasizing the full spatial extent of the data,
+        while the second is a subset that provides only data from a series of profile
+        samples emphasizing the vertical distribution of microbial biomass concentrations.There
+        is a companion file, also in .csv format, of the references for the surveyed
+        publications. A reference_number relates the data to the respective publication.The
+        concentrations of soil microbial biomass, in combination with other soil databases,
+        were used to estimate the global storage of soil microbial biomass C and N
+        in 0-30 cm and 0-100 cm soil profiles. These storage estimates were combined
+        with a spatial map of 12 major biomes (boreal forest, temperate coniferous
+        forest, temperate broadleaf forest, tropical and subtropical forests, mixed
+        forest, grassland, shrub, tundra, desert, natural wetland, cropland, and pasture)
+        at 0.05-degree by 0.5-degree spatial resolution. The biome map and six estimates
+        of C and N storage and C:N ration in soil microbial biomass are provided in
+        a single netCDF format file.  (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/SOILS/guides/Global_Microbial_Biomass_C_N_P.html"}]},{"processing_level_id":"3","boxes":["-50
+        -159.7 68.5 176.9"],"time_start":"1970-01-01T00:00:00.000Z","dif_ids":["LEAF_CARBON_NUTRIENTS"],"version_id":"1","updated":"2012-07-19T00:00:00.000Z","dataset_id":"A
+        Global Database of Carbon and Nutrient Concentrations of Green and Senesced
+        Leaves","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1106","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Carbon and Nutrient Concentrations of Green and Senesced
+        Leaves","coordinate_system":"CARTESIAN","summary":"This data set provides
+        carbon (C), nitrogen (N), phosphorus (P), potassium (K), calcium (Ca), and
+        magnesium (Mg) concentrations in green and senesced leaves. Vegetation characteristics
+        reported include species growth habit, leaf area, mass, and mass loss with
+        senescence. The data were compiled from 86 selected studies in 31 countries,
+        and resulted in approximately 1,000 data points for both green and senesced
+        leaves from woody and non-woody vegetation as described in Vergutz et al (2012).
+        The studies were conducted from 1970-2009. There are two comma-delimited data
+        files with this data set.","has_granules":true,"time_end":"2009-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003380-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1106"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides carbon (C), nitrogen (N), phosphorus (P), potassium (K),
+        calcium (Ca), and magnesium (Mg) concentrations in green and senesced leaves.
+        Vegetation characteristics reported include species growth habit, leaf area,
+        mass, and mass loss with senescence. The data were compiled from 86 selected
+        studies in 31 countries, and resulted in approximately 1,000 data points for
+        both green and senesced leaves from woody and non-woody vegetation as described
+        in Vergutz et al (2012). The studies were conducted from 1970-2009. There
+        are two comma-delimited data files with this data set. (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/VEGETATION/guides/Leaf_carbon_nutrients.html"}]},{"processing_level_id":"3","boxes":["-54.2
+        -164.78 78.42 175.62"],"time_start":"1932-01-01T00:00:00.000Z","dif_ids":["LAI_WOODY_PLANTS"],"version_id":"1","updated":"2014-07-22T00:00:00.000Z","dataset_id":"A
+        Global Database of Field-observed Leaf Area Index in Woody Plant Species,
+        1932-2011","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1231","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Field-observed Leaf Area Index in Woody Plant Species,
+        1932-2011","coordinate_system":"CARTESIAN","summary":"This data set provides
+        global leaf area index (LAI) values for woody species. The data are a compilation
+        of field-observed data from 1,216 locations obtained from 554 literature sources
+        published between 1932 and 2011. Only site-specific maximum LAI values were
+        included from the sources; values affected by significant artificial treatments
+        (e.g. continuous fertilization and/or irrigation) and LAI values that were
+        low due to drought or disturbance (e.g. intensive thinning, wildfire, or disease),
+        or because vegetation was immature or old/declining, were excluded (Lio et
+        al., 2014). To maximize the generic applicability of the data, original LAI
+        values from source literature and values standardized using the definition
+        of half of total surface area (HSA) are included. Supporting information,
+        such as geographical coordinates of plot, altitude, stand age, name of dominant
+        species, plant functional types, and climate data are also provided in the
+        data file. There is one data file in comma-separated (.csv) format with this
+        data set and one companion file which provides the data sources.","has_granules":true,"time_end":"2011-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179130805-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1231"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides global leaf area index (LAI) values for woody species. The
+        data are a compilation of field-observed data from 1,216 locations obtained
+        from 554 literature sources published between 1932 and 2011. Only site-specific
+        maximum LAI values were included from the sources; values affected by significant
+        artificial treatments (e.g. continuous fertilization and/or irrigation) and
+        LAI values that were low due to drought or disturbance (e.g. intensive thinning,
+        wildfire, or disease), or because vegetation was immature or old/declining,
+        were excluded (Lio et al., 2014). To maximize the generic applicability of
+        the data, original LAI values from source literature and values standardized
+        using the definition of half of total surface area (HSA) are included. Supporting
+        information, such as geographical coordinates of plot, altitude, stand age,
+        name of dominant species, plant functional types, and climate data are also
+        provided in the data file. There is one data file in comma-separated (.csv)
+        format with this data set and one companion file which provides the data sources.
+        (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/VEGETATION/guides/LAI_Woody_Plants.html"}]},{"processing_level_id":"3","boxes":["-36.45
+        -149.63 74.5 160.52"],"time_start":"1956-01-01T00:00:00.000Z","dif_ids":["GLOBAL_RTSG_FLUX_V1"],"version_id":"1","updated":"2012-04-16T00:00:00.000Z","dataset_id":"A
+        Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
+        1.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1078","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Gas Fluxes from Soils after Rewetting or Thawing, Version
+        1.0","coordinate_system":"CARTESIAN","summary":"This database contains information
+        compiled from published studies on gas flux from soil following rewetting
+        or thawing. The resulting database includes 222 field and laboratory observations
+        focused on rewetting of dry soils, and 116 field laboratory observations focused
+        on thawing of frozen soils studies conducted from 1956 to 2010. Fluxes of
+        carbon dioxide, methane, nitrous oxide, nitrogen oxide, and ammonia (CO2,
+        CH4, N2O, NO and NH3) were compiled from the literature and the flux rates
+        were normalized for ease of comparison. Field observations of gas flux following
+        rewetting of dry soils include events caused by natural rainfall, simulated
+        rainfall in natural ecosystems, and irrigation in agricultural lands. Similarly,
+        thawing of frozen soils include field observations of natural thawing, simulated
+        freezing-thawing events (i.e., thawing of simulated frozen soil by snow removal),
+        and thawing of seasonal ice in temperate and high latitude regions (Kim et
+        al., 2012). Reported parameters include experiment type, location, site type,
+        vegetation, climate, soil properties, rainfall, soil moisture, soil gas flux
+        after wetting and thawing, peak soil gas flux properties, and the corresponding
+        study references. There is one comma-delimited data file. ","has_granules":true,"time_end":"2009-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003657-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1078"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        database contains information compiled from published studies on gas flux
+        from soil following rewetting or thawing. The resulting database includes
+        222 field and laboratory observations focused on rewetting of dry soils, and
+        116 field laboratory observations focused on thawing of frozen soils studies
+        conducted from 1956 to 2010. Fluxes of carbon dioxide, methane, nitrous oxide,
+        nitrogen oxide, and ammonia (CO2, CH4, N2O, NO and NH3) were compiled from
+        the literature and the flux rates were normalized for ease of comparison.
+        Field observations of gas flux following rewetting of dry soils include events
+        caused by natural rainfall, simulated rainfall in natural ecosystems, and
+        irrigation in agricultural lands. Similarly, thawing of frozen soils include
+        field observations of natural thawing, simulated freezing-thawing events (i.e.,
+        thawing of simulated frozen soil by snow removal), and thawing of seasonal
+        ice in temperate and high latitude regions (Kim et al., 2012). Reported parameters
+        include experiment type, location, site type, vegetation, climate, soil properties,
+        rainfall, soil moisture, soil gas flux after wetting and thawing, peak soil
+        gas flux properties, and the corresponding study references. There is one
+        comma-delimited data file.  (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/SOILS/guides/global_rtsg_flux_v1.html"}]},{"processing_level_id":"3","boxes":["-54.5
+        -156.7 72.5 176.2"],"time_start":"1827-01-01T00:00:00.000Z","dif_ids":["GLOBAL_LITTER_CARBON_NUTRIENTS"],"version_id":"1","updated":"2015-03-31T00:00:00.000Z","dataset_id":"A
+        Global Database of Litterfall Mass and Litter Pool Carbon and Nutrients","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1244","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Litterfall Mass and Litter Pool Carbon and Nutrients","coordinate_system":"CARTESIAN","summary":"Measurement
+        data of aboveground litterfall and littermass and litter carbon, nitrogen,
+        and nutrient concentrations were extracted from 685 original literature sources
+        and compiled into a comprehensive database to support the analysis of global
+        patterns of carbon and nutrients in litterfall and litter pools. Data are
+        included from sources dating from 1827 to 1997. The reported data include
+        the literature reference, general site information (description, latitude,
+        longitude, and elevation), site climate data (mean annual temperature and
+        precipitation), site vegetation characteristics (management, stand age, ecosystem
+        and vegetation-type codes), annual quantities of litterfall (by class, kg
+        m-2 yr-1), litter pool mass (by class and litter layer, kg m-2), and concentrations
+        of nitrogen (N), phosphorus (P), and base cations for the litterfall (g m-2
+        yr-1) and litter pool components (g m-2).  The investigators intent was to
+        compile a comprehensive data set of individual direct field measurements as
+        reported by researchers. While the primary emphasis was on acquiring C data,
+        measurements of N, P, and base cations were also obtained, although the database
+        is sparse for elements other than C and N. Each of the 1,497 records in the
+        database represents a measurement site. Replicate measurements were averaged
+        according to conventions described in Section 5 and recorded for each site
+        in the database. The sites were at 575 different locations. ","has_granules":true,"time_end":"1997-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C1227811476-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1244"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Measurement
+        data of aboveground litterfall and littermass and litter carbon, nitrogen,
+        and nutrient concentrations were extracted from 685 original literature sources
+        and compiled into a comprehensive database to support the analysis of global
+        patterns of carbon and nutrients in litterfall and litter pools. Data are
+        included from sources dating from 1827 to 1997. The reported data include
+        the literature reference, general site information (description, latitude,
+        longitude, and elevation), site climate data (mean annual temperature and
+        precipitation), site vegetation characteristics (management, stand age, ecosystem
+        and vegetation-type codes), annual quantities of litterfall (by class, kg
+        m-2 yr-1), litter pool mass (by class and litter layer, kg m-2), and concentrations
+        of nitrogen (N), phosphorus (P), and base cations for the litterfall (g m-2
+        yr-1) and litter pool components (g m-2).  The investigators intent was to
+        compile a comprehensive data set of individual direct field measurements as
+        reported by researchers. While the primary emphasis was on acquiring C data,
+        measurements of N, P, and base cations were also obtained, although the database
+        is sparse for elements other than C and N. Each of the 1,497 records in the
+        database represents a measurement site. Replicate measurements were averaged
+        according to conventions described in Section 5 and recorded for each site
+        in the database. The sites were at 575 different locations.  (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/VEGETATION/guides/Global_Litter_Carbon_Nutrients.html"}]},{"processing_level_id":"3","boxes":["-42.5
+        -117.86 63.23 117.6"],"time_start":"1985-01-01T00:00:00.000Z","dif_ids":["GLOBAL_PHOSPHORUS_HEDLEY_FRACT"],"version_id":"1","updated":"2014-07-18T00:00:00.000Z","dataset_id":"A
+        Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1230","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Soil Phosphorus Compiled from Studies Using Hedley Fractionation","coordinate_system":"CARTESIAN","summary":"This
+        data set provides concentrations of soil phosphorus (P) compiled from the
+        peer-reviewed literature that cited the Hedley fractionation method (Hedley
+        and Stewart, 1982). This database contains estimates of different forms of
+        naturally occurring soil phosphorus, including labile inorganic P, organic
+        P, occluded P, secondary mineral P, apatite P, and total P, based on the analyses
+        of the various Hedley soil fractions.The recent literature survey (Yang and
+        Post, 2011) was restricted to studies of natural, unfertilized, and uncultivated
+        soils since 1995. Ninety measurements of soil P fractions were identified.
+        These were added to the 88 values from soils in natural ecosystems that Cross
+        and Schlesinger (1995) had compiled. Cross and Schlesinger provided a comprehensive
+        survey on Hedley P data prior to 1995. Measurement data are provided for studies
+        published from 1985 through 2010. In addition to the Hedley P fraction measurement
+        data Yang and Post (2011) also compiled information on soil order, soil pH,
+        organic carbon and nitrogen content, as well as the geographic location (longitude
+        and latitude) of the measurement sites. ","has_granules":true,"time_end":"2010-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179130785-ORNL_DAAC","original_format":"ECHO10","granule_count":1,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1230"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides concentrations of soil phosphorus (P) compiled from the
+        peer-reviewed literature that cited the Hedley fractionation method (Hedley
+        and Stewart, 1982). This database contains estimates of different forms of
+        naturally occurring soil phosphorus, including labile inorganic P, organic
+        P, occluded P, secondary mineral P, apatite P, and total P, based on the analyses
+        of the various Hedley soil fractions.The recent literature survey (Yang and
+        Post, 2011) was restricted to studies of natural, unfertilized, and uncultivated
+        soils since 1995. Ninety measurements of soil P fractions were identified.
+        These were added to the 88 values from soils in natural ecosystems that Cross
+        and Schlesinger (1995) had compiled. Cross and Schlesinger provided a comprehensive
+        survey on Hedley P data prior to 1995. Measurement data are provided for studies
+        published from 1985 through 2010. In addition to the Hedley P fraction measurement
+        data Yang and Post (2011) also compiled information on soil order, soil pH,
+        organic carbon and nitrogen content, as well as the geographic location (longitude
+        and latitude) of the measurement sites.  (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/SOILS/guides/Global_Phosphorus_Hedley_Fract.html"}]},{"processing_level_id":"3","boxes":["-78.02
+        -162.2 78.17 175.5"],"time_start":"1961-01-01T00:00:00.000Z","dif_ids":["GLOBAL_SRDB_V3"],"version_id":"1","updated":"2014-08-04T00:00:00.000Z","dataset_id":"A
+        Global Database of Soil Respiration Data, Version 3.0","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1235","organizations":["ORNL_DAAC"],"title":"A
+        Global Database of Soil Respiration Data, Version 3.0","coordinate_system":"CARTESIAN","summary":"This
+        data set provides an update of the soil respiration database (SRDB), a near-universal
+        compendium of published soil respiration (RS) data. Soil respiration, the
+        flux of autotrophically- and heterotrophically-generated CO2 from the soil
+        to the atmosphere, remains the least well-constrained component of the terrestrial
+        Carbon cycle. The database encompasses all published studies that report at
+        least one of the following data measured in the field (not laboratory): annual
+        RS, mean seasonal RS, a seasonal or annual partitioning of RS into its sources
+        fluxes, RS temperature response (Q10), or RS at 10 degrees C. The SRDB''s
+        orientation is thus to seasonal and annual fluxes, not shorter-term or chamber-specific
+        measurements, and the database is dominated by temperate, well-drained forest
+        measurement locations. The data set includes a file of RS data and a linked
+        file of study bibliographic data; both files are in comma-separated format.","has_granules":true,"time_end":"2011-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179130985-ORNL_DAAC","original_format":"ECHO10","granule_count":2,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1235"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"This
+        data set provides an update of the soil respiration database (SRDB), a near-universal
+        compendium of published soil respiration (RS) data. Soil respiration, the
+        flux of autotrophically- and heterotrophically-generated CO2 from the soil
+        to the atmosphere, remains the least well-constrained component of the terrestrial
+        Carbon cycle. The database encompasses all published studies that report at
+        least one of the following data measured in the field (not laboratory): annual
+        RS, mean seasonal RS, a seasonal or annual partitioning of RS into its sources
+        fluxes, RS temperature response (Q10), or RS at 10 degrees C. The SRDB''s
+        orientation is thus to seasonal and annual fluxes, not shorter-term or chamber-specific
+        measurements, and the database is dominated by temperate, well-drained forest
+        measurement locations. The data set includes a file of RS data and a linked
+        file of study bibliographic data; both files are in comma-separated format.
+        (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/SOILS/guides/global_srdb_v3.html"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-06-26T00:00:00.000Z","dif_ids":["FIFE_AF_DET_M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"Aircraft
+        Flux-Detrended: NRCC (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/3","organizations":["ORNL_DAAC"],"title":"Aircraft
+        Flux-Detrended: NRCC (FIFE)","coordinate_system":"CARTESIAN","summary":"Detrended
+        boundary layer fluxes recorded on aircraft flights over the Konza","has_granules":true,"time_end":"1989-10-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003112-ORNL_DAAC","original_format":"ECHO10","granule_count":28,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=3"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Detrended
+        boundary layer fluxes recorded on aircraft flights over the Konza (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_det_nrcc.html"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-08-11T00:00:00.000Z","dif_ids":["FIFE_AF_DET_K"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"Aircraft
+        Flux-Detrended: U of Wy. (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/4","organizations":["ORNL_DAAC"],"title":"Aircraft
+        Flux-Detrended: U of Wy. (FIFE)","coordinate_system":"CARTESIAN","summary":"Detrended
+        boundary layer fluxes recorded on aircraft flights over the Konza","has_granules":true,"time_end":"1989-10-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003698-ORNL_DAAC","original_format":"ECHO10","granule_count":9,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=4"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Detrended
+        boundary layer fluxes recorded on aircraft flights over the Konza (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_det_wy.html"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-05-26T00:00:00.000Z","dif_ids":["FIFE_AF_DET_G"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"Aircraft
+        Flux-Detrended: Univ. Col. (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/5","organizations":["ORNL_DAAC"],"title":"Aircraft
+        Flux-Detrended: Univ. Col. (FIFE)","coordinate_system":"CARTESIAN","summary":"Detrended
+        boundary layer fluxes recorded on aircraft flights over the Konza","has_granules":true,"time_end":"1989-10-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003494-ORNL_DAAC","original_format":"ECHO10","granule_count":5,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Detrended
+        boundary layer fluxes recorded on aircraft flights over the Konza (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_det_col.html"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-06-26T00:00:00.000Z","dif_ids":["FIFE_AF_FLT_M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"Aircraft
+        Flux-Filtered: NRCC (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/6","organizations":["ORNL_DAAC"],"title":"Aircraft
+        Flux-Filtered: NRCC (FIFE)","coordinate_system":"CARTESIAN","summary":"Filtered
+        boundary layer fluxes recorded on aircraft flights over the Konza","has_granules":true,"time_end":"1989-10-31T00:00:00.000Z","orbit_parameters":{},"id":"C179002951-ORNL_DAAC","original_format":"ECHO10","granule_count":28,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Filtered
+        boundary layer fluxes recorded on aircraft flights over the Konza (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_filt_nrcc.html"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-08-11T00:00:00.000Z","dif_ids":["FIFE_AF_FLT_K"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"Aircraft
+        Flux-Filtered: U of Wy. (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/7","organizations":["ORNL_DAAC"],"title":"Aircraft
+        Flux-Filtered: U of Wy. (FIFE)","coordinate_system":"CARTESIAN","summary":"Filtered
+        boundary layer fluxes recorded on aircraft flights over the Konza","has_granules":true,"time_end":"1989-10-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003237-ORNL_DAAC","original_format":"ECHO10","granule_count":9,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=7"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Filtered
+        boundary layer fluxes recorded on aircraft flights over the Konza (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_filt_wy.html"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-05-26T00:00:00.000Z","dif_ids":["FIFE_AF_FLT_G"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"Aircraft
+        Flux-Filtered: Univ. Col. (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/8","organizations":["ORNL_DAAC"],"title":"Aircraft
+        Flux-Filtered: Univ. Col. (FIFE)","coordinate_system":"CARTESIAN","summary":"Filtered
+        boundary layer fluxes recorded on aircraft flights over the Konza","has_granules":true,"time_end":"1989-10-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003697-ORNL_DAAC","original_format":"ECHO10","granule_count":5,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=8"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Filtered
+        boundary layer fluxes recorded on aircraft flights over the Konza (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_filt_col.html"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-06-26T00:00:00.000Z","dif_ids":["FIFE_AF_RAW_M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"Aircraft
+        Flux-Raw: NRCC (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/9","organizations":["ORNL_DAAC"],"title":"Aircraft
+        Flux-Raw: NRCC (FIFE)","coordinate_system":"CARTESIAN","summary":"Raw (unmodified)
+        boundary layer fluxes recorded on aircraft flights over Konza","has_granules":true,"time_end":"1989-10-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003273-ORNL_DAAC","original_format":"ECHO10","granule_count":28,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=9"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Raw
+        (unmodified) boundary layer fluxes recorded on aircraft flights over Konza
+        (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_raw_nrcc.html"}]},{"processing_level_id":"3","boxes":["37
+        -102 40 -95"],"time_start":"1987-08-11T00:00:00.000Z","dif_ids":["FIFE_AF_RAW_K"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"Aircraft
+        Flux-Raw: U of Wy. (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/10","organizations":["ORNL_DAAC"],"title":"Aircraft
+        Flux-Raw: U of Wy. (FIFE)","coordinate_system":"CARTESIAN","summary":"Raw
+        (unmodified) boundary layer fluxes recorded on aircraft flights over Konza","has_granules":true,"time_end":"1989-10-31T00:00:00.000Z","orbit_parameters":{},"id":"C179002883-ORNL_DAAC","original_format":"ECHO10","granule_count":9,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=10"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Raw
+        (unmodified) boundary layer fluxes recorded on aircraft flights over Konza
+        (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_raw_wy.html"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-05-26T00:00:00.000Z","dif_ids":["FIFE_AF_RAW_G"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"Aircraft
+        Flux-Raw: Univ. Col. (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/11","organizations":["ORNL_DAAC"],"title":"Aircraft
+        Flux-Raw: Univ. Col. (FIFE)","coordinate_system":"CARTESIAN","summary":"Raw
+        (unmodified) boundary layer fluxes recorded on aircraft flights over Konza","has_granules":true,"time_end":"1989-10-31T00:00:00.000Z","orbit_parameters":{},"id":"C179002741-ORNL_DAAC","original_format":"ECHO10","granule_count":5,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=11"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Raw
+        (unmodified) boundary layer fluxes recorded on aircraft flights over Konza
+        (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_raw_col.html"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-20
+        -79.6 5.2 -49.4"],"time_start":"1972-01-01T00:00:00.000Z","dif_ids":["richriver"],"version_id":"1","updated":"1999-01-30T00:00:00.000Z","dataset_id":"Amazon
+        River Basin Precipitation, 1972-1992","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/228","organizations":["ORNL_DAAC"],"title":"Amazon
+        River Basin Precipitation, 1972-1992","coordinate_system":"CARTESIAN","summary":"The
+        precipitation data is 0.2 degree gridded monthly precipitation data based
+        upon monthly rain data from Peru and Bolivia and daily rain data from Brazil.
+        The extent of the data ranges from 5.2N and -20.0S to -49.4W to -79.6W","has_granules":true,"time_end":"1992-12-31T00:00:00.000Z","orbit_parameters":{},"id":"C179003397-ORNL_DAAC","original_format":"ECHO10","granule_count":3,"archive_center":"ORNL_DAAC","browse_flag":true,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=228"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"The
+        precipitation data is 0.2 degree gridded monthly precipitation data based
+        upon monthly rain data from Peru and Bolivia and daily rain data from Brazil.
+        The extent of the data ranges from 5.2N and -20.0S to -49.4W to -79.6W (VIEW
+        RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/LBA/guides/amazon_precip_guide.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","type":"image/png","title":"(BROWSE)","hreflang":"en-US","href":"http://webmap.ornl.gov/sdat/pimg/228_1_fit.png"}]},{"processing_level_id":"3","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["38.98
+        -96.61 39.12 -96.47"],"time_start":"1987-05-01T00:00:00.000Z","dif_ids":["FIFE_AMS_DATA"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"AMS
+        (Automated Met Station) Data (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/12","organizations":["ORNL_DAAC"],"title":"AMS
+        (Automated Met Station) Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
+        minute average meteorological data from NCARs Portable Automated Mesonet Station","has_granules":true,"time_end":"1989-11-10T00:00:00.000Z","orbit_parameters":{},"id":"C179003615-ORNL_DAAC","original_format":"ECHO10","granule_count":7091,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=12"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute average meteorological data from NCARs Portable Automated Mesonet Station
+        (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/AMS_Data.html"}]}]}}'
+    http_version: 
 a9229e906ce91eb359a73bc41077170008882940:
   response:
     status:
