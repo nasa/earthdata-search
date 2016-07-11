@@ -290,6 +290,25 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1279955711-LAADS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 11 Jul 2016 19:02:39 GMT
+  digest: 107c9d82fd1e3296ef1b859c27f9e0131d1e52e5
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G1284058749-NSIDC_ECS&catalog_item_id%5B%5D=G1284058902-NSIDC_ECS&catalog_item_id%5B%5D=G1284062782-NSIDC_ECS&catalog_item_id%5B%5D=G1284062802-NSIDC_ECS&catalog_item_id%5B%5D=G1284058776-NSIDC_ECS&catalog_item_id%5B%5D=G1284058768-NSIDC_ECS&catalog_item_id%5B%5D=G1284062698-NSIDC_ECS&catalog_item_id%5B%5D=G1284062807-NSIDC_ECS&catalog_item_id%5B%5D=G1284062697-NSIDC_ECS&catalog_item_id%5B%5D=G1284062822-NSIDC_ECS&catalog_item_id%5B%5D=G1283427185-NSIDC_ECS&catalog_item_id%5B%5D=G1283421178-NSIDC_ECS&catalog_item_id%5B%5D=G1283421250-NSIDC_ECS&catalog_item_id%5B%5D=G1283421237-NSIDC_ECS&catalog_item_id%5B%5D=G1283421179-NSIDC_ECS&catalog_item_id%5B%5D=G1283421304-NSIDC_ECS&catalog_item_id%5B%5D=G1283427056-NSIDC_ECS&catalog_item_id%5B%5D=G1283427106-NSIDC_ECS&catalog_item_id%5B%5D=G1283427050-NSIDC_ECS&catalog_item_id%5B%5D=G1283427127-NSIDC_ECS
     headers:
       User-Agent:
