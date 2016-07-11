@@ -1,4 +1,34 @@
 ---
+544c0ff705801b0168e913babdfe52a5dabffc88:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"9dfc62149e07e7dffc01d4cb0d9810da"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.272000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 11 Jul 2016 18:08:34 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
+    http_version: 
 47dc17f3f66a8e0bb960259f6d433ef3355efddd:
   response:
     status:
@@ -28,4 +58,47 @@
     body:
       encoding: UTF-8
       string: "[]"
+    http_version: 
+6115e1951aed01025712c59bb621870502551fbe:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"35bee4758cac370f4dbf73dd9deb7b52"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.226000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Mon, 11 Jul 2016 18:08:35 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <data_quality_summary_definition>
+          <id>77EDC43F-3BBC-2E39-BFBA-16DDE3540447</id>
+          <summary>&lt;p&gt;-------------------------------------------------------------------------------------------------------- &lt;br /&gt; MODIS Snow and Sea Ice Quality Assessment and Validation: &lt;br /&gt; -------------------------------------------------------------------------------------------------------- &lt;br /&gt;Product QA:&lt;br /&gt; Product quality assessment QA and validation are integral parts of the MODIS Land product generation process. The MODIS Land products have different data versions and levels of maturity reflecting algorithm refinement and the input data used in their production.&amp;nbsp; Please view technical information regarding product maturity and QA at:  &lt;a href="http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi" target="_modisqa"&gt;http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;&amp;nbsp;&lt;/p&gt;
+        &lt;p&gt;Data Validation:&lt;/p&gt;
+        &lt;p&gt;Versions 5 MODIS/Terra and MODIS/Aqua snow and sea ice products are currently at a 'Validated Stage 2' status. Validated products are high-quality products with well-defined uncertainties, which are suitable for longer term or systematic scientific studies and publication.  While the products as a whole are at &amp;lsquo;Validated Stage 2' status, this is not necessarily true for each parameter within a product.  For example, the validation status of the albedo and fractional snow parameters is provisional. Users are encouraged to review product quality summaries before publication of results.  Please refer to the MODIS Validation Web site &lt;a href="http://landval.gsfc.nasa.gov/" target="_modisvalid"&gt;http://landval.gsfc.nasa.gov/&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;&amp;nbsp;&lt;/p&gt;
+        &lt;p&gt;For answers to questions concerning MODIS Snow or Sea Ice data products please refer to data documentation at &lt;a href="http://nsidc.org/data/modis/data_summaries/index.html" target="_modisnsidc"&gt;http://nsidc.org/data/modis/data_summaries/index.html&lt;/a&gt;&lt;/p&gt;</summary>
+          <name>MODIS</name>
+          <updated_at type="datetime">2011-01-31T20:35:12Z</updated_at>
+          <provider_id>NSIDC_ECS</provider_id>
+        </data_quality_summary_definition>
     http_version: 
