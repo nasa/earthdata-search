@@ -1737,6 +1737,60 @@ c9db6d220438e5227e47161f04d5b76201afcc96:
         Map Services","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/anthromes-anthropogenic-biomes-world-v1/maps/services"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
         set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4H12ZXD"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/browse#","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/downloads/maps/anthromes/anthromes-anthropogenic-biomes-world-v1/Global_Anthropogenic_Biomes.pdf"}]}]}}'
     http_version: 
+d8ee4aad01ae3208287de10ba8842d25ca77fe95:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:49:27 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '2'
+      cmr-took:
+      - '26'
+      cmr-request-id:
+      - 44629288-801c-40eb-a017-c2f39fbf35ea
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:49:27.518Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C179003030-ORNL_DAAC&echo_collection_id%5B%5D=C179001887-SEDAC&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"3","time_start":"1984-12-25T00:00:00.000Z","dif_ids":["FIFE_STRM_15M"],"version_id":"1","updated":"2008-12-02T00:00:00.000Z","dataset_id":"15
+        Minute Stream Flow Data: USGS (FIFE)","points":["39.1 -96.6"],"data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/1","organizations":["ORNL_DAAC"],"title":"15
+        Minute Stream Flow Data: USGS (FIFE)","coordinate_system":"CARTESIAN","summary":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie","has_granules":true,"time_end":"1988-03-04T00:00:00.000Z","orbit_parameters":{},"id":"C179003030-ORNL_DAAC","original_format":"ECHO10","granule_count":39,"archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"USGS
+        15 minute stream flow data for Kings Creek on the Konza Prairie (VIEW RELATED
+        INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/15_min_strm_flow.html"}]},{"processing_level_id":"Level
+        2","boxes":["-55 -180 90 180"],"time_start":"1978-01-01T00:00:00.000Z","dif_ids":["CIESIN_SEDAC_ESI_2000"],"version_id":"2000.00","updated":"2015-08-03T00:00:00.000Z","dataset_id":"2000
+        Pilot Environmental Sustainability Index (ESI)","data_center":"SEDAC","short_name":"CIESIN_SEDAC_ESI_2000","organizations":["SEDAC"],"title":"2000
+        Pilot Environmental Sustainability Index (ESI)","coordinate_system":"CARTESIAN","summary":"The
+        2000 Pilot Environmental Sustainability Index (ESI) is an exploratory effort
+        to construct an \n\nindex that measures the ability of a nation''s economy
+        to achieve sustainable development, with the long term goal of finding a single
+        \n\nindicator for environmental sustainability analagous to that of the Gross
+        Domestic Product (GDP). The index covering 56 countries is \n\na composite
+        measure of the current status of a nation''s environmental systems, pressures
+        on those systems, human vulnerability to \n\nenvironmental change, national
+        capacity to respond, and contributions to global environmental stewardship.
+        The index was unveiled at \n\nthe World Economic Forum''s annual meeting,
+        January 2000, Davos, Switzerland. The 2000 Pilot ESI is the result of collaboration
+        among \n\nthe World Economic Forum (WEF), Yale Center for Environmental Law
+        and Policy (YCELP), and the Columbia University Center for \n\nInternational
+        Earth Science Information Network (CIESIN).","has_granules":false,"orbit_parameters":{},"id":"C179001887-SEDAC","original_format":"ECHO10","granule_count":0,"archive_center":"SEDAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"data
+        download page","hreflang":"en-US","href":"http://sedac.ciesin.columbia.edu/data/set/esi-pilot-environmental-sustainability-index-\n\n2000/data-download"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"data
+        set DOI and homepage (DOI URL)","hreflang":"en-US","href":"http://dx.doi.org/10.7927/H4NK3BZJ"}]}]}}'
+    http_version: 
 ade99948de0a898d921f10b32d5cf6b787df3e4f:
   response:
     status:
