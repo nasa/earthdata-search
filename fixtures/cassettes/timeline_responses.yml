@@ -87,6 +87,50 @@ f5801e117ff4523a275fccd3ef6ed5ca040c1e7a:
       encoding: UTF-8
       string: '[{"concept-id":"C128599377-NSIDC_ECS","intervals":[[1254466308,1265155200,3584],[1265328000,1317686400,17633]]}]'
     http_version: 
+8fd61b30abd9ac7160bd659ec239f79c73cfb292:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:05:56 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 8f3ba7fd-45ff-4431-a676-ef1628a51611
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+b1bbead401c56092a08bf61d93f1a00e291f02b7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:05:52 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 26691332-27ac-4fdc-8b1a-5cb215d6caca
+      content-length:
+      - '144'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C14758250-LPDAAC_ECS","intervals":[[1330387200,1383004800,317111],[1383091200,1383609600,2678],[1383696000,1425254400,246918]]}]'
+    http_version: 
 d35ada11f476019ba0966d5cd835807c05a4c55c:
   response:
     status:

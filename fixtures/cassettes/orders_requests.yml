@@ -308,13 +308,7 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/orders/232D1B49-2BFB-4263-ED9C-6D496BAF89EA/user_information
     body:
       encoding: UTF-8
-      string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
-        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-        Contact"},"billing_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
-        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-        Contact"},"order_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United
-        States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order
-        Contact"},"user_domain":"OTHER","user_region":"USA"}}'
+      string: '{"user_information":{"shipping_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"billing_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"order_contact":{"first_name":"Earthdata","last_name":"Search","email":"patrick+edsc@element84.com","organization":"EDSC","address":{"country":"United States"},"phones":{"0":{"number":"0000000000","phone_number_type":"BUSINESS"}},"role":"Order Contact"},"user_domain":null,"user_region":null}}'
     headers:
       User-Agent:
       - Faraday v0.8.8

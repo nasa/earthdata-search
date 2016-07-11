@@ -113,6 +113,23 @@ http_interactions:
   digest: 5e63bc956df687d12363d0cdb9a65f6e4d0c5706
 - request:
     method: get
+    uri: https://cmr.earthdata.nasa.gov/search/concepts/C14758250-LPDAAC_ECS.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 11 Jul 2016 19:06:00 GMT
+  digest: 9a55a8509703b3845b6925105f7cee3d5f6abd1f
+- request:
+    method: get
     uri: https://cmr.earthdata.nasa.gov/search/concepts/C179001887-SEDAC.echo10
     body:
       encoding: US-ASCII

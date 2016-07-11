@@ -1687,6 +1687,81 @@ c9db6d220438e5227e47161f04d5b76201afcc96:
         Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_land_l2b_soil_moisture.gd.html"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
         Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}]}}'
     http_version: 
+48aa019a373b82af4a30c3990ab380b47e42d5a9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 19:05:51 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '97'
+      cmr-request-id:
+      - 16b619ef-cf7d-4bba-9e83-9760d1b3e648
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T19:05:51.328Z","id":"https://cmr.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C14758250-LPDAAC_ECS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"1A","tags":{"org.ceos.wgiss.cwic.granules.prod":{}},"boxes":["-90
+        -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","dif_ids":["AST_L1A3"],"version_id":"003","updated":"2015-09-30T10:40:23.489Z","dataset_id":"ASTER
+        L1A Reconstructed Unprocessed Instrument Data V003","data_center":"LPDAAC_ECS","short_name":"AST_L1A","organizations":["LPDAAC","GDS"],"title":"ASTER
+        L1A Reconstructed Unprocessed Instrument Data V003","coordinate_system":"CARTESIAN","summary":"The
+        ASTER instrument aboard the Terra satellite has a complement of three different
+        telescopes with varying pointing capabilities. ASTER data are primarily acquired
+        and processed in support of a global mapping mission, and based on Data Acquisition
+        Requests (DARs) from authorized users. ASTER Level-1 data are produced at
+        the Ground Data System (GDS) facility of Japan Space Systems in Tokyo, Japan,
+        and subsequently sent to the Land Processes (LP) Distributed Active Archive
+        Center (DAAC) for archiving, distribution, and higher-level product generation.
+        The ASTER Level-1A data set contains reconstructed, instrument digital numbers
+        (DNs) derived from the telemetry streams of the 3 telescopes: Visible Near
+        Infrared (VNIR), Shortwave Infrared (SWIR), and Thermal Infrared (TIR). The
+        Level-1A data contains depacketized, demultiplexed, and realigned instrument
+        image data with their geometric correction coefficients and radiometric calibration
+        coefficients calculated and appended but not applied. It also includes corrections
+        for the SWIR parallax, and intra- and inter-telescope registration information.
+        \n\nUsers are advised that ASTER SWIR data acquired from late April 2008 to
+        the present exhibit anomalous saturation of values and anomalous striping.
+        This effect is also present for some prior acquisition periods. Please refer
+        to the ASTER SWIR User Advisory Document at https://lpdaac.usgs.gov/sites/default/files/public/aster/docs/ASTER_SWIR_User_Advisory_July%2018_08.pdf
+        for more details.\n\nV003 data set release date: 2002-05-03\n\nData Set Characteristics:
+        \nArea: ~60km x 60km \nImage Dimensions: \n  VNIR: 4200 rows x 4100 columns
+        \n  VNIR (3B): 5400 rows x 5000 columns \n  SWIR: 2100 rows x 2048 columns
+        \n  TIR: 700 rows x 700 columns \nFile Size: \n  VNIR (1,2,3N): ~50 MB \n  VNIR
+        (3B): 30 MB \n  SWIR (4-9): ~25 MB \n  TIR (10-14): ~5 MB\n  Total: 110 Megabytes\nSpatial
+        Resolution:\n  VNIR: 15m\n  SWIR: 30m\n  TIR: 90m \nUnits: Digital counts\nProjection:
+        Universal Transverse Mercator (UTM)\nData Format: HDF-EOS, GeoTIFF\nVgroup
+        Data Fields: 15","has_granules":true,"orbit_parameters":{},"id":"C14758250-LPDAAC_ECS","original_format":"ECHO10","granule_count":2841894,"archive_center":"LPDAAC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Data
+        set landing page at the LP DAAC (MiscInformation)","hreflang":"en-US","href":"http://dx.doi.org/10.5067/ASTER/AST_L1A.003"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Interface
+        to search, discover, and access EOS data products, and invoke available data
+        services.\n       (Type:GET DATA Subtype:REVERB)","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"The
+        USGS Global Visualization Viewer (GloVis) is an online search and order tool
+        driven by browse images.  Users may select any geographical area of interest
+        (for any given product) and view all available browse images for that area
+        before deciding to order those products.\n       (Type:GET DATA)","hreflang":"en-US","href":"http://glovis.usgs.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"The
+        Land Processes Distributed Active Archive Center (LP DAAC) is one of several
+        discipline-specific data centers within the NASA Earth Observing System Data
+        and Information System (EOSDIS).  The LP DAAC Web page provides information
+        about available data products, services, documentation, order interfaces,
+        and tools.\n       (Type:VIEW PROJECT HOME PAGE)","hreflang":"en-US","href":"https://lpdaac.usgs.gov"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"The
+        ASTER home page is maintained through NASA''s Jet Propulsion Laboratory and
+        documents various aspects of the ASTER mission.\n       (Type:VIEW PROJECT
+        HOME PAGE)","hreflang":"en-US","href":"http://asterweb.jpl.nasa.gov/"}]}]}}'
+    http_version: 
 2cffe35b2888a5856d18f1864f4fe0f6b60fe83e:
   response:
     status:
