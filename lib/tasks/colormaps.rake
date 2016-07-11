@@ -14,12 +14,10 @@ namespace :colormaps do
     begin
       # if the directory exists, delete it before running the rake task
       # so old/stale colormaps aren't stored b/c GIBS will be updating versions
-      puts "removing folder..."
       FileUtils::remove_dir(output_dir)
     rescue Errno::ENOENT
-      puts "folder did not exist yet"
+      # blank rescue block, in case the directory did not already exist
     end
-    puts "adding folder..."
     FileUtils::mkdir_p(output_dir)
 
     # regular, OPS url
@@ -38,18 +36,9 @@ namespace :colormaps do
 
     layers.each do |layer|
       id = layer.xpath("./ows:Identifier").first.content.to_s
-      # url = layer.xpath("./ows:Metadata/@xlink:href").to_s
-      # url = url.gsub(/^https/, 'http') # Avoid SSL errors in CI
-
-      # puts "layer: #{layer}"
-      # puts "id: #{id}"
-      # puts "url: #{url}"
 
       # get v1.2 role metadata node
       target = layer.xpath("./ows:Metadata[contains(@xlink:role, '1.2')]")
-      # puts "target: #{target}"
-      puts "nil: #{target.nil?} | empty: #{target.empty?}"
-
       if target.empty?
         # layer does not have a metadata node with xlink:role v1.2,
         # so try to use url from another metadata node (no version or v1.0)
@@ -58,7 +47,6 @@ namespace :colormaps do
         url = target.attribute("href").to_s
       end
       url = url.gsub(/^https/, 'http') # Avoid SSL errors in CI
-      puts "url: #{url}"
 
       unless id.empty? || url.empty? || !url.start_with?('http')
         file_count += 1
@@ -66,7 +54,6 @@ namespace :colormaps do
         error_count += 1 unless result
       end
     end
-    puts "#{layers.count} layers"
 
     puts "#{error_count} error(s), #{file_count} file(s)"
 
