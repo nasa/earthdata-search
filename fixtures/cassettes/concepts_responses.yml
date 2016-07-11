@@ -609,6 +609,36 @@ f84e0da7b5c4a33746f52d6353d644f3d1b9d422:
         \n\t\t\t\t\t\t\t<NorthBoundingCoordinate>90</NorthBoundingCoordinate> \n\t\t\t\t\t\t\t<EastBoundingCoordinate>180</EastBoundingCoordinate>
         \n\t\t\t\t\t\t\t<SouthBoundingCoordinate>-55</SouthBoundingCoordinate> \n\t\t\t\t\t\t</BoundingRectangle>\n\t\t\t\t\t</Geometry>\n\t\t\t\t</HorizontalSpatialDomain>\n\t\t\t\t<GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n\t\t\t</Spatial>\n\t\t</Collection>"
     http_version: 
+c8741b286fc3abcb830c7c874c36854adc00e412:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:51:18 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - e4765541-5ebd-423b-9ef7-c4d80459710a
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["39.08 -96.6 39.11 -96.55"],"time_start":"1987-05-29T00:00:00.000Z","dif_ids":["FIFE_RAIN_30M"],"version_id":"1","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","short_name":"doi:10.3334/ORNLDAAC/2","organizations":["ORNL_DAAC"],"title":"30
+        Minute Rainfall Data (FIFE)","coordinate_system":"CARTESIAN","summary":"30
+        minute rainfall data for the Konza Prairie","time_end":"1987-10-26T00:00:00.000Z","orbit_parameters":{},"id":"C179002914-ORNL_DAAC","original_format":"ECHO10","archive_center":"ORNL_DAAC","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]}'
+    http_version: 
 eaec045ccc13735b698cb225cb0f3190e1f061c3:
   response:
     status:

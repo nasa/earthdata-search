@@ -1367,6 +1367,184 @@ cd7dd03a6200ba6fd79cd1865341a88b35708db0:
         Document for this product at NSIDC (ECSCollGuide)","hreflang":"en-US","href":"http://nsidc.org/data/docs/daac/ae_land_l2b_soil_moisture.gd.html"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E/Aqua
         Product page at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/amsre/"}]}]}}'
     http_version: 
+003f84534504d2ae9dfcb26903ddb0847272fd93:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:51:18 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '14'
+      cmr-request-id:
+      - 98f765d7-ca4b-4858-9b15-f58eb7988509
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:51:18.727Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C179002914-ORNL_DAAC&echo_granule_id=G179106792-ORNL_DAAC&page_num=1&page_size=20&sort_key%5B%5D=-start_date","title":"ECHO
+        granule metadata","entry":[{"boxes":["39.0758 -96.5967 39.1083 -96.5531"],"time_start":"1987-10-25T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72981621.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106792-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.001401","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid1621/72981621.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]}]}}'
+    http_version: 
+4433c0bc9baf8589c6c8f3a9478753962b6149bf:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:51:17 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '21'
+      cmr-request-id:
+      - b1d0540e-f38f-4fe5-9ded-1a76992f476c
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:51:17.412Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C179002914-ORNL_DAAC&echo_granule_id=G179106792-ORNL_DAAC&page_size=20&sort_key%5B%5D=-start_date","title":"ECHO
+        granule metadata","entry":[{"boxes":["39.0758 -96.5967 39.1083 -96.5531"],"time_start":"1987-10-25T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72981621.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106792-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.001401","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid1621/72981621.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]}]}}'
+    http_version: 
+7a41dd31b621ce17bd4fa1795ba121b39f17fb3d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:51:13 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '117'
+      cmr-took:
+      - '23'
+      cmr-request-id:
+      - 0b7bd8a3-b8a7-4c57-b2ba-5f18ee6c3de4
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:51:13.819Z","id":"https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C179002914-ORNL_DAAC&page_num=1&page_size=20&sort_key%5B%5D=-start_date","title":"ECHO
+        granule metadata","entry":[{"boxes":["39.0758 -96.5967 39.1083 -96.5531"],"time_start":"1987-10-25T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72981621.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106792-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.001401","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid1621/72981621.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-14T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72872326.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106791-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003208","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2326/72872326.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72831318.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106774-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003408","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid1318/72831318.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72831824.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-24T00:00:00.000Z","id":"G179106775-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.0021","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid1824/72831824.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72831829.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106776-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003451","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid1829/72831829.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72831917.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106777-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003458","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid1917/72831917.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832123.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106778-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003146","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2123/72832123.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832132.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106779-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.00328","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2132/72832132.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832316.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-16T00:00:00.000Z","id":"G179106780-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.00169","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2316/72832316.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832321.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106781-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003177","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2321/72832321.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832418.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106782-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003384","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2418/72832418.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832424.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106783-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003179","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2424/72832424.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832521.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106784-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003033","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2521/72832521.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832616.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106785-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003233","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2616/72832616.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832723.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-25T00:00:00.000Z","id":"G179106786-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003033","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2723/72832723.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832814.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106787-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003099","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2814/72832814.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832819.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106788-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003387","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2819/72832819.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72832822.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106789-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003313","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid2822/72832822.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-10-10T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72833120.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-10-26T00:00:00.000Z","id":"G179106790-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.003133","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid3120/72833120.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]},{"boxes":["39.0758
+        -96.5967 39.1083 -96.5531"],"time_start":"1987-09-15T00:00:00.000Z","updated":"1994-07-24T00:00:00.000Z","dataset_id":"30
+        Minute Rainfall Data (FIFE)","data_center":"ORNL_DAAC","title":"FIFE_RAIN_30M.72581829.r30","coordinate_system":"CARTESIAN","day_night_flag":"BOTH","time_end":"1987-09-28T00:00:00.000Z","id":"G179106772-ORNL_DAAC","original_format":"ECHO10","granule_size":"0.001113","browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"30
+        minute rainfall data for the Konza Prairie","hreflang":"en-US","href":"http://daac.ornl.gov/data/fife/data/sur_met/rain_30m/grid1829/72581829.r30"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2"},{"inherited":true,"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"30
+        minute rainfall data for the Konza Prairie (VIEW RELATED INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html"}]}]}}'
+    http_version: 
 9d0d70ae85c8ab65030354149d8fd77160a17d2e:
   response:
     status:
