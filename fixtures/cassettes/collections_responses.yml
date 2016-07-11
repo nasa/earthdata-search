@@ -229,6 +229,28 @@ f2c353b615a5d16f98c65df57e8fc109097d8d00:
         cHM6Ly9scGRhYWMudXNncy5nb3YvcHJvZHVjdHMvYXN0ZXJfcHJvZHVjdHNf
         dGFibGUvYXN0Z3RtIn1dfV19fQ==
     http_version: 
+4f0ce98e0d445f870b2bee3a7741ab9ab331470c:
+  response:
+    status:
+      code: 401
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 03:26:36 GMT
+      content-type:
+      - application/json
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 8bef23c0-dcfa-4111-ac0c-6f9b47ddec80
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Token edsc-access does not exist"]}'
+    http_version: 
 45746cda98164055dd66ee6f785801f0e705aaef:
   response:
     status:
@@ -1949,6 +1971,41 @@ a89a108443a059bf8339e654b120d5c384dd4cbb:
         OPeNDAP base directory location for the collection.","hreflang":"en-US","href":"http://podaac-opendap.jpl.nasa.gov/opendap/allData/coastal_alt/preview/L4/OSU_COAS/weekly/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"The
         FTP base directory location for the collection.","hreflang":"en-US","href":"ftp://podaac-ftp.jpl.nasa.gov/allData/coastal_alt/preview/L4/OSU_COAS/weekly"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"(Search
         Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-USWCO-ALT01&apidoc"}]}]}}'
+    http_version: 
+fe1ce3c2870a0471d25b31459b68f278226a1b90:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 02:51:19 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-allow-origin:
+      - "*"
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      cmr-request-id:
+      - dabb79ba-b3bb-4216-935b-89e59445e0d0
+      Cmr-Hits:
+      - 1
+      Cmr-Took:
+      - 18
+      Cmr-Request-Id:
+      - e0b56ef5-b2af-4623-8065-586946268697
+      Content-Length:
+      - 1059
+      Server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T02:51:56.101Z","id":"https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C1000000029-EDF_OPS&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"processing_level_id":"2","time_start":"1999-10-01T12:00:00.000Z","dif_ids":["ACR3L2DM1"],"version_id":"001","updated":"2015-05-26T14:55:22.387Z","dataset_id":"ACRIM
+        III Level 2 Daily Mean Data V001","data_center":"EDF_OPS","short_name":"ACR3L2DM","organizations":["EDF_OPS","ACRIM
+        SCF"],"title":"ACRIM III Level 2 Daily Mean Data V001","summary":"This file
+        contains Level 2 total solar irradiance in the form of daily means gathered
+        by the ACRIM instrument on the ACRIMSAT satellite.","has_granules":true,"orbit_parameters":{},"id":"C1000000029-EDF_OPS","original_format":"ECHO10","granule_count":52,"archive_center":"EDF_OPS","browse_flag":false,"online_access_flag":false}]}}'
     http_version: 
 266c62bcad120ffe4ade62fd9b9a42f0483d2a10:
   response:
