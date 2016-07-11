@@ -37,48 +37,50 @@
                 </span>
               </p>
 
+              <div class="panel-list-item-actions-container">
+                <div class="panel-list-item-actions">
+                  <!-- ko if: $root.ui.collectionsList.canQueryCollectionSpatial($data) -->
+                  <a href="#" class="button icon-button" title="Search using this collection's location"
+                     data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.ui.collectionsList.toggleQueryCollectionSpatial">
+                    <i class="fa fa-map-marker"></i>
+                  </a>
+                  <!-- /ko -->
+                  <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Collections" data-bind="click: $parent.ui.collectionsList.showCollectionDetails" title="View collection details">
+                    <i class="fa fa-info-circle"></i>
+                  </a>
+                  <% if is_project %>
+                    <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
+                      <i class="fa fa-download"></i>
+                    </a>
+                    <!-- ko if: has_granules -->
+                    <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    <!-- /ko -->
+                    <!-- ko ifnot: has_granules -->
+                    <a href="#" class="button icon-button button-disabled" title="No granules">
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    <!-- /ko -->
+                  <% end %>
+                  <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
+                     data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
+                    <i class="fa fa-plus"></i>
+                  </a>
+                  <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
+                     data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
+                    <i class="fa fa-minus"></i>
+                  </a>
+                </div>
+              </div>
+
               <p class="collection-granules-info panel-list-comparison-details">
                 <span data-bind="text: timeRange"></span>
                 <!-- ko if: granuleDescription -->
                 <span class="panel-list-granule-description" data-bind="text: granuleDescription"></span>
                 <!-- /ko -->
               </p>
-
-              <div class="panel-list-item-actions">
-                <!-- ko if: $root.ui.collectionsList.canQueryCollectionSpatial($data) -->
-                <a href="#" class="button icon-button" title="Search using this collection's location"
-                   data-bind="css: {'button-active': $root.query.spatial() == spatial_constraint()}, click: $root.ui.collectionsList.toggleQueryCollectionSpatial">
-                  <i class="fa fa-map-marker"></i>
-                </a>
-                <!-- /ko -->
-                <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Collections" data-bind="click: $parent.ui.collectionsList.showCollectionDetails" title="View collection details">
-                  <i class="fa fa-info-circle"></i>
-                </a>
-                <% if is_project %>
-                  <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
-                    <i class="fa fa-download"></i>
-                  </a>
-                  <!-- ko if: has_granules -->
-                  <a href="#" data-bind="visible: !$root.project.isSearchingGranules($data), click: $root.ui.projectList.showFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button master-overlay-hide-parent master-overlay-show-secondary" title="Show granule filters">
-                    <i class="fa fa-edit"></i>
-                  </a>
-                  <a href="#" data-bind="visible: $root.project.isSearchingGranules($data), click: $root.ui.projectList.hideFilters, css: {'button-highlighted': granuleFiltersApplied()}" class="button icon-button button-active master-overlay-hide-parent master-overlay-hide-secondary" title="Hide granule filters">
-                    <i class="fa fa-edit"></i>
-                  </a>
-                  <!-- /ko -->
-                  <!-- ko ifnot: has_granules -->
-                  <a href="#" class="button icon-button button-disabled" title="No granules">
-                    <i class="fa fa-edit"></i>
-                  </a>
-                  <!-- /ko -->
-                <% end %>
-                <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
-                   data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
-                  <i class="fa fa-plus"></i>
-                </a>
-                <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
-                   data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
-                  <i class="fa fa-minus"></i>
-                </a>
-              </div>
             </li>
