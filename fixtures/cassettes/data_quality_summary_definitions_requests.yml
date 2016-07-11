@@ -1,0 +1,20 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.echo.nasa.gov/echo-rest/data_quality_summary_definitions.json?catalog_item_id=C4543622-LARC_ASDC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Mon, 11 Jul 2016 16:15:17 GMT
+  digest: 47dc17f3f66a8e0bb960259f6d433ef3355efddd
+recorded_with: VCR 2.6.0

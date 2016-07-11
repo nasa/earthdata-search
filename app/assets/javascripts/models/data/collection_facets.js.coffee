@@ -110,11 +110,13 @@ ns.CollectionFacets = do (ko) ->
       ancestors = []
       for child in item.children
         if item.title == 'Features'
-          featureQuery = @queryModel.facets().find (queryParam) ->
-            child.title == queryParam.title
-          if featureQuery
-            child.applied = true
-          children.push new Facet(this, child)
+          facets = @queryModel.facets()
+          if facets && facets.length > 0
+            featureQuery = facets.find (queryParam) ->
+              child.title == queryParam.title
+            if featureQuery
+              child.applied = true
+          children.push(new Facet(this, child))
         else if child.applied
           if item.title == 'Keywords'
             @_findAncestors(ancestors, item)

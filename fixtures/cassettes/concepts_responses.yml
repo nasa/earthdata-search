@@ -1188,6 +1188,37 @@ cc90714ae2c755ee227355b10a930c9c4a047187:
         Granule)</Description><Type>PORTAL_DA_DIRECT_ACCESS</Type></OnlineResource></OnlineResources><AssociatedDIFs
         /><Spatial><SpatialCoverageType>HORIZONTAL</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-133.0</WestBoundingCoordinate><NorthBoundingCoordinate>49.0</NorthBoundingCoordinate><EastBoundingCoordinate>-111.0</EastBoundingCoordinate><SouthBoundingCoordinate>35.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>"
     http_version: 
+3590d4a3d39fcf403f75acea942bb337a3deaf59:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 16:15:15 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 383ae1a0-e0b5-4867-831e-1045beba786c
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"2","boxes":["-90 -180 90 180"],"time_start":"2000-03-01T00:00:00.000Z","version_id":"3A","updated":"2016-06-30T00:00:00.000Z","dataset_id":"CER_SSF_Terra-FM1-MODIS_Edition3A","data_center":"LARC_ASDC","short_name":"CER_SSF_Terra-FM1-MODIS_Edition3A","organizations":["Atmospheric
+        Science Data Center"],"title":"CER_SSF_Terra-FM1-MODIS_Edition3A","coordinate_system":"CARTESIAN","summary":"CERES
+        Single Scanner Satellite Footprint, TOA, Surface Fluxes and Clouds (SSF) data
+        in HDF.","time_end":"2016-03-01T23:59:59.000Z","orbit_parameters":{},"id":"C4543622-LARC_ASDC","original_format":"ECHO10","archive_center":"Atmospheric
+        Science Data Center","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(Collection
+        Quality Summary)","hreflang":"en-US","href":"http://eosweb.larc.nasa.gov/sites/default/files/project/ceres/quality_summaries/CER_SSF_Terra_Edition3A.pdf"}]}'
+    http_version: 
 9bb3738d71894c061dae36c552e702ba256f5673:
   response:
     status:
