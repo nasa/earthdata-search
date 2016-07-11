@@ -24336,6 +24336,71 @@ feb5be950912ec7fec63303a48decc06c7e28b33:
         Central Pacific Hurricane Center (CPHC).","has_granules":false,"orbit_parameters":{},"id":"C1204424196-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         TRMM
         web site operated by JAXA\n      ","hreflang":"en-US","href":"http://www.eorc.jaxa.jp/TRMM/index_e.htm"}]}]}}'
     http_version: 
+9f359f4393fb937e4d0ee2030d896840e3db4a8c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:55:01 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '29'
+      cmr-request-id:
+      - d592313b-8e47-44cc-b4bf-b7be4c76ba33
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:55:01.652Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?echo_collection_id%5B%5D=C1204461918-GCMDTEST&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=entry_title&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"edsc.renderers.cwic":{},"edsc.datasource.cwic":{},"edsc.datasource":{"data":"cwic"},"edsc.renderers":{"data":["cwic"]}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-05-26T00:00:00.000Z","dif_ids":["FIFE_AF_RAW_G"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"AIRCRAFT FLUX-RAW:
+        UNIV. COL. (FIFE)","data_center":"GCMDTEST","short_name":"FIFE_AF_RAW_G","organizations":["ORNL_DAAC"],"title":"AIRCRAFT
+        FLUX-RAW: UNIV. COL. (FIFE)","coordinate_system":"CARTESIAN","summary":"The
+        NCAR King Air participation in FIFE-1987 and FIFE-1989 was part of a coordinated
+        atmospheric boundary layer component which included other aircraft, surface
+        measurements, balloon-borne profiles, and SODAR and lidar remote sensing.
+        The chief objective of the boundary layer component was to describe the structure
+        of the atmospheric boundary layer over the FIFE study area, increase knowledge
+        of the physical processes active in the daytime boundary layer, and explore
+        the relationship of surface properties to the time and spatial variation in
+        the structure of the boundary layer. The phenomena studied were the daytime
+        convective boundary layer structure and physical processes. This study used
+        airborne measurement of vertical and horizontal wind gusts, humidity, potential
+        temperature, mean horizontal wind speed, and horizontal linear trends of temperature,
+        humidity, radiation. Fluxes of sensible heat, moisture, and momentum were
+        estimated from fast response wind gust, temperature, and humidity measurements;
+        these fluxes were evaluated from data with the arithmetic means removed. In
+        addition several radiation parameters were also measured.. Several radiation
+        parameters were also measured (e.g., global short and longwave, upwelling,
+        and downwelling). Altitude of the aircraft was measured by radar and pressure;
+        radar was more accurate but was only valid below about 930 m. Geographical
+        position was measured by an inertial navigation system. All level legs of
+        a flight mission were flown at a constant pressure altitude, thus the altitude
+        of the aircraft over the surface varied. In general, the data set is of excellent
+        overall quality with very little loss of data. Vertical winds were sampled
+        at an effective rate of 5 samples per second instead of the customary 10 samples
+        per second; this had negligible effect on the fluxes but could compromise
+        estimates of turbulence dissipation. Fluxes were estimated using raw, detrended
+        and high-pass filtered data. From extensive analysis the FIFE Boundary Layer
+        Group recommends using the detrended data.\n","has_granules":false,"time_end":"1989-10-31T23:59:59.000Z","orbit_parameters":{},"id":"C1204461918-GCMDTEST","original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=11"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Refine
+        your granule search with ECHO''s next generation Earth Science discovery tool
+        (Reverb) using information from this record.\n      ","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&spatial_map=satellite&spatial_type=rectangle&keywords=FIFE_AF_RAW_G"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         AIRCRAFT
+        FLUX-RAW: UNIV. COL. (FIFE)\n      ","hreflang":"en-US","href":"http://daac.ornl.gov//FIFE/guides/air_flux_raw_col.html"}]}]}}'
+    http_version: 
 d93eed7f2b0bd824fcce876b5bae5b5f6b3a4091:
   response:
     status:
@@ -24870,6 +24935,37 @@ b3fb3a39f124078520905955c1149acc374b8d13:
         boundary layer fluxes recorded on aircraft flights over the Konza (VIEW RELATED
         INFORMATION)","hreflang":"en-US","href":"http://daac.ornl.gov/FIFE/guides/air_flux_det_wy.html"}]}]}}'
     http_version: 
+a313e42a27b8057e0115c0dbc4e79429d10c4b00:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:54:57 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '0'
+      cmr-took:
+      - '69'
+      cmr-request-id:
+      - e4d61da2-6d5f-4982-8b9b-4ba2ad86ebfe
+      content-length:
+      - '473'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:54:57.705Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C1204461918-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[]}}'
+    http_version: 
 01293211b05199adbf7c67b2bed4826c4645a9fb:
   response:
     status:
@@ -24900,6 +24996,71 @@ b3fb3a39f124078520905955c1149acc374b8d13:
       encoding: UTF-8
       string: '{"feed":{"updated":"2016-07-10T02:37:44.151Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&echo_collection_id%5B%5D=C1229626387-LANCEMODIS&echo_collection_id%5B%5D=C1219032686-LANCEMODIS&keyword=C446457-ORNL_DAAC%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
         dataset metadata","entry":[]}}'
+    http_version: 
+53556c8d597c8ab95d5f2e6c6023a74e77d49db2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Mon, 11 Jul 2016 18:54:56 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-hits:
+      - '1'
+      cmr-took:
+      - '191'
+      cmr-request-id:
+      - 06729b6b-22c3-4080-958a-b72a94d548c4
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"feed":{"updated":"2016-07-11T18:54:56.941Z","id":"https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_size=20&page_num=1&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&sort_key%5B%5D=has_granules&sort_key%5B%5D=score&keyword=C1204461918-GCMDTEST%2A&include_has_granules=true&include_granule_counts=true","title":"ECHO
+        dataset metadata","entry":[{"tags":{"edsc.renderers.cwic":{},"edsc.datasource.cwic":{},"edsc.datasource":{"data":"cwic"},"edsc.renderers":{"data":["cwic"]}},"boxes":["37
+        -102 40 -95"],"time_start":"1987-05-26T00:00:00.000Z","dif_ids":["FIFE_AF_RAW_G"],"version_id":"Not
+        provided","updated":"2015-09-22T00:00:00.000Z","dataset_id":"AIRCRAFT FLUX-RAW:
+        UNIV. COL. (FIFE)","data_center":"GCMDTEST","short_name":"FIFE_AF_RAW_G","organizations":["ORNL_DAAC"],"title":"AIRCRAFT
+        FLUX-RAW: UNIV. COL. (FIFE)","coordinate_system":"CARTESIAN","summary":"The
+        NCAR King Air participation in FIFE-1987 and FIFE-1989 was part of a coordinated
+        atmospheric boundary layer component which included other aircraft, surface
+        measurements, balloon-borne profiles, and SODAR and lidar remote sensing.
+        The chief objective of the boundary layer component was to describe the structure
+        of the atmospheric boundary layer over the FIFE study area, increase knowledge
+        of the physical processes active in the daytime boundary layer, and explore
+        the relationship of surface properties to the time and spatial variation in
+        the structure of the boundary layer. The phenomena studied were the daytime
+        convective boundary layer structure and physical processes. This study used
+        airborne measurement of vertical and horizontal wind gusts, humidity, potential
+        temperature, mean horizontal wind speed, and horizontal linear trends of temperature,
+        humidity, radiation. Fluxes of sensible heat, moisture, and momentum were
+        estimated from fast response wind gust, temperature, and humidity measurements;
+        these fluxes were evaluated from data with the arithmetic means removed. In
+        addition several radiation parameters were also measured.. Several radiation
+        parameters were also measured (e.g., global short and longwave, upwelling,
+        and downwelling). Altitude of the aircraft was measured by radar and pressure;
+        radar was more accurate but was only valid below about 930 m. Geographical
+        position was measured by an inertial navigation system. All level legs of
+        a flight mission were flown at a constant pressure altitude, thus the altitude
+        of the aircraft over the surface varied. In general, the data set is of excellent
+        overall quality with very little loss of data. Vertical winds were sampled
+        at an effective rate of 5 samples per second instead of the customary 10 samples
+        per second; this had negligible effect on the fluxes but could compromise
+        estimates of turbulence dissipation. Fluxes were estimated using raw, detrended
+        and high-pass filtered data. From extensive analysis the FIFE Boundary Layer
+        Group recommends using the detrended data.\n","has_granules":false,"time_end":"1989-10-31T23:59:59.000Z","orbit_parameters":{},"id":"C1204461918-GCMDTEST","score":0.5,"original_format":"DIF","granule_count":0,"browse_flag":false,"online_access_flag":true,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","hreflang":"en-US","href":"http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=11"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/data#","title":"\n         Refine
+        your granule search with ECHO''s next generation Earth Science discovery tool
+        (Reverb) using information from this record.\n      ","hreflang":"en-US","href":"http://reverb.echo.nasa.gov/reverb/#utf8=%E2%9C%93&spatial_map=satellite&spatial_type=rectangle&keywords=FIFE_AF_RAW_G"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"\n         AIRCRAFT
+        FLUX-RAW: UNIV. COL. (FIFE)\n      ","hreflang":"en-US","href":"http://daac.ornl.gov//FIFE/guides/air_flux_raw_col.html"}]}]}}'
     http_version: 
 a1e0382982fa88f3347c9c9dc7d0a3f85611b54c:
   response:
