@@ -347,6 +347,25 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/order_information.json
     body:
       encoding: US-ASCII
+      string: catalog_item_id%5B%5D=G1284761745-NSIDC_ECS&catalog_item_id%5B%5D=G1284769701-NSIDC_ECS&catalog_item_id%5B%5D=G1284769841-NSIDC_ECS&catalog_item_id%5B%5D=G1284769710-NSIDC_ECS&catalog_item_id%5B%5D=G1284769798-NSIDC_ECS&catalog_item_id%5B%5D=G1284769764-NSIDC_ECS&catalog_item_id%5B%5D=G1284769773-NSIDC_ECS&catalog_item_id%5B%5D=G1284769846-NSIDC_ECS&catalog_item_id%5B%5D=G1284769863-NSIDC_ECS&catalog_item_id%5B%5D=G1284769864-NSIDC_ECS&catalog_item_id%5B%5D=G1284769657-NSIDC_ECS&catalog_item_id%5B%5D=G1284769651-NSIDC_ECS&catalog_item_id%5B%5D=G1284769714-NSIDC_ECS&catalog_item_id%5B%5D=G1284769766-NSIDC_ECS&catalog_item_id%5B%5D=G1284769678-NSIDC_ECS&catalog_item_id%5B%5D=G1284769700-NSIDC_ECS&catalog_item_id%5B%5D=G1284769818-NSIDC_ECS&catalog_item_id%5B%5D=G1284769757-NSIDC_ECS&catalog_item_id%5B%5D=G1284769819-NSIDC_ECS&catalog_item_id%5B%5D=G1284769660-NSIDC_ECS
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+      Echo-Token:
+      - edsc
+  recorded_at: Tue, 12 Jul 2016 03:24:23 GMT
+  digest: c906f9daae15b420f90bdef3bf7e0e6366bfc845
+- request:
+    method: post
+    uri: https://api.echo.nasa.gov/echo-rest/order_information.json
+    body:
+      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G179098142-ORNL_DAAC&catalog_item_id%5B%5D=G179098143-ORNL_DAAC&catalog_item_id%5B%5D=G179098144-ORNL_DAAC&catalog_item_id%5B%5D=G179098245-ORNL_DAAC&catalog_item_id%5B%5D=G179098246-ORNL_DAAC&catalog_item_id%5B%5D=G179098247-ORNL_DAAC&catalog_item_id%5B%5D=G179098248-ORNL_DAAC&catalog_item_id%5B%5D=G179098249-ORNL_DAAC&catalog_item_id%5B%5D=G179098250-ORNL_DAAC&catalog_item_id%5B%5D=G179098251-ORNL_DAAC&catalog_item_id%5B%5D=G179098252-ORNL_DAAC&catalog_item_id%5B%5D=G179098253-ORNL_DAAC&catalog_item_id%5B%5D=G179098254-ORNL_DAAC&catalog_item_id%5B%5D=G179098255-ORNL_DAAC&catalog_item_id%5B%5D=G179098256-ORNL_DAAC
     headers:
       User-Agent:
