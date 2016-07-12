@@ -256,10 +256,29 @@ describe "Data download page", reset: false do
         click_link "Download Access Script"
       end
 
-      it "downloads a shell script which performs the user's query" do
+      it "displays a page with a shell script on it which performs the user's query" do
         within_last_window do
           expect(page).to have_content('#!/bin/sh')
           expect(page).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
+        end
+      end
+
+      context 'and click "Download Script File" button' do
+        before :all do
+          within_last_window do
+            synchronize do
+              expect(page).to have_button('Download Script File')
+            end
+            page.save_screenshot '1.png'
+            click_button 'Download Script File'
+          end
+        end
+
+        it 'downloads a shell script' do
+          within_last_window do
+            expect(page.source).to have_content('#!/bin/sh')
+            expect(page.source).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
+          end
         end
       end
     end
