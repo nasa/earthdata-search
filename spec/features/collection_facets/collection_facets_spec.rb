@@ -305,8 +305,7 @@ describe "Collection Facets", reset: false do
     end
 
     it "continues to display applied facets with counts of 0" do
-      expect(page).to have_content("EOSDIS")
-      expect(page).to
+      expect(page).to have_content("EOSDIS 0")
     end
   end
 
