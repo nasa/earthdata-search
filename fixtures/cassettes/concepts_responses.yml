@@ -438,6 +438,84 @@ f84e0da7b5c4a33746f52d6353d644f3d1b9d422:
                  Documentation
               </Description><Type>USER SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>90</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>60</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+af7f3a3bb219b981fce3aa18ed088900c2c73b7a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 12 Jul 2016 04:05:55 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 39163c43-1c6b-4831-be3c-f5f89e571284
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Collection><ShortName>USGS_EDC_EO1_ALI</ShortName><VersionId>Not
+        provided</VersionId><InsertTime>2007-09-06T00:00:00.000Z</InsertTime><LastUpdate>2016-01-29T00:00:00.000Z</LastUpdate><LongName>EO-1
+        (Earth Observing-1) Advanced Land Imager (ALI) Instrument Level 1R, Level
+        1Gs, Level 1Gst Data</LongName><DataSetId>EO-1 (Earth Observing-1) Advanced
+        Land Imager (ALI) Instrument Level 1R, Level 1Gs, Level 1Gst Data</DataSetId><Description>Advanced
+        Land Imager (ALI) provides image data from ten spectral bands (band designations).
+        The instrument operates in a pushbroom fashion, with a spatial resolution
+        of 30 meters for the multispectral bands and 10 meters for the panchromatic
+        band. The standard scene width is 37 kilometers. Standard scene length is
+        42 kilometers, with an optional increased scene length of 185 kilometers (additional
+        information).\n                  \nFor Advanced Land Imager (ALI) data, the
+        following levels of correction are available:\n                  \nLevel 1R
+        radiometrically corrected with no geometric correction applied. The image
+        data are provided in 16-bit radiance values. The data are available in Hierarchical
+        Data Format (HDF) and are distributed on CD-ROM, DVD, and File Transfer Protocol
+        (FTP).\n                  \nLevel 1Gs is geometrically corrected and will
+        be provided as a single \"stitched\" file. The image data are provided in
+        16-bit radiance values. The data are available in Hierarchical Data Format
+        (HDF) or Geographic Tagged Image-File Format (GeoTIFF) and are distributed
+        on DVD and File Transfer Protocol (FTP).\n                   \nLevel 1Gst
+        is terrain corrected and will be provided as a single \"stitched\" file. The
+        image data are provided in 16-bit radiance values. The data are available
+        in Hierarchical Data Format (HDF) or Geographic Tagged Image-File Format (GeoTIFF)
+        and are distributed on DVD and File Transfer Protocol (FTP). \n                  \n[Source:
+        USGS/EDC Homepage]</Description><Orderable>true</Orderable><Visible>true</Visible><CollectionState>In
+        Work</CollectionState><SpatialKeywords><Keyword>GLOBAL</Keyword></SpatialKeywords><Temporal><RangeDateTime><BeginningDateTime>2001-03-16T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>TECHNICAL
+        CONTACT</Role><OrganizationEmails><Email>lta@usgs.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>LTA
+        REPRESENTATIVE</FirstName><LastName>USGS EROS CENTER</LastName></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>LAND SURFACE</TopicKeyword><TermKeyword>SURFACE
+        RADIATIVE PROPERTIES</TermKeyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED
+        WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>INFRARED IMAGERY</Value></VariableLevel1Keyword><DetailedVariableKeyword>NEAR
+        INFRARED</DetailedVariableKeyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>INFRARED
+        WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>INFRARED RADIANCE</Value></VariableLevel1Keyword><DetailedVariableKeyword>NEAR
+        INFRARED</DetailedVariableKeyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>VISIBLE
+        WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>VISIBLE IMAGERY</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>SPECTRAL/ENGINEERING</TopicKeyword><TermKeyword>VISIBLE
+        WAVELENGTHS</TermKeyword><VariableLevel1Keyword><Value>VISIBLE RADIANCE</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>EO-1</ShortName><LongName>Earth
+        Observing 1</LongName><Type>Not Specified</Type><Instruments><Instrument><ShortName>ALI</ShortName><LongName>Advanced
+        Land Imager</LongName></Instrument><Instrument><ShortName>HYPERION</ShortName><LongName>HYPERSPECTRAL
+        IMAGER</LongName></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>metadata.uuid</Name><DataType>STRING</DataType><Description></Description><Value>3185d6bf-e098-4297-a911-fc5cea8f0b86</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.extraction_date</Name><DataType>STRING</DataType><Description></Description><Value>2016-01-26
+        06:47:19</Value></AdditionalAttribute><AdditionalAttribute><Name>metadata.keyword_version</Name><DataType>FLOAT</DataType><Description></Description><Value>8.1</Value></AdditionalAttribute></AdditionalAttributes><Campaigns><Campaign><ShortName>NMP</ShortName><LongName>New
+        Millennium Program</LongName></Campaign><Campaign><ShortName>CWIC</ShortName><LongName>CEOS
+        WGISS Integrated Catalog</LongName></Campaign></Campaigns><OnlineAccessURLs><OnlineAccessURL><URL>http://earthexplorer.usgs.gov/</URL><URLDescription>\n
+        \        Search for and order ALI data from the USGS Earth Explorer.\n      </URLDescription></OnlineAccessURL><OnlineAccessURL><URL>http://glovis.usgs.gov/</URL><URLDescription>\n
+        \        Search for and order ALI data from the USGS Global Visualizer (GLOVIS).\n
+        \     </URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://eo1.gsfc.nasa.gov/</URL><Description>\n
+        \        EO-1 Project homepage at NASA's Goddard Space Flight Center.\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource><OnlineResource><URL>http://nmp.nasa.gov/</URL><Description>\n
+        \        NASA's New Millennium Project homepage.\n      </Description><Type>USER
+        SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180</WestBoundingCoordinate><NorthBoundingCoordinate>83.1</NorthBoundingCoordinate><EastBoundingCoordinate>180</EastBoundingCoordinate><SouthBoundingCoordinate>-83.85</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
 5e63bc956df687d12363d0cdb9a65f6e4d0c5706:
   response:
     status:
@@ -746,6 +824,89 @@ f84e0da7b5c4a33746f52d6353d644f3d1b9d422:
         \n\t\t\t\t<HorizontalSpatialDomain>\n\t\t\t\t\t<Geometry>\n\t\t\t\t\t\t<CoordinateSystem>CARTESIAN</CoordinateSystem>\n\t\t\t\t\t\t<BoundingRectangle>\n\t\t\t\t\t\t\t<WestBoundingCoordinate>-180</WestBoundingCoordinate>
         \n\t\t\t\t\t\t\t<NorthBoundingCoordinate>90</NorthBoundingCoordinate> \n\t\t\t\t\t\t\t<EastBoundingCoordinate>180</EastBoundingCoordinate>
         \n\t\t\t\t\t\t\t<SouthBoundingCoordinate>-55</SouthBoundingCoordinate> \n\t\t\t\t\t\t</BoundingRectangle>\n\t\t\t\t\t</Geometry>\n\t\t\t\t</HorizontalSpatialDomain>\n\t\t\t\t<GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n\t\t\t</Spatial>\n\t\t</Collection>"
+    http_version: 
+8ceaac2c3de25080a8495e375e12a70a81ea0587:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 12 Jul 2016 04:13:02 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 16e85b87-efb3-4b5d-ba91-4a23c37981b5
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection>\n\t\t\t<ShortName>doi:10.3334/ORNLDAAC/2</ShortName>\t\t\n\t\t\t<VersionId>1</VersionId>\n\t\t\t<InsertTime>1994-07-24T00:00:00Z</InsertTime>\n\t\t\t<LastUpdate>1994-07-24T00:00:00Z</LastUpdate>\n\t\t\t<LongName>30
+        Minute Rainfall Data (FIFE)</LongName>\n      <DataSetId>30 Minute Rainfall
+        Data (FIFE)</DataSetId>\n\t\t\t<Description>30 minute rainfall data for the
+        Konza Prairie</Description>\n\t\t\t<Orderable>false</Orderable>\n\t\t\t<Visible>true</Visible>\n\t\t\t<RevisionDate>1994-07-24T00:00:00Z</RevisionDate>\n\t\t\t<ProcessingCenter>ORNL_DAAC</ProcessingCenter>\n\t\t\t<ProcessingLevelId>3</ProcessingLevelId>\n\t\t\t<ProcessingLevelDescription>Data
+        or retrieved environmental variables that have been spatially and/or temporally
+        resampled (i.e., derived from Level 1 or Level 2 data products). Such resampling
+        may include averaging and compositing</ProcessingLevelDescription>\n\t\t\t<ArchiveCenter>ORNL_DAAC</ArchiveCenter>\n\t\t\t<CitationForExternalPublication>Wood,
+        E. F. 1994. 30 Minute Rainfall Data (FIFE). Data set. Available on-line [http://www.daac.ornl.gov]
+        from Oak Ridge National Laboratory Distributed Active Archive Center, Oak
+        Ridge, Tennessee, U.S.A. Also published in D. E. Strebel, D. R. Landis, K.
+        F. Huemmrich, and B. W. Meeson (eds.), Collected Data of the First ISLSCP
+        Field Experiment, Vol. 1: Surface Observations and Non-Image Data Sets. CD-ROM.
+        National Aeronautics and Space Administration, Goddard Space Flight Center,
+        Greenbelt, Maryland, U.S.A. (available from http://www.daac.ornl.gov). doi:10.3334/ORNLDAAC/2</CitationForExternalPublication>\n\t\t\t<CollectionState>COMPLETED</CollectionState>\n\t\t\t<MaintenanceAndUpdateFrequency>as
+        needed</MaintenanceAndUpdateFrequency>\n\t\t\t<Price>0</Price>\n\t\t\t<Temporal>\n\t\t\t\t<RangeDateTime>\n\t\t\t\t\t<BeginningDateTime>1987-05-29T00:00:00Z</BeginningDateTime>\n\t\t\t\t\t<EndingDateTime>1987-10-26T00:00:00Z</EndingDateTime>\n\t\t\t\t</RangeDateTime>\n\t\t\t</Temporal>\n
+        \     <Contacts>\n        <Contact>\n          <Role>DATA CENTER CONTACT</Role>\n
+        \         <OrganizationAddresses>\n            <Address>\n              <StreetAddress>ORNL
+        DAAC User Services Office, P.O. Box 2008, MS 6407, Oak Ridge National Laboratory</StreetAddress>\n
+        \             <City>Oak Ridge</City>\n              <StateProvince>Tennessee</StateProvince>\n
+        \             <PostalCode>37831-6407</PostalCode>\n              <Country>USA</Country>\n
+        \           </Address>\n          </OrganizationAddresses>\n          <OrganizationPhones>\n
+        \           <Phone>\n              <Number>(865) 241-3952</Number>\n              <Type>Direct
+        Line</Type>\n            </Phone>\n            <Phone>\n              <Number>(865)
+        574-4665</Number>\n              <Type>Fax</Type>\n            </Phone>\n
+        \         </OrganizationPhones>\n          <OrganizationEmails>\n            <Email>ornldaac@ornl.gov</Email>\n
+        \         </OrganizationEmails>\n          <ContactPersons>\n            <ContactPerson>\n
+        \             <FirstName>PLEASE CONTACT</FirstName>\n              <LastName>ORNL
+        DAAC User Services</LastName>\n            </ContactPerson>\n          </ContactPersons>\n
+        \       </Contact>\n      </Contacts>\n\t\t\t<ScienceKeywords>\n        <ScienceKeyword>\n
+        \         <CategoryKeyword>EARTH SCIENCE</CategoryKeyword>\n          <TopicKeyword>ATMOSPHERE</TopicKeyword>\n
+        \         <TermKeyword>PRECIPITATION</TermKeyword>\n          <VariableLevel1Keyword>\n
+        \           <Value>PRECIPITATION AMOUNT</Value>\n          </VariableLevel1Keyword>\n
+        \       </ScienceKeyword>\n\t\t\t</ScienceKeywords>\n\t\t\t<Platforms>\n        <Platform>\n
+        \         <ShortName>METEOROLOGICAL STATION</ShortName>\n          <LongName>METEOROLOGICAL
+        STATION</LongName>\n          <Type>Ground Based</Type>\n          <Instruments>\n\t\t\t\t\t\t<Instrument>\n
+        \             <ShortName>RAIN GAUGE</ShortName>\n              <LongName>RAIN
+        GAUGE</LongName>\n              <Sensors>\n                <Sensor>\n                  <ShortName>RAIN
+        GAUGE</ShortName>\n                </Sensor>\n              </Sensors>\n            </Instrument>\n\t\t\t\t\t</Instruments>\n
+        \       </Platform>\n      </Platforms>\n      <Campaigns>\n        <Campaign>\n
+        \         <ShortName>First ISLSCP Field Experiment (FIFE)</ShortName>\n          <LongName>First
+        ISLSCP Field Experiment (FIFE)</LongName>\n        </Campaign>\n        <Campaign>\n
+        \         <ShortName>ESIP</ShortName>\n          <LongName>Earth Science Information
+        Partners Program</LongName>\n        </Campaign>\n        <Campaign>\n          <ShortName>EOSDIS</ShortName>\n
+        \         <LongName>Earth Observing System Data Information System</LongName>\n
+        \       </Campaign>\n      </Campaigns>\n      <OnlineAccessURLs>\n        <OnlineAccessURL>\n
+        \         <URL>http://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=2</URL>\n          <URLDescription
+        />\n          <MimeType />\n        </OnlineAccessURL>\n      </OnlineAccessURLs>\n
+        \     <OnlineResources>\n        <OnlineResource>\n          <URL>http://daac.ornl.gov/FIFE/guides/30_Min_Rain_Data.html</URL>\n\t\t\t\t\t<Description>30
+        minute rainfall data for the Konza Prairie</Description>\n          <Type>VIEW
+        RELATED INFORMATION</Type>\n        </OnlineResource>\n      </OnlineResources>\n
+        \     <AssociatedDIFs>\n        <DIF>\n          <EntryId>FIFE_RAIN_30M</EntryId>\n
+        \       </DIF>\n      </AssociatedDIFs>\n      <Spatial>\n        <SpatialCoverageType>Horizontal</SpatialCoverageType>\n
+        \       <HorizontalSpatialDomain>\n          <Geometry>\n            <CoordinateSystem>CARTESIAN</CoordinateSystem>\n
+        \           <BoundingRectangle>\n              <WestBoundingCoordinate>-96.60</WestBoundingCoordinate>\n
+        \             <NorthBoundingCoordinate>39.11</NorthBoundingCoordinate>\n              <EastBoundingCoordinate>-96.55</EastBoundingCoordinate>\n
+        \             <SouthBoundingCoordinate>39.08</SouthBoundingCoordinate>\n            </BoundingRectangle>\n
+        \         </Geometry>\n        </HorizontalSpatialDomain>\n        <GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation>\n
+        \     </Spatial>\n    </Collection>"
     http_version: 
 c8741b286fc3abcb830c7c874c36854adc00e412:
   response:
@@ -1908,7 +2069,7 @@ e12cbf007574b9620f6098962cd92b111c41f5d7:
       - Jetty(9.2.z-SNAPSHOT)
     body:
       encoding: UTF-8
-      string: |
+      string: |-
         <?xml version="1.0" encoding="UTF-8"?>
         <Collection>
            <ShortName>Matthew'sTest</ShortName>
