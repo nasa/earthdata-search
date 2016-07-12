@@ -55,9 +55,9 @@ describe "query", ->
     it "serializes collection facets", ->
       # This is intentionally a little different.  We don't deserialize facets
       params = {campaign: ['campaign1', 'campaign2'], sensor: ['sensor1'], page_size: 20}
-      @query.facets.push(param: 'campaign', term: 'campaign1')
-      @query.facets.push(param: 'campaign', term: 'campaign2')
-      @query.facets.push(param: 'sensor', term: 'sensor1')
+      @query.facets.push(param: 'campaign', title: 'campaign1')
+      @query.facets.push(param: 'campaign', title: 'campaign2')
+      @query.facets.push(param: 'sensor', title: 'sensor1')
       expect(param(@query.params())).toEqual(param(params))
 
     it "does not deserialize collection facets", ->
@@ -89,7 +89,7 @@ describe "query", ->
         page_size: 20
 
       @query.params(params)
-      @query.facets.push(param: 'campaign', term: 'campaign1')
+      @query.facets.push(param: 'campaign', title: 'campaign1')
 
       @query.clearFilters()
       expect(param(@query.params())).toEqual(param(defaults))
