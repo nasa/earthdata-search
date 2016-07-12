@@ -63,17 +63,15 @@ ns.CollectionFacets = do (ko) ->
       !@isFeature() && !@isAncestor() && @hierarchyIndex() > 2 && @_scienceKeywordFacet()
 
     isParent: =>
-      !@isFeature() && @isAncestor() && @_noChildrenSelected()
+      !@isFeature() && @isSelected() && @_noChildrenSelected()
 
     isAncestor: =>
-      !@isFeature() && @isSelected() && @links.remove?.length > 0
+      !@isFeature() && @isSelected() && @hasChildren()
 
     _noChildrenSelected: =>
       if @children
         return false for child in @children when child.applied
-        return true
-      else
-        return false
+      return true
 
     hierarchyIndex: =>
       for matcher, index in facet_matchers

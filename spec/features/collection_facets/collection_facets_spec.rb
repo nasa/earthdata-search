@@ -226,26 +226,25 @@ describe "Collection Facets", reset: false do
     end
 
     it "keeps facet lists collapsed after selecting and removing a facet" do
-      find("h3.panel-title", text: 'Keywords').click
-      expect(page).to have_css("#collapse5.facets-list-hide")
+      expect(page).to have_css(".panel.projects .facets-list-hide")
       find("h3.panel-title", text: "Project").click
-      expect(page).to have_css("#collapse5.facets-list-show")
+      expect(page).to have_css(".panel.projects .facets-list-show")
 
       find("h3.panel-title", text: 'Platform').click
       within(:css, ".platforms") do
         find("p.facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
-      expect(page).to have_css("#collapse2.facets-list-show")
+      expect(page).to have_css(".panel.platforms .facets-list-show")
 
       within(:css, ".platforms") do
         find("p.facets-item", text: "AIRCRAFT").click
       end
       wait_for_xhr
       expect(page).to have_no_css(".facets-items.selected")
-      expect(page).to have_css("#collapse2.facets-list-show")
+      expect(page).to have_css(".panel.platforms .facets-list-show")
       find("h3.panel-title", text: "Project").click
-      expect(page).to have_css("#collapse5.facets-list-hide")
+      expect(page).to have_css(".panel.projects .facets-list-hide")
 
       find("h3.panel-title", text: 'Platform').click
     end
@@ -253,7 +252,6 @@ describe "Collection Facets", reset: false do
 
   context "when applied one science keyword facets and search terms filter the collections list to no results" do
     before(:all) do
-      find(".facets-item", text: "Earth Science", match: :prefer_exact).click
       find(".facets-item", text: "Atmosphere", match: :prefer_exact).click
       fill_in :keywords, with: "somestringthatmatchesnocollections"
       wait_for_xhr
@@ -273,7 +271,6 @@ describe "Collection Facets", reset: false do
 
   context "when applied multiple science keyword facets and search terms filter the collections list to no results" do
     before(:all) do
-      find(".facets-item", text: "Earth Science", match: :prefer_exact).click
       find(".facets-item", text: "Agriculture").click
       find(".facets-item", text: "Agricultural Chemicals").click
       find(".facets-item", text: "Fertilizers").click
@@ -286,8 +283,8 @@ describe "Collection Facets", reset: false do
       wait_for_xhr
     end
 
-    it "continues to display applied science keyword facets in order" do
-      pending
+    # Not apply to v2 facets.
+    xit "continues to display applied science keyword facets in order" do
       within(:css, '#collapse1 .panel-body.facets') do
         expect(page).to have_text("Agriculture Agricultural Chemicals Fertilizers")
       end
@@ -308,7 +305,8 @@ describe "Collection Facets", reset: false do
     end
 
     it "continues to display applied facets with counts of 0" do
-      expect(page).to have_content("EOSDIS 0")
+      expect(page).to have_content("EOSDIS")
+      expect(page).to
     end
   end
 
@@ -317,8 +315,6 @@ describe "Collection Facets", reset: false do
     before(:all) do
       load_page :search, facets: true, env: :sit
       fill_in :keywords, with: "C1000000560-DEV08"
-      wait_for_xhr
-      find(".facet-title", text: "Earth Science").click
       wait_for_xhr
       find(".facet-title", text: "Spectral/Engineering").click
       wait_for_xhr
@@ -369,7 +365,7 @@ describe "Collection Facets", reset: false do
 
   context "when selecting a topic keyword" do
     before :all do
-      find(".facet-title", text: /\AEarth Science\z/).click
+      page.save_screenshot '1.png'
       find(".facet-title", text: /\AAtmosphere\z/).click
       wait_for_xhr
     end

@@ -1,0 +1,18 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://cmr.earthdata.nasa.gov/search/health
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Tue, 12 Jul 2016 04:18:46 GMT
+  digest: 0f110279e395971e05cec02349d1044f01a510c2
+recorded_with: VCR 2.6.0
