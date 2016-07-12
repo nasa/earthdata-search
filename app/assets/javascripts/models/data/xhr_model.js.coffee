@@ -27,7 +27,6 @@ ns.XhrModel = do (ko
       @hitsEstimated = ko.observable(false)
 
       @error.subscribe((value) =>
-        console.log value
         url = @path
         title = "An unexpected error occurred"
         resource = url.match(/([^\/\.]+)(?:\.[^\/]*)?$/)?[1]
