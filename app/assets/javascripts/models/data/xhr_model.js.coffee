@@ -26,6 +26,19 @@ ns.XhrModel = do (ko
       @hasNextPage = ko.observable(true)
       @hitsEstimated = ko.observable(false)
 
+      @error.subscribe((value) =>
+        console.log value
+        url = @path
+        title = "An unexpected error occurred"
+        resource = url.match(/([^\/\.]+)(?:\.[^\/]*)?$/)?[1]
+        if resource?
+          resource = resource.replace('_', ' ')
+          title = "Error retrieving #{resource}"
+        error = value ? 'There was a problem completing the request'
+
+        edsc.banner(url, title, error, className: 'banner-error', immediate: true, html: true)
+      )
+
     search: (params=@params(), callback=null) =>
       params.page_num = @page = 1
       @_loadAndSet params, [], callback
