@@ -169,6 +169,8 @@ module Echo
       dropped_granules = granules_by_id.values_at(*excluded_granule_ids).map {|g| {id: g['id'], name: g['producer_granule_id'].nil? ? g['title'] : g['producer_granule_id']}}
 
       digest = Digest::SHA1.hexdigest(granule_query.to_json + user_id)
+      Rails.logger.info "------------------- {order: {}, digest: digest}.to_json: #{{order: {}, digest: digest}.to_json}"
+      Rails.logger.info "-++++++++++++++++++ token_header(toekn): #{token_header(token)}"
       order_response = post("/echo-rest/orders.json", {order: {}, digest: digest}.to_json, token_header(token))
       id = order_response.body['order']['id']
       Rails.logger.info "Response: #{order_response.body.inspect}"
@@ -198,6 +200,8 @@ module Echo
           user_region: user['user_region']
         }
       }
+      Rails.logger.info "++++++ 1. #{user_info.to_json}"
+      Rails.logger.info "++++++ 2. #{token_header(token)}"
       user_info_response = put("/echo-rest/orders/#{id}/user_information", user_info.to_json, token_header(token))
 
       submission_response = post("/echo-rest/orders/#{id}/submit", nil, token_header(token))
