@@ -270,9 +270,8 @@ describe 'OPeNDAP Retrieval', reset: false do
   context 'downloading an OPeNDAP collection in its original format' do
     before(:all) do
       load_page('data/configure',
-                project: [opendap_collection],
-                bounding_box: [0, 0, 2, 2],
-                temporal: ['2014-07-23T00:00:00Z', '2014-08-02T00:00:00Z'])
+                project: [autodiscovered_opendap_collection],
+                bounding_box: [0, 0, 2, 2])
       choose 'Download'
       choose 'Original (No Subsetting)'
       click_on 'Submit'
@@ -287,15 +286,16 @@ describe 'OPeNDAP Retrieval', reset: false do
     end
 
     it 'does not provide a URL describing the collection\'s parameters' do
-      within_window('Earthdata Search - Downloads') do
+      within_last_window do
+        fetch_download_links
         expect(page).to have_no_css('a[href*=".info"]')
       end
     end
 
     it 'provides links to the original data without opendap parameters' do
-      within_window('Earthdata Search - Downloads') do
-        expect(page).to have_no_css('a[href*="http://acdisc.gsfc.nasa.gov/opendap"]')
-        expect(page).to have_css('a[href*="http://acdisc.gesdisc.eosdis.nasa.gov/data/s4pa/"]')
+      within_last_window do
+        fetch_download_links
+        expect(page).to have_css('a[href="http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/tos_AMSRE_L3_v7_200206-201012.nc"]')
       end
     end
   end
