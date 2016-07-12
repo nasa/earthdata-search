@@ -3343,3 +3343,25 @@ d6f9267e9cccbbd36579d64f55119e1ac5dae077:
       encoding: UTF-8
       string: '[{"concept-id":"C90762182-LAADS","intervals":[[1330387200,1425254400,173927]]}]'
     http_version: 
+1da38b4dee99d98441d839d3aba9cbafbe84c823:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 12 Jul 2016 22:30:52 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 6894fa48-a1cf-4b16-b080-32f33e9d96b3
+      content-length:
+      - '2'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 

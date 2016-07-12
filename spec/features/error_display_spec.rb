@@ -41,4 +41,22 @@ describe "Displaying system errors", reset: false do
       end
     end
   end
+
+  context 'when invalid parameters are entered' do
+    before :all do
+      load_page :search, project: ['C1000000029-EDF_OPS'], view: :project, env: :sit, queries: [nil, { id: '*foo!*foo2!*foo3' }]
+    end
+
+    after :all do
+      load_page :search
+    end
+
+    it 'displays an error message containing the type of request that caused the error' do
+      expect(page.find('.banner-error')).to have_text('Error retrieving granules')
+    end
+
+    it 'displays the readable message from the server, if available' do
+      expect(page).to have_text('The query contained [6] conditions which used a leading wildcard')
+    end
+  end
 end
