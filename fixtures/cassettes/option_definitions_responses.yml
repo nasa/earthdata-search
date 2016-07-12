@@ -1,4 +1,181 @@
 ---
+71276962b97be1cb2d50846bbba17df0253b5f12:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"816c1e391bf38824a2245cf84057b7b1"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.115000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 12 Jul 2016 03:51:28 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"option_definition":{"deprecated":false,"description":"Order Options
+        for AE_SI12","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <model>\n        <instance>\n            <ecs:options
+        xmlns:ecs=\"http://ecs.nasa.gov/options\" xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\">\n                <!--
+        ECS distribution options example -->\n                <ecs:distribution>\n                    <ecs:mediatype>\n                        <ecs:value>FtpPull</ecs:value>\n                    </ecs:mediatype>\n                    <ecs:mediaformat>\n                        <ecs:ftppull-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppull-format>\n                        <ecs:ftppush-format>\n                            <ecs:value>FILEFORMAT</ecs:value>\n                        </ecs:ftppush-format>\n                     </ecs:mediaformat>\n                    <ecs:ftppush>\n                        <ecs:user/>\n                        <ecs:password/>\n                        <ecs:host/>\n                        <ecs:directory/>\n                        <ecs:user-string/>\n                    </ecs:ftppush>          \n                </ecs:distribution>\n                <ecs:do-processing>false</ecs:do-processing>\n                <ecs:processing>\n                    <!--
+        This must be populated with the subsetter''s endpoint -->\n                    <ecs:endpoint>http://n4esl01.nsidcb.ecs.nasa.gov:8000/sam-cgi-bin/poochie</ecs:endpoint>\n                    <!--
+        This tag is a constant and is required for the HSA subsetter -->\n                    <ecs:consider-processing-options-in-request-bundling>false</ecs:consider-processing-options-in-request-bundling>\n                    <!--
+        One or more of BoundingBox, DateRange, and/or FieldList MUST be specified
+        -->\n                    <hsa:SubsettingCriteria>                                                                         \n                        <!--
+        GranuleSize is required -->\n                        <hsa:GranuleSize granule-specific=\"true\">1.0</hsa:GranuleSize>\n                        <hsa:spatial-subsetting
+        granule-specific=\"true\">false</hsa:spatial-subsetting>\n                        <hsa:XYBox>\n                         <hsa:Projection
+        granule-specific=\"true\">\n                         <hsa:Value>North Polar
+        Sterographic</hsa:Value>\n                         </hsa:Projection>\n\t\t\t\t\t\t\t<hsa:ULRow>0</hsa:ULRow>\n\t\t\t\t\t\t\t<hsa:ULCol>0</hsa:ULCol>\n\t\t\t\t\t\t\t<hsa:LRRow>0</hsa:LRRow>\n\t\t\t\t\t\t\t<hsa:LRCol>0</hsa:LRCol>\n\t\t\t\t\t\t</hsa:XYBox>                      \n                        <!--
+        FieldList is optional, required only for parameter subsetting -->\n                        <hsa:parameter-subsetting
+        granule-specific=\"true\">false</hsa:parameter-subsetting>\n                          <hsa:Fields>  \n\t\t\t\t\t\t\t<hsa:FieldList>\n                                <hsa:FieldName>SI_12km_NH_18V_ASC</hsa:FieldName>\n                                <!--
+        Add other field names here -->\n                            </hsa:FieldList>\n\t\t\t\t\t\t  </hsa:Fields>\t    \n                    </hsa:SubsettingCriteria>\n                </ecs:processing>\n\t\t\t\t<ecs:do-ancillaryprocessing>false</ecs:do-ancillaryprocessing>
+        \n                <ecs:ancillary>\n                   <ecs:orderPH/>\n                   <ecs:orderQA/>\n                   <ecs:orderBrowse/>\n                </ecs:ancillary>\n            </ecs:options>\n        </instance>\n        <!--
+        Required to populate the subsetter''s GranuleSize tag -->\n        <extension
+        xmlns:auto=\"http://echo.nasa.gov/v9/echoforms/autopopulate\" name=\"auto:autopopulate\">\n            <auto:expressions>\n                <auto:expression
+        metadata=\"/results/provider/result/GranuleURMetaData/DataGranule/SizeMBDataGranule/text()\"
+        ref=\"/ecs:options/ecs:processing/hsa:SubsettingCriteria/hsa:GranuleSize\"/>\n            </auto:expressions>\n        </extension>\n    </model>\n    <ui>\n        <group
+        id=\"mediaOptionsGroup\" label=\"Media Options\" ref=\"ecs:distribution\">\n            <select
+        id=\"mediaTypeSelect\" label=\"Media Type\" multiple=\"false\" open=\"false\"
+        ref=\"ecs:mediatype\" required=\"true()\" type=\"xsd:string\" valueElementName=\"value\">\n                <item
+        label=\"FTP Pull\" value=\"FtpPull\"/>\n                <item label=\"FTP
+        Push\" value=\"FtpPush\"/>\n            </select>\n            \n            <group
+        id=\"ftpPushGroup\" label=\"FTP Push Properties\" ref=\"ecs:ftppush\" relevant=\"ecs:mediatype/ecs:value
+        = ''FtpPush''\">\n                <input label=\"Username\" ref=\"ecs:user\"
+        required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <secret
+        label=\"Password\" ref=\"ecs:password\" required=\"//ecs:mediatype/ecs:value
+        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"Hostname\"
+        ref=\"ecs:host\" required=\"//ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"/>\n                <input
+        label=\"Destination directory\" ref=\"ecs:directory\" required=\"//ecs:mediatype/ecs:value
+        = ''FtpPush''\" type=\"xsd:string\"/>\n                <input label=\"User
+        string\" ref=\"ecs:user-string\" type=\"xsd:string\"/>\n            </group>\n            <select
+        id=\"mediaFormatSelectFTPPULL\" label=\"Media Format\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppull-format\" relevant=\"ecs:mediatype/ecs:value
+        = ''FtpPull''\" required=\"ecs:mediatype/ecs:value = ''FtpPull''\" type=\"xsd:string\"
+        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n            </select>\n            <select
+        id=\"mediaFormatSelectFTPPUSH\" label=\"Media Format\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:mediaformat/ecs:ftppush-format\" relevant=\"ecs:mediatype/ecs:value
+        = ''FtpPush''\" required=\"ecs:mediatype/ecs:value = ''FtpPush''\" type=\"xsd:string\"
+        valueElementName=\"value\">\n                <item label=\"File\" value=\"FILEFORMAT\"/>\n            </select>\n        </group>\n        <input
+        id=\"processingSwitch\" label=\"Check here for Subsetting Options\" ref=\"ecs:do-processing\"
+        relevant=\"//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
+        = ''FtpPush''\" type=\"xsd:boolean\">\n                 <constraints>\n                   <constraint>\n                     <xpath>//ecs:do-processing
+        = ''false'' or (//hsa:spatial-subsetting = ''true'' or //hsa:parameter-subsetting
+        = ''true'')</xpath>\n                     <alert>If you require processing,
+        please select either spatial or parameter subsetting or both</alert>\n                   </constraint>\n                 </constraints>\n        </input>\n\t\t\n        <group
+        xmlns:hsa=\"http://subset.itsc.uah.edu/HSASubsettingCriteria\" id=\"subsettingOptionsGroup\"
+        label=\"Subsetting Options\" ref=\"ecs:processing\" relevant=\"//ecs:do-processing
+        = ''true'' and (//ecs:mediatype/ecs:value = ''FtpPull'' or //ecs:mediatype/ecs:value
+        = ''FtpPush'')\">\n                     <input id=\"spatialSwitch\" label=\"Spatial
+        Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:spatial-subsetting\" relevant=\"//ecs:do-processing
+        = ''true''\" type=\"xsd:boolean\">\n                     </input>\n\t\t\t   \n        <group
+        id=\"XYBox\" label=\"XY Bounding Box\" ref=\"//hsa:XYBox\" relevant=\"//hsa:spatial-subsetting
+        = ''true''\">\n            <select label=\"Projections\" multiple=\"false\"
+        open=\"false\" ref=\"//hsa:Projection\" relevant=\"false\" type=\"xsd:string\"
+        valueElementName=\"Value\">\n                <item label=\"North Polar Stereographic\"
+        value=\"North Polar Sterographic\"/>\n                <item label=\"South
+        Polar Stereographic\" value=\"South Polar Sterographic\"/>  \n\t    </select>\n            <input
+        label=\"Upper Left Row\" ref=\"hsa:ULRow\" type=\"xsd:int\"/>             \n            <input
+        label=\"Upper Left Column\" ref=\"hsa:ULCol\" type=\"xsd:int\"/>              \n            <input
+        label=\"Lower Right Row\" ref=\"hsa:LRRow\" type=\"xsd:int\"/>              \n            <input
+        label=\"Lower Right Column\" ref=\"hsa:LRCol\" type=\"xsd:int\"/>         \n        </group>\n\t\t\n            <input
+        id=\"parameterSwitch\" label=\"Parameter Subsetting?\" ref=\"hsa:SubsettingCriteria/hsa:parameter-subsetting\"
+        type=\"xsd:boolean\">\n            </input>                       \n            <group
+        label=\"Parameter Selection\" ref=\"hsa:SubsettingCriteria/hsa:Fields\" relevant=\"hsa:SubsettingCriteria/hsa:parameter-subsetting
+        = ''true''\">\n                <select label=\"Parameters\" multiple=\"true\"
+        open=\"false\" ref=\"hsa:FieldList\" type=\"xsd:string\" valueElementName=\"FieldName\">\n                    <constraints>\n                       <constraint>\n                         <xpath>//hsa:FieldName
+        != ''''</xpath>\n                         <alert>If you require parameter
+        subsetting you must select a parameter</alert>\n                       </constraint>\n                    </constraints>\n                    <item
+        label=\"SI_12km_NH_18V_ASC\" value=\"SI_12km_NH_18V_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_18V_DSC\" value=\"SI_12km_NH_18V_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_18V_DAY\" value=\"SI_12km_NH_18V_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_18H_ASC\" value=\"SI_12km_NH_18H_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_18H_DSC\" value=\"SI_12km_NH_18H_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_18H_DAY\" value=\"SI_12km_NH_18H_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_23V_ASC\" value=\"SI_12km_NH_23V_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_23V_DSC\" value=\"SI_12km_NH_23V_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_23V_DAY\" value=\"SI_12km_NH_23V_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_23H_ASC\" value=\"SI_12km_NH_23H_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_23H_DSC\" value=\"SI_12km_NH_23H_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_23H_DAY\" value=\"SI_12km_NH_23H_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_36V_ASC\" value=\"SI_12km_NH_36V_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_36V_DSC\" value=\"SI_12km_NH_36V_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_36V_DAY\" value=\"SI_12km_NH_36V_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_36H_ASC\" value=\"SI_12km_NH_36H_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_36H_DSC\" value=\"SI_12km_NH_36H_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_36H_DAY\" value=\"SI_12km_NH_36H_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_89V_ASC\" value=\"SI_12km_NH_89V_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_89V_DSC\" value=\"SI_12km_NH_89V_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_89V_DAY\" value=\"SI_12km_NH_89V_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_89H_ASC\" value=\"SI_12km_NH_89H_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_89H_DSC\" value=\"SI_12km_NH_89H_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_89H_DAY\" value=\"SI_12km_NH_89H_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_ICECON_ASC\" value=\"SI_12km_NH_ICECON_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_ICECON_DSC\" value=\"SI_12km_NH_ICECON_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_ICECON_DAY\" value=\"SI_12km_NH_ICECON_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_ICEDIFF_ASC\" value=\"SI_12km_NH_ICEDIFF_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_ICEDIFF_DSC\" value=\"SI_12km_NH_ICEDIFF_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_ICEDIFF_DAY\" value=\"SI_12km_NH_ICEDIFF_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_NH_SNOWDEPTH_5DAY\" value=\"SI_12km_NH_SNOWDEPTH_5DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_18V_ASC\" value=\"SI_12km_SH_18V_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_18V_DSC\" value=\"SI_12km_SH_18V_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_18V_DAY\" value=\"SI_12km_SH_18V_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_18H_ASC\" value=\"SI_12km_SH_18H_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_18H_DSC\" value=\"SI_12km_SH_18H_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_18H_DAY\" value=\"SI_12km_SH_18H_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_23V_ASC\" value=\"SI_12km_SH_23V_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_23V_DSC\" value=\"SI_12km_SH_23V_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_23V_DAY\" value=\"SI_12km_SH_23V_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_23H_ASC\" value=\"SI_12km_SH_23H_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_23H_DSC\" value=\"SI_12km_SH_23H_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_23H_DAY\" value=\"SI_12km_SH_23H_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_36V_ASC\" value=\"SI_12km_SH_36V_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_36V_DSC\" value=\"SI_12km_SH_36V_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_36V_DAY\" value=\"SI_12km_SH_36V_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_36H_ASC\" value=\"SI_12km_SH_36H_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_36H_DSC\" value=\"SI_12km_SH_36H_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_36H_DAY\" value=\"SI_12km_SH_36H_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_89V_ASC\" value=\"SI_12km_SH_89V_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_89V_DSC\" value=\"SI_12km_SH_89V_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_89V_DAY\" value=\"SI_12km_SH_89V_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_89H_ASC\" value=\"SI_12km_SH_89H_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_89H_DSC\" value=\"SI_12km_SH_89H_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_89H_DAY\" value=\"SI_12km_SH_89H_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_ICECON_ASC\" value=\"SI_12km_SH_ICECON_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_ICECON_DSC\" value=\"SI_12km_SH_ICECON_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_ICECON_DAY\" value=\"SI_12km_SH_ICECON_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_ICEDIFF_ASC\" value=\"SI_12km_SH_ICEDIFF_ASC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_ICEDIFF_DSC\" value=\"SI_12km_SH_ICEDIFF_DSC\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_ICEDIFF_DAY\" value=\"SI_12km_SH_ICEDIFF_DAY\"/>\n\t\t\t\t\t<item
+        label=\"SI_12km_SH_SNOWDEPTH_5DAY\" value=\"SI_12km_SH_SNOWDEPTH_5DAY\"/>\n                </select>\n            </group>\t\t\n        </group>\n        <output
+        id=\"subsetWarningOuput\" label=\"\" type=\"xsd:string\" value=\"'' -- Ancillary
+        products cannot be ordered when subsetting is selected.''\"/>  \n\t\t<input
+        id=\"ancillarySwitch\" label=\"Check here for ancillary data options\" ref=\"ecs:do-ancillaryprocessing\"
+        type=\"xsd:boolean\"/>  \n        <group id=\"checkancillaryoptions\" label=\"
+        \" ref=\"ecs:ancillary\" relevant=\"//ecs:do-ancillaryprocessing =   ''true''\">
+        \n           <constraints>\n              <constraint>\n              <xpath>//ecs:do-processing
+        = ''false'' </xpath>\n              <alert>Subsetting option is not allowed
+        with ancillary data options</alert>\n              </constraint>\n          </constraints>\n        <input
+        label=\"Include associated Production History file in order?\" ref=\"ecs:orderPH\"
+        type=\"xsd:boolean\"/> \n       <input label=\"Include associated Quality
+        Assurance file in order?\" ref=\"ecs:orderQA\" type=\"xsd:boolean\"/>\n       <input
+        label=\"Include associated Browse file in order?\" ref=\"ecs:orderBrowse\"
+        type=\"xsd:boolean\"/>\n       </group> \n    </ui>\n</form>","id":"159A2C2A-BC8D-04E9-6217-BCB9E7626C91","name":"AE_SI12
+        Order Option","scope":"PROVIDER"}}'
+    http_version: 
 f085ea3c29b348aa041da1fc8bd7ef275145800a:
   response:
     status:
