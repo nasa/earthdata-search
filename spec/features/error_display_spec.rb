@@ -3,13 +3,9 @@
 require "spec_helper"
 
 describe "Displaying system errors", reset: false do
-
-  before :all do
-    load_page :search
-  end
-
   context 'when a system error occurs' do
     before :all do
+      load_page :search
       fill_in 'keywords', with: 'trigger500'
       wait_for_xhr
     end
@@ -45,10 +41,6 @@ describe "Displaying system errors", reset: false do
   context 'when invalid parameters are entered' do
     before :all do
       load_page :search, project: ['C1000000029-EDF_OPS'], view: :project, env: :sit, queries: [nil, { id: '*foo!*foo2!*foo3' }]
-    end
-
-    after :all do
-      load_page :search
     end
 
     it 'displays an error message containing the type of request that caused the error' do
