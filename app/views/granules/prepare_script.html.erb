@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title><%= site_page_title('Downloads') %></title>
+  <link rel="shortcut icon" href="/favicon.ico?v=1.1">
+  <style>
+    .pre-container {
+      min-height: 20px;
+      padding: 19px;
+      margin-bottom: 20px;
+      background-color: #f5f5f5;
+      border: 1px solid #e3e3e3;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    }
+
+    #download-button {
+      color: #fff;
+      background-color: #5382b1;
+      background-image: -webkit-linear-gradient(#5382b1, #315880);
+      background-image: linear-gradient(#5382b1, #315880);
+      border: none;
+      text-shadow: 1px 1px 1px #315880;
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 3px;
+      font-size: small;
+    }
+
+    div {
+      margin: 20px;
+    }
+
+    pre {
+      font-size: smaller;
+    }
+  </style>
+</head>
+<body>
+<div id="errors"></div>
+<div id="loading">Preparing download script. Fetching downloadable granule links...</div>
+<div id="download-description" style="display: none;">Script preparation completed. Please click the button to download the script. <button id="download-button">Download Script File</button></div>
+<div class="pre-container">
+  <pre id="script">
+#!/bin/sh
+
+GREP_OPTIONS=''
+
+cookiejar=$(mktemp cookies.XXXXXXXXXX)
+netrc=$(mktemp netrc.XXXXXXXXXX)
+chmod 0600 "$cookiejar" "$netrc"
+function finish {
+  rm -rf "$cookiejar" "$netrc"
+    <% if @first_link.start_with? 'ftp' %>
+  <% # For FTP retrievals, we also need to clean up ~/.netrc file for safety reasons %>
+      dot_netrc_tmp=$(mktemp ~/.netrc.tmp.XXXXXXXXXX)
+  chmod 0600 "$dot_netrc_tmp"
+  awk '!/<%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1].gsub('.', '\.') %>/' ~/.netrc > $dot_netrc_tmp && mv $dot_netrc_tmp ~/.netrc
+  <% end %>
+    }
+
+trap finish EXIT
+WGETRC="$wgetrc"
+
+prompt_credentials() {
+    echo "Enter your Earthdata Login credentials"
+    read -p "Username (<%= @user %>): " username
+    username=${username:-<%= @user %>}
+    read -s -p "Password: " password
+    echo "\nmachine urs.earthdata.nasa.gov\tlogin $username\tpassword $password" >> $netrc
+    <% if @first_link.start_with? 'ftp' %>
+    echo "\nmachine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>\tlogin $username\tpassword $password" >> $netrc
+    <% end %>
+    echo
+}
+
+exit_with_error() {
+    echo
+    echo "Unable to Retrieve Data"
+    echo
+    echo $1
+    echo
+    echo "<%=raw @first_link %>"
+    echo
+    exit 1
+}
+
+prompt_credentials
+
+<% if @first_link.start_with? 'https://datapool.asf.alaska.edu' %>
+  <%= render partial: 'asf_download' %>
+<% else %>
+  <%= render partial: 'generic_download' %>
+<% end %>
+
+    fetch_urls() {
+    if command -v curl >/dev/null 2>&1; then
+        setup_auth_curl
+        while read -r line; do
+    <% if @first_link.start_with? 'ftp' %>
+            curl -f -Og --netrc-file "$netrc" $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
+            <% else %>
+            curl -f -b "$cookiejar" -c "$cookiejar" -L -n -Og -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
+            <% end %>
+    done;
+    elif command -v wget >/dev/null 2>&1; then
+        # We can't use wget to poke provider server to get info whether or not URS was integrated without download at least one of the files.
+        echo
+        echo "WARNING: Can't find curl, use wget instead."
+        echo "WARNING: Script may not correctly identify Earthdata Login integrations."
+        echo
+        setup_auth_wget
+        while read -r line; do
+        wget --load-cookies "$cookiejar" --save-cookies "$cookiejar" --keep-session-cookies -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
+        done;
+    else
+        fail_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
+    fi
+}
+
+fetch_urls <<'EDSCEOF'
+  </pre>
+</div>
+<ul id="links">
+</ul>
+
+<script>
+  (function () {
+
+    function downloadScriptFile() {
+      var content = document.getElementById("script").innerHTML;
+      var dl = document.createElement('a');
+      dl.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(content));
+      dl.setAttribute('download', 'download.sh');
+      dl.click();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('download').addEventListener('click', downloadScriptFile);
+    });
+
+    var browseOnly = <%= @query.delete('browse') %>;
+    var currentPage = <%= @query['page_num'] %>;
+    var project = <%= @query['project'] %>;
+    var collection = '<%= @query['collection'] %>';
+    var cmrHits = -1;
+
+    function getNextPageUrl() {
+      queryPageNum = parseInt(url.match(/page_num=(\d+)/)[1]);
+      if (queryPageNum * 2000 > cmrHits) {
+        return null;
+      }
+      currentPage++;
+      url = url.replace(/page_num=\d+/, 'page_num=' + currentPage);
+      return url;
+    }
+
+    function finish() {
+      preContent = document.getElementById('script');
+      preContent.innerHTML += '\nEDSCEOF';
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('download-button').style.display = 'inline';
+      document.getElementById('download-description').style.display = 'inline';
+    }
+
+    function onLoad() {
+      var doc = JSON.parse(this.response);
+      cmrHits = doc['CMR-Hits'];
+      document.getElementById('loading').innerHTML = 'Loading more... (parsed ' + (currentPage * 2000 > cmrHits ? cmrHits : (currentPage * 2000))+ ' of ' + cmrHits + ')';
+      var links = doc.links;
+      preContent = document.getElementById('script');
+      preContent.innerHTML += links.join("\n");
+      var next = getNextPageUrl();
+      if (next) {
+        fetchLinks(next);
+      }
+      else {
+        finish();
+      }
+    }
+
+    function onError() {
+      document.getElementById('loading').textContent = "There was an error loading granules. Refresh this page to try again.";
+      finish();
+    }
+
+    function onAbort() {
+      finish();
+    }
+
+    function fetchLinks(url) {
+      var request = new XMLHttpRequest();
+      request.open('GET', url, true);
+      request.send(null);
+
+      request.addEventListener("load", onLoad, false);
+      request.addEventListener("error", onError, false);
+      request.addEventListener("abort", onAbort, false);
+    }
+
+    var url = "/granules/fetch_links.json?page_num=1&browse=" + browseOnly + "&project=" + project + "&collection=" + collection;
+    fetchLinks(url);
+  })();
+</script>
+
+</body></html>
