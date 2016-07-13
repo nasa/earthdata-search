@@ -106,33 +106,38 @@ ns.CollectionFacets = do (ko) ->
     _addAncestorsToFacetsList: (item) ->
       children = []
       ancestors = []
+      hasAppliedKeywords = false
       for child in item.children
         if item.title == 'Features'
           facets = @queryModel.facets()
           if facets && facets.length > 0
             featureQuery = facets.find (queryParam) ->
               child.title == queryParam.title
-            if featureQuery
-              child.applied = true
+            child.applied = true if featureQuery
           children.push(new Facet(this, child))
-        else if child.applied
-          if item.title == 'Keywords'
-            @_findAncestors(ancestors, item)
+        else if item.title == 'Keywords'
+          if child.applied
+            hasAppliedKeywords = true
+            @_findAncestors(ancestors, child)
             parent = ancestors.slice(-1)[0]
             if parent
               children.push new Facet(this, ancestor) for ancestor in ancestors
+              ancestors = []
               if parent.children
                 children.push new Facet(this, grandChild) for grandChild in parent.children
               else
                 break
-          else
-            children.push new Facet(this, child)
         else
-          children.push new Facet(this, child)
+          if child.applied
+            hasAppliedKeywords = true
+            children.push new Facet(this, child)
+
+      children.push new Facet(this, child) for child in item.children if !hasAppliedKeywords && item.title != 'Features'
+
       children
 
     _findAncestors: (ancestors, item) ->
-      ancestors.push item if item.applied && item.type == 'filter'
+      ancestors.push item if item.applied && item.type == 'filter' && item.links.remove?.length > 0
       if item.children
         for child in item.children
           if child.applied && child.links.remove?.length > 0
@@ -204,7 +209,21 @@ ns.CollectionFacets = do (ko) ->
             @_findAncestors(ancestors, child)
 
     removeFacet: (facet) =>
+      @_removeSingleFacet(facet)
       @_removeHierarchicalFacets(facet)
+
+    _removeSingleFacet: (root) ->
+      rootLevel = -1
+      for facetParam in @query.facets()
+        if facetParam.title == root.title
+          rootLevel = parseInt(facetParam.param.split(/(?:\]?\[|\]$)/)[1])
+          break;
+      if isNaN(rootLevel)
+        @query.facets.remove (facet) ->
+          facet.title == root.title
+      else
+        @query.facets.remove (facet) ->
+          parseInt(facet.param.split(/(?:\]?\[|\]$)/)[1]) >= rootLevel
 
     _removeHierarchicalFacets: (root) ->
       if root.children
@@ -217,18 +236,7 @@ ns.CollectionFacets = do (ko) ->
               queryFacet.title == title
             @_removeHierarchicalFacets(child)
         @query.facets.remove (queryFacet) -> queryFacet.title == root.title unless hasAppliedChildren
-      else
-        rootLevel = -1
-        for facetParam in @query.facets()
-          if facetParam.title == root.title
-            rootLevel = parseInt(facetParam.param.split(/(?:\]?\[|\]$)/)[1])
-            break;
-        if isNaN(rootLevel)
-          @query.facets.remove (facet) ->
-            facet.title == root.title
-        else
-          @query.facets.remove (facet) ->
-            parseInt(facet.param.split(/(?:\]?\[|\]$)/)[1]) >= rootLevel
+
 
     addFacet: (facet) =>
       @query.facets([]) unless @query.facets()?
