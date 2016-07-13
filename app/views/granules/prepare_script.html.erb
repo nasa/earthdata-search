@@ -139,7 +139,7 @@ fetch_urls <<'EDSCEOF'
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById('download').addEventListener('click', downloadScriptFile);
+      document.getElementById('download-button').addEventListener('click', downloadScriptFile);
     });
 
     var browseOnly = <%= @query.delete('browse') %>;
