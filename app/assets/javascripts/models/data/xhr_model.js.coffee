@@ -169,7 +169,8 @@ ns.XhrModel = do (ko
         # TODO: don't reference page logout the user
         edsc.banner(null, 'Session has ended', 'Please sign in')
 
-      errors = response.responseJSON?.errors
-      @error(errors) if errors?
+      unless response.status >= 500 || response.status == 408 || response.status == 0
+        errors = response.responseJSON?.errors
+        @error(errors) if errors?
 
   exports = XhrModel
