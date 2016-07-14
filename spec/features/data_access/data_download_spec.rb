@@ -269,7 +269,6 @@ describe "Data download page", reset: false do
             synchronize do
               expect(page).to have_button('Download Script File')
             end
-            page.save_screenshot '1.png'
             click_button 'Download Script File'
           end
         end
