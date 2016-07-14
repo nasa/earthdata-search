@@ -125,14 +125,16 @@ ns.CollectionFacets = do (ko) ->
               ancestors = []
               if parent.children
                 children.push new Facet(this, grandChild) for grandChild in parent.children
+              else if parent.count == 0
+                continue
               else
                 break
         else
-          if child.applied
-            hasAppliedKeywords = true
-            children.push new Facet(this, child)
+          children.push new Facet(this, child)
 
-      children.push new Facet(this, child) for child in item.children if !hasAppliedKeywords && item.title != 'Features'
+      if item.title == 'Keywords'
+        children.push new Facet(this, child) for child in item.children when child.count > 0 unless hasAppliedKeywords
+
 
       children
 

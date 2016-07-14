@@ -283,10 +283,9 @@ describe "Collection Facets", reset: false do
       wait_for_xhr
     end
 
-    # Not apply to v2 facets.
-    xit "continues to display applied science keyword facets in order" do
+    it "continues to display applied science keyword facets in order" do
       within(:css, '#collapse1 .panel-body.facets') do
-        expect(page).to have_text("Agriculture Agricultural Chemicals Fertilizers")
+        expect(page).to have_text("Agriculture 0 Agricultural Chemicals 0 Fertilizers 0")
       end
     end
   end
@@ -364,7 +363,6 @@ describe "Collection Facets", reset: false do
 
   context "when selecting a topic keyword" do
     before :all do
-      page.save_screenshot '1.png'
       find(".facet-title", text: /\AAtmosphere\z/).click
       wait_for_xhr
     end
