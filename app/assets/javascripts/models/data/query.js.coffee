@@ -133,14 +133,17 @@ ns.query = do (ko,
 
   class FacetParam extends QueryParam
     names: ->
-      ['features', 'campaign', 'data_center', 'project', 'platform', 'instrument', 'science_keywords', 'processing_level_id']
+      ['features', 'campaign_h', 'data_center_h', 'project_h', 'platform_h', 'instrument_h', 'science_keywords_h', 'processing_level_id_h']
 
     writeTo: (query) ->
       facetParams = {}
       for facet in @value()
         name = facet.param
-        facetParams[name] ?= []
-        facetParams[name].push(facet.term)
+        if name.indexOf('science_keywords_h') > -1
+          facetParams[name] = facet.title
+        else
+          facetParams[name] ?= []
+          facetParams[name].push facet.title
       queryStr = param(facetParams)
       extend(true, query, deparam(queryStr))
 
@@ -156,7 +159,7 @@ ns.query = do (ko,
         facets = querystr.split('&')
         for facet in facets
           [k, v] = facet.split('=')
-          result.push(param: decodeURIComponent(k), term: decodeURIComponent(v.replace(/\+/g, ' ')))
+          result.push(param: decodeURIComponent(k), title: decodeURIComponent(v.replace(/\+/g, ' ')))
       @value(result)
 
   class BooleanParam extends QueryParam

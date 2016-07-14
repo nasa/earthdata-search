@@ -1,5 +1,5 @@
 ---
-5ad579b9c75edc2392a0d96ef1f08c8e9a49a4cd:
+adeda1117cc379d7fa57e073c5c75041f76dab5f:
   response:
     status:
       code: 200
@@ -12,19 +12,19 @@
       x-echo-feed-title:
       - All Provider Events
       etag:
-      - '"abf988e7632de020e398bbd647d4cfaa"'
+      - '"302128fcc363e5704661e64ea65956f0"'
       cache-control:
       - max-age=0, private, must-revalidate
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.066000'
+      - '0.091000'
       content-type:
       - application/xml;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Tue, 10 Nov 2015 20:13:01 GMT
+      - Fri, 08 Jul 2016 02:15:41 GMT
       connection:
       - close
       transfer-encoding:
@@ -55,9 +55,9 @@
           <calendar_event>
             <id>405EBF8F-8A76-18A7-871B-3F31A2CC0FA9</id>
             <title>Degraded Service</title>
-            <message>&lt;p&gt;Misc OS patching will see an outage of ECHO-hosted browse access. All other services will remain operational&lt;/p&gt;</message>
-            <start_date type="datetime">2014-04-02T12:00:00Z</start_date>
-            <end_date type="datetime">2014-04-02T16:00:00Z</end_date>
+            <message>&lt;p&gt;NASA will be performing network upgrades that will require       recabling of the dev network. This will cause a 'several minute'       outage some time between 4:30 - 5:30 PM ET&lt;/p&gt;</message>
+            <start_date type="datetime">2016-06-03T16:00:00Z</start_date>
+            <end_date type="datetime">2016-06-03T18:00:00Z</end_date>
             <severity type="string">ALERT</severity>
           </calendar_event>
           <calendar_event>
@@ -73,8 +73,17 @@
             <id>3FB16900-5025-24CE-CD3B-79F1530D0443</id>
             <title>ECHO Outage</title>
             <message>&lt;p&gt;OS patching will cause an outage of Test Bed.&lt;/p&gt;</message>
-            <start_date type="datetime">2015-10-07T12:00:00Z</start_date>
-            <end_date type="datetime">2015-10-07T16:00:00Z</end_date>
+            <start_date type="datetime">2016-06-01T12:00:00Z</start_date>
+            <end_date type="datetime">2016-06-01T16:00:00Z</end_date>
+            <severity type="string">ALERT</severity>
+          </calendar_event>
+          <calendar_event>
+            <id>FFE43A26-6327-7A44-FD9E-90EA4B9DC349</id>
+            <title>Dana's Test</title>
+            <message>&lt;p&gt;This is only a test.&lt;/p&gt;</message>
+            <start_date type="datetime">2016-03-23T12:00:00Z</start_date>
+            <end_date type="datetime">2016-03-23T12:00:00Z</end_date>
+            <owner_provider_id>DCE49537-444E-7BEF-B4C0-6FB2C4D9E72C</owner_provider_id>
             <severity type="string">ALERT</severity>
           </calendar_event>
         </calendar_events>

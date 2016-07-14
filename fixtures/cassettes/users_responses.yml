@@ -1,108 +1,35 @@
 ---
-06f57afec45b734fc975b6fd35f65961b08077af:
+e54b66c4240dbfda189a40ea795adbf1022de484:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"0d8ea501adeae11cef00e4941f1d8cea"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.149000'
-      content-type:
-      - application/xml;charset=utf-8
-      content-length:
-      - '926'
+      - nginx/1.4.7
       date:
-      - Thu, 15 Jan 2015 21:08:40 GMT
-      connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user>
-          <id>4C0390AF-BEE1-32C0-4606-66CAFDD4131D</id>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-          <primary_study_area>OTHER</primary_study_area>
-          <user_type>PRODUCTION_USER</user_type>
-          <username>edsc</username>
-          <first_name>Earthdata</first_name>
-          <last_name>Search</last_name>
-          <email>patrick+edsc@element84.com</email>
-          <opt_in type="boolean">false</opt_in>
-          <organization_name>EDSC</organization_name>
-          <creation_date type="datetime">2014-02-04T20:55:34Z</creation_date>
-          <addresses type="array">
-            <address>
-              <id>4029FD6E-AA1A-87A3-209F-C012B8DD9A51</id>
-              <us_format type="boolean">false</us_format>
-              <street1>101 N. Columbus St.</street1>
-              <street2>Suite 200</street2>
-              <city>Alexandria</city>
-              <state>VA</state>
-              <zip>22314</zip>
-              <country>United States</country>
-            </address>
-          </addresses>
-        </user>
-    http_version: 
-62e63dbd42b136061507c74c30df510c1d255402:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"1f05addd57cb3f3122b07a96e192ba9e"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.321000'
+      - Tue, 24 Nov 2015 17:33:21 GMT
       content-type:
-      - application/xml;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Mon, 02 May 2016 17:24:52 GMT
-      connection:
-      - close
+      - application/json; charset=utf-8
       transfer-encoding:
       - chunked
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      cache-control:
+      - no-cache
+      x-request-id:
+      - 9b962bd0-f008-49bb-8008-1da4ab44b713
+      x-runtime:
+      - '0.005167'
     body:
       encoding: UTF-8
-      string: |
-        <?xml version="1.0" encoding="UTF-8"?>
-        <user>
-          <id>69BEF8E4-7C1A-59C3-7C46-18D788AC64B4</id>
-          <user_domain>OTHER</user_domain>
-          <user_region>USA</user_region>
-          <primary_study_area>OTHER</primary_study_area>
-          <user_type>PUBLIC_USER</user_type>
-          <username>edscbasic</username>
-          <first_name>edsc</first_name>
-          <last_name>basic</last_name>
-          <email>patrick+edscbasic@element84.com</email>
-          <opt_in type="boolean">false</opt_in>
-          <organization_name>EDSC</organization_name>
-          <creation_date type="datetime">2014-06-25T14:15:23Z</creation_date>
-          <addresses type="array">
-            <address>
-              <id>7D9F1669-E1CC-9BF8-E413-FE2FEA3F9906</id>
-              <us_format type="boolean">false</us_format>
-              <country>United States</country>
-            </address>
-          </addresses>
-        </user>
-    http_version: 
+      string: '{"user":{"uid":"edsc","first_name":"Earthdata","last_name":"Search","email_address":"patrick+edsc@element84.com","country":"United States","study_area":"OTHER","user_type":"PRODUCTION_USER","affiliation":"OTHER","organization":"EDSC","member_groups":["earthdata_ecc","echo"]}}'
+    http_version:
