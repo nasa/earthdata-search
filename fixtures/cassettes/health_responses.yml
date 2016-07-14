@@ -1,20 +1,22 @@
 ---
-7ec5b68c21bb8347b2ab45f7892fd919550198b7:
+0f110279e395971e05cec02349d1044f01a510c2:
   response:
     status:
       code: 200
       message: 
     headers:
       date:
-      - Tue, 13 Oct 2015 20:31:57 GMT
+      - Tue, 12 Jul 2016 04:18:45 GMT
       content-type:
       - application/json; charset=utf-8
+      cmr-request-id:
+      - a26145d6-7fd9-4148-8a96-de6a3d824979
       content-length:
       - '208'
       connection:
       - close
       server:
-      - Jetty(7.x.y-SNAPSHOT)
+      - Jetty(9.2.z-SNAPSHOT)
     body:
       encoding: UTF-8
       string: '{"echo":{"ok?":true},"internal-metadata-db":{"ok?":true,"dependencies":{"oracle":{"ok?":true},"echo":{"ok?":true}}},"index-set":{"ok?":true,"dependencies":{"elastic_search":{"ok?":true},"echo":{"ok?":true}}}}'

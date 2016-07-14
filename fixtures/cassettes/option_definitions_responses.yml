@@ -14,13 +14,13 @@
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.083000'
+      - '0.115000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 02 Jun 2016 19:11:53 GMT
+      - Tue, 12 Jul 2016 03:51:28 GMT
       connection:
       - close
       transfer-encoding:
@@ -191,13 +191,13 @@ f085ea3c29b348aa041da1fc8bd7ef275145800a:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.090000'
+      - '0.083000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:22:51 GMT
+      - Mon, 11 Jul 2016 18:08:38 GMT
       connection:
       - close
       transfer-encoding:
@@ -309,13 +309,13 @@ f085ea3c29b348aa041da1fc8bd7ef275145800a:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.080000'
+      - '0.125000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:32:00 GMT
+      - Tue, 12 Jul 2016 02:12:01 GMT
       connection:
       - close
       transfer-encoding:
@@ -350,13 +350,13 @@ db4b48585584f8241acc7e65cbdca85f83e58d0f:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.085000'
+      - '0.096000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:18:52 GMT
+      - Mon, 11 Jul 2016 18:46:45 GMT
       connection:
       - close
       transfer-encoding:
@@ -392,13 +392,13 @@ dd14e77fedc4882c6f9d0e80196735350b635dec:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.081000'
+      - '0.076000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:17:57 GMT
+      - Mon, 11 Jul 2016 18:24:03 GMT
       connection:
       - close
       transfer-encoding:
@@ -459,13 +459,13 @@ dd14e77fedc4882c6f9d0e80196735350b635dec:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.102000'
+      - '0.108000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:04 GMT
+      - Mon, 11 Jul 2016 19:06:03 GMT
       connection:
       - close
       transfer-encoding:
@@ -515,13 +515,13 @@ dd14e77fedc4882c6f9d0e80196735350b635dec:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.089000'
+      - '0.239000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:02 GMT
+      - Mon, 11 Jul 2016 19:06:01 GMT
       connection:
       - close
       transfer-encoding:
@@ -586,13 +586,13 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.095000'
+      - '0.106000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:02 GMT
+      - Mon, 11 Jul 2016 19:05:59 GMT
       connection:
       - close
       transfer-encoding:
@@ -657,13 +657,13 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.076000'
+      - '0.083000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:04 GMT
+      - Mon, 11 Jul 2016 19:06:04 GMT
       connection:
       - close
       transfer-encoding:
@@ -728,13 +728,13 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.107000'
+      - '0.124000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:18:16 GMT
+      - Mon, 11 Jul 2016 18:24:38 GMT
       connection:
       - close
       transfer-encoding:
@@ -837,13 +837,13 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.076000'
+      - '0.098000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:01 GMT
+      - Mon, 11 Jul 2016 19:05:59 GMT
       connection:
       - close
       transfer-encoding:
@@ -892,13 +892,13 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.074000'
+      - '0.099000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:02 GMT
+      - Mon, 11 Jul 2016 19:06:03 GMT
       connection:
       - close
       transfer-encoding:
@@ -948,13 +948,13 @@ f59dcc161ecbba9c9f0b1d1db3883407e80cf0c0:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.082000'
+      - '0.110000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:32:17 GMT
+      - Mon, 11 Jul 2016 18:46:58 GMT
       connection:
       - close
       transfer-encoding:
@@ -1063,13 +1063,13 @@ a3e306d85edd72b129f8f85472b219c4f7275f2d:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.077000'
+      - '0.090000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:04 GMT
+      - Mon, 11 Jul 2016 19:06:03 GMT
       connection:
       - close
       transfer-encoding:
@@ -1134,13 +1134,13 @@ a3e306d85edd72b129f8f85472b219c4f7275f2d:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.080000'
+      - '0.099000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:36:48 GMT
+      - Tue, 12 Jul 2016 00:38:17 GMT
       connection:
       - close
       transfer-encoding:
@@ -1256,13 +1256,13 @@ a3e306d85edd72b129f8f85472b219c4f7275f2d:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.088000'
+      - '0.106000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:04 GMT
+      - Mon, 11 Jul 2016 19:06:04 GMT
       connection:
       - close
       transfer-encoding:
@@ -1327,13 +1327,13 @@ a3e306d85edd72b129f8f85472b219c4f7275f2d:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.082000'
+      - '0.083000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:01 GMT
+      - Mon, 11 Jul 2016 19:05:59 GMT
       connection:
       - close
       transfer-encoding:
@@ -1382,13 +1382,13 @@ bb682c41137a389aed28504130a034222509e78b:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.085000'
+      - '0.103000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:03 GMT
+      - Mon, 11 Jul 2016 19:06:01 GMT
       connection:
       - close
       transfer-encoding:
@@ -1438,13 +1438,13 @@ bb682c41137a389aed28504130a034222509e78b:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.082000'
+      - '0.078000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:24:41 GMT
+      - Mon, 11 Jul 2016 18:30:39 GMT
       connection:
       - close
       transfer-encoding:
@@ -1491,13 +1491,13 @@ aa7f6467392a1f35954d5d447691cde8bdef7677:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.089000'
+      - '0.082000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:02 GMT
+      - Mon, 11 Jul 2016 19:06:01 GMT
       connection:
       - close
       transfer-encoding:
@@ -1562,13 +1562,13 @@ aa7f6467392a1f35954d5d447691cde8bdef7677:
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.090000'
+      - '0.081000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Thu, 19 May 2016 16:27:04 GMT
+      - Mon, 11 Jul 2016 19:06:05 GMT
       connection:
       - close
       transfer-encoding:
