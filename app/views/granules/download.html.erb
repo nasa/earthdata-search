@@ -50,7 +50,6 @@
       cmrHits = doc['CMR-Hits'];
       document.getElementById('loading').innerHTML = 'Loading more... (parsed ' + (currentPage * 2000 > cmrHits ? cmrHits : (currentPage * 2000))+ ' of ' + cmrHits + ')';
       var links = doc.links;
-      console.log(links);
       for (var i = 0; i < links.length; i++) {
         renderEntry(links[i]);
       }

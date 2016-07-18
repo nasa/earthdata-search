@@ -3,12 +3,12 @@ require 'spec_helper'
 describe "Collection Granule Count", reset: false do
   before :all do
     Capybara.reset_sessions!
-    visit '/search?q=C16893867-LPDAAC'
+    load_page :search, q: 'C1002-LPDAAC_TBD', env: :sit
     wait_for_xhr
   end
 
   it 'displays many granules for the given collection' do
-    expect(page). to have_content('778216 Granules')
+    expect(page). to have_content('2149 Granules')
   end
 
   context 'when applying search constraint' do

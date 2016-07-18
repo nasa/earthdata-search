@@ -321,7 +321,7 @@ class OpendapConfiguration
     spec = dim[:dimensions] && dim[:dimensions].find {|d| d[:name] = id}
     size = dim[:size] || (spec && spec[:size])
 
-    range_min, range_max = range
+    range_min, range_max = range.map!(&:to_f)
     span = range_max - range_min
     min = clamp(min, *range)
     max = clamp(max, *range)
