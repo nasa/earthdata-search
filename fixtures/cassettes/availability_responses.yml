@@ -1,5 +1,5 @@
 ---
-6318d7bb70e9e1ce6de8f6ebffa2fc4c763a8077:
+b99e39f70e8bd26011052dc5f647e80655cc9c88:
   response:
     status:
       code: 200
@@ -14,13 +14,13 @@
       x-ua-compatible:
       - IE=Edge,chrome=1
       x-runtime:
-      - '0.059000'
+      - '0.034000'
       content-type:
       - application/json;charset=utf-8
       vary:
       - Accept-Encoding
       date:
-      - Tue, 12 Jul 2016 04:18:45 GMT
+      - Tue, 13 Oct 2015 20:31:56 GMT
       connection:
       - close
       transfer-encoding:

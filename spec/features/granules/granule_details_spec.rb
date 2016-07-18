@@ -52,7 +52,7 @@ describe 'Granule details', reset: false do
       ShortName: STILLING WELL
       Campaigns:
       Campaign:
-      ShortName: First ISLSCP Field Experiment (FIFE)
+      ShortName: FIFE
       Price: 0
       OnlineAccessURLs:
       OnlineAccessURL:
