@@ -3350,11 +3350,11 @@ d6f9267e9cccbbd36579d64f55119e1ac5dae077:
       message: 
     headers:
       date:
-      - Tue, 12 Jul 2016 22:30:52 GMT
+      - Mon, 18 Jul 2016 13:13:22 GMT
       access-control-allow-origin:
       - "*"
       cmr-request-id:
-      - 6894fa48-a1cf-4b16-b080-32f33e9d96b3
+      - 84f28346-bd63-4e66-af8e-644946454422
       content-length:
       - '2'
       connection:

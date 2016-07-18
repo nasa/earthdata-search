@@ -52,7 +52,7 @@ module Echo
     end
 
     def get_facets(options={}, token=nil)
-      get_collections(options.merge(include_facets: true, page_size: 1), token)
+      get_collections(options.merge(include_facets: 'v2', page_size: 1), token)
     end
 
     def post_timeline(options={}, token=nil)

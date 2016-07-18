@@ -15,6 +15,12 @@ module Helpers
       end
     end
 
+    def fetch_download_links
+      synchronize(30) do
+        expect(page).not_to have_content('Loading more')
+      end
+    end
+
     def synchronize(seconds=Capybara.default_wait_time)
       start_time = Time.now
 

@@ -112,7 +112,7 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
   end
 
   context "for bounding box collections" do
-    use_collection 'C204200619-GSFCS4PA', 'AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1'
+    use_collection 'C1236224151-GES_DISC', 'AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V4.0 (AIRS_CPR_IND) at GES_DISC'
 
     before :all do
       create_bounding_box(0, 0, 15, 15)
@@ -120,11 +120,11 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "visualizing a collection's granules" do
-      hook_granule_results('AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1')
+      hook_granule_results('AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V4.0 (AIRS_CPR_IND) at GES_DISC')
 
       it "draws polygons on the map for granule spatial areas" do
         wait_for_xhr
-        expect(page).to have_granule_visualizations('C204200619-GSFCS4PA')
+        expect(page).to have_granule_visualizations('C1236224151-GES_DISC')
       end
 
       context "and mousing over a visualized granule" do
@@ -154,10 +154,10 @@ describe "Granule footprint visualizations", reset: false, wait: 60 do
     end
 
     context "removing a visualized collection" do
-      hook_granule_results_back('AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V3.1')
+      hook_granule_results_back('AIRS-CloudSat cloud mask and radar reflectivities collocation indexes V4.0 (AIRS_CPR_IND) at GES_DISC')
 
       it "hides the collection's visualizations" do
-        expect(page).to have_no_granule_visualizations('C204200619-GSFCS4PA')
+        expect(page).to have_no_granule_visualizations('C1236224151-GES_DISC')
       end
     end
   end

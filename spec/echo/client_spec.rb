@@ -108,16 +108,16 @@ describe Echo::Client do
     let(:collection_facets_url) { "/search/collections.json" }
 
     it 'returns collection facets in json format' do
-      expect(connection).to receive(:get).with(collection_facets_url, {:include_facets=>true, :page_size=>1, :include_has_granules=>true, :include_granule_counts=>true}).and_return(:response)
+      expect(connection).to receive(:get).with(collection_facets_url, {:include_facets=>'v2', :page_size=>1, :include_has_granules=>true, :include_granule_counts=>true}).and_return(:response)
 
       response = cmr_client.get_facets()
       expect(response.faraday_response).to eq(:response)
     end
 
     it 'returns collection facets with a filter' do
-      expect(connection).to receive(:get).with(collection_facets_url, {:campaign=>["AQUA"], :include_facets=>true, :page_size=>1, :options=>{:campaign=>{:and=>true}}, :include_has_granules=>true, :include_granule_counts=>true}).and_return(:response)
+      expect(connection).to receive(:get).with(collection_facets_url, {:campaign=>["Aqua"], :include_facets=>"v2", :page_size=>1, :include_has_granules=>true, :include_granule_counts=>true}).and_return(:response)
 
-      response = cmr_client.get_facets(campaign: ["AQUA"])
+      response = cmr_client.get_facets(campaign: ["Aqua"])
       expect(response.faraday_response).to eq(:response)
     end
   end

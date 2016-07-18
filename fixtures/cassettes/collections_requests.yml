@@ -5018,7 +5018,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 12 Jul 2016 22:30:47 GMT
+  recorded_at: Mon, 18 Jul 2016 13:13:18 GMT
   digest: 9c9dbf59b2ef10bc7f605e0f86d699c0e15718b5
 - request:
     method: get
@@ -5033,7 +5033,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 12 Jul 2016 22:30:52 GMT
+  recorded_at: Mon, 18 Jul 2016 13:13:23 GMT
   digest: b699d9b46f7dea279e1738ccd961c8eae2707e01
 - request:
     method: get
@@ -5048,7 +5048,7 @@ http_interactions:
       - eed-edsc-dev
       Echo-ClientId:
       - eed-edsc-dev
-  recorded_at: Tue, 12 Jul 2016 22:30:50 GMT
+  recorded_at: Mon, 18 Jul 2016 13:13:19 GMT
   digest: 6a4b05902e568437a87e948b027e41b997294f42
 - request:
     method: get
