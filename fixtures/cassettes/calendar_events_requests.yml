@@ -10,9 +10,9 @@ http_interactions:
       User-Agent:
       - Faraday v0.8.8
       Client-Id:
-      - eed-edsc-dev
+      - edsc-dev
       Echo-ClientId:
-      - eed-edsc-dev
-  recorded_at: Fri, 08 Jul 2016 02:15:41 GMT
-  digest: adeda1117cc379d7fa57e073c5c75041f76dab5f
+      - edsc-dev
+  recorded_at: Tue, 10 Nov 2015 20:13:02 GMT
+  digest: 5ad579b9c75edc2392a0d96ef1f08c8e9a49a4cd
 recorded_with: VCR 2.6.0

@@ -402,23 +402,6 @@ http_interactions:
   digest: 14a0ec30b17ac928b6678e04f531f842e2a96520
 - request:
     method: get
-    uri: https://sit.urs.earthdata.nasa.gov/api/users/edsc?client_id=mUM6VJvn6dXjZfhdeSeBbA
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc-access
-  recorded_at: Fri, 06 Nov 2015 14:31:36 GMT
-  digest: sit_get_urs_user
-- request:
-    method: get
     uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
     body:
       encoding: US-ASCII
@@ -468,23 +451,6 @@ http_interactions:
       - edscbasic-access
   recorded_at: Tue, 24 Nov 2015 19:26:28 GMT
   digest: edscbasic_preferences
-- request:
-    method: get
-    uri: https://testbed.echo.nasa.gov/echo-rest/users/edsc/preferences.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc-access
-  recorded_at: Tue, 24 Nov 2015 19:26:28 GMT
-  digest: sit_edsc_preferences
 - request:
     method: put
     uri: https://api.echo.nasa.gov/echo-rest/users/4C0390AF-BEE1-32C0-4606-66CAFDD4131D/preferences.json
