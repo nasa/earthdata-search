@@ -217,7 +217,6 @@ ns.GranuleLayer = do (L
             if path.poly?
               reverse = (j == 0) == isClockwise(path.poly)
               path.poly.reverse() if reverse
-#          pathsWithHoles.push(overlaps) unless granule.lines?.length > 0
           pathsWithHoles.push(overlaps)
           paths = paths.concat(overlaps)
 
