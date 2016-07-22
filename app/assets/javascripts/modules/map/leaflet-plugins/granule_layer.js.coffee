@@ -217,6 +217,7 @@ ns.GranuleLayer = do (L
             if path.poly?
               reverse = (j == 0) == isClockwise(path.poly)
               path.poly.reverse() if reverse
+#          pathsWithHoles.push(overlaps) unless granule.lines?.length > 0
           pathsWithHoles.push(overlaps)
           paths = paths.concat(overlaps)
 
@@ -266,7 +267,7 @@ ns.GranuleLayer = do (L
           addPath(ctx, {poly: hole.poly.concat().reverse()})
         ctx.stroke()
         addPath(ctx, boundary)
-        ctx.clip()
+        ctx.clip() unless path.line?.length > 0
       ctx.restore()
       callback?()
       null
