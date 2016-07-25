@@ -124,6 +124,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
+      string: bounding_box=0%2C0%2C15%2C15&echo_collection_id=C1236224151-GES_DISC&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 22 Jul 2016 01:33:20 GMT
+  digest: 925cb03ba15c7a18b61c05132aa323479e40d99b
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
       string: bounding_box=0%2C0%2C15%2C15&echo_collection_id=C204200619-GSFCS4PA&page_num=1&page_size=20&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
@@ -842,6 +859,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
+      string: echo_collection_id=C1236224151-GES_DISC&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 22 Jul 2016 01:33:24 GMT
+  digest: 055755bf6799052ee0ece738572d604021fdb7dc
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
       string: echo_collection_id=C128599377-NSIDC_ECS&echo_granule_id=G186622287-NSIDC_ECS&page_num=1&page_size=2000&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
@@ -1387,6 +1421,23 @@ http_interactions:
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
     body:
       encoding: US-ASCII
+      string: echo_collection_id=C179003030-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111301-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111300-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111299-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111298-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111297-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111296-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111295-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111294-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111293-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111292-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111291-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111290-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111289-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111288-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111287-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111286-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111285-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111284-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111283-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111282-ORNL_DAAC&page_num=2&page_size=4&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 22 Jul 2016 01:46:43 GMT
+  digest: da722777bf3cc8bbf09abbaf78eb0fcdca1f297b
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
       string: echo_collection_id=C179003030-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111301-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111300-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111299-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111298-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111297-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111296-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111295-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111294-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111293-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111292-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111291-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111290-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111289-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111288-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111287-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111286-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111285-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111284-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111283-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111282-ORNL_DAAC&page_num=2&page_size=5&sort_key%5B%5D=-start_date
     headers:
       User-Agent:
@@ -1399,6 +1450,23 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Thu, 19 May 2016 16:42:25 GMT
   digest: 0015b220ea56c1e6dabe63887609ac882e7b207a
+- request:
+    method: post
+    uri: https://cmr.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C179003030-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111301-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111300-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111299-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111298-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111297-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111296-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111295-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111294-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111293-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111292-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111291-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111290-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111289-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111288-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111287-ORNL_DAAC&exclude%5Becho_granule_id%5D%5B%5D=G179111286-ORNL_DAAC&page_num=2&page_size=4&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 22 Jul 2016 01:46:40 GMT
+  digest: fc645cd9f5c1e905d2aff1d4dc9f8ffb904fff39
 - request:
     method: post
     uri: https://cmr.earthdata.nasa.gov/search/granules.json
@@ -2511,4 +2579,21 @@ http_interactions:
       - eed-edsc-dev
   recorded_at: Mon, 18 Jul 2016 13:13:25 GMT
   digest: d36ae3e223167391acd7981fa5893b24dd4b563f
+- request:
+    method: post
+    uri: https://cmr.sit.earthdata.nasa.gov/search/granules.json
+    body:
+      encoding: US-ASCII
+      string: echo_collection_id=C1000000083-DEMO_PROV&page_num=1&page_size=20&sort_key%5B%5D=-start_date
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Fri, 22 Jul 2016 01:40:18 GMT
+  digest: 41e678f1b0cf977e2c25661b814d7ffec62dfbb5
 recorded_with: VCR 2.6.0
