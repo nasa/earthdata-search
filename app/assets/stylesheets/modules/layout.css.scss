@@ -58,6 +58,16 @@ footer, .toolbar {
   //background: asset-url('ssm.jpg') no-repeat center;
 }
 
+header#main-toolbar {
+  background: rgba(0,0,0,0.6);
+  position: absolute;
+  z-index: 400;
+  top: 10px;
+  left: -15px;
+  padding: 32px 74px 68px 21px;
+  width: 100%;
+}
+
 .toolbar {
   @include linear-gradient($ocean-blue, darken($ocean-blue, 5%));
   padding: 25px 0 60px 0;

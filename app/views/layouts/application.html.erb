@@ -37,7 +37,7 @@
     <!--[if lt IE 10]> <%= javascript_include_tag "flexibility" %> <![endif]-->
 </head>
 <body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
-    <div class="wrap">
+  <div class="wrap">
     <%= yield :header %>
     <header id="main-toolbar" class="toolbar">
       <h1>
@@ -64,58 +64,58 @@
     <section class="main-content">
       <%= yield %>
     </section>
+  </div>
+  <footer>
+    <%= yield :footer %>
+    <div class="footer-content">
+      <p>
+        <span class="version">v <strong><%= Rails.configuration.version %></strong></span> •
+        <strong>NASA Official:</strong> Andrew Mitchell •
+        <span class="nasa-links">
+          <a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> •
+          <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> •
+          <a href="http://www.usa.gov">USA.gov</a>
+        </span>
+        <span class="accessibility">
+          <a href="https://access.earthdata.nasa.gov">
+            Earthdata Access: A Section 508 accessible alternative
+          </a>
+        </span>
+      </p>
     </div>
-    <footer>
-      <%= yield :footer %>
-      <div class="footer-content">
-        <p>
-          <span class="version">v <strong><%= Rails.configuration.version %></strong></span> •
-          <strong>NASA Official:</strong> Andrew Mitchell •
-          <span class="nasa-links">
-            <a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> •
-            <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> •
-            <a href="http://www.usa.gov">USA.gov</a>
-          </span>
-          <span class="accessibility">
-            <a href="https://access.earthdata.nasa.gov">
-              Earthdata Access: A Section 508 accessible alternative
-            </a>
-          </span>
-        </p>
-      </div>
-    </footer>
-    <%= yield :global %>
+  </footer>
+  <%= yield :global %>
 
-    <% if Rails.configuration.gather_metrics %>
-      <%= javascript_include_tag "ntpagetag" %>
-      <noscript>
-        <img src="<%= image_path "https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0" %>" alt="">
-      </noscript>
-      <script type="text/javascript">
-        setTimeout(function(){var a=document.createElement("script");
-        var b=document.getElementsByTagName("script")[0];
-        a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/2090.js?"+Math.floor(new Date().getTime()/3600000);
-        a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
-      </script>
-    <% end %>
+  <% if Rails.configuration.gather_metrics %>
+    <%= javascript_include_tag "ntpagetag" %>
+    <noscript>
+      <img src="<%= image_path "https://ws1.ems.eosdis.nasa.gov/images/ntpagetag.gif?js=0" %>" alt="">
+    </noscript>
+    <script type="text/javascript">
+      setTimeout(function(){var a=document.createElement("script");
+      var b=document.getElementsByTagName("script")[0];
+      a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0013/2090.js?"+Math.floor(new Date().getTime()/3600000);
+      a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+    </script>
+  <% end %>
 
-    <%= javascript_include_tag Rails.configuration.tophat_url, async: true, defer: true if Rails.configuration.tophat_url.present? %>
+  <%= javascript_include_tag Rails.configuration.tophat_url, async: true, defer: true if Rails.configuration.tophat_url.present? %>
 
-    <% if Rails.configuration.feedback_url.present? %>
-      <%= javascript_include_tag Rails.configuration.feedback_url, id: 'feedback-tag', async: true, defer: true if Rails.configuration.feedback_url.present? %>
-      <script type="text/javascript">
-        (function() {
-          var initFeedback = function() {
-            window.feedback.init({showIcon: false});
-          }
-          if (window.feedback) {
-            initFeedback();
-          }
-          else {
-            document.getElementById('feedback-tag').onload = initFeedback;
-          }
-        })();
-      </script>
-    <% end %>
+  <% if Rails.configuration.feedback_url.present? %>
+    <%= javascript_include_tag Rails.configuration.feedback_url, id: 'feedback-tag', async: true, defer: true if Rails.configuration.feedback_url.present? %>
+    <script type="text/javascript">
+      (function() {
+        var initFeedback = function() {
+          window.feedback.init({showIcon: false});
+        }
+        if (window.feedback) {
+          initFeedback();
+        }
+        else {
+          document.getElementById('feedback-tag').onload = initFeedback;
+        }
+      })();
+    </script>
+  <% end %>
 </body>
 </html>

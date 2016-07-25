@@ -46,6 +46,7 @@
 // A parent panel for the overlday.  For instance, collection facets are a parent
 // panel to collection search results
 .master-overlay-parent {
+  top: 110px;
   background-color: $master-overlay-parent-bg-color;
   width: $facet-overlay-width;
   left: 0;
@@ -64,6 +65,7 @@
 
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
 .master-overlay-main {
+  top: 110px;
   background-color: $master-overlay-main-bg-color;
   width: 40%;
   left: $facet-overlay-width;

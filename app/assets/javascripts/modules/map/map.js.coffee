@@ -94,17 +94,18 @@ ns.Map = do (window,
       map.loadingLayers = 0
 
       @_buildLayerSwitcher()
-      map.addLayer(new GranuleVisualizationsLayer())
-      map.addLayer(new MouseEventsLayer())
+      map.addControl(L.control.scale(position: 'topright'))
+      map.addLayer(new GranuleVisualizationsLayer(position: 'bottomright'))
+      map.addLayer(new MouseEventsLayer(position: 'bottomright'))
 
-      map.addControl(new ZoomHome())
-      map.addControl(new ProjectionSwitcher())
+      map.addControl(new ZoomHome(position: 'bottomright'))
+      map.addControl(new ProjectionSwitcher(position: 'bottomright'))
       map.addControl(new SpatialSelection())
 
       @legendControl = new LegendControl(position: 'bottomright')
       map.addControl(@legendControl)
 
-      map.addControl(L.control.scale(position: 'bottomright'))
+      # map.addControl(L.control.scale(position: 'topright'))
 
       @setProjection(projection)
       @setBaseMap("Blue Marble")
@@ -227,7 +228,7 @@ ns.Map = do (window,
         break
 
       @_layerControl = L.control.layers(baseMaps, overlayMaps)
-      @map.addControl(@_layerControl)
+      # @map.addControl(@_layerControl)
 
     _rebuildLayers: ->
       layerControl = @_layerControl

@@ -14,43 +14,43 @@
 
 <% content_for :toolbar do %>
   <div class="landing-toolbar-container">
-  <div class="landing-toolbar-content">
-  <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
-    <p>
-      <input id="keywords" type="text" name="keywords" class="autocomplete-placenames"
-             data-bind="valueUpdate: 'keyup'"
-             placeholder="Type any topic or collection name"
-             autofocus>
-    </p>
-  <% end %>
-  <div class="dropdown" id="temporal-dropdown">
-    <a href="#" class="button temporal-dropdown-button dropdown-button" title="Select temporal">
-      <i class="fa fa-clock-o"></i>
-      <span class="dropdown-value">Temporal</span>
-      <i class="fa fa-caret-down"></i>
-    </a>
-    <ul class="dropdown-menu temporal-dropdown">
-      <li>
-        <!-- ko with: query.temporal.pending -->
-        <%= render partial: 'temporal_template', locals: {prefix: 'collection', show_actions: true} %>
-        <!-- /ko -->
-      </li>
-    </ul>
-  </div>
+    <div class="landing-toolbar-content">
+      <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
+        <p>
+          <input id="keywords" type="text" name="keywords" class="autocomplete-placenames"
+                 data-bind="valueUpdate: 'keyup'"
+                 placeholder="Type any topic or collection name"
+                 autofocus>
+        </p>
+      <% end %>
+      <div class="dropdown" id="temporal-dropdown">
+        <a href="#" class="button temporal-dropdown-button dropdown-button" title="Select temporal">
+          <i class="fa fa-clock-o"></i>
+          <span class="dropdown-value">Temporal</span>
+          <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu temporal-dropdown">
+          <li>
+            <!-- ko with: query.temporal.pending -->
+            <%= render partial: 'temporal_template', locals: {prefix: 'collection', show_actions: true} %>
+            <!-- /ko -->
+          </li>
+        </ul>
+      </div>
 
 
-  <div class="dropdown" data-bind="with: ui.spatialType">
-    <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button" title="Select spatial"><i class="fa fa-fw" data-bind="css: icon"></i> <span class="dropdown-value" data-bind="text: name">Spatial</span> <i class="fa fa-caret-down"></i></a>
-    <ul class="dropdown-menu spatial-selection">
-      <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon" title="Select Polygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
-      <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle" title="Select Rectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
-      <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint" title="Select Point"><i class="fa fa-map-marker"></i> Point</a></li>
-      <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile" title="Select Shapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
-    </ul>
+      <div class="dropdown" data-bind="with: ui.spatialType">
+        <a href="#" data-toggle="dropdown" class="button dropdown-button spatial-dropdown-button" title="Select spatial"><i class="fa fa-fw" data-bind="css: icon"></i> <span class="dropdown-value" data-bind="text: name">Spatial</span> <i class="fa fa-caret-down"></i></a>
+        <ul class="dropdown-menu spatial-selection">
+          <li><a href="#" class="dropdown-link select-polygon" data-bind="click: selectPolygon" title="Select Polygon"><i class="edsc-icon-poly-open edsc-icon-fw"></i> Polygon</a></li>
+          <li><a href="#" class="dropdown-link select-rectangle" data-bind="click: selectRectangle" title="Select Rectangle"><i class="edsc-icon-rect-open edsc-icon-fw"></i> Rectangle</a></li>
+          <li><a href="#" class="dropdown-link select-point" data-bind="click: selectPoint" title="Select Point"><i class="fa fa-map-marker"></i> Point</a></li>
+          <li><a href="#" class="dropdown-link select-shapefile" data-bind="click: selectShapefile" title="Select Shapefile"><i class="fa fa-file-o"></i> File <span class="geojson-formats">(KML, KMZ, ESRI, &hellip;)</span></a></li>
+        </ul>
+      </div>
+      <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear filters"><i class="fa fa-eraser"></i> <span class="button-value">Clear Filters</span></a>
+    </div>
   </div>
-  <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear filters"><i class="fa fa-eraser"></i> <span class="button-value">Clear Filters</span></a>
-</div>
-</div>
 <% end %>
 
 <div class="master-overlay homepage-search is-master-overlay-secondary-hidden is-master-overlay-maximized" id="collections-overlay">
