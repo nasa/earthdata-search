@@ -39,7 +39,7 @@ ns.Collections = do (ko
       @unfeatured = @computed(read: @_computeUnfeatured, deferEvaluation: true, owner: this)
 
     params: ->
-      extend({include_facets: true}, super())
+      extend({include_facets: 'v2'}, super())
 
     _decorateNextPage: (params, results) ->
       @page++
@@ -57,7 +57,7 @@ ns.Collections = do (ko
         current.concat(newItems)
       else
         collection.dispose() for collection in current
-        @facets.update(data.feed.facets || [])
+        @facets.update(data.feed.facets.children || [])
         newItems
 
     toggleVisibleCollection: (collection) =>
