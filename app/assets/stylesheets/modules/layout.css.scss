@@ -26,6 +26,7 @@ body {
   height: auto !important;
   height: 100%;
   margin: -25px 0px -10px 0px;
+  display: flex;
   // So we don't have to look at a blank map
   //background: asset-url('ssm.jpg') no-repeat center;
 }
@@ -59,13 +60,10 @@ footer, .toolbar {
 }
 
 header#main-toolbar {
-  background: rgba(0,0,0,0.6);
+  background: none;
   position: absolute;
   z-index: 400;
-  top: 10px;
-  left: -15px;
   padding: 32px 74px 68px 21px;
-  width: 100%;
 }
 
 .toolbar {
@@ -210,4 +208,12 @@ Helper Classes
 
 #timeline {
   display: none;
+}
+
+.drawer-content {
+  flex: 1;
+}
+
+#collections-overlay {
+  width: 280px;
 }

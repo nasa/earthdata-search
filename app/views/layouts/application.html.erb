@@ -38,52 +38,210 @@
 </head>
 <body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
   <div class="wrap">
-    <%= yield :header %>
-    <header id="main-toolbar" class="toolbar">
-      <h1>
-        <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
-        <%= portal_logo %>
-        <a class="site-logo" href="<%=edsc_path root_path %>">
-          <span class="site-logo-org"><%= site_logo_org %></span>
-          <%= site_logo_title %>
-        </a>
-        <% unless Rails.configuration.logo_name.blank? %>
-          <span class="version-badge"><%= Rails.configuration.logo_name %></span>
-        <% end %>
-      </h1>
-      <div class="toolbar-content">
-        <div class="toolbar-secondary">
-          <%= yield :toolbar_secondary %>
+    <div class="master-overlay homepage-search is-master-overlay-secondary-hidden is-master-overlay-maximized" id="collections-overlay">
+      <%= render partial: 'overlay_parent' %>
+      <div class="master-overlay-main">
+        <div class="master-overlay-main-content" data-level="0">
+          <section id="collection-results" class="master-overlay-has-min" data-master-overlay-title="Collections">
+            <a class="master-overlay-minimize master-overlay-when-max" href="#" title="Minimize"><i class="fa fa-angle-double-left"></i></a>
+            <a class="master-overlay-maximize master-overlay-when-min" href="#" title="Maximize"><i class="fa fa-angle-double-right"></i></a>
+            <nav class="master-overlay-nav master-overlay-when-parent-hidden">
+              <a href="#" class="master-overlay-show-parent" data-bind="click: showParent">
+                <i class="fa fa-search"></i> Browse Collections
+                <span class="master-overlay-when-max" data-bind="if: query.facets() && query.facets().length > 0">
+                   (<span data-bind="text: pluralize(query.facets().length, 'facet', 'facets')"></span> applied)
+                </span>
+              </a>
+            </nav>
+            <header>
+              <h2><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
+            </header>
+            <div class="master-overlay-info master-overlay-when-min">
+              <p data-bind="visible: !project.isEmpty()" class="button-details">
+                <a id="view-project-min" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
+                  <i class="fa fa-folder-o"></i> View Project
+                </a>
+              </p>
+            </div>
+            <div class="master-overlay-info master-overlay-when-max">
+              <p data-bind="visible: project.isEmpty()"class="button-details">
+                <a class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#">
+                  <i class="fa fa-question-circle"></i> Learn More
+                </a>
+                <span>Add collections to your project to compare and retrieve their data.</span>
+              </p>
+              <p data-bind="visible: !project.isEmpty()" class="button-details">
+                <a id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
+                  <i class="fa fa-folder-o"></i> View Project
+                </a>
+                <span>You have <em id="project-count" data-bind="text: pluralize(project.collections().length, 'collection', 'collections')"></em> in your project.</span>
+              </p>
+              <p data-bind="if: collections.loadTime() !== null" class="panel-list-meta">
+                Search Time: <span data-bind="text: collections.loadTime">0.000</span>s
+                <% if Rails.configuration.feedback_url.present? %>
+                <a href="#" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Collection Results', null)" class="button feedback-button">
+                  <i class="fa fa-exclamation-circle"></i>
+                  Report a metadata problem
+                </a>
+                <% end %>
+              </p>
+            </div>
+            <div id="collection-scroll-pane" class="master-overlay-content" data-bind="event: {scroll: ui.collectionsList.scrolled}">
+              <!-- ko if: collections.featured().length > 0 -->
+              <h3 class="panel-list-title">Recent and Featured</h3>
+              <div class="panel-list">
+                <edsc-collections-collapsed id="coll-collection-featured-list" params="page: $data, collections: collections.featured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
+                <ul id="collection-featured-list"
+                    class="panel-list-list knockout-template master-overlay-when-max"
+                    data-bind="foreach: collections.featured, css: { 'knockout-template': !bindingsLoaded }">
+                  <%= render partial: 'collection_list_item', locals: {is_project: false} %>
+                </ul>
+              </div>
+
+              <h3 class="panel-list-title">More Collections</h3>
+              <!-- /ko -->
+              <div class="panel-list">
+                <!-- ko if: collections.unfeatured().length > 0 -->
+                <edsc-collections-collapsed id="coll-collection-results-list" params="page: $data, collections: collections.unfeatured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
+                <!-- /ko -->
+                <ul id="collection-results-list"
+                    class="panel-list-list knockout-template master-overlay-when-max"
+                    data-bind="foreach: collections.unfeatured, css: { 'knockout-template': !bindingsLoaded }">
+                  <%= render partial: 'collection_list_item', locals: {is_project: false} %>
+                </ul>
+                <p class="panel-list-load-more" data-bind="visible: collections.isLoading">
+                  Loading collections...
+                </p>
+                <% if portal? %>
+                <p class="portal-escape" data-bind="visible: !collections.isLoading()">
+                  Looking for more collections?
+                  <a href="#" data-bind="click: ui.collectionsList.escapePortal" class="portal-escape-link">Leave the <%= site_name %></a>
+                </p>
+                <% end %>
+              </div>
+            </div>
+          </section>
+          <section id="project-overview" class="master-overlay-hide-self master-overlay-no-min">
+            <a class="master-overlay-close master-overlay-hide" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+            <nav class="master-overlay-nav">
+              <a class="master-overlay-back master-overlay-hide-secondary" href="#" data-bind="click: ui.projectList.hideFilters">
+                <i class="fa fa-arrow-circle-o-left"></i> Back to Collection Search
+              </a>
+            </nav>
+            <header class="with-options">
+              <h2>Project Collections</h2>
+              <div class="master-overlay-global-actions actions">
+                <a href="#" class="button retrieve" title="Retrieve project data" data-bind="click: $root.ui.projectList.loginAndDownloadProject, visible: !project.isEmpty()">
+                  <i class="fa fa-download"></i> Retrieve Project Data
+                </a>
+
+                <a href="#" title="View all collections" data-bind="visible: !$root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button" >
+                  <i class="fa fa-eye"></i>
+                </a>
+                <a href="#" title="Hide all collections" data-bind="visible: $root.ui.projectList.allCollectionsVisible() && !project.isEmpty(), click: $root.ui.projectList.toggleViewAllCollections" class="button icon-button button-active" >
+                  <i class="fa fa-eye"></i>
+                </a>
+              </div>
+            </header>
+            <div class="master-overlay-content panel-list">
+              <ul id="project-collections-list"
+                  class="panel-list-list knockout-template"
+                  data-bind="foreach: project.collections, css: { 'knockout-template': !bindingsLoaded }">
+                <%= render partial: 'collection_list_item', locals: {is_project: true} %>
+              </ul>
+              <div class="master-overlay-help" data-bind="if: project.collections().length == 0">
+                <p>
+                  Use this space to collect collections of interest as you adjust your search parameters.
+                </p>
+                <p>
+                  To add a collection to your project, click the <i class="fa fa-plus"></i> icon on the desired collection.
+                  Once collected, you can use the tools available in this view to compare collections on the map or on a timeline
+                  and choose granules you want from each.
+                </p>
+                <p>
+                  When you are satisfied with your selections, click the <i class="fa fa-download"></i> button to
+                  access your data.
+                </p>
+              </div>
+            </div>
+          </section>
+          <%= render partial: 'granule_list' %>
+          <%= render partial: 'granule_details' %>
+          <%= render partial: 'collection_details' %>
         </div>
-        <%= yield :toolbar %>
       </div>
-    </header>
-    <% if portal_nav? %>
-    <nav class="main-nav portal-nav"><%= portal_nav %></nav>
-    <% end %>
-    <section class="main-content">
-      <%= yield %>
-    </section>
-  </div>
-  <footer>
-    <%= yield :footer %>
-    <div class="footer-content">
-      <p>
-        <span class="version">v <strong><%= Rails.configuration.version %></strong></span> •
-        <strong>NASA Official:</strong> Andrew Mitchell •
-        <span class="nasa-links">
-          <a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> •
-          <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> •
-          <a href="http://www.usa.gov">USA.gov</a>
-        </span>
-        <span class="accessibility">
-          <a href="https://access.earthdata.nasa.gov">
-            Earthdata Access: A Section 508 accessible alternative
-          </a>
-        </span>
-      </p>
+      <div class="master-overlay-secondary">
+        <div class="master-overlay-secondary-content" data-level="0">
+          <section id="granule-search" >
+              <a data-bind="click: ui.projectList.hideFilters" class="master-overlay-close master-overlay-hide-secondary" href="#" title="close"><i class="fa fa-times-circle"></i></a>
+            <nav class="master-overlay-nav">
+              <i class="fa fa-edit"></i> Granule Filters
+            </nav>
+            <!-- ko if: project.searchGranulesCollection() -->
+            <header>
+              <h2 data-bind="text: project.searchGranulesCollection().dataset_id"></h2>
+            </header>
+            <%= render partial: 'granule_search' %>
+            <!-- /ko -->
+          </section>
+        </div>
+      </div>
+      <div class="master-overlay-minimized">
+        <a href="#collections-overlay" class="button text-button master-overlay-show">
+          <i class="fa fa-th-list"></i> Results List
+        </a>
+      </div>
     </div>
-  </footer>
+
+    <section class="drawer-content">
+      <%= yield :header %>
+      <header id="main-toolbar" class="toolbar">
+        <h1>
+          <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
+          <%= portal_logo %>
+          <a class="site-logo" href="<%=edsc_path root_path %>">
+            <span class="site-logo-org"><%= site_logo_org %></span>
+            <%= site_logo_title %>
+          </a>
+          <% unless Rails.configuration.logo_name.blank? %>
+            <span class="version-badge"><%= Rails.configuration.logo_name %></span>
+          <% end %>
+        </h1>
+        <div class="toolbar-content">
+          <div class="toolbar-secondary">
+            <%= yield :toolbar_secondary %>
+          </div>
+          <%= yield :toolbar %>
+        </div>
+      </header>
+      <% if portal_nav? %>
+      <nav class="main-nav portal-nav"><%= portal_nav %></nav>
+      <% end %>
+
+      <section class="main-content">
+        <%= yield %>
+      </section>
+    </div>
+    <footer>
+      <%= yield :footer %>
+      <div class="footer-content">
+        <p>
+          <span class="version">v <strong><%= Rails.configuration.version %></strong></span> •
+          <strong>NASA Official:</strong> Andrew Mitchell •
+          <span class="nasa-links">
+            <a href="http://www.hq.nasa.gov/office/pao/FOIA/agency/">FOIA</a> •
+            <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html#.Uu-qOHddVm0">NASA Privacy Policy</a> •
+            <a href="http://www.usa.gov">USA.gov</a>
+          </span>
+          <span class="accessibility">
+            <a href="https://access.earthdata.nasa.gov">
+              Earthdata Access: A Section 508 accessible alternative
+            </a>
+          </span>
+        </p>
+      </div>
+    </footer>
+  </section>
   <%= yield :global %>
 
   <% if Rails.configuration.gather_metrics %>

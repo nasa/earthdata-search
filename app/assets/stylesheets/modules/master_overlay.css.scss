@@ -117,8 +117,7 @@
 
 .master-overlay-parent, .master-overlay-main, .master-overlay-main-content {
   z-index: 60;
-  position: absolute;
-  height: 100%;
+
   transition-property: left, width;
   transition-duration: 0.3s;
 }
