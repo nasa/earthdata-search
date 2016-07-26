@@ -266,7 +266,7 @@ ns.GranuleLayer = do (L
           addPath(ctx, {poly: hole.poly.concat().reverse()})
         ctx.stroke()
         addPath(ctx, boundary)
-        ctx.clip()
+        ctx.clip() unless path.line?.length > 0
       ctx.restore()
       callback?()
       null

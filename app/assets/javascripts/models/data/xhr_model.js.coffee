@@ -26,6 +26,18 @@ ns.XhrModel = do (ko
       @hasNextPage = ko.observable(true)
       @hitsEstimated = ko.observable(false)
 
+      @error.subscribe((value) =>
+        url = @path
+        title = "An unexpected error occurred"
+        resource = url.match(/([^\/\.]+)(?:\.[^\/]*)?$/)?[1]
+        if resource?
+          resource = resource.replace('_', ' ')
+          title = "Error retrieving #{resource}"
+        error = value ? 'There was a problem completing the request'
+
+        edsc.banner(url, title, error, className: 'banner-error', immediate: true, html: true)
+      )
+
     search: (params=@params(), callback=null) =>
       params.page_num = @page = 1
       @_loadAndSet params, [], callback
@@ -157,7 +169,8 @@ ns.XhrModel = do (ko
         # TODO: don't reference page logout the user
         edsc.banner(null, 'Session has ended', 'Please sign in')
 
-      errors = response.responseJSON?.errors
-      @error(errors) if errors?
+      unless response.status >= 500 || response.status == 408 || response.status == 0
+        errors = response.responseJSON?.errors
+        @error(errors) if errors?
 
   exports = XhrModel

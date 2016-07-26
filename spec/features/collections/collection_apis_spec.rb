@@ -3,49 +3,49 @@ require 'spec_helper'
 describe 'Collection API Endpoints', reset: false do
   context 'when viewing the collection details for a collection with granules' do
     before :all do
-      visit '/search'
+      load_page '/search', env: :sit
       wait_for_xhr
       click_link "Temporal"
       fill_in "Start", with: "1985-12-01 00:00:00\t\t"
       js_click_apply ".temporal-dropdown"
       wait_for_xhr
 
-      fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
+      fill_in 'keywords', with: 'C1000000257-DEV07'
       wait_for_xhr
       click_link "View collection details"
       wait_for_xhr
     end
 
     it 'provides a link to the CMR API for the collections granules' do
-      expect(collection_details).to have_css('a[href="https://cmr.earthdata.nasa.gov/search/granules.json?temporal=1985-12-01T00%3A00%3A00.000Z%2C&echo_collection_id=C179003030-ORNL_DAAC&sort_key%5B%5D=-start_date&page_size=20"]')
+      expect(collection_details).to have_css('a[href="https://cmr.sit.earthdata.nasa.gov/search/granules.json?temporal=1985-12-01T00%3A00%3A00.000Z%2C&echo_collection_id=C1000000257-DEV07&sort_key%5B%5D=-start_date&page_size=20"]')
     end
   end
 
   context 'when viewing the collection details for a collection with GIBS' do
     before :all do
-      load_page :search
-      fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
+      load_page :search, env: :sit
+      fill_in 'keywords', with: 'C24936-LAADS'
       wait_for_xhr
       click_link "View collection details"
       wait_for_xhr
     end
 
     it 'provides the path to the GIBS endpoint' do
-      expect(collection_details).to have_css('a[href="http://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Aqua_Aerosol/default/{Time}/EPSG4326_2km/{ZoomLevel}/{TileRow}/{TileCol}.png"]')
+      expect(collection_details).to have_css('a[href="http://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Terra_Aerosol/default/{Time}/EPSG4326_2km/{ZoomLevel}/{TileRow}/{TileCol}.png"]')
     end
   end
 
   context 'when viewing the collection details for a collection with OPeNDAP' do
     before :all do
       load_page :search
-      fill_in 'keywords', with: 'C183451157-GSFCS4PA'
+      fill_in 'keywords', with: 'C2921042-PODAAC'
       wait_for_xhr
       click_link "View collection details"
       wait_for_xhr
     end
 
     it 'provides a link to the OPeNDAP endpoint' do
-      expect(collection_details).to have_css('a[href="http://acdisc.gsfc.nasa.gov/opendap/Aqua_AIRS_Level3/AIRX3C28.005/"]')
+      expect(collection_details).to have_css('a[href="http://podaac-opendap.jpl.nasa.gov/opendap/allData/coastal_alt/preview/L4/OSU_COAS/weekly/"]')
     end
   end
 
