@@ -1,7 +1,7 @@
 module Echo
   module QueryTransformations
 
-      def options_to_item_query(options={}, remove_spatial=false)
+      def options_to_item_query(options={})
         query = options.dup.symbolize_keys
 
         load_freetext_query(query)
@@ -12,7 +12,8 @@ module Echo
       end
 
       def options_to_collection_query(options={})
-        options_to_item_query(options)
+        query = temporal_limit_query(options)
+        options_to_item_query(query)
       end
 
       def options_to_facet_query(options={})
@@ -92,6 +93,14 @@ module Echo
           query[:options][:processing_level_id_h] = Hash.new
           query[:options][:processing_level_id_h][:and] = true
         end
+      end
+
+      def temporal_limit_query(options)
+        options.to_hash.symbolize_keys!
+        options[:options] ||= Hash.new
+        options[:options][:temporal] = Hash.new
+        options[:options][:temporal][:limit_to_granules] = true
+        options
       end
   end
 end
