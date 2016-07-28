@@ -45,6 +45,7 @@ ns.Map = do (window,
         @_zoom = @_limitZoom(zoom)
         return this
 
+      # TODO: These values need to be adjusted for the new layout to avoid the blank right margin on the map
       # if overlay is visible, adjust center
       overlayWidth = $('.master-overlay-parent').width() + $('.master-overlay-main').width() # parent and main visible
       if $('.master-overlay.is-master-overlay-parent-hidden').length > 0 #only main visible
@@ -52,7 +53,6 @@ ns.Map = do (window,
       if $('.master-overlay.is-hidden').length > 0 # parent and main hidden
         overlayWidth = 0
       overlayWidth /= 2
-
       currentZoom = @getZoom()
       return this if currentZoom == zoom
       if currentZoom > zoom

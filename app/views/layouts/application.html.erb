@@ -40,29 +40,18 @@
     <%= render partial: 'master_overlay' %>
     <div class="wrap">
     <%= yield :header %>
-    <header id="main-toolbar" class="toolbar">
-      <h1>
-        <a class="nasa-logo" href="<%= root_path %>" title="Earthdata Search Home"></a>
-        <%= portal_logo %>
-        <a class="site-logo" href="<%=edsc_path root_path %>">
-          <span class="site-logo-org"><%= site_logo_org %></span>
-          <%= site_logo_title %>
-        </a>
-        <% unless Rails.configuration.logo_name.blank? %>
-          <span class="version-badge"><%= Rails.configuration.logo_name %></span>
-        <% end %>
-      </h1>
-      <div class="toolbar-content">
-        <div class="toolbar-secondary">
-          <%= yield :toolbar_secondary %>
-        </div>
-        <%= yield :toolbar %>
-      </div>
-    </header>
     <% if portal_nav? %>
     <nav class="main-nav portal-nav"><%= portal_nav %></nav>
     <% end %>
     <section class="main-content">
+      <header id="main-toolbar" class="toolbar">
+        <div class="toolbar-content">
+          <div class="toolbar-secondary">
+            <%= yield :toolbar_secondary %>
+          </div>
+          <%= yield :toolbar %>
+        </div>
+      </header>
       <%= yield %>
     </section>
     </div>

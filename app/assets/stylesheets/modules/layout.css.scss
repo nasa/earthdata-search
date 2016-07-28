@@ -55,22 +55,29 @@ body {
 
     &.is-master-overlay-parent-hidden {
       flex: 0 1 620px;
+      /* flex: 0 1 230px; */
     }
+    /*
+    .master-overlay-main {
+      width: 0;
+    }
+    */
   }
 }
 
 .search-page {
   .main-content {
-    position: fixed;
+    /* position: fixed; */
   }
 
   footer {
     position: absolute;
     bottom: 0;
+    right: 0;
   }
 }
 
-footer, .toolbar {
+footer {
   background: $toolbar-background;
   color: #fff;
 }
@@ -82,16 +89,20 @@ footer, .toolbar {
   height: calc(100% - 86px - 35px);
   height: -moz-calc(100% - 86px - 35px);
   height: -webkit-calc(100% - 86px - 35px);
-  width: 100%;
   // So we don't have to look at a blank map
   //background: asset-url('ssm.jpg') no-repeat center;
 }
 
+header#main-toolbar {
+  background: none;
+  position: absolute;
+  z-index: 400;
+  padding: 32px 74px 68px 21px;
+}
+
 .toolbar {
-  @include linear-gradient($ocean-blue, darken($ocean-blue, 5%));
   padding: 25px 0 60px 0;
   height: 58px;
-  border-bottom: 1px solid #242424;
 
   p {
     margin: 0;

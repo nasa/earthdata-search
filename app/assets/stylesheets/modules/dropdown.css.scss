@@ -140,7 +140,7 @@ input.day-of-year-input {
     font-size: 1.4em;
     padding: 15px 20px;
     border-left: 1px solid rgba(255,255,255,.1);
-    display: block;
+    display: inline-block;
     float: left;
     color: rgba(255,255,255,.4);
     @include transition(all 0.2s ease-in-out);
@@ -157,7 +157,7 @@ input.day-of-year-input {
 
   a.feedback {
     font-size: 1em;
-    line-height: 2em;
+    line-height: 1.8em;
   }
 
   span.toolbar-text {

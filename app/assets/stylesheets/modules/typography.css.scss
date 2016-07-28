@@ -39,13 +39,12 @@ hgroup {
   }
 }
 
-header {
-  h1 {
-    margin: 0;
+.branding {
+  margin: 0;
+  height: 70px;
 
-    >a {
-      margin-top: 10px;
-    }
+  >a {
+    margin-top: 20px;
   }
 
   .site-logo-org {
