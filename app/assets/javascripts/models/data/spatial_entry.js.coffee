@@ -16,6 +16,7 @@ ns.SpatialEntry = do (ko,
 
     clearError: ->
       @error('')
+      @coordinates(null)
 
     _validateCoordinate: (value) ->
       msg = ''
