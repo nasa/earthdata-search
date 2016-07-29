@@ -22,7 +22,7 @@ namespace :colormaps do
 
     # regular, OPS url
     gibs_url = "http://map1a.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi/?SERVICE=WMTS&REQUEST=GetCapabilities"
-    # SIT url, for testing with colormaps that have xlink:href role v1.2
+    # SIT url (behind vpn), for testing upgrade to colormaps that have xlink:href role v1.2
     # gibs_url = "https://sit.gibs.earthdata.nasa.gov/wmts/epsg4326/all/wmts.cgi?SERVICE=WMTS&REQUEST=GetCapabilities"
 
     file_count = 0
@@ -40,7 +40,7 @@ namespace :colormaps do
       # get v1.2 role metadata node
       target = layer.xpath("./ows:Metadata[contains(@xlink:role, '1.2')]")
       if target.empty?
-        # layer does not have a metadata node with xlink:role v1.2,
+        # not upgraded yet, layer does not have a metadata node with xlink:role v1.2,
         # so try to use url from another metadata node (no version or v1.0)
         url = layer.xpath("./ows:Metadata/@xlink:href").to_s
       else
