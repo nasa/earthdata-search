@@ -22,10 +22,15 @@ module Colormaps
 
         if entries.size == 0
           # Colormaps 1.2
-          colormaps = xml.xpath("//ColorMaps/ColorMap").find {|map| map.attribute('title').to_s != 'No Data'}
+          colormaps = xml.xpath("//ColorMaps/ColorMap")
+
+          unless colormaps.find { |map| map.attribute('title').to_s == 'No Data' }.nil?
+            blank_colormap = colormaps.find { |cmap| cmap.attribute('title').to_s == 'No Data' && cmap.xpath("./Entries[not(@*)]") }
+            colormaps.delete(blank_colormap)
+          end
           return if colormaps.nil?
 
-          entries = colormaps.xpath("//Entries/ColorMapEntry")
+          entries = colormaps.xpath("./Entries/ColorMapEntry")
         end
 
         entries.each do |entry|
