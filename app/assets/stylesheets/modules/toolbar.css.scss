@@ -1,13 +1,7 @@
 #temporal-query {
-  position: absolute;
   color: #fff;
   background: rgba(22,22,22,.9);
-  z-index: 59;
   padding: 8px 12px;
-  border-radius: 5px;
-  top: 15px;
-  right: 10px;
-  box-shadow: 0 0 10px #424242;
   font-size: 1em;
 }
 
@@ -16,16 +10,11 @@
 }
 
 .manual-coord-entry {
-  position: absolute;
   color: #fff;
   background: rgba(22,22,22,.9);
   z-index: 59;
   padding: 6px 10px;
-  border-radius: 5px;
-  top: 57px;
-  right: 10px;
-  box-shadow: 0 0 10px #424242;
-  font-size: .9em;
+  font-size: 1em;
 
   label {
     min-width: 50px;
@@ -55,5 +44,13 @@
 
   &.projection-switcher-antarctic {
     background-position: -3px -2px;
+  }
+}
+
+.landing-toolbar-content {
+  background: none;
+
+  .primary-search {
+    background: rgba(255,255,255,0.9);
   }
 }

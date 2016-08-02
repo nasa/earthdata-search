@@ -1,6 +1,5 @@
 .toolbar {
   a:link, a:visited {
-    color: #fff;
   }
 
   a.logo{
@@ -25,7 +24,7 @@
     position: absolute;
     z-index: 81;
     margin: 0;
-    background: darken($ocean-blue, 15%);
+    background: rgba(255,255,255,0.9);
     border: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -130,7 +129,7 @@ input.day-of-year-input {
 
   .fa-caret-down {
     padding-left: 5px;
-    color: rgba(255,255,255,.4);
+    color: rgba(0,0,0,.4);
     @include transition(all 0.2s ease-in-out);
   }
 }
@@ -156,8 +155,7 @@ input.day-of-year-input {
   }
 
   a.feedback {
-    font-size: 1em;
-    line-height: 1.8em;
+
   }
 
   span.toolbar-text {

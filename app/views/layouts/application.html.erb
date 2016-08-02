@@ -46,12 +46,12 @@
     <section class="main-content">
       <header id="main-toolbar" class="toolbar">
         <div class="toolbar-content">
-          <div class="toolbar-secondary">
-            <%= yield :toolbar_secondary %>
-          </div>
           <%= yield :toolbar %>
         </div>
       </header>
+      <div class="toolbar-secondary">
+        <%= yield :toolbar_secondary %>
+      </div>
       <%= yield %>
     </section>
     </div>

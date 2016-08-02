@@ -30,10 +30,8 @@
 .toolbar {
   .tt-query, .tt-hint, .tt-input {
     padding: .5em;
-    margin: 2px 0 0 20px;
+    margin: 0;
     width: $toolbar-search-field-width;
-    border: 1px solid $toolbar-accent-border;
-    border-radius: 3px;
-    box-shadow: inset 0 1px 5px 1px rgba(0,0,0,0.2);
+    font-size: 1.2em;
   }
 }

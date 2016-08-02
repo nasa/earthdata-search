@@ -99,9 +99,16 @@
   }
 }
 
-.toolbar {
+.toolbar-secondary {
   .button, input[type="button"], input[type="reset"], input[type="submit"] {
     @include dark-menu-button;
+  }
+}
+
+.primary-search {
+  a.button {
+    color: #222;
+    padding: 10px;
   }
 }
 

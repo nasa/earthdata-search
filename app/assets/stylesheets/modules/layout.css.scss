@@ -100,6 +100,9 @@ header#main-toolbar {
   padding: 32px 74px 68px 21px;
 }
 
+.toolbar-content {
+}
+
 .toolbar {
   padding: 25px 0 60px 0;
   height: 58px;
@@ -136,7 +139,10 @@ nav.main-nav {
 }
 
 .toolbar-secondary {
-  float: right;
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  z-index: 100;
 }
 
 body > footer {

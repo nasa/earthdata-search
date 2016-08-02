@@ -93,18 +93,18 @@ ns.Map = do (window,
 
       map.loadingLayers = 0
 
+      map.addControl(L.control.scale(position: 'topright'))
+
       @_buildLayerSwitcher()
       map.addLayer(new GranuleVisualizationsLayer())
       map.addLayer(new MouseEventsLayer())
 
-      map.addControl(new ZoomHome())
-      map.addControl(new ProjectionSwitcher())
+      map.addControl(new ZoomHome(position: 'bottomright'))
+      map.addControl(new ProjectionSwitcher(position: 'bottomright'))
       map.addControl(new SpatialSelection())
 
       @legendControl = new LegendControl(position: 'bottomright')
       map.addControl(@legendControl)
-
-      map.addControl(L.control.scale(position: 'bottomright'))
 
       @setProjection(projection)
       @setBaseMap("Blue Marble")
