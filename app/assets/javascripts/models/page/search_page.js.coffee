@@ -75,6 +75,10 @@ ns.SearchPage = do (ko
 
     clearFilters: =>
       @query.clearFilters()
+      @clearSpatial()
+
+    clearSpatial: =>
+      @query.spatial('')
       @ui.spatialType.selectNone()
       @ui.spatialType.clearManualEntry()
       @spatialEntry.clearError()
