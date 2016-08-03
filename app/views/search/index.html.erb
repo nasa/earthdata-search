@@ -51,7 +51,7 @@
         </div>
         <a href="#" class="button clear-filters landing-hidden" data-bind="event: {click: clearFilters}" title="Clear filters"><i class="fa fa-eraser"></i></a>
       </div>
-      <div id="temporal-query" data-bind="with: query.temporal.applied">
+      <div id="temporal-query" data-bind="with: query.temporal.applied, visible: query.temporal.applied.isSet()">
         <p>
           <i class="fa fa-clock-o"></i>
           <span data-bind="visible: start.date">

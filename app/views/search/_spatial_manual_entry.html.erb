@@ -1,4 +1,4 @@
-<div id="manual-coord-entry-container" class="manual-coord-entry">
+<div id="manual-coord-entry-container" class="manual-coord-entry" data-bind="visible: ui.spatialType.manualEntryVisible()">
   <p data-bind="visible: !ui.spatialType.manualEntryVisible() && ui.spatialType.querySpatial() != 'Point' && ui.spatialType.querySpatial() != 'Rectangle'"><i class="fa fa-fw fa-crop"></i></p>
   <p data-bind="visible: ui.spatialType.manualEntryVisible() || ui.spatialType.querySpatial() == 'Point' || ui.spatialType.querySpatial() == 'Rectangle'">
     <label>
