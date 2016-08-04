@@ -4,7 +4,7 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
-p "-------application.rb"
+p "-------application.rb, RAILS_ENV: #{Rails.env}"
 
 module EarthdataSearchClient
   class Application < Rails::Application
