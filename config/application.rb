@@ -119,5 +119,53 @@ module EarthdataSearchClient
     config.sit_urs_client_id = services['urs'][Rails.env.to_s][services['earthdata']['sit']['urs_root']]
     config.cmr_tag_namespace = ENV['cmr_tag_namespace'] || 'edsc'
     config.thumbnail_width = 75
+
+    # TODO: remove this monkey patching after NGAP resolves the performance issue with GP-MCE
+    # The code below is temporarily put here as a stopgap to resolve the performance issues as a result of moving to NGAP
+    # See EDSC-1145
+    config.to_prepare do
+      Faraday::Connection.class_eval do
+        def initialize(url = nil, options = {})
+          if url.is_a?(Hash)
+            options = url
+            url     = options[:url]
+          end
+          @headers = Utils::Headers.new
+          @params  = Utils::ParamsHash.new
+          @options = options[:request] || {}
+          @ssl     = options[:ssl]     || {}
+
+          @parallel_manager = nil
+          @default_parallel_manager = options[:parallel_manager]
+
+          @builder = options[:builder] || begin
+                                            # pass an empty block to Builder so it doesn't assume default middleware
+            block = block_given?? Proc.new {|b| } : nil
+            Builder.new(&block)
+          end
+
+          self.url_prefix = url || 'http:/'
+
+          @params.update options[:params]   if options[:params]
+          @headers.update options[:headers] if options[:headers]
+
+          @proxy = nil
+          proxy(options.fetch(:proxy) {
+            uri = ENV['http_proxy']
+            if uri && !uri.empty?
+              no_proxy = ENV['no_proxy']
+              if no_proxy.nil? || !no_proxy.split(",").include?(self.host)
+                uri = 'http://' + uri if uri !~ /^http/i
+                uri
+              end
+            end
+          })
+
+          yield self if block_given?
+
+          @headers[:user_agent] ||= "Faraday v#{VERSION}"
+        end
+      end
+    end
   end
 end
