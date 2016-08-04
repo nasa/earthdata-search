@@ -4,6 +4,8 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
+p "-------application.rb"
+
 module EarthdataSearchClient
   class Application < Rails::Application
     #Tilt::CoffeeScriptTemplate.default_bare = true
