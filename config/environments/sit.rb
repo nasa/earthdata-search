@@ -1,3 +1,5 @@
+p "-------sit.rb"
+
 EarthdataSearchClient::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -85,3 +87,5 @@ EarthdataSearchClient::Application.configure do
   # talks to ECHO/CMR.
   config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-prod'
 end
+
+p "-------sit.rb"
