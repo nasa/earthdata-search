@@ -124,14 +124,16 @@ module EarthdataSearchClient
     # The code below is temporarily put here as a stopgap to resolve the performance issues as a result of moving to NGAP
     # See EDSC-1145
     config.to_prepare do
+      # require 'faraday/utils'
+
       Faraday::Connection.class_eval do
         def initialize(url = nil, options = {})
           if url.is_a?(Hash)
             options = url
             url     = options[:url]
           end
-          @headers = Utils::Headers.new
-          @params  = Utils::ParamsHash.new
+          @headers = Faraday::Utils::Headers.new
+          @params  = Faraday::Utils::ParamsHash.new
           @options = options[:request] || {}
           @ssl     = options[:ssl]     || {}
 
@@ -141,7 +143,7 @@ module EarthdataSearchClient
           @builder = options[:builder] || begin
                                             # pass an empty block to Builder so it doesn't assume default middleware
             block = block_given?? Proc.new {|b| } : nil
-            Builder.new(&block)
+            Faraday::Builder.new(&block)
           end
 
           self.url_prefix = url || 'http:/'
@@ -163,7 +165,7 @@ module EarthdataSearchClient
 
           yield self if block_given?
 
-          @headers[:user_agent] ||= "Faraday v#{VERSION}"
+          @headers[:user_agent] ||= "Faraday v#{Faraday::VERSION}"
         end
       end
     end
