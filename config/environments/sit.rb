@@ -88,4 +88,4 @@ EarthdataSearchClient::Application.configure do
   config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-prod'
 end
 
-p "------- [sit.rb] config.cmr_env: #{Rails.application.cmr_env}"
+p "------- [sit.rb] config.cmr_env: #{Rails.configuration.cmr_env}"
