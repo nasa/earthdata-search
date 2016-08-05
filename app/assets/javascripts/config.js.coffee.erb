@@ -13,6 +13,7 @@
   match = /cmr_env=(\w+)/.exec(query)
   cmr_env = if match then match[1] else '<%= Rails.configuration.cmr_env %>'
   <% Rails.logger.info "-------- [config.js.cofee.erb] Rails.configuration.cmr_env: #{Rails.configuration.cmr_env}" %>
+  <% p "-------- [config.js.cofee.erb] Rails.configuration.cmr_env: #{Rails.configuration.cmr_env}" %>
 
   if cmr_env == 'uat'
     browse_scaler_url = "<%= Rails.configuration.services['earthdata']['uat']['echo_root'] %>/browse-scaler"
