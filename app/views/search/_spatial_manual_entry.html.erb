@@ -2,7 +2,7 @@
   <p data-bind="visible: !ui.spatialType.manualEntryVisible() && ui.spatialType.querySpatial() != 'Point' && ui.spatialType.querySpatial() != 'Rectangle'"><i class="fa fa-fw fa-crop"></i></p>
   <p data-bind="visible: ui.spatialType.manualEntryVisible() || ui.spatialType.querySpatial() == 'Point' || ui.spatialType.querySpatial() == 'Rectangle'">
     <label>
-      <!-- ko text: ui.spatialType.displaySpatial() + ':' --><!-- /ko -->
+      <!-- ko text: ui.spatialType.displaySpatial() + ': ' --><!-- /ko -->
       <!-- ko if: ui.spatialType.displaySpatial() == 'Point' -->
         <input type="text" name="manual-coord-entry-point" data-bind="value: spatialEntry.point, valueUpdate: 'blur'" placeholder="lat, lon (e.g. 44.2, 130)">
       <!--/ko-->
@@ -19,6 +19,6 @@
     </p>
     <!-- ko if: spatialEntry.error --><span class="error" data-bind="text: spatialEntry.error()"></span><!-- /ko -->
 
-    <a href="#" data-bind="click: clearSpatial()" title="Remove spatial constraint"><i class="fa fa-times-circle"></i></a>
+    <a href="#" class="remove-filter" data-bind="click: clearSpatial()" title="Remove spatial constraint"><i class="fa fa-times-circle"></i></a>
   </p>
 </div>

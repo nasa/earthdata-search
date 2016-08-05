@@ -1,7 +1,7 @@
 #temporal-query {
   color: #fff;
-  background: rgba(22,22,22,.9);
-  padding: 8px 12px;
+  background: rgba(22,22,22,0.8);
+  padding: 15px;
   font-size: 1em;
 }
 
@@ -13,18 +13,30 @@
   color: #fff;
   background: rgba(22,22,22,.9);
   z-index: 59;
-  padding: 6px 10px;
+  padding: 15px;
   font-size: 1em;
 
   label {
     min-width: 50px;
     display: block;
+    margin-right: 10px;
   }
 
   input {
     min-width: 200px;
     padding: 0;
   }
+
+  p {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+a.remove-filter {
+  color: #fff;
+  opacity: 0.3;
+  float: right;
 }
 
 .leaflet-top.leaflet-right {
