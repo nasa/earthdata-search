@@ -1,5 +1,3 @@
-p "-------sit.rb"
-
 EarthdataSearchClient::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -12,23 +10,19 @@ EarthdataSearchClient::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  config.assets.digest = true
-  config.assets.prefix = "/assets-dev"
-  config.assets.debug = true
-
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  # config.serve_static_assets = true
+  config.serve_static_assets = true
 
   # Compress JavaScripts and CSS
-  # config.assets.compress = true
-  # config.assets.css_compressor = :sass
-  # config.assets.js_compressor = :uglify
+  config.assets.compress = true
+  config.assets.css_compressor = :sass
+  config.assets.js_compressor = :uglify
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  # config.assets.compile = false
+  config.assets.compile = false
 
   # Generate digests for assets URLs
-  # config.assets.digest = true
+  config.assets.digest = true
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
@@ -56,7 +50,7 @@ EarthdataSearchClient::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  # config.assets.precompile += ['search.js', 'data_access.js', 'account.js', 'cwic_granule.js']
+  config.assets.precompile += ['search.js', 'data_access.js', 'account.js', 'cwic_granule.js']
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -91,5 +85,3 @@ EarthdataSearchClient::Application.configure do
   # talks to ECHO/CMR.
   config.cmr_client_id = ENV['cmr_client_id'] || 'edsc-prod'
 end
-
-p "------- [sit.rb] config.cmr_env: #{Rails.configuration.cmr_env}"

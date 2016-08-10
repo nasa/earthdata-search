@@ -4,8 +4,6 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
-p "-------application.rb, RAILS_ENV: #{Rails.env}"
-
 module EarthdataSearchClient
   class Application < Rails::Application
     #Tilt::CoffeeScriptTemplate.default_bare = true
@@ -115,7 +113,10 @@ module EarthdataSearchClient
     config.portals = (portals[Rails.env.to_s] || portals['defaults']).with_indifferent_access
 
     config.services = YAML.load_file(Rails.root.join('config/services.yml'))
-
+    config.cmr_env = 'prod'
+    services = config.services
+    config.urs_client_id = services['urs'][Rails.env.to_s][services['earthdata'][config.cmr_env]['urs_root']]
+    config.sit_urs_client_id = services['urs'][Rails.env.to_s][services['earthdata']['sit']['urs_root']]
     config.cmr_tag_namespace = ENV['cmr_tag_namespace'] || 'edsc'
     config.thumbnail_width = 75
   end
