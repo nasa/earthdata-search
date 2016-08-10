@@ -18,6 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+set :environment, Rails.env
 set :job_template, "/bin/bash -l -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job'"
 
 every 1.hour do
