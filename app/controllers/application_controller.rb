@@ -44,7 +44,6 @@ class ApplicationController < ActionController::Base
       @cmr_env ||= Rails.configuration.cmr_env || 'prod'
     end
     @cmr_env = 'prod' if @cmr_env == 'ops'
-    Rails.logger.info "_---------- [application_controller]application_controller: cmr_env: #{@cmr_env}"
     @cmr_env
   end
   helper_method :cmr_env

@@ -14,7 +14,6 @@ class EarthdataServiceConfig
   URS_SIT_ROOT = "https://sit.urs.earthdata.nasa.gov"
 
   def self.config_for(cmr_environment)
-    p "------- [earthdata_service_config] cmr_environment: #{cmr_environment}"
     if cmr_environment == 'prod'
       urs_root = URS_OPS_ROOT
       echo_root = ECHO_OPS_ROOT
@@ -34,9 +33,6 @@ class EarthdataServiceConfig
     else
       raise "Unrecognized ECHO environment: #{cmr_environment}"
     end
-    p "------- [earthdata_service_config] urs_root: #{urs_root}"
-    p "------- [earthdata_service_config] echo_root: #{echo_root}"
-    p "------- [earthdata_service_config] cmr_root: #{cmr_root}"
     EarthdataServiceConfig.new(urs_root, echo_root, cmr_root)
   end
 
