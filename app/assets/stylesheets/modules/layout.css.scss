@@ -78,7 +78,7 @@ body {
 }
 
 footer {
-  background: $toolbar-background;
+  background: $ocean-blue;
   color: #fff;
 }
 
@@ -151,18 +151,17 @@ body > footer {
 }
 
 .footer-content {
-  height: 35px;
   font-size: .7em;
 
   p {
-    padding: 9px 20px 0 20px;
+    padding: 7px 10px 5px 0;
   }
 
   .version {
     background: $button-dark-bottom-gradient;
-    padding: 2px 8px;
-    border-radius: 2px;
+    padding: 8px 12px;
     text-shadow: 1px 1px 1px $toolbar-background-bottom;
+    margin-right: 10px;
   }
 
   a:link, a:visited {

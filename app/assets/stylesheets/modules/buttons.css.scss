@@ -54,6 +54,17 @@
 }
 
 @mixin dark-outline-button {
+  border: none;
+  background: $button-dark-lp-border;
+  color: #424242;
+  text-shadow: none;
+
+  &:hover {
+    background: rgba(255,255,255,0.6);
+  }
+}
+
+@mixin light-outline-button {
   border: 2px solid $button-dark-top-gradient;
   background: transparent;
   color: $button-dark-top-gradient;
@@ -101,7 +112,7 @@
 
 .toolbar-secondary {
   .button, input[type="button"], input[type="reset"], input[type="submit"] {
-    @include dark-menu-button;
+    @include dark-outline-button;
   }
 }
 
