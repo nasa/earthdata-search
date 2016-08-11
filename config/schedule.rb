@@ -23,9 +23,9 @@ set :job_template, "/bin/bash -l -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :
 job_type :foreman_rake, "cd :path && :environment_variable=:environment foreman run bundle exec rake :task --silent :output"
 
 every 1.hour do
-  rake "data:load"
+  foreman_rake "data:load"
 end
 
 every 1.day do
-  rake "colormaps:load"
+  foreman_rake "colormaps:load"
 end
