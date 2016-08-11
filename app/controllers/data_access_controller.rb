@@ -100,10 +100,10 @@ class DataAccessController < ApplicationController
           header_value = request.referrer && request.referrer.include?('/data/configure') ? '1' : '2'
           response = ESIClient.get_esi_request(s['collection_id'], s['order_id'], echo_client, token, header_value).body
           response_json = MultiXml.parse(response)
-
           urls = []
           if response_json['agentResponse']
             status = response_json['agentResponse']['requestStatus']
+            process_info = response_json['agentResponse']['processInfo']
             urls = Array.wrap(response_json['agentResponse']['downloadUrls']['downloadUrl']) if response_json['agentResponse']['downloadUrls']
           else
             status = {'status' => 'failed'}
@@ -115,6 +115,10 @@ class DataAccessController < ApplicationController
           s['service_options']['number_processed'] = status['numberProcessed']
           s['service_options']['total_number'] = status['totalNumber']
           s['service_options']['download_urls'] = urls
+
+          if s['order_status'] == 'failed' && response_json['Exception'].nil? && !process_info.nil?
+            s['error_message'] = process_info['message']
+          end
         end
       end
     end
