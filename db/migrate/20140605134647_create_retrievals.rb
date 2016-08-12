@@ -4,7 +4,7 @@ class CreateRetrievals < ActiveRecord::Migration
       t.belongs_to :user
       t.text :jsondata
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end
