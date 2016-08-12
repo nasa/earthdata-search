@@ -135,8 +135,12 @@ input.day-of-year-input {
 
   .fa-caret-down {
     padding-left: 5px;
-    color: rgba(0,0,0,.4);
+    color: rgba(0,0,0,0.2);
     @include transition(all 0.2s ease-in-out);
+
+    &:hover {
+      color: rgba(0,0,0,0.4);
+    }
   }
 }
 
