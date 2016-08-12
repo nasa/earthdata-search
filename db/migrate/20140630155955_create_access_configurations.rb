@@ -5,7 +5,7 @@ class CreateAccessConfigurations < ActiveRecord::Migration
       t.string :dataset_id
       t.text :service_options
 
-      t.timestamps
+      t.timestamps null: true
     end
 
     begin

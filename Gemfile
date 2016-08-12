@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.14.2'
+gem 'rails', '~> 4.2.7.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -84,6 +84,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 
 gem 'nokogiri'
+gem 'responders', '~> 2.0'
 
 # Eventually we'll need these, but there's version conflict when installing
 #gem 'crossroadsjs-rails'
