@@ -57,6 +57,12 @@ ul.dropdown-menu {
 
 .temporal-dropdown {
   width: 420px;
+
+  .low-priority {
+    color: #424242;
+    text-shadow: none;
+    font-weight: bold;
+  }
 }
 
 .save-project-name {

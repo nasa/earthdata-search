@@ -26,7 +26,7 @@
         <% end %>
         <div class="dropdown" id="temporal-dropdown">
           <a href="#" class="button temporal-dropdown-button dropdown-button" title="Temporal filter">
-            <i class="fa fa-clock-o"></i>
+            <i class="fa fa-calendar-plus-o"></i>
             <i class="fa fa-caret-down"></i>
           </a>
           <ul class="dropdown-menu temporal-dropdown">
@@ -53,17 +53,17 @@
       </div>
       <div id="temporal-query" data-bind="with: query.temporal.applied, visible: query.temporal.applied.isSet()">
         <p>
-          <i class="fa fa-clock-o"></i>
-          <span data-bind="visible: start.date">
-            <strong>Start</strong>
+          <i class="fa fa-calendar-o"></i>
+          <span data-bind="visible: start.date" class="temporal-query_start-date">
+            <strong>Start:</strong>
             <span data-bind="text: start.humanDateString"></span>
           </span>
-          <span data-bind="visible: stop.date">
-            <strong>Stop</strong>
+          <span data-bind="visible: stop.date" class="temporal-query_stop-date">
+            <strong>Stop:</strong>
             <span data-bind="text: stop.humanDateString"></span>
           </span>
-          <span data-bind="visible: (start.date() || stop.date()) && isRecurring()">
-            <strong>Range</strong> <span data-bind="text: yearsString"></span>
+          <span data-bind="visible: (start.date() || stop.date()) && isRecurring()" class="temporal-query_range">
+            <strong>Range:</strong> <span data-bind="text: yearsString"></span>
           </span>
           <a href="#" class="remove-filter" data-bind="click: clear, visible: start.date() || stop.date()" title="Remove temporal constraint"><i class="fa fa-times-circle"></i></a>
         </p>

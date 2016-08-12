@@ -3,6 +3,18 @@
   background: rgba(22,22,22,0.8);
   padding: 15px;
   font-size: 1em;
+
+  .temporal-query_start-date {
+    padding: 0 5px;
+  }
+
+  .temporal-query_stop-date {
+    padding-left: 5px;
+  }
+
+  strong {
+    color: rgba(241, 196, 15,1.0);
+  }
 }
 
 #temporal-query p {
@@ -37,6 +49,7 @@ a.remove-filter {
   color: #fff;
   opacity: 0.3;
   float: right;
+  font-size: 1.2em;
 }
 
 .leaflet-top.leaflet-right {
