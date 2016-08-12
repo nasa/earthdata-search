@@ -84,6 +84,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 
 gem 'nokogiri'
+gem 'responders', '~> 2.0'
 
 # Eventually we'll need these, but there's version conflict when installing
 #gem 'crossroadsjs-rails'

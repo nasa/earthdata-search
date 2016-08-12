@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :echo_id
       t.text :site_preferences
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end
