@@ -4,7 +4,7 @@ class CreateRecentDatasets < ActiveRecord::Migration
       t.belongs_to :user, index: true
       t.string :echo_id
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end
