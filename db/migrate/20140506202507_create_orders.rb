@@ -4,7 +4,7 @@ class CreateOrders < ActiveRecord::Migration
       t.string :order_id
       t.string :description
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end
