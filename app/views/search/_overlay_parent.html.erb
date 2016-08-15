@@ -17,7 +17,6 @@
     </h2>
   </header>
   <div class="master-overlay-content panel-group">
-    <!-- ko if: collections.facets.isRelevant() -->
     <!-- ko foreach: collections.facets.results -->
     <!-- ko if: children().length > 0 -->
     <div data-bind="css: class_name" class="panel panel-default">
@@ -54,7 +53,6 @@
         </div>
       </div>
     </div>
-    <!-- /ko -->
     <!-- /ko -->
     <!-- /ko -->
   </div>

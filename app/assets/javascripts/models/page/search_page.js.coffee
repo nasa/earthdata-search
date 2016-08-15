@@ -57,8 +57,6 @@ ns.SearchPage = do (ko
 
       @spatialError = ko.computed(@_computeSpatialError)
 
-      @collections.isRelevant(false) # Avoid load until the URL says it's ok
-
       @workspaceName = ko.observable(null)
       @workspaceNameField = ko.observable(null)
 

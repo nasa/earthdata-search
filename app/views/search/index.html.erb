@@ -108,69 +108,7 @@
   </div>
 </div>
 
-<div class="landing-area landing-visible">
 
-  <div class="landing-dialog">
-    <div class="noscript no-js">
-      <h3><%= site_name %> uses JavaScript</h3>
-      <ul>
-        <li>Please use a JavaScript-aware browser.
-        <li>Make sure that JavaScript is enabled.
-      </ul>
-    </div>
-
-    <div class="old-ie">
-      <h1>Your browser is out of date</h1>
-      <p>In order to use <%= site_name %>, you must upgrade your web browser. Alternatively, you can use <a href="http://reverb.echo.nasa.gov/">Reverb</a></p>
-      <p>To upgrade your browser, click on the icons below to go to the download page</p>
-      <ul>
-        <li>
-          <a href="https://www.google.com/chrome/" target="_blank">
-            <div class="icon chrome"></div>
-            <div class="name">Chrome</div>
-          </a>
-        </li>
-        <li>
-          <a href="http://www.mozilla.org/firefox/" target="_blank">
-            <div class="icon firefox"></div>
-            <div class="name">Firefox</div>
-          </a>
-        </li>
-        <li>
-          <a href="http://www.apple.com/safari/" target="_blank">
-            <div class="icon safari"></div>
-            <div class="name">Safari</div>
-          </a>
-        </li>
-        <li>
-          <a href="http://www.opera.com/" target="_blank">
-            <div class="icon opera"></div>
-            <div class="name">Opera</div>
-          </a>
-        </li>
-        <li>
-          <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">
-            <div class="icon ie"></div>
-            <div class="name">Internet Explorer</div>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="landing-dialog-header">
-      <a href="/?tour=true" class="show-tour" target="_blank" data-bind="visible: window.edscportal || !preferences.showTour()">Take a Tour</a>
-      <h2>Discover Earth Science Data</h2>
-      <p>Search NASA Earth Science data by keyword and filter by <i class="fa fa-clock-o"></i> <strong>time</strong> or <i class="fa fa-crop"></i> <strong>space</strong>.</p>
-    </div>
-    <div class="landing-dialog-toolbar toolbar">
-    </div>
-    <div class="landing-dialog-actions">
-      <a href="#collections-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
-      <p><i class="fa fa-arrow-circle-left"></i> See featured collections or use categories to narrow your results.</p>
-    </div>
-  </div>
-
-</div>
 
 <% content_for :header do %>
 <div id="choose-temporal-modal" data-bind="showModal: ui.projectList.needsTemporalChoice" class="modal" role="dialog" data-keyboard="false" data-backdrop="static">

@@ -36,7 +36,7 @@
     <%= javascript_include_tag "jquery.simulate" if Rails.env.test? %>
     <!--[if lt IE 10]> <%= javascript_include_tag "flexibility" %> <![endif]-->
 </head>
-<body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page" data-bind="css: {'is-landing': ui.isLandingPage}" >
+<body id="edsc" class="env-<%= Rails.env %> <%= controller.controller_name %>-page">
     <%= render partial: 'master_overlay' %>
     <div class="wrap">
     <%= yield :header %>
