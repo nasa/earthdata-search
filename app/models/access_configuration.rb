@@ -4,6 +4,7 @@ require 'json'
 class AccessConfiguration < ActiveRecord::Base
   belongs_to :user
   store :service_options, coder: JSON
+  serialize :echoform_digest, JSON
 
   def self.get_default_access_config(user, cmr_concept_id)
     access_config = self.find_by(user: user, dataset_id: cmr_concept_id)

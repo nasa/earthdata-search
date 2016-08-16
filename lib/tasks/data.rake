@@ -16,6 +16,13 @@ namespace :data do
       end
     end
 
+    desc "Sync tags for services"
+    task :tags => ['environment'] do
+      log_error do
+        CollectionExtra.sync_tags
+      end
+    end
+
     def log_error(&block)
       begin
         yield
@@ -34,7 +41,7 @@ namespace :data do
   desc "Load data from ECHO"
   task :load
 
-  Rake::Task['data:load'].enhance(['data:load:echo10', 'data:load:granules'])
+  Rake::Task['data:load'].enhance(['data:load:echo10', 'data:load:granules', 'data:load:tags'])
 
   namespace :dump do
     # Only dump the CollectionExtra model
