@@ -12,11 +12,10 @@
   width: 540px;
   border: 1px solid #000;
   border-top: 0;
+  color: #fff;
   // Overrides style set by typeahead plugin via Javascript
   left: 0px !important;
   top: 50px !important;
-  height: 100px;
-  display: block !important;
 }
 
 .tt-suggestion {
