@@ -24,12 +24,10 @@ ns.Map = do (window,
       paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0])
       paddingBR = L.point(options.paddingBottomRight || options.padding || [0, 0])
 
-      leftPad = L.point([$('.master-overlay-main').offset().left + $('.master-overlay-main').width(), 0])
-
       zoom = @getBoundsZoom(bounds, false, paddingTL.add(paddingBR))
       paddingOffset = paddingBR.subtract(paddingTL).divideBy(2)
 
-      swPoint = this.project(bounds.getSouthWest(), zoom).subtract(leftPad)
+      swPoint = this.project(bounds.getSouthWest(), zoom)
       nePoint = this.project(bounds.getNorthEast(), zoom)
 
       center = this.unproject(swPoint.add(nePoint).divideBy(2).add(paddingOffset), zoom)
