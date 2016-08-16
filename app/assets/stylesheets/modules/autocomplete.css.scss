@@ -9,12 +9,14 @@
 .tt-dropdown-menu {
   z-index: 90;
   background-color: #333;
-  width: 450px;
+  width: 540px;
   border: 1px solid #000;
   border-top: 0;
-
   // Overrides style set by typeahead plugin via Javascript
-  left: 20px !important;
+  left: 0px !important;
+  top: 50px !important;
+  height: 100px;
+  display: block !important;
 }
 
 .tt-suggestion {
