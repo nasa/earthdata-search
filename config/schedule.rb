@@ -18,6 +18,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+
 set :environment, Rails.env
 set :job_template, "/bin/bash -l -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job'"
 
