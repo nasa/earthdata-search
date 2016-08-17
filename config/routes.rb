@@ -61,6 +61,7 @@ EarthdataSearchClient::Application.routes.draw do
   post 'data/remove' => 'data_access#remove', format: 'json'
 
   get 'search(/*overlay_params)' => 'search#index'
+  get 'extract_filters' => 'search#extract_filters', format: 'json'
   get 'health' => 'health#index', format: 'json'
   root :to => 'search#index'
 

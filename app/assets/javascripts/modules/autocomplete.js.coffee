@@ -1,80 +1,114 @@
-//= require typeahead-0.10.2/typeahead.bundle
-
 do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax) ->
 
   $(document).ready ->
     $placenameInputs = $('.autocomplete-placenames')
 
-    engine = new Bloodhound
-      name: 'placenames'
-      local: []
-      remote:
-        url: '/placenames?q=%QUERY'
-        ajax: success: (data) ->
-          if data[0]?.use_placename == true && currentPage.query.spatial() != data[0].spatial
-            $placenameInputs.trigger 'typeahead:selected', data[0]
-      datumTokenizer: -> Bloodhound.tokenizers.whitespace(d.val)
-      queryTokenizer: Bloodhound.tokenizers.whitespace
+#    engine = new Bloodhound
+#      name: 'extract_filters'
+#      remote:
+#        url: '/extract_filters?q=%QUERY'
+#        wildcard: '%QUERY'
+##        ajax:
+##          success: (data) =>
+##            console.log "------------- ", data
+##            console.log "============= ", data
+##              if data.edscSpatial?.query && currentPage.query.spatial() != data.edscSpatial?.query
+##              $placenameInputs.trigger 'typeahead:selected',  data
+##        url: '/placenames?q=%QUERY'
+#        ajax: success: (data) ->
+#          console.log "---- success"
+#          if (data.edscSpatial? || data.edscTemporal?) && currentPage.query.spatial() != data.edscSpatial.query
+#            $placenameInputs.trigger 'typeahead:selected', data
+#      datumTokenizer: -> Bloodhound.tokenizers.whitespace(d.val)
+#      queryTokenizer: Bloodhound.tokenizers.whitespace
+#
+#    engine.initialize()
+#
+#    uiOpts =
+#      hint: false
+#      highlight: true
+#      minLength: 1
+#    dsOpts =
+#      name: 'keywords'
+#      source: engine.ttAdapter()
+#    $placenameInputs.typeahead(uiOpts, dsOpts)
+#
+#    currentSpatial = null
+#
+#    # When the user selects a typeahead value,
+#    # TODO: Upgrade to typeahead-0.10 when available and verify that typeahead:cursorchanged triggers with arrow keys
+#    $placenameInputs.on 'typeahead:autocompleted typeahead:selected', (event, datum) ->
+#      console.log "==-=-=-=---- ", datum
+#      {edscSpatial, edscTemporal, keyword} = datum
+#      currentPage.query.keywords(keyword)
+#      console.log "==-=-=-=---- 11 "
+#      #      currentPage.query.placename(null)
+#      currentPage.query.spatial(edscSpatial?.query)
+#      currentPage.query.temporal.applied.queryCondition(edscTemporal?.query)
+#      console.log "==-=-=-=---- 20 "
+#
+#      #      currentPage.query.temporal(edscTemporal)
+#      #      currentPage.query.placename(placename)
+#      if edscSpatial
+#        console.log "==-=-=-=---- 25 "
+#        currentSpatial = edscSpatial.query
+#        console.log "==-=-=-=---- 33 "
+#
+#        p1 = [edscSpatial.bbox.swPoint.latitude, edscSpatial.bbox.swPoint.longitude]
+#        p2 = [edscSpatial.bbox.nePoint.latitude, edscSpatial.bbox.nePoint.longitude]
+#        $('#map').data('map').map.fitBounds([p1,p2])
+#        console.log "==-=-=-=---- 44 "
+#      console.log "==-=-=-=---- 55 "
 
-    engine.initialize()
+    typingTimer = null
+    timeoutInterval = 500
+    $placenameInputs.on 'keyup', (event) ->
+      clearTimeout(typingTimer)
+      typingTimer = setTimeout(_parseSearchText, timeoutInterval)
 
-    uiOpts =
-      hint: false
-      highlight: true
-      minLength: 1
-    dsOpts =
-      name: 'keywords'
-      source: engine.ttAdapter()
-    $placenameInputs.typeahead(uiOpts, dsOpts)
+    $placenameInputs.on 'keydown', (event) ->
+      clearTimeout(typingTimer)
 
-    currentSpatial = null
+    _parseSearchText = (e) ->
+      query = $placenameInputs.val()
+      ajax
+        dataType: 'json'
+        url: "/extract_filters?q=#{query}"
+        success: (data) =>
+          _applyParsedText(data)
 
-    # When the user selects a typeahead value,
-    # TODO: Upgrade to typeahead-0.10 when available and verify that typeahead:cursorchanged triggers with arrow keys
-    $placenameInputs.on 'typeahead:autocompleted typeahead:selected', (event, datum) ->
-      {placename, spatial, value} = datum
-      currentPage.query.keywords(value)
+    _applyParsedText = (data) ->
+      {edscSpatial, edscTemporal, keyword} = data
+      currentPage.query.keywords(keyword)
+      $('#keywords').val(keyword) if keyword != $('#keywords').val()
 
-      currentPage.query.placename(null)
-      currentPage.query.spatial(spatial)
-      currentPage.query.placename(placename)
-      currentSpatial = spatial
+      currentPage.query.spatial(edscSpatial?.query)
+      currentPage.query.temporal.applied.queryCondition(edscTemporal?.query)
 
-      points = spatial.split(':')
-      if points[0] == 'point'
-        p1 = points[1].split(',').reverse()
-        p2 = p1
-      else if points[0] == 'bounding_box'
-        p1 = points[1].split(',').reverse()
-        p2 = points[2].split(',').reverse()
-      $('#map').data('map').map.fitBounds([p1,p2])
+      if edscSpatial
+        currentSpatial = edscSpatial.query
 
-    $placenameInputs.on 'keyup', ->
-      newValue = $(this).typeahead('val')
-      query = currentPage.query
-      currentValue = query.keywords()
-      unless newValue == currentValue
-        query.keywords(newValue)
-        placename = query.placename()
-        if placename? && newValue.indexOf(placename) == -1
-          query.placename(null)
-          query.spatial(null)
+        p1 = [edscSpatial.bbox.swPoint.latitude, edscSpatial.bbox.swPoint.longitude]
+        p2 = [edscSpatial.bbox.nePoint.latitude, edscSpatial.bbox.nePoint.longitude]
+        $('#map').data('map').map.fitBounds([p1,p2])
+#      console.log "==-=-=-=---- keyup "
+#      newValue = $(this).typeahead('val')
+#      query = currentPage.query
+#      currentValue = query.keywords()
+#      unless newValue == currentValue
+#        query.keywords(newValue)
 
     readKeywords = (newValue) ->
+      console.log "---- readKeywords", newValue
       $keywords = $('#keywords')
-      currentValue = $keywords.typeahead('val')
+      currentValue = $keywords.val()
       unless newValue == currentValue
-        $keywords.typeahead('val', newValue ? "")
+        $keywords.val(newValue ? "")
 
     readSpatial = (newValue) ->
-      currentPlacename = currentPage.query.placename.peek()
-      for input in $('.autocomplete-placenames')
-        if input.value.indexOf(currentPlacename) != -1 && currentSpatial != null && newValue != currentSpatial
-          currentKeywords = currentPage.query.keywords.peek()
-          currentPage.query.keywords(currentKeywords.replace(currentPlacename, '').trim())
-          currentPage.query.placename('')
-        else if currentSpatial == null
-          currentSpatial = newValue
+      console.log "---- readSpatial", newValue
+      currentSpatial = newValue if currentSpatial == null
+
 
     readKeywords(currentPage.query.keywords())
     readSpatial(currentPage.query.spatial())
@@ -82,13 +116,9 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
     currentPage.query.keywords.subscribe readKeywords
     currentPage.query.spatial.subscribe readSpatial
 
+    # TODO: blur isn't a good event to listen to. It should get triggered
+    #       when the keyword changes.
     $placenameInputs.on 'blur', (e) ->
-      # TODO: blur isn't a good event to listen to. It should get triggered
-      #       when the keyword changes.
-      query = this.value
-      if !$(e.relatedTarget).hasClass('clear-filters') && query.length > 0 && query.indexOf('place:') != -1
-        ajax
-          dataType: 'json'
-          url: "/placenames?q=#{query}"
-          success: (data) =>
-            $placenameInputs.trigger 'typeahead:selected', data[0] if data[0]?
+      console.log "--------------- blur"
+      _parseSearchText(e)
+
