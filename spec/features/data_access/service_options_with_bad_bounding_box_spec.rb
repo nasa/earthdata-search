@@ -47,15 +47,10 @@ describe 'Service Options order with bad bounding_box', reset: false do
     context 'after the order fails' do
       before :all do
         Delayed::Worker.new.work_off
-        # expect(Delayed::Worker.new.work_off).to  eq([1, 0])
-        # load_page "data/retrieve/#{Retrieval.last.to_param}"
       end
 
       it 'shows the order in the "Failed" state' do
-        synchronize(120) do
-          expect(page).to have_text('Failed')
-        end
-        Capybara::Screenshot.screenshot_and_save_page
+        expect(page).to have_text('Failed')
       end
 
       it 'shows an error message saying the subsetting failed' do
