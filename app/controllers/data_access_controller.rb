@@ -117,7 +117,8 @@ class DataAccessController < ApplicationController
           s['service_options']['download_urls'] = urls
 
           if s['order_status'] == 'failed' && response_json['Exception'].nil? && !process_info.nil?
-            s['error_message'] = process_info['message']
+            s['error_message'] = Array.wrap(process_info['message']).join("\n")
+            s['error_code'] = 'Not Provided'
           end
         end
       end

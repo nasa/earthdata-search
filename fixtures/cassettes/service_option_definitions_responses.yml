@@ -2315,3 +2315,161 @@ c266712f4cf6e4b4630b64b3dfef8361f4e52ec8:
         label=\"\" ref=\"//ecs:HEG-request//ecs:null_B\" type=\"xsd:string\"/>\n            </group>\n        </group>\n    </ui>\n</form>","id":"C800502B-4905-BE75-1C6D-A0DC7D775E0F","name":"AE_SI12.3
         ESI Service","provider_id":"20604"}}'
     http_version: 
+aad99791c4ec3a8c65d51b25751786343e8e7ec6:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"621e9f607079d029ec9870bb19bb41c1"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.087000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Fri, 19 Aug 2016 14:20:43 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"service_option_definition":{"description":"ECHO ESI Order form for
+        DataSet \"SMAP L2 Radiometer Half-Orbit 36 km EASE-Grid Soil Moisture V003\"
+        (SPL2SMP.3)","form":"<form xmlns=\"http://echo.nasa.gov/v9/echoforms\" xmlns:forms=\"http://echo.nasa.gov/v9/echoforms\"
+        xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"
+        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" targetNamespace=\"http://ecs.nasa.gov/options\"
+        xsi:schemaLocation=\"http://echo.nasa.gov/v9/echoforms http://api.echo.nasa.gov/echo/wsdl/EchoForms.xsd\">\n    <!--\n            ECHO
+        Service/Order form for DataSet \"SMAP L2 Radiometer Half-Orbit 36 km EASE-Grid
+        Soil Moisture V003\" (SPL2SMP.3):\n            -->\n    <model>\n        <instance>\n            <ecs:request
+        xmlns:ecs=\"http://ecs.nasa.gov/options\">\n                <!--NOTE: elements
+        in caps losely match the ESI API, those in lowercase are helper elements -->\n                <ecs:requestInfo>\n                    <ecs:email/>\n                </ecs:requestInfo>\n                <!--Dataset
+        ID will be injected by Reverb-->\n                <ecs:CLIENT>ESI</ecs:CLIENT>\n                <!--First
+        SubsetAgent in the input capabilities XML is used as the default.-->\n                <ecs:SUBAGENT_ID>\n                    <ecs:value>SMAPL1L2</ecs:value>\n                </ecs:SUBAGENT_ID>\n                <!--
+        hardcode to async for Reverb services -->\n                <ecs:REQUEST_MODE>async</ecs:REQUEST_MODE>\n                <ecs:SMAPL1L2-request>\n                    <ecs:SPATIAL_MSG>Click
+        the checkbox to enable spatial subsetting.</ecs:SPATIAL_MSG>\n                    <ecs:PROJ_MSG_1>CAUTION:
+        Re-projection parameters may alter results.</ecs:PROJ_MSG_1>\n                    <ecs:PROJ_MSG_2>Leave
+        blank to choose default values for each re-projected granule.</ecs:PROJ_MSG_2>\n                    <ecs:INTRPL_MSG_1>Used
+        to calculate data of resampled and reprojected pixels.</ecs:INTRPL_MSG_1>\n                    <ecs:UTM_MSG_1>NOTE:
+        Zone parameter(s) are calculated automatically when spatial subsetting is
+        active.</ecs:UTM_MSG_1>\n                    <ecs:null_B/>\n                    <!--Need
+        to populate BBOX in final ESI request as follows: \"&BBOX=ullon,lrlat,lrlon,ullat\"-->\n                    <ecs:BBOX/>\n                    <ecs:spatial_subsetting>\n                        <ecs:boundingbox>\n                            <ecs:ullat>90</ecs:ullat>\n                            <ecs:ullon>-180</ecs:ullon>\n                            <ecs:lrlat>-90</ecs:lrlat>\n                            <ecs:lrlon>180</ecs:lrlon>\n                        </ecs:boundingbox>\n                    </ecs:spatial_subsetting>\n                    <ecs:band_subsetting>\n                        <ecs:SUBSET_DATA_LAYERS
+        style=\"tree\">\n                            <ecs:SPL2SMP>\n                                <ecs:dataset>/SPL2SMP</ecs:dataset>\n                            </ecs:SPL2SMP>\n                        </ecs:SUBSET_DATA_LAYERS>\n                    </ecs:band_subsetting>\n                    <!--First
+        Format in the input XML is used as the default.-->\n                    <ecs:FORMAT>\n                        <ecs:value/>\n                    </ecs:FORMAT>\n                    <!--
+        OUTPUT_GRID is never used in ESI (but should be enabled for SSW)-->\n                    <!--
+        FILE_IDS must be injected by Reverb -->\n                    <!-- FILE_URLS
+        is not used in requests from ECHO, Use FILE_IDS instead -->\n                    <ecs:advanced_file_option_flag/>\n                    <ecs:advanced_file_options>\n                        <ecs:INTERPOLATION>\n                            <ecs:value/>\n                        </ecs:INTERPOLATION>\n                        <!--INCLUDE_META
+        needs to be converted from true/false here to Y/N in the request.-->\n                        <ecs:INCLUDE_META>false</ecs:INCLUDE_META>\n                    </ecs:advanced_file_options>\n                    <ecs:spatial_subset_flag>false</ecs:spatial_subset_flag>\n                    <ecs:band_subset_flag>true</ecs:band_subset_flag>\n                    <ecs:temporal_subset_flag>false</ecs:temporal_subset_flag>\n                </ecs:SMAPL1L2-request>\n            </ecs:request>\n        </instance>\n        <extension
+        xmlns:pre=\"http://echo.nasa.gov/v9/echoforms/prepopulate\" name=\"pre:prepopulate\">\n            <pre:expressions>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:dataset_ids\" source=\"ALL_DATASET_IDS_FROM_CART\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:email\" source=\"EMAIL\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:keywords\" source=\"KEYWORDS\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:spatial\" source=\"SPATIAL\"/>\n                <pre:expression
+        ref=\"//ecs:requestInfo/ecs:shp_file\" source=\"SHP_FILE\"/>\n                <pre:expression
+        ref=\"//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullon\"
+        source=\"BBOX_WEST\"/>\n                <pre:expression ref=\"//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlat\"
+        source=\"BBOX_SOUTH\"/>\n                <pre:expression ref=\"//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:lrlon\"
+        source=\"BBOX_EAST\"/>\n                <pre:expression ref=\"//ecs:SMAPL1L2-request/ecs:spatial_subsetting/ecs:boundingbox/ecs:ullat\"
+        source=\"BBOX_NORTH\"/>\n            </pre:expressions>\n        </extension>\n    </model>\n    <ui>\n        <input
+        label=\"Email Address\" ref=\"ecs:requestInfo/ecs:email\" required=\"false()\"
+        type=\"xsd:string\">\n            <constraints>\n                <constraint>\n                    <xpath>contains(ecs:requestInfo/ecs:email,
+        ''@'') and contains(substring-after(ecs:requestInfo/ecs:email, ''@''), ''.'')
+        and string-length(substring-after(ecs:requestInfo/ecs:email, ''.''))</xpath>\n                    <alert>A
+        valid email address is required.</alert>\n                </constraint>\n            </constraints>\n        </input>\n        <input
+        label=\"Include Metadata and Processing History\" ref=\"ecs:SMAPL1L2-request/ecs:advanced_file_options/ecs:INCLUDE_META\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2'' &#10;         &#9;and
+        //ecs:SUBAGENT_ID/ecs:value!=''PQF'' &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''GLAS''
+        &#10;         &#9;and //ecs:SUBAGENT_ID/ecs:value!=''SMAPL1L2''&#10;         \"
+        type=\"xsd:boolean\"/>\n        <group id=\"SMAPL1L2-reformatOptions\" label=\"Reformat
+        Output (Optional)\" ref=\"ecs:SMAPL1L2-request\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''\">\n            <select
+        id=\"SMAPL1L2-formatselect\" label=\"Output File Format\" multiple=\"false\"
+        open=\"false\" ref=\"ecs:FORMAT\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''\"
+        type=\"xsd:string\" valueElementName=\"value\">\n                <item label=\"No
+        Reformatting\" value=\"\"/>\n                <item label=\"HDF-EOS5\" value=\"HDF-EOS5\"/>\n                <item
+        label=\"NetCDF4-CF\" value=\"NetCDF4-CF\"/>\n                <item label=\"ASCII\"
+        value=\"ASCII\"/>\n                <item label=\"KML\" value=\"KML\"/>\n                <item
+        label=\"GeoTIFF\" value=\"GeoTIFF\"/>\n                <item label=\"NetCDF-3\"
+        value=\"NetCDF-3\"/>\n            </select>\n        </group>\n        <group
+        id=\"SMAPL1L2-spatial\" label=\"Spatial Subsetting (Optional)\" ref=\"ecs:SMAPL1L2-request/ecs:spatial_subsetting\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''\">\n            <input
+        label=\"Enter bounding box\" ref=\"../ecs:spatial_subset_flag\" type=\"xsd:boolean\"/>\n            <group
+        id=\"SMAPL1L2-NWESBoundingBox\" label=\"\" ref=\"ecs:boundingbox\">\n                <input
+        label=\"North\" ref=\"ecs:ullat\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullat) &gt;= -90</xpath>\n                            <alert>North
+        must be greater than -90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullat) &lt;= 90</xpath>\n                            <alert>North
+        must be less than 90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullat)  &gt;=  number(ecs:lrlat)</xpath>\n                            <alert>North
+        must be greater thanSouth</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"West\" ref=\"ecs:ullon\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullon) &gt;= -180</xpath>\n                            <alert>West
+        must be greater than -180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullon) &lt;= 180</xpath>\n                            <alert>West
+        must be less than 180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:ullon)  &lt;=  number(ecs:lrlon)</xpath>\n                            <alert>West
+        must be less thanEast</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"East\" ref=\"ecs:lrlon\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlon) &gt;= -180</xpath>\n                            <alert>East
+        must be greater than -180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlon) &lt;= 180</xpath>\n                            <alert>East
+        must be less than 180</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlon)  &gt;=  number(ecs:ullon)</xpath>\n                            <alert>East
+        must be greater thanWest</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n                <input
+        label=\"South\" ref=\"ecs:lrlat\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../../ecs:spatial_subset_flag=''true'' &#10;            \" required=\"true()\"
+        type=\"xsd:double\">\n                    <constraints>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlat) &gt;= -90</xpath>\n                            <alert>South
+        must be greater than -90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlat) &lt;= 90</xpath>\n                            <alert>South
+        must be less than 90</alert>\n                        </constraint>\n                        <constraint>\n                            <xpath>//ecs:SUBAGENT_ID/ecs:value!=''HEG''
+        or number(ecs:lrlat)  &lt;=  number(ecs:ullat)</xpath>\n                            <alert>South
+        must be less thanNorth</alert>\n                        </constraint>\n                    </constraints>\n                </input>\n            </group>\n        </group>\n        <group
+        id=\"SMAPL1L2-bandSubsetOptions\" label=\"Band Subsetting (Optional)\" ref=\"ecs:SMAPL1L2-request/ecs:band_subsetting\"
+        relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2'' and ecs:SMAPL1L2-request/ecs:band_subset_flag=''true''\">\n            <tree
+        cascade=\"true\" id=\"SMAPL1L2-bandSubsetOptions\" label=\"Choose Bands\"
+        ref=\"ecs:SUBSET_DATA_LAYERS/ecs:SPL2SMP\" relevant=\"//ecs:SUBAGENT_ID/ecs:value=''SMAPL1L2''
+        and ../ecs:band_subset_flag=''true''\" required=\"false()\" separator=\"/\"
+        type=\"xsd:string\" valueElementName=\"dataset\">\n                <item value=\"SPL2SMP\">\n                    <item
+        value=\"Soil_Moisture_Retrieval_Data\">\n                        <item value=\"albedo\"/>\n                        <item
+        value=\"boresight_incidence\"/>\n                        <item relevant=\"not(contains('',HDF-EOS5,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'','')))\"
+        value=\"EASE_column_index\"/>\n                        <item relevant=\"not(contains('',HDF-EOS5,NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'','')))\"
+        value=\"EASE_row_index\"/>\n                        <item value=\"freeze_thaw_fraction\"/>\n                        <item
+        value=\"landcover_class\"/>\n                        <item value=\"landcover_class_fraction\"/>\n                        <item
+        value=\"latitude\"/>\n                        <item value=\"latitude_centroid\"/>\n                        <item
+        value=\"longitude\"/>\n                        <item value=\"longitude_centroid\"/>\n                        <item
+        value=\"radar_water_body_fraction\"/>\n                        <item value=\"retrieval_qual_flag\"/>\n                        <item
+        value=\"retrieval_qual_flag_option1\"/>\n                        <item value=\"retrieval_qual_flag_option2\"/>\n                        <item
+        value=\"retrieval_qual_flag_option3\"/>\n                        <item value=\"retrieval_qual_flag_option4\"/>\n                        <item
+        value=\"retrieval_qual_flag_option5\"/>\n                        <item value=\"roughness_coefficient\"/>\n                        <item
+        value=\"soil_moisture\"/>\n                        <item value=\"soil_moisture_error\"/>\n                        <item
+        value=\"soil_moisture_option1\"/>\n                        <item value=\"soil_moisture_option2\"/>\n                        <item
+        value=\"soil_moisture_option3\"/>\n                        <item value=\"soil_moisture_option4\"/>\n                        <item
+        value=\"soil_moisture_option5\"/>\n                        <item value=\"static_water_body_fraction\"/>\n                        <item
+        value=\"surface_flag\"/>\n                        <item value=\"surface_temperature\"/>\n                        <item
+        value=\"tb_3_corrected\"/>\n                        <item value=\"tb_4_corrected\"/>\n                        <item
+        value=\"tb_h_corrected\"/>\n                        <item value=\"tb_qual_flag_3\"/>\n                        <item
+        value=\"tb_qual_flag_4\"/>\n                        <item value=\"tb_qual_flag_h\"/>\n                        <item
+        value=\"tb_qual_flag_v\"/>\n                        <item value=\"tb_time_seconds\"/>\n                        <item
+        relevant=\"not(contains('',NetCDF4-CF,'',concat('','',../ecs:FORMAT/ecs:value/text(),'','')))\"
+        value=\"tb_time_utc\"/>\n                        <item value=\"tb_v_corrected\"/>\n                        <item
+        value=\"vegetation_opacity\"/>\n                        <item value=\"vegetation_opacity_option1\"/>\n                        <item
+        value=\"vegetation_opacity_option2\"/>\n                        <item value=\"vegetation_opacity_option3\"/>\n                        <item
+        value=\"vegetation_opacity_option4\"/>\n                        <item value=\"vegetation_opacity_option5\"/>\n                        <item
+        value=\"vegetation_water_content\"/>\n                    </item>\n                </item>\n            </tree>\n        </group>\n    </ui>\n</form>","id":"EF5D7985-10BB-BFD1-95D6-75F08B0CAF6D","name":"SPL2SMP.3
+        ESI Service","provider_id":"20604"}}'
+    http_version: 
