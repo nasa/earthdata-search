@@ -108,7 +108,7 @@ class DataAccessController < ApplicationController
           else
             status = {'status' => 'failed'}
             s['error_code'] = response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Code']
-            s['error_message'] = response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Message']
+            s['error_message'] = Array.wrap(response_json['Exception'].nil? ? 'Unknown' : response_json['Exception']['Message'])
           end
 
           s['order_status'] = status['status']
@@ -118,7 +118,7 @@ class DataAccessController < ApplicationController
 
           if s['order_status'] == 'failed' && response_json['Exception'].nil? && !process_info.nil?
             s['error_message'] = Array.wrap(process_info['message'])
-            s['error_code'] = 'Not Provided'
+            s['error_code'] = 'Error Code Not Provided'
           end
         end
       end
