@@ -7,15 +7,13 @@ class AccessConfiguration < ActiveRecord::Base
   serialize :echoform_digest, JSON
 
   def self.get_default_access_config(user, cmr_concept_id)
-    access_config = self.find_by(user: user, dataset_id: cmr_concept_id)
-    access_config.echoform_digest = JSON.parse(access_config.echoform_digest) if access_config.present? && access_config.echoform_digest.present? && (access_config.echoform_digest.is_a? String)
-    access_config
+    self.find_by(user: user, dataset_id: cmr_concept_id)
   end
 
   def self.set_default_access_config(user, cmr_concept_id, options, form_hashes)
     access_config = self.find_or_initialize_by(user: user, dataset_id: cmr_concept_id)
     access_config.service_options = options
-    access_config.echoform_digest = form_hashes.nil? ? nil : form_hashes
+    access_config.echoform_digest = form_hashes
     access_config.save!
   end
 end
