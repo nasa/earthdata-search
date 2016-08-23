@@ -1,14 +1,8 @@
-<div>
-  <p>
-    <strong>Error: </strong>
-    <span data-bind="text: error_code"></span>
-  </p>
-  <p>
-    <strong>Message: </strong>
-    <ul data-bind="foreach: error_message">
-      <li data-bind="text: $data"></li>
-    </ul>
-  </p>
+<div class="access-error-wrap">
+  <p class="access-error-code" data-bind="text: error_code"></p>
+  <ul class="access-error-message-list" data-bind="foreach: error_message">
+    <li data-bind="text: $data"></li>
+  </ul>
   <% if Rails.configuration.feedback_url.present? %>
     <p>
       <a href="#" data-bind="click: $root.ui.feedback.submitError.bind($data, 'Data Access', $data.error_code)" class="button feedback-button">
