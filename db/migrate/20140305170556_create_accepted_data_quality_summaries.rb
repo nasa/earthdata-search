@@ -4,7 +4,7 @@ class CreateAcceptedDataQualitySummaries < ActiveRecord::Migration
       t.string :dqs_id
       t.string :token
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end
