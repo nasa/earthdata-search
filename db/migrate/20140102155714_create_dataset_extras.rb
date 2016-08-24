@@ -5,7 +5,7 @@ class CreateDatasetExtras < ActiveRecord::Migration
       t.boolean :has_browseable_granules
       t.string :thumbnail_url
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

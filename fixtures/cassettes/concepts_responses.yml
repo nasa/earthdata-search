@@ -1020,6 +1020,38 @@ af7f3a3bb219b981fce3aa18ed088900c2c73b7a:
         These data are available through the File Transfer Protocol (FTP). The base URL of NODC's FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP client to download these data.
         </URLDescription></OnlineAccessURL></OnlineAccessURLs><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>146</WestBoundingCoordinate><NorthBoundingCoordinate>72</NorthBoundingCoordinate><EastBoundingCoordinate>-105</EastBoundingCoordinate><SouthBoundingCoordinate>-44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+baec2f3d96ec288b6741fba6819ae1a2f67afce4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 19 Aug 2016 14:20:42 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - d8ffbd69-8570-4c48-bf43-4b6ddea53c31
+      content-length:
+      - '822'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"boxes":["-85.0445 -180 85.0445 180"],"time_start":"2015-03-31T00:00:00.000Z","dif_ids":["SPL2SMP.003"],"version_id":"003","updated":"2016-04-21T15:58:21.383Z","dataset_id":"SMAP
+        L2 Radiometer Half-Orbit 36 km EASE-Grid Soil Moisture V003","data_center":"NSIDC_ECS","short_name":"SPL2SMP","organizations":["NSIDC","Jet
+        Propulsion Laboratory"],"title":"SMAP L2 Radiometer Half-Orbit 36 km EASE-Grid
+        Soil Moisture V003","coordinate_system":"GEODETIC","summary":"Passive soil
+        moisture estimates onto a 36-km global Earth-fixed grid, based on radiometer
+        measurements acquired when the SMAP spacecraft is travelling from North to
+        South at approximately 6:00 AM local time.","orbit_parameters":{},"id":"C1236303846-NSIDC_ECS","original_format":"ISO-SMAP","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false}'
+    http_version: 
 5e63bc956df687d12363d0cdb9a65f6e4d0c5706:
   response:
     status:
