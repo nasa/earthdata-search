@@ -11,7 +11,7 @@ class GibsConfiguration
 
     all_conditions = []
     configs.each do |config|
-      response = client.add_tag(tag_key, config[:config], config[:collections], token, true) do |tag|
+      response = client.add_tag(tag_key, config[:config], config[:collections], token, true, false) do |tag|
         tag['product'] || tag[:product]
       end
       puts JSON.pretty_generate(response.body) unless response.success?
