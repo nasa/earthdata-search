@@ -12,8 +12,6 @@ gem 'multi_xml'
 gem 'toastr-rails'
 gem 'unicorn'
 gem 'whenever', :require => false
-gem 'rufus-scheduler'
-gem 'rails_12factor'
 
 gem 'obfuscate_id', git: 'https://github.com/namick/obfuscate_id.git', ref: 'a89da600f389c53c88362ce5133d8d3945776464'
 
@@ -45,6 +43,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'rails_12factor'
 end
 
 # Gems that are mostly used for testing but useful to have available via CLI
