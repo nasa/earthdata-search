@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.2'
 
 gem 'rails', '~> 4.2.7.1'
 
@@ -42,6 +43,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'rails_12factor'
 end
 
 # Gems that are mostly used for testing but useful to have available via CLI
