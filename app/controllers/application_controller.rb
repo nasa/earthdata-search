@@ -246,4 +246,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def log_execution_time
+    time = Benchmark.realtime do
+      yield
+    end
+
+    Rails.logger.info "#{params[:controller].singularize.capitalize} request took #{(time.to_f * 1000).round(0)} ms"
+  end
+
 end
