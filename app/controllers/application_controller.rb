@@ -246,4 +246,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def log_execution_time
+    time = Benchmark.realtime do
+      yield
+    end
+
+    if params[:controller] == 'collections' && params[:action] == 'index'
+      action = 'search'
+    elsif params[:controller] == 'granules' && params[:action] == 'create'
+      action = 'index'
+    else
+      action = params[:action]
+    end
+    Rails.logger.info "#{params[:controller].singularize}##{action} request took #{(time.to_f * 1000).round(0)} ms"
+  end
+
 end
