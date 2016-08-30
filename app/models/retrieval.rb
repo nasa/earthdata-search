@@ -88,7 +88,7 @@ class Retrieval < ActiveRecord::Base
               service_response = MultiXml.parse(ESIClient.submit_esi_request(collection['id'], params, method, request_url, client, token).body)
               method[:order_id] = service_response['agentResponse'].nil? ? nil : service_response['agentResponse']['order']['orderId']
               method[:error_code] = service_response['Exception'].nil? ? nil : service_response['Exception']['Code']
-              method[:error_message] = service_response['Exception'].nil? ? nil : service_response['Exception']['Message']
+              method[:error_message] = Array.wrap(service_response['Exception'].nil? ? nil : service_response['Exception']['Message'])
             end
           rescue => e
             tag = SecureRandom.hex(8)
@@ -99,7 +99,7 @@ class Retrieval < ActiveRecord::Base
                 e.backtrace.each {|l| logger.error "\t#{l}"}
                 method[:order_status] = 'failed'
                 method[:error_code] = tag
-                method[:error_message] = "Could not submit request for processing. Our operations team has been notified of the problem. Please try again later. To provide us additional details, please click the button below."
+                method[:error_message] = ['Could not submit request for processing. Our operations team has been notified of the problem. Please try again later. To provide us additional details, please click the button below.']
               end
             end
           end

@@ -1,6 +1,8 @@
 class CollectionsController < ApplicationController
   respond_to :json
 
+  around_action :log_execution_time
+
   UNLOGGED_PARAMS = ['include_facets', 'hierarchical_facets', 'include_tags', 'include_granule_counts']
 
   def index

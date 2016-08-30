@@ -1,6 +1,8 @@
 class GranulesController < ApplicationController
   include GranuleUtils
 
+  around_action :log_execution_time
+
   respond_to :json
 
   def create
