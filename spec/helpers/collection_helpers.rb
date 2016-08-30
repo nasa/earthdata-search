@@ -5,7 +5,6 @@ module Helpers
         wait_for_xhr
         fill_in "keywords", with: id
         wait_for_xhr
-        page.save_screenshot '1.png'
         expect(find('#collection-results .panel-list-item:first-child, #collection-results .ccol:first-child')).to have_content(text)
       end
 

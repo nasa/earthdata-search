@@ -39,7 +39,10 @@ module Helpers
         params['qt'] = temporal(*options[:temporal]) if options[:temporal]
         params['tl'] = "#{options[:timeline].to_i}!4!!" if options[:timeline]
         params['sgd'] = options[:granule_id] if options[:granule_id]
-        params['q'] = options[:q] if options[:q]
+        if options[:q]
+          params['q'] = options[:q]
+          params['ok'] = options[:q]
+        end
         params['ff'] = options[:ff] if options[:ff]
         params['test_facets'] = true if options[:facets]
 

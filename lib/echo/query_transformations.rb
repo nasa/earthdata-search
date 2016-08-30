@@ -27,6 +27,7 @@ module Echo
 
       def load_freetext_query(query)
         freetext = query.delete(:free_text)
+        query.delete(:original_keyword)
         if freetext
           # Escape catalog-rest reserved characters, then add a wildcard character to the
           # end of each word to allow partial matches of any word

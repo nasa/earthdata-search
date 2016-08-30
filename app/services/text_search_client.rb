@@ -4,7 +4,7 @@ class TextSearchClient
   TEXT_SEARCH_URL = ENV['text_search_url']
 
   def self.parse_text(text)
-    connection.get('/api/v0/context_parsing', {text: text}).body
+    connection.get('/nlp', {text: text}).body
   end
 
   def self.connection

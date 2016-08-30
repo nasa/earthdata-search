@@ -113,6 +113,7 @@ this.edsc.util.url = do(window
     new ParamNameCompressor('placename', 'qp')
     new ParamNameCompressor('temporal', 'qt')
     new ParamNameCompressor('free_text', 'q')
+    new ParamNameCompressor('original_keyword', 'ok')
     new ParamNameCompressor('point', 'sp')
     new ParamNameCompressor('bounding_box', 'sb')
     new ParamNameCompressor('line', 'sl')
