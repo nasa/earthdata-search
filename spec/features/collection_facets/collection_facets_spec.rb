@@ -412,6 +412,29 @@ describe "Collection Facets", reset: false do
         expect(page).to have_no_content("Aerosol Extinction")
       end
     end
+
+    context 'when a middle level keyword is unchecked' do
+      before :all do
+        first(".facet-title", text: /\AAerosols\z/).click
+        wait_for_xhr
+        find(".facets-item", text: "Aerosol Extinction").click
+        wait_for_xhr
+        find(".facet-title", text: /\AAerosols\z/).click
+        wait_for_xhr
+      end
+
+      after :all do
+        reset_search
+        find(".facet-title", text: /\AAtmosphere\z/).click
+        wait_for_xhr
+      end
+
+      it 'removes the children keywords but leaves the parent' do
+        expect(page).to have_css('.facets-item.selected[title="Atmosphere"]')
+        expect(page).to have_no_css('.facets-item.selected[title="Aerosols"]')
+        expect(page).to have_no_css('.facets-item.selected[title="Aerosol Extinction"]')
+      end
+    end
   end
 
   context "selecting a processing level facet" do
