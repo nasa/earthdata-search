@@ -1166,7 +1166,7 @@ bd25466faec252cde72a6b8881dac7ef8be1cdd3:
       message: 
     headers:
       date:
-      - Wed, 31 Aug 2016 15:51:41 GMT
+      - Wed, 31 Aug 2016 18:41:52 GMT
       content-type:
       - application/json
       vary:
@@ -2304,6 +2304,24 @@ e1fafe4e453cfcbbc359d3274fd153c7204f5c52:
     body:
       encoding: UTF-8
       string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"MODIS"}'
+    http_version: 
+2b591e2a605f2d8426bfdd18fa88fc79015705da:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 15:51:41 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":{"textAfterExtraction":"","geonames":"Texas,United States","bbox":{"swPoint":{"latitude":25.837163999999998,"longitude":-106.645646},"nePoint":{"latitude":36.500704,"longitude":-93.508039}},"query":"bounding_box:-106.645646,25.837163999999998:-93.508039,36.500704"},"edscTemporal":null,"keyword":""}'
     http_version: 
 8245b1c2ad80f64fd88a57e2f7599a3929ec14e7:
   response:
