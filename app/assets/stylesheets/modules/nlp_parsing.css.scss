@@ -1,9 +1,5 @@
-// The .tt- prefix is used by the typeahead plugin.  This file
-// overrides several of the styles it uses
-
 .keyword-input {
-  // Overrides style set by typeahead plugin via Javascript
-  vertical-align: baseline !important;
+  vertical-align: baseline;
 }
 
 .toolbar {
