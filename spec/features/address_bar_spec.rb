@@ -476,7 +476,6 @@ describe 'Address bar', reset: false do
 
         before(:each) do
           before_project_id = project_id
-          p  "--------------- project_Id : #{project_id}"
           fill_in "keywords", with: 'AST'
           wait_for_xhr
         end
