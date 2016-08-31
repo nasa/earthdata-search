@@ -219,6 +219,9 @@ ns.CollectionFacets = do (ko) ->
       for facetParam in @query.facets()
         if facetParam.title == root.title
           rootLevel = parseInt(facetParam.param.split(/(?:\]?\[|\]$)/)[1])
+          # science_keywords_h are always hierarachical, so we want root to be NaN
+          if facetParam.param.indexOf 'science_keywords_h' > -1
+            rootLevel = NaN
           break;
       if isNaN(rootLevel)
         @query.facets.remove (facet) ->
