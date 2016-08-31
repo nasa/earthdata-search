@@ -56,7 +56,7 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '1199'
-  recorded_at: Wed, 31 Aug 2016 14:02:44 GMT
+  recorded_at: Tue, 30 Aug 2016 17:24:27 GMT
   digest: 1d0bedeb159f449127cd82bf4954fdce74210a15
 - request:
     method: post
@@ -430,7 +430,7 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '14572'
-  recorded_at: Wed, 31 Aug 2016 14:02:41 GMT
+  recorded_at: Tue, 30 Aug 2016 17:24:21 GMT
   digest: 523dff9ad0e34784c53dfa87c8639499fea0c8e8
 - request:
     method: post
@@ -540,7 +540,7 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '1795'
-  recorded_at: Wed, 31 Aug 2016 14:02:42 GMT
+  recorded_at: Tue, 30 Aug 2016 17:24:17 GMT
   digest: 70071d1b9e9a0ee39f381c697e195d04a7ded97a
 - request:
     method: post
@@ -595,7 +595,7 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '1795'
-  recorded_at: Wed, 31 Aug 2016 14:02:47 GMT
+  recorded_at: Tue, 30 Aug 2016 17:24:24 GMT
   digest: 70071d1b9e9a0ee39f381c697e195d04a7ded97a
 - request:
     method: post
@@ -643,7 +643,7 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '791'
-  recorded_at: Wed, 31 Aug 2016 14:02:43 GMT
+  recorded_at: Tue, 30 Aug 2016 17:24:23 GMT
   digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
 - request:
     method: post
@@ -667,6 +667,80 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '791'
+  recorded_at: Tue, 30 Aug 2016 17:24:22 GMT
+  digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
+- request:
+    method: post
+    uri: http://ogre.example.com/convert
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";
+        filename=\"simple.geojson\"\r\nContent-Length: 361\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding:
+        binary\r\n\r\n{ \"type\": \"FeatureCollection\",\n  \"features\": [\n    {
+        \"type\": \"Feature\",\n      \"geometry\": {\n        \"type\": \"Polygon\",\n
+        \       \"coordinates\": [\n          [ [100.0, 0.0], [101.0, 0.0], [101.0,
+        1.0],\n            [100.0, 1.0], [100.0, 0.0] ]\n        ]\n      },\n      \"properties\":
+        {\n        \"prop0\": \"value0\",\n        \"prop1\": {\"this\": \"that\"}\n
+        \     }\n    }\n  ]\n}\n\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '791'
+  recorded_at: Tue, 30 Aug 2016 17:24:16 GMT
+  digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
+- request:
+    method: post
+    uri: http://ogre.example.com/convert
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";
+        filename=\"simple.geojson\"\r\nContent-Length: 361\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding:
+        binary\r\n\r\n{ \"type\": \"FeatureCollection\",\n  \"features\": [\n    {
+        \"type\": \"Feature\",\n      \"geometry\": {\n        \"type\": \"Polygon\",\n
+        \       \"coordinates\": [\n          [ [100.0, 0.0], [101.0, 0.0], [101.0,
+        1.0],\n            [100.0, 1.0], [100.0, 0.0] ]\n        ]\n      },\n      \"properties\":
+        {\n        \"prop0\": \"value0\",\n        \"prop1\": {\"this\": \"that\"}\n
+        \     }\n    }\n  ]\n}\n\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '791'
+  recorded_at: Tue, 30 Aug 2016 17:24:26 GMT
+  digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
+- request:
+    method: post
+    uri: http://ogre.example.com/convert
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";
+        filename=\"simple.geojson\"\r\nContent-Length: 361\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding:
+        binary\r\n\r\n{ \"type\": \"FeatureCollection\",\n  \"features\": [\n    {
+        \"type\": \"Feature\",\n      \"geometry\": {\n        \"type\": \"Polygon\",\n
+        \       \"coordinates\": [\n          [ [100.0, 0.0], [101.0, 0.0], [101.0,
+        1.0],\n            [100.0, 1.0], [100.0, 0.0] ]\n        ]\n      },\n      \"properties\":
+        {\n        \"prop0\": \"value0\",\n        \"prop1\": {\"this\": \"that\"}\n
+        \     }\n    }\n  ]\n}\n\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '791'
+  recorded_at: Tue, 30 Aug 2016 17:24:19 GMT
+  digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
   recorded_at: Wed, 31 Aug 2016 14:02:46 GMT
   digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
 - request:
