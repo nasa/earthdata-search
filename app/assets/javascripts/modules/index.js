@@ -6,7 +6,7 @@
 //= require modules/banner
 //= require modules/map/index
 //= require modules/temporal/index
-//= require modules/autocomplete
+//= require modules/nlp_parsing
 //= require modules/landing
 //= require modules/dropdown
 //= require modules/global_hooks

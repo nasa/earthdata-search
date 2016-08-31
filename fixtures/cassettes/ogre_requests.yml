@@ -47,8 +47,8 @@ http_interactions:
         [\n          [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],\n            [100.0,
         1.0], [100.0, 0.0] ]\n        ]\n      },\n      \"properties\": {\n        \"prop0\":
         \"value0\",\n        \"prop1\": {\"this\": \"that\"}\n      }\n    }\n  ]\n}\n\r\n-------------RubyMultipartPost\r\nContent-Disposition:
-        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost\r\nContent-Disposition:
-        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost--\r\n\r\n"
+        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -56,8 +56,8 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '1199'
-  recorded_at: Fri, 13 May 2016 14:44:50 GMT
-  digest: f5e8a6f25eba60052512a2d8ee0b8bf7f19974c1
+  recorded_at: Wed, 31 Aug 2016 14:02:44 GMT
+  digest: 1d0bedeb159f449127cd82bf4954fdce74210a15
 - request:
     method: post
     uri: http://ogre.example.com/convert
@@ -421,8 +421,8 @@ http_interactions:
         37.283848 ], [ -114.051405, 37.233854 ], [ -114.051673, 37.172368 ], [ -114.052179,
         37.147110 ], [ -114.051867, 37.134292 ], [ -114.052827, 37.103961 ], [ -114.051822,
         37.090976 ], [ -114.051749, 37.088434 ], [ -114.050600, 37.000396 ] ] ] }
-        }\n\r\n-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost\r\nContent-Disposition:
-        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost--\r\n\r\n"
+        }\n\r\n-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -430,8 +430,8 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '14572'
-  recorded_at: Fri, 13 May 2016 14:44:49 GMT
-  digest: 3d1a7055dc4f32b7eff485416d578e1d8516c338
+  recorded_at: Wed, 31 Aug 2016 14:02:41 GMT
+  digest: 523dff9ad0e34784c53dfa87c8639499fea0c8e8
 - request:
     method: post
     uri: http://ogre.example.com/convert
@@ -491,6 +491,116 @@ http_interactions:
     method: post
     uri: http://ogre.example.com/convert
     body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        LS0tLS0tLS0tLS0tLVJ1YnlNdWx0aXBhcnRQb3N0DQpDb250ZW50LURpc3Bv
+        c2l0aW9uOiBmb3JtLWRhdGE7IG5hbWU9InVwbG9hZCI7IGZpbGVuYW1lPSJz
+        aGFwZV93aXRoX3JlZHVuZGFuY2llcy56aXAiDQpDb250ZW50LUxlbmd0aDog
+        MTM1MQ0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9vY3RldC1zdHJlYW0N
+        CkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IGJpbmFyeQ0KDQpQSwMEFAAI
+        AAgAOnqUSAAAAAAAAAAAAAAAAAoAEABzZWFyY2guY3BnVVgMAA5GM1cA8hdX
+        9QEUAAsNcdO1AABQSwcIUDyBDgcAAAAFAAAAUEsDBBQACAAIAJJ6lEgAAAAA
+        AAAAAAAAAAAKABAAc2VhcmNoLmRiZlVYDAAORjNXpPIXV/UBFABjjmeXYmRg
+        YHBk4GbABjJT4Ew/EMGFJs+rAAXGxkYAUEsHCN4fofMfAAAATAAAAFBLAwQU
+        AAgACAA6epRIAAAAAAAAAAAAAAAACgAQAHNlYXJjaC5wcmpVWAwADkYzVwDy
+        F1f1ARQAc3f1d3cOjlYCEvHh7sHxhpYWJko6Lo4hob7RSi5IQsEBHq5B/p4u
+        0UoIMTNjcwtDY3MdI0sLPSNTcyMjY1Mz49hYnYAgT19XoH73otTUvPLM5Awl
+        HYNYnVA/zxCgmanpQFGggJ6BobmJqbGRpZGpoaWlCZBhGhsLAFBLBwjjwVFq
+        eQAAAI8AAABQSwMEFAAIAAgAOnqUSAAAAAAAAAAAAAAAAAoAEABzZWFyY2gu
+        cXBqVVgMAA1GM1cA8hdX9QEUAG2OPQ+CMBRFd3+FeXND2vf6QUciTemgEFpi
+        DCEOStTFwcW/L+jg0vHee5J7vGv9Lo5w9HFbSmB1lYb9N56FXYvYNa5vQ/1H
+        NJlSkGFoywKVQSSliVVDato+pNMIroseGBhOHKYps2hCvS5dH/ZuefOveX6+
+        H5c7MJ7BS8vFig+HkEa4zrcFX8iCCyMVoUUlrJWUc7ACMe8gfw6bD1BLBwjy
+        7FzQnAAAAAEBAABQSwMEFAAIAAgAknqUSAAAAAAAAAAAAAAAAAoAEABzZWFy
+        Y2guc2hwVVgMAA5GM1ek8hdX9QEUAGNgUOdiwA7aXjAzMLACGQKG2yq9d/ge
+        8Hj3Rr/IyNshYEeiV5aj7YHEziVHdacHOeDQjwwYgTiAGLNACtmhmmBqHzOk
+        fLgoEuiw49Le3uxid7jaGUrqV3iX2R2YK7Bjuo8CJh9mNswum6viU56mesP5
+        6OYDAFBLBwg7ZhNbdQAAAAwBAABQSwMEFAAIAAgAknqUSAAAAAAAAAAAAAAA
+        AAoAEABzZWFyY2guc2h4VVgMAA5GM1ek8hdX9QEUAGNgUOdiwA7MXjAzMLAC
+        GQKG2yq9d/ge8Hj3Rr/IyNshYEeiV5aj7YHEziVHdacHOeDQjwyMgDgAAFBL
+        BwgWyMZEOQAAAGwAAABQSwECFQMUAAgACAA6epRIUDyBDgcAAAAFAAAACgAM
+        AAAAAAAAAABApIEAAAAAc2VhcmNoLmNwZ1VYCAAORjNXAPIXV1BLAQIVAxQA
+        CAAIAJJ6lEjeH6HzHwAAAEwAAAAKAAwAAAAAAAAAAECkgU8AAABzZWFyY2gu
+        ZGJmVVgIAA5GM1ek8hdXUEsBAhUDFAAIAAgAOnqUSOPBUWp5AAAAjwAAAAoA
+        DAAAAAAAAAAAQKSBtgAAAHNlYXJjaC5wcmpVWAgADkYzVwDyF1dQSwECFQMU
+        AAgACAA6epRI8uxc0JwAAAABAQAACgAMAAAAAAAAAABApIF3AQAAc2VhcmNo
+        LnFwalVYCAANRjNXAPIXV1BLAQIVAxQACAAIAJJ6lEg7ZhNbdQAAAAwBAAAK
+        AAwAAAAAAAAAAECkgVsCAABzZWFyY2guc2hwVVgIAA5GM1ek8hdXUEsBAhUD
+        FAAIAAgAknqUSBbIxkQ5AAAAbAAAAAoADAAAAAAAAAAAQKSBGAMAAHNlYXJj
+        aC5zaHhVWAgADkYzV6TyF1dQSwUGAAAAAAYABgCYAQAAmQMAAAAADQotLS0t
+        LS0tLS0tLS0tUnVieU11bHRpcGFydFBvc3QNCkNvbnRlbnQtRGlzcG9zaXRp
+        b246IGZvcm0tZGF0YTsgbmFtZT0iY29udHJvbGxlciINCg0KY29udmVyc2lv
+        bnMNCi0tLS0tLS0tLS0tLS1SdWJ5TXVsdGlwYXJ0UG9zdA0KQ29udGVudC1E
+        aXNwb3NpdGlvbjogZm9ybS1kYXRhOyBuYW1lPSJhY3Rpb24iDQoNCmNvbnZl
+        cnQNCi0tLS0tLS0tLS0tLS1SdWJ5TXVsdGlwYXJ0UG9zdC0tDQoNCg==
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '1795'
+  recorded_at: Wed, 31 Aug 2016 14:02:42 GMT
+  digest: 70071d1b9e9a0ee39f381c697e195d04a7ded97a
+- request:
+    method: post
+    uri: http://ogre.example.com/convert
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        LS0tLS0tLS0tLS0tLVJ1YnlNdWx0aXBhcnRQb3N0DQpDb250ZW50LURpc3Bv
+        c2l0aW9uOiBmb3JtLWRhdGE7IG5hbWU9InVwbG9hZCI7IGZpbGVuYW1lPSJz
+        aGFwZV93aXRoX3JlZHVuZGFuY2llcy56aXAiDQpDb250ZW50LUxlbmd0aDog
+        MTM1MQ0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9vY3RldC1zdHJlYW0N
+        CkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IGJpbmFyeQ0KDQpQSwMEFAAI
+        AAgAOnqUSAAAAAAAAAAAAAAAAAoAEABzZWFyY2guY3BnVVgMAA5GM1cA8hdX
+        9QEUAAsNcdO1AABQSwcIUDyBDgcAAAAFAAAAUEsDBBQACAAIAJJ6lEgAAAAA
+        AAAAAAAAAAAKABAAc2VhcmNoLmRiZlVYDAAORjNXpPIXV/UBFABjjmeXYmRg
+        YHBk4GbABjJT4Ew/EMGFJs+rAAXGxkYAUEsHCN4fofMfAAAATAAAAFBLAwQU
+        AAgACAA6epRIAAAAAAAAAAAAAAAACgAQAHNlYXJjaC5wcmpVWAwADkYzVwDy
+        F1f1ARQAc3f1d3cOjlYCEvHh7sHxhpYWJko6Lo4hob7RSi5IQsEBHq5B/p4u
+        0UoIMTNjcwtDY3MdI0sLPSNTcyMjY1Mz49hYnYAgT19XoH73otTUvPLM5Awl
+        HYNYnVA/zxCgmanpQFGggJ6BobmJqbGRpZGpoaWlCZBhGhsLAFBLBwjjwVFq
+        eQAAAI8AAABQSwMEFAAIAAgAOnqUSAAAAAAAAAAAAAAAAAoAEABzZWFyY2gu
+        cXBqVVgMAA1GM1cA8hdX9QEUAG2OPQ+CMBRFd3+FeXND2vf6QUciTemgEFpi
+        DCEOStTFwcW/L+jg0vHee5J7vGv9Lo5w9HFbSmB1lYb9N56FXYvYNa5vQ/1H
+        NJlSkGFoywKVQSSliVVDato+pNMIroseGBhOHKYps2hCvS5dH/ZuefOveX6+
+        H5c7MJ7BS8vFig+HkEa4zrcFX8iCCyMVoUUlrJWUc7ACMe8gfw6bD1BLBwjy
+        7FzQnAAAAAEBAABQSwMEFAAIAAgAknqUSAAAAAAAAAAAAAAAAAoAEABzZWFy
+        Y2guc2hwVVgMAA5GM1ek8hdX9QEUAGNgUOdiwA7aXjAzMLACGQKG2yq9d/ge
+        8Hj3Rr/IyNshYEeiV5aj7YHEziVHdacHOeDQjwwYgTiAGLNACtmhmmBqHzOk
+        fLgoEuiw49Le3uxid7jaGUrqV3iX2R2YK7Bjuo8CJh9mNswum6viU56mesP5
+        6OYDAFBLBwg7ZhNbdQAAAAwBAABQSwMEFAAIAAgAknqUSAAAAAAAAAAAAAAA
+        AAoAEABzZWFyY2guc2h4VVgMAA5GM1ek8hdX9QEUAGNgUOdiwA7MXjAzMLAC
+        GQKG2yq9d/ge8Hj3Rr/IyNshYEeiV5aj7YHEziVHdacHOeDQjwyMgDgAAFBL
+        BwgWyMZEOQAAAGwAAABQSwECFQMUAAgACAA6epRIUDyBDgcAAAAFAAAACgAM
+        AAAAAAAAAABApIEAAAAAc2VhcmNoLmNwZ1VYCAAORjNXAPIXV1BLAQIVAxQA
+        CAAIAJJ6lEjeH6HzHwAAAEwAAAAKAAwAAAAAAAAAAECkgU8AAABzZWFyY2gu
+        ZGJmVVgIAA5GM1ek8hdXUEsBAhUDFAAIAAgAOnqUSOPBUWp5AAAAjwAAAAoA
+        DAAAAAAAAAAAQKSBtgAAAHNlYXJjaC5wcmpVWAgADkYzVwDyF1dQSwECFQMU
+        AAgACAA6epRI8uxc0JwAAAABAQAACgAMAAAAAAAAAABApIF3AQAAc2VhcmNo
+        LnFwalVYCAANRjNXAPIXV1BLAQIVAxQACAAIAJJ6lEg7ZhNbdQAAAAwBAAAK
+        AAwAAAAAAAAAAECkgVsCAABzZWFyY2guc2hwVVgIAA5GM1ek8hdXUEsBAhUD
+        FAAIAAgAknqUSBbIxkQ5AAAAbAAAAAoADAAAAAAAAAAAQKSBGAMAAHNlYXJj
+        aC5zaHhVWAgADkYzV6TyF1dQSwUGAAAAAAYABgCYAQAAmQMAAAAADQotLS0t
+        LS0tLS0tLS0tUnVieU11bHRpcGFydFBvc3QNCkNvbnRlbnQtRGlzcG9zaXRp
+        b246IGZvcm0tZGF0YTsgbmFtZT0iY29udHJvbGxlciINCg0KY29udmVyc2lv
+        bnMNCi0tLS0tLS0tLS0tLS1SdWJ5TXVsdGlwYXJ0UG9zdA0KQ29udGVudC1E
+        aXNwb3NpdGlvbjogZm9ybS1kYXRhOyBuYW1lPSJhY3Rpb24iDQoNCmNvbnZl
+        cnQNCi0tLS0tLS0tLS0tLS1SdWJ5TXVsdGlwYXJ0UG9zdC0tDQoNCg==
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '1795'
+  recorded_at: Wed, 31 Aug 2016 14:02:47 GMT
+  digest: 70071d1b9e9a0ee39f381c697e195d04a7ded97a
+- request:
+    method: post
+    uri: http://ogre.example.com/convert
+    body:
       encoding: UTF-8
       string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";
         filename=\"simple.geojson\"\r\nContent-Length: 361\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding:
@@ -524,8 +634,8 @@ http_interactions:
         1.0],\n            [100.0, 1.0], [100.0, 0.0] ]\n        ]\n      },\n      \"properties\":
         {\n        \"prop0\": \"value0\",\n        \"prop1\": {\"this\": \"that\"}\n
         \     }\n    }\n  ]\n}\n\r\n-------------RubyMultipartPost\r\nContent-Disposition:
-        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost\r\nContent-Disposition:
-        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost--\r\n\r\n"
+        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -533,8 +643,8 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '791'
-  recorded_at: Fri, 16 Jan 2015 16:05:23 GMT
-  digest: 71f2b6c7361ea1cecfe8c70c1a4a04f496939b89
+  recorded_at: Wed, 31 Aug 2016 14:02:43 GMT
+  digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
 - request:
     method: post
     uri: http://ogre.example.com/convert
@@ -548,8 +658,8 @@ http_interactions:
         1.0],\n            [100.0, 1.0], [100.0, 0.0] ]\n        ]\n      },\n      \"properties\":
         {\n        \"prop0\": \"value0\",\n        \"prop1\": {\"this\": \"that\"}\n
         \     }\n    }\n  ]\n}\n\r\n-------------RubyMultipartPost\r\nContent-Disposition:
-        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost\r\nContent-Disposition:
-        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost--\r\n\r\n"
+        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
     headers:
       User-Agent:
       - Faraday v0.8.8
@@ -557,6 +667,78 @@ http_interactions:
       - multipart/form-data; boundary=-----------RubyMultipartPost
       Content-Length:
       - '791'
-  recorded_at: Fri, 13 May 2016 14:44:50 GMT
-  digest: 71f2b6c7361ea1cecfe8c70c1a4a04f496939b89
+  recorded_at: Wed, 31 Aug 2016 14:02:46 GMT
+  digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
+- request:
+    method: post
+    uri: http://ogre.example.com/convert
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";
+        filename=\"simple.geojson\"\r\nContent-Length: 361\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding:
+        binary\r\n\r\n{ \"type\": \"FeatureCollection\",\n  \"features\": [\n    {
+        \"type\": \"Feature\",\n      \"geometry\": {\n        \"type\": \"Polygon\",\n
+        \       \"coordinates\": [\n          [ [100.0, 0.0], [101.0, 0.0], [101.0,
+        1.0],\n            [100.0, 1.0], [100.0, 0.0] ]\n        ]\n      },\n      \"properties\":
+        {\n        \"prop0\": \"value0\",\n        \"prop1\": {\"this\": \"that\"}\n
+        \     }\n    }\n  ]\n}\n\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '791'
+  recorded_at: Wed, 31 Aug 2016 14:02:46 GMT
+  digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
+- request:
+    method: post
+    uri: http://ogre.example.com/convert
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";
+        filename=\"simple.geojson\"\r\nContent-Length: 361\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding:
+        binary\r\n\r\n{ \"type\": \"FeatureCollection\",\n  \"features\": [\n    {
+        \"type\": \"Feature\",\n      \"geometry\": {\n        \"type\": \"Polygon\",\n
+        \       \"coordinates\": [\n          [ [100.0, 0.0], [101.0, 0.0], [101.0,
+        1.0],\n            [100.0, 1.0], [100.0, 0.0] ]\n        ]\n      },\n      \"properties\":
+        {\n        \"prop0\": \"value0\",\n        \"prop1\": {\"this\": \"that\"}\n
+        \     }\n    }\n  ]\n}\n\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '791'
+  recorded_at: Wed, 31 Aug 2016 14:02:45 GMT
+  digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
+- request:
+    method: post
+    uri: http://ogre.example.com/convert
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"upload\";
+        filename=\"simple.geojson\"\r\nContent-Length: 361\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding:
+        binary\r\n\r\n{ \"type\": \"FeatureCollection\",\n  \"features\": [\n    {
+        \"type\": \"Feature\",\n      \"geometry\": {\n        \"type\": \"Polygon\",\n
+        \       \"coordinates\": [\n          [ [100.0, 0.0], [101.0, 0.0], [101.0,
+        1.0],\n            [100.0, 1.0], [100.0, 0.0] ]\n        ]\n      },\n      \"properties\":
+        {\n        \"prop0\": \"value0\",\n        \"prop1\": {\"this\": \"that\"}\n
+        \     }\n    }\n  ]\n}\n\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"controller\"\r\n\r\nconversions\r\n-------------RubyMultipartPost\r\nContent-Disposition:
+        form-data; name=\"action\"\r\n\r\nconvert\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '791'
+  recorded_at: Wed, 31 Aug 2016 14:02:49 GMT
+  digest: ea22739f3eb4e225daca7e065dcfec1afd7230de
 recorded_with: VCR 2.6.0

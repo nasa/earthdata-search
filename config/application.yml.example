@@ -11,7 +11,7 @@ defaults: &defaults
   ogre_url: "<ogre_url>"
 
   # Root URL for CLAVIN-based spatial and temporal extractor.
-  text_search_url: http://localhost:9090/
+  nlp_parser_url: http://localhost:15400/
 
   # URL and API user id for a placename search service.  The URL should stay the same, but you will need
   # to register an API user.

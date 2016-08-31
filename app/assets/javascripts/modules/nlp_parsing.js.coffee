@@ -1,19 +1,19 @@
 do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax) ->
 
   $(document).ready ->
-    $placenameInputs = $('.autocomplete-placenames')
+    $nlpInput = $('.nlp-parsing')
     typingTimer = null
     timeoutInterval = 500
-    $placenameInputs.on 'input paste cut', (event) ->
+    $nlpInput.on 'input paste cut', (event) ->
       clearTimeout(typingTimer)
       typingTimer = setTimeout(_parseSearchText, timeoutInterval)
 
-    $placenameInputs.on 'keydown', (event) ->
+    $nlpInput.on 'keydown', (event) ->
       clearTimeout(typingTimer)
       _parseSearchText(event) if event.which == 13
 
     _parseSearchText = (e) ->
-      query = $placenameInputs.val()
+      query = $nlpInput.val()
       currentPage.query.originalKeywords(query)
       ajax
         dataType: 'json'
