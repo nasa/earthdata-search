@@ -222,7 +222,18 @@ http_interactions:
   digest: 12df547bc45308db2fd98161bb3e3a0164da4f85
 - request:
     method: get
-    uri: http://localhost:15400/nlp?text=Texas
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 31 Aug 2016 20:29:04 GMT
+  digest: f9718903bef9e6dd7ef205d3658b33ca02a5c3ae
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=Texas
     body:
       encoding: US-ASCII
       string: ''
@@ -231,6 +242,28 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Wed, 31 Aug 2016 18:41:52 GMT
   digest: bd25466faec252cde72a6b8881dac7ef8be1cdd3
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=last+winter
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 31 Aug 2016 20:15:59 GMT
+  digest: 59cf06142b5e080c45f12f3d3e7c1097c88348b4
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=snow+cover+in+Boston+last+winter
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 31 Aug 2016 20:29:46 GMT
+  digest: 5884f975ca0a8d5ee85aa5b858613e3f8d61694a
 - request:
     method: get
     uri: http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/tos_AMSRE_L3_v7_200206-201012.nc.ddx
