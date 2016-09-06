@@ -43,6 +43,12 @@ end
 
 group :production do
   gem 'pg'
+  # TODO Turn it on when prod is in the cloud.
+  # gem 'rails_12factor'
+end
+
+group :sit, :uat do
+  gem 'pg'
   gem 'rails_12factor'
 end
 
@@ -59,7 +65,6 @@ group :development, :test do
   gem 'jasmine_junitxml_formatter'
 
   gem 'therubyracer', :require => 'v8'
-
 end
 
 group :assets, :development, :test do
