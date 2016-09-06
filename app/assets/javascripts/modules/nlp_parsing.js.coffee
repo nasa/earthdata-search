@@ -3,7 +3,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
   $(document).ready ->
     $nlpInput = $('.nlp-parsing')
     typingTimer = null
-    timeoutInterval = 500
+    timeoutInterval = 700
     $nlpInput.on 'input paste cut', (event) ->
       clearTimeout(typingTimer)
       typingTimer = setTimeout(_parseSearchText, timeoutInterval)
