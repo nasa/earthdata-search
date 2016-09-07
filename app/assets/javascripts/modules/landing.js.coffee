@@ -19,8 +19,12 @@ do ($=jQuery
     hasTimeline = $('#timeline').data('timeline')?
     if isLandingPage
       $('#timeline').timeline('hide') if hasTimeline
-      $('.landing-dialog-toolbar').append($content)
-      $('#keywords').focus()
+      timer = setInterval((=>
+        unless window.edsc.util.xhr.hasPending()
+          clearTimeout(timer)
+          $('.landing-dialog-toolbar').append($content)
+          $('#keywords').focus()
+      ), 0)
     else
       $('#timeline').timeline('refresh') if hasTimeline
       $('.landing-toolbar-container').append($content)
