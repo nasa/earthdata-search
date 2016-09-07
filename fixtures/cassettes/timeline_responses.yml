@@ -703,6 +703,28 @@ e3b3ea9ef27c0439f3f5ac703f1eb986d377dbf7:
       encoding: UTF-8
       string: "[]"
     http_version: 
+d9475ed0a54ca4ec85c81909ea80cc4945ecfb10:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 07 Sep 2016 19:34:46 GMT
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 291da0d0-d354-4248-9e1f-5406cd6258c1
+      content-length:
+      - '198'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '[{"concept-id":"C1236224182-GES_DISC","intervals":[[1333411200,1333929600,598],[1336953600,1346889600,14383],[1346976000,1348012800,1564],[1348185600,1349308800,1664],[1349568000,1355529600,9320]]}]'
+    http_version: 
 f5801e117ff4523a275fccd3ef6ed5ca040c1e7a:
   response:
     status:
