@@ -131,7 +131,7 @@ fetch_urls <<'EDSCEOF'
   (function () {
 
     function downloadScriptFile() {
-      var content = document.getElementById("script").innerHTML;
+      var content = document.getElementById("script").textContent;
       var dl = document.createElement('a');
       dl.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(content));
       dl.setAttribute('download', 'download.sh');
