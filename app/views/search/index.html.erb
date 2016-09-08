@@ -13,7 +13,7 @@
 <% end %>
 
 <% content_for :toolbar do %>
-  <div class="landing-toolbar-container">
+  <div class="landing-toolbar-container" style="display: none;">
   <div class="landing-toolbar-content">
   <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
     <p>
@@ -265,7 +265,7 @@
 
 <div class="landing-area landing-visible">
 
-  <div class="landing-dialog">
+  <div class="landing-dialog" style="display: none;">
     <div class="noscript no-js">
       <h3><%= site_name %> uses JavaScript</h3>
       <ul>

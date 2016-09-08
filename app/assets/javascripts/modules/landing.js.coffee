@@ -21,6 +21,7 @@ do ($=jQuery
       $('#timeline').timeline('hide') if hasTimeline
       timer = setInterval((=>
         unless window.edsc.util.xhr.hasPending()
+          $('.landing-dialog').show()
           clearTimeout(timer)
           $('.landing-dialog-toolbar').append($content)
           $('#keywords').focus()
@@ -28,6 +29,7 @@ do ($=jQuery
     else
       $('#timeline').timeline('refresh') if hasTimeline
       $('.landing-toolbar-container').append($content)
+      $('.landing-toolbar-container').show()
     $content.css(top: 0, left: 0, position: 'static')
 
   updateLandingPageAnimated = (isLandingPage) ->
