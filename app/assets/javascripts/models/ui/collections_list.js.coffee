@@ -71,6 +71,7 @@ ns.CollectionsList = do ($ = jQuery
         query: query
         collections: collections
         selected_index: index
+        selected_collection: collection.id
 
       return true if $(event?.target).closest('a').length > 0
       return false unless collection.canFocus()
