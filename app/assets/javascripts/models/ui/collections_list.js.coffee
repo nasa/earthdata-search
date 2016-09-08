@@ -3,7 +3,14 @@
 ns = @edsc.models.ui
 data = @edsc.models.data
 
-ns.CollectionsList = do ($=jQuery, document, config = @edsc.config, CollectionsModel=data.Collections, GranulesList=ns.GranulesList, edscplugin=@edscplugin) ->
+ns.CollectionsList = do ($ = jQuery
+                      document
+                      config = @edsc.config
+                      CollectionsModel = data.Collections
+                      GranulesList = ns.GranulesList
+                      edscplugin = @edscplugin
+                      ajax = @edsc.util.xhr.ajax
+                      ) ->
 
   class CollectionsList
     constructor: (@query, @collections, @project) ->
@@ -57,9 +64,25 @@ ns.CollectionsList = do ($=jQuery, document, config = @edsc.config, CollectionsM
         @_unselectTimeout = setTimeout((=> @selected(null)), config.defaultAnimationDurationMs)
 
     focusCollection: (collection, event=null) =>
+      query = @query.params()
+      collections = @collections.results().map (collection) -> collection.id
+      index = @collections.results().indexOf(collection)
+      data =
+        query: query
+        collections: collections
+        selected_index: index
+
       return true if $(event?.target).closest('a').length > 0
       return false unless collection.canFocus()
       return false if @focused()?.collection.id == collection.id
+
+      ajax
+        data: data
+        dataType: 'json'
+        url: "/collections/collection_relevancy"
+        method: 'post'
+        success: (data) ->
+          console.log data
 
       @focused(new GranulesList(collection))
 
