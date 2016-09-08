@@ -46,6 +46,19 @@ class CollectionsController < ApplicationController
     render :json => result, status: :ok
   end
 
+  def collection_relevancy
+    number_of_collections = 20
+
+    data = {
+      query: params[:query],
+      collections: params[:collections][0..number_of_collections - 1],
+      selected_index: params[:selected_index]
+    }
+
+    metrics_event('collection_relevancy', data)
+    render :json => 'ok', status: :ok
+  end
+
   private
 
   def get_featured_ids
