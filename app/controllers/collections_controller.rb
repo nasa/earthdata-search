@@ -52,7 +52,8 @@ class CollectionsController < ApplicationController
     data = {
       query: params[:query],
       collections: params[:collections][0..number_of_collections - 1],
-      selected_index: params[:selected_index]
+      selected_index: params[:selected_index],
+      selected_collection: params[:selected_collection]
     }
 
     metrics_event('collection_relevancy', data)
