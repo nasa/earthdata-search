@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.2'
 
 gem 'rails', '~> 4.2.7.1'
 
@@ -42,6 +43,13 @@ end
 
 group :production do
   gem 'pg'
+  # TODO Turn it on when prod is in the cloud.
+  # gem 'rails_12factor'
+end
+
+group :sit, :uat do
+  gem 'pg'
+  gem 'rails_12factor'
 end
 
 # Gems that are mostly used for testing but useful to have available via CLI
@@ -57,7 +65,6 @@ group :development, :test do
   gem 'jasmine_junitxml_formatter'
 
   gem 'therubyracer', :require => 'v8'
-
 end
 
 group :assets, :development, :test do
