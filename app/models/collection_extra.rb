@@ -9,6 +9,7 @@ class CollectionExtra < ActiveRecord::Base
   store :orbit, coder: JSON
 
   def self.build_echo_client(env=(@cmr_env || Rails.configuration.cmr_env))
+    puts "Building echo client for env: #{env || 'env not working'}"
     Echo::Client.client_for_environment(env, Rails.configuration.services)
   end
 
