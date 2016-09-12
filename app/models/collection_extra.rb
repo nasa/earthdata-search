@@ -32,7 +32,7 @@ class CollectionExtra < ActiveRecord::Base
   end
 
   def self.sync_esi(client, token)
-    puts 'Starting Sync ESI'
+    Rails.logger.info('Starting Sync ESI')
     option_response = client.get_all_service_order_information(token)
 
     if option_response.success?
@@ -48,13 +48,13 @@ class CollectionExtra < ActiveRecord::Base
       end
 
       if ids.present?
-        puts 'Adding ESI Tags'
+        Rails.logger.info('Adding ESI Tags')
 
         key = tag_key('subset_service.esi')
         client.add_tag(key, nil, ids, token, false, false)
       end
     end
-    puts 'Finished adding ESI Tags'
+    Rails.logger.info('Finished adding ESI Tags')
     nil
   end
 
