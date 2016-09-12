@@ -4,6 +4,7 @@ namespace :data do
   namespace :load do
     desc "Cache data contained in the ECHO 10 format to return with granule results"
     task :echo10 => ['environment'] do
+      puts "Starting data:load:echo10"
       log_error do
         CollectionExtra.load_echo10
       end
@@ -11,6 +12,7 @@ namespace :data do
 
     desc "Data about granules in collections to return with granule results"
     task :granules => ['environment'] do
+      puts "Starting data:load:granules"
       log_error do
         CollectionExtra.load
       end
@@ -18,6 +20,7 @@ namespace :data do
 
     desc "Sync tags for services"
     task :tags => ['environment'] do
+      puts "Starting data:load:tags"
       log_error do
         CollectionExtra.sync_tags
       end
