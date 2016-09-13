@@ -49,7 +49,7 @@ end
 
 group :sit, :uat do
   gem 'pg'
-  # gem 'rails_12factor'
+  gem 'rails_12factor'
 end
 
 # Gems that are mostly used for testing but useful to have available via CLI
