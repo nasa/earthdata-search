@@ -4,6 +4,7 @@
 // The container for the entire overlay
 .master-overlay {
   color: #fff;
+  display: flex;
 
   a {
     color: #fff;
@@ -12,7 +13,6 @@
   // Non-scrollable header area
   header {
     margin: 1em 1em 0;
-    color: $overlay-heading-font-color;
 
     h2 {
       font-size: 1.4em;
@@ -65,9 +65,9 @@
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
 .master-overlay-main {
   background-color: $master-overlay-main-bg-color;
-  width: 40%;
-  left: $facet-overlay-width;
+  top: 50%;
   overflow: hidden;
+  color: #424242;
 }
 
 // The secondary section in the overlay. Granule filters
@@ -90,12 +90,14 @@
 .master-overlay-main-content {
   width: 400%;
   left: 0%;
+  background: #fff;
 
   section {
     height: 100%;
     width: 25%;
     float: left;
     position: relative;
+    padding-left: 270px;
   }
 
   dt {
@@ -148,7 +150,6 @@
 
 .master-overlay-info {
   margin: 0;
-  color: $overlay-heading-font-color;
 
 
   p.button-details {
@@ -228,7 +229,7 @@
 
 // Scrollable content area
 .master-overlay-content {
-  padding: .5em 1em 1em 1em;
+  padding: 0;
   height: 80%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -377,7 +378,7 @@ $parent-width: $parent-split * 0.21;
 
 @media (min-width: $browser-split) {
   .master-overlay-main {
-    width: $main-width;
+    width: 100%
   }
 
   .master-overlay-secondary {

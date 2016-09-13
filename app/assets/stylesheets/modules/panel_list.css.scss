@@ -19,9 +19,9 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-item, .panel-list-list > .sortable-placeholder {
-  color: #fff;
-  background-color: #292929;
-  border-left: 10px solid #424242;
+  color: #424242;
+  background-color: #fff;
+  border-top: 1px solid #e3e3e3;
   margin: 5px 5px 6px 5px;
   min-height: $panel-list-thumbnail-size + 30px;
   padding: 10px 10px 10px 14px;
@@ -32,9 +32,12 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     margin-top: 0;
   }
 
+  &:nth-child(odd) {
+    background: #f3f3f3;
+  }
+
   &.master-overlay-forward:hover {
-    border-left-color: #525252;
-    background-color: #393939;
+    background-color: #c9c9c9;
   }
 
   h3 {
@@ -286,7 +289,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 .panel-list-title {
   font-size: 1.1em;
   padding: 0 .5em .2em;
-  color: #c9c9c9
 }
 
 .portal-escape {
