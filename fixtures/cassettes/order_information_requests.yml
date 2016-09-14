@@ -290,25 +290,6 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/order_information.json
     body:
       encoding: US-ASCII
-      string: catalog_item_id%5B%5D=G1299918578-LPDAAC_ECS
-    headers:
-      User-Agent:
-      - Faraday v0.8.8
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Client-Id:
-      - eed-edsc-dev
-      Echo-ClientId:
-      - eed-edsc-dev
-      Echo-Token:
-      - edsc
-  recorded_at: Tue, 13 Sep 2016 19:32:29 GMT
-  digest: 63357d8e7c23cbf7b7c7bdbcab7fc7bd06b02a04
-- request:
-    method: post
-    uri: https://api.echo.nasa.gov/echo-rest/order_information.json
-    body:
-      encoding: US-ASCII
       string: catalog_item_id%5B%5D=G179098142-ORNL_DAAC&catalog_item_id%5B%5D=G179098143-ORNL_DAAC&catalog_item_id%5B%5D=G179098144-ORNL_DAAC&catalog_item_id%5B%5D=G179098245-ORNL_DAAC&catalog_item_id%5B%5D=G179098246-ORNL_DAAC&catalog_item_id%5B%5D=G179098247-ORNL_DAAC&catalog_item_id%5B%5D=G179098248-ORNL_DAAC&catalog_item_id%5B%5D=G179098249-ORNL_DAAC&catalog_item_id%5B%5D=G179098250-ORNL_DAAC&catalog_item_id%5B%5D=G179098251-ORNL_DAAC&catalog_item_id%5B%5D=G179098252-ORNL_DAAC&catalog_item_id%5B%5D=G179098253-ORNL_DAAC&catalog_item_id%5B%5D=G179098254-ORNL_DAAC&catalog_item_id%5B%5D=G179098255-ORNL_DAAC&catalog_item_id%5B%5D=G179098256-ORNL_DAAC
     headers:
       User-Agent:
