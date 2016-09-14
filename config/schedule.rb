@@ -20,6 +20,8 @@
 # Learn more: http://github.com/javan/whenever
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
+set :output, '/var/log/app.search-sit.log'
+
 set :environment, Rails.env
 set :job_template, "/bin/bash -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job'"
 #TODO: This should be reverted when production is in the cloud
