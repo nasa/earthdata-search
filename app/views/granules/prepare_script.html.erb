@@ -90,7 +90,7 @@ exit_with_error() {
 
 prompt_credentials
 
-<% if @first_link.start_with? 'https://datapool.asf.alaska.edu' %>
+    <% if @first_link.start_with? 'https://datapool.asf.alaska.edu' %>
   <%= render partial: 'asf_download' %>
 <% else %>
   <%= render partial: 'generic_download' %>
@@ -98,13 +98,17 @@ prompt_credentials
 
     fetch_urls() {
     if command -v curl >/dev/null 2>&1; then
+    <% unless @first_link.empty? %>
         setup_auth_curl
-        while read -r line; do
+    <% end %>
+    while read -r line; do
     <% if @first_link.start_with? 'ftp' %>
-            curl -f -Og --netrc-file "$netrc" $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
-            <% else %>
-            curl -f -b "$cookiejar" -c "$cookiejar" -L -n -Og -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
-            <% end %>
+        curl -f -Og --netrc-file "$netrc" $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
+    <% elsif !@first_link.empty?%>
+        curl -f -b "$cookiejar" -c "$cookiejar" -L -n -Og -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
+    <% else %>
+        echo "No downloadable links are found."
+    <% end %>
     done;
     elif command -v wget >/dev/null 2>&1; then
         # We can't use wget to poke provider server to get info whether or not URS was integrated without download at least one of the files.
@@ -167,17 +171,25 @@ fetch_urls <<'EDSCEOF'
     }
 
     function onLoad() {
-      var doc = JSON.parse(this.response);
-      cmrHits = doc['CMR-Hits'];
-      document.getElementById('loading').innerHTML = 'Loading more... (parsed ' + (currentPage * 2000 > cmrHits ? cmrHits : (currentPage * 2000))+ ' of ' + cmrHits + ')';
-      var links = doc.links;
-      preContent = document.getElementById('script');
-      preContent.innerHTML += links.join("\n");
-      var next = getNextPageUrl();
-      if (next) {
-        fetchLinks(next);
+      if(this.status == 200) {
+        var doc = JSON.parse(this.response);
+        cmrHits = doc['CMR-Hits'];
+        document.getElementById('loading').innerHTML = 'Loading more... (parsed ' + (currentPage * 2000 > cmrHits ? cmrHits : (currentPage * 2000)) + ' of ' + cmrHits + ')';
+        var links = doc.links;
+        preContent = document.getElementById('script');
+        preContent.innerHTML += links.join("\n");
+        var next = getNextPageUrl();
+        if (next) {
+          fetchLinks(next);
+        }
+        else {
+          finish();
+        }
       }
       else {
+        document.getElementById('download-description').innerHTML = "Error retrieving download links from backend API. Request <div class='pre-container'><pre>" + this.responseURL
+            + "</pre></div> returns an error: <div class='pre-container'><pre>" + this.responseText + "</pre></div>";
+        document.getElementById('download-description').style.display = 'inline';
         finish();
       }
     }

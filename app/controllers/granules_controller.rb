@@ -141,7 +141,7 @@ class GranulesController < ApplicationController
       url_mapper.send("#{url_type}_urls_for", granule).first
     else
       @errors = catalog_response.body
-      nil
+      ''
     end
   end
 end
