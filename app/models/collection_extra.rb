@@ -16,8 +16,11 @@ class CollectionExtra < ActiveRecord::Base
   def self.create_system_token(client)
     response = client.create_token(ENV['system_user'], ENV['system_user_password'])
     if response.success? && response.body['token']
-      response.body['token']['id']
+      token = response.body['token']['id']
+      puts "token: #{token}"
+      token
     else
+      puts "token: nil"
       nil
     end
   end
