@@ -469,6 +469,38 @@ c7448339dd38012463128d35fc337e3aee62e976:
       encoding: UTF-8
       string: "[]"
     http_version: 
+fab4f57e94308c18fc3406de33994b91c183fb2d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      strict-transport-security:
+      - max-age=15768000
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"2bfb8a9b9d87087436fe549a3025b3b8"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.164000'
+      content-type:
+      - application/json;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 13 Sep 2016 19:32:25 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"reference":{"id":"67F585F8-EA34-471F-A57E-BE10AC32A594","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/67F585F8-EA34-471F-A57E-BE10AC32A594","name":"MODIS"}}]'
+    http_version: 
 829a2b4198ae6bd56b348372b2fe0180191be2c6:
   response:
     status:
@@ -653,6 +685,46 @@ c7448339dd38012463128d35fc337e3aee62e976:
           <name>MODIS</name>
           <updated_at type="datetime">2011-01-20T13:22:28Z</updated_at>
           <provider_id>LAADS</provider_id>
+        </data_quality_summary_definition>
+    http_version: 
+a712e61b7f4ee12e195b66bba123ee6d64fbc854:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      strict-transport-security:
+      - max-age=15768000
+      server:
+      - Apache-Coyote/1.1
+      etag:
+      - '"10a6490e45180bcaee32f7909f01bb16"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ua-compatible:
+      - IE=Edge,chrome=1
+      x-runtime:
+      - '0.116000'
+      content-type:
+      - application/xml;charset=utf-8
+      vary:
+      - Accept-Encoding
+      date:
+      - Tue, 13 Sep 2016 19:32:27 GMT
+      connection:
+      - close
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <data_quality_summary_definition>
+          <id>67F585F8-EA34-471F-A57E-BE10AC32A594</id>
+          <summary>&lt;p&gt;-------------------------------------------------------------------------------------------------------- &lt;br /&gt; MODIS LEVEL-2 AND HIGHER PRODUCTS AT THE Land Processes DAAC:  &lt;br /&gt; -------------------------------------------------------------------------------------------------------- &lt;br /&gt;&lt;br /&gt; Product quality assessment QA and validation are integral parts of the MODIS Land product generation process. The MODIS Land products have different data versions and levels of maturity reflecting algorithm refinement and the input data used in their production.&amp;nbsp; Please view technical information regarding product maturity and QA at:  &lt;a href="http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi" target="_modisqa"&gt;http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/newPage.cgi&lt;/a&gt; and product validation status at:  &lt;a href="http://landval.gsfc.nasa.gov/" target="_modisvalid"&gt;http://landval.gsfc.nasa.gov/&lt;/a&gt;&lt;/p&gt;</summary>
+          <name>MODIS</name>
+          <updated_at type="datetime">2011-01-31T20:42:08Z</updated_at>
+          <provider_id>LPDAAC_ECS</provider_id>
         </data_quality_summary_definition>
     http_version: 
 b0c1165cee35a82aec67a0fa257d5453ae182718:

@@ -2135,6 +2135,36 @@ c87ef1798ab8ecf5de167d74280ae857d6f41987:
         Grid</PrimaryCSDT><Implementation>GeoTIFF</Implementation></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>https://lpdaac.usgs.gov/lpdaac/products/aster_product_table</URL><Description>Documents
         page for LP DAAC ASTER Products.</Description><Type>MiscInformation</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>ASTGTM1</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
     http_version: 
+a85b7ab99ddb61a47558a3a150b622b9adc972f2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 13 Sep 2016 19:32:27 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - cb8cb4ff-4555-4ba4-bf9a-8650bb0f54cb
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"2G","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","version_id":"006","updated":"2016-03-21T09:32:15.906Z","dataset_id":"MODIS/Terra
+        Surface Reflectance Daily L2G Global 250m SIN Grid V006","data_center":"LPDAAC_ECS","short_name":"MOD09GQ","organizations":["LPDAAC","MODAPS"],"title":"MODIS/Terra
+        Surface Reflectance Daily L2G Global 250m SIN Grid V006","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        Surface Reflectance Daily L2G Global 250m SIN Grid","orbit_parameters":{},"id":"C193529903-LPDAAC_ECS","original_format":"ECHO10","archive_center":"LPDAAC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&ver=C6"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Data
+        set landing page at the LP DAAC (MiscInformation)","hreflang":"en-US","href":"http://dx.doi.org/10.5067/MODIS/MOD09GQ.006"}]}'
+    http_version: 
 7bcad02381c5db3c148ba8c2da9e384f90b1644c:
   response:
     status:

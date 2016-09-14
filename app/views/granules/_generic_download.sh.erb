@@ -6,6 +6,7 @@ detect_app_approval() {
     fi
 }
 
+<% unless @first_link.empty? %>
 setup_auth_curl() {
     # Firstly, check if it require URS authentication
     status=$(curl -s -z "$(date)" -w %{http_code} <%= raw @first_link %> | tail -1)
@@ -15,12 +16,13 @@ setup_auth_curl() {
         <% # FTP retrieval. Extract hostname and set netrc %>
         # FTP retrieval. Set netrc file before curl-ing.
         echo "\nmachine <%= @first_link[/ftp:\/\/([^\/]*)\/.*/, 1] %>\tlogin $username\tpassword $password" >> $netrc
-        <% else %>
+        <% elsif !@first_link.empty? %>
         # URS authentication is required. Now further check if the application/remote service is approved.
         detect_app_approval
         <% end %>
     fi
 }
+<% end %>
 
 setup_auth_wget() {
     # The safest way to auth via curl is netrc. Note: there's no checking or feedback
