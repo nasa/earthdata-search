@@ -43,7 +43,8 @@ module Helpers
         params['ff'] = options[:ff] if options[:ff]
         params['test_facets'] = true if options[:facets]
 
-        p = ((options[:focus].nil? ? [] : [options[:focus]]) + Array.wrap(options[:project])).join('!')
+        p = ([options[:focus]] + Array.wrap(options[:project])).join('!')
+        p.slice!(0) if p.start_with? '!'
         params['p'] = p if p.present?
 
         Array.wrap(options[:queries]).each_with_index do |q, i|
