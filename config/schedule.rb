@@ -26,7 +26,9 @@ set :job_template, "/bin/bash -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job
 job_type :edsc_rake, "cd :path && :environment_variable=:environment #{Rails.env == 'production' ? '' : 'foreman '}run bundle exec rake :task --silent :output"
 
 every 1.hour do
-  edsc_rake "data:load"
+  edsc_rake "data:load:tags"
+  edsc_rake "data:load:echo10"
+  edsc_rake "data:load:granules"
 end
 
 every 1.day do
