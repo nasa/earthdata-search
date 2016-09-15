@@ -102,26 +102,13 @@
           </p>
         </div>
         <div id="collection-scroll-pane" class="master-overlay-content" data-bind="event: {scroll: ui.collectionsList.scrolled}">
-          <!-- ko if: collections.featured().length > 0 -->
-          <h3 class="panel-list-title">Recent and Featured</h3>
           <div class="panel-list">
-            <edsc-collections-collapsed id="coll-collection-featured-list" params="page: $data, collections: collections.featured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
-            <ul id="collection-featured-list"
-                class="panel-list-list knockout-template master-overlay-when-max"
-                data-bind="foreach: collections.featured, css: { 'knockout-template': !bindingsLoaded }">
-              <%= render partial: 'collection_list_item', locals: {is_project: false} %>
-            </ul>
-          </div>
-
-          <h3 class="panel-list-title">More Collections</h3>
-          <!-- /ko -->
-          <div class="panel-list">
-            <!-- ko if: collections.unfeatured().length > 0 -->
-            <edsc-collections-collapsed id="coll-collection-results-list" params="page: $data, collections: collections.unfeatured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
+            <!-- ko if: collections.results().length > 0 -->
+            <edsc-collections-collapsed id="coll-collection-results-list" params="page: $data, collections: collections.results, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
             <!-- /ko -->
             <ul id="collection-results-list"
                 class="panel-list-list knockout-template master-overlay-when-max"
-                data-bind="foreach: collections.unfeatured, css: { 'knockout-template': !bindingsLoaded }">
+                data-bind="foreach: collections.results, css: { 'knockout-template': !bindingsLoaded }">
               <%= render partial: 'collection_list_item', locals: {is_project: false} %>
             </ul>
             <p class="panel-list-load-more" data-bind="visible: collections.isLoading">
@@ -321,7 +308,7 @@
     </div>
     <div class="landing-dialog-actions">
       <a href="#collections-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
-      <p><i class="fa fa-arrow-circle-left"></i> See featured collections or use categories to narrow your results.</p>
+      <p><i class="fa fa-arrow-circle-left"></i> Use categories to narrow your results.</p>
     </div>
   </div>
 

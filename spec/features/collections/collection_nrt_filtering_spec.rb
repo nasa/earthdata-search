@@ -13,21 +13,17 @@ describe 'Collection NRT Filtering', reset: false do
     end
 
     it 'shows only NRT collections' do
-      expect(collection_results).to have_css('.badge-nrt', count: 21)
+      expect(collection_results).to have_css('.badge-nrt', count: 20)
     end
 
     context 'when un-selecting the NRT filter' do
       before :all do
-          find('p.facets-item', text: 'Near Real Time').click
+        find('p.facets-item', text: 'Near Real Time').click
         wait_for_xhr
       end
 
       it 'shows all collections' do
-        expect(collection_results).to have_css('.badge-nrt', count: 2)
-      end
-
-      it 'shows recent and featured collections' do
-        expect(collection_results).to have_content('Recent and Featured')
+        expect(collection_results).to have_no_css('.badge-nrt')
       end
     end
   end

@@ -113,7 +113,7 @@ describe "Add to project", reset: false do
           target_collection_result.click_link "Add collection to the current project"
           wait_for_xhr
           fill_in :keywords, with: ' '
-          within first_featured_collection do
+          within second_unfeatured_collection do
             click_link "Add collection to the current project"
             click_link "Remove collection from the current project"
           end
