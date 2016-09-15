@@ -14,8 +14,8 @@ describe "Granule list", reset: false do
   end
 
   context "for all collections with granules" do
-    use_collection 'C179003030-ORNL_DAAC', '15 Minute Stream Flow Data: USGS (FIFE)'
-    hook_granule_results
+    use_collection 'C92711294-NSIDC_ECS', 'MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005'
+    hook_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
 
     it "provides a button to get collection details" do
       expect(granule_list).to have_link('View collection details')
@@ -40,7 +40,7 @@ describe "Granule list", reset: false do
 
       it "displays the collection details" do
         expect(page).to have_visible_collection_details
-        expect(page).to have_content('ornldaac@ornl.gov')
+        expect(page).to have_content('nsidc@nsidc.org')
       end
 
       it "displays back navigation with the appropriate text" do
@@ -125,8 +125,8 @@ describe "Granule list", reset: false do
         after :all do
           Capybara.reset_sessions!
           load_page :search
-          fill_in 'keywords', with: 'C179003030-ORNL_DAAC'
-          view_granule_results
+          fill_in 'keywords', with: 'C92711294-NSIDC_ECS'
+          view_granule_results('MODIS/Terra Snow Cover Daily L3 Global 500m SIN Grid V005')
 
           first_granule_list_item.click
           first_granule_list_item.click_link "Exclude this granule"
@@ -134,7 +134,7 @@ describe "Granule list", reset: false do
         end
 
         it "loads next page" do
-          expect(page.text).to match(/Showing [1-9]\d* of 19 matching granules/)
+          expect(page.text).to match(/Showing [1-9]\d* of 1819851 matching granules/)
           expect(page).to have_content("Granule excluded. Undo")
         end
       end
@@ -149,7 +149,7 @@ describe "Granule list", reset: false do
         end
 
         it "shows the excluded granule in the granule list" do
-          expect(page).to have_content('FIFE_STRM_15M.80611715.s15')
+          expect(page).to have_content('MOD10A1.A2016250.h21v17.005.2016252125119.hdf')
           expect(page).to have_css('#granule-list .panel-list-item', count: 20)
         end
 

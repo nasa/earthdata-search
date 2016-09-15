@@ -39,6 +39,13 @@
 
 }
 
+.landing-dialog-loading {
+  height: 288px;
+  background: asset-url('spinner.gif') no-repeat 50% 56%;
+  line-height: 240px;
+  text-align: center;
+}
+
 .landing-dialog-toolbar {
   height: 58px;
   padding: .5em 0;

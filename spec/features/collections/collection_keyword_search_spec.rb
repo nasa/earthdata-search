@@ -56,7 +56,7 @@ describe "Collection keyword searches", reset: false do
         view_granule_results('15 Minute Stream Flow Data: USGS (FIFE)', 'project-overview')
         granule_list.click_link('Filter granules')
         first_granule_list_item.click_link('View granule details')
-        expect(page).to have_content('Day / Night Flag')
+        expect(page).to have_content('Find only granules that have browse images.')
       end
 
       after(:all) do
@@ -111,7 +111,7 @@ describe "Collection keyword searches", reset: false do
         view_granule_results
         granule_list.click_link('Filter granules')
         first_granule_list_item.click_link('View granule details')
-        expect(page).to have_content('Day / Night Flag')
+        expect(page).to have_content('Find only granules that have browse images.')
       end
 
       after(:all) do
