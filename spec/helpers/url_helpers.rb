@@ -30,7 +30,7 @@ module Helpers
       def params_from_options(options)
         params = {}
 
-        [:bounding_box, :point, :polygon].each do |type|
+        [:bounding_box, :sb, :point, :sp, :polygon].each do |type|
           params[type.to_s] = spatial(options[type]) if options[type]
         end
 
