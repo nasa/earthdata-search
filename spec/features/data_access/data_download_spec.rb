@@ -146,6 +146,25 @@ describe "Data download page", reset: false do
     end
   end
 
+  context "selecting the direct download option for a granule with invalid params" do
+    before :all do
+      load_page 'data/configure', {project: 'C92711294-NSIDC_ECS', sb: [42.890625, 23.765625, 43.453125, 24.890625], queries: [{}, cc: {min: ''}], temporal: ['2016-03-12T00:00:00Z', '2016-03-12T23:59:59Z']}
+      choose 'Download'
+      click_on 'Submit'
+      wait_for_xhr
+      click_link "Download Access Script"
+
+    end
+    context 'upon clicking a "Download Access Script" button' do
+      it "displays a shell script on the page with no downloadable urls" do
+        within_last_window do
+          expect(page).to have_content("Error retrieving download links from backend API")
+          expect(page).to have_content("fetch_urls <<'EDSCEOF' EDSCEOF")
+        end
+      end
+    end
+  end
+
   context "selecting an asynchronous access option for granules with browse imagery" do
     before :all do
       load_page 'data/configure', browseable_collection_params
