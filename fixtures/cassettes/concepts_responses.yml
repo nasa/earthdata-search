@@ -2558,6 +2558,37 @@ b8790055866bfcd5fe029ae66c0c65ed32ec751b:
         Page for this product at NSIDC</Description><Type>MiscInformation</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/data_pool/modis_disclaimer.html</URL><Description>Quality
         Summary</Description><Type>Quality Summary</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>MOD10A1V5</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
     http_version: 
+ea880ca0a47da48a66e1e18ee987efc39864afb2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 14 Sep 2016 17:18:20 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 6dc6571b-16d1-4a95-9485-2bb9aea98dbf
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","dif_ids":["MOD10A1V5"],"version_id":"5","updated":"2014-10-30T13:57:31.002Z","dataset_id":"MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid V005","data_center":"NSIDC_ECS","short_name":"MOD10A1","organizations":["NSIDC","MODAPS"],"title":"MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid V005","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid","orbit_parameters":{},"id":"C92711294-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Catalog
+        Page for this product at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/MOD10A1/versions/5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
+        Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}'
+    http_version: 
 e12cbf007574b9620f6098962cd92b111c41f5d7:
   response:
     status:
