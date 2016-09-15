@@ -25,13 +25,13 @@ do ($=jQuery
           clearTimeout(timer)
           $('.landing-dialog-toolbar').append($content)
           $('#keywords').focus()
-          $('.landing-dialog-container').show()
+          $('.landing-dialog-container').fadeIn()
           help.startTour() if !window.edscportal && uiModel.isLandingPage() && (preferences.showTour() || window.location.href.indexOf('?tour=true') != -1)
       ), 0)
     else
       $('#timeline').timeline('refresh') if hasTimeline
       $('.landing-toolbar-container').append($content)
-      $('.landing-toolbar-container').show()
+      $('.landing-toolbar-container').fadeIn()
     $content.css(top: 0, left: 0, position: 'static')
 
   updateLandingPageAnimated = (isLandingPage) ->
