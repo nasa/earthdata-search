@@ -22,8 +22,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
 set :environment, Rails.env
 set :job_template, "/bin/bash -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job'"
-#TODO: This should be reverted when production is in the cloud
-job_type :edsc_rake, "cd :path && :environment_variable=:environment #{Rails.env == 'production' ? '' : 'foreman '}run bundle exec rake :task --silent :output"
+job_type :edsc_rake, "cd :path && :environment_variable=:environment foreman run bundle exec rake :task --silent :output"
 
 every 1.hour do
   edsc_rake "data:load"

@@ -13,7 +13,7 @@
 <% end %>
 
 <% content_for :toolbar do %>
-  <div class="landing-toolbar-container">
+  <div class="landing-toolbar-container" style="display: none;">
   <div class="landing-toolbar-content">
   <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
     <p>
@@ -312,16 +312,19 @@
       </ul>
     </div>
 
-    <div class="landing-dialog-header">
-      <a href="/?tour=true" class="show-tour" target="_blank" data-bind="visible: window.edscportal || !preferences.showTour()">Take a Tour</a>
-      <h2>Discover Earth Science Data</h2>
-      <p>Search NASA Earth Science data by keyword and filter by <i class="fa fa-clock-o"></i> <strong>time</strong> or <i class="fa fa-crop"></i> <strong>space</strong>.</p>
-    </div>
-    <div class="landing-dialog-toolbar toolbar">
-    </div>
-    <div class="landing-dialog-actions">
-      <a href="#collections-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
-      <p><i class="fa fa-arrow-circle-left"></i> See featured collections or use categories to narrow your results.</p>
+    <p class="landing-dialog-loading">Please wait while the application loads</p>
+    <div class="landing-dialog-container" style="display: none;">
+      <div class="landing-dialog-header">
+        <a href="/?tour=true" class="show-tour" target="_blank" data-bind="visible: window.edscportal || !preferences.showTour()">Take a Tour</a>
+        <h2>Discover Earth Science Data</h2>
+        <p>Search NASA Earth Science data by keyword and filter by <i class="fa fa-clock-o"></i> <strong>time</strong> or <i class="fa fa-crop"></i> <strong>space</strong>.</p>
+      </div>
+      <div class="landing-dialog-toolbar toolbar">
+      </div>
+      <div class="landing-dialog-actions">
+        <a href="#collections-overlay" class="master-overlay-show button text-button"><i class="fa fa-search"></i> Browse All Data</a>
+        <p><i class="fa fa-arrow-circle-left"></i> See featured collections or use categories to narrow your results.</p>
+      </div>
     </div>
   </div>
 
