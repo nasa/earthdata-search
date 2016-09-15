@@ -43,8 +43,7 @@ end
 
 group :production do
   gem 'pg'
-  # TODO Turn it on when prod is in the cloud.
-  # gem 'rails_12factor'
+  gem 'rails_12factor'
 end
 
 group :sit, :uat do
