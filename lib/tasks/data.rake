@@ -4,34 +4,37 @@ namespace :data do
   namespace :load do
     desc "Cache data contained in the ECHO 10 format to return with granule results"
     task :echo10 => ['environment'] do
-      log_error do
+      puts "Starting data:load:echo10"
+      log_error('data:load:echo10') do
         CollectionExtra.load_echo10
       end
     end
 
     desc "Data about granules in collections to return with granule results"
     task :granules => ['environment'] do
-      log_error do
+      puts "Starting data:load:granules"
+      log_error('data:load:granules') do
         CollectionExtra.load
       end
     end
 
     desc "Sync tags for services"
     task :tags => ['environment'] do
-      log_error do
+      puts "Starting data:load:tags"
+      log_error('data:load:tags') do
         CollectionExtra.sync_tags
       end
     end
 
-    def log_error(&block)
+    def log_error(task, &block)
       begin
         yield
       rescue
-        job = CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'failed', message: "#{error.inspect}", host: Socket.gethostname)
+        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'failed', message: "#{error.inspect}", host: Socket.gethostname)
         job.save!
         exit 1
       else
-        job = CronJobHistory.new(task_name: 'data:load', last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
+        job = CronJobHistory.new(task_name: task, last_run: Time.now, status: 'succeeded', host: Socket.gethostname)
         job.save!
       end
     end
