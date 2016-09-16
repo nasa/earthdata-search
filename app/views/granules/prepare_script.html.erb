@@ -121,7 +121,7 @@ prompt_credentials
         wget --load-cookies "$cookiejar" --save-cookies "$cookiejar" --keep-session-cookies -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
         done;
     else
-        fail_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
+        exit_with_error "Error: Could not find a command-line downloader.  Please install curl or wget"
     fi
 }
 
