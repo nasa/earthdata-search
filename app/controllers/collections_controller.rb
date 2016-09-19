@@ -30,7 +30,6 @@ class CollectionsController < ApplicationController
     metrics_event('details', {collections: [params[:id]]})
     response = echo_client.get_collection(params[:id], token)
 
-    use_collection(params[:id])
 
     if response.success?
       respond_with(CollectionDetailsPresenter.new(response.body.first, params[:id], token, cmr_env), status: response.status)
@@ -41,7 +40,6 @@ class CollectionsController < ApplicationController
 
   def use
     metrics_event('view', {collections: [params[:id]]})
-    result = use_collection(params[:id])
     render :json => result, status: :ok
   end
 
