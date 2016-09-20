@@ -105,7 +105,7 @@ prompt_credentials
     <% if @first_link.start_with? 'ftp' %>
         curl -f -Og --netrc-file "$netrc" $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
     <% elsif !@first_link.empty?%>
-        curl -f -b "$cookiejar" -c "$cookiejar" -L -n -Og -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
+        curl -f -b "$cookiejar" -c "$cookiejar" -L --netrc-file "$netrc" -Og -- $line && echo || exit_with_error "Command failed with error. Please retrieve the data manually."
     <% else %>
         echo "No downloadable links are found."
     <% end %>
