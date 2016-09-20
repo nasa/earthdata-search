@@ -25,8 +25,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  RECENT_DATASET_COUNT = 2
-
   def echo_client
     if @echo_client.nil?
       service_configs = Rails.configuration.services
