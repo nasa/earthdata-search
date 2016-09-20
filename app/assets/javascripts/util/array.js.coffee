@@ -9,3 +9,13 @@
 
   exports =
     pairs: pairs
+
+if Array::find == undefined
+
+  Array::find = (callback, thisArg) ->
+    i = 0
+    while i < @length
+      if callback.call(thisArg or window, @[i], i, this)
+        return @[i]
+      i++
+    undefined
