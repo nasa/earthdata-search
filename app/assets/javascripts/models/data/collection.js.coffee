@@ -43,10 +43,9 @@ ns.Collection = do (ko
 
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
-      featured = jsonData.featured
       for collection in collections()
         if collection.id == id
-          if (jsonData.short_name? && !collection.hasAtomData()) || collection.featured != featured || jsonData.granule_count != collection.granule_count
+          if (jsonData.short_name? && !collection.hasAtomData()) || jsonData.granule_count != collection.granule_count
             collection.fromJson(jsonData)
           return collection.reference()
       register(new Collection(jsonData, query, randomKey))
@@ -160,16 +159,6 @@ ns.Collection = do (ko
       result = !@granuleFiltersApplied()
       collections.remove(this) if result
       result
-
-    makeRecent: ->
-      id = @id
-      if id? && !@featured
-        ajax
-          dataType: 'json'
-          url: "/collections/#{id}/use.json"
-          method: 'post'
-          success: (data) ->
-            @featured = data
 
     granuleDatasourceName: ->
       datasource = @getValueForTag('datasource')

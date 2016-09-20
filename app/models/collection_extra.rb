@@ -279,10 +279,6 @@ class CollectionExtra < ActiveRecord::Base
     end
   end
 
-  def self.featured_ids
-    ['C1229626387-LANCEMODIS', 'C1219032686-LANCEMODIS']
-  end
-
   def decorate(collection)
     collection = collection.dup.with_indifferent_access
 
