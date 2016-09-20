@@ -1,0 +1,26 @@
+{
+  "layers": {
+    "MOPITT_CO_Daily_Total_Column_Day": {
+      "startDate": "2000-03-03",
+      "product": "MOPITT_CO_Daily_Total_Column_Day",
+      "id": "MOPITT_CO_Daily_Total_Column_Day",
+      "subtitle": "Terra / MOPITT",
+      "format": "image/png",
+      "title": "Carbon Monoxide (Daily, Day, Total Column)",
+      "type": "wmts",
+      "projections": {
+        "geographic": {
+          "source": "GIBS:geographic",
+          "matrixSet": "2km"
+        }
+      }
+    }
+  },
+  "products": {
+    "MOPITT_CO_Daily_Total_Column_Day": {
+      "query": {
+        "conceptId": ["C191855458-LARC", "C40204-ECHO10_PT"]
+      }
+    }
+  }
+}
