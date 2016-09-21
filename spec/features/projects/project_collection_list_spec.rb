@@ -67,7 +67,8 @@ describe "Project collection list", reset: true do
 
     before :each do
       second_project_collection.click_link "Show granule filters"
-      select 'Day only', from: "day-night-select"
+      fill_in "Start", with: "1987-10-15 00:00:00\t"
+      fill_in "End", with: "1987-10-20 23:59:59\t"
       click_button "granule-filters-submit"
       wait_for_xhr
     end
@@ -75,12 +76,11 @@ describe "Project collection list", reset: true do
     after :each do
       second_project_collection.click_link "Show granule filters"
       click_button "granule-filters-clear"
-      expect(page).to have_select("day-night-select", selected: "Anytime")
-      click_button "granule-filters-submit"
     end
 
     it "doesn't show an empty query param 'pg[]=' in the url" do
-      expect(page).to have_query_string("p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[2][dnf]=DAY&q=Minute+(FIFE)&ok=Minute+(FIFE)")
+      project = Project.find(URI.parse(page.current_url).query[/^projectId=(\d+)$/, 1].to_i)
+      expect(project.path).to eq("/search/project?p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[2][qt]=1987-10-15T00%3A00%3A00.000Z%2C1987-10-20T23%3A59%3A59.000Z&q=Minute+(FIFE)")
     end
   end
 

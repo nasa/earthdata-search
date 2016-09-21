@@ -168,6 +168,7 @@ describe "Collection Facets", reset: false do
 
       before :each do
         find(".facets-item", text: "ESIP").click
+        wait_for_xhr
       end
 
       after :all do

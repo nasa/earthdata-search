@@ -857,4 +857,15 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Thu, 19 May 2016 16:25:15 GMT
   digest: 9ce0bd1566373b313dc9b29dc08f3b5a3c9ff8c4
+- request:
+    method: get
+    uri: https://worldview.earthdata.nasa.gov/config/wv.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Tue, 20 Sep 2016 19:04:33 GMT
+  digest: c4bdaee98ebbd8ac715deaafd3b1275eb475566c
 recorded_with: VCR 2.6.0

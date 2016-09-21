@@ -9,6 +9,7 @@ class CollectionExtra < ActiveRecord::Base
   store :orbit, coder: JSON
 
   def self.build_echo_client(env=(@cmr_env || Rails.configuration.cmr_env))
+    puts "Building echo client for env: #{env || 'env not working'}"
     Echo::Client.client_for_environment(env, Rails.configuration.services)
   end
 
@@ -17,6 +18,7 @@ class CollectionExtra < ActiveRecord::Base
     if response.success? && response.body['token']
       response.body['token']['id']
     else
+      puts 'System token not created successfully'
       nil
     end
   end
@@ -32,7 +34,7 @@ class CollectionExtra < ActiveRecord::Base
   end
 
   def self.sync_esi(client, token)
-    Rails.logger.info('Starting Sync ESI')
+    puts 'Starting Sync ESI'
     option_response = client.get_all_service_order_information(token)
 
     if option_response.success?
@@ -48,13 +50,13 @@ class CollectionExtra < ActiveRecord::Base
       end
 
       if ids.present?
-        Rails.logger.info('Adding ESI Tags')
+        puts 'Adding ESI Tags'
 
         key = tag_key('subset_service.esi')
         client.add_tag(key, nil, ids, token, false, false)
       end
     end
-    Rails.logger.info('Finished adding ESI Tags')
+    puts 'Finished adding ESI Tags'
     nil
   end
 
@@ -275,10 +277,6 @@ class CollectionExtra < ActiveRecord::Base
       extra = extras[result['id']] || CollectionExtra.new
       extra.decorate(result)
     end
-  end
-
-  def self.featured_ids
-    ['C1229626387-LANCEMODIS', 'C1219032686-LANCEMODIS']
   end
 
   def decorate(collection)

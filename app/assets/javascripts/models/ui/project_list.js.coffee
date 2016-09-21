@@ -133,7 +133,6 @@ ns.ProjectList = do (ko
       if project.hasCollection(collection)
         project.removeCollection(collection)
       else
-        collection.makeRecent()
         project.addCollection(collection)
 
     _computeCollectionLinks: ->

@@ -267,7 +267,7 @@ describe 'Address bar', reset: false do
 
   context "setting granule query conditions within the project" do
     before(:all) do
-      visit '/search/project?p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
+      visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS'
       first_project_collection.click_link "Show granule filters"
       check "Find only granules that have browse images."
       second_project_collection.click_link "Show granule filters"
@@ -280,7 +280,7 @@ describe 'Address bar', reset: false do
 
     it "saves the query conditions in the URL" do
       expect(page).to have_path('/search/project/collection-details')
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS&pg[1][bo]=true&pg[2][dnf]=DAY')
     end
 
     it "does not duplicate the query conditions for the focused collection" do
@@ -307,7 +307,7 @@ describe 'Address bar', reset: false do
 
   context "loading a URL with saved query conditions" do
     before :all do
-      visit '/search/project?p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
+      visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS!C179002883-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
       wait_for_xhr
     end
 

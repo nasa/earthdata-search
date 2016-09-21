@@ -43,10 +43,9 @@ ns.Collection = do (ko
 
     @findOrCreate: (jsonData, query) ->
       id = jsonData.id
-      featured = jsonData.featured
       for collection in collections()
         if collection.id == id
-          if (jsonData.short_name? && !collection.hasAtomData()) || collection.featured != featured || jsonData.granule_count != collection.granule_count
+          if (jsonData.short_name? && !collection.hasAtomData()) || jsonData.granule_count != collection.granule_count
             collection.fromJson(jsonData)
           return collection.reference()
       register(new Collection(jsonData, query, randomKey))
@@ -100,6 +99,19 @@ ns.Collection = do (ko
             "#{@details().granule_url}?#{paramStr}"
         deferEvaluation: true
 
+      @availableFilters = @computed(@_computeAvailableFilters, this, deferEvaluation: true)
+
+    # Since CMR doesn't support this feature, we get them from the granules that are already loaded.
+    _computeAvailableFilters: ->
+      _capabilities = {}
+      # Loop for each loaded granules, as long as we found one that capable of day/night filtering or cloud cover filtering,
+      # it stops.
+      for _granule in @cmrGranulesModel.results()
+        _capabilities['day_night_flag'] = true if _granule.day_night_flag? && _granule.day_night_flag.toUpperCase() in ['DAY', 'NIGHT', 'BOTH']
+        _capabilities['cloud_cover'] = true if _granule.cloud_cover?
+        break if _capabilities['day_night_flag'] && _capabilities['cloud_cover']
+      _capabilities
+
     _computeTimeRange: ->
       if @hasAtomData()
         result = dateUtil.timeSpanToIsoDate(@time_start, @time_end)
@@ -147,16 +159,6 @@ ns.Collection = do (ko
       result = !@granuleFiltersApplied()
       collections.remove(this) if result
       result
-
-    makeRecent: ->
-      id = @id
-      if id? && !@featured
-        ajax
-          dataType: 'json'
-          url: "/collections/#{id}/use.json"
-          method: 'post'
-          success: (data) ->
-            @featured = data
 
     granuleDatasourceName: ->
       datasource = @getValueForTag('datasource')

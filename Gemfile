@@ -46,6 +46,11 @@ group :production do
   gem 'rails_12factor'
 end
 
+group :sit, :uat do
+  gem 'pg'
+  gem 'rails_12factor'
+end
+
 # Gems that are mostly used for testing but useful to have available via CLI
 group :development, :test do
   gem 'thin'
@@ -59,7 +64,6 @@ group :development, :test do
   gem 'jasmine_junitxml_formatter'
 
   gem 'therubyracer', :require => 'v8'
-
 end
 
 group :assets, :development, :test do
