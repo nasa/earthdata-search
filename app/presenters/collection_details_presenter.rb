@@ -47,7 +47,8 @@ class CollectionDetailsPresenter < DetailsPresenter
 
     metadata_url = "#{Rails.configuration.services['earthdata'][env]['cmr_root']}/search/concepts/#{@collection.id}"
     url_token = "?token=#{token}:#{client_id(env)}" if token
-    @collection.native_url = "#{metadata_url}#{url_token}"
+    @collection.html_url = "#{metadata_url}.html#{url_token}"
+    @collection.native_url = "#{metadata_url}.native#{url_token}"
     @collection.atom_url = "#{metadata_url}.atom#{url_token}"
     @collection.echo10_url = "#{metadata_url}.echo10#{url_token}"
     @collection.iso19115_url = "#{metadata_url}.iso19115#{url_token}"
