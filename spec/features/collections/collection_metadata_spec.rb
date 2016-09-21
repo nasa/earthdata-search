@@ -9,7 +9,8 @@ describe 'Collection metadata', reset: false do
   end
 
   it 'provides metadata in multiple formats' do
-    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.html"]')
+    expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.native"]')
     expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.atom"]')
     expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.echo10"]')
     expect(page).to have_selector('a[href="https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.iso19115"]')
@@ -23,7 +24,8 @@ describe 'Collection metadata', reset: false do
     end
 
     it 'provides metadata in multiple formats with user tokens' do
-      expect(page).to have_xpath('//a[contains(@href, "https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS?token=")]')
+      expect(page).to have_xpath('//a[contains(@href, "https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.html?token=")]')
+      expect(page).to have_xpath('//a[contains(@href, "https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.native?token=")]')
       expect(page).to have_xpath('//a[contains(@href, "https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.atom?token=")]')
       expect(page).to have_xpath('//a[contains(@href, "https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.echo10?token=")]')
       expect(page).to have_xpath('//a[contains(@href, "https://cmr.earthdata.nasa.gov/search/concepts/C179460405-LPDAAC_ECS.iso19115?token=")]')
