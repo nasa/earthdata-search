@@ -80,7 +80,7 @@ describe "Project collection list", reset: true do
 
     it "doesn't show an empty query param 'pg[]=' in the url" do
       project = Project.find(URI.parse(page.current_url).query[/^projectId=(\d+)$/, 1].to_i)
-      expect(project.path).to eq("/search/project?p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[2][qt]=1987-10-15T00%3A00%3A00.000Z%2C1987-10-20T23%3A59%3A59.000Z&q=Minute+(FIFE)")
+      expect(project.path).to eq("/search/project?p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[2][qt]=1987-10-15T00%3A00%3A00.000Z%2C1987-10-20T23%3A59%3A59.000Z&q=Minute+(FIFE)&ok=Minute+(FIFE)")
     end
   end
 
