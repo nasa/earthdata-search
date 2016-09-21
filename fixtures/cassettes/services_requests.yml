@@ -222,48 +222,48 @@ http_interactions:
   digest: 12df547bc45308db2fd98161bb3e3a0164da4f85
 - request:
     method: get
-    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C179002107-SEDAC
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Wed, 31 Aug 2016 20:29:04 GMT
-  digest: f9718903bef9e6dd7ef205d3658b33ca02a5c3ae
+  recorded_at: Wed, 21 Sep 2016 17:43:31 GMT
+  digest: 5d60317d82cfd1a34e19c15a15a3aafcd5e77078
 - request:
     method: get
-    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=Texas
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C179002914-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Wed, 31 Aug 2016 18:41:52 GMT
-  digest: bd25466faec252cde72a6b8881dac7ef8be1cdd3
+  recorded_at: Wed, 21 Sep 2016 17:43:34 GMT
+  digest: 25fff63cf6c244fe65f5e00922872ea6753d32d9
 - request:
     method: get
-    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=last+winter
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C179003380-ORNL_DAAC
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Wed, 31 Aug 2016 20:15:59 GMT
-  digest: 59cf06142b5e080c45f12f3d3e7c1097c88348b4
+  recorded_at: Wed, 21 Sep 2016 17:43:40 GMT
+  digest: 59c017dd2f03edb84702a70b1161a9ab2d18f40d
 - request:
     method: get
-    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=snow+cover+in+Boston+last+winter
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C92711294-NSIDC_ECS
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
       - Faraday v0.8.8
-  recorded_at: Wed, 31 Aug 2016 20:29:46 GMT
-  digest: 5884f975ca0a8d5ee85aa5b858613e3f8d61694a
+  recorded_at: Wed, 21 Sep 2016 17:43:43 GMT
+  digest: b9570c482b947a0139b588ef8beb03eb6844ce57
 - request:
     method: get
     uri: http://podaac-opendap.jpl.nasa.gov/opendap/allData/amsre/L3/sst_1deg_1mo/tos_AMSRE_L3_v7_200206-201012.nc.ddx
@@ -688,6 +688,17 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v0.8.8
+  recorded_at: Wed, 31 Aug 2016 20:29:04 GMT
+  digest: 267d7a0532de9cfbe155c618871e65d6a75ba08e
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=C179003030-ORNL_DAAC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
   recorded_at: Wed, 31 Aug 2016 13:53:20 GMT
   digest: 267d7a0532de9cfbe155c618871e65d6a75ba08e
 - request:
@@ -791,6 +802,17 @@ http_interactions:
   digest: 2b591e2a605f2d8426bfdd18fa88fc79015705da
 - request:
     method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=Texas
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 31 Aug 2016 18:41:52 GMT
+  digest: 2b591e2a605f2d8426bfdd18fa88fc79015705da
+- request:
+    method: get
     uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=asdfasdfasdfasdfasdf
     body:
       encoding: US-ASCII
@@ -800,6 +822,28 @@ http_interactions:
       - Faraday v0.8.8
   recorded_at: Wed, 31 Aug 2016 13:51:42 GMT
   digest: 8245b1c2ad80f64fd88a57e2f7599a3929ec14e7
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=last+winter
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 31 Aug 2016 20:15:59 GMT
+  digest: e18cf04d431fed94443e161aa77947050dfab040
+- request:
+    method: get
+    uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=snow+cover+in+Boston+last+winter
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+  recorded_at: Wed, 31 Aug 2016 20:29:46 GMT
+  digest: 6ee0da5974f6311d8bd28aef212e82ea65f42b4d
 - request:
     method: get
     uri: https://edsc-clavin.ngap.earthdata.nasa.gov/nlp?text=snow+cover+nrt
