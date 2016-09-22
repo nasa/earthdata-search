@@ -141,30 +141,30 @@ describe 'Address bar', reset: false do
 
   context 'when searching by facets' do
     before(:all) do
-      visit '/search?test_facets=true'
-      find("h3.facet-title", text: 'Project').click
+      visit '/search?test_facets=true&cmr_env=sit'
+      find("h3.panel-title", text: 'Project').click
       find(".facets-item", text: "EOSDIS").click
       wait_for_xhr
     end
 
     it 'saves the facet condition in the address bar' do
-      expect(page).to have_query_string('test_facets=true&fpj=EOSDIS')
+      expect(page).to have_query_string('cmr_env=sit&test_facets=true&fpj=EOSDIS')
     end
 
     context 'clearing filters' do
       before(:all) { click_link "Clear Filters" }
 
       it 'removes the facet condition from the address bar' do
-        expect(page).to have_query_string('test_facets=true')
+        expect(page).to have_query_string('cmr_env=sit&test_facets=true')
       end
     end
   end
 
   context 'when loading a url containing a facet condition' do
-    before(:all) { visit '/search?test_facets=true&fpj=EOSDIS' }
+    before(:all) { visit '/search?cmr_env=sit&test_facets=true&fpj=EOSDIS' }
 
     it 'displays the selected facet condition' do
-      within(:css, '#collapse2 .panel-body.facets') do
+      within(:css, '.panel.projects .panel-body.facets') do
         expect(page).to have_content("EOSDIS")
         expect(page).to have_css(".facets-item.selected")
       end
@@ -267,7 +267,7 @@ describe 'Address bar', reset: false do
 
   context "setting granule query conditions within the project" do
     before(:all) do
-      visit '/search/project?p=!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC'
+      visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS'
       first_project_collection.click_link "Show granule filters"
       check "Find only granules that have browse images."
       second_project_collection.click_link "Show granule filters"
@@ -280,7 +280,7 @@ describe 'Address bar', reset: false do
 
     it "saves the query conditions in the URL" do
       expect(page).to have_path('/search/project/collection-details')
-      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY')
+      expect(page).to have_query_string('p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS&pg[1][bo]=true&pg[2][dnf]=DAY')
     end
 
     it "does not duplicate the query conditions for the focused collection" do
@@ -307,7 +307,7 @@ describe 'Address bar', reset: false do
 
   context "loading a URL with saved query conditions" do
     before :all do
-      visit '/search/project?p=C179003030-ORNL_DAAC!C179003030-ORNL_DAAC!C179002914-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
+      visit '/search/project?p=!C179003030-ORNL_DAAC!C92711294-NSIDC_ECS!C179002883-ORNL_DAAC&pg[1][bo]=true&pg[2][dnf]=DAY'
       wait_for_xhr
     end
 

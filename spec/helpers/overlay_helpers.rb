@@ -37,28 +37,20 @@ module Helpers
       page.find('#collection-results-list')
     end
 
-    def featured_collection_results
-      page.find('#collection-featured-list')
+    def first_unfeatured_collection
+      nth_panel(unfeatured_collection_results, 1)
     end
 
-    def featured_collapsed_collection_results
-      page.find('#coll-collection-featured-list')
+    def second_unfeatured_collection
+      nth_panel(unfeatured_collection_results, 2)
     end
 
     def unfeatured_collapsed_collection_results
       page.find('#coll-collection-results-list')
     end
 
-    def first_featured_collection
-      nth_panel(featured_collection_results, 1)
-    end
-
-    def second_featured_collection
-      nth_panel(featured_collection_results, 2)
-    end
-
-    def first_collapsed_featured_collection
-      nth_ccol(featured_collapsed_collection_results, 1)
+    def collapsed_collection(col)
+      page.find('.ccol', text: col)
     end
 
     def first_collapsed_collection

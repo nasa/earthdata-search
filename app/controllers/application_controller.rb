@@ -25,8 +25,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  RECENT_DATASET_COUNT = 2
-
   def echo_client
     if @echo_client.nil?
       service_configs = Rails.configuration.services
@@ -54,6 +52,7 @@ class ApplicationController < ActionController::Base
   end
 
   def refresh_urs_if_needed
+    current_user
     if logged_in? && server_session_expires_in < 0
       refresh_urs_token
     end
@@ -111,26 +110,6 @@ class ApplicationController < ActionController::Base
     @current_user
   end
 
-  @@recent_lock = Mutex.new
-  def use_collection(id)
-    return false if id.blank? || (Rails.env.test? && cookies['persist'] != 'true')
-
-    id = id.first if id.is_a? Array
-    if current_user.present?
-      @@recent_lock.synchronize do
-        RecentCollection.find_or_create_by(user: current_user, echo_id: id).touch
-      end
-    else
-      # FIXME This does not work for guests loading directly to a project with more then 1
-      # collection, the session gets session does not carry over between the multiple calls to
-      # collections_controller:show
-      recent = session[:recent_collections] || []
-      recent.unshift(id)
-      session[:recent_collections] = recent.uniq.take(RECENT_DATASET_COUNT)
-    end
-    true
-  end
-
   def earthdata_username
     session[:user_name]
   end
@@ -139,7 +118,6 @@ class ApplicationController < ActionController::Base
     store_oauth_token()
     session[:user_id] = nil
     session[:user_name] = nil
-    session[:recent_collections] = []
   end
 
   def store_oauth_token(json={})
@@ -244,6 +222,21 @@ class ApplicationController < ActionController::Base
       timestamp = (Time.now.to_f * 1000).to_i
       Rails.logger.info({event: type, data: data, session: session.id, timestamp: timestamp}.merge(other_data).to_json)
     end
+  end
+
+  def log_execution_time
+    time = Benchmark.realtime do
+      yield
+    end
+
+    if params[:controller] == 'collections' && params[:action] == 'index'
+      action = 'search'
+    elsif params[:controller] == 'granules' && params[:action] == 'create'
+      action = 'index'
+    else
+      action = params[:action]
+    end
+    Rails.logger.info "#{params[:controller].singularize}##{action} request took #{(time.to_f * 1000).round(0)} ms"
   end
 
 end

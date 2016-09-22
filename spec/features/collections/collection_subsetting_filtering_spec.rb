@@ -55,10 +55,6 @@ describe 'Collection "Subsetting Services" Filtering', reset: false do
       it 'shows all collections' do
         expect(page).to have_css('.badge-subsetting', count: 1)
       end
-
-      it 'shows recent and featured collections' do
-        expect(page).to have_content('Recent and Featured')
-      end
     end
   end
 

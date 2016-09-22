@@ -18,12 +18,20 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-set :job_template, "/bin/bash -l -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job'"
+require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+
+set :output, '$NGAP_LOG'
+
+set :environment, Rails.env
+set :job_template, "/bin/bash -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job'"
+job_type :edsc_rake, "cd :path && :environment_variable=:environment foreman run bundle exec rake :task --silent :output"
 
 every 1.hour do
-  rake "data:load"
+  edsc_rake "data:load:tags"
+  edsc_rake "data:load:echo10"
+  edsc_rake "data:load:granules"
 end
 
 every 1.day do
-  rake "colormaps:load"
+  edsc_rake "colormaps:load"
 end

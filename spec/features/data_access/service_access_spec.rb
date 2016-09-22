@@ -26,8 +26,12 @@ describe 'Services Access', reset: false do
       # Cannot reliably display a progress bar using recordings
       it 'displays an error message', pending_fixtures: true do
         wait_for_xhr
-        expect(page).to have_content('Error: CollectionDisabled')
-        expect(page).to have_content('Message: This collection is currently not configured for subagent HEG')
+        within '.access-error-code' do
+          expect(page).to have_content('CollectionDisabled')
+        end
+        within '.access-error-message-list' do
+          expect(page).to have_content('This collection is currently not configured for subagent HEG')
+        end
       end
     end
   end

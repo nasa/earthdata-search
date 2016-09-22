@@ -27,11 +27,13 @@ EarthdataSearchClient::Application.routes.draw do
       post 'use'
     end
   end
+  post 'collections/collection_relevancy' => 'collections#collection_relevancy'
 
   resources :granules, only: [:create, :show], defaults: {format: 'json'} do
     collection do
       post 'timeline'
       get 'download', defaults: { format: ['html', 'sh'] }
+      get 'fetch_links'
     end
   end
 

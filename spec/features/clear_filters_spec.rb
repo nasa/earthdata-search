@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "'Clear Filters' button", reset: false do
   before :all do
-    load_page :search, facets: true
+    load_page :search, facets: true, env: :sit
   end
 
   it "clears keywords" do
@@ -17,13 +17,13 @@ describe "'Clear Filters' button", reset: false do
   end
 
   it "clears spatial" do
-    create_point(67, -155)
-    expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
-    expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+    create_point(0, 0)
+    expect(page).to have_no_content("A minimal dif dataset")
+    expect(page).to have_content("ADVANCED MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-15 V1")
 
     click_link "Clear Filters"
-    expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
-    expect(page).to have_content("A Global Database of Carbon and Nutrient Concentrations of Green and Senesced Leaves")
+    expect(page).to have_content("A minimal dif dataset")
+    expect(page).to have_content("ADVANCED MICROWAVE SOUNDING UNIT-A (AMSU-A) SWATH FROM NOAA-15 V1")
   end
 
   context "clears temporal" do
@@ -41,14 +41,14 @@ describe "'Clear Filters' button", reset: false do
                 temporal.isRecurring(false);
                 null;"
       page.execute_script(script)
-      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
+      fill_in "keywords", with: 'C1000001409-EDF_OPS'
 
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      expect(page).to have_no_content("A minimal dif dataset")
 
       click_link "Clear Filters"
 
-      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
-      expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+      fill_in "keywords", with: 'C1000000083-DEMO_PROV'
+      expect(page).to have_content("A minimal dif dataset")
       click_link "Temporal"
       expect(page.find("#collection-temporal-range-start")).to have_no_text("1978-12-01 00:00:00")
       expect(page.find("#collection-temporal-range-stop")).to have_no_text("1979-12-01 00:00:00")
@@ -63,13 +63,13 @@ describe "'Clear Filters' button", reset: false do
                 null;"
       page.execute_script(script)
 
-      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
-      expect(page).to have_no_content("15 Minute Stream Flow Data: USGS")
+      fill_in "keywords", with: 'C1000001409-EDF_OPS'
+      expect(page).to have_no_content("MEaSUREs Arctic Sea Ice Characterization Daily 25km EASE-Grid 2.0 V001")
 
       click_link "Clear Filters"
       wait_for_xhr
-      fill_in "keywords", with: 'C179003030-ORNL_DAAC'
-      expect(page).to have_content("15 Minute Stream Flow Data: USGS")
+      fill_in "keywords", with: 'C1000001409-EDF_OPS'
+      expect(page).to have_content("MEaSUREs Arctic Sea Ice Characterization Daily 25km EASE-Grid 2.0 V001")
       click_link "Temporal"
       expect(page.find("#collection-temporal-recurring-start")).to have_no_text("1970-12-01 00:00:00")
       expect(page.find("#collection-temporal-recurring-stop")).to have_no_text("1975-12-31 00:00:00")
@@ -79,9 +79,9 @@ describe "'Clear Filters' button", reset: false do
   end
 
   it "clears facets" do
-    find("h3.facet-title", text: 'Project').click
-    find(".facets-item", text: "EOSDIS").click
-    within(:css, '#collapse2 .panel-body.facets') do
+    find("h3.panel-title", text: 'Project').click
+    find("p.facets-item", text: "EOSDIS").click
+    within(:css, '.projects') do
       expect(page).to have_content("EOSDIS")
       expect(page).to have_css(".facets-item.selected")
     end

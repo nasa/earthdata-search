@@ -146,6 +146,25 @@ describe "Data download page", reset: false do
     end
   end
 
+  context "selecting the direct download option for a granule with invalid params" do
+    before :all do
+      load_page 'data/configure', {project: 'C92711294-NSIDC_ECS', sb: [42.890625, 23.765625, 43.453125, 24.890625], queries: [{}, cc: {min: ''}], temporal: ['2016-03-12T00:00:00Z', '2016-03-12T23:59:59Z']}
+      choose 'Download'
+      click_on 'Submit'
+      wait_for_xhr
+      click_link "Download Access Script"
+
+    end
+    context 'upon clicking a "Download Access Script" button' do
+      it "displays a shell script on the page with no downloadable urls" do
+        within_last_window do
+          expect(page).to have_content("Error retrieving download links from backend API")
+          expect(page).to have_content("fetch_urls <<'EDSCEOF' EDSCEOF")
+        end
+      end
+    end
+  end
+
   context "selecting an asynchronous access option for granules with browse imagery" do
     before :all do
       load_page 'data/configure', browseable_collection_params
@@ -256,10 +275,28 @@ describe "Data download page", reset: false do
         click_link "Download Access Script"
       end
 
-      it "downloads a shell script which performs the user's query" do
+      it "displays a page with a shell script on it which performs the user's query" do
         within_last_window do
           expect(page).to have_content('#!/bin/sh')
           expect(page).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
+        end
+      end
+
+      context 'and click "Download Script File" button' do
+        before :all do
+          within_last_window do
+            synchronize do
+              expect(page).to have_button('Download Script File')
+            end
+            click_button 'Download Script File'
+          end
+        end
+
+        it 'downloads a shell script' do
+          within_last_window do
+            expect(page.source).to have_content('#!/bin/sh')
+            expect(page.source).to have_content('ftp://ladsftp.nascom.nasa.gov/allData/5/MYD02QKM/2014/191/MYD02QKM.A2014191.0330.005.2014191162458.hdf')
+          end
         end
       end
     end
