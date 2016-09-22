@@ -5,7 +5,6 @@ module Echo
                               :errors => Echo::ClientMiddleware::ErrorsMiddleware,
                               :echo10_collections => Echo::ClientMiddleware::Echo10CollectionMiddleware,
                               :echo10_granules => Echo::ClientMiddleware::Echo10GranuleMiddleware,
-                              :facet_culling => Echo::ClientMiddleware::FacetCullingMiddleware,
                               :events => Echo::ClientMiddleware::EventMiddleware)
 
   class BaseClient
@@ -78,7 +77,6 @@ module Echo
         # Our parsers depend on JSON / XML being converted to objects by earlier
         # parsers.
         conn.response :errors, :content_type => /\bjson$/
-        conn.response :facet_culling, :content_type => /\bjson$/ if Rails.env.test?
         conn.response :json, :content_type => /\bjson$/
         conn.response :echo10_granules, :content_type => /^application\/(echo10\+)?xml$/
         conn.response :echo10_collections, :content_type => /^application\/(echo10\+)?xml$/

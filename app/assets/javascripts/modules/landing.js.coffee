@@ -19,11 +19,19 @@ do ($=jQuery
     hasTimeline = $('#timeline').data('timeline')?
     if isLandingPage
       $('#timeline').timeline('hide') if hasTimeline
-      $('.landing-dialog-toolbar').append($content)
-      $('#keywords').focus()
+      timer = setInterval((=>
+        unless window.edsc.util.xhr.hasPending()
+          $('.landing-dialog-loading').hide()
+          clearTimeout(timer)
+          $('.landing-dialog-toolbar').append($content)
+          $('#keywords').focus()
+          $('.landing-dialog-container').fadeIn()
+          help.startTour() if !window.edscportal && uiModel.isLandingPage() && (preferences.showTour() || window.location.href.indexOf('?tour=true') != -1)
+      ), 0)
     else
       $('#timeline').timeline('refresh') if hasTimeline
       $('.landing-toolbar-container').append($content)
+      $('.landing-toolbar-container').fadeIn()
     $content.css(top: 0, left: 0, position: 'static')
 
   updateLandingPageAnimated = (isLandingPage) ->
@@ -71,14 +79,6 @@ do ($=jQuery
 
     goToSearch = ->
       urlUtil.pushPath("/search")
-
-    startTourDefault = ->
-      help.startTour() if !window.edscportal && uiModel.isLandingPage()
-
-    preferences.onload ->
-      if preferences.showTour() || window.location.href.indexOf('?tour=true') != -1
-        # Let the DOM finish any refresh operations before showing the tour
-        setTimeout(startTourDefault, 0)
 
     $('.landing-area').on 'keypress', '#keywords', (e) ->
       goToSearch() if e.which == 13

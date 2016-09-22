@@ -33,13 +33,8 @@ ns.Collections = do (ko
 
       @facets = new CollectionFacetsModel(query)
 
-      # The index where featured collections stop and un-featured begin
-      @_featuredSplitIndex = @computed(read: @_computeFeaturedSplitIndex, deferEvaluation: true, owner: this)
-      @featured = @computed(read: @_computeFeatured, deferEvaluation: true, owner: this)
-      @unfeatured = @computed(read: @_computeUnfeatured, deferEvaluation: true, owner: this)
-
     params: ->
-      extend({include_facets: true}, super())
+      extend({include_facets: 'v2'}, super())
 
     _decorateNextPage: (params, results) ->
       @page++
@@ -57,23 +52,10 @@ ns.Collections = do (ko
         current.concat(newItems)
       else
         collection.dispose() for collection in current
-        @facets.update(data.feed.facets || [])
+        @facets.update(data.feed.facets.children || [])
         newItems
 
     toggleVisibleCollection: (collection) =>
       collection.visible(!collection.visible())
-
-    _computeFeaturedSplitIndex: ->
-      results = @results()
-      return 0 if results.length > 0 && !results[0].hasAtomData()
-      for ds, i in results
-        return i if !ds.hasAtomData() || !ds.featured
-      results.length
-
-    _computeFeatured: ->
-      @results().slice(0, @_featuredSplitIndex())
-
-    _computeUnfeatured: ->
-      @results().slice(@_featuredSplitIndex())
 
   exports = CollectionsModel

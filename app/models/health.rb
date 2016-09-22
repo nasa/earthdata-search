@@ -28,8 +28,16 @@ class Health
     {ok?: true}
   end
 
-  def data_load_status
-    check_cron_job('data:load', 1.hour)
+  def data_load_tags_status
+    check_cron_job('data:load:tags', 1.hour)
+  end
+
+  def data_load_echo10_status
+    check_cron_job('data:load:echo10', 1.hour)
+  end
+
+  def data_load_granules_status
+    check_cron_job('data:load:granules', 1.hour)
   end
 
   def colormap_load_status

@@ -5,14 +5,14 @@ class CreateAccessConfigurations < ActiveRecord::Migration
       t.string :dataset_id
       t.text :service_options
 
-      t.timestamps
+      t.timestamps null: true
     end
 
-    begin
+    #begin
       # This migration isn't important and postgres complains that it doesn't have the column
-      remove_column :projects, :username, :string
-    rescue => e
-    end
+    #  remove_column :projects, :username, :string
+    #rescue => e
+    #end
 
     add_column :projects, :user_id, :integer, index: true
 

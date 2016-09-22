@@ -4,95 +4,165 @@ ns = @edsc.models.data
 
 ns.CollectionFacets = do (ko) ->
 
-  # Note: This minifies poorly
-  sk_facet_order = [
-#    'science_keywords[0][category][]',
-    'science_keywords[0][topic][]',
-    'science_keywords[0][term][]',
-    'science_keywords[0][variable_level_1][]',
-    'science_keywords[0][variable_level_2][]',
-    'science_keywords[0][variable_level_3][]',
-    'science_keywords[0][detailed_variable][]'
-  ]
+  facet_matchers = ['features=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[category\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[topic\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[term\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[variable_level_1\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[variable_level_2\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[variable_level_3\\]=[^&]+',
+    'science_keywords_h\\[\\d*\\]\\[detailed_variable\\]=[^&]+',
+    'platform_h\\[\\]=[^&]+',
+    'instrument_h\\[\\]=[^&]+',
+    'data_center_h\\[\\]=[^&]+',
+    'project_h\\[\\]=[^&]+',
+    'processing_level_id_h\\[\\]=[^&]+']
+
+  facet_param_to_title = {
+    'features': 'Features',
+    'science_keywords_h': 'Keywords',
+    'platform_h': 'Platforms',
+    'instrument_h': 'Instruments',
+    'data_center_h': 'Organizations',
+    'project_h': 'Projects',
+    'processing_level_id_h': 'Processing levels'}
 
   class Facet
     constructor: (@parent, item) ->
-      @term = item.term
+      @title = item.title
+      @type = item.type
+      @hasChildren = ko.observable(item.has_children)
+      @links = item.links
+      @children = item.children
+      @isSelected = ko.observable(item.applied)
       @count = ko.observable(item.count)
-      @param = item.param || parent.param
+      @param = @_linksToParam()
 
-    isSelected: ->
-      term = @term
-      param = @param
-      for facet in @parent.queryModel.facets()
-        return true if facet.term == term && facet.param == param
-      return false
+    _linksToParam: =>
+      params = []
+      if @parent.title == 'Features'
+        params.push 'features'
+      else if @links.apply?
+        link = @links.apply.replace(/%5B/g, '[').replace(/%5D/g, ']')
+      else
+        link = @links.remove.replace(/%5B/g, '[').replace(/%5D/g, ']')
+      for category in facet_matchers
+        regex = new RegExp(category, 'g')
+        if link?.match(regex)
+          for match in link.match(regex)
+            for key of facet_param_to_title
+              [param, value] = match.split('=')
+              if param.indexOf(key) > -1 && value == encodeURIComponent(@title).replace(/%20/g, '+').replace(/\(/g, "%28").replace(/\)/g, "%29")
+                params.push match.split('=')[0]
+      params
 
-    isChild: ->
-      @isHierarchical() && !@isAncestor() && @hierarchyIndex() > 0
+    isFeature: =>
+      @parent.title == 'Features'
 
-    isParent: ->
-      @isScienceKeywordParent()
+    isChild: =>
+      !@isFeature() && !@isAncestor() && @hierarchyIndex() > 2 && @_scienceKeywordFacet()
 
-    isAncestor: ->
-      @isHierarchical() && @isSelected()
+    isParent: =>
+      !@isFeature() && @isSelected() && @_noChildrenSelected()
 
-    isScienceKeyword: ->
-      @param.indexOf('sci') == 0
+    isAncestor: =>
+      !@isFeature() && @isSelected() && @hasChildren()
 
-    isScienceKeywordParent: ->
-      (@isAncestor() &&
-       @hierarchyIndex() >= @parent.queryModel.scienceKeywordFacets().length - 1)
+    _noChildrenSelected: =>
+      if @children
+        return false for child in @children when child.applied
+      return true
 
-    isHierarchical: ->
-      @isScienceKeyword()
+    hierarchyIndex: =>
+      for matcher, index in facet_matchers
+        queryParamRegex = matcher.split('=')[0]
+        regex = new RegExp(queryParamRegex, 'g')
+        if @param.length > 0 && @param[0].match(regex)
+          return index
+      return -1
 
-    hierarchyIndex: ->
-      sk_facet_order.indexOf(@param)
+    _scienceKeywordFacet: =>
+      @param[0].indexOf('science_keywords_h') > -1
 
     equals: (other) ->
-      other && other.term == @term && other.param == @param
+      other && other.title == @title && other.param == @param
 
   class FacetsListModel
     constructor: (@queryModel, item) ->
-      @name = item.name
-      @class_name = ko.computed => @name.toLowerCase().replace(' ', '-')
+      @title = item.title
+      @class_name = ko.computed => @title.toLowerCase().replace(' ', '-')
       @param = item.param
 
-      values = (new Facet(this, value) for value in item.values)
-
-      @values = ko.observable(values)
+      children = @_addAncestorsToFacetsList(item)
+      @children = ko.observable(children)
       @selectedValues = ko.computed(@_loadSelectedValues)
 
       isDefaultOpened = (@selectedValues().length > 0 ||
-                         item.name == 'Keywords' ||
-                         item.name == 'Features')
+                         item.title == 'Keywords' ||
+                         item.title == 'Features')
       @opened = ko.observable(isDefaultOpened)
       @closed = ko.computed => !@opened()
 
-    setValues: (newValues) =>
-      facetsByTerm = {}
-      for facet in @values()
-        facetsByTerm[facet.term] = facet
+    _addAncestorsToFacetsList: (item) ->
+      children = []
+      ancestors = []
+      hasAppliedKeywords = false
+      for child in item.children
+        if item.title == 'Features'
+          facets = @queryModel.facets()
+          if facets && facets.length > 0
+            featureQuery = facets.find (queryParam) ->
+              child.title == queryParam.title
+            child.applied = true if featureQuery
+          children.push(new Facet(this, child))
+        else if item.title == 'Keywords'
+          if child.applied
+            hasAppliedKeywords = true
+            @_findAncestors(ancestors, child)
+            parent = ancestors.slice(-1)[0]
+            if parent
+              children.push new Facet(this, ancestor) for ancestor in ancestors
+              ancestors = []
+              if parent.children
+                children.push new Facet(this, grandChild) for grandChild in parent.children
+              else if parent.count == 0
+                continue
+              else
+                break
+        else
+          children.push new Facet(this, child)
+
+      if item.title == 'Keywords'
+        children.push new Facet(this, child) for child in item.children when child.count > 0 unless hasAppliedKeywords
+
+
+      children
+
+    _findAncestors: (ancestors, item) ->
+      ancestors.push item if item.applied && item.type == 'filter' && item.links.remove?.length > 0
+      if item.children
+        for child in item.children
+          if child.applied && child.links.remove?.length > 0
+            @_findAncestors(ancestors, child)
+
+    setValues: (item) =>
+      newValues = @_addAncestorsToFacetsList(item)
+
+      facetsByTitle = {}
+      for facet in @children()
+        facetsByTitle[facet.title] = facet
       values = []
-      for newFacetData in newValues
-        oldFacet = facetsByTerm[newFacetData.term]
-        newFacet = new Facet(this, newFacetData)
+      for newFacet in newValues
+        oldFacet = facetsByTitle[newFacet.title]
         if newFacet.equals(oldFacet)
-          oldFacet.count(newFacetData.count)
+          oldFacet.count(newFacet.count)
           values.push(oldFacet)
         else
           values.push(newFacet)
-      @values(values)
+      @children(values)
 
     _loadSelectedValues: =>
-      facet for facet in @values() when facet.isSelected()
-
-    removeHierarchyBelow: (facet) ->
-      index = facet.hierarchyIndex()
-      removed = (v for v in @values() when v.hierarchyIndex() > index)
-      @values(v for v in @values() when v.hierarchyIndex() <= index)
-      removed
+      facet for facet in @children() when facet.isSelected()
 
     toggleList: =>
       @opened(!@opened())
@@ -111,31 +181,73 @@ ns.CollectionFacets = do (ko) ->
       current = @results.peek()
       for item in data
         found = ko.utils.arrayFirst current, (result) ->
-          result.name == item.name
+          result.title == item.title
         if found
-          values = item.values
-          value.parent = found for value in item.values
-          found.setValues(item.values)
+          found.setValues(item)
         else
           current.push(new FacetsListModel(@query, item))
+
+      # Remove 'current' facetsList that are not returned from CMR (e.g. after 'atmosphere -> cloud -> cloud properties'
+      # being applied, CMR will not return 'processing_level_id_h' in facet-v2 since no collections have any process level
+      # id info.
+      currentLen = current.length
+      i = 0
+      while i < currentLen
+        currentFacetList = current[i]
+        found = ko.utils.arrayFirst data, (result) ->
+          result.title == currentFacetList.title
+        current.splice(current.indexOf(currentFacetList), 1) unless found
+        currentLen = current.length
+        i++
 
       @results(current)
       current
 
+    _findAncestors: (ancestors, item) ->
+      ancestors.push item if item.applied && item.type == 'filter'
+      if item.children
+        for child in item.children
+          if child.applied && child.links.remove?.length > 0
+            @_findAncestors(ancestors, child)
+
     removeFacet: (facet) =>
       @_removeSingleFacet(facet)
-      for facet in facet.parent.removeHierarchyBelow(facet) when facet.isSelected()
-        @_removeSingleFacet(facet)
+      @_removeHierarchicalFacets(facet)
 
-    _removeSingleFacet: (facet) ->
-      term = facet.term
-      param = facet.param
-      @query.facets.remove (queryFacet) ->
-        queryFacet.term == term && queryFacet.param == param
+    _removeSingleFacet: (root) ->
+      rootLevel = -1
+      for facetParam in @query.facets()
+        if facetParam.title == root.title
+          rootLevel = parseInt(facetParam.param.split(/(?:\]?\[|\]$)/)[1])
+          # science_keywords_h are always hierarachical, so we want root to be NaN
+          if facetParam.param.indexOf 'science_keywords_h' > -1
+            rootLevel = NaN
+          break;
+      if isNaN(rootLevel)
+        @query.facets.remove (facet) ->
+          facet.title == root.title
+      else
+        @query.facets.remove (facet) ->
+          parseInt(facet.param.split(/(?:\]?\[|\]$)/)[1]) >= rootLevel
+
+    _removeHierarchicalFacets: (root) ->
+      if root.children
+        hasAppliedChildren = false
+        for child in root.children
+          if child.applied
+            hasAppliedChildren = true
+            title = child.title
+            @query.facets.remove (queryFacet) ->
+              queryFacet.title == title
+            @_removeHierarchicalFacets(child)
+        @query.facets.remove (queryFacet) -> queryFacet.title == root.title unless hasAppliedChildren
+
 
     addFacet: (facet) =>
       @query.facets([]) unless @query.facets()?
-      @query.facets.push(term: facet.term, param: facet.param)
+      for param in facet.param
+        @query.facets.push(title: facet.title, param: param)
+      @query.facets()
 
     toggleFacet: (facet) =>
       if facet.isSelected()

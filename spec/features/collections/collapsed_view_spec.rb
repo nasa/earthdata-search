@@ -7,7 +7,7 @@ describe "Collections Collapsed View", reset: false do
 
     before :all do
       Capybara.reset_sessions!
-      load_page :search
+      load_page :search, env: :sit
     end
 
     it 'shows the expanded collections list by default' do
@@ -37,7 +37,7 @@ describe "Collections Collapsed View", reset: false do
       end
 
       it 'displays a map with spatial for each collection' do
-        expect(first_collapsed_collection).to have_css('.ccol-mini-map-spatial-layer', visible: true)
+        expect(collapsed_collection('amsua15sp -1')).to have_css('.ccol-mini-map-spatial-layer', visible: true)
       end
 
       it 'displays a more info button for each collection' do
@@ -53,43 +53,44 @@ describe "Collections Collapsed View", reset: false do
       end
 
       it 'displays a spatial query button for collections with point spatial' do
-        for_collapsed_collection  'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC' do
+        for_collapsed_collection  'C1200019403-MMT_2', "Matthew'sTest -2" do
           expect(first_collapsed_collection).to have_link("Search using this collection's location")
         end
       end
 
       it 'displays no spatial query button for collections without spatial' do
-        for_collapsed_collection 'C14758250-LPDAAC_ECS', 'AST_L1A' do
+        for_collapsed_collection 'C1002-LPDAAC_TBD', 'AST_L1A -3' do
           expect(first_collapsed_collection).to have_no_link("Search using this collection's location")
         end
       end
 
       it 'displays no view collection button for collections with granules' do
-        for_collapsed_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC' do
+        for_collapsed_collection 'C1000000083-DEMO_PROV', 'minimal_dif_dataset' do
           expect(first_collapsed_collection).to have_no_link('Preview collection')
         end
       end
 
       it 'displays no view collection button for collections without granules' do
-        for_collapsed_collection  'C179002107-SEDAC', 'CIESIN_SEDAC_ANTHROMES' do
+        for_collapsed_collection 'C1200208323-SCIOPS', 'USDA0382' do
           expect(first_collapsed_collection).to have_no_link('Preview collection')
         end
       end
 
-      context 'and viewing a collection without version_id' do
-        use_collection 'C1214605943-SCIOPS', 'CANEMRCCRSBAPMN'
-
-        it "doesn't show version id" do
-          expect(page).to have_content('CANEMRCCRSBAPMN')
-          expect(page).to have_no_content('CANEMRCCRSBAPMN - Not provided')
-        end
-      end
+      # context 'and viewing a collection without version_id' do
+        # "Can't find collections without version_id in SIT"
+      #   use_collection 'C1214605943-SCIOPS', 'CANEMRCCRSBAPMN'
+      #
+      #   it "doesn't show version id" do
+      #     expect(page).to have_content('CANEMRCCRSBAPMN')
+      #     expect(page).to have_no_content('CANEMRCCRSBAPMN - Not provided')
+      #   end
+      # end
 
       context 'and clicking a collection with granules' do
-        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+        use_collection 'C1000000083-DEMO_PROV', 'minimal_dif_dataset'
 
         before :all do
-          view_granule_results
+          view_granule_results('A minimal dif dataset')
         end
 
         it "shows the collection's granule list" do
@@ -112,7 +113,7 @@ describe "Collections Collapsed View", reset: false do
       end
 
       context 'and clicking a collection without granules' do
-        use_collection  'C179002107-SEDAC', 'CIESIN_SEDAC_ANTHROMES'
+        use_collection 'C1200208323-SCIOPS', 'USDA0382'
 
         before :all do
           page.execute_script("$('#collection-results .ccol:first-child').click()")
@@ -125,7 +126,7 @@ describe "Collections Collapsed View", reset: false do
       end
 
       context "and clicking a collection's more info button" do
-        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+        use_collection 'C1200019403-MMT_2', "Matthew'sTest -2"
 
         before :all do
           first_collapsed_collection.click_link('Toggle details')
@@ -133,7 +134,7 @@ describe "Collections Collapsed View", reset: false do
 
         it "displays a flyout with additional collection information" do
           expect(page).to have_selector('.flyout')
-          expect(page.find('.flyout')).to have_text('Archive Center')
+          expect(page.find('.flyout')).to have_text('Data Center')
         end
 
         it "changes the more info button into a less info button" do
@@ -180,7 +181,7 @@ describe "Collections Collapsed View", reset: false do
       end
 
       context "and clicking a collection's add to project button" do
-        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+        use_collection 'C1200019403-MMT_2', "Matthew'sTest -2"
 
         before :all do
           first_collapsed_collection.find('a.add-to-project').click
@@ -193,7 +194,7 @@ describe "Collections Collapsed View", reset: false do
         end
 
         it "adds the collection to the project" do
-          expect(project_collection_ids).to match_array(['15 Minute Stream Flow Data: USGS (FIFE)'])
+          expect(project_collection_ids).to match_array(["Matthew's Test"])
         end
 
         it "changes the add to project button to a remove button" do
@@ -255,7 +256,7 @@ describe "Collections Collapsed View", reset: false do
       end
 
       context "and clicking a collection's collection details button" do
-        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+        use_collection 'C1200019403-MMT_2', "Matthew'sTest -2"
 
         before :all do
           first_collapsed_collection.click_link "View collection details"
@@ -277,7 +278,7 @@ describe "Collections Collapsed View", reset: false do
       end
 
       context "and clicking a collection's spatial query button" do
-        use_collection 'C179003030-ORNL_DAAC', 'doi:10.3334/ORNLDAAC'
+        use_collection 'C1200019403-MMT_2', "Matthew'sTest -2"
 
         before :all do
           first_collapsed_collection.click_link "Search using this collection's location"

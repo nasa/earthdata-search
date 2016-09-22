@@ -4,7 +4,7 @@ class CreateProjects < ActiveRecord::Migration
       t.string :username
       t.text :jsondata
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

@@ -1,4 +1,4 @@
-unless Rails.env.production?
+unless Rails.env.production? || Rails.env.uat? || Rails.env.sit?
   namespace :test do
     require 'csslint/testtask'
 

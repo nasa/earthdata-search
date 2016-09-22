@@ -119,20 +119,12 @@ this.edsc.util.url = do(window
     new ParamNameCompressor('line', 'sg')
 
     new ArrayJoiner('features', 'ff')
-    new ArrayJoiner('data_center', 'fdc')
-    new ArrayJoiner('project', 'fpj')
-    new ArrayJoiner('platform', 'fp')
-    new ArrayJoiner('instrument', 'fi')
-    new ArrayJoiner('sensor', 'fs')
-    new ArrayJoiner('processing_level_id', 'fl')
-
-    new ParamFlattener(['science_keywords', '0', 'category'], 'fsc', true)
-    new ParamFlattener(['science_keywords', '0', 'topic'], 'fst', true)
-    new ParamFlattener(['science_keywords', '0', 'term'], 'fsm', true)
-    new ParamFlattener(['science_keywords', '0', 'variable_level_1'], 'fs1', true)
-    new ParamFlattener(['science_keywords', '0', 'variable_level_2'], 'fs2', true)
-    new ParamFlattener(['science_keywords', '0', 'variable_level_3'], 'fs3', true)
-    new ParamFlattener(['science_keywords', '0', 'detailed_variable'], 'fsd', true)
+    new ArrayJoiner('data_center_h', 'fdc')
+    new ArrayJoiner('project_h', 'fpj')
+    new ArrayJoiner('platform_h', 'fp')
+    new ArrayJoiner('instrument_h', 'fi')
+#    new ArrayJoiner('sensor_h', 'fs')
+    new ArrayJoiner('processing_level_id_h', 'fl')
 
     new ChildCompressor('pg', new ParamNameCompressor('temporal', 'qt'))
     new ChildCompressor('pg', new ParamNameCompressor('day_night_flag', 'dnf'))
@@ -146,6 +138,18 @@ this.edsc.util.url = do(window
     new ChildCompressor('pg', new CmrGranuleIdListCompressor('x'))
     new ChildCompressor('pg', new CwicGranuleIdListCompressor('cx'))
   ]
+
+#   new ParamFlattener(['science_keywords_h', '0', 'category'], 'fsc', false)
+  keywords = []
+  for index in [0...6]
+    keywords.push new ParamFlattener(['science_keywords_h', index, 'topic'], "fst#{index}", false)
+    keywords.push new ParamFlattener(['science_keywords_h', index, 'term'], "fsm#{index}", false)
+    keywords.push new ParamFlattener(['science_keywords_h', index, 'variable_level_1'], "fs1#{index}", false)
+    keywords.push new ParamFlattener(['science_keywords_h', index, 'variable_level_2'], "fs2#{index}", false)
+    keywords.push new ParamFlattener(['science_keywords_h', index, 'variable_level_3'], "fs3#{index}", false)
+    keywords.push new ParamFlattener(['science_keywords_h', index, 'detailed_variable'], "fsd#{index}", false)
+
+  compressors = compressors.concat keywords
 
   alter = (params, method) ->
 

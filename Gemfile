@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
+ruby '2.1.2'
 
-gem 'rails', '~> 4.1.14.2'
+gem 'rails', '~> 4.2.7.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -42,6 +43,12 @@ end
 
 group :production do
   gem 'pg'
+  gem 'rails_12factor'
+end
+
+group :sit, :uat do
+  gem 'pg'
+  gem 'rails_12factor'
 end
 
 # Gems that are mostly used for testing but useful to have available via CLI
@@ -57,8 +64,6 @@ group :development, :test do
   gem 'jasmine_junitxml_formatter'
 
   gem 'therubyracer', :require => 'v8'
-  gem 'libv8', '~> 3.11.8.3'
-
 end
 
 group :assets, :development, :test do
@@ -85,6 +90,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 
 gem 'nokogiri'
+gem 'responders', '~> 2.0'
 
 # Eventually we'll need these, but there's version conflict when installing
 #gem 'crossroadsjs-rails'

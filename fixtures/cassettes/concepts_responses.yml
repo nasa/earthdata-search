@@ -1020,6 +1020,38 @@ af7f3a3bb219b981fce3aa18ed088900c2c73b7a:
         These data are available through the File Transfer Protocol (FTP). The base URL of NODC's FTP server is ftp://ftp.nodc.noaa.gov/ and you may use any FTP client to download these data.
         </URLDescription></OnlineAccessURL></OnlineAccessURLs><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>146</WestBoundingCoordinate><NorthBoundingCoordinate>72</NorthBoundingCoordinate><EastBoundingCoordinate>-105</EastBoundingCoordinate><SouthBoundingCoordinate>-44</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
     http_version: 
+baec2f3d96ec288b6741fba6819ae1a2f67afce4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 19 Aug 2016 14:20:42 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - d8ffbd69-8570-4c48-bf43-4b6ddea53c31
+      content-length:
+      - '822'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"boxes":["-85.0445 -180 85.0445 180"],"time_start":"2015-03-31T00:00:00.000Z","dif_ids":["SPL2SMP.003"],"version_id":"003","updated":"2016-04-21T15:58:21.383Z","dataset_id":"SMAP
+        L2 Radiometer Half-Orbit 36 km EASE-Grid Soil Moisture V003","data_center":"NSIDC_ECS","short_name":"SPL2SMP","organizations":["NSIDC","Jet
+        Propulsion Laboratory"],"title":"SMAP L2 Radiometer Half-Orbit 36 km EASE-Grid
+        Soil Moisture V003","coordinate_system":"GEODETIC","summary":"Passive soil
+        moisture estimates onto a 36-km global Earth-fixed grid, based on radiometer
+        measurements acquired when the SMAP spacecraft is travelling from North to
+        South at approximately 6:00 AM local time.","orbit_parameters":{},"id":"C1236303846-NSIDC_ECS","original_format":"ISO-SMAP","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false}'
+    http_version: 
 5e63bc956df687d12363d0cdb9a65f6e4d0c5706:
   response:
     status:
@@ -2258,6 +2290,67 @@ c87ef1798ab8ecf5de167d74280ae857d6f41987:
         \     </Geometry>\n    </HorizontalSpatialDomain>\n    <GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation>\n
         \ </Spatial>\n</Collection>"
     http_version: 
+38abcc1d87c03f96966b83cacc91071898f8b11d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 22 Jul 2016 01:50:13 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 9fa387b9-3fcd-4375-80ad-677a9371a9bd
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection><ShortName>ALT_TIDE_GAUGE_L4_OST_SLA_US_WEST_COAST</ShortName><VersionId>1</VersionId><InsertTime>2010-08-12T00:51:48.954Z</InsertTime><LastUpdate>2011-01-21T17:10:13.000Z</LastUpdate><LongName>Gridded
+        Altimeter Fields with Enhanced Coastal Coverage</LongName><DataSetId>ALT_TIDE_GAUGE_L4_OST_SLA_US_WEST_COAST:1</DataSetId><Description>This
+        data set contains sea level anomalies and alongshore ocean currents (U and
+        V) derived from satellite altimeters and tide gauge data.  Currents and heights
+        near the coast are calculated using tide</Description><Orderable>false</Orderable><Visible>true</Visible><RevisionDate>2014-07-24T16:32:15.804Z</RevisionDate><ProcessingCenter>Craig
+        Risin and P. Ted Strub</ProcessingCenter><ProcessingLevelId>4</ProcessingLevelId><ArchiveCenter>PO.DAAC</ArchiveCenter><DataFormat>NETCDF</DataFormat><SpatialKeywords><Keyword>Eastern
+        Pacific Ocean</Keyword></SpatialKeywords><TemporalKeywords /><Temporal><RangeDateTime><BeginningDateTime>1992-10-14T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>Archiver</Role><OrganizationName>Physical
+        Oceanography Distributed Active Archive Center, Jet Propulsion Laboratory,
+        NASA</OrganizationName><OrganizationAddresses /><OrganizationPhones><Phone><Number>(818)
+        393-7165</Number><Type>Primary</Type></Phone></OrganizationPhones><OrganizationEmails><Email>podaac@podaac.jpl.nasa.gov</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>User</FirstName><MiddleName>null</MiddleName><LastName>Services</LastName><JobPosition>Technical
+        Contact</JobPosition></ContactPerson></ContactPersons></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>SEA
+        SURFACE TOPOGRAPHY</TermKeyword><VariableLevel1Keyword><Value>SEA SURFACE
+        HEIGHT</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>OCEANS</TopicKeyword><TermKeyword>OCEAN
+        CIRCULATION</TermKeyword><VariableLevel1Keyword><Value>OCEAN CURRENTS</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>OSTM/Jason-2</ShortName><LongName>Ocean
+        Surface Topography Mission/Jason-2</LongName><Type>unknown</Type><Characteristics
+        /><Instruments><Instrument><ShortName>POSEIDON-3</ShortName><LongName>OSTM/Jason-2
+        RADAR alitmieter</LongName><Characteristics /><Sensors><Sensor><ShortName>POSEIDON-3</ShortName><LongName>OSTM/Jason-2
+        RADAR alitmieter</LongName><Characteristics /></Sensor></Sensors><OperationModes
+        /></Instrument></Instruments></Platform><Platform><ShortName>TOPEX/POSEIDON</ShortName><LongName>Topography
+        Experiment/Poseidon</LongName><Type>spacecraft</Type><Characteristics /><Instruments><Instrument><ShortName>POSEIDON
+        ALTIMETER</ShortName><LongName>POSEIDON ALTIMETER</LongName><Characteristics
+        /><Sensors><Sensor><ShortName>POSEIDON ALTIMETER</ShortName><LongName>POSEIDON
+        ALTIMETER</LongName><Characteristics /></Sensor></Sensors><OperationModes
+        /></Instrument></Instruments></Platform><Platform><ShortName>JASON-1</ShortName><LongName>JASON-1</LongName><Type>spacecraft</Type><Characteristics
+        /><Instruments><Instrument><ShortName>POSEIDON-2</ShortName><LongName>JASON-1
+        RADAR ALTIMETER</LongName><Characteristics /><Sensors><Sensor><ShortName>POSEIDON-2</ShortName><LongName>JASON-1
+        RADAR ALTIMETER</LongName><Characteristics /></Sensor></Sensors><OperationModes
+        /></Instrument></Instruments></Platform></Platforms><AdditionalAttributes
+        /><CSDTDescriptions /><CollectionAssociations /><Campaigns /><AlgorithmPackages
+        /><TwoDCoordinateSystems /><OnlineAccessURLs><OnlineAccessURL><URL>http://podaac-opendap.jpl.nasa.gov/opendap/allData/coastal_alt/preview/L4/OSU_COAS/weekly/</URL><URLDescription>The
+        OPeNDAP base directory location for the collection.</URLDescription></OnlineAccessURL><OnlineAccessURL><URL>ftp://podaac-ftp.jpl.nasa.gov/allData/coastal_alt/preview/L4/OSU_COAS/weekly</URL><URLDescription>The
+        FTP base directory location for the collection.</URLDescription></OnlineAccessURL></OnlineAccessURLs><OnlineResources><OnlineResource><URL>http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-USWCO-ALT01&amp;apidoc</URL><Description>(Search
+        Granule)</Description><Type>PORTAL_DA_DIRECT_ACCESS</Type></OnlineResource></OnlineResources><AssociatedDIFs
+        /><Spatial><SpatialCoverageType>HORIZONTAL</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-133.0</WestBoundingCoordinate><NorthBoundingCoordinate>49.0</NorthBoundingCoordinate><EastBoundingCoordinate>-111.0</EastBoundingCoordinate><SouthBoundingCoordinate>35.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
 b8790055866bfcd5fe029ae66c0c65ed32ec751b:
   response:
     status:
@@ -2304,7 +2397,7 @@ b8790055866bfcd5fe029ae66c0c65ed32ec751b:
         Granule) (PORTAL_DA_DIRECT_ACCESS)","hreflang":"en-US","href":"http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId=PODAAC-SST00-1D1M1&apidoc"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"AMSR-E
         Technical Note (PDF)","hreflang":"en-US","href":"ftp://podaac.jpl.nasa.gov/allData/amsre/L3/sst_1deg_1mo/docs/tosTechNote_AMSRE_L3_v7_200206-201012.pdf"}]}'
     http_version: 
-a12ddbf6fccfe8d53804c556eb591145463195bf:
+3590d4a3d39fcf403f75acea942bb337a3deaf59:
   response:
     status:
       code: 401
@@ -2393,6 +2486,109 @@ a12ddbf6fccfe8d53804c556eb591145463195bf:
         access to the ftp site and directory hosting the MYD02QKM 5 data set.","hreflang":"en-US","href":"ftp://ladsweb.nascom.nasa.gov/allData/5/MYD02QKM/"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"MODIS
         Level 1B Product Information Page at MCST","hreflang":"en-US","href":"http://mcst.gsfc.nasa.gov/l1b/product-information"}]}'
     http_version: 
+4b1922020b60a6b855a961ae1870bda0e6bcdd6c:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Thu, 08 Sep 2016 19:42:38 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 4f2db94f-0a88-4815-ba30-43d2a93f8cc8
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection><ShortName>MOD10A1</ShortName><VersionId>5</VersionId><InsertTime>2005-01-11T10:53:26.893Z</InsertTime><LastUpdate>2014-10-30T13:57:31.002Z</LastUpdate><LongName>MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid</LongName><DataSetId>MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid V005</DataSetId><Description>MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid</Description><Orderable>false</Orderable><Visible>true</Visible><RevisionDate>2014-06-13T00:00:00Z</RevisionDate><SuggestedUsage>Science
+        Research</SuggestedUsage><ProcessingCenter>MODAPS</ProcessingCenter><ProcessingLevelId>3</ProcessingLevelId><ProcessingLevelDescription>GRID</ProcessingLevelDescription><ArchiveCenter>NSIDC</ArchiveCenter><VersionDescription>Collection
+        Version 5 Processing and Reprocessing</VersionDescription><CitationForExternalPublication>This
+        data set was provided by the NASA EOS Project.</CitationForExternalPublication><CollectionState>In
+        Work</CollectionState><MaintenanceAndUpdateFrequency>As Needed</MaintenanceAndUpdateFrequency><RestrictionComment>None</RestrictionComment><Temporal><TimeType>UTC</TimeType><DateType>Gregorian</DateType><TemporalRangeType>Continuous
+        Range</TemporalRangeType><PrecisionOfSeconds>7</PrecisionOfSeconds><EndsAtPresentFlag>true</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>1999-12-18T00:00:00Z</BeginningDateTime><EndingDateTime>2020-12-31T23:59:59Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>User
+        Services</Role><HoursOfService>9:00 A.M. to 5:00 P.M., U.S. Mountain Time,
+        Monday through Friday, excluding U.S. holidays.</HoursOfService><Instructions>Contact
+        by e-mail first</Instructions><OrganizationName>NASA DAAC at the National
+        Snow and Ice Data Center</OrganizationName><OrganizationAddresses><Address><StreetAddress>1540
+        30th St Campus Box 449</StreetAddress><City>Boulder</City><StateProvince>Colorado</StateProvince><PostalCode>80309-0449</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>303-492-6199</Number><Type>phone</Type></Phone><Phone><Number>303-492-2468</Number><Type>fax</Type></Phone></OrganizationPhones><OrganizationEmails><Email>nsidc@nsidc.org</Email></OrganizationEmails></Contact><Contact><Role>Producer</Role><Instructions>Contact
+        for data content concerns</Instructions><OrganizationName>MODIS Science Data
+        Support Team</OrganizationName><OrganizationAddresses><Address><StreetAddress>NASA/GSFC
+        Code 922</StreetAddress><City>GREENBELT</City><StateProvince>MD</StateProvince><PostalCode>20771</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>301-614-5515</Number><Type>phone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>Edward.J.Masuoka@nasa.gov</Email></OrganizationEmails></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>SNOW
+        COVER</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>LAKE
+        ICE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>SNOW
+        COVER</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>LAKE
+        ICE</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>CRYOSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>HYDROSPHERE</TopicKeyword><TermKeyword>SNOW/ICE</TermKeyword><VariableLevel1Keyword><Value>ALBEDO</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Terra</ShortName><LongName>First
+        EOS Polar Orbiting Satellite, 10:30 AM Descending Equator Crossing</LongName><Type>Spacecraft</Type><Characteristics><Characteristic><Name>EquatorCrossingTime</Name><Description>Local
+        time of the equator crossing and direction (ascending or descending)</Description><DataType>varchar</DataType><Unit>Local
+        Mean Time</Unit><Value>10:30, descending</Value></Characteristic></Characteristics><Instruments><Instrument><ShortName>MODIS</ShortName><LongName>Moderate-Resolution
+        Imaging Spectroradiometer</LongName><Technique>Imaging Spectroradiometry</Technique><Sensors><Sensor><ShortName>MODIS</ShortName><LongName>Cross-track
+        Scanning Radiometer</LongName><Technique>Radiometry</Technique></Sensor></Sensors></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>HORIZONTALTILENUMBER</Name><DataType>INT</DataType><Description>Horizontal
+        tile number of a grid, which increases from left to right.</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTGOODQUALITY</Name><DataType>INT</DataType><Description>Percent
+        of pixels with good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTNOTPRODUCEDCLOUD</Name><DataType>INT</DataType><Description>Percent
+        of pixels under cloud</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTNOTPRODUCEDOTHER</Name><DataType>INT</DataType><Description>Percent
+        of pixels not produced due to some reason other than cloud</Description></AdditionalAttribute><AdditionalAttribute><Name>QAPERCENTOTHERQUALITY</Name><DataType>INT</DataType><Description>Percent
+        of pixels with not so good quality</Description></AdditionalAttribute><AdditionalAttribute><Name>SNOWCOVERPERCENT</Name><DataType>INT</DataType><Description>Percent
+        of granule that was identified as snow covered;  % based on area of granule
+        (swath or tile).</Description></AdditionalAttribute><AdditionalAttribute><Name>VERTICALTILENUMBER</Name><DataType>INT</DataType><Description>Vertical
+        tile number of a grid, which increases from top to bottom.</Description></AdditionalAttribute><AdditionalAttribute><Name>TileID</Name><DataType>INT</DataType><Description>MODIS
+        Land tile identification number which represents a geographical area on the
+        surface of the Earth bounded by latitude and longitude coordinates.</Description></AdditionalAttribute><AdditionalAttribute><Name>PROCESSVERSION</Name><DataType>STRING</DataType><Description>Version
+        of the process software that generated the product.</Description></AdditionalAttribute></AdditionalAttributes><CSDTDescriptions><CSDTDescription><PrimaryCSDT>Projected
+        Grid</PrimaryCSDT><Implementation>HDF-EOS</Implementation><CSDTComments>None</CSDTComments><IndirectReference>N/A</IndirectReference></CSDTDescription></CSDTDescriptions><TwoDCoordinateSystems><TwoDCoordinateSystem><TwoDCoordinateSystemName>MODIS
+        Tile SIN</TwoDCoordinateSystemName><Coordinate1><MinimumValue>0</MinimumValue><MaximumValue>35</MaximumValue></Coordinate1><Coordinate2><MinimumValue>0</MinimumValue><MaximumValue>17</MaximumValue></Coordinate2></TwoDCoordinateSystem></TwoDCoordinateSystems><OnlineResources><OnlineResource><URL>http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&amp;ver=C5</URL><Type>DatasetDisclaimer</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/MOD10A1/versions/5</URL><Description>Catalog
+        Page for this product at NSIDC</Description><Type>MiscInformation</Type></OnlineResource><OnlineResource><URL>http://nsidc.org/data/data_pool/modis_disclaimer.html</URL><Description>Quality
+        Summary</Description><Type>Quality Summary</Type></OnlineResource></OnlineResources><AssociatedDIFs><DIF><EntryId>MOD10A1V5</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>-180.0</WestBoundingCoordinate><NorthBoundingCoordinate>90.0</NorthBoundingCoordinate><EastBoundingCoordinate>180.0</EastBoundingCoordinate><SouthBoundingCoordinate>-90.0</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
+ea880ca0a47da48a66e1e18ee987efc39864afb2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 14 Sep 2016 17:18:20 GMT
+      content-type:
+      - application/json; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 6dc6571b-16d1-4a95-9485-2bb9aea98dbf
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: '{"processing_level_id":"3","boxes":["-90 -180 90 180"],"time_start":"1999-12-18T00:00:00.000Z","dif_ids":["MOD10A1V5"],"version_id":"5","updated":"2014-10-30T13:57:31.002Z","dataset_id":"MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid V005","data_center":"NSIDC_ECS","short_name":"MOD10A1","organizations":["NSIDC","MODAPS"],"title":"MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid V005","coordinate_system":"CARTESIAN","summary":"MODIS/Terra
+        Snow Cover Daily L3 Global 500m SIN Grid","orbit_parameters":{},"id":"C92711294-NSIDC_ECS","original_format":"ECHO10","archive_center":"NSIDC","browse_flag":false,"online_access_flag":false,"links":[{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"(DatasetDisclaimer)","hreflang":"en-US","href":"http://landweb.nascom.nasa.gov/cgi-bin/QA_WWW/qaFlagPage.cgi?sat=terra&ver=C5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Catalog
+        Page for this product at NSIDC (MiscInformation)","hreflang":"en-US","href":"http://nsidc.org/data/MOD10A1/versions/5"},{"rel":"http://esipfed.org/ns/fedsearch/1.1/metadata#","title":"Quality
+        Summary (Quality Summary)","hreflang":"en-US","href":"http://nsidc.org/data/data_pool/modis_disclaimer.html"}]}'
+    http_version: 
 e12cbf007574b9620f6098962cd92b111c41f5d7:
   response:
     status:
@@ -2438,6 +2634,64 @@ e12cbf007574b9620f6098962cd92b111c41f5d7:
         on the Konza Prairie</URLDescription>\n        </OnlineAccessURL>\n      </OnlineAccessURLs>\n
         \     <Orderable>false</Orderable>\n      <DataFormat>txt</DataFormat>\n    </Granule>"
     http_version: 
+9bb3738d71894c061dae36c552e702ba256f5673:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 22 Jul 2016 01:50:00 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - 4e7a529e-ba83-4207-a8c0-ec15dc8a5da7
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection><ShortName>ACR3L2DM</ShortName><VersionId>1</VersionId><InsertTime>2005-05-24T07:45:20.000Z</InsertTime><LastUpdate>2012-01-12T09:34:04.000Z</LastUpdate><LongName>ACRIM
+        III Level 2 Daily Mean Data</LongName><DataSetId>ACRIM III Level 2 Daily Mean
+        Data V001</DataSetId><Description>This file contains Level 2 total solar irradiance
+        in the form of daily means gathered by the ACRIM instrument on the ACRIMSAT
+        satellite.</Description><Orderable>false</Orderable><Visible>true</Visible><RevisionDate>2011-12-29T00:00:00Z</RevisionDate><SuggestedUsage>This
+        collection is comprised of processed daily mean data collected by the ACRIMSAT
+        spacecraft. This collection is ACRIM III results of total solar irradiance.</SuggestedUsage><ProcessingCenter>ACRIM
+        SCF</ProcessingCenter><ProcessingLevelId>2</ProcessingLevelId><ProcessingLevelDescription>GEOQUANT</ProcessingLevelDescription><ArchiveCenter>LaRC</ArchiveCenter><VersionDescription>Initial
+        Version</VersionDescription><CitationForExternalPublication>The research producing
+        this EOS/ACRIM III experiment collection was supervised by Dr. Richard C.
+        Willson, Principal Investigator, sponsored by Columbia University and funded
+        by the National Aeronautics and Space Administration under contract NAS5-97164.</CitationForExternalPublication><CollectionState>In
+        Work</CollectionState><MaintenanceAndUpdateFrequency>As Needed</MaintenanceAndUpdateFrequency><SpatialKeywords><Keyword>Global</Keyword></SpatialKeywords><Temporal><TimeType>UTC</TimeType><DateType>Gregorian</DateType><TemporalRangeType>Continuous
+        Range</TemporalRangeType><PrecisionOfSeconds>2</PrecisionOfSeconds><EndsAtPresentFlag>true</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>1999-12-20T00:00:00Z</BeginningDateTime><EndingDateTime>2014-12-20T00:00:00Z</EndingDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>Investigator</Role><HoursOfService>Monday-Friday
+        09:00-16:00 PT</HoursOfService><Instructions>E-mail Dr. Richard C. Willson</Instructions><OrganizationAddresses><Address><StreetAddress>1001
+        B Ave #200</StreetAddress><City>Coronado</City><StateProvince>California</StateProvince><PostalCode>92118</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>619-522-2945</Number><Type>phone</Type></Phone><Phone><Number>619-522-2967</Number><Type>fax</Type></Phone></OrganizationPhones><OrganizationEmails><Email>acrim@acrim.com</Email></OrganizationEmails><ContactPersons><ContactPerson><FirstName>Dr.
+        Richard</FirstName><MiddleName>C.</MiddleName><LastName>Willson</LastName><JobPosition>Principal
+        Investigator</JobPosition></ContactPerson></ContactPersons></Contact><Contact><Role>Archive</Role><HoursOfService>9
+        AM to 5 PM ET</HoursOfService><Instructions>None</Instructions><OrganizationName>Langley
+        DAAC User Services</OrganizationName><OrganizationAddresses><Address><StreetAddress>NASA
+        Langley Research Center, Mail Stop 157D</StreetAddress><City>Hampton</City><StateProvince>Virginia</StateProvince><PostalCode>23681-2199</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>757-864-8656</Number><Type>phone</Type></Phone><Phone><Number>757-864-8807</Number><Type>fax</Type></Phone></OrganizationPhones><OrganizationEmails><Email>larc-asdc-uds@lists.nasa.gov</Email></OrganizationEmails></Contact><Contact><Role>Producer</Role><HoursOfService>Monday-Friday
+        09:00-16:00 PT</HoursOfService><Instructions>E-mail Dr. Richard C. Willson</Instructions><OrganizationName>ACRIM
+        SCF</OrganizationName><OrganizationAddresses><Address><StreetAddress>1001
+        B Ave #200</StreetAddress><City>Coronado</City><StateProvince>California</StateProvince><PostalCode>92118</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>619-522-2945</Number><Type>phone</Type></Phone><Phone><Number>619-522-2967</Number><Type>fax</Type></Phone></OrganizationPhones><OrganizationEmails><Email>acrim@acrim.com</Email></OrganizationEmails></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>Earth
+        Science</CategoryKeyword><TopicKeyword>Atmosphere</TopicKeyword><TermKeyword>Atmospheric
+        Radiation</TermKeyword><VariableLevel1Keyword><Value>Solar Irradiance</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>Earth
+        Science</CategoryKeyword><TopicKeyword>Sun-Earth Interactions</TopicKeyword><TermKeyword>Solar
+        Activity</TermKeyword><VariableLevel1Keyword><Value>Solar Irradiance</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>ACRIMSAT</ShortName><LongName>Active
+        Cavity Radiometer Irradiance Monitor Satellite</LongName><Type>Spacecraft</Type><Characteristics/><Instruments><Instrument><ShortName>ACRIM</ShortName><LongName>Active
+        Cavity Radiometer Irradiance Monitor</LongName><Technique>Pyrheliometry</Technique><Characteristics/><Sensors><Sensor><ShortName>ACR</ShortName><LongName>Active
+        Cavity Radiometer</LongName><Technique>Active Cavity Radiometry</Technique></Sensor></Sensors><OperationModes><OperationMode>Normal</OperationMode></OperationModes></Instrument></Instruments></Platform></Platforms><CSDTDescriptions><CSDTDescription><PrimaryCSDT>n-Dim
+        Array of Records</PrimaryCSDT><Implementation>HDF</Implementation><CSDTComments>N/A</CSDTComments><IndirectReference>N/A</IndirectReference></CSDTDescription></CSDTDescriptions><Campaigns><Campaign><ShortName>ACRIM</ShortName><LongName>Active
+        Cavity Radiometer Irradiance Monitor</LongName><StartDate>1980-02-14T00:00:00Z</StartDate></Campaign></Campaigns><OnlineResources/><AssociatedDIFs><DIF><EntryId>ACR3L2DM1</EntryId></DIF></AssociatedDIFs><Spatial><SpatialCoverageType>Horizontal</SpatialCoverageType><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
 ac66e141d7ffb4a7db9222bf4c75d922bbfa13ec:
   response:
     status:
@@ -2473,6 +2727,96 @@ ac66e141d7ffb4a7db9222bf4c75d922bbfa13ec:
         3D Meteorological Data Processing System (IMDPS)</LongName></Campaign><Campaign><ShortName>CWIC</ShortName><LongName>CEOS
         WGISS Integrated Catalog</LongName></Campaign></Campaigns><OnlineResources><OnlineResource><URL>www.mosdac.gov.in</URL><Type>USER
         SUPPORT</Type></OnlineResource></OnlineResources><Spatial><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><BoundingRectangle><WestBoundingCoordinate>20</WestBoundingCoordinate><NorthBoundingCoordinate>50</NorthBoundingCoordinate><EastBoundingCoordinate>130</EastBoundingCoordinate><SouthBoundingCoordinate>-50</SouthBoundingCoordinate></BoundingRectangle></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>NO_SPATIAL</GranuleSpatialRepresentation></Spatial></Collection>
+    http_version: 
+100a4ceb11a02d26e70c36dcc024eb3da5729d35:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 22 Jul 2016 01:40:14 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - b4fb4cda-0f06-4957-8a6e-9ab92fd8e757
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection><ShortName>Matthew'sTest</ShortName><VersionId>2</VersionId><InsertTime>2001-01-01T00:00:00.000Z</InsertTime><LastUpdate>2001-01-01T00:00:00.000Z</LastUpdate><LongName>dummy-long-name</LongName><DataSetId>Matthew's
+        Test</DataSetId><Description>test abstract</Description><Orderable>true</Orderable><Visible>true</Visible><ProcessingLevelId>Level
+        0</ProcessingLevelId><ProcessingLevelDescription>none</ProcessingLevelDescription><Temporal><SingleDateTime>2015-09-20T00:00:00.000Z</SingleDateTime></Temporal><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>PALEOCLIMATE</TopicKeyword><TermKeyword>OCEAN/LAKE
+        RECORDS</TermKeyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>testing</ShortName><LongName>testing
+        long name</LongName><Type>test type</Type></Platform></Platforms><OnlineResources><OnlineResource><URL>http://youtube.com</URL><Type>UNKNOWN</Type></OnlineResource></OnlineResources><Spatial><SpatialCoverageType>HORIZONTAL</SpatialCoverageType><HorizontalSpatialDomain><Geometry><CoordinateSystem>CARTESIAN</CoordinateSystem><Point><PointLongitude>0.0</PointLongitude><PointLatitude>0.0</PointLatitude></Point></Geometry></HorizontalSpatialDomain><GranuleSpatialRepresentation>CARTESIAN</GranuleSpatialRepresentation></Spatial></Collection>"
+    http_version: 
+b0372414d3a0e12399bca7fd5acbf30f30b4b8e9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Fri, 22 Jul 2016 01:50:04 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - cc304ed2-7dd4-469d-8b33-7242d589f73b
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection><ShortName>MOD04_L2</ShortName><VersionId>5</VersionId><InsertTime>2006-03-17T00:00:00.000Z</InsertTime><LastUpdate>2006-03-17T00:00:00.000Z</LastUpdate><LongName>MODIS/Terra
+        Aerosol 5-Min L2 Swath 10km</LongName><DataSetId>MODIS/Terra Aerosol 5-Min
+        L2 Swath 10km V005</DataSetId><Description>MODIS/Terra Aerosol 5-Min L2 Swath
+        10km</Description><Orderable>false</Orderable><Visible>true</Visible><RevisionDate>2006-03-17T00:00:00.000Z</RevisionDate><SuggestedUsage>Science
+        Research</SuggestedUsage><ProcessingCenter>MODAPS</ProcessingCenter><ProcessingLevelId>2</ProcessingLevelId><ProcessingLevelDescription>Sensor
+        Measurements</ProcessingLevelDescription><ArchiveCenter>LAADS</ArchiveCenter><VersionDescription>Terra
+        MODIS Version 5 Data Collection, Fourth Atmosphere Reprocessing Campaign</VersionDescription><CitationForExternalPublication>This
+        data set was provided by the NASA EOS Project.</CitationForExternalPublication><CollectionState>In
+        Work</CollectionState><MaintenanceAndUpdateFrequency>As Needed</MaintenanceAndUpdateFrequency><SpatialKeywords
+        /><TemporalKeywords /><Temporal><TimeType>UTC</TimeType><DateType>Gregorian</DateType><TemporalRangeType>Continuous
+        Range</TemporalRangeType><PrecisionOfSeconds>1</PrecisionOfSeconds><EndsAtPresentFlag>true</EndsAtPresentFlag><RangeDateTime><BeginningDateTime>1999-12-18T00:00:00.000Z</BeginningDateTime></RangeDateTime></Temporal><Contacts><Contact><Role>Producer</Role><Instructions>Contact
+        for data content concerns</Instructions><OrganizationName>MODIS Science Data
+        Support Team</OrganizationName><OrganizationAddresses><Address><StreetAddress>NASA/GSFC
+        Code 922</StreetAddress><City>GREENBELT</City><StateProvince>MD</StateProvince><PostalCode>20771</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>301-286-7608</Number><Type>phone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>Edward.J.Masuoka.1@gsfc.nasa.gov</Email></OrganizationEmails><ContactPersons
+        /></Contact><Contact><Role>Archive</Role><Instructions>Contact for format/distribution
+        issues.</Instructions><OrganizationName>MODIS Science Data Support Team</OrganizationName><OrganizationAddresses><Address><StreetAddress>7501
+        Forbes Blvd, Suite 103</StreetAddress><City>Seabrook</City><StateProvince>MD</StateProvince><PostalCode>20706</PostalCode><Country>USA</Country></Address></OrganizationAddresses><OrganizationPhones><Phone><Number>301-352-2144</Number><Type>phone</Type></Phone></OrganizationPhones><OrganizationEmails><Email>laadshelp@listserv.gsfc.nasa.gov</Email></OrganizationEmails><ContactPersons
+        /></Contact></Contacts><ScienceKeywords><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>CLOUD
+        CONDENSATION NUCLEI</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>AEROSOLS</TermKeyword><VariableLevel1Keyword><Value>AEROSOL
+        PARTICLE PROPERTIES</Value></VariableLevel1Keyword></ScienceKeyword><ScienceKeyword><CategoryKeyword>EARTH
+        SCIENCE</CategoryKeyword><TopicKeyword>ATMOSPHERE</TopicKeyword><TermKeyword>ATMOSPHERIC
+        RADIATION</TermKeyword><VariableLevel1Keyword><Value>RADIATIVE FLUX</Value></VariableLevel1Keyword></ScienceKeyword></ScienceKeywords><Platforms><Platform><ShortName>Terra</ShortName><LongName>First
+        EOS Polar Orbiting Satellite, 10:30 AM Descending Equator Crossing</LongName><Type>Spacecraft</Type><Characteristics><Characteristic><Name>EquatorCrossingTime</Name><Description>Local
+        time of the equator crossing and direction (ascending or descending)</Description><DataType>varchar</DataType><Unit>Local
+        Mean Time</Unit><Value>10:30, descending</Value></Characteristic></Characteristics><Instruments><Instrument><ShortName>MODIS</ShortName><LongName>Moderate-Resolution
+        Imaging Spectroradiometer</LongName><Technique>Imaging Spectroradiometry</Technique><NumberOfSensors>1</NumberOfSensors><Characteristics
+        /><Sensors><Sensor><ShortName>MODIS</ShortName><LongName>Cross-track Scanning
+        Radiometer</LongName><Technique>Radiometry</Technique><Characteristics /></Sensor></Sensors><OperationModes
+        /></Instrument></Instruments></Platform></Platforms><AdditionalAttributes><AdditionalAttribute><Name>SuccessfulRetrievalPct_Land</Name><DataType>FLOAT</DataType><Description>None</Description></AdditionalAttribute><AdditionalAttribute><Name>SuccessfulRetrievalPct_Ocean</Name><DataType>FLOAT</DataType><Description>None</Description></AdditionalAttribute></AdditionalAttributes><CSDTDescriptions><CSDTDescription><PrimaryCSDT>Simple
+        Swath</PrimaryCSDT><Implementation>HDF-EOS</Implementation><CSDTComments>None</CSDTComments><IndirectReference>N/A</IndirectReference></CSDTDescription></CSDTDescriptions><OnlineResources><OnlineResource><URL>http://modis-atmos.gsfc.nasa.gov/products.html</URL><Description>Overview
+        of MODIS Atmosphere Data Products</Description><Type>ECSCollGuide</Type></OnlineResource><OnlineResource><URL>http://modis-atmos.gsfc.nasa.gov/products_calendar.html</URL><Description>MODIS
+        Atmosphere Data Availability Calendar and Validation Level</Description><Type>MiscInformation</Type></OnlineResource><OnlineResource><URL>http://modis-atmos.gsfc.nasa.gov/validation.html</URL><Description>NULL</Description><Type>DatasetDisclaimer</Type></OnlineResource></OnlineResources><Spatial><GranuleSpatialRepresentation>GEODETIC</GranuleSpatialRepresentation></Spatial></Collection>"
     http_version: 
 94dce8361246627e4a97a3d92becf8e09bc1c198:
   response:

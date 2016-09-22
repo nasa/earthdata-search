@@ -200,6 +200,31 @@ describe "Spatial" do
       end
     end
 
+    context 'clearing filters' do
+      before :each do
+        create_bounding_box(0, 0, 10, 10)
+        wait_for_xhr
+        click_on 'Clear Filters'
+        wait_for_xhr
+      end
+
+      it 'removes the spatial point in the manual entry text boxes' do
+        expect(page).not_to have_field('manual-coord-entry-swpoint')
+        expect(page).not_to have_field('manual-coord-entry-nepoint')
+      end
+
+      context 'using the manual entry text boxes to enter a new SW point' do
+        before :each do
+          click_on 'Search by spatial rectangle'
+          fill_in 'manual-coord-entry-swpoint', with: "0,0\t"
+        end
+
+        it 'does not display the old NE point values' do
+          expect(page).not_to have_field('manual-coord-entry-nepoint', with: '10,10')
+        end
+      end
+    end
+
     context "loading a bounding box selection over the antimeridian" do
       before :each do
         visit '/search?m=-29.25!-199.40625!0!1&sb=160%2C20%2C-170%2C40'
