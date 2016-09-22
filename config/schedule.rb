@@ -20,7 +20,7 @@
 # Learn more: http://github.com/javan/whenever
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
-set :output, '$NGAP_LOG'
+set :output, ENV["NGAP_LOG"]
 
 set :environment, Rails.env
 set :job_template, "/bin/bash -c 'PATH=#{File.dirname(`which ruby`)}:$PATH; :job'"
