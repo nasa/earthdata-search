@@ -154,3 +154,13 @@ do (ko, $=jQuery) ->
         mbr.style.height = Math.round(max_lat - min_lat + 2*borderWidth) + 'px'
         mbr.style.width = Math.round(max_lng - min_lng + 2*borderWidth) + 'px'
         element.appendChild(mbr)
+
+  # Truncate utility: http://jsfiddle.net/dima_k/bZEQM/1/
+  ko.bindingHandlers.truncatedText = update: (element, valueAccessor, allBindingsAccessor) ->
+    originalText = ko.utils.unwrapObservable(valueAccessor())
+    length = ko.utils.unwrapObservable(allBindingsAccessor().maxLength) or 100
+    truncatedText = if originalText.length > length then originalText.substring(0, length) + '...' else originalText
+    # updating text binding handler to show truncatedText
+    ko.bindingHandlers.text.update element, ->
+      truncatedText
+    return

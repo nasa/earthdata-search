@@ -21,7 +21,14 @@
                 <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
               </div>
               <h3 data-bind="text: dataset_id"></h3>
+              <p class="collection-granules-info panel-list-comparison-details">
+                <!-- ko if: granuleDescription -->
+                <strong><span class="panel-list-granule-description" data-bind="text: granuleDescription"></span></strong>
+                <!-- /ko -->
+                • <span data-bind="text: timeRange"></span>
 
+                <span data-bind="truncatedText: summary, maxLength: 300"></span>
+              </p>
               <p>
                 <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
 
@@ -76,11 +83,4 @@
                   </a>
                 </div>
               </div>
-
-              <p class="collection-granules-info panel-list-comparison-details">
-                <span data-bind="text: timeRange"></span>
-                <!-- ko if: granuleDescription -->
-                <span class="panel-list-granule-description" data-bind="text: granuleDescription"></span>
-                <!-- /ko -->
-              </p>
             </li>

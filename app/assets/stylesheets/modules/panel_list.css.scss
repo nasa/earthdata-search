@@ -22,9 +22,9 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   color: #424242;
   background-color: #fff;
   border-top: 1px solid #e3e3e3;
-  margin: 5px 5px 6px 5px;
+  margin: 0;
   min-height: $panel-list-thumbnail-size + 30px;
-  padding: 10px 10px 10px 14px;
+  padding: 15px 15px 15px 20px;
   font-size: .8em;
   position: relative;
 
@@ -33,15 +33,16 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 
   &:nth-child(odd) {
-    background: #f3f3f3;
+    background: #f4f7fa;
   }
 
   &.master-overlay-forward:hover {
-    background-color: #c9c9c9;
+    background-color: darken(#f4f7fa, 2%);
   }
 
   h3 {
     overflow: hidden;
+    font-size: 1.4em;
   }
 }
 
@@ -225,14 +226,10 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-comparison-details {
-  font-size: .9em;
-  padding: 4px 8px;
+  font-size: 1em;
 }
 
 .panel-list-granule-description {
-  border-left: 1px solid #888;
-  padding-left: 4px;
-  margin-left: 4px;
 }
 
 .panel-list-item-actions {

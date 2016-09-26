@@ -14,7 +14,7 @@
           </a>
         </nav>
         <header>
-          <h2><strong data-bind="text: collections.hits"></strong> Matching Collections</h2>
+          <h2><strong class="collection-hits" data-bind="text: collections.hits"></strong> Matching Collections <a class="master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#"><i class="fa fa-question-circle"></i></a></h2>
         </header>
         <div class="master-overlay-info master-overlay-when-min">
           <p data-bind="visible: !project.isEmpty()" class="button-details">
@@ -24,12 +24,9 @@
           </p>
         </div>
         <div class="master-overlay-info master-overlay-when-max">
-          <p data-bind="visible: project.isEmpty()"class="button-details">
-            <a class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward low-priority" href="#">
-              <i class="fa fa-question-circle"></i> Learn More
-            </a>
-            <span>Add collections to your project to compare and retrieve their data.</span>
-          </p>
+          <div class="collection-filters">
+            <input type="checkbox"> Hide collections without granules (23)
+          </div>
           <p data-bind="visible: !project.isEmpty()" class="button-details">
             <a id="view-project" class="button master-overlay-hide-parent master-overlay-show-next master-overlay-forward" href="#">
               <i class="fa fa-folder-o"></i> View Project
@@ -48,17 +45,7 @@
         </div>
         <div id="collection-scroll-pane" class="master-overlay-content" data-bind="event: {scroll: ui.collectionsList.scrolled}">
           <!-- ko if: collections.featured().length > 0 -->
-          <h3 class="panel-list-title">Recent and Featured</h3>
-          <div class="panel-list">
-            <edsc-collections-collapsed id="coll-collection-featured-list" params="page: $data, collections: collections.featured, isProject: false" class="master-overlay-when-min"></edsc-collections-collapsed>
-            <ul id="collection-featured-list"
-                class="panel-list-list knockout-template master-overlay-when-max"
-                data-bind="foreach: collections.featured, css: { 'knockout-template': !bindingsLoaded }">
-              <%= render partial: 'collection_list_item', locals: {is_project: false} %>
-            </ul>
-          </div>
 
-          <h3 class="panel-list-title">More Collections</h3>
           <!-- /ko -->
           <div class="panel-list">
             <!-- ko if: collections.unfeatured().length > 0 -->

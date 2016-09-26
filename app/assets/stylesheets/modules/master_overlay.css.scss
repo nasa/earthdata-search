@@ -7,17 +7,27 @@
   display: flex;
 
   a {
-    color: #fff;
   }
 
   // Non-scrollable header area
   header {
-    margin: 1em 1em 0;
+    margin: 1em 1em 0 0;
 
     h2 {
-      font-size: 1.4em;
+      background: #fff;
+      font-size: 1.2em;
       margin: 0;
       font-weight: 200;
+      display: inline-block;
+      padding: 10px 20px;
+    }
+
+    .collection-hits {
+      background: $ocean-blue;
+      color: #fff;
+      border-radius: 20px;
+      padding: 5px 10px;
+      font-size: 0.8em;
     }
 
     &.with-options {
@@ -58,13 +68,16 @@
       margin: 0;
       font-size: 1em;
       font-weight: bold;
+      background: none;
+      display: block;
+      padding: inherit;
     }
   }
 }
 
 // The main section in the overlay.  Collection results, pinned collections, whatnot.
 .master-overlay-main {
-  background-color: $master-overlay-main-bg-color;
+  background-color: transparent;
   top: 50%;
   overflow: hidden;
   color: #424242;
@@ -90,7 +103,7 @@
 .master-overlay-main-content {
   width: 400%;
   left: 0%;
-  background: #fff;
+  background: transparent;
 
   section {
     height: 100%;
@@ -123,8 +136,8 @@
   transition-duration: 0.3s;
 }
 
-.master-overlay-parent, .master-overlay-main {
-  box-shadow: 5px 0px 2px 0px rgba(0,0,0,0.4);
+.master-overlay-parent {
+  box-shadow: 5px 0px 2px 0px rgba(0,0,0,0.2);
 }
 
 .master-overlay-parent {
@@ -150,6 +163,7 @@
 
 .master-overlay-info {
   margin: 0;
+  background: #fff;
 
 
   p.button-details {
@@ -170,7 +184,7 @@
   }
 
   p {
-    margin: 1em 1em 0;
+    margin: 0;
   }
 
   .button {
@@ -192,7 +206,6 @@
 }
 
 .is-master-overlay-maximized #collection-results .master-overlay-info {
-  height: 71px;
 }
 
 .master-overlay-global-actions {
@@ -229,6 +242,7 @@
 
 // Scrollable content area
 .master-overlay-content {
+  background: none;
   padding: 0;
   height: 80%;
   overflow-y: scroll;
@@ -398,8 +412,8 @@ $parent-width: $parent-split * 0.21;
 
 .master-overlay-info .panel-list-meta, .panel-list-meta {
   text-align:right;
-  padding: 0 1.25em;
-  margin: 1em .5em 0 0;
+  padding: 1em;
+  margin: 0;
   font-size: .8em;
   color: #666;
   line-height: 1.5;
@@ -435,4 +449,11 @@ $parent-width: $parent-split * 0.21;
     margin-bottom: 10px;
     word-wrap: break-word;
   }
+}
+
+.collection-filters {
+  float: left;
+  font-size: 0.8em;
+  margin-left: 20px;
+  padding-top: 12px;
 }
