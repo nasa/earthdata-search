@@ -4,9 +4,24 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .panel-list {
   .button {
-    @include light-button;
-    font-size: 1.2em;
-    padding: 7px 10px;
+    font-size: 1em;
+    padding: 4px 8px;
+    display: block;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #ccc;
+    color: #424242;
+    margin-bottom: 2px;
+
+    &.primary {
+      background: #27ae60;
+      color: #fff;
+    }
+
+    &.button-active {
+      background: #c0392b;
+      color: #fff;
+    }
   }
 }
 
@@ -26,7 +41,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   min-height: $panel-list-thumbnail-size + 30px;
   padding: 15px 15px 15px 20px;
   font-size: .8em;
-  position: relative;
+  display: flex;
+
 
   &:first-child {
     margin-top: 0;
@@ -44,11 +60,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     overflow: hidden;
     font-size: 1.4em;
   }
-}
-
-.panel-list-item > p {
-  margin-left: $panel-list-thumbnail-container-size;
-  display: table;
 }
 
 // Drag handles instead of borders
@@ -82,16 +93,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-thumbnail-container {
-  display: block;
-  float: left;
-  position:relative;
-  margin-right: .5em;
-  width: $panel-list-thumbnail-container-size;
-  height: $panel-list-thumbnail-container-size;
-  background-color: #222;
-  border: 1px solid rgb(235, 235, 235);
-  text-align: center;
-  line-height: $panel-list-thumbnail-size - 1px;
+  width: 100px;
 }
 
 .panel-list-thumbnail-onerror {
@@ -129,9 +131,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-badges {
-  position: absolute;
-  top: -1px;
-  left: -1px;
   .tooltip {
     width: $facet-overlay-width;
   }
@@ -148,13 +147,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .badge {
-  display: block;
+  color: #fff;
   float: left;
-  border-radius: 2px;
-  margin: 2px 0 0 2px;
-  background-repeat: no-repeat;
-  width: 22px;
-  height: 22px;
 }
 
 .facets-list-hide .badge {
@@ -165,27 +159,34 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   margin: 0 .5em 0 0;
 }
 
-.badge-gibs {
-  @include retina-image(gibs, 22px 22px, png, null, '@2x', true);
-}
-
-.badge-subsetting {
-  @include retina-image(opendap, 22px 22px, png, null, '@2x', true);
-}
-
-.badge-nrt {
-  border-radius: 2px;
+.badge-nrt, .badge-gibs, .badge-subsetting {
   background-color: #2ECC71;
   color: #fff;
-  text-shadow: .5px .5px .5px darken(#2ECC71, 20%);
-  font-size: 9px;
+  text-shadow: .5px .5px .5px rgba(0,0,0,0.2);
+  font-size: 10px;
   font-weight: bold;
   text-align: center;
   line-height: 22px;
+  padding: 0 10px;
+  text-transform: uppercase;
   &:before {
-    content: "NRT";
+    content: "Near-real Time Data";
   }
   // @include retina-image(nrt, 22px 22px, png, null, '@2x', true);
+}
+
+.badge-gibs {
+  background: #e67e22;
+  &:before {
+    content: "Map Imagery";
+  }
+}
+
+.badge-subsetting {
+  background: #3498db;
+  &:before {
+    content: "Subsetting";
+  }
 }
 
 .badge-cwic {
@@ -216,13 +217,11 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 .panel-list-details {
-  font-size: .8em;
-  background: #111;
-  border-radius: 5px;
-  padding: 4px 8px;
-  display: inline;
-  color: #fff;
-  text-shadow: 1px 1px 1px #222;
+  font-size: 10px;
+  text-align: center;
+  line-height: 22px;
+  padding: 0 10px;
+  display: inline-block;
 }
 
 .panel-list-comparison-details {
@@ -232,11 +231,13 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 .panel-list-granule-description {
 }
 
-.panel-list-item-actions {
-  position: relative;
-  top: 2px;
-  left: 2px;
-  float: right;
+.panel-list-details-container {
+  flex: 1 1 600px;
+  margin-right: 20px;
+}
+
+.panel-list-item-actions-container {
+  width: 140px;
 }
 
 .granule-item-actions {

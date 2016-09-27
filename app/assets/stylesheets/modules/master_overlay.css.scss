@@ -61,7 +61,7 @@
   left: 0;
 
   header {
-    margin: 1em 1em 0 .5em;
+    margin: 1em 0.5em 0 0.5em;
 
     h2 {
       color: #FFFFFF;
@@ -81,6 +81,7 @@
   top: 50%;
   overflow: hidden;
   color: #424242;
+  height: 50%;
 }
 
 // The secondary section in the overlay. Granule filters
@@ -131,7 +132,6 @@
 .master-overlay-parent, .master-overlay-main, .master-overlay-main-content {
   z-index: 60;
   position: absolute;
-  height: 100%;
   transition-property: left, width;
   transition-duration: 0.3s;
 }
@@ -164,6 +164,7 @@
 .master-overlay-info {
   margin: 0;
   background: #fff;
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.4);
 
 
   p.button-details {
@@ -384,11 +385,12 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
   margin-bottom: 1em;
 }
 
-$browser-split: 1550px;
+$browser-split: 1000px;
 $parent-split: 1200px;
 
 $main-width: $browser-split * 0.4;
 $parent-width: $parent-split * 0.21;
+
 
 @media (min-width: $browser-split) {
   .master-overlay-main {

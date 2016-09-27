@@ -145,11 +145,16 @@
 
 .facet-badge {
   display: block;
-  border-radius: 2px;
-  margin-left: 2px;
+  border-radius: 5px;
+  margin: 0 5px 0 2px;
   background-repeat: no-repeat;
-  width: 22px;
-  height: 22px;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+
+  &:before {
+    content: "";
+  }
 }
 
 .facet-title {

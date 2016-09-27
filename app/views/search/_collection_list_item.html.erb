@@ -1,49 +1,52 @@
-            <li data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': canFocus(), 'master-overlay-hide-parent': canFocus()}"
-                class="panel-list-item"<%=raw ' draggable="true"' if is_project %>>
+            <!-- <li data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': canFocus(), 'master-overlay-hide-parent': canFocus()}" -->
+            <li data-master-overlay-forward="Collections" data-bind="click: $parent.ui.collectionsList.showCollectionDetails"
+                class="panel-list-item master-overlay-forward"<%=raw ' draggable="true"' if is_project %>>
               <% if is_project %>
               <div class="panel-list-drag-handle"></div>
               <% end %>
               <div class="panel-list-thumbnail-container" data-bind="css: {'panel-list-thumbnail-placeholder': !thumbnail()}">
-                <div class="panel-list-badges">
-                  <!-- ko if: gibs() -->
-                  <a href="#" class="badge badge-gibs" data-tooltip="true" title="Supports advanced map visualizations using the GIBS tile service"></a>
-                  <!-- /ko -->
-                  <!-- ko if: opendap() -->
-                  <a href="#" class="badge badge-subsetting" data-tooltip="true" title="Supports spatial and parameter subsetting"></a>
-                  <!-- /ko -->
-                  <!-- ko if: nrt -->
-                  <a href="#" class="badge badge-nrt" data-tooltip="true" title="Near Real Time (NRT) Data"></a>
-                  <!-- /ko -->
-                  <!-- ko if: cwic() -->
-                  <a href="#" class="badge badge-cwic" data-tooltip="true" title="Int'l / Interagency Data"></a>
-                  <!-- /ko -->
-                </div>
                 <img class="panel-list-thumbnail" data-bind="attr: {src: thumbnail(), alt: dataset_id}">
               </div>
-              <h3 data-bind="text: dataset_id"></h3>
-              <p class="collection-granules-info panel-list-comparison-details">
-                <!-- ko if: granuleDescription -->
-                <strong><span class="panel-list-granule-description" data-bind="text: granuleDescription"></span></strong>
-                <!-- /ko -->
-                • <span data-bind="text: timeRange"></span>
-
-                <span data-bind="truncatedText: summary, maxLength: 300"></span>
-              </p>
-              <p>
-                <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
-
-                  <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
-                  <span data-bind="text: short_name"></span> v<span data-bind="text: version_id"></span>
+              <div class="panel-list-details-container">
+                <h3 data-bind="text: dataset_id"></h3>
+                <p class="collection-granules-info panel-list-comparison-details">
+                  <!-- ko if: granuleDescription -->
+                  <strong><span class="panel-list-granule-description" data-bind="text: granuleDescription"></span></strong>
                   <!-- /ko -->
-                  <!-- ko ifnot: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
-                  <span data-bind="text: short_name"></span>
-                  <!--/ko-->
-                  <!-- ko if: $data.org() -->
-                  - <span data-bind="text: org()"></span>
-                  <!-- /ko -->
-                </span>
-              </p>
+                  <strong>• <span data-bind="text: timeRange"></span> •</strong>
+                  <span data-bind="truncatedText: summary, maxLength: 280"></span>
+                </p>
+                <p>
+                  <div class="panel-list-badges">
+                    <!-- ko if: gibs() -->
+                    <a href="#" class="badge badge-gibs" data-tooltip="true" title="Supports advanced map visualizations using the GIBS tile service"></a>
+                    <!-- /ko -->
+                    <!-- ko if: opendap() -->
+                    <a href="#" class="badge badge-subsetting" data-tooltip="true" title="Supports spatial and parameter subsetting"></a>
+                    <!-- /ko -->
+                    <!-- ko if: nrt -->
+                    <a href="#" class="badge badge-nrt" data-tooltip="true" title="Near Real Time (NRT) Data"></a>
+                    <!-- /ko -->
+                    <!-- ko if: cwic() -->
+                    <a href="#" class="badge badge-cwic" data-tooltip="true" title="Int'l / Interagency Data"></a>
+                    <!-- /ko -->
+                  </div>
+                  <span class="panel-list-details" <% if is_project %>data-bind="style: {'background-color': $root.project.colorForCollection($data)}"<% end %>>
 
+                    <strong>
+                      <!-- ko if: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
+                      <span data-bind="text: short_name"></span> v<span data-bind="text: version_id"></span>
+                      <!-- /ko -->
+                      <!-- ko ifnot: $data.version_id && $data.version_id !== 'Undefined' && $data.version_id !== 'Not provided' -->
+                      <span data-bind="text: short_name"></span>
+                      <!--/ko-->
+                    </strong>
+                    <!-- ko if: $data.org() -->
+                    - <span data-bind="text: org()"></span>
+                    <!-- /ko -->
+                  </span>
+                </p>
+              </div>
               <div class="panel-list-item-actions-container">
                 <div class="panel-list-item-actions">
                   <!-- ko if: $root.ui.collectionsList.canQueryCollectionSpatial($data) -->
@@ -52,9 +55,6 @@
                     <i class="fa fa-map-marker"></i>
                   </a>
                   <!-- /ko -->
-                  <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Collections" data-bind="click: $parent.ui.collectionsList.showCollectionDetails" title="View collection details">
-                    <i class="fa fa-info-circle"></i>
-                  </a>
                   <% if is_project %>
                     <a href="#" class="button icon-button" title="Retrieve data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
                       <i class="fa fa-download"></i>
@@ -73,13 +73,16 @@
                     </a>
                     <!-- /ko -->
                   <% end %>
-                  <a href="#" class="button icon-button add-to-project" data-pulse="#project-count" title="Add collection to the current project"
-                     data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
-                    <i class="fa fa-plus"></i>
+                  <a class="button" title="View granules" data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}">
+                     View Granules
                   </a>
-                  <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
+                  <a href="#" class="button primary add-to-project" data-pulse="#project-count" title="Add collection to the current project"
+                     data-bind="visible: !$root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
+                    <i class="fa fa-plus"></i> Add to project
+                  </a>
+                  <a href="#" class="button button-active" data-pulse="#project-count" title="Remove collection from the current project"
                      data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
-                    <i class="fa fa-minus"></i>
+                    Remove from project
                   </a>
                 </div>
               </div>
