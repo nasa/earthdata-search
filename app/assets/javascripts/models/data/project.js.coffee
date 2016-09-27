@@ -144,7 +144,6 @@ ns.Project = do (ko,
         current?.dispose()
         if collection?
           projectCollection = new ProjectCollection(collection)
-          collection.makeRecent()
         observable(projectCollection)
 
     getCollections: ->

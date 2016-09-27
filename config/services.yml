@@ -42,9 +42,9 @@ urs:
 opendap:
   C191855458-LARC:
     granule_url_template:
-      https://opendap.larc.nasa.gov/opendap/SortByDirectory/MOPITT/MOP03J.006/{od_time_start_dot}/{producer_granule_id}
+      https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.006/{od_time_start_dot}/{producer_granule_id}
     ddx_url:
-      https://opendap.larc.nasa.gov/opendap/SortByDirectory/MOPITT/MOP03J.006/2012.06.18/MOP03J-20120618-L3V4.2.3.he5.ddx
+      https://opendap.larc.nasa.gov/opendap/MOPITT/MOP03J.006/2012.06.18/MOP03J-20120618-L3V4.2.3.he5.ddx
   C7085910-LARC_ASDC:
     granule_url_template:
       https://opendap.larc.nasa.gov/opendap/SortByDirectory/CERES/EBAF/TOA_Edition2.8/{producer_granule_id}
