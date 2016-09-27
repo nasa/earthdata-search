@@ -360,7 +360,7 @@ a.master-overlay-back:hover:before, a.master-overlay-show-parent:hover:before {
 }
 
 .is-master-overlay-parent-hidden {
-  .master-overlay-parent { left:-$facet-overlay-width; }
+  .master-overlay-parent { }
   .master-overlay-main   { left:0%; }
 }
 
