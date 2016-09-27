@@ -4,7 +4,7 @@ describe 'Collection GIBS Filtering', reset: false do
   before :all do
     Capybara.reset_sessions!
     load_page :search, facets: true, env: :sit
-    
+
   end
 
   context 'when selecting the GIBS filter' do
@@ -25,11 +25,6 @@ describe 'Collection GIBS Filtering', reset: false do
 
       it 'shows all collections' do
         expect(page).to have_css('.badge-gibs', count: 1)
-      end
-
-      # The hard-coded feature collection ids in collection_extra is for ops only.
-      xit 'shows recent and featured collections' do
-        expect(page).to have_content('Recent and Featured')
       end
     end
   end

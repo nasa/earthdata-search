@@ -11,7 +11,7 @@ class GibsConfiguration
 
     all_conditions = []
     configs.each do |config|
-      response = client.add_tag(tag_key, config[:config], config[:collections], token, true) do |tag|
+      response = client.add_tag(tag_key, config[:config], config[:collections], token, true, false) do |tag|
         tag['product'] || tag[:product]
       end
       puts JSON.pretty_generate(response.body) unless response.success?
@@ -41,7 +41,15 @@ class GibsConfiguration
     response = build_connection.get(url)
     return nil unless response.success?
 
-    json = response.body
+    wv_json = response.body
+
+    config_file = File.read(Rails.root.join('config', 'gibs.json'))
+    config_json = JSON.parse(config_file)
+
+    json = {}
+    wv_json.each do |k, v|
+      json[k] = v.merge(config_json[k]) if config_json[k]
+    end
 
     layers = json['layers']
     products = json['products']
@@ -108,6 +116,7 @@ class GibsConfiguration
 
   def query_to_cmr(query)
     mappings = {
+      'conceptId' => ->(value) { {'concept_id' => value} },
       'dataCenterId' => ->(value) { {'provider' => value} },
       'shortName' => ->(value) { {'short_name' => value} }
     }
