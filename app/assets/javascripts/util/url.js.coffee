@@ -117,6 +117,7 @@ this.edsc.util.url = do(window
     new ParamNameCompressor('bounding_box', 'sb')
     new ParamNameCompressor('line', 'sl')
     new ParamNameCompressor('line', 'sg')
+    new ParamNameCompressor('has_granules', 'hg')
 
     new ArrayJoiner('features', 'ff')
     new ArrayJoiner('data_center_h', 'fdc')
