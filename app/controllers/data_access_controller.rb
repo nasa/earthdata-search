@@ -225,11 +225,13 @@ class DataAccessController < ApplicationController
     return true if access_config.nil? || access_config.echoform_digest.nil? || methods.nil?
 
     form_digest = []
+    echoform_digest = access_config.echoform_digest
+    echoform_digest = JSON.parse(echoform_digest) if echoform_digest.is_a? String
     methods.each do |method|
       if method[:type] == 'download' || method[:form].nil?
-        digest = access_config.echoform_digest.select {|digest| digest['id'] == method[:type]}
+        digest = echoform_digest.select {|digest| digest['id'] == method[:type]}
       else
-        digest = access_config.echoform_digest.select {|digest| digest['id'] == method[:id] && digest['form_hash'] == Digest::SHA1.hexdigest(method[:form])}
+        digest = echoform_digest.select {|digest| digest['id'] == method[:id] && digest['form_hash'] == Digest::SHA1.hexdigest(method[:form])}
       end
       form_digest.push digest if digest.present?
     end
