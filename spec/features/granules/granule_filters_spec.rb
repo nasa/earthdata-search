@@ -113,24 +113,16 @@ describe "Granule search filters", reset: false do
         fill_in "Minimum:", with: "2.5"
         page.find(".master-overlay-secondary-content").click
         wait_for_xhr
-        page.save_screenshot "1.png"
 
-        project = Project.find(URI.parse(page.current_url).query[/^projectId=(\d+)$/, 1].to_i)
-        p "--------- #{project.path}"
-
-        page.execute_script("document.getElementById('cloud-cover-min').value = ''; null;")
         fill_in "Minimum:", with: ""
-        # keypress_script = "var e = $.Event('keypress', { which: 9 }); $('#cloud-cover-min').trigger(e); null;"
-        # page.execute_script(keypress_script)
         expect(page).to have_field("Minimum", with: "")
+
+        page.execute_script('$("#cloud-cover-min").trigger("change"); null;')
         page.find(".master-overlay-secondary-content").click
-        wait_for_xhr
-        page.save_screenshot "2.png"
         click_button "Apply"
         wait_for_xhr
-        p "--------- #{project.path}"
 
-        expect(project.path).not_to have_content("pg[1][cc][min]")
+        expect(current_url).not_to have_content("pg[1][cc][min]")
       end
 
       context "validates input" do
