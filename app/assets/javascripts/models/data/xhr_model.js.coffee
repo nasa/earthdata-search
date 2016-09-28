@@ -67,11 +67,6 @@ ns.XhrModel = do (ko
       if @query?
         params = @params()
         params.page_num = @page = 1
-        unless @isRelevant()
-          if !@isLoaded.peek()
-            @stale = true
-          @isLoaded(false)
-          return
         if !@stale && !@isLoaded.peek()
           @isLoaded(true)
           return

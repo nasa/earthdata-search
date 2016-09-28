@@ -170,7 +170,7 @@ ns.CollectionFacets = do (ko) ->
   class CollectionFacetsModel
     constructor: (query) ->
       @query = query
-      @isRelevant = ko.observable(false)
+      @isRelevant = ko.observable(true)
       @appliedFacets = ko.computed(@_computeAppliedFacets, this, deferEvaluation: true)
       @results = ko.observable([])
 
