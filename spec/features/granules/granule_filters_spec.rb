@@ -108,6 +108,23 @@ describe "Granule search filters", reset: false do
         click_button "granule-filters-submit"
       end
 
+      it "entering and removing values doesn't set invalid query param in the url" do
+        page.execute_script("document.getElementById('cloud-cover-min').scrollIntoView()")
+        fill_in "Minimum:", with: "2.5"
+        page.find(".master-overlay-secondary-content").click
+        wait_for_xhr
+
+        fill_in "Minimum:", with: ""
+        expect(page).to have_field("Minimum", with: "")
+
+        page.execute_script('$("#cloud-cover-min").trigger("change"); null;')
+        page.find(".master-overlay-secondary-content").click
+        click_button "Apply"
+        wait_for_xhr
+
+        expect(current_url).not_to have_content("pg[1][cc][min]")
+      end
+
       context "validates input" do
         after :each do
           first_project_collection.click_link "Hide granule filters"
