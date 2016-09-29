@@ -118,6 +118,22 @@ describe "Access Option Defaults", reset: true do
 
       expect(page).to have_select('Distribution Options', selected: 'FtpPull')
     end
+
+    context "with corrupted data in the database" do
+      before :all do
+        latest = AccessConfiguration.last
+        # Insert an invalid piece of data here which used to trigger an error.
+        AccessConfiguration.connection.execute("INSERT INTO access_configurations (id, user_id, dataset_id, echoform_digest) VALUES (#{latest.nil? ? 1 : latest.id + 1}, 1, 'C90762182-LAADS', '\"[{\"id\":\"download\"}]\"')")
+        load_page 'data/configure', page_options
+        wait_for_xhr
+      end
+
+      it "doesn't display an error and loads the default configuration" do
+        expect(page).not_to have_content("Error retrieving options There was a problem completing the request Retry")
+        expect(page).to have_unchecked_field('Download')
+        expect(page).to have_unchecked_field('FtpPushPull')
+      end
+    end
   end
 
   context "accessing a collection for the third time" do
