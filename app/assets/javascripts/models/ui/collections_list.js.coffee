@@ -73,7 +73,6 @@ ns.CollectionsList = do ($ = jQuery
         selected_index: index
         selected_collection: collection.id
 
-      return true if $(event?.target).closest('a').length > 0
       return false unless collection.canFocus()
       return false if @focused()?.collection.id == collection.id
 

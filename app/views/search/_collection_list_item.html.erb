@@ -73,7 +73,7 @@
                     </a>
                     <!-- /ko -->
                   <% end %>
-                  <a class="button" title="View granules" data-bind="click: $root.ui.collectionsList.focusCollection, css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}">
+                  <a class="button" title="View granules" data-bind="click: $root.ui.collectionsList.focusCollection, clickBubble: false, css: {'master-overlay-forward': has_granules, 'master-overlay-hide-parent': has_granules}">
                      View Granules
                   </a>
                   <a href="#" class="button primary add-to-project" data-pulse="#project-count" title="Add collection to the current project"
