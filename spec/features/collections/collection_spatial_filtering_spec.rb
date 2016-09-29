@@ -117,6 +117,18 @@ describe "Spatial manual entry", reset: false do
         it "removes the spatial bounding box collection filter" do
           expect(page).to have_content("15 Minute Stream Flow Data: USGS")
         end
+
+        context "then draw another bounding box" do
+          before :all do
+            create_bounding_box(0, 0, 5, 5)
+            wait_for_xhr
+          end
+
+          it "sets coordinates in the manual entry boxes" do
+            expect(page).not_to have_field('manual-coord-entry-swpoint', with: '0,0')
+            expect(page).not_to have_field('manual-coord-entry-nepoint', with: '5,5')
+          end
+        end
       end
     end
   end
