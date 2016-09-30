@@ -160,7 +160,7 @@
       root
 
     _writePath: (path) ->
-      unless path.indexOf('/search') == 0
+      unless path.indexOf('/search') == 0 || path == '/'
         return
 
       # Default state
