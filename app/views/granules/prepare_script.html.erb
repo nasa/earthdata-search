@@ -42,7 +42,7 @@
 <body>
 <div id="errors"></div>
 <div id="loading">Preparing download script. Fetching downloadable granule links...</div>
-<div id="download-description" style="display: none;">Script preparation completed. Please click the button to download the script. <button id="download-button">Download Script File</button></div>
+<div id="download-description" style="display: none;">Script preparation completed. Please click the button to download the script. <button id="download-button" onclick="downloadScriptFile();">Download Script File</button></div>
 <div class="pre-container">
   <pre id="script">
 #!/bin/sh
@@ -132,12 +132,20 @@ fetch_urls <<'EDSCEOF'
 <script>
   (function () {
 
+    var clickEvent = new MouseEvent("click", {
+      "view": window,
+      "bubbles": true,
+      "cancelable": false
+    });
+
     function downloadScriptFile() {
       var content = document.getElementById("script").textContent;
       var dl = document.createElement('a');
       dl.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(content));
       dl.setAttribute('download', 'download.sh');
-      dl.click();
+      dl.setAttribute('id', 'generated-download-link');
+
+      dl.dispatchEvent(clickEvent);
     }
 
     document.addEventListener('DOMContentLoaded', function () {
