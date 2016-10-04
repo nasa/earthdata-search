@@ -54,7 +54,6 @@ describe "Temporal" do
 
       js_click_temporal
       js_click_clear
-      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
@@ -106,7 +105,6 @@ describe "Temporal" do
 
       js_click_temporal
       js_click_clear
-      js_click_apply ".temporal-dropdown"
 
       expect(page).to have_no_content("15 Minute Stream Flow Data: USGS (FIFE)")
 
