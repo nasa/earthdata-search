@@ -282,6 +282,7 @@ ns.query = do (ko,
       @scienceKeywordFacets = @computed(read: @_computeScienceKeywordFacets, deferEvaluation: true)
       @pageSize = @queryComponent(new QueryParam('page_size'), 20, ephemeral: true)
       @keywords = @queryComponent(new KeywordParam('free_text', @placename), '')
+      @originalKeywords = @queryComponent(new KeywordParam('original_keyword', @placename), '')
       super(parentQuery)
 
     clearFilters: =>

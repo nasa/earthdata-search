@@ -10,6 +10,9 @@ defaults: &defaults
   # Root URL for an ogre shapefile conversion service (See: http://ogre.adc4gis.com/)
   ogre_url: "<ogre_url>"
 
+  # Root URL for CLAVIN-based spatial and temporal extractor.
+  nlp_parser_url: http://localhost:15400/
+
   # URL and API user id for a placename search service.  The URL should stay the same, but you will need
   # to register an API user.
   places_url: http://api.geonames.org/
