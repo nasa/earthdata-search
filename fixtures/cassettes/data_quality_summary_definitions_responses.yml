@@ -616,39 +616,7 @@ c7448339dd38012463128d35fc337e3aee62e976:
     body:
       encoding: UTF-8
       string: '[{"reference":{"id":"3C37FE59-7568-1D93-9D36-730668C0F9E5","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/3C37FE59-7568-1D93-9D36-730668C0F9E5","name":"MODIS"}}]'
-    http_version: 
-462912ec9ecac04dc9cba10e707848b560e439d6:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      strict-transport-security:
-      - max-age=15768000
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"9dfc62149e07e7dffc01d4cb0d9810da"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.138000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Wed, 14 Sep 2016 17:18:19 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '[{"reference":{"id":"77EDC43F-3BBC-2E39-BFBA-16DDE3540447","location":"https://api.echo.nasa.gov:443/echo-rest/data_quality_summary_definitions/77EDC43F-3BBC-2E39-BFBA-16DDE3540447","name":"MODIS"}}]'
-    http_version: 
+    http_version:
 94b45392f217278a97c2217d0ef9cd7e70146899:
   response:
     status:

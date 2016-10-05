@@ -65,6 +65,12 @@ ns.SpatialEntry = do (ko,
       [sw, ne] = splits
       [@_reverseLonLat(sw), @_reverseLonLat(ne)]
 
+    _setCoordinatesFromQuery: (results)->
+      if @coordinates() == null
+        if @querySpatial()
+          @coordinates(results)
+        else
+          return null
 
     _writeCoordinates: (value) ->
       if value == null || value == ''
@@ -94,8 +100,8 @@ ns.SpatialEntry = do (ko,
 
     _readSwPoint: ->
       if @spatialName?() == 'Bounding Box'
-        return null if @coordinates() == null
         results = @_getPointsFromRectQuery()
+        @_setCoordinatesFromQuery(results)
         results[0]
 
     _writeSwPoint: (value) ->
@@ -112,8 +118,8 @@ ns.SpatialEntry = do (ko,
 
     _readNePoint: ->
       if @spatialName?() == 'Bounding Box'
-        return null if @coordinates() == null
         results = @_getPointsFromRectQuery()
+        @_setCoordinatesFromQuery(results)
         results[1]
 
     _writeNePoint: (value) ->

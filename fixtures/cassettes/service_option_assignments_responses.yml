@@ -478,36 +478,4 @@ aef05d6420e2c1c50b0e49cc32326ddd3e403fdd:
     body:
       encoding: UTF-8
       string: "[]"
-    http_version: 
-7d3d441f5a21b087bb242f6a1488a46ff9f7ecef:
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      strict-transport-security:
-      - max-age=15768000
-      server:
-      - Apache-Coyote/1.1
-      etag:
-      - '"46b2d3d88295fe68196126db1bbfcfc0"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-ua-compatible:
-      - IE=Edge,chrome=1
-      x-runtime:
-      - '0.191000'
-      content-type:
-      - application/json;charset=utf-8
-      vary:
-      - Accept-Encoding
-      date:
-      - Wed, 14 Sep 2016 17:18:21 GMT
-      connection:
-      - close
-      transfer-encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: '[{"service_option_assignment":{"applies_only_to_granules":true,"catalog_item_id":"C92711294-NSIDC_ECS","id":"BC685523-0B3B-C4A2-DF64-8D9EFAECC0F3","service_entry_id":"5AE45EAE-C41E-04C0-087A-5C6FF266F58E","service_option_definition_id":"A4A6BE5E-F23C-65EF-493F-13FF71E55976"}}]'
-    http_version: 
+    http_version:

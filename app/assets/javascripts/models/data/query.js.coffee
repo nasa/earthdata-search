@@ -212,8 +212,8 @@ ns.query = do (ko,
           max = @max()
           return null unless min? || max?
           params = {}
-          params.min = min if min?
-          params.max = max if max?
+          params.min = min if min? && min != ''
+          params.max = max if max? && max != ''
           params
         write: (value) =>
           @min(value?.min)
