@@ -2634,6 +2634,35 @@ e12cbf007574b9620f6098962cd92b111c41f5d7:
         on the Konza Prairie</URLDescription>\n        </OnlineAccessURL>\n      </OnlineAccessURLs>\n
         \     <Orderable>false</Orderable>\n      <DataFormat>txt</DataFormat>\n    </Granule>"
     http_version: 
+905cb3222de6377bf376eef2c32e498fee3138a5:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 05 Oct 2016 15:49:07 GMT
+      content-type:
+      - application/echo10+xml; charset=utf-8
+      access-control-expose-headers:
+      - CMR-Hits, CMR-Request-Id
+      access-control-allow-origin:
+      - "*"
+      cmr-request-id:
+      - e25b31be-240b-4b74-8578-180fb012e5c6
+      content-length:
+      - '642'
+      connection:
+      - close
+      server:
+      - Jetty(9.2.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: "<Collection><ShortName>minimal_dif_dataset</ShortName><VersionId>Not
+        provided</VersionId><InsertTime></InsertTime><LastUpdate>2013-10-22T00:00:00.000Z</LastUpdate><LongName>A
+        minimal dif dataset</LongName><DataSetId>A minimal dif dataset</DataSetId><Description>summary
+        of the dataset</Description><Orderable>true</Orderable><Visible>true</Visible><RevisionDate>2013-10-22T00:00:00.000Z</RevisionDate><ArchiveCenter>datacenter_short_name</ArchiveCenter><ScienceKeywords><ScienceKeyword><CategoryKeyword>category</CategoryKeyword><TopicKeyword>topic</TopicKeyword><TermKeyword>term</TermKeyword></ScienceKeyword></ScienceKeywords></Collection>"
+    http_version: 
 9bb3738d71894c061dae36c552e702ba256f5673:
   response:
     status:

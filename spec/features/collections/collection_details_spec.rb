@@ -6,7 +6,7 @@ describe 'Collection details', reset: false do
     load_page :search
     fill_in 'keywords', with: 'AST_L1AE'
     expect(page).to have_content('ASTER Expedited L1A')
-    first_collection_result.click_link('View collection details')
+    first_collection_result.click
     wait_for_xhr
     within('#collection-details') do
       expect(page).to have_content('ASTER Expedited L1A Reconstructed Unprocessed Instrument Data V003')
@@ -38,7 +38,7 @@ describe 'Collection details', reset: false do
     end
 
     it "displays the collection details" do
-      first_collection_result.click_link('View collection details')
+      first_collection_result.click
       wait_for_xhr
       within('#collection-details') do
         expect(page).to have_content('ASTER Global Digital Elevation Model V002')
@@ -59,7 +59,7 @@ describe 'Collection details', reset: false do
   context "when selecting a collection without contacts in the xml" do
     before :all do
       load_page :search, q: 'Aqua_AMSR-E_L3_TB_23.8GHz-H'
-      first_collection_result.click_link('View collection details')
+      first_collection_result.click
     end
 
     it "displays the collection's detail page with no errors" do
@@ -71,7 +71,7 @@ describe 'Collection details', reset: false do
     before :all do
       load_page :search, q: 'C179003030-ORNL_DAAC'
       expect(page).to have_content('15 Minute Stream Flow Data: USGS (FIFE)')
-      first_collection_result.click_link('View collection details')
+      first_collection_result.click
     end
 
     it "does not display the collection's spatial bounds on the map" do
@@ -84,7 +84,7 @@ describe 'Collection details', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C179002945-ORNL_DAAC'
       wait_for_xhr
-      first_collection_result.click_link('View collection details')
+      first_collection_result.click
     end
 
     it "does not display the collection's spatial bounds on the map" do
@@ -97,7 +97,7 @@ describe 'Collection details', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C1220111370-NSIDCV0'
       expect(page).to have_content('AVHRR Leads-ARI Polar Gridded Brightness Temperatures')
-      first_collection_result.click_link('View collection details')
+      first_collection_result.click
     end
 
     it "does not display the collection's spatial bounds on the map" do
@@ -111,7 +111,7 @@ describe 'Collection details', reset: false do
   #    load_page :search
   #    fill_in 'keywords', with: 'NSIDC-0239'
   #    expect(page).to have_content('SMEX02 Atmospheric Aerosol Optical Properties Data')
-  #    first_collection_result.click_link('View collection details')
+  #    first_collection_result.click
   #  end
   #
   #  it "displays the collection's spatial bounds on the map" do

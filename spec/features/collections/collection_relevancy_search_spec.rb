@@ -6,7 +6,7 @@ describe "Collection results", reset: false do
   end
 
   after :each do
-    click_on 'Clear Filters'
+    click_on 'Clear filters'
     wait_for_xhr
   end
 

@@ -11,7 +11,7 @@ describe 'Address bar', reset: false do
     before :all do
       visit '/search'
       wait_for_xhr
-      first_collection_result.click_link('View collection details')
+      first_collection_result.click
       wait_for_xhr
     end
 
@@ -221,7 +221,7 @@ describe 'Address bar', reset: false do
   context "when viewing a collection's details" do
     before(:all) do
       visit '/search/collections?q=C179003030-ORNL_DAAC'
-      first_collection_result.click_link('View collection details')
+      first_collection_result.click
     end
 
     it 'saves the selected collection in the address bar' do

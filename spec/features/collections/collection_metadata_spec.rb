@@ -4,7 +4,7 @@ describe 'Collection metadata', reset: false do
   before do
     load_page :search
     fill_in 'keywords', with: 'AST_L1AE'
-    find('li', text: 'ASTER Expedited L1A').click_link "View collection details"
+    find('li', text: 'ASTER Expedited L1A').click
     wait_for_xhr
   end
 

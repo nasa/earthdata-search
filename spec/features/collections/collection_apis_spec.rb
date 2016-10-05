@@ -12,7 +12,7 @@ describe 'Collection API Endpoints', reset: false do
 
       fill_in 'keywords', with: 'C1000000257-DEV07'
       wait_for_xhr
-      click_link "View collection details"
+      first_collection_result.click
       wait_for_xhr
     end
 
@@ -26,7 +26,7 @@ describe 'Collection API Endpoints', reset: false do
       load_page :search, env: :sit
       fill_in 'keywords', with: 'C24936-LAADS'
       wait_for_xhr
-      click_link "View collection details"
+      first_collection_result.click
       wait_for_xhr
     end
 
@@ -40,7 +40,7 @@ describe 'Collection API Endpoints', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C2921042-PODAAC'
       wait_for_xhr
-      click_link "View collection details"
+      first_collection_result.click
       wait_for_xhr
     end
 
@@ -54,7 +54,7 @@ describe 'Collection API Endpoints', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C1219032686-LANCEMODIS'
       wait_for_xhr
-      click_link "View collection details"
+      first_collection_result.click
       wait_for_xhr
     end
 
@@ -68,7 +68,7 @@ describe 'Collection API Endpoints', reset: false do
       load_page :search
       fill_in 'keywords', with: 'C179001887-SEDAC'
       wait_for_xhr
-      click_link "View collection details"
+      first_collection_result.click
       wait_for_xhr
     end
 

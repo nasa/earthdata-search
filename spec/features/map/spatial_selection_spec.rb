@@ -204,7 +204,7 @@ describe "Spatial" do
       before :each do
         create_bounding_box(0, 0, 10, 10)
         wait_for_xhr
-        click_on 'Clear Filters'
+        click_on 'Clear filters'
         wait_for_xhr
       end
 

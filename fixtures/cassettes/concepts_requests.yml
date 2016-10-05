@@ -593,6 +593,21 @@ http_interactions:
   digest: e12cbf007574b9620f6098962cd92b111c41f5d7
 - request:
     method: get
+    uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000083-DEMO_PROV.echo10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.8.8
+      Client-Id:
+      - eed-edsc-dev
+      Echo-ClientId:
+      - eed-edsc-dev
+  recorded_at: Wed, 05 Oct 2016 15:49:07 GMT
+  digest: 905cb3222de6377bf376eef2c32e498fee3138a5
+- request:
+    method: get
     uri: https://cmr.sit.earthdata.nasa.gov/search/concepts/C1000000257-DEV07.echo10
     body:
       encoding: US-ASCII

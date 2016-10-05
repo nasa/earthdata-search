@@ -25,7 +25,7 @@ describe "Collection visualizations", reset: false do
         # load_page :search
         # fill_in "keywords", with: collection_id
         # wait_for_xhr
-        first_collection_result.click_link "View collection details"
+        first_collection_result.click
       end
 
       after :all do

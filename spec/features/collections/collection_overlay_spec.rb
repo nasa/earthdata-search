@@ -15,7 +15,7 @@ describe 'Collections overlay', :reset => false do
     expect(page).to have_visible_collection_results
     expect(page).to_not have_visible_collection_details
 
-    first_collection_result.click_link "View collection details"
+    first_collection_result.click
 
     expect(page).to_not have_visible_collection_results
     expect(page).to have_visible_collection_details
@@ -34,7 +34,7 @@ describe 'Collections overlay', :reset => false do
     end
 
     it "shows collection details when clicking on a collection" do
-      first_collection_result.click_link "View collection details"
+      first_collection_result.click
       expect(page).to have_visible_collection_details
     end
   end

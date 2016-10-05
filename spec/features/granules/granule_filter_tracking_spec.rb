@@ -35,7 +35,7 @@ describe "Granule filter tracking", reset: false do
 
       context 'and locating the collection again' do
         before :all do
-          click_on 'Clear Filters'
+          click_on 'Clear filters'
           wait_for_xhr
         end
 
