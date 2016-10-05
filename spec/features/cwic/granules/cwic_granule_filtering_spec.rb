@@ -58,7 +58,8 @@ describe "CWIC Granule list", reset: false do
         end
 
         it "has query param 'pg[0][qt]' in the url", acceptance: true do
-          expect(current_url).to include("pg[0][qt]=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T23%3A59%3A59.000Z")
+          project_id = URI.parse(current_url).query[/^projectId=(\d+)$/, 1].to_i
+          expect(Project.find(project_id).path).to include("pg[0][qt]=2010-02-02T00%3A00%3A00.000Z%2C2010-02-02T23%3A59%3A59.000Z")
         end
       end
     end

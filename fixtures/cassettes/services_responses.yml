@@ -1159,6 +1159,78 @@ d204b91c248d4f6680b7a7b8c1beeb1d566dbd36:
         <?xml version="1.0" encoding="UTF-8"?>
         <feed xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/" xmlns:georss="http://www.georss.org/georss/10" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/" xmlns:cwic="http://cwic.wgiss.ceos.org/opensearch/extensions/1.0/" xmlns:esipdiscover="http://commons.esipfed.org/ns/discovery/1.2/"><title>CWIC OpenSearch Response</title><updated>2016-05-19T11:25:13Z</updated><author><name>CEOS WGISS Integrated Catalog (CWIC) - CWIC Contact - Email: cwic-help@wgiss.ceos.org - Web: http://wgiss.ceos.org/cwic</name><email>cwic-help@wgiss.ceos.org</email></author><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom/?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01</dc:identifier><opensearch:totalResults>1</opensearch:totalResults><opensearch:startIndex>1</opensearch:startIndex><opensearch:itemsPerPage>1</opensearch:itemsPerPage><link rel="self" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01" title="This Request"/><link rel="search" type="application/opensearchdescription+xml" href="http://cwic.wgiss.ceos.org/opensearch/datasets/USGS_EDC_EO1_ALI/osdd.xml" title="Search this resource"/><link rel="first" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&amp;count=null&amp;startIndex=1" title="First result"/><link rel="last" type="application/atom+xml" href="http://cwic.wgiss.ceos.org/opensearch/granules.atom?datasetId=USGS_EDC_EO1_ALI&amp;count=null&amp;startIndex=1" title="Last result"/><opensearch:Query role="request" cwic:datasetId="USGS_EDC_EO1_ALI" uid="USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01"/><!-- Remote search completed in 0.519 seconds. --><entry><title>Entity ID: EO1A1470392016083110KF_AK3_01, Acquisition Date: 23-MAR-16, Target Path: 147, Target Row: 39</title><id>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01</id><dc:identifier>http://cwic.wgiss.ceos.org/opensearch/granules.atom?uid=USGS_EDC_EO1_ALI:EO1A1470392016083110KF_AK3_01</dc:identifier><updated>2016-03-26T13:18:03Z</updated><author><name>EROS DATA CENTER - TECHNICAL CONTACT - Customer Services; U.S. Geological Survey; EROS Data Center; 47914 252nd Street;  Sioux Falls, SD 57198-0001; USA - Email: custserv@usgs.gov - Phone: 605-594-6151 - FAX: 605-594-6589</name><email>custserv@usgs.gov</email></author><georss:box>29.247873 77.072798 30.113336 77.715801</georss:box><georss:polygon>29.377395 77.072798 30.113336 77.281717 29.983081 77.715801 29.247873 77.503997 29.377395 77.072798</georss:polygon><dc:date>2016-03-23T03:42:46Z/2016-03-23T03:42:58Z</dc:date><link title="Original source metadata" rel="via" type="text/xml" href="http://earthexplorer.usgs.gov/metadata/xml/1852/EO1A1470392016083110KF_AK3_01/"/><link title="Alternate metadata URL" rel="alternate" type="text/xml" href="http://earthexplorer.usgs.gov/metadata/xml/1852/EO1A1470392016083110KF_AK3_01/"/><link title="Browse image URL" rel="icon" type="image/jpeg" href="http://earthexplorer.usgs.gov/browse/eo-1/ali/147/39/2016/EO11470392016083110KF_AK3_01.jpeg"/><link title="Granule ordering URL" rel="alternate" type="text/html" href="http://earthexplorer.usgs.gov/order/process?dataset_name=EO1_ALI_PUB&amp;ordered=EO1A1470392016083110KF_AK3_01&amp;node=INVSVC"/><link title="Granule download URL" rel="enclosure" type="text/html" href="http://earthexplorer.usgs.gov/download/external/options/EO1_ALI_PUB/EO1A1470392016083110KF_AK3_01/INVSVC/"/><summary type="text">Granule metadata for Entity ID: EO1A1470392016083110KF_AK3_01, Acquisition Date: 23-MAR-16, Target Path: 147, Target Row: 39</summary></entry><!-- Atom response generation completed in 1ms. --></feed><!-- OpenSearch response completed in 522ms. -->
     http_version: 
+5d60317d82cfd1a34e19c15a15a3aafcd5e77078:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 21 Sep 2016 17:43:31 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179002107-sedac"}'
+    http_version: 
+25fff63cf6c244fe65f5e00922872ea6753d32d9:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 21 Sep 2016 17:43:34 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179002914-ornl_daac"}'
+    http_version: 
+59c017dd2f03edb84702a70b1161a9ab2d18f40d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 21 Sep 2016 17:43:39 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179003380-ornl_daac"}'
+    http_version: 
+b9570c482b947a0139b588ef8beb03eb6844ce57:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 21 Sep 2016 17:43:43 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C92711294-nsidc_ecs"}'
+    http_version: 
 f2a7ab93337a9736dcaae149c78473b57acfd35c:
   response:
     status:
@@ -1512,6 +1584,910 @@ f2a7ab93337a9736dcaae149c78473b57acfd35c:
     body:
       encoding: UTF-8
       string: ''
+    http_version: 
+a4ca57d05899a54820b80faee51b5bc5905e25e3:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:58:58 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":""}'
+    http_version: 
+e558c89e81a58fffdd52c62adbd443c5ff8be60f:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:56:38 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"A"}'
+    http_version: 
+1fe53ee6f865989db5dfcce3c66e559d906ce5c8:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:56:30 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"AQUARIUS_SAC-D as"}'
+    http_version: 
+45fa1d5f76111b22d5daf4aa2c2c5cda20101707:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Tue, 30 Aug 2016 19:22:17 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"AST"}'
+    http_version: 
+4904d74784c78c1470a7bd3d09dd7e3f79862654:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:11 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"AST_L%"}'
+    http_version: 
+a0b29f1489f953786a6d21388ea0de9e995d6372:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:57:25 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"AST_L1A"}'
+    http_version: 
+8817e264f1fb0bb9981cbaa65f580d14482b03bd:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:00:29 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"AST_L1AE"}'
+    http_version: 
+4476b477e38a9db9e79e5015fecf5dc7e9f312a2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:11 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"AST_L"}'
+    http_version: 
+80525cef7f695803bb27b085080dad5a2dda072b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:02:55 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000000000-ORNL_DAAC"}'
+    http_version: 
+d2296c6718aa5f2f29741332a752378a8460ad8a:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:58:57 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000000083-DEMO_PROV"}'
+    http_version: 
+5e7a39395ef0f426801bace4ae963dee3d44e7fb:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:55:29 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000000257-DEV07"}'
+    http_version: 
+280d484176a375b145cb0828179a2c411a5ce15b:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:06:03 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000000316-LARC_ASDC"}'
+    http_version: 
+f480d96b6d5e61837d5226c4ce4bcb4c39b20293:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:51:30 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000000560-DEV08"}'
+    http_version: 
+709995f2bd1dd8208124ce88e03d9f2ea6e3d5ce:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:58:54 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1000001409-EDF_OPS"}'
+    http_version: 
+ac03cb3bd8fea9a61c18f3a1dbfc0e4f79938945:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:47 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1002-LPDAAC_TBD"}'
+    http_version: 
+3cc2f17b6baaf35878c05ef0a13a91e54b4f95e7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:53:39 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C119124186-NSIDC_ECS"}'
+    http_version: 
+ac669361ae66dbb7c7ab5960bd49b9b416f18139:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:46 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1200019403-MMT_2"}'
+    http_version: 
+7320e00a62da7c268d1996eec0cdfdb878937525:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:45 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1200208323-SCIOPS"}'
+    http_version: 
+520a4d779a430a68af778a63389ab5271fccf976:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:06:01 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1204449891-GCMDTEST"}'
+    http_version: 
+067a592faf3304024b2965d0b1e5b4d0b0c009e4:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:56:32 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1211793450-PODAAC"}'
+    http_version: 
+98bb4fac06cfd86206b42401f8368d0a4cc3b5df:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:56:33 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1214605943-SCIOPS"}'
+    http_version: 
+29b89d175522fdddcc2cee3e828c1cc45fa84266:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:55:20 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1219032686-LANCEMODIS"}'
+    http_version: 
+f3e9a0411b7d06d6796a6788cbb06272ece6c3e2:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:12 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1219224200-NSIDCV0"}'
+    http_version: 
+c086e75c002289d5724619cd2faf081335987e88:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:59:30 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1219252422-LANCEMODIS"}'
+    http_version: 
+7d53f4a642fe03334db4fb8d4096c09f81e8a4e6:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:27 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1220111370-NSIDCV0"}'
+    http_version: 
+58e03bc845969b7b267d6336cf545053052f9206:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:55:17 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1220566654-USGS_LTA"}'
+    http_version: 
+eba957a6177dd2dd4712753a8c432fbe82d8087d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:02:56 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1234044620-GES_DISC"}'
+    http_version: 
+b8bb7cb132a257a37d8921f6dd34a26857a7c8b5:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:59:33 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C1236224151-GES_DISC"}'
+    http_version: 
+b9ae1faa6305aee966e58adfba0dfa66d7e999ad:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:56:28 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C138500-PODAAC"}'
+    http_version: 
+057900a9b283d67ceda1bda327b925d867a63adc:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:56:41 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C14758250-LPDAAC_ECS"}'
+    http_version: 
+5c22120f8293499e74a4cca539baaccb734eae02:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:55:26 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179001887-SEDAC"}'
+    http_version: 
+99cb93932cb1af3da88bde1acc617463fa49bf81:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:54:47 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179002107-SEDAC"}'
+    http_version: 
+47615cc38edd6bae10c29008027f6224a3c89166:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:54:44 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179002914-ORNL_DAAC"}'
+    http_version: 
+8ac00351c42f3869cc3c82f11ecbbcf48ce0a130:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:39 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179002945-ORNL_DAAC"}'
+    http_version: 
+267d7a0532de9cfbe155c618871e65d6a75ba08e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:53:20 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179003030-ORNL_DAAC"}'
+    http_version: 
+3f0ee1dc6a989ec5f150bea6983c5a39bd11b575:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:54:48 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C179003380-ORNL_DAAC"}'
+    http_version: 
+20bd4cd56d84ea58c05ee0345f9d434da2af788e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:59:24 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C187016591-LPDAAC_ECS"}'
+    http_version: 
+8ea7994bd8714efe06e1de06ba5368135ba32d64:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:35 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C197265171-LPDAAC_ECS"}'
+    http_version: 
+065bb035b6cafa4e3abf0ce92eb0581d1725a649:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:55:24 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C24936-LAADS"}'
+    http_version: 
+ed8b6eeaa9fbe4d455d99e19c4885fa8e7e7cc19:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:55:22 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C2921042-PODAAC"}'
+    http_version: 
+32f8ff1b79f029c3b8e92d4981a519f55d62941e:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:56:35 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C32000-PODAAC"}'
+    http_version: 
+d083b678972eb55e4994f0d77eb80c12d49502fa:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:59:37 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"C4543622-LARC_ASDC"}'
+    http_version: 
+e1fafe4e453cfcbbc359d3274fd153c7204f5c52:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:00:52 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"MODIS"}'
+    http_version: 
+2b591e2a605f2d8426bfdd18fa88fc79015705da:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 18:41:52 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":{"textAfterExtraction":"","geonames":"Texas,United States","bbox":{"swPoint":{"latitude":25.837163999999998,"longitude":-106.645646},"nePoint":{"latitude":36.500704,"longitude":-93.508039}},"query":"bounding_box:-106.645646,25.837163999999998:-93.508039,36.500704"},"edscTemporal":null,"keyword":""}'
+    http_version: 
+8245b1c2ad80f64fd88a57e2f7599a3929ec14e7:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:51:42 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"asdfasdfasdfasdfasdf"}'
+    http_version: 
+e18cf04d431fed94443e161aa77947050dfab040:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 20:15:59 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":{"textAfterExtraction":"","temporal":"null,
+        2015-WI","timex":"null, 2015-WI","query":"2015-12-01T00:00:00Z,2016-03-31T00:00:00Z,335,91","start":"2015-12-01T00:00:00Z","end":"2016-03-31T00:00:00Z","recurring":true},"keyword":""}'
+    http_version: 
+6ee0da5974f6311d8bd28aef212e82ea65f42b4d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 20:29:46 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":{"textAfterExtraction":"snow cover last winter","geonames":"Boston,United
+        States","bbox":{"swPoint":{"latitude":42.22788,"longitude":-71.191155},"nePoint":{"latitude":42.40082,"longitude":-70.748802}},"query":"bounding_box:-71.191155,42.22788:-70.748802,42.40082"},"edscTemporal":{"textAfterExtraction":"snow
+        cover","temporal":"null, 2015-WI","timex":"null, 2015-WI","query":"2015-12-01T00:00:00Z,2016-03-31T00:00:00Z,335,91","start":"2015-12-01T00:00:00Z","end":"2016-03-31T00:00:00Z","recurring":true},"keyword":"snow
+        cover"}'
+    http_version: 
+56c10caab08f9dd9d8e12f95837aeaae99731391:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:00:24 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"snow cover nrt"}'
+    http_version: 
+a4c9594294ce6e1c8b6c50eed1ca2ae5297b117d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 13:51:10 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"somestringthatmatchesnocollections"}'
+    http_version: 
+2b80c39a8970471032b8b3f33f9421db2379215d:
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      date:
+      - Wed, 31 Aug 2016 14:01:41 GMT
+      content-type:
+      - application/json
+      vary:
+      - Accept-Encoding, User-Agent
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"edscSpatial":null,"edscTemporal":null,"keyword":"trigger500"}'
     http_version: 
 f8ab9ae82d5d59d6a12f1477ebf18a37868e8f98:
   response:

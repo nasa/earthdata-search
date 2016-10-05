@@ -28,7 +28,7 @@ describe 'Address bar', reset: false do
     end
 
     it 'saves the keyword condition in the address bar' do
-      expect(page).to have_query_string('q=C1219032686-LANCEMODIS')
+      expect(page).to have_query_string('q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS')
     end
 
     context 'clearing filters' do
@@ -41,7 +41,7 @@ describe 'Address bar', reset: false do
   end
 
   context 'when loading a url containing a temporal condition' do
-    before(:all) { visit '/search/collections?q=C1219032686-LANCEMODIS' }
+    before(:all) { visit '/search/collections?q=C1219032686-LANCEMODIS&ok=C1219032686-LANCEMODIS' }
 
     it 'loads the condition into the keywords field' do
       expect(page).to have_field('keywords', with: 'C1219032686-LANCEMODIS')
@@ -445,8 +445,8 @@ describe 'Address bar', reset: false do
   end
 
   context "Long URLs" do
-    let(:long_path) { '/search/collections?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC&q=C179003030-ORNL_DAAC' }
-    let(:longer_path) { long_path.gsub('&', '!C179003030-ORNL_DAAC&') }
+    let(:long_path) { '/search/collections?p=!C179001887-SEDAC!C1000000220-SEDAC!C179001967-SEDAC!C179001889-SEDAC!C179001707-SEDAC&q=C179003030-ORNL_DAAC&ok=C179003030-ORNL_DAAC' }
+    let(:longer_path) { long_path.gsub('!C179001707-SEDAC&', '!C179001707-SEDAC!C179003030-ORNL_DAAC&') }
     let(:query_re) { /^projectId=(\d+)$/ }
 
     def query
@@ -481,7 +481,7 @@ describe 'Address bar', reset: false do
         end
 
         it "keeps the URL the same but updates the remote store" do
-          expect(Project.find(project_id).path).to eql(longer_path.gsub(/C179003030-ORNL_DAAC$/, 'AST'))
+          expect(Project.find(project_id).path).to eql(longer_path.gsub(/q=C179003030-ORNL_DAAC&ok=C179003030-ORNL_DAAC$/, 'q=AST&ok=AST'))
           expect(before_project_id).to eql(project_id)
         end
       end

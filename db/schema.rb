@@ -24,6 +24,29 @@ ActiveRecord::Schema.define(version: 20160920144648) do
 
   add_index "access_configurations", ["user_id"], name: "index_access_configurations_on_user_id"
 
+  create_table "cmep_collections", force: :cascade do |t|
+    t.string   "username",          limit: 255
+    t.string   "provider",          limit: 255
+    t.string   "entry_title",       limit: 255
+    t.text     "xml"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "validation_errors"
+  end
+
+  create_table "cmep_short_long_valids", force: :cascade do |t|
+    t.string   "field",      limit: 255
+    t.string   "short_name", limit: 255
+    t.string   "long_name",  limit: 255
+    t.string   "cat0",       limit: 255
+    t.string   "cat1",       limit: 255
+    t.string   "cat2",       limit: 255
+    t.string   "cat3",       limit: 255
+    t.string   "cat4",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "cron_job_histories", force: :cascade do |t|
     t.string   "task_name", limit: 255
     t.datetime "last_run"
