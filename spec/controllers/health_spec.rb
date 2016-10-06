@@ -138,7 +138,7 @@ describe HealthController, type: :controller do
 
         json = JSON.parse response.body
         expect(json['edsc']).to eq({"ok?"=>false})
-        expect(json['background_jobs']['data_load_echo10'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load:echo10' failed in last run at .* with message 'error text' on host .*\.\"/)
+        expect(json['background_jobs']['data_load_echo10'].to_json).to match(/\"ok\?\":false,\"error\":\"Cron job 'data:load:echo10' failed in last run at .* with message 'error text'\"/)
       end
     end
   end
