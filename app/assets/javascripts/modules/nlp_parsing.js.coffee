@@ -1,4 +1,4 @@
-do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax) ->
+do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr.ajax, hasPending=@edsc.util.xhr.hasPending) ->
 
   $(document).ready ->
     $nlpInput = $('.nlp-parsing')
@@ -34,17 +34,26 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
         p2 = [edscSpatial.bbox.nePoint.latitude, edscSpatial.bbox.nePoint.longitude]
         $('#map').data('map').map.fitBounds([p1,p2])
 
-    readOriginalKeywords = (newValue) ->
-      $keywords = $('#keywords')
-      currentValue = $keywords.val()
-      $keywords.val(newValue ? "") unless newValue == currentValue
+    readOriginalKeywords = ->
+      delayUpdateTimer = setInterval((=>
+        unless hasPending()
+          clearTimeout(delayUpdateTimer)
+          $keywords = $('#keywords')
+          currentValue = $keywords.val()
+          newValue = currentPage.query.originalKeywords()
+          if newValue == "" || newValue == null
+            currentPage.query.originalKeywords(currentValue)
+            currentPage.query.keywords(currentValue)
+          else
+            $keywords.val(newValue)
+      ), 0)
 
     readSpatial = (newValue) ->
       currentSpatial = currentPage.query.spatial()
       currentSpatial = newValue ? "" unless currentSpatial == newValue
 
 
-    readOriginalKeywords(currentPage.query.originalKeywords())
+    readOriginalKeywords()
     readSpatial(currentPage.query.spatial())
 
     currentPage.query.originalKeywords.subscribe readOriginalKeywords
