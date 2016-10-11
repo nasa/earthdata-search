@@ -133,11 +133,9 @@ fetch_urls <<'EDSCEOF'
   (function () {
 
     function downloadScriptFile() {
-      var clickEvent = new MouseEvent("click", {
-        view: window,
-        bubbles: true,
-        cancelable: false
-      });
+      var clickEvent = document.createEvent("MouseEvent");
+      <% # initMouseEvent is deprecated, however IE11 needs this. %>
+      clickEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
       var content = document.getElementById("script").textContent;
       var dl = document.createElement('a');
       dl.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(content));
