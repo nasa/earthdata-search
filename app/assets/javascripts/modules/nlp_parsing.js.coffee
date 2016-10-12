@@ -40,7 +40,7 @@ do ($=jQuery, currentPage = window.edsc.models.page.current, ajax=@edsc.util.xhr
           clearTimeout(delayUpdateTimer)
           $keywords = $('#keywords')
           currentValue = $keywords.val()
-          newValue = currentPage.query.originalKeywords()
+          newValue = currentPage.query.originalKeywords() || currentPage.query.keywords()
           if newValue == "" || newValue == null
             currentPage.query.originalKeywords(currentValue)
             currentPage.query.keywords(currentValue)
