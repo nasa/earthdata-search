@@ -286,6 +286,7 @@ ns.query = do (ko,
       super(parentQuery)
 
     clearFilters: =>
+      document.getElementById('keywords')?.value = ''
       @focusedTemporal(null)
       @focusedInterval(null)
       @placename("")
