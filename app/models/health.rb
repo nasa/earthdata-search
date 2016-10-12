@@ -89,8 +89,10 @@ class Health
       status1 = task_status(interval, task1, task_name)
       task2 = tasks.select {|task| task.host != task1.host}.last
       if task2.nil?
+        log_text = "Cron job '#{task_name}' hasn't been run in the past #{3 * interval} seconds"
+        Rails.logger.info "Health failure: #{log_text} on the other production host (other than #{task1.host}). #{status1[:error]}"
         @ok = false
-        {ok?: false, error: "Cron job '#{task_name}' hasn't been run in the past #{3 * interval} seconds on the other production host (other than #{task1.host}). #{status1[:error]}"}
+        {ok?: false, error: log_text}
       else
         status2 = task_status(interval, task2, task_name)
         if status2[:ok?] && status1[:ok?]
@@ -109,16 +111,22 @@ class Health
   def task_status(interval, task, task_name)
     if task.status == 'succeeded'
       if task.last_run < Time.now - interval && task.last_run > Time.now - 3 * interval
-        return {ok?: true, info: "Suspend cron job checks for #{interval.to_i / 3600} hours after a new deployment. Last task execution was #{task.status} at #{task.last_run} on host #{task.host}."}
+        log_text = "Suspend cron job checks for #{interval.to_i / 3600} hours after a new deployment. Last task execution was #{task.status} at #{task.last_run}"
+        Rails.logger.info "Health failure: #{log_text} on host #{task.host}."
+        return {ok?: true, info: log_text}
       elsif task.last_run < Time.now - 3 * interval
         @ok = false
-        return {ok?: false, error: "Cron job '#{task_name}' hasn't been run since #{task.last_run} on host #{task.host}."}
+        log_text = "Cron job '#{task_name}' hasn't been run since #{task.last_run}"
+        Rails.logger.info "Health failure: #{log_text} on host #{task.host}."
+        return {ok?: false, error: log_text}
       else
         return {ok?: true}
       end
     else
       @ok = false
-      {ok?: false, error: "Cron job '#{task_name}' failed in last run at #{task.last_run} with message '#{task.message}' on host #{task.host}."}
+        log_text = "Cron job '#{task_name}' failed in last run at #{task.last_run} with message '#{task.message}'"
+        Rails.logger.info "Health failure: #{log_text} on host #{task.host}."
+      {ok?: false, error: log_text}
     end
   end
 
