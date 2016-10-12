@@ -168,6 +168,7 @@
 
 
   p.button-details {
+    
     span {
       display: block;
       position: relative;
@@ -458,4 +459,12 @@ $parent-width: $parent-split * 0.21;
   font-size: 0.8em;
   margin-left: 20px;
   padding-top: 12px;
+
+  label {
+    min-width: inherit;
+  }
+
+  select {
+    margin-right: 10px;
+  }
 }
