@@ -21,10 +21,10 @@
       <div class="primary-search">
         <%= form_tag('/', method: 'get', class: 'auto-submit') do %>
           <p>
-            <input id="keywords" type="text" name="keywords" class="autocomplete-placenames"
-                   data-bind="valueUpdate: 'keyup'"
-                   placeholder="Type any topic or collection name"
-                   autofocus>
+            <input id="keywords" type="text" name="keywords" class="nlp-parsing keyword-input"
+              data-bind="valueUpdate: 'keyup'"
+              placeholder="Type any topic or collection name"
+              autofocus>
           </p>
         <% end %>
         <div class="dropdown" id="temporal-dropdown">
