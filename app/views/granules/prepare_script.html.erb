@@ -28,6 +28,7 @@
       padding: 8px 12px;
       border-radius: 3px;
       font-size: small;
+      text-decoration: none;
     }
 
     div {
@@ -42,7 +43,7 @@
 <body>
 <div id="errors"></div>
 <div id="loading">Preparing download script. Fetching downloadable granule links...</div>
-<div id="download-description" style="display: none;">Script preparation completed. Please click the button to download the script. <button id="download-button">Download Script File</button></div>
+<div id="download-description" style="display: none;">Script preparation completed. Please click the button to download the script. <a href="#" id="download-button">Download Script File</a></div>
 <div class="pre-container">
   <pre id="script">
 #!/bin/sh
@@ -132,16 +133,25 @@ fetch_urls <<'EDSCEOF'
 <script>
   (function () {
 
-    function downloadScriptFile() {
-      var content = document.getElementById("script").textContent;
-      var dl = document.createElement('a');
-      dl.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(content));
-      dl.setAttribute('download', 'download.sh');
-      dl.click();
+    function downloadFileIE(e) {
+      var blob = new Blob([e.target.scriptFileContent]);
+      window.navigator.msSaveOrOpenBlob(blob, e.target.scriptFileName);
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById('download-button').addEventListener('click', downloadScriptFile);
+      var dlLink = document.getElementById('download-button');
+      dlLink.scriptFileContent = document.getElementById("script").textContent;
+      dlLink.scriptFileName = 'download.sh';
+
+      var isIE = /*@cc_on!@*/false || !!document.documentMode;
+      if (isIE) {
+        dlLink.addEventListener('click', downloadFileIE);
+      }
+      else {
+        var file = new Blob([dlLink.scriptFileContent], {type: 'text/plain;charset:utf-8'});
+        dlLink.href = URL.createObjectURL(file);
+        dlLink.download = dlLink.scriptFileName;
+      }
     });
 
     var browseOnly = <%= @query.delete('browse') %>;
