@@ -63,7 +63,15 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 }
 
 #granule-list {
-  background: #f4f4f4;
+
+  header {
+    background: #fff;
+    margin: 0;
+  }
+
+  .panel-list {
+    background: #f4f4f4;
+  }
 
   .panel-list-item {
     float: left;

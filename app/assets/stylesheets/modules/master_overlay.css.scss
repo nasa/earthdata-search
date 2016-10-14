@@ -39,6 +39,7 @@
 
       .actions {
         margin-top: .5em;
+        text-align: right;
       }
     }
   }
@@ -50,7 +51,6 @@
 
 .master-overlay-nav {
   padding: 1em;
-  border-bottom: 1px solid #333;
 }
 
 // A parent panel for the overlday.  For instance, collection facets are a parent

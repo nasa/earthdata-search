@@ -53,16 +53,6 @@
           <p class="undo">Granule excluded. <a href="#" data-bind="click: undoExcludeGranule">Undo</a></p>
           <!-- /ko -->
 
-          <p data-bind="if: granules().loadTime() !== null" class="panel-list-meta">
-            Search Time: <span data-bind="text: granules().loadTime">0.000</span>s
-            <% if Rails.configuration.feedback_url.present? %>
-              <a href="javascript:void(0)" data-bind="click: $root.ui.feedback.showFeedback.bind($data, 'Granule Results', $data.id)" class="button feedback-button" title="Leave metadata feedback">
-                <i class="fa fa-exclamation-circle"></i>
-                Report a metadata problem
-              </a>
-            <% end %>
-          </p>
-
           <!--ko ifnot: $data.collection.cwic()-->
             <p class="granule-sort">Sort by: <select id="granule-sort" data-bind="options: granules().query.sortOptions, optionsText: 'name', optionsValue: 'value', value: granules().query.sortKey"></select></p>
           <!--/ko-->
@@ -84,7 +74,6 @@
                 <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>
                 <!-- /ko -->
 
-              <h3 data-bind="text: displayName()"></h3>
               <span data-bind="text: getTemporal()"></span>
 
               <div class="panel-list-item-actions granule-item-actions">
