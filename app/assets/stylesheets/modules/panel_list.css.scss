@@ -62,6 +62,17 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 }
 
+#granule-list {
+  background: #f4f4f4;
+
+  .panel-list-item {
+    float: left;
+    padding: 10px;
+    margin: 10px;
+    width: 15%;
+  }
+}
+
 // Drag handles instead of borders
 .panel-list-item[draggable=true] {
   border-left: 0;
@@ -242,9 +253,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .granule-item-actions {
   @media (min-width: 1150px) {
-    position: relative;
-    top: 25px;
-    left: 25px;
+
   }
 }
 
