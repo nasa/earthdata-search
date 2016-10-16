@@ -36,6 +36,10 @@ describe 'Single Granule Data Access', reset: false do
       expect(page).to have_content "1 Granule"
     end
 
+    it 'does not have granule filter in back url' do
+      expect(find_link('Back to Search Session')[:href]).not_to include("&sgd=")
+    end
+
     it 'limits the data access to only the selected granule' do
       click_link 'Expand List'
       expect(page).to have_content 'FIFE_RAIN_30M.72981621.r30'
