@@ -73,11 +73,19 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
     background: #f4f4f4;
   }
 
+  .panel-list-list {
+    display: flex;
+    flex-flow: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+  }
+
   .panel-list-item {
-    float: left;
-    padding: 10px;
+    height: 200px;
+    width: 200px;
+    flex: 0 0 200px;
     margin: 10px;
-    width: 15%;
   }
 }
 

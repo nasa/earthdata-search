@@ -12,13 +12,14 @@
   // Non-scrollable header area
   header {
     margin: 1em 1em 0 0;
+    height: 50px;
 
     h2 {
       background: #fff;
       font-size: 1.2em;
       margin: 0;
       font-weight: 200;
-      display: inline-block;
+      float: left;
       padding: 10px 20px;
     }
 
@@ -163,6 +164,7 @@
 
 .master-overlay-info {
   margin: 0;
+  padding: 10px;
   background: #fff;
 
   p.button-details {
@@ -185,6 +187,7 @@
 
   p {
     margin: 0;
+    display: inline-block;
   }
 
   .button {
@@ -209,9 +212,8 @@
 }
 
 .master-overlay-global-actions {
+  float: right;
   padding: 0;
-  border: 1px solid transparent;
-  border-radius: 3px;
 
   .button {
     @include light-button;

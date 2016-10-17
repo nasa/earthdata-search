@@ -101,10 +101,8 @@
 }
 
 .master-overlay-info .granule-sort {
-  margin: -2.5em 0 0 1em;
-  padding: .1em 1em;
-  position: absolute;
-  font-size: .9em;
+  display: inline-block;
+  float: right;
 }
 
 .master-overlay-info .undo {
