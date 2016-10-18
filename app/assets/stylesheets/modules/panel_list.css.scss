@@ -82,10 +82,22 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
   }
 
   .panel-list-item {
-    height: 200px;
+    height: 100px;
     width: 200px;
     flex: 0 0 200px;
     margin: 10px;
+    display: block;
+    border: 1px solid #e3e3e3;
+    background: #fff;
+  }
+
+  .panel-list-item:nth-child(odd) {
+    background: #fff;
+  }
+
+  .panel-list-item:hover {
+    background: rgba(52, 152, 219,0.05);
+    border: 1px solid rgba(52, 152, 219,0.4);
   }
 }
 
@@ -281,13 +293,13 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 #granule-list:focus, #granule-list.has-focus {
   .panel-list-selected {
-    border-left-color: #2980b9;
+    border: 1px solid rgba(52, 152, 219,0.5);
   }
 }
 
 .panel-list-selected {
-  border-left-color: desaturate(#2980b9, 50%);
-  background: #494949;
+  box-shadow: 0 0 10px rgba(52, 152, 219,0.2);
+  background: #fff;
 
   .panel-list-when-selected {
     visibility: visible;
@@ -300,8 +312,6 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size + 4px;
 
 .panel-list a.panel-list-remove {
   float: right;
-  color: #fff;
-  color: rgba(255,255,255, 0.2);
   @include transition(color 0.3s ease-in-out);
 
   &:hover {

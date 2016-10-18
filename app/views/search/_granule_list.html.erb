@@ -65,7 +65,16 @@
 
             <li class="panel-list-item" data-bind="css: {'panel-list-item-with-thumb': browse_flag === 'true' || browse_flag === true, 'panel-list-focused': $parent.focused() === $data, 'panel-list-selected': $parent.isStickied($data)}, event: { mouseenter: $parent.onGranuleMouseover, mouseleave: $parent.onGranuleMouseout, click: $parent.toggleStickyFocus}">
 
-              <!-- ko if: browse_flag === 'true' || browse_flag === true -->
+              <p><strong data-bind="text: getTemporal()"></strong></p>
+
+              <div class="panel-list-item-actions granule-item-actions">
+                <a href="#" class="master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
+                  <i class="fa fa-info-circle"></i>
+                </a>
+                <a href="#" class="" title="Retrieve single granule data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
+                  <i class="fa fa-download"></i>
+                </a>
+                <!-- ko if: browse_flag === 'true' || browse_flag === true -->
                 <a class="panel-list-thumbnail-container" data-bind="attr: {href: edsc_full_browse_url()}" target="_blank" title="View full image">
                   <img class="panel-list-thumbnail" data-bind="event: {error: onThumbError}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
                 </a>
@@ -73,16 +82,6 @@
                 <!-- ko if: $parent.canRemoveGranules() -->
                 <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>
                 <!-- /ko -->
-
-              <span data-bind="text: getTemporal()"></span>
-
-              <div class="panel-list-item-actions granule-item-actions">
-                <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
-                  <i class="fa fa-info-circle"></i>
-                </a>
-                <a href="#" class="button icon-button" title="Retrieve single granule data" data-bind="click: $root.ui.projectList.loginAndDownloadGranule.bind($data, $parent.collection)">
-                  <i class="fa fa-download"></i>
-                </a>
               </div>
             </li>
           </ul>
