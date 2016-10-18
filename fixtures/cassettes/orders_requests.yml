@@ -320,7 +320,7 @@ http_interactions:
     uri: https://api.echo.nasa.gov/echo-rest/orders/75287FBC-3A46-1EB7-B146-FD4B55E2F7B4/order_items/bulk_action
     body:
       encoding: UTF-8
-      string: "[{\"order_item\":{\"catalog_item_id\":\"G1219913173-LAADS\",\"quantity\":1,\"option_selection\":{\"id\":\"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1\",\"option_definition_name\":\"FtpPushPull\",\"content\":null}}},{\"order_item\":{\"catalog_item_id\":\"G1219913107-LAADS\",\"quantity\":1,\"option_selection\":{\"id\":\"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1\",\"option_definition_name\":\"FtpPushPull\",\"content\":null}}}]"
+      string: "[{\"order_item\":{\"catalog_item_id\":\"G1219913173-LAADS\",\"quantity\":1,\"option_selection\":{\"id\":\"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1\",\"option_definition_name\":\"FtpPushPull\",\"content\":\"\\u003cprov:packageOption xmlns:prov=\\\"http://ecsodl.nasa.gov/orderoptions\\\"\\u003e\\u003c!-- Distribution Specification--\\u003e\\u003cprov:dist\\u003e\\u003cprov:value\\u003eFtpPull\\u003c/prov:value\\u003e\\u003c/prov:dist\\u003e\\u003c/prov:packageOption\\u003e\"}}},{\"order_item\":{\"catalog_item_id\":\"G1219913107-LAADS\",\"quantity\":1,\"option_selection\":{\"id\":\"E1F140CA-CC29-B7AD-5AA0-D7E26463BCF1\",\"option_definition_name\":\"FtpPushPull\",\"content\":\"\\u003cprov:packageOption xmlns:prov=\\\"http://ecsodl.nasa.gov/orderoptions\\\"\\u003e\\u003c!-- Distribution Specification--\\u003e\\u003cprov:dist\\u003e\\u003cprov:value\\u003eFtpPull\\u003c/prov:value\\u003e\\u003c/prov:dist\\u003e\\u003c/prov:packageOption\\u003e\"}}}]"
     headers:
       User-Agent:
       - Faraday v0.8.8
