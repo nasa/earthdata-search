@@ -132,7 +132,6 @@ do (ko, $=jQuery) ->
               options.rawModel = null
             null
           $el.on 'echoforms:modelchange', syncModel
-          syncModel.call($el)
         else
           options.isValid(true)
         options.isReadFromDefaults = true
