@@ -24,7 +24,6 @@ describe 'Single Granule Data Access', reset: false do
       load_page :search, focus: downloadable_collection_id
       login
       wait_for_xhr
-      expect(page).to have_content "117 matching granules"
       first_granule_list_item.click_link "Retrieve single granule data"
       wait_for_xhr
     end
@@ -43,7 +42,14 @@ describe 'Single Granule Data Access', reset: false do
 
     it 'limits the data access to only the selected granule' do
       click_link 'Expand List'
+      wait_for_xhr
       expect(page).to have_content 'FIFE_RAIN_30M.72981621.r30'
+    end
+
+    it 'does not filter the granules upon returning to the collection' do
+      click_link 'Back to Search Session'
+      wait_for_xhr
+      expect(page).to have_content "117 matching granules"
     end
   end
 
