@@ -36,19 +36,25 @@ describe 'Single Granule Data Access', reset: false do
       expect(page).to have_content "1 Granule"
     end
 
-    it 'does not have granule filter in back url' do
-      expect(find_link('Back to Search Session')[:href]).not_to include("&sgd=")
-    end
-
     it 'limits the data access to only the selected granule' do
       click_link 'Expand List'
       wait_for_xhr
       expect(page).to have_content 'FIFE_RAIN_30M.72981621.r30'
     end
+  end
 
-    it 'does not filter the granules upon returning to the collection' do
+  context 'while the user is viewing a single granule of a multi-granule collection' do
+    before :all do
+      load_page :search, focus: downloadable_collection_id
+      login
+      wait_for_xhr
+      first_granule_list_item.click_link "Retrieve single granule data"
+      wait_for_xhr
       click_link 'Back to Search Session'
       wait_for_xhr
+    end
+
+    it 'does not filter the granules upon returning to the collection' do
       expect(page).to have_content "117 matching granules"
     end
   end
