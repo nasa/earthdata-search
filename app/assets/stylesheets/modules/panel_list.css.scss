@@ -1,4 +1,4 @@
-$panel-list-item-height: 74px;
+$panel-list-item-height: 73px;
 $panel-list-thumbnail-size: $panel-list-item-height;
 $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
 
@@ -66,7 +66,10 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
 
   header {
     background: #fff;
+    border-bottom: 1px solid #e3e3e3;
     margin: 0;
+    height: 55px;
+    padding: 0 15px 0 0;
   }
 
   .panel-list {
@@ -87,7 +90,7 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
     min-height: 75px;
     width: 250px;
     flex: 0 0 250px;
-    margin: 5px;
+    margin: 8px;
     display: block;
     border: 1px solid #e3e3e3;
     background: #fff;
@@ -98,12 +101,8 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
     }
 
     div {
-      padding: 0 10px;
+      padding: 0;
     }
-  }
-
-  .panel-list-item:nth-child(odd) {
-    background: #fff;
   }
 
   .panel-list-item:hover {
@@ -143,8 +142,12 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
 }
 
 .panel-list-thumbnail-container {
-  width: 80px;
+  width: 75px;
+  height: 73px;
+  margin-right: 10px;
   float: left;
+  border-right: 1px solid #e3e3e3;
+  background: #fff;
 }
 
 .panel-list-thumbnail-onerror {
@@ -293,6 +296,12 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
 }
 
 .granule-item-actions {
+
+  a {
+    padding: 0 5px 0 0;
+    font-size: 1.2em;
+  }
+
   @media (min-width: 1150px) {
   }
 }
@@ -305,13 +314,15 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
 
 #granule-list:focus, #granule-list.has-focus {
   .panel-list-selected {
-    border: 1px solid rgba(52, 152, 219,0.5);
+    border: 1px solid rgba(52, 152, 219,0.4);
+    background: rgba(52, 152, 219,0.05);
   }
 }
 
-.panel-list-selected {
+#granule-list .panel-list-selected {
+  border: 1px solid rgba(52, 152, 219,0.4);
   box-shadow: 0 0 10px rgba(52, 152, 219,0.2);
-  background: #fff;
+  background: rgba(52, 152, 219,0.05);
 
   .panel-list-when-selected {
     visibility: visible;
@@ -323,6 +334,9 @@ $panel-list-thumbnail-container-size: $panel-list-thumbnail-size;
 }
 
 .panel-list a.panel-list-remove {
+  padding: 4px 6px 5px 6px;
+  line-height: 1;
+  background: #c0392b;
   float: right;
   @include transition(color 0.3s ease-in-out);
 

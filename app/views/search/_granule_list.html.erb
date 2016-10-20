@@ -12,9 +12,6 @@
           <div id="datasource-caveats"></div>
           <!-- ko with: collection -->
           <div class="master-overlay-global-actions actions">
-            <a href="#" class="button retrieve" title="Retrieve collection data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
-              <i class="fa fa-download"></i> Retrieve Collection Data
-            </a>
             <a href="#" class="button icon-button master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $root.ui.collectionsList.showCollectionDetails" title="View collection details">
               <i class="fa fa-info-circle"></i>
             </a>
@@ -33,6 +30,9 @@
             <a href="#" class="button icon-button button-active" data-pulse="#project-count" title="Remove collection from the current project"
                data-bind="visible: $root.project.hasCollection($data), click: $root.ui.projectList.toggleCollection">
               <i class="fa fa-minus"></i>
+            </a>
+            <a href="#" class="button retrieve" title="Retrieve collection data" data-bind="click: $root.ui.projectList.loginAndDownloadCollection">
+              <i class="fa fa-download"></i> Retrieve Collection Data
             </a>
           </div>
           <!-- /ko -->
@@ -69,7 +69,7 @@
                 <img class="panel-list-thumbnail" data-bind="event: {error: onThumbError}, attr: {src: edsc_browse_url(<%= Rails.configuration.thumbnail_width %>)}" alt="Browse Image">
               </a>
               <!-- /ko -->
-              <p><strong data-bind="text: getTemporal()"></strong></p>
+              <p data-bind="text: getTemporal()"></p>
 
               <div class="panel-list-item-actions granule-item-actions">
                 <a href="#" class="master-overlay-forward" data-master-overlay-forward="Granules" data-bind="click: $parent.showGranuleDetails" title="View granule details">
@@ -79,7 +79,7 @@
                   <i class="fa fa-download"></i>
                 </a>
                 <!-- ko if: $parent.canRemoveGranules() -->
-                <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span></a>
+                <a class="panel-list-remove panel-list-when-selected" data-bind="click: $parent.removeGranule" href="#" title="Exclude this granule"><i class="fa fa-times fa-inverse"></i></a>
                 <!-- /ko -->
               </div>
             </li>
