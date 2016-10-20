@@ -41,12 +41,13 @@ describe 'Single Granule Data Access', reset: false do
       expect(page).to have_content 'FIFE_RAIN_30M.72981621.r30'
     end
 
-    context 'while the user is viewing a single granule of a multi-granule collection' do
+    context 'when returning to the search results' do
       before :all do
         click_link 'Back to Search Session'
         wait_for_xhr
       end
-      it 'does not filter the granules upon returning to the collection' do
+
+      it 'displays all of the collections granules' do
         expect(page).to have_content "117 matching granules"
       end
     end
